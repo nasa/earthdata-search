@@ -4,8 +4,25 @@
     white-space: nowrap;
   }
 
+  header {
+    background: #fff;
+    margin: 0;
+    height: 55px;
+    padding: 0;
+  }
+
   .master-overlay-back {
     text-decoration: none;
+  }
+
+  .nav {
+    background: #fff;
+    margin: 0;
+  }
+
+  h4 {
+    margin: 0;
+    padding: 10px 15px;
   }
 }
 

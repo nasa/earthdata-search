@@ -3,6 +3,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 
 .panel-list {
+
   .button {
     font-size: 1em;
     padding: 4px 8px;
@@ -101,7 +102,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
     }
 
     div {
-      padding: 0;
+      padding: 0 0 0 10px;
     }
   }
 

@@ -8,7 +8,7 @@
   </nav>
   <!-- ko if: $root.ui.collectionsList.selected() -->
   <header >
-    <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
+    <!-- <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2> -->
     <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
       <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
         <!-- ko if: details().version_id -->

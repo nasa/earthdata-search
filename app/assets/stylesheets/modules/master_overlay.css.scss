@@ -51,6 +51,8 @@
 
 .master-overlay-nav {
   padding: 1em;
+  display: inline-block;
+  background: #fff;
 }
 
 // A parent panel for the overlday.  For instance, collection facets are a parent
@@ -244,7 +246,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  background: none;
+  background: #fff;
   padding: 0;
   height: 80%;
   overflow-y: scroll;
@@ -278,28 +280,10 @@ a.master-overlay-close {
 
 a.master-overlay-back, a.master-overlay-show-parent {
   background: $button-dark-bottom-gradient;
-  padding: 8px 10px 8px 5px;
+  padding: 8px 10px;
   color: #fff;
   text-shadow: 1px 1px rgba(0,0,0,.4);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 1px;
-  border-top-left-radius: 1px;
-  margin-left: 25px;
-  @include transition(all 0.2s ease-in-out);
-}
-
-a.master-overlay-back:before, a.master-overlay-show-parent:before {
-  content:"";
-  position: absolute;
-  float: left;
-  left: 24px;
-  top: 10px;
-  width:0;
-  height:0;
-  border-color: transparent $button-dark-bottom-gradient transparent transparent;
-  border-style: solid;
-  border-width: 17px 17px 17px 0;
+  border-radius: 5px;
   @include transition(all 0.2s ease-in-out);
 }
 
@@ -448,7 +432,6 @@ $parent-width: $parent-split * 0.21;
   dd {
     font-size: 0.9em;
     font-weight: bold;
-    color: #FFFFFF;
     margin-bottom: 10px;
     word-wrap: break-word;
   }
