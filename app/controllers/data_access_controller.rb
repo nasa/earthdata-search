@@ -25,6 +25,13 @@ class DataAccessController < ApplicationController
     if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
       @back_path = '/search/collections'
     end
+
+    #This block removes the granule filter per EDSC-1214
+    @paramsWithoutGranuleFilter = request.query_string
+    params = CGI.parse(@paramsWithoutGranuleFilter)
+    params.delete('sgd')
+    @paramsWithoutGranuleFilter = URI.encode_www_form(params).to_s
+    @paramsWithoutGranuleFilter = URI.unescape(@paramsWithoutGranuleFilter)
   end
 
   def retrieve
