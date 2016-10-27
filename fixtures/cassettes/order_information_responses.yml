@@ -118,6 +118,42 @@ b59ce3cb7ff08a2e70d740fec732666e488129ee:
         Order Option"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1001047334-NSIDC_ECS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1001047334-NSIDC_ECS","name":"G1001047334-NSIDC_ECS"},"option_definition_refs":[{"id":"159A2C2A-BC8D-04E9-6217-BCB9E7626C91","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/159A2C2A-BC8D-04E9-6217-BCB9E7626C91","name":"AE_SI12
         Order Option"}],"orderable":true,"price":0.0}}]'
     http_version: 
+1c8dab08cb447f1f2900d3e785c027187dae75f8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"003d21e1ad1c778bb4e82d99e86d9445"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzY4NDYzMWQxNWUxODIyMmE5YmQ5Nzk0MzM0MDFkMjE%3D--4ba1d0a0a15c6d4f2c34d44ab36790cbc9a2d32d;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.708000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 27 Oct 2016 17:36:05 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"order_information":{"catalog_item_ref":{"id":"G1001792123-NSIDC_ECS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1001792123-NSIDC_ECS","name":"G1001792123-NSIDC_ECS"},"option_definition_refs":[{"id":"F8D65838-A54A-FDCA-300D-FE6396AE5502","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/F8D65838-A54A-FDCA-300D-FE6396AE5502","name":"FTP
+        order w/o browse"}],"orderable":true,"price":0.0}}]'
+    http_version: 
 5235c199d6e56463bdcd35ba74ceca998824c1cf:
   response:
     status:
@@ -223,7 +259,7 @@ cf803bbd97b39fe186631ec8ca2b4fbfe46a80a3:
     body:
       encoding: UTF-8
       string: '[{"order_information":{"catalog_item_ref":{"id":"G1219913107-LAADS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1219913107-LAADS","name":"G1219913107-LAADS"},"option_definition_refs":[{"id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","name":"FtpPushPull"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1219913173-LAADS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1219913173-LAADS","name":"G1219913173-LAADS"},"option_definition_refs":[{"id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","name":"FtpPushPull"}],"orderable":true,"price":0.0}}]'
-    http_version:
+    http_version: 
 d70429693b43b626ab59c6e900638eda06ffd473:
   response:
     status:
