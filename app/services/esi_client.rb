@@ -93,7 +93,7 @@ class ESIClient
   end
 
   def find_field_element(field_symbol, data_type = 'ecs')
-    find_by_xpath("//#{data_type}:#{field_symbol.to_s}")
+    find_by_xpath("//*[contains(name(), '#{data_type}:#{field_symbol.to_s}')]")
   end
 
   def find_by_xpath(xpath)

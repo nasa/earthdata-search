@@ -29,7 +29,6 @@ describe 'Service Options order with bad bounding_box', reset: false do
       wait_for_xhr
 
       within '.access-item-actions' do
-        sleep 2
         click_on 'Continue'
       end
       click_on 'Submit'
