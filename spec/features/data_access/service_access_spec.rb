@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'Services Access', reset: false do
   serviceable_collection_id = 'C179014698-NSIDC_ECS'
+  smap_collection_id = 'C1236303848-NSIDC_ECS'
+  smap_collection_title = "SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid Brightness Temperatures V003"
   serviceable_collection_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
   disabled_serviceable_collection_id = 'C128599377-NSIDC_ECS'
 
@@ -31,6 +33,50 @@ describe 'Services Access', reset: false do
         end
         within '.access-error-message-list' do
           expect(page).to have_content('This collection is currently not configured for subagent HEG')
+        end
+      end
+    end
+  end
+
+  context 'when viewing data access with a SMAP collection that is capable of zone subsetting' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, focus: smap_collection_id
+      login
+      first_granule_list_item.click_link "Retrieve single granule data"
+    end
+
+    context "when submitting the ESI service access method for two consecutive times" do
+      before :all do
+        # first time, the ESI option should not be selected and the form should not be auto populated.
+        expect(page).not_to have_content("Reformat Output (Optional)")
+        choose 'SPL1CTB.3 ESI Service'
+        wait_for_xhr
+        fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
+        select 'NetCDF4-CF', from: 'Output File Format'
+        select 'UTM Northern Hemisphere', from: 'Re-projection Options'
+        fill_in 'UTM Zone', with: "3\t"
+        click_on 'Continue'
+        click_on 'Submit'
+
+        # Second time, the ESI form is now prepopulated
+        click_link 'Back to Data Access Options'
+        wait_for_xhr
+        click_on 'Continue'
+        click_on 'Submit'
+      end
+
+      context 'and returning to the retrieval page after the service is complete' do
+        before :all do
+          visit "/data/status"
+          within ".odd" do
+            click_on smap_collection_title
+          end
+          wait_for_xhr
+        end
+
+        it 'displays the service order is completed' do
+          expect(page).to have_content('Complete')
         end
       end
     end

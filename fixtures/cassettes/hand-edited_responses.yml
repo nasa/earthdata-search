@@ -742,6 +742,146 @@ second_service_request:
             </requestStatus>
         </eesi:agentResponse>
     http_version:
+post_smap_esi:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:32:14 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013871
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000013871</orderId>
+                <Instructions>You may receive an email about your order if you specified an EMAIL address. &lt;br/&gt;&lt;br/&gt;The instructions used to process this order are:  Processing tool=SMAPL1L2. Projection=UTM NORTHERN HEMISPHERE. Output file format=NetCDF4-CF. Granule id(s)=SC:SPL1CTB.003:86801326. Email address=patrick+edsc@element84.com. Band(s)=/SPL1CTB/Global_Projection/cell_antenna_scan_angle_aft,/SPL1CTB/Global_Projection/cell_antenna_scan_angle_fore,/SPL1CTB/Global_Projection/cell_boresight_incidence_aft,/SPL1CTB/Global_Projection/cell_boresight_incidence_fore,/SPL1CTB/Global_Projection/cell_lat,/SPL1CTB/Global_Projection/cell_lat_centroid_aft,/SPL1CTB/Global_Projection/cell_lat_centroid_fore,/SPL1CTB/Global_Projection/cell_lon,/SPL1CTB/Global_Projection/cell_lon_centroid_aft,/SPL1CTB/Global_Projection/cell_lon_centroid_fore,/SPL1CTB/Global_Projection/cell_number_measurements_3_aft,/SPL1CTB/Global_Projection/cell_number_measurements_3_fore,/SPL1CTB/Global_Projection/cell_number_measurements_4_aft,/SPL1CTB/Global_Projection/cell_number_measurements_4_fore,/SPL1CTB/Global_Projection/cell_number_measurements_h_aft,/SPL1CTB/Global_Projection/cell_number_measurements_h_fore,/SPL1CTB/Global_Projection/cell_number_measurements_v_aft,/SPL1CTB/Global_Projection/cell_number_measurements_v_fore,/SPL1CTB/Global_Projection/cell_solar_specular_phi_aft,/SPL1CTB/Global_Projection/cell_solar_specular_phi_fore,/SPL1CTB/Global_Projection/cell_solar_specular_theta_aft,/SPL1CTB/Global_Projection/cell_solar_specular_theta_fore,/SPL1CTB/Global_Projection/cell_tb_3_aft,/SPL1CTB/Global_Projection/cell_tb_3_fore,/SPL1CTB/Global_Projection/cell_tb_4_aft,/SPL1CTB/Global_Projection/cell_tb_4_fore,/SPL1CTB/Global_Projection/cell_tb_error_3_aft,/SPL1CTB/Global_Projection/cell_tb_error_3_fore,/SPL1CTB/Global_Projection/cell_tb_error_4_aft,/SPL1CTB/Global_Projection/cell_tb_error_4_fore,/SPL1CTB/Global_Projection/cell_tb_error_h_aft,/SPL1CTB/Global_Projection/cell_tb_error_h_fore,/SPL1CTB/Global_Projection/cell_tb_error_v_aft,/SPL1CTB/Global_Projection/cell_tb_error_v_fore,/SPL1CTB/Global_Projection/cell_tb_h_aft,/SPL1CTB/Global_Projection/cell_tb_h_fore,/SPL1CTB/Global_Projection/cell_tb_qual_flag_3_aft,/SPL1CTB/Global_Projection/cell_tb_qual_flag_3_fore,/SPL1CTB/Global_Projection/cell_tb_qual_flag_4_aft,/SPL1CTB/Global_Projection/cell_tb_qual_flag_4_fore,/SPL1CTB/Global_Projection/cell_tb_qual_flag_h_aft,/SPL1CTB/Global_Projection/cell_tb_qual_flag_h_fore,/SPL1CTB/Global_Projection/cell_tb_qual_flag_v_aft,/SPL1CTB/Global_Projection/cell_tb_qual_flag_v_fore,/SPL1CTB/Global_Projection/cell_tb_time_seconds_aft,/SPL1CTB/Global_Projection/cell_tb_time_seconds_fore,/SPL1CTB/Global_Projection/cell_tb_v_aft,/SPL1CTB/Global_Projection/cell_tb_v_fore. Projection parameter(s)=NZone:3.&lt;br/&gt;&lt;br/&gt;Note from Client: To view the status of your request, please see: http://127.0.0.1:63178//data/retrieve/6234964205</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT0.711S</processDuration>
+                <subagentId>SMAPL1L2</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>processing</status>
+                <numberProcessed>0</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
+get_smap_esi_1:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:32:48 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013871
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <downloadUrls>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/5000000013871.html</downloadUrl>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/5000000013871.zip</downloadUrl>
+            </downloadUrls>
+            <order>
+                <orderId>5000000013871</orderId>
+                <Instructions>Your request has completed processing. You may retrieve the results from the download URLs until 2016-11-06 14:32:43.069</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT28.548S</processDuration>
+                <subagentId>SMAPL1L2</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
+get_smap_esi_2:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:32:48 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013871
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <downloadUrls>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/5000000013871.html</downloadUrl>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/5000000013871.zip</downloadUrl>
+            </downloadUrls>
+            <order>
+                <orderId>5000000013871</orderId>
+                <Instructions>Your request has completed processing. You may retrieve the results from the download URLs until 2016-11-06 14:32:43.069</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT28.548S</processDuration>
+                <subagentId>SMAPL1L2</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
 acab3c43996bb7f51d50e4301fe55418086eadbd:
   response:
     status:
