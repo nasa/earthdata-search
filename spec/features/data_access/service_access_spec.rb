@@ -69,7 +69,7 @@ describe 'Services Access', reset: false do
       context 'and returning to the retrieval page after the service is complete' do
         before :all do
           visit "/data/status"
-          within ".odd" do
+          within("table.data-retrievals tbody tr:first-child") do
             click_on smap_collection_title
           end
           wait_for_xhr
