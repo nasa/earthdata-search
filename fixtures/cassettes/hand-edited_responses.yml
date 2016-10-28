@@ -1086,7 +1086,7 @@ service_order_with_bad_bounding_box_request:
   response:
     status:
       code: 201
-      message: 
+      message:
     headers:
       date:
       - Fri, 19 Aug 2016 14:44:44 GMT
@@ -1248,12 +1248,12 @@ service_order_with_bad_bounding_box_request:
                 <totalNumber>50</totalNumber>
             </requestStatus>
         </eesi:agentResponse>
-    http_version: 
+    http_version:
 service_order_with_bad_bounding_box_post:
   response:
     status:
       code: 201
-      message: 
+      message:
     headers:
       date:
       - Fri, 19 Aug 2016 14:44:29 GMT
@@ -1363,4 +1363,93 @@ service_order_with_bad_bounding_box_post:
                 <totalNumber>2000</totalNumber>
             </requestStatus>
         </eesi:agentResponse>
-    http_version: 
+    http_version:
+boundingbox1_1:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 17:37:09 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013853
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000013853</orderId>
+                <Instructions>Your request has completed processing. However the request did not generate any output files</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <message>The files you selected contained no data that satisfy your subset constraints.</message>
+                <processDuration>PT1.081S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
+boundingbox1_2:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 17:37:05 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013853
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000013853</orderId>
+                <Instructions>You may receive an email about your order if you specified an EMAIL address. &lt;br/&gt;&lt;br/&gt;The instructions used to process this order are:  Processing tool=GLAS. Bounding Box(es)=-139,-76,-100,-63. Granule id(s)=SC:GLAH06.034:52619741. Email address=test@email.com. Band(s)=/GLAH06.&lt;br/&gt;&lt;br/&gt;Note from Client: To view the status of your request, please see: http://127.0.0.1:64001//data/retrieve/0435720986</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT0.083S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>pending</status>
+                <numberProcessed>0</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
