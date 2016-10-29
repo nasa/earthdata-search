@@ -181,6 +181,38 @@ a821a12e797488ad29470b886e9251e701d0b9cf:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1236303846-NSIDC_ECS","id":"34BEE022-055F-2EFD-1885-7452C9EFB0AA","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"EF5D7985-10BB-BFD1-95D6-75F08B0CAF6D"}}]'
     http_version: 
+7108807c922490d207ca1b6c9bf6cedb2057a3dc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"3a366c93b137cb604885e2cb92a5299f"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.220000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 27 Oct 2016 21:08:32 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1236303848-NSIDC_ECS","id":"A1E734FD-3685-0089-C7F4-3C51732565D9","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"12C60790-3A5B-BFCC-B97C-570B041FC0C3"}}]'
+    http_version: 
 92572877a3ae82236d6205f41f825027353d7b9a:
   response:
     status:
