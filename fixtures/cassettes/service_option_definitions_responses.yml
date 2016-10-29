@@ -373,6 +373,621 @@
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"062E0BDE-D8F6-248E-2B30-B226C1574305","name":"AE_Land.2
         ESI Service","provider_id":"20604"}}'
     http_version: 
+ee0f11ab032587ae8c334518b749e3df754ec88d:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"68f78dae09b9f847a437ab520d9711eb"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.082000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 27 Oct 2016 21:08:32 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"service_option_definition":{"description":"ECHO ESI Order form for
+        DataSet \"SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid Brightness Temperatures
+        V003\" (SPL1CTB.3)","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:forms=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://ecs.nasa.gov/options\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n    <!--\n            ECHO
+        Service/Order form for DataSet \"SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid
+        Brightness Temperatures V003\" (SPL1CTB.3):\n            -->\n    <model>\n        <instance>\n            <ecs:request
+        xmlns:ecs=\"http://ecs.nasa.gov/options\">\n                <!--NOTE: elements
+        in caps losely match the ESI API, those in lowercase are helper elements -->\n                <ecs:requestInfo>\n                    <ecs:email/>\n                </ecs:requestInfo>\n                <!--Dataset
+        ID will be injected by Reverb-->\n                <ecs:CLIENT>ESI</ecs:CLIENT>\n                <!--First
+        SubsetAgent in the input capabilities XML is used as the default.-->\n                <ecs:SUBAGENT_ID>\n                    <ecs:value>SMAPL1L2</ecs:value>\n                </ecs:SUBAGENT_ID>\n                <!--
+        hardcode to async for Reverb services -->\n                <ecs:REQUEST_MODE>async</ecs:REQUEST_MODE>\n                <ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG>\n                <ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1>\n                <ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2>\n                <ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1>\n                <ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1>\n                <ecs:NULL_MSG/>\n                <ecs:SMAPL1L2-request>\n                    <!--Need
+        to populate BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"-->\n                    <ecs:BBOX/>\n                    <ecs:spatial_subsetting>\n                        <ecs:boundingbox>\n                            <ecs:ullat>90</ecs:ullat>\n                            <ecs:ullon>-180</ecs:ullon>\n                            <ecs:lrlat>-90</ecs:lrlat>\n                            <ecs:lrlon>180</ecs:lrlon>\n                        </ecs:boundingbox>\n                    </ecs:spatial_subsetting>\n                    <ecs:band_subsetting>\n                        <ecs:SUBSET_DATA_LAYERS
+        style=\"tree\">\n                            <ecs:SPL1CTB>\n                                <ecs:dataset>/SPL1CTB</ecs:dataset>\n                            </ecs:SPL1CTB>\n                        </ecs:SUBSET_DATA_LAYERS>\n                    </ecs:band_subsetting>\n                    <!--First
+        Format in the input XML is used as the default.-->\n                    <ecs:FORMAT>\n                        <ecs:value/>\n                    </ecs:FORMAT>\n                    <!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)-->\n                    <!--
+        FILE_IDS must be injected by Reverb -->\n                    <!-- FILE_URLS
+        is not used in requests from ECHO, Use FILE_IDS instead -->\n                    <ecs:projection_options>\n                        <ecs:PROJECTION>\n                            <ecs:value>&amp;</ecs:value>\n                        </ecs:PROJECTION>\n                        <!--In
+        final ESI request, projection parameters should be included as follows: \"&PROJECTION_PARAMETERS=param1:value1,param2:value2,...paramn:valuen\"-->\n                        <ecs:PROJECTION_PARAMETERS>\n                            <ecs:UTM_NORTHERN_HEMISPHERE_projection>\n                                <ecs:NZone/>\n                            </ecs:UTM_NORTHERN_HEMISPHERE_projection>\n                            <ecs:UTM_SOUTHERN_HEMISPHERE_projection>\n                                <ecs:NZone/>\n                            </ecs:UTM_SOUTHERN_HEMISPHERE_projection>\n                        </ecs:PROJECTION_PARAMETERS>\n                    </ecs:projection_options>\n                    <ecs:advanced_file_option_flag/>\n                    <ecs:advanced_file_options>\n                        <ecs:INTERPOLATION>\n                            <ecs:value/>\n                        </ecs:INTERPOLATION>\n                        <!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.-->\n                        <ecs:INCLUDE_META>false</ecs:INCLUDE_META>\n                    </ecs:advanced_file_options>\n                    <ecs:spatial_subset_flag>false</ecs:spatial_subset_flag>\n                    <ecs:band_subset_flag>true</ecs:band_subset_flag>\n                    <ecs:temporal_subset_flag>false</ecs:temporal_subset_flag>\n                </ecs:SMAPL1L2-request>\n            </ecs:request>\n        </instance>\n        <extension
+        xmlns:pre=\"http://echo.nasa.gov/v9/echoforms/prepopulate\" name=\"pre:prepopulate\">\n            <pre:expressions>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:dataset_ids\" source=\"ALL_DATASET_IDS_FROM_CART\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:email\" source=\"EMAIL\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:keywords\" source=\"KEYWORDS\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:spatial\" source=\"SPATIAL\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:shp_file\" source=\"SHP_FILE\"/>\n                <pre:expression
+        ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon\"
+        source=\"BBOX_WEST\"/>\n                <pre:expression ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlat\"
+        source=\"BBOX_SOUTH\"/>\n                <pre:expression ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon\"
+        source=\"BBOX_EAST\"/>\n                <pre:expression ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullat\"
+        source=\"BBOX_NORTH\"/>\n            </pre:expressions>\n        </extension>\n    </model>\n    <ui>\n        <input
+        label=\"Email Address\" ref=\"ecs:requestInfo/ecs:email\" required=\"false()\"
+        type=\"xsd:string\">\n            <constraints>\n                <constraint>\n                    <xpath>contains(ecs:requestInfo/ecs:email,
+        ''@'') and contains(substring-after(ecs:requestInfo/ecs:email, ''@''), ''.'')
+        and string-length(substring-after(ecs:requestInfo/ecs:email, ''.''))</xpath>\n                    <alert>A
+        valid email address is required.</alert>\n                </constraint>\n            </constraints>\n        </input>\n        <input
+        label=\"Include Metadata and Processing History\" ref=\"ecs:SMAPL1L2-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2'' &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''PQF''
+        &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''GLAS'' &#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \" type=\"xsd:boolean\"/>\n        <group
+        id=\"SMAPL1L2-reformatOptions\" label=\"Reformat Output (Optional)\" ref=\"ecs:SMAPL1L2-request\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\">\n            <select
+        id=\"SMAPL1L2-formatselect\" label=\"Output File Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:FORMAT\" relevant=\"../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"No
+        Reformatting\" value=\"\"/>\n                <item label=\"HDF-EOS5\" value=\"HDF-EOS5\"/>\n                <item
+        label=\"NetCDF4-CF\" value=\"NetCDF4-CF\"/>\n                <item label=\"ASCII\"
+        value=\"ASCII\"/>\n                <item label=\"KML\" value=\"KML\"/>\n                <item
+        label=\"NetCDF-3\" value=\"NetCDF-3\"/>\n            </select>\n        </group>\n        <group
+        id=\"SMAPL1L2-spatial\" label=\"Spatial Subsetting (Optional)\" ref=\"ecs:SMAPL1L2-request/ecs:spatial_subsetting\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\">\n            <input label=\"Enter
+        bounding box\" ref=\"../ecs:spatial_subset_flag\" type=\"xsd:boolean\"/>\n            <group
+        id=\"SMAPL1L2-NWESBoundingBox\" label=\"\" ref=\"ecs:boundingbox\">\n                <input
+        label=\"North\" ref=\"ecs:ullat\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)
+        &gt;= -90</xpath>\n                            <alert>North must be greater
+        than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)
+        &lt;= 90</xpath>\n                            <alert>North must be less than
+        90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)  &gt;=  number(ecs:lrlat)</xpath>\n                            <alert>North
+        must be greater than South</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"West\" ref=\"ecs:ullon\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)
+        &gt;= -180</xpath>\n                            <alert>West must be greater
+        than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)
+        &lt;= 180</xpath>\n                            <alert>West must be less than
+        180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)  &lt;=  number(ecs:lrlon)</xpath>\n                            <alert>West
+        must be less than East</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"East\" ref=\"ecs:lrlon\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)
+        &gt;= -180</xpath>\n                            <alert>East must be greater
+        than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)
+        &lt;= 180</xpath>\n                            <alert>East must be less than
+        180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)  &gt;=  number(ecs:ullon)</xpath>\n                            <alert>East
+        must be greater than West</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"South\" ref=\"ecs:lrlat\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)
+        &gt;= -90</xpath>\n                            <alert>South must be greater
+        than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)
+        &lt;= 90</xpath>\n                            <alert>South must be less than
+        90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)  &lt;=  number(ecs:ullat)</xpath>\n                            <alert>South
+        must be less than North</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n            </group>\n        </group>\n        <group
+        id=\"SMAPL1L2-projectionSettings\" label=\"Projection Options\" ref=\"ecs:SMAPL1L2-request/ecs:projection_options\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2'' and (//ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''
+        or (//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2'' and (//ecs:FORMAT/ecs:value=''GeoTIFF''
+        or //ecs:FORMAT/ecs:value=''NetCDF4-CF'' or //ecs:FORMAT/ecs:value=''HDF-EOS5'')))\">\n            <select
+        id=\"SMAPL1L2-projectselect\" label=\"Re-projection Options\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:PROJECTION\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <!--Place
+        holder if we dont know the default projection (same as empty string)-->\n                <item
+        label=\"No Change\" value=\"&amp;\"/>\n                <item label=\"Geographic\"
+        value=\"GEOGRAPHIC\"/>\n                <item label=\"UTM Northern Hemisphere\"
+        value=\"UTM NORTHERN HEMISPHERE\"/>\n                <item label=\"UTM Southern
+        Hemisphere\" value=\"UTM SOUTHERN HEMISPHERE\"/>\n            </select>\n            <group
+        id=\"SMAPL1L2-UTM_NORTHERN_HEMISPHERE-paramgroup\" label=\"Set Parameters
+        for UTM Northern Hemisphere (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:UTM_NORTHERN_HEMISPHERE_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''UTM NORTHERN HEMISPHERE'' and not(ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/>\n                <input label=\"UTM Zone\" ref=\"ecs:NZone\"
+        required=\"true()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>string-length(translate(ecs:NZone,
+        ''0123456789'', '''')) = 0</xpath>\n                            <alert>Only
+        numeric characters are allowed in this field.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 ((number(translate(ecs:NZone,''-'',''''))
+        &gt;= 1.0 and number(translate(ecs:NZone,''-'','''')) &lt;= 60.0) and\n                                 \n                                 not(contains(ecs:NZone,
+        ''.'')))</xpath>\n                            <alert>Zone parameter (Zone)
+        must be specified as an integer with a value between 1.0 and 60.0, inclusive.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 not(../../../ecs:spatial_subset_flag=''true'')
+        or\n                                 (\n                                 ((number(ecs:NZone)
+        &gt;= 16 and number(ecs:NZone) &lt;= 60) and \n                                 ((((number(ecs:NZone)
+        * 6) - 183) - 45) &lt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))
+        or\n                                 \n                                 ((number(ecs:NZone)
+        &gt;= 1 and number(ecs:NZone) &lt;= 15) and \n                                 (number(-180)
+        &lt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))\n                                 )</xpath>\n                            <alert>Invalid
+        spatial subset specified; the western boundary must be less than 45 degrees
+        west of the zone meridian.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 not(../../../ecs:spatial_subset_flag=''true'')
+        or\n                                 (\n                                 ((number(ecs:NZone)
+        &gt;= 1 and number(ecs:NZone) &lt;= 45) and \n                                 ((((number(ecs:NZone)
+        * 6) - 183) + 45) &gt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))
+        or\n                                 \n                                 ((number(ecs:NZone)
+        &gt;= 46 and number(ecs:NZone) &lt;= 60) and \n                                 (number(180)
+        &gt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))\n                                 )</xpath>\n                            <alert>Invalid
+        spatial subset specified; the eastern boundary must be less than 45 degrees
+        east of the zone meridian.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 not(../../../ecs:spatial_subset_flag=''true'')
+        or\n                                 \n                                 (not(number(ecs:NZone)
+        &gt;= 15 and number(ecs:NZone) &lt;= 44) or ((number(ecs:NZone) &gt;= 15 and
+        number(ecs:NZone) &lt;= 44) and \n                                 (number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)
+        &lt;\n                                 number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon))))</xpath>\n                            <alert>Invalid
+        spatial subset specified; the zone must encompass the specified bounding box.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>1..60</help>\n                </input>\n                <output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 16 and ecs:NZone
+        &lt;= 60\" type=\"xsd:string\" value=\"((number(ecs:NZone) * 6) - 183) - 45\"/>\n                <output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone
+        &lt;= 15\" type=\"xsd:string\" value=\"-180\"/>\n                <output label=\"Maximum
+        supported longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone &lt;= 45\"
+        type=\"xsd:string\" value=\"((number(ecs:NZone) * 6) - 183) + 45\"/>\n                <output
+        label=\"Maximum supported longitude\" relevant=\"ecs:NZone &gt;= 46 and ecs:NZone
+        &lt;= 60\" type=\"xsd:string\" value=\"180\"/>\n            </group>\n            <group
+        id=\"SMAPL1L2-UTM_SOUTHERN_HEMISPHERE-paramgroup\" label=\"Set Parameters
+        for UTM Southern Hemisphere (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:UTM_SOUTHERN_HEMISPHERE_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'' and not(ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/>\n                <input label=\"UTM Zone\" ref=\"ecs:NZone\"
+        required=\"true()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>string-length(translate(ecs:NZone,
+        ''0123456789'', '''')) = 0</xpath>\n                            <alert>Only
+        numeric characters are allowed in this field.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 ((number(translate(ecs:NZone,''-'',''''))
+        &gt;= 1.0 and number(translate(ecs:NZone,''-'','''')) &lt;= 60.0) and\n                                 \n                                 not(contains(ecs:NZone,
+        ''.'')))</xpath>\n                            <alert>Zone parameter (Zone)
+        must be specified as an integer with a value between 1.0 and 60.0, inclusive.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 not(../../../ecs:spatial_subset_flag=''true'')
+        or\n                                 (\n                                 ((number(ecs:NZone)
+        &gt;= 16 and number(ecs:NZone) &lt;= 60) and \n                                 ((((number(ecs:NZone)
+        * 6) - 183) - 45) &lt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))
+        or\n                                 \n                                 ((number(ecs:NZone)
+        &gt;= 1 and number(ecs:NZone) &lt;= 15) and \n                                 (number(-180)
+        &lt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))\n                                 )</xpath>\n                            <alert>Invalid
+        spatial subset specified; the western boundary must be less than 45 degrees
+        west of the zone meridian.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 not(../../../ecs:spatial_subset_flag=''true'')
+        or\n                                 (\n                                 ((number(ecs:NZone)
+        &gt;= 1 and number(ecs:NZone) &lt;= 45) and \n                                 ((((number(ecs:NZone)
+        * 6) - 183) + 45) &gt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))
+        or\n                                 \n                                 ((number(ecs:NZone)
+        &gt;= 46 and number(ecs:NZone) &lt;= 60) and \n                                 (number(180)
+        &gt;= number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))\n                                 )</xpath>\n                            <alert>Invalid
+        spatial subset specified; the eastern boundary must be less than 45 degrees
+        east of the zone meridian.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>string-length(ecs:NZone)
+        = 0 or\n                                 \n                                 not(../../../ecs:spatial_subset_flag=''true'')
+        or\n                                 \n                                 (not(number(ecs:NZone)
+        &gt;= 15 and number(ecs:NZone) &lt;= 44) or ((number(ecs:NZone) &gt;= 15 and
+        number(ecs:NZone) &lt;= 44) and \n                                 (number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)
+        &lt;\n                                 number(//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon))))</xpath>\n                            <alert>Invalid
+        spatial subset specified; the zone must encompass the specified bounding box.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>1..60</help>\n                </input>\n                <output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 16 and ecs:NZone
+        &lt;= 60\" type=\"xsd:string\" value=\"((number(ecs:NZone) * 6) - 183) - 45\"/>\n                <output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone
+        &lt;= 15\" type=\"xsd:string\" value=\"-180\"/>\n                <output label=\"Maximum
+        supported longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone &lt;= 45\"
+        type=\"xsd:string\" value=\"((number(ecs:NZone) * 6) - 183) + 45\"/>\n                <output
+        label=\"Maximum supported longitude\" relevant=\"ecs:NZone &gt;= 46 and ecs:NZone
+        &lt;= 60\" type=\"xsd:string\" value=\"180\"/>\n            </group>\n        </group>\n        <group
+        id=\"SMAPL1L2-bandSubsetOptions\" label=\"Band Subsetting (Optional)\" ref=\"ecs:SMAPL1L2-request/ecs:band_subsetting\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2'' and ecs:SMAPL1L2-request/ecs:band_subset_flag=''true''\">\n            <tree
+        cascade=\"true\" id=\"SMAPL1L2-bandSubsetOptions\" label=\"Choose Bands\"
+        ref=\"ecs:SUBSET_DATA_LAYERS/ecs:SPL1CTB\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../ecs:band_subset_flag=''true''\" required=\"false()\" separator=\"/\"
+        type=\"xsd:string\" valueElementName=\"dataset\">\n                <item value=\"SPL1CTB\">\n                    <item
+        value=\"Global_Projection\">\n                        <item value=\"cell_antenna_scan_angle_aft\"/>\n                        <item
+        value=\"cell_antenna_scan_angle_fore\"/>\n                        <item value=\"cell_boresight_incidence_aft\"/>\n                        <item
+        value=\"cell_boresight_incidence_fore\"/>\n                        <item relevant=\"not(contains('',HDF-EOS5,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'','')))\"
+        value=\"cell_column\"/>\n                        <item value=\"cell_lat\"/>\n                        <item
+        value=\"cell_lat_centroid_aft\"/>\n                        <item value=\"cell_lat_centroid_fore\"/>\n                        <item
+        value=\"cell_lon\"/>\n                        <item value=\"cell_lon_centroid_aft\"/>\n                        <item
+        value=\"cell_lon_centroid_fore\"/>\n                        <item value=\"cell_number_measurements_3_aft\"/>\n                        <item
+        value=\"cell_number_measurements_3_fore\"/>\n                        <item
+        value=\"cell_number_measurements_4_aft\"/>\n                        <item
+        value=\"cell_number_measurements_4_fore\"/>\n                        <item
+        value=\"cell_number_measurements_h_aft\"/>\n                        <item
+        value=\"cell_number_measurements_h_fore\"/>\n                        <item
+        value=\"cell_number_measurements_v_aft\"/>\n                        <item
+        value=\"cell_number_measurements_v_fore\"/>\n                        <item
+        relevant=\"not(contains('',HDF-EOS5,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'','')))\"
+        value=\"cell_row\"/>\n                        <item value=\"cell_solar_specular_phi_aft\"/>\n                        <item
+        value=\"cell_solar_specular_phi_fore\"/>\n                        <item value=\"cell_solar_specular_theta_aft\"/>\n                        <item
+        value=\"cell_solar_specular_theta_fore\"/>\n                        <item
+        value=\"cell_tb_3_aft\"/>\n                        <item value=\"cell_tb_3_fore\"/>\n                        <item
+        value=\"cell_tb_4_aft\"/>\n                        <item value=\"cell_tb_4_fore\"/>\n                        <item
+        value=\"cell_tb_error_3_aft\"/>\n                        <item value=\"cell_tb_error_3_fore\"/>\n                        <item
+        value=\"cell_tb_error_4_aft\"/>\n                        <item value=\"cell_tb_error_4_fore\"/>\n                        <item
+        value=\"cell_tb_error_h_aft\"/>\n                        <item value=\"cell_tb_error_h_fore\"/>\n                        <item
+        value=\"cell_tb_error_v_aft\"/>\n                        <item value=\"cell_tb_error_v_fore\"/>\n                        <item
+        value=\"cell_tb_h_aft\"/>\n                        <item value=\"cell_tb_h_fore\"/>\n                        <item
+        value=\"cell_tb_qual_flag_3_aft\"/>\n                        <item value=\"cell_tb_qual_flag_3_fore\"/>\n                        <item
+        value=\"cell_tb_qual_flag_4_aft\"/>\n                        <item value=\"cell_tb_qual_flag_4_fore\"/>\n                        <item
+        value=\"cell_tb_qual_flag_h_aft\"/>\n                        <item value=\"cell_tb_qual_flag_h_fore\"/>\n                        <item
+        value=\"cell_tb_qual_flag_v_aft\"/>\n                        <item value=\"cell_tb_qual_flag_v_fore\"/>\n                        <item
+        value=\"cell_tb_time_seconds_aft\"/>\n                        <item value=\"cell_tb_time_seconds_fore\"/>\n                        <item
+        relevant=\"not(contains('',GeoTIFF,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM
+        NORTHERN HEMISPHERE,UTM SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_utc_aft\"/>\n                        <item relevant=\"not(contains('',GeoTIFF,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM
+        NORTHERN HEMISPHERE,UTM SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_utc_fore\"/>\n                        <item value=\"cell_tb_v_aft\"/>\n                        <item
+        value=\"cell_tb_v_fore\"/>\n                    </item>\n                    <item
+        value=\"North_Polar_Projection\">\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_antenna_scan_angle_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_antenna_scan_angle_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_boresight_incidence_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_boresight_incidence_fore\"/>\n                        <item relevant=\"not(contains('',HDF-EOS5,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_column\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lat\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lat_centroid_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lat_centroid_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lon\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lon_centroid_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lon_centroid_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_3_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_3_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_4_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_4_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_h_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_h_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_v_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_v_fore\"/>\n                        <item
+        relevant=\"not(contains('',HDF-EOS5,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_row\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_phi_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_phi_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_theta_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_theta_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_3_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_3_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_4_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_4_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_3_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_3_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_4_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_4_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_h_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_h_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_v_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_v_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_h_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_h_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_3_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_3_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_4_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_4_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_h_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_h_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_v_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_v_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_seconds_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_seconds_fore\"/>\n                        <item relevant=\"not(contains('',GeoTIFF,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',NORTH POLAR STEREOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_utc_aft\"/>\n                        <item relevant=\"not(contains('',GeoTIFF,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',NORTH POLAR STEREOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_utc_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_v_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_v_fore\"/>\n                    </item>\n                    <item
+        value=\"South_Polar_Projection\">\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_antenna_scan_angle_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_antenna_scan_angle_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_boresight_incidence_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_boresight_incidence_fore\"/>\n                        <item relevant=\"not(contains('',HDF-EOS5,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_column\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lat\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lat_centroid_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lat_centroid_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lon\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lon_centroid_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_lon_centroid_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_3_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_3_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_4_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_4_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_h_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_h_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_v_aft\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_number_measurements_v_fore\"/>\n                        <item
+        relevant=\"not(contains('',HDF-EOS5,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_row\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_phi_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_phi_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_theta_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_solar_specular_theta_fore\"/>\n                        <item
+        relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_3_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_3_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_4_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_4_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_3_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_3_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_4_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_4_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_h_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_h_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_v_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_error_v_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_h_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_h_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_3_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_3_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_4_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_4_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_h_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_h_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_v_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_qual_flag_v_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_seconds_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_seconds_fore\"/>\n                        <item relevant=\"not(contains('',GeoTIFF,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',NORTH POLAR STEREOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_utc_aft\"/>\n                        <item relevant=\"not(contains('',GeoTIFF,KML,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',NORTH POLAR STEREOGRAPHIC,SOUTH POLAR STEREOGRAPHIC,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_time_utc_fore\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_v_aft\"/>\n                        <item relevant=\"not(contains('',KML,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))
+        or contains('',GEOGRAPHIC,NORTH POLAR STEREOGRAPHIC,UTM NORTHERN HEMISPHERE,UTM
+        SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
+        value=\"cell_tb_v_fore\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"12C60790-3A5B-BFCC-B97C-570B041FC0C3","name":"SPL1CTB.3
+        ESI Service","provider_id":"20604"}}'
+    http_version:
 66302bf7ccd9d497266e78971d8a9db2211073e7:
   response:
     status:
@@ -1136,12 +1751,12 @@
         :/()#+-'',''________''),''-dimension'')]/ecs:value[text()!=''&amp;'']\">\n                <output
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"36066D55-CC5A-A9D6-5C12-4B47754091D6","name":"MYD29P1N.5
         ESI Service","provider_id":"20604"}}'
-    http_version: 
+    http_version:
 b3573b8f122c6936a537aefe15288075f0563436:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       strict-transport-security:
       - max-age=15768000
@@ -1534,7 +2149,7 @@ b3573b8f122c6936a537aefe15288075f0563436:
         value=\"d_skew2\"/>\n                            <item value=\"i_gval_rcv\"/>\n                            <item
         value=\"i_nPeaks1\"/>\n                            <item value=\"i_numPk\"/>\n                        </item>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"9663A150-F821-AC41-E58E-5448CCB8DD58","name":"GLAH06.34
         ESI Service","provider_id":"20604"}}'
-    http_version: 
+    http_version:
 0bd38c0a9c1ab6a11d20f44819a3af3a80cb97a6:
   response:
     status:

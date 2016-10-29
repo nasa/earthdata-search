@@ -332,6 +332,45 @@ http_interactions:
   digest: 0074182fcbff52d0a40b77dc7bdd7bc21e2489df
 - request:
     method: post
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request
+    body:
+      encoding: UTF-8
+      string: FILE_IDS=SC%3ASPL1CTB.003%3A86801326&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A63178%2F%2Fdata%2Fretrieve%2F6234964205&FORMAT=NetCDF4-CF&PROJECTION=UTM+NORTHERN+HEMISPHERE&CLIENT=ESI&SUBAGENT_ID=SMAPL1L2&REQUEST_MODE=async&PROJECTION_PARAMETERS=NZone%3A3&SUBSET_DATA_LAYERS=%2FSPL1CTB%2FGlobal_Projection%2Fcell_antenna_scan_angle_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_antenna_scan_angle_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_boresight_incidence_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_boresight_incidence_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_lat%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_lat_centroid_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_lat_centroid_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_lon%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_lon_centroid_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_lon_centroid_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_3_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_3_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_4_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_4_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_h_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_h_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_v_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_number_measurements_v_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_solar_specular_phi_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_solar_specular_phi_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_solar_specular_theta_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_solar_specular_theta_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_3_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_3_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_4_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_4_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_3_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_3_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_4_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_4_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_h_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_h_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_v_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_error_v_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_h_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_h_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_3_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_3_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_4_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_4_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_h_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_h_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_v_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_qual_flag_v_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_time_seconds_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_time_seconds_fore%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_v_aft%2C%2FSPL1CTB%2FGlobal_Projection%2Fcell_tb_v_fore&EMAIL=patrick%2Bedsc%40element84.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Wed, 20 May 2015 17:21:59 GMT
+  digest: post_smap_esi
+- request:
+    method: get
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013871
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      X-EDSC-REQUEST:
+      - '1'
+  recorded_at: Thu, 27 Oct 2016 21:32:48 GMT
+  digest: get_smap_esi_1
+- request:
+    method: get
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013871
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      X-EDSC-REQUEST:
+      - '2'
+  recorded_at: Thu, 27 Oct 2016 21:32:48 GMT
+  digest: get_smap_esi_2
+- request:
+    method: post
     uri: https://api.echo.nasa.gov/echo-rest/orders.json
     body:
       encoding: UTF-8
