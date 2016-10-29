@@ -1,4 +1,39 @@
 ---
+09e0c203c0062a024f78b6b5518d576482f7459e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 27 Oct 2016 17:36:04 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 717fe281-3e01-4880-9279-672b31626751
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2003-01-13T00:00:00.000Z","dif_ids":["GLAH06"],"version_id":"034","updated":"2015-11-02T09:10:52.715Z","dataset_id":"GLAS/ICESat
+        L1B Global Elevation Data (HDF5) V034","data_center":"NSIDC_ECS","short_name":"GLAH06","organizations":["NSIDC","GSFC
+        I-SIPS"],"title":"GLAS/ICESat L1B Global Elevation Data (HDF5) V034","coordinate_system":"CARTESIAN","summary":"Data
+        granules contain approximately 23 minutes (1/4 orbit) and include the surface
+        elevation, surface roughness assuming no slope, surface slope assuming no
+        roughness and geodetic and atmospheric corrections for the range at the full
+        40/sec resolution.","time_end":"2010-01-13T00:00:00.000Z","orbit_parameters":{"swath_width":"2.0","period":"96.7","inclination_angle":"94.0","number_of_orbits":"0.25","start_circular_latitude":"-50.0"},"id":"C1000000445-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/icesat/disclaimer.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/glas_icesat_l1_l2_global_altimetry.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"GLAS
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/icesat/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/icesat/disclaimer.html"}]}'
+    http_version: 
 4e55a766f61632c66c30206b8c0459ee09b7d92e:
   response:
     status:

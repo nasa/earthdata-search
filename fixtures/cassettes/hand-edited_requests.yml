@@ -606,5 +606,30 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Fri, 19 Aug 2016 14:44:39 GMT
   digest: service_order_with_bad_bounding_box_post
-
+- request:
+    method: get
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000013853
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      X-EDSC-REQUEST:
+      - '2'
+  recorded_at: Thu, 27 Oct 2016 17:37:09 GMT
+  digest: boundingbox1_1
+- request:
+    method: post
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request
+    body:
+      encoding: UTF-8
+      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A64001%2F%2Fdata%2Fretrieve%2F0435720986&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Thu, 27 Oct 2016 17:37:05 GMT
+  digest: boundingbox1_2
 recorded_with: "VCR 2.6.0"

@@ -1,4 +1,36 @@
 ---
+7a4c422cfef05eb4a2115342a0440a15cd0bd6de:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"4a276e689047e255dc0df295136cf7bc"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.168000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 27 Oct 2016 17:36:05 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000445-NSIDC_ECS","id":"A28D2168-9B2A-0669-44E9-FE6FB7086F43","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"9663A150-F821-AC41-E58E-5448CCB8DD58"}}]'
+    http_version: 
 c408d14718216ea365fb41c484938039c102185b:
   response:
     status:

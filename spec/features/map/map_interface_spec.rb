@@ -15,7 +15,7 @@ describe "Map interface", reset: false do
   let (:switcher_selector) { '#map .projection-switcher' }
   let (:north_text) { 'North Polar Stereographic' }
   let (:north_link) { within(switcher_selector) {find_link(north_text)} }
-  let (:geo_text) { 'WGS 84 / Plate Carree' }
+  let (:geo_text) { 'Geographic (Equirectangular)' }
   let (:geo_link) { within(switcher_selector) {find_link(geo_text)} }
   let (:south_text) { 'South Polar Stereographic' }
   let (:south_link) { within(switcher_selector) {find_link(south_text)} }
