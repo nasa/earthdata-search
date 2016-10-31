@@ -55,13 +55,16 @@ netrc=$(mktemp netrc.XXXXXXXXXX)
 chmod 0600 "$cookiejar" "$netrc"
 function finish {
   rm -rf "$cookiejar" "$netrc"
-    <% if @first_link.start_with? 'ftp' %>
+  <% if @first_link.start_with? 'ftp' %>
   <% # For FTP retrievals, we also need to clean up ~/.netrc file for safety reasons %>
-      dot_netrc_tmp=$(mktemp ~/.netrc.tmp.XXXXXXXXXX)
+  dot_netrc_tmp=$(mktemp ~/.netrc.tmp.XXXXXXXXXX)
   chmod 0600 "$dot_netrc_tmp"
-  awk '!/<%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1].gsub('.', '\.') %>/' ~/.netrc > $dot_netrc_tmp && mv $dot_netrc_tmp ~/.netrc
+  if [ -e ~/.netrc ]
+  then
+    awk '!/<%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1].gsub('.', '\.') %>/' ~/.netrc > $dot_netrc_tmp && mv $dot_netrc_tmp ~/.netrc
+  fi
   <% end %>
-    }
+}
 
 trap finish EXIT
 WGETRC="$wgetrc"
@@ -138,7 +141,7 @@ fetch_urls <<'EDSCEOF'
       window.navigator.msSaveOrOpenBlob(blob, e.target.scriptFileName);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('EdscScriptLoaded', function(){
       var dlLink = document.getElementById('download-button');
       dlLink.scriptFileContent = document.getElementById("script").textContent;
       dlLink.scriptFileName = 'download.sh';
@@ -173,6 +176,11 @@ fetch_urls <<'EDSCEOF'
     function finish() {
       preContent = document.getElementById('script');
       preContent.innerHTML += '\nEDSCEOF';
+
+      var event = document.createEvent('Event');
+      event.initEvent('EdscScriptLoaded', true, true);
+      document.getElementById("download-button").dispatchEvent(event);
+
       document.getElementById('loading').style.display = 'none';
       document.getElementById('download-button').style.display = 'inline';
       document.getElementById('download-description').style.display = 'inline';
