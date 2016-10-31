@@ -70,6 +70,13 @@ trap finish EXIT
 WGETRC="$wgetrc"
 
 prompt_credentials() {
+    <% if @query['echo_collection_id'].include?('NSIDC') %>
+    read -p "Enter your email address: " email
+    echo "\nmachine urs.earthdata.nasa.gov\tlogin anonymous\tpassword $email" >> $netrc
+    <% if @first_link.start_with? 'ftp' %>
+    echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin anonymous\tpassword $email" >> $netrc
+    <% end %>
+    <% else %>
     echo "Enter your Earthdata Login or other provider supplied credentials"
     read -p "Username (<%= @user %>): " username
     username=${username:-<%= @user %>}
@@ -79,6 +86,7 @@ prompt_credentials() {
     echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> $netrc
     <% end %>
     echo
+    <% end %>
 }
 
 exit_with_error() {
