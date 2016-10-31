@@ -61,7 +61,7 @@ class Health
     # copied from eed_utility_scripts
     res = echo_client.get_cmr_search_availability
     json = res.body
-    ok? res, !json.nil? && json['feed'] && json['feed']['entry'] && json['feed']['entry'].size > 1
+    ok? res, json.present? && json['feed'] && json['feed']['entry'] && json['feed']['entry'].size > 1
   end
 
   def opensearch_status(echo_client)
