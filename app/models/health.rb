@@ -57,6 +57,13 @@ class Health
     ok? res, json.include?("\"ok?\":true") && !json.include?("false")
   end
 
+  def cmr_search_status(echo_client)
+    # copied from eed_utility_scripts
+    res = echo_client.get_cmr_search_availability
+    json = res.body
+    ok? res, json.present? && json['feed'] && json['feed']['entry'] && json['feed']['entry'].size > 1
+  end
+
   def opensearch_status(echo_client)
     # check home page only
     res = echo_client.get_opensearch_availability

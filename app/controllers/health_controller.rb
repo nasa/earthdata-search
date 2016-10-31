@@ -15,6 +15,7 @@ class HealthController < ApplicationController
         dependencies: {
             echo: health.echo_status(echo_client),
             cmr: health.cmr_status(echo_client),
+            cmr_search: health.cmr_search_status(echo_client),
             opensearch: health.opensearch_status(echo_client),
             browse_scaler: health.browse_scaler_status(echo_client),
             urs: health.urs_status(echo_client)}
