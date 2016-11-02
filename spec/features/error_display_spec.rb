@@ -48,7 +48,7 @@ describe "Displaying system errors", reset: false do
     end
 
     it 'displays the readable message from the server, if available' do
-      expect(page).to have_text('The query contained [3] conditions which used a leading wildcard')
+      expect(page).to have_text('The query contained 3 conditions which used a leading wildcard')
     end
   end
 end
