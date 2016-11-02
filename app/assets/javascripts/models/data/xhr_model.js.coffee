@@ -33,10 +33,17 @@ ns.XhrModel = do (ko
         if resource?
           resource = resource.replace('_', ' ')
           title = "Error retrieving #{resource}"
-        error = value ? 'There was a problem completing the request'
+
+        error = @_translateCMRError(value) ? 'There was a problem completing the request'
 
         edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true)
       )
+
+    _translateCMRError: (cmrError) ->
+      matchGroups = cmrError[0].match(/^The query contained \[(\d+)\] conditions which used a leading wildcard. This is more than the maximum allowed amount of \[\d+\]\.(.*)$/)
+      if matchGroups?
+        return "The query contained #{matchGroups[1]/2} conditions which used a leading wildcard: #{@query.params().readable_granule_name}. But only 2 is allowed.#{matchGroups[2]}"
+      cmrError
 
     search: (params=@params(), callback=null) =>
       params.page_num = @page = 1
