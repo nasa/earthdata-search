@@ -5534,6 +5534,36 @@ http_interactions:
   digest: e8ff7d1ba03b91a1ef5b3f1dde8c60cfaa741b0b
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z&bounding_box=-71.191155%2C42.22788%2C-70.748802%2C42.40082&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 01 Nov 2016 16:55:45 GMT
+  digest: d7bb8c514138a28d3621b962be6509a0ce66a8db
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 01 Nov 2016 16:55:12 GMT
+  digest: 0b43a5cb4cd61d844616a42c6a229b1e1d01e6f0
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=2016-01-21T00%3A00%3A00.000Z%2C2016-01-21T23%3A59%3A59.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
