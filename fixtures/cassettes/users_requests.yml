@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
   digest: 06f57afec45b734fc975b6fd35f65961b08077af
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/users/69BEF8E4-7C1A-59C3-7C46-18D788AC64B4
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/69BEF8E4-7C1A-59C3-7C46-18D788AC64B4
     body:
       encoding: US-ASCII
       string: ''
