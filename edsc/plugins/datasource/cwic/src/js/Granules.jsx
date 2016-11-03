@@ -123,12 +123,12 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._load = function (params, current, callback) {
+    
     if (!this.osdd()) {
       this._loadOsdd(() => this._load(params, current, callback));
       return;
     }
     let url = this._urlFor(params);
-
     this.abort();
     this.isLoading(true);
     this.isError(false);
@@ -174,6 +174,7 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._parseOsdd = function (doc) {
+
     let urls = doc.getElementsByTagNameNS(xmlNamespaces.os, 'Url');
     for (let i = 0; i < urls.length; i++) {
       let url = urls[i];
@@ -202,7 +203,13 @@ let CwicGranules = (function() {
       },
       error: (response, type, reason) => {
         this.isError(true);
+        this.results([]);
+        this.hits(0);
+        this.loadTime(0);
+        this.isLoaded(true);
+        this.isLoading(false);
         console.log(`Fail (OSDD Load) [${reason}]: ${this.osddPath}`);
+
       }
     };
     ajax(xhrOpts);
@@ -312,7 +319,6 @@ let CwicGranules = (function() {
       }
     }
   };
-
   CwicGranules.prototype.loadNextPage = function() {
     if (this.hasNextPage() && !this.isLoading()) {
       this._loadAndSet(this.nextPageUrl, this.results());
