@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/availability.json
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/availability.json
     body:
       encoding: US-ASCII
       string: ''

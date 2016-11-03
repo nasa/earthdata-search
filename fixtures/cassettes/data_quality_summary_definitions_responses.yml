@@ -1,4 +1,36 @@
 ---
+943374bce57b3d70daf45a20c6c64f9156cb23ef:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.083000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 27 Oct 2016 17:36:04 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 b56e7257384311edf1b635665f90ec3d1dca5942:
   response:
     status:
@@ -27,7 +59,7 @@ b56e7257384311edf1b635665f90ec3d1dca5942:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
 1321e61b03e3f1c682bfa981ca873bea07dae976:
   response:
@@ -85,7 +117,7 @@ b56e7257384311edf1b635665f90ec3d1dca5942:
       - close
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
+      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
 cdd5b3b9f772281564648ace8f9cab7494c9a104:
   response:
@@ -115,7 +147,7 @@ cdd5b3b9f772281564648ace8f9cab7494c9a104:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
+      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
 86c032b73692ac733aa5172c432bebeb9d540e0c:
   response:
@@ -145,7 +177,7 @@ cdd5b3b9f772281564648ace8f9cab7494c9a104:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
 c886193469b87295d1c738907118006e069d5ee6:
   response:
@@ -207,6 +239,38 @@ ecc2121a045e55980919ef4a787cda35ac2ef290:
       encoding: UTF-8
       string: "[]"
     http_version: 
+90b9a646df24d2fd38fc7ffbd1ddede8166e0e44:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.039000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 27 Oct 2016 21:08:30 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 6c81e21f086c7b9a2a9dfa2d141fc819cbfbbc7c:
   response:
     status:
@@ -235,7 +299,7 @@ ecc2121a045e55980919ef4a787cda35ac2ef290:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
 63dd30ce90efeea05666d3e4199cc1ae363dedc9:
   response:
@@ -265,7 +329,7 @@ ecc2121a045e55980919ef4a787cda35ac2ef290:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","name":"ASTER_L1A_L1B"}}]'
+      string: '[{"reference":{"id":"6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","name":"ASTER_L1A_L1B"}}]'
     http_version: 
 5837bc2c90bc47cad8e844946449102721140728:
   response:
@@ -439,7 +503,7 @@ c7448339dd38012463128d35fc337e3aee62e976:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
 06cebcc13cf99b377e4aff0e41ef0f607e008447:
   response:
@@ -615,8 +679,8 @@ c7448339dd38012463128d35fc337e3aee62e976:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"3C37FE59-7568-1D93-9D36-730668C0F9E5","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5","name":"MODIS"}}]'
-    http_version:
+      string: '[{"reference":{"id":"3C37FE59-7568-1D93-9D36-730668C0F9E5","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5","name":"MODIS"}}]'
+    http_version: 
 94b45392f217278a97c2217d0ef9cd7e70146899:
   response:
     status:

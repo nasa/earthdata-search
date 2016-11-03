@@ -4,6 +4,10 @@ module Echo
       get("/search/health")
     end
 
+    def get_cmr_search_availability
+      get("/search/collections.json")
+    end
+
     def get_collections(options={}, token=nil)
       format = options.delete(:format) || 'json'
       query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
