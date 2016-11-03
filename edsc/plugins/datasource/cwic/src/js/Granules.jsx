@@ -189,6 +189,7 @@ let CwicGranules = (function() {
 
   CwicGranules.prototype._loadOsdd = function (callback) {
     this.isLoading(true);
+    let start = new Date();
     let xhrOpts = {
       method: 'get',
       dataType: 'xml',
@@ -205,7 +206,8 @@ let CwicGranules = (function() {
         this.isError(true);
         this.results([]);
         this.hits(0);
-        this.loadTime(0);
+        let timing = ((new Date() - start) / 1000).toFixed(1);
+        this.loadTime(timing);
         this.isLoaded(true);
         this.isLoading(false);
         console.log(`Fail (OSDD Load) [${reason}]: ${this.osddPath}`);
