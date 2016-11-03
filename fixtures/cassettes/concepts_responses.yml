@@ -1,4 +1,39 @@
 ---
+09e0c203c0062a024f78b6b5518d576482f7459e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 27 Oct 2016 17:36:04 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 717fe281-3e01-4880-9279-672b31626751
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2003-01-13T00:00:00.000Z","dif_ids":["GLAH06"],"version_id":"034","updated":"2015-11-02T09:10:52.715Z","dataset_id":"GLAS/ICESat
+        L1B Global Elevation Data (HDF5) V034","data_center":"NSIDC_ECS","short_name":"GLAH06","organizations":["NSIDC","GSFC
+        I-SIPS"],"title":"GLAS/ICESat L1B Global Elevation Data (HDF5) V034","coordinate_system":"CARTESIAN","summary":"Data
+        granules contain approximately 23 minutes (1/4 orbit) and include the surface
+        elevation, surface roughness assuming no slope, surface slope assuming no
+        roughness and geodetic and atmospheric corrections for the range at the full
+        40/sec resolution.","time_end":"2010-01-13T00:00:00.000Z","orbit_parameters":{"swath_width":"2.0","period":"96.7","inclination_angle":"94.0","number_of_orbits":"0.25","start_circular_latitude":"-50.0"},"id":"C1000000445-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/icesat/disclaimer.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/glas_icesat_l1_l2_global_altimetry.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"GLAS
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/icesat/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/icesat/disclaimer.html"}]}'
+    http_version: 
 4e55a766f61632c66c30206b8c0459ee09b7d92e:
   response:
     status:
@@ -1051,6 +1086,39 @@ baec2f3d96ec288b6741fba6819ae1a2f67afce4:
         moisture estimates onto a 36-km global Earth-fixed grid, based on radiometer
         measurements acquired when the SMAP spacecraft is travelling from North to
         South at approximately 6:00 AM local time.","orbit_parameters":{},"id":"C1236303846-NSIDC_ECS","original_format":"ISO-SMAP","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false}'
+    http_version: 
+c0397529a3db7377532830fd690da96652354208:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:08:30 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - fc0d2652-aa0a-408a-b6d9-c6e74c902bfb
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-85.0445 -180 85.0445 180"],"time_start":"2015-03-31T00:00:00.000Z","dif_ids":["SPL1CTB.003"],"version_id":"003","updated":"2016-04-21T15:58:21.364Z","dataset_id":"SMAP
+        L1C Radiometer Half-Orbit 36 km EASE-Grid Brightness Temperatures V003","data_center":"NSIDC_ECS","short_name":"SPL1CTB","organizations":["NSIDC","Jet
+        Propulsion Laboratory"],"title":"SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid
+        Brightness Temperatures V003","coordinate_system":"GEODETIC","summary":"The
+        SMAP Level 1C_TB product provides radiometer brightness temperatures in half-orbit
+        granules, gridded at 36 km grid resolution, on 3 EASE2 Earth-fixed grids -
+        1) Cylindrical projection, 2) Northern polar projection, 3) Southern polar
+        projection.","orbit_parameters":{},"id":"C1236303848-NSIDC_ECS","original_format":"ISO-SMAP","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false}'
     http_version: 
 5e63bc956df687d12363d0cdb9a65f6e4d0c5706:
   response:
@@ -2557,7 +2625,7 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         Tile SIN</TwoDCoordinateSystemName><Coordinate1><MinimumValue>0</MinimumValue><MaximumValue>35</MaximumValue></Coordinate1><Coordinate2><MinimumValue>0</MinimumValue><MaximumValue>17</MaximumValue></Coordinate2></TwoDCoordinateSystem></TwoDCoordinateSystems><OnlineResources><OnlineResource><URL>http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&amp;ver=C5</URL><Type>DatasetDisclaimer</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/MOD10A1/versions/5</URL><Description>Catalog
         Page for this product at NSIDC</Description><Type>MiscInformation</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/data_pool/modis_disclaimer.html</URL><Description>Quality
         Summary</Description><Type>Quality Summary</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>MOD10A1V5</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version:
+    http_version: 
 e12cbf007574b9620f6098962cd92b111c41f5d7:
   response:
     status:

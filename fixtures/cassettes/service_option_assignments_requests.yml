@@ -2,7 +2,24 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C1000000560-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000445-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 27 Oct 2016 17:36:06 GMT
+  digest: 7a4c422cfef05eb4a2115342a0440a15cd0bd6de
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000560-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +36,7 @@ http_interactions:
   digest: c408d14718216ea365fb41c484938039c102185b
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C115003855-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C115003855-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -36,7 +53,7 @@ http_interactions:
   digest: 7f9140d1d50683eb6fac54b4ac85af9d06a4c494
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C115003857-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C115003857-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -53,7 +70,7 @@ http_interactions:
   digest: a821a12e797488ad29470b886e9251e701d0b9cf
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C119124186-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C119124186-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -70,7 +87,7 @@ http_interactions:
   digest: 3f887ffd67f91bcbb4bbd636abcb62bbfee3be54
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C1236303846-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1236303846-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -87,7 +104,24 @@ http_interactions:
   digest: 65c44fe71696260d559e22a33dff441e7d6acf48
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C128599377-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1236303848-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 27 Oct 2016 21:08:32 GMT
+  digest: 7108807c922490d207ca1b6c9bf6cedb2057a3dc
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C128599377-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -104,7 +138,7 @@ http_interactions:
   digest: 92572877a3ae82236d6205f41f825027353d7b9a
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C14758250-LPDAAC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C14758250-LPDAAC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -121,7 +155,7 @@ http_interactions:
   digest: aae448bcb7b7f823dfaaf76de094b68e7e7399cb
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179002914-ORNL_DAAC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C179002914-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -138,7 +172,7 @@ http_interactions:
   digest: 2451e9e438161649322e3d708667acfa54a64a52
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179003030-ORNL_DAAC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C179003030-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -155,7 +189,7 @@ http_interactions:
   digest: f6c2800a9a3f844a58b7c224eb060b847430fe97
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179003216-ORNL_DAAC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C179003216-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -172,7 +206,7 @@ http_interactions:
   digest: b4a96890c3c84c4eb5059cf59ae15c0fafa8b858
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179014698-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C179014698-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -189,7 +223,7 @@ http_interactions:
   digest: c984e246bca4c653a1efa6d6077aa8e67c22e4e6
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C181553784-GSFCS4PA
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C181553784-GSFCS4PA
     body:
       encoding: US-ASCII
       string: ''
@@ -206,7 +240,7 @@ http_interactions:
   digest: 84d998d916213c1bf830bee246b778a4f210f637
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C2930962-PODAAC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C2930962-PODAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -223,7 +257,7 @@ http_interactions:
   digest: 9da0136fd18283e1b48e0b14d7c5862ff1b60c65
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C4543622-LARC_ASDC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C4543622-LARC_ASDC
     body:
       encoding: US-ASCII
       string: ''
@@ -240,7 +274,7 @@ http_interactions:
   digest: c4b587bd86bd7e8491115d2605cf6db077f290ed
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C7085910-LARC_ASDC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C7085910-LARC_ASDC
     body:
       encoding: US-ASCII
       string: ''
@@ -257,7 +291,7 @@ http_interactions:
   digest: aef05d6420e2c1c50b0e49cc32326ddd3e403fdd
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C90762182-LAADS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C90762182-LAADS
     body:
       encoding: US-ASCII
       string: ''
