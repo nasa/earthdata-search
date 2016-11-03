@@ -659,6 +659,81 @@
           "matrixSet": "2km"
         }
       }
+    },
+    "MISR_Aerosol_Optical_Depth_Avg_Green_Monthly": {
+      "startDate": "2000-02-01",
+      "product": "MISR_Aerosol_Optical_Depth_Avg_Green_Monthly",
+      "id": "MISR_Aerosol_Optical_Depth_Avg_Green_Monthly",
+      "subtitle": "Terra / MISR",
+      "format": "image/png",
+      "title": "Aerosol Optical Depth Average (Green, Monthly)",
+      "type": "wmts",
+      "projections": {
+        "geographic": {
+          "source": "GIBS:geographic",
+          "matrixSet": "2km"
+        }
+      }
+    },
+    "MISR_Land_NDVI_Average_Monthly": {
+      "startDate": "2000-02-01",
+      "product": "MISR_Land_NDVI_Average_Monthly",
+      "id": "MISR_Land_NDVI_Average_Monthly",
+      "subtitle": "Terra / CERES",
+      "format": "image/png",
+      "title": "Land NDVI Average (Monthly, v4)",
+      "type": "wmts",
+      "projections": {
+        "geographic": {
+          "source": "GIBS:geographic",
+          "matrixSet": "2km"
+        }
+      }
+    },
+    "MISR_TOA_Albedo_Average_Red_Monthly": {
+      "startDate": "2000-02-01",
+      "product": "MISR_TOA_Albedo_Average_Red_Monthly",
+      "id": "MISR_TOA_Albedo_Average_Red_Monthly",
+      "subtitle": "Terra / CERES",
+      "format": "image/png",
+      "title": "TOA Albedo Average (Red, Monthly)",
+      "type": "wmts",
+      "projections": {
+        "geographic": {
+          "source": "GIBS:geographic",
+          "matrixSet": "2km"
+        }
+      }
+    },
+    "MISR_Cloud_Stereo_Height_Histogram_Bin_0.5km_Monthly": {
+      "startDate": "2000-02-01",
+      "product": "MISR_Cloud_Stereo_Height_Histogram_Bin_0.5km_Monthly",
+      "id": "MISR_Cloud_Stereo_Height_Histogram_Bin_0.5km_Monthly",
+      "subtitle": "Terra / MISR",
+      "format": "image/png",
+      "title": "Cloud Stereo Height (No Wind Correction, < 0.5 km, Monthly)",
+      "type": "wmts",
+      "projections": {
+        "geographic": {
+          "source": "GIBS:geographic",
+          "matrixSet": "2km"
+        }
+      }
+    },
+    "MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-2.0km_Monthly": {
+      "startDate": "2000-02-01",
+      "product": "MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-2.0km_Monthly",
+      "id": "MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-2.0km_Monthly",
+      "subtitle": "Terra / MISR",
+      "format": "image/png",
+      "title": "Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)",
+      "type": "wmts",
+      "projections": {
+        "geographic": {
+          "source": "GIBS:geographic",
+          "matrixSet": "2km"
+        }
+      }
     }
   },
   "products": {
@@ -880,6 +955,31 @@
     "CERES_Terra_TOA_Window_Region_Flux_All_Sky_Monthly": {
       "query": {
         "conceptId": ["C6011924-LARC_ASDC"]
+      }
+    },
+    "MISR_Aerosol_Optical_Depth_Avg_Green_Monthly": {
+      "query": {
+        "conceptId": ["C43677719-LARC"]
+      }
+    },
+    "MISR_Land_NDVI_Average_Monthly": {
+      "query": {
+        "conceptId": ["C43677721-LARC"]
+      }
+    },
+    "MISR_TOA_Albedo_Average_Red_Monthly": {
+      "query": {
+        "conceptId": ["C61095981-LARC"]
+      }
+    },
+    "MISR_Cloud_Stereo_Height_Histogram_Bin_0.5km_Monthly": {
+      "query": {
+        "conceptId": ["C84942916-LARC"]
+      }
+    },
+    "MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-2.0km_Monthly": {
+      "query": {
+        "conceptId": ["C84942916-LARC"]
       }
     }
   }
