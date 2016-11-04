@@ -3586,4 +3586,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 22 Jul 2016 01:40:19 GMT
   digest: 36734f7f3df3ae9237d932b56268bb8cf1085d4b
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001002-EDF_OPS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 04 Nov 2016 18:36:43 GMT
+  digest: 40aeb9e9068c7af924f875ac30e2b085d2a155ac
 recorded_with: VCR 2.6.0

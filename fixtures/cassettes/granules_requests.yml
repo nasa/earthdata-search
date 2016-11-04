@@ -2829,4 +2829,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 22 Jul 2016 01:40:18 GMT
   digest: 41e678f1b0cf977e2c25661b814d7ffec62dfbb5
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001002-EDF_OPS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 04 Nov 2016 18:36:41 GMT
+  digest: 0a5b93d92fa7fae1ac5dcf11ce7bd0fb4b89c3b5
 recorded_with: VCR 2.6.0
