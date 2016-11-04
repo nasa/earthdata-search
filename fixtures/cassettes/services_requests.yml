@@ -857,7 +857,7 @@ http_interactions:
   digest: 2b80c39a8970471032b8b3f33f9421db2379215d
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1000001002-EDF_OPS
+    uri: https://edsc-calvin.ngap.earthdata.nasa.gov/nlp?text=C1000001002-EDF_OPS
     body:
       encoding: US-ASCII
       string: ''
@@ -868,7 +868,7 @@ http_interactions:
   digest: 26050261e9e4315fc8b9e7c60037f25ce498f401
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C119124186-NSIDC_ECS
+    uri: https://edsc-calvin.ngap.earthdata.nasa.gov/nlp?text=C119124186-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
