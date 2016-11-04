@@ -171,6 +171,19 @@ ns.GranuleLayer = do (L
       matched = false
       for optionSet in @multiOptions when @_matches(granule, optionSet.match)
         matched = true
+
+        # set resolution to {projection}_resolution if it exists
+        oldResolution = optionSet.resolution
+
+        if this._map.projection == 'geo'
+          newResolution = optionSet.geo_resolution
+        newResolution = optionSet.arctic_resolution if this._map.projection == 'arctic'
+        newResolution = optionSet.antarctic_resolution if this._map.projection == 'antarctic'
+
+        # Use default resolution unless newResolution exists
+        newResolution = oldResolution unless newResolution?
+        optionSet.resolution = newResolution
+
         @options = L.extend({}, @originalOptions, optionSet)
         break
 
