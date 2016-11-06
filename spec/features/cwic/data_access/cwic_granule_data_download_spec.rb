@@ -55,8 +55,8 @@ describe "CWIC-enabled data access", reset: false do
       it 'presents a list of download links with associated link titles', acceptance: true do
         within_last_window do
           expect(page).to have_no_text('Loading more...')
-          expect(page).to have_link('Granule download URL', count: 37)
-          expect(page).to have_link('Browse image URL', count: 37)
+          expect(page).to have_link('Granule download URL', count: 21)
+          expect(page).to have_link('Browse image URL', count: 21)
         end
       end
     end

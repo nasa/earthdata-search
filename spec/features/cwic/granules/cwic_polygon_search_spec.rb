@@ -20,7 +20,7 @@ describe "CWIC-enabled polygon searches", reset: false do
       end
 
       it "filters the result list based on the minimum bounding rectangle", acceptance: true do
-        expect(page).to have_content("Showing 20 of 800 matching granules")
+        expect(page).to have_content("Showing 20 of 805 matching granules")
         params = page.evaluate_script('edsc.page.project.focus().granuleDatasource().toQueryParams()')
         expect(params).to have_key('mbr')
         expect(params).not_to have_key('polygon')

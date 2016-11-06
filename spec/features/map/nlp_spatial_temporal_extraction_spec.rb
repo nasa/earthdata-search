@@ -40,11 +40,11 @@ describe "Spatial and temporal extraction", reset: false do
     end
 
     it 'filters collection results' do
-      expect(page).to have_content('6325 Matching Collections')
+      expect(page).to have_content('11550 Matching Collections')
     end
 
-    it 'is set in the query' do
-      expect(page).to have_query_string('qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T00%3A00%3A00.000Z%2C335%2C90&ok=last+winter')
+    it 'is set in the query' do         
+      expect(page).to have_query_string('qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z&ok=last+winter')
     end
   end
 
@@ -60,7 +60,7 @@ describe "Spatial and temporal extraction", reset: false do
     end
 
     it 'filters collection results' do
-      expect(page).to have_content('249 Matching Collections')
+      expect(page).to have_content('316 Matching Collections')
     end
 
     it "doesn't overwrite the search text" do
@@ -70,7 +70,7 @@ describe "Spatial and temporal extraction", reset: false do
     it 'is set in the query and adds q= and ok= query params to the url' do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
       path = Project.find(project_id).path
-      expect(path).to eql('/search/collections?m=42.314350000000005!-72.09497850000001!7!1!0!0%2C2&qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T00%3A00%3A00.000Z%2C335%2C90&q=snow+cover&ok=snow+cover+in+Boston+last+winter&sb=-71.191155%2C42.22788%2C-70.748802%2C42.40082')
+      expect(path).to eql('/search/collections?m=42.314350000000005!-72.09497850000001!7!1!0!0%2C2&qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z&q=snow+cover&ok=snow+cover+in+Boston+last+winter&sb=-71.191155%2C42.22788%2C-70.748802%2C42.40082')
       expect(path).to have_text("q=snow+cover")
       expect(path).to have_text("ok=snow+cover+in+Boston+last+winter")
     end
