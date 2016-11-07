@@ -44,4 +44,34 @@ describe "Collection GIBS visualizations", reset: false do
       expect(page).to have_no_granule_visualizations(gibs_collection_id)
     end
   end
+
+  context 'when viewing a GIBS-enabled collection with different resolutions for each projection' do
+    before :all do
+      load_page :search, env: :sit
+      fill_in 'keywords', with: 'C1000001002-EDF_OPS'
+      wait_for_xhr
+      first_collection_result.click
+      wait_for_xhr
+    end
+
+    after :all do
+      load_page :search
+      fill_in "keywords", with: gibs_collection_id
+      wait_for_xhr
+    end
+
+    it 'displays the correct geo resolution' do
+      expect(page).to have_gibs_resolution('2km')
+    end
+
+    context 'when selecting the arctic resolution' do
+      before :all do
+        find('.projection-switcher-arctic').click
+      end
+
+      it 'displays the correct arctic resolution' do
+        expect(page).to have_gibs_resolution('1km')
+      end
+    end
+  end
 end

@@ -6539,6 +6539,21 @@ http_interactions:
   digest: 977ac8d78fe8569cfc114dac5839f1141c2ff2c7
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1000001002-EDF_OPS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 04 Nov 2016 18:36:38 GMT
+  digest: c591869582d9e3c315aa64fa3023add2bc30a335
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1002-LPDAAC_TBD%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
