@@ -4619,3 +4619,25 @@ a1e4e345b8121c07d1ec1f8284ebb29ca91ae7a8:
       encoding: UTF-8
       string: "[]"
     http_version: 
+40aeb9e9068c7af924f875ac30e2b085d2a155ac:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 04 Nov 2016 18:36:42 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e0b58199-7125-4df2-aaf1-9e10256f06dc
+      content-length:
+      - '78'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000001002-EDF_OPS","intervals":[[1293840000,1294099200,2]]}]'
+    http_version: 
