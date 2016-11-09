@@ -47,14 +47,14 @@ class Health
   def echo_status(echo_client)
     # check ECHO-REST availability
     res = echo_client.get_echo_availability
-    ok? res, res.body['availability'].downcase == 'available'
+    ok? res, res.body.present? && res.body['availability'] && res.body['availability'].downcase == 'available'
   end
 
   def cmr_status(echo_client)
     # copied from eed_utility_scripts
     res = echo_client.get_cmr_availability
     json = res.body.to_json
-    ok? res, json.include?("\"ok?\":true") && !json.include?("false")
+    ok? res, json.present? && json.include?("\"ok?\":true") && !json.include?("false")
   end
 
   def cmr_search_status(echo_client)
@@ -66,13 +66,13 @@ class Health
 
   def opensearch_status(echo_client)
     # check home page only
-    res = echo_client.get_opensearch_availability
-    ok? res
+    ok? echo_client.get_opensearch_availability
   end
 
   def browse_scaler_status(echo_client)
     # a 500 error will be returned if either hdf2jpeg or image_magick is DOWN
-    ok? echo_client.get_browse_scaler_availability
+    res = echo_client.get_browse_scaler_availability
+    ok? res, res.body.present? && !res.body.downcase.include?("down")
   end
 
   def urs_status(echo_client)
