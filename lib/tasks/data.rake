@@ -30,7 +30,7 @@ namespace :data do
       begin
         yield
       rescue
-        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: "#{error.inspect}", host: Socket.gethostname)
+        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: "#{error.present? ? error.inspect : 'Null'}", host: Socket.gethostname)
         job.save!
         exit 1
       else
