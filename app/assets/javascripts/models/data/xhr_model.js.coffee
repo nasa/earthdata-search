@@ -27,27 +27,28 @@ ns.XhrModel = do (ko
       @hitsEstimated = ko.observable(false)
 
       @error.subscribe((value) =>
-        url = @path
-        title = "An unexpected error occurred"
-        resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
-        if resource?
-          resource = resource.replace('_', ' ')
-          title = "Error retrieving #{resource}"
+        if @isError()
+          url = @path
+          title = "An unexpected error occurred"
+          resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
+          if resource?
+            resource = resource.replace('_', ' ')
+            title = "Error retrieving #{resource}"
 
-        #TODO Remove this translation when CMR can provide a more user friendly error message (CMR-3534)
-        error = @_translateCMRError(value) ? 'There was a problem completing the request'
+          #TODO Remove this translation when CMR can provide a more user friendly error message (CMR-3534)
+          error = @_translateCMRError(value) ? 'There was a problem completing the request'
 
-        # Ignore errors from /granules/timeline.json since it is the same as what /search/granules.json returns.
-        edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true) unless url.indexOf('/granules/timeline.json') > -1
+          # Ignore errors from /granules/timeline.json since it is the same as what /search/granules.json returns.
+          edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true) unless url.indexOf('/granules/timeline.json') > -1
 
-        if url.indexOf('/granules/timeline.json') > -1
-          $('.master-overlay').removeClass('is-master-overlay-secondary-hidden');
-          currentPage=window.edsc.models.page.current
-          currentPage.ui.projectList.showFilters(currentPage.project.focusedProjectCollection().collection)
+          if url.indexOf('/granules/timeline.json') > -1
+            $('.master-overlay').removeClass('is-master-overlay-secondary-hidden');
+            currentPage=window.edsc.models.page.current
+            currentPage.ui.projectList.showFilters(currentPage.project.focusedProjectCollection().collection)
       )
 
     _translateCMRError: (cmrError) ->
-      matchGroups = cmrError[0].match(/^The query contained \[(\d+)\] conditions which used a leading wildcard. This is more than the maximum allowed amount of \[\d+\]\.(.*)$/)
+      matchGroups = cmrError?[0].match(/^The query contained \[(\d+)\] conditions which used a leading wildcard. This is more than the maximum allowed amount of \[\d+\]\.(.*)$/)
       if matchGroups?
         return "The query contained #{matchGroups[1]/2} conditions which used a leading wildcard: #{@query.params().readable_granule_name}. Only 2 conditions that start with a wildcard are allowed.#{matchGroups[2]}"
       cmrError
