@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
     body:
       encoding: US-ASCII
       string: ''
