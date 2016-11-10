@@ -1,4 +1,4 @@
-do (ko, $=jQuery) ->
+do (ko, $=jQuery, ajax=@edsc.util.xhr.ajax) ->
 
   ko.observableArray.fn.contains = (obj) ->
     @indexOf(obj) != -1
@@ -92,6 +92,23 @@ do (ko, $=jQuery) ->
 
   ko.bindingHandlers.echoform =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      @email = ""
+      xhr = ajax
+        url: "/users/get_preferences"
+        dataType: 'json'
+        method: 'get'
+        success: (data) =>
+          prefs = data.preferences
+          contact = prefs.general_contact
+          if contact?
+            @email = contact.email_address
+
+        fail: (response, type, reason) =>
+          if response.status == 404
+            @errors([])
+          else
+            @errors(["Email address could not be loaded from URS"])
+
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       $el = $(element)
       if $el.data('echoforms')
@@ -99,7 +116,6 @@ do (ko, $=jQuery) ->
         $el.off('echoforms:modelchange')
 
       options = ko.unwrap(valueAccessor())
-
       methodName = options.method()
       if methodName?
         method = null
@@ -108,6 +124,8 @@ do (ko, $=jQuery) ->
             method = available
             break
         if method? && available?.form?
+          # EDSC-975: If the form contains an empty email address field, prepopulate it with the user's email
+          available.form = available.form.replace('<ecs:email/>', '<ecs:email>' + @email + '</ecs:email>')
           originalForm = form = available.form
           model = options.rawModel
 
