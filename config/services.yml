@@ -2,19 +2,22 @@ earthdata:
   # Endpoints for Earthdata.  These must remain in sync, because for instance ECHO SIT can't accept tokens from URS prod
   prod:
     urs_root: "https://urs.earthdata.nasa.gov"
-    echo_root: "https://api.echo.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://api.echo.nasa.gov/browse-scaler"
   uat:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
-    echo_root: "https://api-test.echo.nasa.gov"
+    echo_root: "https://cmr.uat.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.uat.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://api.echo.nasa.gov/browse-scaler"
   sit:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
-    echo_root: "https://testbed.echo.nasa.gov"
+    echo_root: "https://cmr.sit.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"
     opensearch_root: "https://cmr.sit.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://api.echo.nasa.gov/browse-scaler"
 
 cwic_root: "http://cwic.wgiss.ceos.org/"
 
