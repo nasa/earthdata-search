@@ -13,31 +13,32 @@ describe 'Services Access', reset: false do
       first_granule_list_item.click_link "Retrieve single granule data"
       wait_for_xhr
     end
-
+    
     context 'when choosing the ESI Service' do
       before :all do
         choose 'AE_Land.2 ESI Service'
         wait_for_xhr
       end
+
       it 'prepopulates the email address field' do
         expect(find_field('Email Address').value).not_to be_blank
       end
-      after :all do
-        fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
-        click_on 'Continue'
-        click_on 'Submit'
-      end
-    end
-    
-    context 'and submitting an ESI service request' do
-      # Cannot reliably display a progress bar using recordings
-      it 'displays an error message', pending_fixtures: true do
-        wait_for_xhr
-        within '.access-error-code' do
-          expect(page).to have_content('CollectionDisabled')
+
+      context 'and submitting an ESI service request' do
+        before :all do
+          click_on 'Continue'
+          click_on 'Submit'
         end
-        within '.access-error-message-list' do
-          expect(page).to have_content('This collection is currently not configured for subagent HEG')
+
+        # Cannot reliably display a progress bar using recordings
+        it 'displays an error message', pending_fixtures: true do
+          wait_for_xhr
+          within '.access-error-code' do
+            expect(page).to have_content('CollectionDisabled')
+          end
+          within '.access-error-message-list' do
+            expect(page).to have_content('This collection is currently not configured for subagent HEG')
+          end
         end
       end
     end
