@@ -14,15 +14,22 @@ describe 'Services Access', reset: false do
       wait_for_xhr
     end
 
-    context 'and submitting an ESI service request' do
+    context 'when choosing the ESI Service' do
       before :all do
         choose 'AE_Land.2 ESI Service'
         wait_for_xhr
+      end
+      it 'prepopulates the email address field' do
+        expect(find_field('Email Address').value).not_to be_blank
+      end
+      after :all do
         fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
         click_on 'Continue'
         click_on 'Submit'
       end
-
+    end
+    
+    context 'and submitting an ESI service request' do
       # Cannot reliably display a progress bar using recordings
       it 'displays an error message', pending_fixtures: true do
         wait_for_xhr
