@@ -153,7 +153,7 @@ module VCR
           elsif request.uri.include? '/rest/'
             parts = request.uri.split('/rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
-          elsif (request.uri.include? 'ops/egi/request') && (request.uri.include? 'nsidc.org')
+          elsif (request.uri.include? 'ops/egi/request') && ((request.uri.include? 'nsidc.org') || (request.uri.include?  '152.61.4.111'))
             opts[:match_requests_on] = [:method, :parsed_uri, :headers, :esi_request_body]
             cassette = "hand-edited"
             record = :none

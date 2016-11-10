@@ -1,5 +1,5 @@
 ---
-71276962b97be1cb2d50846bbba17df0253b5f12:
+a5d136f180d8f77db003d70ee959697212ccb6ae:
   response:
     status:
       code: 200
@@ -176,7 +176,7 @@
         type=\"xsd:boolean\"/>\n       </group> \n    </ui>\n</form>","id":"159A2C2A-BC8D-04E9-6217-BCB9E7626C91","name":"AE_SI12
         Order Option","scope":"PROVIDER"}}'
     http_version: 
-f085ea3c29b348aa041da1fc8bd7ef275145800a:
+9149bd377e30a1219778c8a9521e34191ae7c066:
   response:
     status:
       code: 200
@@ -294,7 +294,7 @@ f085ea3c29b348aa041da1fc8bd7ef275145800a:
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"19AFC933-5015-F5D6-0D38-C2414CCB520F","name":"M*D29P1D
         Order Option","scope":"PROVIDER"}}'
     http_version: 
-45bfbbfd07994479eb8475b1479ab0ed06e10539:
+583e4af4d8d9e1d9cd892df20b8bfcfae696d74d:
   response:
     status:
       code: 200
@@ -335,7 +335,7 @@ f085ea3c29b348aa041da1fc8bd7ef275145800a:
         = ''FtpPull''\" type=\"xsd:string\" valueElementName=\"value\"> \n        <item
         label=\"File\" value=\"FILEFORMAT\"/>\n      </select>   \n    </group>\n  </ui>\n</form>","id":"2D86BA00-9709-8CB9-CB0B-6A430894417A","name":"ASDC_FTPPULL","scope":"PROVIDER","sort_key":"1"}}'
     http_version: 
-db4b48585584f8241acc7e65cbdca85f83e58d0f:
+b7b10ce83fab0d83fd41058e14647c617ba647ae:
   response:
     status:
       code: 200
@@ -377,7 +377,7 @@ db4b48585584f8241acc7e65cbdca85f83e58d0f:
         Tape Archive Format (TARGZ)\" value=\"TARGZ\"/>\n        <item label=\"PK/Win
         Zip Format\" value=\"WINZIP\"/>\n    </selectref>\n  </group>\n\n</ui>\n</form>","id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","name":"Ftp_Pull","scope":"PROVIDER"}}'
     http_version: 
-dd14e77fedc4882c6f9d0e80196735350b635dec:
+bab75649e98fea59a8b8b07c1a32be3b50ae3df5:
   response:
     status:
       code: 200
@@ -444,7 +444,7 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
         \n    </ui>\n</form>","id":"64E1376B-C01B-949F-B846-A46F36A49505","name":"AE_Land
         Order Options","scope":"PROVIDER"}}'
     http_version: 
-815f92be0f46a7e044c951a4f1926c8a6a2315f2:
+4a70646d5e60bf4ad51ada80c596be07fcd10b69:
   response:
     status:
       code: 200
@@ -500,7 +500,7 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
         required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
         label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"67B936C6-25C0-70B0-74DE-DB6D398AC3D9","name":"AST14OTH","scope":"PROVIDER","sort_key":"P"}}'
     http_version: 
-6674893f00466cf5677034cde7e78fb2933c58a3:
+81d9923f3a086b0e6a5fa0a17a8e5f7abf20d825:
   response:
     status:
       code: 200
@@ -571,7 +571,7 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","name":"AST_08","scope":"PROVIDER","sort_key":"J"}}'
     http_version: 
-f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
+145d1a7d5c020289a8ada50a33481c7298bd700b:
   response:
     status:
       code: 200
@@ -642,7 +642,7 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"82D38BDE-E319-A530-8770-07A7A6F515AC","name":"AST_05","scope":"PROVIDER","sort_key":"D"}}'
     http_version: 
-9efeb83763c674cbc8aa4f02af2e41dcedc726bb:
+93e57e43f174df65ef818f65101aa00b8e361c1b:
   response:
     status:
       code: 200
@@ -713,7 +713,7 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"88537F09-C291-396F-91DC-96ED6B1F3318","name":"AST_09XT","scope":"PROVIDER","sort_key":"L"}}'
     http_version: 
-666342d7a2c227f0ff0c357db73a9fba5baee698:
+06ec3fcec7218b74470d213261e6b91c0d9a51a4:
   response:
     status:
       code: 200
@@ -822,7 +822,7 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
         label=\"Flags_SouthernPentad\" value=\"Flags_SouthernPentad\"/>\n               </select>\n            </group>\t\t\n        </group>\n    </ui>\n</form>","id":"906C81F9-4941-1D4D-2EB5-07B6DBBBBDFA","name":"AE_5DSno
         Order Options","scope":"PROVIDER"}}'
     http_version: 
-9d473153a57cb24fbde300d44721ab326096b30a:
+3170920dad21a2723dcdc67e210886150e332188:
   response:
     status:
       code: 200
@@ -877,7 +877,7 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
         required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
         label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"96DBA166-0E46-8F4E-9D52-2AC4685268E7","name":"AST_L1B","scope":"PROVIDER","sort_key":"B"}}'
     http_version: 
-48dc685ebf267c90628c0c061fa27caa5648c0d7:
+a687bf12f7edfd1bd8d8c16e6631da53bb6f7124:
   response:
     status:
       code: 200
@@ -933,7 +933,7 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
         required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
         label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"9703E1B6-0334-2376-4BB2-A90C769D5D2B","name":"AST14DEM","scope":"PROVIDER","sort_key":"O"}}'
     http_version: 
-6e5f41bd3563ffc533d86ecfa47b3c6e7f5b39a8:
+bab7027872369dcbf20e5b7a467cd2452ec7b295:
   response:
     status:
       code: 200
@@ -1048,7 +1048,7 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"9940B026-5C7C-BC3E-049B-89F6D2A35AD8","name":"M*D29P1N
         Order Option","scope":"PROVIDER"}}'
     http_version: 
-a2b88daee6097fccc3c78a4f800e2f527c51c7ee:
+026b1150618d3141d3639caefb6d18d45f04e77e:
   response:
     status:
       code: 200
@@ -1112,7 +1112,7 @@ a2b88daee6097fccc3c78a4f800e2f527c51c7ee:
         \n    </ui>\n</form>","id":"A7B3B8F6-0EDC-DBEE-3686-54E8D7DE216D","name":"FTP
         order w/QA","scope":"PROVIDER"}}'
     http_version: 
-a3e306d85edd72b129f8f85472b219c4f7275f2d:
+4436c7388ba8310f57244afa01e8630b64569c84:
   response:
     status:
       code: 200
@@ -1183,7 +1183,7 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"A876D145-3D53-D9FF-985B-EFE14FC966F0","name":"AST_09","scope":"PROVIDER","sort_key":"K"}}'
     http_version: 
-719dfed667554f597fe0e800ce8bed81659391fa:
+3e5f0a50357e424d6f74eb7f8fa04ac70207c6a5:
   response:
     status:
       code: 200
@@ -1305,7 +1305,7 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
         type=\"xsd:boolean\"/>\n       </group> \n    </ui>\n</form>","id":"ACFC9F77-7CAC-A5D1-EEC2-8DF3823EE4F1","name":"AE_Rain
         Order Option","scope":"PROVIDER"}}'
     http_version: 
-854759fa5a7bb7d3d4e9113e7845a058b16fc42e:
+ba12b2eb4a79c3f422670d4986a666067ced77e4:
   response:
     status:
       code: 200
@@ -1376,7 +1376,7 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"BA87A7EE-0FE6-03EB-C5F3-3B494726055B","name":"AST_07XT","scope":"PROVIDER","sort_key":"I"}}'
     http_version: 
-10ad3e5e18a70dbd3eeace425c58d99737007789:
+b9ba3747086bddf1506c8cde20a1c6df0d3cd42f:
   response:
     status:
       code: 200
@@ -1431,7 +1431,7 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
         required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
         label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","name":"AST_L1A","scope":"PROVIDER","sort_key":"A"}}'
     http_version: 
-bb682c41137a389aed28504130a034222509e78b:
+a5a61b15764f485b859b95b4189af3d950d14822:
   response:
     status:
       code: 200
@@ -1487,7 +1487,7 @@ bb682c41137a389aed28504130a034222509e78b:
         required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
         label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"E1032659-E26F-226C-C668-4B5E3A7B5EB0","name":"AST14DMO","scope":"PROVIDER","sort_key":"Q"}}'
     http_version: 
-2c130f6ffcb3efdbbb529ab361c04f9275558e3e:
+044389dc81b11066c4ec61c7fe49b848c0879b92:
   response:
     status:
       code: 200
@@ -1540,7 +1540,7 @@ bb682c41137a389aed28504130a034222509e78b:
         ref=\"prov:odl[@name=''PASSWORD'']\" required=\"true()\" type=\"xs:string\"/>\n      <input
         label=\"FTP Path:\" ref=\"prov:odl[@name=''FTP_PATH'']\" type=\"xs:string\"/>\n    </group>\n    \n  </ui>\n</form>","id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","name":"FtpPushPull","scope":"PROVIDER"}}'
     http_version: 
-aa7f6467392a1f35954d5d447691cde8bdef7677:
+5c5ffa3c63848409f6078895d2241a8a54dac654:
   response:
     status:
       code: 200
@@ -1611,7 +1611,54 @@ aa7f6467392a1f35954d5d447691cde8bdef7677:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"E441136C-03AB-2A45-B698-7A62659FD463","name":"AST_09T","scope":"PROVIDER","sort_key":"M"}}'
     http_version: 
-7b7fda9d5d0cee90aa0016d517fe96dca2ee7f6d:
+46ab8038ae7ea476219e2b75c827f2957fd6660a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json; charset=utf-8
+      etag:
+      - '"91d811cf32a8162495a78a9511455c6f"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.044000'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"Delivery Option","form":"<form
+        xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" targetNamespace=\"http://echo.nasa.gov/v9/echoforms\"
+        xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n    <model>\n       <instance>\n           <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/MODIS.xsd\">\n\n           <!-- Model -->\n            <ecs:distribution>\n             <ecs:mediatype>\n                 <ecs:value>FtpPull</ecs:value>\n             </ecs:mediatype>\n             \n             <ecs:mediaformat>\n                 <ecs:ftppull-format>\n                     <ecs:value>FILEFORMAT</ecs:value>\n                 </ecs:ftppull-format>\n             </ecs:mediaformat>\n           </ecs:distribution>\n\n             <lpdaac:subsetSpecification>\n                 <lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">MODIS</lpdaac:productName>\n                 <lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">MODIS Long Name</lpdaac:longName>\n                 <lpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0.0</lpdaac:granuleSize>\n             </lpdaac:subsetSpecification>\n         </ecs:options>\n       </instance>\n\n        <extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\n                <auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/CollectionMetaData/ShortName/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:productName\"/>\n\n                <auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/CollectionMetaData/DataSetId/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:longName\"/>\n            </auto:expressions>\n        </extension>\n    </model>\n   <ui>\n\n    <!--
+        Media Type Options for MtMGW: FtpPull (default) -->\n    <group xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions\"
+        id=\"DistributionOptionsGroup\" label=\"Distribution Options\" ref=\"ecs:distribution\">\n\n        <output
+        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
+        =''FtpPull''\" type=\"xsd:string\" value=\"''Http Pull''\"/>\n\n           <!--  FtpPull
+        Media Format Selection -->\n           <output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>        \n    </group>\n   </ui>\n</form>","id":"EC7AA66E-00D6-ED42-3043-B2F1534AA85A","name":"Delivery
+        Option","scope":"PROVIDER"}}'
+    http_version: 
+6d746da16b1989db4ff4b53f0ede9bb8e0e9433b:
   response:
     status:
       code: 200
@@ -1682,7 +1729,7 @@ aa7f6467392a1f35954d5d447691cde8bdef7677:
         - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
         6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"F56BCDCE-BA50-059C-6E3F-ED793ACDCD41","name":"AST_07","scope":"PROVIDER","sort_key":"H"}}'
     http_version: 
-c625438d7ecbaeaf2059b75b9cac339aabc26e39:
+f6c14c4da4d71572785d8e7cdc1477c0eb9cab0a:
   response:
     status:
       code: 200

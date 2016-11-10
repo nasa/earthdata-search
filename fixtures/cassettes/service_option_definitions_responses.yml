@@ -1,5 +1,5 @@
 ---
-6405767fe1e1d87c324638f8987189348edf3b8e:
+8674a47145eaa0f505dbf1c9cf9eb11bb7b778ee:
   response:
     status:
       code: 200
@@ -373,11 +373,11 @@
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"062E0BDE-D8F6-248E-2B30-B226C1574305","name":"AE_Land.2
         ESI Service","provider_id":"20604"}}'
     http_version: 
-ee0f11ab032587ae8c334518b749e3df754ec88d:
+52c3f2a9a089e869fa20087da8c8c90b39bd9cac:
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       strict-transport-security:
       - max-age=15768000
@@ -987,8 +987,8 @@ ee0f11ab032587ae8c334518b749e3df754ec88d:
         SOUTHERN HEMISPHERE,'',concat('','',../ecs:projection_options/ecs:PROJECTION/ecs:value/text(),'','')))\"
         value=\"cell_tb_v_fore\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"12C60790-3A5B-BFCC-B97C-570B041FC0C3","name":"SPL1CTB.3
         ESI Service","provider_id":"20604"}}'
-    http_version:
-66302bf7ccd9d497266e78971d8a9db2211073e7:
+    http_version: 
+cf5aefa3587f1083192546d6a454ad88c75e5be4:
   response:
     status:
       code: 200
@@ -1371,7 +1371,7 @@ ee0f11ab032587ae8c334518b749e3df754ec88d:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"14ACD8FB-BF1A-9D10-29A9-19D1DDD804B0","name":"AE_Rain.2
         ESI Service","provider_id":"20604"}}'
     http_version: 
-75259ebba13277900ef13f2a1d6be13ae3b499c7:
+85ba62faf0b80b53c78405d7e6e7bef0c90e2390:
   response:
     status:
       code: 200
@@ -1751,12 +1751,12 @@ ee0f11ab032587ae8c334518b749e3df754ec88d:
         :/()#+-'',''________''),''-dimension'')]/ecs:value[text()!=''&amp;'']\">\n                <output
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"36066D55-CC5A-A9D6-5C12-4B47754091D6","name":"MYD29P1N.5
         ESI Service","provider_id":"20604"}}'
-    http_version:
-b3573b8f122c6936a537aefe15288075f0563436:
+    http_version: 
+802e0c343e370ac575c28699889e7151e1ca6a64:
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       strict-transport-security:
       - max-age=15768000
@@ -2149,8 +2149,8 @@ b3573b8f122c6936a537aefe15288075f0563436:
         value=\"d_skew2\"/>\n                            <item value=\"i_gval_rcv\"/>\n                            <item
         value=\"i_nPeaks1\"/>\n                            <item value=\"i_numPk\"/>\n                        </item>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"9663A150-F821-AC41-E58E-5448CCB8DD58","name":"GLAH06.34
         ESI Service","provider_id":"20604"}}'
-    http_version:
-0bd38c0a9c1ab6a11d20f44819a3af3a80cb97a6:
+    http_version: 
+9f251a2f137bfc39b2b36e44c6677c2ea5605628:
   response:
     status:
       code: 200
@@ -2533,7 +2533,7 @@ b3573b8f122c6936a537aefe15288075f0563436:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"AA7A37B7-C7EE-7FE3-3CB7-F2B7C24470E9","name":"AE_5DSno.2
         ESI Service","provider_id":"20604"}}'
     http_version: 
-52f7fda7d62a9ae5e0ab98872aaf55c08ababfdd:
+9b4ea8d846cd7d7e9a3d2ea10f8786f037266f18:
   response:
     status:
       code: 200
@@ -2915,7 +2915,7 @@ b3573b8f122c6936a537aefe15288075f0563436:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"BFF68EA5-057A-4895-641C-08732C7DECCF","name":"MYD29P1D.5
         ESI Service","provider_id":"20604"}}'
     http_version: 
-c266712f4cf6e4b4630b64b3dfef8361f4e52ec8:
+9662118d09de11fbea7037e87b83848d9818c7fa:
   response:
     status:
       code: 200
@@ -3328,7 +3328,7 @@ c266712f4cf6e4b4630b64b3dfef8361f4e52ec8:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"C800502B-4905-BE75-1C6D-A0DC7D775E0F","name":"AE_SI12.3
         ESI Service","provider_id":"20604"}}'
     http_version: 
-aad99791c4ec3a8c65d51b25751786343e8e7ec6:
+bbbc6a43b402e36a26b64c27934f80826115ed21:
   response:
     status:
       code: 200
@@ -3485,4 +3485,983 @@ aad99791c4ec3a8c65d51b25751786343e8e7ec6:
         value=\"vegetation_opacity_option4\"/>\n                        <item value=\"vegetation_opacity_option5\"/>\n                        <item
         value=\"vegetation_water_content\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"EF5D7985-10BB-BFD1-95D6-75F08B0CAF6D","name":"SPL2SMP.3
         ESI Service","provider_id":"20604"}}'
+    http_version: 
+10cf0909894938e19daa736278133bf6e03b28b7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json; charset=utf-8
+      etag:
+      - '"4d8d012f1469c0d80683df7fcff6fecc"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.094000'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"service_option_definition":{"description":"ECHO ESI Service form
+        for DataSet \"MODIS/Terra Surface Reflectance 8-Day L3 Global 500m SIN Grid
+        V005\" (MOD09A1.5)","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:forms=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://ecs.nasa.gov/options\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n    <!--\n            ECHO
+        Service/Order form for DataSet \"MODIS/Terra Surface Reflectance 8-Day L3
+        Global 500m SIN Grid V005\" (MOD09A1.5):\n            -->\n    <model>\n        <instance>\n            <ecs:request
+        xmlns:ecs=\"http://ecs.nasa.gov/options\">\n                <!--NOTE: elements
+        in caps losely match the ESI API, those in lowercase are helper elements -->\n                <ecs:requestInfo>\n                    <ecs:email/>\n                </ecs:requestInfo>\n                <!--Dataset
+        ID will be injected by Reverb-->\n                <ecs:CLIENT>ESI</ecs:CLIENT>\n                <!--First
+        SubsetAgent in the input capabilities XML is used as the default.-->\n                <ecs:SUBAGENT_ID>\n                    <ecs:value>HEG</ecs:value>\n                </ecs:SUBAGENT_ID>\n                <!--
+        hardcode to async for Reverb services -->\n                <ecs:REQUEST_MODE>async</ecs:REQUEST_MODE>\n                <ecs:HEG-request>\n                    <ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG>\n                    <ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1>\n                    <ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2>\n                    <ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1>\n                    <ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1>\n                    <ecs:null_B/>\n                    <!--Need
+        to populate BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"-->\n                    <ecs:BBOX/>\n                    <ecs:spatial_subsetting>\n                        <ecs:boundingbox>\n                            <ecs:ullat>90</ecs:ullat>\n                            <ecs:ullon>-180</ecs:ullon>\n                            <ecs:lrlat>-90</ecs:lrlat>\n                            <ecs:lrlon>180</ecs:lrlon>\n                        </ecs:boundingbox>\n                    </ecs:spatial_subsetting>\n                    <ecs:band_subsetting>\n                        <ecs:SUBSET_DATA_LAYERS
+        style=\"tree\">\n                            <ecs:MOD09A1>\n                                <ecs:dataset>/MOD09A1</ecs:dataset>\n                            </ecs:MOD09A1>\n                        </ecs:SUBSET_DATA_LAYERS>\n                    </ecs:band_subsetting>\n                    <!--First
+        Format in the input XML is used as the default.-->\n                    <ecs:FORMAT>\n                        <ecs:value>&amp;</ecs:value>\n                    </ecs:FORMAT>\n                    <!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)-->\n                    <!--
+        FILE_IDS must be injected by Reverb -->\n                    <!-- FILE_URLS
+        is not used in requests from ECHO, Use FILE_IDS instead -->\n                    <ecs:projection_options>\n                        <ecs:PROJECTION>\n                            <ecs:value>&amp;</ecs:value>\n                        </ecs:PROJECTION>\n                        <!--In
+        final ESI request, projection parameters should be included as follows: \"&PROJECTION_PARAMETERS=param1:value1,param2:value2,...paramn:valuen\"-->\n                        <ecs:PROJECTION_PARAMETERS>\n                            <ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection>\n                                <ecs:LonZ/>\n                                <ecs:LatZ/>\n                                <ecs:NZone/>\n                            </ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection>\n                            <ecs:STATE_PLANE_projection>\n                                <ecs:NZone/>\n                            </ecs:STATE_PLANE_projection>\n                            <ecs:ALBERS_projection>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                                <ecs:STDPR1/>\n                                <ecs:STDPR2/>\n                                <ecs:OriginLat/>\n                                <ecs:CentMer/>\n                            </ecs:ALBERS_projection>\n                            <ecs:LAMBERT_CONFORMAL_CONIC_projection>\n                                <ecs:OriginLat/>\n                                <ecs:CentMer/>\n                                <ecs:STDPR1/>\n                                <ecs:STDPR2/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                            </ecs:LAMBERT_CONFORMAL_CONIC_projection>\n                            <ecs:MERCATOR_projection>\n                                <ecs:CentMer/>\n                                <ecs:TrueScale/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                            </ecs:MERCATOR_projection>\n                            <ecs:POLAR_STEREOGRAPHIC_projection>\n                                <ecs:LongPol/>\n                                <ecs:TrueScale/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                            </ecs:POLAR_STEREOGRAPHIC_projection>\n                            <ecs:TRANSVERSE_MERCATOR_projection>\n                                <ecs:Factor/>\n                                <ecs:OriginLat/>\n                                <ecs:CentMer/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                            </ecs:TRANSVERSE_MERCATOR_projection>\n                            <ecs:LAMBERT_AZIMUTHAL_projection>\n                                <ecs:Sphere/>\n                                <ecs:CenterLat/>\n                                <ecs:CentLon/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                            </ecs:LAMBERT_AZIMUTHAL_projection>\n                            <ecs:SINUSOIDAL_projection>\n                                <ecs:CentMer/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                            </ecs:SINUSOIDAL_projection>\n                            <ecs:CYLINDRICAL_EQUAL_AREA_projection>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                                <ecs:CentMer/>\n                                <ecs:TrueScale/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                            </ecs:CYLINDRICAL_EQUAL_AREA_projection>\n                        </ecs:PROJECTION_PARAMETERS>\n                    </ecs:projection_options>\n                    <ecs:advanced_file_option_flag/>\n                    <ecs:advanced_file_options>\n                        <!--In
+        final ESI request, resample options should be formatted like: \"&RESAMPLE=dimension:value\"-->\n                        <ecs:RESAMPLE>\n                            <ecs:NO_CHANGE-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:NO_CHANGE-dimension>\n                            <ecs:GEOGRAPHIC-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:GEOGRAPHIC-dimension>\n                            <ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension>\n                            <ecs:STATE_PLANE-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:STATE_PLANE-dimension>\n                            <ecs:ALBERS-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:ALBERS-dimension>\n                            <ecs:LAMBERT_CONFORMAL_CONIC-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:LAMBERT_CONFORMAL_CONIC-dimension>\n                            <ecs:MERCATOR-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:MERCATOR-dimension>\n                            <ecs:POLAR_STEREOGRAPHIC-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:POLAR_STEREOGRAPHIC-dimension>\n                            <ecs:TRANSVERSE_MERCATOR-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:TRANSVERSE_MERCATOR-dimension>\n                            <ecs:LAMBERT_AZIMUTHAL-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:LAMBERT_AZIMUTHAL-dimension>\n                            <ecs:SINUSOIDAL-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:SINUSOIDAL-dimension>\n                            <ecs:CYLINDRICAL_EQUAL_AREA-dimension>\n                                <ecs:value>PERCENT</ecs:value>\n                            </ecs:CYLINDRICAL_EQUAL_AREA-dimension>\n                            <ecs:NO_CHANGE-PERCENT-value>101</ecs:NO_CHANGE-PERCENT-value>\n                            <ecs:GEOGRAPHIC-PERCENT-value>101</ecs:GEOGRAPHIC-PERCENT-value>\n                            <ecs:UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-value>101</ecs:UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-value>\n                            <ecs:STATE_PLANE-PERCENT-value>101</ecs:STATE_PLANE-PERCENT-value>\n                            <ecs:ALBERS-PERCENT-value>101</ecs:ALBERS-PERCENT-value>\n                            <ecs:LAMBERT_CONFORMAL_CONIC-PERCENT-value>101</ecs:LAMBERT_CONFORMAL_CONIC-PERCENT-value>\n                            <ecs:MERCATOR-PERCENT-value>101</ecs:MERCATOR-PERCENT-value>\n                            <ecs:POLAR_STEREOGRAPHIC-PERCENT-value>101</ecs:POLAR_STEREOGRAPHIC-PERCENT-value>\n                            <ecs:TRANSVERSE_MERCATOR-PERCENT-value>101</ecs:TRANSVERSE_MERCATOR-PERCENT-value>\n                            <ecs:LAMBERT_AZIMUTHAL-PERCENT-value>101</ecs:LAMBERT_AZIMUTHAL-PERCENT-value>\n                            <ecs:SINUSOIDAL-PERCENT-value>101</ecs:SINUSOIDAL-PERCENT-value>\n                            <ecs:CYLINDRICAL_EQUAL_AREA-PERCENT-value>101</ecs:CYLINDRICAL_EQUAL_AREA-PERCENT-value>\n                        </ecs:RESAMPLE>\n                        <ecs:INTERPOLATION>\n                            <ecs:value>NN</ecs:value>\n                        </ecs:INTERPOLATION>\n                        <!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.-->\n                        <ecs:INCLUDE_META>false</ecs:INCLUDE_META>\n                    </ecs:advanced_file_options>\n                    <ecs:spatial_subset_flag>false</ecs:spatial_subset_flag>\n                    <ecs:band_subset_flag>true</ecs:band_subset_flag>\n                    <ecs:temporal_subset_flag>false</ecs:temporal_subset_flag>\n                </ecs:HEG-request>\n                <ecs:MRT-request>\n                    <ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG>\n                    <ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1>\n                    <ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2>\n                    <ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1>\n                    <ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1>\n                    <ecs:null_B/>\n                    <!--Need
+        to populate BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"-->\n                    <ecs:BBOX/>\n                    <ecs:spatial_subsetting>\n                        <ecs:boundingbox>\n                            <ecs:ullat>90</ecs:ullat>\n                            <ecs:ullon>-180</ecs:ullon>\n                            <ecs:lrlat>-90</ecs:lrlat>\n                            <ecs:lrlon>180</ecs:lrlon>\n                        </ecs:boundingbox>\n                    </ecs:spatial_subsetting>\n                    <ecs:band_subsetting>\n                        <ecs:SUBSET_DATA_LAYERS
+        style=\"tree\">\n                            <ecs:MOD09A1>\n                                <ecs:dataset>/MOD09A1</ecs:dataset>\n                            </ecs:MOD09A1>\n                        </ecs:SUBSET_DATA_LAYERS>\n                    </ecs:band_subsetting>\n                    <!--First
+        Format in the input XML is used as the default.-->\n                    <ecs:FORMAT>\n                        <ecs:value>GEO</ecs:value>\n                    </ecs:FORMAT>\n                    <!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)-->\n                    <!--
+        FILE_IDS must be injected by Reverb -->\n                    <!-- FILE_URLS
+        is not used in requests from ECHO, Use FILE_IDS instead -->\n                    <ecs:projection_options>\n                        <ecs:PROJECTION>\n                            <ecs:value>GEOGRAPHIC_MRT</ecs:value>\n                        </ecs:PROJECTION>\n                        <!--In
+        final ESI request, projection parameters should be included as follows: \"&PROJECTION_PARAMETERS=param1:value1,param2:value2,...paramn:valuen\"-->\n                        <ecs:PROJECTION_PARAMETERS>\n                            <ecs:GEOGRAPHIC_MRT_projection>\n                                <ecs:Datum2>\n                                    <ecs:value>No
+        Datum</ecs:value>\n                                </ecs:Datum2>\n                            </ecs:GEOGRAPHIC_MRT_projection>\n                            <ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection>\n                                <ecs:LonZ/>\n                                <ecs:LatZ/>\n                                <ecs:NZone/>\n                                <ecs:Datum4>\n                                    <ecs:value>No
+        Datum</ecs:value>\n                                </ecs:Datum4>\n                            </ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection>\n                            <ecs:ALBERS_MRT_projection>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                                <ecs:STDPR1/>\n                                <ecs:STDPR2/>\n                                <ecs:OriginLat/>\n                                <ecs:CentMer/>\n                                <ecs:Datum1>\n                                    <ecs:value>No
+        Datum</ecs:value>\n                                </ecs:Datum1>\n                            </ecs:ALBERS_MRT_projection>\n                            <ecs:POLAR_STEREOGRAPHIC_MRT_projection>\n                                <ecs:LongPol/>\n                                <ecs:TrueScale/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:SMajor/>\n                                <ecs:SMinor/>\n                                <ecs:Datum3>\n                                    <ecs:value>No
+        Datum</ecs:value>\n                                </ecs:Datum3>\n                            </ecs:POLAR_STEREOGRAPHIC_MRT_projection>\n                            <ecs:LAMBERT_AZIMUTHAL_MRT_projection>\n                                <ecs:Sphere/>\n                                <ecs:CenterLat/>\n                                <ecs:CentLon/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                            </ecs:LAMBERT_AZIMUTHAL_MRT_projection>\n                            <ecs:SINUSOIDAL_MRT_projection>\n                                <ecs:CentMer/>\n                                <ecs:FE/>\n                                <ecs:FN/>\n                                <ecs:Sphere>90</ecs:Sphere>\n                            </ecs:SINUSOIDAL_MRT_projection>\n                        </ecs:PROJECTION_PARAMETERS>\n                    </ecs:projection_options>\n                    <ecs:advanced_file_option_flag/>\n                    <ecs:advanced_file_options>\n                        <!--In
+        final ESI request, resample options should be formatted like: \"&RESAMPLE=dimension:value\"-->\n                        <ecs:RESAMPLE>\n                            <ecs:GEOGRAPHIC_MRT-dimension>\n                                <ecs:value>&amp;</ecs:value>\n                            </ecs:GEOGRAPHIC_MRT-dimension>\n                            <ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-dimension>\n                                <ecs:value>&amp;</ecs:value>\n                            </ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-dimension>\n                            <ecs:ALBERS_MRT-dimension>\n                                <ecs:value>&amp;</ecs:value>\n                            </ecs:ALBERS_MRT-dimension>\n                            <ecs:POLAR_STEREOGRAPHIC_MRT-dimension>\n                                <ecs:value>&amp;</ecs:value>\n                            </ecs:POLAR_STEREOGRAPHIC_MRT-dimension>\n                            <ecs:LAMBERT_AZIMUTHAL_MRT-dimension>\n                                <ecs:value>&amp;</ecs:value>\n                            </ecs:LAMBERT_AZIMUTHAL_MRT-dimension>\n                            <ecs:SINUSOIDAL_MRT-dimension>\n                                <ecs:value>&amp;</ecs:value>\n                            </ecs:SINUSOIDAL_MRT-dimension>\n                            <ecs:GEOGRAPHIC_MRT-DEGREES-value>\n                                <ecs:value>Native</ecs:value>\n                            </ecs:GEOGRAPHIC_MRT-DEGREES-value>\n                            <ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-METERS-value>\n                                <ecs:value>1000</ecs:value>\n                            </ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-METERS-value>\n                            <ecs:ALBERS_MRT-METERS-value>\n                                <ecs:value>1000</ecs:value>\n                            </ecs:ALBERS_MRT-METERS-value>\n                            <ecs:POLAR_STEREOGRAPHIC_MRT-METERS-value>\n                                <ecs:value>1000</ecs:value>\n                            </ecs:POLAR_STEREOGRAPHIC_MRT-METERS-value>\n                            <ecs:LAMBERT_AZIMUTHAL_MRT-METERS-value>\n                                <ecs:value>1000</ecs:value>\n                            </ecs:LAMBERT_AZIMUTHAL_MRT-METERS-value>\n                            <ecs:SINUSOIDAL_MRT-METERS-value>\n                                <ecs:value>1000</ecs:value>\n                            </ecs:SINUSOIDAL_MRT-METERS-value>\n                        </ecs:RESAMPLE>\n                        <ecs:INTERPOLATION>\n                            <ecs:value>NN</ecs:value>\n                        </ecs:INTERPOLATION>\n                        <!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.-->\n                        <ecs:INCLUDE_META>false</ecs:INCLUDE_META>\n                    </ecs:advanced_file_options>\n                    <ecs:spatial_subset_flag>false</ecs:spatial_subset_flag>\n                    <ecs:band_subset_flag>true</ecs:band_subset_flag>\n                    <ecs:temporal_subset_flag>false</ecs:temporal_subset_flag>\n                </ecs:MRT-request>\n                <ecs:PQF-request>\n                    <ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG>\n                    <ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1>\n                    <ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2>\n                    <ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1>\n                    <ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1>\n                    <ecs:null_B/>\n                    <!--Need
+        to populate BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"-->\n                    <ecs:BBOX/>\n                    <ecs:band_subsetting>\n                        <ecs:SUBSET_DATA_LAYERS
+        style=\"tree\">\n                            <ecs:MOD09A1>\n                                <ecs:dataset>/MOD09A1</ecs:dataset>\n                            </ecs:MOD09A1>\n                        </ecs:SUBSET_DATA_LAYERS>\n                    </ecs:band_subsetting>\n                    <!--First
+        Format in the input XML is used as the default.-->\n                    <!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)-->\n                    <!--
+        FILE_IDS must be injected by Reverb -->\n                    <!-- FILE_URLS
+        is not used in requests from ECHO, Use FILE_IDS instead -->\n                    <ecs:projection_options>\n                        <ecs:PROJECTION>\n                            <ecs:value>LDOPE_Custom_Projection</ecs:value>\n                        </ecs:PROJECTION>\n                        <!--In
+        final ESI request, projection parameters should be included as follows: \"&PROJECTION_PARAMETERS=param1:value1,param2:value2,...paramn:valuen\"-->\n                        <ecs:PROJECTION_PARAMETERS>\n                            <ecs:LDOPE_Custom_Projection_projection>\n                                <ecs:Mask>\n                                    <ecs:value>Ideal</ecs:value>\n                                </ecs:Mask>\n                                <ecs:IncludeProducts>\n                                    <ecs:value>Mask</ecs:value>\n                                </ecs:IncludeProducts>\n                            </ecs:LDOPE_Custom_Projection_projection>\n                        </ecs:PROJECTION_PARAMETERS>\n                    </ecs:projection_options>\n                    <ecs:advanced_file_option_flag/>\n                    <ecs:advanced_file_options>\n                        <ecs:INTERPOLATION>\n                            <ecs:value/>\n                        </ecs:INTERPOLATION>\n                        <!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.-->\n                        <ecs:INCLUDE_META>false</ecs:INCLUDE_META>\n                    </ecs:advanced_file_options>\n                    <ecs:spatial_subset_flag>false</ecs:spatial_subset_flag>\n                    <ecs:band_subset_flag>true</ecs:band_subset_flag>\n                    <ecs:temporal_subset_flag>false</ecs:temporal_subset_flag>\n                </ecs:PQF-request>\n            </ecs:request>\n        </instance>\n        <extension
+        xmlns:pre=\"http://echo.nasa.gov/v9/echoforms/prepopulate\" name=\"pre:prepopulate\">\n            <pre:expressions>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:dataset_ids\" source=\"ALL_DATASET_IDS_FROM_CART\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:email\" source=\"EMAIL\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:keywords\" source=\"KEYWORDS\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:spatial\" source=\"SPATIAL\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:shp_file\" source=\"SHP_FILE\"/>\n                <pre:expression
+        ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon\"
+        source=\"BBOX_WEST\"/>\n                <pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlat\"
+        source=\"BBOX_SOUTH\"/>\n                <pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon\"
+        source=\"BBOX_EAST\"/>\n                <pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullat\"
+        source=\"BBOX_NORTH\"/>\n                <pre:expression ref=\"//ecs:MRT-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon\"
+        source=\"BBOX_WEST\"/>\n                <pre:expression ref=\"//ecs:MRT-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlat\"
+        source=\"BBOX_SOUTH\"/>\n                <pre:expression ref=\"//ecs:MRT-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon\"
+        source=\"BBOX_EAST\"/>\n                <pre:expression ref=\"//ecs:MRT-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullat\"
+        source=\"BBOX_NORTH\"/>\n            </pre:expressions>\n        </extension>\n    </model>\n    <ui>\n        <input
+        label=\"Email Address\" ref=\"ecs:requestInfo/ecs:email\" required=\"false()\"
+        type=\"xsd:string\">\n            <constraints>\n                <constraint>\n                    <xpath>contains(ecs:requestInfo/ecs:email,
+        ''@'') and contains(substring-after(ecs:requestInfo/ecs:email, ''@''), ''.'')
+        and string-length(substring-after(ecs:requestInfo/ecs:email, ''.''))</xpath>\n                    <alert>A
+        valid email address is required.</alert>\n                </constraint>\n            </constraints>\n        </input>\n        <select
+        id=\"agentSelect\" label=\"Select Processor\" multiple=\"false\" open=\"false\"
+        ref=\"ecs:SUBAGENT_ID\" required=\"false()\" type=\"xsd:string\" valueElementName=\"value\">\n            <item
+        label=\"HEG\" value=\"HEG\"/>\n            <item label=\"MRT\" value=\"MRT\"/>\n            <item
+        label=\"PQF\" value=\"PQF\"/>\n        </select>\n        <input label=\"Include
+        Metadata and Processing History\" ref=\"ecs:HEG-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''QA_SERVICE''
+        &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''GLAS'' &#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \" type=\"xsd:boolean\"/>\n        <group
+        id=\"HEG-reformatOptions\" label=\"Reformat Output (Optional)\" ref=\"ecs:HEG-request\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''\">\n            <select id=\"HEG-formatselect\"
+        label=\"Output File Format\" multiple=\"false\" open=\"false\" ref=\"ecs:FORMAT\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"No Reformatting\" value=\"&amp;\"/>\n                <item label=\"HDF-EOS\"
+        value=\"HDF-EOS\"/>\n                <item label=\"GeoTiff\" value=\"GEO\"/>\n                <item
+        label=\"KMLSUPEROVERLAY\" value=\"KMLSUPEROVERLAY\"/>\n                <item
+        label=\"NetCDF-Alt (GDAL)\" value=\"GdalNetCDF\"/>\n                <item
+        label=\"ASCII (ncdump)\" value=\"NC_ASCII\"/>\n                <item label=\"NetCDF:
+        Network Common Data Format\" value=\"netCDF\"/>\n            </select>\n        </group>\n        <group
+        id=\"HEG-spatial\" label=\"Spatial Subsetting (Optional)\" ref=\"ecs:HEG-request/ecs:spatial_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''\">\n            <input label=\"Enter
+        bounding box\" ref=\"../ecs:spatial_subset_flag\" type=\"xsd:boolean\"/>\n            <group
+        id=\"HEG-NWESBoundingBox\" label=\"\" ref=\"ecs:boundingbox\">\n                <input
+        label=\"North\" ref=\"ecs:ullat\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat) &gt;= -90</xpath>\n                            <alert>North
+        must be greater than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat) &lt;= 90</xpath>\n                            <alert>North
+        must be less than 90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat)  &gt;=  number(ecs:lrlat)</xpath>\n                            <alert>North
+        must be greater thanSouth</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"West\" ref=\"ecs:ullon\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon) &gt;= -180</xpath>\n                            <alert>West
+        must be greater than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon) &lt;= 180</xpath>\n                            <alert>West
+        must be less than 180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon)  &lt;=  number(ecs:lrlon)</xpath>\n                            <alert>West
+        must be less thanEast</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"East\" ref=\"ecs:lrlon\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon) &gt;= -180</xpath>\n                            <alert>East
+        must be greater than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon) &lt;= 180</xpath>\n                            <alert>East
+        must be less than 180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon)  &gt;=  number(ecs:ullon)</xpath>\n                            <alert>East
+        must be greater thanWest</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"South\" ref=\"ecs:lrlat\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat) &gt;= -90</xpath>\n                            <alert>South
+        must be greater than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat) &lt;= 90</xpath>\n                            <alert>South
+        must be less than 90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat)  &lt;=  number(ecs:ullat)</xpath>\n                            <alert>South
+        must be less thanNorth</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n            </group>\n        </group>\n        <group
+        id=\"HEG-optionalSettings\" label=\"Advanced Settings (Optional)\" ref=\"ecs:HEG-request\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''\">\n            <select id=\"HEG-projectselect\"
+        label=\"Re-projection Options\" multiple=\"false\" open=\"false\" ref=\"ecs:projection_options/ecs:PROJECTION\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''\" type=\"xsd:string\" valueElementName=\"value\">\n                <!--Place
+        holder if we dont know the default projection (same as empty string)-->\n                <item
+        label=\"No Change\" value=\"&amp;\"/>\n                <item label=\"Geographic\"
+        value=\"GEOGRAPHIC\"/>\n                <item label=\"Universal Transverse
+        Mercator\" value=\"UNIVERSAL TRANSVERSE MERCATOR\"/>\n                <item
+        label=\"State Plane Coordinates\" value=\"STATE PLANE\"/>\n                <item
+        label=\"Albers Equal-Area Conic\" value=\"ALBERS\"/>\n                <item
+        label=\"Lambert Conic Conformal\" value=\"LAMBERT CONFORMAL CONIC\"/>\n                <item
+        label=\"Mercator\" value=\"MERCATOR\"/>\n                <item label=\"Polar
+        Stereographic\" value=\"POLAR STEREOGRAPHIC\"/>\n                <item label=\"Transverse
+        Mercator\" value=\"TRANSVERSE MERCATOR\"/>\n                <item label=\"Lambert
+        Azimuthal Equal Area\" value=\"LAMBERT AZIMUTHAL\"/>\n                <item
+        label=\"Sinusoidal\" value=\"SINUSOIDAL\"/>\n                <item label=\"Cylindrical
+        Equal Area\" value=\"CYLINDRICAL EQUAL AREA\"/>\n            </select>\n            <group
+        id=\"HEG-UNIVERSAL_TRANSVERSE_MERCATOR-paramgroup\" label=\"Set Parameters
+        for Universal Transverse Mercator (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of any point in UTM Zone\" ref=\"ecs:LonZ\" relevant=\"//ecs:HEG-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        = 0) or\n                           \n                           (number(translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ,''-'',''''))
+        &gt;= 0.0 and number(translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ,''-'',''''))
+        &lt;= 180.0) and\n                           \n                           not(contains(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ,
+        ''.''))</xpath>\n                            <alert>Longitude must be specified
+        with values \u00c2\u00b1(0.0..180.0).</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        = 0 and string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        = 0) or  \n                           \n                           (string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        &gt; 0)</xpath>\n                            <alert>Latitude and Longitude
+        must be specified together.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>Enter
+        Longitude (decimal degrees) of any point if you do not know the UTM Zone,
+        or just enter UTM Zone.</help>\n                </input>\n                <input
+        label=\"Latitude of any point in UTM Zone\" ref=\"ecs:LatZ\" relevant=\"//ecs:HEG-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        = 0) or\n                           \n                           (number(translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ,''-'',''''))
+        &gt;= 0.0 and number(translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ,''-'',''''))
+        &lt;= 180.0) and\n                           \n                           not(contains(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ,
+        ''.''))</xpath>\n                            <alert>Latitude must be specified
+        with values \u00c2\u00b1(0.0..180.0).</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        = 0 and string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        = 0) or  \n                           \n                           (string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        &gt; 0)</xpath>\n                            <alert>Latitude and Longitude
+        must be specified together.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>Enter
+        Latitude (decimal degrees) of any point if you do not know the UTM Zone, or
+        just enter UTM Zone.</help>\n                </input>\n                <input
+        label=\"UTM Zone\" ref=\"ecs:NZone\" relevant=\"//ecs:HEG-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:NZone)
+        = 0 or\n                           \n                           ((number(translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:NZone,''-'',''''))
+        &gt; -60.0 and number(translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:NZone,''-'',''''))
+        &lt;= 60.0) and\n                           \n                           not(contains(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:NZone,
+        ''.'')))</xpath>\n                            <alert>Zone parameter (Zone)
+        must be specified as an integer with a value \u00c2\u00b1(1..60)</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        = 0 and string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        = 0) or string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:NZone)
+        = 0</xpath>\n                            <alert>The zone parameter takes precedence
+        over the latitude and longitude specifications.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>-60..60,&lt;0:SouthHem</help>\n                </input>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:UTM_MSG_1\" relevant=\"//ecs:HEG-request/ecs:spatial_subset_flag=''true''
+        &#10;                      &#10;                     or ( string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        &gt; 0 &#10;                     and string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        &gt; 0)\" type=\"xsd:string\"/>\n            </group>\n            <group
+        id=\"HEG-STATE_PLANE-paramgroup\" label=\"Set Parameters for State Plane Coordinates
+        (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:STATE_PLANE_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''STATE
+        PLANE'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"State Plane Zone\" ref=\"ecs:NZone\" relevant=\"//ecs:HEG-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <help>Unitless</help>\n                </input>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:UTM_MSG_1\" relevant=\"//ecs:HEG-request/ecs:spatial_subset_flag=''true''
+        &#10;                      &#10;                     or ( string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:STATE_PLANE_projection/ecs:LatZ)
+        &gt; 0 &#10;                     and string-length(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:STATE_PLANE_projection/ecs:LonZ)
+        &gt; 0)\" type=\"xsd:string\"/>\n            </group>\n            <group
+        id=\"HEG-ALBERS-paramgroup\" label=\"Set Parameters for Albers Equal-Area
+        Conic (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:ALBERS_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS''
+        and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Semimajor radius
+        and Semiminor radius of the ellipsoid axis, then you do not enter Latitude
+        of first standard parallel and Latitude of second standard parallel.</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Semimajor radius
+        and Semiminor radius of the ellipsoid axis, then you do not enter Latitude
+        of first standard parallel and Latitude of second standard parallel.</help>\n                </input>\n                <input
+        label=\"Latitude of first standard parallel\" ref=\"ecs:STDPR1\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Latitude of first
+        standard parallel and Latitude of second standard parallel (decimal degrees),
+        then you do not enter Semimajor radius and Semiminor radius of the ellipsoid
+        axis.</help>\n                </input>\n                <input label=\"Latitude
+        of second standard parallel\" ref=\"ecs:STDPR2\" required=\"false()\" type=\"xsd:string\">\n                    <help>If
+        you enter Latitude of first standard parallel and Latitude of second standard
+        parallel (decimal degrees), then you do not enter Semimajor radius and Semiminor
+        radius of the ellipsoid axis.</help>\n                </input>\n                <input
+        label=\"Latitude of false origin\" ref=\"ecs:OriginLat\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Longitude of false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-LAMBERT_CONFORMAL_CONIC-paramgroup\" label=\"Set Parameters for Lambert
+        Conic Conformal (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:LAMBERT_CONFORMAL_CONIC_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        CONFORMAL CONIC'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Latitude of false origin\" ref=\"ecs:OriginLat\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Longitude of false origin / central meridian\" ref=\"ecs:CentMer\"
+        required=\"false()\" type=\"xsd:string\">\n                    <help>The longitude
+        value (decimal degrees) that defines the origin of the x-coordinate values
+        for a projection.</help>\n                </input>\n                <input
+        label=\"Latitude of first standard parallel\" ref=\"ecs:STDPR1\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Latitude of first
+        standard parallel and Latitude of second standard parallel (decimal degrees),
+        then you do not enter Semimajor radius and Semiminor radius of the ellipsoid
+        axis.</help>\n                </input>\n                <input label=\"Latitude
+        of second standard parallel\" ref=\"ecs:STDPR2\" required=\"false()\" type=\"xsd:string\">\n                    <help>If
+        you enter Latitude of first standard parallel and Latitude of second standard
+        parallel (decimal degrees), then you do not enter Semimajor radius and Semiminor
+        radius of the ellipsoid axis.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Semimajor radius
+        and Semiminor radius of the ellipsoid axis, then you do not enter Latitude
+        of first standard parallel and Latitude of second standard parallel.</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Semimajor radius
+        and Semiminor radius of the ellipsoid axis, then you do not enter Latitude
+        of first standard parallel and Latitude of second standard parallel.</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-MERCATOR-paramgroup\" label=\"Set Parameters for Mercator (Optional)\"
+        ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:MERCATOR_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''MERCATOR''
+        and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of natural/false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Latitude of natural origin\" ref=\"ecs:TrueScale\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Linear</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Linear</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-POLAR_STEREOGRAPHIC-paramgroup\" label=\"Set Parameters for Polar
+        Stereographic (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:POLAR_STEREOGRAPHIC_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of natural origin\" ref=\"ecs:LongPol\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Latitude of natural origin\" ref=\"ecs:TrueScale\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Need to define either the
+        Semimajor and Semiminor radius of the ellipsoid axis, or the Datum.</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Need to define either the
+        Semimajor and Semiminor radius of the ellipsoid axis, or the Datum.</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-TRANSVERSE_MERCATOR-paramgroup\" label=\"Set Parameters for Transverse
+        Mercator (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:TRANSVERSE_MERCATOR_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''TRANSVERSE
+        MERCATOR'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Scale factor at natural origin\" ref=\"ecs:Factor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Scale factor at the center
+        of the projection</help>\n                </input>\n                <input
+        label=\"Latitude of false/natural origin\" ref=\"ecs:OriginLat\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Longitude of natural/false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Linear</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Linear</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-LAMBERT_AZIMUTHAL-paramgroup\" label=\"Set Parameters for Lambert
+        Azimuthal Equal Area (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:LAMBERT_AZIMUTHAL_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Radius of reference Sphere\" ref=\"ecs:Sphere\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Radius of reference Sphere
+        must be defined in order to submit a successful request. If you enter Radius
+        of reference Sphere, then you do not need to enter Latitude / Longitude of
+        projection center.</help>\n                </input>\n                <input
+        label=\"Latitude of projection center / origin\" ref=\"ecs:CenterLat\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the center, and sometimes the origin, of a projection.</help>\n                </input>\n                <input
+        label=\"Longitude of projection center\" ref=\"ecs:CentLon\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the center, and sometimes the origin, of a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-SINUSOIDAL-paramgroup\" label=\"Set Parameters for Sinusoidal (Optional)\"
+        ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:SINUSOIDAL_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL''
+        and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of projection center\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Longitude of projection center
+        must be defined in order to submit a successful request. The longitude value
+        (decimal degrees) that defines the center, and sometimes the origin, of a
+        projection.</help>\n                </input>\n                <input label=\"False
+        Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n            </group>\n            <group
+        id=\"HEG-CYLINDRICAL_EQUAL_AREA-paramgroup\" label=\"Set Parameters for Cylindrical
+        Equal Area (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:CYLINDRICAL_EQUAL_AREA_projection\"
+        relevant=\"//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''CYLINDRICAL
+        EQUAL AREA'' and not(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Linear</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Linear</help>\n                </input>\n                <input
+        label=\"Longitude of false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Latitude of natural origin\" ref=\"ecs:TrueScale\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n            </group>\n            <select
+        id=\"HEG-NO_CHANGE-resampleselect\" label=\"Resample Dimension\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:NO_CHANGE-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''&amp;''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Percent\"
+        value=\"PERCENT\"/>\n            </select>\n            <range end=\"200.0\"
+        id=\"HEG-NO_CHANGE-PERCENT-range\" label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:NO_CHANGE-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''&amp;''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:NO_CHANGE-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-GEOGRAPHIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Percent\"
+        value=\"PERCENT\"/>\n            </select>\n            <range end=\"200.0\"
+        id=\"HEG-GEOGRAPHIC-PERCENT-range\" label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-UNIVERSAL_TRANSVERSE_MERCATOR-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-range\" label=\"Percent\"
+        ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-STATE_PLANE-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:STATE_PLANE-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''STATE
+        PLANE''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-STATE_PLANE-PERCENT-range\" label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:STATE_PLANE-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''STATE
+        PLANE'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:STATE_PLANE-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-ALBERS-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Percent\"
+        value=\"PERCENT\"/>\n            </select>\n            <range end=\"200.0\"
+        id=\"HEG-ALBERS-PERCENT-range\" label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-LAMBERT_CONFORMAL_CONIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_CONFORMAL_CONIC-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        CONFORMAL CONIC''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-LAMBERT_CONFORMAL_CONIC-PERCENT-range\" label=\"Percent\"
+        ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_CONFORMAL_CONIC-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        CONFORMAL CONIC'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_CONFORMAL_CONIC-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-MERCATOR-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:MERCATOR-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''MERCATOR''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Percent\"
+        value=\"PERCENT\"/>\n            </select>\n            <range end=\"200.0\"
+        id=\"HEG-MERCATOR-PERCENT-range\" label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:MERCATOR-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''MERCATOR''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:MERCATOR-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-POLAR_STEREOGRAPHIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-POLAR_STEREOGRAPHIC-PERCENT-range\" label=\"Percent\"
+        ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-TRANSVERSE_MERCATOR-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:TRANSVERSE_MERCATOR-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''TRANSVERSE
+        MERCATOR''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-TRANSVERSE_MERCATOR-PERCENT-range\" label=\"Percent\"
+        ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:TRANSVERSE_MERCATOR-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''TRANSVERSE
+        MERCATOR'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:TRANSVERSE_MERCATOR-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-LAMBERT_AZIMUTHAL-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-LAMBERT_AZIMUTHAL-PERCENT-range\" label=\"Percent\"
+        ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-SINUSOIDAL-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Percent\"
+        value=\"PERCENT\"/>\n            </select>\n            <range end=\"200.0\"
+        id=\"HEG-SINUSOIDAL-PERCENT-range\" label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-CYLINDRICAL_EQUAL_AREA-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:CYLINDRICAL_EQUAL_AREA-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''CYLINDRICAL
+        EQUAL AREA''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Percent\" value=\"PERCENT\"/>\n            </select>\n            <range
+        end=\"200.0\" id=\"HEG-CYLINDRICAL_EQUAL_AREA-PERCENT-range\" label=\"Percent\"
+        ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:CYLINDRICAL_EQUAL_AREA-PERCENT-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''CYLINDRICAL
+        EQUAL AREA'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:CYLINDRICAL_EQUAL_AREA-dimension/ecs:value=''PERCENT''
+        \" start=\"1.0\" step=\"1\" type=\"xs:double\"/>\n            <select id=\"HEG-interpolselect\"
+        label=\"Interpolation Method\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:INTERPOLATION\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and (ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;''
+        or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\" type=\"xsd:string\"
+        valueElementName=\"value\">\n                <item label=\"Nearest Neighbor\"
+        value=\"NN\"/>\n                <item label=\"Cubic Convolution\" value=\"CC\"/>\n                <item
+        label=\"Bilinear\" value=\"BI\"/>\n            </select>\n            <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:INTRPL_MSG_1\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and (ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;'' or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\"
+        type=\"xsd:string\"/>\n        </group>\n        <group id=\"HEG-bandSubsetOptions\"
+        label=\"Band Subsetting (Optional)\" ref=\"ecs:HEG-request/ecs:band_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:HEG-request/ecs:band_subset_flag=''true''\">\n            <tree
+        cascade=\"true\" id=\"HEG-bandSubsetOptions\" label=\"Choose Bands\" ref=\"ecs:SUBSET_DATA_LAYERS/ecs:MOD09A1\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG'' and ../ecs:band_subset_flag=''true''\"
+        required=\"false()\" separator=\"/\" type=\"xsd:string\" valueElementName=\"dataset\">\n                <item
+        value=\"MOD09A1\">\n                    <item value=\"MOD_Grid_500m_Surface_Reflectance\">\n                        <item
+        value=\"sur_refl_b01\"/>\n                        <item value=\"sur_refl_b02\"/>\n                        <item
+        value=\"sur_refl_b03\"/>\n                        <item value=\"sur_refl_b04\"/>\n                        <item
+        value=\"sur_refl_b05\"/>\n                        <item value=\"sur_refl_b06\"/>\n                        <item
+        value=\"sur_refl_b07\"/>\n                        <item value=\"sur_refl_day_of_year\"/>\n                        <item
+        value=\"sur_refl_qc_500m\"/>\n                        <item value=\"sur_refl_raz\"/>\n                        <item
+        value=\"sur_refl_state_500m\"/>\n                        <item value=\"sur_refl_szen\"/>\n                        <item
+        value=\"sur_refl_vzen\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n        <group
+        label=\"\" ref=\"ecs:HEG-request\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''HEG''\">\n            <group
+        label=\"\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE\" relevant=\"not(//ecs:HEG-request/ecs:advanced_file_options/ecs:RESAMPLE//ecs:value=''&amp;'')\">\n                <output
+        label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n        <input
+        label=\"Include Metadata and Processing History\" ref=\"ecs:MRT-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''QA_SERVICE''
+        &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''GLAS'' &#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \" type=\"xsd:boolean\"/>\n        <group
+        id=\"MRT-reformatOptions\" label=\"Reformat Output (Optional)\" ref=\"ecs:MRT-request\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''\">\n            <select id=\"MRT-formatselect\"
+        label=\"Output File Format\" multiple=\"false\" open=\"false\" ref=\"ecs:FORMAT\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"HDF-EOS\" value=\"HDF-EOS\"/>\n                <item label=\"GeoTiff\"
+        value=\"GEO\"/>\n                <item label=\"Raw Binary\" value=\"RAW BINARY\"/>\n            </select>\n        </group>\n        <group
+        id=\"MRT-spatial\" label=\"Spatial Subsetting (Optional)\" ref=\"ecs:MRT-request/ecs:spatial_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''\">\n            <input label=\"Enter
+        bounding box\" ref=\"../ecs:spatial_subset_flag\" type=\"xsd:boolean\"/>\n            <group
+        id=\"MRT-NWESBoundingBox\" label=\"\" ref=\"ecs:boundingbox\">\n                <input
+        label=\"North\" ref=\"ecs:ullat\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat) &gt;= -90</xpath>\n                            <alert>North
+        must be greater than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat) &lt;= 90</xpath>\n                            <alert>North
+        must be less than 90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat)  &gt;=  number(ecs:lrlat)</xpath>\n                            <alert>North
+        must be greater thanSouth</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"West\" ref=\"ecs:ullon\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon) &gt;= -180</xpath>\n                            <alert>West
+        must be greater than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon) &lt;= 180</xpath>\n                            <alert>West
+        must be less than 180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon)  &lt;=  number(ecs:lrlon)</xpath>\n                            <alert>West
+        must be less thanEast</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"East\" ref=\"ecs:lrlon\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon) &gt;= -180</xpath>\n                            <alert>East
+        must be greater than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon) &lt;= 180</xpath>\n                            <alert>East
+        must be less than 180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon)  &gt;=  number(ecs:ullon)</xpath>\n                            <alert>East
+        must be greater thanWest</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"South\" ref=\"ecs:lrlat\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat) &gt;= -90</xpath>\n                            <alert>South
+        must be greater than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat) &lt;= 90</xpath>\n                            <alert>South
+        must be less than 90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat)  &lt;=  number(ecs:ullat)</xpath>\n                            <alert>South
+        must be less thanNorth</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n            </group>\n        </group>\n        <group
+        id=\"MRT-optionalSettings\" label=\"Advanced Settings (Optional)\" ref=\"ecs:MRT-request\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''\">\n            <select id=\"MRT-projectselect\"
+        label=\"Re-projection Options\" multiple=\"false\" open=\"false\" ref=\"ecs:projection_options/ecs:PROJECTION\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''\" type=\"xsd:string\" valueElementName=\"value\">\n                <!--Place
+        holder if we dont know the default projection (same as empty string)-->\n                <item
+        label=\"Geographic\" value=\"GEOGRAPHIC_MRT\"/>\n                <item label=\"Universal
+        Transverse Mercator\" value=\"UNIVERSAL TRANSVERSE MERCATOR_MRT\"/>\n                <item
+        label=\"Albers Equal Area\" value=\"ALBERS_MRT\"/>\n                <item
+        label=\"Polar Stereographic\" value=\"POLAR STEREOGRAPHIC_MRT\"/>\n                <item
+        label=\"Lambert Azimuthal\" value=\"LAMBERT AZIMUTHAL_MRT\"/>\n                <item
+        label=\"Sinusoidal\" value=\"SINUSOIDAL_MRT\"/>\n                <item label=\"No
+        Change\" value=\"NO_CHANGE_MRT\"/>\n            </select>\n            <group
+        id=\"MRT-GEOGRAPHIC_MRT-paramgroup\" label=\"Set Parameters for Geographic
+        (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:GEOGRAPHIC_MRT_projection\"
+        relevant=\"//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC_MRT''
+        and not(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <select
+        id=\"MRTGEOGRAPHIC_MRTDatum2enumselect\" label=\"Datum:\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:Datum2\" required=\"false()\" type=\"xs:string\"
+        valueElementName=\"value\">\n                    <item label=\"NAD27\" value=\"NAD27\"/>\n                    <item
+        label=\"NAD83\" value=\"NAD83\"/>\n                    <item label=\"No Datum\"
+        value=\"No Datum\"/>\n                    <item label=\"WGS66\" value=\"WGS66\"/>\n                    <item
+        label=\"WGS72\" value=\"WGS72\"/>\n                    <item label=\"WGS84\"
+        value=\"WGS84\"/>\n                    <help/>\n                </select>\n            </group>\n            <group
+        id=\"MRT-UNIVERSAL_TRANSVERSE_MERCATOR_MRT-paramgroup\" label=\"Set Parameters
+        for Universal Transverse Mercator (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection\"
+        relevant=\"//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR_MRT'' and not(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of any point in UTM Zone\" ref=\"ecs:LonZ\" relevant=\"//ecs:MRT-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ)
+        = 0) or\n                           \n                           (number(translate(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ,''-'',''''))
+        &gt;= 0.0 and number(translate(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ,''-'',''''))
+        &lt;= 180.0) and\n                           \n                           not(contains(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ,
+        ''.''))</xpath>\n                            <alert>Longitude must be specified
+        with values \u00c2\u00b1(0.0..180.0).</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ)
+        = 0 and string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ)
+        = 0) or  \n                           \n                           (string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ)
+        &gt; 0)</xpath>\n                            <alert>Latitude and Longitude
+        must be specified together.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>Enter
+        Longitude (decimal degrees) of any point if you do not know the UTM Zone,
+        or just enter UTM Zone.</help>\n                </input>\n                <input
+        label=\"Latitude of any point in UTM Zone\" ref=\"ecs:LatZ\" relevant=\"//ecs:MRT-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ)
+        = 0) or\n                           \n                           (number(translate(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ,''-'',''''))
+        &gt;= 0.0 and number(translate(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ,''-'',''''))
+        &lt;= 180.0) and\n                           \n                           not(contains(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ,
+        ''.''))</xpath>\n                            <alert>Latitude must be specified
+        with values \u00c2\u00b1(0.0..180.0).</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ)
+        = 0 and string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ)
+        = 0) or  \n                           \n                           (string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ)
+        &gt; 0)</xpath>\n                            <alert>Latitude and Longitude
+        must be specified together.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>Enter
+        Latitude (decimal degrees) of any point if you do not know the UTM Zone, or
+        just enter UTM Zone.</help>\n                </input>\n                <input
+        label=\"UTM Zone\" ref=\"ecs:NZone\" relevant=\"//ecs:MRT-request/ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\">\n                    <constraints>\n                        <constraint>\n                            <xpath>string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:NZone)
+        = 0 or\n                           \n                           ((number(translate(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:NZone,''-'',''''))
+        &gt; 0.0 and number(translate(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:NZone,''-'',''''))
+        &lt;= 180.0) and\n                           \n                           not(contains(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:NZone,
+        ''.'')))</xpath>\n                            <alert>Zone parameter (Zone)
+        must be specified as an integer with a value \u00c2\u00b1(1..60)</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>(string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LatZ)
+        = 0 and string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:LonZ)
+        = 0) or string-length(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT_projection/ecs:NZone)
+        = 0</xpath>\n                            <alert>The zone parameter takes precedence
+        over the latitude and longitude specifications.</alert>\n                        </constraint>\n                    </constraints>\n                    <help>If
+        you entered a Latitude/Longitude of any point in the UTM Zone, then you do
+        not need to enter UTM Zone.</help>\n                </input>\n                <select
+        id=\"MRTUNIVERSAL_TRANSVERSE_MERCATOR_MRTDatum4enumselect\" label=\"Datum:\"
+        multiple=\"false\" open=\"false\" ref=\"ecs:Datum4\" required=\"false()\"
+        type=\"xs:string\" valueElementName=\"value\">\n                    <item
+        label=\"NAD27\" value=\"NAD27\"/>\n                    <item label=\"NAD83\"
+        value=\"NAD83\"/>\n                    <item label=\"No Datum\" value=\"No
+        Datum\"/>\n                    <item label=\"WGS66\" value=\"WGS66\"/>\n                    <item
+        label=\"WGS72\" value=\"WGS72\"/>\n                    <item label=\"WGS84\"
+        value=\"WGS84\"/>\n                    <help/>\n                </select>\n            </group>\n            <group
+        id=\"MRT-ALBERS_MRT-paramgroup\" label=\"Set Parameters for Albers Equal Area
+        (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:ALBERS_MRT_projection\"
+        relevant=\"//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS_MRT''
+        and not(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Semimajor radius
+        and Semiminor radius of the ellipsoid axis, then you do not enter Latitude
+        of first standard parallel and Latitude of second standard parallel.</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Semimajor radius
+        and Semiminor radius of the ellipsoid axis, then you do not enter Latitude
+        of first standard parallel and Latitude of second standard parallel.</help>\n                </input>\n                <input
+        label=\"Latitude of first standard parallel\" ref=\"ecs:STDPR1\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Latitude of first
+        standard parallel and Latitude of second standard parallel (decimal degrees),
+        then you do not enter Semimajor radius and Semiminor radius of the ellipsoid
+        axis.</help>\n                </input>\n                <input label=\"Latitude
+        of second standard parallel\" ref=\"ecs:STDPR2\" required=\"false()\" type=\"xsd:string\">\n                    <help>If
+        you enter Latitude of first standard parallel and Latitude of second standard
+        parallel (decimal degrees), then you do not enter Semimajor radius and Semiminor
+        radius of the ellipsoid axis.</help>\n                </input>\n                <input
+        label=\"Latitude of false origin\" ref=\"ecs:OriginLat\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Longitude of false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n                <select
+        id=\"MRTALBERS_MRTDatum1enumselect\" label=\"Datum:\" multiple=\"false\" open=\"false\"
+        ref=\"ecs:Datum1\" required=\"false()\" type=\"xs:string\" valueElementName=\"value\">\n                    <item
+        label=\"NAD27\" value=\"NAD27\"/>\n                    <item label=\"NAD83\"
+        value=\"NAD83\"/>\n                    <item label=\"No Datum\" value=\"No
+        Datum\"/>\n                    <item label=\"WGS66\" value=\"WGS66\"/>\n                    <item
+        label=\"WGS72\" value=\"WGS72\"/>\n                    <item label=\"WGS84\"
+        value=\"WGS84\"/>\n                    <help/>\n                </select>\n            </group>\n            <group
+        id=\"MRT-POLAR_STEREOGRAPHIC_MRT-paramgroup\" label=\"Set Parameters for Polar
+        Stereographic (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:POLAR_STEREOGRAPHIC_MRT_projection\"
+        relevant=\"//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC_MRT'' and not(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of natural origin\" ref=\"ecs:LongPol\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the origin of the x-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"Latitude of natural origin\" ref=\"ecs:TrueScale\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the origin of the y-coordinate values for a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Need to define either the
+        Semimajor and Semiminor radius of the ellipsoid axis, or the Datum.</help>\n                </input>\n                <input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Need to define either the
+        Semimajor and Semiminor radius of the ellipsoid axis, or the Datum.</help>\n                </input>\n                <select
+        id=\"MRTPOLAR_STEREOGRAPHIC_MRTDatum3enumselect\" label=\"Datum:\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:Datum3\" required=\"false()\" type=\"xs:string\"
+        valueElementName=\"value\">\n                    <item label=\"NAD27\" value=\"NAD27\"/>\n                    <item
+        label=\"NAD83\" value=\"NAD83\"/>\n                    <item label=\"No Datum\"
+        value=\"No Datum\"/>\n                    <item label=\"WGS66\" value=\"WGS66\"/>\n                    <item
+        label=\"WGS72\" value=\"WGS72\"/>\n                    <item label=\"WGS84\"
+        value=\"WGS84\"/>\n                    <help/>\n                </select>\n            </group>\n            <group
+        id=\"MRT-LAMBERT_AZIMUTHAL_MRT-paramgroup\" label=\"Set Parameters for Lambert
+        Azimuthal (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:LAMBERT_AZIMUTHAL_MRT_projection\"
+        relevant=\"//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL_MRT'' and not(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Radius of reference Sphere\" ref=\"ecs:Sphere\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Radius of reference Sphere
+        must be defined in order to submit a successful request. If you enter Radius
+        of reference Sphere, then you do not need to enter Latitude / Longitude of
+        projection center.</help>\n                </input>\n                <input
+        label=\"Latitude of projection center / origin\" ref=\"ecs:CenterLat\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The latitude value (decimal
+        degrees) that defines the center, and sometimes the origin, of a projection.</help>\n                </input>\n                <input
+        label=\"Longitude of projection center\" ref=\"ecs:CentLon\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>The longitude value (decimal
+        degrees) that defines the center, and sometimes the origin, of a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n            </group>\n            <group
+        id=\"MRT-SINUSOIDAL_MRT-paramgroup\" label=\"Set Parameters for Sinusoidal
+        (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:SINUSOIDAL_MRT_projection\"
+        relevant=\"//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL_MRT''
+        and not(//ecs:MRT-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <input
+        label=\"Longitude of projection center\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>If you enter Radius of reference
+        Sphere, then you do not need to enter Longitude of projection center. The
+        longitude value (decimal degrees) that defines the center, and sometimes the
+        origin, of a projection.</help>\n                </input>\n                <input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the x-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\">\n                    <help>A
+        linear value (decimal degrees) applied to the origin of the y-coordinates
+        of a map projection, so that no values in the geographic region are negative.</help>\n                </input>\n                <input
+        label=\"Radius of reference Sphere\" ref=\"ecs:Sphere\" required=\"false()\"
+        type=\"xsd:string\">\n                    <help>Radius of reference Sphere
+        must be defined in order to submit a successful request.</help>\n                </input>\n            </group>\n            <select
+        id=\"MRT-GEOGRAPHIC_MRT-resampleselect\" label=\"Resample Dimension\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC_MRT-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC_MRT''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Decimal
+        Degrees\" value=\"DEGREES\"/>\n                <item label=\"No Resampling\"
+        value=\"&amp;\"/>\n            </select>\n            <select id=\"MRT-GEOGRAPHIC_MRT-DEGREES-resampEmumselect\"
+        label=\"Select a resampling value:\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC_MRT-DEGREES-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC_MRT''  and
+        ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC_MRT-dimension/ecs:value=''DEGREES''
+        \" type=\"xs:string\" valueElementName=\"value\">\n                <item label=\"Native\"
+        value=\"Native\"/>\n                <help>Native:  nominal pixel size at nadir.
+        For the Geographic Projection, pixel size is measured as decimal degrees.</help>\n            </select>\n            <select
+        id=\"MRT-UNIVERSAL_TRANSVERSE_MERCATOR_MRT-resampleselect\" label=\"Resample
+        Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR_MRT''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Meters\" value=\"METERS\"/>\n                <item label=\"No Resampling\"
+        value=\"&amp;\"/>\n            </select>\n            <select id=\"MRT-UNIVERSAL_TRANSVERSE_MERCATOR_MRT-METERS-resampEmumselect\"
+        label=\"Select a resampling value:\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-METERS-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR_MRT''  and ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_MRT-dimension/ecs:value=''METERS''
+        \" type=\"xs:string\" valueElementName=\"value\">\n                <item label=\"1000\"
+        value=\"1000\"/>\n                <item label=\"250\" value=\"250\"/>\n                <item
+        label=\"500\" value=\"500\"/>\n                <item label=\"Native\" value=\"Native\"/>\n                <help>Pixel
+        size can be defined as Native (nominal pixel size at nadir) 250, 500, or 1000
+        meters.</help>\n            </select>\n            <select id=\"MRT-ALBERS_MRT-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS_MRT-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS_MRT''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Meters\"
+        value=\"METERS\"/>\n                <item label=\"No Resampling\" value=\"&amp;\"/>\n            </select>\n            <select
+        id=\"MRT-ALBERS_MRT-METERS-resampEmumselect\" label=\"Select a resampling
+        value:\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS_MRT-METERS-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS_MRT''  and
+        ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS_MRT-dimension/ecs:value=''METERS''
+        \" type=\"xs:string\" valueElementName=\"value\">\n                <item label=\"1000\"
+        value=\"1000\"/>\n                <item label=\"250\" value=\"250\"/>\n                <item
+        label=\"500\" value=\"500\"/>\n                <item label=\"Native\" value=\"Native\"/>\n                <help>Pixel
+        size can be defined as Native (nominal pixel size at nadir) 250, 500, or 1000
+        meters.</help>\n            </select>\n            <select id=\"MRT-POLAR_STEREOGRAPHIC_MRT-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC_MRT-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC_MRT''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Meters\" value=\"METERS\"/>\n                <item label=\"No Resampling\"
+        value=\"&amp;\"/>\n            </select>\n            <select id=\"MRT-POLAR_STEREOGRAPHIC_MRT-METERS-resampEmumselect\"
+        label=\"Select a resampling value:\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC_MRT-METERS-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC_MRT''  and ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC_MRT-dimension/ecs:value=''METERS''
+        \" type=\"xs:string\" valueElementName=\"value\">\n                <item label=\"1000\"
+        value=\"1000\"/>\n                <item label=\"250\" value=\"250\"/>\n                <item
+        label=\"500\" value=\"500\"/>\n                <item label=\"Native\" value=\"Native\"/>\n                <help>Pixel
+        size can be defined as Native (nominal pixel size at nadir) 250, 500, or 1000
+        meters.</help>\n            </select>\n            <select id=\"MRT-LAMBERT_AZIMUTHAL_MRT-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL_MRT-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL_MRT''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"Meters\" value=\"METERS\"/>\n                <item label=\"No Resampling\"
+        value=\"&amp;\"/>\n            </select>\n            <select id=\"MRT-LAMBERT_AZIMUTHAL_MRT-METERS-resampEmumselect\"
+        label=\"Select a resampling value:\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL_MRT-METERS-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL_MRT''  and ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL_MRT-dimension/ecs:value=''METERS''
+        \" type=\"xs:string\" valueElementName=\"value\">\n                <item label=\"1000\"
+        value=\"1000\"/>\n                <item label=\"250\" value=\"250\"/>\n                <item
+        label=\"500\" value=\"500\"/>\n                <item label=\"Native\" value=\"Native\"/>\n                <help>Pixel
+        size can be defined as Native (nominal pixel size at nadir) 250, 500, or 1000
+        meters.</help>\n            </select>\n            <select id=\"MRT-SINUSOIDAL_MRT-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL_MRT-dimension\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL_MRT''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"Meters\"
+        value=\"METERS\"/>\n                <item label=\"No Resampling\" value=\"&amp;\"/>\n            </select>\n            <select
+        id=\"MRT-SINUSOIDAL_MRT-METERS-resampEmumselect\" label=\"Select a resampling
+        value:\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL_MRT-METERS-value\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL_MRT''  and
+        ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL_MRT-dimension/ecs:value=''METERS''
+        \" type=\"xs:string\" valueElementName=\"value\">\n                <item label=\"1000\"
+        value=\"1000\"/>\n                <item label=\"250\" value=\"250\"/>\n                <item
+        label=\"500\" value=\"500\"/>\n                <item label=\"Native\" value=\"Native\"/>\n                <help>Pixel
+        size can be defined as Native (nominal pixel size at nadir) 250, 500, or 1000
+        meters.</help>\n            </select>\n            <select id=\"MRT-interpolselect\"
+        label=\"Interpolation Method\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:INTERPOLATION\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and (ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;''
+        or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\" type=\"xsd:string\"
+        valueElementName=\"value\">\n                <item label=\"Nearest Neighbor\"
+        value=\"NN\"/>\n            </select>\n            <output label=\"\" ref=\"//ecs:MRT-request//ecs:INTRPL_MSG_1\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and (ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;''
+        or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\" type=\"xsd:string\"/>\n        </group>\n        <group
+        id=\"MRT-bandSubsetOptions\" label=\"Band Subsetting (Optional)\" ref=\"ecs:MRT-request/ecs:band_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ecs:MRT-request/ecs:band_subset_flag=''true''\">\n            <tree
+        cascade=\"true\" id=\"MRT-bandSubsetOptions\" label=\"Choose Bands\" ref=\"ecs:SUBSET_DATA_LAYERS/ecs:MOD09A1\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT'' and ../ecs:band_subset_flag=''true''\"
+        required=\"false()\" separator=\"/\" type=\"xsd:string\" valueElementName=\"dataset\">\n                <item
+        value=\"MOD09A1\">\n                    <item value=\"MOD_Grid_500m_Surface_Reflectance\">\n                        <item
+        value=\"sur_refl_b01\"/>\n                        <item value=\"sur_refl_b02\"/>\n                        <item
+        value=\"sur_refl_b03\"/>\n                        <item value=\"sur_refl_b04\"/>\n                        <item
+        value=\"sur_refl_b05\"/>\n                        <item value=\"sur_refl_b06\"/>\n                        <item
+        value=\"sur_refl_b07\"/>\n                        <item value=\"sur_refl_day_of_year\"/>\n                        <item
+        value=\"sur_refl_qc_500m\"/>\n                        <item value=\"sur_refl_raz\"/>\n                        <item
+        value=\"sur_refl_state_500m\"/>\n                        <item value=\"sur_refl_szen\"/>\n                        <item
+        value=\"sur_refl_vzen\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n        <group
+        label=\"\" ref=\"ecs:MRT-request\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''MRT''\">\n            <group
+        label=\"\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE\" relevant=\"not(//ecs:MRT-request/ecs:advanced_file_options/ecs:RESAMPLE//ecs:value=''&amp;'')\">\n                <output
+        label=\"\" ref=\"//ecs:MRT-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n        <input
+        label=\"Include Metadata and Processing History\" ref=\"ecs:PQF-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''PQF'' &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''QA_SERVICE''
+        &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''GLAS'' &#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \" type=\"xsd:boolean\"/>\n        <group
+        id=\"PQF-optionalSettings\" label=\"Advanced Settings (Optional)\" ref=\"ecs:PQF-request\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''PQF''\">\n            <select id=\"PQF-projectselect\"
+        label=\"Re-projection Options\" multiple=\"false\" open=\"false\" ref=\"ecs:projection_options/ecs:PROJECTION\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''PQF''\" type=\"xsd:string\" valueElementName=\"value\">\n                <!--Place
+        holder if we dont know the default projection (same as empty string)-->\n                <item
+        label=\"Pixel Quality Filter\" value=\"LDOPE_Custom_Projection\"/>\n            </select>\n            <group
+        id=\"PQF-LDOPE_Custom_Projection-paramgroup\" label=\"Set Parameters for Pixel
+        Quality Filter (Optional)\" ref=\"ecs:projection_options/ecs:PROJECTION_PARAMETERS/ecs:LDOPE_Custom_Projection_projection\"
+        relevant=\"//ecs:PQF-request/ecs:projection_options/ecs:PROJECTION/ecs:value=''LDOPE_Custom_Projection''
+        and not(//ecs:PQF-request/ecs:projection_options/ecs:PROJECTION/ecs:value!=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')\">\n                <output
+        label=\"\" ref=\"//ecs:PQF-request//ecs:PROJ_MSG_1\" type=\"xsd:string\"/>\n                <output
+        label=\"\" ref=\"//ecs:PQF-request//ecs:PROJ_MSG_2\" type=\"xsd:string\"/>\n                <select
+        id=\"PQFLDOPE_Custom_ProjectionMaskenumselect\" label=\"Quality Mask:\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:Mask\" required=\"true()\" type=\"xs:string\" valueElementName=\"value\">\n                    <item
+        label=\"Ideal\" value=\"Ideal\"/>\n                    <item label=\"Good\"
+        value=\"Good\"/>\n                    <help>Ideal: Pixel value 1=highest possible
+        grade in every quality parameter. 0=a grade less than the highest in at least
+        one quality parameter. Good: 1=include all Ideal pixels + those less than
+        perfect but still usable. 0=deemed unusable by the Quality info.</help>\n                </select>\n                <select
+        id=\"PQFLDOPE_Custom_ProjectionIncludeProductsenumselect\" label=\"Included
+        Products:\" multiple=\"false\" open=\"false\" ref=\"ecs:IncludeProducts\"
+        required=\"true()\" type=\"xs:string\" valueElementName=\"value\">\n                    <item
+        label=\"Mask\" value=\"Mask\"/>\n                    <item label=\"Applied
+        Mask\" value=\"Applied Mask\"/>\n                    <item label=\"Both\"
+        value=\"Both\"/>\n                    <help>Mask: Pixels with value=1 (Ideal
+        or Good) are usable. Value=0 are considered unusable for scientific research.
+        Applied Mask: Pixels deemed usable (Ideal or Good) will retain their pixel
+        value from the original HDF file. Unusable Pixel value=-28672.</help>\n                </select>\n            </group>\n            <output
+        label=\"\" ref=\"//ecs:PQF-request//ecs:INTRPL_MSG_1\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''PQF''
+        and (ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;'' or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\"
+        type=\"xsd:string\"/>\n        </group>\n        <group id=\"PQF-bandSubsetOptions\"
+        label=\"Band Subsetting (Optional)\" ref=\"ecs:PQF-request/ecs:band_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''PQF'' and ecs:PQF-request/ecs:band_subset_flag=''true''\">\n            <tree
+        cascade=\"true\" id=\"PQF-bandSubsetOptions\" label=\"Choose Bands\" ref=\"ecs:SUBSET_DATA_LAYERS/ecs:MOD09A1\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''PQF'' and ../ecs:band_subset_flag=''true''\"
+        required=\"false()\" separator=\"/\" type=\"xsd:string\" valueElementName=\"dataset\">\n                <item
+        value=\"MOD09A1\">\n                    <item value=\"MOD_Grid_500m_Surface_Reflectance\">\n                        <item
+        value=\"sur_refl_b01\"/>\n                        <item value=\"sur_refl_b02\"/>\n                        <item
+        value=\"sur_refl_b03\"/>\n                        <item value=\"sur_refl_b04\"/>\n                        <item
+        value=\"sur_refl_b05\"/>\n                        <item value=\"sur_refl_b06\"/>\n                        <item
+        value=\"sur_refl_b07\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"F8986009-8AA5-1025-19C6-6E59BD4A9075","name":"MOD09A1.5
+        ESI Service","provider_id":"12408"}}'
     http_version: 
