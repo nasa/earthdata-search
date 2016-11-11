@@ -112,7 +112,7 @@ module VCR
       lock = Mutex.new
 
       c.ignore_request do |request|
-        request.uri.include?('/echo-rest/tokens.json')
+        request.uri.include?('/rest/tokens.json')
       end
 
       c.around_http_request do |request|
@@ -126,14 +126,14 @@ module VCR
             cassette = 'geonames'
           elsif uri.include? '/convert'
             cassette = 'ogre'
-          elsif uri.include?('/echo-rest/orders')
+          elsif uri.include?('/rest/orders')
             cassette = 'orders'
             opts[:match_requests_on] << :token
             record = :none
           elsif (request.method == :delete ||
-                 (uri.include?('/echo-rest/calendar_events') && !uri.include?('testbed')) ||
+                 (uri.include?('/rest/calendar_events') && !uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
-                 uri.include?('/echo-rest/users.json') ||
+                 uri.include?('/rest/users.json') ||
                  uri.include?('/preferences.json') ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
@@ -150,8 +150,8 @@ module VCR
           elsif request.uri.include? '/catalog-rest/'
             parts = request.uri.split(/\/catalog-rest\/(?:echo_catalog\/)?/)[1]
             cassette = parts.split(/\.|\/|\?/).first
-          elsif request.uri.include? '/echo-rest/'
-            parts = request.uri.split('/echo-rest/')[1]
+          elsif request.uri.include? '/rest/'
+            parts = request.uri.split('/rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
           elsif (request.uri.include? 'ops/egi/request') && (request.uri.include? 'nsidc.org')
             opts[:match_requests_on] = [:method, :parsed_uri, :headers, :esi_request_body]
