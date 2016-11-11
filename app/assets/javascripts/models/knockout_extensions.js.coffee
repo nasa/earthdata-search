@@ -92,6 +92,7 @@ do (ko, $=jQuery) ->
 
   ko.bindingHandlers.echoform =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       $el = $(element)
       if $el.data('echoforms')
@@ -99,7 +100,6 @@ do (ko, $=jQuery) ->
         $el.off('echoforms:modelchange')
 
       options = ko.unwrap(valueAccessor())
-
       methodName = options.method()
       if methodName?
         method = null
@@ -108,6 +108,8 @@ do (ko, $=jQuery) ->
             method = available
             break
         if method? && available?.form?
+          # EDSC-975: If the form contains an empty email address field, prepopulate it with the user's email
+          available.form = available.form.replace('<ecs:email/>', '<ecs:email>' + edsc.page.account.email() + '</ecs:email>')
           originalForm = form = available.form
           model = options.rawModel
 
