@@ -80,6 +80,10 @@ class GibsConfiguration
 
       match['day_night_flag'] = query['dayNightFlag'] if query['dayNightFlag']
 
+      geo_resolution = layer['projections']['geographic']['matrixSet'].split('_').last if layer['projections']['geographic']
+      arctic_resolution = layer['projections']['arctic']['matrixSet'].split('_').last if layer['projections']['arctic']
+      antarctic_resolution = layer['projections']['antarctic']['matrixSet'].split('_').last if layer['projections']['antarctic']
+
       config = {
         match: match,
         product: layer['id'],
@@ -90,7 +94,10 @@ class GibsConfiguration
         resolution: layer['projections'].first.last['matrixSet'].split('_').last,
         geo: layer['projections'].key?('geographic'),
         arctic: layer['projections'].key?('arctic'),
-        antarctic: layer['projections'].key?('antarctic')
+        antarctic: layer['projections'].key?('antarctic'),
+        geo_resolution: geo_resolution,
+        arctic_resolution: arctic_resolution,
+        antarctic_resolution: antarctic_resolution
       }
 
       datacenter = Array.wrap(query['dataCenterId'])

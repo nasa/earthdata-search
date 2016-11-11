@@ -114,3 +114,20 @@ RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected
     "expected page to have map query of 'm=#{expected_lat}!#{expected_lng}!#{expected_zoom}...', got '#{URI.parse(page.current_url).query.inspect}'"
   end
 end
+
+RSpec::Matchers.define :have_gibs_resolution do |expected|
+  def page_resolution(page)
+    script = "var resolution = null; var layers = $('#map').data('map').map._layers; for (var k in layers) { var layer = layers[k]; if (layer.multiOptions && layer.getTileUrl && layer._map) resolution = layer.options.resolution } resolution"
+    page.evaluate_script(script)
+  end
+
+  match do |page|
+    synchronize do
+      expect(page_resolution(page)).to eq(expected)
+    end
+  end
+
+  failure_message_for_should do |page|
+    "expected page to have gibs tile resolution of '#{expected}', got '#{page_resolution(page)}'"
+  end
+end

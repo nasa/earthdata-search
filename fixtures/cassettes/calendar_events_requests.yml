@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://testbed.echo.nasa.gov/echo-rest/calendar_events?severity=ALERT
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/calendar_events?severity=ALERT
     body:
       encoding: US-ASCII
       string: ''
