@@ -40,7 +40,7 @@ describe "Spatial and temporal extraction", reset: false do
     end
 
     it 'filters collection results' do
-      expect(page).to have_content('6325 Matching Collections')
+      expect(page).to have_content('11547 Matching Collections')
     end
 
     it 'is set in the query' do
