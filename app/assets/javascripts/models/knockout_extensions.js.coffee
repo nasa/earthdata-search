@@ -1,4 +1,4 @@
-do (ko, $=jQuery, ajax=@edsc.util.xhr.ajax) ->
+do (ko, $=jQuery) ->
 
   ko.observableArray.fn.contains = (obj) ->
     @indexOf(obj) != -1
