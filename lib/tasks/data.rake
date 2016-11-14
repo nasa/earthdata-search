@@ -5,7 +5,7 @@ namespace :data do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
     task :echo10 => ['environment'] do
       puts "Starting data:load:echo10"
-      log_error('data:load:echo10') do
+      task_wrapper('data:load:echo10') do
         CollectionExtra.load_echo10
       end
     end
@@ -13,7 +13,7 @@ namespace :data do
     desc "Data about granules in collections to return with granule results"
     task :granules => ['environment'] do
       puts "Starting data:load:granules"
-      log_error('data:load:granules') do
+      task_wrapper('data:load:granules') do
         CollectionExtra.load
       end
     end
@@ -21,22 +21,63 @@ namespace :data do
     desc "Sync tags for services"
     task :tags => ['environment'] do
       puts "Starting data:load:tags"
-      log_error('data:load:tags') do
+      task_wrapper('data:load:tags') do
         CollectionExtra.sync_tags
       end
     end
 
-    def log_error(task, &block)
-      begin
+    def task_wrapper(task, tries=nil, &block)
+      # There are two hosts in production. We need to make sure the rake tasks are run on both of them.
+      # However too many requests sent from both of the hosts at the same time every hour time out due to the heavy load
+      # on CMR side. We therefore alternate the cron jobs in OPS to fire only from one host at a time.
+
+      # In detail, one of the host checks last run task in the db,
+      # if "last_run" is within (1.5 * interval)
+      #   check which host it comes from.
+      #     if it's from the same host, stop
+      #     else run the cron job
+      # if no entries in the past (1.5 * interval) found, wait and re-check for ten minutes
+      if Rails.env.production?
+        tries ||= 10
+        history_tasks = CronJobHistory.where(task_name: task, last_run: (Time.now - 1.5 * interval)..Time.now)
+        if history_tasks.size > 0
+          last_task = history_tasks.last
+          if Socket.gethostname == last_task.host
+            return
+          else
+            job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
+            job.save!
+            id  = job.id
+            yield
+          end
+        else
+          sleep rand(0..60)
+          retry unless (tries -= 1).zero?
+        end
+      else
         yield
-      rescue
+      end
+
+    rescue
+      if id.present?
+        job = CronJobHistory.find_by_id id
+        job.last_run = Time.now
+        job.status = 'failed'
+        job.message = "#{error.present? ? error.inspect : 'Null'}"
+      else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: "#{error.present? ? error.inspect : 'Null'}", host: Socket.gethostname)
-        job.save!
-        exit 1
+      end
+      job.save!
+      return
+    else
+      if id.present?
+      job = CronJobHistory.find_by_id id
+      job.last_run = Time.now
+      job.status = 'succeeded'
       else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
-        job.save!
       end
+      job.save!
     end
 
   end
