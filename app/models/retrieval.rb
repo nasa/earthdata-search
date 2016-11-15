@@ -64,42 +64,54 @@ class Retrieval < ActiveRecord::Base
       retrieval.collections.each do |collection|
         params = Rack::Utils.parse_nested_query(collection['params'])
         params.reject! { |p| ['datasource', 'short_name'].include? p }
-        params.merge!(page_size: 2000, page_num: 1)
 
-        access_methods = collection['serviceOptions']['accessMethod']
-        access_methods.each do |method|
-          begin
-            if method['type'] == 'order'
-              order_response = client.create_order(params,
-                                                   method['id'],
-                                                   method['method'],
-                                                   method['model'],
-                                                   user_id,
-                                                   token,
-                                                   client,
-                                                   access_token)
-              method[:order_id] = order_response[:order_id]
-              method[:dropped_granules] = order_response[:dropped_granules]
-              Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
-            elsif method['type'] == 'service'
-              request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
+        page_num = 0
+        page_size = 2000
+        results_count = test_query_params(client, params, token)
 
-              method[:collection_id] = collection['id']
-              service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
-              method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
-              method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
-              method[:error_message] = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
-            end
-          rescue => e
-            tag = SecureRandom.hex(8)
-            logger.tagged("retrieval-error") do
-              logger.tagged(tag) do
-                logger.error "Unable to process access method in retrieval #{id}: #{method.to_json}"
-                logger.error e.message
-                e.backtrace.each {|l| logger.error "\t#{l}"}
-                method[:order_status] = 'failed'
-                method[:error_code] = tag
-                method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
+        until page_num * page_size > results_count do
+          page_num += 1
+          params.merge!(page_size: page_size, page_num: page_num)
+
+          access_methods = collection['serviceOptions']['accessMethod']
+          access_methods.each do |method|
+            begin
+              if method['type'] == 'order'
+                order_response = client.create_order(params,
+                                                     method['id'],
+                                                     method['method'],
+                                                     method['model'],
+                                                     user_id,
+                                                     token,
+                                                     client,
+                                                     access_token)
+                method[:order_id] ||= []
+                method[:order_id] << order_response[:order_id]
+                method[:dropped_granules] = order_response[:dropped_granules]
+                Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+              elsif method['type'] == 'service'
+                # TODO how does this work for service requests? is it only orders?
+                request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
+                method[:collection_id] = collection['id']
+                service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
+                order_id = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
+                method[:order_id] ||= []
+                method[:order_id] << order_id
+                method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
+                method[:error_message] = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
+              end
+            rescue => e
+              puts e.inspect
+              tag = SecureRandom.hex(8)
+              logger.tagged("retrieval-error") do
+                logger.tagged(tag) do
+                  logger.error "Unable to process access method in retrieval #{id}: #{method.to_json}"
+                  logger.error e.message
+                  e.backtrace.each {|l| logger.error "\t#{l}"}
+                  method[:order_status] = 'failed'
+                  method[:error_code] = tag
+                  method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
+                end
               end
             end
           end
@@ -156,5 +168,12 @@ class Retrieval < ActiveRecord::Base
         AccessConfiguration.set_default_access_config(self.user, collection['id'], collection['serviceOptions'], collection['form_hashes'])
       end
     end
+  end
+
+  def self.test_query_params(client, params, token)
+    result = client.get_granules(params, token)
+    # puts "params: #{params.inspect}"
+    # puts "test_query_params: #{result.inspect}"
+    result.headers['cmr-hits'].to_i || 0
   end
 end

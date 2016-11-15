@@ -74,58 +74,70 @@ class DataAccessController < ApplicationController
 
     if orders.size > 0
       order_ids = orders.map {|o| o['order_id']}
-      order_response = order_ids.compact.size > 0 ? echo_client.get_orders({id: order_ids}, token) : nil
-      if order_response && order_response.success?
-        echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
+      order_ids.each do |order_id|
+          order_response = order_id && order_id.compact.size > 0 ? echo_client.get_orders({id: order_id}, token) : nil
+          if order_response && order_response.success?
+            echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
 
-        orders.each do |order|
-          echo_order = echo_orders[order['order_id']]
-          if echo_order
-            order['order_status'] = echo_order['state']
-          else
-            # echo order_id doesn't exist yet
-            order['order_status'] ||= 'creating'
+            orders.each do |order|
+              Array.wrap(order['order_id']).each do |id|
+                echo_order = echo_orders[id]
+
+                if echo_order
+                  order['order_status'] = echo_order['state']
+                else
+                  # echo order_id doesn't exist yet
+                  order['order_status'] ||= 'creating'
+                end
+              end
+            end
           end
-        end
-      end
-      # if no order numbers exist yet
-      if order_response.nil?
-        orders.each do |order|
-          order['order_status'] ||= 'creating'
-        end
+          # if no order numbers exist yet
+          if order_response.nil?
+            orders.each do |order|
+              order['order_status'] ||= 'creating'
+            end
+          end
       end
     end
 
+    # order_id is an array from retrieval.rb, but I need order_status, number_processed, total_number, etc. to match that array of order_ids
     if service_orders.size > 0
       service_orders.each do |s|
         s['order_status'] = 'creating'
         s['service_options'] = {}
+        s['service_options']['number_processed'] = 0
+        s['service_options']['total_number'] = 0
+        s['service_options']['download_urls'] = []
 
         if !s['error_code'].blank?
           s['order_status'] = 'failed'
         elsif s['collection_id']
           header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
-          response = ESIClient.get_esi_request(s['collection_id'], s['order_id'], echo_client, token, header_value).body
-          response_json = MultiXml.parse(response)
-          urls = []
-          if response_json['agentResponse']
-            status = response_json['agentResponse']['requestStatus']
-            process_info = response_json['agentResponse']['processInfo']
-            urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
-          else
-            status = {'status' => 'failed'}
-            s['error_code'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Code']
-            s['error_message'] = Array.wrap(response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Message'])
-          end
 
-          s['order_status'] = status['status']
-          s['service_options']['number_processed'] = status['numberProcessed']
-          s['service_options']['total_number'] = status['totalNumber']
-          s['service_options']['download_urls'] = urls
+          Array.wrap(s['order_id']).each do |order_id|
+            response = ESIClient.get_esi_request(s['collection_id'], order_id, echo_client, token, header_value).body
+            response_json = MultiXml.parse(response)
+            urls = []
+            if response_json['agentResponse']
+              status = response_json['agentResponse']['requestStatus']
+              process_info = response_json['agentResponse']['processInfo']
+              urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
+            else
+              status = {'status' => 'failed'}
+              s['error_code'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Code']
+              s['error_message'] = Array.wrap(response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Message'])
+            end
 
-          if s['order_status'] == 'failed' && response_json['Exception'].nil? && !process_info.nil?
-            s['error_message'] = Array.wrap(process_info['message'])
-            s['error_code'] = 'Error Code Not Provided'
+            s['order_status'] = status['status']
+            s['service_options']['number_processed'] += status['numberProcessed'].to_i
+            s['service_options']['total_number'] += status['totalNumber'].to_i
+            s['service_options']['download_urls'] += urls
+
+            if s['order_status'] == 'failed' && response_json['Exception'].nil? && !process_info.nil?
+              s['error_message'] = Array.wrap(process_info['message'])
+              s['error_code'] = 'Error Code Not Provided'
+            end
           end
         end
       end
