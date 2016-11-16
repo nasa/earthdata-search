@@ -150,6 +150,109 @@
         CIRES, 449 UCB
         University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>+1 (303) 492-2468</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>NSIDC</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>User Services</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>NOAA-11</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>NOAA-9</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>NOAA-8</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>NOAA-10</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes /><CSDTDescriptions /><CollectionAssociations /><Campaigns /><AlgorithmPackages /><TwoDCoordinateSystems /><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/data/NSIDC-0026</URL><URLDescription>Data Access</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources /><AssociatedDIFs><DIF><EntryId>NSIDC-0026</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+19cce170dd52238b2a6cf95ed1b293e01574182d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 10 Nov 2016 03:37:38 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d3235bf7-2de8-4eaf-ab01-025eb0398d66
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJwcm9jZXNzaW5nX2xldmVsX2lkIjoiMyIsImJveGVzIjpbIi05MCAtMTgw
+        IDkwIDE4MCJdLCJ0aW1lX3N0YXJ0IjoiMTk5OS0xMi0xOFQwMDowMDowMC4w
+        MDBaIiwidmVyc2lvbl9pZCI6IjAwNSIsInVwZGF0ZWQiOiIyMDE1LTA5LTMw
+        VDEwOjQ3OjI5Ljc5NVoiLCJkYXRhc2V0X2lkIjoiTU9ESVMvVGVycmEgU3Vy
+        ZmFjZSBSZWZsZWN0YW5jZSA4LURheSBMMyBHbG9iYWwgNTAwbSBTSU4gR3Jp
+        ZCBWMDA1IiwiZGF0YV9jZW50ZXIiOiJMUERBQUNfRUNTIiwic2hvcnRfbmFt
+        ZSI6Ik1PRDA5QTEiLCJvcmdhbml6YXRpb25zIjpbIkxQREFBQyIsIkxQIERB
+        QUMgVXNlciBTZXJ2aWNlcyIsIk1PREFQUyIsIk1PRElTIFNjaWVuY2UgRGF0
+        YSBTdXBwb3J0IFRlYW0iXSwidGl0bGUiOiJNT0RJUy9UZXJyYSBTdXJmYWNl
+        IFJlZmxlY3RhbmNlIDgtRGF5IEwzIEdsb2JhbCA1MDBtIFNJTiBHcmlkIFYw
+        MDUiLCJjb29yZGluYXRlX3N5c3RlbSI6IkNBUlRFU0lBTiIsInN1bW1hcnki
+        OiJUaGUgTU9ESVMgU3VyZmFjZSBSZWZsZWN0YW5jZSBwcm9kdWN0cyBwcm92
+        aWRlIGFuIGVzdGltYXRlIG9mIHRoZSBzdXJmYWNlIHNwZWN0cmFsIHJlZmxl
+        Y3RhbmNlIGFzIGl0IHdvdWxkIGJlIG1lYXN1cmVkIGF0IGdyb3VuZCBsZXZl
+        bCBpbiB0aGUgYWJzZW5jZSBvZiBhdG1vc3BoZXJpYyBzY2F0dGVyaW5nIG9y
+        IGFic29ycHRpb24uIExvdy1sZXZlbCBkYXRhIGFyZSBjb3JyZWN0ZWQgZm9y
+        IGF0bW9zcGhlcmljIGdhc2VzIGFuZCBhZXJvc29scywgeWllbGRpbmcgYSBs
+        ZXZlbC0yIGJhc2lzIGZvciBzZXZlcmFsIGhpZ2hlci1vcmRlciBncmlkZGVk
+        IGxldmVsLTIgKEwyRykgYW5kIGxldmVsLTMgcHJvZHVjdHMuXG5cbk1PRDA5
+        QTEgcHJvdmlkZXMgQmFuZHMgMeKAkzcgYXQgNTAwLW1ldGVyIHJlc29sdXRp
+        b24gaW4gYW4gOC1kYXkgZ3JpZGRlZCBsZXZlbC0zIHByb2R1Y3QgaW4gdGhl
+        IFNpbnVzb2lkYWwgcHJvamVjdGlvbi4gRWFjaCBNT0QwOUExIHBpeGVsIGNv
+        bnRhaW5zIHRoZSBiZXN0IHBvc3NpYmxlIEwyRyBvYnNlcnZhdGlvbiBkdXJp
+        bmcgYW4gOC1kYXkgcGVyaW9kIGFzIHNlbGVjdGVkIGJ5IGhpZ2gtb2JzZXJ2
+        YXRpb24gY292ZXJhZ2UsIGxvdy12aWV3IGFuZ2xlLCB0aGUgYWJzZW5jZSBv
+        ZiBjbG91ZHMgb3IgY2xvdWQgc2hhZG93LCBhbmQgYWVyb3NvbCBsb2FkaW5n
+        LiBTY2llbmNlIERhdGEgU2V0cyBwcm92aWRlZCBmb3IgdGhpcyBwcm9kdWN0
+        IGluY2x1ZGUgcmVmbGVjdGFuY2UgdmFsdWVzIGZvciBCYW5kcyAx4oCTNywg
+        cXVhbGl0eSBhc3Nlc3NtZW50LCBhbmQgdGhlIGRheSBvZiB0aGUgeWVhciBm
+        b3IgdGhlIHBpeGVsIGFsb25nIHdpdGggc29sYXIsIHZpZXcsIGFuZCB6ZW5p
+        dGggYW5nbGVzLlxuXG5WZXJzaW9uLTUgTU9ESVMvVGVycmEgU3VyZmFjZSBS
+        ZWZsZWN0YW5jZSBwcm9kdWN0cyBhcmUgVmFsaWRhdGVkIFN0YWdlIDIsIG1l
+        YW5pbmcgdGhhdCBhY2N1cmFjeSBoYXMgYmVlbiBhc3Nlc3NlZCBvdmVyIGEg
+        d2lkZWx5IGRpc3RyaWJ1dGVkIHNldCBvZiBsb2NhdGlvbnMgYW5kIHRpbWUg
+        cGVyaW9kcyB2aWEgc2V2ZXJhbCBncm91bmQtdHJ1dGggYW5kIHZhbGlkYXRp
+        b24gZWZmb3J0cy4gXG5cbkNoYW5nZSBQb2ludHMgb2YgSW50ZXJlc3Rcblxu
+        UmVkdWNlZCBmaWxlIHZvbHVtZTogaW50ZXJuYWwgY29tcHJlc3Npb25cbklt
+        cHJvdmVkIGFlcm9zb2wgcmV0cmlldmFsXG5cblYwMDUgRGF0YSBTZXQgQ2hh
+        cmFjdGVyaXN0aWNzOiBcblRlbXBvcmFsIENvdmVyYWdlOiBGZWJydWFyeSAx
+        OCwgMjAwMCAtXG5BcmVhOiB+MTAgZGVncmVlcyB4IDEwIGRlZ3JlZXMgbGF0
+        L2xvbmcgXG5GaWxlIFNpemU6IH42NCBNQiBcblByb2plY3Rpb246IFNpbnVz
+        b2lkYWwgXG5EYXRhIEZvcm1hdDogSERGLUVPUyBcbkltYWdlIERpbWVuc2lv
+        bnM6IDI0MDAgeCAyNDAwIHJvd3MvY29sdW1ucyBcblJlc29sdXRpb246IDUw
+        MCBtZXRlcnMgXG5TY2llbmNlIERhdGEgU2V0cyAoU0RTIEhERiBMYXllcnMp
+        OiAxMyIsIm9yYml0X3BhcmFtZXRlcnMiOnt9LCJpZCI6IkMxMDc3MDUyMjct
+        TFBEQUFDX0VDUyIsIm9yaWdpbmFsX2Zvcm1hdCI6IkVDSE8xMCIsImFyY2hp
+        dmVfY2VudGVyIjoiTFBEQUFDIiwiYnJvd3NlX2ZsYWciOmZhbHNlLCJvbmxp
+        bmVfYWNjZXNzX2ZsYWciOmZhbHNlLCJsaW5rcyI6W3sicmVsIjoiaHR0cDov
+        L2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwiaHJl
+        ZmxhbmciOiJlbi1VUyIsImhyZWYiOiJodHRwOi8vbGFuZHdlYi5uYXNjb20u
+        bmFzYS5nb3YvY2dpLWJpbi9RQV9XV1cvcWFGbGFnUGFnZS5jZ2k/c2F0PXRl
+        cnJhJnZlcj1DNSJ9LHsicmVsIjoiaHR0cDovL2VzaXBmZWQub3JnL25zL2Zl
+        ZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwiaHJlZmxhbmciOiJlbi1VUyIsImhy
+        ZWYiOiJodHRwczovL2xwZGFhYy51c2dzLmdvdi9ub2RlLzI5NSJ9LHsicmVs
+        IjoiaHR0cDovL2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRh
+        dGEjIiwiaHJlZmxhbmciOiJlbi1VUyIsImhyZWYiOiJodHRwOi8vcmV2ZXJi
+        LmVjaG8ubmFzYS5nb3YvcmV2ZXJiLyJ9LHsicmVsIjoiaHR0cDovL2VzaXBm
+        ZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwiaHJlZmxhbmci
+        OiJlbi1VUyIsImhyZWYiOiJodHRwczovL2xwZGFhYy51c2dzLmdvdi9kYXRh
+        X2FjY2Vzcy9kYXRhX3Bvb2wifSx7InJlbCI6Imh0dHA6Ly9lc2lwZmVkLm9y
+        Zy9ucy9mZWRzZWFyY2gvMS4xL21ldGFkYXRhIyIsImhyZWZsYW5nIjoiZW4t
+        VVMiLCJocmVmIjoiaHR0cDovL21ydHdlYi5jci51c2dzLmdvdi8ifSx7InJl
+        bCI6Imh0dHA6Ly9lc2lwZmVkLm9yZy9ucy9mZWRzZWFyY2gvMS4xL21ldGFk
+        YXRhIyIsImhyZWZsYW5nIjoiZW4tVVMiLCJocmVmIjoiaHR0cDovL2VhcnRo
+        ZXhwbG9yZXIudXNncy5nb3YvIn0seyJyZWwiOiJodHRwOi8vZXNpcGZlZC5v
+        cmcvbnMvZmVkc2VhcmNoLzEuMS9tZXRhZGF0YSMiLCJocmVmbGFuZyI6ImVu
+        LVVTIiwiaHJlZiI6Imh0dHA6Ly9nbG92aXMudXNncy5nb3YvIn0seyJyZWwi
+        OiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVkc2VhcmNoLzEuMS9tZXRhZGF0
+        YSMiLCJocmVmbGFuZyI6ImVuLVVTIiwiaHJlZiI6Imh0dHA6Ly9yZXZlcmIu
+        ZWNoby5uYXNhLmdvdi9yZXZlcmIvI3V0Zjg9JUUyJTlDJTkzJnNwYXRpYWxf
+        bWFwPXNhdGVsbGl0ZSZzcGF0aWFsX3R5cGU9cmVjdGFuZ2xlJmtleXdvcmRz
+        PU1PRDA5QTE1In0seyJyZWwiOiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVk
+        c2VhcmNoLzEuMS9tZXRhZGF0YSMiLCJocmVmbGFuZyI6ImVuLVVTIiwiaHJl
+        ZiI6Imh0dHBzOi8vbHBkYWFjLnVzZ3MuZ292LyJ9LHsicmVsIjoiaHR0cDov
+        L2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwiaHJl
+        ZmxhbmciOiJlbi1VUyIsImhyZWYiOiJodHRwOi8vbW9kaXMtbGFuZC5nc2Zj
+        Lm5hc2EuZ292LyJ9XX0=
+    http_version: 
 5cc022147c7c28dbda3c895322ff1a1cf204d0b8:
   response:
     status:
