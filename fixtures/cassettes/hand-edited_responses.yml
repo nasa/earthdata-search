@@ -820,6 +820,146 @@ post_smap_esi:
             </requestStatus>
         </eesi:agentResponse>
     http_version:
+post_mod09a1_esi:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:32:14 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://152.61.4.111/ops/egi/request/100001
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>100001</orderId>
+                <Instructions></Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT0.711S</processDuration>
+                <subagentId>SMAPL1L2</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>processing</status>
+                <numberProcessed>0</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
+get_mod09a1_esi_1:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:32:48 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://152.61.4.111/ops/egi/request/100001
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <downloadUrls>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/100001.html</downloadUrl>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/100001.zip</downloadUrl>
+            </downloadUrls>
+            <order>
+                <orderId>100001</orderId>
+                <Instructions>Your request has completed processing. You may retrieve the results from the download URLs until 2016-11-06 14:32:43.069</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT28.548S</processDuration>
+                <subagentId>SMAPL1L2</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
+get_mod09a1_esi_2:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      date:
+      - Thu, 27 Oct 2016 21:32:48 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      location:
+      - http://152.61.4.111/ops/egi/request/100001
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <downloadUrls>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/100001.html</downloadUrl>
+                <downloadUrl>http://n5eil01u.ecs.nsidc.org/ops/esir/100001.zip</downloadUrl>
+            </downloadUrls>
+            <order>
+                <orderId>100001</orderId>
+                <Instructions>Your request has completed processing. You may retrieve the results from the download URLs until 2016-11-06 14:32:43.069</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT28.548S</processDuration>
+                <subagentId>SMAPL1L2</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version:
 get_smap_esi_1:
   response:
     status:
