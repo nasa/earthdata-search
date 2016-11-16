@@ -233,7 +233,7 @@ http_interactions:
   digest: f2a7ab93337a9736dcaae149c78473b57acfd35c
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/browse-scaler/availability
+    uri: https://cmr.earthdata.nasa.gov/browse-scaler/availability
     body:
       encoding: US-ASCII
       string: ''
