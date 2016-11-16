@@ -76,7 +76,7 @@ describe "CWIC Granule list", reset: false do
     hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
     before :all do
-      expect(page).to have_text("Showing 20 of 85056 matching granules")
+      expect(page).to have_text("Showing 20 of 85202 matching granules")
       granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
       fill_in "Start", with: "1960-02-02 00:00:00\t"
       fill_in "End", with: "1960-02-02 23:59:59\t"

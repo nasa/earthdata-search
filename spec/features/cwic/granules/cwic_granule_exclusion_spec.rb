@@ -19,7 +19,7 @@ describe "CWIC-enabled granule results", reset: false do
 
       it "removes it from the list", acceptance: true do
         expect(page).to have_css('#granule-list .panel-list-item', count: 19)
-        expect(granule_list).to have_content("Showing 19 of 85055 matching granules")
+        expect(granule_list).to have_content("Showing 19 of 85201 matching granules")
       end
 
       context "and undoing a removal" do
@@ -36,7 +36,7 @@ describe "CWIC-enabled granule results", reset: false do
 
         it "adds it back to the list" do
           expect(page).to have_css('#granule-list .panel-list-item', count: 20)
-          expect(granule_list).to have_content("Showing 20 of 85056 matching granules")
+          expect(granule_list).to have_content("Showing 20 of 85202 matching granules")
         end
       end
 
@@ -48,7 +48,7 @@ describe "CWIC-enabled granule results", reset: false do
 
         it "continues to exclude the removed granule from the list", acceptance: true do
           expect(page).to have_css('#granule-list .panel-list-item', count: 19)
-          expect(granule_list).to have_content("Showing 19 of 85055 matching granules")
+          expect(granule_list).to have_content("Showing 19 of 85201 matching granules")
         end
       end
 
@@ -66,7 +66,7 @@ describe "CWIC-enabled granule results", reset: false do
 
 
         it "shows one excluded granule" do
-          expect(page).to have_content("85055 Granules")
+          expect(page).to have_content("85201 Granules")
         end
 
         context "and submitting a download order then viewing granule links" do
