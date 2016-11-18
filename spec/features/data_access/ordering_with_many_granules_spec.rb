@@ -20,11 +20,7 @@ describe 'Access data with more than 2000 granules', reset: false do
     context "with more than 2000 granules" do
       before :all do
         load_page 'data/configure', project: [collection_id]
-      end
-
-      it 'shows more than 2000 granules without a warning' do
-        expect(page).to have_text('3385 Granules')
-        expect(page).to have_no_text('Access methods other than "Download" are limited to the first 2000 granules.')
+        wait_for_xhr
       end
 
       context "and selecting 'ESI service' option" do
@@ -32,52 +28,57 @@ describe 'Access data with more than 2000 granules', reset: false do
           choose 'AE_SI6.3 ESI Service'
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
-          click_on 'Submit'
-          wait_for_xhr
         end
 
         after :all do
           load_page 'data/configure', project: [collection_id]
         end
 
-        it 'shows the order in the "Complete" state' do
-          expect(page).to have_text('Complete')
+        it "doesn't show a modal dialog" do
+          expect(page).not_to have_content('Maximum Granules Exceeded')
+          expect(page).to have_link('Edit Profile in Earthdata Login')
         end
-
-        # context 'after the order processes' do
-        #   before :all do
-        #     Delayed::Worker.new.work_off
-        #   end
-        #
-        #   it 'shows the order in the "Complete" state' do
-        #     expect(page).to have_text('Complete')
-        #   end
-        # end
       end
 
       context "and selecting 'Order' option" do
         before :all do
           choose 'FTP order w/QA,PH, and Browse'
           click_on 'Continue'
-          click_on 'Submit'
-          wait_for_xhr
         end
 
         after :all do
           load_page 'data/configure', project: [collection_id]
         end
 
-        it 'initially shows the order in the "Creating" state' do
-          expect(page).to have_text('Creating')
+        it 'displays a warning about multiple emails' do
+          expect(page).to have_text('Your order will be automatically split up into 2 orders. You will receive a set of emails for each order placed.')
+          expect(modal_footer).to have_link('Change access methods')
+          expect(modal_footer).to have_link('Refine your search')
+          expect(modal_footer).to have_link('Continue')
         end
 
-        context 'after the order processes' do
+        context 'when accepting the modal' do
           before :all do
-            Delayed::Worker.new.work_off
+            sleep 1
+            within '.modal-footer' do
+              click_link 'Continue'
+            end
+            click_on 'Submit'
+            wait_for_xhr
           end
 
-          it 'shows the order in the "Closed" state' do
-            expect(page).to have_text('Closed')
+          it 'initially shows the order in the "Creating" state' do
+            expect(page).to have_text('Creating')
+          end
+
+          context 'after the order processes' do
+            before :all do
+              Delayed::Worker.new.work_off
+            end
+
+            it 'shows the order in the "Closed" state' do
+              expect(page).to have_text('Closed')
+            end
           end
         end
       end
@@ -102,26 +103,40 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and the second collection having more than 2000 granules" do
         before :all do
-          choose 'AE_Rain Order Option'
-          click_on 'Continue'
-        end
-
-        after :all do
-          sleep 1
-          within '.modal-footer' do
-            click_link 'Continue'
-          end
-          click_on 'Back'
-          click_on 'Back'
-          choose 'Order'
+          choose 'FTP order w/QA,PH, and Browse'
           click_on 'Continue'
         end
 
         it "shows a modal dialog" do
-          expect(page).to have_content('Maximum Granules Exceeded')
+          expect(page).to have_text('Your order will be automatically split up into 2 orders. You will receive a set of emails for each order placed.')
           expect(modal_footer).to have_link('Change access methods')
           expect(modal_footer).to have_link('Refine your search')
           expect(modal_footer).to have_link('Continue')
+        end
+
+        context 'when accepting the modal' do
+          before :all do
+            sleep 1
+            within '.modal-footer' do
+              click_link 'Continue'
+            end
+            click_on 'Submit'
+            wait_for_xhr
+          end
+
+          it 'initially shows the order in the "Creating" state' do
+            expect(page).to have_text('Creating')
+          end
+
+          context 'after the order processes' do
+            before :all do
+              Delayed::Worker.new.work_off
+            end
+
+            it 'shows the order in the "Closed" state' do
+              expect(page).to have_text('Closed')
+            end
+          end
         end
       end
     end
