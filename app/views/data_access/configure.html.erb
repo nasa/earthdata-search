@@ -32,9 +32,9 @@
             <p class="summary">
               <span class="summary-data" data-bind="text: granuleAccessOptions().hits"></span>
               <span class="summary-label" data-bind="text: granuleAccessOptions().hits > 1 ? 'Granules' : 'Granule'"></span>
-              <!-- <span class="summary-caveat" data-bind="if: granuleAccessOptions().hits > 2000">
+              <span class="summary-caveat" data-bind="if: granuleAccessOptions().hits > 2000">
                 Access methods other than "Download" are limited to the first 2000 granules.
-              </span> -->
+              </span>
             </p>
             <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
@@ -202,9 +202,7 @@
       </div>
       <div class="modal-body">
         <p>
-          Access methods other than "Download" are limited to the
-          first 2,000 granules.  If you choose to continue, your request
-          may be truncated to the first 2,000 granules or rejected entirely.
+          Your order will be automatically split up into <span id="number-of-orders"></span> orders. You will receive a set of emails for each order placed.
         </p>
       </div>
       <div class="modal-footer">
