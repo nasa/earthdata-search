@@ -197,7 +197,6 @@ let CwicGranules = (function() {
       retry: () => this._loadOsdd(callback),
       success: (data, status, xhr) => {
         this.osdd(this._parseOsdd(data));
-        if (callback) callback();
       },
       complete: () => {
         this.isLoading(!this.currentRequest);
