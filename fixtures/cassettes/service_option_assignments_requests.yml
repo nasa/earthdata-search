@@ -36,6 +36,23 @@ http_interactions:
   digest: 00c93c69b96302b070ed8bb969b3b8baedd3d30c
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000561-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 21 Nov 2016 20:15:34 GMT
+  digest: fb29d23bb76d3e3913b0d10b385802a0b203e6cd
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C107705227-LPDAAC_ECS
     body:
       encoding: US-ASCII
