@@ -117,7 +117,7 @@ do (ko, $=jQuery) ->
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
           # Handle problems if the underlying form has a breaking change
           try
-            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+            $el.echoforms(form: form, prepopulate: options.prepopulatedFields(), skipValidation: model?)
           catch error
             console.log("Error caught rendering saved model, retrying:", error)
             form = originalForm
