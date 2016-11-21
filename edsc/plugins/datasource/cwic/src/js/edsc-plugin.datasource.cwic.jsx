@@ -9,8 +9,8 @@ export default class CwicDatasourcePlugin {
     this._collection = collection;
     this._query = null;
     this._dataLoaded = ko.observable(false);
-    let short_name = collection.json.short_name;
-    let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/datasets/${short_name}/osdd.xml`;
+    let id = collection.json.id
+    let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/datasets/${id}/osdd.xml`;
     Object.defineProperty(collection, 'granuleQuery', {get: () => {return this.cwicQuery();}});
     collection.osdd_url(osdd_url);
 
@@ -133,7 +133,7 @@ export default class CwicDatasourcePlugin {
   data() {
     if (!this._granules) {
       let collection = this._collection;
-      let datasetId = collection.json.short_name;
+      let datasetId = collection.json.id;
       this._granules = new Granules(this.cwicQuery(), this.cwicQuery().parentQuery, datasetId);
       this._granules.results();
       this._dataLoaded(true);

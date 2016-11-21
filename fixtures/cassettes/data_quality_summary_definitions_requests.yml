@@ -36,23 +36,6 @@ http_interactions:
   digest: 42256fedd0489ec24c443316dbef18e54df2b3bf
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1000000561-NSIDC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 15 Nov 2016 20:15:09 GMT
-  digest: b9c9a723ae33ccc75c63c2d608e43542c37cf086
-- request:
-    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1020-GHRC
     body:
       encoding: US-ASCII
@@ -68,6 +51,23 @@ http_interactions:
       - edsc
   recorded_at: Mon, 28 Sep 2015 17:28:02 GMT
   digest: d2413454dc799ab1d75baa1145bb7a252b5e5e5d
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C107705227-LPDAAC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 10 Nov 2016 03:37:38 GMT
+  digest: 0f58a41323aabdd38d5b7e672de16e46d8d3f5f2
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C115003855-NSIDC_ECS
@@ -425,6 +425,23 @@ http_interactions:
       - edsc
   recorded_at: Thu, 17 Sep 2015 01:42:29 GMT
   digest: 52fdf23b43ee07fdf59143998568b48021dc4123
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 10 Nov 2016 03:37:38 GMT
+  digest: 4daab4905e8625c9b7524d09fb96d22919b39e0f
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D
