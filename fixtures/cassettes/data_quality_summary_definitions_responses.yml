@@ -61,30 +61,6 @@
       encoding: UTF-8
       string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
-b9c9a723ae33ccc75c63c2d608e43542c37cf086:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/json; charset=utf-8
-      etag:
-      - '"9f40aa334584fe130aec2010b42c962a"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.120000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
-    http_version: 
 d2413454dc799ab1d75baa1145bb7a252b5e5e5d:
   response:
     status:
@@ -114,6 +90,30 @@ d2413454dc799ab1d75baa1145bb7a252b5e5e5d:
     body:
       encoding: UTF-8
       string: "[]"
+    http_version: 
+0f58a41323aabdd38d5b7e672de16e46d8d3f5f2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json; charset=utf-8
+      etag:
+      - '"e221d0c1b61dd1093e5b18cf8d987b03"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '2.168000'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"67F585F8-EA34-471F-A57E-BE10AC32A594","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594","name":"MODIS"}}]'
     http_version: 
 e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
   response:
@@ -741,6 +741,38 @@ e5d32985213ec3843724214f16eb67b62ce42808:
           <name>MODIS</name>
           <updated_at type="datetime">2011-01-20T13:22:28Z</updated_at>
           <provider_id>LAADS</provider_id>
+        </data_quality_summary_definition>
+    http_version: 
+4daab4905e8625c9b7524d09fb96d22919b39e0f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/xml; charset=utf-8
+      etag:
+      - '"10a6490e45180bcaee32f7909f01bb16"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.121000'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>67F585F8-EA34-471F-A57E-BE10AC32A594</id>
+          <summary>&lt;p&gt;-------------------------------------------------------------------------------------------------------- &lt;br /&gt; MODIS LEVEL-2 AND HIGHER PRODUCTS AT THE Land Processes DAAC:  &lt;br /&gt; -------------------------------------------------------------------------------------------------------- &lt;br /&gt;&lt;br /&gt; Product quality assessment QA and validation are integral parts of the MODIS Land product generation process. The MODIS Land products have different data versions and levels of maturity reflecting algorithm refinement and the input data used in their production.&amp;nbsp; Please view technical information regarding product maturity and QA at:  &lt;a href="http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi" target="_modisqa"&gt;http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi&lt;/a&gt; and product validation status at:  &lt;a href="http://landval.gsfc.nasa.gov/" target="_modisvalid"&gt;http://landval.gsfc.nasa.gov/&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>MODIS</name>
+          <updated_at type="datetime">2011-01-31T20:42:08Z</updated_at>
+          <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 
 7821e1f166cb65238302c261f7c9e0800e26c7e1:

@@ -43,7 +43,7 @@ describe "Spatial and temporal extraction", reset: false do
       expect(page).to have_content('6325 Matching Collections')
     end
 
-    it 'is set in the query' do
+    it 'is set in the query' do         
       expect(page).to have_query_string('qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T00%3A00%3A00.000Z%2C335%2C90&ok=last+winter')
     end
   end

@@ -5,19 +5,19 @@ earthdata:
     echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
-    browse_scaler_root: "https://api.echo.nasa.gov/browse-scaler"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
   uat:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_root: "https://cmr.uat.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.uat.earthdata.nasa.gov/opensearch"
-    browse_scaler_root: "https://api.echo.nasa.gov/browse-scaler"
+    browse_scaler_root: "https://cmr.uat.earthdata.nasa.gov/browse-scaler"
   sit:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
     echo_root: "https://cmr.sit.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"
     opensearch_root: "https://cmr.sit.earthdata.nasa.gov/opensearch"
-    browse_scaler_root: "https://api.echo.nasa.gov/browse-scaler"
+    browse_scaler_root: "https://cmr.sit.earthdata.nasa.gov/browse-scaler"
 
 cwic_root: "http://cwic.wgiss.ceos.org/"
 

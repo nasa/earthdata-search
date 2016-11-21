@@ -3,12 +3,11 @@ require "spec_helper"
 describe "CWIC-enabled granule results", reset: false do
   extend Helpers::CollectionHelpers
   before :all do
-    Capybara.reset_sessions!
-    load_page :search, env: :uat, q: 'C1204461918-GCMDTEST'
+    load_page :search, q: 'C1220566654-USGS_LTA'
   end
 
   context "when viewing granule results for a CWIC-enabled collection" do
-    hook_granule_results("AIRCRAFT FLUX-RAW: UNIV. COL. (FIFE)")
+    hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "clicking the button to remove a granule" do
 
@@ -19,8 +18,8 @@ describe "CWIC-enabled granule results", reset: false do
       end
 
       it "removes it from the list", acceptance: true do
-        expect(page).to have_css('#granule-list .panel-list-item', count: 14)
-        expect(granule_list).to have_content("Showing 14 of 14 matching granules")
+        expect(page).to have_css('#granule-list .panel-list-item', count: 19)
+        expect(granule_list).to have_content("Showing 19 of 85201 matching granules")
       end
 
       context "and undoing a removal" do
@@ -36,8 +35,8 @@ describe "CWIC-enabled granule results", reset: false do
         end
 
         it "adds it back to the list" do
-          expect(page).to have_css('#granule-list .panel-list-item', count: 15)
-          expect(granule_list).to have_content("Showing 15 of 15 matching granules")
+          expect(page).to have_css('#granule-list .panel-list-item', count: 20)
+          expect(granule_list).to have_content("Showing 20 of 85202 matching granules")
         end
       end
 
@@ -48,8 +47,8 @@ describe "CWIC-enabled granule results", reset: false do
         end
 
         it "continues to exclude the removed granule from the list", acceptance: true do
-          expect(page).to have_css('#granule-list .panel-list-item', count: 14)
-          expect(granule_list).to have_content("Showing 14 of 14 matching granules")
+          expect(page).to have_css('#granule-list .panel-list-item', count: 19)
+          expect(granule_list).to have_content("Showing 19 of 85201 matching granules")
         end
       end
 
@@ -67,7 +66,7 @@ describe "CWIC-enabled granule results", reset: false do
 
 
         it "shows one excluded granule" do
-          expect(page).to have_content("14 Granules")
+          expect(page).to have_content("85201 Granules")
         end
 
         context "and submitting a download order then viewing granule links" do
@@ -86,7 +85,7 @@ describe "CWIC-enabled granule results", reset: false do
           it "provides a list of download links for the remaining granuels" do
             within_last_window do
               expect(page).to have_no_text('Loading more...')
-              expect(page).to have_link('Granule download URL', count: 14)
+              expect(page).to have_link('Granule download URL', count: 99)
             end
           end
         end

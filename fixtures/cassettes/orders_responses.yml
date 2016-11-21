@@ -1,32 +1,5 @@
 ---
-9188ea5709e6fc89c593097075d7c9dd1899db86:
-  response:
-    status:
-      code: 201
-      message: 
-    headers:
-      location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/A46EF5BC-23F3-F2E8-A334-3B9E006B9D2B
-      content-type:
-      - application/json; charset=utf-8
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZWM1OTRmZjFlNzBhNjAzZjkzYzMzMWYwYjNiMGViMWU%3D--70bab94b0ae8f45bf27e2b4519e86cdb3646ac8b;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.207000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '{"order":{"id":"A46EF5BC-23F3-F2E8-A334-3B9E006B9D2B","provider_orders":[]}}'
-    http_version: 
-1b90f7b4333a8da88a642d8c7ada2aa40c058a8d:
+e753ec6897956e7482fa31e4880002db8fef76fd:
   response:
     status:
       code: 201
@@ -59,7 +32,7 @@
       encoding: UTF-8
       string: '{"order":{"id":"83010677-B2CE-BA63-C747-00DD17F53450","provider_orders":[]}}'
     http_version: 
-af1908464a76fca0d983f3be1e037514a1c7a468:
+11d02f2c98b62031098f610a34ae894c2a51240f:
   response:
     status:
       code: 201
@@ -92,34 +65,7 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       encoding: UTF-8
       string: '{"order":{"id":"AB49080C-89E6-D804-6139-B76873316327","provider_orders":[]}}'
     http_version: 
-bdf9845bcdc77d013bb2a60a5e0cfe1a9c8fd36d:
-  response:
-    status:
-      code: 201
-      message: 
-    headers:
-      location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/DA3FE0A3-F1D5-ABB2-1723-3BC3F25FFE08
-      content-type:
-      - application/json; charset=utf-8
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjEzYjJkMDU5NjM3ODhlYzBmODczZDJlODZmYjlkNjc%3D--071164c129565646083f1a874cfa59802fe5e909;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.229000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '{"order":{"id":"DA3FE0A3-F1D5-ABB2-1723-3BC3F25FFE08","provider_orders":[]}}'
-    http_version: 
-67df63391c277d4a742ab2c338b6fe156dc4505e:
+027afdee2287e641cd1e9e2fe5ff123d144a1f7b:
   response:
     status:
       code: 201
@@ -152,7 +98,7 @@ bdf9845bcdc77d013bb2a60a5e0cfe1a9c8fd36d:
       encoding: UTF-8
       string: '{"order":{"id":"232D1B49-2BFB-4263-ED9C-6D496BAF89EA","provider_orders":[]}}'
     http_version: 
-1b16d55d1d7d59ac4c70fbfe53eff5113719a699:
+5f019c91ef0076864e509ccda143823a7a48821a:
   response:
     status:
       code: 201
@@ -185,7 +131,7 @@ bdf9845bcdc77d013bb2a60a5e0cfe1a9c8fd36d:
       encoding: UTF-8
       string: '{"order":{"id":"8AA6A9ED-7868-357D-02B1-B960CE3E8B31","provider_orders":[]}}'
     http_version: 
-6c3e16ffd228884ccdc4460cd1e31bc3f8c45ec4:
+a5704e237da6199aeb490ae6ef79ac4ad96294b3:
   response:
     status:
       code: 201
@@ -218,7 +164,7 @@ bdf9845bcdc77d013bb2a60a5e0cfe1a9c8fd36d:
       encoding: UTF-8
       string: '{"order":{"id":"EB125611-B645-DD75-79EE-160AC3FBDE70","provider_orders":[]}}'
     http_version: 
-559fe229b88769924449be50e2f34415c5f6210e:
+128e145e8449f051833baa4ce81e090e480f922e:
   response:
     status:
       code: 201
@@ -251,7 +197,7 @@ bdf9845bcdc77d013bb2a60a5e0cfe1a9c8fd36d:
       encoding: UTF-8
       string: '{"order":{"id":"8419A64C-02F3-BBE8-A104-A9BB6B3F9F63","provider_orders":[]}}'
     http_version: 
-3205f794323f1f997ecbb04c8c905c735b5cc3cc:
+02aa4db9fe733c6984dbc4373072433b4d9059cb:
   response:
     status:
       code: 201
@@ -284,7 +230,7 @@ bdf9845bcdc77d013bb2a60a5e0cfe1a9c8fd36d:
       encoding: UTF-8
       string: '{"order":{"id":"75287FBC-3A46-1EB7-B146-FD4B55E2F7B4","provider_orders":[]}}'
     http_version: 
-c0cfde29c262a2e61e03920ecf4a187ec5a90ae6:
+127265a871057eda8dd4755fc0796378c10b6c7f:
   response:
     status:
       code: 200
@@ -314,7 +260,7 @@ c0cfde29c262a2e61e03920ecf4a187ec5a90ae6:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:48:31Z","id":"232D1B49-2BFB-4263-ED9C-6D496BAF89EA","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"LPDAAC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/232D1B49-2BFB-4263-ED9C-6D496BAF89EA/provider_orders/LPDAAC_ECS","name":"LPDAAC_ECS"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:48:35Z","updated_at":"2016-05-19T18:48:35Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-ea651b4aa3f50c74cd82559a47d1127401bea608:
+20df9983c1981342337838d8ade303afe5d1e2d4:
   response:
     status:
       code: 200
@@ -344,7 +290,7 @@ ea651b4aa3f50c74cd82559a47d1127401bea608:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:33:38Z","id":"75287FBC-3A46-1EB7-B146-FD4B55E2F7B4","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"LAADS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/75287FBC-3A46-1EB7-B146-FD4B55E2F7B4/provider_orders/LAADS","name":"LAADS"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:33:41Z","updated_at":"2016-05-19T18:33:41Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-6feefd2a0e2be689b4622d48dfb393b89a7b2619:
+cb10b25838af630d0fca4625ed935aada50a7c99:
   response:
     status:
       code: 200
@@ -374,7 +320,7 @@ ea651b4aa3f50c74cd82559a47d1127401bea608:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:58:56Z","id":"83010677-B2CE-BA63-C747-00DD17F53450","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/83010677-B2CE-BA63-C747-00DD17F53450/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:59:01Z","updated_at":"2016-05-19T18:59:01Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-b2fc76fa24b397a9c3852010ec823b4bec89edb0:
+47d2968dca0af024639dd3bc1110e8f14da17b37:
   response:
     status:
       code: 200
@@ -404,7 +350,7 @@ b2fc76fa24b397a9c3852010ec823b4bec89edb0:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:27:38Z","id":"8419A64C-02F3-BBE8-A104-A9BB6B3F9F63","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/8419A64C-02F3-BBE8-A104-A9BB6B3F9F63/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:27:41Z","updated_at":"2016-05-19T18:27:41Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-512c397e0fcfe4aeb308ca5d9f069eb328063a66:
+17173371edb21da948d071eb11a92c3bba8c5470:
   response:
     status:
       code: 200
@@ -434,31 +380,7 @@ b2fc76fa24b397a9c3852010ec823b4bec89edb0:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:39:33Z","id":"8AA6A9ED-7868-357D-02B1-B960CE3E8B31","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/8AA6A9ED-7868-357D-02B1-B960CE3E8B31/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:39:37Z","updated_at":"2016-05-19T18:39:37Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-d43ee51758266b225a3e420679007f90f2163e2b:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/json; charset=utf-8
-      etag:
-      - '"3bae2d8047a082a7827bb19c93f8cdbe"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.233000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-11-15T20:34:02Z","id":"A46EF5BC-23F3-F2E8-A334-3B9E006B9D2B","notification_level":"VERBOSE","order_price":0.0,"owner_id":"3BE909C1-75AE-3B16-852D-B20EB69EEDF4","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/A46EF5BC-23F3-F2E8-A334-3B9E006B9D2B/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"CLOSED","submitted_at":"2016-11-15T20:35:04Z","updated_at":"2016-11-15T20:42:51Z","user_domain":"OTHER","user_region":"USA"}},{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-11-15T20:35:05Z","id":"DA3FE0A3-F1D5-ABB2-1723-3BC3F25FFE08","notification_level":"VERBOSE","order_price":0.0,"owner_id":"3BE909C1-75AE-3B16-852D-B20EB69EEDF4","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/DA3FE0A3-F1D5-ABB2-1723-3BC3F25FFE08/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"CLOSED","submitted_at":"2016-11-15T20:35:46Z","updated_at":"2016-11-15T20:40:51Z","user_domain":"OTHER","user_region":"USA"}}]'
-    http_version: 
-6adf093cbf2cf150fd229d6c99d7f413246c9446:
+03589132cf35dee86deab9193c664677f2dc3216:
   response:
     status:
       code: 200
@@ -488,7 +410,7 @@ d43ee51758266b225a3e420679007f90f2163e2b:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:27:33Z","id":"AB49080C-89E6-D804-6139-B76873316327","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/AB49080C-89E6-D804-6139-B76873316327/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:27:36Z","updated_at":"2016-05-19T18:27:36Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-289957a6b1180466ce100cfd705c62db70d01d6a:
+ec9d9d87189a7204af95e88738ec9cbfb0fede4b:
   response:
     status:
       code: 200
@@ -518,7 +440,7 @@ d43ee51758266b225a3e420679007f90f2163e2b:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"Gsk6IBbEfa98sbE5UavsZQ","created_at":"2016-05-19T18:40:49Z","id":"EB125611-B645-DD75-79EE-160AC3FBDE70","notification_level":"NONE","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[{"reference":{"id":"LARC_ASDC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/EB125611-B645-DD75-79EE-160AC3FBDE70/provider_orders/LARC_ASDC","name":"LARC_ASDC"}}],"state":"SUBMITTING","submitted_at":"2016-05-19T18:40:52Z","updated_at":"2016-05-19T18:40:52Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-1063f551f3c8936c567db50c1f78921f824b7561:
+3cfead54d3b566c7e7d3b044885f252f607c5cf5:
   response:
     status:
       code: 200
@@ -549,7 +471,7 @@ d43ee51758266b225a3e420679007f90f2163e2b:
       encoding: UTF-8
       string: " "
     http_version: 
-9e171fbcf7ab3bc0ca8c30127c5c70a88a21692a:
+1886e3390849bb46397033a749ba63bc27430ace:
   response:
     status:
       code: 204
@@ -574,7 +496,7 @@ d43ee51758266b225a3e420679007f90f2163e2b:
       encoding: US-ASCII
       string: ''
     http_version: 
-462b2908ffc0d78262f94009e859081dfb9b83c3:
+2c7a0da5ad50e569f699230e9b1b54090f990536:
   response:
     status:
       code: 200
@@ -660,7 +582,7 @@ d43ee51758266b225a3e420679007f90f2163e2b:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-49d32c9d65d940dcc75fbb7b0ed4da56c34e1219:
+f51ec258c04d914dc119de48c65a56168947486a:
   response:
     status:
       code: 200
@@ -691,7 +613,7 @@ d43ee51758266b225a3e420679007f90f2163e2b:
       encoding: UTF-8
       string: " "
     http_version: 
-d79abcc1404c0b91b9706acf1ae1c29354992f63:
+e6eca46d3310832ab24998b8aece61aa075562f8:
   response:
     status:
       code: 204
@@ -716,7 +638,7 @@ d79abcc1404c0b91b9706acf1ae1c29354992f63:
       encoding: US-ASCII
       string: ''
     http_version: 
-e0729f8591caeac3ca10755baa494a4e84f39018:
+e6437001d524a01e4aa29189302815871cf1a448:
   response:
     status:
       code: 200
@@ -802,7 +724,7 @@ e0729f8591caeac3ca10755baa494a4e84f39018:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-b9ce7147bb3b1e80cc230b89787d80663834eb22:
+09c666445513d6ac9e413603377aa0efd514324e:
   response:
     status:
       code: 200
@@ -833,7 +755,7 @@ b9ce7147bb3b1e80cc230b89787d80663834eb22:
       encoding: UTF-8
       string: " "
     http_version: 
-7a6550f803862d4ccbc1ec79747695cfc288b370:
+68f4ee7845f2917f9bc884445884421a2e06c4dd:
   response:
     status:
       code: 204
@@ -858,7 +780,7 @@ b9ce7147bb3b1e80cc230b89787d80663834eb22:
       encoding: US-ASCII
       string: ''
     http_version: 
-37bb535b34b9b4a0e678b3d54b7de2f6fb0d1a28:
+abd51661d77552151117b9df2d9f2147a1a0ccfd:
   response:
     status:
       code: 200
@@ -944,7 +866,7 @@ b9ce7147bb3b1e80cc230b89787d80663834eb22:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-07c05ed0a3684538057a58b024ad36b864448492:
+e969bec32508a3b63b255d3e4a88769f54cfb4a7:
   response:
     status:
       code: 200
@@ -975,7 +897,7 @@ b9ce7147bb3b1e80cc230b89787d80663834eb22:
       encoding: UTF-8
       string: " "
     http_version: 
-e00c2c5a55bf67a2c8e51522d261e35854e62427:
+18b7c541eaeeb652345f51678da59b6b6a3ec0b4:
   response:
     status:
       code: 204
@@ -1000,7 +922,7 @@ e00c2c5a55bf67a2c8e51522d261e35854e62427:
       encoding: US-ASCII
       string: ''
     http_version: 
-8777faa265c2b8366c2c54981d432476bb534294:
+262a010683a62ba57a186df2aadaad33eaa9e46d:
   response:
     status:
       code: 200
@@ -1086,7 +1008,7 @@ e00c2c5a55bf67a2c8e51522d261e35854e62427:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-8aaa0f49f51f323e2a8169e8ca21dc3d282d7de4:
+2bea047e29a4d09b9b5a16cf7f0cb0fa8afec9e8:
   response:
     status:
       code: 200
@@ -1117,7 +1039,7 @@ e00c2c5a55bf67a2c8e51522d261e35854e62427:
       encoding: UTF-8
       string: " "
     http_version: 
-62680381e4a27510a2fd60ab5f134755e1ecfae6:
+471c52a4546c70344ed06cab7089da1d6133b32f:
   response:
     status:
       code: 204
@@ -1142,7 +1064,7 @@ e00c2c5a55bf67a2c8e51522d261e35854e62427:
       encoding: US-ASCII
       string: ''
     http_version: 
-5f17b22fda4102ceb395a58f5dcdf82674550ab9:
+8c0b951cc711cf8ff01d8a1f00dece5773559800:
   response:
     status:
       code: 200
@@ -1228,135 +1150,7 @@ e00c2c5a55bf67a2c8e51522d261e35854e62427:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-6852a555499452c7f95a6756c07e4f94e43a167f:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/xml; charset=utf-8
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMDBkNmM1N2FiZjJjYmY4MWE0MzZiODk1OThiMjg4YzY%3D--5304ec8c56132b703a63882a7d71e899dd889d4c;
-        path=/; HttpOnly
-      x-runtime:
-      - '52.414000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-3c6b86947fd42a8de6f6baffcb121b1c16464cfe:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMzFjMDExODcyMzk5MWQ1YTcxZjBiNDlhYTJlOWFjNmM%3D--3bd69f011983478b661e780f424c2fda958aac30;
-        path=/; HttpOnly
-      x-runtime:
-      - '2.511000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-178db43e0715598031fb933041bf77603bef3638:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/xml; charset=utf-8
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMjAxMTI3MTkyMzEzNGI5NTNkNjhjMzQwZGRjN2JjNTU%3D--63b19f07e10919a76405cd4ee17dc6aaa8e6c03f;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.509000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-e2def734a8d1cf2db9a7e15ef3c56122a4513ab4:
+f71461bf230eff5fc53816081b5c0b0a0572c3ce:
   response:
     status:
       code: 200
@@ -1387,7 +1181,7 @@ e2def734a8d1cf2db9a7e15ef3c56122a4513ab4:
       encoding: UTF-8
       string: " "
     http_version: 
-e86767d73d0ffa474646b00e052ebfcfdbdf67dc:
+1e5a5674a89f7ae573af0522debdc52f78f4eeb1:
   response:
     status:
       code: 204
@@ -1412,7 +1206,7 @@ e86767d73d0ffa474646b00e052ebfcfdbdf67dc:
       encoding: US-ASCII
       string: ''
     http_version: 
-613112c86e1782173699556f041d4d60d09a5f13:
+36560818d914110e545fc151fadc2ab4cb8f648d:
   response:
     status:
       code: 200
@@ -1498,135 +1292,7 @@ e86767d73d0ffa474646b00e052ebfcfdbdf67dc:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-b37d0f92a25c263a46f4ebeab728ed78aaba9278:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/xml; charset=utf-8
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlM2NhYmE1ZjM3YjhlODNlZDM5MzhhMWU5N2M5NTQ0NDE%3D--a7a8f6f6a25313e816430e08ddc1806af78ee94c;
-        path=/; HttpOnly
-      x-runtime:
-      - '33.861000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-4b423f5dc5d42c8e048b61aba19a223bc56c7306:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMjY5ODYwZjE5NWY3MTA5ZTkyZTcyNTMzMjA2NzUzNDA%3D--cf14b00e014abc490ae086944d255f18f72eec74;
-        path=/; HttpOnly
-      x-runtime:
-      - '1.717000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-25370b626797acaaf4766011e483907c35ffd2b1:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/xml; charset=utf-8
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjMyMTUzODYwYTJiOWM5ZDZkZjMwYTBjMTFkYWZiZGE%3D--dee3a1f069c6d5b52574b278d720ad9cf0c1013e;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.308000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-7141aee9263954b12b76be6effb801e0e09f84c4:
+a5ea9038a645c99c24fe4c1001f249794acb48a4:
   response:
     status:
       code: 200
@@ -1657,7 +1323,7 @@ b37d0f92a25c263a46f4ebeab728ed78aaba9278:
       encoding: UTF-8
       string: " "
     http_version: 
-abdd38db1509651b9303918d8ff93ee9bbe47f69:
+7df7ba6d84f8a0bfdbcdf806a88e78e6b18b7cd1:
   response:
     status:
       code: 204
@@ -1682,7 +1348,7 @@ abdd38db1509651b9303918d8ff93ee9bbe47f69:
       encoding: US-ASCII
       string: ''
     http_version: 
-a2019d49f6e16b4473398aecbd593742c314fa81:
+fa24df0b4f263fede01ab4adb01212644379df0f:
   response:
     status:
       code: 200

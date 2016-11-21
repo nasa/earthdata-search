@@ -36,7 +36,7 @@ http_interactions:
   digest: 00c93c69b96302b070ed8bb969b3b8baedd3d30c
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000561-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C107705227-LPDAAC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -49,8 +49,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 15 Nov 2016 20:15:11 GMT
-  digest: fb29d23bb76d3e3913b0d10b385802a0b203e6cd
+  recorded_at: Thu, 10 Nov 2016 03:37:41 GMT
+  digest: 36b301977a00d6b4833d706598b331d7253a25ac
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C115003855-NSIDC_ECS

@@ -93,7 +93,7 @@ class ESIClient
   end
 
   def find_field_element(field_symbol, data_type = 'ecs')
-    find_by_xpath("//*[contains(name(), '#{data_type}:#{field_symbol.to_s}')]")
+    find_by_xpath("//#{data_type}:#{field_symbol.to_s}")
   end
 
   def find_by_xpath(xpath)
@@ -205,17 +205,22 @@ class ESIClient
   end
 
   def add_bounding_box
-    bbox = {}
-    find_field_element("boundingbox").children.each do |item|
-      text = item.text.strip
-      bbox[item.name] = item.text.strip if item && !item.blank? && text.present?
-    end
+    bboxes = []
+    #Find all bounding boxes in the option selections.  There may be zero, one, or multiple
+    find_by_xpath("//*[contains(name(),'ecs:boundingbox')]").map{|bbox_element|
+      bbox = {}
+      bbox_element.children.each do |item|
+        text = item.text.strip
+        bbox[item.name] = item.text.strip if item && !item.blank? && text.present? && item.name != "display"
+      end
 
-    if bbox.size == 4
-      add_parameter(:BBOX, %w{ullon lrlat lrlon ullat}.
-          map { |an_edge| bbox[an_edge] }.
-          join(','))
-    end
+      if bbox.size >= 4
+        bboxes.push %w{ullon lrlat lrlon ullat}.
+            map { |an_edge| bbox[an_edge] }.
+            join(',')
+      end
+    }
+    add_parameter :BBOX, bboxes
   end
 
   def compact_nodes(node_set)

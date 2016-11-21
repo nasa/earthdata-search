@@ -709,7 +709,7 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
-      string: echo_collection_id=C1000000561-NSIDC_ECS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date
+      string: echo_collection_id=C107705227-LPDAAC_ECS&echo_granule_id=G1342587410-LPDAAC_ECS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -721,14 +721,14 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 15 Nov 2016 20:15:14 GMT
-  digest: e88c5b2ab9a200745d19275183d76198f4de4539
+  recorded_at: Thu, 10 Nov 2016 03:39:02 GMT
+  digest: adf1637f0d4f7d62ade1f3ed2f7ec5f7f7b1ddd4
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
-      string: echo_collection_id=C1000000561-NSIDC_ECS&page_num=2&page_size=2000&sort_key%5B%5D=-start_date
+      string: echo_collection_id=C107705227-LPDAAC_ECS&echo_granule_id=G1342587410-LPDAAC_ECS&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -740,14 +740,14 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 15 Nov 2016 20:15:16 GMT
-  digest: 2097fc72f884a76d0f80db0931dcba01644cb9af
+  recorded_at: Thu, 10 Nov 2016 03:37:34 GMT
+  digest: 7a1b768b2d6d403d4c849275cdfc916d87009b10
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
-      string: echo_collection_id=C1000000561-NSIDC_ECS&page_size=20&sort_key%5B%5D=-start_date
+      string: echo_collection_id=C107705227-LPDAAC_ECS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -757,10 +757,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 15 Nov 2016 20:15:08 GMT
-  digest: 66dc839aba498b2b8d006d23c6c4e2c2cb21c82c
+  recorded_at: Thu, 10 Nov 2016 03:37:19 GMT
+  digest: 8b03221adc3dab945d707a0f30c377b4e333d84c
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
