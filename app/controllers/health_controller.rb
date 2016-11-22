@@ -1,7 +1,7 @@
 class HealthController < ApplicationController
   respond_to :json
 
-  def index
+  def index 
     health = Health.new
     response = {
         edsc: nil,
@@ -18,7 +18,7 @@ class HealthController < ApplicationController
             cmr_search: health.cmr_search_status(echo_client),
             opensearch: health.opensearch_status(echo_client),
             browse_scaler: health.browse_scaler_status(echo_client),
-            urs: health.urs_status(echo_client)}
+            urs: health.urs_status(echo_client, params[:urs_test])}
     }
     response[:edsc] = health.edsc_status
     respond_with(response, status: :ok)

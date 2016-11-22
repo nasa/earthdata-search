@@ -1,8 +1,12 @@
 module Echo
   
   class UrsClient < BaseClient
-    def get_urs_availability
-      connection.get("/")
+    def get_urs_availability(urs_test = false)
+      if urs_test == "true"
+        connection.get("https://expired.badssl.com")
+      else
+        connection.get("/") 
+      end
     rescue Faraday::Error::ConnectionFailed
       {'ok?' => false, 'error' => 'Faraday::Error::ConnectionFailed (SSL Certificate Failed)'}
     end
