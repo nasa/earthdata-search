@@ -65,7 +65,8 @@ class Retrieval < ActiveRecord::Base
         params = Rack::Utils.parse_nested_query(collection['params'])
         params.reject! { |p| ['datasource', 'short_name'].include? p }
 
-        results_count = test_query_params(client, params, token)
+        results_count = get_granule_count(client, params, token)
+        results_count = 1000000 if results_count > 1000000
         page_num = 0
         page_size = 2000
 
@@ -73,7 +74,6 @@ class Retrieval < ActiveRecord::Base
         access_methods.each do |method|
           begin
             if method['type'] == 'order'
-              # TODO put upper limit of 1000000 granules
               until page_num * page_size > results_count do
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
@@ -87,7 +87,8 @@ class Retrieval < ActiveRecord::Base
                                                      access_token)
                 method[:order_id] ||= []
                 method[:order_id] << order_response[:order_id]
-                method[:dropped_granules] = order_response[:dropped_granules]
+                method[:dropped_granules] ||= []
+                method[:dropped_granules] << order_response[:dropped_granules]
                 Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
               end
             elsif method['type'] == 'service'
@@ -101,7 +102,6 @@ class Retrieval < ActiveRecord::Base
               method[:error_message] = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
             end
           rescue => e
-            puts e.inspect
             tag = SecureRandom.hex(8)
             logger.tagged("retrieval-error") do
               logger.tagged(tag) do
@@ -169,10 +169,8 @@ class Retrieval < ActiveRecord::Base
     end
   end
 
-  def self.test_query_params(client, params, token)
+  def self.get_granule_count(client, params, token)
     result = client.get_granules(params, token)
-    # puts "params: #{params.inspect}"
-    # puts "test_query_params: #{result.inspect}"
     result.headers['cmr-hits'].to_i || 0
   end
 end
