@@ -71,10 +71,11 @@ describe HealthController, type: :controller do
         CronJobHistory.delete_all
       end
 
+      
+
       it "returns a json response indicating edsc is not ok" do
         mock_client = Object.new
         allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
-
         res = MockResponse.edsc_dependency({"availability"=>"NO"})
         expect(mock_client).to receive(:get_echo_availability).and_return(res)
         res = MockResponse.edsc_dependency({"ok?"=>true})
@@ -100,6 +101,14 @@ describe HealthController, type: :controller do
         expect(json['background_jobs']['data_load_granules']).to eq({"ok?"=>true})
         expect(json['background_jobs']['data_load_tags']).to eq({"ok?"=>true})
         expect(json['background_jobs']['colormaps_load']).to eq({"ok?"=>true})
+      end
+    end
+
+    context "when the SSL Certificate held by URS fails" do
+      it "recovers from the exception and reports the failure" do
+        get :index, urs_test: "true", format: 'json'
+        json = JSON.parse response.body
+        expect(json['dependencies']['urs']).to eq({"ok?"=>false, "error"=>"Faraday::Error::ConnectionFailed (SSL Certificate Failed)"})
       end
     end
 
