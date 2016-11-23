@@ -88,7 +88,7 @@ class Retrieval < ActiveRecord::Base
                 method[:order_id] ||= []
                 method[:order_id] << order_response[:order_id]
                 method[:dropped_granules] ||= []
-                method[:dropped_granules] << order_response[:dropped_granules]
+                method[:dropped_granules] += order_response[:dropped_granules]
                 Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
               end
             elsif method['type'] == 'service'
