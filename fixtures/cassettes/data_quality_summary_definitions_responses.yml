@@ -61,6 +61,30 @@
       encoding: UTF-8
       string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
+b9c9a723ae33ccc75c63c2d608e43542c37cf086:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json; charset=utf-8
+      etag:
+      - '"9f40aa334584fe130aec2010b42c962a"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.210000'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+    http_version: 
 d2413454dc799ab1d75baa1145bb7a252b5e5e5d:
   response:
     status:
