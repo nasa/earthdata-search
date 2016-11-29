@@ -25,16 +25,16 @@
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
+          <h3 class="access-item-options-header" data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
+          <div class="summary-caveat" data-bind="visible: granuleAccessOptions().hits > 2000">
+            <i class="fa fa-exclamation-circle"></i> This order contains <span data-bind="text: granuleAccessOptions().hits"></span> granules. Some access methods may not support access beyond the first 2000 granules.
+          </div>
           <!-- ko if: granuleAccessOptions().hits != null && collection.has_granules -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
               <span class="summary-data" data-bind="text: granuleAccessOptions().hits"></span>
               <span class="summary-label" data-bind="text: granuleAccessOptions().hits > 1 ? 'Granules' : 'Granule'"></span>
-              <span class="summary-caveat" data-bind="if: granuleAccessOptions().hits > 2000">
-                Access methods other than "Download" are limited to the first 2000 granules.
-              </span>
             </p>
             <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
