@@ -128,7 +128,6 @@ let CwicGranules = (function() {
       this._loadOsdd(() => this._load(params, current, callback));
       return;
     }
-
     let url = this._urlFor(params);
     this.abort();
     this.isLoading(true);
