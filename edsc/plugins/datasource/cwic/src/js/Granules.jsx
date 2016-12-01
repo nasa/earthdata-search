@@ -128,6 +128,7 @@ let CwicGranules = (function() {
       this._loadOsdd(() => this._load(params, current, callback));
       return;
     }
+
     let url = this._urlFor(params);
     this.abort();
     this.isLoading(true);
@@ -173,7 +174,7 @@ let CwicGranules = (function() {
     this.currentRequest = ajax(xhrOpts);
   };
 
-  CwicGranules.prototype._parseOsdd = function (doc) {
+  CwicGranules.prototype._parseOsdd = function (doc, callback) {
 
     let urls = doc.getElementsByTagNameNS(xmlNamespaces.os, 'Url');
     for (let i = 0; i < urls.length; i++) {
@@ -184,6 +185,7 @@ let CwicGranules = (function() {
         };
       }
     }
+    if (callback) callback();
     return null;
   };
 
@@ -196,7 +198,7 @@ let CwicGranules = (function() {
       url: this.osddPath,
       retry: () => this._loadOsdd(callback),
       success: (data, status, xhr) => {
-        this.osdd(this._parseOsdd(data));
+        this.osdd(this._parseOsdd(data, callback));
       },
       complete: () => {
         this.isLoading(!this.currentRequest);
