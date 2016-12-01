@@ -78,8 +78,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_connectionfailed
-    render json: {errors: {error: 'Faraday::Error::ConnectionFailed: Likely SSL Certificate Failure'}}, status: 504
+  def handle_connection_failed
+    render json: {errors: {error: 'Faraday::Error::ConnectionFailed: Likely SSL Certificate Failure'}}, status: 500
   end
 
   def token
