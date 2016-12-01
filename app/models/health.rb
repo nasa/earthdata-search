@@ -75,8 +75,8 @@ class Health
     ok? res, res.body.present? && !res.body.downcase.include?("down")
   end
 
-  def urs_status(echo_client, urs_test = false)
-    res = echo_client.get_urs_availability(urs_test)
+  def urs_status(echo_client)
+    res = echo_client.get_urs_availability()
     (res.respond_to? :success? ) ? (ok? res) : res
   end
 

@@ -106,9 +106,20 @@ describe HealthController, type: :controller do
 
     context "when the SSL Certificate held by URS fails" do
       it "recovers from the exception and reports the failure" do
-        get :index, urs_test: "true", format: 'json'
+        mock_client = Object.new
+        allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
+        res = MockResponse.edsc_dependency({"availability"=>"NO"})
+        expect(mock_client).to receive(:get_echo_availability).and_return(res)
+        expect(mock_client).to receive(:get_cmr_availability).and_return(res)
+        expect(mock_client).to receive(:get_cmr_search_availability).and_return(res)
+        res = MockResponse.connection_failed(nil)
+        expect(mock_client).to receive(:get_urs_availability).and_return(res)
+        expect(mock_client).to receive(:get_opensearch_availability).and_return(res)
+        expect(mock_client).to receive(:get_browse_scaler_availability).and_return(res)
+
+        get :index, format: 'json'
         json = JSON.parse response.body
-        expect(json['dependencies']['urs']).to eq({"ok?"=>false, "error"=>"Faraday::Error::ConnectionFailed (SSL Certificate Failed)"})
+        expect(json['dependencies']['urs']).to eq({"ok?"=>false, "error"=>"Response code is 500"})
       end
     end
 
