@@ -1,7 +1,7 @@
 class HealthController < ApplicationController
   respond_to :json
 
-  def index 
+  def index
     health = Health.new
     response = {
         edsc: nil,
