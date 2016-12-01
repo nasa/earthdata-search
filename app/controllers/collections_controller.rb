@@ -50,7 +50,8 @@ class CollectionsController < ApplicationController
       query: params[:query],
       collections: params[:collections][0..number_of_collections - 1],
       selected_index: params[:selected_index],
-      selected_collection: params[:selected_collection]
+      selected_collection: params[:selected_collection],
+      exact_match: params[:exact_match]
     }
 
     metrics_event('collection_relevancy', data)

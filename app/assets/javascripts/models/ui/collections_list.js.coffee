@@ -67,11 +67,20 @@ ns.CollectionsList = do ($ = jQuery
       query = @query.params()
       collections = @collections.results().map (collection) -> collection.id
       index = @collections.results().indexOf(collection)
+
+      exact_match = switch query.free_text
+        when collection.dataset_id then true
+        when collection.id then true
+        when collection.short_name() then true
+        when "#{collection.short_name()}.#{collection.version_id}" then true
+        else false
+
       data =
         query: query
         collections: collections
         selected_index: index
         selected_collection: collection.id
+        exact_match: exact_match
 
       return true if $(event?.target).closest('a').length > 0
       return false unless collection.canFocus()
