@@ -71,8 +71,6 @@ describe HealthController, type: :controller do
         CronJobHistory.delete_all
       end
 
-      
-
       it "returns a json response indicating edsc is not ok" do
         mock_client = Object.new
         allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
