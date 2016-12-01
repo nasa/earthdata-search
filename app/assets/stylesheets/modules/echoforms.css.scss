@@ -1,6 +1,6 @@
 #edsc {
   h1.echoforms-label {
-    padding: .2em;
+    padding: 0.2em;
     background-color: transparent;
     font-size: 1.2em;
   }
@@ -17,6 +17,10 @@
   #bands-filter {
     margin-bottom: 10px;
     width: 350px;
+  }
+
+  #bands-count {
+    margin-bottom: 0.25em;
   }
 
   #selected-bands-count {
