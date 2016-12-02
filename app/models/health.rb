@@ -76,8 +76,8 @@ class Health
   end
 
   def urs_status(echo_client)
-    # check login page
-    ok? echo_client.get_urs_availability
+    res = echo_client.get_urs_availability()
+    (res.respond_to? :success? ) ? (ok? res) : res
   end
 
   private

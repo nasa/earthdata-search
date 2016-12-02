@@ -74,7 +74,6 @@ describe HealthController, type: :controller do
       it "returns a json response indicating edsc is not ok" do
         mock_client = Object.new
         allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
-
         res = MockResponse.edsc_dependency({"availability"=>"NO"})
         expect(mock_client).to receive(:get_echo_availability).and_return(res)
         res = MockResponse.edsc_dependency({"ok?"=>true})
@@ -100,6 +99,25 @@ describe HealthController, type: :controller do
         expect(json['background_jobs']['data_load_granules']).to eq({"ok?"=>true})
         expect(json['background_jobs']['data_load_tags']).to eq({"ok?"=>true})
         expect(json['background_jobs']['colormaps_load']).to eq({"ok?"=>true})
+      end
+    end
+
+    context "when the SSL Certificate held by URS fails" do
+      it "recovers from the exception and reports the failure" do
+        mock_client = Object.new
+        allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
+        res = MockResponse.edsc_dependency({"availability"=>"NO"})
+        expect(mock_client).to receive(:get_echo_availability).and_return(res)
+        expect(mock_client).to receive(:get_cmr_availability).and_return(res)
+        expect(mock_client).to receive(:get_cmr_search_availability).and_return(res)
+        res = MockResponse.connection_failed(nil)
+        expect(mock_client).to receive(:get_urs_availability).and_return(res)
+        expect(mock_client).to receive(:get_opensearch_availability).and_return(res)
+        expect(mock_client).to receive(:get_browse_scaler_availability).and_return(res)
+
+        get :index, format: 'json'
+        json = JSON.parse response.body
+        expect(json['dependencies']['urs']).to eq({"ok?"=>false, "error"=>"Response code is 500"})
       end
     end
 

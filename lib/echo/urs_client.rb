@@ -1,7 +1,10 @@
 module Echo
+  
   class UrsClient < BaseClient
     def get_urs_availability
-      connection.get("/")
+      connection.get("/") 
+    rescue Faraday::Error::ConnectionFailed
+      {'ok?' => false, 'error' => 'Faraday::Error::ConnectionFailed (SSL Certificate Failed)'}
     end
 
     def urs_login_path(callback_url=ENV['urs_callback_url'])
