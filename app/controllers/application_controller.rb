@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :validate_portal
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
-  rescue_from Faraday::Error::ConnectionFailed, with: :handle_connectionfailed
+  rescue_from Faraday::Error::ConnectionFailed, with: :handle_connection_failed
 
   def redirect_from_urs
     last_point = session[:last_point]
