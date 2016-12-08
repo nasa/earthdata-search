@@ -125,8 +125,9 @@ describe 'Collection details', reset: false do
       expect(page).to have_content('CALIPSO Lidar Level 2 5km aerosol profile data V3-01')
     end
 
-    it 'displays the combined temporal' do
-      expect(page).to have_content('2006-06-13 to 2011-10-31')
+    it 'displays all the temporal' do
+      expect(page).to have_content('2006-06-13 to 2009-02-16')
+      expect(page).to have_content('2009-03-17 to 2011-10-31')
     end
   end
 
@@ -136,8 +137,9 @@ describe 'Collection details', reset: false do
       expect(page).to have_content('JAXA/EORC Tropical Cyclones database')
     end
 
-    it 'displays the combined temporal' do
-      expect(page).to have_content('1997-12-07 ongoing')
+    it 'displays all the temporal' do
+      expect(page).to have_content('1997-12-07 to 2001-08-06')
+      expect(page).to have_content('2001-08-25 ongoing')
     end
   end
 
