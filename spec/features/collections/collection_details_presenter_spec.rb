@@ -64,7 +64,7 @@ describe CollectionDetailsPresenter do
     temporal = {"RangeDateTime"=>{"BeginningDateTime"=>"1984-12-25T00:00:00.000Z", "EndingDateTime"=>"1988-03-04T00:00:00.000Z"}}
     @collection.temporal = temporal
     presenter = CollectionDetailsPresenter.new(@collection)
-    @collection.temporal.should eq("1984-12-25T00:00:00.000Z to 1988-03-04T00:00:00.000Z")
+    @collection.temporal.should eq(["1984-12-25 to 1988-03-04"])
   end
 
   it "converts contacts" do

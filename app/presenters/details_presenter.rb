@@ -1,19 +1,39 @@
 class DetailsPresenter
 
   def temporal(hash)
-    if hash && hash['RangeDateTime']
-      # some collections may have multiple temporal fields when retrieved in echo10 format. CMR returns the date time
-      # from elasticsearch where latest and earliest times are indexed.
-      if hash['RangeDateTime'].is_a? Array
-        start_time = hash['RangeDateTime'].map{|range| DateTime.parse(range['BeginningDateTime']) if range['BeginningDateTime'].present?}.compact.min
-        end_time = hash['RangeDateTime'].map{|range| DateTime.parse(range['EndingDateTime']) if range['EndingDateTime'].present?}.compact.max
-        "#{start_time} to #{end_time}"
-      else
-        "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
+    # TODO: Hopefully this works but I'm not sure if it covers all cases
+    temporal = []
+    if hash && hash.is_a?(Hash)
+      if hash['TemporalRangeType'] && hash['TemporalRangeType'] == 'SingleDateTime'
+        date = "#{hash['SingleDateTime'].split('T')[0]}"
+        date += ' ongoing' if hash['EndsAtPresentFlag'] && hash['EndsAtPresentFlag'] == 'true'
+        temporal << date
+      end
+      if hash['TemporalRangeType'] && hash['TemporalRangeType'] == 'Continuous Range'
+        start = hash['RangeDateTime']['BeginningDateTime'].split('T')[0]
+        stop = hash['RangeDateTime']['EndingDateTime'].split('T')[0] if hash['RangeDateTime']['EndingDateTime']
+        if hash['EndsAtPresentFlag'] && hash['EndsAtPresentFlag'] == 'true'
+          date = "#{start} ongoing"
+        else
+          date = "#{start} to #{stop}"
+        end
+        temporal << date
+      elsif hash['RangeDateTime']
+        Array.wrap(hash['RangeDateTime']).each do |range_date|
+          start = range_date['BeginningDateTime'].split('T')[0]
+          stop = range_date['EndingDateTime'] ? range_date['EndingDateTime'].split('T')[0] : nil
+          if hash['EndsAtPresentFlag'] && hash['EndsAtPresentFlag'] == 'true' || stop == nil
+            date = "#{start} ongoing"
+          else
+            date = "#{start} to #{stop}"
+          end
+          temporal << date
+        end
       end
     else
-      'Not available'
+      temporal << 'Not available'
     end
+    temporal
   end
 
   def spatial(hash)
