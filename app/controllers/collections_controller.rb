@@ -123,11 +123,7 @@ class CollectionsController < ApplicationController
     # hurt to list them here though.
     relevancy_capable_fields = [:keyword, :free_text, :platform, :instrument, :sensor, :two_d_coordinate_system_name,
                                 :science_keywords, :project, :processing_level_id, :data_center, :archive_center]
-    if (params.keys & relevancy_capable_fields.map(&:to_s)).empty?
-      params[:sort_key].push 'entry_title'
-    else
-      params[:sort_key].push 'score'
-    end
+    params[:sort_key].push 'score' unless (params.keys & relevancy_capable_fields.map(&:to_s)).empty?
   end
 
   def add_fake_json_facets(facets)
