@@ -73,6 +73,7 @@ ns.CollectionsList = do ($ = jQuery
         when collection.id?.toLowerCase() then true
         when collection.short_name()?.toLowerCase() then true
         when "#{collection.short_name()?.toLowerCase()}_#{collection.version_id.toLowerCase()}" then true
+        when "#{collection.short_name()?.toLowerCase()} #{collection.version_id.toLowerCase()}" then true
         else false
 
       data =
