@@ -92,17 +92,6 @@ class Health
 
     if Rails.env.production?
       # There are two hosts in production. We need to make sure the rake tasks are run on both of them.
-      # However too many requests sent from both of the hosts at the same time every hour time out due to the heavy load
-      # on CMR side. We therefore alternate the cron jobs in OPS to fire only from one host at a time.
-
-      # In detail, one of the host checks last run task in the db,
-      # if "last_run" is within (1.5 * interval)
-      #   check which host it comes from.
-      #     if it's from the same host, stop
-      #     else run the cron job
-      # if no entries in the past (1.5 * interval) found, run the cron job
-
-      # host #1 checks last run of the cron job
       task1 = tasks.last
       status1 = task_status(interval, task1, task_name)
       task2 = tasks.select {|task| task.host != task1.host}.last

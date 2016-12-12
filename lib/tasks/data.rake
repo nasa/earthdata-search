@@ -36,28 +36,39 @@ namespace :data do
       #   check which host it comes from.
       #     if it's from the same host, stop
       #     else run the cron job
-      # if no entries in the past (1.5 * interval) found, wait and re-check for ten minutes
+      # if no entries in the past (1.5 * interval) found, wait and re-check for ten times
+
       if Rails.env.production?
-        tries ||= 10
-        history_tasks = CronJobHistory.where(task_name: task, last_run: (Time.now - 1.5 * interval)..Time.now)
-        if history_tasks.size > 0
-          last_task = history_tasks.last
-          if Socket.gethostname == last_task.host
-            return
+        tried = 0
+        while tried < 10 do
+          history_tasks = CronJobHistory.where(task_name: task, last_run: (Time.now - 1.5 * interval)..Time.now)
+          if history_tasks.size > 0
+            last_task = history_tasks.last
+            if Socket.gethostname == last_task.host
+              return
+            else
+              job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
+              job.save!
+              id = job.id
+              tried = 10
+              yield
+            end
           else
-            job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
-            job.save!
-            id  = job.id
-            yield
+            sleep rand(0..60)
+            tried += 1
+            if tried == 10
+              job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
+              job.save!
+              id = job.id
+              yield
+            else
+              next
+            end
           end
-        else
-          sleep rand(0..60)
-          retry unless (tries -= 1).zero?
         end
       else
         yield
       end
-
     rescue
       if id.present?
         job = CronJobHistory.find_by_id id
