@@ -18,7 +18,7 @@
   else if cmr_env == 'sit'
     browse_scaler_url = "<%= ENV['browse_scaler_url_sit'] ||  Rails.configuration.services['earthdata']['sit']['browse_scaler_root'] %>"
   else
-    browse_scaler_url = "<%= ENV['browse_scaler_url_prod'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
+    browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
 
   <% if Rails.env.test? %>
 
