@@ -10,7 +10,7 @@ module Echo
       @config = service_config
       clients = []
       clients << CmrClient.new(@config['cmr_root'], urs_client_id)
-      clients << EchoClient.new(@config['echo_root'], urs_client_id)
+      clients << EchoClient.new(ENV["echo_url_#{Rails.env.to_s}"] || @config['echo_root'], urs_client_id)
       clients << UrsClient.new(@config['urs_root'], urs_client_id)
       clients << BrowseScalerClient.new(ENV["browse_scaler_url_#{Rails.env.to_s}"] || @config['browse_scaler_root'], urs_client_id)
       @clients = clients
