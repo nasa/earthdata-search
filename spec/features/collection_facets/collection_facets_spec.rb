@@ -443,7 +443,7 @@ describe "Collection Facets", reset: false do
 
     after(:all) do
       reset_search
-      # find("h3.panel-title", text: 'Processing level').click
+      find("h3.panel-title", text: 'Processing level').click
     end
 
     it "shortens the query parameter to 'fl' in the url" do
