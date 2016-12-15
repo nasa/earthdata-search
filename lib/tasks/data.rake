@@ -31,10 +31,12 @@ namespace :data do
         yield
       rescue
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: "#{$!.message}", host: Socket.gethostname)
+        puts "Cron job #{task} failed with error #{$!.message}"
         job.save!
         exit 1
       else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
+        puts "Cron job #{task} completed successfully."
         job.save!
       end
     end
