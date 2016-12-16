@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend, hasPending=@edsc.util.xhr.hasPending) ->
+ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
 
   class SubsetOptions
     constructor: (@config) ->
@@ -68,10 +68,15 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       for m in @availableMethods when m.name == item.name
         clickedMethod = m
         break
-      selectedMethod = @availableMethods.filter (m) => m.name == @method()
-      if selectedMethod?[0]?.type == 'service' && clickedMethod.type == 'service'
-        @loadForm(true)
+
+      echoformContainer = document.getElementsByClassName('access-form')[0]
+      if clickedMethod.type == 'service' || clickedMethod.type == 'order'
+        @loadForm(true) if clickedMethod.type == 'service'
+        setTimeout (=>
+          ko.applyBindingsToNode(echoformContainer, {echoform: this})
+          @loadForm(false)), 0
       else
+        ko.cleanNode(echoformContainer);
         @loadForm(false)
       true
 
@@ -98,6 +103,19 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @model = jsonObj.model
       @rawModel = jsonObj.rawModel
       @type = jsonObj.type
+
+      if jsonObj.type == 'service' || jsonObj.type == 'order'
+        echoformContainer = null
+        checkExistsTimer = setInterval (=>
+          echoformContainer = document.getElementsByClassName('access-form')[0]
+          if echoformContainer
+            clearTimeout checkExistsTimer
+            setTimeout (=>
+              @loadForm(true) if jsonObj.type == 'service'
+              ko.applyBindingsToNode(echoformContainer, {echoform: this})
+              @loadForm(false)), 0
+        ), 0
+
       @orderId = jsonObj.order_id
       @orderStatus = jsonObj.order_status
       @errorCode = jsonObj.error_code
