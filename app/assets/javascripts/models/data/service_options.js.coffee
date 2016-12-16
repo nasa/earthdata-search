@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
+ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend, hasPending=@edsc.util.xhr.hasPending) ->
 
   class SubsetOptions
     constructor: (@config) ->
@@ -33,6 +33,20 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @method = ko.observable(method)
       @isValid = ko.observable(true)
 
+      @loadForm = ko.observable(false)
+
+      @loadingForm = ko.computed (item, e) =>
+        if @loadForm()
+          timer = setTimeout((=>
+            if document.getElementsByClassName('access-form')[0].children.length > 0
+              @loadForm(false)
+              clearTimeout timer
+            else
+              @loadForm(true)
+          ), 0)
+          @loadForm()
+        false
+
       @subsetOptions = ko.observable(null)
       @prepopulatedFields = ko.computed(@_computePrepopulatedFields, this, deferEvaluation: true)
 
@@ -48,6 +62,18 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         else
           @subsetOptions(null)
         result
+
+    showSpinner: (item, e)=>
+      clickedMethod = null
+      for m in @availableMethods when m.name == item.name
+        clickedMethod = m
+        break
+      selectedMethod = @availableMethods.filter (m) => m.name == @method()
+      if selectedMethod?[0]?.type == 'service' && clickedMethod.type == 'service'
+        @loadForm(true)
+      else
+        @loadForm(false)
+      true
 
     _computePrepopulatedFields: ->
       result = {}
@@ -118,6 +144,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
       for m in @accessMethod()
         return false unless m.method()? && m.isValid()
+        return false if m.loadForm()
       true
 
     addAccessMethod: =>

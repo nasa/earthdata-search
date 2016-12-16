@@ -117,11 +117,11 @@ do (ko, $=jQuery) ->
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
           # Handle problems if the underlying form has a breaking change
           try
-            $el.echoforms(form: form, prepopulate: options.prepopulatedFields(), skipValidation: model?)
+            setTimeout (=> $el.echoforms(form: form, prepopulate: options.prepopulatedFields(), skipValidation: model?)), 0
           catch error
             console.log("Error caught rendering saved model, retrying:", error)
             form = originalForm
-            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+            setTimeout (=> $el.echoforms(form: form, prepopulate: options.prepopulatedFields())), 0
 
           syncModel = ->
             isValid = $(this).echoforms('isValid')
