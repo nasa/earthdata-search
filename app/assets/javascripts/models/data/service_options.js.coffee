@@ -33,6 +33,20 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @method = ko.observable(method)
       @isValid = ko.observable(true)
 
+      @loadForm = ko.observable(false)
+
+      @loadingForm = ko.computed (item, e) =>
+        if @loadForm()
+          timer = setTimeout((=>
+            if document.getElementsByClassName('access-form')[0].children.length > 0
+              @loadForm(false)
+              clearTimeout timer
+            else
+              @loadForm(true)
+          ), 0)
+          @loadForm()
+        false
+
       @subsetOptions = ko.observable(null)
       @prepopulatedFields = ko.computed(@_computePrepopulatedFields, this, deferEvaluation: true)
 
@@ -48,6 +62,23 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         else
           @subsetOptions(null)
         result
+
+    showSpinner: (item, e)=>
+      clickedMethod = null
+      for m in @availableMethods when m.name == item.name
+        clickedMethod = m
+        break
+
+      echoformContainer = document.getElementsByClassName('access-form')[0]
+      if clickedMethod.type == 'service' || clickedMethod.type == 'order'
+        @loadForm(true) if clickedMethod.type == 'service'
+        setTimeout (=>
+          ko.applyBindingsToNode(echoformContainer, {echoform: this})
+          @loadForm(false)), 0
+      else
+        ko.cleanNode(echoformContainer);
+        @loadForm(false)
+      true
 
     _computePrepopulatedFields: ->
       result = {}
@@ -72,6 +103,19 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @model = jsonObj.model
       @rawModel = jsonObj.rawModel
       @type = jsonObj.type
+
+      if jsonObj.type == 'service' || jsonObj.type == 'order'
+        echoformContainer = null
+        checkExistsTimer = setInterval (=>
+          echoformContainer = document.getElementsByClassName('access-form')[0]
+          if echoformContainer
+            clearTimeout checkExistsTimer
+            setTimeout (=>
+              @loadForm(true) if jsonObj.type == 'service'
+              ko.applyBindingsToNode(echoformContainer, {echoform: this})
+              @loadForm(false)), 0
+        ), 0
+
       @orderId = jsonObj.order_id
       @orderStatus = jsonObj.order_status
       @errorCode = jsonObj.error_code
@@ -118,6 +162,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
       for m in @accessMethod()
         return false unless m.method()? && m.isValid()
+        return false if m.loadForm()
       true
 
     addAccessMethod: =>
