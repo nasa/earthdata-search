@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'Ordering with deprecated order options', reset: false do
-  orderable_collection_id = 'C179002914-ORNL_DAAC'
-  orderable_collection_title = '30 Minute Rainfall Data (FIFE)'
-  granule_id = 'G179106792-ORNL_DAAC'
+  orderable_collection_id = 'C179003030-ORNL_DAAC'
+  granule_id = 'G179111301-ORNL_DAAC'
 
   before :all do
     Capybara.reset_sessions!

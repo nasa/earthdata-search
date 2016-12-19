@@ -74,10 +74,11 @@ namespace :data do
         job = CronJobHistory.find_by_id id
         job.last_run = Time.now
         job.status = 'failed'
-        job.message = "#{error.present? ? error.inspect : 'Null'}"
+        job.message = $!.message
       else
-        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: "#{error.present? ? error.inspect : 'Null'}", host: Socket.gethostname)
+        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: $!.message, host: Socket.gethostname)
       end
+      puts "Cron job #{task} failed with error #{$!.message}"
       job.save!
       return
     else
@@ -88,9 +89,9 @@ namespace :data do
       else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
       end
+      puts "Cron job #{task} completed successfully."
       job.save!
     end
-
   end
 
   desc "Load data from ECHO"
