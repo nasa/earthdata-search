@@ -58,9 +58,11 @@
   background: $button-dark-lp-border;
   color: #424242;
   text-shadow: none;
+  @include transition(background 0.2s ease-in-out);
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 
   &:hover {
-    background: rgba(255,255,255,0.6);
+    background: darken($button-dark-lp-border, 10%);
   }
 }
 
