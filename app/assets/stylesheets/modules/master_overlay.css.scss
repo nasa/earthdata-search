@@ -11,28 +11,38 @@
 
   // Non-scrollable header area
   header {
-    margin: 1em 1em 0 0;
+    margin: 0;
     height: 45px;
 
     h2 {
       background: #fff;
       font-size: 1.2em;
+      line-height: 1.2em;
       margin: 0;
       font-weight: 200;
       float: left;
-      padding: 10px 20px;
+      padding: 11px 20px;
     }
 
     .collection-hits {
       background: $ocean-blue;
       color: #fff;
       border-radius: 20px;
-      padding: 5px 10px;
-      font-size: 0.8em;
+      padding: 2px 10px;
+      font-size: 0.7em;
+      line-height: 1.2em;
+      text-shadow: 1px 1px rgba(0,0,0,0.2);
+      vertical-align: top;
+      margin: 2px 4px 0 0;
+      display: inline-block;
+    }
+
+    i {
+      margin-left: 5px;
     }
 
     &.with-options {
-      margin: .4em 1em .5em 1em;
+      background: #fff;
 
       h2 {
       }
@@ -366,8 +376,8 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   .master-overlay-secondary { right: -60%; left: 100% !important; }
 }
 
-.master-overlay-help p {
-  margin-bottom: 1em;
+.master-overlay-help {
+  padding: 1em;
 }
 
 $browser-split: 1000px;

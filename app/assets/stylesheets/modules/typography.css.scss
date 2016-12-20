@@ -1,5 +1,6 @@
 a, a:visited {
   color: #2980b9;
+  @include transition(color 0.2s ease-in-out);
 
   &.close {
     color: #ccc;
@@ -191,4 +192,8 @@ span.instructions {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.help {
+  color: #f39c12;
 }
