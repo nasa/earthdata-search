@@ -125,4 +125,29 @@ describe "Timeline display", reset: false do
     end
   end
 
+  start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')
+  stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
+
+  context 'with a temporal condition' do
+
+
+    before :all do
+      add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+
+      set_temporal(start_date, stop_date)
+
+      collection_results.click_link "View Project"
+    end
+
+    after :all do
+      click_link 'Back to Collection Search'
+      unset_temporal
+      reset_project
+    end
+
+    it 'pans the timeline to the applied temporal timeframe' do
+      expect(page).to have_highlighted_selection(start_date, stop_date)
+    end
+  end
+
 end
