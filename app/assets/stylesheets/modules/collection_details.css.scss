@@ -27,15 +27,15 @@
 }
 
 .version-label {
+  color: #fff;
   display: inline-block;
   vertical-align: middle;
   background: #7f33a0;
   border-radius: 4px;
-  font-size: xx-small;
-  font-weight: normal;
-  padding: 1px 5px 0px;
-  margin-bottom: 5px;
-  margin-left: 5px;
+  font-size: 0.6em;
+  font-weight: bold;
+  padding: 4px 8px;
+  margin-left: 5px
 }
 
 .cwic-label {
@@ -51,6 +51,7 @@
 }
 
 .endpoint-label {
+  color: #fff;
   display: inline-block;
   vertical-align: middle;
   background: #293646;

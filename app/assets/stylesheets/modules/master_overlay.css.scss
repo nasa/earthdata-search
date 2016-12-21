@@ -73,7 +73,8 @@
   left: 0;
 
   header {
-    margin: 1em 0.5em 0 0.5em;
+    margin: 20px 0 0 10px;
+    height: 25px;
 
     h2 {
       color: #FFFFFF;
@@ -281,6 +282,7 @@
 
 .master-overlay-close {
   float: right;
+  margin-right: 10px;
 }
 
 a.master-overlay-close {
@@ -319,13 +321,8 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: block; }
   .master-overlay-main {
-    width: $collapsed-overlay-width;
-    header {
-      margin: 1em .5em 0;
-      h2 {
-        font-size: 1.1em;
-      }
-    }
+    top: 90%;
+
     .master-overlay-content {
       padding: .5em 0 1em;
 //      direction:rtl; // Puts the scrollbar on the left hand side

@@ -97,11 +97,11 @@ ns.Map = do (window,
       map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new MouseEventsLayer())
 
-      map.addControl(new ZoomHome(position: 'bottomright'))
-      map.addControl(new ProjectionSwitcher(position: 'bottomright'))
+      map.addControl(new ZoomHome(position: 'topright'))
+      map.addControl(new ProjectionSwitcher(position: 'topright'))
       map.addControl(new SpatialSelection())
 
-      @legendControl = new LegendControl(position: 'bottomright')
+      @legendControl = new LegendControl(position: 'topright')
       map.addControl(@legendControl)
 
       @setProjection(projection)
