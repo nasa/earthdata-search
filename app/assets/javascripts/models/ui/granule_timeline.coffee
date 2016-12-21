@@ -255,7 +255,7 @@ ns.GranuleTimeline = do (ko
       if result[0]?
         appliedStop = result[0].query.temporal.applied?.stop
         if listChanged && appliedStop.date()?
-          lastDate = Date.parse(appliedStop.humanDateString())
+          lastDate = new Date(appliedStop.date()).getTime()
           @_lastDate = lastDate
           $timeline.timeline('panToTime', lastDate)
 

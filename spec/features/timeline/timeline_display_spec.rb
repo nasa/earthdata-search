@@ -125,11 +125,9 @@ describe "Timeline display", reset: false do
     end
   end
 
-  start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')
-  stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
-
   context 'with a temporal condition' do
-
+    start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')
+    stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
 
     before :all do
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
