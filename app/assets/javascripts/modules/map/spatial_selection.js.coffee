@@ -12,7 +12,7 @@ ns.SpatialSelection = do (window,
 
   L.drawLocal.draw.toolbar.buttons.polygon = "Search by spatial polygon"
   L.drawLocal.draw.toolbar.buttons.rectangle = "Search by spatial rectangle"
-  L.drawLocal.draw.toolbar.buttons.marker = "Search by coordinate"
+  L.drawLocal.draw.toolbar.buttons.marker = "Search by spatial coordinate"
 
   normalColor = '#00ffff'
   errorColor = '#990000'

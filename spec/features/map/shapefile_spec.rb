@@ -204,7 +204,7 @@ describe "Shapefile search", reset: false, wait: 30 do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
       expect(page).to have_css('.geojson-svg')
-      choose_tool_from_map_toolbar('Point')
+      choose_tool_from_map_toolbar('Coordinate')
     end
 
     after :all do
