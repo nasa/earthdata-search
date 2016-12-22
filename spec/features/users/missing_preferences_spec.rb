@@ -11,7 +11,7 @@ describe "User missing ordering preferences", reset: false do
 
       login 'edscbasic'
 
-      click_link "Retrieve project data"
+      click_link "Download project data"
 
       choose "FtpPushPull"
       select 'FtpPull', from: 'Distribution Options'
@@ -30,7 +30,7 @@ describe "User missing ordering preferences", reset: false do
 
       login 'edscbasic'
 
-      click_link "Retrieve project data"
+      click_link "Download project data"
 
       choose 'Download'
       click_button 'Submit'

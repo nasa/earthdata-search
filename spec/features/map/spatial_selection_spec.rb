@@ -28,7 +28,7 @@ describe "Spatial tool", reset: false do
       end
 
       context "choosing the point selection tool from the map toolbar" do
-        before(:each) { choose_tool_from_map_toolbar('Point') }
+        before(:each) { choose_tool_from_map_toolbar('Coordinate') }
 
         it "selects the point selection tool in both toolbars" do
           expect(spatial_dropdown).to have_text('Point')
@@ -49,7 +49,7 @@ describe "Spatial tool", reset: false do
       end
 
       context "choosing the point selection tool in the map toolbar" do
-        before(:each) { choose_tool_from_map_toolbar('Point') }
+        before(:each) { choose_tool_from_map_toolbar('Coordinate') }
 
         it "selects the point selection tool in both toolbars" do
           expect(spatial_dropdown).to have_text('Point')
@@ -83,7 +83,7 @@ describe "Spatial tool", reset: false do
 
     context "canceling the point selection in the toolbar" do
       before(:each) do
-        choose_tool_from_map_toolbar('Point')
+        choose_tool_from_map_toolbar('Coordinate')
         within "#map" do
           click_link "Cancel"
         end

@@ -231,7 +231,7 @@ describe "Shapefile search", reset: false, wait: 30 do
       end
 
       after :all do
-        choose_tool_from_map_toolbar('Point')
+        choose_tool_from_map_toolbar('Coordinate')
       end
 
       it "restores the shapefile's display" do
@@ -251,7 +251,7 @@ describe "Shapefile search", reset: false, wait: 30 do
       after :all do
         upload_shapefile('doc/example-data/shapefiles/simple.geojson')
         wait_for_xhr
-        choose_tool_from_map_toolbar('Point')
+        choose_tool_from_map_toolbar('Coordinate')
       end
 
       it "keeps the shapefile's display hidden" do
