@@ -21,7 +21,7 @@ describe "CWIC-enabled data access", reset: false do
       load_page :search, search_params
       login
       view_granule_results(dataset_id)
-      click_link 'Retrieve Collection Data'
+      click_link 'Download Collection Data'
       wait_for_xhr
     end
 
@@ -36,7 +36,7 @@ describe "CWIC-enabled data access", reset: false do
       load_page :search, search_params
       login
       view_granule_results(dataset_id)
-      click_link 'Retrieve Collection Data'
+      click_link 'Download Collection Data'
       wait_for_xhr
       choose 'Download'
       click_on 'Submit'
@@ -69,7 +69,7 @@ describe "CWIC-enabled data access", reset: false do
       login
       view_granule_results(dataset_id)
       within(first_granule_list_item) do
-        click_link 'Retrieve single granule data'
+        click_link 'Download single granule data'
       end
       wait_for_xhr
       choose 'Download'

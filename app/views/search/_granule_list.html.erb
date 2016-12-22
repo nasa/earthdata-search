@@ -12,8 +12,8 @@
           <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Retrieve collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
-              <i class="fa fa-download"></i> Retrieve Collection Data
+            <a href="#" class="button retrieve" title="Download collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+              <i class="fa fa-download"></i> Download Collection Data
             </a>
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
               <i class="fa fa-info-circle"></i>
@@ -91,7 +91,7 @@
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
                   <i class="fa fa-info-circle"></i>
                 </a>
-                <a href="#" class="button icon-button" title="Retrieve single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
+                <a href="#" class="button icon-button" title="Download single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
                   <i class="fa fa-download"></i>
                 </a>
               </div>
