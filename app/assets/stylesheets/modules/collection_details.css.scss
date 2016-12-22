@@ -1,6 +1,5 @@
 .details /*.tab-content*/ {
-  a {
-    text-decoration: underline;
+  a, a:visited {
     white-space: nowrap;
   }
 
@@ -54,11 +53,16 @@
   color: #fff;
   display: inline-block;
   vertical-align: middle;
+  text-decoration: none;
   background: #293646;
   border-radius: 4px;
   font-size: .9em;
   font-weight: bolder;
   padding: 1px 5px 0;
+}
+
+.endpoint-label:visited {
+  color: #fff;
 }
 
 .long-paragraph {

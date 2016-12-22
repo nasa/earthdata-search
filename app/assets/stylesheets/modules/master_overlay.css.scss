@@ -270,13 +270,14 @@
 }
 
 .master-overlay-minimize, .master-overlay-maximize {
+  color: rgba(255,255,255,0.5);
   font-size: 1.3em;
   position: absolute;
-  right: .5em;
+  right: 2.5em;
   top: .5em;
   display: block;
   &:hover {
-    color: #aaa;
+    color: rgba(255,255,255,0.9);
   }
 }
 
@@ -322,15 +323,6 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   .master-overlay-when-min { display: block; }
   .master-overlay-main {
     top: 90%;
-
-    .master-overlay-content {
-      padding: .5em 0 1em;
-//      direction:rtl; // Puts the scrollbar on the left hand side
-//      > * {
-//        direction:ltr;
-//      }
-      width: $collapsed-overlay-width + 30px;
-    }
     .master-overlay-info {
       height: 32px;
       .button-details {

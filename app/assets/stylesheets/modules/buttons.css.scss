@@ -121,7 +121,15 @@
 .primary-search {
   a.button {
     color: #222;
-    padding: 14px;
+    padding: 15px 10px;
+    border-left: 1px solid #ecf0f1;
+  }
+  a.clear-filters {
+    padding: 15px;
+  }
+
+  a:hover {
+    color: #3498db;
   }
 }
 
