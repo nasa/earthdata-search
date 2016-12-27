@@ -169,7 +169,6 @@ section.data-access-next {
   h3 {
     color: #fff;
     background-color: rgb(51, 75, 102);
-    margin-bottom: 1em;
     padding-top: .5em;
     padding-bottom: .5em;
   }
@@ -301,9 +300,16 @@ section.data-access-next {
   padding-right: .25em;
 }
 
+.access-item-options-header {
+  margin-bottom: 0;
+}
+
 .summary-caveat {
-  font-size: .8em;
-  color: #b94a48;
+  font-size: 0.9em;
+  background-color: #c0392b;
+  color: #fff;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
 }
 
 .access-method-label {

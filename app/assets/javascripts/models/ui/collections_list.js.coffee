@@ -67,11 +67,20 @@ ns.CollectionsList = do ($ = jQuery
       query = @query.params()
       collections = @collections.results().map (collection) -> collection.id
       index = @collections.results().indexOf(collection)
+
+      exactMatch = switch query.free_text?.toLowerCase()
+        when collection.dataset_id?.toLowerCase() then true
+        when collection.id?.toLowerCase() then true
+        when collection.short_name()?.toLowerCase() then true
+        when "#{collection.short_name()?.toLowerCase()}_#{collection.version_id.toLowerCase()}" then true
+        else false
+
       data =
         query: query
         collections: collections
         selected_index: index
         selected_collection: collection.id
+        exact_match: exactMatch
 
       return false unless collection.canFocus()
       return false if @focused()?.collection.id == collection.id

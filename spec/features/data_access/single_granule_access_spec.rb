@@ -40,6 +40,17 @@ describe 'Single Granule Data Access', reset: false do
       click_link 'Expand List'
       expect(page).to have_content 'FIFE_RAIN_30M.72981621.r30'
     end
+
+    context 'when returning to the search results' do
+      before :all do
+        click_link 'Back to Search Session'
+        wait_for_xhr
+      end
+
+      it 'displays all of the collections granules' do
+        expect(page).to have_content "117 matching granules"
+      end
+    end
   end
 
   context 'within a saved project' do

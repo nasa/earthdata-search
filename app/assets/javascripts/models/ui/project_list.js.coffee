@@ -215,7 +215,7 @@ ns.ProjectList = do (ko
             console.log "Finished loading project data for #{@project.id()}"
             @project.fromJson(data)
           complete: =>
-            @isPollingUpdates(false)
+            shouldPoll = false
         )), 5000)
         @pollingIntervalId(intervalId)
 

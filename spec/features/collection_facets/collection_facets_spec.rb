@@ -227,10 +227,6 @@ describe "Collection Facets", reset: false do
     end
 
     it "keeps facet lists collapsed after selecting and removing a facet" do
-      expect(page).to have_css(".panel.projects .facets-list-hide")
-      find("h3.panel-title", text: "Project").click
-      expect(page).to have_css(".panel.projects .facets-list-show")
-
       find("h3.panel-title", text: 'Platform').click
       within(:css, ".platforms") do
         find("p.facets-item", text: "AIRCRAFT").click
@@ -244,8 +240,6 @@ describe "Collection Facets", reset: false do
       wait_for_xhr
       expect(page).to have_no_css(".facets-items.selected")
       expect(page).to have_css(".panel.platforms .facets-list-show")
-      find("h3.panel-title", text: "Project").click
-      expect(page).to have_css(".panel.projects .facets-list-hide")
 
       find("h3.panel-title", text: 'Platform').click
     end
@@ -474,4 +468,27 @@ describe "Collection Facets", reset: false do
   #    expect(page).to have_content("Ocean Optics")
   #  end
   #end
+
+  context "selecting multiple organizations and clear filter" do
+    before :all do
+      find("h3.panel-title", text: 'Organizations').click
+      within(:css, '.organizations') do
+        find(".facets-item", text: "LaRC", match: :prefer_exact).click
+      end
+      wait_for_xhr
+      within(:css, '.organizations') do
+        find(".facets-item", text: "GSFC", match: :prefer_exact).click
+      end
+      wait_for_xhr
+      expect(page).to have_no_content("Keywords")
+      expect(page).to have_no_content("Platforms")
+
+      click_link "Clear Filters"
+      wait_for_xhr
+    end
+
+    it "maintains the original facet category order" do
+      expect(page).to have_content("Subsetting Services Keywords Agriculture")
+    end
+  end
 end
