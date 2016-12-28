@@ -109,7 +109,6 @@ describe "Granule search filters", reset: false do
       end
 
       it "entering and removing values doesn't set invalid query param in the url" do
-        page.execute_script("document.getElementById('cloud-cover-min').scrollIntoView()")
         fill_in "Minimum:", with: "2.5"
         page.find(".master-overlay-secondary-content").click
         wait_for_xhr

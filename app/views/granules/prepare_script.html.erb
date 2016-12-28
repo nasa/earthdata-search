@@ -28,6 +28,7 @@
       padding: 8px 12px;
       border-radius: 3px;
       font-size: small;
+      text-decoration: none;
     }
 
     div {
@@ -42,7 +43,7 @@
 <body>
 <div id="errors"></div>
 <div id="loading">Preparing download script. Fetching downloadable granule links...</div>
-<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <button id="download-button">Download Script File</button></div>
+<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <a href="#" id="download-button">Download Script File</a></div>
 <div class="pre-container">
   <pre id="script">
 #!/bin/sh
@@ -54,18 +55,28 @@ netrc=$(mktemp netrc.XXXXXXXXXX)
 chmod 0600 "$cookiejar" "$netrc"
 function finish {
   rm -rf "$cookiejar" "$netrc"
-    <% if @first_link.start_with? 'ftp' %>
+  <% if @first_link.start_with? 'ftp' %>
   <% # For FTP retrievals, we also need to clean up ~/.netrc file for safety reasons %>
-      dot_netrc_tmp=$(mktemp ~/.netrc.tmp.XXXXXXXXXX)
+  dot_netrc_tmp=$(mktemp ~/.netrc.tmp.XXXXXXXXXX)
   chmod 0600 "$dot_netrc_tmp"
-  awk '!/<%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1].gsub('.', '\.') %>/' ~/.netrc > $dot_netrc_tmp && mv $dot_netrc_tmp ~/.netrc
+  if [ -e ~/.netrc ]
+  then
+    awk '!/<%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1].gsub('.', '\.') %>/' ~/.netrc > $dot_netrc_tmp && mv $dot_netrc_tmp ~/.netrc
+  fi
   <% end %>
-    }
+}
 
 trap finish EXIT
 WGETRC="$wgetrc"
 
 prompt_credentials() {
+    <% if @query['echo_collection_id'].include?('NSIDC') %>
+    read -p "Enter your email address: " email
+    echo "\nmachine urs.earthdata.nasa.gov\tlogin anonymous\tpassword $email" >> $netrc
+    <% if @first_link.start_with? 'ftp' %>
+    echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin anonymous\tpassword $email" >> $netrc
+    <% end %>
+    <% else %>
     echo "Enter your Earthdata Login or other provider supplied credentials"
     read -p "Username (<%= @user %>): " username
     username=${username:-<%= @user %>}
@@ -75,6 +86,7 @@ prompt_credentials() {
     echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> $netrc
     <% end %>
     echo
+    <% end %>
 }
 
 exit_with_error() {
@@ -132,16 +144,25 @@ fetch_urls <<'EDSCEOF'
 <script>
   (function () {
 
-    function downloadScriptFile() {
-      var content = document.getElementById("script").textContent;
-      var dl = document.createElement('a');
-      dl.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
-      dl.setAttribute('download', 'download.sh');
-      dl.click();
+    function downloadFileIE(e) {
+      var blob = new Blob([e.target.scriptFileContent]);
+      window.navigator.msSaveOrOpenBlob(blob, e.target.scriptFileName);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('download-button').addEventListener('click', downloadScriptFile);
+    document.addEventListener('EdscScriptLoaded', function(){
+      var dlLink = document.getElementById('download-button');
+      dlLink.scriptFileContent = document.getElementById("script").textContent;
+      dlLink.scriptFileName = 'download.sh';
+
+      var isIE = /*@cc_on!@*/false || !!document.documentMode;
+      if (isIE) {
+        dlLink.addEventListener('click', downloadFileIE);
+      }
+      else {
+        var file = new Blob([dlLink.scriptFileContent], {type: 'text/plain;charset:utf-8'});
+        dlLink.href = URL.createObjectURL(file);
+        dlLink.download = dlLink.scriptFileName;
+      }
     });
 
     var browseOnly = <%= @query.delete('browse') %>;
@@ -163,6 +184,11 @@ fetch_urls <<'EDSCEOF'
     function finish() {
       preContent = document.getElementById('script');
       preContent.innerHTML += '\nEDSCEOF';
+
+      var event = document.createEvent('Event');
+      event.initEvent('EdscScriptLoaded', true, true);
+      document.getElementById("download-button").dispatchEvent(event);
+
       document.getElementById('loading').style.display = 'none';
       document.getElementById('download-button').style.display = 'inline';
       document.getElementById('download-description').style.display = 'inline';

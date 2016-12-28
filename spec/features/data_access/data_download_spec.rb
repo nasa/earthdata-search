@@ -267,9 +267,9 @@ describe "Data download page", reset: false do
         before :all do
           within_last_window do
             synchronize do
-              expect(page).to have_button('Download Script File')
+              expect(page).to have_link('Download Script File')
             end
-            click_button 'Download Script File'
+            click_link 'Download Script File'
           end
         end
 

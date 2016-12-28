@@ -26,6 +26,8 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
               # if ESI service, don't show the modal
               for method in accessCollection.serviceOptions.granuleAccessOptions().methods
                 if method.name == checkedAccessMethodName && method.type != 'service' && method.type != 'download'
+                  numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
+                  $("#number-of-orders").text(numberOfOrders)
                   $("#tooManyGranulesModal").modal('show')
                   return true
             @showNext()

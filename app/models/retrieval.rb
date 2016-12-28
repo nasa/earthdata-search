@@ -64,24 +64,35 @@ class Retrieval < ActiveRecord::Base
       retrieval.collections.each do |collection|
         params = Rack::Utils.parse_nested_query(collection['params'])
         params.reject! { |p| ['datasource', 'short_name'].include? p }
-        params.merge!(page_size: 2000, page_num: 1)
+
+        results_count = get_granule_count(client, params, token)
+        results_count = 1000000 if results_count > 1000000
+        page_num = 0
+        page_size = 2000
 
         access_methods = collection['serviceOptions']['accessMethod']
         access_methods.each do |method|
           begin
             if method['type'] == 'order'
-              order_response = client.create_order(params,
-                                                   method['id'],
-                                                   method['method'],
-                                                   method['model'],
-                                                   user_id,
-                                                   token,
-                                                   client,
-                                                   access_token)
-              method[:order_id] = order_response[:order_id]
-              method[:dropped_granules] = order_response[:dropped_granules]
-              Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+              until page_num * page_size > results_count do
+                page_num += 1
+                params.merge!(page_size: page_size, page_num: page_num)
+                order_response = client.create_order(params,
+                                                     method['id'],
+                                                     method['method'],
+                                                     method['model'],
+                                                     user_id,
+                                                     token,
+                                                     client,
+                                                     access_token)
+                method[:order_id] ||= []
+                method[:order_id] << order_response[:order_id]
+                method[:dropped_granules] ||= []
+                method[:dropped_granules] += order_response[:dropped_granules]
+                Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+              end
             elsif method['type'] == 'service'
+              params.merge!(page_size: 2000, page_num: 1)
               request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
               method[:collection_id] = collection['id']
@@ -156,5 +167,10 @@ class Retrieval < ActiveRecord::Base
         AccessConfiguration.set_default_access_config(self.user, collection['id'], collection['serviceOptions'], collection['form_hashes'])
       end
     end
+  end
+
+  def self.get_granule_count(client, params, token)
+    result = client.get_granules(params, token)
+    result.headers['cmr-hits'].to_i || 0
   end
 end

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :validate_portal
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
+  rescue_from Faraday::Error::ConnectionFailed, with: :handle_connection_failed
 
   def redirect_from_urs
     last_point = session[:last_point]
@@ -75,6 +76,10 @@ class ApplicationController < ActionController::Base
     if request.xhr?
       render json: {errors: {error: 'The server took too long to complete the request'}}, status: 504
     end
+  end
+
+  def handle_connection_failed
+    render json: {errors: {error: 'Faraday::Error::ConnectionFailed: Likely SSL Certificate Failure'}}, status: 500
   end
 
   def token

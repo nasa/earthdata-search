@@ -22,7 +22,7 @@ describe "CWIC-enabled granule results view", reset: false do
       it "displays a link to download the original OpenSearch granule metadata", acceptance: true do
         click_link 'Metadata'
         within('#granule-details') do
-          expect(page).to have_selector('a[href^="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_"]')
+          expect(page).to have_selector('a[href^="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA"]')
         end
         click_link 'Information'
       end

@@ -123,12 +123,12 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._load = function (params, current, callback) {
+    
     if (!this.osdd()) {
       this._loadOsdd(() => this._load(params, current, callback));
       return;
     }
     let url = this._urlFor(params);
-
     this.abort();
     this.isLoading(true);
     this.isError(false);
@@ -173,7 +173,8 @@ let CwicGranules = (function() {
     this.currentRequest = ajax(xhrOpts);
   };
 
-  CwicGranules.prototype._parseOsdd = function (doc) {
+  CwicGranules.prototype._parseOsdd = function (doc, callback) {
+
     let urls = doc.getElementsByTagNameNS(xmlNamespaces.os, 'Url');
     for (let i = 0; i < urls.length; i++) {
       let url = urls[i];
@@ -183,26 +184,34 @@ let CwicGranules = (function() {
         };
       }
     }
+    if (callback) callback();
     return null;
   };
 
   CwicGranules.prototype._loadOsdd = function (callback) {
     this.isLoading(true);
+    let start = new Date();
     let xhrOpts = {
       method: 'get',
       dataType: 'xml',
       url: this.osddPath,
       retry: () => this._loadOsdd(callback),
       success: (data, status, xhr) => {
-        this.osdd(this._parseOsdd(data));
-        if (callback) callback();
+        this.osdd(this._parseOsdd(data, callback));
       },
       complete: () => {
         this.isLoading(!this.currentRequest);
       },
       error: (response, type, reason) => {
         this.isError(true);
+        this.results([]);
+        this.hits(0);
+        let timing = ((new Date() - start) / 1000).toFixed(1);
+        this.loadTime(timing);
+        this.isLoaded(true);
+        this.isLoading(false);
         console.log(`Fail (OSDD Load) [${reason}]: ${this.osddPath}`);
+
       }
     };
     ajax(xhrOpts);
@@ -312,7 +321,6 @@ let CwicGranules = (function() {
       }
     }
   };
-
   CwicGranules.prototype.loadNextPage = function() {
     if (this.hasNextPage() && !this.isLoading()) {
       this._loadAndSet(this.nextPageUrl, this.results());

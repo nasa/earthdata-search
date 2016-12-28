@@ -9,7 +9,7 @@
 
 <div class="data-access">
   <nav class="data-access-nav">
-    <a href="<%= @back_path %>?<%= request.query_string %>">
+    <a href="<%= @back_path %>?<%= @paramsWithoutGranuleFilter %>">
       <i class="fa fa-arrow-circle-o-left"></i> Back to Search Session
     </a>
   </nav>
@@ -25,16 +25,16 @@
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
+          <h3 class="access-item-options-header" data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
+          <div class="summary-caveat" data-bind="visible: granuleAccessOptions().hits > 2000">
+            <i class="fa fa-exclamation-circle"></i> This order contains <span data-bind="text: granuleAccessOptions().hits"></span> granules. Some access methods may not support access beyond the first 2000 granules.
+          </div>
           <!-- ko if: granuleAccessOptions().hits != null && collection.has_granules -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
               <span class="summary-data" data-bind="text: granuleAccessOptions().hits"></span>
               <span class="summary-label" data-bind="text: granuleAccessOptions().hits > 1 ? 'Granules' : 'Granule'"></span>
-              <span class="summary-caveat" data-bind="if: granuleAccessOptions().hits > 2000">
-                Access methods other than "Download" are limited to the first 2000 granules.
-              </span>
             </p>
             <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
@@ -85,13 +85,16 @@
                   <span class="access-method-label">Select Data Access Method:</span>
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <!-- ko foreach: availableMethods -->
-                  <label>
+                  <label data-bind="click: $parent.showSpinner">
                     <input data-bind="checked: $parent.method, attr: { value: name, name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
                     <span data-bind="text: name"></span>
+                    <!-- ko if: type == 'service' -->
+                    <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
+                    <!-- /ko -->
                   </label>
                   <!-- /ko -->
                 </p>
-                <div class="access-form" data-bind="echoform: $data"></div>
+                <div class="access-form"></div>
                 <div class="access-subset-options" data-bind="if: subsetOptions">
                   <div class="access-subset-options-section">
                     <h5>File format</h5>
@@ -202,9 +205,7 @@
       </div>
       <div class="modal-body">
         <p>
-          Access methods other than "Download" are limited to the
-          first 2,000 granules.  If you choose to continue, your request
-          may be truncated to the first 2,000 granules or rejected entirely.
+          Your order will be automatically split up into <span id="number-of-orders"></span> orders. You will receive a set of emails for each order placed.
         </p>
       </div>
       <div class="modal-footer">
