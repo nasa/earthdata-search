@@ -144,5 +144,13 @@ module Helpers
         page.find('#master-overlay-parent a.master-overlay-close').click
       end
     end
+
+    def collection_with_granule_toggle
+      page.find('.collection-filters input[type="checkbox"]')
+    end
+
+    def collection_count_header
+      page.find('.master-overlay-main h2')
+    end
   end
 end

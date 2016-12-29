@@ -1,24 +1,40 @@
 .details /*.tab-content*/ {
-  a {
-    text-decoration: underline;
+  a, a:visited {
     white-space: nowrap;
+  }
+
+  header {
+    background: #fff;
+    margin: 0;
+    height: 55px;
+    padding: 0;
   }
 
   .master-overlay-back {
     text-decoration: none;
   }
+
+  .nav {
+    background: #fff;
+    margin: 0;
+  }
+
+  h4 {
+    margin: 0;
+    padding: 15px 20px;
+  }
 }
 
 .version-label {
+  color: #fff;
   display: inline-block;
   vertical-align: middle;
   background: #7f33a0;
   border-radius: 4px;
-  font-size: xx-small;
-  font-weight: normal;
-  padding: 1px 5px 0px;
-  margin-bottom: 5px;
-  margin-left: 5px;
+  font-size: 0.6em;
+  font-weight: bold;
+  padding: 4px 8px;
+  margin-left: 5px
 }
 
 .cwic-label {
@@ -34,13 +50,19 @@
 }
 
 .endpoint-label {
+  color: #fff;
   display: inline-block;
   vertical-align: middle;
+  text-decoration: none;
   background: #293646;
   border-radius: 4px;
   font-size: .9em;
   font-weight: bolder;
   padding: 1px 5px 0;
+}
+
+.endpoint-label:visited {
+  color: #fff;
 }
 
 .long-paragraph {

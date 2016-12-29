@@ -57,9 +57,10 @@ a.banner-show-events {
   &:link, &:visited {
     display: block;
     float: left;
-    margin: 1.2em 1.1em 1.1em 0;
+    margin: 0.6em 1.1em 1.1em 0;
     @include transition(opacity 0.2s ease-in-out);
-    opacity: 0.4;
+    opacity: 0.9;
+    color: #fff;
   }
 
   &:hover {

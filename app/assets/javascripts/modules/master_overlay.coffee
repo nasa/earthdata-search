@@ -180,6 +180,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
           $div = $(div)
           $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 20, 13))
 
+        collectionDetailHeight = @root.find('.master-overlay-content').height()
+        $('.tab-pane .master-overlay-content').height(@root.find('.master-overlay-content').height() / 2.3)
+
         tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
         for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
           $(div).height(tabPaneHeight)

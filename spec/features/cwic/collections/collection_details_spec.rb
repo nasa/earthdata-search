@@ -16,7 +16,7 @@ describe "CWIC-enabled collection details", reset: false do
     use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     before :all do
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
       wait_for_xhr
     end
 

@@ -24,12 +24,10 @@ ns.Map = do (window,
       paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
       paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0])
 
-      leftPad = L.point([$('.master-overlay-main').offset().left + $('.master-overlay-main').width(), 0])
-
       zoom = @getBoundsZoom(bounds, false, paddingTL.add(paddingBR))
       paddingOffset = paddingBR.subtract(paddingTL).divideBy(2)
 
-      swPoint = this.project(bounds.getSouthWest(), zoom).subtract(leftPad)
+      swPoint = this.project(bounds.getSouthWest(), zoom)
       nePoint = this.project(bounds.getNorthEast(), zoom)
 
       center = this.unproject(swPoint.add(nePoint).divideBy(2).add(paddingOffset), zoom)
@@ -45,6 +43,7 @@ ns.Map = do (window,
         @_zoom = @_limitZoom(zoom)
         return this
 
+      # TODO: These values need to be adjusted for the new layout to avoid the blank right margin on the map
       # if overlay is visible, adjust center
       overlayWidth = $('.master-overlay-parent').width() + $('.master-overlay-main').width() # parent and main visible
       if $('.master-overlay.is-master-overlay-parent-hidden').length > 0 #only main visible
@@ -52,7 +51,6 @@ ns.Map = do (window,
       if $('.master-overlay.is-hidden').length > 0 # parent and main hidden
         overlayWidth = 0
       overlayWidth /= 2
-
       currentZoom = @getZoom()
       return this if currentZoom == zoom
       if currentZoom > zoom
@@ -93,18 +91,18 @@ ns.Map = do (window,
 
       map.loadingLayers = 0
 
+      map.addControl(L.control.scale(position: 'topright'))
+
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new MouseEventsLayer())
 
-      map.addControl(new ZoomHome())
-      map.addControl(new ProjectionSwitcher())
+      map.addControl(new ZoomHome(position: 'topright'))
+      map.addControl(new ProjectionSwitcher(position: 'topright'))
       map.addControl(new SpatialSelection())
 
-      @legendControl = new LegendControl(position: 'bottomright')
+      @legendControl = new LegendControl(position: 'topright')
       map.addControl(@legendControl)
-
-      map.addControl(L.control.scale(position: 'bottomright'))
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")

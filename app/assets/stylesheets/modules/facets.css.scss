@@ -113,6 +113,7 @@
 }
 
 .master-overlay-content.panel-group {
+  background: #191a1b;
   padding: .5em 0 1em 0;
   .panel {
     background-color: $master-overlay-parent-bg-color;
@@ -125,6 +126,7 @@
   font-weight: 500;
   padding: .6em .5em;
   a {
+    color: #fff;
     text-decoration: none;
   }
 }
@@ -144,11 +146,16 @@
 
 .facet-badge {
   display: block;
-  border-radius: 2px;
-  margin-left: 2px;
+  border-radius: 5px;
+  margin: 0 5px 0 2px;
   background-repeat: no-repeat;
-  width: 22px;
-  height: 22px;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+
+  &:before {
+    content: "";
+  }
 }
 
 .facet-title {

@@ -1,5 +1,6 @@
-a:link, a:visited {
+a, a:visited {
   color: #2980b9;
+  @include transition(color 0.2s ease-in-out);
 
   &.close {
     color: #ccc;
@@ -39,13 +40,12 @@ hgroup {
   }
 }
 
-header {
-  h1 {
-    margin: 0;
+.branding {
+  margin: 0;
+  height: 70px;
 
-    >a {
-      margin-top: 10px;
-    }
+  >a {
+    margin-top: 20px;
   }
 
   .site-logo-org {
@@ -59,6 +59,7 @@ header {
   }
 
   .site-logo {
+    color: #fff;
     height: 40px;
     float: left;
     line-height: 1.1em;
@@ -106,10 +107,11 @@ header {
   .version-badge {
     font-size: 0.4em;
     float: left;
-    background: darken($ocean-blue, 10%);
-    padding: 0.2em 0.6em;
-    margin: 30px 5px 0;
-    border-radius: 4px;
+    background: #3498db;
+    padding: 4px 8px 3px;
+    margin: 34px 10px 0;
+    border-radius: 2px;
+    text-shadow: 1px 1px rgba(0,0,0,0.4);
   }
 }
 
@@ -190,4 +192,8 @@ span.instructions {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.help {
+  color: #f39c12;
 }

@@ -11,7 +11,7 @@
   <!-- ko with: $root.ui.collectionsList.focused() -->
   <!-- ko if: selected() -->
   <header >
-    <h2 data-bind="ifnot: selected().detailsLoaded" class="loading">Details Loading...</h2>
+    <!-- <h2 data-bind="ifnot: selected().detailsLoaded" class="loading">Details Loading...</h2> -->
     <!-- ko if: selected().detailsLoaded -->
     <h2 data-bind="text: selected().title"></h2>
     <!-- /ko -->

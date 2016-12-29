@@ -82,7 +82,6 @@ ns.CollectionsList = do ($ = jQuery
         selected_collection: collection.id
         exact_match: exactMatch
 
-      return true if $(event?.target).closest('a').length > 0
       return false unless collection.canFocus()
       return false if @focused()?.collection.id == collection.id
 

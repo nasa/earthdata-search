@@ -1,6 +1,5 @@
 .toolbar {
   a:link, a:visited {
-    color: #fff;
   }
 
   a.logo{
@@ -25,7 +24,7 @@
     position: absolute;
     z-index: 81;
     margin: 0;
-    background: darken($ocean-blue, 15%);
+    background: rgba(255,255,255,0.9);
     border: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -58,6 +57,12 @@ ul.dropdown-menu {
 
 .temporal-dropdown {
   width: 420px;
+
+  .low-priority {
+    color: #424242;
+    text-shadow: none;
+    font-weight: bold;
+  }
 }
 
 .save-project-name {
@@ -129,9 +134,13 @@ input.day-of-year-input {
   }
 
   .fa-caret-down {
-    padding-left: 5px;
-    color: rgba(255,255,255,.4);
+    padding-left: 2px;
+    color: rgba(0,0,0,0.2);
     @include transition(all 0.2s ease-in-out);
+
+    &:hover {
+      color: rgba(0,0,0,0.4);
+    }
   }
 }
 
@@ -140,7 +149,7 @@ input.day-of-year-input {
     font-size: 1.4em;
     padding: 15px 20px;
     border-left: 1px solid rgba(255,255,255,.1);
-    display: block;
+    display: inline-block;
     float: left;
     color: rgba(255,255,255,.4);
     @include transition(all 0.2s ease-in-out);
@@ -156,8 +165,7 @@ input.day-of-year-input {
   }
 
   a.feedback {
-    font-size: 1em;
-    line-height: 2em;
+
   }
 
   span.toolbar-text {

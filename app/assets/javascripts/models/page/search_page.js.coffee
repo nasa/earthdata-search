@@ -49,15 +49,13 @@ ns.SearchPage = do (ko
         spatialType: new SpatialTypeModel(@query)
         collectionsList: new CollectionsListModel(@query, @collections, @project)
         projectList: new ProjectListModel(@project, @collections)
-        isLandingPage: ko.observable(null) # Used by modules/landing
+        isLandingPage: ko.observable(false) # Used by modules/landing
         feedback: new FeedbackModel()
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
-
-      @collections.isRelevant(false) # Avoid load until the URL says it's ok
 
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
@@ -75,6 +73,10 @@ ns.SearchPage = do (ko
 
     clearFilters: =>
       @query.clearFilters()
+      @clearSpatial()
+
+    clearSpatial: =>
+      @query.spatial('')
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()

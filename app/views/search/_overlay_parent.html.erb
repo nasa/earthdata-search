@@ -1,11 +1,22 @@
 <section id="master-overlay-parent" class="master-overlay-parent">
+  <h1 class="branding">
+    <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
+    <%= portal_logo %>
+    <a class="site-logo" href="<%=edsc_path root_path %>">
+      <span class="site-logo-org"><%= site_logo_org %></span>
+      <%= site_logo_title %>
+    </a>
+    <% unless Rails.configuration.logo_name.blank? %>
+      <span class="version-badge"><%= Rails.configuration.logo_name %></span>
+    <% end %>
+  </h1>
   <header>
+    <h2>
+      Browse Collections
+    </h2>
     <a class="master-overlay-close master-overlay-hide-parent" data-bind="click: hideParent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-    <h2>Browse Collections</h2>
-    </p>
   </header>
   <div class="master-overlay-content panel-group">
-    <!-- ko if: collections.facets.isRelevant() -->
     <!-- ko foreach: collections.facets.results -->
     <!-- ko if: children().length > 0 -->
     <div data-bind="css: class_name" class="panel panel-default">
@@ -42,7 +53,6 @@
         </div>
       </div>
     </div>
-    <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
   </div>

@@ -36,32 +36,22 @@
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
 </head>
-<body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
+<body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page">
+    <%= render partial: 'master_overlay' %>
     <div class="wrap">
     <%= yield :header %>
-    <header id="main-toolbar" class="toolbar">
-      <h1>
-        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
-        <%= portal_logo %>
-        <a class="site-logo" href="<%=edsc_path root_path %>">
-          <span class="site-logo-org"><%= site_logo_org %></span>
-          <%= site_logo_title %>
-        </a>
-        <% unless Rails.configuration.logo_name.blank? %>
-          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
-        <% end %>
-      </h1>
-      <div class="toolbar-content">
-        <div class="toolbar-secondary">
-          <%= yield :toolbar_secondary %>
-        </div>
-        <%= yield :toolbar %>
-      </div>
-    </header>
     <% if portal_nav? %>
     <nav class="main-nav portal-nav"><%= portal_nav %></nav>
     <% end %>
     <section class="main-content">
+      <header id="main-toolbar" class="toolbar">
+        <div class="toolbar-content">
+          <%= yield :toolbar %>
+        </div>
+      </header>
+      <div class="toolbar-secondary">
+        <%= yield :toolbar_secondary %>
+      </div>
       <%= yield %>
     </section>
     </div>
@@ -69,7 +59,8 @@
       <%= yield :footer %>
       <div class="footer-content">
         <p>
-          <span class="version">v <strong><%= Rails.configuration.version %></strong></span> •
+          <span class="version"><i class="fa fa-github"></i> <strong><%= Rails.configuration.version %></strong></span>
+          Search Time: <span data-bind="text: collections.loadTime">0.000</span>s •
           <strong>NASA Official:</strong> Andrew Mitchell •
           <span class="nasa-links">
             <a href="http://www.nasa.gov/FOIA/index.html">FOIA</a> •

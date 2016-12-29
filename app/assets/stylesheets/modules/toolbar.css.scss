@@ -1,14 +1,20 @@
 #temporal-query {
-  position: absolute;
   color: #fff;
-  background: rgba(22,22,22,.9);
-  z-index: 59;
-  padding: 8px 12px;
-  border-radius: 5px;
-  top: 15px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
+  background: rgba(22,22,22,0.8);
+  padding: 15px;
   font-size: 1em;
+
+  .temporal-query_start-date {
+    padding: 0 5px;
+  }
+
+  .temporal-query_stop-date {
+    padding-left: 5px;
+  }
+
+  strong {
+    color: rgba(241, 196, 15,1.0);
+  }
 }
 
 #temporal-query p {
@@ -16,26 +22,34 @@
 }
 
 .manual-coord-entry {
-  position: absolute;
   color: #fff;
   background: rgba(22,22,22,.9);
   z-index: 59;
-  padding: 6px 10px;
-  border-radius: 5px;
-  top: 57px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
-  font-size: .9em;
+  padding: 15px;
+  font-size: 1em;
 
   label {
     min-width: 50px;
     display: block;
+    margin-right: 10px;
   }
 
   input {
     min-width: 200px;
     padding: 0;
   }
+
+  p {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+a.remove-filter {
+  color: #fff;
+  opacity: 0.3;
+  float: right;
+  font-size: 1.2em;
 }
 
 .leaflet-top.leaflet-right {
@@ -55,5 +69,13 @@
 
   &.projection-switcher-antarctic {
     background-position: -3px -2px;
+  }
+}
+
+.landing-toolbar-content {
+  background: #fff;
+
+  .primary-search {
+    background: none;
   }
 }

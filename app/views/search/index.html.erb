@@ -7,193 +7,74 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
+  <a data-bind="visible: !project.isEmpty()" id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
+    <i class="fa fa-folder-o"></i> View Project (<span id="project-count" data-bind="text: project.collections().length"></span>)
+  </a>
   <%= render partial: 'workspace_name' %>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
 
 <% content_for :toolbar do %>
-  <div class="landing-toolbar-container" style="display: none;">
-  <div class="landing-toolbar-content">
-  <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
-    <p>
-      <input id="keywords" type="text" name="keywords" class="nlp-parsing keyword-input"
-             data-bind="valueUpdate: 'keyup'"
-             placeholder="Type any topic or collection name"
-             autofocus>
-    </p>
-  <% end %>
-  <div class="dropdown" id="temporal-dropdown">
-    <a href="#" class="button temporal-dropdown-button dropdown-button" title="Select temporal">
-      <i class="fa fa-clock-o"></i>
-      <span class="dropdown-value">Temporal</span>
-      <i class="fa fa-caret-down"></i>
-    </a>
-    <ul class="dropdown-menu temporal-dropdown">
-      <li>
-        <!-- ko with: query.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
-        <!-- /ko -->
-      </li>
-    </ul>
-  </div>
-
-
-  <div class="dropdown" data-bind="with: ui.spatialType">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Select spatial"><i class="fa fa-fw" data-bind="css: icon"></i> <span class="dropdown-value" data-bind="text: name">Spatial</span> <i class="fa fa-caret-down"></i></a>
-    <ul class="dropdown-menu spatial-selection">
-      <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
-      <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
-      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
-      <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
-    </ul>
-  </div>
-  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear filters"><i class="fa fa-eraser"></i> <span class="button-value">Clear Filters</span></a>
-</div>
-</div>
-<% end %>
-
-<div class="master-overlay homepage-search is-master-overlay-secondary-hidden is-master-overlay-maximized" id="collections-overlay">
-  <%= render partial: 'overlay_parent' %>
-  <div class="master-overlay-main">
-    <div class="master-overlay-main-content" data-level="0">
-      <section id="collection-results" class="master-overlay-has-min" data-master-overlay-title="Collections">
-        <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-angle-double-left"></i></a>
-        <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-angle-double-right"></i></a>
-        <nav class="master-overlay-nav master-overlay-when-parent-hidden">
-          <a href="#" class="master-overlay-show-parent" data-bind="click: showParent">
-            <i class="fa fa-search"></i> Browse Collections
-            <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
-               (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
-            </span>
+  <div class="landing-toolbar-container">
+    <div class="landing-toolbar-content">
+      <div class="primary-search">
+        <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
+          <p>
+            <input id="keywords" type="text" name="keywords" class="nlp-parsing keyword-input"
+              data-bind="valueUpdate: 'keyup'"
+              placeholder="Type any topic or collection name"
+              autofocus>
+          </p>
+        <% end %>
+        <div class="dropdown" id="temporal-dropdown">
+          <a href="#" class="button temporal-dropdown-button dropdown-button" title="Temporal filter">
+            <i class="fa fa-calendar-plus-o"></i>
+            <i class="fa fa-caret-down"></i>
           </a>
-        </nav>
-        <header>
-          <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
-        </header>
-        <div class="master-overlay-info master-overlay-when-min">
-          <p data-bind="visible: !project.isEmpty()" class="button-details">
-            <a id="view-project-min" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
-              <i class="fa fa-folder-o"></i> View Project
-            </a>
-          </p>
-        </div>
-        <div class="master-overlay-info master-overlay-when-max">
-          <p data-bind="visible: project.isEmpty()"class="button-details">
-            <a class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#">
-              <i class="fa fa-question-circle"></i> Learn More
-            </a>
-            <span>Add collections to your project to compare and retrieve their data.</span>
-          </p>
-          <p data-bind="visible: !project.isEmpty()" class="button-details">
-            <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
-              <i class="fa fa-folder-o"></i> View Project
-            </a>
-            <span>You have <em id="project-count" data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></em> in your project.</span>
-          </p>
-          <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
-            Search Time: <span data-bind="text: collections.loadTime">0.000</span>s
-            <% if Rails.configuration.feedback_url.present? %>
-            <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Collection Results', null)" class="button feedback-button">
-              <i class="fa fa-exclamation-circle"></i>
-              Report a metadata problem
-            </a>
-            <% end %>
-          </p>
-        </div>
-        <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
-          <div class="panel-list">
-            <!-- ko if: collections.results().length > 0 -->
-            <edsc-collections-collapsed id="coll-collection-results-list" params="page: $data, collections: collections.results, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
-            <!-- /ko -->
-            <ul id="collection-results-list"
-                class="panel-list-list knockout-template master-overlay-when-max"
-                data-bind="foreach: collections.results, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
-            </ul>
-            <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
-              Loading collections...
-            </p>
-            <% if portal? %>
-            <p class="portal-escape" data-bind="visible: !collections.isLoading()">
-              Looking for more collections?
-              <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave the <%= site_name %></a>
-            </p>
-            <% end %>
-          </div>
-        </div>
-      </section>
-      <section id="project-overview" class="master-overlay-hide-self master-overlay-no-min">
-        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
-            <i class="fa fa-arrow-circle-o-left"></i> Back to Collection Search
-          </a>
-        </nav>
-        <header class="with-options">
-          <h2>Project Collections</h2>
-          <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
-              <i class="fa fa-download"></i> Retrieve Project Data
-            </a>
-
-            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button" >
-              <i class="fa fa-eye"></i>
-            </a>
-            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button button-active" >
-              <i class="fa fa-eye"></i>
-            </a>
-          </div>
-        </header>
-        <div class="master-overlay-content panel-list">
-          <ul id="project-collections-list"
-              class="panel-list-list knockout-template"
-              data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
-            <%= render partial: 'collection_list_item', locals: {is_project: true} %>
+          <ul class="dropdown-menu temporal-dropdown">
+            <li>
+              <!-- ko with: query.temporal.pending -->
+              <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
+              <!-- /ko -->
+            </li>
           </ul>
-          <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
-            <p>
-              Use this space to collect collections of interest as you adjust your search parameters.
-            </p>
-            <p>
-              To add a collection to your project, click the <i class="fa fa-plus"></i> icon on the desired collection.
-              Once collected, you can use the tools available in this view to compare collections on the map or on a timeline
-              and choose granules you want from each.
-            </p>
-            <p>
-              When you are satisfied with your selections, click the <i class="fa fa-download"></i> button to
-              access your data.
-            </p>
-          </div>
         </div>
-      </section>
-      <%= render partial: 'granule_list' %>
-      <%= render partial: 'granule_details' %>
-      <%= render partial: 'collection_details' %>
+        <div class="dropdown" data-bind="with: ui.spatialType">
+          <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Spatial filter">
+            <i class="fa fa-fw" data-bind="css: icon"></i>
+            <i class="fa fa-caret-down"></i>
+          </a>
+          <ul class="dropdown-menu spatial-selection">
+            <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
+            <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
+            <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
+            <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
+          </ul>
+        </div>
+        <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear filters"><i class="fa fa-eraser"></i></a>
+      </div>
+      <div id="temporal-query" data-bind="with: query.temporal.applied, visible: query.temporal.applied.isSet()">
+        <p>
+          <i class="fa fa-calendar-o"></i>
+          <span data-bind="visible: start.date" class="temporal-query_start-date">
+            <strong>Start:</strong>
+            <span data-bind="text: start.humanDateString"></span>
+          </span>
+          <span data-bind="visible: stop.date" class="temporal-query_stop-date">
+            <strong>Stop:</strong>
+            <span data-bind="text: stop.humanDateString"></span>
+          </span>
+          <span data-bind="visible: (start.date() || stop.date()) && isRecurring()" class="temporal-query_range">
+            <strong>Range:</strong> <span data-bind="text: yearsString"></span>
+          </span>
+          <a href="#" class="remove-filter" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
+        </p>
+      </div>
+      <%= render partial: 'spatial_manual_entry'%>
     </div>
   </div>
-  <div class="master-overlay-secondary">
-    <div class="master-overlay-secondary-content" data-level="0">
-      <section id="granule-search" >
-          <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <nav class="master-overlay-nav">
-          <i class="fa fa-edit"></i> Granule Filters
-        </nav>
-        <!-- ko if: project.searchGranulesCollection() -->
-        <header>
-          <h2 data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
-        </header>
-        <%= render partial: 'granule_search' %>
-        <!-- /ko -->
-      </section>
-    </div>
-  </div>
-  <div class="master-overlay-minimized">
-    <a href="#collections-overlay" class="button text-button master-overlay-show">
-      <i class="fa fa-th-list"></i> Results List
-    </a>
-  </div>
-</div>
+<% end %>
 
 <div id="map" class="map" style="height:100%">
   <div id="map-center"></div>
@@ -230,92 +111,7 @@
   </div>
 </div>
 
-<div id="temporal-query" data-bind="with: query.temporal.applied">
-  <p>
-    <i class="fa fa-clock-o"></i>
-    <span data-bind="visible: start.date">
-      <strong>Start</strong>
-      <span data-bind="text: start.humanDateString"></span>
-    </span>
-    <span data-bind="visible: stop.date">
-      <strong>Stop</strong>
-      <span data-bind="text: stop.humanDateString"></span>
-    </span>
-    <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
-      <strong>Range</strong> <span data-bind="text: yearsString"></span>
-    </span>
-    <a href="#" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
-  </p>
-</div>
 
-<%= render partial: 'spatial_manual_entry'%>
-
-<div class="landing-area landing-visible">
-
-  <div class="landing-dialog">
-    <div class="noscript no-js">
-      <h3><%= site_name %> uses JavaScript</h3>
-      <ul>
-        <li>Please use a JavaScript-aware browser.
-        <li>Make sure that JavaScript is enabled.
-      </ul>
-    </div>
-
-    <div class="old-ie">
-      <h1>Your browser is out of date</h1>
-      <p>In order to use <%= site_name %>, you must upgrade your web browser. Alternatively, you can use <a href="http://reverb.echo.nasa.gov/">Reverb</a></p>
-      <p>To upgrade your browser, click on the icons below to go to the download page</p>
-      <ul>
-        <li>
-          <a href="https://www.google.com/chrome/" target="_blank">
-            <div class="icon chrome"></div>
-            <div class="name">Chrome</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.mozilla.org/firefox/" target="_blank">
-            <div class="icon firefox"></div>
-            <div class="name">Firefox</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.apple.com/safari/" target="_blank">
-            <div class="icon safari"></div>
-            <div class="name">Safari</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.opera.com/" target="_blank">
-            <div class="icon opera"></div>
-            <div class="name">Opera</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
-            <div class="icon ie"></div>
-            <div class="name">Internet Explorer</div>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <p class="landing-dialog-loading">Please wait while the application loads</p>
-    <div class="landing-dialog-container" style="display: none;">
-      <div class="landing-dialog-header">
-        <a href="/?tour=true" class="show-tour" target="_blank" data-bind="visible: window.edscportal || !preferences.showTour()">Take a Tour</a>
-        <h2>Discover Earth Science Data</h2>
-        <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
-      </div>
-      <div class="landing-dialog-toolbar toolbar">
-      </div>
-      <div class="landing-dialog-actions">
-        <a href="#collections-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-        <p><i class="fa fa-arrow-circle-left"></i> Use categories to narrow your results.</p>
-      </div>
-    </div>
-  </div>
-
-</div>
 
 <% content_for :header do %>
 <div id="choose-temporal-modal" data-bind="showModal: ui.projectList.needsTemporalChoice" class="modal" role="dialog" data-keyboard="false" data-backdrop="static">

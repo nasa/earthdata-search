@@ -10,6 +10,7 @@ body {
   font-size: 16px;
   background-color: #222;
   padding-top: 25px;
+  display: flex;
 }
 
 // Fixes to rendering glitches caused by tophat loading after page render
@@ -21,28 +22,62 @@ body {
 }
 
 .wrap {
-  width: 100%;
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin: -25px 0px -10px 0px;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
+  flex: 1;
+}
+
+#collections-overlay {
+  flex: 0 1 890px;
+
+  &.is-master-overlay-minimized {
+    flex: 0 1 535px;
+  }
+
+  &.is-master-overlay-minimized-desired {
+    flex: 0 1 265px;
+
+    &.is-master-overlay-parent-hidden {
+      flex: 0 1 265px;
+    }
+
+    &.is-master-overlay-secondary-hidden {
+      flex: 0 1 270px;
+    }
+  }
+
+  &.is-master-overlay-maximized {
+    flex: 0 1 270px;
+
+    &.is-master-overlay-parent-hidden {
+      flex: 0 1 270px;
+    }
+    /*
+    .master-overlay-main {
+      width: 0;
+    }
+    */
+  }
 }
 
 .search-page {
   .main-content {
-    position: fixed;
+    /* position: fixed; */
   }
 
   footer {
     position: absolute;
     bottom: 0;
+    right: 0;
   }
 }
 
-footer, .toolbar {
-  background: $toolbar-background;
+footer {
+  background: $ocean-blue;
   color: #fff;
 }
 
@@ -53,16 +88,23 @@ footer, .toolbar {
   height: calc(100% - 86px - 35px);
   height: -moz-calc(100% - 86px - 35px);
   height: -webkit-calc(100% - 86px - 35px);
-  width: 100%;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
 }
 
+header#main-toolbar {
+  background: none;
+  position: absolute;
+  z-index: 400;
+  padding: 32px 74px 68px 21px;
+}
+
+.toolbar-content {
+}
+
 .toolbar {
-  @include linear-gradient($ocean-blue, darken($ocean-blue, 5%));
   padding: 25px 0 60px 0;
   height: 58px;
-  border-bottom: 1px solid #242424;
 
   p {
     margin: 0;
@@ -96,7 +138,10 @@ nav.main-nav {
 }
 
 .toolbar-secondary {
-  float: right;
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  z-index: 100;
 }
 
 body > footer {
@@ -105,18 +150,17 @@ body > footer {
 }
 
 .footer-content {
-  height: 35px;
   font-size: .7em;
 
   p {
-    padding: 9px 20px 0 20px;
+    padding: 7px 10px 5px 0;
   }
 
   .version {
     background: $button-dark-bottom-gradient;
-    padding: 2px 8px;
-    border-radius: 2px;
+    padding: 8px 12px;
     text-shadow: 1px 1px 1px $toolbar-background-bottom;
+    margin-right: 10px;
   }
 
   a:link, a:visited {
