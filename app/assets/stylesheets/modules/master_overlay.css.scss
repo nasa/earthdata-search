@@ -100,14 +100,15 @@
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
   background-color: $master-overlay-main-bg-color;
-  left: 40%;
+  left: 0%;
   right: 0%;
   overflow: hidden;
-  z-index: 60;
+  z-index: 1000;
   position: absolute;
   height: 100%;
   transition-property: right, left;
   transition-duration: 0.3s;
+  box-shadow: 0 -10px 10px rgba(0,0,0,0.2);
 
   .message {
     margin-top: 1em;
@@ -177,8 +178,9 @@
 
 .master-overlay-info {
   margin: 0;
-  padding: 0 25px 20px 25px;
+  padding: 0;
   background: #fff;
+  min-height: 45px;
 
   p.button-details {
 
@@ -200,6 +202,7 @@
 
   p {
     margin: 0;
+    padding: 10px 20px;
     display: inline-block;
   }
 
@@ -219,9 +222,10 @@
   em {
     font-weight: bold;
   }
-}
 
-.is-master-overlay-maximized #collection-results .master-overlay-info {
+  .tab-pane {
+    padding: 20px;
+  }
 }
 
 .master-overlay-global-actions {
@@ -269,14 +273,11 @@
 }
 
 .master-overlay-minimize, .master-overlay-maximize {
-  color: rgba(255,255,255,0.5);
-  font-size: 1.3em;
-  position: absolute;
-  right: 2.5em;
-  top: .5em;
-  display: block;
+  color: rgba(0,0,0,0.2);
+  font-size: 1em;
+  display: inline-block;
   &:hover {
-    color: rgba(255,255,255,0.9);
+    color: rgba(0,0,0,0.5);
   }
 }
 
@@ -320,6 +321,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 .is-master-overlay-minimized {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: block; }
+  .master-overlay-maximize.master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
     top: 90%;
     .master-overlay-info {
@@ -348,7 +350,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 }
 
 .is-master-overlay-secondary-hidden {
-  .master-overlay-secondary { right: -60%; left: 100% !important; }
+  .master-overlay-secondary { right: 0; left: 100% !important; }
 }
 
 .master-overlay-main-content {
@@ -385,7 +387,7 @@ $parent-width: $parent-split * 0.21;
   }
 
   .is-master-overlay-parent-hidden .master-overlay-secondary {
-    left: $main-width;
+    left: 60%;
   }
 }
 

@@ -73,10 +73,10 @@
                     </a>
                     <!-- /ko -->
                   <% end %>
-                  <a class="button" title="View granules" data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}">
+                  <a class="button primary" title="View granules" data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}">
                      View Granules
                   </a>
-                  <a href="#" class="button primary add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                  <a href="#" class="button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
                      data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
                     <i class="fa fa-plus"></i> Add to project
                   </a>

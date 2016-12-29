@@ -3,8 +3,6 @@
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
       <section id="collection-results" class="master-overlay-has-min" data-master-overlay-title="Collections">
-        <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-chevron-circle-down"></i></a>
-        <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
           <a href="#" class="master-overlay-show-parent" data-bind="click: showParent">
             <i class="fa fa-search"></i> Browse Collections
@@ -14,7 +12,10 @@
           </a>
         </nav>
         <header>
-          <h2><strong class="collection-hits" data-bind="text: collections.hits"></strong> Matching Collections <a title="Get Help: What are collections?" class="master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority help" href="#"><i class="fa fa-question-circle"></i></a></h2>
+          <h2>
+            <strong class="collection-hits" data-bind="text: collections.hits"></strong> Matching Collections <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-chevron-circle-down"></i></a><a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
+            <!-- <a title="Get Help: What are collections?" class="master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority help" href="#"><i class="fa fa-question-circle"></i></a> -->
+          </h2>
         </header>
         <div class="master-overlay-info master-overlay-when-min">
           <p data-bind="visible: !project.isEmpty()" class="button-details">

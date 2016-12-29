@@ -1,9 +1,8 @@
 .master-overlay-secondary-content {
-  color: #C9C9C9;
+  color: #424242;
 
   dl {
     overflow: hidden;
-    background: #292929;
     padding: 20px 0 20px 20px;
     margin: 0;
   }
@@ -12,7 +11,7 @@
     margin: 0 0 5px 0;
     padding: 0;
     font-weight: bold;
-    color: #fff;
+    color: #424242;
   }
 
   dd {
@@ -60,8 +59,7 @@
 }
 
 .granule-filter-actions {
-  margin-left: 1em;
-  margin-top: .2em;
+  margin: 0 0 100px 20px;
 
   .low-priority {
     box-shadow: none;
