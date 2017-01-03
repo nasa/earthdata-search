@@ -16,7 +16,7 @@ describe 'Service options order with boundingbox1 field', reset: false do
       login
       wait_for_xhr
 
-      first_granule_list_item.click_link "Retrieve single granule data"
+      first_granule_list_item.click_link "Download single granule data"
       choose 'GLAH06.34 ESI Service'
 
       check 'Enter bounding box'

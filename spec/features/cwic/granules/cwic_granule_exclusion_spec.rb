@@ -55,7 +55,7 @@ describe "CWIC-enabled granule results", reset: false do
       context "and going to data access page" do
         before :all do
           login
-          click_link 'Retrieve Collection Data'
+          click_link 'Download Collection Data'
           wait_for_xhr
         end
 
