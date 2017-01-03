@@ -15,7 +15,7 @@ describe 'Service Options', reset: false do
     before :all do
       load_page :search, project: [downloadable_collection_id], view: :project
       wait_for_xhr
-      click_link "Retrieve project data"
+      click_link "Download project data"
       wait_for_xhr
     end
 
@@ -46,7 +46,7 @@ describe 'Service Options', reset: false do
     before :all do
       load_page :search, project: [collection_with_intermittent_timeline_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']
       wait_for_xhr
-      click_link "Retrieve project data"
+      click_link "Download project data"
       wait_for_xhr
     end
 
