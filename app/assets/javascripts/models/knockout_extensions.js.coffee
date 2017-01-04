@@ -114,10 +114,11 @@ do (ko, $=jQuery) ->
           model = options.rawModel
 
           if model? && !options.isReadFromDefaults
+            model = model.replace(/<ecs:PROJECTION>.*<ecs:value>.*<\/ecs:value>.*<\/ecs:PROJECTION>/, '<ecs:PROJECTION><ecs:value>&amp;</ecs:value></ecs:PROJECTION>')
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
           # Handle problems if the underlying form has a breaking change
           try
-            $el.echoforms(form: form, prepopulate: options.prepopulatedFields(), skipValidation: model?)
+            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
           catch error
             console.log("Error caught rendering saved model, retrying:", error)
             form = originalForm
