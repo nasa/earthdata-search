@@ -42,7 +42,7 @@ EarthdataSearchClient::Application.configure do
   config.env_name = ""
   config.tophat_url = ""
 
-  config.url_limit = 130
+  config.url_limit = 500
 
   config.middleware.use RackSessionAccess::Middleware
   config.middleware.use Middleware::RackRequestBlocker

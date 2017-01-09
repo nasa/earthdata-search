@@ -436,4 +436,19 @@ describe "Granule search filters", reset: false do
       expect(page).not_to have_content("Find granules by cloud cover percentage.")
     end
   end
+
+  context "When specify a collection level project/campaign param" do
+    before :all do
+      load_page :search, facets: true, q: 'C1000000062-NSIDC_ECS'
+      find("h3.panel-title", text: 'Project').click
+      find("p.facets-item", text: "2009_AN_NASA").click
+      first_collection_result.click
+      wait_for_xhr
+    end
+
+    it "the param is carried over to the granule search" do
+      uri = URI.parse(current_url)
+      expect(uri.query).to have_content('pg[0][project]=')
+    end
+  end
 end
