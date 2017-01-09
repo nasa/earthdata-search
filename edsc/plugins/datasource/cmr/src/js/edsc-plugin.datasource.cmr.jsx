@@ -82,10 +82,12 @@ export default class CmrDatasourcePlugin {
     return result;
   }
   hasQueryConfig() {
+    if(this._query == null)
+      return false;
     var serialized = this._query.serialize();
     var numOfParams = Object.keys(serialized).length;
     // if 'project' is the only granule search param, don't highlight the has-applied-granule-filters icon
-    return this._query !== null && numOfParams > 0 && !(serialized['project'] && numOfParams == 1);
+    return numOfParams > 0 && !(serialized['project'] && numOfParams == 1);
   }
   updateFromCollectionData(collectionData) {
     let attributes = collectionData.searchable_attributes;

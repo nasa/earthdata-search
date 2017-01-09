@@ -447,8 +447,8 @@ describe "Granule search filters", reset: false do
     end
 
     it "the param is carried over to the granule search" do
-      uri = URI.parse(current_url)
-      expect(uri.query).to have_content('pg[0][project]=')
+      project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
+      expect(Project.find(project_id).path).to include('pg[0][project]=')
     end
   end
 end
