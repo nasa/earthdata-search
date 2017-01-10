@@ -151,7 +151,7 @@ ns.GranuleLayer = do (L
     _matches: (granule, matcher) ->
       operators = ['>=', '<=']
       for own prop, value of matcher
-      granuleValue = granule[prop].split('T')[0]
+        granuleValue = granule[prop].split('T')[0]
         return false if value && !granuleValue
         op = null
         for operator in operators
