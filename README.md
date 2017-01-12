@@ -61,6 +61,7 @@ Operating systems | Command
   RHEL| `$ sudo yum install -y postgresql-devel`|
 ---
 * Node.js (with npm)
+
 Operating systems | Command
 ---- | ---- |
    Mac(homebrew)| `$ brew install node`|
