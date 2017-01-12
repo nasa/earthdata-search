@@ -54,10 +54,9 @@ Additionally, you will need the following, which will be installed automatically
 * Postgres development headers
 Operating systems | Command
 ---- | ---- | ----
-  [Mac] (homebrew) | `$ brew install postgresql`
-  [Ubuntu] | `$ sudo apt-get install -y libpq-dev`
-  [RHEL] | `$ sudo yum install -y postgresql-devel`
-
+  [Mac](homebrew) | `$ brew install postgresql`|
+  [Ubuntu](Ubuntu) | `$ sudo apt-get install -y libpq-dev`|
+  [RHEL](RHEL) | `$ sudo yum install -y postgresql-devel`|
 * Node.js (with npm)
   * Mac (homebrew): `$ brew install node`
   * Ubuntu: `$ sudo apt-get install -y nodejs`
