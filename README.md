@@ -60,7 +60,6 @@ Operating systems | Command
   Ubuntu| `$ sudo apt-get install -y libpq-dev`|
   RHEL| `$ sudo yum install -y postgresql-devel`|
 
----
 * Node.js (with npm)
 
 Operating systems | Command
