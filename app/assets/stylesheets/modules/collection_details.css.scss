@@ -59,10 +59,15 @@
   font-size: .9em;
   font-weight: bolder;
   padding: 1px 5px 0;
+
+  &:hover {
+    color: #fff;
+  }
 }
 
 .endpoint-label:visited {
   color: #fff;
+  text-decoration: none;
 }
 
 .long-paragraph {
@@ -80,17 +85,15 @@
   max-height: 3000px;
 }
 
-.description-toggle:hover {
-  background-color: #1f1f1f;
-}
-
 .description-toggle {
-  border-radius: 5px;
-  background-color: transparent;
-  background-color: #171717;
-  font-size: 0.6em;
   text-align: center;
-  margin-bottom: .5em;
+  margin-bottom: 2em;
+  opacity: 0.5;
+  @include transition(opacity 0.3s ease-in-out);
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .arrow-tag-group {

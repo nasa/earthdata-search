@@ -54,8 +54,8 @@ do (document
   $(document).on 'click', '.description-toggle', (e) ->
     e.preventDefault()
     $('.long-paragraph').toggleClass('expanded')
-    $('.description-toggle').find('i').toggleClass('fa-chevron-down')
-    $('.description-toggle').find('i').toggleClass('fa-chevron-up')
+    $('.description-toggle').find('i').toggleClass('fa-chevron-circle-down')
+    $('.description-toggle').find('i').toggleClass('fa-chevron-circle-up')
 
   $(document).ready ->
     map = $('#map').data('map')?.map
