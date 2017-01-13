@@ -205,6 +205,11 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 .badge {
   color: #fff;
   float: left;
+
+  &:hover {
+    color: #fff;
+    text-shadow: .5px .5px .5px rgba(0,0,0,0.5);
+  }
 }
 
 .facets-list-hide .badge {
