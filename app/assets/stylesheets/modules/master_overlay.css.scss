@@ -45,10 +45,15 @@
       background: #fff;
 
       h2 {
+        width: 65%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .actions {
-        margin-top: 0;
+        margin-top: 5px;
+        margin-right: 15px;
         text-align: right;
       }
     }
@@ -178,9 +183,9 @@
 
 .master-overlay-info {
   margin: 0;
-  padding: 0;
+  padding: 10px 0 0 0;
   background: #fff;
-  min-height: 55px;
+  min-height: 40px;
 
   p.button-details {
 

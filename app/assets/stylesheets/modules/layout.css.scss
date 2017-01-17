@@ -1,9 +1,6 @@
-html, body {
-  height: 100%;
-}
-
 html {
   -webkit-font-smoothing: antialiased;
+  height: 95%;
 }
 
 body {
@@ -11,6 +8,7 @@ body {
   background-color: #222;
   padding-top: 25px;
   display: flex;
+  height: 100%;
 }
 
 // Fixes to rendering glitches caused by tophat loading after page render

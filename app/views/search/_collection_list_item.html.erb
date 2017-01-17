@@ -31,7 +31,7 @@
                     <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
                     <!-- /ko -->
                   </div>
-                  <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
+                  <span class="panel-list-details" <% if is_project %>data-bind="style: {'color': $root.project.colorForCollection($data)}"<% end %>>
 
                     <strong>
                       <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
@@ -56,12 +56,12 @@
                   </a>
                   <!-- /ko -->
                   <% if is_project %>
-                    <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
-                      <i class="fa fa-download"></i>
+                    <a href="#" class="button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+                      <i class="fa fa-download"></i> Retrieve data
                     </a>
                     <!-- ko if: has_granules -->
-                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
-                      <i class="fa fa-edit"></i>
+                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
+                      <i class="fa fa-edit"></i> Granule filters
                     </a>
                     <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
                       <i class="fa fa-edit"></i>

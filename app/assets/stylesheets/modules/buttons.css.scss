@@ -244,3 +244,13 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
     background: $feedback-button-hover-color;
   }
 }
+
+#project-count {
+  background: #c0392b;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.6em;
+  border-radius: 15px;
+  padding: 2px 8px;
+  display: inline-block;
+}

@@ -40,7 +40,7 @@
         <div class="master-overlay-info">
           <!-- ko if: granules().isLoaded() -->
           <p>
-            Showing <span data-bind="text: granules().results().length"></span> of
+            Showing <strong><span data-bind="text: granules().results().length"></span></strong> of
             <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
             <span data-bind="text: granules().hits() == 1 ? '1 matching granule' : granules().hits() + ' matching granules'"></span>
             <!-- ko if: granules().parentQuery.focusedInterval() -->
