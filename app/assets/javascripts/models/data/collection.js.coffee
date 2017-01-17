@@ -300,6 +300,8 @@ ns.Collection = do (ko
         if (extraGibs[0].antarctic == true)
           available.push("Antartic")
       available.sort()
+      if available.length == 0
+        available.push("None")
       @gibsLayers(available.join(", "))  
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)

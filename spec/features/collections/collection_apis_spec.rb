@@ -77,7 +77,7 @@ describe 'Collection API Endpoints', reset: false do
     end
 
     it 'does not provide a link to the GIBS endpoint' do
-      expect(collection_details).to have_no_content 'GIBS'
+      expect(collection_details).to have_no_link 'GIBS'
     end
 
     it 'does not provide a link to the OPeNDAP endpoint' do
