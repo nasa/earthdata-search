@@ -290,16 +290,11 @@ ns.Collection = do (ko
       @_setObservable('tags', jsonObj)
       @gibs(@getValueForTag('extra.gibs'))
       
-      extraGibs = @getValueForTag('extra.gibs')
       available = []
-      if extraGibs
-        if (extraGibs[0].geo == true)
-          available.push("Geo")
-        if (extraGibs[0].arctic == true)
-          available.push("Arctic")
-        if (extraGibs[0].antarctic == true)
-          available.push("Antartic")
-      available.sort()
+      if @gibs()
+        available.push('Antarctic') if @gibs()[0].antarctic
+        available.push('Arctic') if @gibs()[0].arctic
+        available.push('Geo') if @gibs()[0].geo
       if available.length == 0
         available.push("None")
       @gibsLayers(available.join(", "))  
