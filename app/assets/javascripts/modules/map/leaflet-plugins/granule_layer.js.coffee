@@ -174,13 +174,13 @@ ns.GranuleLayer = do (L
         # set resolution to {projection}_resolution if it exists
         # and if the layer exists within optionSet
         oldResolution = optionSet.resolution
-        if this._map.projection == 'geo' && optionSet.geo == true
+        if this._map.projection == 'geo' && optionSet.geo
           matched = true
           newResolution = optionSet.geo_resolution
-        else if this._map.projection == 'arctic' && optionSet.arctic == true
+        else if this._map.projection == 'arctic' && optionSet.arctic
           matched = true
           newResolution = optionSet.arctic_resolution
-        else if this._map.projection == 'antarctic' && optionSet.antarctic == true
+        else if this._map.projection == 'antarctic' && optionSet.antarctic
           matched = true
           newResolution = optionSet.antarctic_resolution
 
