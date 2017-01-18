@@ -4,36 +4,49 @@
   display: flex;
   -ms-flex-align: center;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
-  font-size: 0.8em;
+  font-size: 0.9em;
   cursor: pointer;
-  padding: .8em .4em .8em .8em;
+  padding: .2em .4em .2em 1.1em;
   margin: 0;
   vertical-align: middle;
-  border-bottom: 1px solid #474A4C;
   overflow: hidden;
   color: #ffffff;
-  border-left: 5px solid transparent;
 
   &:first-child {
-    border-top: 1px solid #474A4C;
+    padding-top: .6em;
   }
 
-  i.fa-times {
-    display: none;
+  &:last-child {
+    padding-bottom: .3em;
   }
 
-  &:hover {
-    border-left-color: #30AB62;
+  input[type="checkbox"]{
+    cursor: pointer;
+    margin-right: .7em;
+    border-radius: 4px;
+    position: relative;
+    width: 17px;
+    min-width: 17px;
+    height: 17px;
+    vertical-align: top;
+    margin-top: 3px;
+    opacity: .6;
+  }
+
+  input[type="checkbox"]:checked{
+    opacity: 1;
+  }
+
+  input[type="checkbox"]:focus{
+    outline: 0 none;
+    box-shadow: none;
   }
 }
 
 .cwic-facet {
-  &:hover {
-    border-left-color: transparent;
-  }
   & > i {
     margin-right: .2em;
   }
@@ -53,11 +66,6 @@
 
 .facets-item.selected {
   cursor: pointer;
-  border-left-color: #30AB62;
-
-  &:hover {
-    border-left-color: darken(#30AB62, 5%);
-  }
 
   i.fa-times {
     display: inline;
@@ -88,8 +96,8 @@
 
 // Overwrite default bootstrap values
 .panel-body {
-  background-color: #2A2C2E;
-  color: #424242;
+  background-color: #121315;
+  color: #fff;
   padding: 0;
 }
 
@@ -99,13 +107,11 @@
 }
 
 .panel-default>.panel-heading {
-  @include background-image(linear-gradient(#191A1B, #101112));
+  background-color: #1c1c1c;
   color: #fff;
   padding: 0;
   text-decoration: none;
-  border-left: 5px solid transparent;
   cursor: pointer;
-  border-radius: 0;
 
   &:hover {
     background: #222;
@@ -121,9 +127,10 @@
 }
 
 .facet-group-title {
-  font-size: 0.9em;
-  font-weight: 500;
-  padding: .6em .5em;
+  font-size: 1em;
+  font-weight: 400;
+  padding: .6em 1.1em;
+  color: #fff;
   a {
     text-decoration: none;
   }
@@ -149,6 +156,14 @@
   background-repeat: no-repeat;
   width: 22px;
   height: 22px;
+}
+
+.facet-circle-icon {
+  display: block;
+  border-radius: 50%;
+  margin-left: 2px;
+  width: 10px;
+  height: 10px;
 }
 
 .facet-title {

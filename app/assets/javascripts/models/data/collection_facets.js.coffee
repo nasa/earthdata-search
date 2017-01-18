@@ -256,5 +256,6 @@ ns.CollectionFacets = do (ko) ->
         @removeFacet(facet)
       else
         @addFacet(facet)
+      true
 
   exports = CollectionFacetsModel

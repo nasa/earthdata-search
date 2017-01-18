@@ -129,14 +129,15 @@ describe "Collection Facets", reset: false do
       Capybara.reset_sessions!
       load_page :search, facets: true, env: :sit
       # select a project
+      find("h3.panel-title", text: 'Keywords').click
       find("h3.panel-title", text: 'Project').click
-      find("p.facets-item", text: "EOSDIS").click
+      find("label.facets-item", text: "EOSDIS").click
       wait_for_xhr
       within(:css, '#collapse5 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
-      expect(page).to have_css("p.facets-item.selected")
+      expect(page).to have_css("label.facets-item.selected")
 
       # select a platform
       find("h3.panel-title", text: 'Platform').click
@@ -146,7 +147,7 @@ describe "Collection Facets", reset: false do
         expect(page).to have_content("FIELD INVESTIGATION")
         expect(page).to have_css(".facets-item.selected")
       end
-      expect(page).to have_css("p.facets-item.selected")
+      expect(page).to have_css("label.facets-item.selected")
 
       # select a second project
       find(".facets-item", text: "ESIP").click
@@ -155,7 +156,7 @@ describe "Collection Facets", reset: false do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
-      expect(page).to have_css("p.facets-item.selected")
+      expect(page).to have_css("label.facets-item.selected")
 
       find("h3.panel-title", text: 'Project').click
       find("h3.panel-title", text: 'Platform').click
@@ -187,7 +188,7 @@ describe "Collection Facets", reset: false do
       end
 
       it "clicks remove from facet lists" do
-        find("p.facets-item", text: "ESIP").click
+        find("label.facets-item", text: "ESIP").click
         expect(page).to have_no_css(".facets-item.selected")
       end
     end
@@ -196,7 +197,7 @@ describe "Collection Facets", reset: false do
       expect(page).to have_css(".panel.processing-levels .panel-heading")
 
       find("h3.panel-title", text: 'Project').click
-      find(".projects p.facets-item", text: "ESSP").click
+      find(".projects label.facets-item", text: "ESSP").click
 
       expect(page).to have_no_css(".panel.processing-levels .panel-heading")
 
@@ -219,7 +220,7 @@ describe "Collection Facets", reset: false do
       within(:css, ".projects") do
         expect(page).to have_content("ESSP")
 
-        find("p.facets-item", text: "ESIP").click
+        find("label.facets-item", text: "ESIP").click
 
         expect(page).to have_no_content("ESSP")
       end
@@ -229,13 +230,13 @@ describe "Collection Facets", reset: false do
     it "keeps facet lists collapsed after selecting and removing a facet" do
       find("h3.panel-title", text: 'Platform').click
       within(:css, ".platforms") do
-        find("p.facets-item", text: "AIRCRAFT").click
+        find("label.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
       expect(page).to have_css(".panel.platforms .facets-list-show")
 
       within(:css, ".platforms") do
-        find("p.facets-item", text: "AIRCRAFT").click
+        find("label.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
       expect(page).to have_no_css(".facets-items.selected")
@@ -344,7 +345,7 @@ describe "Collection Facets", reset: false do
   #
   #     # get count from facet list
   #     within '#master-overlay-parent' do
-  #       facet_count = find('h3', text: 'Platform').parent.parent.find('p.facets-item.selected').find('span.facet-item-collection-count').text
+  #       facet_count = find('h3', text: 'Platform').parent.parent.find('label.facets-item.selected').find('span.facet-item-collection-count').text
   #     end
   #
   #     # get count from collection list pane
