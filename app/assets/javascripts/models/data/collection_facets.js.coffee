@@ -35,6 +35,7 @@ ns.CollectionFacets = do (ko) ->
       @links = item.links
       @children = item.children
       @isSelected = ko.observable(item.applied)
+      @isChecked = ko.observable(item.applied)
       @count = ko.observable(item.count)
       @param = @_linksToParam()
 
@@ -253,10 +254,10 @@ ns.CollectionFacets = do (ko) ->
 
     toggleFacet: (facet) =>
       if facet.isSelected()
+        facet.isChecked(false)
         @removeFacet(facet)
-        facet.isSelected(false)
       else
+        facet.isChecked(true)
         @addFacet(facet)
-        facet.isSelected(true)
 
   exports = CollectionFacetsModel

@@ -19,7 +19,7 @@
         <div class="panel-body facets">
           <!-- ko foreach: children() -->
           <label class="facets-item" data-bind="click: $root.collections.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: title}">
-            <input type="checkbox" data-bind="checked: isSelected()">
+            <input type="checkbox" data-bind="checked: isChecked()">
             <!--ko if: isAncestor() && !isParent() -->
               <i class="fa fa-chevron-left"></i>
             <!--/ko-->
