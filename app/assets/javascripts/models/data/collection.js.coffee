@@ -62,7 +62,18 @@ ns.Collection = do (ko
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
-      @gibsLayers = ko.observable(null)
+      
+      @gibsLayers = ko.computed( (->
+        available = []
+        if @gibs()
+          available.push('Antarctic') if @gibs()[0].antarctic
+          available.push('Arctic') if @gibs()[0].arctic
+          available.push('Geo') if @gibs()[0].geo
+        if available.length == 0
+          available.push("None")
+        return available.join(", ")),
+        this)
+
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
@@ -289,15 +300,7 @@ ns.Collection = do (ko
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)
       @gibs(@getValueForTag('extra.gibs'))
-      
-      available = []
-      if @gibs()
-        available.push('Antarctic') if @gibs()[0].antarctic
-        available.push('Arctic') if @gibs()[0].arctic
-        available.push('Geo') if @gibs()[0].geo
-      if available.length == 0
-        available.push("None")
-      @gibsLayers(available.join(", "))  
+
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
 
