@@ -18,7 +18,7 @@ describe 'Collection NRT Filtering', reset: false do
 
     context 'when un-selecting the NRT filter' do
       before :all do
-        find('p.facets-item', text: 'Near Real Time').click
+        find('.facets-item', text: 'Near Real Time').click
         wait_for_xhr
       end
 

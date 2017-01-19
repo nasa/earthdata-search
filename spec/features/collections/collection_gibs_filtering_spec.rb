@@ -9,17 +9,17 @@ describe 'Collection GIBS Filtering', reset: false do
 
   context 'when selecting the GIBS filter' do
     before :all do
-      find('p.facets-item', text: 'Map Imagery').click
+      find('.facets-item', text: 'Map Imagery').click
       wait_for_xhr
     end
 
     it 'shows only GIBS enabled collections' do
-      expect(page).to have_css('.circle-badge-gibs', count: 21)
+      expect(page).to have_css('.badge-gibs', count: 20)
     end
 
     context 'when un-selecting the GIBS filter' do
       before :all do
-        find('p.facets-item', text: 'Map Imagery').click
+        find('.facets-item', text: 'Map Imagery').click
         wait_for_xhr
       end
 
