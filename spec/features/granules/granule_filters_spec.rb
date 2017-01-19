@@ -441,7 +441,7 @@ describe "Granule search filters", reset: false do
     before :all do
       load_page :search, facets: true, q: 'C1000000062-NSIDC_ECS'
       find("h3.panel-title", text: 'Project').click
-      find("p.facets-item", text: "2009_AN_NASA").click
+      find(".facets-item", text: "2009_AN_NASA").click
       first_collection_result.click
       wait_for_xhr
     end
