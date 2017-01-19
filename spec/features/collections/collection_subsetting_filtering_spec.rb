@@ -43,7 +43,7 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
     end
 
     it 'shows only subsetting-enabled collections' do
-      expect(page).to have_css('.badge-subsetting', count: 21)
+      expect(page).to have_css('.circle-badge-subsetting', count: 21)
     end
 
     context 'when un-selecting the "Subsetting Services" filter' do
@@ -53,7 +53,7 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
       end
 
       it 'shows all collections' do
-        expect(page).to have_css('.badge-subsetting', count: 1)
+        expect(page).to have_css('.circle-badge-subsetting', count: 1)
       end
     end
   end

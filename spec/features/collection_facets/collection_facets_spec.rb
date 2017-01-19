@@ -18,19 +18,19 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Project facet" do
       find("h3.panel-title", text: 'Project').click
-      expect(page).to have_css('.panel.projects .facets-item', visible: true)
+      expect(page).to have_css('.panel.projects label.facets-item', visible: true)
       find("h3.panel-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.panel-title", text: 'Platform').click
-      expect(page).to have_css('.panel.platforms .facets-item', visible: true)
+      expect(page).to have_css('.panel.platforms label.facets-item', visible: true)
       find("h3.panel-title", text: 'Platform').click
     end
 
     it "shows the first Instrument facet" do
       find("h3.panel-title", text: 'Instrument').click
-      expect(page).to have_css('.panel.instruments .facets-item', visible: true)
+      expect(page).to have_css('.panel.instruments label.facets-item', visible: true)
       find("h3.panel-title", text: 'Instrument').click
     end
 
@@ -84,7 +84,7 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Processing Level facet" do
       find("h3.panel-title", text: 'Processing level').click
-      expect(page).to have_css('.panel.processing-levels .facets-item', visible: true)
+      expect(page).to have_css('.panel.processing-levels label.facets-item', visible: true)
       find("h3.panel-title", text: 'Processing level').click
     end
 
@@ -208,7 +208,7 @@ describe "Collection Facets", reset: false do
       expect(page).to have_no_content("AIRX3STD")
 
       find("h3.panel-title", text: 'Project').click
-      find(".panel.projects .facets-item", text: "ESIP").click
+      find(".panel.projects label.facets-item", text: "ESIP").click
 
       expect(page).to have_content("AIRX3STD")
 

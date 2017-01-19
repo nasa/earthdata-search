@@ -254,8 +254,9 @@ ns.CollectionFacets = do (ko) ->
     toggleFacet: (facet) =>
       if facet.isSelected()
         @removeFacet(facet)
+        facet.isSelected(false)
       else
         @addFacet(facet)
-      true
+        facet.isSelected(true)
 
   exports = CollectionFacetsModel

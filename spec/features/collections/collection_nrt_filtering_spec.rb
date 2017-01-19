@@ -13,7 +13,7 @@ describe 'Collection NRT Filtering', reset: false do
     end
 
     it 'shows only NRT collections' do
-      expect(collection_results).to have_css('.badge-nrt', count: 20)
+      expect(collection_results).to have_css('.circle-badge-nrt', count: 20)
     end
 
     context 'when un-selecting the NRT filter' do
@@ -23,7 +23,7 @@ describe 'Collection NRT Filtering', reset: false do
       end
 
       it 'shows all collections' do
-        expect(collection_results).to have_no_css('.badge-nrt')
+        expect(collection_results).to have_no_css('.circle-badge-nrt')
       end
     end
   end
