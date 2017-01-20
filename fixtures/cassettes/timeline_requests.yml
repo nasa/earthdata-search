@@ -536,6 +536,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C1000000062-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&project=2009_AN_NASA&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 20 Jan 2017 00:35:24 GMT
+  digest: 3ebf746fb5ece902493d10c05cea7a0e0039707c
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C1000000300-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
@@ -580,7 +597,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 19 Jan 2017 22:40:56 GMT
+  recorded_at: Fri, 20 Jan 2017 00:37:14 GMT
   digest: 586d1d3ad5249368bf2575001b4e37ca1ece039a
 - request:
     method: post
@@ -597,7 +614,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 19 Jan 2017 20:43:27 GMT
+  recorded_at: Fri, 20 Jan 2017 00:37:36 GMT
   digest: 91e9a50ed45d588b2e07acd5d7f5943c4ea91c76
 - request:
     method: post
@@ -614,7 +631,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 20 Jan 2017 00:04:19 GMT
+  recorded_at: Fri, 20 Jan 2017 00:37:46 GMT
   digest: e0da703e6a8378342160e7854ddd335180013ed5
 - request:
     method: post
@@ -769,7 +786,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 20 Jan 2017 00:06:14 GMT
+  recorded_at: Fri, 20 Jan 2017 00:37:09 GMT
   digest: 5a2d92b1ec732fce89daf2151ddb4b73f0196da7
 - request:
     method: post

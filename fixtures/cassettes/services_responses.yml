@@ -3063,28 +3063,6 @@ a4c9594294ce6e1c8b6c50eed1ca2ae5297b117d:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"A"}'
     http_version: 
-134467c8157e34e8388d8dc00a9ce545bbeb10e9:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/json
-      date:
-      - Thu, 19 Jan 2017 19:42:39 GMT
-      server:
-      - nginx/1.10.2
-      vary:
-      - Accept-Encoding, User-Agent
-      content-length:
-      - '67'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AE_SI6"}'
-    http_version: 
 ce9a854488dbbc38fb77426c9b7c65256f56b218:
   response:
     status:
@@ -3336,7 +3314,7 @@ c2b2eb5fce2ee491856eee3d5d96880be4e14b65:
       content-type:
       - application/json
       date:
-      - Thu, 19 Jan 2017 22:40:28 GMT
+      - Fri, 20 Jan 2017 00:36:48 GMT
       server:
       - nginx/1.10.2
       vary:
@@ -3358,7 +3336,7 @@ f5b2444334e5ce652abdc6d19c8d4cc2888ece62:
       content-type:
       - application/json
       date:
-      - Thu, 19 Jan 2017 20:11:18 GMT
+      - Fri, 20 Jan 2017 00:37:39 GMT
       server:
       - nginx/1.10.2
       vary:
@@ -3380,7 +3358,7 @@ f5b2444334e5ce652abdc6d19c8d4cc2888ece62:
       content-type:
       - application/json
       date:
-      - Fri, 20 Jan 2017 00:04:21 GMT
+      - Fri, 20 Jan 2017 00:37:18 GMT
       server:
       - nginx/1.10.2
       vary:
@@ -3754,7 +3732,7 @@ c610097fb33a2955cae3f020ef15f74e7f93c760:
       content-type:
       - application/json
       date:
-      - Fri, 20 Jan 2017 00:05:46 GMT
+      - Fri, 20 Jan 2017 00:36:41 GMT
       server:
       - nginx/1.10.2
       vary:
@@ -4096,28 +4074,6 @@ e5932c734c9e0acb576de82fe0407508918923d0:
     body:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C92711294-NSIDC_ECS"}'
-    http_version: 
-f1705507301101a1c308f3d153b3e41b168647df:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/json
-      date:
-      - Fri, 20 Jan 2017 00:02:21 GMT
-      server:
-      - nginx/1.10.2
-      vary:
-      - Accept-Encoding, User-Agent
-      content-length:
-      - '80'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"CC1000000580-NSIDC_ECS"}'
     http_version: 
 2856614d9059b67c1f4786116e088e633af8a168:
   response:

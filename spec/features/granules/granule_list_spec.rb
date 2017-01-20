@@ -36,6 +36,7 @@ describe "Granule list", reset: false do
 
       after :all do
         collection_details.click_link('Back to Granules')
+        wait_for_xhr
       end
 
       it "displays the collection details" do
@@ -55,6 +56,7 @@ describe "Granule list", reset: false do
 
       after :all do
         page.execute_script('window.history.back()')
+        wait_for_xhr
       end
 
       it "triggers the download workflow" do
