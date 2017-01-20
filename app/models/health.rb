@@ -64,9 +64,9 @@ class Health
     ok? res, json.present? && json['feed'] && json['feed']['entry'] && json['feed']['entry'].size > 1
   end
 
-  def opensearch_status(echo_client)
+  def opensearch_status(cmr_client)
     # check home page only
-    ok? echo_client.get_opensearch_availability
+    ok? cmr_client.get_opensearch_availability
   end
 
   def browse_scaler_status(echo_client)

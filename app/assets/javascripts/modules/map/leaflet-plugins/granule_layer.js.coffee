@@ -134,7 +134,6 @@ ns.GranuleLayer = do (L
       origin = @_map.getPixelOrigin()
       tileSize = @_getTileSize()
       tilePoint = p.add(origin).divideBy(tileSize).floor()
-
       canvas = @_getBackTile(tilePoint)
 
       tilePixel = p.subtract(@_getTilePos(tilePoint))
@@ -170,10 +169,9 @@ ns.GranuleLayer = do (L
       date = granule.time_start?.substring(0, 10)
       matched = false
       for optionSet in @multiOptions when @_matches(granule, optionSet.match)
-
+        oldResolution = optionSet.resolution
         # set resolution to {projection}_resolution if it exists
         # and if the layer exists within optionSet
-        oldResolution = optionSet.resolution
         if this._map.projection == 'geo' && optionSet.geo
           matched = true
           newResolution = optionSet.geo_resolution
@@ -217,14 +215,12 @@ ns.GranuleLayer = do (L
       boundary.poly.reverse() unless isClockwise(boundary.poly)
       bounds = new L.latLngBounds(boundary.poly.map(layerPointToLatLng))
       bounds = bounds.pad(0.1)
-
       date = null
       paths = []
       pathsWithHoles = []
 
       for granule, i in @_results
         overlaps = @_granulePathsOverlappingTile(granule, bounds)
-
         if overlaps.length > 0
           url = @getTileUrl(tilePoint, granule)
           for path, j in overlaps

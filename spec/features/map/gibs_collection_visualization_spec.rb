@@ -98,6 +98,10 @@ describe "Collection GIBS visualizations", reset: false do
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000561-NSIDC_ECS')
     end
+    after :all do
+      reset_search
+      wait_for_xhr
+    end
   end
 
   context 'when accessing GIBS-enabled collection "C1000000560-NSIDC_ECS"' do
@@ -109,6 +113,10 @@ describe "Collection GIBS visualizations", reset: false do
     hook_granule_results('AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003')
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000560-NSIDC_ECS')
+    end
+    after :all do
+      reset_search
+      wait_for_xhr
     end
   end
 
@@ -122,6 +130,10 @@ describe "Collection GIBS visualizations", reset: false do
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000580-NSIDC_ECS')
     end
+    after :all do
+      reset_search
+      wait_for_xhr
+    end
   end
 
   context 'when accessing GIBS-enabled collection "C1236303849-NSIDC_ECS"' do
@@ -133,6 +145,10 @@ describe "Collection GIBS visualizations", reset: false do
     hook_granule_results('SMAP L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V003')
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1236303849-NSIDC_ECS')
+    end
+    after :all do
+      reset_search
+      wait_for_xhr
     end
   end
 end
