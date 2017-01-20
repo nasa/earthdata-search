@@ -409,21 +409,6 @@ http_interactions:
   digest: f2a7ab93337a9736dcaae149c78473b57acfd35c
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/browse-scaler/availability
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Thu, 19 May 2016 16:25:14 GMT
-  digest: 24a42088b83467008ee2aa3890f71e7873225e08
-- request:
-    method: get
     uri: https://api.echo.nasa.gov/opensearch
     body:
       encoding: US-ASCII
@@ -437,6 +422,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 19 May 2016 16:25:14 GMT
   digest: 7bab0cd9eaa51adede18727638aba8bd56addf03
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/browse-scaler/availability
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:25:14 GMT
+  digest: a3c67c46886a10f55957a8abd1ff34d4c66514be
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/opensearch
@@ -1048,6 +1048,17 @@ http_interactions:
   digest: 12fb3c3bd23cf8da10cc48c4d483045050b3a9ea
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=AE_SI6
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 19 Jan 2017 19:42:34 GMT
+  digest: 134467c8157e34e8388d8dc00a9ce545bbeb10e9
+- request:
+    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=AQUARIUS_SAC-D+as
     body:
       encoding: US-ASCII
@@ -1167,6 +1178,39 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 11 Nov 2016 17:11:31 GMT
   digest: 9a92ff49823156b05c822130d55fad5dc8e1657d
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1000000560-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 19 Jan 2017 22:40:51 GMT
+  digest: 2f086b593bab46881fd639b9b1d1bf517eecad48
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1000000561-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 19 Jan 2017 20:11:12 GMT
+  digest: f5b2444334e5ce652abdc6d19c8d4cc2888ece62
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1000000580-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 20 Jan 2017 00:04:14 GMT
+  digest: 9c4268f5130f3b3d831b5c3682fb94a4466921c4
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1000001002-EDF_OPS
@@ -1345,6 +1389,17 @@ http_interactions:
   digest: 8b0d610ea9882cb067c28a40104b9abe20c8ad29
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1236303849-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 20 Jan 2017 00:06:09 GMT
+  digest: 3f1e31654f5063bb2b765fc9f4b269ff166ffa1b
+- request:
+    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C138500-PODAAC
     body:
       encoding: US-ASCII
@@ -1508,6 +1563,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 11 Nov 2016 17:19:40 GMT
   digest: e5932c734c9e0acb576de82fe0407508918923d0
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=CC1000000580-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 20 Jan 2017 00:02:13 GMT
+  digest: f1705507301101a1c308f3d153b3e41b168647df
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=MODIS

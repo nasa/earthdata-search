@@ -68,7 +68,7 @@ ns.Collection = do (ko
         if @gibs()
           available.push('Antarctic') if @gibs()[0].antarctic
           available.push('Arctic') if @gibs()[0].arctic
-          available.push('Geo') if @gibs()[0].geo
+          available.push('Geographic') if @gibs()[0].geo
         if available.length == 0
           available.push("None")
         return available.join(", ")),
