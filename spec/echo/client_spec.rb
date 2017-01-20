@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Echo::Client do
   let(:connection) { Object.new }
   let(:req) { double(headers: {}) }
-  let(:echo_client) { Echo::EchoClient.new('http://example.com', '1234') }
+  let(:echo_rest_client) { Echo::EchoRestClient.new('http://example.com', '1234') }
+  let(:echo_catalog_rest_client) { Echo::EchoCatalogRestClient.new('http://example.com', '1234') }
   let(:cmr_client) { Echo::CmrClient.new('http://example.com', '1234') }
   let(:extended_client) { Class.new(Echo::BaseClient) { def request; super; end } }
 
