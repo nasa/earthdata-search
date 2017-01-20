@@ -257,7 +257,8 @@ ns.GranuleTimeline = do (ko
         if listChanged && appliedStop.date()?
           lastDate = new Date(appliedStop.date()).getTime()
           @_lastDate = lastDate
-          $timeline.timeline('panToTime', lastDate)
+          panToTime = lastDate + lastDate - $timeline.timeline('center')
+          $timeline.timeline('panToTime', panToTime)
 
       if listChanged && (lastDate > Number.MIN_VALUE && lastDate < start || firstDate < Number.MAX_VALUE && firstDate > end)
         @_lastDate = lastDate
