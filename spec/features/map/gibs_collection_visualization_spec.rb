@@ -12,11 +12,6 @@ describe "Collection GIBS visualizations", reset: false do
   gibs_collection_name = 'AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
-  after :all do
-    reset_search
-    wait_for_xhr
-  end
-
   context "when viewing a GIBS-enabled collection in the results list" do
     before :all do
       load_page :search
@@ -25,6 +20,10 @@ describe "Collection GIBS visualizations", reset: false do
     end
     it "indicates that the collection has GIBS visualizations" do
       expect(first_collection_result).to have_css('.badge-gibs')
+    end
+    after :all do
+      reset_search
+      wait_for_xhr
     end
   end
 
@@ -38,6 +37,10 @@ describe "Collection GIBS visualizations", reset: false do
     it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
       expect(page).to have_granule_visualizations(gibs_collection_id)
     end
+    after :all do
+      reset_search
+      wait_for_xhr
+    end
   end
 
   context "when turning off visualizations for a GIBS-enabled collection" do
@@ -49,6 +52,10 @@ describe "Collection GIBS visualizations", reset: false do
     hook_granule_results_back(gibs_collection_name)
     it "removes the collection's GIBS tiles from the map" do
       expect(page).to have_no_granule_visualizations(gibs_collection_id)
+    end
+    after :all do
+      reset_search
+      wait_for_xhr
     end
   end
 
