@@ -44,7 +44,7 @@ describe "Spatial and temporal extraction", reset: false do
     end
 
     it 'is set in the query' do
-      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2&qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z%2C335%2C90&ok=last+winter')
+      expect(page.current_url).to include('qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z%2C335%2C90&ok=last+winter')
 
     end
   end
