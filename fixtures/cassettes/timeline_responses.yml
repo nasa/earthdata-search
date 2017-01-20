@@ -681,6 +681,28 @@ a08acca69f95ed3209679bf691c963a42b32711d:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000000-ORNL_DAAC","intervals":[[1330387200,1338595200,3]]}]'
     http_version: 
+3ebf746fb5ece902493d10c05cea7a0e0039707c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 20 Jan 2017 00:35:24 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4078cb61-aa71-4e21-a733-7593fb334348
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 dd211f49231fb53e71690939b1a0e2df6bb4f85f:
   response:
     status:
@@ -732,11 +754,11 @@ bcee2d69e84a8832b7245978b2403cce6add2ec6:
       message: 
     headers:
       date:
-      - Thu, 19 Jan 2017 22:40:56 GMT
+      - Fri, 20 Jan 2017 00:37:14 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 3e134253-9ef5-4fec-adad-01df40dd1b0f
+      - 61a22040-a2bf-453a-a514-8c12f1a33751
       content-length:
       - '110'
       connection:
@@ -754,11 +776,11 @@ bcee2d69e84a8832b7245978b2403cce6add2ec6:
       message: 
     headers:
       date:
-      - Thu, 19 Jan 2017 20:43:25 GMT
+      - Fri, 20 Jan 2017 00:37:36 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 86d6cc83-4011-4c4b-9b18-0b2db5218d0e
+      - 93506bcf-b63f-40c3-ad9f-13395460cc35
       content-length:
       - '110'
       connection:
@@ -776,11 +798,11 @@ e0da703e6a8378342160e7854ddd335180013ed5:
       message: 
     headers:
       date:
-      - Fri, 20 Jan 2017 00:04:18 GMT
+      - Fri, 20 Jan 2017 00:37:45 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 50e262cb-ce00-4e4b-a491-68450cf2733a
+      - 55bdb0d5-a2c3-4543-b247-745c4e36754e
       content-length:
       - '110'
       connection:
@@ -974,11 +996,11 @@ b00bb8542b7c36db99316559e7a76942397958b5:
       message: 
     headers:
       date:
-      - Fri, 20 Jan 2017 00:06:14 GMT
+      - Fri, 20 Jan 2017 00:37:08 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 277a8d4c-9af2-4f44-947e-25990153a47a
+      - d55c7c95-280d-4563-9a67-fc7615dba78b
       content-length:
       - '2'
       connection:

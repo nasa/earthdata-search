@@ -347,6 +347,9 @@ ns.query = do (ko,
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
 
       @singleGranuleId = ko.observable(null)
+
+      @project = @queryComponent(new QueryParam('project'), @_computeProject(parentQuery.facets()))
+
       super(parentQuery)
 
     _computeIsValid: =>
@@ -361,6 +364,12 @@ ns.query = do (ko,
 
     validateCloudCoverRange: (min, max) =>
       isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
+
+    _computeProject: (facets) =>
+      project = ''
+      for facet in facets
+        return facet.title if facet.param == 'project_h[]'
+      project
 
   exports =
     CollectionQuery: CollectionQuery
