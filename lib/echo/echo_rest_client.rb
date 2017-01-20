@@ -1,15 +1,15 @@
 module Echo
-  class EchoClient < BaseClient
+  class EchoRestClient < BaseClient
     def get_echo_availability
       get("rest/availability.json")
     end
 
     def create_token(username, password)
       auth = {
-        username: username,
-        password: password,
-        client_id: client_id,
-        user_ip_address: '127.0.0.1'
+          username: username,
+          password: password,
+          client_id: client_id,
+          user_ip_address: '127.0.0.1'
       }
       post("rest/tokens.json", {token: auth}.to_json)
     end
@@ -26,14 +26,6 @@ module Echo
 
       #service_entries = Array.wrap(ServiceEntry.all(:params => {:tag_group => "DATASET"}))
       puts "TODO: EchoClient#get_services(token)"
-    end
-
-    def get_opensearch_availability
-      get("/opensearch")
-    end
-
-    def get_provider_holdings
-      get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
 
     def get_data_quality_summary(catalog_item_id, token=nil)
@@ -73,20 +65,20 @@ module Echo
         # URS doesn't have fields like phones and address. However, these are required when submitting orders in ECHO.
         # Hence the place holders.
         contact = {
-          id: echo_user['id'],
-          role: 'Order Contact',
-          first_name: urs_user['first_name'],
-          last_name: urs_user['last_name'],
-          email: urs_user['email_address'],
-          organization: urs_user['organization'],
-          address: {us_format: urs_user['country'] == 'United States' ? true : false, country: urs_user['country']},
-          phones: [{number: '0000000000', phone_number_type: 'BUSINESS'}]
+            id: echo_user['id'],
+            role: 'Order Contact',
+            first_name: urs_user['first_name'],
+            last_name: urs_user['last_name'],
+            email: urs_user['email_address'],
+            organization: urs_user['organization'],
+            address: {us_format: urs_user['country'] == 'United States' ? true : false, country: urs_user['country']},
+            phones: [{number: '0000000000', phone_number_type: 'BUSINESS'}]
         }
 
         response = update_preferences(user_id,
                                       {preferences:
-                                        {general_contact: contact},
-                                        order_notification_level: response.body['preferences']['order_notification_level']},
+                                           {general_contact: contact},
+                                       order_notification_level: response.body['preferences']['order_notification_level']},
                                       token)
       end
       response
@@ -172,9 +164,9 @@ module Echo
       common_options = {quantity: 1}
       unless option_id.nil?
         common_options[:option_selection] = {
-          id: option_id,
-          option_definition_name: option_name,
-          content: option_model
+            id: option_id,
+            option_definition_name: option_name,
+            content: option_model
         }
       end
       order_items = granules.map {|g| {order_item: {catalog_item_id: g['id']}.merge(common_options)}}
@@ -186,13 +178,13 @@ module Echo
       contact = prefs_response.body['preferences']['general_contact']
       user = user_response.body['user']
       user_info = {
-        user_information: {
-          shipping_contact: contact,
-          billing_contact: contact,
-          order_contact: contact,
-          user_domain: user['user_domain'],
-          user_region: user['user_region']
-        }
+          user_information: {
+              shipping_contact: contact,
+              billing_contact: contact,
+              order_contact: contact,
+              user_domain: user['user_domain'],
+              user_region: user['user_region']
+          }
       }
       user_info_response = put("rest/orders/#{id}/user_information", user_info.to_json, token_header(token))
 
@@ -205,11 +197,11 @@ module Echo
 
       {order_id: id, response: submission_response, count: granules.size, dropped_granules: dropped_granules}
     end
+  end
 
-    protected
+  protected
 
-    def default_headers
-      {'Client-Id' => client_id, 'Echo-ClientId' => client_id}
-    end
+  def default_headers
+    {'Client-Id' => client_id, 'Echo-ClientId' => client_id}
   end
 end
