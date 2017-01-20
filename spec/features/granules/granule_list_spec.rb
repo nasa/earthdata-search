@@ -22,7 +22,7 @@ describe "Granule list", reset: false do
     end
 
     it "provides a button to get download the collection" do
-      expect(granule_list).to have_link('Retrieve collection data')
+      expect(granule_list).to have_link('Download collection data')
     end
 
     it "provides a button to edit granule filters" do
@@ -36,6 +36,7 @@ describe "Granule list", reset: false do
 
       after :all do
         collection_details.click_link('Back to Granules')
+        wait_for_xhr
       end
 
       it "displays the collection details" do
@@ -50,11 +51,12 @@ describe "Granule list", reset: false do
 
     context "clicking on the download button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').click_link('Retrieve collection data')
+        granule_list.find('.master-overlay-global-actions').click_link('Download collection data')
       end
 
       after :all do
         page.execute_script('window.history.back()')
+        wait_for_xhr
       end
 
       it "triggers the download workflow" do

@@ -10,7 +10,7 @@ describe 'Service Options With MRT processing and reprojection', reset: false do
 
       load_page :search, focus: collection_id
       login
-      first_granule_list_item.click_link "Retrieve single granule data"
+      first_granule_list_item.click_link "Download single granule data"
       wait_for_xhr
 
       choose 'MOD09A1.5 ESI Service'

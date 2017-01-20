@@ -703,6 +703,28 @@ a08acca69f95ed3209679bf691c963a42b32711d:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000000-ORNL_DAAC","intervals":[[1330387200,1338595200,3]]}]'
     http_version: 
+3ebf746fb5ece902493d10c05cea7a0e0039707c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 09 Jan 2017 19:08:39 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - a2634298-bb3f-4ca9-a7ed-7499d3d6fabc
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 dd211f49231fb53e71690939b1a0e2df6bb4f85f:
   response:
     status:
