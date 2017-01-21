@@ -90,65 +90,48 @@ describe "Collection GIBS visualizations", reset: false do
   end
   context 'when accessing GIBS-enabled collection "C1000000561-NSIDC_ECS"' do
     before :all do
-      load_page :search, env: :prod
+      load_page :search, q: 'C1000000561-NSIDC_ECS'
       fill_in 'keywords', with: 'C1000000561-NSIDC_ECS'
+      view_granule_results('AMSR-E/Aqua Daily L3 6.25 km 89 GHz Brightness Temperature (Tb) Polar Grids V003')
       wait_for_xhr
     end
-    hook_granule_results('AMSR-E/Aqua Daily L3 6.25 km 89 GHz Brightness Temperature (Tb) Polar Grids V003')
+
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000561-NSIDC_ECS')
-    end
-    after :all do
-      reset_search
-      wait_for_xhr
     end
   end
 
   context 'when accessing GIBS-enabled collection "C1000000560-NSIDC_ECS"' do
     before :all do
-      load_page :search, env: :prod
-      fill_in 'keywords', with: 'C1000000560-NSIDC_ECS'
+      load_page :search, q: 'C1000000560-NSIDC_ECS'
+      view_granule_results('AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003')
       wait_for_xhr
     end
-    hook_granule_results('AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003')
+    
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000560-NSIDC_ECS')
-    end
-    after :all do
-      reset_search
-      wait_for_xhr
     end
   end
 
   context 'when accessing GIBS-enabled collection "C1000000580-NSIDC_ECS"' do
     before :all do
-      load_page :search, env: :prod
-      fill_in 'keywords', with: 'C1000000580-NSIDC_ECS'
+      load_page :search, q: 'C1000000580-NSIDC_ECS'
+      view_granule_results('AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003')
       wait_for_xhr
     end
-    hook_granule_results('AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003')
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000580-NSIDC_ECS')
-    end
-    after :all do
-      reset_search
-      wait_for_xhr
     end
   end
 
   context 'when accessing GIBS-enabled collection "C1236303849-NSIDC_ECS"' do
     before :all do
-      load_page :search, env: :prod
-      fill_in 'keywords', with: 'C1236303849-NSIDC_ECS'
+      load_page :search, q: 'C1236303849-NSIDC_ECS'
+      view_granule_results('SMAP L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V003')
       wait_for_xhr
     end
-    hook_granule_results('SMAP L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V003')
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1236303849-NSIDC_ECS')
-    end
-    after :all do
-      reset_search
-      wait_for_xhr
     end
   end
 end
