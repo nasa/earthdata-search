@@ -62,6 +62,18 @@ ns.Collection = do (ko
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
+      
+      @gibsLayers = ko.computed( (->
+        available = []
+        if @gibs()
+          available.push('Antarctic') if @gibs()[0].antarctic
+          available.push('Arctic') if @gibs()[0].arctic
+          available.push('Geographic') if @gibs()[0].geo
+        if available.length == 0
+          available.push("None")
+        return available.join(", ")),
+        this)
+
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)

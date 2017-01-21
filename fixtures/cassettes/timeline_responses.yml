@@ -688,11 +688,11 @@ a08acca69f95ed3209679bf691c963a42b32711d:
       message: 
     headers:
       date:
-      - Mon, 09 Jan 2017 19:08:39 GMT
+      - Fri, 20 Jan 2017 22:11:51 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - a2634298-bb3f-4ca9-a7ed-7499d3d6fabc
+      - a85e2908-08e7-482a-978e-626fda4877ee
       content-length:
       - '2'
       connection:
@@ -746,6 +746,72 @@ bcee2d69e84a8832b7245978b2403cce6add2ec6:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000445-NSIDC_ECS","intervals":[[1203206400,1206144000,1977],[1223078400,1224460800,864],[1227571200,1229558400,1309],[1236556800,1239494400,1969],[1254268800,1255305600,636]]}]'
+    http_version: 
+586d1d3ad5249368bf2575001b4e37ca1ece039a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 20 Jan 2017 22:29:12 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6f0824c5-ddd8-495f-8570-dc129a30c1e2
+      content-length:
+      - '110'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000000560-NSIDC_ECS","intervals":[[1254466308,1265155200,124],[1265328000,1317772800,607]]}]'
+    http_version: 
+91e9a50ed45d588b2e07acd5d7f5943c4ea91c76:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 20 Jan 2017 22:29:19 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 09b124b1-1190-4b3d-aa23-30e491e8852f
+      content-length:
+      - '110'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000000561-NSIDC_ECS","intervals":[[1254466308,1265155200,124],[1265328000,1317772800,607]]}]'
+    http_version: 
+e0da703e6a8378342160e7854ddd335180013ed5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 20 Jan 2017 22:28:59 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 398c5d3b-ed1c-42db-80df-a74a46b93512
+      content-length:
+      - '110'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000000580-NSIDC_ECS","intervals":[[1254466308,1265155200,124],[1265328000,1317772800,607]]}]'
     http_version: 
 62933365a7a48530f2ed5d7f2f82b6b6dd8dd192:
   response:
@@ -913,6 +979,28 @@ b00bb8542b7c36db99316559e7a76942397958b5:
       - "*"
       cmr-request-id:
       - 8e271676-62e2-4c34-9c8a-a1bdf43a32f6
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+5a2d92b1ec732fce89daf2151ddb4b73f0196da7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 20 Jan 2017 22:29:30 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b75d9371-fcfc-4ca0-b6a1-cce5a9b2466c
       content-length:
       - '2'
       connection:

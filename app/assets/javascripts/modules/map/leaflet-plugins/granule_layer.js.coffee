@@ -134,7 +134,6 @@ ns.GranuleLayer = do (L
       origin = @_map.getPixelOrigin()
       tileSize = @_getTileSize()
       tilePoint = p.add(origin).divideBy(tileSize).floor()
-
       canvas = @_getBackTile(tilePoint)
 
       tilePixel = p.subtract(@_getTilePos(tilePoint))
@@ -151,7 +150,7 @@ ns.GranuleLayer = do (L
     _matches: (granule, matcher) ->
       operators = ['>=', '<=']
       for own prop, value of matcher
-        granuleValue = granule[prop]
+        granuleValue = granule[prop].split('T')[0]
         return false if value && !granuleValue
         op = null
         for operator in operators
@@ -170,14 +169,18 @@ ns.GranuleLayer = do (L
       date = granule.time_start?.substring(0, 10)
       matched = false
       for optionSet in @multiOptions when @_matches(granule, optionSet.match)
-        matched = true
-
-        # set resolution to {projection}_resolution if it exists
         oldResolution = optionSet.resolution
-
-        newResolution = optionSet.geo_resolution if this._map.projection == 'geo'
-        newResolution = optionSet.arctic_resolution if this._map.projection == 'arctic'
-        newResolution = optionSet.antarctic_resolution if this._map.projection == 'antarctic'
+        # set resolution to {projection}_resolution if it exists
+        # and if the layer exists within optionSet
+        if this._map.projection == 'geo' && optionSet.geo
+          matched = true
+          newResolution = optionSet.geo_resolution
+        else if this._map.projection == 'arctic' && optionSet.arctic
+          matched = true
+          newResolution = optionSet.arctic_resolution
+        else if this._map.projection == 'antarctic' && optionSet.antarctic
+          matched = true
+          newResolution = optionSet.antarctic_resolution
 
         # Use default resolution unless newResolution exists
         newResolution = oldResolution unless newResolution?
@@ -185,7 +188,7 @@ ns.GranuleLayer = do (L
 
         @options = L.extend({}, @originalOptions, optionSet)
         break
-
+      
       return unless matched
 
       if @options.granule
@@ -212,14 +215,12 @@ ns.GranuleLayer = do (L
       boundary.poly.reverse() unless isClockwise(boundary.poly)
       bounds = new L.latLngBounds(boundary.poly.map(layerPointToLatLng))
       bounds = bounds.pad(0.1)
-
       date = null
       paths = []
       pathsWithHoles = []
 
       for granule, i in @_results
         overlaps = @_granulePathsOverlappingTile(granule, bounds)
-
         if overlaps.length > 0
           url = @getTileUrl(tilePoint, granule)
           for path, j in overlaps
