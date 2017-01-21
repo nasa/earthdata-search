@@ -44,6 +44,12 @@
                 <span data-bind="text: $data"></span><br/>
                 <!--/ko-->
               </dd>
+              <dt>GIBS Imagery Projection Availability:</dt>
+              <dd>
+                <!-- ko with: $root.ui.collectionsList.selected() -->
+                <span data-bind="text: gibsLayers()"></span>
+                <!-- /ko -->
+              </dd>
           </dl>
         </div>
         <!-- end of first row -->
