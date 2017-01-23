@@ -29,7 +29,7 @@ describe "Timeline temporal display", reset: false do
     after(:all) { unset_temporal }
 
     it "displays a temporal range with the given start date and an end date at the present" do
-      expect(page,).to have_highlighted_selection(start_date, max_date)
+      expect(page).to have_highlighted_selection(start_date, max_date)
     end
   end
 
