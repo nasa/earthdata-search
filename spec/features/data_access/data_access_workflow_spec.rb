@@ -59,11 +59,8 @@ describe "Data Access workflow", reset: false do
     end
 
     it "displays a link to return to search results" do
-      link_url = page.find('.data-access-nav a')['href']
-      project_id = link_url[/^.*projectId=(\d+).*$/, 1].to_i
-      path = Project.find(project_id).path
       expect(page).to have_link("Back to Search Session")
-      expect(path).to include(downloadable_collection_id)
+      expect(page).to have_css("a[href^=\"/search/project?p=!#{downloadable_collection_id}\"]")
     end
 
     context "when displaying options for the first of multiple collections" do
