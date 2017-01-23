@@ -250,6 +250,27 @@ ns.GranuleTimeline = do (ko
           lastDate = Math.max(lastDate, new Date(collection.time_end).getTime())
           firstDate = Math.min(firstDate, new Date(collection.time_start).getTime())
       [start, end] = @range.peek()
+
+      # pan the timeline to the applied temporal range
+      if result[0]?
+        appliedStop = result[0].query.temporal.applied?.stop
+        appliedStart = result[0].query.temporal.applied?.start
+        timelineStart = $timeline.timeline('startTime')
+        timelineEnd = $timeline.timeline('endTime')
+        if listChanged
+          if appliedStart.date()? && appliedStop.date()?
+            appliedStartTime = new Date(appliedStart.date()).getTime()
+            appliedStopTime = new Date(appliedStop.date()).getTime()
+            @_lastDate = lastDate = appliedStartTime + .5 * (appliedStopTime - appliedStartTime) + .5 * (timelineEnd - timelineStart)
+            $timeline.timeline('panToTime', lastDate)
+          else if appliedStart.date()?
+            appliedStartTime = new Date(appliedStart.date()).getTime()
+            @_lastDate = lastDate = appliedStartTime + (timelineEnd - timelineStart)
+            $timeline.timeline('panToTime', lastDate)
+          else if appliedStop.date()?
+            @_lastDate = lastDate = new Date(appliedStop.date()).getTime()
+            $timeline.timeline('panToTime', lastDate)
+
       if listChanged && (lastDate > Number.MIN_VALUE && lastDate < start || firstDate < Number.MAX_VALUE && firstDate > end)
         @_lastDate = lastDate
         $timeline.timeline('panToTime', lastDate)
