@@ -29,6 +29,10 @@
     padding-bottom: .3em;
   }
 
+  .facets-term {
+
+  }
+
   input[type="checkbox"] {
     cursor: pointer;
     margin-right: .7em;
@@ -181,11 +185,20 @@
   color: #ffffff;
 }
 
-.facets-item.facets-child {
-  padding-left: 2em;
-  //background-color: #404346;
-
-  //.facet-title {
-  //  padding-left: 20px;
-  //}
+.facets-item.facets-term {
+  padding-left: 1.8em;
 }
+
+.facets-item.facets-var1 {
+  padding-left: 2.6em;
+}
+
+.facets-item.facets-var2 {
+  padding-left: 3.4em;
+}
+
+.facets-item.facets-var3 {
+  padding-left: 4.2em;
+}
+
+
