@@ -5,7 +5,7 @@ namespace :data do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
     task :echo10 => ['environment'] do
       puts "Starting data:load:echo10"
-      task_wrapper('data:load:echo10') do
+      task_wrapper('data:load:echo10', 1.hour) do
         CollectionExtra.load_echo10
       end
     end
@@ -13,7 +13,7 @@ namespace :data do
     desc "Data about granules in collections to return with granule results"
     task :granules => ['environment'] do
       puts "Starting data:load:granules"
-      task_wrapper('data:load:granules') do
+      task_wrapper('data:load:granules', 1.hour) do
         CollectionExtra.load
       end
     end
@@ -21,12 +21,12 @@ namespace :data do
     desc "Sync tags for services"
     task :tags => ['environment'] do
       puts "Starting data:load:tags"
-      task_wrapper('data:load:tags') do
+      task_wrapper('data:load:tags', 1.hour) do
         CollectionExtra.sync_tags
       end
     end
 
-    def task_wrapper(task, tries=nil, &block)
+    def task_wrapper(task, interval, &block)
       # There are two hosts in production. We need to make sure the rake tasks are run on both of them.
       # However too many requests sent from both of the hosts at the same time every hour time out due to the heavy load
       # on CMR side. We therefore alternate the cron jobs in OPS to fire only from one host at a time.
