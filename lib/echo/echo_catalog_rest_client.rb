@@ -8,7 +8,7 @@ module Echo
 
 
     def get_provider_holdings
-      get("/catalog-rest/echo_catalog/provider_holdings.json")
+      get("echo_catalog/provider_holdings.json")
     end
 
 
