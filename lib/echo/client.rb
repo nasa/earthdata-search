@@ -10,6 +10,7 @@ module Echo
       @config = service_config
       clients = []
       clients << CmrClient.new(@config['cmr_root'], urs_client_id)
+      clients << StatusAppClient.new(Rails.configuration.services['status_app_root'], urs_client_id)
       clients << EchoRestClient.new(ENV["echo_rest_url_#{Rails.env.to_s}"] || @config['echo_rest_root'], urs_client_id)
       clients << EchoCatalogRestClient.new(ENV["echo_catalog_rest_url_#{Rails.env.to_s}"] || @config['echo_catalog_rest_root'], urs_client_id)
       clients << UrsClient.new(@config['urs_root'], urs_client_id)

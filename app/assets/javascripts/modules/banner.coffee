@@ -17,7 +17,7 @@
     unless $banner
       $banner = $(template)
       $banner.addClass(options.className) if options.className?
-      $banner.find('.banner-title').text(title)
+      $banner.find('.banner-title').text(title) if title?
       $message = $banner.find('.banner-message')
       if options.html
         $message.html(message)
@@ -67,10 +67,10 @@
     # For pruning dismissed events that are no longer relevant
     pruned = []
     for event in allEvents
-      start = event.start_date
-      end = event.end_date
-      if dismissed.indexOf(event.id) == -1
-        showBanner(event.id, "#{event.title} (#{date.timeSpanToHuman(start, end)})", event.message, persist: true)
+      start = event.starttime
+      end = event.endtime
+      if dismissed.indexOf(event.id.toString()) == -1
+        showBanner(event.id, "#{if event.title? then event.title else ''} (#{date.timeSpanToHuman(start, end)})", event.message, persist: true)
       else
         pruned.push(event.id)
     preferences.dismissedEvents(pruned)
