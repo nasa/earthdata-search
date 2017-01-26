@@ -45,8 +45,10 @@ namespace :data do
           if history_tasks.size > 0
             last_task = history_tasks.last
             if Socket.gethostname == last_task.host
+              puts "Cron job #{task} has been run on #{last_task.host}. Stop."
               return
             else
+              puts "Cron job #{task} has NOT been run on #{last_task.host}. Start the run on #{Socket.gethostname}."
               job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
               job.save!
               id = job.id
@@ -54,9 +56,12 @@ namespace :data do
               yield
             end
           else
+            puts "Cron job #{task} has not been run for #{(1.5 * interval).to_i / 3600.0} hours on #{Socket.gethostname}. Wait randomly for 0 to 60 seconds and retry."
             sleep rand(0..60)
             tried += 1
+            puts "Wait is done. Retrying (#{tried}) on #{Socket.gethostname}."
             if tried == 10
+              puts "Cron job #{task} is being started on #{Socket.gethostname}."
               job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
               job.save!
               id = job.id
@@ -78,18 +83,18 @@ namespace :data do
       else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: $!.message, host: Socket.gethostname)
       end
-      puts "Cron job #{task} failed with error #{$!.message}"
+      puts "Cron job #{task} failed with error #{$!.message} on #{Socket.gethostname}"
       job.save!
       return
     else
       if id.present?
-      job = CronJobHistory.find_by_id id
-      job.last_run = Time.now
-      job.status = 'succeeded'
+        job = CronJobHistory.find_by_id id
+        job.last_run = Time.now
+        job.status = 'succeeded'
       else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
       end
-      puts "Cron job #{task} completed successfully."
+      puts "Cron job #{task} completed successfully on #{Socket.gethostname}."
       job.save!
     end
   end

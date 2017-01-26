@@ -186,7 +186,7 @@ describe HealthController, type: :controller do
         expect(json['dependencies']['opensearch']).to eq({"ok?"=>true})
         expect(json['dependencies']['browse_scaler']).to eq({"ok?"=>true})
         expect(json['background_jobs']['delayed_job']).to eq({"ok?"=>true})
-        expect(json['background_jobs']['data_load_echo10'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load:echo10' hasn't been run in the past 10800 seconds/)
+        expect(json['background_jobs']['data_load_echo10'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load:echo10' hasn't been run in the past 3\.0 hours/)
       end
     end
 
