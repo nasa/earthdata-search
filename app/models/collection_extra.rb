@@ -176,7 +176,11 @@ class CollectionExtra < ActiveRecord::Base
         puts "Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
       end
 
-      extra.save if extra.changed?
+      begin
+        extra.save! if extra.changed?
+      rescue ActiveRecord::RecordNotUnique => e
+        puts "#{e.message}"
+      end
 
       processed_count += 1
 

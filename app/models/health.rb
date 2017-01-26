@@ -87,7 +87,7 @@ class Health
 
     if tasks.size == 0
       @ok = false
-      return {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{3 * interval} seconds."}
+      return {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{(3 * interval).to_i / 3600.0} hours."}
     end
 
     if Rails.env.production?
@@ -96,7 +96,7 @@ class Health
       status1 = task_status(interval, task1, task_name)
       task2 = tasks.select {|task| task.host != task1.host}.last
       if task2.nil?
-        log_text = "Cron job '#{task_name}' hasn't been run in the past #{3 * interval} seconds"
+        log_text = "Cron job '#{task_name}' hasn't been run in the past #{(3 * interval).to_i / 3600.0} hours."
         Rails.logger.info "Health failure: #{log_text} on the other production host (other than #{task1.host}). #{status1[:error]}"
         @ok = false
         {ok?: false, error: log_text}
@@ -118,7 +118,7 @@ class Health
   def task_status(interval, task, task_name)
     if task.status == 'succeeded'
       if task.last_run < Time.now - interval && task.last_run > Time.now - 3 * interval
-        log_text = "Suspend cron job checks for #{interval.to_i / 3600} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run}"
+        log_text = "Suspend cron job checks for #{interval.to_i / 3600.0} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run}"
         Rails.logger.info "Health failure: #{log_text} on host #{task.host}."
         return {ok?: true, info: log_text}
       elsif task.last_run < Time.now - 3 * interval
