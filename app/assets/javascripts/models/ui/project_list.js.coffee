@@ -89,6 +89,12 @@ ns.ProjectList = do (ko
       @project.focus(collection)
       @configureProject()
 
+    viewProject: () =>
+      base = urlUtil.cleanPath()?.split('?')[0]
+      parameters = urlUtil.cleanPath()?.split('?')[1]
+      base = base + "/project" unless base.indexOf("/project") >= 0
+      urlUtil.pushPath(base + "?" + parameters)
+
     loginAndDownloadGranule: (collection, granule) =>
       @project.focus(collection)
       @configureProject(granule.id)
