@@ -80,7 +80,7 @@ describe "'Clear Filters' button", reset: false do
 
   it "clears facets" do
     find("h3.panel-title", text: 'Project').click
-    find("p.facets-item", text: "EOSDIS").click
+    find(".facets-item", text: "EOSDIS").click
     within(:css, '.projects') do
       expect(page).to have_content("EOSDIS")
       expect(page).to have_css(".facets-item.selected")

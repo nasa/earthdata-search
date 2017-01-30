@@ -165,8 +165,16 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
 }
 
+.circle-badge-gibs {
+  background-color: #ec8101;
+}
+
 .badge-subsetting {
   @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
+}
+
+.circle-badge-subsetting {
+  background-color: #1b97e1;
 }
 
 .badge-nrt {
@@ -182,6 +190,10 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     content: "NRT";
   }
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
+.circle-badge-nrt {
+  background-color: #01cf6b;
 }
 
 .badge-cwic {
@@ -201,7 +213,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-header-toggle {
-  color: #888;
   line-height: 1.5em;
 }
 
