@@ -43,17 +43,17 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
     end
 
     it 'shows only subsetting-enabled collections' do
-      expect(page).to have_css('.badge-subsetting', count: 21)
+      expect(page).to have_css('.badge-subsetting', count: 20)
     end
 
     context 'when un-selecting the "Subsetting Services" filter' do
       before :all do
-        find('p.facets-item', text: 'Subsetting Services').click
+        find('.facets-item', text: 'Subsetting Services').click
         wait_for_xhr
       end
 
       it 'shows all collections' do
-        expect(page).to have_css('.badge-subsetting', count: 1)
+        expect(page).to have_css('.circle-badge-subsetting', count: 1)
       end
     end
   end
