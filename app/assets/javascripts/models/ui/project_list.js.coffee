@@ -90,8 +90,7 @@ ns.ProjectList = do (ko
       @configureProject()
 
     viewProject: () =>
-      base = urlUtil.cleanPath()?.split('?')[0]
-      parameters = urlUtil.cleanPath()?.split('?')[1]
+      [base, parameters] = urlUtil.cleanPath()?.split('?')
       base = base + "/project" unless base.indexOf("/project") >= 0
       urlUtil.pushPath(base + "?" + parameters)
 
