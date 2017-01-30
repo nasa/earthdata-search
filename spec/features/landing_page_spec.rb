@@ -62,11 +62,11 @@ describe 'Site landing page' do
 
   it 'displays the current NASA official' do
     load_page :root
-    expect(page).to have_text('Andrew Mitchell')
+    expect(page).to have_text('Stephen Berrick')
   end
 
   it 'does not display the previous NASA official' do
     load_page :root
-    expect(page).to have_no_text('Kevin Murphy')
+    expect(page).to have_no_text('Andrew Mitchell')
   end
 end
