@@ -90,7 +90,7 @@ class Health
       return {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{(3 * interval).to_i / 3600.0} hours."}
     end
 
-    if Rails.env.production?
+    if Rails.env.production? || Rails.env.uat?
       # There are two hosts in production. We need to make sure the rake tasks are run on both of them.
       task1 = tasks.last
       status1 = task_status(interval, task1, task_name)
@@ -119,24 +119,24 @@ class Health
     if task.status == 'succeeded'
       if task.last_run < Time.now - interval && task.last_run > Time.now - 3 * interval
         log_text = "Suspend cron job checks for #{interval.to_i / 3600.0} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run}"
-        Rails.logger.info "Health check results: PENDING: #{log_text} on host #{task.host}."
+        Rails.logger.info "Health pending: #{log_text} on host #{task.host}."
         return {ok?: true, info: log_text}
       elsif task.last_run < Time.now - 3 * interval
         @ok = false
         log_text = "Cron job '#{task_name}' hasn't been run since #{task.last_run}"
-        Rails.logger.info "Health check results: FAILED: #{log_text} on host #{task.host}."
+        Rails.logger.info "Health failure: #{log_text} on host #{task.host}."
         return {ok?: false, error: log_text}
       else
         return {ok?: true}
       end
     elsif task.status == 'running'
       log_text = "Cron job #{task_name} is still running."
-      Rails.logger.info "Health check results: PENDING: #{log_text} on host #{task.host}"
+      Rails.logger.info "Health pending: #{log_text} on host #{task.host}"
       return {ok?: true, info: log_text}
     else
       @ok = false
         log_text = "Cron job '#{task_name}' failed in last run at #{task.last_run} with message '#{task.message}'"
-        Rails.logger.info "Health check results: FAILED: #{log_text} on host #{task.host}."
+        Rails.logger.info "Health failure: #{log_text} on host #{task.host}."
       {ok?: false, error: log_text}
     end
   end
