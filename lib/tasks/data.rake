@@ -38,7 +38,7 @@ namespace :data do
       #     else run the cron job
       # if no entries in the past (1.5 * interval) found, wait and re-check for ten times
 
-      if Rails.env.production?
+      if Rails.env.production? || Rails.env.uat?
         tried = 0
         while tried < 10 do
           history_tasks = CronJobHistory.where(task_name: task, last_run: (Time.now - 1.5 * interval)..Time.now)
