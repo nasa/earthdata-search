@@ -7,7 +7,7 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a data-bind="visible: !project.isEmpty()" id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
+  <a data-bind="visible: !project.isEmpty(), click: $root.ui.projectList.viewProject" id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
     <i class="fa fa-folder-o"></i> View Project <span id="project-count" data-bind="text: project.collections().length"></span>
   </a>
   <%= render partial: 'workspace_name' %>
