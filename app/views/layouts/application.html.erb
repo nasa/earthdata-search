@@ -35,8 +35,16 @@
     <% end %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
+  <% # This is the recommended way to use "Status" app from the app's documentation. However we have to use the provided %>
+  <% # API in event_controller. Reasons being: %>
+  <% # 1. we need to combine PUMP calendar response with Status response before PUMP shutdown. %>
+  <% # 2. we need to show different notifications from different environments when cmr_env is set in the url. %>
+  <!--<script src="https://status.earthdata.nasa.gov/assets/banner_widget.js"></script>-->
 </head>
 <body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
+<!-- Add the Status banner -->
+<!--<div id="earthdata-notification-banner"></div>-->
+<!-- End Status banner -->
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">

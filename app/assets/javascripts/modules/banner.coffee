@@ -1,4 +1,5 @@
 @edsc.banner = do (
+                config = @edsc.config
                 date = @edsc.util.date
                 $=jQuery
                 preferences = @edsc.page.preferences
@@ -10,7 +11,7 @@
   template = "<div class=\"banner banner-hidden\">
       <a class=\"banner-close\" href=\"#\" title=\"close\"><i class=\"fa fa-times-circle\"></i></a>
       <h1 class=\"banner-title\"></h1>
-      <p class=\"banner-message\"></p>
+      <p class=\"banner-text\"></p>
     </div>"
 
   displayBanner = (key, title, message, options={}) ->
@@ -18,7 +19,7 @@
       $banner = $(template)
       $banner.addClass(options.className) if options.className?
       $banner.find('.banner-title').text(title) if title?
-      $message = $banner.find('.banner-message')
+      $message = $banner.find('.banner-text')
       if options.html
         $message.html(message)
       else
@@ -28,7 +29,11 @@
       $('body').after($banner)
       # Do this in a timeout so the element has time to be placed in the DOM and animations can happen
       # $banner might be undefined. Keep an eye on this and file a bug if it happens again.
-      setTimeout((-> $banner.removeClass('banner-hidden')), 0)
+      setTimeout((->
+        $banner.removeClass('banner-hidden')
+        $('#main-toolbar').animate({paddingTop: 0, marginTop: $banner.outerHeight() + 22}, {duration: config.defaultAnimationDurationMs})
+        setTimeout((->$('.master-overlay')?.masterOverlay('contentHeightChanged')), config.defaultAnimationDurationMs * 1.05)
+      ), 0)
       $banner.on 'click', '.banner-close', onClickClose
 
   showBanner = (args...) ->
@@ -46,6 +51,9 @@
     $banner = null
     if banners.length > 0
       displayBanner(banners[0]...)
+    else
+      $('#main-toolbar').animate({paddingTop: "25px", marginTop: 0}, {duration: config.defaultAnimationDurationMs})
+      setTimeout((->$('.master-overlay')?.masterOverlay('contentHeightChanged')), config.defaultAnimationDurationMs * 1.05)
 
   removeBannersWithKey = (key) ->
     banners = (banner for banner in banners when banner[0] != key)
@@ -70,7 +78,7 @@
       start = event.starttime
       end = event.endtime
       if dismissed.indexOf(event.id.toString()) == -1
-        showBanner(event.id, "#{if event.title? then event.title else ''} (#{date.timeSpanToHuman(start, end)})", event.message, persist: true)
+        showBanner(event.id, "#{if event.title? then event.title else ''} (#{date.timeSpanToHuman(start, end)})", event.message, {persist: true, className: "banner-#{event.notification_type.toLowerCase()}"})
       else
         pruned.push(event.id)
     preferences.dismissedEvents(pruned)
