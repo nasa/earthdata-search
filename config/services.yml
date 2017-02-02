@@ -7,6 +7,7 @@ earthdata:
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.earthdata.nasa.gov"
   uat:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_rest_root: "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest"
@@ -14,6 +15,7 @@ earthdata:
     cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.uat.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.uat.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.uat.earthdata.nasa.gov"
   sit:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
     echo_rest_root: "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest"
@@ -21,7 +23,9 @@ earthdata:
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"
     opensearch_root: "https://cmr.sit.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.sit.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.sit.earthdata.nasa.gov"
 
+status_app_root: "https://status.earthdata.nasa.gov/api/v1/"
 cwic_root: "http://cwic.wgiss.ceos.org/"
 
 # Every (EDSC, URS) environment pair has a different client id.  Yay combinatorics.

@@ -4263,7 +4263,7 @@ f8ab9ae82d5d59d6a12f1477ebf18a37868e8f98:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<dap:Error xmlns:dap=\"http://xml.opendap.org/ns/DAP/3.2#\"
         code=\"404\">Cannot locate resource: https://opendap.larc.nasa.gov/opendap/hyrax/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc.ddx</dap:Error>\r\n\r\n"
-    http_version: 
+    http_version:
 9ce0bd1566373b313dc9b29dc08f3b5a3c9ff8c4:
   response:
     status:
