@@ -114,11 +114,32 @@ do (ko, $=jQuery) ->
           model = options.rawModel
 
           if model? && !options.isReadFromDefaults
-            model = model.replace(/<ecs:PROJECTION>.*<ecs:value>.*<\/ecs:value>.*<\/ecs:PROJECTION>/, '<ecs:PROJECTION><ecs:value>&amp;</ecs:value></ecs:PROJECTION>')
+            shortNameRegex = /<ecs:SUBAGENT_ID>[\s\S]*<ecs:value>(.*)<\/ecs:value>[\s\S]*<\/ecs:SUBAGENT_ID>/
+            shortName = shortNameRegex.exec(model)?[1]
+
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
           # Handle problems if the underlying form has a breaking change
           try
             $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+
+            # this needs to be done to trigger echoform validation otherwise these nested values will be pruned.
+            if shortName?
+              projectionOptions = $('#' + shortName + '-projectionSettings:visible')
+              if projectionOptions.length > 0
+                reprojectionOptionsLabel = $('label:contains("Re-projection Options"):visible')
+                if reprojectionOptionsLabel.length > 0
+                  # touch select tag
+                  reprojectionSelect = $('#' + reprojectionOptionsLabel.attr('for'))
+                  originalVal = reprojectionSelect.val()
+                  reprojectionSelect.val('&').trigger('change').val(originalVal).trigger('change')
+
+                  # touch input tag(s)
+                  inputs = projectionOptions.find('input[type=text]:visible')
+                  $.each(inputs, (i, obj) ->
+                    originalVal = $(obj).val()
+                    $(obj).val(originalVal + 1).trigger('change').val(originalVal).trigger('change')
+                  )
+
           catch error
             console.log("Error caught rendering saved model, retrying:", error)
             form = originalForm
