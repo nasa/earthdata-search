@@ -37,7 +37,7 @@ portals: &portals
       - id: ornl-daac-logo
         image: /images/portals/ornl/ornl-daac-logo-mono.png
         link: https://daac.ornl.gov
-        title: ORNL DAAC AirMOSS Home
+        title: ORNL DAAC Home
     scripts:
       - edsc-portal.ornl.min.js
 
