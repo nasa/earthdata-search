@@ -32,7 +32,7 @@ class CollectionsController < ApplicationController
 
 
     if response.success?
-      respond_with(CollectionDetailsPresenter.new(response.body.first, params[:id], token, cmr_env), status: response.status)
+      respond_with(CollectionDetailsPresenter.new(response.body, params[:id], token, cmr_env), status: response.status)
     else
       respond_with(response.body, status: response.status)
     end

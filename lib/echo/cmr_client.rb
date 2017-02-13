@@ -24,7 +24,8 @@ module Echo
       post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))
     end
 
-    def get_collection(id, token=nil, format='echo10')
+    def get_collection(id, token=nil, format='umm_json_v1_4')
+      # TODO make 1_4 configurable (yml + ENV)
       response = get("/search/concepts/#{id}.#{format}", {}, token_header(token))
       response.body[0].granule_url = @root + "/search/granules.json" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
       response
