@@ -34,34 +34,36 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def self.sync_esi(client, token)
-    puts 'Starting Sync ESI'
+    puts 'Starting sync ESI'
     option_response = client.get_all_service_order_information(token)
 
     if option_response.success?
-      ids = option_response.body.map {|option| option['service_option_assignment']['catalog_item_id']}
+      esi_capable_ids = option_response.body.map {|option| option['service_option_assignment']['catalog_item_id']}
+      esi_tagged_ids = []
 
       each_collection(client, {tag_key: tag_key('subset_service.esi')}, token) do |collection|
-        # Remove tags which are no longer applicable
-        unless ids.include?(collection['id'])
-          remove_extra_tag(collection, 'subset_service.esi', nil, client, token)
-        end
-        # Ensure all the ids need the tag
-        ids.delete(collection['id'])
+        esi_tagged_ids.push collection['id']
       end
 
-      if ids.present?
-        puts 'Adding ESI Tags'
+      ids_no_longer_esi_capable = esi_tagged_ids - esi_capable_ids
+      ids_become_esi_capable = esi_capable_ids - esi_tagged_ids
+      puts "Number of collections that should no longer bear ESI tag: #{ids_no_longer_esi_capable.size}."
+      puts "Number of collections that should be tagged ESI capable: #{ids_become_esi_capable.size}."
 
-        key = tag_key('subset_service.esi')
-        client.add_tag(key, nil, ids, token, false, false)
-      end
+      # collections that no longer ESI capable:
+      client.bulk_remove_tag(tag_key('subset_service.esi'), ids_no_longer_esi_capable.map{|elem| {'concept-id' => elem}}, token) if ids_no_longer_esi_capable.size > 0
+
+      # collections that just get the ESI configs
+      client.add_tag(tag_key('subset_service.esi'), nil, ids_become_esi_capable, token, false, false) if ids_become_esi_capable.size > 0
     end
-    puts 'Finished adding ESI Tags'
+    puts 'Finished adding ESI tags'
     nil
   end
 
   def self.sync_gibs(client, token)
+    puts "Starting sync GIBS"
     GibsConfiguration.new.sync_tags!(tag_key('gibs'), client, token)
+    puts "Finished adding GIBS tags"
   end
 
   def self.sync_tags
@@ -80,18 +82,11 @@ class CollectionExtra < ActiveRecord::Base
       client.create_tag_if_needed(tag_key(tag), token)
     end
 
-    each_collection(client, {has_granules: false, tag_key: tag_key('*')}, token) do |collection|
-      stale_tags.each do |tag, collections|
-        collections << collection['id'] if has_tag(collection, tag)
-      end
-    end
-    stale_tags.each do |tag, collections|
-      client.remove_tag(tag, collections, token) if collections.present?
-    end
-
+    puts "Starting sync OPENDAP"
     each_collection(client, {has_granules: true}, token) do |collection|
       sync_opendap(client, token, collection)
     end
+    puts "Finished adding OPENDAP tags"
 
     sync_esi(client, token)
     sync_gibs(client, token)

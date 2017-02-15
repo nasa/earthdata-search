@@ -113,6 +113,10 @@ module Echo
       response
     end
 
+    def bulk_remove_tag(key, assoc_data, token)
+      delete("/search/tags/#{key}/associations", {}, assoc_data.to_json, token_header(token))
+    end
+
     def remove_tag(key, condition, token)
       query = tag_condition_to_query(condition)
       delete("/search/tags/#{key}/associations/by_query", {}, query.to_json, token_header(token))
