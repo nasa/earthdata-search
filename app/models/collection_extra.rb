@@ -153,20 +153,29 @@ class CollectionExtra < ActiveRecord::Base
       if extra.has_granules
         # Edited the condition to update browseable_granule ID if it hasn't been updated for a week.
         if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.updated_at < 1.week.ago)
-          browseable = echo_client.get_granules(format: 'json',
+          response = echo_client.get_granules(format: 'json',
                                                  echo_collection_id: [id],
-                                                 page_size: 1, browse_only: true, sort_key: ['-start_date']).body['feed']['entry']
-          extra.has_browseable_granules = browseable.size > 0
-          if extra.has_browseable_granules
-            extra.granule = extra.browseable_granule = browseable.first['id']
+                                                 page_size: 1, browse_only: true, sort_key: ['-start_date'])
+          if response.success?
+            browseable = response.body['feed']['entry']
+            extra.has_browseable_granules = browseable.size > 0
+            if extra.has_browseable_granules
+              extra.granule = extra.browseable_granule = browseable.first['id']
+            end
+          else
+            puts JSON.pretty_generate(response.body)
           end
         end
         if extra.granule.nil?
-          granules = echo_client.get_granules(format: 'json',
+          response = echo_client.get_granules(format: 'json',
                                                echo_collection_id: [id],
-                                               page_size: 1).body['feed']['entry']
-
-          extra.granule = granules.first['id'] if granules.first
+                                               page_size: 1)
+          if response.success?
+            granules = response.body['feed']['entry']
+            extra.granule = granules.first['id'] if granules.first
+          else
+            puts JSON.pretty_generate(response.body)
+          end
         end
         puts "Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
       end
