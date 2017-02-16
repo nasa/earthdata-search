@@ -43,14 +43,14 @@ describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with OPeNDAP' do
     before :all do
       load_page :search
-      fill_in 'keywords', with: 'C2921042-PODAAC'
+      fill_in 'keywords', with: 'C1214305813-AU_AADC'
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
     end
 
     it 'provides a link to the OPeNDAP endpoint' do
-      expect(collection_details).to have_css('a[href="http://podaac-opendap.jpl.nasa.gov/opendap/allData/coastal_alt/preview/L4/OSU_COAS/weekly/"]')
+      expect(collection_details).to have_css('a[href="http://data.aad.gov.au/aadc/portal/download_file.cfm?file_id=1677"]')
     end
   end
 

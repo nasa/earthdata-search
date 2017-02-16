@@ -13,7 +13,7 @@ describe 'Collection details', reset: false do
       expect(page).to have_content('Archive Center: LPDAAC')
       expect(page).to have_content('Processing Center: LPDAAC')
       expect(page).to have_content('Short Name: AST_L1AE')
-      expect(page).to have_content('VERSION 3')
+      expect(page).to have_content('VERSION 003')
       expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@usgs.gov')
       expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
       expect(page).to have_content('Metadata Formats: HTML | Native | ATOM | ECHO10 | ISO19115 | DIF')
@@ -26,10 +26,10 @@ describe 'Collection details', reset: false do
   context "when selecting a collection that is only viewable after logging in" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search
+      load_page :search, env: :uat
       login
       wait_for_xhr
-      fill_in 'keywords', with: 'C197265171-LPDAAC_ECS'
+      fill_in 'keywords', with: 'C1216386350-NSIDC_TS1'
       wait_for_xhr
     end
 
@@ -41,17 +41,15 @@ describe 'Collection details', reset: false do
       first_collection_result.click_link('View collection details')
       wait_for_xhr
       within('#collection-details') do
-        expect(page).to have_content('ASTER Global Digital Elevation Model V002')
-        expect(page).to have_content('Archive Center: LPDAAC')
-        expect(page).to have_content('Processing Center: JPL')
-        expect(page).to have_content('Short Name: ASTGTM')
-        expect(page).to have_content('VERSION 002')
-        expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@usgs.gov')
-        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (82.0°, -180.0°, -83.0°, 180.0°)')
+        expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
+        expect(page).to have_content('Archive Center: Not provided')
+        expect(page).to have_content('Short Name: SPL3SMP_E')
+        expect(page).to have_content('VERSION 001')
+        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
         expect(page).to have_content('Metadata Formats: HTML | Native | ATOM | ECHO10 | ISO19115 | DIF')
-        expect(page).to have_content('Temporal Extent: 1999-12-18 to 2011-02-28')
+        expect(page).to have_content('Temporal Extent: 2015-03-31 ongoing')
         expect(page).to have_content('API Endpoints: CMR OSDD')
-        expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceTopography')
+        expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceSoils')
       end
     end
   end

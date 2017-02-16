@@ -741,4 +741,21 @@ http_interactions:
       - edsc-dev
   recorded_at: Tue, 05 Jan 2016 15:08:44 GMT
   digest: e2d02db474493c25c398656554a6d7057c11bbf1
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1216386350-NSIDC_TS1.umm_json_v1_4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - c8e2a9fb135086ed4916d6d47775087dbcf9a0d0c2d37ab42dd95d1e9c2b0550:e8QKhLdQqhfDzzmSJrBW7g
+  recorded_at: Thu, 16 Feb 2017 20:19:10 GMT
+  digest: be54ff4dc0b45108e195039acecf07f96ab2f843
 recorded_with: VCR 2.6.0

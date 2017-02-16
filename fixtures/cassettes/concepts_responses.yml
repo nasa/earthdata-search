@@ -3172,3 +3172,51 @@ e2d02db474493c25c398656554a6d7057c11bbf1:
                  NASA CALIPSO Mission Portal
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+be54ff4dc0b45108e195039acecf07f96ab2f843:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 16 Feb 2017 20:19:09 GMT
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.4; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 84a1eda9-c3d5-404c-8039-de9397a353fd
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"ShortName":"SPL3SMP_E","Abstract":"Daily global composite of up to
+        30 half-orbit L2_SM_P soil moisture estimates based on radiometer brightness
+        temperature measurements acquired by the SMAP radiometer during ascending
+        and descending half-orbits at approximately 6 PM and 6 AM local solar time.","Purpose":"The
+        SMAP L3_SM_P_E algorithm provides daily global composite of soil moistures
+        based on radiometer data on a 9 km grid.","RelatedUrls":[{"URLs":["Not%20provided"]}],"DataDates":[{"Date":"2016-10-31T00:00:00.000Z","Type":"UPDATE"},{"Date":"2016-11-15T11:31:02.467Z","Type":"UPDATE"},{"Date":"2016-10-14T09:01:28.878Z","Type":"CREATE"}],"ContactPersons":[],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"GEODETIC","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":85.0445,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-85.0445}]}},"GranuleSpatialRepresentation":"GEODETIC"},"ContactGroups":[],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"SOILS","VariableLevel1":"SOIL MOISTURE/WATER
+        CONTENT"},{"Category":"EARTH SCIENCE","Topic":"CLIMATE INDICATORS","Term":"LAND
+        SURFACE/AGRICULTURE INDICATORS","VariableLevel1":"SOIL MOISTURE"},{"Category":"EARTH
+        SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"MICROWAVE","VariableLevel1":"BRIGHTNESS
+        TEMPERATURE"},{"Category":"EARTH SCIENCE","Topic":"TERRESTRIAL HYDROSPHERE","Term":"SNOW/ICE","VariableLevel1":"FREEZE/THAW"},{"Category":"EARTH
+        SCIENCE","Topic":"CRYOSPHERE","Term":"SNOW/ICE","VariableLevel1":"FREEZE/THAW"},{"Category":"EARTH
+        SCIENCE","Topic":"BIOSPHERE","Term":"VEGETATION","VariableLevel1":"PLANT CHARACTERISTICS","VariableLevel2":"VEGETATION
+        WATER CONTENT"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"ALBEDO"},{"Category":"EARTH SCIENCE","Topic":"LAND
+        SURFACE","Term":"TOPOGRAPHY","VariableLevel1":"SURFACE ROUGHNESS"},{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE RADIATIVE PROPERTIES","VariableLevel1":"ALBEDO"},{"Category":"EARTH
+        SCIENCE","Topic":"TERRESTRIAL HYDROSPHERE","Term":"SNOW/ICE","VariableLevel1":"FREEZE/THAW"}],"EntryTitle":"SMAP
+        Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001","CollectionProgress":"onGoing","ProcessingLevel":{"Id":"Not
+        provided"},"Platforms":[{"Type":"Spacecraft","ShortName":"SMAP","LongName":"Soil
+        Moisture Active and Passive Observatory","Instruments":[{"ShortName":"SMAP
+        L-BAND RADIOMETER","LongName":"SMAP L-Band Radiometer"}]}],"Version":"001","TemporalExtents":[{"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"2015-03-31T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"Not
+        provided","ContactGroups":[],"ContactPersons":[]}],"DataLanguage":"eng"}'
+    http_version: 

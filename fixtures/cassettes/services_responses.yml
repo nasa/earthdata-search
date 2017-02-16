@@ -3569,6 +3569,30 @@ a527c65007873cc267af002d8fbd40ff533da60f:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1214605943-SCIOPS"}'
     http_version: 
+27ea8005dadb43da392075aa4219e32a3f7377ee:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Thu, 16 Feb 2017 20:19:08 GMT
+      server:
+      - nginx/1.10.2
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '74'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1216386350-NSIDC_TS1"}'
+    http_version: 
 c610097fb33a2955cae3f020ef15f74e7f93c760:
   response:
     status:
@@ -4263,7 +4287,7 @@ f8ab9ae82d5d59d6a12f1477ebf18a37868e8f98:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<dap:Error xmlns:dap=\"http://xml.opendap.org/ns/DAP/3.2#\"
         code=\"404\">Cannot locate resource: https://opendap.larc.nasa.gov/opendap/hyrax/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc.ddx</dap:Error>\r\n\r\n"
-    http_version:
+    http_version: 
 9ce0bd1566373b313dc9b29dc08f3b5a3c9ff8c4:
   response:
     status:

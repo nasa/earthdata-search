@@ -1301,6 +1301,17 @@ http_interactions:
   digest: a527c65007873cc267af002d8fbd40ff533da60f
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1216386350-NSIDC_TS1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 16 Feb 2017 20:19:08 GMT
+  digest: 27ea8005dadb43da392075aa4219e32a3f7377ee
+- request:
+    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1219032686-LANCEMODIS
     body:
       encoding: US-ASCII
