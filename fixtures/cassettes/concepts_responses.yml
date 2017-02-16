@@ -2298,6 +2298,58 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         for data content concerns","ContactMechanisms":[{"Type":"Telephone","Value":"301-614-5515"},{"Type":"Email","Value":"Edward.J.Masuoka@nasa.gov"}],"Addresses":[{"StreetAddresses":["NASA/GSFC
         Code 922"],"City":"GREENBELT","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}]}]}'
     http_version: 
+e12cbf007574b9620f6098962cd92b111c41f5d7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 16 Feb 2017 21:40:47 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 46bc352f-6d9f-4e6b-b41d-247e77d375d8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Granule>\n      <GranuleUR>FIFE_STRM_15M.80611715.s15</GranuleUR>\n
+        \     <InsertTime>2008-12-02T00:00:00Z</InsertTime>\n      <LastUpdate>2008-12-02T00:00:00Z</LastUpdate>\n
+        \     <Collection>\n        <ShortName>doi:10.3334/ORNLDAAC/1</ShortName>\n
+        \       <VersionId>1</VersionId>\n      </Collection>\n      <DataGranule>\n
+        \       <SizeMBDataGranule>0.00041</SizeMBDataGranule>\n        <DayNightFlag>BOTH</DayNightFlag>\n
+        \       <ProductionDateTime>2008-12-02T00:00:00Z</ProductionDateTime>\n      </DataGranule>\n
+        \     <Temporal>\n        <RangeDateTime>\n          <BeginningDateTime>1988-03-01T00:00:00Z</BeginningDateTime>\n
+        \         <EndingDateTime>1988-03-04T00:00:00Z</EndingDateTime>\n        </RangeDateTime>\n
+        \     </Temporal>\n      <Spatial>\n        <HorizontalSpatialDomain>\n          <Geometry>\n\t\t
+        \       <Point>\n              <PointLongitude>-96.595</PointLongitude>\n
+        \             <PointLatitude>39.1019</PointLatitude>\n            </Point>\n
+        \         </Geometry>\n        </HorizontalSpatialDomain>\n      </Spatial>\n\t\t\t<MeasuredParameters>\n
+        \       <MeasuredParameter>\n          <ParameterName>STAGE HEIGHT</ParameterName>\n
+        \       </MeasuredParameter>\t\t\t\t\n        <MeasuredParameter>\n          <ParameterName>DISCHARGE/FLOW</ParameterName>\n
+        \       </MeasuredParameter>\t\t\t\t\n        <MeasuredParameter>\n          <ParameterName>HYDROPATTERN</ParameterName>\n
+        \       </MeasuredParameter>\t\t\t\t\n      </MeasuredParameters>\n      <Platforms>\n
+        \       <Platform>\n          <ShortName>SURFACE WATER WEIR</ShortName>\n
+        \         <Instruments>\n\t\t\t\t\t\t<Instrument>\n              <ShortName>STILLING
+        WELL</ShortName>\n              <Sensors>\n                <Sensor>\n                  <ShortName>STILLING
+        WELL</ShortName>\n                </Sensor>\n              </Sensors>\n            </Instrument>\n\t\t\t\t\t</Instruments>\n
+        \       </Platform>\n      </Platforms>\n      <Campaigns>\n        <Campaign>\n
+        \         <ShortName>First ISLSCP Field Experiment (FIFE)</ShortName>\n        </Campaign>\n
+        \     </Campaigns>\n\t\t\t<Price>0</Price>\n      <OnlineAccessURLs>\n        <OnlineAccessURL>\n
+        \         <URL>https://daac.ornl.gov/daacdata/fife/data/hydrolgy/strm_15m/y1988/80611715.s15</URL>\n
+        \         <URLDescription>USGS 15 minute stream flow data for Kings Creek
+        on the Konza Prairie</URLDescription>\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
+        \     <Orderable>false</Orderable>\n      <DataFormat>txt</DataFormat>\n    </Granule>"
+    http_version: 
 1490f29b14ab0af5b05339aa4670286aff9fa6cc:
   response:
     status:
