@@ -90,29 +90,7 @@ class Health
       return {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{(3 * interval).to_i / 3600.0} hours."}
     end
 
-    if Rails.env.production? || Rails.env.uat?
-      # There are two hosts in production. We need to make sure the rake tasks are run on both of them.
-      task1 = tasks.last
-      status1 = task_status(interval, task1, task_name)
-      task2 = tasks.select {|task| task.host != task1.host}.last
-      if task2.nil?
-        log_text = "Cron job '#{task_name}' hasn't been run in the past #{(3 * interval).to_i / 3600.0} hours."
-        Rails.logger.info "Health check results: FAILED: #{log_text} on the other production host (other than #{task1.host}). #{status1[:error]}"
-        @ok = false
-        {ok?: false, error: log_text}
-      else
-        status2 = task_status(interval, task2, task_name)
-        if status2[:ok?] && status1[:ok?]
-          {ok?: true}
-        else
-          @ok = false
-          {ok?: false, error: "#{status1[:error]} #{status2[:error]}"}
-        end
-      end
-    else
-      task = tasks.last
-      task_status(interval, task, task_name)
-    end
+    task_status(interval, tasks.last, task_name)
   end
 
   def task_status(interval, task, task_name)
