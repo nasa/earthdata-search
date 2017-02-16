@@ -3649,6 +3649,21 @@ http_interactions:
   digest: e747e06322f727c40e7de5a4f3c11c7d39177b54
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1214305813-AU_AADC%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 16 Feb 2017 20:50:13 GMT
+  digest: 54c55fdc72a4993f880a297a1e97564b0f30c544
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1214605943-SCIOPS%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -7099,7 +7114,7 @@ http_interactions:
       Echo-Token:
       - edsc
   recorded_at: Thu, 16 Feb 2017 20:19:08 GMT
-  digest: 02426285440af71a077ce5b5d8df545b31539470
+  digest: 8abc37e68dac2967cfa4ab8128391ced55b67762
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C446457-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true

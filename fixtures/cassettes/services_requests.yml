@@ -1290,6 +1290,17 @@ http_interactions:
   digest: 946170f725964d98dfa78ceac2520d1f2568fb05
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1214305813-AU_AADC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 16 Feb 2017 20:50:12 GMT
+  digest: 23e2379df7ebd3674dc5387754def77572ee292b
+- request:
+    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1214605943-SCIOPS
     body:
       encoding: US-ASCII

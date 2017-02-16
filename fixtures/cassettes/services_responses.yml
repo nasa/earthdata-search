@@ -3547,6 +3547,30 @@ a9eba439d8c791b27e44e14fc437c9d7cffe617e:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1211793450-PODAAC"}'
     http_version: 
+23e2379df7ebd3674dc5387754def77572ee292b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Thu, 16 Feb 2017 20:50:13 GMT
+      server:
+      - nginx/1.10.2
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '72'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1214305813-AU_AADC"}'
+    http_version: 
 a527c65007873cc267af002d8fbd40ff533da60f:
   response:
     status:
