@@ -41,14 +41,40 @@ namespace :data do
       if Rails.env.production? || Rails.env.uat?
         tried = 0
         while tried < 10 do
-          history_tasks = CronJobHistory.where(task_name: task, last_run: (Time.now - 1.5 * interval)..Time.now)
+          history_tasks = CronJobHistory.where(task_name: task).where(last_run: (Time.now - 1.5 * interval)..Time.now)
+
           if history_tasks.size > 0
-            last_task = history_tasks.last
-            if Socket.gethostname == last_task.host
-              puts "Cron job #{task} has been run on #{last_task.host}. Stop."
+            task1 = history_tasks.last
+            task2 = history_tasks.select {|task| task.host != task1.host}.last
+
+            if Socket.gethostname == task1.host
+              # last time it was run on task1.host. Yield to the other instance this time.
+              puts "Cron job #{task} has been run on #{task1.host}. Stop."
               return
-            else
-              puts "Cron job #{task} has NOT been run on #{last_task.host}. Start the run on #{Socket.gethostname}."
+            elsif task2.present? && Socket.gethostname == task2.host # && Socket.gethostname != task1.host
+              # last time it was run on task2.host. Yield to the other instance this time.
+              puts "Cron job #{task} has been run on #{task2.host}. Stop."
+              return
+            elsif task2.present? # && Socket.gethostname != task1.host && Socket.gethostname != task2.host
+              # Both task1 and task2 exist in history
+              # However, IPs of both the instances have changed (after a new deployment).
+              puts "This is possibly a new deployment. Wait randomly for 0 to 60 seconds and retry."
+              sleep rand(0..60)
+              tried += 1
+              puts "Wait is done. Retrying (#{tried}) on #{Socket.gethostname}."
+              if tried == 10
+                puts "Cron job #{task} is being started on #{Socket.gethostname}."
+                job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
+                job.save!
+                id = job.id
+                yield
+              else
+                next
+              end
+            else # task2.nil?
+              # task1 not nil. But the host name is different now which means it is no different than a fresh deployment.
+              puts "Cron job #{task} has been run for #{history_tasks.size} times (in total from both hosts) during the past #{(1.5 * interval).to_i / 3600.0} hours."
+              puts "Cron job #{task} is being started on #{Socket.gethostname}."
               job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
               job.save!
               id = job.id
@@ -56,6 +82,7 @@ namespace :data do
               yield
             end
           else
+            # neither has been run.
             puts "Cron job #{task} has not been run for #{(1.5 * interval).to_i / 3600.0} hours on #{Socket.gethostname}. Wait randomly for 0 to 60 seconds and retry."
             sleep rand(0..60)
             tried += 1
