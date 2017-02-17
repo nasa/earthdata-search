@@ -57,7 +57,8 @@ describe Echo::Client do
       expect(response.faraday_response).to eq(resp)
     end
 
-    it "sets the granule_url" do
+    # No longer applicable. The granule_url is set in the collection presenter.
+    xit "sets the granule_url" do
       expect(connection).to receive(:get).with(collection_url, {}).and_return(resp)
       expect(resp).to receive(:body).and_return([body]).at_least(:once)
       expect(body).to receive(:granule_url=).with(granule_url)

@@ -25,9 +25,7 @@ module Echo
     end
 
     def get_collection(id, token=nil, format='echo10')
-      response = get("/search/concepts/#{id}.#{format}", {}, token_header(token))
-      response.body[0].granule_url = @root + "/search/granules.json" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
-      response
+      get("/search/concepts/#{id}.#{format}", {}, token_header(token))
     end
 
     def get_granules(options={}, token=nil)
