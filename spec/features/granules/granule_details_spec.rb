@@ -38,9 +38,11 @@ describe 'Granule details', reset: false do
       PointLatitude: 39.1019
       MeasuredParameters:
       MeasuredParameter:
+      ParameterName: STAGE HEIGHT
+      MeasuredParameter:
       ParameterName: DISCHARGE/FLOW
       MeasuredParameter:
-      ParameterName: STAGE HEIGHT
+      ParameterName: HYDROPATTERN
       Platforms:
       Platform:
       ShortName: SURFACE WATER WEIR
@@ -52,11 +54,11 @@ describe 'Granule details', reset: false do
       ShortName: STILLING WELL
       Campaigns:
       Campaign:
-      ShortName: FIFE
+      ShortName: First ISLSCP Field Experiment (FIFE)
       Price: 0
       OnlineAccessURLs:
       OnlineAccessURL:
-      URL: http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80611715.s15
+      URL: https://daac.ornl.gov/daacdata/fife/data/hydrolgy/strm_15m/y1988/80611715.s15
       URLDescription: USGS 15 minute stream flow data for Kings Creek on the Konza Prairie
       Orderable: false
       DataFormat: txt')

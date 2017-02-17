@@ -121,14 +121,13 @@
             <dd data-bind="foreach: $data.contacts">
               <div class="contact-content">
                 <div data-bind="text: name"></div>
-                <div data-bind="foreach: phones">
+                <div data-bind="foreach: contact_mechanisms">
                   <span data-bind="text: $data"></span><br />
                 </div>
-                <div data-bind="text: email"></div>
               </div>
             </dd>
             <!--ko foreach: $data.online_access_urls-->
-            <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data.URL}" target="_blank">Download Page</a></dt>
+            <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data}" target="_blank">Download Page</a></dt>
             <!--/ko -->
           </dl>
         </div>

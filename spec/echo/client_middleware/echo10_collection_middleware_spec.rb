@@ -259,7 +259,7 @@ describe Echo::ClientMiddleware::Echo10CollectionMiddleware do
       collections = env[:body].dup
       expect(collections).to be_instance_of(Array)
       expect(collections.size).to eq(1)
-      parse_collection = CollectionDetailsPresenter.new(collections[0], 'C123-LPDAAC')
+      parse_collection = CollectionDetailsPresenterEcho10.new(collections[0], 'C123-LPDAAC')
       expect(collections[0].as_json).to eq(expected_body['collection'])
     end
 
