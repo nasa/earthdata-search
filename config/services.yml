@@ -56,7 +56,7 @@ urs:
     "https://urs.earthdata.nasa.gov": "Gsk6IBbEfa98sbE5UavsZQ"
     "https://uat.urs.earthdata.nasa.gov": "e8QKhLdQqhfDzzmSJrBW7g"
     "https://sit.urs.earthdata.nasa.gov": "mUM6VJvn6dXjZfhdeSeBbA"
-  searchlab:
+  lab:
     "https://urs.earthdata.nasa.gov": "6VThsdWMcfrKzLEP_A5xCQ"
     "https://uat.urs.earthdata.nasa.gov": "f9SNO2nTTMVzG9uLa3vxqA"
     "https://sit.urs.earthdata.nasa.gov": "ObPbuvn1Clh8PCphoJ4oLA"
