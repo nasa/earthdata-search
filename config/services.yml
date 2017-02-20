@@ -57,9 +57,9 @@ urs:
     "https://uat.urs.earthdata.nasa.gov": "e8QKhLdQqhfDzzmSJrBW7g"
     "https://sit.urs.earthdata.nasa.gov": "mUM6VJvn6dXjZfhdeSeBbA"
   lab:
-    "https://urs.earthdata.nasa.gov": "6VThsdWMcfrKzLEP_A5xCQ"
-    "https://uat.urs.earthdata.nasa.gov": "f9SNO2nTTMVzG9uLa3vxqA"
-    "https://sit.urs.earthdata.nasa.gov": "ObPbuvn1Clh8PCphoJ4oLA"
+    "https://urs.earthdata.nasa.gov": "QTwF6cmUjImOi5wlJhbvLA"
+    "https://uat.urs.earthdata.nasa.gov": "ShmAmFGyAS9yQaKGR-ruvA"
+    "https://sit.urs.earthdata.nasa.gov": "0yEmVSQ2urMVGRt2IltsbA"
 
 opendap:
   C191855458-LARC:
