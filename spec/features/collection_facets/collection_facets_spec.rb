@@ -129,31 +129,30 @@ describe "Collection Facets", reset: false do
       Capybara.reset_sessions!
       load_page :search, facets: true, env: :sit
       # select a project
-      find("h3.panel-title", text: 'Keywords').click
       find("h3.panel-title", text: 'Project').click
-      find("label.facets-item", text: "EOSDIS").click
+      find("label.facets-item", text: "AMBS").click
       wait_for_xhr
       within(:css, '#collapse5 .panel-body.facets') do
-        expect(page).to have_content("EOSDIS")
+        expect(page).to have_content("AMBS")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("label.facets-item.selected")
 
       # select a platform
       find("h3.panel-title", text: 'Platform').click
-      find(".facets-item", text: "FIELD INVESTIGATION").click
+      find("label.facets-item", text: "Field Investigation").click
       wait_for_xhr
       within(:css, '.platforms') do
-        expect(page).to have_content("FIELD INVESTIGATION")
+        expect(page).to have_content("Field Investigation")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("label.facets-item.selected")
 
       # select a second project
-      find(".facets-item", text: "ESIP").click
+      find(".facets-item", text: "Field Investigation").click
       wait_for_xhr
       within(:css, '.projects') do
-        expect(page).to have_content("EOSDIS")
+        expect(page).to have_content("AMBS")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("label.facets-item.selected")
@@ -168,7 +167,7 @@ describe "Collection Facets", reset: false do
       end
 
       before :each do
-        find(".facets-item", text: "ESIP").click
+        find(".facets-item", text: "AMBS").click
         wait_for_xhr
       end
 
@@ -178,17 +177,17 @@ describe "Collection Facets", reset: false do
 
       it "clicks remove from selected facets" do
         within(:css, '.projects') do
-          expect(page).to have_content("ESIP")
+          expect(page).to have_content("AMBS")
           expect(page).to have_css(".facets-item.selected")
 
-          find(".facets-item", text: "ESIP").click
+          find(".facets-item", text: "AMBS").click
         end
 
         expect(page).to have_no_css(".facets-item.selected")
       end
 
       it "clicks remove from facet lists" do
-        find("label.facets-item", text: "ESIP").click
+        find("label.facets-item", text: "AMBS").click
         expect(page).to have_no_css(".facets-item.selected")
       end
     end
@@ -197,7 +196,7 @@ describe "Collection Facets", reset: false do
       expect(page).to have_css(".panel.processing-levels .panel-heading")
 
       find("h3.panel-title", text: 'Project').click
-      find(".projects label.facets-item", text: "ESSP").click
+      find(".projects label.facets-item", text: "NWRBDP").click
 
       expect(page).to have_no_css(".panel.processing-levels .panel-heading")
 
@@ -205,24 +204,24 @@ describe "Collection Facets", reset: false do
     end
 
     it "updates the collection results" do
-      expect(page).to have_no_content("AIRX3STD")
+      expect(page).to have_no_content("National Wildlife Refuge Boundaries")
 
       find("h3.panel-title", text: 'Project').click
-      find(".panel.projects label.facets-item", text: "ESIP").click
+      find(".panel.projects label.facets-item", text: "NWRBDP").click
 
-      expect(page).to have_content("AIRX3STD")
+      expect(page).to have_content("National Wildlife Refuge Boundaries")
 
       find("h3.panel-title", text: 'Project').click
     end
 
-    it "updates facet lists" do
+    it " doesn't updates facet lists" do
       find("h3.panel-title", text: 'Project').click
       within(:css, ".projects") do
-        expect(page).to have_content("ESSP")
+        expect(page).to have_content("ARCOD 36")
 
-        find("label.facets-item", text: "ESIP").click
+        find("label.facets-item", text: "AMBS").click
 
-        expect(page).to have_no_content("ESSP")
+        expect(page).to have_content("ARCOD 36")
       end
       find("h3.panel-title", text: 'Project').click
     end
@@ -289,7 +288,7 @@ describe "Collection Facets", reset: false do
   context "when applied facets and search terms filter the collections list to no results" do
     before(:all) do
       find("h3.panel-title", text: 'Project').click
-      find(".facets-item", text: "EOSDIS").click
+      find(".facets-item", text: "AMBS").click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
       wait_for_xhr
     end
@@ -300,7 +299,7 @@ describe "Collection Facets", reset: false do
     end
 
     it "continues to display applied facets with counts of 0" do
-      expect(page).to have_content("EOSDIS 0")
+      expect(page).to have_content("AMBS 0")
     end
   end
 
@@ -470,26 +469,35 @@ describe "Collection Facets", reset: false do
   #  end
   #end
 
-  context "selecting multiple organizations and clear filter" do
+  context "selecting multiple facets from different categories and clear filter" do
     before :all do
       find("h3.panel-title", text: 'Organizations').click
       within(:css, '.organizations') do
-        find(".facets-item", text: "LaRC", match: :prefer_exact).click
+        find(".facets-item", text: "DOE/ORNL/ESD/CDIAC", match: :prefer_exact).click
       end
       wait_for_xhr
-      within(:css, '.organizations') do
-        find(".facets-item", text: "GSFC", match: :prefer_exact).click
+      find("h3.panel-title", text: 'Organizations').click
+
+      find("h3.panel-title", text: 'Platforms').click
+      within(:css, '.platforms') do
+        find(".facets-item", text: "BUOYS", match: :prefer_exact).click
       end
       wait_for_xhr
-      expect(page).to have_no_content("Keywords")
-      expect(page).to have_no_content("Platforms")
+      find("h3.panel-title", text: 'Platforms').click
+
+      expect(page).to have_no_content("Instruments")
+      expect(page).to have_no_content("Projects")
+      expect(page).to have_no_content("Processing levels")
+
 
       click_link "Clear Filters"
+      find("h3.panel-title", text: 'Platforms').click
       wait_for_xhr
     end
 
     it "maintains the original facet category order" do
-      expect(page).to have_content("Subsetting Services Keywords Agriculture")
+      expect(page).to have_content("WEATHER STATIONS 149 Instruments")
+      find("h3.panel-title", text: 'Platforms').click
     end
   end
 end
