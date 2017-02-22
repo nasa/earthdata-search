@@ -14,10 +14,11 @@ describe "Granule search filters", reset: false do
       temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
       set_temporal(temporal_start_date, temporal_stop_date)
       wait_for_xhr
-
       first_project_collection.click_link "Show granule filters"
       number_granules = project_overview.text.match /\d+ Granules/
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
+      screenshot_path = "./tmp/screenshots/debug-#{Time.now.to_i}.png"
+      page.save_screenshot(screenshot_path)
     end
 
     after :all do
@@ -126,7 +127,9 @@ describe "Granule search filters", reset: false do
 
       context "validates input" do
         after :each do
-          first_project_collection.click_link "Hide granule filters"
+          within("#granule-search") do
+            page.click_link('close')
+          end
           wait_for_xhr
         end
 

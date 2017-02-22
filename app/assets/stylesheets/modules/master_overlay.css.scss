@@ -97,6 +97,10 @@
     float: left;
     position: relative;
     padding-left: $facet-overlay-width;
+
+    &.master-overlay-no-min {
+      padding-left: 0;
+    }
   }
 
   dt {
