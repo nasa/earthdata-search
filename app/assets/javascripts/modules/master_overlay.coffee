@@ -180,6 +180,10 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
           $div = $(div)
           $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 20, 13))
 
+        scrollContentHeight = @root.find('.master-overlay-main').height()
+        for div in @root.find('.master-overlay-main .master-overlay-content')
+          $(div).height(scrollContentHeight - (scrollContentHeight * 0.6))
+
         tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
         for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
           $(div).height(tabPaneHeight)

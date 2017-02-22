@@ -65,9 +65,9 @@
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
-  width: 40%;
-  left: $facet-overlay-width;
+  width: 100%;
   overflow: hidden;
+  top: 40%;
 }
 
 // The secondary section in the overlay. Granule filters
@@ -96,6 +96,7 @@
     width: 25%;
     float: left;
     position: relative;
+    padding-left: $facet-overlay-width;
   }
 
   dt {
@@ -380,7 +381,6 @@ $parent-width: $parent-split * 0.21;
 
 @media (min-width: $browser-split) {
   .master-overlay-main {
-    width: $main-width;
   }
 
   .master-overlay-secondary {
