@@ -129,7 +129,6 @@ describe "Collection Facets", reset: false do
       Capybara.reset_sessions!
       load_page :search, facets: true, env: :sit
       # select a project
-      find("h3.panel-title", text: 'Keywords').click
       find("h3.panel-title", text: 'Project').click
       find("label.facets-item", text: "ESSP").click
       wait_for_xhr
