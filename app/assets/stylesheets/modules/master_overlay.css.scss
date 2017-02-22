@@ -242,10 +242,7 @@
 
 .master-overlay-minimize, .master-overlay-maximize {
   font-size: 1.3em;
-  position: absolute;
-  right: .5em;
-  top: .5em;
-  display: block;
+  display: inline-block;
   &:hover {
     color: #aaa;
   }
@@ -344,7 +341,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 }
 
 .is-master-overlay-parent-hidden .master-overlay-when-parent-hidden {
-  display: block;
+  display: inline-block;
 }
 
 .is-master-overlay-parent-hidden {
