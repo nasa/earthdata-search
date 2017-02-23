@@ -6,6 +6,7 @@ require "spec_helper"
 describe "Spatial tool", reset: false do
   before :all do
     load_page :search
+    click_link 'Minimize'
   end
 
   let(:spatial_dropdown) do
@@ -215,6 +216,10 @@ describe "Spatial" do
 
       context 'using the manual entry text boxes to enter a new SW point' do
         before :each do
+
+          # JS: Get panel out of the way
+          click_link 'Minimize'
+
           click_on 'Search by spatial rectangle'
           fill_in 'manual-coord-entry-swpoint', with: "0,0\t"
         end
@@ -265,9 +270,17 @@ describe "Spatial" do
     end
 
     it "filters collections using south polar bounding boxes in the south polar projection" do
+
+      # JS: Get panel out of the way
+      click_link 'Minimize'
+
       click_link "South Polar Stereographic"
       create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
+
+      # JS: Bring that panel back
+      click_link 'Maximize'
+
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
     end

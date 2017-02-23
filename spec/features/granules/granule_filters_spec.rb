@@ -17,8 +17,6 @@ describe "Granule search filters", reset: false do
       first_project_collection.click_link "Show granule filters"
       number_granules = project_overview.text.match /\d+ Granules/
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
-      screenshot_path = "./tmp/screenshots/debug-#{Time.now.to_i}.png"
-      page.save_screenshot(screenshot_path)
     end
 
     after :all do
