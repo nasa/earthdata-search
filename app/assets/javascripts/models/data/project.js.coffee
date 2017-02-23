@@ -54,12 +54,11 @@ ns.Project = do (ko,
   ])
 
   class ProjectCollection
-    constructor: (@collection, @meta={}) ->
+    constructor: (@collection, @index, @meta={}) ->
       @collection.reference()
       @meta.color ?= colorPool.next()
-
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
-      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
+      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions, @index)
 
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
@@ -143,7 +142,7 @@ ns.Project = do (ko,
       unless current?.collection == collection
         current?.dispose()
         if collection?
-          projectCollection = new ProjectCollection(collection)
+          projectCollection = new ProjectCollection(collection, Object.keys(@_collectionsById).length)
         observable(projectCollection)
 
     getCollections: ->
@@ -155,7 +154,7 @@ ns.Project = do (ko,
       for ds, i in collections
         id = ds.id
         collectionIds.push(id)
-        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds)
+        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds, Object.keys(collectionIds).length)
       @_collectionsById = collectionsById
       @_collectionIds(collectionIds)
       null
@@ -185,8 +184,7 @@ ns.Project = do (ko,
 
     addCollection: (collection) ->
       id = collection.id
-
-      @_collectionsById[id] ?= new ProjectCollection(collection)
+      @_collectionsById[id] ?= new ProjectCollection(collection, Object.keys(@_collectionsById).length)
       @_collectionIds.remove(id)
       @_collectionIds.push(id)
       null
