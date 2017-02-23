@@ -101,10 +101,10 @@ ns.Map = do (window,
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
 
-      @legendControl = new LegendControl(position: 'bottomright')
+      @legendControl = new LegendControl(position: 'topleft')
       map.addControl(@legendControl)
 
-      map.addControl(L.control.scale(position: 'bottomright'))
+      map.addControl(L.control.scale(position: 'topright'))
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")

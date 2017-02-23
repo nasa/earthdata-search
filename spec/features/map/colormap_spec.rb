@@ -44,6 +44,12 @@ describe 'Collection Colormaps', reset: false do
       fill_in 'keywords', with: non_gibs_collection_id
       wait_for_xhr
       expect(page).to have_content("doi:10.3334/ORNLDAAC/1")
+
+      # JS: Close the GIBS warning popup
+      within ".popover-navigation" do
+        click_button "Close"
+      end
+
       first_collection_result.click
       wait_for_xhr
     end
