@@ -14,16 +14,6 @@ module Helpers
       end
     end
 
-    def for_collapsed_collection(id, text)
-      wait_for_xhr
-      fill_in "keywords", with: id
-      wait_for_xhr
-      expect(first_collapsed_collection).to have_content(text)
-      yield
-      reset_search
-      wait_for_xhr
-    end
-
     def view_granule_results(col_name='15 Minute Stream Flow Data: USGS (FIFE)', from='collection-results')
       wait_for_xhr
       overlay = from
