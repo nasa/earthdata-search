@@ -3,10 +3,9 @@ require "spec_helper"
 describe "Project collection list", reset: true do
 
   before(:each) do
-    load_page :search, q: 'Minute (FIFE)'
-    target_collection_result.click_link "Add collection to the current project"
-    target_collection_result('30 Minute Rainfall Data (FIFE)').click_link "Add collection to the current project"
-
+    load_page :search
+    add_collection_to_project("C179003030-ORNL_DAAC", "15 Minute Stream Flow Data: USGS (FIFE)")
+    add_collection_to_project("C179002914-ORNL_DAAC", "30 Minute Rainfall Data (FIFE)")
     collection_results.click_link "View Project"
   end
 
@@ -80,7 +79,7 @@ describe "Project collection list", reset: true do
 
     it "doesn't show an empty query param 'pg[]=' in the url" do
       project = Project.find(URI.parse(page.current_url).query[/^projectId=(\d+)$/, 1].to_i)
-      expect(project.path).to eq("/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][qt]=1987-10-15T00%3A00%3A00.000Z%2C1987-10-20T23%3A59%3A59.000Z&q=Minute+(FIFE)&ok=Minute+(FIFE)")
+      expect(project.path).to eq("/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][qt]=1987-10-15T00%3A00%3A00.000Z%2C1987-10-20T23%3A59%3A59.000Z&q=C179002914-ORNL_DAAC&ok=C179002914-ORNL_DAAC")
     end
   end
 
