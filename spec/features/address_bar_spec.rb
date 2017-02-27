@@ -247,7 +247,6 @@ describe 'Address bar', reset: false do
       first_granule_list_item.click_link 'View granule details'
       wait_for_xhr
     end
-
     it 'saves the selected granule in the address bar' do
       expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2&q=C179003030-ORNL_DAAC')
     end
@@ -268,11 +267,11 @@ describe 'Address bar', reset: false do
   context "setting granule query conditions within the project" do
     before(:all) do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
-      first_project_collection.click_link "Show granule filters"
+      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
       check "Find only granules that have browse images."
-      second_project_collection.click_link "Show granule filters"
+      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
       select 'Day only', from: "day-night-select"
-      second_project_collection.click_link "Hide granule filters"
+      find_by_id('granule-search').click_on("close")
       first_project_collection.click_link "View collection details"
       wait_for_xhr
       expect(page).to have_visible_collection_details
@@ -312,9 +311,9 @@ describe 'Address bar', reset: false do
     end
 
     it "restores the granule query conditions" do
-      first_project_collection.click_link "Show granule filters"
+      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_checked_field 'Find only granules that have browse images.'
-      second_project_collection.click_link "Show granule filters"
+      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
       expect(page).to have_select 'day-night-select', selected: 'Day only'
     end
   end

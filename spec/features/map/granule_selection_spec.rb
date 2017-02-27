@@ -235,9 +235,8 @@ describe "Granule selection", reset: false do
 
     context "clicking the remove icon on the map" do
       before :all do
-        within '#map' do
-          click_link 'Exclude this granule'
-        end
+        find_by_id("map").find('a[title="Exclude this granule"]').click
+        wait_for_xhr
         find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
       end
 
