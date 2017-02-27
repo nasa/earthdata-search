@@ -41,7 +41,7 @@ body {
   }
 }
 
-footer, .toolbar {
+footer {
   background: $toolbar-background;
   color: #fff;
 }
@@ -59,10 +59,12 @@ footer, .toolbar {
 }
 
 .toolbar {
-  @include linear-gradient($ocean-blue, darken($ocean-blue, 5%));
-  padding: 25px 0 60px 0;
+  background: transparent;
+  padding: 0;
   height: 58px;
-  border-bottom: 1px solid #242424;
+  position: absolute;
+  left: 270px;
+  z-index: 100;
 
   p {
     margin: 0;
