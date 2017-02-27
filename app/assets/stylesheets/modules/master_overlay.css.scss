@@ -11,7 +11,8 @@
 
   // Non-scrollable header area
   header {
-    margin: 1em 1em 0;
+    background: $master-overlay-info-bg-color;
+    margin: 0;
     color: $overlay-heading-font-color;
 
     h2 {
@@ -20,8 +21,13 @@
       font-weight: 200;
     }
 
+    h4 {
+      margin: 0;
+      padding: 1em 0.5em;
+    }
+
     &.with-options {
-      margin: .4em 1em .5em 1em;
+      margin: 0;
 
       h2 {
         padding: 10px 0 10px 0;
@@ -30,6 +36,12 @@
       .actions {
         margin-top: .5em;
       }
+    }
+
+    &.tab {
+      background: $master-overlay-tab-color;
+      display: inline-block;
+      margin: 0;
     }
   }
 }
@@ -40,7 +52,8 @@
 
 .master-overlay-nav {
   padding: 1em;
-  border-bottom: 1px solid #333;
+  background: $master-overlay-tab-color;
+  display: inline-block;
 }
 
 // A parent panel for the overlday.  For instance, collection facets are a parent
@@ -52,6 +65,7 @@
 
   header {
     margin: 1em 1em 0 .5em;
+    background: inherit;
 
     h2 {
       color: #FFFFFF;
@@ -72,7 +86,7 @@
 
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
-  background-color: $master-overlay-main-bg-color;
+  background-color: $master-overlay-parent-bg-color;
   left: 40%;
   right: 0%;
   overflow: hidden;
@@ -81,6 +95,11 @@
   height: 100%;
   transition-property: right, left;
   transition-duration: 0.3s;
+
+  header, nav {
+    background: transparent;
+    color: #fff;
+  }
 
   .message {
     margin-top: 1em;
@@ -113,8 +132,16 @@
     margin-left: 0;
   }
 
+  .nav-tabs {
+    background: #eee;
+    color: #424242;
+    margin: 0;
+  }
+
   .tab-content {
     padding-bottom: 0;
+    background: $master-overlay-info-bg-color;
+    color: #424242;
   }
 }
 
@@ -152,6 +179,7 @@
 }
 
 .master-overlay-info {
+  background: $master-overlay-info-bg-color;
   margin: 0;
   color: $overlay-heading-font-color;
 
@@ -174,7 +202,7 @@
   }
 
   p {
-    margin: 1em 1em 0;
+    margin: 0;
   }
 
   .button {
@@ -233,7 +261,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  padding: .5em 1em 1em 1em;
+  padding: 0;
   height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -402,7 +430,7 @@ $parent-width: $parent-split * 0.21;
 .master-overlay-info .panel-list-meta, .panel-list-meta {
   text-align:right;
   padding: 0 1.25em;
-  margin: 1em .5em 0 0;
+  margin: 0;
   font-size: .8em;
   color: #666;
   line-height: 1.5;
