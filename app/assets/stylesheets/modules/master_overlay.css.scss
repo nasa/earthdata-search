@@ -281,10 +281,7 @@
 }
 
 .master-overlay-close {
-  position: absolute;
-  right: 1em;
-  top: 1em;
-  display: block;
+  float: right;
 }
 
 a.master-overlay-close {

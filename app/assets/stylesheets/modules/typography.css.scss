@@ -41,7 +41,9 @@ hgroup {
 
 header {
   h1 {
-    margin: 0;
+    margin: $tophat-clearance 0 0 0;
+    width: $toolbar-logo-container-width;
+    height: 80px;
 
     >a {
       margin-top: 10px;

@@ -10,7 +10,7 @@ $toolbar-search-field-width: 300px;
 $toolbar-search-field-sm-width: 200px;
 
 $toolbar-logo-width: 172px;
-$toolbar-logo-container-width: 142px;
+$toolbar-logo-container-width: 270px;
 
 
 // Colors
@@ -33,6 +33,9 @@ $dropdown-highlight: $ocean-blue;
 $toolbar-background: #2276ac;
 $toolbar-background-bottom: #283949;
 $toolbar-accent-border: #236d9e;
+
+// Tophat height
+$tophat-clearance: 30px;
 
 // Master Overlay
 $master-overlay-parent-bg-color: #191A1B;
