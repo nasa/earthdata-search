@@ -106,7 +106,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if jsonObj.type == 'service' || jsonObj.type == 'order'
         echoformContainer = null
         checkExistsTimer = setInterval (=>
-          echoformContainer = document.getElementsByClassName('access-form')[@index]
+          echoformContainer = document.getElementsByClassName('access-form')[0]
           if echoformContainer
             clearTimeout checkExistsTimer
             setTimeout (=>
