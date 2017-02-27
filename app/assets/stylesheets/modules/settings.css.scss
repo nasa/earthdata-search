@@ -30,15 +30,17 @@ $button-dark-lp-border: #fff;
 $dropdown-highlight: $ocean-blue;
 
 // Toolbar and Footer
-$toolbar-background: #2c3e50;
+$toolbar-background: #2276ac;
 $toolbar-background-bottom: #283949;
 $toolbar-accent-border: #236d9e;
 
 // Master Overlay
 $master-overlay-parent-bg-color: #191A1B;
 $master-overlay-parent-on-main-bg-color: transparentize(#111, .3); // Used when drawing parent overlapping main
-$master-overlay-main-bg-color: transparentize(#111, .1);
-$overlay-heading-font-color: #c9c9c9;
+$master-overlay-main-bg-color: transparent;
+$master-overlay-info-bg-color: #fff;
+$master-overlay-tab-color: #fff;
+$overlay-heading-font-color: #424242;
 
 // Facet Overlay
 $facet-overlay-width: 270px;
