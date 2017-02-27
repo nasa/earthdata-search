@@ -154,7 +154,7 @@ ns.Project = do (ko,
       for ds, i in collections
         id = ds.id
         collectionIds.push(id)
-        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds, Object.keys(collectionIds).length)
+        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds, Object.keys(@_collectionsById).length)
       @_collectionsById = collectionsById
       @_collectionIds(collectionIds)
       null
