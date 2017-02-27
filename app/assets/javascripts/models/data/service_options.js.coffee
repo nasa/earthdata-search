@@ -68,7 +68,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         clickedMethod = m
         break
 
-      echoformContainer = document.getElementsByClassName('access-form')[@index]
+      echoformContainer = if @index then document.getElementsByClassName('access-form')[@index] else document.getElementsByClassName('access-form')[0]
       if clickedMethod.type == 'service' || clickedMethod.type == 'order'
         @loadForm(true) if clickedMethod.type == 'service'
         setTimeout (=>
@@ -106,7 +106,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if jsonObj.type == 'service' || jsonObj.type == 'order'
         echoformContainer = null
         checkExistsTimer = setInterval (=>
-          echoformContainer = document.getElementsByClassName('access-form')[0]
+          echoformContainer = if @index then document.getElementsByClassName('access-form')[@index] else document.getElementsByClassName('access-form')[0]
           if echoformContainer
             clearTimeout checkExistsTimer
             setTimeout (=>
