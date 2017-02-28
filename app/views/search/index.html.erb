@@ -24,9 +24,8 @@
     </p>
   <% end %>
   <div class="dropdown" id="temporal-dropdown">
-    <a href="#" class="button temporal-dropdown-button dropdown-button" title="Select temporal">
+    <a href="#" class="button temporal-dropdown-button dropdown-button" title="Temporal">
       <i class="fa fa-clock-o"></i>
-      <span class="dropdown-value">Temporal</span>
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu temporal-dropdown">
@@ -40,7 +39,7 @@
 
 
   <div class="dropdown" data-bind="with: ui.spatialType">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Select spatial"><i class="fa fa-fw" data-bind="css: icon"></i> <span class="dropdown-value" data-bind="text: name">Spatial</span> <i class="fa fa-caret-down"></i></a>
+    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Spatial"><i class="fa fa-fw" data-bind="css: icon"></i><i class="fa fa-caret-down"></i></a>
     <ul class="dropdown-menu spatial-selection">
       <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
