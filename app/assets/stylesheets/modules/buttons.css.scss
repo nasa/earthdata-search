@@ -101,7 +101,6 @@
 
 .toolbar {
   .button, input[type="button"], input[type="reset"], input[type="submit"] {
-    @include dark-menu-button;
   }
 }
 
