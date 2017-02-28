@@ -5,7 +5,7 @@ module Echo
         query = options.dup.symbolize_keys
 
         load_freetext_query(query)
-        # and_query(query)
+        or_science_keywords(query)
         pattern_query(query)
 
         query
@@ -65,34 +65,12 @@ module Echo
         end
       end
 
-      # If Campaigns, Platforms, Instruments, or Sensors are selected
-      # add the option to perform an AND search in the catalog
-      def and_query(query)
-        if query[:platform_h]
-          query[:options] ||= Hash.new
-          query[:options][:platform_h] = Hash.new
-          query[:options][:platform_h][:and] = true
-        end
-        if query[:instrument_h]
-          query[:options] ||= Hash.new
-          query[:options][:instrument_h] = Hash.new
-          query[:options][:instrument_h][:and] = true
-        end
-        if query[:data_center_h]
-          query[:options] ||= Hash.new
-          query[:options][:data_center_h] = Hash.new
-          query[:options][:data_center_h][:and] = true
-        end
-        if query[:project_h]
-          query[:options] ||= Hash.new
-          query[:options][:project_h] = Hash.new
-          query[:options][:project_h][:and] = true
-        end
-        if query[:processing_level_id_h]
-          query[:options] ||= Hash.new
-          query[:options][:processing_level_id_h] = Hash.new
-          query[:options][:processing_level_id_h][:and] = true
-        end
+    def or_science_keywords(query)
+      if query[:science_keywords_h]
+        query[:options] ||= Hash.new
+        query[:options][:science_keywords_h] = Hash.new
+        query[:options][:science_keywords_h][:or] = true
       end
+    end
   end
 end

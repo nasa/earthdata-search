@@ -515,4 +515,16 @@ describe "Collection Facets", reset: false do
       end
     end
   end
+
+  context "selecting multiple facets from same category" do
+    before :all do
+      find(".facets-item", text: "Agriculture", match: :prefer_exact).click
+      expect(page).to have_content('1628 Matching Collections')
+    end
+
+    it "'OR's the results of the selected facets" do
+      find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
+      expect(page).to have_content('5607 Matching Collections')
+    end
+  end
 end
