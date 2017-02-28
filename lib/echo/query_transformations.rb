@@ -5,7 +5,7 @@ module Echo
         query = options.dup.symbolize_keys
 
         load_freetext_query(query)
-        and_query(query)
+        # and_query(query)
         pattern_query(query)
 
         query
