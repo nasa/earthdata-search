@@ -32,6 +32,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     constructor: (method, @availableMethods, @index) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
+      
       @loadForm = ko.observable(false)
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
