@@ -101,6 +101,9 @@
 
 .toolbar {
   .button, input[type="button"], input[type="reset"], input[type="submit"] {
+    border-left: 1px solid #e3e3e3;
+    padding: 10px 14px;
+    border-radius: 0;
   }
 }
 
