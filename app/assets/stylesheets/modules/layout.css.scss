@@ -42,7 +42,7 @@ body {
 }
 
 footer {
-  background: $toolbar-background;
+  background: $footer-background;
   color: #fff;
 }
 
@@ -63,8 +63,8 @@ footer {
   padding-top: $tophat-clearance;
   height: 58px;
   position: absolute;
-  left: 270px;
-  z-index: 100;
+  z-index: 10;
+  left: $toolbar-logo-container-width;
 
   p {
     margin: 0;
