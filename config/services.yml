@@ -24,6 +24,14 @@ earthdata:
     opensearch_root: "https://cmr.sit.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.sit.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.sit.earthdata.nasa.gov"
+  lab:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
+    cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.sit.earthdata.nasa.gov"
+
 
 status_app_root: "https://status.earthdata.nasa.gov/api/v1/"
 cwic_root: "http://cwic.wgiss.ceos.org/"
@@ -48,6 +56,10 @@ urs:
     "https://urs.earthdata.nasa.gov": "Gsk6IBbEfa98sbE5UavsZQ"
     "https://uat.urs.earthdata.nasa.gov": "e8QKhLdQqhfDzzmSJrBW7g"
     "https://sit.urs.earthdata.nasa.gov": "mUM6VJvn6dXjZfhdeSeBbA"
+  lab:
+    "https://urs.earthdata.nasa.gov": "QTwF6cmUjImOi5wlJhbvLA"
+    "https://uat.urs.earthdata.nasa.gov": "ShmAmFGyAS9yQaKGR-ruvA"
+    "https://sit.urs.earthdata.nasa.gov": "0yEmVSQ2urMVGRt2IltsbA"
 
 opendap:
   C191855458-LARC:
