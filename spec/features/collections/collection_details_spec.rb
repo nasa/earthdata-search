@@ -61,7 +61,7 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('Contacts: Download Page')
+      expect(page).to have_content('Contacts: JAXA G-PORTAL z-gportal-support@ml.jaxa.jp Download Page')
     end
   end
 
