@@ -92,8 +92,7 @@
   background-color: $master-overlay-parent-bg-color;
   left: 40%;
   /* JS: Temporary, ugly fix to prevent overlap */
-  top: 120px;
-  right: 0%;
+  top: 80px;
   overflow: hidden;
   z-index: 100;
   position: absolute;
