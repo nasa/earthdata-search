@@ -73,6 +73,15 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
           ci = dc['ContactInformation'].first
           if ci['ContactMechanisms'].present?
             contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
+          elsif dc['ContactPersons'].present?
+            dc['ContactPersons'].each do |cp|
+              if cp['ContactInformation'].present?
+                ci = cp['ContactInformation'].first
+                if ci['ContactMechanisms'].present?
+                  contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
+                end
+              end
+            end
           end
         end
         contacts.push({name: name, contact_mechanisms: contact_mechanisms}) if contact_mechanisms.present?
@@ -81,18 +90,19 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
 
     # contacts from "Root/ContactPersons"
     if metadata['ContactPersons'].present?
-      cp = metadata['ContactPersons'].first
-      #name
-      name = "#{cp['FirstName']} #{cp['LastName']}"
-      # contact_mechanisms
-      contact_mechanisms = nil
-      if cp['ContactInformation'].present?
-        ci = cp['ContactInformation'].first
-        if ci['ContactMechanisms'].present?
-          contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
+      metadata['ContactPersons'].each do |cp|
+        #name
+        name = "#{cp['FirstName']} #{cp['LastName']}"
+        # contact_mechanisms
+        contact_mechanisms = nil
+        if cp['ContactInformation'].present?
+          ci = cp['ContactInformation'].first
+          if ci['ContactMechanisms'].present?
+            contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
+          end
         end
+        contacts.push({name: name, contact_mechanisms: contact_mechanisms}) if contact_mechanisms.present?
       end
-      contacts.push({name: name, contact_mechanisms: contact_mechanisms}) if contact_mechanisms.present?
     end
 
     contacts
