@@ -28,7 +28,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     fromJson: (jsonObj) ->
       this
 
-  class ServiceOptions   
+  class ServiceOptions
     constructor: (method, @availableMethods, @index) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
