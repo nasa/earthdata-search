@@ -28,11 +28,13 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     fromJson: (jsonObj) ->
       this
 
-  class ServiceOptions     
-    constructor: (method, @availableMethods, @index) ->
+  class ServiceOptions
+    constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
+      @index = document.getElementsByClassName('access-form').length
+      console.log "Index is: " + @index
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -125,6 +127,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
   class ServiceOptionsModel extends KnockoutModel
     constructor: (@granuleAccessOptions, @index) ->
+      @accessIndexCount = @index
       @accessMethod = ko.observableArray()
       @isLoaded = @computed
         read: =>
@@ -163,7 +166,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       true
 
     addAccessMethod: => 
-      @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods, @index))
+      @accessIndexCount = @accessIndexCount + 1
+      @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods, @accessIndexCount))
 
     removeAccessMethod: (method) =>
       @accessMethod.remove(method)
