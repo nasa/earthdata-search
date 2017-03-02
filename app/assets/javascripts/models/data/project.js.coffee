@@ -54,7 +54,7 @@ ns.Project = do (ko,
   ])
 
   class ProjectCollection
-    constructor: (@collection, @index, @meta={}) ->
+    constructor: (@collection, @meta={}) ->
       @collection.reference()
       @meta.color ?= colorPool.next()
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
@@ -142,7 +142,7 @@ ns.Project = do (ko,
       unless current?.collection == collection
         current?.dispose()
         if collection?
-          projectCollection = new ProjectCollection(collection, Object.keys(@_collectionsById).length)
+          projectCollection = new ProjectCollection(collection)
         observable(projectCollection)
 
     getCollections: ->
@@ -154,7 +154,7 @@ ns.Project = do (ko,
       for ds, i in collections
         id = ds.id
         collectionIds.push(id)
-        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds, Object.keys(@_collectionsById).length)
+        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds)
       @_collectionsById = collectionsById
       @_collectionIds(collectionIds)
       null
@@ -184,7 +184,7 @@ ns.Project = do (ko,
 
     addCollection: (collection) ->
       id = collection.id
-      @_collectionsById[id] ?= new ProjectCollection(collection, Object.keys(@_collectionsById).length)
+      @_collectionsById[id] ?= new ProjectCollection(collection)
       @_collectionIds.remove(id)
       @_collectionIds.push(id)
       null
