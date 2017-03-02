@@ -26,11 +26,13 @@ describe "Data Access workflow", reset: false do
       before(:all) do
         within '.access-item-selection:nth-child(1)' do
           choose 'FtpPushPull'
+          wait_for_xhr
         end
-        wait_for_xhr
       end
       it "displays the distribution options for the first collection" do
-        expect(page).to have_text('Distribution Options')
+        synchronize do
+          page.find('.access-form').should have_content("Distribution Options")
+        end
       end
       context "and then clicking continue and selecting 'AE_SI12.3 ESI Service' for the second collection" do
         before(:all) do
@@ -42,12 +44,12 @@ describe "Data Access workflow", reset: false do
           wait_for_xhr
           within '.access-item-selection:nth-child(1)' do
             choose 'AE_SI12.3 ESI Service'
+            wait_for_xhr
           end
-          wait_for_xhr
         end
         it "displays the option subsettings for the second collection" do
-          within '.access-form' do
-            expect(page).to have_text('Include Metadata and Processing History')
+          synchronize do
+            page.find('.access-form').should have_content("Include Metadata and Processing History")
           end
         end
         context "and then clicking continue and selecting 'AE_SI6.3 ESI Service' for the third collection" do
@@ -56,12 +58,12 @@ describe "Data Access workflow", reset: false do
             wait_for_xhr
             within '.access-item-selection:nth-child(1)' do
               choose 'AE_SI6.3 ESI Service'
+              wait_for_xhr
             end
-            wait_for_xhr
           end
           it "displays the option subsetting for the third collection" do
-            within '.access-form' do
-              expect(page).to have_text('Include Metadata and Processing History')
+            synchronize do
+              page.find('.access-form').should have_content("Include Metadata and Processing History")
             end
           end
         end
