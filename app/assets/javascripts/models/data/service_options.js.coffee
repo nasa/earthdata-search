@@ -34,7 +34,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
       @index = document.getElementsByClassName('access-form').length
-      console.log "Index is: " + @index
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -126,8 +125,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       this
 
   class ServiceOptionsModel extends KnockoutModel
-    constructor: (@granuleAccessOptions, @index) ->
-      @accessIndexCount = @index
+    constructor: (@granuleAccessOptions) ->
+      @accessIndexCount = document.getElementsByClassName('access-form').length
       @accessMethod = ko.observableArray()
       @isLoaded = @computed
         read: =>
