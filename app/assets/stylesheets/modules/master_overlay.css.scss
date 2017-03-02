@@ -81,6 +81,7 @@
   background-color: $master-overlay-main-bg-color;
   width: 100%;
   overflow: hidden;
+  top: 50%;
 
   .master-overlay-content {
     background: #fff;
@@ -112,8 +113,7 @@
 
 .master-overlay-main-content {
   width: 400%;
-  left: 0%;
-  bottom: 0;
+  left: 0;
 
   section {
     height: 100%;
