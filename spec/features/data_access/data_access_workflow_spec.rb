@@ -30,9 +30,7 @@ describe "Data Access workflow", reset: false do
         end
       end
       it "displays the distribution options for the first collection" do
-        synchronize do
-          page.find('.access-form').should have_content("Distribution Options")
-        end
+        page.find('.access-form').should have_content("Distribution Options", wait: 5)
       end
       context "and then clicking continue and selecting 'AE_SI12.3 ESI Service' for the second collection" do
         before(:all) do
@@ -48,9 +46,7 @@ describe "Data Access workflow", reset: false do
           end
         end
         it "displays the option subsettings for the second collection" do
-          synchronize do
-            page.find('.access-form').should have_content("Include Metadata and Processing History")
-          end
+          page.find('.access-form').should have_content("Include Metadata and Processing History", wait: 5)
         end
         context "and then clicking continue and selecting 'AE_SI6.3 ESI Service' for the third collection" do
           before(:all) do
@@ -62,9 +58,7 @@ describe "Data Access workflow", reset: false do
             end
           end
           it "displays the option subsetting for the third collection" do
-            synchronize do
-              page.find('.access-form').should have_content("Include Metadata and Processing History")
-            end
+            page.find('.access-form').should have_content("Include Metadata and Processing History", wait: 5)
           end
         end
       end

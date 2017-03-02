@@ -3871,6 +3871,30 @@ d6f9267e9cccbbd36579d64f55119e1ac5dae077:
       encoding: UTF-8
       string: '[{"concept-id":"C4543622-LARC_ASDC","intervals":[[1388361599,1451606400,17391]]}]'
     http_version: 
+27857c307af709236edd96981fdd43fa17cd7368:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 02 Mar 2017 23:14:26 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8f2070f1-6bea-4812-ba04-942e92228f04
+      content-length:
+      - '79'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+      strict-transport-security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C90762182-LAADS","intervals":[[1254466308,1349333508,173997]]}]'
+    http_version: 
 1ee1b14254e1a6fb1c67da1d524aee5908c1464b:
   response:
     status:
