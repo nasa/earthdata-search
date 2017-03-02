@@ -58,7 +58,7 @@ ns.Project = do (ko,
       @collection.reference()
       @meta.color ?= colorPool.next()
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
-      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions, @index)
+      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
 
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
