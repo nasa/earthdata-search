@@ -57,7 +57,7 @@ ns.Project = do (ko,
     constructor: (@collection, @meta={}) ->
       @collection.reference()
       @meta.color ?= colorPool.next()
-
+      
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
 
@@ -185,7 +185,6 @@ ns.Project = do (ko,
 
     addCollection: (collection) ->
       id = collection.id
-      
       @_collectionsById[id] ?= new ProjectCollection(collection)
       @_collectionIds.remove(id)
       @_collectionIds.push(id)
