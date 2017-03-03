@@ -42,6 +42,11 @@
       background: $master-overlay-tab-color;
       display: inline-block;
       margin: 0;
+      padding: 10px;
+
+      h2 {
+        display: inline-block;
+      }
     }
   }
 }
@@ -165,7 +170,7 @@
   transition-duration: 0.3s;
 }
 
-.master-overlay-parent, .master-overlay-main {
+.master-overlay-parent {
   box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.4);
 }
 
@@ -287,6 +292,10 @@
 .master-overlay-minimize, .master-overlay-maximize {
   font-size: 1.3em;
   display: inline-block;
+  margin-left: 5px;
+  &:link {
+    color: #e3e3e3;
+  }
   &:hover {
     color: #aaa;
   }
@@ -348,7 +357,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 
 .is-master-overlay-minimized {
   .master-overlay-when-max { display: none; }
-  .master-overlay-when-min { display: block; }
+  .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
     width: $collapsed-overlay-width;
     header {
