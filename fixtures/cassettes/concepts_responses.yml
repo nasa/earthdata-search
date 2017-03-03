@@ -826,6 +826,102 @@ ff2f122cb844b5f384f0912f4483d1b684c3f191:
         Snow and Ice Data Center","CIRES, 449 UCB","University of Colorado"],"City":"Boulder","StateProvince":"CO","Country":"USA","PostalCode":"80309-0449"}]}],"FirstName":"NSIDC
         DAAC","LastName":"USER SERVICES"}],"ContactInformation":[{"RelatedUrls":[{"URLs":["http://nsidc.org/daac/index.html"]}]}]}],"DataLanguage":"eng"}'
     http_version: 
+c65b65cd6efe1ee8fd05a7621ad758d2ce6b2f60:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 01 Mar 2017 15:37:39 GMT
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.4; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 3178c693-f211-43a9-9c77-425ed11ec493
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+      strict-transport-security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"LocationKeywords":[{"Category":"CONTINENT","Type":"ANTARCTICA"},{"Category":"GEOGRAPHIC
+        REGION","Type":"ARCTIC"},{"Category":"GEOGRAPHIC REGION","Type":"POLAR"}],"MetadataDates":[{"Date":"1999-01-01T00:00:00.000Z","Type":"CREATE"},{"Date":"2017-02-03T00:00:00.000Z","Type":"UPDATE"}],"ShortName":"NSIDC-0081","Abstract":"&lt;!--******NOTE:
+        Do not remove the following SSI: data_release_prob.ssi. This notice is for
+        periodic interruptions in CLASS subscription data. *******--&gt; &lt;!--#include
+        virtual=\"/ssi/data_release_prob.ssi\" --&gt; This data set provides a Near-Real-Time
+        (NRT) map of sea ice concentrations for both the Northern and Southern Hemispheres.","DirectoryNames":[{"ShortName":"USA/NASA"}],"PublicationReferences":[{"RelatedUrl":{"URLs":["Not%20provided"],"Title":"Reference
+        Online Resource","Description":"Reference Online Resource","Relation":["VIEW
+        RELATED INFORMATION","Citation"],"MimeType":"text/html"}}],"RelatedUrls":[{"Description":"Documentation","Relation":["VIEW
+        RELATED INFORMATION"],"URLs":["http://dx.doi.org/10.5067/U8C09DWVX9LM"]},{"Description":"HTTPS","Relation":["GET
+        DATA"],"URLs":["https://daacdata.apps.nsidc.org/pub/DATASETS/nsidc0081_nrt_nasateam_seaice/"]},{"Description":"Sea
+        Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I Passive Microwave Data","Relation":["VIEW
+        RELATED INFORMATION"],"URLs":["http://nsidc.org/data/nsidc-0051.html"]},{"Description":"Near-Real-Time
+        SSM/I EASE-Grid Daily Global Ice Concentration and Snow Extent","Relation":["VIEW
+        RELATED INFORMATION"],"URLs":["http://nsidc.org/data/nise1.html"]},{"Description":"Sea
+        Ice Data at NSIDC","Relation":["VIEW PROJECT HOME PAGE"],"URLs":["http://nsidc.org/data/seaice/"]},{"Description":"Sea
+        Ice Index","Relation":["VIEW RELATED INFORMATION"],"URLs":["http://nsidc.org/data/g02135.html"]}],"ContactPersons":[{"Roles":["Investigator"],"FirstName":"Jim","LastName":"Maslanik"},{"Roles":["Investigator"],"ContactInformation":[{"ContactMechanisms":[{"Type":"Email","Value":"stroeve@nsidc.org"}],"Addresses":[{"StreetAddresses":["National
+        Snow and Ice Data Center","CIRES, 449 UCB","University of Colorado"],"City":"Boulder","StateProvince":"CO","PostalCode":"80309"}]}],"FirstName":"Julienne","LastName":"Stroeve"},{"Roles":["Investigator"],"ContactInformation":[{"Addresses":[{"StreetAddresses":["National
+        Snow and Ice Data Center","CIRES, 449 UCB","University of Colorado"],"City":"Boulder","StateProvince":"CO","Country":"USA","PostalCode":"80309-0449"}]}],"FirstName":"Kenneth","LastName":"Knowles"},{"Roles":["Investigator"],"ContactInformation":[{"ContactMechanisms":[{"Type":"Email","Value":"walter.n.meier@nasa.gov"}],"Addresses":[{"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}],"FirstName":"Walt","LastName":"Meier"},{"Roles":["Investigator"],"ContactInformation":[{"ContactMechanisms":[{"Type":"Email","Value":"Donald.J.Cavalieri@nasa.gov"},{"Type":"Fax","Value":"1-301-614-5644"},{"Type":"Telephone","Value":"1-301-614-5901"}],"Addresses":[{"StreetAddresses":["NASA/GSFC","Mail
+        Code: 615"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}],"FirstName":"Donald","MiddleName":"J.","LastName":"Cavalieri"},{"Roles":["Technical
+        Contact"],"ContactInformation":[{"ContactMechanisms":[{"Type":"Email","Value":"nsidc@nsidc.org"},{"Type":"Fax","Value":"
+        1 (303) 492-2468"},{"Type":"Telephone","Value":" 1 (303) 492-6199"}],"Addresses":[{"StreetAddresses":["National
+        Snow and Ice Data Center","CIRES, 449 UCB","University of Colorado"],"City":"Boulder","StateProvince":"CO","Country":"USA","PostalCode":"80309-0449"}]}],"FirstName":"NSIDC","LastName":"USER
+        SERVICES"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":30.98},{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":-39.23,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"NO_SPATIAL"},"ContactGroups":[],"AdditionalAttributes":[{"Group":"NSIDC","Value":"&lt;ul&gt;
+        &lt;li&gt;June 2016&lt;br&gt; Starting on 1 April 2016, sea ice concentration
+        fields are computed using F18 data.&lt;/li&gt; &lt;li&gt;March 2015&lt;br&gt;
+        New smaller pole hole mask used: &lt;a href=\"http://nsidc.org/data/docs/daac/nsidc0081_ssmi_nrt_seaice.gd.html#ssmis-pole-hole\"&gt;SSMIS
+        Pole Hole.&lt;/a&gt;&lt;br&gt; New spurious ice masks: &lt;a href=\"http://nsidc.org/data/docs/daac/nsidc0081_ssmi_nrt_seaice.gd.html#climo-masks\"&gt;NIC
+        Valid Ice Masks.&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;1999&lt;br&gt; Initial release
+        of this data product.&lt;/li&gt; &lt;/ul&gt;","Name":"Version Summary","Description":"Not
+        provided","DataType":"STRING"},{"Group":"NSIDC","Value":"updated daily","Name":"Update
+        Frequency","Description":"Not provided","DataType":"STRING"},{"Group":"NSIDC","Value":"1","Name":"Current
+        Version","Description":"Not provided","DataType":"INT"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"CRYOSPHERE","Term":"SEA ICE","VariableLevel1":"SEA ICE CONCENTRATION"},{"Category":"EARTH
+        SCIENCE","Topic":"OCEANS","Term":"SEA ICE","VariableLevel1":"SEA ICE CONCENTRATION"}],"Quality":"This
+        near-real-time sea ice concentration (NRTSI) data set is created using brightness
+        temperatures from NOAA''s Comprehensive Large Array-data Stewardship System
+        (CLASS) in order to provide the product within one to two days following data
+        acquisition. These brightness temperatures do not receive the same level of
+        quality control as the DMSP SSM/I-SSMIS Daily Polar Gridded Brightness Temperatures
+        product created at NSIDC. Additionally, these NRTSI data may be missing swaths
+        and contain erroneous ice over ocean that was missed by the weather filters.","EntryTitle":"Near-Real-Time
+        DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations","Distributions":[{"DistributionMedia":"FTP","DistributionFormat":"PNG"},{"DistributionMedia":"FTP","Sizes":[{"Size":102.7,"Unit":"KB"}],"DistributionFormat":"Binary"},{"DistributionMedia":"FTP","Sizes":[{"Size":133.3,"Unit":"KB"}],"DistributionFormat":"Binary"}],"CollectionProgress":"in
+        work","UseConstraints":"These data are intended to facilitate time-sensitive
+        research dependent upon precise detection of seasonal polar sea ice formation
+        and break up. These data are primarily meant to provide a best estimate of
+        current ice and snow conditions based on information and algorithms available
+        at the time the data are acquired. Near-real-time products are not intended
+        for operational use in assessing sea ice conditions for navigation and should
+        be used with caution in extending the sea ice time series. For historical
+        SMMR and SSM/I sea ice concentration data, please see Sea Ice Concentrations
+        from Nimbus-7 SMMR and DMSP SSM/I Passive Microwave Data.","TemporalKeywords":["1
+        day"],"AncillaryKeywords":["Antarctic","Arctic","DMSP","Gridded Data","Ice","Ice
+        Concentration","Near Real-time","Passive Microwave","Polar","Polar Stereographic","Polar
+        Stereo Sea Ice-project","Remote Sensing","Sea Ice","Sea Ice Concentration","Sea
+        Ice PM Polar Stereo-project","Sea Ice Prediction Network-project","SIPN sea
+        ice-project","SMMR","SMMR/SSMIS Polar Stereo Sea Ice Conc-project","Special
+        Sensor Microwave Imager/Sounder","SSM/I","SSMIS"],"ProcessingLevel":{"Id":"Not
+        provided"},"Platforms":[{"ShortName":"Not provided","Instruments":[{"ShortName":"SSMIS","LongName":"Special
+        Sensor Microwave Imager/Sounder"}]},{"ShortName":"DMSP 5D-3/F17","LongName":"Defense
+        Meteorological Satellite Program-F17"},{"ShortName":"DMSP 5D-3/F18","LongName":"Defense
+        Meteorological Satellite Program-F18"}],"Projects":[{"ShortName":"EOSDIS","LongName":"Earth
+        Observing System Data Information System"},{"ShortName":"ESIP","LongName":"Earth
+        Science Information Partners Program"}],"Version":"1","TemporalExtents":[{"RangeDateTimes":[{"BeginningDateTime":"2015-01-01T00:00:00.000Z","EndingDateTime":"2017-02-04T23:59:59.999Z"}]}],"DataCenters":[{"Roles":["ORIGINATOR"],"ShortName":"NASA
+        NSIDC DAAC","ContactGroups":[],"ContactPersons":[]},{"Roles":["ARCHIVER","DISTRIBUTOR"],"ShortName":"NASA/NSIDC_DAAC","LongName":"NASA
+        National Snow and Ice Data Center Distributed Active Archive Center","ContactGroups":[],"ContactPersons":[{"Roles":["Data
+        Center Contact"],"ContactInformation":[{"ContactMechanisms":[{"Type":"Email","Value":"nsidc@nsidc.org"},{"Type":"Fax","Value":"+1
+        (303) 492-2468"},{"Type":"Telephone","Value":"+1 (303) 492-6199"}],"Addresses":[{"StreetAddresses":["National
+        Snow and Ice Data Center","CIRES, 449 UCB","University of Colorado"],"City":"Boulder","StateProvince":"CO","Country":"USA","PostalCode":"80309-0449"}]}],"FirstName":"NSIDC
+        DAAC","LastName":"USER SERVICES"}],"ContactInformation":[{"RelatedUrls":[{"URLs":["http://nsidc.org/daac/index.html"]}]}]}],"DataLanguage":"eng"}'
+    http_version: 
 36951f09925f78b6fbc1a50e179a607e6b7cda56:
   response:
     status:
