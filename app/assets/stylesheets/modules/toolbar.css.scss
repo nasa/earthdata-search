@@ -4,10 +4,8 @@
   background: rgba(22,22,22,.9);
   z-index: 59;
   padding: 8px 12px;
-  border-radius: 5px;
-  top: 30px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
+  top: 80px;
+  left: $toolbar-logo-container-width + 10px;
   font-size: 1em;
 }
 
@@ -21,10 +19,8 @@
   background: rgba(22,22,22,.9);
   z-index: 59;
   padding: 6px 10px;
-  border-radius: 5px;
-  top: 72px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
+  top: 120px;
+  left: $toolbar-logo-container-width + 10px;
   font-size: .9em;
 
   label {
@@ -39,7 +35,7 @@
 }
 
 .leaflet-top.leaflet-right {
-  top: 110px;
+  top: 80px;
 }
 
 .leaflet-bar.projection-switcher a {
