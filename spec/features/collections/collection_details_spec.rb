@@ -61,7 +61,7 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('Contacts: Download Page')
+      expect(page).to have_content('Contacts: JAXA G-PORTAL z-gportal-support@ml.jaxa.jp Download Page')
     end
   end
 
@@ -158,6 +158,16 @@ describe 'Collection details', reset: false do
 
     it "displays all spatial content" do
       expect(page).to have_content("Bounding Rectangle: (22.0°, -96.0°, -20.0°, -48.0°) Bounding Rectangle: (10.0°, -14.0°, -9.0°, 34.0°) Bounding Rectangle: (27.0°, 92.0°, -20.0°, 151.0°)")
+    end
+  end
+
+  context "when selecting a collection with multiple contacts values from DataCenters and ContactPersons" do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1220111401-NSIDCV0'
+    end
+
+    it "displays all spatial content" do
+      expect(page).to have_content("Contacts: NSIDC DAAC USER SERVICES nsidc@nsidc.org +1 (303) 492-2468 (Fax) +1 (303) 492-6199 (Telephone) Julienne Stroeve stroeve@nsidc.org Walt Meier walter.n.meier@nasa.gov Donald Cavalieri Donald.J.Cavalieri@nasa.gov 1-301-614-5644 (Fax) 1-301-614-5901 (Telephone) NSIDC USER SERVICES nsidc@nsidc.org 1 (303) 492-2468 (Fax) 1 (303) 492-6199 (Telephone) Download Page")
     end
   end
 end
