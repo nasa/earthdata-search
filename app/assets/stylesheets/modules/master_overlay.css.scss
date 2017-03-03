@@ -16,7 +16,7 @@
     color: $overlay-heading-font-color;
 
     h2 {
-      font-size: 1.4em;
+      font-size: 1.2em;
       margin: 0;
       font-weight: 200;
     }
@@ -28,6 +28,10 @@
 
     &.with-options {
       margin: 0;
+
+      > * {
+        display: inline-block;
+      }
 
       h2 {
         padding: 10px 0 10px 0;
@@ -42,7 +46,7 @@
       background: $master-overlay-tab-color;
       display: inline-block;
       margin: 0;
-      padding: 10px;
+      padding: 10px 20px;
 
       h2 {
         display: inline-block;
@@ -200,8 +204,14 @@
   margin: 0;
   color: $overlay-heading-font-color;
 
+  > * {
+    display: inline-block;
+  }
+
 
   p.button-details {
+    color: #999;
+
     span {
       display: block;
       position: relative;
@@ -215,7 +225,6 @@
       position: relative;
       z-index:1;
     }
-    height: 36px;
   }
 
   p {
@@ -241,7 +250,7 @@
 }
 
 .is-master-overlay-maximized #collection-results .master-overlay-info {
-  height: 71px;
+  padding: 20px;
 }
 
 .master-overlay-global-actions {
@@ -446,8 +455,10 @@ $parent-width: $parent-split * 0.21;
 }
 
 .master-overlay-info .panel-list-meta, .panel-list-meta {
+  display: inline-block;
+  float: right;
   text-align:right;
-  padding: 0 1.25em;
+  padding: 0;
   margin: 0;
   font-size: .8em;
   color: #666;
