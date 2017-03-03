@@ -21,11 +21,11 @@
     browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
 
   if cmr_env == 'uat'
-    aster_collections = "<%= Rails.configuration.services['edsc']['uat']['aster_collections'] %>".split /\s*,\s*/
+    limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
   else if cmr_env == 'sit'
-    aster_collections = "<%= Rails.configuration.services['edsc']['sit']['aster_collections'] %>".split /\s*,\s*/
+    limited_collections = "<%= Rails.configuration.services['edsc']['sit']['limited_collections'] %>".split /\s*,\s*/
   else
-    aster_collections = "<%= Rails.configuration.services['edsc']['prod']['aster_collections'] %>".split /\s*,\s*/
+    limited_collections = "<%= Rails.configuration.services['edsc']['prod']['limited_collections'] %>".split /\s*,\s*/
 
   <% if Rails.env.test? %>
 
@@ -49,7 +49,7 @@
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
-    asterCollections: aster_collections
+    asterCollections: limited_collections
 
   <% elsif Rails.env.development? %>
 
@@ -71,7 +71,7 @@
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
-    asterCollections: aster_collections
+    asterCollections: limited_collections
 
   <% else %>
   # Production config
@@ -91,6 +91,6 @@
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
-    asterCollections: aster_collections
+    asterCollections: limited_collections
 
   <% end %>
