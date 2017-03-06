@@ -45,7 +45,7 @@
     "script-loader": "^0.6.1",
     "style-loader": "^0.12.3",
     "url-loader": "0.5.6",
-    "webpack": "^1.12.1"
+    "webpack": "1.12.1"
   },
   "scripts": {
     "prepublish": "./node_modules/.bin/webpack --config config/webpack.config.js -p --bail --colors",
