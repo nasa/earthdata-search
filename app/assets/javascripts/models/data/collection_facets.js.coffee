@@ -52,11 +52,10 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
 
       if !link && @parent.title == 'Keywords'
         # hierarchical facet is applied and there is no applicable link
-        # TODO turn this into a loop if we want to support multiple keywords from same category
         query = window.edsc.models.page.current.query
         i = 0
         appliedKeywordsHash = query.params()['science_keywords_h']
-        if appliedKeywordsHash? && appliedKeywordsHash[i]?
+        for appliedKeyword, i in appliedKeywordsHash
           Object.keys(appliedKeywordsHash[i]).forEach (key) =>
             title = appliedKeywordsHash[i][key]
             params.push "science_keywords_h[#{i}][#{key}]" if title == @title
@@ -274,6 +273,11 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
               queryFacet.title == title
             @_removeHierarchicalFacets(child)
         @query.facets.remove (queryFacet) -> queryFacet.title == root.title unless hasAppliedChildren
+        params = @query.params()
+        if params['science_keywords_h']
+          (tmp or tmp = []).push sk for sk in params['science_keywords_h'] when sk
+          params['science_keywords_h'] = tmp
+
 
 
     addFacet: (facet) =>
@@ -283,7 +287,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       @query.facets()
 
     toggleFacet: (facet) =>
-      console.log facet
       if facet.isSelected()
         facet.isChecked(false)
         @removeFacet(facet)
