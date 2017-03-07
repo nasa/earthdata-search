@@ -53,7 +53,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       if !link && @parent.title == 'Keywords'
         # hierarchical facet is applied and there is no applicable link
         query = window.edsc.models.page.current.query
-        i = 0
         appliedKeywordsHash = query.params()['science_keywords_h']
         for appliedKeyword, i in appliedKeywordsHash
           Object.keys(appliedKeywordsHash[i]).forEach (key) =>
@@ -223,6 +222,7 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       # being applied, CMR will not return 'processing_level_id_h' in facet-v2 since no collections have any process level
       # id info.
       currentLen = updated.length
+      i = 0
       while i < currentLen
         currentFacetList = updated[i]
         found = ko.utils.arrayFirst data, (result) ->
