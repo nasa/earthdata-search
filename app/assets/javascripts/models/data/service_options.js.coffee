@@ -68,7 +68,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         clickedMethod = m
         break
 
+
       echoformContainer = if @index then document.getElementsByClassName('access-form')[@index] else document.getElementsByClassName('access-form')[0]
+      if (typeof echoformContainer != 'undefined')
+        if ($.isFunction(echoformContainer.empty))
+          echoformContainer.empty();
       if clickedMethod.type == 'service' || clickedMethod.type == 'order'
         @loadForm(true) if clickedMethod.type == 'service'
         setTimeout (=>
