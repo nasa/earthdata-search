@@ -469,6 +469,21 @@ http_interactions:
   digest: 15851c71add1dd12d15ac0f0819b70dc41571259
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C203234517-LAADS.umm_json_v1_4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 07 Mar 2017 23:04:07 GMT
+  digest: fb5d4b28c70dfe09d18a24e3b25db071f00f8d7b
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C2930962-PODAAC.json
     body:
       encoding: US-ASCII
