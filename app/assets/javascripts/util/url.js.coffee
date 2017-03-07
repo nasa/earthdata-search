@@ -154,13 +154,20 @@ this.edsc.util.url = do(window
 
   alter = (params, method) ->
 
+  _removeNullScienceKeywords = (params) ->
+    if params['science_keywords_h']
+      (tmp or tmp = []).push sk for sk in params['science_keywords_h'] when sk
+      params['science_keywords_h'] = tmp
+
   compress = (params) ->
     params = extend(true, {}, params)
+    _removeNullScienceKeywords params
     compressor.compress(params) for compressor in compressors
     params
 
   inflate = (params) ->
     params = extend(true, {}, params)
+    _removeNullScienceKeywords params
     compressors[i].inflate(params) for i in [compressors.length-1..0]
     params
 

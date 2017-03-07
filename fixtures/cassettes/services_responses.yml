@@ -1544,6 +1544,46 @@ d204b91c248d4f6680b7a7b8c1beeb1d566dbd36:
         <?xml version="1.0" encoding="UTF-8"?>
         <feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:georss="http://www.georss.org/georss/10" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:cwic="http://cwic.wgiss.ceos.org/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/"><title>CWIC OpenSearch Response</title><updated>2016-05-19T11:25:13Z</updated><author><name>CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic</name><email>cwic-help@wgiss.ceos.org</email></author><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</dc:identifier><opensearch:totalResults>1</opensearch:totalResults><opensearch:startIndex>1</opensearch:startIndex><opensearch:itemsPerPage>1</opensearch:itemsPerPage><link rel="self" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01" title="This Request"/><link rel="search" type="application/opensearchdescription+xml" href="http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml" title="Search this resource"/><link rel="first" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&amp;count=null&amp;startIndex=1" title="First result"/><link rel="last" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&amp;count=null&amp;startIndex=1" title="Last result"/><opensearch:Query role="request" cwic:datasetId="USGS_EDC_EO1_ALI" uid="USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01"/><!-- Remote search completed in 0.519 seconds. --><entry><title>Entity ID: EO1A1470392016083110KF_AK3_01, Acquisition Date: 23-MAR-16, Target Path: 147, Target Row: 39</title><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</dc:identifier><updated>2016-03-26T13:18:03Z</updated><author><name>EROS DATA CENTER - TECHNICAL CONTACT - Customer Services; U.S. Geological Survey; EROS Data Center; 47914 252nd Street;  Sioux Falls, SD 57198-0001; USA - Email: custserv@usgs.gov - Phone: 605-594-6151 - FAX: 605-594-6589</name><email>custserv@usgs.gov</email></author><georss:box>29.247873 77.072798 30.113336 77.715801</georss:box><georss:polygon>29.377395 77.072798 30.113336 77.281717 29.983081 77.715801 29.247873 77.503997 29.377395 77.072798</georss:polygon><dc:date>2016-03-23T03:42:46Z/2016-03-23T03:42:58Z</dc:date><link title="Original source metadata" rel="via" type="text/xml" href="http://earthexplorer.usgs.gov/metadata/xml/1852/EO1A1470392016083110KF_AK3_01/"/><link title="Alternate metadata URL" rel="alternate" type="text/xml" href="http://earthexplorer.usgs.gov/metadata/xml/1852/EO1A1470392016083110KF_AK3_01/"/><link title="Browse image URL" rel="icon" type="image/jpeg" href="http://earthexplorer.usgs.gov/browse/eo-1/ali/147/39/2016/EO11470392016083110KF_AK3_01.jpeg"/><link title="Granule ordering URL" rel="alternate" type="text/html" href="http://earthexplorer.usgs.gov/order/process?dataset_name=EO1_ALI_PUB&amp;ordered=EO1A1470392016083110KF_AK3_01&amp;node=INVSVC"/><link title="Granule download URL" rel="enclosure" type="text/html" href="http://earthexplorer.usgs.gov/download/external/options/EO1_ALI_PUB/EO1A1470392016083110KF_AK3_01/INVSVC/"/><summary type="text">Granule metadata for Entity ID: EO1A1470392016083110KF_AK3_01, Acquisition Date: 23-MAR-16, Target Path: 147, Target Row: 39</summary></entry><!-- Atom response generation completed in 1ms. --></feed><!-- OpenSearch response completed in 522ms. -->
     http_version: 
+f76fa4e812c139f30c482dcb0c79f39b4c13f718:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 07 Mar 2017 15:26:13 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '70'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000560-DEV08"}'
+    http_version: 
+5134f88cbce955ebc204ea35d11d293688afa7ad:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 07 Mar 2017 15:32:19 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '87'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"somestringthatmatchesnocollections"}'
+    http_version: 
 f2a7ab93337a9736dcaae149c78473b57acfd35c:
   response:
     status:
