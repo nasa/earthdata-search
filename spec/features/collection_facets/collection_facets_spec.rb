@@ -121,6 +121,11 @@ describe "Collection Facets", reset: false do
   end
 
   context "selecting facets" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, facets: true, env: :sit
+    end
+
     after :each do
       reset_search
     end
@@ -520,6 +525,11 @@ describe "Collection Facets", reset: false do
     before :all do
       find(".facets-item", text: "Agriculture", match: :prefer_exact).click
       expect(page).to have_content('1628 Matching Collections')
+    end
+
+    after :all do
+      find(".facets-item", text: "Agriculture", match: :prefer_exact).click
+      find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
     end
 
     it "'OR's the results of the selected facets" do
