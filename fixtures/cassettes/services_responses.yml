@@ -1548,7 +1548,7 @@ f76fa4e812c139f30c482dcb0c79f39b4c13f718:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Tue, 07 Mar 2017 15:26:13 GMT
@@ -1563,12 +1563,12 @@ f76fa4e812c139f30c482dcb0c79f39b4c13f718:
     body:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000560-DEV08"}'
-    http_version: 
+    http_version:
 5134f88cbce955ebc204ea35d11d293688afa7ad:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Tue, 07 Mar 2017 15:32:19 GMT
@@ -1583,7 +1583,87 @@ f76fa4e812c139f30c482dcb0c79f39b4c13f718:
     body:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"somestringthatmatchesnocollections"}'
-    http_version: 
+    http_version:
+ca3d7345f2c73b6b210b399ad385d7c40837679d:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Tue, 07 Mar 2017 23:04:03 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '61'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AST_L1AE"}'
+    http_version:
+e57a9aa38c0cd90895fd835d8f154439dd77ad33:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Tue, 07 Mar 2017 23:04:18 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '74'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1216386350-NSIDC_TS1"}'
+    http_version:
+42180e7bc6b5ed12462cd7d77e8a8875cab3d51e:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Tue, 07 Mar 2017 23:04:09 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '72'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1220111370-NSIDCV0"}'
+    http_version:
+4123138ffb200cdffd193eb8e246ac15b38b6c2d:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Tue, 07 Mar 2017 23:04:14 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '73'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179002945-ORNL_DAAC"}'
+    http_version:
 f2a7ab93337a9736dcaae149c78473b57acfd35c:
   response:
     status:
