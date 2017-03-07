@@ -24,13 +24,18 @@ describe "Data Access workflow", reset: false do
 
     context "when clicking 'FtpPushPull'on the first collection" do
       before(:all) do
-        within '.access-item-selection:nth-child(1)' do
+        selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
+        within selection do
           choose 'FtpPushPull'
           wait_for_xhr
         end
       end
       it "displays the distribution options for the first collection" do
-        page.find('.access-form').should have_content("Distribution Options", wait: 5)
+        wait_for_xhr
+        form = find(:css, ".access-item:nth-child(1)").find(:css, ".access-form")
+        synchronize do
+          expect(form).to have_content("Distribution Options")
+        end
       end
       context "and then clicking continue and selecting 'AE_SI12.3 ESI Service' for the second collection" do
         before(:all) do
@@ -40,25 +45,35 @@ describe "Data Access workflow", reset: false do
           sleep(1)
           find_by_id("tooManyGranulesModal").click_link("Continue")
           wait_for_xhr
-          within '.access-item-selection:nth-child(1)' do
+          selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
+          within selection do
             choose 'AE_SI12.3 ESI Service'
             wait_for_xhr
           end
         end
         it "displays the option subsettings for the second collection" do
-          page.find('.access-form').should have_content("Include Metadata and Processing History", wait: 5)
+          wait_for_xhr
+          form = find(:css, ".access-item:nth-child(2)").find(:css, ".access-form")
+          synchronize do
+            expect(form).to have_content("Include Metadata and Processing History")
+          end
         end
         context "and then clicking continue and selecting 'AE_SI6.3 ESI Service' for the third collection" do
           before(:all) do
             click_button "Continue"
             wait_for_xhr
-            within '.access-item-selection:nth-child(1)' do
+            selection = find(:css, ".access-item:nth-child(3)").find(:css, ".access-item-selection")
+            within selection do
               choose 'AE_SI6.3 ESI Service'
               wait_for_xhr
             end
           end
           it "displays the option subsetting for the third collection" do
-            page.find('.access-form').should have_content("Include Metadata and Processing History", wait: 5)
+            wait_for_xhr
+            form = find(:css, ".access-item:nth-child(3)").find(:css, ".access-form")
+            synchronize do
+              expect(form).to have_content("Include Metadata and Processing History")
+            end
           end
         end
       end
