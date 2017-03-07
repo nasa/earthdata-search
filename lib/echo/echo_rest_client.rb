@@ -97,7 +97,7 @@ module Echo
     end
 
     def get_availability_events
-      get('calendar_events', severity: 'ALERT')
+      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['https://cmr.earthdata.nasa.gov/legacy-services/rest/calendar_events?severity=ALERT'])
     end
 
     def get_order_information(item_ids, token)

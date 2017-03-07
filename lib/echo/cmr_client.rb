@@ -14,9 +14,7 @@ module Echo
 
 
     def get_collections(options={}, token=nil)
-      format = options.delete(:format) || 'json'
-      query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
-      get("/search/collections.#{format}", query, token_header(token))
+      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&include_has_granules=true&include_granule_counts=true'])
     end
 
     def json_query_collections(query, token=nil, options={})
