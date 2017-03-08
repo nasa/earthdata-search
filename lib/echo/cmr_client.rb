@@ -1,36 +1,39 @@
 module Echo
   class CmrClient < BaseClient
     def get_cmr_availability
-      get("/search/health")
+      get('/search/health')
     end
 
     def get_cmr_search_availability
-      get("/search/collections.json")
+      get('/search/collections.json')
     end
 
     def get_opensearch_availability
-      get("/opensearch")
+      get('/opensearch')
     end
 
-
-    def get_collections(options={}, token=nil)
-      #TODO Move this to service.yml after picking up changes on master.
+    def get_collections(options = {}, token = nil)
+      # TODO: Move this to service.yml after picking up changes on master.
       options['echo_collection_id'] = ['C1344054706-NSIDC_ECS', 'C1000001160-NSIDC_ECS', 'C1243477383-GES_DISC']
       format = options.delete(:format) || 'json'
       query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
       get("/search/collections.#{format}", query, token_header(token))
     end
 
-    def json_query_collections(query, token=nil, options={})
+    def customize_options
+      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/customize_options'])
+    end
+
+    def json_query_collections(query, token = nil, options = {})
       format = options.delete(:format) || 'json'
       post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))
     end
 
-    def get_collection(id, token=nil, format='echo10')
+    def get_collection(id, token = nil, format = 'echo10')
       get("/search/concepts/#{id}.#{format}", {}, token_header(token))
     end
 
-    def get_granules(options={}, token=nil)
+    def get_granules(options = {}, token = nil)
       options = options.dup
       format = options.delete(:format) || 'json'
       body = options_to_granule_query(options)
@@ -39,7 +42,7 @@ module Echo
       post("/search/granules.#{format}", query, headers)
     end
 
-    def get_first_granule(collection, options={}, token=nil)
+    def get_first_granule(collection, options = {}, _token = nil)
       id = collection
       id = collection['id'] unless id.is_a?(String)
       defaults = {
@@ -51,22 +54,20 @@ module Echo
       response = get_granules(defaults.merge(options))
       if response.success? && response.body['feed'] && response.body['feed']['entry'].present?
         response.body['feed']['entry'].first
-      else
-        nil
       end
     end
 
-    def get_granule(id, options={}, token=nil)
+    def get_granule(id, _options = {}, token = nil)
       get("/search/concepts/#{id}.echo10", {}, token_header(token))
     end
 
-    def get_facets(options={}, token=nil)
+    def get_facets(options = {}, token = nil)
       get_collections(options.merge(include_facets: 'v2', page_size: 1), token)
     end
 
-    def post_timeline(options={}, token=nil)
+    def post_timeline(options = {}, token = nil)
       options = options.dup
-      options['concept_id'] = options.delete("echo_collection_id")
+      options['concept_id'] = options.delete('echo_collection_id')
       format = options.delete(:format) || 'json'
       query = options_to_granule_query(options).to_query
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
@@ -78,17 +79,17 @@ module Echo
     # existing data (if not already present), rather than overwriting it. The optional
     # block gets passed Array#uniq to determine whether a piece of data is already
     # present in the tag. Newer versions of data will overwrite older ones.
-    def add_tag(key, value, condition, token, append=false, only_granules=true, &block)
+    def add_tag(key, value, condition, token, append = false, only_granules = true, &block)
       query = tag_condition_to_query(condition)
       # https://bugs.earthdata.nasa.gov/browse/CMR-2855 will fix the need for some of this logic
       # https://bugs.earthdata.nasa.gov/browse/CMR-2609 as well
       if value.present? || only_granules
-        query_params = {include_tags: key, include_has_granules: true}
+        query_params = { include_tags: key, include_has_granules: true }
         response = json_query_collections(condition, token, query_params)
         return response unless response.success? && response.body['feed']['entry'].present?
 
         entries = response.body['feed']['entry']
-        entries = entries.select {|entry| entry['has_granules']} if only_granules
+        entries = entries.select { |entry| entry['has_granules'] } if only_granules
         assoc_data = nil
         if append
           data = Array.wrap(value)
@@ -97,12 +98,12 @@ module Echo
             data = Array.wrap(tags[key]['data']) + data if tags && tags[key]
             # Ensure no duplicate values and that newer values overwrite older ones
             data = data.reverse.uniq(&block).reverse
-            {'concept-id' => entry['id'], 'data' => data}
+            { 'concept-id' => entry['id'], 'data' => data }
           end
         elsif value.present?
-          assoc_data = entries.map { |entry| {'concept-id' => entry['id'], 'data' => value} }
+          assoc_data = entries.map { |entry| { 'concept-id' => entry['id'], 'data' => value } }
         else
-          assoc_data = entries.map { |entry| {'concept-id' => entry['id']} }
+          assoc_data = entries.map { |entry| { 'concept-id' => entry['id'] } }
         end
         if assoc_data.present?
           response = post("/search/tags/#{key}/associations", assoc_data.to_json, token_header(token))
@@ -123,11 +124,11 @@ module Echo
     end
 
     def get_tag(key, token)
-      get('/search/tags', {'tag-key' => key}, token_header(token))
+      get('/search/tags', { 'tag-key' => key }, token_header(token))
     end
 
     def create_tag(key, token)
-      post('/search/tags', {'tag-key' => key}.to_json, token_header(token))
+      post('/search/tags', { 'tag-key' => key }.to_json, token_header(token))
     end
 
     def create_tag_if_needed(key, token)
@@ -142,17 +143,17 @@ module Echo
 
     def tag_condition_to_query(condition)
       if condition.is_a?(String) || condition.is_a?(Array)
-        id_conditions = Array.wrap(condition).map { |c| {:concept_id => c} }
-        condition = {or: id_conditions}
+        id_conditions = Array.wrap(condition).map { |c| { concept_id: c } }
+        condition = { or: id_conditions }
       end
       unless condition.key?('condition') || condition.key?(:condition)
-        condition = {condition: condition}
+        condition = { condition: condition }
       end
       condition
     end
 
     def default_headers
-      {'Client-Id' => client_id, 'Echo-ClientId' => client_id}
+      { 'Client-Id' => client_id, 'Echo-ClientId' => client_id }
     end
   end
 end
