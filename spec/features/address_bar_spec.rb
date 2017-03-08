@@ -425,7 +425,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-99.374541015625!7!1!0!0%2C2')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-99.4075!7!1!0!0%2C2')
     end
   end
 

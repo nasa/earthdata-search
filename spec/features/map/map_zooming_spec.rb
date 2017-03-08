@@ -166,7 +166,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(0, -273, 0)
+          expect(page).to have_map_center(0, -274, 0)
         end
 
         it 'does not zoom out any further' do
