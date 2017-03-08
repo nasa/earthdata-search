@@ -36,6 +36,10 @@ ns.SearchPage = do (ko
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
     $('.master-overlay').masterOverlay()
+    $('.launch-variable-modal').click ->
+      $('#variablesModal').modal('show')
+    $('.launch-customize-modal').click ->
+      $('#customizeDataModal').modal('show')
 
   class SearchPage
     constructor: ->
