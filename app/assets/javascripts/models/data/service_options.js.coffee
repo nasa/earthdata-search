@@ -29,11 +29,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       this
 
   class ServiceOptions
-    constructor: (method, @availableMethods) ->
+    constructor: (method, @availableMethods, @index) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
-      @index = document.getElementsByClassName('access-form').length
+     # @index = document.getElementsByClassName('access-form').length
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -67,8 +67,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       for m in @availableMethods when m.name == item.name
         clickedMethod = m
         break
-
-
       echoformContainer = if @index then document.getElementsByClassName('access-form')[@index] else document.getElementsByClassName('access-form')[0]
       if (typeof echoformContainer != 'undefined')
         if ($.isFunction(echoformContainer.empty))
@@ -129,8 +127,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       this
 
   class ServiceOptionsModel extends KnockoutModel
-    constructor: (@granuleAccessOptions) ->
-      @accessIndexCount = document.getElementsByClassName('access-form').length
+    constructor: (@granuleAccessOptions, @index) ->
+      @accessIndexCount = @index
       @accessMethod = ko.observableArray()
       @isLoaded = @computed
         read: =>
@@ -155,7 +153,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           for available in availableMethods
             validDefaults.push(method) if method.method == available.name
         @fromJson(accessMethod: validDefaults)
-      @addAccessMethod() if methods.length == 0 && availableMethods.length > 0 && validDefaults.length == 0
+      @addAccessMethod(true) if methods.length == 0 && availableMethods.length > 0 && validDefaults.length == 0
       @canAddAccessMethod(availableMethods.length > 1 ||
         (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 
@@ -168,8 +166,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         return false if m.loadForm()
       true
 
-    addAccessMethod: => 
-      @accessIndexCount = @accessIndexCount + 1
+    addAccessMethod: (initialLoad = false) =>
+      @accessIndexCount = @accessIndexCount + 1 if not initialLoad
       @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods, @accessIndexCount))
 
     removeAccessMethod: (method) =>
@@ -181,7 +179,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
       for json in jsonObj.accessMethod
-        method = new ServiceOptions(null, @_methods)
+        method = new ServiceOptions(null, @_methods, @index)
         method.fromJson(json)
         @accessMethod.push(method)
       this
