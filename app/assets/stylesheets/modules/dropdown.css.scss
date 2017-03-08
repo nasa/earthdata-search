@@ -6,10 +6,6 @@
   a.logo{
     margin: 10px 0 0 10px;
   }
-
-  a.sign-in {
-    margin: 10px;
-  }
 }
 
 .dropdown {
@@ -137,25 +133,21 @@ input.day-of-year-input {
 
 .toolbar-secondary {
   a.toolbar-button {
-    font-size: 1.4em;
-    padding: 15px 20px;
+    background: rgba(255,255,255,.8);
+    border-radius: 3px;
+    font-size: 1em;
+    padding: 12px 15px;
+    margin-left: 10px;
     display: block;
     float: left;
     @include transition(all 0.2s ease-in-out);
     outline: none;
     text-decoration: none;
+    border: none;
 
     &:hover {
-      color: rgba(255,255,255,1);
-      .fa-caret-down {
-        color: rgba(255,255,255,1);
-      }
+      background: rgba(255,255,255,1);
     }
-  }
-
-  a.feedback {
-    font-size: 1em;
-    line-height: 2em;
   }
 
   span.toolbar-text {

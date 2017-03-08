@@ -19,7 +19,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 .panel-list-item, .panel-list-list > .sortable-placeholder {
   color: #424242;
   background-color: #fff;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #e3e3e3;
   margin: 0;
   min-height: $panel-list-thumbnail-size + 30px;
   padding: 10px 10px 10px 14px;
@@ -28,6 +28,10 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
   &:first-child {
     margin-top: 0;
+  }
+
+  &:nth-child(odd) {
+    background: #f4f7fa;
   }
 
   &.master-overlay-forward:hover {
