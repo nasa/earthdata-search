@@ -51,5 +51,3 @@ node_modules
 npm-debug.log*
 /edsc/dist
 /mkmf.log
-bin/rubocop
-.rubocop.yml
