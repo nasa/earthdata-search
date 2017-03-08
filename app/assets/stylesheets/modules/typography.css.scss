@@ -73,7 +73,7 @@ header {
     @include retina-image('app-logo', $toolbar-logo-width 40px, png, null, '_2x', true);
     height: 40px;
     width: 40px;
-    margin-left: 10px;
+    margin-left: 0;
     float: left;
     background-repeat: no-repeat;
     text-indent: inherit;
@@ -109,10 +109,11 @@ header {
     color: #fff;
     font-size: 0.4em;
     float: left;
-    background: darken($ocean-blue, 10%);
+    background: $ocean-blue;
     padding: 0.2em 0.6em;
-    margin: 30px 5px 0;
-    border-radius: 4px;
+    margin: 26px 5px 0;
+    border-radius: 2px;
+    text-shadow: 1px 1px rgba(0,0,0,0.4);
   }
 }
 
