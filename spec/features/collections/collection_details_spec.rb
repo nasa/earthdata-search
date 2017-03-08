@@ -170,4 +170,14 @@ describe 'Collection details', reset: false do
       expect(page).to have_content("Contacts: NSIDC DAAC USER SERVICES nsidc@nsidc.org +1 (303) 492-2468 (Fax) +1 (303) 492-6199 (Telephone) Julienne Stroeve stroeve@nsidc.org Walt Meier walter.n.meier@nasa.gov Donald Cavalieri Donald.J.Cavalieri@nasa.gov 1-301-614-5644 (Fax) 1-301-614-5901 (Telephone) NSIDC USER SERVICES nsidc@nsidc.org 1 (303) 492-2468 (Fax) 1 (303) 492-6199 (Telephone) Download Page")
     end
   end
+
+  context "when selecting a collection with temporal that doesn't have an end date or 'ends at present' flag" do
+    before :all do
+      load_page '/search/collection-details', focus: 'C203234517-LAADS'
+    end
+
+    it "displays the temporal correctly" do
+      expect(page).to have_content("1999-12-18 ongoing")
+    end
+  end
 end

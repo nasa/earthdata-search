@@ -398,6 +398,72 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
+    uri: http://localhost:15400/nlp?text=C1000000560-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 15:26:13 GMT
+  digest: f76fa4e812c139f30c482dcb0c79f39b4c13f718
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=somestringthatmatchesnocollections
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 15:32:19 GMT
+  digest: 5134f88cbce955ebc204ea35d11d293688afa7ad
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=AST_L1AE
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:03 GMT
+  digest: ca3d7345f2c73b6b210b399ad385d7c40837679d
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=C1216386350-NSIDC_TS1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:18 GMT
+  digest: e57a9aa38c0cd90895fd835d8f154439dd77ad33
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=C1220111370-NSIDCV0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:09 GMT
+  digest: 42180e7bc6b5ed12462cd7d77e8a8875cab3d51e
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=C179002945-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:14 GMT
+  digest: 4123138ffb200cdffd193eb8e246ac15b38b6c2d
+- request:
+    method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
     body:
       encoding: US-ASCII
