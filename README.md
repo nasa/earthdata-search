@@ -51,15 +51,22 @@ See public/licenses.txt
 
 Additionally, you will need the following, which will be installed automatically by `bin/setup` on most UNIX-like systems:
 
+---
 * Postgres development headers
-  * Mac (homebrew): `brew install postgresql`
-  * Ubuntu: `sudo apt-get install -y libpq-dev`
-  * RHEL: `sudo yum install -y postgresql-devel`
 
+Operating systems | Command
+---- | ---- | 
+  Mac(homebrew)| `$ brew install postgresql`|
+  Ubuntu| `$ sudo apt-get install -y libpq-dev`|
+  RHEL| `$ sudo yum install -y postgresql-devel`|
+---
 * Node.js (with npm)
-  * Mac (homebrew): `brew install node`
-  * Ubuntu: `sudo apt-get install -y nodejs`
-  * RHEL: `sudo curl -sL https://rpm.nodesource.com/setup | bash - && sudo yum install -y nodejs`
+
+Operating systems | Command
+---- | ---- |
+   Mac(homebrew)| `$ brew install node`|
+   Ubuntu| `$ sudo apt-get install -y nodejs`|
+   RHEL| `$ sudo curl -sL https://rpm.nodesource.com/setup | bash - && sudo yum install -y nodejs`|
 
 ### Earthdata Login (URS) Configuration
 
