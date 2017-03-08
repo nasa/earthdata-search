@@ -24,6 +24,18 @@ module Echo
       Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/customize_options'])
     end
 
+    def measurements
+      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/measurements'])
+    end
+
+    def variables(measurement)
+      if measurement.present?
+        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml["/variables?measurement[]=#{measurement}"])
+      else
+        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/variables'])
+      end
+    end
+
     def json_query_collections(query, token = nil, options = {})
       format = options.delete(:format) || 'json'
       post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))

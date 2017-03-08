@@ -18,6 +18,30 @@
     "resample_dimensions":["Percent"],
     "interpolation_methods":["Nearest Neighbor","Bilinear","Cubic Convolution"]
     }'
+  format: 'json'￼
+  headers:
+  status: 200
+"/measurements":
+  method: get
+  body: '{"measurements":["Sea Ice","Soil Moisture"]}'
+  format: 'json'
+  headers:
+  status: 200
+"/variables?measurement[]=Sea Ice":
+  method: get
+  body: '{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}'
+  format: 'json'
+  headers:
+  status: 200
+"/variables?measurement[]=Soil Moisture":
+  method: get
+  body: '{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]}'
+  format: 'json'
+  headers:
+  status: 200
+"/variables":￼￼
+  method: get
+  body: '{variables:[{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]},{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}]}'
   format: 'json'
   headers:
   status: 200
