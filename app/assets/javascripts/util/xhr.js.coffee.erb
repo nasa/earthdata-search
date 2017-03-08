@@ -8,7 +8,7 @@
   isRefreshing = false
 
   hasPending = ->
-    xhrPool.length > 0 || timeoutPool.length > 0 || edscplugin.hasPending() || $.active != 0
+    xhrPool.length > 0 || timeoutPool.length > 0 || edscplugin.hasPending() || $.active > 0
 
   runCallbacks = ->
     while !hasPending() && callbacks.length > 0
