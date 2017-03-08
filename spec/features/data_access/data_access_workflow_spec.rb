@@ -16,6 +16,7 @@ describe "Data Access workflow", reset: false do
 
   context "when a user has three or more collections within a project" do
     before(:all) do
+      Capybara.reset_sessions!
       load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project
       login
       click_link "Download project data"
@@ -27,13 +28,12 @@ describe "Data Access workflow", reset: false do
         selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
         within selection do
           choose 'FtpPushPull'
-          wait_for_xhr
         end
+        wait_for_xhr
       end
       it "displays the distribution options for the first collection" do
-        wait_for_xhr
         form = find(:css, ".access-item:nth-child(1)").find(:css, ".access-form")
-        synchronize do
+        synchronize(30) do
           expect(form).to have_content("Distribution Options")
         end
       end
@@ -48,13 +48,12 @@ describe "Data Access workflow", reset: false do
           selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
           within selection do
             choose 'AE_SI12.3 ESI Service'
-            wait_for_xhr
           end
+          wait_for_xhr
         end
         it "displays the option subsettings for the second collection" do
-          wait_for_xhr
           form = find(:css, ".access-item:nth-child(2)").find(:css, ".access-form")
-          synchronize do
+          synchronize(30) do
             expect(form).to have_content("Include Metadata and Processing History")
           end
         end
@@ -65,13 +64,12 @@ describe "Data Access workflow", reset: false do
             selection = find(:css, ".access-item:nth-child(3)").find(:css, ".access-item-selection")
             within selection do
               choose 'AE_SI6.3 ESI Service'
-              wait_for_xhr
             end
+            wait_for_xhr
           end
           it "displays the option subsetting for the third collection" do
-            wait_for_xhr
             form = find(:css, ".access-item:nth-child(3)").find(:css, ".access-form")
-            synchronize do
+            synchronize(30) do
               expect(form).to have_content("Include Metadata and Processing History")
             end
           end
