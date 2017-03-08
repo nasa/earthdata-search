@@ -29,12 +29,10 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       this
 
   class ServiceOptions
-    constructor: (method, @availableMethods) ->
+    constructor: (method, @availableMethods, @index) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
-
       @loadForm = ko.observable(false)
-
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -69,7 +67,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         clickedMethod = m
         break
 
-      echoformContainer = document.getElementsByClassName('access-form')[0]
+      echoformContainer = if @index then document.getElementsByClassName('access-form')[@index] else document.getElementsByClassName('access-form')[0]
       if clickedMethod.type == 'service' || clickedMethod.type == 'order'
         @loadForm(true) if clickedMethod.type == 'service'
         setTimeout (=>
@@ -107,7 +105,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if jsonObj.type == 'service' || jsonObj.type == 'order'
         echoformContainer = null
         checkExistsTimer = setInterval (=>
-          echoformContainer = document.getElementsByClassName('access-form')[0]
+          echoformContainer = if @index then document.getElementsByClassName('access-form')[@index] else document.getElementsByClassName('access-form')[0]
           if echoformContainer
             clearTimeout checkExistsTimer
             setTimeout (=>
@@ -126,7 +124,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       this
 
   class ServiceOptionsModel extends KnockoutModel
-    constructor: (@granuleAccessOptions) ->
+    constructor: (@granuleAccessOptions, @index) ->
       @accessMethod = ko.observableArray()
       @isLoaded = @computed
         read: =>
@@ -136,7 +134,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @_onAccessOptionsLoad(opts) if result
           result
         deferEvaluation: true
-
       @canAddAccessMethod = ko.observable(false)
       @readyToDownload = @computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
 
@@ -165,8 +162,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         return false if m.loadForm()
       true
 
-    addAccessMethod: =>
-      @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods))
+    addAccessMethod: => 
+      @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods, @index))
 
     removeAccessMethod: (method) =>
       @accessMethod.remove(method)
