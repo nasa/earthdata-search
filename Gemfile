@@ -36,7 +36,8 @@ end
 
 group :development do
   gem 'quiet_assets'
-
+  gem 'rubocop'
+  
   # For dumping additional metadata stored in DatasetExtras and similar
   gem 'seed_dump'
 end

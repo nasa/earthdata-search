@@ -14,7 +14,11 @@ module Echo
 
 
     def get_collections(options={}, token=nil)
-      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&include_has_granules=true&include_granule_counts=true'])
+      #TODO Move this to service.yml after picking up changes on master.
+      options['echo_collection_id'] = ['C1344054706-NSIDC_ECS', 'C1000001160-NSIDC_ECS', 'C1243477383-GES_DISC']
+      format = options.delete(:format) || 'json'
+      query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
+      get("/search/collections.#{format}", query, token_header(token))
     end
 
     def json_query_collections(query, token=nil, options={})
