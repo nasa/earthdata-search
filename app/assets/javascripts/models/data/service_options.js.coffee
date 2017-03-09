@@ -162,7 +162,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         return false if m.loadForm()
       true
 
-    addAccessMethod: () =>
+    addAccessMethod: =>
       @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods))
 
     removeAccessMethod: (method) =>
