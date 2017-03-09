@@ -21,18 +21,18 @@ module Echo
     end
 
     def customize_options
-      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/customize_options'])
+      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/customize_options']).body
     end
 
     def measurements
-      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/measurements'])
+      Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/measurements']).body
     end
 
     def variables(measurement)
       if measurement.present?
-        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml["/variables?measurement[]=#{measurement}"])
+        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml["/variables?measurement[]=#{measurement}"]).body
       else
-        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/variables'])
+        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/variables']).body
       end
     end
 

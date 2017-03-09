@@ -18,6 +18,7 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko
+                    ajax = @edsc.util.xhr.ajax
                     setCurrent = ns.setCurrent
                     QueryModel = data.query.CollectionQuery
                     CollectionsModel = data.Collections
@@ -36,10 +37,10 @@ ns.SearchPage = do (ko
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
     $('.master-overlay').masterOverlay()
-    $('.launch-variable-modal').click ->
-      $('#variablesModal').modal('show')
-    $('.launch-customize-modal').click ->
-      $('#customizeDataModal').modal('show')
+    # $('.launch-variable-modal').click ->
+    #   $('#variablesModal').modal('show')
+    # $('.launch-customize-modal').click ->
+    #   $('#customizeDataModal').modal('show')
 
   class SearchPage
     constructor: ->
@@ -67,6 +68,9 @@ ns.SearchPage = do (ko
       @workspaceNameField = ko.observable(null)
 
       @project.focus.subscribe(@_updateFocusRenderState)
+
+      @outputFileFormats = ko.observableArray([])
+      @chosenOutputFileFormat = ko.observable(null)
 
       new StateManager(this).monitor()
 
@@ -101,6 +105,30 @@ ns.SearchPage = do (ko
 
     showParent: =>
       $('.master-overlay').masterOverlay('manualShowParent')
+
+    getMeasurements: =>
+      ajax
+        dataType: 'json'
+        url: "/measurements"
+        success: (data) =>
+          console.log data
+          $('#variablesModal').modal('show')
+
+    getCustomizeOptions: =>
+      ajax
+        dataType: 'json'
+        url: "/customize_options"
+        success: (data) =>
+          console.log data
+          @outputFileFormats(data.output_file_formats)
+        complete: =>
+          $('#customizeDataModal').modal('show')
+
+    addCustomizeOptionsFilter: =>
+      console.log this
+
+    updateCustomizeOptionsQuery: =>
+      @query.outputFormat(@chosenOutputFileFormat())
 
   current = new SearchPage()
   setCurrent(current)

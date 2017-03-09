@@ -47,8 +47,8 @@
       <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
     </ul>
   </div>
-  <a href="#" class="button launch-variable-modal" title="Select Measurements and Variables"><i class="fa fa-list-alt"></i></a>
-  <a href="#" class="button launch-customize-modal" title="Customize Data"><i class="fa fa-list-alt"></i></a>
+  <a href="#" class="button launch-variable-modal" title="Select Measurements and Variables" data-bind="event: {click: getMeasurements}"><i class="fa fa-list-alt"></i></a>
+  <a href="#" class="button launch-customize-modal" title="Customize Data" data-bind="event: {click: getCustomizeOptions}"><i class="fa fa-list-alt"></i></a>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
 </div>
 </div>

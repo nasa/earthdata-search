@@ -10,17 +10,6 @@
   format: 'json'
   headers:
   status: 200
-"/customize_options":
-  method: get
-  body: '{
-    "output_file_formats":["GeoTIFF","NetCDF4-CF","ASCII","KML","NetCDF-3"],
-    "reprojection_options":["Geographic","Universal Transverse Mercator","State Plane Coordinates","Lambert Conic Conformal","Polar Stereographic","Transverse Mercator","Lambert Azimuthal Equal Area","Sinusoidal"],
-    "resample_dimensions":["Percent"],
-    "interpolation_methods":["Nearest Neighbor","Bilinear","Cubic Convolution"]
-    }'
-  format: 'json'￼
-  headers:
-  status: 200
 "/measurements":
   method: get
   body: '{"measurements":["Sea Ice","Soil Moisture"]}'
@@ -39,9 +28,15 @@
   format: 'json'
   headers:
   status: 200
-"/variables":￼￼
+"/variables":
   method: get
-  body: '{variables:[{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]},{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}]}'
+  body: '[{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]},{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}]'
+  format: 'json'
+  headers:
+  status: 200
+"/customize_options":
+  method: get
+  body: '{"output_file_formats":["GeoTIFF","NetCDF4-CF","ASCII","KML","NetCDF-3"],"reprojection_options":["Geographic","Universal Transverse Mercator","State Plane Coordinates","Lambert Conic Conformal","Polar Stereographic","Transverse Mercator","Lambert Azimuthal Equal Area","Sinusoidal"],"resample_dimensions":["Percent"],"interpolation_methods":["Nearest Neighbor","Bilinear","Cubic Convolution"]}'
   format: 'json'
   headers:
   status: 200

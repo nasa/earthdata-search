@@ -283,6 +283,7 @@ ns.query = do (ko,
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
+      @outputFormat = @queryComponent(new QueryParam('output_format'), '')
       super(parentQuery)
 
     clearFilters: =>
