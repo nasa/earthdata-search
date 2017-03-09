@@ -85,7 +85,7 @@ module EarthdataSearchClient
 
     # edsc plugins
     config.assets.paths += Dir.glob(Rails.root.join('edsc', '*', 'dist'))
-    config.assets.precompile += %w(.svg .eot .woff .ttf)
+    config.assets.precompile += %w(.svg .eot .woff .woff2 .ttf)
     config.assets.initialize_on_precompile = false
 
     config.gather_metrics = false
