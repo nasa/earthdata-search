@@ -11,13 +11,16 @@
   height: 100%;
   background: #246 asset-url('africa-green-line.jpg') no-repeat 0 0;
   background-size: cover;
-  z-index: 80;
-  background
+  z-index: 180;
 
   .toolbar {
     background: transparent;
     border: 0;
   }
+}
+
+.is-landing .toolbar {
+  z-index: 0;
 }
 
 .landing-dialog {
