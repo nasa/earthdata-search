@@ -6,7 +6,6 @@
   color: #fff;
 
   a {
-    color: #fff;
   }
 
   // Non-scrollable header area
@@ -72,6 +71,10 @@
   width: $facet-overlay-width;
   left: 0;
 
+  a {
+    color: #fff;
+  }
+
   header {
     margin: 1em 1em 0 .5em;
     background: inherit;
@@ -133,6 +136,12 @@
 
     &.master-overlay-no-min {
       padding-left: 0;
+
+      h4 {
+        padding-left: 25px;
+        font-size: 1.2em;
+        font-weight: normal;
+      }
     }
   }
 
@@ -201,6 +210,7 @@
 .master-overlay-info {
   background: $master-overlay-info-bg-color;
   margin: 0;
+  padding: 0px 25px 0 25px;
   color: $overlay-heading-font-color;
 
   > * {
@@ -494,7 +504,6 @@ $parent-width: $parent-split * 0.21;
   dd {
     font-size: 0.9em;
     font-weight: bold;
-    color: #FFFFFF;
     margin-bottom: 10px;
     word-wrap: break-word;
   }
