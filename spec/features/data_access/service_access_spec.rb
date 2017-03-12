@@ -68,7 +68,7 @@ describe 'Services Access', reset: false do
         click_on 'Submit'
 
         # Second time, the ESI form is now prepopulated
-        click_link 'Back to Data Access Options'
+        find_link('Back to Data Access Options').trigger('click')
         wait_for_xhr
         click_on 'Continue'
         click_on 'Submit'

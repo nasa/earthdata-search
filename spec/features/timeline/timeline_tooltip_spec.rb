@@ -72,7 +72,7 @@ describe "Timeline tooltip", reset: false do
     it "displays a tooltip for timeline data" do
       script = '$($(".C179003030-ORNL_DAAC.timeline-data").children()[1]).trigger("mouseover");'
       page.execute_script(script)
-      expect(page).to have_content("01 Oct 1987 00:00 GMT to 03 Oct 1987 10:59 GMT")
+      expect(page).to have_content("01 Oct 1987 00:00 GMT to 03 Oct 1987 13:27 GMT")
     end
   end
 
