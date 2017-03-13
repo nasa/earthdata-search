@@ -12,8 +12,8 @@ describe "CWIC-enabled granule results", reset: false do
     context "clicking the button to remove a granule" do
 
       before :all do
-        first_granule_list_item.click
-        keypress('#granule-list', :delete)
+        first_granule_list_item.trigger('click')
+        first_granule_list_item.find_link("Exclude this granule").trigger("click")
         wait_for_xhr
       end
 
@@ -24,13 +24,12 @@ describe "CWIC-enabled granule results", reset: false do
 
       context "and undoing a removal" do
         before :all do
-          granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
-          click_link 'Add it back'
+          find_link('Undo').trigger('click')
         end
 
         after :all do
-          first_granule_list_item.click
-          keypress('#granule-list', :delete)
+          first_granule_list_item.trigger('click')
+          first_granule_list_item.find_link("Exclude this granule").trigger("click")
           wait_for_xhr
         end
 
@@ -55,12 +54,12 @@ describe "CWIC-enabled granule results", reset: false do
       context "and going to data access page" do
         before :all do
           login
-          click_link 'Download Collection Data'
+          find_link('Download Collection Data').trigger('click')
           wait_for_xhr
         end
 
         after :all do
-          click_link 'Back to Search Session'
+          find_link('Back to Search Session').trigger('click')
           wait_for_xhr
         end
 
@@ -78,11 +77,11 @@ describe "CWIC-enabled granule results", reset: false do
           end
 
           after :all do
-            click_link 'Back to Data Access Options'
+            find_link('Back to Data Access Options').trigger('click')
             wait_for_xhr
           end
 
-          it "provides a list of download links for the remaining granuels" do
+          it "provides a list of download links for the remaining granules" do
             within_last_window do
               expect(page).to have_no_text('Loading more...')
               expect(page).to have_link('Granule download URL', count: 99)
