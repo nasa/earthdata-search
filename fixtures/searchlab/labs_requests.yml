@@ -16,13 +16,13 @@
   format: 'json'
   headers:
   status: 200
-"/variables?measurement[]=Sea Ice":
+"/variables?measurement=Sea Ice":
   method: get
   body: '{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}'
   format: 'json'
   headers:
   status: 200
-"/variables?measurement[]=Soil Moisture":
+"/variables?measurement=Soil Moisture":
   method: get
   body: '{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]}'
   format: 'json'

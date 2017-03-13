@@ -86,6 +86,8 @@ ns.SearchPage = do (ko
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+#      for m in document.querySelectorAll('[id^=measurement-]')
+#        ko.removeNode(m)
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
@@ -107,12 +109,44 @@ ns.SearchPage = do (ko
       $('.master-overlay').masterOverlay('manualShowParent')
 
     getMeasurements: =>
+      if @query.measurement()
+        # show variables
+        @getVariables(null, {target: {text: @query.measurement()}})
+      else
+        ajax
+          dataType: 'json'
+          url: '/measurements'
+          success: (data) =>
+            console.log data
+            $("#variablesModal .modal-body ul").remove()
+            $('#variablesModal .modal-body').append('<ul></ul>')
+            for m in data.measurements
+              id = 'measurement-' + m.toLowerCase().replace(/\s/g, '_')
+              $('#variablesModal .modal-body ul').append('<li><a id="' + id + '" href="#">' + m + '</a></li>')
+              # bind click
+              $("##{id}").on 'click', (e) => @getVariables(null, e)
+          complete: =>
+            $('#variablesModal').modal('show')
+
+    getVariables: (data, event)=>
+      $('[id^=measurement-]').closest('ul').remove()
+      @query.measurement(event.target.text)
+
       ajax
         dataType: 'json'
-        url: "/measurements"
+        url: '/variables'
+        data: {measurement: event.target.text}
         success: (data) =>
           console.log data
-          $('#variablesModal').modal('show')
+          $("#variablesModal .modal-body ul").remove()
+          $("#variablesModal .modal-body").append("<ul></ul>")
+          for v in data.variables
+            id = 'variable-' + v.toLowerCase().replace(/\s/g, '_')
+            $('#variablesModal .modal-body ul').append('<li><a id="' + id + '" href="#">' + v + '</a></li>')
+            $("##{id}").on 'click', (e) =>
+              @query.variable(e.target.text)
+        complete: =>
+          $('#variablesModal').modal('show') unless $('#variablesModal').is(':visible')
 
     getCustomizeOptions: =>
       ajax

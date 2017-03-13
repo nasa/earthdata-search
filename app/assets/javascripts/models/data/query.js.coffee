@@ -284,6 +284,9 @@ ns.query = do (ko,
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
       @outputFormat = @queryComponent(new QueryParam('output_format'), '')
+      @measurement = @queryComponent(new QueryParam('measurement'), '')
+      @variable = @queryComponent(new QueryParam('variable'), '')
+
       super(parentQuery)
 
     clearFilters: =>

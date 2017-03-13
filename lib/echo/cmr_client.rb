@@ -31,7 +31,7 @@ module Echo
 
     def variables(measurement)
       if measurement.present?
-        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml["/variables?measurement[]=#{measurement}"]).body
+        Echo::PrototypeResponse.new(Rails.configuration.lab_yaml["/variables?measurement=#{measurement}"]).body
       else
         Echo::PrototypeResponse.new(Rails.configuration.lab_yaml['/variables']).body
       end
@@ -178,6 +178,19 @@ module Echo
           concept_ids -= ['C1000001160-NSIDC_ECS']
         end
         options.delete 'output_format'
+      end
+
+      if options['measurement']
+        concept_ids -= ['C1243477383-GES_DISC']
+        if options['measurement'].downcase == 'sea ice'
+          concept_ids -= ['C1344054706-NSIDC_ECS']
+        elsif options['measurement'].downcase == 'soil moisture'
+          concept_ids -= ['C1000001160-NSIDC_ECS']
+        end
+        options.delete 'measurement'
+
+        # clicking on variable won't further filter collections in the prototype. So the param is deleted/ignored.
+        options.delete 'variable'
       end
 
       concept_ids
