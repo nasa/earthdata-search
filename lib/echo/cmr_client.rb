@@ -13,8 +13,9 @@ module Echo
     end
 
     def get_collections(options = {}, token = nil)
-      # TODO: Move this to service.yml after picking up changes on master.
-      options['echo_collection_id'] = ['C1344054706-NSIDC_ECS', 'C1000001160-NSIDC_ECS', 'C1243477383-GES_DISC']
+      sample_collections = ['C1344054706-NSIDC_ECS', 'C1000001160-NSIDC_ECS', 'C1243477383-GES_DISC']
+
+      options['echo_collection_id'] = filter_sample_collections sample_collections, options
       format = options.delete(:format) || 'json'
       query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
       get("/search/collections.#{format}", query, token_header(token))
@@ -166,6 +167,20 @@ module Echo
 
     def default_headers
       { 'Client-Id' => client_id, 'Echo-ClientId' => client_id }
+    end
+
+    private
+
+    def filter_sample_collections(concept_ids, options)
+      if options['output_format']
+        concept_ids -= ['C1243477383-GES_DISC']
+        if options['output_format'].downcase != 'geotiff'
+          concept_ids -= ['C1000001160-NSIDC_ECS']
+        end
+        options.delete 'output_format'
+      end
+
+      concept_ids
     end
   end
 end

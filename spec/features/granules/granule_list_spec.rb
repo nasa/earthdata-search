@@ -102,7 +102,7 @@ describe "Granule list", reset: false do
       after :all do
         click_link "Filter granules"
         click_button "granule-filters-clear"
-        click_link 'Hide granule filters'
+        find('#granule-search').click_link('close')
       end
 
       it "removes the selected granule from the list" do

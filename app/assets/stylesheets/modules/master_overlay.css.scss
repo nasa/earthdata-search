@@ -104,7 +104,7 @@
   /* JS: Temporary, ugly fix to prevent overlap */
   top: 80px;
   overflow: hidden;
-  z-index: 100;
+  z-index: 140;
   position: absolute;
   height: 100%;
   transition-property: right, left;
@@ -168,7 +168,6 @@
 }
 
 .master-overlay-main-content {
-  z-index: 60;
   position: absolute;
   transition-property: left, width;
   transition-duration: 0.3s;
@@ -179,11 +178,11 @@
 }
 
 .master-overlay-parent {
-  z-index: 62;
+  z-index: 130;
 }
 
 .master-overlay-main {
-  z-index: 61;
+  z-index: 120;
 }
 
 .master-overlay-minimized {

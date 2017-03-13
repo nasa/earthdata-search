@@ -70,7 +70,7 @@ ns.SearchPage = do (ko
       @project.focus.subscribe(@_updateFocusRenderState)
 
       @outputFileFormats = ko.observableArray([])
-      @chosenOutputFileFormat = ko.observable(null)
+      @chosenOutputFileFormat = ko.observable(@query.outputFormat())
 
       new StateManager(this).monitor()
 
@@ -119,13 +119,11 @@ ns.SearchPage = do (ko
         dataType: 'json'
         url: "/customize_options"
         success: (data) =>
-          console.log data
           @outputFileFormats(data.output_file_formats)
+          if @query.outputFormat()
+            @chosenOutputFileFormat(@query.outputFormat())
         complete: =>
           $('#customizeDataModal').modal('show')
-
-    addCustomizeOptionsFilter: =>
-      console.log this
 
     updateCustomizeOptionsQuery: =>
       @query.outputFormat(@chosenOutputFileFormat())
