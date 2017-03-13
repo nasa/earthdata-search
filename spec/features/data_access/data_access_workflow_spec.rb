@@ -8,6 +8,73 @@ describe "Data Access workflow", reset: false do
   non_downloadable_collection_id = 'C179001887-SEDAC'
   non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
+  test_collection_1 = 'C90762182-LAADS'
+  test_collection_2 = 'C1000000560-NSIDC_ECS'
+  test_collection_3 = 'C1000000561-NSIDC_ECS'
+
+  let(:echo_id) { "4C0390AF-BEE1-32C0-4606-66CAFDD4131D" }
+
+  context "when a user has three or more collections within a project" do
+    before(:all) do
+      Capybara.reset_sessions!
+      load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project
+      login
+      click_link "Download project data"
+      wait_for_xhr
+    end
+
+    context "when clicking 'FtpPushPull'on the first collection" do
+      it "displays the distribution options for the first collection" do
+        synchronize do
+          selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
+          within selection do
+            choose 'FtpPushPull'
+            wait_for_xhr
+          end
+          form = find(:css, ".access-item:nth-child(1)").find(:css, ".access-form")
+          expect(form).to have_content("Distribution Options")
+        end
+      end
+      context "and then clicking continue and selecting 'AE_SI12.3 ESI Service' for the second collection" do
+        before(:all) do
+          click_button "Continue"
+          wait_for_xhr
+          # the tooManyGranulesModal is taking its time showing up, and this unfortunate sleep is the only way (so far) to get it behave
+          sleep(1)
+          find_by_id("tooManyGranulesModal").click_link("Continue")
+          wait_for_xhr
+        end
+        it "displays the option subsettings for the second collection" do
+          synchronize() do
+            selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
+            within selection do
+              choose 'AE_SI12.3 ESI Service'
+              wait_for_xhr
+            end
+            form = find(:css, ".access-item:nth-child(2)").find(:css, ".access-form")
+            expect(form).to have_content("Include Metadata and Processing History")
+          end
+        end
+        context "and then clicking continue and selecting 'AE_SI6.3 ESI Service' for the third collection" do
+          before(:all) do
+            click_button "Continue"
+            wait_for_xhr
+          end
+          it "displays the option subsetting for the third collection" do
+            synchronize do
+              selection = find(:css, ".access-item:nth-child(3)").find(:css, ".access-item-selection")
+              within selection do
+                choose 'AE_SI6.3 ESI Service'
+                wait_for_xhr
+              end
+              form = find(:css, ".access-item:nth-child(3)").find(:css, ".access-form")
+              expect(form).to have_content("Include Metadata and Processing History")
+            end
+          end
+        end
+      end
+    end
+  end
   context "when a malicious user attempts an XSS attack using the data access back link" do
     before(:all) do
       load_page :root
