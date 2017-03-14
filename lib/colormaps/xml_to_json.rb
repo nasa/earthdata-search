@@ -41,7 +41,7 @@ module Colormaps
       else
         url = target.attribute("href").to_s
       end
-      url = url.gsub(/^https/, 'http') # Avoid SSL errors in CI
+      url = url.gsub(/^http:/, 'https:')
 
       unless id.empty? || url.empty? || !url.start_with?('http')
         file_count += 1
