@@ -15,7 +15,12 @@ module Echo
     def get_collections(options = {}, token = nil)
       sample_collections = ['C1344054706-NSIDC_ECS', 'C1000001160-NSIDC_ECS', 'C1243477383-GES_DISC']
 
-      options['echo_collection_id'] = filter_sample_collections sample_collections, options
+      echo_collection_ids = filter_sample_collections(sample_collections, options)
+      if echo_collection_ids.present?
+        options['echo_collection_id'] = echo_collection_ids
+      else
+        options['echo_collection_id'] = 'C123-NOTEXIST'
+      end
       format = options.delete(:format) || 'json'
       query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
       get("/search/collections.#{format}", query, token_header(token))
@@ -191,6 +196,26 @@ module Echo
 
         # clicking on variable won't further filter collections in the prototype. So the param is deleted/ignored.
         options.delete 'variable'
+      end
+
+      if options['reprojection_option']
+        concept_ids -= ['C1243477383-GES_DISC']
+        if ['north polar stereographic', 'south polar stereographic'].include? options['reprojection_option'].downcase
+          concept_ids -= ['C1000001160-NSIDC_ECS']
+        elsif ['state plane coordinates', 'lambert conic conformal', 'polar stereographic', 'transverse mercator', 'lambert azimuthal equal area', 'sinusoidal'].include? options['reprojection_option'].downcase
+          concept_ids -= ['C1344054706-NSIDC_ECS']
+        end
+        options.delete 'reprojection_option'
+      end
+
+      if options['resample_dimension']
+        concept_ids -= ['C1344054706-NSIDC_ECS', 'C1243477383-GES_DISC']
+        options.delete 'resample_dimension'
+      end
+
+      if options['interpolation_method']
+        concept_ids -= ['C1344054706-NSIDC_ECS', 'C1243477383-GES_DISC']
+        options.delete 'interpolation_method'
       end
 
       concept_ids

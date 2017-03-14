@@ -284,6 +284,9 @@ ns.query = do (ko,
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
       @outputFormat = @queryComponent(new QueryParam('output_format'), '')
+      @reprojectionOption = @queryComponent(new QueryParam('reprojection_option'), '')
+      @resampleDimension = @queryComponent(new QueryParam('resample_dimension'), '')
+      @interpolationMethod = @queryComponent(new QueryParam('interpolation_method'), '')
       @measurement = @queryComponent(new QueryParam('measurement'), '')
       @variable = @queryComponent(new QueryParam('variable'), '')
 

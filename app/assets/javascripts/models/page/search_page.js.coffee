@@ -72,6 +72,15 @@ ns.SearchPage = do (ko
       @outputFileFormats = ko.observableArray([])
       @chosenOutputFileFormat = ko.observable(@query.outputFormat())
 
+      @reprojectionOptions = ko.observableArray([])
+      @chosenReprojectionOption = ko.observable(@query.reprojectionOption())
+
+      @resampleDimensions = ko.observableArray([])
+      @chosenResampleDimension = ko.observable(@query.resampleDimension())
+
+      @interpolationMethods = ko.observableArray([])
+      @chosenInterpolationMethod = ko.observable(@query.interpolationMethod())
+
       new StateManager(this).monitor()
 
     _updateFocusRenderState: (newFocus) =>
@@ -86,6 +95,10 @@ ns.SearchPage = do (ko
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+#      @chosenOutputFileFormat('')
+#      @chosenReprojectionOption('')
+#      @chosenResampleDimension('')
+#      @chosenInterpolationMethod('')
 #      for m in document.querySelectorAll('[id^=measurement-]')
 #        ko.removeNode(m)
 
@@ -154,13 +167,21 @@ ns.SearchPage = do (ko
         url: "/customize_options"
         success: (data) =>
           @outputFileFormats(data.output_file_formats)
-          if @query.outputFormat()
-            @chosenOutputFileFormat(@query.outputFormat())
+          @reprojectionOptions(data.reprojection_options)
+          @resampleDimensions(data.resample_dimensions)
+          @interpolationMethods(data.interpolation_methods)
         complete: =>
           $('#customizeDataModal').modal('show')
+          @chosenOutputFileFormat(@query.outputFormat())
+          @chosenReprojectionOption(@query.reprojectionOption())
+          @chosenResampleDimension(@query.resampleDimension())
+          @chosenInterpolationMethod(@query.interpolationMethod())
 
     updateCustomizeOptionsQuery: =>
       @query.outputFormat(@chosenOutputFileFormat())
+      @query.reprojectionOption(@chosenReprojectionOption())
+      @query.resampleDimension(@chosenResampleDimension())
+      @query.interpolationMethod(@chosenInterpolationMethod())
 
   current = new SearchPage()
   setCurrent(current)
