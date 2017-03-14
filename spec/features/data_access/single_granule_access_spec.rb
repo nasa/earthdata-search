@@ -43,7 +43,7 @@ describe 'Single Granule Data Access', reset: false do
 
     context 'when returning to the search results' do
       before :all do
-        click_link 'Back to Search Session'
+        find_link('Back to Search Session').trigger('click')
         wait_for_xhr
       end
 
