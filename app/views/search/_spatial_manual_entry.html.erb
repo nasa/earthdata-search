@@ -9,13 +9,14 @@
     </label>
 
     <p>
-    <!-- ko if: ui.spatialType.displaySpatial() == 'Rectangle' && ui.spatialType.manualEntryVisible() -->
-    <label for="manual-coord-entry-swpoint">Southwest Point</label>
-    <input type="text" id="manual-coord-entry-swpoint" name="manual-coord-entry-swpoint" data-bind="value: spatialEntry.swPoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 44.2, 130)">
-    <label for="manual-coord-entry-nepoint">Northeast Point</label>
-    <input type="text" id="manual-coord-entry-nepoint" name="manual-coord-entry-nepoint" data-bind="value: spatialEntry.nePoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 50, 133.24)">
-    <!--/ko-->
-
+      <!-- ko if: ui.spatialType.displaySpatial() == 'Rectangle' && ui.spatialType.manualEntryVisible() -->
+      SW: <input type="text" id="manual-coord-entry-swpoint" name="manual-coord-entry-swpoint" data-bind="value: spatialEntry.swPoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 44.2, 130)">
+      <!--/ko-->
+    </p>
+    <p>
+      <!-- ko if: ui.spatialType.displaySpatial() == 'Rectangle' && ui.spatialType.manualEntryVisible() -->
+      NE: <input type="text" id="manual-coord-entry-nepoint" name="manual-coord-entry-nepoint" data-bind="value: spatialEntry.nePoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 50, 133.24)">
+      <!--/ko-->
     </p>
     <!-- ko if: spatialEntry.error --><span class="error" data-bind="text: spatialEntry.error()"></span><!-- /ko -->
   </p>

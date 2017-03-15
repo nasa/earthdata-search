@@ -14,44 +14,64 @@
 
 <% content_for :toolbar do %>
   <div class="landing-toolbar-container" style="display: none;">
-  <div class="landing-toolbar-content">
-  <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
-    <p>
-      <input id="keywords" type="text" name="keywords" class="nlp-parsing keyword-input"
-             data-bind="valueUpdate: 'keyup'"
-             placeholder="Type any topic or collection name"
-             autofocus>
-    </p>
-  <% end %>
-  <div class="dropdown" id="temporal-dropdown">
-    <a href="#" class="button temporal-dropdown-button dropdown-button" title="Temporal">
-      <i class="fa fa-clock-o"></i>
-      <i class="fa fa-caret-down"></i>
-    </a>
-    <ul class="dropdown-menu temporal-dropdown">
-      <li>
-        <!-- ko with: query.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
-        <!-- /ko -->
-      </li>
-    </ul>
-  </div>
+    <div class="landing-toolbar-content">
+      <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
+        <p>
+          <input id="keywords" type="text" name="keywords" class="nlp-parsing keyword-input"
+                 data-bind="valueUpdate: 'keyup'"
+                 placeholder="Type any topic or collection name"
+                 autofocus>
+        </p>
+      <% end %>
+      <div class="dropdown" id="temporal-dropdown">
+        <a href="#" class="button temporal-dropdown-button dropdown-button" title="Temporal">
+          <i class="fa fa-clock-o"></i>
+          <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu temporal-dropdown">
+          <li>
+            <!-- ko with: query.temporal.pending -->
+            <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
+            <!-- /ko -->
+          </li>
+        </ul>
+      </div>
 
+      <div class="dropdown" data-bind="with: ui.spatialType">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Spatial"><i class="fa fa-fw" data-bind="css: icon"></i><i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-menu spatial-selection">
+          <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
+          <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
+          <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
+          <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
+        </ul>
+      </div>
+      <a href="#" class="button launch-variable-modal" title="Select Measurements and Variables"><i class="fa fa-thermometer-half"></i></a>
+      <a href="#" class="button launch-customize-modal" title="Customize Data"><i class="fa fa-sliders"></i></a>
+      <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
+      <div class="filter-stack">
+        <div id="temporal-query" data-bind="with: query.temporal.applied">
+          <p>
+            <i class="fa fa-clock-o"></i>
+            <span data-bind="visible: start.date">
+              <strong>Start</strong>
+              <span data-bind="text: start.humanDateString"></span>
+            </span>
+            <span data-bind="visible: stop.date">
+              <strong>Stop</strong>
+              <span data-bind="text: stop.humanDateString"></span>
+            </span>
+            <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
+              <strong>Range</strong> <span data-bind="text: yearsString"></span>
+            </span>
+            <a href="#" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
+          </p>
+        </div>
 
-  <div class="dropdown" data-bind="with: ui.spatialType">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Spatial"><i class="fa fa-fw" data-bind="css: icon"></i><i class="fa fa-caret-down"></i></a>
-    <ul class="dropdown-menu spatial-selection">
-      <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
-      <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
-      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
-      <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
-    </ul>
+        <%= render partial: 'spatial_manual_entry'%>
+      </div>
+    </div>
   </div>
-  <a href="#" class="button launch-variable-modal" title="Select Measurements and Variables"><i class="fa fa-thermometer-half"></i></a>
-  <a href="#" class="button launch-customize-modal" title="Customize Data"><i class="fa fa-sliders"></i></a>
-  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
-</div>
-</div>
 <% end %>
 
 <div class="master-overlay homepage-search is-master-overlay-secondary-hidden is-master-overlay-maximized" id="collections-overlay">
@@ -222,26 +242,6 @@
     </div>
   </div>
 </div>
-
-<div id="temporal-query" data-bind="with: query.temporal.applied">
-  <p>
-    <i class="fa fa-clock-o"></i>
-    <span data-bind="visible: start.date">
-      <strong>Start</strong>
-      <span data-bind="text: start.humanDateString"></span>
-    </span>
-    <span data-bind="visible: stop.date">
-      <strong>Stop</strong>
-      <span data-bind="text: stop.humanDateString"></span>
-    </span>
-    <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
-      <strong>Range</strong> <span data-bind="text: yearsString"></span>
-    </span>
-    <a href="#" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
-  </p>
-</div>
-
-<%= render partial: 'spatial_manual_entry'%>
 
 <div class="landing-area landing-visible">
 
