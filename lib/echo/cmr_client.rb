@@ -27,6 +27,7 @@ module Echo
       response = get("/search/concepts/#{id}.#{format}", {}, token_header(token))
 
       ########
+      # TODO Remove before merging!
       # Example RelatedUrls while we wait for https://bugs.earthdata.nasa.gov/browse/CMR-3446
       related_urls = [
         {
