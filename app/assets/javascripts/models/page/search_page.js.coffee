@@ -38,7 +38,7 @@ ns.SearchPage = do (ko
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
     $('.master-overlay').masterOverlay()
     # $('.launch-variable-modal').click ->
-    #   $('#variablesModal').modal('show')
+  #   $('#variables-modal').modal('show')
     # $('.launch-customize-modal').click ->
     #   $('#customizeDataModal').modal('show')
 
@@ -81,6 +81,9 @@ ns.SearchPage = do (ko
       @interpolationMethods = ko.observableArray([])
       @chosenInterpolationMethod = ko.observable(@query.interpolationMethod())
 
+      @chosenMeasurement = ko.observable()
+      @checkedVariables = ko.observableArray([])
+
       new StateManager(this).monitor()
 
     _updateFocusRenderState: (newFocus) =>
@@ -95,6 +98,8 @@ ns.SearchPage = do (ko
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+      @chosenMeasurement(null)
+      @checkedVariables([])
 #      @chosenOutputFileFormat('')
 #      @chosenReprojectionOption('')
 #      @chosenResampleDimension('')
@@ -122,28 +127,34 @@ ns.SearchPage = do (ko
       $('.master-overlay').masterOverlay('manualShowParent')
 
     getMeasurements: =>
-      if @query.measurement()
-        # show variables
-        @getVariables(null, {target: {text: @query.measurement()}})
+      @checkedVariables(if @query.variables() == "" then [] else @query.variables())
+      if @query.measurement() || @chosenMeasurement()
+        @getVariables(null, {target: {text: if @chosenMeasurement() then @chosenMeasurement() else @query.measurement()}})
       else
         ajax
           dataType: 'json'
           url: '/measurements'
           success: (data) =>
-            console.log data
-            $("#variablesModal .modal-body ul").remove()
-            $('#variablesModal .modal-body').append('<ul></ul>')
+            $('#check-all-vars-container').remove()
+            $("#variables-modal .modal-body ul").remove()
+            $('#back-to-measurements').remove()
+            $('#variables-modal .modal-body').append('<ul></ul>')
             for m in data.measurements
               id = 'measurement-' + m.toLowerCase().replace(/\s/g, '_')
-              $('#variablesModal .modal-body ul').append('<li><a id="' + id + '" href="#">' + m + '</a></li>')
+              $('#variables-modal .modal-body ul').append('<li><a id="' + id + '" href="#">' + m + '</a></li>')
               # bind click
               $("##{id}").on 'click', (e) => @getVariables(null, e)
           complete: =>
-            $('#variablesModal').modal('show')
+            $('#variables-modal').modal('show')
+
+    applyVariables: =>
+      @query.measurement(@chosenMeasurement())
+      $.each($('#variables-modal li input:checked'), (i, val)=> @checkedVariables.push $('label[for=' + $(val).prop('id') + ']').text())
+      @query.variables(@checkedVariables())
 
     getVariables: (data, event)=>
       $('[id^=measurement-]').closest('ul').remove()
-      @query.measurement(event.target.text)
+      @chosenMeasurement(event.target.text)
 
       ajax
         dataType: 'json'
@@ -151,15 +162,43 @@ ns.SearchPage = do (ko
         data: {measurement: event.target.text}
         success: (data) =>
           console.log data
-          $("#variablesModal .modal-body ul").remove()
-          $("#variablesModal .modal-body").append("<ul></ul>")
+          $("#variables-modal .modal-body ul").remove()
+          $('#check-all-vars-container').remove()
+          $('#back-to-measurements').remove()
+
+          # add check all
+          $("#variables-modal .modal-body").append('<div id="check-all-vars-container"><input id="check-all-vars" type="checkbox" data-bind="checked: checkAllVariables"><label for="check-all-vars">Select All Variables</label></div>')
+
+          # hook up check all
+          $('#check-all-vars').on 'change', (e) =>
+            if $(e.target).is(':checked')
+              $('.modal-body ul input:checkbox').prop('checked', true)
+            else
+              $('.modal-body ul input:checkbox').prop('checked', false)
+
+          # add variable checkboxes
+          $("#variables-modal .modal-body").append("<ul></ul>")
           for v in data.variables
+# find in query param
+            found = (i for i in @query.variables() when i == v)[0]
             id = 'variable-' + v.toLowerCase().replace(/\s/g, '_')
-            $('#variablesModal .modal-body ul').append('<li><a id="' + id + '" href="#">' + v + '</a></li>')
-            $("##{id}").on 'click', (e) =>
-              @query.variable(e.target.text)
+            $('#variables-modal .modal-body ul').append('<li><input id="' + id + '" type="checkbox" ' + (if found then 'checked="checked"' else '') + '><label for="' + id + '">' + v + '</label></li>')
+
+          # hook up variable checkboxes
+          $('.modal-body ul input[type=checkbox]').on 'change', (e) =>
+            $('#check-all-vars').prop('checked', $('.modal-body ul input:checkbox').length == $('.modal-body ul input[type=checkbox]:checked').length)
+
+          # add back to measurement
+          $('#variables-modal .modal-body').append('<a href="#" id="back-to-measurements">Back to Measurement List</a>')
+
+          # hook up back to measurement
+          $('#back-to-measurements').on 'click', (e) =>
+            @chosenMeasurement(null)
+            @query.measurement(null)
+            @query.variables([])
+            @getMeasurements()
         complete: =>
-          $('#variablesModal').modal('show') unless $('#variablesModal').is(':visible')
+          $('#variables-modal').modal('show') unless $('#variables-modal').is(':visible')
 
     getCustomizeOptions: =>
       ajax

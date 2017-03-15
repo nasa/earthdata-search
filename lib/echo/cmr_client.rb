@@ -195,7 +195,7 @@ module Echo
         options.delete 'measurement'
 
         # clicking on variable won't further filter collections in the prototype. So the param is deleted/ignored.
-        options.delete 'variable'
+        options.delete 'variables'
       end
 
       if options['reprojection_option']
