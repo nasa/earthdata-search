@@ -94,16 +94,23 @@
               <!-- /ko -->
             </dd>
           </dl>
+          <!-- end of second row -->
+
+          <ul>
+            <!-- ko foreach: $data.highlighted_urls -->
+            <li><a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a></li>
+            <!-- /ko -->
+            <li><a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View More</a></li>
+          </ul>
         </div>
-        <!-- end of second row -->
 
         <!-- description -->
         <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
-        <!--ko if: $root.ui.collectionsList.selected().detailsLoaded -->
+        <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
         <div class="description-toggle">
           <i class="fa fa-chevron-down"></i>
         </div>
-        <!--/ko-->
+        <!-- /ko -->
         <!-- end of description -->
 
         <!-- third row: misc info -->
@@ -126,9 +133,9 @@
                 </div>
               </div>
             </dd>
-            <!--ko foreach: $data.online_access_urls-->
+            <!-- ko foreach: $data.online_access_urls -->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data}" target="_blank">Download Page</a></dt>
-            <!--/ko -->
+            <!-- /ko -->
           </dl>
         </div>
         <!-- end of third row -->
@@ -137,20 +144,20 @@
         <div class="row">
           <dl>
             <dt>Science Keywords:</dt>
-            <!--ko if: $data.science_keywords.length == 0 -->
+            <!-- ko if: $data.science_keywords.length == 0 -->
             <dd>Not Available</dd>
-            <!--/ko-->
-            <!--ko if: $data.science_keywords.length > 0 -->
+            <!-- /ko -->
+            <!-- ko if: $data.science_keywords.length > 0 -->
             <dd data-bind="foreach: $data.science_keywords">
               <div class="arrow-tag-group">
                 <ul class="arrow-tag-group-list">
-                  <!--ko foreach: $data-->
+                  <!-- ko foreach: $data -->
                   <li class="arrow-tag-group-item" data-bind="text: $data"></li>
-                  <!--/ko-->
+                  <!-- /ko -->
                 </ul>
               </div>
             </dd>
-            <!--/ko-->
+            <!-- /ko -->
           </dl>
         </div>
         <!-- end of fourth row -->
