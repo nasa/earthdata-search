@@ -123,7 +123,7 @@ ns.SearchPage = do (ko
       $('.master-overlay').masterOverlay('manualShowParent')
 
     getMeasurements: =>
-      @measurements(@query.measurements())
+      @measurements(if @query.measurements() == "" then {} else @query.measurements())
       @checkedVariables([])
       ajax
         dataType: 'json'

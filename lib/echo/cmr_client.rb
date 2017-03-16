@@ -189,7 +189,7 @@ module Echo
         concept_ids -= ['C1243477383-GES_DISC']
         if options['measurements']['Sea Ice']
           concept_ids -= ['C1344054706-NSIDC_ECS']
-        elsif options['measurement']['Soil Moisture']
+        elsif options['measurements']['Soil Moisture']
           concept_ids -= ['C1000001160-NSIDC_ECS']
         end
         options.delete 'measurements'
