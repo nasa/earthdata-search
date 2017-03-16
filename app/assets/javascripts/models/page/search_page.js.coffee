@@ -84,6 +84,7 @@ ns.SearchPage = do (ko
       @checkedVariables = ko.observableArray([])
 
       @activeFilters = ko.observableArray([])
+      @activeFilters = @_resetActiveFilters(@query.measurements())
 
       new StateManager(this).monitor()
 
@@ -201,11 +202,18 @@ ns.SearchPage = do (ko
       $('#variables-modal').modal('hide')
 
       # construct active filters for the modal
-      @activeFilters([])
-      for k, v of @measurements()
-
-        @activeFilters.push({name: k, count: v.length, value: v.join(', ')})
+      @_resetActiveFilters(@measurements())
       $('#active-filters-modal').modal('show') unless $('#active-filters-modal').is(':visible')
+
+    _resetActiveFilters: (measurements)->
+      @activeFilters([])
+      for k, v of measurements
+        if v.length > 2
+          stringifiedValue = v[0] + ', ' + v[1] + " and #{v.length - 2} other#{if v.length - 2 == 1 then '' else 's'}"
+        else
+          stringifiedValue = v.join(', ')
+        @activeFilters.push({name: k, count: v.length, value: v, stringified: stringifiedValue})
+      @activeFilters
 
     getCustomizeOptions: =>
       ajax
@@ -254,6 +262,31 @@ ns.SearchPage = do (ko
       else
         $('#resample-params').empty()
       @query.interpolationMethod(@chosenInterpolationMethod())
+
+    toggleFilterStack: (data, event) =>
+      $(event.target).toggleClass('collapse-filter-stack')
+
+    clearOutputfileFormat: =>
+      @chosenOutputFileFormat(null)
+      @query.outputFormat(null)
+
+    clearReprojectionOption: =>
+      @chosenReprojectionOption(null)
+      @query.reprojectionOption(null)
+      @clearResampleDimension()
+
+    clearResampleDimension: =>
+      @chosenResampleDimension(null)
+      @query.resampleDimension(null)
+
+    clearInterpolationMethod: =>
+      @chosenInterpolationMethod(null)
+      @query.interpolationMethod(null)
+
+    clearMeasurementsAndVariables: =>
+      @measurements({})
+      @activeFilters([])
+      @query.measurements(null)
 
   current = new SearchPage()
   setCurrent(current)

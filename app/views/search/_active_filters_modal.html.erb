@@ -9,7 +9,7 @@
         <ul data-bind="foreach: activeFilters">
           <li>
             <div><!-- ko text: name --><!-- /ko --> (<!-- ko text: count --><!-- /ko --> Variables)</div>
-            <div data-bind="text: value"></div>
+            <div data-bind="text: value.join(', ')"></div>
           </li>
         </ul>
       </div>
