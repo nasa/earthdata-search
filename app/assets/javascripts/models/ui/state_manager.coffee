@@ -115,7 +115,6 @@
     # The following two methods read a path from and write a path to the master overlay state, respectively
     #
     # Paths are as follows:
-    #   / - The landing page
     #   /search - The search page with browse collections and collection list open
     #   /search/map - The search page with the overlays closed
     #   /search/collections - The search page with browse collections closed
@@ -136,9 +135,7 @@
       path
 
     _pathForState: (state) ->
-      return urlUtil.cleanPath()?.split('?')[0] ? '/' if !state? || !@page.ui.isLandingPage()?
-
-      return '/' if @page.ui.isLandingPage()
+      return urlUtil.cleanPath()?.split('?')[0] ? '/' if !state?
 
       root = '/search'
 
