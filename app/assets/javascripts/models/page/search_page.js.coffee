@@ -83,6 +83,8 @@ ns.SearchPage = do (ko
       @chosenMeasurement = ko.observable()
       @checkedVariables = ko.observableArray([])
 
+      @activeFilters = ko.observableArray([])
+
       new StateManager(this).monitor()
 
     _updateFocusRenderState: (newFocus) =>
@@ -123,9 +125,6 @@ ns.SearchPage = do (ko
     getMeasurements: =>
       @measurements(@query.measurements())
       @checkedVariables([])
-#      if @chosenMeasurement()
-#        @getVariables(null, {target: {text: @chosenMeasurement()}})
-#      else
       ajax
         dataType: 'json'
         url: '/measurements'
@@ -147,8 +146,7 @@ ns.SearchPage = do (ko
       $('[id^=measurement-]').closest('ul').remove()
       @chosenMeasurement(event.target.text)
       measurement = @measurements()[@chosenMeasurement()]
-      unless measurement
-        @measurements()[@chosenMeasurement()] = []
+      @measurements()[@chosenMeasurement()] = [] unless measurement
 
       ajax
         dataType: 'json'
@@ -199,6 +197,12 @@ ns.SearchPage = do (ko
       @measurements()[@chosenMeasurement()].push(@checkedVariables())
       @measurements()[@chosenMeasurement()] = [].concat.apply([], @measurements()[@chosenMeasurement()]).unique()
       @query.measurements(@measurements())
+      $('#variables-modal').modal('hide')
+
+      # construct active filters for the modal
+      for k, v of @measurements()
+        @activeFilters.push({name: k, count: v.length, value: v.join(', ')})
+      $('#active-filters-modal').modal('show') unless $('#active-filters-modal').is(':visible')
 
     getCustomizeOptions: =>
       ajax

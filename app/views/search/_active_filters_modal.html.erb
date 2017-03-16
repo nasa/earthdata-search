@@ -1,0 +1,19 @@
+<div class="modal fade variables" id="active-filters-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h4 class="modal-title" id="active-filters-modal-label">Active Subset Filters</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do a bunch of things</p>
+        <ul data-bind="foreach: activeFilters">
+          <li>
+            <div><!-- ko text: name --><!-- /ko --> (<!-- ko text: count --><!-- /ko --> Variables)</div>
+            <div data-bind="text: value"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
