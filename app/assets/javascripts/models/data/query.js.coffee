@@ -287,8 +287,7 @@ ns.query = do (ko,
       @reprojectionOption = @queryComponent(new QueryParam('reprojection_option'), '')
       @resampleDimension = @queryComponent(new QueryParam('resample_dimension'), '')
       @interpolationMethod = @queryComponent(new QueryParam('interpolation_method'), '')
-      @measurement = @queryComponent(new QueryParam('measurement'), '')
-      @variables = @queryComponent(new QueryParam('variables'), '')
+      @measurements = @queryComponent(new QueryParam('measurements'), '')
 
       super(parentQuery)
 

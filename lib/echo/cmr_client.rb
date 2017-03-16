@@ -185,17 +185,14 @@ module Echo
         options.delete 'output_format'
       end
 
-      if options['measurement']
+      if options['measurements']
         concept_ids -= ['C1243477383-GES_DISC']
-        if options['measurement'].downcase == 'sea ice'
+        if options['measurements']['Sea Ice']
           concept_ids -= ['C1344054706-NSIDC_ECS']
-        elsif options['measurement'].downcase == 'soil moisture'
+        elsif options['measurement']['Soil Moisture']
           concept_ids -= ['C1000001160-NSIDC_ECS']
         end
-        options.delete 'measurement'
-
-        # clicking on variable won't further filter collections in the prototype. So the param is deleted/ignored.
-        options.delete 'variables'
+        options.delete 'measurements'
       end
 
       if options['reprojection_option']
