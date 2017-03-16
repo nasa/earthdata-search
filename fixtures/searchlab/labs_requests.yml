@@ -36,7 +36,54 @@
   status: 200
 "/customize_options":
   method: get
-  body: '{"output_file_formats":["GeoTIFF","NetCDF4-CF","ASCII","KML","NetCDF-3"],"reprojection_options":["Geographic","Universal Transverse Mercator","State Plane Coordinates","Lambert Conic Conformal","Polar Stereographic","Transverse Mercator","Lambert Azimuthal Equal Area","Sinusoidal"],"resample_dimensions":["Percent"],"interpolation_methods":["Nearest Neighbor","Bilinear","Cubic Convolution"]}'
+  body: '{"output_file_formats":["GeoTIFF","NetCDF4-CF","ASCII","KML","NetCDF-3"],
+  "reprojection_options":[
+    {"name":"Geographic","params":{}},
+    {"name":"Universal Transverse Mercator","params":[
+      {"Longitude of any point in UTM Zone":{"type":"integer"}},
+      {"Latitude of any point in UTM Zone":{"type":"integer"}},
+      {"UTM Zone":{"type":"integer"}}
+    ]},
+    {"name":"State Plane Coordinates","params":[
+      {"name":"State Plane Zon","constraints":{"type":"integer"}}
+      ]},
+    {"name":"Lambert Conic Conformal","params":[
+      {"name":"Latitude of False Origin","constraints":{"type":"integer"}},
+      {"name":"Longitude of False Origin/Central Meridian","constraints":{"type":"integer"}},
+      {"name":"Latitude of first standard parallel","constraints":{"type":"integer"}},
+      {"name":"Latitude of second standard parallel","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Semimajor radius of the ellipsoid axis","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Polar Stereographic","params":[
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Semimajor radius of the ellipsoid axis","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Transverse Mercator","params":[
+      {"name":"Scale factor at natural origin","constraints":{"type":"integer"}},
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Semimajor radius of the ellipsoid axis","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Lambert Azimuthal Equal Area","params":[
+      {"name":"Radius of reference Sphere","constraints":{"type":"integer"}},
+      {"name":"Latitude of projection center / origin","constraints":{"type":"integer"}},
+      {"name":"Longitude of projection center","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Sinusoidal","params":[
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Longitude of projection center","constraints":{"type":"integer"}}
+    ]}
+  ],"resample_dimensions":["Percent"],"interpolation_methods":["Nearest Neighbor","Bilinear","Cubic Convolution"]}'
   format: 'json'
   headers:
   status: 200

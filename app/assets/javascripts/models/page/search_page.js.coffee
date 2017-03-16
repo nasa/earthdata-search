@@ -73,6 +73,7 @@ ns.SearchPage = do (ko
       @outputFileFormats = ko.observableArray([])
       @chosenOutputFileFormat = ko.observable(@query.outputFormat())
       @reprojectionOptions = ko.observableArray([])
+      @reprojectionConfigs = ko.observableArray([])
       @chosenReprojectionOption = ko.observable(@query.reprojectionOption())
 
       @resampleDimensions = ko.observableArray([])
@@ -178,7 +179,7 @@ ns.SearchPage = do (ko
           # add variable checkboxes
           $("#variables-modal .modal-body").append("<ul></ul>")
           for v in data.variables
-# find in query param
+            # find in query param
             found = (i for i in @query.variables() when i == v)[0]
             id = 'variable-' + v.toLowerCase().replace(/\s/g, '_')
             $('#variables-modal .modal-body ul').append('<li><input id="' + id + '" type="checkbox" ' + (if found then 'checked="checked"' else '') + '><label for="' + id + '">' + v + '</label></li>')
@@ -206,20 +207,46 @@ ns.SearchPage = do (ko
         url: "/customize_options"
         success: (data) =>
           @outputFileFormats(data.output_file_formats)
-          @reprojectionOptions(data.reprojection_options)
+          @reprojectionOptions([])
+          @reprojectionConfigs([])
+          for reprojection in data.reprojection_options
+            @reprojectionOptions.push(reprojection.name)
+            @reprojectionConfigs.push(reprojection)
           @resampleDimensions(data.resample_dimensions)
           @interpolationMethods(data.interpolation_methods)
-        complete: =>
-          $('#customizeDataModal').modal('show')
+
           @chosenOutputFileFormat(@query.outputFormat())
           @chosenReprojectionOption(@query.reprojectionOption())
+          $('#reprojection-params').empty()
+          reprojectionConfig = (reprojection.params for reprojection in @reprojectionConfigs() when reprojection.name == @chosenReprojectionOption())[0]
+          if reprojectionConfig
+            for config in reprojectionConfig
+              id = 'projection_param-' + config.name.toLowerCase().replace(/\s/g, '_')
+              $('#reprojection-params').append("<div><label for='" + id + "'>" + config.name + "</label><input id='" + id + "' type='text'></input></div>")
           @chosenResampleDimension(@query.resampleDimension())
+          if @chosenResampleDimension()
+            $('#resample-params').append("<div><label for='resample-value'>Value</label><input id='resample-value' type='text'></input></div>")
+          else
+            $('#resample-params').empty()
           @chosenInterpolationMethod(@query.interpolationMethod())
+        complete: =>
+          $('#customizeDataModal').modal('show')
 
     updateCustomizeOptionsQuery: =>
       @query.outputFormat(@chosenOutputFileFormat())
       @query.reprojectionOption(@chosenReprojectionOption())
+      $('#reprojection-params').empty()
+      reprojectionConfig = (reprojection.params for reprojection in @reprojectionConfigs() when reprojection.name == @chosenReprojectionOption())[0]
+      if reprojectionConfig
+        for config in reprojectionConfig
+          id = 'projection_param-' + config.name.toLowerCase().replace(/\s/g, '_')
+          $('#reprojection-params').append("<div><label for='" + id + "'>" + config.name + "</label><input id='" + id + "' type='text'></input></div>")
+      @chosenResampleDimension(null) unless @chosenReprojectionOption()
       @query.resampleDimension(@chosenResampleDimension())
+      if @chosenResampleDimension()
+        $('#resample-params').append("<div><label for='resample-value'>Value</label><input id='resample-value' type='text'></input></div>")
+      else
+        $('#resample-params').empty()
       @query.interpolationMethod(@chosenInterpolationMethod())
 
   current = new SearchPage()

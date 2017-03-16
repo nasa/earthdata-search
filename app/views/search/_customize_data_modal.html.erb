@@ -9,24 +9,28 @@
         <!--<p>Do a bunch of things</p>-->
         <p>
           <label for="output-file-formats">Output File Formats</label>
-          <select id="output-file-formats" data-bind="options: outputFileFormats, value: chosenOutputFileFormat, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'Select...', valueAllowUnset: true">
+          <select id="output-file-formats" data-bind="options: outputFileFormats, value: chosenOutputFileFormat, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'No Reformatting', valueAllowUnset: true">
           </select>
         </p>
         <p>
           <label for="reprojection-options">Re-projections Options</label>
-          <select id="reprojection-options" data-bind="options: reprojectionOptions, value: chosenReprojectionOption, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'Select...', valueAllowUnset: true">
+          <select id="reprojection-options" data-bind="options: reprojectionOptions, value: chosenReprojectionOption, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'No Change', valueAllowUnset: true">
           </select>
+          <div id="reprojection-params"></div>
         </p>
         <p>
           <label for="resample-dimensions">Resample Dimensions</label>
-          <select id="resample-dimensions" data-bind="options: resampleDimensions, value: chosenResampleDimension, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'Select...', valueAllowUnset: true">
+          <select id="resample-dimensions" data-bind="options: resampleDimensions, value: chosenResampleDimension, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'No Resampling', valueAllowUnset: true">
           </select>
+        <div id="resample-params"></div>
         </p>
+        <!-- ko if: chosenReprojectionOption -->
         <p>
           <label for="interpolation-methods">Interpolation Methods</label>
           <select id="interpolation-methods" data-bind="options: interpolationMethods, value: chosenInterpolationMethod, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'Select...', valueAllowUnset: true">
           </select>
         </p>
+        <!-- /ko -->
       </div>
       <div class="modal-footer">
         <a class="button text-button" data-dismiss="modal" href="#">Close</a>
