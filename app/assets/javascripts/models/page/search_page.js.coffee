@@ -20,6 +20,7 @@ ns = models.page
 ns.SearchPage = do (ko
                     ajax = @edsc.util.xhr.ajax
                     setCurrent = ns.setCurrent
+                    urlUtil = @edsc.util.url
                     QueryModel = data.query.CollectionQuery
                     CollectionsModel = data.Collections
                     ProjectModel = data.Project
@@ -56,7 +57,7 @@ ns.SearchPage = do (ko
         projectList: new ProjectListModel(@project, @collections)
         isLandingPage: ko.observable(null) # Used by modules/landing
         feedback: new FeedbackModel()
-
+      @project.serialized(urlUtil.currentParams())
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)
 
@@ -71,7 +72,6 @@ ns.SearchPage = do (ko
 
       @outputFileFormats = ko.observableArray([])
       @chosenOutputFileFormat = ko.observable(@query.outputFormat())
-
       @reprojectionOptions = ko.observableArray([])
       @chosenReprojectionOption = ko.observable(@query.reprojectionOption())
 
@@ -80,7 +80,6 @@ ns.SearchPage = do (ko
 
       @interpolationMethods = ko.observableArray([])
       @chosenInterpolationMethod = ko.observable(@query.interpolationMethod())
-
       @chosenMeasurement = ko.observable()
       @checkedVariables = ko.observableArray([])
 
@@ -201,6 +200,7 @@ ns.SearchPage = do (ko
           $('#variables-modal').modal('show') unless $('#variables-modal').is(':visible')
 
     getCustomizeOptions: =>
+
       ajax
         dataType: 'json'
         url: "/customize_options"
