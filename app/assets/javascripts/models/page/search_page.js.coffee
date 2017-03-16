@@ -202,6 +202,7 @@ ns.SearchPage = do (ko
       # construct active filters for the modal
       @activeFilters([])
       for k, v of @measurements()
+
         @activeFilters.push({name: k, count: v.length, value: v.join(', ')})
       $('#active-filters-modal').modal('show') unless $('#active-filters-modal').is(':visible')
 
