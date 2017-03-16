@@ -123,6 +123,7 @@ ns.SearchPage = do (ko
       $('.master-overlay').masterOverlay('manualShowParent')
 
     getMeasurements: =>
+      $('#active-filters-modal').modal('hide') if $('#active-filters-modal').is(':visible')
       @measurements(if @query.measurements() == "" then {} else @query.measurements())
       @checkedVariables([])
       ajax
