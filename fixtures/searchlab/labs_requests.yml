@@ -40,9 +40,9 @@
   "reprojection_options":[
     {"name":"Geographic","params":{}},
     {"name":"Universal Transverse Mercator","params":[
-      {"Longitude of any point in UTM Zone":{"type":"integer"}},
-      {"Latitude of any point in UTM Zone":{"type":"integer"}},
-      {"UTM Zone":{"type":"integer"}}
+      {"name":"Longitude of any point in UTM Zone","constraints":{"type":"integer"}},
+      {"name":"Latitude of any point in UTM Zone","constraints":{"type":"integer"}},
+      {"name":"UTM Zone","constraints":{"type":"integer"}}
     ]},
     {"name":"State Plane Coordinates","params":[
       {"name":"State Plane Zon","constraints":{"type":"integer"}}

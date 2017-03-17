@@ -124,25 +124,29 @@ ns.SearchPage = do (ko
       $('.master-overlay').masterOverlay('manualShowParent')
 
     getMeasurements: =>
-      $('#active-filters-modal').modal('hide') if $('#active-filters-modal').is(':visible')
       @measurements(if @query.measurements() == "" then {} else @query.measurements())
-      @checkedVariables([])
-      ajax
-        dataType: 'json'
-        url: '/measurements'
-        success: (data) =>
-          $('#check-all-vars-container').remove()
-          $("#variables-modal .modal-body ul").remove()
-          $('#back-to-measurements').remove()
+      if @query.measurements() && !$('#active-filters-modal').is(':visible')
+        @_resetActiveFilters(@measurements())
+        $('#active-filters-modal').modal('show') unless $('#active-filters-modal').is(':visible')
+      else
+        $('#active-filters-modal').modal('hide') if $('#active-filters-modal').is(':visible')
+        @checkedVariables([])
+        ajax
+          dataType: 'json'
+          url: '/measurements'
+          success: (data) =>
+            $('#check-all-vars-container').remove()
+            $("#variables-modal .modal-body ul").remove()
+            $('#back-to-measurements').remove()
 
-          $('#variables-modal .modal-body').append('<ul></ul>')
-          for m in data.measurements
-            id = 'measurement-' + m.toLowerCase().replace(/\s/g, '_')
-            $('#variables-modal .modal-body ul').append('<li><a id="' + id + '" href="#">' + m + '</a></li>')
-            # bind click
-            $("##{id}").on 'click', (e) => @getVariables(null, e)
-        complete: =>
-          $('#variables-modal').modal('show')
+            $('#variables-modal .modal-body').append('<ul></ul>')
+            for m in data.measurements
+              id = 'measurement-' + m.toLowerCase().replace(/\s/g, '_')
+              $('#variables-modal .modal-body ul').append('<li><a id="' + id + '" href="#">' + m + '</a></li>')
+              # bind click
+              $("##{id}").on 'click', (e) => @getVariables(null, e)
+          complete: =>
+            $('#variables-modal').modal('show')
 
     getVariables: (data, event)=>
       $('[id^=measurement-]').closest('ul').remove()
@@ -264,7 +268,16 @@ ns.SearchPage = do (ko
       @query.interpolationMethod(@chosenInterpolationMethod())
 
     toggleFilterStack: (data, event) =>
-      $(event.target).toggleClass('collapse-filter-stack')
+      $('.filter-stack').toggle()
+      $('.filter-stack-collapsed').toggle()
+
+    totalFilters: ->
+      length = @activeFilters().length
+      length += (if @chosenOutputFileFormat() then 1 else 0)
+      length += (if @chosenReprojectionOption() then 1 else 0)
+      length += (if @chosenResampleDimension() then 1 else 0)
+      length += (if @chosenInterpolationMethod() then 1 else 0)
+      length
 
     clearOutputfileFormat: =>
       @chosenOutputFileFormat(null)
@@ -286,7 +299,7 @@ ns.SearchPage = do (ko
     clearMeasurementsAndVariables: =>
       @measurements({})
       @activeFilters([])
-      @query.measurements(null)
+      @query.measurements('')
 
   current = new SearchPage()
   setCurrent(current)

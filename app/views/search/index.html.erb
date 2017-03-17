@@ -75,6 +75,9 @@
         <%= render partial: 'customize_interpolation'%>
         <%= render partial: 'measurements_and_variables'%>
       </div>
+      <div class="filter-stack-collapsed" style="display: none;">
+        You have <!-- ko text: totalFilters() --><!-- /ko --> active filters.
+      </div>
     </div>
   </div>
 <% end %>
