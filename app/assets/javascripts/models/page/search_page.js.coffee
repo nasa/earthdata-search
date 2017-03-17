@@ -277,6 +277,8 @@ ns.SearchPage = do (ko
       length += (if @chosenReprojectionOption() then 1 else 0)
       length += (if @chosenResampleDimension() then 1 else 0)
       length += (if @chosenInterpolationMethod() then 1 else 0)
+      length += (if @query.spatial() then 1 else 0)
+      length += (if @query.temporalComponent() then 1 else 0)
       length
 
     clearOutputfileFormat: =>
@@ -300,6 +302,11 @@ ns.SearchPage = do (ko
       @measurements({})
       @activeFilters([])
       @query.measurements('')
+
+    clearSpatial: =>
+      @ui.spatialType.manualEntryVisible(false)
+      @query.spatial(null)
+      @spatialEntry = null
 
   current = new SearchPage()
   setCurrent(current)
