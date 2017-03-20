@@ -381,34 +381,7 @@ a.master-overlay-show-parent:hover:before {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
-    width: $collapsed-overlay-width;
-    header {
-      margin: 1em .5em 0;
-      h2 {
-        font-size: 1.1em;
-      }
-    }
-    .master-overlay-content {
-      padding: .5em 0 1em;
-//      direction:rtl; // Puts the scrollbar on the left hand side
-//      > * {
-//        direction:ltr;
-//      }
-      width: $collapsed-overlay-width + 30px;
-    }
-    .master-overlay-info {
-      height: 32px;
-      .button-details {
-        text-align: right;
-        padding-top: 4px;
-        margin-top: 0;
-      }
-      .button {
-        float: none;
-        font-size: .8em;
-        padding: 4px 6px;
-      }
-    }
+    top: 92%;
   }
 }
 
