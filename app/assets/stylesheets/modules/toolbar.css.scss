@@ -1,16 +1,31 @@
 .filter-stack {
   background: #111;
+  color: #fff;
 
   a {
     float: right;
   }
+
+  dl {
+    margin: 0 0 5px 0;
+    display: inline-block;
+  }
+
+  dt {
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  dd {
+    margin: 0;
+    display: inline-block;
+  }
 }
 
 #temporal-query {
-  color: #fff;
   z-index: 59;
-  padding: 10px 15px;
-  font-size: 1em;
+  padding: 15px 15px 5px 15px;
+  font-size: 0.9em;
 }
 
 #temporal-query p {
@@ -18,9 +33,8 @@
 }
 
 .manual-coord-entry {
-  color: #fff;
   z-index: 59;
-  padding: 10px 15px;
+  padding: 5px 15px;
   font-size: .9em;
 
   label {
@@ -51,10 +65,13 @@
   float: right;
 }
 
-.custom-data-format-container {
-  color: #fff;
+.custom-data-format-container,
+.custom-reprojection-container,
+.custom-resample-container,
+.custom-interpolation-container,
+.measurements-and-variables-container {
   z-index: 59;
-  padding: 10px 15px;
+  padding: 5px 15px;
   font-size: .9em;
 
   label {
