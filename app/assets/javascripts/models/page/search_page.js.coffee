@@ -270,7 +270,7 @@ ns.SearchPage = do (ko
 
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
-      $('.filter-stack-collapsed').toggle()
+      $('.filter-stack-minimized').toggle()
 
     totalFilters: ->
       length = @activeFilters().length
