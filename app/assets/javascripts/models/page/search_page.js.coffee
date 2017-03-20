@@ -166,7 +166,7 @@ ns.SearchPage = do (ko
           $('#back-to-measurements').remove()
 
           # add check all
-          $("#variables-modal .modal-body").append('<div id="check-all-vars-container"><input id="check-all-vars" type="checkbox"><label for="check-all-vars">Select All Variables</label></div>')
+          $("#variables-modal .modal-body").append('<p id="check-all-vars-container" class="select-all"><input id="check-all-vars" type="checkbox"><label for="check-all-vars">Select All Variables</label></p>')
 
           # hook up check all
           $('#check-all-vars').on 'change', (e) =>
@@ -190,7 +190,7 @@ ns.SearchPage = do (ko
             $('#check-all-vars').prop('checked', $('.modal-body ul input:checkbox').length == $('.modal-body ul input[type=checkbox]:checked').length)
 
           # add back to measurement
-          $('#variables-modal .modal-body').append('<a href="#" id="back-to-measurements">Back to Measurement List</a>')
+          $('#variables-modal .modal-body').append('<p><a href="#" id="back-to-measurements">Back to Measurement List</a></p>')
 
           # hook up back to measurement
           $('#back-to-measurements').on 'click', (e) =>

@@ -6,26 +6,25 @@
         <h4 class="modal-title" id="customizeDataModalLabel"><i class="fa fa-sliders"></i> Customize Data</h4>
       </div>
       <div class="modal-body">
-        <!--<p>Do a bunch of things</p>-->
-        <p>
+        <p class="customize-block">
           <label for="output-file-formats">Output File Formats</label>
           <select id="output-file-formats" data-bind="options: outputFileFormats, value: chosenOutputFileFormat, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'No Reformatting', valueAllowUnset: true">
           </select>
         </p>
-        <p>
+        <p class="customize-block">
           <label for="reprojection-options">Re-projections Options</label>
           <select id="reprojection-options" data-bind="options: reprojectionOptions, value: chosenReprojectionOption, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'No Change', valueAllowUnset: true">
           </select>
           <div id="reprojection-params"></div>
         </p>
-        <p>
+        <p class="customize-block">
           <label for="resample-dimensions">Resample Dimensions</label>
           <select id="resample-dimensions" data-bind="options: resampleDimensions, value: chosenResampleDimension, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'No Resampling', valueAllowUnset: true">
           </select>
         <div id="resample-params"></div>
         </p>
         <!-- ko if: chosenReprojectionOption -->
-        <p>
+        <p class="customize-block">
           <label for="interpolation-methods">Interpolation Methods</label>
           <select id="interpolation-methods" data-bind="options: interpolationMethods, value: chosenInterpolationMethod, event: {change: updateCustomizeOptionsQuery}, optionsCaption: 'Select...', valueAllowUnset: true">
           </select>

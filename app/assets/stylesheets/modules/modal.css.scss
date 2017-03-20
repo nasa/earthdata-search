@@ -6,13 +6,45 @@
 
 .modal.variables, .modal.customize-data {
 
+  .add-measurement {
+    float: right;
+  }
+
   .modal-body {
     padding: 0;
 
     p {
       margin: 0;
       padding: 20px;
-      border-bottom: 1px solid #e3e3e3;
+
+      &.customize-block {
+        border-bottom: 1px solid #e3e3e3;
+      }
+
+      &.select-all {
+
+        padding-bottom: 0;
+
+        label {
+          font-weight: normal;
+          font-style: italic;
+        }
+      }
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 20px;
+
+      &.active-filters {
+        padding: 0;
+
+        li {
+          padding: 20px;
+          border-bottom: 1px solid #e3e3e3;
+        }
+      }
     }
 
     label {
@@ -21,6 +53,10 @@
 
     select {
       float: right;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 6px;
     }
   }
 
