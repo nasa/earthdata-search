@@ -100,6 +100,10 @@ ns.SearchPage = do (ko
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+      @chosenOutputFileFormat(null)
+      @chosenReprojectionOption(null)
+      @chosenResampleDimension(null)
+      @chosenInterpolationMethod(null)
       @chosenMeasurement(null)
       @checkedVariables([])
       @measurements({})
@@ -270,7 +274,8 @@ ns.SearchPage = do (ko
 
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
-      $('.filter-stack-minimized').toggle()
+      $('.filter-stack-minimized').hide() if $('.filter-stack').is(':visible')
+      $('.filter-stack-minimized').show() if !$('.filter-stack').is(':visible') && @totalFilters() > 0
 
     totalFilters: ->
       length = @activeFilters().length
