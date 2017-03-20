@@ -24,33 +24,7 @@ module Echo
     end
 
     def get_collection(id, token = nil, format = 'echo10')
-      response = get("/search/concepts/#{id}.#{format}", {}, token_header(token))
-
-      ########
-      # TODO Remove before merging!
-      # Example RelatedUrls while we wait for https://bugs.earthdata.nasa.gov/browse/CMR-3446
-      related_urls = [
-        {
-          'URLContentType' => 'CollectionURL',
-          'Type' => 'DATA SET LANDING PAGE',
-          'URL' => 'http://dx.doi.org/10.5067/AMSR2/A2_DySno_NRT'
-        },
-        {
-          'URLContentType' => 'PublicationURL',
-          'Type' => 'VIEW RELATED INFORMATION',
-          'SubType' => "USER'S GUIDE",
-          'URL' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf'
-        },
-        {
-          'URLContentType' => 'VisualizationURL',
-          'Type' => 'GET RELATED VISUALIZATION',
-          'URL' => 'https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level3/daysnow/R00/'
-        }
-      ]
-      response.body['RelatedUrls'] = related_urls
-      ##########
-
-      response
+      get("/search/concepts/#{id}.#{format}", {}, token_header(token))
     end
 
     def get_granules(options = {}, token = nil)
