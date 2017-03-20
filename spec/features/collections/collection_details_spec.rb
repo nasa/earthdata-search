@@ -62,7 +62,6 @@ describe 'Collection details', reset: false do
 
     it "displays the collection's detail page with no errors" do
       expect(page).to have_content('Contacts: JAXA G-PORTAL z-gportal-support@ml.jaxa.jp')
-      expect(page).to have_content('Data Set Landing Page')
     end
   end
 

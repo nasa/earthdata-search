@@ -115,7 +115,7 @@ describe CollectionDetailsPresenterUmmJson do
       {
         'URLContentType' => 'PublicationURL',
         'Type' => 'VIEW RELATED INFORMATION',
-        'SubType' => "USER'S GUIDE",
+        'Subtype' => "USER'S GUIDE",
         'URL' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf'
       },
       {
@@ -140,7 +140,7 @@ describe CollectionDetailsPresenterUmmJson do
       {
         'URLContentType' => 'PublicationURL',
         'Type' => 'VIEW RELATED INFORMATION',
-        'SubType' => "USER'S GUIDE",
+        'Subtype' => "USER'S GUIDE",
         'URL' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf'
       },
       {
