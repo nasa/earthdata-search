@@ -61,7 +61,8 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('Contacts: JAXA G-PORTAL z-gportal-support@ml.jaxa.jp Download Page')
+      expect(page).to have_content('Contacts: JAXA G-PORTAL z-gportal-support@ml.jaxa.jp')
+      expect(page).to have_content('Data Set Landing Page')
     end
   end
 
@@ -167,7 +168,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays all spatial content' do
-      expect(page).to have_content('Contacts: NSIDC DAAC USER SERVICES nsidc@nsidc.org +1 (303) 492-2468 (Fax) +1 (303) 492-6199 (Telephone) Julienne Stroeve stroeve@nsidc.org Walt Meier walter.n.meier@nasa.gov Donald Cavalieri Donald.J.Cavalieri@nasa.gov 1-301-614-5644 (Fax) 1-301-614-5901 (Telephone) NSIDC USER SERVICES nsidc@nsidc.org 1 (303) 492-2468 (Fax) 1 (303) 492-6199 (Telephone) Download Page')
+      expect(page).to have_content('Contacts: NSIDC DAAC USER SERVICES nsidc@nsidc.org +1 (303) 492-2468 (Fax) +1 (303) 492-6199 (Telephone) Julienne Stroeve stroeve@nsidc.org Walt Meier walter.n.meier@nasa.gov Donald Cavalieri Donald.J.Cavalieri@nasa.gov 1-301-614-5644 (Fax) 1-301-614-5901 (Telephone) NSIDC USER SERVICES nsidc@nsidc.org 1 (303) 492-2468 (Fax) 1 (303) 492-6199 (Telephone)')
     end
   end
 
@@ -178,6 +179,28 @@ describe 'Collection details', reset: false do
 
     it 'displays the temporal correctly' do
       expect(page).to have_content('1999-12-18 ongoing')
+    end
+  end
+
+  context 'when selecting a collection with related urls' do
+    before do
+      load_page '/search/collection-details', focus: 'C1000000577-DEV07', env: :sit
+    end
+
+    it 'displays highlighted urls' do
+      expect(collection_details).to have_content "User's Guide"
+    end
+
+    context 'when clicking View More' do
+      before do
+        click_on 'View More'
+      end
+
+      it 'displays all related urls' do
+        within '#related-urls-modal' do
+          expect(page).to have_content "General Documentation User's Guide General Documentation"
+        end
+      end
     end
   end
 end
