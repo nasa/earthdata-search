@@ -64,6 +64,9 @@ EarthdataSearchClient::Application.routes.draw do
   get 'search(/*overlay_params)' => 'search#index'
   get 'extract_filters' => 'search#extract_filters', format: 'json'
   get 'health' => 'health#index', format: 'json'
+  get 'measurements' => 'measurements#index', format: 'json'
+  get 'variables' => 'variables#index', format: 'json'
+  get 'customize_options' => 'customize_options#index', format: 'json'
   root :to => 'search#index'
 
 

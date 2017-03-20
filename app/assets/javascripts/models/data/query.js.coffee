@@ -283,6 +283,12 @@ ns.query = do (ko,
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
+      @outputFormat = @queryComponent(new QueryParam('output_format'), '')
+      @reprojectionOption = @queryComponent(new QueryParam('reprojection_option'), '')
+      @resampleDimension = @queryComponent(new QueryParam('resample_dimension'), '')
+      @interpolationMethod = @queryComponent(new QueryParam('interpolation_method'), '')
+      @measurements = @queryComponent(new QueryParam('measurements'), '')
+
       super(parentQuery)
 
     clearFilters: =>

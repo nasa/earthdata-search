@@ -1,0 +1,89 @@
+"https://cmr.earthdata.nasa.gov/legacy-services/rest/calendar_events?severity=ALERT":
+  method: get
+  body: []
+  headers:
+  format: 'xml'
+  status: 200
+"https://status.earthdata.nasa.gov/api/v1/notifications?domain=https%3A%2F%2Fsearch.earthdata.nasa.gov":
+  method: get
+  body: '{"success":true,"notifications":[]}'
+  format: 'json'
+  headers:
+  status: 200
+"/measurements":
+  method: get
+  body: '{"measurements":["Sea Ice","Soil Moisture"]}'
+  format: 'json'
+  headers:
+  status: 200
+"/variables?measurement=Sea Ice":
+  method: get
+  body: '{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}'
+  format: 'json'
+  headers:
+  status: 200
+"/variables?measurement=Soil Moisture":
+  method: get
+  body: '{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]}'
+  format: 'json'
+  headers:
+  status: 200
+"/variables":
+  method: get
+  body: '[{"measurement":"Soil Moisture","variables":["Albedo","Freeze Thaw Fraction","Surface Temporature","Vegetation Opacity"]},{"measurement":"Sea Ice","variables":["Ice Surface Temporature","Sea Ice by Reflectance"]}]'
+  format: 'json'
+  headers:
+  status: 200
+"/customize_options":
+  method: get
+  body: '{"output_file_formats":["GeoTIFF","NetCDF4-CF","ASCII","KML","NetCDF-3"],
+  "reprojection_options":[
+    {"name":"Geographic","params":{}},
+    {"name":"Universal Transverse Mercator","params":[
+      {"name":"Longitude of any point in UTM Zone","constraints":{"type":"integer"}},
+      {"name":"Latitude of any point in UTM Zone","constraints":{"type":"integer"}},
+      {"name":"UTM Zone","constraints":{"type":"integer"}}
+    ]},
+    {"name":"State Plane Coordinates","params":[
+      {"name":"State Plane Zon","constraints":{"type":"integer"}}
+      ]},
+    {"name":"Lambert Conic Conformal","params":[
+      {"name":"Latitude of False Origin","constraints":{"type":"integer"}},
+      {"name":"Longitude of False Origin/Central Meridian","constraints":{"type":"integer"}},
+      {"name":"Latitude of first standard parallel","constraints":{"type":"integer"}},
+      {"name":"Latitude of second standard parallel","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Semimajor radius of the ellipsoid axis","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Polar Stereographic","params":[
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Semimajor radius of the ellipsoid axis","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Transverse Mercator","params":[
+      {"name":"Scale factor at natural origin","constraints":{"type":"integer"}},
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"Latitude of natural origin","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Semimajor radius of the ellipsoid axis","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Lambert Azimuthal Equal Area","params":[
+      {"name":"Radius of reference Sphere","constraints":{"type":"integer"}},
+      {"name":"Latitude of projection center / origin","constraints":{"type":"integer"}},
+      {"name":"Longitude of projection center","constraints":{"type":"integer"}},
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}}
+    ]},
+    {"name":"Sinusoidal","params":[
+      {"name":"False Easting","constraints":{"type":"integer"}},
+      {"name":"False Northing","constraints":{"type":"integer"}},
+      {"name":"Longitude of projection center","constraints":{"type":"integer"}}
+    ]}
+  ],"resample_dimensions":["Percent"],"interpolation_methods":["Nearest Neighbor","Bilinear","Cubic Convolution"]}'
+  format: 'json'
+  headers:
+  status: 200

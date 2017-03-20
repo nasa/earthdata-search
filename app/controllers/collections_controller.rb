@@ -3,7 +3,7 @@ class CollectionsController < ApplicationController
 
   around_action :log_execution_time
 
-  UNLOGGED_PARAMS = ['include_facets', 'hierarchical_facets', 'include_tags', 'include_granule_counts']
+  UNLOGGED_PARAMS = %w(include_facets hierarchical_facets include_tags include_granule_counts)
 
   def index
     collection_params = collection_params_for_request(request)
@@ -13,7 +13,7 @@ class CollectionsController < ApplicationController
     catalog_response = echo_client.get_collections(collection_params, token)
 
     if catalog_response.success?
-      catalog_response.body['feed']['facets'] = Hash.new if catalog_response.body['feed']['facets'].nil?
+      catalog_response.body['feed']['facets'] = {} if catalog_response.body['feed']['facets'].nil?
       catalog_response.body['feed']['facets']['children'] = add_fake_json_facets(catalog_response.body['feed']['facets'])
 
       CollectionExtra.decorate_all(catalog_response.body['feed']['entry'])
@@ -27,10 +27,9 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    metrics_event('details', {collections: [params[:id]]})
-    #TODO make 1_4 configurable (yml + ENV)
+    metrics_event('details', collections: [params[:id]])
+    # TODO: make 1_4 configurable (yml + ENV)
     response = echo_client.get_collection(params[:id], token, 'umm_json_v1_4')
-
 
     if response.success?
       respond_with(CollectionDetailsPresenterUmmJson.new(response.body, params[:id], token, cmr_env), status: response.status)
@@ -40,8 +39,8 @@ class CollectionsController < ApplicationController
   end
 
   def use
-    metrics_event('view', {collections: [params[:id]]})
-    render :json => result, status: :ok
+    metrics_event('view', collections: [params[:id]])
+    render json: result, status: :ok
   end
 
   def collection_relevancy
@@ -56,7 +55,7 @@ class CollectionsController < ApplicationController
     }
 
     metrics_event('collection_relevancy', data)
-    render :json => 'ok', status: :ok
+    render json: 'ok', status: :ok
   end
 
   private
@@ -66,7 +65,7 @@ class CollectionsController < ApplicationController
 
     params.delete(:portal)
     if portal? && portal[:params]
-      params.deep_merge!(portal[:params]) do |key, v1, v2|
+      params.deep_merge!(portal[:params]) do |_key, v1, v2|
         if v1.is_a?(Array) && v2.is_a?(Array)
           v1 + v2
         else
@@ -76,11 +75,9 @@ class CollectionsController < ApplicationController
     end
 
     test_facets = params.delete(:test_facets)
-    if Rails.env.test? && !test_facets
-      params = params.except('include_facets')
-    end
+    params = params.except('include_facets') if Rails.env.test? && !test_facets
 
-    features = Hash[Array.wrap(params.delete(:features)).map {|f| [f, true]}]
+    features = Hash[Array.wrap(params.delete(:features)).map { |f| [f, true] }]
     if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
@@ -96,7 +93,7 @@ class CollectionsController < ApplicationController
     end
 
     params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*",
-                              "org.ceos.wgiss.cwic.granules.prod"].join(',')
+                              'org.ceos.wgiss.cwic.granules.prod'].join(',')
 
     # params['include_facets'] = 'v2'
 
@@ -128,10 +125,10 @@ class CollectionsController < ApplicationController
   end
 
   def add_fake_json_facets(facets)
-    feature_facet = [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
-        {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-        {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-        {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
+    feature_facet = [{ 'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
+      { 'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false },
+      { 'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false },
+      { 'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false }]
      }]
     if facets.present? && facets['children']
       feature_facet + facets['children']
@@ -139,5 +136,4 @@ class CollectionsController < ApplicationController
       feature_facet
     end
   end
-
 end

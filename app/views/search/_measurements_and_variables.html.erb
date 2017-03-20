@@ -1,0 +1,7 @@
+<div id="measurements-and-variables-container" class="measurements-and-variables-container">
+  <dl data-bind="foreach: activeFilters">
+    <dt data-bind="text: name"></dt>
+    <dd>(<!-- ko text: stringified --><!-- /ko -->)</dd>
+  </dl>
+  <a href="#" data-bind="event: {click: clearMeasurementsAndVariables}, visible: activeFilters().length > 0"><i class="fa fa-times-circle"></i></a>
+</div>

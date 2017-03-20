@@ -1,16 +1,45 @@
 .filter-stack {
   background: #111;
+  color: #fff;
 
   a {
     float: right;
   }
+
+  dl {
+    margin: 0 0 5px 0;
+    display: inline-block;
+  }
+
+  dt {
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  dd {
+    margin: 0;
+    display: inline-block;
+  }
 }
 
+.badge-filter {
+   border-radius: 12px;
+   background-color: red;
+   color: #fff;
+   text-shadow: .5px .5px .5px darken(red, 20%);
+   font-size: 12px;
+   font-weight: bold;
+   text-align: center;
+   line-height: 22px;
+   position: absolute;
+   margin-top: -45px;
+   margin-left: 15px;
+ }
+
 #temporal-query {
-  color: #fff;
   z-index: 59;
-  padding: 10px 15px;
-  font-size: 1em;
+  padding: 15px 15px 5px 15px;
+  font-size: 0.9em;
 }
 
 #temporal-query p {
@@ -18,9 +47,8 @@
 }
 
 .manual-coord-entry {
-  color: #fff;
   z-index: 59;
-  padding: 10px 15px;
+  padding: 5px 15px;
   font-size: .9em;
 
   label {
@@ -49,6 +77,29 @@
   background: #111;
   color: #fff;
   float: right;
+}
+
+.custom-data-format-container,
+.custom-reprojection-container,
+.custom-resample-container,
+.custom-interpolation-container,
+.measurements-and-variables-container {
+  z-index: 59;
+  padding: 5px 15px;
+  font-size: .9em;
+
+  label {
+    min-width: 50px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    font-weight: bold;
+  }
+
+  span {
+    min-width: 200px;
+    padding: 0;
+  }
 }
 
 .leaflet-top.leaflet-right {

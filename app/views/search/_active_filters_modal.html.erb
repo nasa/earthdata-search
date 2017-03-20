@@ -1,0 +1,21 @@
+<div class="modal fade variables" id="active-filters-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="add-measurement" href="#"><span aria-hidden="true" data-bind="event: {click: getMeasurements}"><i class="fa fa-plus-circle"></i> Add Another Measurement</span></a>
+        <h4 class="modal-title" id="active-filters-modal-label">Active Subset Filters</h4>
+      </div>
+      <div class="modal-body">
+        <ul data-bind="foreach: activeFilters" class="active-filters">
+          <li>
+            <div><!-- ko text: name --><!-- /ko --> (<!-- ko text: count --><!-- /ko --> Variables)</div>
+            <div data-bind="text: value.join(', ')"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" data-dismiss="modal" href="#">Done</a>
+      </div>
+    </div>
+  </div>
+</div>
