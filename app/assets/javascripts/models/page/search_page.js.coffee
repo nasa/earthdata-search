@@ -103,6 +103,7 @@ ns.SearchPage = do (ko
       @chosenMeasurement(null)
       @checkedVariables([])
       @measurements({})
+      @activeFilters([])
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural

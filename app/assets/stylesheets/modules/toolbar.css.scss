@@ -6,6 +6,18 @@
   }
 }
 
+.badge-filter {
+   border-radius: 12px;
+   background-color: red;
+   color: #fff;
+   text-shadow: .5px .5px .5px darken(red, 20%);
+   font-size: 12px;
+   font-weight: bold;
+   text-align: center;
+   line-height: 22px;
+  float: right;
+ }
+
 #temporal-query {
   color: #fff;
   z-index: 59;
