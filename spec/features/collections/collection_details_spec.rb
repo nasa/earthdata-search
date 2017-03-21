@@ -190,9 +190,9 @@ describe 'Collection details', reset: false do
       expect(collection_details).to have_content "User's Guide"
     end
 
-    context 'when clicking View More' do
+    context 'when clicking View All Related URLs' do
       before do
-        click_on 'View More'
+        click_on 'View All Related URLs'
       end
 
       it 'displays all related urls' do

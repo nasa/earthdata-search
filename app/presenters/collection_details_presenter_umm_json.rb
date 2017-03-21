@@ -201,11 +201,18 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       url = related_url.fetch('URL', '')
 
       related_urls << {
-        url: url,
+        url: format_url(url),
         name: name
       }
     end
 
     related_urls
+  end
+
+  def format_url(url)
+    unless url =~ %r{^(http|https)\:\/\/}
+      url = 'http://' + url
+    end
+    url
   end
 end
