@@ -177,23 +177,22 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     related_urls = []
 
     collection.fetch('RelatedUrls', []).each do |related_url|
-      content_type = related_url.fetch('URLContentType', '')
-      type = related_url.fetch('Type', '')
-      subtype = related_url.fetch('Subtype', '')
+      content_type = related_url.fetch('URLContentType', '').downcase
+      type = related_url.fetch('Type', '').downcase
+      subtype = related_url.fetch('Subtype', '').downcase
 
       if highlighted_only
-        if content_type == 'CollectionURL' && type == 'DATA SET LANDING PAGE'
+        if content_type == 'collectionurl' && type == 'data set landing page'
           name = 'Data Set Landing Page'
         end
-        if content_type == 'PublicationURL' && type == 'VIEW RELATED INFORMATION'
-          name = 'QA' if subtype == 'DATA QUALITY'
-          name = 'ATBD' if subtype == 'ALGORITHM THEORETICAL BASIS DOCUMENT'
-          name = "User's Guide" if subtype == "USER'S GUIDE"
+        if content_type == 'publicationurl' && type == 'view related information'
+          name = 'QA' if subtype == 'data quality'
+          name = 'ATBD' if subtype == 'algorithm theoretical basis document'
+          name = "User's Guide" if subtype == "user's guide"
         end
 
         next unless ['Data Set Landing Page', 'QA', 'ATBD', "User\'s Guide"].include?(name)
       else
-
         name = type.titleize
         name = subtype.titleize unless subtype.empty?
       end
