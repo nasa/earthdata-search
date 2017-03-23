@@ -8,7 +8,7 @@ class CollectionsController < ApplicationController
   def index
     collection_params = collection_params_for_request(request)
     unless params['echo_collection_id']
-      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS))
+      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS).merge({user_id: session[:user_id]}))
     end
     catalog_response = echo_client.get_collections(collection_params, token)
 
