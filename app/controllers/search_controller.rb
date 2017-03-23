@@ -5,6 +5,8 @@ class SearchController < ApplicationController
   respond_to :json
 
   def extract_filters
+    consecutiveKeywordQuery = params.delete :rerun
+    Rails.logger.info "------- consecutiveKeywordQuery: #{consecutiveKeywordQuery}"
     respond_with TextSearchClient.parse_text(params[:q])
   end
 

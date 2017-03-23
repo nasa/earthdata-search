@@ -1,6 +1,8 @@
 do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax, hasPending=@edsc.util.xhr.hasPending) ->
 
+  consecutiveKeywordQuery = null
   $(document).ready ->
+    originalKeywordVal = currentPage.query.originalKeywords()
     $nlpInput = $('.nlp-parsing')
     typingTimer = null
     timeoutInterval = 700
@@ -12,14 +14,28 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
       clearTimeout(typingTimer)
       _parseSearchText(event) if event.which == 13
 
+    $('body').on 'click', 'label', (event) ->
+      consecutiveKeywordQuery = false
+      true
+    $('body').on 'click', 'a', (event) ->
+      consecutiveKeywordQuery = false
+      true
+
     _parseSearchText = (e) ->
+      if consecutiveKeywordQuery
+        consecutiveKeywordQuery = ($nlpInput.val() != currentPage.query.originalKeywords() && $nlpInput.val() != '' && currentPage.query.originalKeywords() != '')
+      else
+        consecutiveKeywordQuery = false
+
       query = $nlpInput.val()
       currentPage.query.originalKeywords(query)
+      originalKeywordVal = currentPage.query.originalKeywords()
       ajax
         dataType: 'json'
-        url: "/extract_filters?q=#{query}"
+        url: "/extract_filters?q=#{query}&rerun=#{consecutiveKeywordQuery}"
         success: (data) =>
           _applyParsedText(data)
+      consecutiveKeywordQuery = true
 
     _applyParsedText = (data) ->
       {edscSpatial, edscTemporal, keyword} = data
