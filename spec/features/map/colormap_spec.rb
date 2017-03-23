@@ -45,12 +45,7 @@ describe 'Collection Colormaps', reset: false do
       wait_for_xhr
       expect(page).to have_content("doi:10.3334/ORNLDAAC/1")
 
-      # JS: Close the GIBS warning popup
-      within ".popover-navigation" do
-        click_button "Close"
-      end
-
-      first_collection_result.click
+      first_collection_result.trigger('click')
       wait_for_xhr
     end
 
@@ -71,7 +66,7 @@ describe 'Collection Colormaps', reset: false do
       fill_in 'keywords', with: gibs_granules_collection_id
       wait_for_xhr
       expect(page).to have_content("MOD11_L2")
-      first_collection_result.click
+      first_collection_result.trigger('click')
       wait_for_xhr
     end
 
