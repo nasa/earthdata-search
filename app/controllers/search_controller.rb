@@ -5,8 +5,9 @@ class SearchController < ApplicationController
   respond_to :json
 
   def extract_filters
-    consecutiveKeywordQuery = params.delete :rerun
-    Rails.logger.info "------- consecutiveKeywordQuery: #{consecutiveKeywordQuery}"
+    isImmediateReentered = (params.delete :rerun) == 'true'
+    previousKeyword = params.delete :previous_q
+    metrics_event('immediate-reenter', {keyword: params[:q], previous_keyword: previousKeyword}) if isImmediateReentered
     respond_with TextSearchClient.parse_text(params[:q])
   end
 
