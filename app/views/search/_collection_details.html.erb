@@ -96,14 +96,17 @@
           </dl>
           <!-- end of second row -->
 
-          <ul class="flex-column">
-            <!-- ko foreach: $data.highlighted_urls -->
-            <li><a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a></li>
-            <!-- /ko -->
-            <!-- ko if: $data.related_urls.length > 0 -->
-            <li><a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a></li>
-            <!-- /ko -->
-          </ul>
+          <dl class="flex-column">
+            <dt>Related URLs:</dt>
+            <dd>
+              <!-- ko foreach: $data.highlighted_urls -->
+              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
+              <!-- /ko -->
+              <!-- ko if: $data.related_urls.length > 0 -->
+              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
+              <!-- /ko -->
+            </dd>
+          </dl>
         </div>
 
         <!-- description -->
