@@ -15,7 +15,7 @@ describe 'Collection Colormaps', reset: false do
       fill_in 'keywords', with: gibs_collection_id
       wait_for_xhr
       expect(page).to have_content("AE_Rain")
-      first_collection_result.click
+      first_collection_result.trigger('click')
       wait_for_xhr
     end
 
