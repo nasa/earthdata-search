@@ -45,12 +45,15 @@ describe "Granule selection", reset: false do
   context "clicking on a granule in the result list" do
     before :all do
       # Click on a bottom one to test re-ordering
-      nth_granule_list_item(10).click
+      nth_granule_list_item(10).trigger('click')
       wait_for_xhr
+      find('#temporal-query').trigger('click')
     end
 
     after :all do
-      nth_granule_list_item(10).click
+      nth_granule_list_item(10).trigger('click')
+      wait_for_xhr
+      find('#temporal-query').trigger('click')
     end
 
     it "highlights the selected granule in the granule list" do
@@ -58,7 +61,7 @@ describe "Granule selection", reset: false do
     end
 
     it "highlights the selected granule on the map" do
-      expect(page).to have_selector('#map path', count: 5)
+      expect(page).to have_selector('#map path', count: 3)
     end
 
     it "displays a link to remove the granule in the granule list" do
@@ -113,7 +116,7 @@ describe "Granule selection", reset: false do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
 
-        expect(result).to eq("LatLng(0, 0)")
+        expect(result).to eq("LatLng(-0.07031, 0.07031)")
       end
 
       it "zooms the map to the selected granule" do
@@ -143,11 +146,13 @@ describe "Granule selection", reset: false do
 
     context "and clicking on it again" do
       before :all do
-        nth_granule_list_item(10).click
+        nth_granule_list_item(10).trigger('click')
+        wait_for_xhr
       end
 
       after :all do
-        nth_granule_list_item(10).click
+        nth_granule_list_item(10).trigger('click')
+        wait_for_xhr
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -169,12 +174,13 @@ describe "Granule selection", reset: false do
 
   context "clicking on a granule on the map" do
     before :all do
+      map_mouseclick('#map', 5, 5)
       wait_for_xhr
-      map_mouseclick(5, 5)
     end
 
     after :all do
-      map_mouseclick(5, 5)
+      map_mouseclick('#map', 5, 5)
+      wait_for_xhr
     end
 
     it "highlights the selected granule in the granule list" do
@@ -209,12 +215,13 @@ describe "Granule selection", reset: false do
 
     context "and clicking on it again" do
       before :all do
+        map_mouseclick('#map', 5, 5)
         wait_for_xhr
-        map_mouseclick(5, 5)
       end
 
       after :all do
-        map_mouseclick(5, 5)
+        map_mouseclick('#map', 5, 5)
+        wait_for_xhr
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -235,17 +242,17 @@ describe "Granule selection", reset: false do
 
     context "clicking the remove icon on the map" do
       before :all do
-        find_by_id("map").find('a[title="Exclude this granule"]').trigger('click')
+        find("#map").find_link("Exclude this granule").trigger('click')
         wait_for_xhr
         find('#temporal-query').trigger('click') # Ensure the capybara cursor is in a reasonable place
       end
 
       after :all do
-        granule_list.click_link 'Filter granules'
+        granule_list.find_link('Filter granules').trigger('click')
         click_button "granule-filters-clear"
-        granule_list.click_link('Hide granule filters')
+        granule_list.find_link('Hide granule filters').trigger('click')
         wait_for_xhr
-        map_mouseclick(5, 5)
+        map_mouseclick('#map', 5, 5)
       end
 
       it "removes the granule from the list" do

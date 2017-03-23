@@ -13,6 +13,7 @@ describe "CWIC-enabled granule results", reset: false do
 
       before :all do
         first_granule_list_item.trigger('click')
+        wait_for_xhr
         first_granule_list_item.find_link("Exclude this granule").trigger("click")
         wait_for_xhr
       end
@@ -29,6 +30,7 @@ describe "CWIC-enabled granule results", reset: false do
 
         after :all do
           first_granule_list_item.trigger('click')
+          wait_for_xhr
           first_granule_list_item.find_link("Exclude this granule").trigger("click")
           wait_for_xhr
         end
