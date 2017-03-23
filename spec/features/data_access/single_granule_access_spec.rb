@@ -60,7 +60,7 @@ describe 'Single Granule Data Access', reset: false do
       login
       wait_for_xhr
 
-      click_link "Save your project"
+      find_link("Save your project").trigger('click')
       fill_in "workspace-name", with: "Single Granule Project\t" #press tab to exit the input field
       click_save_project_name
       wait_for_xhr
