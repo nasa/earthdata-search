@@ -104,4 +104,54 @@ describe CollectionDetailsPresenterUmmJson do
     CollectionDetailsPresenterUmmJson.new(@collection)
     @collection[:contacts].should eq([])
   end
+
+  it 'converts RelatedUrls to a name and url' do
+    related_urls = [
+      {
+        'URLContentType' => 'CollectionURL',
+        'Type' => 'DATA SET LANDING PAGE',
+        'URL' => 'http://dx.doi.org/10.5067/AMSR2/A2_DySno_NRT'
+      },
+      {
+        'URLContentType' => 'PublicationURL',
+        'Type' => 'VIEW RELATED INFORMATION',
+        'Subtype' => "USER'S GUIDE",
+        'URL' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf'
+      },
+      {
+        'URLContentType' => 'VisualizationURL',
+        'Type' => 'GET RELATED VISUALIZATION',
+        'URL' => 'https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level3/daysnow/R00/'
+      }
+    ]
+
+    @collection['RelatedUrls'] = related_urls
+    CollectionDetailsPresenterUmmJson.new(@collection)
+    @collection[:related_urls].should eq([{ 'url' => 'http://dx.doi.org/10.5067/AMSR2/A2_DySno_NRT', 'name' => 'Data Set Landing Page' }, { 'url' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf', 'name' => "User's Guide" }, { 'url' => 'https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level3/daysnow/R00/', 'name' => 'Get Related Visualization' }])
+  end
+
+  it 'converts RelatedUrls to highlighted urls' do
+    related_urls = [
+      {
+        'URLContentType' => 'CollectionURL',
+        'Type' => 'DATA SET LANDING PAGE',
+        'URL' => 'http://dx.doi.org/10.5067/AMSR2/A2_DySno_NRT'
+      },
+      {
+        'URLContentType' => 'PublicationURL',
+        'Type' => 'VIEW RELATED INFORMATION',
+        'Subtype' => "USER'S GUIDE",
+        'URL' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf'
+      },
+      {
+        'URLContentType' => 'VisualizationURL',
+        'Type' => 'GET RELATED VISUALIZATION',
+        'URL' => 'https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level3/daysnow/R00/'
+      }
+    ]
+
+    @collection['RelatedUrls'] = related_urls
+    CollectionDetailsPresenterUmmJson.new(@collection)
+    @collection[:highlighted_urls].should eq([{ 'url' => 'http://dx.doi.org/10.5067/AMSR2/A2_DySno_NRT', 'name' => 'Data Set Landing Page' }, { 'url' => 'http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf', 'name' => "User's Guide" }])
+  end
 end

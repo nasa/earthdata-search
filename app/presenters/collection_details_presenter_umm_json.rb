@@ -15,6 +15,9 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     @collection[:contacts] = contacts(collection)
     @collection[:science_keywords] = science_keywords(collection['ScienceKeywords']) if collection['ScienceKeywords']
 
+    @collection[:highlighted_urls] = related_urls(collection, true)
+    @collection[:related_urls] = related_urls(collection, false)
+
     @collection[:online_access_urls] = collection['RelatedUrls'].select { |ru| ru['Relation'].present? && ru['Relation'].include?('GET DATA') }.map { |ru| ru['URLs'] } .flatten if collection['RelatedUrls'].present?
     @collection[:spatial] = spatial(collection['SpatialExtent'])
 
@@ -58,7 +61,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     contacts = []
     # contacts from 'DataCenters'
     if metadata['DataCenters'].present?
-      metadata['DataCenters'].select { |dc| dc['ContactPersons'].present? && dc['ContactPersons'].size > 0 || dc['ContactInformation'].present? && dc['ContactInformation'].size > 0 }.each do |dc|
+      metadata['DataCenters'].select { |dc| dc['ContactPersons'].present? && !dc['ContactPersons'].empty? || dc['ContactInformation'].present? && !dc['ContactInformation'].empty? }.each do |dc|
         # name
         if dc['ContactPersons'].present?
           first_name = dc['ContactPersons'].first['FirstName']
@@ -168,5 +171,47 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     end
 
     spatial_list.flatten
+  end
+
+  def related_urls(collection, highlighted_only = false)
+    related_urls = []
+
+    collection.fetch('RelatedUrls', []).each do |related_url|
+      content_type = related_url.fetch('URLContentType', '').downcase
+      type = related_url.fetch('Type', '').downcase
+      subtype = related_url.fetch('Subtype', '').downcase
+
+      if highlighted_only
+        if content_type == 'collectionurl' && type == 'data set landing page'
+          name = 'Data Set Landing Page'
+        end
+        if content_type == 'publicationurl' && type == 'view related information'
+          name = 'QA' if subtype == 'data quality'
+          name = 'ATBD' if subtype == 'algorithm theoretical basis document'
+          name = "User's Guide" if subtype == "user's guide"
+        end
+
+        next unless ['Data Set Landing Page', 'QA', 'ATBD', "User\'s Guide"].include?(name)
+      else
+        name = type.titleize
+        name = subtype.titleize unless subtype.empty?
+      end
+
+      url = related_url.fetch('URL', '')
+
+      related_urls << {
+        url: format_url(url),
+        name: name
+      }
+    end
+
+    related_urls
+  end
+
+  def format_url(url)
+    unless url =~ %r{^(http|https)\:\/\/}
+      url = 'http://' + url
+    end
+    url
   end
 end

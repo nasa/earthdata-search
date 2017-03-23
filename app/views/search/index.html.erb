@@ -314,7 +314,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <% content_for :header do %>
@@ -349,4 +348,8 @@
 
 <% content_for :footer do %>
   <%= render partial: 'timeline' %>
+<% end %>
+
+<% content_for :global do %>
+  <%= render partial: 'related_urls_modal' %>
 <% end %>
