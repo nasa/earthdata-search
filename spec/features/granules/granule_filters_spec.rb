@@ -306,7 +306,7 @@ describe "Granule search filters", reset: false do
 
     context "when searching by temporal" do
       after :each do
-        first_project_collection.click_link "Show granule filters"
+        first_project_collection.find_link("Show granule filters").trigger('click')
         click_button "granule-filters-clear"
         js_uncheck_recurring 'granule'
         expect(project_overview).to reset_granules_to(before_granule_count)
@@ -338,7 +338,7 @@ describe "Granule search filters", reset: false do
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
 
-        first_project_collection.click_link "Show granule filters"
+        first_project_collection.find_link("Show granule filters").trigger('click')
         click_button "granule-filters-clear"
         expect(project_overview).to reset_granules_to(before_granule_count)
 

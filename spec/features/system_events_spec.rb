@@ -17,7 +17,7 @@ describe "System event notification", reset: true do
 
   context "upon loading the search page" do
     before :each do
-      click_on 'Browse All Data'
+      find_link('Browse All Data').trigger('click')
       wait_for_xhr
     end
 

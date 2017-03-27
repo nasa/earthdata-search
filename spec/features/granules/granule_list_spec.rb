@@ -117,7 +117,7 @@ describe "Granule list", reset: false do
 
       context "until all granules on current page are excluded" do
         before :all do
-          find('#granule-search').click_link('close')
+          find('#granule-search').find_link('close').trigger('click')
 
           num_of_clicks = 19
           while num_of_clicks > 0
