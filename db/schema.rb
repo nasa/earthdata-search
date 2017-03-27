@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920144648) do
+ActiveRecord::Schema.define(version: 20170316054224) do
 
   create_table "access_configurations", force: :cascade do |t|
     t.integer  "user_id"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160920144648) do
     t.text     "service_options"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "echoform_digest", limit: 255
+    t.text     "echoform_digest", limit: 255
   end
 
   add_index "access_configurations", ["user_id"], name: "index_access_configurations_on_user_id"
