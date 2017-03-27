@@ -42,7 +42,7 @@
     }
 
     &.tab {
-      background: $master-overlay-tab-color;
+      background: $master-overlay-tab-color url('drag.png') no-repeat center 5px;
       display: inline-block;
       margin: 0;
       padding: 10px 20px;
@@ -94,6 +94,11 @@
   width: 100%;
   overflow: hidden;
   top: 50%;
+  height: 50%;
+  z-index: 60;
+  position: absolute;
+  transition-property: left, width;
+  transition-duration: 0.3s;
 
   .master-overlay-content {
     background: #fff;
@@ -168,7 +173,7 @@
   }
 }
 
-.master-overlay-parent, .master-overlay-main {
+.master-overlay-parent {
   z-index: 60;
   position: absolute;
   height: 100%;
@@ -381,7 +386,8 @@ a.master-overlay-show-parent:hover:before {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
-    top: 92%;
+    // JS: I know, I know... This needs to override any interact.js actions
+    top: 92% !important;
   }
 }
 
