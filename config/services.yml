@@ -32,7 +32,7 @@ earthdata:
     browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.sit.earthdata.nasa.gov"
 
-  lab:
+  scan:
     urs_root: "https://urs.earthdata.nasa.gov"
     echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
     cmr_root: "https://cmr.earthdata.nasa.gov"
