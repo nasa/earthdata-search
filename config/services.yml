@@ -4,7 +4,7 @@ earthdata:
     urs_root: "https://urs.earthdata.nasa.gov"
     echo_rest_root: "https://cmr.earthdata.nasa.gov/legacy-services/rest"
     echo_catalog_rest_root: "https://api.echo.nasa.gov/catalog-rest"
-    cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
+    cmr_root: "https://cmr.earthdata.nasa.gov"
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.earthdata.nasa.gov"
@@ -12,7 +12,7 @@ earthdata:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_rest_root: "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest"
     echo_catalog_rest_root: "https://cmr.uat.earthdata.nasa.gov/catalog-rest"
-    cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
+    cmr_root: "https://cmr.uat.earthdata.nasa.gov"
     opensearch_root: "https://cmr.uat.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.uat.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.uat.earthdata.nasa.gov"
@@ -27,7 +27,15 @@ earthdata:
   lab:
     urs_root: "https://urs.earthdata.nasa.gov"
     echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
-    cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
+    cmr_root: "https://cmr.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.sit.earthdata.nasa.gov"
+
+  lab:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
+    cmr_root: "https://cmr.earthdata.nasa.gov"
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.sit.earthdata.nasa.gov"
@@ -72,6 +80,10 @@ urs:
     "https://urs.earthdata.nasa.gov": "QTwF6cmUjImOi5wlJhbvLA"
     "https://uat.urs.earthdata.nasa.gov": "ShmAmFGyAS9yQaKGR-ruvA"
     "https://sit.urs.earthdata.nasa.gov": "0yEmVSQ2urMVGRt2IltsbA"
+  scan:
+    "https://urs.earthdata.nasa.gov": "Ok3vmnPCVTHowuuw4EeQCA"
+    "https://uat.urs.earthdata.nasa.gov": "DUAgv2wAXFDGBRgohFkMJA"
+    "https://sit.urs.earthdata.nasa.gov": "hzUucRwv-gK6fcpVk5b7Pw"
 
 opendap:
   C191855458-LARC:
