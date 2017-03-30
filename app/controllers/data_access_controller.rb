@@ -110,7 +110,7 @@ class DataAccessController < ApplicationController
         s['service_options']['total_number'] = 0
         s['service_options']['download_urls'] = []
 
-        if !s['error_code'].blank?
+        if !s['error_code'].compact.empty?
           s['order_status'] = 'failed'
         elsif s['collection_id']
           header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
