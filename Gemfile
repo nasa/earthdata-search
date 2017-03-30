@@ -39,6 +39,7 @@ group :development do
 
   # For dumping additional metadata stored in DatasetExtras and similar
   gem 'seed_dump'
+  gem 'rubocop', require: false
 end
 
 group :production do

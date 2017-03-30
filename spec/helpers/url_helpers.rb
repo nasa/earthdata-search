@@ -10,7 +10,7 @@ module Helpers
         url = '/' + url unless url.start_with?('/')
         result = [path_from_options(url, options), params_from_options(options)].map(&:presence).compact.join('?')
         # Debugging
-        #puts "Page: #{result}"
+        puts "Page: #{result}"
         result
       end
 
