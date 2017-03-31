@@ -106,7 +106,6 @@ describe "Granule list", reset: false do
       end
 
       it "removes the selected granule from the list" do
-        page.save_screenshot('tmp/screenshots/105.png')
         expect(page).to have_no_content('FIFE_STRM_15M.80611715.s15')
         expect(page).to have_css('#granule-list .panel-list-item', count: 19)
       end
@@ -117,7 +116,7 @@ describe "Granule list", reset: false do
 
       context "until all granules on current page are excluded" do
         before :all do
-          find('#granule-search').click_link('close')
+          find('#granule-search').find_link('close').trigger('click')
 
           num_of_clicks = 19
           while num_of_clicks > 0

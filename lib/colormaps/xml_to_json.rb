@@ -17,7 +17,7 @@ module Colormaps
     FileUtils::mkdir_p(output_dir)
 
     # regular, OPS url
-    gibs_url = "http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
+    gibs_url = "https://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
     # SIT url (behind vpn), for testing upgrade to colormaps that have xlink:href role v1.2
     # gibs_url = "https://sit.gibs.earthdata.nasa.gov/wmts/epsg4326/all/wmts.cgi?SERVICE=WMTS&REQUEST=GetCapabilities"
 
@@ -41,7 +41,7 @@ module Colormaps
       else
         url = target.attribute("href").to_s
       end
-      url = url.gsub(/^https/, 'http') # Avoid SSL errors in CI
+      url = url.gsub(/^http:/, 'https:')
 
       unless id.empty? || url.empty? || !url.start_with?('http')
         file_count += 1
