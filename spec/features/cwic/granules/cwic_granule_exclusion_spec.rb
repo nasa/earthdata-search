@@ -25,13 +25,14 @@ describe "CWIC-enabled granule results", reset: false do
 
       context "and undoing a removal" do
         before :all do
-          find_link('Undo').trigger('click')
+          page.save_screenshot '1.png'
+          granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
+          click_link 'Add it back'
         end
 
         after :all do
-          first_granule_list_item.trigger('click')
-          wait_for_xhr
-          first_granule_list_item.find_link("Exclude this granule").trigger("click")
+          first_granule_list_item.click
+          keypress('#granule-list', :delete)
           wait_for_xhr
         end
 
