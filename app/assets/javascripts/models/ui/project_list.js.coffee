@@ -282,4 +282,13 @@ ns.ProjectList = do (ko
         all_visible = false if !collection.visible()
       all_visible
 
+    showRelatedUrls: ->
+      for related_url in this.related_urls
+        $('ul#related-urls-list').append("<li><a href='#{related_url.url}' target='_blank'>#{related_url.name}</a></li>")
+      $('#related-urls-modal').modal('show')
+
+    hideRelatedUrls: ->
+      $('ul#related-urls-list li').remove()
+      $('#related-urls-modal').modal('hide')
+
   exports = ProjectList

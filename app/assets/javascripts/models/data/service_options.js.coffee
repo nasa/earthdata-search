@@ -32,9 +32,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
-
       @loadForm = ko.observable(false)
-
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -68,8 +66,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       for m in @availableMethods when m.name == item.name
         clickedMethod = m
         break
-
-      echoformContainer = document.getElementsByClassName('access-form')[0]
+      echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
+      echoformContainer.empty?() if echoformContainer?
       if clickedMethod.type == 'service' || clickedMethod.type == 'order'
         @loadForm(true) if clickedMethod.type == 'service'
         setTimeout (=>
@@ -136,7 +134,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @_onAccessOptionsLoad(opts) if result
           result
         deferEvaluation: true
-
       @canAddAccessMethod = ko.observable(false)
       @readyToDownload = @computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
 

@@ -52,11 +52,9 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
 
       if !link && @parent.title == 'Keywords'
         # hierarchical facet is applied and there is no applicable link
-        # TODO turn this into a loop if we want to support multiple keywords from same category
         query = window.edsc.models.page.current.query
-        i = 0
         appliedKeywordsHash = query.params()['science_keywords_h']
-        if appliedKeywordsHash? && appliedKeywordsHash[i]?
+        for appliedKeyword, i in appliedKeywordsHash
           Object.keys(appliedKeywordsHash[i]).forEach (key) =>
             title = appliedKeywordsHash[i][key]
             params.push "science_keywords_h[#{i}][#{key}]" if title == @title
@@ -139,7 +137,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
     _addAncestorsToFacetsList: (item) ->
       children = []
       ancestors = []
-      hasAppliedKeywords = false
       for child in item.children
         if item.title == 'Features'
           facets = @queryModel.facets()
@@ -150,7 +147,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
           children.push(new Facet(this, child))
         else if item.title == 'Keywords'
           if child.applied
-            hasAppliedKeywords = true
             @_findAncestors(ancestors, child)
             parent = ancestors.slice(-1)[0]
             if parent
@@ -160,13 +156,13 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
                 children.push new Facet(this, grandChild) for grandChild in parent.children
               else if parent.count == 0
                 continue
-              else
-                break
+            index = item.children.indexOf(child)
+            item.children[index] = null if index > -1
         else
           children.push new Facet(this, child)
 
       if item.title == 'Keywords'
-        children.push new Facet(this, child) for child in item.children when child.count > 0 unless hasAppliedKeywords
+        children.push new Facet(this, child) for child in item.children when child? && child.count > 0
 
 
       children
@@ -276,6 +272,11 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
               queryFacet.title == title
             @_removeHierarchicalFacets(child)
         @query.facets.remove (queryFacet) -> queryFacet.title == root.title unless hasAppliedChildren
+        params = @query.params()
+        if params['science_keywords_h']
+          (tmp or tmp = []).push sk for sk in params['science_keywords_h'] when sk
+          params['science_keywords_h'] = tmp
+
 
 
     addFacet: (facet) =>
@@ -285,7 +286,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       @query.facets()
 
     toggleFacet: (facet) =>
-      console.log facet
       if facet.isSelected()
         facet.isChecked(false)
         @removeFacet(facet)

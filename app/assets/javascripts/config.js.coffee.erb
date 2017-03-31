@@ -20,6 +20,13 @@
   else
     browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
 
+  if cmr_env == 'uat'
+    limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
+  else if cmr_env == 'sit'
+    limited_collections = "<%= Rails.configuration.services['edsc']['sit']['limited_collections'] %>".split /\s*,\s*/
+  else
+    limited_collections = "<%= Rails.configuration.services['edsc']['prod']['limited_collections'] %>".split /\s*,\s*/
+
   <% if Rails.env.test? %>
 
   #window.onerror = (message, filename, lineno, colno, e) ->
@@ -42,6 +49,7 @@
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
+    asterCollections: limited_collections
 
   <% elsif Rails.env.development? %>
 
@@ -63,6 +71,7 @@
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
+    asterCollections: limited_collections
 
   <% else %>
   # Production config
@@ -82,5 +91,6 @@
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
+    asterCollections: limited_collections
 
   <% end %>

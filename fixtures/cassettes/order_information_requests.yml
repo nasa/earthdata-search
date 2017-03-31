@@ -404,6 +404,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1373128825-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128850-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129003-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128984-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128818-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128891-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128985-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128952-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128976-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129057-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129104-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128815-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129044-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128848-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129142-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128901-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128816-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128889-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129021-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129111-LPDAAC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 01 Mar 2017 22:28:16 GMT
+  digest: d8a28116e7868c7626f529f45d12b09e79f95c88
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G179098142-ORNL_DAAC&catalog_item_id%5B%5D=G179098143-ORNL_DAAC&catalog_item_id%5B%5D=G179098144-ORNL_DAAC&catalog_item_id%5B%5D=G179098245-ORNL_DAAC&catalog_item_id%5B%5D=G179098246-ORNL_DAAC&catalog_item_id%5B%5D=G179098247-ORNL_DAAC&catalog_item_id%5B%5D=G179098248-ORNL_DAAC&catalog_item_id%5B%5D=G179098249-ORNL_DAAC&catalog_item_id%5B%5D=G179098250-ORNL_DAAC&catalog_item_id%5B%5D=G179098251-ORNL_DAAC&catalog_item_id%5B%5D=G179098252-ORNL_DAAC&catalog_item_id%5B%5D=G179098253-ORNL_DAAC&catalog_item_id%5B%5D=G179098254-ORNL_DAAC&catalog_item_id%5B%5D=G179098255-ORNL_DAAC&catalog_item_id%5B%5D=G179098256-ORNL_DAAC
     headers:
       User-Agent:
