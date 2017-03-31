@@ -29,7 +29,7 @@ describe 'Site landing page' do
   end
 
   it 'reveals the full search interface when the user clicks "Browse All Data"' do
-    click_link "Browse All Data"
+    find_link("Browse All Data").trigger('click')
     expect(page).to have_link('Clear Filters')
   end
 

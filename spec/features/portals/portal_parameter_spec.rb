@@ -25,9 +25,11 @@ describe "Portal parameters", reset: true do
     expect(page).to have_path_prefix("/portal/simple/")
 
     within '#main-toolbar' do
-      click_link "Simple"
+      # EDSC-1361: UI work temporarily disabling portals - rework when appropriate
+      # find_link("Simple").trigger('click')
     end
-    expect(page).to have_path('/portal/simple/')
+    #EDSC-1361: UI work temporarily disabling portals - rework when appropriate
+    #expect(page).to have_path('/portal/simple/')
 
   end
 
@@ -39,8 +41,8 @@ describe "Portal parameters", reset: true do
 
     context "and selecting the contact info page" do
       before :each do
-        click_link 'Manage user account'
-        click_link 'Contact Information'
+        find_link('Manage user account').trigger('click')
+        find_link('Contact Information').trigger('click')
       end
       it "carries the portal parameter to the next page" do
         expect(page).to have_path_prefix("/portal/simple/")
@@ -49,8 +51,8 @@ describe "Portal parameters", reset: true do
 
     context "and selecting the recent retrievals page" do
       before :each do
-        click_link 'Manage user account'
-        click_link 'Recent Retrievals'
+        find_link('Manage user account').trigger('click')
+        find_link('Recent Retrievals').trigger('click')
       end
       it "carries the portal parameter to the next page" do
         expect(page).to have_path_prefix("/portal/simple/")
@@ -59,8 +61,8 @@ describe "Portal parameters", reset: true do
 
     context "and selecting the saved project page" do
       before :each do
-        click_link 'Manage user account'
-        click_link 'Saved Projects'
+        find_link('Manage user account').trigger('click')
+        find_link('Saved Projects').trigger('click')
       end
       it "carries the portal parameter to the next page" do
         expect(page).to have_path_prefix("/portal/simple/")
@@ -69,8 +71,8 @@ describe "Portal parameters", reset: true do
 
     context "and logging out" do
       before :each do
-        click_link 'Manage user account'
-        click_link 'Logout'
+        find_link('Manage user account').trigger('click')
+        find_link('Logout').trigger('click')
       end
       it "carries the portal parameter to the next page" do
         expect(page).to have_path_prefix("/portal/simple/")
@@ -92,7 +94,8 @@ describe "Portal parameters", reset: true do
     context "and clicking the home page link" do
       before :each do
         within '#main-toolbar' do
-          click_link 'Simple'
+          # EDSC-1361: UI work temporarily disabling portals - rework when appropriate
+          # find_link("Simple").trigger('click')
         end
       end
       it "carries the portal parameter to the next page" do
