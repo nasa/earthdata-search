@@ -83,7 +83,7 @@ describe "Granule selection", reset: false do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
 
-      expect(result).to eq("LatLng(0.07031, -0.07031)")
+      expect(result).to eq("LatLng(0, 0)")
     end
 
     it "zooms the map to the selected granule" do
@@ -113,7 +113,7 @@ describe "Granule selection", reset: false do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
 
-        expect(result).to eq("LatLng(0.07031, -0.07031)")
+        expect(result).to eq("LatLng(0, 0)")
       end
 
       it "zooms the map to the selected granule" do
@@ -235,13 +235,14 @@ describe "Granule selection", reset: false do
 
     context "clicking the remove icon on the map" do
       before :all do
+        center = page.evaluate_script("$('#map').data('map').map.getCenter()")
         # re-center the map a little above the granule list so the 'x' on the map is clickable
         page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(-20,0))")
         find_by_id("map").find('a[title="Exclude this granule"]').click
         wait_for_xhr
         find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
         # restore the map center
-        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(0,0))")
+        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(#{center['lat']},center['lng'))")
       end
 
       after :all do
