@@ -3,6 +3,7 @@ require 'rake'
 
 describe 'Access data with more than 2000 granules', reset: false do
   collection_id = 'C1000000561-NSIDC_ECS'
+  aster_collection_id = 'C14758250-LPDAAC_ECS'
 
   before :all do
     Delayed::Worker.delay_jobs = true
@@ -26,6 +27,7 @@ describe 'Access data with more than 2000 granules', reset: false do
       context "and selecting 'ESI service' option" do
         before :all do
           choose 'AE_SI6.3 ESI Service'
+          wait_for_xhr
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
         end
@@ -137,6 +139,31 @@ describe 'Access data with more than 2000 granules', reset: false do
               expect(page).to have_text('Closed')
             end
           end
+        end
+      end
+    end
+  end
+
+  context "from one ASTER collection" do
+    context "with more than 2000 granules" do
+      before :all do
+        load_page 'data/configure', project: [aster_collection_id]
+        wait_for_xhr
+      end
+
+      context "and selecting 'Order' option" do
+        before :all do
+          choose 'AST_L1A'
+          click_on 'Continue'
+        end
+
+        after :all do
+          load_page 'data/configure', project: [aster_collection_id]
+        end
+
+        it "doesn't show a modal dialog" do
+          expect(page).not_to have_content('Maximum Granules Exceeded')
+          expect(page).to have_link('Edit Profile in Earthdata Login')
         end
       end
     end

@@ -491,3 +491,7 @@ $parent-width: $parent-split * 0.21;
     word-wrap: break-word;
   }
 }
+
+.master-overlay-content .flex-column {
+  padding-right: 1em;
+}

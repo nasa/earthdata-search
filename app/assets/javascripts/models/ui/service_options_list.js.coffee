@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ServiceOptionsList = do (ko, $=jQuery) ->
+ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
   class ServiceOptionsList
     constructor: (@accountForm, @project) ->
       @activeIndex = ko.observable(0)
@@ -25,7 +25,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
               checkedAccessMethodName = checkedAccessMethod.method()
               # if ESI service, don't show the modal
               for method in accessCollection.serviceOptions.granuleAccessOptions().methods
-                if method.name == checkedAccessMethodName && method.type != 'service' && method.type != 'download'
+                if method.name == checkedAccessMethodName && method.type != 'service' && method.type != 'download' && accessCollection.collection.id not in edsc.config.asterCollections
                   numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
                   $("#number-of-orders").text(numberOfOrders)
                   $("#tooManyGranulesModal").modal('show')

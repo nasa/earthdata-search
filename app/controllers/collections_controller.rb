@@ -8,7 +8,7 @@ class CollectionsController < ApplicationController
   def index
     collection_params = collection_params_for_request(request)
     unless params['echo_collection_id']
-      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS))
+      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS).merge({user_id: session[:user_id]}))
     end
     catalog_response = echo_client.get_collections(collection_params, token)
 
@@ -29,7 +29,7 @@ class CollectionsController < ApplicationController
   def show
     metrics_event('details', {collections: [params[:id]]})
     #TODO make 1_4 configurable (yml + ENV)
-    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_4')
+    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_9')
 
 
     if response.success?

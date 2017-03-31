@@ -47,7 +47,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-group :sit, :uat do
+group :sit, :uat, :lab do
   gem 'pg'
   gem 'rails_12factor'
 end
