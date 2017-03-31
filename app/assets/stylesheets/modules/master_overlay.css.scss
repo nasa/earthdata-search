@@ -47,6 +47,10 @@
       margin: 0;
       padding: 10px 20px;
 
+      &:hover {
+        cursor: row-resize;
+      }
+
       h2 {
         display: inline-block;
       }

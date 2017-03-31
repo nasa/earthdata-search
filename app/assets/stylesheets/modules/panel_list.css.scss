@@ -43,6 +43,13 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 }
 
+.granule-list .panel-list-item {
+  width: 300px;
+  float: left;
+  margin: 10px;
+  border: 1px solid #e3e3e3;
+}
+
 .panel-list-item > p {
   margin-left: $panel-list-thumbnail-container-size;
   display: table;
@@ -249,11 +256,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .granule-item-actions {
-  @media (min-width: 1150px) {
-    position: relative;
-    top: 25px;
-    left: 25px;
-  }
+
 }
 
 .panel-list-item:after {
