@@ -97,9 +97,13 @@ class Retrieval < ActiveRecord::Base
               method[:collection_id] = collection['id']
 
               until page_num * page_size > results_count do
+                if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
+                  page_size = 100
+                  page_num = results_count / page_size + 1
+                end
+
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
-                page_num = results_count / page_size + 1 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
 
                 service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
 
