@@ -71,7 +71,7 @@
             </ul>
           </div>
           <div class="button-group">
-            <button type="button" class="button group-main">API Endpoints</button><button type="button" class="button group-secondary toggle-button-group" data-bind="event: {click: $root.ui.collectionsList.toggleButtonGroup}"><i class="fa fa-sort-desc"></i></button>
+            <button type="button" class="button group-main">API Endpoints</button><button type="button" id="api-endpoints-toggle" class="button group-secondary toggle-button-group" data-bind="event: {click: $root.ui.collectionsList.toggleButtonGroup}"><i class="fa fa-sort-desc"></i></button>
             <ul class="button-group dropdown">
               <!-- ko with: $root.ui.collectionsList.selected() -->
               <!-- ko if: granuleDatasourceName() == "cmr" -->
