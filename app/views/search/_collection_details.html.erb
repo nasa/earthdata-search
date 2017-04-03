@@ -56,44 +56,46 @@
 
         <!-- second row: metadata links | api endpionts -->
         <div class="row">
-          <dl class="flex-column">
-            <dt>Metadata Formats:</dt>
-            <dd><a data-bind="attr: { href: $data.html_url }">HTML</a>
-              | <a data-bind="attr: { href: $data.native_url }">Native</a>
-              | <a data-bind="attr: { href: $data.atom_url }">ATOM</a>
-              | <a data-bind="attr: { href: $data.echo10_url }">ECHO10</a>
-              | <a data-bind="attr: { href: $data.iso19115_url }">ISO19115</a>
+          <div class="button-group">
+            <button type="button" class="button group-main">Metadata Formats</button><button type="button" class="button group-secondary toggle-button-group" data-bind="event: {click: $root.ui.collectionsList.toggleButtonGroup}"><i class="fa fa-sort-desc"></i></button>
+            <ul class="button-group dropdown">
+              <li><a data-bind="attr: { href: $data.html_url }">HTML</a></li>
+              <li><a data-bind="attr: { href: $data.native_url }">Native</a></li>
+              <li><a data-bind="attr: { href: $data.atom_url }">ATOM</a></li>
+              <li><a data-bind="attr: { href: $data.echo10_url }">ECHO10</a></li>
+              <li><a data-bind="attr: { href: $data.iso19115_url }">ISO19115</a></li>
               <!-- ko if: $data.smap_iso_url -->
-              | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
+              <li><a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></li>
               <!-- /ko -->
-              | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
-          </dl>
-          <dl class="flex-column">
-            <dt>API Endpoints:</dt>
-            <dd>
+              <li><a data-bind="attr: { href: $data.dif_url }">DIF</a></li>
+            </ul>
+          </div>
+          <div class="button-group">
+            <button type="button" class="button group-main">API Endpoints</button><button type="button" class="button group-secondary toggle-button-group" data-bind="event: {click: $root.ui.collectionsList.toggleButtonGroup}"><i class="fa fa-sort-desc"></i></button>
+            <ul class="button-group dropdown">
               <!-- ko with: $root.ui.collectionsList.selected() -->
               <!-- ko if: granuleDatasourceName() == "cmr" -->
-              <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
+              <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
               <!-- /ko -->
 
               <!-- ko foreach: gibs() -->
-              <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
+              <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
               <!-- /ko -->
 
               <!-- ko if: opendap_url() -->
-              <a class="endpoint-label" data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a>
+              <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
               <!-- /ko -->
 
               <!-- ko if: modaps() -->
-              <a class="endpoint-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
+              <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
               <!-- /ko -->
 
               <!-- ko if: osddUrl() -->
-              <a class="endpoint-label" data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a>
+              <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
               <!-- /ko -->
               <!-- /ko -->
-            </dd>
-          </dl>
+            </ul>
+          </div>
           <!-- end of second row -->
 
           <dl class="flex-column">

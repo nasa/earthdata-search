@@ -251,7 +251,6 @@
 
   .button {
     @include dark-button;
-    float: right;
     font-style: normal;
     line-height: 1.428571429em; // Bootstrap value.  Weird.
 

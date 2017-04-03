@@ -63,6 +63,9 @@ ns.CollectionsList = do ($ = jQuery
       if @selected()?
         @_unselectTimeout = setTimeout((=> @selected(null)), config.defaultAnimationDurationMs)
 
+    toggleButtonGroup: (data, event) ->
+      $(event.currentTarget).parent().find('.dropdown').toggle()
+
     focusCollection: (collection, event=null) =>
       query = @query.params()
       collections = @collections.results().map (collection) -> collection.id
