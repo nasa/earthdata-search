@@ -2,24 +2,52 @@
 require 'spec_helper'
 
 describe 'Collection details', reset: false do
-  it 'displays the collection details' do
-    load_page :search
-    fill_in 'keywords', with: 'AST_L1AE'
-    expect(page).to have_content('ASTER Expedited L1A')
-    first_collection_result.click_link('View collection details')
-    wait_for_xhr
-    within('#collection-details') do
-      expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-      expect(page).to have_content('Archive Center: LPDAAC')
-      expect(page).to have_content('Processing Center: LPDAAC')
-      expect(page).to have_content('Short Name: AST_L1AE')
-      expect(page).to have_content('VERSION 003')
-      expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (Telephone) 605-594-6963 (Fax) lpdaac@usgs.gov')
-      expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
-      expect(page).to have_content('Metadata Formats: HTML | Native | ATOM | ECHO10 | ISO19115 | DIF')
-      expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
-      expect(page).to have_content('API Endpoints: CMR OSDD')
-      expect(page).to have_content('Science Keywords: Earth ScienceSpectral/EngineeringInfrared Wavelengths Earth ScienceSpectral/EngineeringVisible Wavelengths')
+  context 'when displaying the collection details' do
+    before :all do
+      load_page :search
+      fill_in 'keywords', with: 'AST_L1AE'
+      expect(page).to have_content('ASTER Expedited L1A')
+      first_collection_result.click_link('View collection details')
+      wait_for_xhr
+    end
+    it 'those details provide the expected collection data' do
+      within('#collection-details') do
+        expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
+        expect(page).to have_content('Archive Center: LPDAAC')
+        expect(page).to have_content('Processing Center: LPDAAC')
+        expect(page).to have_content('Short Name: AST_L1AE')
+        expect(page).to have_content('VERSION 003')
+        expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (Telephone) 605-594-6963 (Fax) lpdaac@usgs.gov')
+        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+        expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
+        expect(page).to have_content('Science Keywords: Earth ScienceSpectral/EngineeringInfrared Wavelengths Earth ScienceSpectral/EngineeringVisible Wavelengths')
+      end
+    end
+
+    context 'and when the metadata formats toggle is clicked' do
+      before :all do
+        find("#metadata-formats-toggle").click
+        wait_for_xhr
+      end
+      it 'provides the metadata formats links' do
+        expect(page).to have_link("HTML",  :visible => false)
+        expect(page).to have_link("Native",  :visible => false)
+        expect(page).to have_link("ATOM",  :visible => false)
+        expect(page).to have_link("ECHO10",  :visible => false)
+        expect(page).to have_link("ISO19115",  :visible => false)
+        expect(page).to have_link("DIF",  :visible => false)
+      end
+    end
+
+    context 'and when the API Endpoints toggle is clicked' do
+      before :all do
+        find("#api-endpoints-toggle").click
+        wait_for_xhr
+      end
+      it 'provides the API Endpoints links' do
+        expect(page).to have_link("CMR",  :visible => false)
+        expect(page).to have_link("OSDD",  :visible => false)
+      end
     end
   end
 
@@ -31,6 +59,8 @@ describe 'Collection details', reset: false do
       wait_for_xhr
       fill_in 'keywords', with: 'C1216393716-EDF_OPS'
       wait_for_xhr
+      first_collection_result.click_link('View collection details')
+      wait_for_xhr
     end
 
     after :all do
@@ -38,20 +68,44 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the collection details' do
-      first_collection_result.click_link('View collection details')
-      wait_for_xhr
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
         expect(page).to have_content('Archive Center: Not provided')
         expect(page).to have_content('Short Name: SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
         expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
-        expect(page).to have_content('Metadata Formats: HTML | Native | ATOM | ECHO10 | ISO19115 | DIF')
         expect(page).to have_content('Temporal Extent: 2015-03-31 to 2020-12-31')
-        expect(page).to have_content('API Endpoints: CMR OSDD')
         expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceSoils')
       end
     end
+
+    context 'and when the metadata formats toggle is clicked' do
+      before :all do
+        find("#metadata-formats-toggle").click
+        wait_for_xhr
+      end
+      it 'provides the metadata formats links' do
+        expect(page).to have_link("HTML",  :visible => false)
+        expect(page).to have_link("Native",  :visible => false)
+        expect(page).to have_link("ATOM",  :visible => false)
+        expect(page).to have_link("ECHO10",  :visible => false)
+        expect(page).to have_link("ISO19115",  :visible => false)
+        expect(page).to have_link("DIF",  :visible => false)
+      end
+    end
+
+    context 'and when the API Endpoints toggle is clicked' do
+      before :all do
+        find("#api-endpoints-toggle").click
+        wait_for_xhr
+      end
+      it 'provides the API Endpoints links' do
+        expect(page).to have_link("CMR",  :visible => false)
+        expect(page).to have_link("OSDD",  :visible => false)
+      end
+    end
+
+
   end
 
   context 'when selecting a collection without contacts in the xml' do
@@ -192,7 +246,7 @@ describe 'Collection details', reset: false do
 
     context 'when clicking View All Related URLs' do
       before do
-        click_on 'View All Related URLs'
+        find_link('View All Related URLs').trigger('click')
       end
 
       it 'displays all related urls' do

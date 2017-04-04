@@ -8,6 +8,7 @@ describe "Granule browse display", reset: false do
 
   before :all do
     Capybara.reset_sessions!
+    login
     load_page :search
   end
 
@@ -23,28 +24,21 @@ describe "Granule browse display", reset: false do
 
       context "clicking on a granule result" do
         before :all do
-          first_granule_list_item.click
-        end
-
-        after :all do
-          first_granule_list_item.click
+          find("#granule-list-item-0").click
         end
 
         it "displays a larger browse thumbnail on the map which links to the original browse image" do
           expect(page).to have_css('#map .granule-browse a img[src$="h=256&w=256"]')
         end
-      end
-    end
 
-    context "returning to the search page with granule browse visible on the map" do
-      before :all do
-        view_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
-        first_granule_list_item.click
-        leave_granule_results
-      end
-
-      it "hides the granule browse" do
-        expect(page).to have_no_css('.granule-browse a img[src$="h=256&w=256"]')
+        context "and returning to the search page with granule browse visible on the map" do
+          before :all do
+            leave_granule_results
+          end
+          it "hides the granule browse" do
+            expect(page).to have_no_css('.granule-browse a img[src$="h=256&w=256"]')
+          end
+        end
       end
     end
   end
@@ -66,5 +60,4 @@ describe "Granule browse display", reset: false do
       end
     end
   end
-
 end
