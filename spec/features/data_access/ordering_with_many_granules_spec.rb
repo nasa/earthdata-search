@@ -36,9 +36,8 @@ describe 'Access data with more than 2000 granules', reset: false do
           load_page 'data/configure', project: [collection_id]
         end
 
-        it "doesn't show a modal dialog" do
-          expect(page).not_to have_content('Maximum Granules Exceeded')
-          expect(page).to have_link('Edit Profile in Earthdata Login')
+        it "shows a modal dialog" do
+          expect(page).to have_content('Maximum Granules Exceeded')
         end
       end
 
