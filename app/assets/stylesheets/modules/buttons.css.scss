@@ -11,6 +11,7 @@
   &.button-disabled:hover {
     background: #ddd;
     border: 1px solid transparent;
+    cursor: not-allowed;
   }
 
   &.button-active {

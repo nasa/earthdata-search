@@ -149,6 +149,11 @@ ns.Project = do (ko,
     getCollections: ->
       @_collectionsById[id]?.collection for id in @_collectionIds()
 
+    exceedCollectionLimit: ->
+      for c in @getCollections()
+        return true if c.isMaxOrderSizeReached()
+      false
+
     setCollections: (collections) ->
       collectionIds = []
       collectionsById = {}
