@@ -82,7 +82,7 @@ describe "Granule selection", reset: false do
     it "centers the map over the selected granule" do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
-
+      wait_for_xhr
       expect(result).to eq("LatLng(0, 0)")
     end
 
@@ -112,6 +112,7 @@ describe "Granule selection", reset: false do
       it "centers the map over the selected granule" do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
+        wait_for_xhr
 
         expect(result).to eq("LatLng(0, 0)")
       end
