@@ -24,14 +24,16 @@ describe "Data Access workflow", reset: false do
     end
 
     context "when clicking 'FtpPushPull'on the first collection" do
+      before(:all) do
+        selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
+        within selection do
+          choose 'FtpPushPull'
+        end
+        wait_for_xhr
+      end
       it "displays the distribution options for the first collection" do
-        synchronize do
-          selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
-          within selection do
-            choose 'FtpPushPull'
-            wait_for_xhr
-          end
-          form = find(:css, ".access-item:nth-child(1)").find(:css, ".access-form")
+        form = find(:css, ".access-item:nth-child(1)").find(:css, ".access-form")
+        synchronize(30) do
           expect(form).to have_content("Distribution Options")
         end
       end
@@ -43,14 +45,14 @@ describe "Data Access workflow", reset: false do
           sleep(1)
           find_by_id("tooManyGranulesModal").click_link("Continue")
           wait_for_xhr
+          selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
+          within selection do
+            choose 'AE_SI12.3 ESI Service'
+            wait_for_xhr
+          end
         end
         it "displays the option subsettings for the second collection" do
           synchronize() do
-            selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
-            within selection do
-              choose 'AE_SI12.3 ESI Service'
-              wait_for_xhr
-            end
             form = find(:css, ".access-item:nth-child(2)").find(:css, ".access-form")
             expect(form).to have_content("Include Metadata and Processing History")
           end
@@ -59,6 +61,9 @@ describe "Data Access workflow", reset: false do
           before(:all) do
             click_button "Continue"
             wait_for_xhr
+            # the tooManyGranulesModal is taking its time showing up, and this unfortunate sleep is the only way (so far) to get it behave
+            sleep(1)
+            find_by_id("tooManyGranulesModal").click_link("Continue")
           end
           it "displays the option subsetting for the third collection" do
             synchronize do

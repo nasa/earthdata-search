@@ -93,14 +93,31 @@ class Retrieval < ActiveRecord::Base
                 Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
               end
             elsif method['type'] == 'service'
-              params.merge!(page_size: 2000, page_num: 1)
               request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
-
               method[:collection_id] = collection['id']
-              service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
-              method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
-              method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
-              method[:error_message] = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
+
+              until page_num * page_size > results_count do
+                if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
+                  page_size = 100
+                  page_num = results_count / page_size + 1
+                end
+
+                page_num += 1
+                params.merge!(page_size: page_size, page_num: page_num)
+
+                service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
+
+                order_id = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
+                error_code = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
+                error_message = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
+
+                method[:order_id] ||= []
+                method[:order_id] << order_id
+                method[:error_code] = []
+                method[:error_code] << error_code
+                method[:error_message] = []
+                method[:error_message] << error_message
+              end
             end
           rescue => e
             tag = SecureRandom.hex(8)

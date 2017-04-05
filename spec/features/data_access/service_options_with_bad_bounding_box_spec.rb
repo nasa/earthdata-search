@@ -31,6 +31,11 @@ describe 'Service Options order with bad bounding_box', reset: false do
       within '.access-item-actions' do
         click_on 'Continue'
       end
+
+      # the tooManyGranulesModal is taking its time showing up, and this unfortunate sleep is the only way (so far) to get it behave
+      sleep(1)
+      find_by_id("tooManyGranulesModal").click_link("Continue")
+
       click_on 'Submit'
       wait_for_xhr
     end
