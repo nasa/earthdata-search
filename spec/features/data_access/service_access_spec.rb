@@ -101,7 +101,7 @@ describe 'Services Access', reset: false do
       click_button "granule-filters-submit"
       wait_for_xhr
 
-      click_link "Download collection data"
+      click_button "Download collection data"
       wait_for_xhr
     end
 
