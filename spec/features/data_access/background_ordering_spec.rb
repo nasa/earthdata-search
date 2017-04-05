@@ -20,7 +20,7 @@ describe 'Background jobs ordering', reset: false do
       click_button "granule-filters-submit"
       wait_for_xhr
 
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
 
       choose "AST_07XT"

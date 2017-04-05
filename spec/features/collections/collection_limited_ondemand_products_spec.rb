@@ -50,7 +50,7 @@ describe "Limited Collections", reset: false do
       end
 
       after :all do
-        reset_search
+        unset_temporal
       end
 
       it 'enables the retrieve button' do
