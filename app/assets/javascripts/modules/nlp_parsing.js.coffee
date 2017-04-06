@@ -1,5 +1,6 @@
 do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax, hasPending=@edsc.util.xhr.hasPending) ->
 
+  immediateReenter = null
   $(document).ready ->
     $nlpInput = $('.nlp-parsing')
     typingTimer = null
@@ -12,14 +13,29 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
       clearTimeout(typingTimer)
       _parseSearchText(event) if event.which == 13
 
+    $('body').on 'click', 'label', (event) ->
+      immediateReenter = false
+      true
+    $('body').on 'click', 'a', (event) ->
+      immediateReenter = false
+      true
+
     _parseSearchText = (e) ->
+      if immediateReenter
+        immediateReenter = ($nlpInput.val() != currentPage.query.originalKeywords() && $nlpInput.val() != '' && currentPage.query.originalKeywords() != '')
+      else
+        immediateReenter = false
+
+      previousKeyword = currentPage.query.originalKeywords()
+
       query = $nlpInput.val()
       currentPage.query.originalKeywords(query)
       ajax
         dataType: 'json'
-        url: "/extract_filters?q=#{query}"
+        url: "/extract_filters?q=#{query}&rerun=#{immediateReenter}&previous_q=#{previousKeyword}"
         success: (data) =>
           _applyParsedText(data)
+      immediateReenter = true
 
     _applyParsedText = (data) ->
       {edscSpatial, edscTemporal, keyword} = data

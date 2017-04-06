@@ -63,8 +63,8 @@ footer {
   padding-top: $tophat-clearance;
   position: absolute;
   z-index: 110;
-  padding-left: $toolbar-logo-container-width;
-  width: 100%;
+  left: $toolbar-logo-container-width;
+  width: 45%;
 
   p {
     margin: 0;
@@ -98,8 +98,11 @@ nav.main-nav {
 }
 
 .toolbar-secondary {
-  float: right;
   margin-right: 10px;
+  z-index: 110;
+  margin-top: 35px;
+  position: absolute;
+  right: 0;
 }
 
 body > footer {

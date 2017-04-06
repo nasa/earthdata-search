@@ -45,6 +45,12 @@
   }
 }
 
+.toolbar a.toggle-filter-stack {
+  background: #111;
+  color: #fff;
+  float: right;
+}
+
 .leaflet-top.leaflet-right {
   top: 80px;
   z-index: 100;

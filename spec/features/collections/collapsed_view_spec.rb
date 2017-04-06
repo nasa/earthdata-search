@@ -27,8 +27,6 @@ describe "Collections Collapsed View", reset: false do
 
     context 'clicking the minimize button for the collections list' do
       before :all do
-        screenshot_path = "./tmp/screenshots/debug-#{Time.now.to_i}.png"
-        page.save_screenshot(screenshot_path)
         click_link 'Minimize'
       end
 

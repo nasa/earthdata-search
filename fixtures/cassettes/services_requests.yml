@@ -398,6 +398,28 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179002914-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 30 Mar 2017 21:02:33 GMT
+  digest: 25fff63cf6c244fe65f5e00922872ea6753d32d9
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 30 Mar 2017 21:02:32 GMT
+  digest: f9718903bef9e6dd7ef205d3658b33ca02a5c3ae
+- request:
+    method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
     body:
       encoding: US-ASCII
@@ -452,6 +474,17 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 11 Nov 2016 17:08:36 GMT
   digest: d01537ac1b980a4377b21fabd637822e936f33b7
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=+
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 27 Mar 2017 13:55:14 GMT
+  digest: 0f56404ff9116b3803d451e32edeb63cbbe50dd0
 - request:
     method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=
@@ -531,6 +564,17 @@ http_interactions:
   digest: 8817e264f1fb0bb9981cbaa65f580d14482b03bd
 - request:
     method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=AST_L1AE
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:03 GMT
+  digest: 8817e264f1fb0bb9981cbaa65f580d14482b03bd
+- request:
+    method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=AST_L
     body:
       encoding: US-ASCII
@@ -584,6 +628,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 14:06:03 GMT
   digest: 280d484176a375b145cb0828179a2c411a5ce15b
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C1000000560-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 15:26:13 GMT
+  digest: f480d96b6d5e61837d5226c4ce4bcb4c39b20293
 - request:
     method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C1000000560-DEV08
@@ -696,6 +751,17 @@ http_interactions:
   digest: 98bb4fac06cfd86206b42401f8368d0a4cc3b5df
 - request:
     method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C1216386350-NSIDC_TS1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:18 GMT
+  digest: 7d44d1c5c163ff3dc4cbadedf334906e27909a24
+- request:
+    method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C1219032686-LANCEMODIS
     body:
       encoding: US-ASCII
@@ -727,6 +793,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 13:59:30 GMT
   digest: c086e75c002289d5724619cd2faf081335987e88
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C1220111370-NSIDCV0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:09 GMT
+  digest: 7d53f4a642fe03334db4fb8d4096c09f81e8a4e6
 - request:
     method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C1220111370-NSIDCV0
@@ -826,6 +903,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 13:54:44 GMT
   digest: 47615cc38edd6bae10c29008027f6224a3c89166
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179002945-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 23:04:14 GMT
+  digest: 8ac00351c42f3869cc3c82f11ecbbcf48ce0a130
 - request:
     method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179002945-ORNL_DAAC
@@ -1015,6 +1103,28 @@ http_interactions:
   digest: a4c9594294ce6e1c8b6c50eed1ca2ae5297b117d
 - request:
     method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=somestringthatmatchesnocollections
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Mar 2017 15:32:19 GMT
+  digest: a4c9594294ce6e1c8b6c50eed1ca2ae5297b117d
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=trigger500
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 27 Mar 2017 13:55:13 GMT
+  digest: 2b80c39a8970471032b8b3f33f9421db2379215d
+- request:
+    method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=trigger500
     body:
       encoding: US-ASCII
@@ -1024,6 +1134,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 14:01:41 GMT
   digest: 2b80c39a8970471032b8b3f33f9421db2379215d
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=+
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 27 Mar 2017 14:47:40 GMT
+  digest: 5299387581bb572ac461f6c581fe30e612d8c0c3
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=
@@ -1321,6 +1442,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Thu, 16 Feb 2017 20:19:08 GMT
   digest: 27ea8005dadb43da392075aa4219e32a3f7377ee
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1216393716-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 08 Mar 2017 15:58:55 GMT
+  digest: b8b607b7fafe2f89ca629dad8c06ba1a51157f17
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1219032686-LANCEMODIS
