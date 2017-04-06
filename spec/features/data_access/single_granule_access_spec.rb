@@ -43,7 +43,7 @@ describe 'Single Granule Data Access', reset: false do
 
     context 'when returning to the search results' do
       before :all do
-        click_link 'Back to Search Session'
+        find_link('Back to Search Session').trigger('click')
         wait_for_xhr
       end
 
@@ -60,7 +60,7 @@ describe 'Single Granule Data Access', reset: false do
       login
       wait_for_xhr
 
-      click_link "Save your project"
+      find_link("Save your project").trigger('click')
       fill_in "workspace-name", with: "Single Granule Project\t" #press tab to exit the input field
       click_save_project_name
       wait_for_xhr

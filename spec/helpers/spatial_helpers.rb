@@ -16,7 +16,7 @@ module Helpers
     end
 
     def manually_create_point(lat=0, lon=0)
-      page.find('a[title="Select spatial"]').click
+      page.find('a[title="Spatial"]').click
       page.find('a[title="Select Point"]').click
       fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}\t"
     end
@@ -26,7 +26,7 @@ module Helpers
     end
 
     def manually_create_bounding_box(swlat=0, swlon=0, nelat=0, nelon=0)
-      page.find('a[title="Select spatial"]').click
+      page.find('a[title="Spatial"]').click
       page.find('a[title="Select Rectangle"]').click
       fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}\t"
       fill_in 'manual-coord-entry-nepoint', with: "#{nelat},#{nelon}\t"
@@ -91,7 +91,7 @@ module Helpers
     end
 
     def map_mouseclick(*args)
-      find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
+      find('.landing-toolbar-container').click # Ensure the capybara cursor is in a reasonable place
       # Popover code requires the mouse to be over the map
       map_position_event('mousemove', *args)
       map_position_event('click', *args)

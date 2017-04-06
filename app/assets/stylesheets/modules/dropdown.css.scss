@@ -1,14 +1,10 @@
 .toolbar {
   a:link, a:visited {
-    color: #fff;
+    color: #424242;
   }
 
   a.logo{
     margin: 10px 0 0 10px;
-  }
-
-  a.sign-in {
-    margin: 10px;
   }
 }
 
@@ -25,7 +21,7 @@
     position: absolute;
     z-index: 81;
     margin: 0;
-    background: darken($ocean-blue, 15%);
+    background: #fff;
     border: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -129,35 +125,29 @@ input.day-of-year-input {
   }
 
   .fa-caret-down {
+    opacity: 0.3;
     padding-left: 5px;
-    color: rgba(255,255,255,.4);
     @include transition(all 0.2s ease-in-out);
   }
 }
 
 .toolbar-secondary {
   a.toolbar-button {
-    font-size: 1.4em;
-    padding: 15px 20px;
-    border-left: 1px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.8);
+    border-radius: 3px;
+    font-size: 1em;
+    padding: 12px 15px;
+    margin-left: 10px;
     display: block;
     float: left;
-    color: rgba(255,255,255,.4);
     @include transition(all 0.2s ease-in-out);
     outline: none;
     text-decoration: none;
+    border: none;
 
     &:hover {
-      color: rgba(255,255,255,1);
-      .fa-caret-down {
-        color: rgba(255,255,255,1);
-      }
+      background: rgba(255,255,255,1);
     }
-  }
-
-  a.feedback {
-    font-size: 1em;
-    line-height: 2em;
   }
 
   span.toolbar-text {

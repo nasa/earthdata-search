@@ -11,7 +11,7 @@ describe 'Address bar', reset: false do
     before :all do
       visit '/search'
       wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      first_collection_result.find_link('View collection details').trigger('click')
       wait_for_xhr
     end
 
@@ -242,14 +242,13 @@ describe 'Address bar', reset: false do
     before :all do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
       wait_for_xhr
-      first_collection_result.click
+      first_collection_result.trigger('click')
       wait_for_xhr
-      first_granule_list_item.click_link 'View granule details'
+      first_granule_list_item.find_link('View granule details').trigger('click')
       wait_for_xhr
     end
-
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2&q=C179003030-ORNL_DAAC')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&q=C179003030-ORNL_DAAC')
     end
   end
 
@@ -268,12 +267,12 @@ describe 'Address bar', reset: false do
   context "setting granule query conditions within the project" do
     before(:all) do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
-      first_project_collection.click_link "Show granule filters"
+      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
       check "Find only granules that have browse images."
-      second_project_collection.click_link "Show granule filters"
+      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
       select 'Day only', from: "day-night-select"
-      second_project_collection.click_link "Hide granule filters"
-      first_project_collection.click_link "View collection details"
+      find_by_id('granule-search').find_link("close").trigger('click')
+      first_project_collection.find_link("View collection details").trigger('click')
       wait_for_xhr
       expect(page).to have_visible_collection_details
     end
@@ -291,7 +290,7 @@ describe 'Address bar', reset: false do
   context "setting granule query conditions when the focused collection is not the project" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
-      click_link "Filter granules"
+      find_link("Filter granules").trigger('click')
       check "Find only granules that have browse images."
       wait_for_xhr
     end
@@ -312,9 +311,9 @@ describe 'Address bar', reset: false do
     end
 
     it "restores the granule query conditions" do
-      first_project_collection.click_link "Show granule filters"
+      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_checked_field 'Find only granules that have browse images.'
-      second_project_collection.click_link "Show granule filters"
+      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
       expect(page).to have_select 'day-night-select', selected: 'Day only'
     end
   end
@@ -387,7 +386,7 @@ describe 'Address bar', reset: false do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
       wait_for_xhr
-      find('.timeline-zoom-out').click
+      find('.timeline-zoom-out').trigger('click')
       wait_for_xhr
     end
 
@@ -421,12 +420,12 @@ describe 'Address bar', reset: false do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
       wait_for_xhr
-      second_granule_list_item.click
+      second_granule_list_item.trigger('click')
       wait_for_xhr
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC')
     end
   end
 
@@ -462,7 +461,7 @@ describe 'Address bar', reset: false do
       before(:each) do
         visit long_path
         wait_for_xhr
-        target_collection_result.click_link('Add collection to the current project')
+        target_collection_result.find_link('Add collection to the current project').trigger('click')
         wait_for_xhr
       end
 
@@ -508,7 +507,7 @@ describe 'Address bar', reset: false do
     context 'the granule filters panel' do
       before(:all) do
         visit "/search/granules?labs=true&p=C14758250-LPDAAC_ECS"
-        click_on 'Filter granules'
+        find_link('Filter granules').trigger('click')
       end
 
       it 'shows a section for additional attribute search' do
@@ -525,7 +524,7 @@ describe 'Address bar', reset: false do
     context 'the granule filters panel' do
       before(:all) do
         visit "/search/granules?p=C14758250-LPDAAC_ECS"
-        click_on 'Filter granules'
+        find_link('Filter granules').trigger('click')
       end
 
       it 'shows no section for additional attribute search' do

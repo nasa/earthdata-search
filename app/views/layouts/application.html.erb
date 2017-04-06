@@ -35,7 +35,7 @@
     <% end %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
-  <% # This is the recommended way to use "Status" app from the app's documentation. However we have to use the provided %>
+  <% # This is the recommended way to use Status app from the apps documentation. However we have to use the provided %>
   <% # API in event_controller. Reasons being: %>
   <% # 1. we need to combine PUMP calendar response with Status response before PUMP shutdown. %>
   <% # 2. we need to show different notifications from different environments when cmr_env is set in the url. %>
@@ -48,24 +48,13 @@
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
-      <h1>
-        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
-        <%= portal_logo %>
-        <a class="site-logo" href="<%=edsc_path root_path %>">
-          <span class="site-logo-org"><%= site_logo_org %></span>
-          <%= site_logo_title %>
-        </a>
-        <% unless Rails.configuration.logo_name.blank? %>
-          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
-        <% end %>
-      </h1>
       <div class="toolbar-content">
-        <div class="toolbar-secondary">
-          <%= yield :toolbar_secondary %>
-        </div>
         <%= yield :toolbar %>
       </div>
     </header>
+    <div class="toolbar-secondary">
+      <%= yield :toolbar_secondary %>
+    </div>
     <% if portal_nav? %>
     <nav class="main-nav portal-nav"><%= portal_nav %></nav>
     <% end %>

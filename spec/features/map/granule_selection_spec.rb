@@ -82,7 +82,7 @@ describe "Granule selection", reset: false do
     it "centers the map over the selected granule" do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
-
+      wait_for_xhr
       expect(result).to eq("LatLng(0, 0)")
     end
 
@@ -112,6 +112,7 @@ describe "Granule selection", reset: false do
       it "centers the map over the selected granule" do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
+        wait_for_xhr
 
         expect(result).to eq("LatLng(0, 0)")
       end
@@ -235,16 +236,20 @@ describe "Granule selection", reset: false do
 
     context "clicking the remove icon on the map" do
       before :all do
-        within '#map' do
-          click_link 'Exclude this granule'
-        end
+        center = page.evaluate_script("$('#map').data('map').map.getCenter()")
+        # re-center the map a little above the granule list so the 'x' on the map is clickable
+        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(-20,0))")
+        find_by_id("map").find('a[title="Exclude this granule"]').click
+        wait_for_xhr
         find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
+        # restore the map center
+        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(#{center['lat']},center['lng'))")
       end
 
       after :all do
         granule_list.click_link 'Filter granules'
         click_button "granule-filters-clear"
-        granule_list.click_link('Hide granule filters')
+        click_button('Apply your selections')
         wait_for_xhr
         map_mouseclick(5, 5)
       end

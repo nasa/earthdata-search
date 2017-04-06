@@ -6,22 +6,31 @@
   color: #fff;
 
   a {
-    color: #fff;
   }
 
   // Non-scrollable header area
   header {
-    margin: 1em 1em 0;
+    background: $master-overlay-info-bg-color;
+    margin: 0;
     color: $overlay-heading-font-color;
 
     h2 {
-      font-size: 1.4em;
+      font-size: 1.2em;
       margin: 0;
       font-weight: 200;
     }
 
+    h4 {
+      margin: 0;
+      padding: 1em 0.5em;
+    }
+
     &.with-options {
-      margin: .4em 1em .5em 1em;
+      margin: 0;
+
+      > * {
+        display: inline-block;
+      }
 
       h2 {
         padding: 10px 0 10px 0;
@@ -29,6 +38,21 @@
 
       .actions {
         margin-top: .5em;
+      }
+    }
+
+    &.tab {
+      background: $master-overlay-tab-color url('drag.png') no-repeat center 5px;
+      display: inline-block;
+      margin: 0;
+      padding: 10px 20px;
+
+      &:hover {
+        cursor: row-resize;
+      }
+
+      h2 {
+        display: inline-block;
       }
     }
   }
@@ -40,7 +64,8 @@
 
 .master-overlay-nav {
   padding: 1em;
-  border-bottom: 1px solid #333;
+  background: $master-overlay-tab-color;
+  display: inline-block;
 }
 
 // A parent panel for the overlday.  For instance, collection facets are a parent
@@ -50,8 +75,13 @@
   width: $facet-overlay-width;
   left: 0;
 
+  a {
+    color: #fff;
+  }
+
   header {
     margin: 1em 1em 0 .5em;
+    background: inherit;
 
     h2 {
       color: #FFFFFF;
@@ -65,22 +95,37 @@
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
-  width: 40%;
-  left: $facet-overlay-width;
+  width: 100%;
   overflow: hidden;
+  top: 50%;
+  height: 50%;
+  z-index: 60;
+  position: absolute;
+  transition-property: left, width;
+  transition-duration: 0.3s;
+
+  .master-overlay-content {
+    background: #fff;
+  }
 }
 
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
-  background-color: $master-overlay-main-bg-color;
+  background-color: $master-overlay-parent-bg-color;
   left: 40%;
-  right: 0%;
+  /* JS: Temporary, ugly fix to prevent overlap */
+  top: 80px;
   overflow: hidden;
-  z-index: 60;
+  z-index: 140;
   position: absolute;
   height: 100%;
   transition-property: right, left;
   transition-duration: 0.3s;
+
+  header, nav {
+    background: transparent;
+    color: #fff;
+  }
 
   .message {
     margin-top: 1em;
@@ -89,13 +134,24 @@
 
 .master-overlay-main-content {
   width: 400%;
-  left: 0%;
+  left: 0;
 
   section {
     height: 100%;
     width: 25%;
     float: left;
     position: relative;
+    padding-left: $facet-overlay-width;
+
+    &.master-overlay-no-min {
+      padding-left: 0;
+
+      h4 {
+        padding-left: 25px;
+        font-size: 1.2em;
+        font-weight: normal;
+      }
+    }
   }
 
   dt {
@@ -108,12 +164,20 @@
     margin-left: 0;
   }
 
+  .nav-tabs {
+    background: #eee;
+    color: #424242;
+    margin: 0;
+  }
+
   .tab-content {
     padding-bottom: 0;
+    background: $master-overlay-info-bg-color;
+    color: #424242;
   }
 }
 
-.master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
+.master-overlay-parent {
   z-index: 60;
   position: absolute;
   height: 100%;
@@ -121,16 +185,22 @@
   transition-duration: 0.3s;
 }
 
-.master-overlay-parent, .master-overlay-main {
-  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.4);
+.master-overlay-main-content {
+  position: absolute;
+  transition-property: left, width;
+  transition-duration: 0.3s;
 }
 
 .master-overlay-parent {
-  z-index: 62;
+  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.2);
+}
+
+.master-overlay-parent {
+  z-index: 130;
 }
 
 .master-overlay-main {
-  z-index: 61;
+  z-index: 120;
 }
 
 .master-overlay-minimized {
@@ -147,11 +217,19 @@
 }
 
 .master-overlay-info {
+  background: $master-overlay-info-bg-color;
   margin: 0;
+  padding: 0px 25px 0 25px;
   color: $overlay-heading-font-color;
+
+  > * {
+    display: inline-block;
+  }
 
 
   p.button-details {
+    color: #999;
+
     span {
       display: block;
       position: relative;
@@ -165,16 +243,14 @@
       position: relative;
       z-index:1;
     }
-    height: 36px;
   }
 
   p {
-    margin: 1em 1em 0;
+    margin: 0;
   }
 
   .button {
     @include dark-button;
-    float: right;
     font-style: normal;
     line-height: 1.428571429em; // Bootstrap value.  Weird.
 
@@ -191,7 +267,7 @@
 }
 
 .is-master-overlay-maximized #collection-results .master-overlay-info {
-  height: 71px;
+  padding: 20px;
 }
 
 .master-overlay-global-actions {
@@ -228,7 +304,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  padding: .5em 1em 1em 1em;
+  padding: 0;
   height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -241,20 +317,18 @@
 
 .master-overlay-minimize, .master-overlay-maximize {
   font-size: 1.3em;
-  position: absolute;
-  right: .5em;
-  top: .5em;
-  display: block;
+  display: inline-block;
+  margin-left: 5px;
+  &:link {
+    color: #e3e3e3;
+  }
   &:hover {
     color: #aaa;
   }
 }
 
 .master-overlay-close {
-  position: absolute;
-  right: 1em;
-  top: 1em;
-  display: block;
+  float: right;
 }
 
 a.master-overlay-close {
@@ -262,7 +336,11 @@ a.master-overlay-close {
   @include transition (color 0.15s ease-in-out);
 }
 
-a.master-overlay-back, a.master-overlay-show-parent {
+a.master-overlay-back {
+  color: #424242;
+}
+
+a.master-overlay-show-parent {
   background: $button-dark-bottom-gradient;
   padding: 8px 10px 8px 5px;
   color: #fff;
@@ -275,7 +353,7 @@ a.master-overlay-back, a.master-overlay-show-parent {
   @include transition(all 0.2s ease-in-out);
 }
 
-a.master-overlay-back:before, a.master-overlay-show-parent:before {
+a.master-overlay-show-parent:before {
   content:"";
   position: absolute;
   float: left;
@@ -289,11 +367,11 @@ a.master-overlay-back:before, a.master-overlay-show-parent:before {
   @include transition(all 0.2s ease-in-out);
 }
 
-a.master-overlay-back:hover, a.master-overlay-show-parent:hover {
+a.master-overlay-show-parent:hover {
   background: #2b4c6f;
 }
 
-a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
+a.master-overlay-show-parent:hover:before {
   border-color:transparent #2b4c6f transparent transparent;
 }
 
@@ -309,41 +387,15 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 
 .is-master-overlay-minimized {
   .master-overlay-when-max { display: none; }
-  .master-overlay-when-min { display: block; }
+  .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
-    width: $collapsed-overlay-width;
-    header {
-      margin: 1em .5em 0;
-      h2 {
-        font-size: 1.1em;
-      }
-    }
-    .master-overlay-content {
-      padding: .5em 0 1em;
-//      direction:rtl; // Puts the scrollbar on the left hand side
-//      > * {
-//        direction:ltr;
-//      }
-      width: $collapsed-overlay-width + 30px;
-    }
-    .master-overlay-info {
-      height: 32px;
-      .button-details {
-        text-align: right;
-        padding-top: 4px;
-        margin-top: 0;
-      }
-      .button {
-        float: none;
-        font-size: .8em;
-        padding: 4px 6px;
-      }
-    }
+    // JS: I know, I know... This needs to override any interact.js actions
+    top: 92% !important;
   }
 }
 
 .is-master-overlay-parent-hidden .master-overlay-when-parent-hidden {
-  display: block;
+  display: inline-block;
 }
 
 .is-master-overlay-parent-hidden {
@@ -380,7 +432,6 @@ $parent-width: $parent-split * 0.21;
 
 @media (min-width: $browser-split) {
   .master-overlay-main {
-    width: $main-width;
   }
 
   .master-overlay-secondary {
@@ -399,9 +450,11 @@ $parent-width: $parent-split * 0.21;
 }
 
 .master-overlay-info .panel-list-meta, .panel-list-meta {
+  display: inline-block;
+  float: right;
   text-align:right;
-  padding: 0 1.25em;
-  margin: 1em .5em 0 0;
+  padding: 0;
+  margin: 0;
   font-size: .8em;
   color: #666;
   line-height: 1.5;
@@ -433,7 +486,6 @@ $parent-width: $parent-split * 0.21;
   dd {
     font-size: 0.9em;
     font-weight: bold;
-    color: #FFFFFF;
     margin-bottom: 10px;
     word-wrap: break-word;
   }

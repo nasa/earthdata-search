@@ -55,6 +55,7 @@ describe 'Duplicate Service Options', reset: false do
 
   context 'when setting options for a collection whose only option is "Download"' do
     before :all do
+      wait_for_xhr
       choose 'Download'
       click_button 'Continue'
     end
@@ -84,7 +85,7 @@ describe 'Duplicate Service Options', reset: false do
     after :all do
       wait_for_xhr
       AccessConfiguration.destroy_all if page.server.responsive?
-      click_link 'Back to Data Access Options'
+      find_link('Back to Data Access Options').trigger('click')
     end
 
     it "displays download links twice" do

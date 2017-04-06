@@ -147,7 +147,7 @@ describe "Shapefile search", reset: false, wait: 30 do
       lat = result.split('(')[1].split(',')[0].to_f
       lng = result.split(', ')[1].split(')')[0].to_f
       expect(lat).to be_within(0.15).of(0.5)
-      expect(lng).to be_within(0.15).of(100.6)
+      expect(lng).to be_within(0.15).of(98.8)
     end
 
     it "zooms the map to the spatial constraint" do
@@ -160,6 +160,8 @@ describe "Shapefile search", reset: false, wait: 30 do
 
   context "when selecting a shapefile feature containing a large number of points" do
     before :all do
+      clear_spatial
+      clear_shapefile
       expect(page).to have_no_css('.geojson-svg')
       upload_shapefile('doc/example-data/shapefiles/large.geojson')
       expect(page).to have_css('.geojson-svg')

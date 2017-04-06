@@ -3,6 +3,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list {
+
   .button {
     @include light-button;
     font-size: 1.2em;
@@ -10,19 +11,16 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 }
 
-.panel-list .ccols {
-  margin-bottom: 1em;
-}
-
 .panel-list-list {
   margin-top: 0;
+  background: $master-overlay-info-bg-color;
 }
 
 .panel-list-item, .panel-list-list > .sortable-placeholder {
-  color: #fff;
-  background-color: #292929;
-  border-left: 10px solid #424242;
-  margin: 5px 5px 6px 5px;
+  color: #424242;
+  background-color: #fff;
+  border-top: 1px solid #e3e3e3;
+  margin: 0;
   min-height: $panel-list-thumbnail-size + 30px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
@@ -32,14 +30,24 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     margin-top: 0;
   }
 
+  &:nth-child(odd) {
+    background: #f4f7fa;
+  }
+
   &.master-overlay-forward:hover {
-    border-left-color: #525252;
-    background-color: #393939;
+    background-color: #eee;
   }
 
   h3 {
     overflow: hidden;
   }
+}
+
+.granule-list .panel-list-item {
+  width: 300px;
+  float: left;
+  margin: 10px;
+  border: 1px solid #e3e3e3;
 }
 
 .panel-list-item > p {
@@ -72,9 +80,19 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-focused {
-  border-left-color: #525252;
-  background-color: #393939;
+  background-color: #eee;
   cursor: pointer;
+}
+
+.panel-list-info-container {
+  display: inline-block;
+  width: 80%;
+}
+
+.panel-list-item-actions-container {
+  display: inline-block;
+  vertical-align: top;
+  float: right;
 }
 
 .panel-list-thumbnail-container {
@@ -237,25 +255,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   padding: 4px 8px;
 }
 
-.panel-list-granule-description {
-  border-left: 1px solid #888;
-  padding-left: 4px;
-  margin-left: 4px;
-}
-
-.panel-list-item-actions {
-  position: relative;
-  top: 2px;
-  left: 2px;
-  float: right;
-}
-
 .granule-item-actions {
-  @media (min-width: 1150px) {
-    position: relative;
-    top: 25px;
-    left: 25px;
-  }
+
 }
 
 .panel-list-item:after {
@@ -271,8 +272,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-selected {
-  border-left-color: desaturate(#2980b9, 50%);
-  background: #494949;
+  background: rgba(46, 204, 113,0.2);
 
   .panel-list-when-selected {
     visibility: visible;

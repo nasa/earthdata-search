@@ -6,11 +6,11 @@
 // Layout Dimensions
 // ========================================
 
-$toolbar-search-field-width: 300px;
+$toolbar-search-field-width: 325px;
 $toolbar-search-field-sm-width: 200px;
 
 $toolbar-logo-width: 172px;
-$toolbar-logo-container-width: 142px;
+$toolbar-logo-container-width: 275px;
 
 
 // Colors
@@ -29,19 +29,27 @@ $button-dark-lp-border: #fff;
 
 $dropdown-highlight: $ocean-blue;
 
-// Toolbar and Footer
-$toolbar-background: #2c3e50;
+// Toolbar
+$toolbar-background: #fff;
 $toolbar-background-bottom: #283949;
 $toolbar-accent-border: #236d9e;
+
+// Footer
+$footer-background: rgba(41, 128, 185,1.0);
+
+// Tophat height
+$tophat-clearance: 35px;
 
 // Master Overlay
 $master-overlay-parent-bg-color: #191A1B;
 $master-overlay-parent-on-main-bg-color: transparentize(#111, .3); // Used when drawing parent overlapping main
-$master-overlay-main-bg-color: transparentize(#111, .1);
-$overlay-heading-font-color: #c9c9c9;
+$master-overlay-main-bg-color: transparent;
+$master-overlay-info-bg-color: #fff;
+$master-overlay-tab-color: #fff;
+$overlay-heading-font-color: #424242;
 
 // Facet Overlay
-$facet-overlay-width: 270px;
+$facet-overlay-width: 280px;
 
 // Collapsed Overlay
-$collapsed-overlay-width: 267px;
+$collapsed-overlay-width: 450px;

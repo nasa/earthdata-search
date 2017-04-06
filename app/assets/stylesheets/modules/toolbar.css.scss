@@ -1,13 +1,15 @@
+.filter-stack {
+  background: #111;
+
+  a {
+    float: right;
+  }
+}
+
 #temporal-query {
-  position: absolute;
   color: #fff;
-  background: rgba(22,22,22,.9);
   z-index: 59;
-  padding: 8px 12px;
-  border-radius: 5px;
-  top: 15px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
+  padding: 10px 15px;
   font-size: 1em;
 }
 
@@ -16,30 +18,42 @@
 }
 
 .manual-coord-entry {
-  position: absolute;
   color: #fff;
-  background: rgba(22,22,22,.9);
   z-index: 59;
-  padding: 6px 10px;
-  border-radius: 5px;
-  top: 57px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
+  padding: 10px 15px;
   font-size: .9em;
 
   label {
     min-width: 50px;
+    padding-right: 5px;
     display: block;
+    font-weight: bold;
   }
 
   input {
-    min-width: 200px;
-    padding: 0;
+    min-width: 180px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    border: none;
+    background: #424242;
+    color: #e3e3e3;
+    font-weight: normal;
+  }
+
+  p {
+    display: inline-block;
   }
 }
 
+.toolbar a.toggle-filter-stack {
+  background: #111;
+  color: #fff;
+  float: right;
+}
+
 .leaflet-top.leaflet-right {
-  top: 85px;
+  top: 80px;
+  z-index: 100;
 }
 
 .leaflet-bar.projection-switcher a {

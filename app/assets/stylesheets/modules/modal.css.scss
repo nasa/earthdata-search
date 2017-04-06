@@ -4,6 +4,32 @@
   height: 80%;
 }
 
+.modal.variables, .modal.customize-data {
+
+  .modal-body {
+    padding: 0;
+
+    p {
+      margin: 0;
+      padding: 20px;
+      border-bottom: 1px solid #e3e3e3;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select {
+      float: right;
+    }
+  }
+
+  .modal-dialog {
+    width: 800px;
+    margin-top: 120px;
+  }
+}
+
 .modal-body {
   /* 100% = dialog height, 120px = header + footer */
   max-height: calc(100% - 120px);

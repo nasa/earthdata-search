@@ -93,6 +93,8 @@ ns.Map = do (window,
 
       map.loadingLayers = 0
 
+      map.addControl(L.control.scale(position: 'topright'))
+
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new MouseEventsLayer())
@@ -101,10 +103,8 @@ ns.Map = do (window,
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
 
-      @legendControl = new LegendControl(position: 'bottomright')
+      @legendControl = new LegendControl(position: 'topleft')
       map.addControl(@legendControl)
-
-      map.addControl(L.control.scale(position: 'bottomright'))
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")

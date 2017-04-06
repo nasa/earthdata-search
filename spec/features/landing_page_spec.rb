@@ -29,7 +29,7 @@ describe 'Site landing page' do
   end
 
   it 'reveals the full search interface when the user clicks "Browse All Data"' do
-    click_link "Browse All Data"
+    find_link("Browse All Data").trigger('click')
     expect(page).to have_link('Clear Filters')
   end
 
@@ -53,12 +53,14 @@ describe 'Site landing page' do
     expect(page).to have_link('Clear Filters')
   end
 
-  it 'goes back to the landing page when the user clicks the site logo from the search page' do
-    load_page :search
-    expect(page).to have_link('Clear Filters')
-    click_link 'Earthdata Search Home'
-    expect(page).to have_no_link('Clear Filters')
-  end
+
+  # JS: We are eliminating the landing page
+  # it 'goes back to the landing page when the user clicks the site logo from the search page' do
+  #   load_page :search
+  #   expect(page).to have_link('Clear Filters')
+  #   click_link 'Earthdata Search Home'
+  #   expect(page).to have_no_link('Clear Filters')
+  # end
 
   it 'displays the current NASA official' do
     load_page :root

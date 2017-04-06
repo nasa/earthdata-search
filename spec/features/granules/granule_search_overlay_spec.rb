@@ -29,8 +29,20 @@ describe "Granule search overlay", reset: false do
       expect(page).to have_link("Hide granule filters", count: 1)
     end
 
-    it "should close granule search overlay when clicking again" do
-      first_project_collection.click_link "Hide granule filters"
+    #it "should close granule search overlay when clicking again" do
+    #  first_project_collection.click_link "Hide granule filters"
+    #
+    #  expect(page).to_not have_visible_granule_search
+    #  expect(page).to have_no_link("Hide granule filters")
+    #end
+
+    # JS: In the new design you can't click the show granule search button again to close
+    # so you need to click the close icon. Adding test for this new case.
+
+    it "should close granule search overlay when clicking close icon" do
+      within("#granule-search") do
+        page.click_link('close')
+      end
 
       expect(page).to_not have_visible_granule_search
       expect(page).to have_no_link("Hide granule filters")
