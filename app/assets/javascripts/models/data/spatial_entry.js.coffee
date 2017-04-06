@@ -73,13 +73,6 @@ ns.SpatialEntry = do (ko,
           return null
 
     _writeCoordinates: (value) ->
-      map = $('#map').data('map').map
-      layers = map._layers
-      keys = Object.keys(layers)
-      for key in keys
-        map.fitBounds([layers[key].getLatLng()]) if layers[key].type? && layers[key].type == 'marker'
-        map.fitBounds([layers[key].getLatLngs()]) if layers[key].type? && layers[key].type == 'rectangle'
-
       if value == null || value == ''
         @querySpatial(null)
       else if typeof(value) == 'string'

@@ -218,6 +218,7 @@ ns.SpatialSelection = do (window,
       marker = @_layer = new L.Marker(shape[0], icon: L.Draw.Marker.prototype.options.icon)
       marker.type = 'marker'
       @_drawnItems.addLayer(marker)
+      @map.fitBounds([marker.getLatLng()])
 
     _renderRectangle: (shape) ->
       # southwest longitude should not be greater than northeast
@@ -228,6 +229,7 @@ ns.SpatialSelection = do (window,
       rect = @_layer = new L.Rectangle(bounds, options)
       rect.type = 'rectangle'
       @_drawnItems.addLayer(rect)
+      @map.fitBounds(rect.getLatLngs())
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
