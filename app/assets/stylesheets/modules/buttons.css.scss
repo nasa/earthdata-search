@@ -4,12 +4,16 @@
   border: 1px solid #424242;
 
   &.button-disabled {
-    color: #aaa;
+    background: $button-disabled;
+    color: #fff;
     cursor: default;
+    padding: 6px 10px;
+    @include transition(background 0.2s ease-in-out);
   }
 
   &.button-disabled:hover {
-    background: #ddd;
+    background: darken($button-disabled, 10%);
+    color: #fff;
     border: 1px solid transparent;
     cursor: not-allowed;
   }
