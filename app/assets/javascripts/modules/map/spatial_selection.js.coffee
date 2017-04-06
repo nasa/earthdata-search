@@ -218,7 +218,13 @@ ns.SpatialSelection = do (window,
       marker = @_layer = new L.Marker(shape[0], icon: L.Draw.Marker.prototype.options.icon)
       marker.type = 'marker'
       @_drawnItems.addLayer(marker)
-      @map.fitBounds(L.latLngBounds([marker.getLatLng()]), {maxZoom: @map.getZoom()})
+
+      # pan to empty area
+      masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
+      facetOverlay = document.getElementById('master-overlay-parent')
+      offset = 0 - ((if masterOverlay then masterOverlay.offsetWidth else 0) + (if facetOverlay then facetOverlay.offsetWidth else 0)) / 2
+
+      @map.panTo(marker.getLatLng()).panBy([offset,0])
 
     _renderRectangle: (shape) ->
       # southwest longitude should not be greater than northeast
