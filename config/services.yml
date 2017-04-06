@@ -4,7 +4,7 @@ earthdata:
     urs_root: "https://urs.earthdata.nasa.gov"
     echo_rest_root: "https://cmr.earthdata.nasa.gov/legacy-services/rest"
     echo_catalog_rest_root: "https://api.echo.nasa.gov/catalog-rest"
-    cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
+    cmr_root: "https://cmr.earthdata.nasa.gov"
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.earthdata.nasa.gov"
@@ -12,7 +12,7 @@ earthdata:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_rest_root: "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest"
     echo_catalog_rest_root: "https://cmr.uat.earthdata.nasa.gov/catalog-rest"
-    cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
+    cmr_root: "https://cmr.uat.earthdata.nasa.gov"
     opensearch_root: "https://cmr.uat.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.uat.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.uat.earthdata.nasa.gov"
@@ -24,9 +24,37 @@ earthdata:
     opensearch_root: "https://cmr.sit.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.sit.earthdata.nasa.gov/browse-scaler"
     status_app_domain: "https://search.sit.earthdata.nasa.gov"
+  lab:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
+    cmr_root: "https://cmr.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.sit.earthdata.nasa.gov"
+
+  scan:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
+    cmr_root: "https://cmr.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+    status_app_domain: "https://search.sit.earthdata.nasa.gov"
+
 
 status_app_root: "https://status.earthdata.nasa.gov/api/v1/"
 cwic_root: "http://cwic.wgiss.ceos.org/"
+
+# Earthdata Search Client specific configs
+#     limited_collections: The collection concept IDs included below will be limited to 2000 granules when ordering. The
+#                          number 2000 is defined in several places service_options_list.coffee and configure.html.erb.
+#                          TODO move them to one place.
+edsc:
+  sit:
+    limited_collections: C1002-LPDAAC_TBD
+  uat:
+    limited_collections: C1070-PVC_TS2, C1000-LPDAAC_TS2, C1052-LPDAAC_TS1, C1218664486-CUMULUS, C1216391161-LPCUMULUS, C1071-PVC_TS2, C98791-LPDAAC_TS1, C1216100909-LPDAAC_TS2, C1216257556-LPDAAC_TS1, C1216101022-LPDAAC_TS2, C1216257557-LPDAAC_TS1, C1216101026-LPDAAC_TS2, C1216257558-LPDAAC_TS1, C1216101028-LPDAAC_TS2, C1216257559-LPDAAC_TS1, C1216101030-LPDAAC_TS2, C1216257560-LPDAAC_TS1, C1216101032-LPDAAC_TS2, C1216257561-LPDAAC_TS1, C1216101034-LPDAAC_TS2, C1216257562-LPDAAC_TS1, C1216101036-LPDAAC_TS2, C1216257563-LPDAAC_TS1, C1216101038-LPDAAC_TS2, C1216257593-LPDAAC_TS1, C1216101040-LPDAAC_TS2, C1216257565-LPDAAC_TS1
+  prod:
+    limited_collections: C14758250-LPDAAC_ECS, C190733714-LPDAAC_ECS, C1299783607-LPDAAC_ECS, C1299783800-LPDAAC_ECS, C1299783608-LPDAAC_ECS, C1299783630-LPDAAC_ECS, C1299783574-LPDAAC_ECS, C1299783609-LPDAAC_ECS, C1299783631-LPDAAC_ECS, C1299783579-LPDAAC_ECS, C1299783651-LPDAAC_ECS, C1299783684-LPDAAC_ECS
 
 # Every (EDSC, URS) environment pair has a different client id.  Yay combinatorics.
 urs:
@@ -48,6 +76,14 @@ urs:
     "https://urs.earthdata.nasa.gov": "Gsk6IBbEfa98sbE5UavsZQ"
     "https://uat.urs.earthdata.nasa.gov": "e8QKhLdQqhfDzzmSJrBW7g"
     "https://sit.urs.earthdata.nasa.gov": "mUM6VJvn6dXjZfhdeSeBbA"
+  lab:
+    "https://urs.earthdata.nasa.gov": "QTwF6cmUjImOi5wlJhbvLA"
+    "https://uat.urs.earthdata.nasa.gov": "ShmAmFGyAS9yQaKGR-ruvA"
+    "https://sit.urs.earthdata.nasa.gov": "0yEmVSQ2urMVGRt2IltsbA"
+  scan:
+    "https://urs.earthdata.nasa.gov": "Ok3vmnPCVTHowuuw4EeQCA"
+    "https://uat.urs.earthdata.nasa.gov": "DUAgv2wAXFDGBRgohFkMJA"
+    "https://sit.urs.earthdata.nasa.gov": "hzUucRwv-gK6fcpVk5b7Pw"
 
 opendap:
   C191855458-LARC:

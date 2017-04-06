@@ -91,7 +91,6 @@ module Helpers
     end
 
     def map_mouseclick(*args)
-      page.save_screenshot('tmp/screenshots/click.png')
       find('.landing-toolbar-container').click # Ensure the capybara cursor is in a reasonable place
       # Popover code requires the mouse to be over the map
       map_position_event('mousemove', *args)

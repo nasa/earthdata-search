@@ -42,10 +42,14 @@
     }
 
     &.tab {
-      background: $master-overlay-tab-color;
+      background: $master-overlay-tab-color url('drag.png') no-repeat center 5px;
       display: inline-block;
       margin: 0;
       padding: 10px 20px;
+
+      &:hover {
+        cursor: row-resize;
+      }
 
       h2 {
         display: inline-block;
@@ -94,6 +98,11 @@
   width: 100%;
   overflow: hidden;
   top: 50%;
+  height: 50%;
+  z-index: 60;
+  position: absolute;
+  transition-property: left, width;
+  transition-duration: 0.3s;
 
   .master-overlay-content {
     background: #fff;
@@ -168,7 +177,7 @@
   }
 }
 
-.master-overlay-parent, .master-overlay-main {
+.master-overlay-parent {
   z-index: 60;
   position: absolute;
   height: 100%;
@@ -242,7 +251,6 @@
 
   .button {
     @include dark-button;
-    float: right;
     font-style: normal;
     line-height: 1.428571429em; // Bootstrap value.  Weird.
 
@@ -381,34 +389,8 @@ a.master-overlay-show-parent:hover:before {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
-    width: $collapsed-overlay-width;
-    header {
-      margin: 1em .5em 0;
-      h2 {
-        font-size: 1.1em;
-      }
-    }
-    .master-overlay-content {
-      padding: .5em 0 1em;
-//      direction:rtl; // Puts the scrollbar on the left hand side
-//      > * {
-//        direction:ltr;
-//      }
-      width: $collapsed-overlay-width + 30px;
-    }
-    .master-overlay-info {
-      height: 32px;
-      .button-details {
-        text-align: right;
-        padding-top: 4px;
-        margin-top: 0;
-      }
-      .button {
-        float: none;
-        font-size: .8em;
-        padding: 4px 6px;
-      }
-    }
+    // JS: I know, I know... This needs to override any interact.js actions
+    top: 92% !important;
   }
 }
 
@@ -507,4 +489,8 @@ $parent-width: $parent-split * 0.21;
     margin-bottom: 10px;
     word-wrap: break-word;
   }
+}
+
+.master-overlay-content .flex-column {
+  padding-right: 1em;
 }

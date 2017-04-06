@@ -14,6 +14,7 @@ describe "User missing ordering preferences", reset: false do
       click_link "Download project data"
 
       choose "FtpPushPull"
+      wait_for_xhr
       select 'FtpPull', from: 'Distribution Options'
       click_button "Continue"
     end

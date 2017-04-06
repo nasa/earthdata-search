@@ -12,8 +12,8 @@ describe "CWIC-enabled granule results", reset: false do
     context "clicking the button to remove a granule" do
 
       before :all do
-        first_granule_list_item.trigger('click')
-        first_granule_list_item.find_link("Exclude this granule").trigger("click")
+        first_granule_list_item.click
+        keypress('#granule-list', :delete)
         wait_for_xhr
       end
 
@@ -24,12 +24,14 @@ describe "CWIC-enabled granule results", reset: false do
 
       context "and undoing a removal" do
         before :all do
-          find_link('Undo').trigger('click')
+          granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
+          click_link 'Add it back'
         end
 
         after :all do
-          first_granule_list_item.trigger('click')
-          first_granule_list_item.find_link("Exclude this granule").trigger("click")
+          click_button('Apply your selections')
+          first_granule_list_item.click
+          keypress('#granule-list', :delete)
           wait_for_xhr
         end
 
@@ -54,12 +56,12 @@ describe "CWIC-enabled granule results", reset: false do
       context "and going to data access page" do
         before :all do
           login
-          find_link('Download Collection Data').trigger('click')
+          click_link 'Download Collection Data'
           wait_for_xhr
         end
 
         after :all do
-          find_link('Back to Search Session').trigger('click')
+          click_link 'Back to Search Session'
           wait_for_xhr
         end
 
@@ -77,11 +79,11 @@ describe "CWIC-enabled granule results", reset: false do
           end
 
           after :all do
-            find_link('Back to Data Access Options').trigger('click')
+            click_link 'Back to Data Access Options'
             wait_for_xhr
           end
 
-          it "provides a list of download links for the remaining granules" do
+          it "provides a list of download links for the remaining granuels" do
             within_last_window do
               expect(page).to have_no_text('Loading more...')
               expect(page).to have_link('Granule download URL', count: 99)

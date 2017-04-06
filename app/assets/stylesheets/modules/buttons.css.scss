@@ -80,12 +80,34 @@
   text-decoration: none;
   display: inline-block;
   padding: 8px 12px;
-  border-radius: 3px;
+  border-radius: 2px;
   outline: none;
   color: #fff;
 
   &:hover, &:focus {
     text-decoration: none;
+  }
+
+  &.group-main {
+    padding-right: 0.5em;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    float: none;
+  }
+
+  &.group-secondary {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    float: none;
+
+    i {
+      display: inline-block;
+      vertical-align: top;
+      padding-top: 2px;
+    }
   }
 }
 
@@ -216,5 +238,34 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
 
   &:hover {
     background: $feedback-button-hover-color;
+  }
+}
+
+.button-group {
+  display: inline-block;
+  margin-right: 10px;
+  
+
+  &.dropdown {
+    background: white;
+    list-style-type: none;
+    margin: 5px 0 0 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    border: 1px solid darken($light-grey, 10%);
+    font-size: 0.9em;
+  }
+
+  &.dropdown li {
+    padding: 10px 20px 0 20px;
+    margin: 0;
+    display: block;
+  }
+
+  &.dropdown li:last-child {
+    padding-bottom: 10px;
   }
 }

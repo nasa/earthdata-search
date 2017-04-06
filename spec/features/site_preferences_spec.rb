@@ -27,7 +27,8 @@ describe 'Site Preferences', reset: true do
 
     it "sets site preferences when closing the tour" do
       click_button 'End Tour'
-      click_button 'Close'
+      #EDSC-1361: UI Work to address tour at appropriate time
+      #click_button 'Close'
       expect(page).to have_no_css '.tour'
       wait_for_xhr
 
@@ -48,7 +49,8 @@ describe 'Site Preferences', reset: true do
 
     it "sets site preferences when closing the tour" do
       click_button 'End Tour'
-      click_button 'Close'
+      #EDSC-1361: UI Work to address tour at appropriate time
+      #click_button 'Close'
       expect(page).to have_no_css '.tour'
       wait_for_xhr
 

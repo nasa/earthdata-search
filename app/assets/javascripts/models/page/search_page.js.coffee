@@ -101,6 +101,10 @@ ns.SearchPage = do (ko
     showParent: =>
       $('.master-overlay').masterOverlay('manualShowParent')
 
+    toggleFilterStack: (data, event) =>
+      $('.filter-stack').toggle()
+      $('.filter-stack-collapsed').toggle()
+
   current = new SearchPage()
   setCurrent(current)
 
