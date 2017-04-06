@@ -93,7 +93,7 @@
     preferences.save()
     showAllEvents()
 
-  $(document).on 'searchready', ->
+  $(document).on 'ready', ->
     preferences.onload ->
       getJSON '/events', (data, status, xhr) ->
         allEvents = data
