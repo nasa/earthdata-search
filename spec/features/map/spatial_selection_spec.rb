@@ -129,7 +129,7 @@ describe "Spatial" do
       end
 
       it "pans map to the point" do
-        expect(page.current_url).to match(/m=-75![\d\.]+!7!/)
+        expect(page.current_url).to match(/m=-74\.953125![\d\.]+!2!/)
       end
 
       it "updates the collection filters using the new point selection" do
