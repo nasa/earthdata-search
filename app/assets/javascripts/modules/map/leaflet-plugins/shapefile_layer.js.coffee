@@ -1,6 +1,6 @@
 ns = @edsc.map.L
 
-ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
+ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
 
   MAX_POLYGON_SIZE = config.maxPolygonSize
 
@@ -136,7 +136,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       if children.length > 1
         middleChild = children[Math.floor(children.length / 2)]
         el = middleChild._container ? middleChild._icon
-        help.add('shapefile_multiple', element: el)
       else if children.length == 1
         @_setConstraint(children[0])
 
@@ -154,15 +153,11 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       @_setConstraint(e.chain[0])
 
     _setConstraint: (sourceLayer) ->
-      help.next() if help.current()?.key == 'shapefile_multiple'
 
       if sourceLayer.getLatLngs?
         # Polygon
         originalLatLngs = sourceLayer.getLatLngs()
         latlngs = @_simplifyPoints(originalLatLngs)
-
-        if originalLatLngs.length > MAX_POLYGON_SIZE && latlngs.length != originalLatLngs.length
-          help.add('shapefile_reduction', element: '.leaflet-draw-edit-edit')
 
         layer = L.sphericalPolygon(latlngs, @options.selection)
         layerType = 'polygon'
