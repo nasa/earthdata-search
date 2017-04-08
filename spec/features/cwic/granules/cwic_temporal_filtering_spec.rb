@@ -37,10 +37,6 @@ describe "CWIC-enabled granule results", reset: false do
         context "and setting a recurring temporal condition" do
           before(:all) { set_temporal("12-01 00:00:00", "12-01 23:59:59", [2013, 2014]) }
           after(:all) { set_temporal("2013-12-01 00:00:00", "2013-12-01 23:59:59") }
-
-          it "displays a warning that recurring temporal is not supported" do
-            expect(page).to have_popover('Recurring Temporal Unavailable')
-          end
         end
       end
 
@@ -50,10 +46,6 @@ describe "CWIC-enabled granule results", reset: false do
         it "filters the results list to the period from the first recurring start to the last recurring end", acceptance: true do
           expect(first_granule_list_item).to have_text('2013-12-01')
           expect(page).to have_text('Showing 20 of 6053 matching granules')
-        end
-
-        it "displays a warning that recurring temporal is not supported", acceptance: true do
-          expect(page).to have_popover('Recurring Temporal Unavailable')
         end
 
         context "and removing the recurring temporal condition" do
