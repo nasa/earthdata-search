@@ -27,7 +27,6 @@ describe "Site tour", reset: true do
 
       expect(page).to have_popover('Keyword Search')
       fill_in 'keywords', with: 'snow cover'
-      click_on 'Browse All Data'
       wait_for_xhr
 
       expect(page).to have_popover('Browse Collections')
@@ -105,7 +104,6 @@ describe "Site tour", reset: true do
         click_on 'Next'
         expect(page).to have_popover
         fill_in "keywords", with: "AST_L1A"
-        find_link('Browse All Data').trigger('click')
       end
 
       it "hides the tour" do
@@ -114,9 +112,6 @@ describe "Site tour", reset: true do
     end
 
     context "starting a search without starting the tour" do
-      before :each do
-        find_link('Browse All Data').trigger('click')
-      end
 
       it "hides the tour" do
         expect(page).to have_no_popover
