@@ -30,28 +30,24 @@ describe "Granule search filters", reset: false do
     context "when choosing a day/night flag" do
       after :each do
         first_project_collection.click_link "Show granule filters"
-        wait_for_xhr
         click_button "granule-filters-clear"
         expect(project_overview).to reset_granules_to(before_granule_count)
       end
 
       it "selecting day returns day granules" do
         select 'Day only', from: "day-night-select"
-        wait_for_xhr
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
       end
 
       it "selecting night returns night granules" do
         select 'Night only', from: "day-night-select"
-        wait_for_xhr
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
       end
 
       it "selecting both returns both day and night granules" do
         select 'Both day and night', from: "day-night-select"
-        wait_for_xhr
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
       end
@@ -73,7 +69,6 @@ describe "Granule search filters", reset: false do
     context "when choosing cloud cover" do
       after :each do
         first_project_collection.click_link "Show granule filters"
-        wait_for_xhr
         click_button "granule-filters-clear"
         expect(project_overview).to reset_granules_to(before_granule_count)
       end
@@ -104,7 +99,6 @@ describe "Granule search filters", reset: false do
         expect(project_overview).to filter_granules_from(before_granule_count)
 
         first_project_collection.click_link "Show granule filters"
-        wait_for_xhr
         click_button "granule-filters-clear"
         expect(project_overview).to reset_granules_to(before_granule_count)
 
