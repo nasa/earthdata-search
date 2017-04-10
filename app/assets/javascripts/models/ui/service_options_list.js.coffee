@@ -20,12 +20,14 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         # find current collection
         if accessCollection.collection.id == this._currentCollection().id
           # number of granules in the order
-          if accessCollection.granuleAccessOptions().hits > 2000 # && accessCollection.serviceOptions.accessMethod()[0].method() ==
+          if accessCollection.granuleAccessOptions().hits > 2000
             for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
               checkedAccessMethodName = checkedAccessMethod.method()
-              # if ESI service, don't show the modal
               for method in accessCollection.serviceOptions.granuleAccessOptions().methods
-                if method.name == checkedAccessMethodName && method.type != 'download' && accessCollection.collection.id not in edsc.config.asterCollections
+                # method.type == 'download': continue without chunking
+                # method.type == 'order':    ASTER ? first 100 granules : chunking
+                # method.type == 'service':  enabled ? chunking : first 2000 granules
+                if method.name == checkedAccessMethodName && method.type != 'download' && method.type != 'service' && accessCollection.collection.id not in edsc.config.asterCollections ||  method.type == 'service' && window.edsc.config.enableEsiOrderChunking
                   numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
                   $("#number-of-orders").text(numberOfOrders)
                   $("#tooManyGranulesModal").modal('show')
@@ -35,6 +37,9 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
           else
             @showNext()
             return true
+
+    isEsiOrderChunkingEnabled: ->
+      edsc.config.enableEsiOrderChunking
 
     showNext: =>
       $("#tooManyGranulesModal").modal('hide')

@@ -97,8 +97,8 @@ class Retrieval < ActiveRecord::Base
               method[:collection_id] = collection['id']
 
               until page_num * page_size > results_count do
-                if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
-                  page_size = 100
+                unless Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['enable_esi_order_chunking'] == 'true'
+                  page_size = 100 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
                   page_num = results_count / page_size + 1
                 end
 
