@@ -424,25 +424,6 @@ a.master-overlay-show-parent:hover:before {
   margin-bottom: 1em;
 }
 
-$browser-split: 1550px;
-$parent-split: 1200px;
-
-$main-width: $browser-split * 0.4;
-$parent-width: $parent-split * 0.21;
-
-@media (min-width: $browser-split) {
-  .master-overlay-main {
-  }
-
-  .master-overlay-secondary {
-    left: $main-width + $parent-width;
-  }
-
-  .is-master-overlay-parent-hidden .master-overlay-secondary {
-    left: $main-width;
-  }
-}
-
 .details-content {
   white-space: pre;
   font-family: monospace;
@@ -493,4 +474,34 @@ $parent-width: $parent-split * 0.21;
 
 .master-overlay-content .flex-column {
   padding-right: 1em;
+}
+
+$browser-split: 1550px;
+$parent-split: 1200px;
+
+$main-width: $browser-split * 0.4;
+$parent-width: $parent-split * 0.21;
+
+@media (min-width: $browser-split) {
+  .master-overlay-main {
+  }
+
+  .master-overlay-secondary {
+    left: $main-width + $parent-width;
+  }
+
+  .is-master-overlay-parent-hidden .master-overlay-secondary {
+    left: $main-width;
+  }
+}
+
+@media (max-width: $parent-split) {
+  .button-details {
+    overflow: hidden;
+    font-size: 0.8em;
+  }
+
+  .master-overlay-info .panel-list-meta {
+    float: none;
+  }
 }
