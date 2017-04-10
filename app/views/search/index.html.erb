@@ -107,7 +107,6 @@
             <span>You have <em id="project-count" data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></em> in your project.</span>
           </p>
           <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
-            Search Time: <span data-bind="text: collections.loadTime">0.000</span>s
             <% if Rails.configuration.feedback_url.present? %>
             <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Collection Results', null)" class="button feedback-button">
               <i class="fa fa-exclamation-circle"></i>
