@@ -8,7 +8,7 @@ describe 'Contact Information', reset: false do
     load_page :search, overlay: false
     login
 
-    find_link('Manage user account').trigger('click')
+    click_link 'Manage user account'
     # TODO: Both of these fail to get me to the contact info page
     # click_link 'Contact Information'
     # click_contact_information
