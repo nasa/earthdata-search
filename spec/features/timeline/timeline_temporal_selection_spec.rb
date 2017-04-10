@@ -60,7 +60,7 @@ describe "Timeline temporal selection", reset: false do
     end
 
     context 'clicking on the close link in the temporal constraint display' do
-      before(:all) { find('a[title="Remove temporal constraint"]').trigger('click')}
+      before(:all) { click_link 'Remove temporal constraint' }
       after(:all) { set_temporal(global_start_date, global_stop_date) }
 
       it 'clears the global temporal constraint' do
