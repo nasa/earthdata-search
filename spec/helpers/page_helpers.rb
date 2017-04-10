@@ -112,6 +112,7 @@ module Helpers
                 when :right then 39
                 when :down then 40
                 when :delete then 46
+                when :esc then 27
                 else key.to_i
                 end
 
