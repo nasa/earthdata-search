@@ -85,6 +85,14 @@
     border-color: darken(#e3e3e3, 8%);
     color: darken(#7f8c8d, 8%);
   }
+
+  &.primary {
+    color: #27ae60;
+  }
+
+  &.button-active {
+    color: #c0392b;
+  }
 }
 
 .button, input[type="button"], input[type="reset"], input[type="submit"], button {

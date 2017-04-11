@@ -101,10 +101,7 @@
         <div class="master-overlay-info master-overlay-when-max">
           <p data-bind="visible: project.isEmpty()"class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus-square"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
-            <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
-              <i class="fa fa-folder-o"></i> View Project
-            </a>
-            <span>You have <em id="project-count" data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></em> in your project.</span>
+            You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" class="master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">Project</a>
           </p>
           <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
             <% if Rails.configuration.feedback_url.present? %>
