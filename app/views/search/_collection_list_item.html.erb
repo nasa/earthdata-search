@@ -4,20 +4,6 @@
               <div class="panel-list-drag-handle"></div>
               <% end %>
               <div class="panel-list-thumbnail-container" data-bind="css: {'panel-list-thumbnail-placeholder': !thumbnail()}">
-                <div class="panel-list-badges">
-                  <!-- ko if: gibs() -->
-                  <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
-                  <!-- /ko -->
-                  <!-- ko if: opendap() -->
-                  <a href="#" class="badge badge-subsetting" data-tooltip="true" title="Supports spatial and parameter subsetting"></a>
-                  <!-- /ko -->
-                  <!-- ko if: nrt -->
-                  <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
-                  <!-- /ko -->
-                  <!-- ko if: cwic() -->
-                  <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
-                  <!-- /ko -->
-                </div>
                 <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               </div>
               <div class="panel-list-info-container">
@@ -30,6 +16,20 @@
                   <span data-bind="truncatedText: summary, maxLength: 280"></span>
                 </p>
                 <p>
+                  <span class="panel-list-badges">
+                    <!-- ko if: gibs() -->
+                    <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
+                    <!-- /ko -->
+                    <!-- ko if: opendap() -->
+                    <a href="#" class="badge badge-subsetting" data-tooltip="true" title="Supports spatial and parameter subsetting"></a>
+                    <!-- /ko -->
+                    <!-- ko if: nrt -->
+                    <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
+                    <!-- /ko -->
+                    <!-- ko if: cwic() -->
+                    <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
+                    <!-- /ko -->
+                  </span>
                   <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
 
                     <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
