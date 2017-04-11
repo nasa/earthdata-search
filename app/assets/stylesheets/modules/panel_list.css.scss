@@ -5,7 +5,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 .panel-list {
 
   .button {
-    @include light-button;
+    @include list-panel-button;
     font-size: 1.2em;
     padding: 7px 10px;
   }
