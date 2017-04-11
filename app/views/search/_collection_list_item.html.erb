@@ -1,5 +1,5 @@
             <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}"
-                class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
+                title="View granules" class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
               <% if is_project %>
               <div class="panel-list-drag-handle"></div>
               <% end %>
@@ -73,7 +73,7 @@
                     </a>
                     <!-- /ko -->
                   <% end %>
-                  <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                  <a href="#" class="button icon-button add-to-project primary" data-pulse="#project-count" title="Add collection to the current project"
                      data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
                     <i class="fa fa-plus"></i>
                   </a>
