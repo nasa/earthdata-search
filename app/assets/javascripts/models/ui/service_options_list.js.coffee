@@ -25,13 +25,16 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
               checkedAccessMethodName = checkedAccessMethod.method()
               for method in accessCollection.serviceOptions.granuleAccessOptions().methods
                 # method.type == 'download': continue without chunking
-                # method.type == 'order':    ASTER ? first 100 granules : chunking
-                # method.type == 'service':  enabled ? chunking : first 2000 granules
-                if method.name == checkedAccessMethodName && method.type != 'download' && method.type != 'service' && accessCollection.collection.id not in edsc.config.asterCollections ||  method.type == 'service' && window.edsc.config.enableEsiOrderChunking
-                  numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
-                  $("#number-of-orders").text(numberOfOrders)
-                  $("#tooManyGranulesModal").modal('show')
-                  return true
+                # method.type == 'order':    ASTER ? first 2000 granules : chunking
+                # method.type == 'service':  enabled ? (ASTER ? first 100 : chunking) : first 2000.
+                if method.name == checkedAccessMethodName &&
+                  method.type != 'download' &&
+                  (method.type == 'order' || method.type == 'service' && edsc.config.enableEsiOrderChunking ) &&
+                  accessCollection.collection.id not in edsc.config.asterCollections
+                    numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
+                    $("#number-of-orders").text(numberOfOrders)
+                    $("#tooManyGranulesModal").modal('show')
+                    return true
             @showNext()
             return true
           else
@@ -40,6 +43,9 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     isEsiOrderChunkingEnabled: ->
       edsc.config.enableEsiOrderChunking
+
+    isLimitedCollection: (projectCollection) ->
+      projectCollection.collection.id in edsc.config.asterCollections
 
     showNext: =>
       $("#tooManyGranulesModal").modal('hide')

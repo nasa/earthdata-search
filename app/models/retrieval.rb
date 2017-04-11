@@ -97,10 +97,7 @@ class Retrieval < ActiveRecord::Base
               method[:collection_id] = collection['id']
 
               until page_num * page_size > results_count do
-                unless Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['enable_esi_order_chunking'] == 'true'
-                  page_size = 100 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
-                  page_num = results_count / page_size + 1
-                end
+                page_size = 100 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
 
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
@@ -117,6 +114,8 @@ class Retrieval < ActiveRecord::Base
                 method[:error_code] << error_code
                 method[:error_message] = []
                 method[:error_message] << error_message
+
+                page_num = results_count / page_size + 1 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['enable_esi_order_chunking'] == 'false'
               end
             end
           rescue => e
