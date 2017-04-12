@@ -90,6 +90,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: bounding_box=0%2C0%2C15%2C10&concept_id=C1219252422-LANCEMODIS&end_date=1989-03-05T00%3A00%3A00.000Z&interval=day&start_date=1986-03-03T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 12 Apr 2017 17:58:49 GMT
+  digest: 75e36862aa9d935b595993cf7dfca1f5057c15f0
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: bounding_box=0%2C0%2C15%2C15&concept_id=C1219252422-LANCEMODIS&end_date=1989-03-05T00%3A00%3A00.000Z&interval=day&start_date=1986-03-03T00%3A00%3A00.000Z
     headers:
       User-Agent:
