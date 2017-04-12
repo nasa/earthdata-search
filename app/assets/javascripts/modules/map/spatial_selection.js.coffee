@@ -241,7 +241,7 @@ ns.SpatialSelection = do (window,
       facetOverlay = document.getElementById('master-overlay-parent')
       offset = 0 - ((if masterOverlay then masterOverlay.offsetWidth else 0) + (if facetOverlay then facetOverlay.offsetWidth else 0)) / 2
 
-      @map.fitBounds(L.latLngBounds(rect.getLatLngs()), {maxZoom: @map.getZoom()}).panBy([offset, 0])
+      @map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offset, 0])
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
