@@ -5,6 +5,8 @@ describe "Add to project", reset: false do
   before(:all) do
     Capybara.reset_sessions!
     load_page :search, q: 'C179003030-ORNL_DAAC'
+    login
+    wait_for_xhr
   end
 
   context "in the collection results list" do
