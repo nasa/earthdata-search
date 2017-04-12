@@ -17,6 +17,8 @@ describe "Sharing Projects", reset: false do
       project_id = Project.first.to_param
       visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
+      login
+      wait_for_xhr
     end
 
     after :all do
