@@ -108,6 +108,8 @@ describe "Add to project", reset: false do
 
       context 'when collections remain in the project' do
         before(:all) do
+          login
+          wait_for_xhr
           fill_in :keywords, with: 'C179003030-ORNL_DAAC'
           wait_for_xhr
           target_collection_result.click_link "Add collection to the current project"
