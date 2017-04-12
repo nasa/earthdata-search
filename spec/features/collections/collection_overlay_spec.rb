@@ -25,7 +25,7 @@ describe 'Collections overlay', :reset => false do
     before(:all) do
       first_collection_result.click_link "Add collection to the current project"
       second_collection_result.click_link "Add collection to the current project"
-      collection_results.click_link "View Project"
+      find("#view-project").click
       project_overview.click_link "Back to Collection Search"
     end
 
@@ -46,7 +46,7 @@ describe 'Collections overlay', :reset => false do
 
       first_collection_result.click_link "Add collection to the current project"
       second_collection_result.click_link "Add collection to the current project"
-      collection_results.click_link "View Project"
+      find("#view-project").click
     end
 
     after :all do
