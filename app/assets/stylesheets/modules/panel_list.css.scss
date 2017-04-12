@@ -43,11 +43,27 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 }
 
-.granule-list .panel-list-item {
-  width: 300px;
-  float: left;
-  margin: 10px;
-  border: 1px solid #e3e3e3;
+.granule-list {
+
+  .master-overlay-info {
+    padding: 10px 20px;
+  }
+
+  .panel-list-list {
+    padding: 10px;
+    border-top: 1px solid #e3e3e3;
+  }
+
+  .panel-list-item {
+    width: 300px;
+    float: left;
+    margin: 10px;
+    border: 1px solid #e3e3e3;
+  }
+
+  .button {
+    @include list-panel-button;
+  }
 }
 
 .panel-list-item > p {

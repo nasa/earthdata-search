@@ -33,7 +33,7 @@
       }
 
       h2 {
-        padding: 10px 0 10px 0;
+        padding: 10px 0 10px 20px;
       }
 
       .actions {
@@ -219,7 +219,7 @@
 .master-overlay-info {
   background: $master-overlay-info-bg-color;
   margin: 0;
-  padding: 0px 25px 0 25px;
+  padding: 0px 20px 0 20px;
   color: $overlay-heading-font-color;
 
   > * {
@@ -276,12 +276,13 @@
   border-radius: 3px;
 
   .button {
-    @include light-button;
+    @include list-panel-button;
     padding: 6px 6px;
   }
 
   .retrieve {
     background: #27ae60;
+    border: none;
     color: #fff;
     padding-left: 10px;
     padding-right: 10px;
