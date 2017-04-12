@@ -66,7 +66,7 @@ describe "Add to project", reset: false do
       end
 
       it 'displays a summary of the collections in the project' do
-        expect(page).to have_text("You have 1 collection in your project.")
+        expect(page).to have_text("You have 1 collection in your current project.")
       end
 
       it 'displays a link to view the project' do
@@ -88,7 +88,7 @@ describe "Add to project", reset: false do
         end
 
         it 'removes the summary of the collections in the project' do
-          expect(page).to have_no_text("You have 1 collection in your project.")
+          expect(page).to have_no_text("You have 1 collection in your current project.")
           expect(page).to have_text('Add collections to your project to compare and download their data.')
         end
 
@@ -130,7 +130,7 @@ describe "Add to project", reset: false do
         end
 
         it 'updates the summary of the collections in the project' do
-          expect(page).to have_text("You have 1 collection in your project.")
+          expect(page).to have_text("You have 1 collection in your current project.")
           expect(page).to have_no_text('Add collections to your project to compare and download their data.')
         end
 
