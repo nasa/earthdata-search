@@ -115,7 +115,7 @@ class Retrieval < ActiveRecord::Base
                 method[:error_message] = []
                 method[:error_message] << error_message
 
-                page_num = results_count / page_size + 1 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['enable_esi_order_chunking'] == 'false'
+                page_num = results_count / page_size + 1 if Rails.configuration.enable_esi_order_chunking
               end
             end
           rescue => e
