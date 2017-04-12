@@ -52,6 +52,9 @@ describe "Sharing Projects", reset: false do
       project_id = Project.first.to_param
       visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
+      # EDSC-1394: This login really might be defeating the purpose of this test and should be reviewed
+      login
+      wait_for_xhr
       new_project_id = Project.first.to_param
     end
 
