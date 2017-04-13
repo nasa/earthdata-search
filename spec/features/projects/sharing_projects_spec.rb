@@ -59,7 +59,7 @@ describe "Sharing Projects", reset: false do
     end
 
     it "shows the contents of the project" do
-      expect(page).to have_content 'You have 8 collections in your current project'
+      expect(page).to have_content 'You have 8 collections in your current Project'
     end
 
     it "saves the path into a new project for the new user" do
