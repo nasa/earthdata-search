@@ -50,7 +50,7 @@ describe 'Project help', reset: false do
   context 'viewing the project list with collections in the project' do
     before :each do
       first_collection_result.click_link "Add collection to the current project"
-      collection_results.click_link "View Project"
+      find("#view-project").click
     end
 
     after :each do

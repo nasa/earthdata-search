@@ -39,13 +39,6 @@ describe "CWIC-enabled polygon searches", reset: false do
       after :all do
         leave_granule_results
       end
-
-      it "presents a message explaining that the search has been reduced", acceptance: true do
-        expect(page).to have_popover('Polygon Searches Unavailable')
-        within '.popover' do
-          expect(page).to have_content("Search results will show all granules within your area's minimum bounding rectangle")
-        end
-      end
     end
 
     context "viewing CWIC granule results after the first time" do

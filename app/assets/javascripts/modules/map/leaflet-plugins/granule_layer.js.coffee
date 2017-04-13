@@ -7,7 +7,6 @@ ns.GranuleLayer = do (L
                       dividePolygon = @edsc.map.geoutil.dividePolygon
                       capitalize = @edsc.util.string.capitalize
                       arrayUtil = @edsc.util.array
-                      help = @edsc.help
                       config = @edsc.config
                       ) ->
 
@@ -512,9 +511,6 @@ ns.GranuleLayer = do (L
       delete newOptions.time
 
       url = @url()
-
-      # Make sure help is displayed after the master overlay is updated for positioning reasons
-      setTimeout((-> help.add('gibs_accuracy')), 0) if url?
 
       layer = new GranuleCanvasLayer(url, L.extend(@_toTileLayerOptions(newOptions), color: @color), @multiOptions)
 

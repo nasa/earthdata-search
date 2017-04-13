@@ -52,10 +52,6 @@ describe "Shapefile search", reset: false, wait: 30 do
       expect(page).to have_css('.geojson-icon')
     end
 
-    it "displays a help message prompting the user to select a feature" do
-      expect(page).to have_popover('Choose a Search Constraint')
-    end
-
     context "when clicking on a feature" do
       before :all do
         page.execute_script("$('.geojson-svg').first().mapClick()")
@@ -176,9 +172,6 @@ describe "Shapefile search", reset: false, wait: 30 do
       expect(MapUtil.spatial(page).split(':').size).to be <= 51
     end
 
-    it "displays a help message explaining the point reduction" do
-      expect(page).to have_popover('Shape file has too many points')
-    end
   end
 
   context "when removing an uploaded shapefile" do

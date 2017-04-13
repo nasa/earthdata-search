@@ -6,7 +6,7 @@ describe "Project collection list", reset: true do
     load_page :search
     add_collection_to_project("C179003030-ORNL_DAAC", "15 Minute Stream Flow Data: USGS (FIFE)")
     add_collection_to_project("C179002914-ORNL_DAAC", "30 Minute Rainfall Data (FIFE)")
-    collection_results.click_link "View Project"
+    find("#view-project").click
   end
 
   after(:each) do

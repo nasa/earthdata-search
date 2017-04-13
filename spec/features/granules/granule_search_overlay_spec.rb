@@ -11,7 +11,7 @@ describe "Granule search overlay", reset: false do
     target_collection_result('MODIS/Aqua Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 1km').click_link "Add collection to the current project"
     target_collection_result('MODIS/Aqua Near Real Time (NRT) Geolocation Angles Daily L2G Global 1km SIN Grid Day V005').click_link "Add collection to the current project"
 
-    collection_results.click_link "View Project"
+    find("#view-project").click
   end
 
   after(:each) do
@@ -56,7 +56,7 @@ describe "Granule search overlay", reset: false do
 
     it "should hide the granule search overlay when returning to the project" do
       project_overview.click_link "Back to Collection Search"
-      collection_results.click_link "View Project"
+      find("#view-project").click
 
       expect(page).to_not have_visible_granule_search
       expect(page).to have_no_link("Hide granule filters")

@@ -53,7 +53,6 @@ ns.SearchPage = do (ko
         spatialType: new SpatialTypeModel(@query)
         collectionsList: new CollectionsListModel(@query, @collections, @project)
         projectList: new ProjectListModel(@project, @collections)
-        isLandingPage: ko.observable(null) # Used by modules/landing
         feedback: new FeedbackModel()
 
       @bindingsLoaded = ko.observable(false)
