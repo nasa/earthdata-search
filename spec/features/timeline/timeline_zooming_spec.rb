@@ -21,7 +21,7 @@ describe "Timeline zooming", reset: false do
 
     set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
 
-    collection_results.click_link "View Project"
+    find("#view-project").click
     pan_to_time(present)
     wait_for_xhr
   end

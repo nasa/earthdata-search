@@ -91,7 +91,6 @@ describe "Expired user token", reset: true do
         page.execute_script script
 
         fill_in 'keywords', with: 'AST_L1AE'
-        find_link('Browse All Data').trigger('click')
         wait_for_xhr
       end
 

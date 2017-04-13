@@ -24,7 +24,7 @@ describe "Timeline temporal selection", reset: false do
     add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
     add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
-    collection_results.click_link "View Project"
+    find("#view-project").click
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
     pan_to_time(present - 25.years)
@@ -60,7 +60,7 @@ describe "Timeline temporal selection", reset: false do
     end
 
     context 'clicking on the close link in the temporal constraint display' do
-      before(:all) { find('a[title="Remove temporal constraint"]').trigger('click')}
+      before(:all) { click_link 'Remove temporal constraint' }
       after(:all) { set_temporal(global_start_date, global_stop_date) }
 
       it 'clears the global temporal constraint' do

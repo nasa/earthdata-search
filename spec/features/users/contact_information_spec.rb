@@ -7,8 +7,10 @@ describe 'Contact Information', reset: false do
   before :all do
     load_page :search, overlay: false
     login
-
-    find_link('Manage user account').trigger('click')
+    wait_for_xhr
+    # Banner status bars are blocking the 'Manage user account' link - close one if it is present
+    find(".banner-close").click if page.has_css?('.banner-close')
+    click_link 'Manage user account' 
     # TODO: Both of these fail to get me to the contact info page
     # click_link 'Contact Information'
     # click_contact_information
