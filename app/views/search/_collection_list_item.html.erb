@@ -56,9 +56,9 @@
                     <i class="fa fa-info-circle"></i>
                   </a>
                   <% if is_project %>
-                    <a href="#" class="button icon-button" title="Download data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+                    <button class="button icon-button" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading.' : 'Download data'}">
                       <i class="fa fa-download"></i>
-                    </a>
+                    </button>
                     <!-- ko if: has_granules -->
                     <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
                       <i class="fa fa-edit"></i>

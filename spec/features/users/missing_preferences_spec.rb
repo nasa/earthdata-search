@@ -11,7 +11,7 @@ describe "User missing ordering preferences", reset: false do
 
       login 'edscbasic'
 
-      click_link "Download project data"
+      click_button "Download project data"
 
       choose "FtpPushPull"
       wait_for_xhr
@@ -31,7 +31,7 @@ describe "User missing ordering preferences", reset: false do
 
       login 'edscbasic'
 
-      click_link "Download project data"
+      click_button "Download project data"
 
       choose 'Download'
       click_button 'Submit'

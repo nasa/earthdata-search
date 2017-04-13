@@ -22,7 +22,7 @@ describe "Granule list", reset: false do
     end
 
     it "provides a button to get download the collection" do
-      expect(granule_list).to have_link('Download collection data')
+      expect(granule_list).to have_button('Download collection data')
     end
 
     it "provides a button to edit granule filters" do

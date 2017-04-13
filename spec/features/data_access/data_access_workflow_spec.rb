@@ -19,7 +19,7 @@ describe "Data Access workflow", reset: false do
       Capybara.reset_sessions!
       load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project
       login
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 
@@ -102,7 +102,7 @@ describe "Data Access workflow", reset: false do
       Capybara.reset_sessions!
       load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       wait_for_xhr
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 
@@ -122,7 +122,7 @@ describe "Data Access workflow", reset: false do
     before(:all) do
       load_page :search, {project: [downloadable_collection_id, non_downloadable_collection_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       login
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 
