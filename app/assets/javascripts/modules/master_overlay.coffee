@@ -82,6 +82,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @current().next().show()
 
     toggleParent: (show = @root.hasClass(@scope('is-parent-hidden')), event=true) ->
+      $('body').toggleClass(@scope('no-facet'), !show)
       @root.toggleClass(@scope('is-parent-hidden'), !show)
       @contentHeightChanged()
       @_triggerStateChange() if event
