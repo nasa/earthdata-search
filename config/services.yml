@@ -45,9 +45,8 @@ status_app_root: "https://status.earthdata.nasa.gov/api/v1/"
 cwic_root: "http://cwic.wgiss.ceos.org/"
 
 # Earthdata Search Client specific configs
-#     limited_collections: The collection concept IDs included below will be limited to 2000 granules when ordering. The
-#                          number 2000 is defined in several places service_options_list.coffee and configure.html.erb.
-#                          TODO move them to one place.
+#     limited_collections:       The collection concept IDs included below will be limited to 100 granules when ordering.
+#     enable_esi_order_chunking: enable/disable ESI order chunking for a specific environment.
 edsc:
   development:
     enable_esi_order_chunking: true

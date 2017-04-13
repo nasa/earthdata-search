@@ -28,8 +28,7 @@
           <h3 class="access-item-options-header" data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
           <div class="summary-caveat" data-bind="visible: granuleAccessOptions().hits > 100 && $root.ui.serviceOptionsList.isLimitedCollection($data) || !$root.ui.serviceOptionsList.isEsiOrderChunkingEnabled() && granuleAccessOptions().hits > 2000">
             <i class="fa fa-exclamation-circle"></i> This order contains
-            <span data-bind="text: granuleAccessOptions().hits"></span> granules. "Order" access method may not support
-            access beyond the first 2000 granules. "ESI Service" access method may not support access beyond the first 100 granules.
+            <span data-bind="text: granuleAccessOptions().hits"></span> granules. Some access methods may not support access beyond the first 2000 granules.
           </div>
           <!-- ko if: granuleAccessOptions().hits != null && collection.has_granules -->
           <div class="access-item-review">
