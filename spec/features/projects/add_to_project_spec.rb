@@ -70,7 +70,7 @@ describe "Add to project", reset: false do
       end
 
       it 'displays a link to view the project' do
-        expect(page).to have_link("View Project")
+        expect(page).to have_link("Project")
       end
     end
 
@@ -135,7 +135,7 @@ describe "Add to project", reset: false do
         end
 
         it 'continues to show the link to view the project' do
-          expect(page).to have_link("View Project")
+          expect(page).to have_link("Project")
         end
 
         it 'removes the collection from the current project' do
