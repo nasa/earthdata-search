@@ -13,7 +13,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [80, 0, 85, 10]
       login
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 
@@ -110,7 +110,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, point: [-80, 10]
       wait_for_xhr
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 
@@ -207,7 +207,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [10, 0, 80, 10]
       wait_for_xhr
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 
@@ -240,7 +240,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [10, 0, 80, 10]
       wait_for_xhr
-      click_link "Download project data"
+      click_button "Download project data"
       wait_for_xhr
     end
 

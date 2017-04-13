@@ -37,7 +37,7 @@ do (document
     $(this).removeClass('has-focus')
 
   $(document).ready ->
-    $(document.body).tooltip({ selector: '[data-tooltip="true"]', placement: 'auto left' });
+    $(document.body).tooltip({ selector: '[data-tooltip="true"]'});
 
   $(document).on 'click', 'a.sign-in', ->
     this.setAttribute('href',  "/login?next_point=#{encodeURIComponent(window.location.href)}")

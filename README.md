@@ -47,7 +47,7 @@ See public/licenses.txt
 * A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) is strongly recommended.
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
 * (For placename completion) a [GeoNames](http://www.geonames.org) account
-* For automatic spatial and temporal extraction from the search text, clone and set up an [EDSC-NLP](https://github.com/mightynimble/edsc-nlp) server
+* For automatic spatial and temporal extraction from the search text, clone and set up an [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) server
 
 Additionally, you will need the following, which will be installed automatically by `bin/setup` on most UNIX-like systems:
 
@@ -55,7 +55,7 @@ Additionally, you will need the following, which will be installed automatically
 * Postgres development headers
 
 Operating systems | Command
----- | ---- | 
+---- | ---- |
   Mac(homebrew)| `$ brew install postgresql`|
   Ubuntu| `$ sudo apt-get install -y libpq-dev`|
   RHEL| `$ sudo yum install -y postgresql-devel`|
@@ -99,7 +99,7 @@ and placename completion as appropriate.
 
 ### Running
 
-Set up EDSC-NLP REST service. (Follow the README on [EDSC-NLP](https://github.com/mightynimble/edsc-nlp) page)
+Set up EDSC-NLP REST service. (Follow the README on [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) page)
 
 If you set up Pow, simply visit `http://earthdata-search.dev`,
 otherwise run `rails s` in the project directory and visit `http://localhost:3000`.

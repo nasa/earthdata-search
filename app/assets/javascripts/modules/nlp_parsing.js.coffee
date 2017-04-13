@@ -1,6 +1,7 @@
 do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax, hasPending=@edsc.util.xhr.hasPending) ->
 
   immediateReenter = null
+  doneTyping = null
   $(document).ready ->
     $nlpInput = $('.nlp-parsing')
     typingTimer = null
@@ -11,17 +12,23 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
 
     $nlpInput.on 'keydown', (event) ->
       clearTimeout(typingTimer)
-      _parseSearchText(event) if event.which == 13
+      if event.which == 13
+        _parseSearchText(event)
+        doneTyping = true
 
     $('body').on 'click', 'label', (event) ->
       immediateReenter = false
+      doneTyping = true
       true
     $('body').on 'click', 'a', (event) ->
       immediateReenter = false
+      doneTyping = true
       true
+    $('body').on 'blur', '#keywords', (event) ->
+      doneTyping = true
 
     _parseSearchText = (e) ->
-      if immediateReenter
+      if immediateReenter && doneTyping
         immediateReenter = ($nlpInput.val() != currentPage.query.originalKeywords() && $nlpInput.val() != '' && currentPage.query.originalKeywords() != '')
       else
         immediateReenter = false
@@ -36,6 +43,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
         success: (data) =>
           _applyParsedText(data)
       immediateReenter = true
+      doneTyping = false
 
     _applyParsedText = (data) ->
       {edscSpatial, edscTemporal, keyword} = data

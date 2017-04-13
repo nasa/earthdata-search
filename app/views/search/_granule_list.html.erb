@@ -12,9 +12,9 @@
           <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Download collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading.' : 'Download collection data'}">
               <i class="fa fa-download"></i> Download Collection Data
-            </a>
+            </button>
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
               <i class="fa fa-info-circle"></i>
             </a>
