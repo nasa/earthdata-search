@@ -497,7 +497,7 @@ describe 'Address bar', reset: false do
       end
 
       it "restores the persisted long path" do
-        expect(page).to have_text('You have 6 collections in your project.')
+        expect(page).to have_text('You have 6 collections in your current Project')
       end
     end
   end
