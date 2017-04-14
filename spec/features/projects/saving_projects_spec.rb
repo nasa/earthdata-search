@@ -9,6 +9,7 @@ describe 'Saving Projects', reset: false do
       Capybara.reset_sessions!
       load_page :search
       login
+      find('a[class="banner-close"]').click if page.has_css?('.banner-close')
 
       second_unfeatured_collection.click_link "Add collection to the current project"
       first_unfeatured_collection.click_link "Add collection to the current project"
