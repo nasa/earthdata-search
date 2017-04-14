@@ -281,7 +281,7 @@ describe "Spatial" do
       wait_for_xhr
 
       # JS: Bring that panel back
-      find(".master-overlay-maximize").trigger("click")
+      click_link 'Maximize'
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")

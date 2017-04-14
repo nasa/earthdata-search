@@ -34,13 +34,13 @@ describe 'Map Zooming', reset: false do
     context 'and the overlay is visible' do
       before :all do
         visit '/search'
-        find('.leaflet-control-zoom-in').trigger('click')
+        find('.leaflet-control-zoom-in').click
         wait_for_xhr
         sleep 0.2 # Allow animations to finish and avoid clickfailed
       end
 
       after :all do
-        find('.leaflet-control-zoom-out').trigger('click')
+        find('.leaflet-control-zoom-out').click
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
@@ -53,19 +53,19 @@ describe 'Map Zooming', reset: false do
     context 'and the overlay is minimized' do
       before :all do
         within '.master-overlay-main' do
-          find('.master-overlay-minimize').trigger('click')
+          find('.master-overlay-minimize').click
         end
         wait_for_xhr
-        find('.leaflet-control-zoom-in').trigger('click')
+        find('.leaflet-control-zoom-in').click
         wait_for_xhr
       end
 
       after :all do
         synchronize(30) do
           # Synchronize because animations can cause occlusion if execution is very fast
-          find('.leaflet-control-zoom-out').trigger('click')
+          find('.leaflet-control-zoom-out').click
           wait_for_xhr
-          find('.master-overlay-maximize').trigger('click')
+          find('.master-overlay-maximize').click
           wait_for_xhr
         end
         wait_for_xhr
@@ -88,7 +88,7 @@ describe 'Map Zooming', reset: false do
 
         create_bounding_box(0, 0, 20, 20)
 
-        find('.leaflet-control-zoom-home').trigger('click')
+        find('.leaflet-control-zoom-home').click
       end
 
       after :all do
@@ -108,7 +108,7 @@ describe 'Map Zooming', reset: false do
         script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:-10}, {lat: -20, lng: -10}]);"
         page.execute_script(script)
 
-        find('.leaflet-control-zoom-home').trigger('click')
+        find('.leaflet-control-zoom-home').click
       end
 
       after :all do
@@ -147,25 +147,25 @@ describe 'Map Zooming', reset: false do
       before :all do
         visit '/search'
         wait_for_xhr
-        find_link("Geographic (Equirectangular)").trigger('click')
+        page.execute_script("$('#geo').click")
         MapUtil.set_zoom(page, 0)
       end
 
       after :all do
-        find('.leaflet-control-zoom-home').trigger('click')
+        find('.leaflet-control-zoom-home').click
         wait_for_zoom_animation(2)
         wait_for_xhr
       end
 
       context 'clicking zoom out' do
         before :all do
-          find('.leaflet-control-zoom-out').trigger('click')
+          find('.leaflet-control-zoom-out').click
           wait_for_zoom_animation(0)
           wait_for_xhr
         end
 
         after :all do
-          find('.leaflet-control-zoom-home').trigger('click')
+          find('.leaflet-control-zoom-home').click
           wait_for_zoom_animation(2)
           wait_for_xhr
         end
@@ -186,18 +186,18 @@ describe 'Map Zooming', reset: false do
       end
 
       after :all do
-        find('.leaflet-control-zoom-home').trigger('click')
+        find('.leaflet-control-zoom-home').click
         wait_for_zoom_animation(2)
       end
 
       context 'clicking zoom out' do
         before :all do
-          find('.leaflet-control-zoom-in').trigger('click')
+          find('.leaflet-control-zoom-in').click
           wait_for_zoom_animation(7)
         end
 
         after :all do
-          find('.leaflet-control-zoom-home').trigger('click')
+          find('.leaflet-control-zoom-home').click
           wait_for_zoom_animation(2)
         end
 
@@ -217,17 +217,17 @@ describe 'Map Zooming', reset: false do
   context 'on polar view (e.g. EPSG3031 - South Polar Stereographic)' do
     context 'at the maximum zoom level' do
       before :all do
-        find_link("North Polar Stereographic").trigger("click")
+        page.execute_script("$('#arctic').click")
         MapUtil.set_zoom(page, 4)
       end
 
       after :all do
-        find_link("Geographic (Equirectangular)").trigger('click')
+        page.execute_script("$('#geo').click")
       end
 
       context 'clicking zoom in' do
         before :all do
-          find('.leaflet-control-zoom-in').trigger('click')
+          find('.leaflet-control-zoom-in').click
         end
 
         it 'does not zoom in any further' do

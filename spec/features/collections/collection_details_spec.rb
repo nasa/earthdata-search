@@ -246,7 +246,7 @@ describe 'Collection details', reset: false do
 
     context 'when clicking View All Related URLs' do
       before do
-        find_link('View All Related URLs').trigger('click')
+        click_on 'View All Related URLs'
       end
 
       it 'displays all related urls' do
