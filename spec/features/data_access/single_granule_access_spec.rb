@@ -58,6 +58,7 @@ describe 'Single Granule Data Access', reset: false do
       Capybara.reset_sessions!
       load_page :search, focus: downloadable_collection_id
       login
+      find('a[class="banner-close"]').click if page.has_css?('.banner-close')
       wait_for_xhr
 
       click_link "Save your project"

@@ -83,7 +83,7 @@ describe "Granule selection", reset: false do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
       wait_for_xhr
-      expect(result).to eq("LatLng(0, 0)")
+      expect(result).to match(/LatLng\([-\.\d]*, 0\)/)
     end
 
     it "zooms the map to the selected granule" do
@@ -114,7 +114,7 @@ describe "Granule selection", reset: false do
         result = page.evaluate_script script
         wait_for_xhr
 
-        expect(result).to eq("LatLng(0, 0)")
+        expect(result).to match(/LatLng\([-\.\d]*, 0\)/)
       end
 
       it "zooms the map to the selected granule" do

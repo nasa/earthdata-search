@@ -94,7 +94,7 @@ module Helpers
       wait_for_xhr
 
       # close banner if there are any (which block the 'Manage user account' link
-      if close_banner.present? && close_banner
+      if close_banner.present? && close_banner || close_banner.nil?
         while page.has_css?('.banner-close') do
           find('a[class="banner-close"]').click
           wait_for_xhr
