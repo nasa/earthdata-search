@@ -219,6 +219,13 @@ ns.SpatialSelection = do (window,
       marker.type = 'marker'
       @_drawnItems.addLayer(marker)
 
+      # pan to empty area
+      masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
+      facetOverlay = document.getElementById('master-overlay-parent')
+      offset = 0 - ((if masterOverlay then masterOverlay.offsetWidth else 0) + (if facetOverlay then facetOverlay.offsetWidth else 0)) / 2
+
+      @map.panTo(marker.getLatLng()).panBy([offset, 0])
+
     _renderRectangle: (shape) ->
       # southwest longitude should not be greater than northeast
       shape[1].lng += 360 if shape[0].lng > shape[1].lng
@@ -228,6 +235,13 @@ ns.SpatialSelection = do (window,
       rect = @_layer = new L.Rectangle(bounds, options)
       rect.type = 'rectangle'
       @_drawnItems.addLayer(rect)
+
+      # pan to empty area
+      masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
+      facetOverlay = document.getElementById('master-overlay-parent')
+      offset = 0 - ((if masterOverlay then masterOverlay.offsetWidth else 0) + (if facetOverlay then facetOverlay.offsetWidth else 0)) / 2
+
+      @map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offset, 0])
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
