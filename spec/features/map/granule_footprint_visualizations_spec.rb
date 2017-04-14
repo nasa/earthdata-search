@@ -64,7 +64,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     use_collection 'C1219252422-LANCEMODIS', 'MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m'
 
     before :all do
-      create_bounding_box(0, 0, 15, 15)
+      create_bounding_box(0, 0, 10, 15)
       wait_for_xhr
     end
 
