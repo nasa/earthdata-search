@@ -297,10 +297,10 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list a.panel-list-remove {
   float: right;
-  color: #fff;
-  color: rgba(255,255,255, 0.2);
   @include transition(color 0.3s ease-in-out);
-
+  font-size: 1.6em;
+  line-height: 1em;
+  padding-left: 2px;
   &:hover {
     color: #e74c3c;
   }
