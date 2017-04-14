@@ -85,7 +85,7 @@ describe 'Duplicate Service Options', reset: false do
     after :all do
       wait_for_xhr
       AccessConfiguration.destroy_all if page.server.responsive?
-      find_link('Back to Data Access Options').trigger('click')
+      click_link 'Back to Data Access Options'
     end
 
     it "displays download links twice" do

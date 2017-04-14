@@ -12,7 +12,7 @@ describe 'Saving Projects', reset: false do
 
       second_unfeatured_collection.click_link "Add collection to the current project"
       first_unfeatured_collection.click_link "Add collection to the current project"
-      find_link("Save your project").trigger('click')
+      click_link 'Save your project'
       fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
       click_save_project_name
     end
@@ -28,7 +28,7 @@ describe 'Saving Projects', reset: false do
 
     context "when renaming the project" do
       before :all do
-        find_link("Test Project").trigger('click')
+        click_link 'Test Project'
         fill_in "workspace-name", with: "Test Project 2\t"
         click_save_project_name
       end

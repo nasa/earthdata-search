@@ -15,7 +15,7 @@ describe 'Collection Colormaps', reset: false do
       fill_in 'keywords', with: gibs_collection_id
       wait_for_xhr
       expect(page).to have_content("AE_Rain")
-      first_collection_result.trigger('click')
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -45,7 +45,7 @@ describe 'Collection Colormaps', reset: false do
       wait_for_xhr
       expect(page).to have_content("doi:10.3334/ORNLDAAC/1")
 
-      first_collection_result.trigger('click')
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -66,7 +66,7 @@ describe 'Collection Colormaps', reset: false do
       fill_in 'keywords', with: gibs_granules_collection_id
       wait_for_xhr
       expect(page).to have_content("MOD11_L2")
-      first_collection_result.trigger('click')
+      first_collection_result.click
       wait_for_xhr
     end
 

@@ -31,7 +31,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the collection details button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').find_link('View collection details').trigger('click')
+        granule_list.find('.master-overlay-global-actions').click_link('View collection details')
       end
 
       after :all do
@@ -51,7 +51,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the download button" do
       before :all do
-        granule_list.find_link('Download collection data').trigger('click')
+        granule_list.find('.master-overlay-global-actions').click_link('Download collection data')
       end
 
       after :all do
@@ -66,11 +66,11 @@ describe "Granule list", reset: false do
 
     context "clicking on the edit filters button" do
       before :all do
-        granule_list.find_link('Filter granules').trigger('click')
+        granule_list.click_link('Filter granules')
       end
 
       after :all do
-        granule_list.find_link('Hide granule filters').trigger('click')
+        granule_list.click_link('Hide granule filters')
       end
 
       it "allows the user to edit granule filters" do
@@ -94,8 +94,8 @@ describe "Granule list", reset: false do
 
     context "clicking the exclude granule button" do
       before :all do
-        first_granule_list_item.trigger('click')
-        first_granule_list_item.find_link("Exclude this granule").trigger('click')
+        first_granule_list_item.click
+        first_granule_list_item.click_link "Exclude this granule"
         wait_for_xhr
       end
 
@@ -116,7 +116,7 @@ describe "Granule list", reset: false do
 
       context "until all granules on current page are excluded" do
         before :all do
-          find('#granule-search').find_link('close').trigger('click')
+          find('#granule-search').click_link('close')
 
           num_of_clicks = 19
           while num_of_clicks > 0
@@ -132,7 +132,7 @@ describe "Granule list", reset: false do
           fill_in 'keywords', with: 'C92711294-NSIDC_ECS'
           view_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
 
-          first_granule_list_item.trigger('click')
+          first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
           wait_for_xhr
         end
@@ -145,7 +145,7 @@ describe "Granule list", reset: false do
 
       context "and clicking the undo button" do
         before :all do
-          find_link('Undo').trigger('click')
+          click_link "Undo"
         end
 
         after :all do
@@ -171,10 +171,10 @@ describe "Granule list", reset: false do
 
         after :all do
           uncheck "Find only granules that have browse images."
-          find_link("Add it back").trigger('click')
+          click_link "Add it back"
           wait_for_xhr
-          find_link('Hide granule filters').trigger('click')
-          first_granule_list_item.trigger('click')
+          click_link 'Hide granule filters'
+          first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
           wait_for_xhr
         end
