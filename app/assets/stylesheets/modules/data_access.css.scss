@@ -2,10 +2,12 @@
   height: 100%;
   color: $overlay-heading-font-color;
   padding-bottom: 70px;
+  padding-top: 35px;
 
   h1 {
     border-bottom: 1px solid #333;
     padding: 0 0 .2em 0;
+    width: inherit;
   }
 
   a {
