@@ -86,10 +86,20 @@ module Helpers
     end
 
     def load_page(url, options={})
+      close_banner = options.delete :close_banner
+
       ActiveSupport::Notifications.instrument "edsc.performance", activity: "Page load" do
         visit QueryBuilder.new.add_to(url, options)
       end
       wait_for_xhr
+
+      # close banner if there are any (which block the 'Manage user account' link
+      if close_banner.present? && close_banner
+        while page.has_css?('.banner-close') do
+          find('a[class="banner-close"]').click
+          wait_for_xhr
+        end
+      end
     end
   end
 end

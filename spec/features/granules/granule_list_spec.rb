@@ -51,7 +51,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the download button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').click_link('Download collection data')
+        granule_list.click_button('Download collection data')
       end
 
       after :all do
@@ -70,7 +70,7 @@ describe "Granule list", reset: false do
       end
 
       after :all do
-        granule_list.click_link('Hide granule filters')
+        find('#granule-search').click_link('close')
       end
 
       it "allows the user to edit granule filters" do
@@ -116,8 +116,6 @@ describe "Granule list", reset: false do
 
       context "until all granules on current page are excluded" do
         before :all do
-          find('#granule-search').click_link('close')
-
           num_of_clicks = 19
           while num_of_clicks > 0
             first_granule_list_item.click_link "Exclude this granule"
@@ -173,7 +171,7 @@ describe "Granule list", reset: false do
           uncheck "Find only granules that have browse images."
           click_link "Add it back"
           wait_for_xhr
-          click_link 'Hide granule filters'
+          find('#granule-search').click_link('close')
           first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
           wait_for_xhr

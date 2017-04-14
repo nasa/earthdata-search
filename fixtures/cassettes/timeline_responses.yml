@@ -1319,6 +1319,30 @@ ff6ef80b86c510330bd1d953cf8f689318eb5886:
       encoding: UTF-8
       string: "[]"
     http_version: 
+2e41bcfec2c068cac3ea972c7a8be181835dce0b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 14 Apr 2017 20:03:49 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b2abaabd-0a7c-4cd7-946d-74113acc68f3
+      content-length:
+      - '203'
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+      connection:
+      - close
+      strict-transport-security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179002914-ORNL_DAAC","intervals":[[549244800,549504000,10],[549590400,552096000,24],[552182400,554515200,22],[554947200,557107200,23],[557884800,559958400,19],[560822400,562291200,19]]}]'
+    http_version: 
 d35ada11f476019ba0966d5cd835807c05a4c55c:
   response:
     status:
