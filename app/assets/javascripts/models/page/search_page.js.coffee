@@ -105,6 +105,12 @@ ns.SearchPage = do (ko
       $('.filter-stack').toggle()
       $('.filter-stack-collapsed').toggle()
 
+    showProject: (data, event) =>
+      $('#view-project').click()
+
+    hideProject: (data, event) =>
+      $('#view-project').click()
+
   current = new SearchPage()
   setCurrent(current)
 
