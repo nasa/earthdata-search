@@ -217,12 +217,12 @@ describe 'Map Zooming', reset: false do
   context 'on polar view (e.g. EPSG3031 - South Polar Stereographic)' do
     context 'at the maximum zoom level' do
       before :all do
-        page.execute_script("$('#arctic').click")
+        find_link("North Polar Stereographic").click
         MapUtil.set_zoom(page, 4)
       end
 
       after :all do
-        page.execute_script("$('#geo').click")
+        find_link("Geographic (Equirectangular)").click
       end
 
       context 'clicking zoom in' do
