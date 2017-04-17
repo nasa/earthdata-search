@@ -313,16 +313,12 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .portal-escape {
-  color: #c9c9c9;
-  margin-top: 2em;
-  padding: 1em .5em .5em;
-  border-top: 1px solid #888;
+  color: #424242;
+  margin-top: 1.6em;
+  padding: 15px 20px;
+  border-top: 1px solid #e3e3e3;
 }
 
 .portal-escape a {
-  color: #c9c9c9;
   text-decoration: underline;
-  &:link, &:visited {
-    color: #c9c9c9;
-  }
 }
