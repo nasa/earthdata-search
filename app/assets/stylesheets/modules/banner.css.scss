@@ -81,17 +81,3 @@ a.banner-close {
     color: #444;
   }
 }
-
-a.banner-show-events {
-  &:link, &:visited {
-    display: block;
-    float: left;
-    margin: 1.2em 1.1em 1.1em 0;
-    @include transition(opacity 0.2s ease-in-out);
-    opacity: 0.4;
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-}

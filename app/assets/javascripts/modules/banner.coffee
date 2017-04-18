@@ -98,7 +98,7 @@
       getJSON '/events', (data, status, xhr) ->
         allEvents = data
         if data.length > 0
-          $('.toolbar-secondary').prepend('<a href="#" class="banner-show-events" title="Show Outage Notices"><i class="fa fa-warning"></i></a>')
+          $('.toolbar-secondary').prepend('<a href="#" class="banner-show-events toolbar-button" title="Show Outage Notices"><i class="fa fa-warning"></i></a>')
           showAllEvents()
 
   # Errors for XHRs
