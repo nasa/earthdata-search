@@ -177,12 +177,17 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         height = windowHeight - main.position().top - $('body > footer').outerHeight()
         main.height(height)
 
+        for div in @root.find(@scope('.content'))
+          $div = $(div)
+          $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 20, 13))
+
         scrollContentHeight = @root.find('.master-overlay-main').height()
-        for section in $('.master-overlay-main').find('section')
-          $(section).height(scrollContentHeight)
-          tabPaneHeight = $(section).height() - $(section).find('.master-overlay-nav').outerHeight() - $(section).find('.master-overlay-info').outerHeight() - $(section).find('.with-options').outerHeight() - $(section).find('header h4').outerHeight()
-          for div in $(section).find(@scope('.content'))
-            $(div).height(tabPaneHeight)
+        for div in @root.find('.master-overlay-main .master-overlay-content')
+          $(div).height(scrollContentHeight - (scrollContentHeight * 0.18))
+
+        tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
+        for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
+          $(div).height(tabPaneHeight)
         null), 0)
 
   $document = $(document)
