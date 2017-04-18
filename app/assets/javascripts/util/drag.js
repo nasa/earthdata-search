@@ -11,13 +11,12 @@ interact('.master-overlay-main')
     preserveAspectRatio: false,
     edges: { left: false, right: false, bottom: false, top: true },
   })
-  .on('resizemove', function (event) {
-    var target = event.target,
-        x = (parseFloat(target.getAttribute('data-x')) || 0),
-        y = (parseFloat(target.getAttribute('data-y')) || 0);
+  .on("resizemove", function (event) {
+    var target = event.target;
+    windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-    target.style.top = 100 - (((event.rect.height / $(window).height())) * 100) + '%';
-    target.style.height = (((event.rect.height / $(window).height())) * 100) + '%';
-    $('#collection-scroll-pane').height(event.rect.height);
+    target.style.top = (windowHeight - $(".main-content").position().top - event.rect.height) + "px";
+    target.style.height = (event.rect.height - $("body > footer").outerHeight()) + "px";
 
+    $(".master-overlay").masterOverlay("contentHeightChanged");
   });

@@ -16,7 +16,7 @@
     <h2 data-bind="text: selected().title"></h2>
     <!-- /ko -->
   </header>
-  <div class="master-overlay-info">
+  <div class="master-overlay-content master-overlay-detail-info">
     <p class="panel-list-meta">
     <% if Rails.configuration.feedback_url.present? %>
       <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Details', $root.ui.collectionsList.focused().selected().id)" class="button feedback-button">
