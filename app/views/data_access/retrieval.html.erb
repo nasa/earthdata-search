@@ -14,9 +14,9 @@
   <nav class="data-access-nav">
     <a href="<%=edsc_path "/data/configure?#{@retrieval.source}" %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Data Access Options</a>
   </nav>
-  <header class="data-access-header" data-bind="visible: ui.projectList.collectionsToDownload().length == 0">
+  <header class="data-access-header" data-bind="visible: ui.projectList.collectionsToDownload().length == 0 && ui.projectList.collectionOnly().length == 0 && ui.projectList.submittedOrders().length == 0 && ui.projectList.submittedServiceOrders().length == 0 && ui.projectList.collectionLinks().length == 0">
     <h1>Request in Progress</h1>
-    <p>Your request is being processed.  Results will appear shortly.</p>
+    <p>Your request is being processed.  Please standby.</p>
   </header>
   <div class="data-access-container">
     <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.collectionsToDownload().length > 0">
