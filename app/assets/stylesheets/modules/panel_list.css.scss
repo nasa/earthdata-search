@@ -45,7 +45,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .granule-list {
 
-  .master-overlay-info {
+  .master-overlay-info, .master-overlay-detail-info {
     padding: 10px 20px;
   }
 
