@@ -40,7 +40,7 @@ describe "Displaying system errors", reset: false do
 
   context 'when invalid parameters are entered' do
     before :all do
-      load_page :search, focus: 'C1000000029-EDF_OPS', env: :sit, queries: [{ id: '*foo!*foo2!*foo3' }]
+      load_page :search, focus: 'C1000000029-EDF_OPS', env: :sit, queries: [{ id: '*foo!*foo2!*foo3' }], close_banner: false
     end
 
     it 'displays an error message containing the type of request that caused the error' do
