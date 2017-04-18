@@ -24,6 +24,7 @@ describe 'Single Granule Data Access', reset: false do
       load_page :search, focus: downloadable_collection_id
       login
       wait_for_xhr
+      dismiss_banner
       first_granule_list_item.click_link "Download single granule data"
       wait_for_xhr
     end
@@ -58,8 +59,8 @@ describe 'Single Granule Data Access', reset: false do
       Capybara.reset_sessions!
       load_page :search, focus: downloadable_collection_id
       login
-      find('a[class="banner-close"]').click if page.has_css?('.banner-close')
       wait_for_xhr
+      dismiss_banner
 
       click_link "Save your project"
       fill_in "workspace-name", with: "Single Granule Project\t" #press tab to exit the input field
