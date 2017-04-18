@@ -272,17 +272,9 @@ describe "Spatial" do
     end
 
     it "filters collections using south polar bounding boxes in the south polar projection" do
-
-      # JS: Get panel out of the way
-      click_link 'Minimize'
-
       click_link "South Polar Stereographic"
       create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
-
-      # JS: Bring that panel back
-      click_link 'Maximize'
-
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
     end
