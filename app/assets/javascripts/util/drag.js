@@ -12,12 +12,9 @@ interact('.master-overlay-main')
     edges: { left: false, right: false, bottom: false, top: true },
   })
   .on('resizemove', function (event) {
-    var target = event.target,
-        x = (parseFloat(target.getAttribute('data-x')) || 0),
-        y = (parseFloat(target.getAttribute('data-y')) || 0);
-
+    var target = event.target;
     target.style.top = 100 - (((event.rect.height / $(window).height())) * 100) + '%';
     target.style.height = (((event.rect.height / $(window).height())) * 100) + '%';
-    $('#collection-scroll-pane').height(event.rect.height);
 
+    $(".master-overlay").masterOverlay("contentHeightChanged");
   });
