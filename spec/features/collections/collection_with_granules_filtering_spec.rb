@@ -10,7 +10,7 @@ describe "Collection with granules filtering", reset: false do
   end
 
   it "displays collection filters to hide collections without granules" do
-    expect(page).to have_content("Hide collections without granules")
+    expect(page).to have_content("Include collections without granules")
   end
 
   it "defaults to show all the collections" do

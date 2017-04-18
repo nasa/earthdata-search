@@ -102,6 +102,12 @@ class CollectionsController < ApplicationController
 
     relevancy_param(params)
 
+    if params['all_collections']
+      params['has_granules'] = params.delete('all_collections').to_s != 'true'
+    else
+      params['has_granules'] = true
+    end
+
     params
   end
 
