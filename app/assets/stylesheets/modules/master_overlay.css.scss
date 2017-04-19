@@ -17,7 +17,12 @@
     h2 {
       font-size: 1.2em;
       margin: 0;
+      padding: 10px 20px;
       font-weight: 200;
+
+      &.loading {
+        padding: 0;
+      }
     }
 
     h4 {
@@ -53,6 +58,7 @@
 
       h2 {
         display: inline-block;
+        padding: 0;
       }
     }
   }
@@ -64,7 +70,7 @@
 
 .master-overlay-nav {
   padding: 12px 20px 10px 20px;
-  background: $master-overlay-tab-color;
+  background: $master-overlay-tab-color url('drag.png') no-repeat center 5px;
   display: inline-block;
   font-size: 1.2em;
 }
@@ -172,7 +178,7 @@
   }
 
   .tab-content {
-    padding-bottom: 0;
+    padding: 20px;
     background: $master-overlay-info-bg-color;
     color: #424242;
   }
