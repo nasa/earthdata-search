@@ -121,9 +121,9 @@
   background-color: $master-overlay-parent-bg-color;
   left: 40%;
   /* JS: Temporary, ugly fix to prevent overlap */
-  top: 80px;
+  top: 90px;
   overflow: hidden;
-  z-index: 140;
+  z-index: 180;
   position: absolute;
   height: 100%;
   transition-property: right, left;
@@ -134,8 +134,22 @@
     color: #fff;
   }
 
+  nav {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+
   .message {
     margin-top: 1em;
+  }
+
+  a.master-overlay-close {
+    font-size: 1.4em;
+    padding: 10px;
+
+    &:hover {
+      color: #e74c3c;
+    }
   }
 }
 
