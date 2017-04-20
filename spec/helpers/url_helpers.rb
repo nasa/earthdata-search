@@ -97,7 +97,6 @@ module Helpers
       if close_banner.present? && close_banner || close_banner.nil?
         while page.has_css?('.banner-close') do
           find('a[class="banner-close"]').click
-          wait_for_xhr
         end
       end
     end
