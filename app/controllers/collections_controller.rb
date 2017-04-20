@@ -98,9 +98,11 @@ class CollectionsController < ApplicationController
     params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*",
                               "org.ceos.wgiss.cwic.granules.prod"].join(',')
 
-    # params['include_facets'] = 'v2'
-
     relevancy_param(params)
+
+    if params['all_collections'].nil? || params['all_collections'].present? && params.delete('all_collections').to_s != 'true'
+      params['has_granules'] = true
+    end
 
     params
   end

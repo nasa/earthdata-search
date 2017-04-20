@@ -129,6 +129,14 @@ module Helpers
       page.find('.modal-footer')
     end
 
+    def collection_with_granule_toggle
+      page.find('.collection-filters input[type="checkbox"]')
+    end
+
+    def collection_count_header
+      page.find('.master-overlay-main h2')
+    end
+
     private
 
     def nth_panel(root, n)
