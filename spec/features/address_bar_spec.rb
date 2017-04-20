@@ -111,17 +111,21 @@ describe 'Address bar', reset: false do
       visit '/search/map'
       wait_for_xhr
       create_bounding_box(0, 0, 10, 10)
+      wait_for_xhr
     end
 
     it 'saves the spatial condition in the address bar' do
-      expect(page).to have_query_string('sb=0%2C0%2C10%2C10')
+      expect(page.current_url).to have_content('sb=0%2C0%2C10%2C10')
     end
 
     context 'clearing filters' do
-      before(:all) { click_link "Clear Filters" }
+      before :all do
+        click_link "Clear Filters"
+        wait_for_xhr
+      end
 
       it 'removes the spatial condition from the address bar' do
-        expect(page).to have_query_string(nil)
+        expect(page.current_url).not_to have_content("sb=0%2C0%2C10%2C10")
       end
     end
   end
