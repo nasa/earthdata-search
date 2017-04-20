@@ -24,16 +24,19 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @name('Point')
       @icon('fa-map-marker')
       @manualEntryVisible(true)
+      $('.filter-stack').show()
 
     selectRectangle: =>
       @name('Rectangle')
       @icon('edsc-icon-rect-open')
       @manualEntryVisible(true)
+      $('.filter-stack').show()
 
     selectPolygon: =>
       @name('Polygon')
       @icon('edsc-icon-poly-open')
       @manualEntryVisible(false)
+      $('.filter-stack').show()
 
     selectShapefile: =>
       @name('Shape File')
