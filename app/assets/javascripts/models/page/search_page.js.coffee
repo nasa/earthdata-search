@@ -104,8 +104,6 @@ ns.SearchPage = do (ko
 
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
-      $('.filter-stack-minimized').hide() if $('.filter-stack').is(':visible')
-      $('.filter-stack-minimized').show() if !$('.filter-stack').is(':visible') && @totalFilters() > 0
 
     totalFilters: ->
       length += (if @query.spatial() then 1 else 0)
