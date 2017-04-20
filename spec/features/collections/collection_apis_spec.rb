@@ -14,7 +14,7 @@ describe 'Collection API Endpoints', reset: false do
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
-      find("#api-endpoints-toggle").click
+      click_link 'API Endpoints'
     end
 
     it 'provides a link to the CMR API for the collections granules' do
@@ -29,7 +29,7 @@ describe 'Collection API Endpoints', reset: false do
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
-      find("#api-endpoints-toggle").click
+      click_link 'API Endpoints'
     end
 
     it 'provides the path to the GIBS endpoint' do
@@ -63,7 +63,7 @@ describe 'Collection API Endpoints', reset: false do
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
-      find("#api-endpoints-toggle").click
+      click_link 'API Endpoints'
     end
 
     it 'provides the path to the MODAPS WCS endpoint' do
