@@ -53,25 +53,25 @@
         </div>
         <!-- end of first row -->
 
-        <!-- second row: metadata links | api endpionts -->
+        <!-- second row: metadata links | api endpionts | relative urls-->
         <div class="row">
-          <div class="button-group">
-            <button type="button" class="button group-main">Metadata Formats</button><button type="button" id="metadata-formats-toggle" class="button group-secondary toggle-button-group" data-bind="event: {click: $root.ui.collectionsList.toggleButtonGroup}"><i class="fa fa-sort-desc"></i></button>
-            <ul class="button-group dropdown">
-              <li><a data-bind="attr: { href: $data.html_url }">HTML</a></li>
-              <li><a data-bind="attr: { href: $data.native_url }">Native</a></li>
-              <li><a data-bind="attr: { href: $data.atom_url }">ATOM</a></li>
-              <li><a data-bind="attr: { href: $data.echo10_url }">ECHO10</a></li>
-              <li><a data-bind="attr: { href: $data.iso19115_url }">ISO19115</a></li>
+          <div class="dropdown detail-dropdown">
+            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Metadata Formats <i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.html_url }">HTML</a></li>
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.native_url }">Native</a></li>
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.atom_url }">ATOM</a></li>
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.echo10_url }">ECHO10</a></li>
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.iso19115_url }">ISO19115</a></li>
               <!-- ko if: $data.smap_iso_url -->
-              <li><a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></li>
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></li>
               <!-- /ko -->
-              <li><a data-bind="attr: { href: $data.dif_url }">DIF</a></li>
+              <li><a class="dropdown-link" data-bind="attr: { href: $data.dif_url }">DIF</a></li>
             </ul>
           </div>
-          <div class="button-group">
-            <button type="button" class="button group-main">API Endpoints</button><button type="button" id="api-endpoints-toggle" class="button group-secondary toggle-button-group" data-bind="event: {click: $root.ui.collectionsList.toggleButtonGroup}"><i class="fa fa-sort-desc"></i></button>
-            <ul class="button-group dropdown">
+          <div class="dropdown detail-dropdown">
+            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">API Endpoints <i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu">
               <!-- ko with: $root.ui.collectionsList.selected() -->
               <!-- ko if: granuleDatasourceName() == "cmr" -->
               <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
@@ -95,7 +95,6 @@
               <!-- /ko -->
             </ul>
           </div>
-          <!-- end of second row -->
 
           <dl class="flex-column">
             <!-- ko if: $data.related_urls.length > 0 -->
@@ -109,6 +108,7 @@
             <!-- /ko -->
           </dl>
         </div>
+        <!-- end of second row -->
 
         <!-- description -->
         <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
