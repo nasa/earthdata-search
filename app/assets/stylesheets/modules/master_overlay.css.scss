@@ -121,7 +121,7 @@
   background-color: $master-overlay-parent-bg-color;
   left: 40%;
   /* JS: Temporary, ugly fix to prevent overlap */
-  top: 90px;
+  top: 100px;
   overflow: hidden;
   z-index: 180;
   position: absolute;
@@ -135,7 +135,7 @@
   }
 
   nav {
-    font-size: 1.4em;
+    font-size: 1em;
     font-weight: bold;
   }
 
