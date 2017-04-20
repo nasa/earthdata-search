@@ -95,9 +95,8 @@ module Helpers
 
       # close banner if there are any (which block the 'Manage user account' link
       if close_banner.present? && close_banner || close_banner.nil?
-        while page.has_css?('.banner-close') do
-          find('a[class="banner-close"]').click
-          wait_for_xhr
+        while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
+          find('.banner-close').click
         end
       end
     end

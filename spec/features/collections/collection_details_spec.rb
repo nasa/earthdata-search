@@ -26,27 +26,26 @@ describe 'Collection details', reset: false do
 
     context 'and when the metadata formats toggle is clicked' do
       before :all do
-        find("#metadata-formats-toggle").click
-        wait_for_xhr
+        click_link 'Metadata Formats'
       end
       it 'provides the metadata formats links' do
-        expect(page).to have_link("HTML",  :visible => false)
-        expect(page).to have_link("Native",  :visible => false)
-        expect(page).to have_link("ATOM",  :visible => false)
-        expect(page).to have_link("ECHO10",  :visible => false)
-        expect(page).to have_link("ISO19115",  :visible => false)
-        expect(page).to have_link("DIF",  :visible => false)
+        expect(page).to have_link('HTML')
+        expect(page).to have_link('Native')
+        expect(page).to have_link('ATOM')
+        expect(page).to have_link('ECHO10')
+        expect(page).to have_link('ISO19115')
+        expect(page).to have_link('DIF')
       end
     end
 
     context 'and when the API Endpoints toggle is clicked' do
       before :all do
-        find("#api-endpoints-toggle").click
+        click_link 'API Endpoints'
         wait_for_xhr
       end
       it 'provides the API Endpoints links' do
-        expect(page).to have_link("CMR",  :visible => false)
-        expect(page).to have_link("OSDD",  :visible => false)
+        expect(page).to have_link('CMR')
+        expect(page).to have_link('OSDD')
       end
     end
   end
@@ -81,27 +80,25 @@ describe 'Collection details', reset: false do
 
     context 'and when the metadata formats toggle is clicked' do
       before :all do
-        find("#metadata-formats-toggle").click
-        wait_for_xhr
+        click_link 'Metadata Formats'
       end
       it 'provides the metadata formats links' do
-        expect(page).to have_link("HTML",  :visible => false)
-        expect(page).to have_link("Native",  :visible => false)
-        expect(page).to have_link("ATOM",  :visible => false)
-        expect(page).to have_link("ECHO10",  :visible => false)
-        expect(page).to have_link("ISO19115",  :visible => false)
-        expect(page).to have_link("DIF",  :visible => false)
+        expect(page).to have_link('HTML')
+        expect(page).to have_link('Native')
+        expect(page).to have_link('ATOM')
+        expect(page).to have_link('ECHO10')
+        expect(page).to have_link('ISO19115')
+        expect(page).to have_link('DIF')
       end
     end
 
     context 'and when the API Endpoints toggle is clicked' do
       before :all do
-        find("#api-endpoints-toggle").click
-        wait_for_xhr
+        click_link 'API Endpoints'
       end
       it 'provides the API Endpoints links' do
-        expect(page).to have_link("CMR",  :visible => false)
-        expect(page).to have_link("OSDD",  :visible => false)
+        expect(page).to have_link('CMR')
+        expect(page).to have_link('OSDD')
       end
     end
 
