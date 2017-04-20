@@ -81,6 +81,7 @@ ns.SearchPage = do (ko
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+      @toggleFilterStack()
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
@@ -103,7 +104,13 @@ ns.SearchPage = do (ko
 
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
-      $('.filter-stack-collapsed').toggle()
+      $('.filter-stack-minimized').hide() if $('.filter-stack').is(':visible')
+      $('.filter-stack-minimized').show() if !$('.filter-stack').is(':visible') && @totalFilters() > 0
+
+    totalFilters: ->
+      length += (if @query.spatial() then 1 else 0)
+      length += (if @query.temporalComponent() then 1 else 0)
+      length
 
     showProject: (data, event) =>
       $('#view-project').click()

@@ -49,7 +49,7 @@
       </div>
       <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
       <a href="#" class="button toggle-filter-stack" data-bind="event: {click: toggleFilterStack}" title="Toggle Filter Stack"><i class="fa fa-bars"></i></a>
-      <div class="filter-stack">
+      <div class="filter-stack" data-bind="visible: totalFilters() > 0">
         <div id="temporal-query" data-bind="with: query.temporal.applied">
           <p>
             <i class="fa fa-clock-o"></i>
