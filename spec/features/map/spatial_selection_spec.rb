@@ -131,6 +131,10 @@ describe "Spatial" do
         expect(page).to have_field('manual-coord-entry-point', with: '-75,40')
       end
 
+      it "pans map to the point" do
+        expect(page.current_url).to match(/m=-74\.953125![-\d\.]+!2!/)
+      end
+
       it "updates the collection filters using the new point selection" do
         expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
       end

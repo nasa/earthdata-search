@@ -113,7 +113,6 @@ describe "Granule selection", reset: false do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
         wait_for_xhr
-
         expect(result).to match(/LatLng\([-\.\d]*, 0\)/)
       end
 

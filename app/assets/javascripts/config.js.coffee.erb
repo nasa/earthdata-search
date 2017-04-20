@@ -15,17 +15,16 @@
 
   if cmr_env == 'uat'
     browse_scaler_url = "<%= ENV['browse_scaler_url_uat'] ||  Rails.configuration.services['earthdata']['uat']['browse_scaler_root'] %>"
+    limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
+    enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['uat']['enable_esi_order_chunking'].to_s %>" == 'true')
   else if cmr_env == 'sit'
     browse_scaler_url = "<%= ENV['browse_scaler_url_sit'] ||  Rails.configuration.services['earthdata']['sit']['browse_scaler_root'] %>"
+    limited_collections = "<%= Rails.configuration.services['edsc']['sit']['limited_collections'] %>".split /\s*,\s*/
+    enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['sit']['enable_esi_order_chunking'].to_s %>" == 'true')
   else
     browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
-
-  if cmr_env == 'uat'
-    limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
-  else if cmr_env == 'sit'
-    limited_collections = "<%= Rails.configuration.services['edsc']['sit']['limited_collections'] %>".split /\s*,\s*/
-  else
     limited_collections = "<%= Rails.configuration.services['edsc']['prod']['limited_collections'] %>".split /\s*,\s*/
+    enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['prod']['enable_esi_order_chunking'].to_s %>" == 'true')
 
   <% if Rails.env.test? %>
 
@@ -50,6 +49,7 @@
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
+    enableEsiOrderChunking: enable_esi_order_chunking
 
   <% elsif Rails.env.development? %>
 
@@ -72,6 +72,7 @@
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
+    enableEsiOrderChunking: enable_esi_order_chunking
 
   <% else %>
   # Production config
@@ -92,5 +93,6 @@
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
+    enableEsiOrderChunking: enable_esi_order_chunking
 
   <% end %>
