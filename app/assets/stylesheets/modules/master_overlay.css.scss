@@ -274,6 +274,7 @@
     @include dark-button;
     font-style: normal;
     line-height: 1.428571429em; // Bootstrap value.  Weird.
+    text-decoration: none;
 
     &.low-priority {
       box-shadow: none;
