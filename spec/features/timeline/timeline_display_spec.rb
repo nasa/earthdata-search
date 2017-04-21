@@ -33,7 +33,7 @@ describe "Timeline display", reset: false do
       add_collection_to_project('C1000000000-ORNL_DAAC', 'A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data')
       add_collection_to_project('C1234044620-GES_DISC', 'MLS/Aura Near-Real-Time L2 Nitric Acid (HNO3) Mixing Ratio V003 (ML2HNO3_NRT) at GES DISC')
 
-      collection_results.click_link "View Project"
+      find("#view-project").click
 
       wait_for_xhr
     end
@@ -71,7 +71,7 @@ describe "Timeline display", reset: false do
       end
 
       after :all do
-        click_link("View Project")
+        find("#view-project").click
       end
 
       it 'hides the timeline' do
@@ -109,7 +109,7 @@ describe "Timeline display", reset: false do
     before :all do
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
-      collection_results.click_link "View Project"
+      find("#view-project").click
       view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview')
     end
 
@@ -134,7 +134,7 @@ describe "Timeline display", reset: false do
 
       set_temporal(start_date, stop_date)
 
-      collection_results.click_link "View Project"
+      find("#view-project").click
     end
 
     after :all do

@@ -5,6 +5,8 @@ describe "Add to project", reset: false do
   before(:all) do
     Capybara.reset_sessions!
     load_page :search, q: 'C179003030-ORNL_DAAC'
+    login
+    wait_for_xhr
   end
 
   context "in the collection results list" do
@@ -64,11 +66,11 @@ describe "Add to project", reset: false do
       end
 
       it 'displays a summary of the collections in the project' do
-        expect(page).to have_text("You have 1 collection in your project.")
+        expect(page).to have_text("You have 1 collection in your current Project")
       end
 
       it 'displays a link to view the project' do
-        expect(page).to have_link("View Project")
+        expect(page).to have_link("Project")
       end
     end
 
@@ -86,7 +88,7 @@ describe "Add to project", reset: false do
         end
 
         it 'removes the summary of the collections in the project' do
-          expect(page).to have_no_text("You have 1 collection in your project.")
+          expect(page).to have_no_text("You have 1 collection in your current Project")
           expect(page).to have_text('Add collections to your project to compare and download their data.')
         end
 
@@ -110,6 +112,8 @@ describe "Add to project", reset: false do
         before(:all) do
           fill_in :keywords, with: 'C179003030-ORNL_DAAC'
           wait_for_xhr
+          login
+          wait_for_xhr
           target_collection_result.click_link "Add collection to the current project"
           wait_for_xhr
           fill_in :keywords, with: ' '
@@ -126,12 +130,12 @@ describe "Add to project", reset: false do
         end
 
         it 'updates the summary of the collections in the project' do
-          expect(page).to have_text("You have 1 collection in your project.")
+          expect(page).to have_text("You have 1 collection in your current Project")
           expect(page).to have_no_text('Add collections to your project to compare and download their data.')
         end
 
         it 'continues to show the link to view the project' do
-          expect(page).to have_link("View Project")
+          expect(page).to have_link("Project")
         end
 
         it 'removes the collection from the current project' do

@@ -82,6 +82,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @current().next().show()
 
     toggleParent: (show = @root.hasClass(@scope('is-parent-hidden')), event=true) ->
+      $('body').toggleClass(@scope('no-facet'), !show)
       @root.toggleClass(@scope('is-parent-hidden'), !show)
       @contentHeightChanged()
       @_triggerStateChange() if event
@@ -180,9 +181,44 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
           $div = $(div)
           $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 20, 13))
 
-        tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
-        for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
-          $(div).height(tabPaneHeight)
+        scrollContentHeight = @root.find('.master-overlay-main').height()
+        for section in $('.master-overlay-main').find('section')
+          $(section).height(scrollContentHeight)
+
+        main = $('.main-content')
+        windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+        height = windowHeight - main.position().top - $('body > footer').outerHeight()
+        main.height(height)
+
+        # collection details
+        collectionDetail = $('#collection-details')
+        if collectionDetail.is(':visible')
+          newHeight = collectionDetail.height() - collectionDetail.find('.master-overlay-nav').outerHeight() - collectionDetail.find('header').outerHeight()
+          collectionDetail.find(@scope('.content')).height(newHeight)
+
+
+        # project
+        project = $('#project-overview')
+        newHeight = project.height() - project.find('.master-overlay-nav').outerHeight() - project.find('header').outerHeight()
+        project.find(@scope('.content')).height(newHeight)
+
+        # collection results
+        collectionResults = $('#collection-results')
+        newHeight = collectionResults.height() - collectionResults.find('header').outerHeight() - collectionResults.find('.master-overlay-info').outerHeight()
+        collectionResults.find(@scope('.content')).height(newHeight)
+
+        # granule list
+        granuleList = $('#granule-list')
+        if granuleList.is(':visible')
+          newHeight = granuleList.height() - granuleList.find('.master-overlay-nav').outerHeight() - granuleList.find('.master-overlay-info').outerHeight() - granuleList.find('header').outerHeight()
+          granuleList.find(@scope('.content')).height(newHeight)
+
+        # granule details
+        granuleDetails = $('#granule-details')
+        if granuleDetails.is(':visible')
+          newHeight = granuleDetails.height() - granuleDetails.find('.master-overlay-nav').outerHeight() - granuleDetails.find('.master-overlay-info').outerHeight() - granuleDetails.find('header').outerHeight() - $('#granule-details-nav').outerHeight()
+          granuleDetails.find(@scope('.content')).height(newHeight)
+
         null), 0)
 
   $document = $(document)

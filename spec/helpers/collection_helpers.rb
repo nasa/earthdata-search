@@ -14,13 +14,8 @@ module Helpers
       end
     end
 
-    def for_collapsed_collection(id, text)
-      wait_for_xhr
-      fill_in "keywords", with: id
-      wait_for_xhr
-      expect(first_collapsed_collection).to have_content(text)
-      yield
-      reset_search
+    def view_granule_filters(col_name='15 Minute Stream Flow Data: USGS (FIFE)')
+      find_by_id("project-collections-list").find("h3", :text => col_name, :exact => true).find(:xpath, '../..').find_link('Show granule filters').trigger("click")
       wait_for_xhr
     end
 

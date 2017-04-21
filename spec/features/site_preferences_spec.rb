@@ -6,59 +6,61 @@
 
 require 'spec_helper'
 
-describe 'Site Preferences', reset: true do
-  after :each do
-    wait_for_xhr
-    User.destroy_all if page.server.responsive?
-  end
+# EDSC-1361: UI Work to address tour at appropriate time
 
-  before :each do
-    load_page :root
-  end
+#describe 'Site Preferences', reset: true do
+#  after :each do
+#    wait_for_xhr
+#    User.destroy_all if page.server.responsive?
+#  end
 
-  context "when user is logged in" do
-    before :each do
-      login
-    end
+#  before :each do
+#    load_page :root
+#  end
 
-    it "shows the tour" do
-      expect(page).to have_css '.tour'
-    end
+#  context "when user is logged in" do
+#    before :each do
+#      login
+#    end
 
-    it "sets site preferences when closing the tour" do
-      click_button 'End Tour'
-      click_button 'Close'
-      expect(page).to have_no_css '.tour'
-      wait_for_xhr
+#    it "shows the tour" do
+#      expect(page).to have_css '.tour'
+#    end
 
-      load_page :root
-      expect(page).to have_no_css '.tour'
-    end
+#    it "sets site preferences when closing the tour" do
+#      click_button 'End Tour'
+#      click_button 'Close'
+#      expect(page).to have_no_css '.tour'
+#      wait_for_xhr
 
-    it "shows Take a Tour link after closing the tour" do
-      click_button 'End Tour'
-      expect(page).to have_content 'Take a Tour'
-    end
-  end
+#      load_page :root
+#      expect(page).to have_no_css '.tour'
+#    end
 
-  context "when user is a guest" do
-    it "shows the tour" do
-      expect(page).to have_css '.tour'
-    end
+#    it "shows Take a Tour link after closing the tour" do
+#      click_button 'End Tour'
+#      expect(page).to have_content 'Take a Tour'
+#    end
+#  end
 
-    it "sets site preferences when closing the tour" do
-      click_button 'End Tour'
-      click_button 'Close'
-      expect(page).to have_no_css '.tour'
-      wait_for_xhr
+#  context "when user is a guest" do
+#    it "shows the tour" do
+#      expect(page).to have_css '.tour'
+#    end
 
-      load_page :root
-      expect(page).to have_no_css '.tour'
-    end
+#    it "sets site preferences when closing the tour" do
+#      click_button 'End Tour'
+#      click_button 'Close'
+#      expect(page).to have_no_css '.tour'
+#      wait_for_xhr
 
-    it "shows Take a Tour link after closing the tour" do
-      click_button 'End Tour'
-      expect(page).to have_content 'Take a Tour'
-    end
-  end
-end
+#      load_page :root
+#      expect(page).to have_no_css '.tour'
+#    end
+
+#    it "shows Take a Tour link after closing the tour" do
+#      click_button 'End Tour'
+#      expect(page).to have_content 'Take a Tour'
+#    end
+#  end
+# end

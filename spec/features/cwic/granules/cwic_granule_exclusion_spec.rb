@@ -29,6 +29,7 @@ describe "CWIC-enabled granule results", reset: false do
         end
 
         after :all do
+          click_button('Apply your selections')
           first_granule_list_item.click
           keypress('#granule-list', :delete)
           wait_for_xhr

@@ -38,9 +38,7 @@ export default class CwicRendererPlugin {
     this.cwicQuery = null;
     this._needsTemporalWarning = true;
     this._clearLayers();
-    this.edsc.removeElementHelp('recurringTemporal');
     this._removeCaveats();
-    this.edsc.removeElementHelp('mbr');
     console.log('End search focus');
   }
   startSearchView() {
@@ -103,12 +101,10 @@ export default class CwicRendererPlugin {
         placement: 'bottom',
         element: '#temporal-query'
       };
-      this.edsc.addElementHelp('recurringTemporal', options);
       this._needsTemporalWarning = false;
     }
     else if (!isRecurring) {
       this._needsTemporalWarning = true;
-      this.edsc.removeElementHelp('recurringTemporal');
     }
 
     this._clearLayers();
@@ -122,7 +118,6 @@ export default class CwicRendererPlugin {
           placement: 'bottom',
           element: 'a.spatial-dropdown-button'
         };
-        this.edsc.addElementHelp('mbr', options);
         this._needsSpatialWarning = false;
       }
       let mbr = this.cwicQuery.mbr();

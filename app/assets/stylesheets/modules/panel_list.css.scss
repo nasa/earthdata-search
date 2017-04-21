@@ -3,26 +3,24 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list {
+
   .button {
-    @include light-button;
+    @include list-panel-button;
     font-size: 1.2em;
     padding: 7px 10px;
   }
 }
 
-.panel-list .ccols {
-  margin-bottom: 1em;
-}
-
 .panel-list-list {
   margin-top: 0;
+  background: $master-overlay-info-bg-color;
 }
 
 .panel-list-item, .panel-list-list > .sortable-placeholder {
-  color: #fff;
-  background-color: #292929;
-  border-left: 10px solid #424242;
-  margin: 5px 5px 6px 5px;
+  color: #424242;
+  background-color: #fff;
+  border-top: 1px solid #e3e3e3;
+  margin: 0;
   min-height: $panel-list-thumbnail-size + 30px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
@@ -32,13 +30,39 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     margin-top: 0;
   }
 
+  &:nth-child(odd) {
+    background: #f4f7fa;
+  }
+
   &.master-overlay-forward:hover {
-    border-left-color: #525252;
-    background-color: #393939;
+    background-color: #eee;
   }
 
   h3 {
     overflow: hidden;
+  }
+}
+
+.granule-list {
+
+  .master-overlay-info {
+    padding: 10px 20px;
+  }
+
+  .panel-list-list {
+    padding: 10px;
+    border-top: 1px solid #e3e3e3;
+  }
+
+  .panel-list-item {
+    width: 300px;
+    float: left;
+    margin: 10px;
+    border: 1px solid #e3e3e3;
+  }
+
+  .button {
+    @include list-panel-button;
   }
 }
 
@@ -72,9 +96,19 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-focused {
-  border-left-color: #525252;
-  background-color: #393939;
+  background-color: #eee;
   cursor: pointer;
+}
+
+.panel-list-info-container {
+  display: inline-block;
+  width: 80%;
+}
+
+.panel-list-item-actions-container {
+  display: inline-block;
+  vertical-align: top;
+  float: right;
 }
 
 .panel-list-thumbnail-container {
@@ -125,9 +159,11 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-badges {
-  position: absolute;
-  top: -1px;
-  left: -1px;
+
+  a {
+    color: #fff;
+  }
+
   .tooltip {
     width: $facet-overlay-width;
   }
@@ -144,13 +180,15 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .badge {
-  display: block;
-  float: left;
-  border-radius: 2px;
-  margin: 2px 0 0 2px;
-  background-repeat: no-repeat;
-  width: 22px;
-  height: 22px;
+  display: inline-block;
+  color: #fff;
+  font-size: 9px;
+  line-height: 12px;
+  font-weight: bold;
+  padding: 3px 6px;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
 }
 
 .facets-list-hide .badge {
@@ -162,30 +200,29 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .badge-gibs {
-  @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
+  background-color: $gibs;
+  &:before {
+    content: "Map Imagery";
+  }
 }
 
 .circle-badge-gibs {
-  background-color: #ec8101;
+  background-color: $gibs;
 }
 
 .badge-subsetting {
-  @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
+  background-color: $subsetting;
+  &:before {
+    content: "Subsetting";
+  }
 }
 
 .circle-badge-subsetting {
-  background-color: #1b97e1;
+  background-color: $subsetting;
 }
 
 .badge-nrt {
-  border-radius: 2px;
-  background-color: #2ECC71;
-  color: #fff;
-  text-shadow: .5px .5px .5px darken(#2ECC71, 20%);
-  font-size: 9px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 22px;
+  background-color: $nrt;
   &:before {
     content: "NRT";
   }
@@ -193,21 +230,13 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .circle-badge-nrt {
-  background-color: #01cf6b;
+  background-color: $nrt;
 }
 
 .badge-cwic {
-  border-radius: 2px;
-  background-color: #ccaa00;
-  color: #fff;
-  text-shadow: .5px .5px .5px darken(#ccaa00, 20%);
-  font-size: 1em;
-  font-weight: bold;
-  text-align: center;
-  line-height: 22px;
-  font-family: FontAwesome;
+  background-color: $cwic;
   &:before {
-    content: "\f0ac";
+    content: "CWIC";
   }
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
 }
@@ -223,39 +252,23 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-details {
-  font-size: .8em;
-  background: #111;
-  border-radius: 5px;
-  padding: 4px 8px;
-  display: inline;
+  background: rgba(0,0,0,0.3);
+  font-size: 9px;
+  line-height: 12px;
+  font-weight: bold;
+  padding: 3px 6px;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  display: inline-block;
   color: #fff;
-  text-shadow: 1px 1px 1px #222;
 }
 
 .panel-list-comparison-details {
   font-size: .9em;
-  padding: 4px 8px;
-}
-
-.panel-list-granule-description {
-  border-left: 1px solid #888;
-  padding-left: 4px;
-  margin-left: 4px;
-}
-
-.panel-list-item-actions {
-  position: relative;
-  top: 2px;
-  left: 2px;
-  float: right;
 }
 
 .granule-item-actions {
-  @media (min-width: 1150px) {
-    position: relative;
-    top: 25px;
-    left: 25px;
-  }
+
 }
 
 .panel-list-item:after {
@@ -271,8 +284,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-selected {
-  border-left-color: desaturate(#2980b9, 50%);
-  background: #494949;
+  background: rgba(46, 204, 113,0.2);
 
   .panel-list-when-selected {
     visibility: visible;
@@ -285,10 +297,10 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list a.panel-list-remove {
   float: right;
-  color: #fff;
-  color: rgba(255,255,255, 0.2);
   @include transition(color 0.3s ease-in-out);
-
+  font-size: 1.6em;
+  line-height: 1em;
+  padding-left: 2px;
   &:hover {
     color: #e74c3c;
   }
@@ -301,16 +313,12 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .portal-escape {
-  color: #c9c9c9;
-  margin-top: 2em;
-  padding: 1em .5em .5em;
-  border-top: 1px solid #888;
+  color: #424242;
+  margin-top: 1.6em;
+  padding: 15px 20px;
+  border-top: 1px solid #e3e3e3;
 }
 
 .portal-escape a {
-  color: #c9c9c9;
   text-decoration: underline;
-  &:link, &:visited {
-    color: #c9c9c9;
-  }
 }

@@ -36,6 +36,10 @@ ns.SearchPage = do (ko
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
     $('.master-overlay').masterOverlay()
+    $('.launch-variable-modal').click ->
+      $('#variablesModal').modal('show')
+    $('.launch-customize-modal').click ->
+      $('#customizeDataModal').modal('show')
 
   class SearchPage
     constructor: ->
@@ -49,7 +53,6 @@ ns.SearchPage = do (ko
         spatialType: new SpatialTypeModel(@query)
         collectionsList: new CollectionsListModel(@query, @collections, @project)
         projectList: new ProjectListModel(@project, @collections)
-        isLandingPage: ko.observable(null) # Used by modules/landing
         feedback: new FeedbackModel()
 
       @bindingsLoaded = ko.observable(false)
@@ -78,6 +81,7 @@ ns.SearchPage = do (ko
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+      @toggleFilterStack()
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
@@ -97,6 +101,20 @@ ns.SearchPage = do (ko
 
     showParent: =>
       $('.master-overlay').masterOverlay('manualShowParent')
+
+    toggleFilterStack: (data, event) =>
+      $('.filter-stack').toggle()
+
+    totalFilters: ->
+      length += (if @query.spatial() then 1 else 0)
+      length += (if @query.temporalComponent() then 1 else 0)
+      length
+
+    showProject: (data, event) =>
+      $('#view-project').click()
+
+    hideProject: (data, event) =>
+      $('#view-project').click()
 
   current = new SearchPage()
   setCurrent(current)

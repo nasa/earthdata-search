@@ -9,10 +9,11 @@ describe 'Saving Projects', reset: false do
       Capybara.reset_sessions!
       load_page :search
       login
+      dismiss_banner
 
       second_unfeatured_collection.click_link "Add collection to the current project"
       first_unfeatured_collection.click_link "Add collection to the current project"
-      click_link "Save your project"
+      click_link 'Save your project'
       fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
       click_save_project_name
     end
@@ -28,7 +29,7 @@ describe 'Saving Projects', reset: false do
 
     context "when renaming the project" do
       before :all do
-        click_link "Test Project"
+        click_link 'Test Project'
         fill_in "workspace-name", with: "Test Project 2\t"
         click_save_project_name
       end

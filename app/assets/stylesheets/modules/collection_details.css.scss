@@ -10,13 +10,14 @@
 }
 
 .version-label {
+  color: #fff;
   display: inline-block;
   vertical-align: middle;
   background: #7f33a0;
   border-radius: 4px;
-  font-size: xx-small;
+  font-size: 0.6em;
   font-weight: normal;
-  padding: 1px 5px 0px;
+  padding: 3px 10px;
   margin-bottom: 5px;
   margin-left: 5px;
 }
@@ -33,7 +34,7 @@
   color: #fff;
 }
 
-.endpoint-label {
+a.endpoint-label {
   display: inline-block;
   vertical-align: middle;
   background: #293646;
@@ -41,6 +42,8 @@
   font-size: .9em;
   font-weight: bolder;
   padding: 1px 5px 0;
+  color: #fff;
+  text-decoration: none;
 }
 
 .long-paragraph {
@@ -59,13 +62,12 @@
 }
 
 .description-toggle:hover {
-  background-color: #1f1f1f;
+  color: #1f1f1f;
 }
 
 .description-toggle {
-  border-radius: 5px;
   background-color: transparent;
-  background-color: #171717;
+  color: #999;
   font-size: 0.6em;
   text-align: center;
   margin-bottom: .5em;

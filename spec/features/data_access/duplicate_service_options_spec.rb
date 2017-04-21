@@ -55,6 +55,7 @@ describe 'Duplicate Service Options', reset: false do
 
   context 'when setting options for a collection whose only option is "Download"' do
     before :all do
+      wait_for_xhr
       choose 'Download'
       click_button 'Continue'
     end

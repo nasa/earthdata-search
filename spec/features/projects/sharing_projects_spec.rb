@@ -17,6 +17,8 @@ describe "Sharing Projects", reset: false do
       project_id = Project.first.to_param
       visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
+      login
+      wait_for_xhr
     end
 
     after :all do
@@ -24,7 +26,7 @@ describe "Sharing Projects", reset: false do
     end
 
     it "shows the contents of the project" do
-      expect(page).to have_content 'You have 2 collections in your project'
+      expect(page).to have_content 'You have 2 collections in your current Project'
     end
 
     it "inflates the url" do
@@ -50,11 +52,14 @@ describe "Sharing Projects", reset: false do
       project_id = Project.first.to_param
       visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
+      # EDSC-1394: This login really might be defeating the purpose of this test and should be reviewed
+      login
+      wait_for_xhr
       new_project_id = Project.first.to_param
     end
 
     it "shows the contents of the project" do
-      expect(page).to have_content 'You have 8 collections in your project'
+      expect(page).to have_content 'You have 8 collections in your current Project'
     end
 
     it "saves the path into a new project for the new user" do

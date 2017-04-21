@@ -19,7 +19,7 @@ describe "Spatial and temporal extraction", reset: false do
 
     it "is set in the query" do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
-      expect(Project.find(project_id).path).to eql('/search/collections?m=31.168933999999993!-104.5768425!5!1!0!0%2C2&ok=Texas&sb=-106.645646%2C25.837163999999998%2C-93.508039%2C36.500704')
+      expect(Project.find(project_id).path).to have_content('ok=Texas&sb=-106.645646%2C25.837163999999998%2C-93.508039%2C36.500704')
     end
 
     it "is set on the map" do
@@ -71,7 +71,7 @@ describe "Spatial and temporal extraction", reset: false do
     it 'is set in the query and adds q= and ok= query params to the url' do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
       path = Project.find(project_id).path
-      expect(path).to eql('/search/collections?m=42.314350000000005!-72.09497850000001!7!1!0!0%2C2&qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z&q=snow+cover&ok=snow+cover+in+Boston+last+winter&sb=-71.191155%2C42.22788%2C-70.748802%2C42.40082')
+      expect(path).to have_content('qt=2015-12-01T00%3A00%3A00.000Z%2C2016-03-31T23%3A59%3A59.000Z&q=snow+cover&ok=snow+cover+in+Boston+last+winter&sb=-71.191155%2C42.22788%2C-70.748802%2C42.40082')
       expect(path).to have_text("q=snow+cover")
       expect(path).to have_text("ok=snow+cover+in+Boston+last+winter")
     end
