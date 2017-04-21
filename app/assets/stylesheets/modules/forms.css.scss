@@ -41,12 +41,26 @@ fieldset {
 }
 
 .accounts {
-  max-width: 1000px;
-  margin: 1em auto;
+  padding-top: 35px;
+
+  a:link, a:visited {
+    color: #fff;
+  }
+
+  i {
+    padding-right: 5px;
+  }
 }
 
 .account-form {
+  margin: 1em auto;
+  padding: 1em 0;
+  max-width: 1000px;
   margin-bottom: 43px;
+
+  fieldset {
+    padding: 30px;
+  }
 
   .urs-profile-label {
     display: inline-block;

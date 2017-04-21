@@ -88,6 +88,13 @@ module Helpers
       page.set_rack_session(logged_in_at: Time.now.to_i)
     end
 
+    def dismiss_banner
+      while page.has_css?('.banner-close') do
+        find('a[class="banner-close"]').click
+        wait_for_xhr
+      end
+    end
+
     def have_popover(title=nil)
       if title.nil?
         have_css('.tour')

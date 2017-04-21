@@ -7,8 +7,9 @@ describe 'Contact Information', reset: false do
   before :all do
     load_page :search, overlay: false
     login
-
-    click_link 'Manage user account'
+    wait_for_xhr
+    dismiss_banner
+    click_link 'Manage user account' 
     # TODO: Both of these fail to get me to the contact info page
     # click_link 'Contact Information'
     # click_contact_information

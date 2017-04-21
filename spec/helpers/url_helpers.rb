@@ -10,7 +10,7 @@ module Helpers
         url = '/' + url unless url.start_with?('/')
         result = [path_from_options(url, options), params_from_options(options)].map(&:presence).compact.join('?')
         # Debugging
-        #puts "Page: #{result}"
+        # puts "Page: #{result}"
         result
       end
 
@@ -86,10 +86,19 @@ module Helpers
     end
 
     def load_page(url, options={})
+      close_banner = options.delete :close_banner
+
       ActiveSupport::Notifications.instrument "edsc.performance", activity: "Page load" do
         visit QueryBuilder.new.add_to(url, options)
       end
       wait_for_xhr
+
+      # close banner if there are any (which block the 'Manage user account' link
+      if close_banner.present? && close_banner || close_banner.nil?
+        while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
+          find('.banner-close').click
+        end
+      end
     end
   end
 end

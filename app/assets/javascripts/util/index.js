@@ -1,5 +1,7 @@
+//= require interactjs-1.2.8.min
 //= require util/compat
 //= require util/deparam
+//= require util/drag
 //= require util/murmurhash3
 //= require util/string
 //= require util/array

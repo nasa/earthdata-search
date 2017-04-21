@@ -19,7 +19,6 @@ ns.CreateAccountPage = do (ko
       @bindingsLoaded = ko.observable(false)
 
       @ui =
-        isLandingPage: false
         accountForm: new AccountFormModel(@account, false)
         feedback: new FeedbackModel()
 

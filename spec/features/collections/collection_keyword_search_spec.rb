@@ -52,11 +52,13 @@ describe "Collection keyword searches", reset: false do
 
       before(:all) do
         target_collection_result.click_link "Add collection to the current project"
-        collection_results.click_link "View Project"
+        find("#view-project").click
         view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview')
         granule_list.click_link('Filter granules')
-        first_granule_list_item.click_link('View granule details')
+        # JS: Consider moving; doesn't match new UI flow
+        # first_granule_list_item.click_link('View granule details')
         expect(page).to have_content('Find only granules that have browse images.')
+        find('#granule-search').click_link('close')
       end
 
       after(:all) do
@@ -66,6 +68,7 @@ describe "Collection keyword searches", reset: false do
 
       it "does not return to the collection results list when the keyword search is cleared" do
         fill_in "keywords", with: " "
+        first_granule_list_item.click_link('View granule details')
         expect(page).to have_visible_granule_details
       end
 
@@ -110,8 +113,10 @@ describe "Collection keyword searches", reset: false do
       before(:all) do
         view_granule_results
         granule_list.click_link('Filter granules')
-        first_granule_list_item.click_link('View granule details')
+        # JS: Consider moving; doesn't match new UI flow
+        # first_granule_list_item.click_link('View granule details')
         expect(page).to have_content('Find only granules that have browse images.')
+        find('#granule-search').click_link('close')
       end
 
       after(:all) do
@@ -120,6 +125,7 @@ describe "Collection keyword searches", reset: false do
       end
 
       it "does not return to the collection results list when the keyword search is cleared" do
+        first_granule_list_item.click_link('View granule details')
         fill_in "keywords", with: " "
         expect(page).to have_visible_granule_details
       end

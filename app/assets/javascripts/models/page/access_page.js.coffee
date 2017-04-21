@@ -39,7 +39,6 @@ ns.AccessPage = do (ko,
       accountForm = new AccountFormModel(@account, true)
 
       @ui =
-        isLandingPage: false
         temporal: new TemporalModel(@query)
         # TODO: Why is this needed on this page?  There is no project list here.
         projectList: projectList

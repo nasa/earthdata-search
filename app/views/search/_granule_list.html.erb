@@ -1,5 +1,4 @@
-      <section id="granule-list" class="master-overlay-no-min" data-bind="visible: ui.collectionsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
-        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <section id="granule-list" class="master-overlay-no-min granule-list" data-bind="visible: ui.collectionsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: function() {ui.projectList.hideFilters(); ui.collectionsList.unfocusCollection(); }">
             <i class="fa fa-arrow-circle-o-left"></i> Back to Collections
@@ -81,10 +80,10 @@
                 </a>
                 <!-- /ko -->
                 <!-- ko if: $parent.canRemoveGranules() -->
-                <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
+                <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><i class="fa fa-times-circle"></i></a>
                 <!-- /ko -->
 
-              <h3 data-bind="text: displayName()"></h3>
+              <h3 data-bind="attr: {id: 'granule-list-item-' + $index()}, text: displayName()"></h3>
               <span data-bind="text: getTemporal()"></span>
 
               <div class="panel-list-item-actions granule-item-actions">

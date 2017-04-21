@@ -44,6 +44,7 @@ describe 'Collection Colormaps', reset: false do
       fill_in 'keywords', with: non_gibs_collection_id
       wait_for_xhr
       expect(page).to have_content("doi:10.3334/ORNLDAAC/1")
+
       first_collection_result.click
       wait_for_xhr
     end

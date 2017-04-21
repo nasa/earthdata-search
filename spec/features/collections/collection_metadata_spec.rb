@@ -6,6 +6,7 @@ describe 'Collection metadata', reset: false do
     fill_in 'keywords', with: 'AST_L1AE'
     find('li', text: 'ASTER Expedited L1A').click_link "View collection details"
     wait_for_xhr
+    click_link 'Metadata Formats'
   end
 
   it 'provides metadata in multiple formats' do
@@ -21,6 +22,7 @@ describe 'Collection metadata', reset: false do
     before do
       login
       wait_for_xhr
+      click_link 'Metadata Formats'
     end
 
     it 'provides metadata in multiple formats with user tokens' do

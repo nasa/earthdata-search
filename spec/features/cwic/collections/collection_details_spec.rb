@@ -18,6 +18,7 @@ describe "CWIC-enabled collection details", reset: false do
     before :all do
       first_collection_result.click_link('View collection details')
       wait_for_xhr
+      click_link 'API Endpoints'
     end
 
     after :all do

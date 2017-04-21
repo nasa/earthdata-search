@@ -36,8 +36,7 @@ describe "Spatial search by collection location" do
       it "centers the map over the selected granule" do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
-
-        expect(result).to eq("LatLng(39.09814, -98.55615)")
+        expect(result).to eq("LatLng(39.09814, -100.87207)")
       end
 
       it "zooms the map to the selected granule" do

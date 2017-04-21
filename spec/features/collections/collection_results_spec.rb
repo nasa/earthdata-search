@@ -92,7 +92,7 @@ describe "Collection results", reset: false do
   # EDSC-145: As a user, I want to see how long my collection searches take, so that
   #           I may understand the performance of the system
   it "shows how much time the collection search took" do
-    search_time_element = find('#collection-results .panel-list-meta')
+    search_time_element = find('.footer-content')
     expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
   end
 

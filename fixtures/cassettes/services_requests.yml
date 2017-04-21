@@ -398,26 +398,26 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=AST
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179002914-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 14 Apr 2017 14:35:13 GMT
-  digest: 2c4ef1f46ecb56284757f6d1609bc631fc6bed6f
+  recorded_at: Thu, 30 Mar 2017 21:02:33 GMT
+  digest: 25fff63cf6c244fe65f5e00922872ea6753d32d9
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=MODIS
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 14 Apr 2017 14:35:14 GMT
-  digest: 6e6de62570866db2768f181508d702109ad1d087
+  recorded_at: Thu, 30 Mar 2017 21:02:32 GMT
+  digest: f9718903bef9e6dd7ef205d3658b33ca02a5c3ae
 - request:
     method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
