@@ -83,14 +83,14 @@ describe "Granule selection", reset: false do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
       wait_for_xhr
-      expect(result).to match(/LatLng\([-\.\d]*, 0\)/)
+      expect(result).to match(/LatLng\([-\.\d]*, [-\.\d]*\)/)
     end
 
     it "zooms the map to the selected granule" do
       script = "$('#map').data('map').map.getZoom()"
       result = page.evaluate_script script
 
-      expect(result).to eq(2)
+      expect(result).to eq(4)
     end
 
     context "pressing the up button" do
@@ -113,14 +113,14 @@ describe "Granule selection", reset: false do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
         wait_for_xhr
-        expect(result).to match(/LatLng\([-\.\d]*, 0\)/)
+        expect(result).to match(/LatLng\([-\.\d]*, [-\.\d]*\)/)
       end
 
       it "zooms the map to the selected granule" do
         script = "$('#map').data('map').map.getZoom()"
         result = page.evaluate_script script
 
-        expect(result).to eq(2)
+        expect(result).to eq(4)
       end
     end
 
@@ -237,7 +237,7 @@ describe "Granule selection", reset: false do
       before :all do
         center = page.evaluate_script("$('#map').data('map').map.getCenter()")
         # re-center the map a little above the granule list so the 'x' on the map is clickable
-        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(-20,0))")
+        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(-10,0))")
         find_by_id("map").find('a[title="Exclude this granule"]').click
         wait_for_xhr
         find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
