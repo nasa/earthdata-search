@@ -51,6 +51,7 @@ describe "Granule selection", reset: false do
 
     after :all do
       nth_granule_list_item(10).click
+      wait_for_xhr
     end
 
     it "highlights the selected granule in the granule list" do
@@ -89,7 +90,7 @@ describe "Granule selection", reset: false do
     it "zooms the map to the selected granule" do
       script = "$('#map').data('map').map.getZoom()"
       result = page.evaluate_script script
-
+      wait_for_xhr
       expect(result).to eq(4)
     end
 
@@ -119,7 +120,7 @@ describe "Granule selection", reset: false do
       it "zooms the map to the selected granule" do
         script = "$('#map').data('map').map.getZoom()"
         result = page.evaluate_script script
-
+        wait_for_xhr
         expect(result).to eq(4)
       end
     end
@@ -144,10 +145,12 @@ describe "Granule selection", reset: false do
     context "and clicking on it again" do
       before :all do
         nth_granule_list_item(10).click
+        wait_for_xhr
       end
 
       after :all do
         nth_granule_list_item(10).click
+        wait_for_xhr
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -169,12 +172,13 @@ describe "Granule selection", reset: false do
 
   context "clicking on a granule on the map" do
     before :all do
-      wait_for_xhr
       map_mouseclick(5, 5)
+      wait_for_xhr
     end
 
     after :all do
       map_mouseclick(5, 5)
+      wait_for_xhr
     end
 
     it "highlights the selected granule in the granule list" do
@@ -209,12 +213,13 @@ describe "Granule selection", reset: false do
 
     context "and clicking on it again" do
       before :all do
-        wait_for_xhr
         map_mouseclick(5, 5)
+        wait_for_xhr
       end
 
       after :all do
         map_mouseclick(5, 5)
+        wait_for_xhr
       end
 
       it "removes added highlights and overlays from the granule result list" do
