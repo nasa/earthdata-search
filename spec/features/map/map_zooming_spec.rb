@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# Delete this line before merging
+
 describe 'Map Zooming', reset: false do
   before :all do
     page.driver.resize_window(1680, 1050) # Default capybara window size
