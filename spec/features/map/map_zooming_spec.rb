@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-# Delete this line before merging
-
 describe 'Map Zooming', reset: false do
   before :all do
     page.driver.resize_window(1680, 1050) # Default capybara window size
@@ -129,16 +127,19 @@ describe 'Map Zooming', reset: false do
         page.execute_script("$('#geo').click")
         script = "$('#map').data('map').map.setView([0, 0], 2);"
         page.execute_script(script)
+        wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
 
       it "centers the map at (90, 0) for north polar view" do
         page.execute_script("$('#arctic').click")
+        wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
 
       it "centers the map at (-90, 0) for south polar view" do
         page.execute_script("$('#antarctic').click")
+        wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
     end
