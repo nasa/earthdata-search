@@ -254,7 +254,7 @@ describe 'Address bar', reset: false do
     it 'saves the selected granule in the address bar' do
       query = URI.parse(page.current_url).query
       project_id = query[/^projectId=(\d+)$/, 1].to_i
-      expect(Project.find(project_id).path).to eql('/search/granules/granule-details?p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-99.37234375!7!1!0!0%2C2&q=C179003030-ORNL_DAAC')
+      expect(Project.find(project_id).path).to match(/&g=G179111301-ORNL_DAAC&/)
     end
   end
 
@@ -431,7 +431,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-99.37234375!7!1!0!0%2C2')
+      expect(page.current_url).to match(/&g=G179111300-ORNL_DAAC&/)
     end
   end
 

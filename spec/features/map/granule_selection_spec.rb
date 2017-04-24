@@ -79,10 +79,7 @@ describe "Granule selection", reset: false do
     end
 
     it "centers the map over the selected granule" do
-      script = "$('#map').data('map').map.getCenter().toString()"
-      result = page.evaluate_script script
-      wait_for_xhr
-      expect(result).to eq('LatLng(-9.49219, 7.38281)')
+      expect(page).to match_map_center(-9, 7)
     end
 
     it "zooms the map to the selected granule" do
@@ -108,10 +105,7 @@ describe "Granule selection", reset: false do
       end
 
       it "centers the map over the selected granule" do
-        script = "$('#map').data('map').map.getCenter().toString()"
-        result = page.evaluate_script script
-        wait_for_xhr
-        expect(result).to eq('LatLng(-9.49219, 7.38281)')
+        expect(page).to match_map_center(-9, 7)
       end
 
       it "zooms the map to the selected granule" do
