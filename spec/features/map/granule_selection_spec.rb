@@ -46,12 +46,10 @@ describe "Granule selection", reset: false do
     before :all do
       # Click on a bottom one to test re-ordering
       nth_granule_list_item(10).click
-      wait_for_xhr
     end
 
     after :all do
       nth_granule_list_item(10).click
-      wait_for_xhr
     end
 
     it "highlights the selected granule in the granule list" do
@@ -84,14 +82,13 @@ describe "Granule selection", reset: false do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
       wait_for_xhr
-      expect(result).to match(/LatLng\([-\.\d]*, [-\.\d]*\)/)
+      expect(result).to eq('LatLng(-9.49219, 7.38281)')
     end
 
     it "zooms the map to the selected granule" do
       script = "$('#map').data('map').map.getZoom()"
       result = page.evaluate_script script
-      wait_for_xhr
-      expect(result).to eq(4)
+      expect(result).to eq(2)
     end
 
     context "pressing the up button" do
@@ -114,14 +111,13 @@ describe "Granule selection", reset: false do
         script = "$('#map').data('map').map.getCenter().toString()"
         result = page.evaluate_script script
         wait_for_xhr
-        expect(result).to match(/LatLng\([-\.\d]*, [-\.\d]*\)/)
+        expect(result).to eq('LatLng(-9.49219, 7.38281)')
       end
 
       it "zooms the map to the selected granule" do
         script = "$('#map').data('map').map.getZoom()"
         result = page.evaluate_script script
-        wait_for_xhr
-        expect(result).to eq(4)
+        expect(result).to eq(2)
       end
     end
 
@@ -145,12 +141,10 @@ describe "Granule selection", reset: false do
     context "and clicking on it again" do
       before :all do
         nth_granule_list_item(10).click
-        wait_for_xhr
       end
 
       after :all do
         nth_granule_list_item(10).click
-        wait_for_xhr
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -172,12 +166,12 @@ describe "Granule selection", reset: false do
 
   context "clicking on a granule on the map" do
     before :all do
-      map_mouseclick(5, 5)
+      map_mouseclick('#map', 2, -11)
       wait_for_xhr
     end
 
     after :all do
-      map_mouseclick(5, 5)
+      map_mouseclick('#map', 2, -11)
       wait_for_xhr
     end
 
@@ -213,12 +207,12 @@ describe "Granule selection", reset: false do
 
     context "and clicking on it again" do
       before :all do
-        map_mouseclick(5, 5)
+        map_mouseclick('#map', 2, -11)
         wait_for_xhr
       end
 
       after :all do
-        map_mouseclick(5, 5)
+        map_mouseclick('#map', 2, -11)
         wait_for_xhr
       end
 
@@ -240,14 +234,10 @@ describe "Granule selection", reset: false do
 
     context "clicking the remove icon on the map" do
       before :all do
-        center = page.evaluate_script("$('#map').data('map').map.getCenter()")
-        # re-center the map a little above the granule list so the 'x' on the map is clickable
-        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(-10,0))")
         find_by_id("map").find('a[title="Exclude this granule"]').click
         wait_for_xhr
         find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
-        # restore the map center
-        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(#{center['lat']},center['lng'))")
+        page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(2,-11))")
       end
 
       after :all do
@@ -255,7 +245,7 @@ describe "Granule selection", reset: false do
         click_button "granule-filters-clear"
         click_button('Apply your selections')
         wait_for_xhr
-        map_mouseclick(5, 5)
+        map_mouseclick('#map', 2, -11)
       end
 
       it "removes the granule from the list" do

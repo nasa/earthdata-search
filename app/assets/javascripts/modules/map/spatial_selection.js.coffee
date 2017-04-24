@@ -6,6 +6,7 @@ ns.SpatialSelection = do (window,
                           L,
                           ShapefileLayer = ns.L.ShapefileLayer,
                           Proj = ns.L.Proj,
+                          util=@edsc.util.visibility,
                           currentPage = @edsc.models.page.current) ->
 
   L.drawLocal.draw.handlers.simpleshape.tooltip.end = "Release to finish drawing"
@@ -222,9 +223,9 @@ ns.SpatialSelection = do (window,
       # pan to empty area
       masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
       facetOverlay = document.getElementById('master-overlay-parent')
-      offset = 0 - ((if masterOverlay then masterOverlay.offsetWidth else 0) + (if facetOverlay then facetOverlay.offsetWidth else 0)) / 2
-
-      @map.panTo(marker.getLatLng()).panBy([offset, 0])
+      offsetWidth = 0 - (if util.isElementInViewPort(facetOverlay) then facetOverlay.offsetWidth else 0) / 2
+      offsetHeight = masterOverlay?.offsetHeight / 4
+      @map.panTo(marker.getLatLng()).panBy([offsetWidth, offsetHeight])
 
     _renderRectangle: (shape) ->
       # southwest longitude should not be greater than northeast
@@ -239,9 +240,9 @@ ns.SpatialSelection = do (window,
       # pan to empty area
       masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
       facetOverlay = document.getElementById('master-overlay-parent')
-      offset = 0 - ((if masterOverlay then masterOverlay.offsetWidth else 0) + (if facetOverlay then facetOverlay.offsetWidth else 0)) / 2
-
-      @map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offset, 0])
+      offsetWidth = 0 - (if util.isElementInViewPort(facetOverlay) then facetOverlay.offsetWidth else 0) / 2
+      offsetHeight = masterOverlay?.offsetHeight / 4
+      @map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offsetWidth, offsetHeight])
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
