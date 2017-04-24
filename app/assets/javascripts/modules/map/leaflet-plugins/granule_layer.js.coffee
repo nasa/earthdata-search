@@ -501,7 +501,7 @@ ns.GranuleLayer = do (L
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
           if bounds?.isValid() && !@_map.getBounds().contains(bounds)
-            @_map.fitBounds(bounds.pad(0.2))
+            @_map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
 
       @_loadResults(@_results)
 

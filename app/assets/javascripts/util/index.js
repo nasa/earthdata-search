@@ -10,3 +10,4 @@
 //= require util/xhr
 //= require util/plugin
 //= require util/metrics
+//= require util/visibility
