@@ -86,6 +86,30 @@ RSpec::Matchers.define :have_no_spatial_constraint do |expected|
   end
 end
 
+RSpec::Matchers.define :match_map_center do |expected_lat, expected_lng|
+  def map_params(page)
+    page.evaluate_script("(function() {
+       var center = $('#map').data('map').map.getCenter();
+       return [center.lat, center.lng];
+    })();")
+  end
+
+  match do |page|
+    synchronize do
+      lat, lng = map_params(page)
+      delta = 1
+
+      expect(lat).to be_within(delta).of(expected_lat)
+      expect(lng).to be_within(delta).of(expected_lng)
+    end
+  end
+
+  failure_message_for_should do |page|
+    "expected page to have map query of 'm=#{expected_lat}!#{expected_lng}...', got '#{URI.parse(page.current_url).query.inspect}'"
+  end
+
+end
+
 RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected_zoom|
 
   def map_params(page)
