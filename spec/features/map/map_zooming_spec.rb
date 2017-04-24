@@ -123,24 +123,31 @@ describe 'Map Zooming', reset: false do
     end
 
     context "on polar view" do
+      
+      before :all do
+        find("#collection-results").find_link("Minimize").click
+        wait_for_xhr
+      end
       after :all do
-        page.execute_script("$('#geo').click")
+        click_on "Geographic (Equirectangular)"
+        find_by_id("collection-results").find_link("Maximize").click
+        wait_for_xhr
         script = "$('#map').data('map').map.setView([0, 0], 2);"
         page.execute_script(script)
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
 
-      it "centers the map at (90, 0) for north polar view" do
-        page.execute_script("$('#arctic').click")
+      it "centers the map at (90, 45) for north polar view" do
+        click_on "North Polar Stereographic"
         wait_for_xhr
-        expect(page).to have_map_center(0, 0, 2)
+        expect(page).to have_map_center(90, 45, 0)
       end
 
-      it "centers the map at (-90, 0) for south polar view" do
-        page.execute_script("$('#antarctic').click")
+      it "centers the map at (-90, 90) for south polar view" do
+        click_on "South Polar Stereographic"
         wait_for_xhr
-        expect(page).to have_map_center(0, 0, 2)
+        expect(page).to have_map_center(-90, 90, 0)
       end
     end
   end
