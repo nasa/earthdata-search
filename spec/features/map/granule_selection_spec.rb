@@ -40,12 +40,14 @@ describe "Granule selection", reset: false do
 
   before :all do
     load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C90757595-LAADS'
+    p "------- url: #{page.current_url}"
   end
 
   context "clicking on a granule in the result list" do
     before :all do
       # Click on a bottom one to test re-ordering
       nth_granule_list_item(10).click
+      wait_for_xhr
     end
 
     after :all do
@@ -135,6 +137,7 @@ describe "Granule selection", reset: false do
     context "and clicking on it again" do
       before :all do
         nth_granule_list_item(10).click
+        wait_for_xhr
       end
 
       after :all do
