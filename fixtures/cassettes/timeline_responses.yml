@@ -707,6 +707,30 @@ e11cd86b9ba6a814a979bf2f3550f3a228b2bad4:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000000-ORNL_DAAC","intervals":[[510192000,605059200,3]]}]'
     http_version: 
+d9a55544d156fa6abdcbbb24a4b31f6477e782af:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - af095e51-588c-4a44-9080-afdd6dd021e1
+      date:
+      - Mon, 24 Apr 2017 19:48:01 GMT
+      server:
+      - nginx/1.10.3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '80'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000000000-ORNL_DAAC","intervals":[[1275264000,1338595200,3]]}]'
+    http_version: 
 c3931024deafe0683a41ccf791beece729f3fa49:
   response:
     status:
@@ -1478,6 +1502,30 @@ b610fc344ce621186fdeca15e0255b5fb846a12b:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179002914-ORNL_DAAC","intervals":[[546825600,562723200,117]]}]'
+    http_version: 
+1a4e6aca1c112e4ea7085cdc96a45d2b36ec8c06:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e1c9f820-5521-482c-845f-d46814befc68
+      date:
+      - Mon, 24 Apr 2017 19:48:44 GMT
+      server:
+      - nginx/1.10.3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
     http_version: 
 f9f8b9f916aab6b1f4f98857cf3bbc26d805afa2:
   response:
@@ -3340,6 +3388,30 @@ f4c28a5839bd38d8bc1e35e9a1893254e575660c:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
+276c52e93f0a4212f556b2b6724a8ea4814dd506:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - c7a4207c-11a5-4776-a1e1-5f7729f16f32
+      date:
+      - Mon, 24 Apr 2017 19:48:37 GMT
+      server:
+      - nginx/1.10.3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
     http_version: 
 fe1d84be2c05f02db9addd545112f173b8dde8e1:
   response:
