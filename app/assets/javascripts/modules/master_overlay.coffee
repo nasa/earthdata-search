@@ -185,11 +185,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         for section in $('.master-overlay-main').find('section')
           $(section).height(scrollContentHeight)
 
-        main = $('.main-content')
-        windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-        height = windowHeight - main.position().top - $('body > footer').outerHeight()
-        main.height(height)
-
         # collection details
         collectionDetail = $('#collection-details')
         if collectionDetail.is(':visible')
