@@ -19,6 +19,7 @@ if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeede
     git remote add ecc ssh://git@git.earthdata.nasa.gov:7999/edsc/earthdata-search-client_repo.git
     git fetch ecc "+refs/heads/*:refs/remotes/origin/*"
 
+    git fetch --unshallow || true
     echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
     git push ecc $TRAVIS_COMMIT:refs/heads/deploy
 fi
