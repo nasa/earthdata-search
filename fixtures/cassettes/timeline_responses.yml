@@ -421,6 +421,30 @@ abe1485607c534520cc458d534217ecfdd354174:
       encoding: UTF-8
       string: "[]"
     http_version: 
+0450d95c3c8b4806176516f1c6df97d71751a668:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8cbaec3d-b805-4bc8-9b1e-f0d6669dafa7
+      date:
+      - Tue, 25 Apr 2017 00:34:48 GMT
+      server:
+      - nginx/1.10.3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 51fdb3890d96e163993469ccb9bab06382eec1cf:
   response:
     status:
@@ -1591,6 +1615,30 @@ f9f8b9f916aab6b1f4f98857cf3bbc26d805afa2:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+b693a5ebe5f4d8b4b94ff41f2cf4bb3dd405583c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - f7472eb8-1137-4d1e-80c5-ec7013497f22
+      date:
+      - Tue, 25 Apr 2017 00:29:36 GMT
+      server:
+      - nginx/1.10.3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
