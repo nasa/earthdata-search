@@ -88,10 +88,16 @@
                   <label data-bind="click: $parent.showSpinner, css: {'some-class': $parent.method() == $data.name}" class="input-tab">
                     <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parentContext.$parentContext.$index() + $parentContext.$index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
                     <strong><span data-bind="text: name"></span></strong>
+                    <!-- ko if: type == 'download' -->
+                    <span class="access-item-description">Download raw data now.</span>
+                    <!-- /ko -->
+                    <!-- ko if: type == 'order' -->
+                    <span class="access-item-description">Figure out the difference between download and order.</span>
+                    <!-- /ko -->
                     <!-- ko if: type == 'service' -->
                     <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
+                    <span class="access-item-description">Select custom service options to be performed.</span>
                     <!-- /ko -->
-                    <span class="access-item-description">You could have a brief description here about the thing.</span>
                   </label>
                   <!-- /ko -->
                 </p>
