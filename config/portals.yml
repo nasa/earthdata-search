@@ -29,7 +29,7 @@ portals: &portals
       
   ornldaac:
     org: ORNL DAAC
-    title: ORNL DAAC
+    title: Search
     params:
       data_center:
         - ORNL_DAAC
