@@ -281,6 +281,27 @@ section.data-access-next {
   &:first-child {
     border-top: 0px;
   }
+
+  .input-tab {
+    border: 1px solid #e3e3e3;
+    border-radius: 2px;
+    padding: 15px;
+    width: 275px;
+    display: inline-block;
+    vertical-align: top;
+
+    input[type="radio"]:checked {
+      border-bottom: none;
+    }
+  }
+
+  .access-item-description {
+    display: block;
+    font-size: 0.9em;
+    line-height: 1.2em;
+    margin-top: 4px;
+    color: #95a5a6;
+  }
 }
 
 .summary-label {
