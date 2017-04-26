@@ -43,6 +43,10 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @icon('fa-file-o')
       @manualEntryVisible(false)
 
+    selectGrid: =>
+      @name('Grid Coordinates')
+      @icon ('edsc-icon-globe')
+
     _toReadableName: (name)->
       return 'Point' if name == 'point'
       return 'Rectangle' if name == 'bounding_box'
