@@ -101,7 +101,7 @@ class CollectionsController < ApplicationController
     # params['include_facets'] = 'v2'
 
     relevancy_param(params)
-    
+
     params['two_d_coordinate_system'].delete 'coordinates' if params['two_d_coordinate_system'].present?
 
     params

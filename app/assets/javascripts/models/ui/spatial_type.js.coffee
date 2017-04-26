@@ -51,8 +51,6 @@ ns.SpatialType = do (ko, $=jQuery) ->
 
     selectGrid: =>
       @isGrid(true)
-#      @icon ('edsc-icon-globe')
-#      @manualEntryVisible(false)
 
     _toReadableName: (name)->
       return 'Point' if name == 'point'
