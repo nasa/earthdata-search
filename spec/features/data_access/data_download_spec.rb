@@ -209,6 +209,9 @@ describe "Data download page", reset: false do
       wait_for_xhr
     end
 
+    it 'does not display a header erroneously declaring success' do
+      expect(page).should_not have_content("Success!")
+    end
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
       expect(page).to have_css("a[href^=\"/data/configure?\"]")
