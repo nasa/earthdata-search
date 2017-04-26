@@ -85,7 +85,7 @@
                 <p class="access-item-selection">
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <!-- ko foreach: availableMethods -->
-                  <label data-bind="click: $parent.showSpinner, css: $parent.activeLabel" class="input-tab">
+                  <label data-bind="click: $parent.showSpinner, css: {'some-class': $parent.method() == $data.name}" class="input-tab">
                     <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parentContext.$parentContext.$index() + $parentContext.$index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
                     <strong><span data-bind="text: name"></span></strong>
                     <!-- ko if: type == 'service' -->

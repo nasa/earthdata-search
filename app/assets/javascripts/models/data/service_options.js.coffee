@@ -78,9 +78,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         @loadForm(false)
       true
 
-    activeLabel: (item) =>
-      
-
     _computePrepopulatedFields: ->
       result = {}
       mbr = edsc.page.query?.mbr()
