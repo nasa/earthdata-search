@@ -89,14 +89,14 @@
                     <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parentContext.$parentContext.$index() + $parentContext.$index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
                     <strong><span data-bind="text: name"></span></strong>
                     <!-- ko if: type == 'download' -->
-                    <span class="access-item-description">Download raw data now.</span>
+                    <span class="access-item-description">Download RAW data now from your browser or access script.</span>
                     <!-- /ko -->
                     <!-- ko if: type == 'order' -->
-                    <span class="access-item-description">Figure out the difference between download and order.</span>
+                    <span class="access-item-description">Send a <strong>free</strong> order request to the provider for processing.</span>
                     <!-- /ko -->
                     <!-- ko if: type == 'service' -->
                     <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
-                    <span class="access-item-description">Select custom service options to be performed.</span>
+                    <span class="access-item-description">Select custom service options to be performed. (Subsetting, reprojection, etc.)</span>
                     <!-- /ko -->
                   </label>
                   <!-- /ko -->
