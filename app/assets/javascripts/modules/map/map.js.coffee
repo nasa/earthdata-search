@@ -45,20 +45,9 @@ ns.Map = do (window,
         @_zoom = @_limitZoom(zoom)
         return this
 
-      # if overlay is visible, adjust center
-      overlayWidth = $('.master-overlay-parent').width() + $('.master-overlay-main').width() # parent and main visible
-      if $('.master-overlay.is-master-overlay-parent-hidden').length > 0 #only main visible
-        overlayWidth -= $('.master-overlay-parent').width()
-      if $('.master-overlay.is-hidden').length > 0 # parent and main hidden
-        overlayWidth = 0
-      overlayWidth /= 2
-
       currentZoom = @getZoom()
       return this if currentZoom == zoom
-      if currentZoom > zoom
-        targetPoint = @project(@getCenter(), zoom).subtract([overlayWidth / 2, 0])
-      else
-        targetPoint = @project(@getCenter(), zoom).add([overlayWidth, 0])
+      targetPoint = @project(@getCenter(), zoom)  
       targetLatLng = @unproject(targetPoint, zoom)
 
       @setView(targetLatLng, zoom, {zoom: options})
