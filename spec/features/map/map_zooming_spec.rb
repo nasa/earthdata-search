@@ -46,7 +46,7 @@ describe 'Map Zooming', reset: false do
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 68, 3)
+        expect(page).to have_map_center(0, 0, 3)
       end
     end
 
@@ -73,7 +73,7 @@ describe 'Map Zooming', reset: false do
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 19.6, 3)
+        expect(page).to have_map_center(0, 0, 3)
       end
     end
   end
@@ -181,7 +181,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(0, -274, 0)
+          expect(page).to have_map_center(0, 0, 0)
         end
 
         it 'does not zoom out any further' do
@@ -212,7 +212,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(0, 4, 7)
+          expect(page).to have_map_center(0, 0, 7)
         end
 
         it 'does not zoom in any further' do
@@ -245,7 +245,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(85, 45, 4)
+          expect(page).to have_map_center(90, -45, 4)
         end
       end
     end
