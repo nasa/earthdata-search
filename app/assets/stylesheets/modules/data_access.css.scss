@@ -274,7 +274,8 @@ section.data-access-next {
 }
 
 .access-item-selection {
-  padding: .5em 0;
+  padding: 0;
+  margin: 0;
   border-top: 1px solid #ccc;
 
   &:first-child {
@@ -283,16 +284,23 @@ section.data-access-next {
 
   .input-tab {
     border: 1px solid #e3e3e3;
-    border-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     padding: 10px;
     width: 24%;
     min-height: 110px;
     display: inline-block;
     vertical-align: top;
 
+    &:hover {
+      border-color: #27ae60;
+      border-bottom: none;
+    }
+
     &.active-tab {
       background: #2ecc71;
       border-color: #27ae60;
+      border-bottom: none;
       color: #fff;
     }
   }
@@ -363,7 +371,9 @@ section.data-access-next {
 }
 
 .access-form {
-  padding: 0 1em;
+  padding: 15px;
+  background: #f9f9f9;
+  border-top: 2px solid #27ae60;
 
   > .echoforms-control-ui {
     padding-top: 0;
