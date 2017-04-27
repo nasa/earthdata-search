@@ -283,29 +283,31 @@ section.data-access-next {
 
   .input-tab {
     border: 1px solid #e3e3e3;
-    border-radius: 2px;
-    padding: 15px;
-    width: 275px;
+    border-radius: 4px;
+    padding: 10px;
+    width: 24%;
+    min-height: 110px;
     display: inline-block;
     vertical-align: top;
 
-    input[type="radio"]:checked {
-      border-bottom: none;
+    &.active-tab {
+      background: #2ecc71;
+      border-color: #27ae60;
+      color: #fff;
     }
   }
 
   .access-item-description {
     display: block;
-    font-size: 0.9em;
+    font-size: 0.85em;
     line-height: 1.2em;
     margin-top: 4px;
     color: #95a5a6;
   }
-}
 
-.some-class {
-  background-color: #0d3349;
-  color: #F0F0F0;
+  .active-tab .access-item-description {
+    color: #fff;
+  }
 }
 
 .summary-label {
