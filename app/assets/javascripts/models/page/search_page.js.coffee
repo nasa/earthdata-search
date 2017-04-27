@@ -106,9 +106,10 @@ ns.SearchPage = do (ko
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
 
-    totalFilters: ->
-      length += (if @query.spatial() then 1 else 0)
+    totalFilters: =>
+      length = (if @query.spatial() && @query.spatial().length then 1 else 0)
       length += (if @query.temporalComponent() then 1 else 0)
+      length += (if @ui.spatialType.name() == 'Grid Coordinates' || @query.grid.selected() then 1 else 0)
       length
 
     showProject: (data, event) =>

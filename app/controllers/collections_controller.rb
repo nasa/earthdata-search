@@ -102,6 +102,8 @@ class CollectionsController < ApplicationController
 
     relevancy_param(params)
 
+    # two_d_param(params)
+
     params
   end
 
@@ -126,6 +128,14 @@ class CollectionsController < ApplicationController
                                 :science_keywords, :project, :processing_level_id, :data_center, :archive_center]
     params[:sort_key].push 'score' unless (params.keys & relevancy_capable_fields.map(&:to_s)).empty?
   end
+
+  # def two_d_param(params)
+  #   if params['two_d_coordinate_system'].present?
+  #     params[:two_d_coordinate_system_name] = params['two_d_coordinate_system']['name']
+  #     params[:two_d_coordinate_system] = params['two_d_coordinate_system']['coordinates']
+  #     params.delete 'two_d_coordinate_system' if params[:two_d_coordinate_system].is_a?(Hash) || params[:two_d_coordinate_system].nil?
+  #   end
+  # end
 
   def add_fake_json_facets(facets)
     feature_facet = [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
