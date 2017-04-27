@@ -47,7 +47,7 @@
     }
 
     &.tab {
-      background: $master-overlay-tab-color url('drag.png') no-repeat center 5px;
+      background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
       display: inline-block;
       margin: 0;
       padding: 10px 20px;
@@ -70,7 +70,7 @@
 
 .master-overlay-nav {
   padding: 12px 20px 10px 20px;
-  background: $master-overlay-tab-color url('drag.png') no-repeat center 5px;
+  background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
   display: inline-block;
   font-size: 1.2em;
 }
