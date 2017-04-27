@@ -1,6 +1,6 @@
 .data-access {
   height: 100%;
-  color: $overlay-heading-font-color;
+  color: #888;
   padding-bottom: 70px;
   padding-top: 35px;
 
@@ -8,6 +8,7 @@
     border-bottom: 1px solid #333;
     padding: 0 0 .2em 0;
     width: inherit;
+    height: 55px;
   }
 
   a {
@@ -374,7 +375,7 @@ section.data-access-next {
 .access-form {
   padding: 15px;
   background: #f9f9f9;
-  border-top: 2px solid #27ae60;
+  border-top: 1px solid #27ae60;
 
   > .echoforms-control-ui {
     padding-top: 0;
