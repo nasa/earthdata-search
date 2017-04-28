@@ -398,28 +398,6 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179002914-ORNL_DAAC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 30 Mar 2017 21:02:33 GMT
-  digest: 25fff63cf6c244fe65f5e00922872ea6753d32d9
-- request:
-    method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 30 Mar 2017 21:02:32 GMT
-  digest: f9718903bef9e6dd7ef205d3658b33ca02a5c3ae
-- request:
-    method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
     body:
       encoding: US-ASCII
@@ -1541,6 +1519,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 11 Nov 2016 17:08:46 GMT
   digest: 56e5b1006d49c79317e5096f588c71d96ec3dc2e
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179002986-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 27 Apr 2017 14:13:20 GMT
+  digest: 94d05b88a5005706eaf176b82841405be5fd9df4
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
