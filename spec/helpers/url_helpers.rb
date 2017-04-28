@@ -62,6 +62,8 @@ module Helpers
           params[direct_param.to_s] = options[direct_param] if options.key?(direct_param)
         end
 
+        params['ac'] = true if options[:ac]
+
         result = []
         params.each do |k, v|
           param = {}
