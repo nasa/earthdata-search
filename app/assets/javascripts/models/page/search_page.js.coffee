@@ -84,6 +84,11 @@ ns.SearchPage = do (ko
       @spatialEntry.clearError()
       @toggleFilterStack()
 
+    clearSpatial: =>
+      @ui.spatialType.clearManualEntry()
+      @spatialEntry.clearError()
+      @query.spatial(null)
+
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
       "#{value} #{word}"
