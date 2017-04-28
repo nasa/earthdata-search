@@ -29,7 +29,7 @@ describe "Temporal" do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
-      expect(page).to have_content("Stop 1970-12-01 00:00:00")
+      expect(page).to have_content("Stop: 1970-12-01 00:00:00")
     end
 
     it "allows the user to search from a start date time to an end date time" do
@@ -40,8 +40,8 @@ describe "Temporal" do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
-      expect(page).to have_content("Start 1975-12-01 00:00:00")
-      expect(page).to have_content("Stop 1975-12-01 00:00:00")
+      expect(page).to have_content("Start: 1975-12-01 00:00:00")
+      expect(page).to have_content("Stop: 1975-12-01 00:00:00")
     end
 
     it "allows the user to clear the date time range" do
@@ -57,8 +57,8 @@ describe "Temporal" do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
-      expect(page).to have_no_content("Start 1978-12-01 00:00:00")
-      expect(page).to have_no_content("Stop 1979-12-01 00:00:00")
+      expect(page).to have_no_content("Start: 1978-12-01 00:00:00")
+      expect(page).to have_no_content("Stop: 1979-12-01 00:00:00")
     end
 
     it "validates incorrect user input" do
@@ -83,9 +83,9 @@ describe "Temporal" do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
-      expect(page).to have_content("Start 12-01 00:00:00")
-      expect(page).to have_content("Stop 12-31 00:00:00")
-      expect(page).to have_content("Range 1970 - 1975")
+      expect(page).to have_content("Start: 12-01 00:00:00")
+      expect(page).to have_content("Stop: 12-31 00:00:00")
+      expect(page).to have_content("Range: 1970 - 1975")
     end
 
     it "allows the user to clear the recurring date time search" do
@@ -99,18 +99,18 @@ describe "Temporal" do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
-      expect(page).to have_content("Start 12-01 00:00:00")
-      expect(page).to have_content("Stop 12-31 00:00:00")
-      expect(page).to have_content("Range 1970 - 1975")
+      expect(page).to have_content("Start: 12-01 00:00:00")
+      expect(page).to have_content("Stop: 12-31 00:00:00")
+      expect(page).to have_content("Range: 1970 - 1975")
 
       js_click_temporal
       js_click_clear
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
-      expect(page).to have_no_content("Start 12-01 00:00:00")
-      expect(page).to have_no_content("Stop 12-31 00:00:00")
-      expect(page).to have_no_content("Range 1970 - 1975")
+      expect(page).to have_no_content("Start: 12-01 00:00:00")
+      expect(page).to have_no_content("Stop: 12-31 00:00:00")
+      expect(page).to have_no_content("Range: 1970 - 1975")
     end
 
     it "validates incorrect user input" do

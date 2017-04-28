@@ -97,7 +97,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'displays the temporal on the map' do
-      expect(page.find('#temporal-query')).to have_text('Start 12-01 00:00:00 Stop 12-31 00:00:00 Range 1970 - 1975')
+      expect(page.find('#temporal-query')).to have_text('Start: 12-01 00:00:00 Stop: 12-31 00:00:00 Range: 1970 - 1975')
     end
 
     it 'filters collections using the condition' do
