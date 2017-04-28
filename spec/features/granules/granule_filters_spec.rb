@@ -5,7 +5,7 @@ describe "Granule search filters", reset: false do
     before_granule_count = 0
 
     before(:all) do
-      page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
+      page.driver.resize_window(2000, 5000) # Avoid having to scroll to click
 
       # Labs parameter enables additional attribute searching
       load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
