@@ -85,6 +85,9 @@ ns.ProjectList = do (ko
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
 
+    awaitingStatus: =>
+      @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
+
     loginAndDownloadCollection: (collection) =>
       @project.focus(collection)
       @configureProject()
