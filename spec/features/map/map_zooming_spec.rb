@@ -46,7 +46,7 @@ describe 'Map Zooming', reset: false do
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 68, 3)
+        expect(page).to have_map_center(0, 0, 3)
       end
     end
 
@@ -73,7 +73,7 @@ describe 'Map Zooming', reset: false do
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 19.6, 3)
+        expect(page).to have_map_center(0, 0, 3)
       end
     end
   end
@@ -123,21 +123,31 @@ describe 'Map Zooming', reset: false do
     end
 
     context "on polar view" do
+      
+      before :all do
+        find("#collection-results").find_link("Minimize").click
+        wait_for_xhr
+      end
       after :all do
-        page.execute_script("$('#geo').click")
+        click_on "Geographic (Equirectangular)"
+        find_by_id("collection-results").find_link("Maximize").click
+        wait_for_xhr
         script = "$('#map').data('map').map.setView([0, 0], 2);"
         page.execute_script(script)
+        wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
 
       it "centers the map at (90, 0) for north polar view" do
-        page.execute_script("$('#arctic').click")
-        expect(page).to have_map_center(0, 0, 2)
+        click_on "North Polar Stereographic"
+        wait_for_xhr
+        expect(page).to have_map_center(90, 0, 0)
       end
 
       it "centers the map at (-90, 0) for south polar view" do
-        page.execute_script("$('#antarctic').click")
-        expect(page).to have_map_center(0, 0, 2)
+        click_on "South Polar Stereographic"
+        wait_for_xhr
+        expect(page).to have_map_center(-90, 0, 0)
       end
     end
   end
@@ -147,7 +157,7 @@ describe 'Map Zooming', reset: false do
       before :all do
         visit '/search'
         wait_for_xhr
-        page.execute_script("$('#geo').click")
+        click_on "Geographic (Equirectangular)"
         MapUtil.set_zoom(page, 0)
       end
 
@@ -171,7 +181,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(0, -274, 0)
+          expect(page).to have_map_center(0, 0, 0)
         end
 
         it 'does not zoom out any further' do
@@ -202,7 +212,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(0, 4, 7)
+          expect(page).to have_map_center(0, 0, 7)
         end
 
         it 'does not zoom in any further' do
@@ -217,12 +227,12 @@ describe 'Map Zooming', reset: false do
   context 'on polar view (e.g. EPSG3031 - South Polar Stereographic)' do
     context 'at the maximum zoom level' do
       before :all do
-        find_link("North Polar Stereographic").click
+        click_on "North Polar Stereographic"
         MapUtil.set_zoom(page, 4)
       end
 
       after :all do
-        find_link("Geographic (Equirectangular)").click
+        click_on "Geographic (Equirectangular)"
       end
 
       context 'clicking zoom in' do
@@ -235,7 +245,7 @@ describe 'Map Zooming', reset: false do
         end
 
         it 'maintains the map center' do
-          expect(page).to have_map_center(85, 45, 4)
+          expect(page).to have_map_center(90, -45, 4)
         end
       end
     end
