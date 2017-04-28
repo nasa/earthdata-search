@@ -55,6 +55,7 @@ module Helpers
     def js_click_clear
       script = "$('#temporal-clear').click()"
       page.execute_script script
+      wait_for_xhr
     end
 
     def js_check_recurring(prefix)

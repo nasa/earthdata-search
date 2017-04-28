@@ -106,7 +106,7 @@ describe "Temporal" do
       js_click_temporal
       js_click_clear
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
+      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_no_content("Start 12-01 00:00:00")
       expect(page).to have_no_content("Stop 12-31 00:00:00")
