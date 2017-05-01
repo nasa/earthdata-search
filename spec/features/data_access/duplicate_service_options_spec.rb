@@ -29,7 +29,7 @@ describe 'Duplicate Service Options', reset: false do
       end
 
       it "adds an additional service option" do
-        expect(page).to have_content 'Download RAW data', count: 2
+        expect(page).to have_content 'Download', count: 2
       end
 
       it "displays a 'remove access method' icon" do
@@ -43,7 +43,7 @@ describe 'Duplicate Service Options', reset: false do
         end
 
         it "removes the access method" do
-          expect(page).to have_content 'Download RAW data', count: 1
+          expect(page).to have_content 'Download', count: 1
         end
 
         it "does not display a remove access method icon for the last access method" do

@@ -26,7 +26,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and selecting 'ESI service' option" do
         before :all do
-          choose 'AE_SI6.3 ESI Service'
+          choose 'Customize'
           wait_for_xhr
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
@@ -43,7 +43,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and selecting 'Order' option" do
         before :all do
-          choose 'FTP order w/QA,PH, and Browse'
+          choose 'Place Data Request'
           click_on 'Continue'
         end
 
@@ -94,7 +94,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
     context "with the first collection having no more than 2000 granules in the order" do
       before :all do
-        choose 'Order'
+        choose 'Place Data Request'
         click_on 'Continue'
       end
 
@@ -152,7 +152,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and selecting 'Order' option" do
         before :all do
-          choose 'AST_L1A'
+          choose 'Place Data Request'
           click_on 'Continue'
         end
 
