@@ -18,7 +18,7 @@
       NE: <input type="text" id="manual-coord-entry-nepoint" name="manual-coord-entry-nepoint" data-bind="value: spatialEntry.nePoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 50, 133.24)">
       <!--/ko-->
     </span>
-    <!-- ko if: spatialEntry.error --><span class="error" data-bind="text: spatialEntry.error()"></span><!-- /ko -->
     <a href="#" data-bind="click: clearSpatial" title="Clear spatial constraint"><i class="fa fa-times-circle"></i></a>
+    <!-- ko if: spatialEntry.error --><span class="error" data-bind="text: spatialEntry.error()"></span><!-- /ko -->
   </p>
 </div>
