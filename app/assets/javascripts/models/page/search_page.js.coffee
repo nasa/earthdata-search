@@ -1,3 +1,4 @@
+#= require models/data/grid
 #= require models/data/query
 #= require models/data/collections
 #= require models/data/project
@@ -83,6 +84,11 @@ ns.SearchPage = do (ko
       @spatialEntry.clearError()
       @toggleFilterStack()
 
+    clearSpatial: =>
+      @ui.spatialType.clearManualEntry()
+      @spatialEntry.clearError()
+      @query.spatial(null)
+
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
       "#{value} #{word}"
@@ -105,9 +111,10 @@ ns.SearchPage = do (ko
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
 
-    totalFilters: ->
-      length += (if @query.spatial() then 1 else 0)
+    totalFilters: =>
+      length = (if @query.spatial() && @query.spatial().length then 1 else 0)
       length += (if @query.temporalComponent() then 1 else 0)
+      length += (if @ui.spatialType.isGrid() || @query.grid.selected() then 1 else 0)
       length
 
     showProject: (data, event) =>

@@ -1,3 +1,4 @@
+#= require models/data/grid
 #= require models/data/granule_attributes
 #= require models/ui/temporal
 
@@ -5,6 +6,7 @@ ns = @edsc.models.data
 
 ns.query = do (ko,
                param = $.param
+               GridCondition=@edsc.models.data.GridCondition
                GranuleAttributes=@edsc.models.data.GranuleAttributes
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
@@ -270,6 +272,7 @@ ns.query = do (ko,
     constructor: (parentQuery) ->
       @focusedTemporal = ko.observable(null)
       @focusedInterval = ko.observable(null)
+      @grid = new GridCondition()
       @temporal = new Temporal()
 
       @testFacets = @queryComponent(new QueryParam('test_facets'), '')
@@ -278,6 +281,7 @@ ns.query = do (ko,
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
       @mbr = @computed(read: @_computeMbr, owner: this, deferEvaluation: true)
+      @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @scienceKeywordFacets = @computed(read: @_computeScienceKeywordFacets, deferEvaluation: true)
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
