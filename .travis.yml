@@ -21,7 +21,6 @@ env:
 branches:
   only: # Only build master. Pull requests to master also get built.
     - master
-    - labs-ux
 deploy:
   provider: script
   script: bin/ecc-sync
