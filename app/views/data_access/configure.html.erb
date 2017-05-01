@@ -78,19 +78,25 @@
           </div>
 
           <div class="access-item-options">
-            <h4>Service Options</h4>
+            <h4>Select Data Access Method</h4>
             <div>
               <!-- ko if: serviceOptions.isLoaded() -->
                 <!-- ko foreach: serviceOptions.accessMethod -->
                 <p class="access-item-selection">
-                  <span class="access-method-label">Select Data Access Method:</span>
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <!-- ko foreach: availableMethods -->
-                  <label data-bind="click: $parent.showSpinner">
+                  <label data-bind="click: $parent.showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
                     <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parentContext.$parentContext.$index() + $parentContext.$index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
-                    <span data-bind="text: name"></span>
+                    <strong><span data-bind="text: name"></span></strong>
+                    <!-- ko if: type == 'download' -->
+                    <span class="access-item-description">Download RAW data now from your browser or access script.</span>
+                    <!-- /ko -->
+                    <!-- ko if: type == 'order' -->
+                    <span class="access-item-description">Send a <strong>free</strong> order request to the provider for processing.</span>
+                    <!-- /ko -->
                     <!-- ko if: type == 'service' -->
                     <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
+                    <span class="access-item-description">Select custom service options to be performed. (e.g. subsetting, etc.)</span>
                     <!-- /ko -->
                   </label>
                   <!-- /ko -->
