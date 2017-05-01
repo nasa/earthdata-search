@@ -311,11 +311,24 @@ p.map-popup-info {
   z-index: 59;
   padding: 10px 15px;
   font-size: 1em;
+
+  input {
+    padding: 0;
+    width: 18em;
+    height: 22px;
+  }
+
+  label {
+    min-width: 0;
+  }
+}
+
+.landing-toolbar-content .error {
+  max-width: 590px;
 }
 
 .map-grid-hint {
   display:block;
-  text-align:right;
   padding-top:.2em;
 }
 

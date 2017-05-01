@@ -1,5 +1,5 @@
-<div id="manual-coord-entry-container" class="manual-coord-entry">
-  <p data-bind="visible: ui.spatialType.manualEntryVisible() || query.spatial() && (query.spatial().indexOf('point') >= 0 || query.spatial().indexOf('bounding_box') >= 0)">
+<div id="manual-coord-entry-container" class="manual-coord-entry" data-bind="visible: ui.spatialType.manualEntryVisible() || query.spatial() && (query.spatial().indexOf('point') >= 0 || query.spatial().indexOf('bounding_box') >= 0)">
+  <p>
     <i class="fa fa-fw fa-crop"></i>
     <span>
       <strong><!-- ko text: ui.spatialType.displaySpatial() + ':' --><!-- /ko --></strong>
