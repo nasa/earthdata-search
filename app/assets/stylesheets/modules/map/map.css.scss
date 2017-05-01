@@ -306,6 +306,35 @@ p.map-popup-info {
   left: 50%;
 }
 
+.map-grid-search {
+  color: #fff;
+  z-index: 59;
+  padding: 10px 15px;
+  font-size: 1em;
+
+  input {
+    padding: 0;
+    width: 16em;
+    height: 22px;
+  }
+
+  label {
+    min-width: 0;
+  }
+}
+
+.landing-toolbar-content .error {
+  max-width: 590px;
+  margin: 0;
+}
+
+.map-grid-hint {
+  display:block;
+  padding-top:.2em;
+  color: #999;
+  font-size: .9em;
+}
+
 // Overrides to make L.Draw cancel / undo buttons align correctly on touch
 // devices
 .leaflet-touch .leaflet-right .leaflet-draw-actions {

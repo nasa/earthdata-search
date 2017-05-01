@@ -1,5 +1,6 @@
 #= require models/data/granule
 #= require models/data/spatial_entry
+#= require models/data/grid
 #= require models/data/xhr_model
 
 ns = @edsc.models.data

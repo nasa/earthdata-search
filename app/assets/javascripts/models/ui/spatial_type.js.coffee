@@ -7,6 +7,7 @@ ns.SpatialType = do (ko, $=jQuery) ->
     constructor: (@query) ->
       @icon = ko.observable('fa-crop')
       @name = ko.observable('Spatial')
+      @isGrid = ko.observable(false)
       @displaySpatial = ko.computed(read: @_computeDisplaySpatialName, owner: this, deferEvaluation: true)
       @querySpatial = ko.computed(read: @_computeQuerySpatial, owner: this, deferEvaluation: true)
       @mapControlTop = ko.computed(read: @_computeMapControlPosition, owner: this)
@@ -18,30 +19,38 @@ ns.SpatialType = do (ko, $=jQuery) ->
     selectNone: =>
       @name('Spatial')
       @icon('fa-crop')
+      @isGrid(false)
       if @displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle' then @manualEntryVisible(true) else @manualEntryVisible(false)
 
     selectPoint: =>
       @name('Point')
       @icon('fa-map-marker')
+      @isGrid(false)
       @manualEntryVisible(true)
       $('.filter-stack').show()
 
     selectRectangle: =>
       @name('Rectangle')
       @icon('edsc-icon-rect-open')
+      @isGrid(false)
       @manualEntryVisible(true)
       $('.filter-stack').show()
 
     selectPolygon: =>
       @name('Polygon')
       @icon('edsc-icon-poly-open')
+      @isGrid(false)
       @manualEntryVisible(false)
       $('.filter-stack').show()
 
     selectShapefile: =>
       @name('Shape File')
       @icon('fa-file-o')
+      @isGrid(false)
       @manualEntryVisible(false)
+
+    selectGrid: =>
+      @isGrid(true)
 
     _toReadableName: (name)->
       return 'Point' if name == 'point'

@@ -22,7 +22,7 @@ describe 'Date picker', reset: false do
       end
 
       it "fills in 00:00:00 for the start time" do
-        expect(page).to have_content("Start 2010-01-15 00:00:00")
+        expect(page).to have_content("Start: 2010-01-15 00:00:00")
       end
     end
 
@@ -41,7 +41,7 @@ describe 'Date picker', reset: false do
       end
 
       it "fills in 23:59:59 for the end time" do
-        expect(page).to have_content("Stop 2010-01-15 23:59:59")
+        expect(page).to have_content("Stop: 2010-01-15 23:59:59")
       end
     end
 
@@ -58,7 +58,7 @@ describe 'Date picker', reset: false do
         end
 
         it "does not alter the end time" do
-          expect(page).to have_content("Stop 2010-01-15 12:13:14")
+          expect(page).to have_content("Stop: 2010-01-15 12:13:14")
         end
       end
     end
@@ -107,7 +107,7 @@ describe 'Date picker', reset: false do
       end
 
       it "fills in 23:59:59 for the end time" do
-        expect(page).to have_content("Stop 01-20 23:59:59")
+        expect(page).to have_content("Stop: 01-20 23:59:59")
       end
     end
 
