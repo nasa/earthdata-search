@@ -151,7 +151,7 @@ describe "Data download page", reset: false do
       load_page 'data/configure', browseable_collection_params
       wait_for_xhr
 
-      choose 'M*D29P1N Order Option'
+      choose 'Place Data Request'
       click_on 'Continue'
 
       # Confirm address
@@ -183,7 +183,7 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [orderable_collection_id_with_no_browseable_granules]
       wait_for_xhr
 
-      choose 'Order'
+      choose 'Place Data Request'
       click_on 'Continue'
 
       # Confirm address
@@ -292,7 +292,7 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [no_direct_download_collection_id]
       wait_for_xhr
 
-      choose 'Order'
+      choose 'Place Data Request'
       click_on 'Continue'
 
       # Confirm address
@@ -309,7 +309,7 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [orderable_collection_id, non_orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
       wait_for_xhr
 
-      choose 'FtpPushPull'
+      choose 'Place Data Request'
       click_on 'Continue'
       # No actions available on the second, continue
       click_on 'Continue'

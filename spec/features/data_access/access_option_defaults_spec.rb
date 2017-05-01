@@ -32,7 +32,7 @@ describe "Access Option Defaults", reset: true do
 
     it "presents default options" do
       expect(page).to have_unchecked_field('Download')
-      expect(page).to have_unchecked_field('FtpPushPull')
+      expect(page).to have_unchecked_field('Place Data Request')
       expect(page).to have_no_text('Ftp Pull Information')
     end
   end
@@ -49,7 +49,7 @@ describe "Access Option Defaults", reset: true do
 
     it "presents default options for the order" do
       expect(page).to have_unchecked_field('Download')
-      expect(page).to have_unchecked_field('FtpPushPull')
+      expect(page).to have_unchecked_field('Place Data Request')
     end
   end
 
@@ -65,7 +65,7 @@ describe "Access Option Defaults", reset: true do
 
     it "presents default options for the order" do
       expect(page).to have_unchecked_field('Download')
-      expect(page).to have_unchecked_field('FtpPushPull')
+      expect(page).to have_unchecked_field('Place Data Request')
     end
   end
 
@@ -77,7 +77,7 @@ describe "Access Option Defaults", reset: true do
 
     it "presents default options" do
       expect(page).to have_unchecked_field('Download')
-      expect(page).to have_unchecked_field('FtpPushPull')
+      expect(page).to have_unchecked_field('Place Data Request')
     end
   end
 
@@ -90,7 +90,7 @@ describe "Access Option Defaults", reset: true do
       click_on 'Add access method'
 
       within '.access-item-selection:nth-child(4)' do
-        choose 'FtpPushPull'
+        choose 'Place Data Request'
       end
 
       select 'FtpPull', from: 'Distribution Options'
@@ -108,12 +108,12 @@ describe "Access Option Defaults", reset: true do
     it "restores options from the first retrieval" do
       within '.access-item-selection:nth-child(1)' do
         expect(page).to have_checked_field('Download')
-        expect(page).to have_unchecked_field('FtpPushPull')
+        expect(page).to have_unchecked_field('Place Data Request')
       end
 
       within '.access-item-selection:nth-child(4)' do
         expect(page).to have_unchecked_field('Download')
-        expect(page).to have_checked_field('FtpPushPull')
+        expect(page).to have_checked_field('Place Data Request')
       end
 
       expect(page).to have_select('Distribution Options', selected: 'FtpPull')
@@ -131,7 +131,7 @@ describe "Access Option Defaults", reset: true do
       it "doesn't display an error and loads the default configuration" do
         expect(page).not_to have_content("Error retrieving options There was a problem completing the request Retry")
         expect(page).to have_unchecked_field('Download')
-        expect(page).to have_unchecked_field('FtpPushPull')
+        expect(page).to have_unchecked_field('Place Data Request')
       end
     end
   end
@@ -145,7 +145,7 @@ describe "Access Option Defaults", reset: true do
       click_on 'Add access method'
 
       within '.access-item-selection:nth-child(4)' do
-        choose 'FtpPushPull'
+        choose 'Place Data Request'
       end
 
       select 'FtpPull', from: 'Distribution Options'
@@ -173,7 +173,7 @@ describe "Access Option Defaults", reset: true do
     it "restores options from the second retrieval" do
       expect(page).to have_css('.access-item-selection', count: 1)
       expect(page).to have_checked_field('Download')
-      expect(page).to have_unchecked_field('FtpPushPull')
+      expect(page).to have_unchecked_field('Place Data Request')
     end
   end
 
