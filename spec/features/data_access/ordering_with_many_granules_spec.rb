@@ -104,7 +104,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and the second collection having more than 2000 granules" do
         before :all do
-          choose 'FTP order w/QA,PH, and Browse'
+          choose 'Place Data Request'
           click_on 'Continue'
         end
 
