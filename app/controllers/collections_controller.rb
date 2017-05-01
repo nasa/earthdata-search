@@ -102,6 +102,10 @@ class CollectionsController < ApplicationController
 
     relevancy_param(params)
 
+    if params['all_collections'].nil? || params['all_collections'].present? && params.delete('all_collections').to_s != 'true'
+      params['has_granules'] = true
+    end
+    
     params['two_d_coordinate_system'].delete 'coordinates' if params['two_d_coordinate_system'].present?
 
     params
