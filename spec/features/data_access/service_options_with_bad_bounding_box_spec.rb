@@ -15,7 +15,7 @@ describe 'Service Options order with bad bounding_box', reset: false do
       load_page 'data/configure', {project: [collection_id],
                                    granule_id: granule_id}
 
-      choose 'SPL2SMP.3 ESI Service'
+      choose 'Customize'
 
       check 'Enter bounding box'
       wait_for_xhr

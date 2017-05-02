@@ -86,13 +86,23 @@
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <!-- ko foreach: availableMethods -->
                   <label data-bind="click: $parent.showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
-                    <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parentContext.$parentContext.$index() + $parentContext.$index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
-                    <strong><span data-bind="text: name"></span></strong>
+                    <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
+                    <strong>
+                      <!-- ko if: type == 'download' -->
+                      <span data-bind="text: name"></span>
+                      <!-- /ko -->
+                      <!-- ko if: type == 'order' -->
+                      <span>Place Data Request</span>
+                      <!-- /ko -->
+                      <!-- ko if: type == 'service' -->
+                      <span>Customize</span>
+                      <!-- /ko -->
+                    </strong>
                     <!-- ko if: type == 'download' -->
-                    <span class="access-item-description">Download RAW data now from your browser or access script.</span>
+                    <span class="access-item-description">Download data <strong>as-is</strong> now from your browser or access script.</span>
                     <!-- /ko -->
                     <!-- ko if: type == 'order' -->
-                    <span class="access-item-description">Send a <strong>free</strong> order request to the provider for processing.</span>
+                    <span class="access-item-description">Send a data request to the provider for processing.</span>
                     <!-- /ko -->
                     <!-- ko if: type == 'service' -->
                     <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>

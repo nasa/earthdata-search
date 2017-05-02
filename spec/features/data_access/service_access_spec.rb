@@ -18,7 +18,7 @@ describe 'Services Access', reset: false do
 
     context 'when choosing the ESI Service' do
       before :all do
-        choose 'AE_Land.2 ESI Service'
+        choose 'Customize'
         wait_for_xhr
       end
 
@@ -58,7 +58,7 @@ describe 'Services Access', reset: false do
       before :all do
         # first time, the ESI option should not be selected and the form should not be auto populated.
         expect(page).not_to have_content("Reformat Output (Optional)")
-        choose 'SPL1CTB.3 ESI Service'
+        choose 'Customize'
         wait_for_xhr
         fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
         select 'NetCDF4-CF', from: 'Output File Format'
@@ -106,12 +106,12 @@ describe 'Services Access', reset: false do
     end
 
     it 'displays a service access method' do
-      expect(page).to have_content('AE_5DSno.2 ESI Service')
+      expect(page).to have_content('Customize')
     end
 
     context 'when selecting the service access method' do
       before :all do
-        choose 'AE_5DSno.2 ESI Service'
+        choose 'Customize'
       end
 
       it 'displays the service echoform' do

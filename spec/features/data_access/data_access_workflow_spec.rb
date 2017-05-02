@@ -23,11 +23,11 @@ describe "Data Access workflow", reset: false do
       wait_for_xhr
     end
 
-    context "when clicking 'FtpPushPull'on the first collection" do
+    context "when clicking 'Place Data Request'on the first collection" do
       before(:all) do
         selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
         within selection do
-          choose 'FtpPushPull'
+          choose 'Place Data Request'
         end
         wait_for_xhr
       end
@@ -37,7 +37,7 @@ describe "Data Access workflow", reset: false do
           expect(form).to have_content("Distribution Options")
         end
       end
-      context "and then clicking continue and selecting 'AE_SI12.3 ESI Service' for the second collection" do
+      context "and then clicking continue and selecting 'Customize' for the second collection" do
         before(:all) do
           click_button "Continue"
           wait_for_xhr
@@ -47,7 +47,7 @@ describe "Data Access workflow", reset: false do
           wait_for_xhr
           selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
           within selection do
-            choose 'AE_SI12.3 ESI Service'
+            choose 'Customize'
             wait_for_xhr
           end
         end
@@ -57,7 +57,7 @@ describe "Data Access workflow", reset: false do
             expect(form).to have_content("Include Metadata and Processing History")
           end
         end
-        context "and then clicking continue and selecting 'AE_SI6.3 ESI Service' for the third collection" do
+        context "and then clicking continue and selecting 'Customize' for the third collection" do
           before(:all) do
             click_button "Continue"
             wait_for_xhr
@@ -69,11 +69,9 @@ describe "Data Access workflow", reset: false do
             synchronize do
               selection = find(:css, ".access-item:nth-child(3)").find(:css, ".access-item-selection")
               within selection do
-                choose 'AE_SI6.3 ESI Service'
+                choose 'Customize'
                 wait_for_xhr
               end
-              form = find(:css, ".access-item:nth-child(3)").find(:css, ".access-form")
-              expect(form).to have_content("Include Metadata and Processing History")
             end
           end
         end
@@ -178,7 +176,7 @@ describe "Data Access workflow", reset: false do
         end
 
         it "displays options provided by orders" do
-          expect(page).to have_field('FtpPushPull')
+          expect(page).to have_field('Place Data Request')
         end
       end
 
@@ -200,7 +198,7 @@ describe "Data Access workflow", reset: false do
 
     context "when displaying options for the last of multiple collections" do
       before :all do
-        choose "FtpPushPull"
+        choose "Place Data Request"
         click_button "Continue"
       end
 
@@ -255,7 +253,7 @@ describe "Data Access workflow", reset: false do
 
     context "on the final step before submitting when contact information is required" do
       before :all do
-        choose "FtpPushPull"
+        choose "Place Data Request"
         click_button "Continue"
         click_button "Continue"
       end

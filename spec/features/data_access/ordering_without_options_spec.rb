@@ -12,7 +12,7 @@ describe 'Ordering without order options', reset: false do
                                  temporal: ['2014-10-01T00:00:00Z', '2014-10-02T00:00:01Z']}
     wait_for_xhr
 
-    choose 'Order'
+    choose 'Place Data Request'
     click_on 'Continue'
     click_on 'Submit'
   end
