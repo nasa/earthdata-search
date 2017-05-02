@@ -72,8 +72,6 @@ describe "Data Access workflow", reset: false do
                 choose 'Customize'
                 wait_for_xhr
               end
-              form = find(:css, ".access-item:nth-child(3)").find(:css, ".access-form")
-              expect(form).to have_content("Include Metadata and Processing History")
             end
           end
         end
