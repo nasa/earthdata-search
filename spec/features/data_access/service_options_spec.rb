@@ -26,7 +26,7 @@ describe 'Service Options', reset: false do
 
       context 'choosing to set an order option' do
         before :all do
-          choose 'FtpPushPull'
+          choose 'Place Data Request'
         end
 
         it 'shows the form for the associated order option' do
@@ -51,7 +51,7 @@ describe 'Service Options', reset: false do
     end
 
     it 'displays no service options' do
-      expect(page).to have_no_field('FtpPushPull')
+      expect(page).to have_no_field('Place Data Request')
     end
 
     it 'displays a message indicating that there are no matching granules' do
@@ -68,7 +68,7 @@ describe 'Service Options', reset: false do
       end
 
       it "prepopulates the options form with the filter's MBR" do
-        choose 'AE_SI12.3 ESI Service'
+        choose 'Customize'
         check 'Enter bounding box'
         expect(page).to have_field('North', with: "3")
         expect(page).to have_field('South', with: "1")
@@ -84,7 +84,7 @@ describe 'Service Options', reset: false do
       end
 
       it "does not prepopulate the form" do
-        choose 'AE_SI12.3 ESI Service'
+        choose 'Customize'
         check 'Enter bounding box'
         expect(page).to have_field('North', with: "90")
         expect(page).to have_field('South', with: "-90")
