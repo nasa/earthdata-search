@@ -22,8 +22,8 @@ describe 'Background jobs ordering', reset: false do
 
       click_button "Download project data"
       wait_for_xhr
-      # First instance of 'Place Data Request'
-      find("#access-method-0").click
+      
+      find("#access-method-10").click
 
       click_on 'Continue'
       click_on 'Submit'
