@@ -230,7 +230,6 @@ describe "Granule selection", reset: false do
       before :all do
         find_by_id("map").find('a[title="Exclude this granule"]').click
         wait_for_xhr
-        find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
         page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(2,-11))")
       end
 

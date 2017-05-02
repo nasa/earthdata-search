@@ -45,24 +45,38 @@
           <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
           <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
           <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
+          <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid" title="Select Grid Coordinates"><i class="edsc-icon-globe-grid"></i> Grid Coordinates</a></li>
         </ul>
       </div>
       <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
       <a href="#" class="button toggle-filter-stack" data-bind="event: {click: toggleFilterStack}" title="Toggle Filter Stack"><i class="fa fa-bars"></i></a>
       <div class="filter-stack" data-bind="visible: totalFilters() > 0">
-        <div id="temporal-query" data-bind="with: query.temporal.applied">
+        <div class="map-grid-search" data-bind="with: query.grid, , visible: ui.spatialType.isGrid() || query.grid.selected(), css: { 'knockout-template': !bindingsLoaded }">
+          <p>
+            <label for="map-grid-system">
+              <i class="edsc-icon-globe-grid"></i> <span><strong>Grid: </strong></span>
+            </label>
+            <select id="map-grid-system" name="map-grid-system" data-bind="value: selected, options: available, optionsText: 'label', optionsCaption: 'Coordinate System...'">
+            </select>
+            <input type="text" id="map-grid-coordinates" name="map-grid-coordinates" data-bind="value: coordinates" placeholder="Coordinates...">
+            <a href="#" data-bind="click: clear" title="Remove grid coordinates constraint"><i class="fa fa-times-circle"></i></a>
+            <label for="map-grid-coordinates" class="map-grid-hint" data-bind="text: hint"></label>
+            <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
+          </p>
+        </div>
+        <div id="temporal-query" data-bind="with: query.temporal.applied, visible: query.temporal.applied.start.date() || query.temporal.applied.stop.date()">
           <p>
             <i class="fa fa-clock-o"></i>
             <span data-bind="visible: start.date">
-              <strong>Start</strong>
+              <strong>Start: </strong>
               <span data-bind="text: start.humanDateString"></span>
             </span>
             <span data-bind="visible: stop.date">
-              <strong>Stop</strong>
+              <strong>Stop: </strong>
               <span data-bind="text: stop.humanDateString"></span>
             </span>
             <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
-              <strong>Range</strong> <span data-bind="text: yearsString"></span>
+              <strong>Range: </strong> <span data-bind="text: yearsString"></span>
             </span>
             <a href="#" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
           </p>
@@ -214,6 +228,7 @@
   <!-- /ko -->
   <!-- /ko -->
   <!-- /ko -->
+
   <div class="geojson-help">
     <div class="geojson-help-dropzone">
       <h1>Search by Shape File</h1>
