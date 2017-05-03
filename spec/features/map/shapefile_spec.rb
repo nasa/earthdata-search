@@ -143,7 +143,7 @@ describe "Shapefile search", reset: false, wait: 30 do
       lat = result.split('(')[1].split(',')[0].to_f
       lng = result.split(', ')[1].split(')')[0].to_f
       expect(lat).to be_within(0.15).of(0.5)
-      expect(lng).to be_within(0.15).of(98.8)
+      expect(lng).to be_within(0.15).of(100.5)
     end
 
     it "zooms the map to the spatial constraint" do

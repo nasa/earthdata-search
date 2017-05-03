@@ -162,19 +162,19 @@ p.map-popup-info {
   left: 0;
   right: 0;
   position: absolute;
-  z-index: 59;
-  background-color: rgba(255, 255, 255, 0.75);
+  z-index: 160;
+  background-color: rgba(0,0,0, 0.8);
 }
 
 .geojson-help-dropzone {
   display: none;
-  border: 5px dashed #eee;
+  border: 3px dashed #ccc;
   background: #fff;
   width: 30em;
-  border-radius: 1em;
-  margin: 5em auto 0;
-  padding: 1em;
-  font-size: 1.5em;
+  border-radius: 10px;
+  margin: 200px auto 0;
+  padding: 25px;
+  font-size: 1.2em;
 
   p {
     margin: 1em 0;

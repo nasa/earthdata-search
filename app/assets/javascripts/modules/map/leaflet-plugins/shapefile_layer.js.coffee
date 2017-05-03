@@ -68,7 +68,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
       @_isActive = true
       @show()
       @showHelp() if showHelp
-      $('#collections-overlay').masterOverlay('hide')
 
     deactivate: ->
       @_isActive = false
