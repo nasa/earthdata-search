@@ -99,7 +99,7 @@ describe 'Map Zooming', reset: false do
       end
 
       it "centers the map over the spatial area" do
-        expect(page).to have_map_center(10, -19, 4)
+        expect(page).to have_map_center(10, 10, 4)
       end
     end
 
