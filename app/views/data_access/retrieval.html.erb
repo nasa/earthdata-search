@@ -161,9 +161,14 @@
     <h2>Next Steps</h2>
     <ul>
       <li>
-        <i class="fa fa-chevron-circle-right"></i>
-        <a class="link" href="<%=edsc_path "/search?#{@retrieval.source}" %>">Back to <%= site_name %> Results</a></li>
-      <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path "/"%>">Start a New <%= site_name %> Session</a></li>
+        <i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path "/search?#{@retrieval.source}" %>">Back to <%= site_name %> Results</a>
+      </li>
+      <li>
+        <i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path "/"%>">Start a New <%= site_name %> Session</a>
+      </li>
+      <li>
+        <i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path '/data/status' %>">View Your Recent Data Retrievals</a>
+      </li>
     </ul>
   </section>
 </section>
