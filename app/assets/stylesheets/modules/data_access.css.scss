@@ -153,9 +153,13 @@ section.data-access-next {
   border-bottom-left-radius: 2px;
   border-top: 5px solid #249b56;
   max-width: 1000px;
-  color: #f3f3f3;
+  color: #fff;
   a {
-    color: #f3f3f3;
+    color: #fff;
+
+    &:hover {
+      color: #eee;
+    }
   }
 }
 
