@@ -77,7 +77,7 @@ class Retrieval < ActiveRecord::Base
               until page_num * page_size > results_count do
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
-                page_num = results_count / page_size + 1 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
+                page_num = results_count / page_size + 1 if limited_collection?(method['id'])
                 order_response = client.create_order(params,
                                                      method['id'],
                                                      method['method'],
@@ -97,7 +97,7 @@ class Retrieval < ActiveRecord::Base
               method[:collection_id] = collection['id']
 
               until page_num * page_size > results_count do
-                page_size = 100 if Rails.configuration.services['edsc'][Rails.configuration.cmr_env]['limited_collections'].split(/\s*,\s*/).include? method['id']
+                page_size = 100 if limited_collection?(method['id'])
 
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
@@ -166,6 +166,11 @@ class Retrieval < ActiveRecord::Base
   end
 
   private
+
+  def self.limited_collection?(collection_id)
+    env = Rails.configuration.cmr_env == 'prod' ? 'production' : Rails.configuration.cmr_env
+    Rails.configuration.services['edsc'][env]['limited_collections'].split(/\s*,\s*/).include? collection_id
+  end
 
   def get_collection_id(id)
     result = nil

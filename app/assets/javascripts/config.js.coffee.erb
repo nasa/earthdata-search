@@ -23,8 +23,8 @@
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['sit']['enable_esi_order_chunking'].to_s %>" == 'true')
   else
     browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
-    limited_collections = "<%= Rails.configuration.services['edsc']['prod']['limited_collections'] %>".split /\s*,\s*/
-    enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['prod']['enable_esi_order_chunking'].to_s %>" == 'true')
+    limited_collections = "<%= Rails.configuration.services['edsc']['production']['limited_collections'] %>".split /\s*,\s*/
+    enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['production']['enable_esi_order_chunking'].to_s %>" == 'true')
 
   <% if Rails.env.test? %>
 
