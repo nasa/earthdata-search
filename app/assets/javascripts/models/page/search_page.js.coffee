@@ -11,12 +11,14 @@
 #= require models/ui/granule_timeline
 #= require models/ui/state_manager
 #= require models/ui/feedback
+#= require modules/help
 
 models = @edsc.models
 data = models.data
 ui = models.ui
-
 ns = models.page
+help = @edsc.help
+
 
 ns.SearchPage = do (ko
                     setCurrent = ns.setCurrent
@@ -41,6 +43,8 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
+    preferences = new PreferencesModel()
+    help.startTour() if !window.edscportal && (preferences.showTour() || window.location.href.indexOf('?tour=true') != -1)
 
   class SearchPage
     constructor: ->
