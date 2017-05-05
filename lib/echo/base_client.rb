@@ -4,8 +4,7 @@ module Echo
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
                               :echo10_collections => Echo::ClientMiddleware::Echo10CollectionMiddleware,
-                              :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware,
-                              :events => Echo::ClientMiddleware::EventMiddleware)
+                              :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware)
 
   class BaseClient
     include Echo::QueryTransformations
@@ -80,7 +79,6 @@ module Echo
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_granules, :content_type => /^application\/(echo10\+)?xml$/
         conn.response :echo10_collections, :content_type => /^application\/(echo10\+)?xml$/
-        conn.response :events, :content_type => /\bxml$/
         conn.response :xml, :content_type => /\bxml$/
 
         yield(conn) if block_given?

@@ -96,10 +96,6 @@ module Echo
       get("users/#{user_id}", {}, token_header(token))
     end
 
-    def get_availability_events
-      get('calendar_events', severity: 'ALERT')
-    end
-
     def get_order_information(item_ids, token)
       post('order_information.json', options_to_item_query({catalog_item_id: item_ids}).to_query, token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded'))
     end
