@@ -31,19 +31,26 @@ ns = @edsc.models.page
                     <button class='button-small button-outline' data-role='prev'>« Prev</button>
                     <button class='button-small' data-role='next'>Next <i class='fa fa-arrow-circle-right'></i></button>
                   </div>
-                  <button class='button-small button-outline' data-role='end'>Close</button>
+                  <button class='button-small button-outline pull-left' data-role='end'>End Tour</button>
+                  <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
+                    <input id='doNotShowAgain' type='checkbox' />
+                    <small>Do not show again</small>
+                  </label>
                 </div>
               </div>"
 
-  arrowFreeTemplate = "<div class='popover tour'>
+  firstStepTemplate = "<div class='popover tour'>
                 <h3 class='popover-title'></h3>
                 <div class='popover-content'></div>
                 <div class='popover-navigation'>
                   <div class='btn-group'>
-                    <button class='button-small button-outline' data-role='prev'>« Prev</button>
                     <button class='button-small' data-role='next'>Next <i class='fa fa-arrow-circle-right'></i></button>
                   </div>
-                  <button class='button-small button-outline' data-role='end'>Close</button>
+                  <button class='button-small button-outline pull-left' data-role='end'>End Tour</button>
+                  <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
+                    <input id='doNotShowAgain' type='checkbox' />
+                    <small>Do not show again</small>
+                  </label>
                 </div>
               </div>"
 
@@ -55,24 +62,28 @@ ns = @edsc.models.page
       element: '#map-center'
       placement: 'left'
       showNext: true
+      wait: true
       showPrevious: false
-      template: arrowFreeTemplate
+      template: firstStepTemplate
       cleanup: (nextFn, closeFn) ->
         $(window).off 'statechange anchorchange', closeFn
       advanceHook: (nextFn, closeFn) ->
         $(window).one 'statechange anchorchange', closeFn
     }, {
       title: "Search"
-      content: '<div>Use Earthdata Search Clients natural language processing-enabled search tool to quickly narrow
+      content: '<div>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
                 down to relevant collections.  An example search phrase could be "Land Surface Temperature over
                 Texas last month".  Results will be displayed in the collection panel below.</div>
-                <div style="margin-top: 5px;">If you would prefer to draw spatial boundaries, upload a shapefile, or pick a temporal range from
-                a calendar, use the buttons to the right of the search box.</div>
-                <div style="margin-top: 5px;">To start your search session over, click the eraser icon to clear all of your set filters.</div>
+                <div style="margin-top: 5px;">If you would prefer to pick a temporal range from a calendar (<i class="fa fa-clock-o"></i>),
+                draw spatial boundaries (<i class="fa fa-fw fa-crop"></i>), or
+                upload a shapefile (<i class="fa fa-fw fa-crop"></i> <i class="fa fa-arrow-right"></i> <i class="fa fa-file-o"></i>),
+                use the buttons to the right of the search box.</div>
+                <div style="margin-top: 5px;">To start your search session over, click the eraser icon (<i class="fa fa-eraser"></i>) to clear all of your set filters.</div>
                 '
       element: '#keywords'
       placement: 'bottom'
       showNext: true
+      wait: true
       cleanup: (nextFn, closeFn) ->
         $(window).off 'statechange anchorchange', closeFn
       advanceHook: (nextFn, closeFn) ->
@@ -84,23 +95,26 @@ ns = @edsc.models.page
                 information along with relevant badges to allow you to quickly scan your search results to find the
                 right collection for you.  The panel can be resized by clicking and dragging the bar above the "Matching
                 Collections" tab.</div>
-                <div style="margin-top: 5px;">To view more information about a collection, click on the “i” icon.</div>
+                <div style="margin-top: 5px;">To view more information about a collection, click on the <i class="fa fa-info-circle"></i> icon.</div>
                 <div style="margin-top: 5px;">To view granules available for download, click anywhere on a collection.</div>
-                <div style="margin-top: 5px;">Click on the + icon to add a collection to a project, which allows you to compare multiple collections.</div>
+                <div style="margin-top: 5px;">Click on the <i class="fa fa-plus"></i> icon to add a collection to a project, which allows you to compare multiple collections.</div>
 '
       element: '#collection-results-list'
       placement: 'top'
       showNext: true
+      wait: true
       cleanup: (nextFn, closeFn) ->
         $(window).off 'statechange anchorchange', closeFn
       advanceHook: (nextFn, closeFn) ->
         $(window).one 'statechange anchorchange', closeFn
     },{
       title: "Facets"
-      content: "Refine your search further with available 'keyword' facets."
+      content: "Refine your search further with available facets, such as Features, Keywords, Platforms,
+                Instruments, Organizations, Projects, and Processing Levels."
       element: "#master-overlay-parent"
       placement: 'right'
       showNext: true
+      wait: true
       top: null
       positionHook: (positionFn) ->
         positionFn("#master-overlay-parent .master-overlay-content")
@@ -110,6 +124,7 @@ ns = @edsc.models.page
       placement: 'left'
       element: '.leaflet-control-zoom-in'
       showNext: true
+      wait: true
       positionHook: (positionFn) ->
         positionFn("#master-overlay-parent .master-overlay-content")
     }, {
@@ -202,8 +217,8 @@ ns = @edsc.models.page
       $tip = $el.data('bs.popover').$tip
       $tip.toggleClass('is-popover-single', queue.length == 1)
       if tourRunning
-        $tip.find('[data-role=end]').text('End Tour')
-        $tip.find('[data-role=prev]').hide()
+        # $tip.find('[data-role=end]').text('End Tour')
+        # $tip.find('[data-role=prev]').hide()
         $tip.find('[data-role=next]').toggle(queue[index].showNext)
       else
         $tip.find('[data-role=end]').text('Close')
