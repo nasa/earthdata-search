@@ -530,6 +530,7 @@ describe "Collection Facets", reset: false do
 
   context "selecting multiple facets from same category" do
     before :all do
+      load_page :search, facets: true, env: :sit
       find("h3.panel-title", text: 'Keywords').click
       find(".facets-item", text: "Agriculture", match: :prefer_exact).click
       expect(page).to have_content('1628 Matching Collections')
