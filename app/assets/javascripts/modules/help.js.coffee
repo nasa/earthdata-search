@@ -104,7 +104,7 @@ ns = @edsc.models.page
         $(window).one 'statechange anchorchange', closeFn
     },{
       title: "Facets"
-      content: "Refine your search <em>further</em> with available facets, such as:
+      content: "Refine your search further with available facets, such as:
                 <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
                   <li>Features</li>
                   <li>Keywords</li>
