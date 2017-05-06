@@ -44,7 +44,8 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
     preferences = new PreferencesModel()
-    help.startTour() if !window.edscportal && (preferences.showTour() || window.location.href.indexOf('?tour=true') != -1)
+
+    help.startTour() if !window.edscportal && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1) 
 
   class SearchPage
     constructor: ->

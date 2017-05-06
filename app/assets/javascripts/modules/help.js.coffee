@@ -1,18 +1,13 @@
-#= require models/data/query
-#= require models/data/project
-#= require models/data/account
+
 #= require models/data/preferences
-#= require models/ui/temporal
-#= require models/ui/project_list
-#= require models/ui/service_options_list
-#= require models/ui/account_form
-#= require models/ui/feedback
+
 
 data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
 
-@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, preferences = @edsc.models.data.preferences, PreferencesModel = data.Preferences) ->
+@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, PreferencesModel = data.Preferences) ->
+
 
   tourOptions =
     tour_end:
@@ -33,7 +28,7 @@ ns = @edsc.models.page
                   </div>
                   <button class='button-small button-outline pull-left' data-role='end'>End Tour</button>
                   <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
-                    <input id='doNotShowAgain' type='checkbox' />
+                    <input data-role='toggleHideTour' class='toggleHideTour' type='checkbox' />
                     <small>Do not show again</small>
                   </label>
                 </div>
@@ -48,7 +43,7 @@ ns = @edsc.models.page
                   </div>
                   <button class='button-small button-outline pull-left' data-role='end'>End Tour</button>
                   <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
-                    <input id='doNotShowAgain' type='checkbox' />
+                    <input  data-role='toggleHideTour' class='toggleHideTour' type='checkbox' />
                     <small>Do not show again</small>
                   </label>
                 </div>
@@ -109,15 +104,21 @@ ns = @edsc.models.page
         $(window).one 'statechange anchorchange', closeFn
     },{
       title: "Facets"
-      content: "Refine your search further with available facets, such as Features, Keywords, Platforms,
-                Instruments, Organizations, Projects, and Processing Levels."
+      content: "Refine your search <em>further</em> with available facets, such as:
+                <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
+                  <li>Features</li>
+                  <li>Keywords</li>
+                  <li>Platforms</li>
+                  <li>Instruments</li>
+                  <li>Organizations</li>
+                  <li>Projects</li>
+                  <li>Processing Levels</li>
+                </ul></div>"
       element: "#master-overlay-parent"
       placement: 'right'
       showNext: true
       wait: true
       top: null
-      positionHook: (positionFn) ->
-        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
       title: "Map Tools"
       content: 'Use these standard map tools to configure and position the map as well as enable certain spatial search tools.'
@@ -135,11 +136,10 @@ ns = @edsc.models.page
       placement: 'bottom'
     }]
 
-  
-
   defaultHelpOptions =
     placement: 'auto left'
     html: true
+    wait: true
     trigger: 'manual'
     template: defaultTemplate
     container: 'body'
@@ -155,6 +155,11 @@ ns = @edsc.models.page
   close = null
 
   tourRunning = false
+
+  doNotShowTourAgain = false
+
+  toggleHideTour = ->
+    doNotShowTourAgain = if doNotShowTourAgain then false else true
 
   hideCurrent = ->
     if queue[index]?
@@ -201,7 +206,9 @@ ns = @edsc.models.page
 
     $el.popover(queue[index])
     $el.attr('data-original-title', '')
+
     $el.popover('show')
+    $el.popover({ html : true })
     shown[queue[index].key] = true
 
     unless queue[index].advanceHook
@@ -212,7 +219,7 @@ ns = @edsc.models.page
     queue[index].advanceHook?(next, close)
     queue[index].closeHook?(close)
     queue[index].positionHook?(position)
-
+    $('input:checkbox.toggleHideTour').prop 'checked', doNotShowTourAgain
     if $el.data('bs.popover')?
       $tip = $el.data('bs.popover').$tip
       $tip.toggleClass('is-popover-single', queue.length == 1)
@@ -235,10 +242,12 @@ ns = @edsc.models.page
 
   $(document).on 'click', '.popover [data-role=prev]', prev
   $(document).on 'click', '.popover [data-role=next], .popover-advance', next
+  $(document).on 'click', '.popover [data-role=toggleHideTour]', toggleHideTour
   $(document).on 'click', '.popover [data-role=end]', ->
     if tourRunning
       preferences = new PreferencesModel()
       preferences.showTour(false)
+      preferences.doNotShowTourAgain(doNotShowTourAgain)
       preferences.save()
       close()
       add('tour_end')
@@ -286,3 +295,4 @@ ns = @edsc.models.page
     prev: prev
     close: close
     startTour: startTour
+    toggleHideTour: toggleHideTour

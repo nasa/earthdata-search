@@ -11,6 +11,7 @@ ns.Preferences = do (ko
     constructor: () ->
       # Default Preferences
       @showTour = ko.observable(true)
+      @doNotShowTourAgain = ko.observable()
       @dismissedEvents = ko.observableArray([])
       @isLoaded = ko.observable(false)
 
@@ -24,11 +25,16 @@ ns.Preferences = do (ko
         @fromJson(data)
         @isLoaded(true)
       else
-        getJSON '/users/site_preferences', (data, status, xhr) =>
-          console.log "Loaded site preferences, #{JSON.stringify(data)}"
-
-          @fromJson(data)
-          @isLoaded(true)
+        $.ajax '/users/site_preferences',
+          type: 'GET'
+          dataType: 'json',
+          async: false,
+          context: this,
+          data: data,
+          success: (data, textStatus, jqXHR) ->
+            console.log "Loaded site preferences, #{JSON.stringify(data)}"
+            @fromJson(data)
+            @isLoaded(true)
       null
 
     onload: (fn) ->
@@ -51,11 +57,13 @@ ns.Preferences = do (ko
     fromJson: (jsonObj) =>
       return unless jsonObj?
       @showTour(jsonObj.show_tour != 'false')
+      @doNotShowTourAgain(jsonObj.doNotShowTourAgain)
       @dismissedEvents(jsonObj.dismissed_events ? [])
 
     serialize: =>
       json =
         show_tour: @showTour()
+        doNotShowTourAgain: @doNotShowTourAgain()
         dismissed_events: @dismissedEvents()
 
   exports = Preferences
