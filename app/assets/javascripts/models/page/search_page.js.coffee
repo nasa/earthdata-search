@@ -11,6 +11,7 @@
 #= require models/ui/granule_timeline
 #= require models/ui/state_manager
 #= require models/ui/feedback
+#= require models/ui/sitetour
 #= require modules/help
 
 models = @edsc.models
@@ -32,6 +33,7 @@ ns.SearchPage = do (ko
                     GranuleTimelineModel = ui.GranuleTimeline
                     PreferencesModel = data.Preferences
                     FeedbackModel = ui.Feedback
+                    SiteTourModel = ui.SiteTour
                     StateManager = ui.StateManager) ->
   current = null
 
@@ -60,6 +62,7 @@ ns.SearchPage = do (ko
         collectionsList: new CollectionsListModel(@query, @collections, @project)
         projectList: new ProjectListModel(@project, @collections)
         feedback: new FeedbackModel()
+        sitetour: new SiteTourModel()
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)

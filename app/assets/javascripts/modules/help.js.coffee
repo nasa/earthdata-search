@@ -224,8 +224,6 @@ ns = @edsc.models.page
       $tip = $el.data('bs.popover').$tip
       $tip.toggleClass('is-popover-single', queue.length == 1)
       if tourRunning
-        # $tip.find('[data-role=end]').text('End Tour')
-        # $tip.find('[data-role=prev]').hide()
         $tip.find('[data-role=next]').toggle(queue[index].showNext)
       else
         $tip.find('[data-role=end]').text('Close')
