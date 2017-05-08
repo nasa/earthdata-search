@@ -12,7 +12,7 @@
 //= require namespaces
 //= require config
 //= require util/index
-//= require modules/echoformsext
+//= require modules/echoformsext.coffee.erb
 //= require modules/spinners
 //= require modules/map/coordinate
 //= require modules/map/arc
