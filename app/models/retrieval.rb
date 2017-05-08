@@ -95,6 +95,7 @@ class Retrieval < ActiveRecord::Base
             elsif method['type'] == 'service'
               request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
               method[:collection_id] = collection['id']
+              Rails.logger.info "Total ESI service granules: #{results_count}."
 
               until page_num * page_size > results_count do
                 page_size = 100 if limited_collection?(method['id'])
@@ -102,6 +103,7 @@ class Retrieval < ActiveRecord::Base
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
 
+                Rails.logger.info "page_size = #{page_size}, page_num = #{page_num}"
                 service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
 
                 order_id = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
@@ -115,7 +117,11 @@ class Retrieval < ActiveRecord::Base
                 method[:error_message] = []
                 method[:error_message] << error_message
 
-                page_num = results_count / page_size + 1 if Rails.configuration.enable_esi_order_chunking
+                # break the loop
+                if !Rails.configuration.enable_esi_order_chunking || limited_collection?(method['id'])
+                  Rais.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{method['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
+                  page_num = results_count / page_size + 1
+                end
               end
             end
           rescue => e
