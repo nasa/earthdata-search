@@ -54,8 +54,8 @@ ns = @edsc.models.page
       content: 'This application allows you to search, discover, visualize, refine, and access NASA Earth Observation data.  
                 If you are new to this application, please follow the brief tour to get an overview of the features that will 
                 help you achieve your goals.'
-      element: '#map-center'
-      placement: 'left'
+      element: '#collection-results'
+      placement: 'top'
       showNext: true
       wait: true
       showPrevious: false
