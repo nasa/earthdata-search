@@ -257,6 +257,8 @@ describe "Collection Facets", reset: false do
 
   context "when applied one science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
       find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
       wait_for_xhr
@@ -276,6 +278,8 @@ describe "Collection Facets", reset: false do
 
   context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
       find(".facets-item", text: "Agriculture").click
       find(".facets-item", text: "Agricultural Chemicals").click
       find(".facets-item", text: "Fertilizers").click
@@ -319,6 +323,7 @@ describe "Collection Facets", reset: false do
       load_page :search, facets: true, env: :sit
       fill_in :keywords, with: "C1000000560-DEV08"
       wait_for_xhr
+      find("h3.panel-title", text: 'Keywords').click
       find(".facet-title", text: "Spectral/Engineering").click
       wait_for_xhr
     end
@@ -368,6 +373,8 @@ describe "Collection Facets", reset: false do
 
   context "when selecting a topic keyword" do
     before :all do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
       find(".facet-title", text: /\AAtmosphere\z/).click
       wait_for_xhr
     end
@@ -523,6 +530,8 @@ describe "Collection Facets", reset: false do
 
   context "selecting multiple facets from same category" do
     before :all do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
       find(".facets-item", text: "Agriculture", match: :prefer_exact).click
       expect(page).to have_content('1628 Matching Collections')
     end

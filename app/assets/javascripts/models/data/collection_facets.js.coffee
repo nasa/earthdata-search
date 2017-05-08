@@ -129,7 +129,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       @selectedValues = ko.computed(@_loadSelectedValues)
 
       isDefaultOpened = (@selectedValues().length > 0 ||
-                         item.title == 'Keywords' ||
                          item.title == 'Features')
       @opened = ko.observable(isDefaultOpened)
       @closed = ko.computed => !@opened()
