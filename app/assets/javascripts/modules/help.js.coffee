@@ -60,11 +60,7 @@ ns = @edsc.models.page
       wait: true
       showPrevious: false
       template: firstStepTemplate
-      cleanup: (nextFn, closeFn) ->
-        $(window).off 'statechange anchorchange', closeFn
-      advanceHook: (nextFn, closeFn) ->
-        $(window).one 'statechange anchorchange', closeFn
-    }, {
+      }, {
       title: "Search"
       content: '<div>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
                 down to relevant collections.  An example search phrase could be "Land Surface Temperature over
@@ -79,12 +75,7 @@ ns = @edsc.models.page
       placement: 'bottom'
       showNext: true
       wait: true
-      cleanup: (nextFn, closeFn) ->
-        $(window).off 'statechange anchorchange', closeFn
-      advanceHook: (nextFn, closeFn) ->
-        $(window).one 'statechange anchorchange', closeFn
-    }, 
-    {
+      },{
       title: "Search Results"
       content: '<div>Search results will be shown in the Matching Collections panel below.  Each result will have summary 
                 information along with relevant badges to allow you to quickly scan your search results to find the
@@ -98,11 +89,7 @@ ns = @edsc.models.page
       placement: 'top'
       showNext: true
       wait: true
-      cleanup: (nextFn, closeFn) ->
-        $(window).off 'statechange anchorchange', closeFn
-      advanceHook: (nextFn, closeFn) ->
-        $(window).one 'statechange anchorchange', closeFn
-    },{
+      },{
       title: "Facets"
       content: "Refine your search further with available facets, such as:
                 <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
@@ -126,8 +113,6 @@ ns = @edsc.models.page
       element: '.leaflet-control-zoom-in'
       showNext: true
       wait: true
-      positionHook: (positionFn) ->
-        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
       title: 'Toolbar'
       content: 'Use the options available (upon logging in) in the application toolbar to view recent downloads, saved projects, and profile 
@@ -160,6 +145,7 @@ ns = @edsc.models.page
 
   toggleHideTour = ->
     doNotShowTourAgain = if doNotShowTourAgain then false else true
+    $('input:checkbox.toggleHideTour').prop 'checked', doNotShowTourAgain
 
   hideCurrent = ->
     if queue[index]?
@@ -293,4 +279,3 @@ ns = @edsc.models.page
     prev: prev
     close: close
     startTour: startTour
-    toggleHideTour: toggleHideTour

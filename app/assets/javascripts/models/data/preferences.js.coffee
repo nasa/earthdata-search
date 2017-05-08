@@ -11,7 +11,7 @@ ns.Preferences = do (ko
     constructor: () ->
       # Default Preferences
       @showTour = ko.observable(true)
-      @doNotShowTourAgain = ko.observable()
+      @doNotShowTourAgain = ko.observable(false)
       @dismissedEvents = ko.observableArray([])
       @isLoaded = ko.observable(false)
 
