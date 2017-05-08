@@ -34,7 +34,7 @@ ns = @edsc.models.page
                 </div>
               </div>"
 
-  firstStepTemplate = "<div class='popover tour'>
+  firstStepTemplate = "<div class='popover tour' style='margin-top: 75px; margin-left: 75px;'>
                 <h3 class='popover-title'></h3>
                 <div class='popover-content'></div>
                 <div class='popover-navigation'>
