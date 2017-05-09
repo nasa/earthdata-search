@@ -61,6 +61,9 @@ describe "CWIC-enabled granule results", reset: false do
         end
 
         after :all do
+          while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
+            find('.banner-close').click
+          end
           click_link 'Back to Search Session'
           wait_for_xhr
         end
@@ -79,6 +82,9 @@ describe "CWIC-enabled granule results", reset: false do
           end
 
           after :all do
+            while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
+              find('.banner-close').click
+            end
             click_link 'Back to Data Access Options'
             wait_for_xhr
           end
