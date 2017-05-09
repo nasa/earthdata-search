@@ -78,7 +78,7 @@
       start = event.starttime
       end = event.endtime
       if dismissed.indexOf(event.id.toString()) == -1
-        showBanner(event.id, "#{if event.title? then event.title else ''} (#{date.timeSpanToHuman(start, end)})", event.message, {persist: true, className: "banner-#{event.notification_type.toLowerCase()}"})
+        showBanner(event.id, "#{if event.title? then event.title else ''} (#{date.timeSpanToHuman(start, end)})", event.message, {persist: true, className: "banner-#{event.notification_type.toLowerCase()}", html: true})
       else
         pruned.push(event.id)
     preferences.dismissedEvents(pruned)
