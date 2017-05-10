@@ -38,9 +38,8 @@ ns = @edsc.models.page
       content: '<p>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
                 down to relevant collections.  An example search phrase could be "Land Surface Temperature over
                 Texas last month".  Results will be displayed in the collection panel below.</p>
-                <p>If you would prefer to pick a temporal range from a calendar (<i class="fa fa-clock-o"></i>),
-                draw spatial boundaries (<i class="fa fa-fw fa-crop"></i>), or
-                upload a shapefile (<i class="fa fa-fw fa-crop"></i> <i class="fa fa-arrow-right"></i> <i class="fa fa-file-o"></i>),
+                <p>If you would prefer to pick a temporal range from a calendar (<i class="fa fa-clock-o"></i>) or 
+                manually set spatial boundaries (<i class="fa fa-fw fa-crop"></i>),
                 use the buttons to the right of the search box.</p>
                 <p>To start your search session over, click the eraser icon (<i class="fa fa-eraser"></i>) to clear all of your set filters.</p>
                 '
@@ -182,6 +181,11 @@ ns = @edsc.models.page
       if tourRunning
         if index == 0
           $tip.find('[data-role=prev]').hide()
+        if index < queue.length - 1
+          $tip.find('[data-role=end]').addClass('button-outline')
+        else
+          $tip.find('[data-role=end]').removeClass('button-outline')
+
         $tip.find('[data-role=next]').toggle(queue[index].showNext)
       else
         $tip.find('[data-role=end]').text('Close')
