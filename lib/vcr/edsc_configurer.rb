@@ -131,7 +131,6 @@ module VCR
             opts[:match_requests_on] << :token
             record = :none
           elsif (request.method == :delete ||
-                 (uri.include?('/rest/calendar_events') && !uri.include?('testbed')) ||
                  uri.include?('status.earthdata.nasa.gov') ||
                  uri.include?('users/current.json') ||
                  uri.include?('/rest/users.json') ||
