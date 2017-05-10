@@ -1,7 +1,6 @@
 
 #= require models/data/preferences
 
-
 data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
@@ -34,64 +33,36 @@ ns = @edsc.models.page
                 </div>
               </div>"
 
-  firstStepTemplate = "<div class='popover tour' style='margin-top: 75px; margin-left: 75px;'>
-                <h3 class='popover-title'></h3>
-                <div class='popover-content'></div>
-                <div class='popover-navigation'>
-                  <div class='btn-group'>
-                    <button class='button-small' data-role='next'>Next <i class='fa fa-arrow-circle-right'></i></button>
-                  </div>
-                  <button class='button-small button-outline pull-left' data-role='end'>End Tour</button>
-                  <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
-                    <input  data-role='toggleHideTour' class='toggleHideTour' type='checkbox' />
-                    <small>Do not show again</small>
-                  </label>
-                </div>
-              </div>"
-
   tour = [{
-      title: "Welcome to Earthdata Search Client"
-      content: 'This application allows you to search, discover, visualize, refine, and access NASA Earth Observation data.  
-                If you are new to this application, please follow the brief tour to get an overview of the features that will 
-                help you achieve your goals.'
-      element: '#collection-results'
-      placement: 'top'
-      showNext: true
-      wait: true
-      showPrevious: false
-      template: firstStepTemplate
-      }, {
       title: "Search"
-      content: '<div>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
+      content: '<p>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
                 down to relevant collections.  An example search phrase could be "Land Surface Temperature over
-                Texas last month".  Results will be displayed in the collection panel below.</div>
-                <div style="margin-top: 5px;">If you would prefer to pick a temporal range from a calendar (<i class="fa fa-clock-o"></i>),
+                Texas last month".  Results will be displayed in the collection panel below.</p>
+                <p>If you would prefer to pick a temporal range from a calendar (<i class="fa fa-clock-o"></i>),
                 draw spatial boundaries (<i class="fa fa-fw fa-crop"></i>), or
                 upload a shapefile (<i class="fa fa-fw fa-crop"></i> <i class="fa fa-arrow-right"></i> <i class="fa fa-file-o"></i>),
-                use the buttons to the right of the search box.</div>
-                <div style="margin-top: 5px;">To start your search session over, click the eraser icon (<i class="fa fa-eraser"></i>) to clear all of your set filters.</div>
+                use the buttons to the right of the search box.</p>
+                <p>To start your search session over, click the eraser icon (<i class="fa fa-eraser"></i>) to clear all of your set filters.</p>
                 '
       element: '#keywords'
       placement: 'bottom'
       showNext: true
-      wait: true
       },{
       title: "Search Results"
-      content: '<div>Search results will be shown in the Matching Collections panel below.  Each result will have summary 
+      content: '<p>Search results will be shown in the Matching Collections panel below.  Each result will have summary 
                 information along with relevant badges to allow you to quickly scan your search results to find the
                 right collection for you.  The panel can be resized by clicking and dragging the bar above the "Matching
-                Collections" tab.</div>
-                <div style="margin-top: 5px;">To view more information about a collection, click on the <i class="fa fa-info-circle"></i> icon.</div>
-                <div style="margin-top: 5px;">To view granules available for download, click anywhere on a collection.</div>
-                <div style="margin-top: 5px;">Click on the <i class="fa fa-plus"></i> icon to add a collection to a project, which allows you to compare multiple collections.</div>
+                Collections" tab.</p>
+                <p>To view more information about a collection, click on the <i class="fa fa-info-circle"></i> icon.</p>
+                <p>To view granules available for download, click anywhere on a collection.</p>
+                <p>Click on the <i class="fa fa-plus"></i> icon to add a collection to a project, which allows you to compare multiple collections.</p>
 '
       element: '#collection-results-list'
       placement: 'top'
       showNext: true
-      wait: true
       },{
       title: "Facets"
-      content: "Refine your search further with available facets, such as:
+      content: "<p>Refine your search further with available facets, such as:
                 <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
                   <li>Features</li>
                   <li>Keywords</li>
@@ -100,23 +71,21 @@ ns = @edsc.models.page
                   <li>Organizations</li>
                   <li>Projects</li>
                   <li>Processing Levels</li>
-                </ul></div>"
+                </ul></div></p>"
       element: "#master-overlay-parent"
       placement: 'right'
       showNext: true
-      wait: true
       top: null
     }, {
       title: "Map Tools"
-      content: 'Use these standard map tools to configure and position the map as well as enable certain spatial search tools.'
+      content: '<p>Use these standard map tools to configure and position the map as well as enable certain spatial search tools.</p>'
       placement: 'left'
       element: '.leaflet-control-zoom-in'
       showNext: true
-      wait: true
     }, {
       title: 'Toolbar'
-      content: 'Use the options available (upon logging in) in the application toolbar to view recent downloads, saved projects, and profile 
-      information. You can provide feedback using our feedback module. '
+      content: '<p>Use the options available (upon logging in) in the application toolbar to view recent downloads, saved projects, and profile 
+      information. You can provide feedback using our feedback module.</p>'
       element: '.user-info'
       placement: 'bottom'
     }]
@@ -154,6 +123,7 @@ ns = @edsc.models.page
       $('.popover-advance').removeClass('popover-advance')
 
   close = ->
+    $('#sitetourModal').modal('hide')
     hideCurrent()
     queue = []
     index = 0
@@ -192,9 +162,9 @@ ns = @edsc.models.page
 
     $el.popover(queue[index])
     $el.attr('data-original-title', '')
-
     $el.popover('show')
     $el.popover({ html : true })
+    
     shown[queue[index].key] = true
 
     unless queue[index].advanceHook
@@ -210,6 +180,8 @@ ns = @edsc.models.page
       $tip = $el.data('bs.popover').$tip
       $tip.toggleClass('is-popover-single', queue.length == 1)
       if tourRunning
+        if index == 0
+          $tip.find('[data-role=prev]').hide()
         $tip.find('[data-role=next]').toggle(queue[index].showNext)
       else
         $tip.find('[data-role=end]').text('Close')
