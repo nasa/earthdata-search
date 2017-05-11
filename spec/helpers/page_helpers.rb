@@ -75,7 +75,11 @@ module Helpers
 
       url = query.nil? ? path : path + '?' + query
       visit url
+      
       wait_for_xhr
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
     end
 
     def be_logged_in_as(key)
@@ -89,6 +93,11 @@ module Helpers
     end
 
     def dismiss_banner
+      # Let's get the tour modal while we're at it...
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+      # Now the banner...
       while page.has_css?('.banner-close') do
         find('a[class="banner-close"]').click
         wait_for_xhr

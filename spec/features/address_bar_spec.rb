@@ -10,6 +10,9 @@ describe 'Address bar', reset: false do
   context 'when loading collection details page from search page' do
     before :all do
       visit '/search'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       first_collection_result.click_link 'View collection details'
       wait_for_xhr
@@ -23,6 +26,9 @@ describe 'Address bar', reset: false do
   context 'when searching by keywords' do
     before(:all) do
       visit '/search/map'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       fill_in "keywords", with: 'C1219032686-LANCEMODIS'
     end
@@ -41,7 +47,12 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS' }
+    before(:all) { 
+      visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'loads the condition into the keywords field' do
       expect(page).to have_field('keywords', with: 'C1219032686-LANCEMODIS')
@@ -55,6 +66,9 @@ describe 'Address bar', reset: false do
   context 'when searching by temporal' do
     before(:all) do
       visit '/search/map'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       click_link "Temporal"
       js_check_recurring "collection"
@@ -84,7 +98,12 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
+    before(:all) { 
+      visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'loads the condition into the temporal fields' do
       click_link "Temporal"
@@ -109,6 +128,9 @@ describe 'Address bar', reset: false do
   context 'when searching by spatial' do
     before(:all) do
       visit '/search/map'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       create_bounding_box(0, 0, 10, 10)
       wait_for_xhr
@@ -131,7 +153,12 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { visit '/search/collections?sb=0%2C0%2C10%2C10' }
+    before(:all) { 
+      visit '/search/collections?sb=0%2C0%2C10%2C10' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'draws the condition on the map' do
       expect(page).to have_selector('#map path', count: 1)
@@ -146,6 +173,9 @@ describe 'Address bar', reset: false do
   context 'when searching by facets' do
     before(:all) do
       visit '/search?test_facets=true&cmr_env=sit'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       find("h3.panel-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
@@ -165,7 +195,15 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' }
+    before(:all) { 
+      visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'displays the selected facet condition' do
       within(:css, '.panel.projects .panel-body.facets') do
@@ -182,6 +220,9 @@ describe 'Address bar', reset: false do
   context 'when adding collections to a project' do
     before(:all) do
       visit '/search/collections'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       add_collection_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
       add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
       click_link "Clear Filters"
@@ -193,7 +234,12 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing project collections' do
-    before(:all) { visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' }
+    before(:all) { 
+      visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'restores the project' do
       expect(page).to have_visible_project_overview
@@ -205,6 +251,9 @@ describe 'Address bar', reset: false do
   context "when viewing a collection's granules" do
     before(:all) do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       view_granule_results
     end
 
@@ -214,7 +263,12 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a collection's granules" do
-    before(:all) { visit '/search/granules?p=C179003030-ORNL_DAAC' }
+    before(:all) { 
+      visit '/search/granules?p=C179003030-ORNL_DAAC' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'restores the collection granules view' do
       expect(page).to have_visible_granule_list
@@ -225,6 +279,9 @@ describe 'Address bar', reset: false do
   context "when viewing a collection's details" do
     before(:all) do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       first_collection_result.click_link('View collection details')
     end
 
@@ -234,7 +291,12 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a collection's details" do
-    before(:all) { visit '/search/collection-details?p=C179003030-ORNL_DAAC' }
+    before(:all) { 
+      visit '/search/collection-details?p=C179003030-ORNL_DAAC' 
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+    }
 
     it 'restores the collection details view' do
       expect(page).to have_visible_collection_details
@@ -245,6 +307,9 @@ describe 'Address bar', reset: false do
   context "when viewing a granule's details" do
     before :all do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       first_collection_result.click
       wait_for_xhr
@@ -261,6 +326,9 @@ describe 'Address bar', reset: false do
   context "when loading a url containing a granule's details" do
     before :all do
       visit '/search/granules/granule-details?p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
     end
 
@@ -273,6 +341,9 @@ describe 'Address bar', reset: false do
   context "setting granule query conditions within the project" do
     before(:all) do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
       check "Find only granules that have browse images."
       view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
@@ -296,6 +367,9 @@ describe 'Address bar', reset: false do
   context "setting granule query conditions when the focused collection is not the project" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       find_link("Filter granules").click
       check "Find only granules that have browse images."
       wait_for_xhr
@@ -313,6 +387,9 @@ describe 'Address bar', reset: false do
   context "loading a URL with saved query conditions" do
     before :all do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS!C179002883-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
     end
 
@@ -327,6 +404,9 @@ describe 'Address bar', reset: false do
   context "when panning and zooming the map" do
     before(:all) do
       visit '/search/map'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
       wait_for_zoom_animation(5)
@@ -341,6 +421,9 @@ describe 'Address bar', reset: false do
   context "when loading a url with a saved map state" do
     before(:all) do
       visit '/search/map?m=12!-34!5!1'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
     end
 
     it "restores the map pan state from the query conditions" do
@@ -365,6 +448,9 @@ describe 'Address bar', reset: false do
   context "when panning the timeline" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       pan_to_time(present - 20.years)
       wait_for_xhr
@@ -378,6 +464,9 @@ describe 'Address bar', reset: false do
   context "when selecting a timeline date" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       click_timeline_date('Nov', '1987')
       wait_for_xhr
@@ -391,6 +480,9 @@ describe 'Address bar', reset: false do
   context "when zooming the timeline" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       find('.timeline-zoom-out').click
       wait_for_xhr
@@ -404,6 +496,9 @@ describe 'Address bar', reset: false do
   context "when loading a URL with a saved timeline state" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC&tl=604713600!5!536457600!567993600'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
     end
 
@@ -425,6 +520,9 @@ describe 'Address bar', reset: false do
   context "when selecting a granule" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       second_granule_list_item.click
       wait_for_xhr
@@ -438,6 +536,9 @@ describe 'Address bar', reset: false do
   context "when loading a URL with a selected granule" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
     end
 
     it "restores the granule selection in the granules list" do
@@ -466,6 +567,9 @@ describe 'Address bar', reset: false do
       # Each to avoid database cleanup problems
       before(:each) do
         visit long_path
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         wait_for_xhr
         target_collection_result.click_link 'Add collection to the current project'
         wait_for_xhr
@@ -499,6 +603,9 @@ describe 'Address bar', reset: false do
         project.save!
 
         visit "/search/collections?projectId=#{project.to_param}"
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         wait_for_xhr
       end
 
@@ -513,6 +620,9 @@ describe 'Address bar', reset: false do
     context 'the granule filters panel' do
       before(:all) do
         visit "/search/granules?labs=true&p=C14758250-LPDAAC_ECS"
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         click_on 'Filter granules'
       end
 
@@ -530,6 +640,9 @@ describe 'Address bar', reset: false do
     context 'the granule filters panel' do
       before(:all) do
         visit "/search/granules?p=C14758250-LPDAAC_ECS"
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         click_on 'Filter granules'
       end
 
@@ -546,6 +659,9 @@ describe 'Address bar', reset: false do
   context 'when changing the base layer' do
     before :all do
       visit '/search'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       page.find_link('Layers').trigger(:mouseover)
       within '#map' do
@@ -561,6 +677,9 @@ describe 'Address bar', reset: false do
     context 'when refreshing the page' do
       before :all do
         visit '/search?m=0!0!2!1!2!'
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         wait_for_xhr
       end
 
@@ -573,6 +692,9 @@ describe 'Address bar', reset: false do
   context 'when changing the map overlays' do
     before :all do
       visit '/search'
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
       wait_for_xhr
       page.find_link('Layers').trigger(:mouseover)
       within '#map' do
@@ -589,6 +711,9 @@ describe 'Address bar', reset: false do
     context 'when refreshing the page' do
       before :all do
         visit '/search?m=0!0!2!1!0!0%2C1'
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         wait_for_xhr
       end
 

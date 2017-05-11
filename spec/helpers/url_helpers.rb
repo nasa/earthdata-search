@@ -94,13 +94,19 @@ module Helpers
         visit QueryBuilder.new.add_to(url, options)
       end
       wait_for_xhr
-
-      # close banner if there are any (which block the 'Manage user account' link
+      #close tour modal
+      if page.has_link?('closeInitialTourModal')
+        find("#closeInitialTourModal").click
+      end
+      
+      # close banner if there are any (which block the 'Manage user account' link)
       if close_banner.present? && close_banner || close_banner.nil?
         while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
           find('.banner-close').click
         end
       end
+
+
     end
   end
 end

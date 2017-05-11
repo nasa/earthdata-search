@@ -5,6 +5,9 @@ describe 'Map Zooming', reset: false do
     page.driver.resize_window(1680, 1050) # Default capybara window size
     Capybara.reset_sessions!
     visit '/search'
+    if page.has_link?('closeInitialTourModal')
+      find("#closeInitialTourModal").click
+    end
   end
 
   after :all do
@@ -34,6 +37,9 @@ describe 'Map Zooming', reset: false do
     context 'and the overlay is visible' do
       before :all do
         visit '/search'
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
         sleep 0.2 # Allow animations to finish and avoid clickfailed
@@ -82,6 +88,9 @@ describe 'Map Zooming', reset: false do
     context 'with spatial bounds' do
       before :all do
         visit '/search'
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         wait_for_xhr
         script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:0}, {lat: -20, lng: 0}]);"
         page.execute_script(script)
@@ -157,6 +166,9 @@ describe 'Map Zooming', reset: false do
       before :all do
         visit '/search'
         wait_for_xhr
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         click_on "Geographic (Equirectangular)"
         MapUtil.set_zoom(page, 0)
       end

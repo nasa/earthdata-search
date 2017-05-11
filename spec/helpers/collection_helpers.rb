@@ -2,6 +2,9 @@ module Helpers
   module CollectionHelpers
     def use_collection(id, text)
       before :all do
+        if page.has_link?('closeInitialTourModal')
+          find("#closeInitialTourModal").click
+        end
         wait_for_xhr
         fill_in "keywords", with: id
         wait_for_xhr
