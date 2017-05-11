@@ -11,7 +11,7 @@ ns.SiteTour = do (help = @edsc.help, PreferencesModel = data.Preferences,  urlUt
       help.startTour()
 
     safePath: () =>
-      return if urlUtil.cleanPath() then urlUtil.cleanPath().split('?')[0] == '/search' else false
+      return if urlUtil.cleanPath() then (urlUtil.cleanPath().split('?')[0] == '/search' || urlUtil.cleanPath().split('?')[0] == '/') else false
 
     toggleHideTour: () =>
       toggle = $('#toggleHideTour:checked').val()
