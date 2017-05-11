@@ -1,131 +1,115 @@
-# -*- coding: utf-8 -*-
-# EDSC-137: As a user, I want an introductory tour when I visit the site so I
-#           may quickly get oriented in the system
-
 require "spec_helper"
 
-# EDSC-1361: UI work to redo tour at appropriate time
+describe "Site tour" do
+  context "When loading the initial search page" do
+    before :each do
+      Capybara.reset_sessions!
+      login
+      visit "/search"  
+      wait_for_xhr
+      dismiss_banner
+      find_link("Manage user account").click
+      find_link("Show Tour").click
+      # The tour loads with 'Do not Show Again' unchecked - closing it immediately sets the preference to false
+      # for this test.  This ensures the right starting point.
+      find_button("End Tour").click
+      page.evaluate_script 'window.location.reload()'
+      wait_for_xhr
+    end
 
-# Resetting here because the tour introduces very complex page state that's not easy to back out of
-#describe "Site tour", reset: true do
-#  after :each do
-#    wait_for_xhr
-#    User.destroy_all if page.server.responsive?
-#  end
-#
-#  context "on the landing page" do
-#    before :each do
-#      Capybara.reset_sessions!
-#      visit "/?test_facets=true" # Load the root url with facets and no extra params
-#      wait_for_xhr
-#    end
+    it 'shows a call-to-action modal which introduces the tour' do
+      expect(page).to have_css('#sitetourModal')
+    end
 
-    # Single spec for the tour which tests every stop.  Normally I'd like this to be separate tests per stop, but
-    # doing so is slow and highly redundant because the tour is so serial.
-    # Skip the tour until top 'category' facets are removed in OPS.
-#    xit "shows an introductory tour walking the user through finding and visualizing data and adding it to a project" do
-#      expect(page).to have_popover('Welcome to Earthdata Search')
-#      click_on 'Next'
+    context "and when the 'Start Tour' button is clicked from the initial introductory modal" do
+      before :each do
+        find_button("Start Tour").click
+        wait_for_xhr
+      end
 
-#      expect(page).to have_popover('Keyword Search')
-#      fill_in 'keywords', with: 'snow cover'
-#      wait_for_xhr
+      it "shows the first popover of the tour" do
+        expect(page).to have_popover("Search")
+      end
 
-#      expect(page).to have_popover('Browse Collections')
-#      find('.facets-item', text: 'Near Real Time').click
+      context 'and when the "Next" button is clicked from the Search popover' do
+        before :each do
+          find_button("Next").click
+          wait_for_xhr
+        end
+        it "shows the second popover of the tour" do
+          expect(page).to have_popover("Search Results")
+        end
 
-#      wait_for_xhr
-#      expect(page).to have_popover('Browse Collections')
-#      find(".facets-item", text: "Atmosphere").click
-#      wait_for_xhr
+        context 'and when the "Next" button is clicked from the Search Results popover' do
+          before :each do
+            find_button("Next").click
+            wait_for_xhr
+          end
+          it "shows the third popover of the tour" do
+            expect(page).to have_popover("Facets")
+          end
 
-#      expect(page).to have_popover('Spatial Search')
-#      create_bounding_box(0, 0, 10, 10)
-#      wait_for_xhr
+          context 'and when the "Next" button is clicked from the Facets popover' do
+            before :each do
+              find_button("Next").click
+              wait_for_xhr
+            end
+            it "shows the fourth popover of the tour" do
+              expect(page).to have_popover("Map Tools")
+            end
+            context 'and when the "Next" button is clicked from the Map Tools popover' do
+              before :each do
+                find_button("Next").click
+                wait_for_xhr
+              end
+              it "shows the fifth and last popover of the tour" do
+                expect(page).to have_popover("Toolbar")
+              end
 
-#      expect(page).to have_popover('Collection Results')
-#      target_collection_result('MODIS/Aqua Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 005)').click
-#      wait_for_xhr
+              context 'and when the "Do not show again" checkbox is set, the tour closed, and the page refreshed' do 
+              	before :each do
+                  find(".toggleHideTour").click
+                  find_button("End Tour").click
+                  page.evaluate_script 'window.location.reload()'
+                  wait_for_xhr
+              	end
+              	it 'does not show the call-to-action modal' do
+                  expect(page).to_not have_css('#sitetourModal')
+              	end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 
-#      expect(page).to have_popover('Matching Granules')
-#      second_granule_list_item.click
-#      wait_for_xhr
+  context "When loading the initial search page and then selecting 'Show Tour' from the Manage Account drop down" do
+    before :each do
+      Capybara.reset_sessions!
+      login
+      visit "/search"  
+      wait_for_xhr
+      dismiss_banner
+      find_link("Manage user account").click
+      find_link("Show Tour").click
+    end
+    it "shows the first popover of the tour" do
+      expect(page).to have_popover("Search")
+    end
+  end
 
-#      expect(page).to have_popover('Map View')
-#      page.find('.leaflet-control-layers').trigger(:mouseover)
-
-#      expect(page).to have_popover('Map View')
-#      choose 'Land / Water Map'
-
-#      expect(page).to have_popover('Granule Timeline (Part 1)')
-#      find('.timeline-zoom-in').click
-
-#      expect(page).to have_popover('Granule Timeline (Part 2)')
-#      click_timeline_date('24', 'Feb')
-
-#      expect(page).to have_popover('Granule Timeline (Part 3)')
-#      drag_temporal(DateTime.new(2016, 2, 24, 13, 17, 8 , '+0'), DateTime.new(2016, 2, 25, 6, 36, 17, '+0'))
-
-#      expect(page).to have_popover('Back to Collections')
-#      granule_list.click_on 'Back to Collections'
-
-#      expect(page).to have_popover('Comparing Multiple Collections')
-#      collection_container = find('h3', text: /\AMODIS\/Aqua Near Real Time \(NRT\) Clouds 5-Min L2 Swath 1km and 5km\z/).find(:xpath, '..')
-#      collection_container.find('.add-to-project').click
-
-#      expect(page).to have_popover('Projects')
-#      click_on 'View Project'
-
-#      expect(page).to have_popover('Project (cont.)')
-#    end
-
-#    context 'clicking on the tour\'s "End Tour" button' do
-#      before :each do
-#        find(".button-small", :text => 'End Tour').trigger('click')
-#      end
-
-#      it 'shows a popover indicating that the tour ended with information on how to restart it' do
-#        expect(page).to have_popover('Tour Ended')
-#      end
-
-#      context 'and closing the tour ended dialog' do
-#        before :each do
-#           find_link('Close').trigger('click')
-#         end
-
-#        it 'shows no further popovers' do
-#          expect(page).to have_no_popover
-#        end
-#      end
-#    end
-
-#    context "starting the tour and searching for terms other than those prompted by the tour" do
-#      before :each do
-#        click_on 'Next'
-#        expect(page).to have_popover
-#        fill_in "keywords", with: "AST_L1A"
-#      end
-
-#      it "hides the tour" do
-#        expect(page).to have_no_popover
-#      end
-#    end
-
-#    context "starting a search without starting the tour" do
-
-#      it "hides the tour" do
-#        expect(page).to have_no_popover
-#      end
-#    end
-#  end
-
-#  context "directly loading the search page" do
-#    before :each do
-#      load_page :search, overlay: false
-#    end
-
-#    it "shows no tour" do
-#      expect(page).to have_no_popover
-#    end
-#  end
-# end
+  context "When loading something other than the initial search page and then opening the Manage Account drop down" do
+    before :each do
+      Capybara.reset_sessions!
+      login
+      visit '/search/collections?sb=0%2C0%2C10%2C10'  
+      wait_for_xhr
+      dismiss_banner
+      find_link("Manage user account").click
+    end
+    it "does not show the link to start the tour" do
+      expect(page).to_not have_link("Show Tour")
+    end
+  end  
+end
