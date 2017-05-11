@@ -142,14 +142,6 @@ ns = @edsc.models.page
     else
       close()
 
-  position = (selector)->
-    $(selector).on 'scroll', (e) ->
-      if index == 2 || index == 3 || index == 5 || index == 6 || index == 13
-        $container = $(this)
-        $tour_popover = $('.popover.tour')
-        queue[index].top = $tour_popover.offset().top unless queue[index].top?
-        $tour_popover.css({top: queue[index].top - $(this).scrollTop()})
-
   showCurrentImmediate = ->
     $('.popover-advance').removeClass('popover-advance')
 
@@ -173,7 +165,6 @@ ns = @edsc.models.page
 
     queue[index].advanceHook?(next, close)
     queue[index].closeHook?(close)
-    queue[index].positionHook?(position)
     $('input:checkbox.toggleHideTour').prop 'checked', doNotShowTourAgain
     if $el.data('bs.popover')?
       $tip = $el.data('bs.popover').$tip
