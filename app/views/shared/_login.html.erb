@@ -1,5 +1,5 @@
 <!-- ko if: window.tokenExpiresIn === null -->
-<a href="#" data-bind="click: function(){ $root.ui.sitetour.startTour(); }" class="toolbar-button">Show Tour</a>
+<a href="#" data-bind="click: function(){ $root.ui.sitetour.startTour(); }, visible:  $root.ui.sitetour.safePath();" class="toolbar-button">Show Tour</a>
 <a href="<%=edsc_path '/login' %>" class="toolbar-button user-info sign-in"><i class="fa fa-lock"></i> Earthdata Login</a>
 <!-- /ko -->
 <!-- ko if: window.tokenExpiresIn !== null -->
@@ -21,7 +21,7 @@
       <a href="<%=edsc_path '/projects' %>" class="dropdown-link dropdown-link-projects">Saved Projects</a>
     </li>
     <li>
-      <a href="#" data-bind="click: function(){ $root.ui.sitetour.startTour(); }" class="dropdown-link">Show Tour</a>
+      <a href="#" data-bind="click: function(){ $root.ui.sitetour.startTour(); }, visible:  $root.ui.sitetour.safePath();" class="dropdown-link">Show Tour</a>
     </li>
     <li>
       <a href="<%=edsc_path '/logout' %>" class="dropdown-link dropdown-link-logout">Logout</a>

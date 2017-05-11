@@ -200,9 +200,6 @@ describe 'Address bar', reset: false do
       if page.has_link?('closeInitialTourModal')
         find("#closeInitialTourModal").click
       end
-      if page.has_link?('closeInitialTourModal')
-        find("#closeInitialTourModal").click
-      end
     }
 
     it 'displays the selected facet condition' do

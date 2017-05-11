@@ -19,6 +19,7 @@ data = models.data
 ui = models.ui
 ns = models.page
 help = @edsc.help
+sitetour = @edsc.sitetour
 
 ns.SearchPage = do (ko
                     setCurrent = ns.setCurrent
@@ -45,8 +46,8 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
     preferences = new PreferencesModel()
-
-    $('#sitetourModal').modal('show') if !window.edscportal && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1) 
+    sitetour = new SiteTourModel();
+    $('#sitetourModal').modal('show') if sitetour.safePath() && !window.edscportal && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1) 
 
   class SearchPage
     constructor: ->
