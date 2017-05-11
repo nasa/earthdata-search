@@ -12,8 +12,8 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
 
     constructor: (args...) ->
       @map_initialized = false
-      @map
-      @bbox_shape
+#      @map
+#      @bbox_shape
       super(args...)
 
     _scaledLonLatProjection = (scale) ->
@@ -39,28 +39,27 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
       bounding_box._interpolationFn = 'cartesian'
       bounding_box.addTo(@map)
 
-    _buildMap: (el, event)->
+    _buildMap: (el, event) =>
       unless @map_initialized
+        @map_initialized = true
         el.append("<div id='image-map'/>")
-        $('#image-map')
-        @map = L.map 'image-map',
-          minZoom: 0
-          maxZoom: 0
-          zoom: 0
-          center: [0, 0]
-          crs: _simpleScaledCrs(.75)
-          zoomControl: false
-          attributionControl: false
-        @map.dragging.disable()
-        @map.touchZoom.disable()
-        @map.doubleClickZoom.disable()
-        @map.scrollWheelZoom.disable()
-        @map.tap.disable() if (@map.tap)
-        url = '<%= image_path('plate_carree_earth_scaled.png') %>'
-        L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(@map)
-        @_redrawOnMap(el)
-
-      @map_initialized = true
+        if $('#image-map').length > 0
+          @map = L.map 'image-map',
+            minZoom: 0
+            maxZoom: 0
+            zoom: 0
+            center: [0, 0]
+            crs: _simpleScaledCrs(.75)
+            zoomControl: false
+            attributionControl: false
+          @map.dragging.disable()
+          @map.touchZoom.disable()
+          @map.doubleClickZoom.disable()
+          @map.scrollWheelZoom.disable()
+          @map.tap.disable() if (@map.tap)
+          url = '<%= image_path('plate_carree_earth_scaled.png') %>'
+          L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(@map)
+          @_redrawOnMap(el)
 
     buildDom: ->
       result = super()
@@ -72,6 +71,7 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
       children.find('> div:nth-child(3)').addClass('bbox_east')
       children.find('> div:nth-child(4)').addClass('bbox_south')
       children.find('> div.echoforms-help').css('float','left')
+#      result.append("<div id='image-map'/>") if $('#image-map').length == 0
       $('.access-item-options')
         .on 'click change', '.echoforms-control-checkbox:contains("Enter bounding box")', (event) =>
           @_buildMap(result, event)
