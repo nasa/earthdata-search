@@ -153,9 +153,7 @@ describe 'Address bar', reset: false do
     before(:all) do
       visit '/search?test_facets=true&cmr_env=sit'
       wait_for_xhr
-      if page.has_css?('#closeInitialTourModal')
-        find("#closeInitialTourModal").click
-      end
+      dismiss_banner
       find("h3.panel-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
@@ -177,9 +175,7 @@ describe 'Address bar', reset: false do
   context 'when loading a url containing a facet condition' do
     before(:all) { 
       visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' 
-      if page.has_css?('#closeInitialTourModal')
-        find("#closeInitialTourModal").click
-      end
+      dismiss_banner
     }
 
     it 'displays the selected facet condition' do
@@ -582,9 +578,7 @@ describe 'Address bar', reset: false do
     context 'when refreshing the page' do
       before :all do
         visit '/search?m=0!0!2!1!2!'
-        if page.has_css?('#closeInitialTourModal')
-          find("#closeInitialTourModal").click
-        end
+        dismiss_banner
         wait_for_xhr
       end
 
@@ -613,9 +607,7 @@ describe 'Address bar', reset: false do
     context 'when refreshing the page' do
       before :all do
         visit '/search?m=0!0!2!1!0!0%2C1'
-        if page.has_css?('#closeInitialTourModal')
-          find("#closeInitialTourModal").click
-        end
+        dismiss_banner
         wait_for_xhr
       end
 

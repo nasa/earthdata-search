@@ -65,9 +65,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the edit filters button" do
       before :all do
-        if page.has_css?('#closeInitialTourModal')
-          find("#closeInitialTourModal").click
-        end
+        dismiss_banner
         granule_list.click_link('Filter granules')
       end
 
@@ -96,9 +94,7 @@ describe "Granule list", reset: false do
 
     context "clicking the exclude granule button" do
       before :all do
-        if page.has_css?('#closeInitialTourModal')
-          find("#closeInitialTourModal").click
-        end
+        dismiss_banner
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
         wait_for_xhr

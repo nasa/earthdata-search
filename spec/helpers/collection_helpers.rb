@@ -2,9 +2,7 @@ module Helpers
   module CollectionHelpers
     def use_collection(id, text)
       before :all do
-        if page.has_css?('#closeInitialTourModal')
-          find("#closeInitialTourModal").click
-        end
+        dismiss_banner
         wait_for_xhr
         fill_in "keywords", with: id
         wait_for_xhr
