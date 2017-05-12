@@ -6,7 +6,6 @@
 data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
-sitetour = @edsc.sitetour
 
 ns.CreateAccountPage = do (ko
                           setCurrent = ns.setCurrent

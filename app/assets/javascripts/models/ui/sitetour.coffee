@@ -11,6 +11,10 @@ ns.SiteTour = do (help = @edsc.help, PreferencesModel = data.Preferences,  urlUt
       help.startTour()
 
     safePath: () =>
+      if urlUtil.cleanPath() then
+        console.log 'Safepath has: ' + urlUtil.cleanPath()
+      else
+        console.log 'Safepath defaulted to false - urlUtil.cleanPath() was null'
       return if urlUtil.cleanPath() then (urlUtil.cleanPath().split('?')[0] == '/search' || urlUtil.cleanPath().split('?')[0] == '/') else false
 
     toggleHideTour: () =>

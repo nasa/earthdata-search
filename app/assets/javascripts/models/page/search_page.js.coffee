@@ -18,8 +18,6 @@ models = @edsc.models
 data = models.data
 ui = models.ui
 ns = models.page
-help = @edsc.help
-sitetour = @edsc.sitetour
 
 ns.SearchPage = do (ko
                     setCurrent = ns.setCurrent
