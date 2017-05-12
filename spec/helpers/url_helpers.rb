@@ -95,7 +95,7 @@ module Helpers
       end
       wait_for_xhr
       #close tour modal
-      if page.has_link?('closeInitialTourModal')
+      if page.has_css?('#closeInitialTourModal')
         find("#closeInitialTourModal").click
       end
       

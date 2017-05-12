@@ -11,9 +11,6 @@ describe "Granule list", reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search
-    if page.has_link?('closeInitialTourModal')
-      find("#closeInitialTourModal").click
-    end
   end
 
   context "for all collections with granules" do
@@ -68,7 +65,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the edit filters button" do
       before :all do
-        if page.has_link?('closeInitialTourModal')
+        if page.has_css?('#closeInitialTourModal')
           find("#closeInitialTourModal").click
         end
         granule_list.click_link('Filter granules')
@@ -99,7 +96,7 @@ describe "Granule list", reset: false do
 
     context "clicking the exclude granule button" do
       before :all do
-        if page.has_link?('closeInitialTourModal')
+        if page.has_css?('#closeInitialTourModal')
           find("#closeInitialTourModal").click
         end
         first_granule_list_item.click

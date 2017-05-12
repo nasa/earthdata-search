@@ -2,7 +2,7 @@ module Helpers
   module CollectionHelpers
     def use_collection(id, text)
       before :all do
-        if page.has_link?('closeInitialTourModal')
+        if page.has_css?('#closeInitialTourModal')
           find("#closeInitialTourModal").click
         end
         wait_for_xhr

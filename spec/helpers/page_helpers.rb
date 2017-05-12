@@ -77,7 +77,7 @@ module Helpers
       visit url
       
       wait_for_xhr
-      if page.has_link?('closeInitialTourModal')
+      if page.has_css?('#closeInitialTourModal')
         find("#closeInitialTourModal").click
       end
     end
@@ -94,7 +94,7 @@ module Helpers
 
     def dismiss_banner
       # Let's get the tour modal while we're at it...
-      if page.has_link?('closeInitialTourModal')
+      if page.has_css?('#closeInitialTourModal')
         find("#closeInitialTourModal").click
       end
       # Now the banner...
