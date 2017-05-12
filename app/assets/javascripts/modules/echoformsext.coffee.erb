@@ -26,42 +26,43 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
       L.extend({}, L.CRS.Simple, projection: _scaledLonLatProjection(scale))
 
     _redrawOnMap: (el) =>
-      @map.eachLayer (layer) =>
-        @map.removeLayer(layer) if layer.id == 'bbox_layer'
+      if @map?
+        @map.eachLayer (layer) =>
+          @map.removeLayer(layer) if layer.id == 'bbox_layer'
 
-      north=parseInt(el.find('div.bbox_north input').val())
-      west=parseInt(el.find('div.bbox_west input').val())
-      east=parseInt(el.find('div.bbox_east input').val())
-      south=parseInt(el.find('div.bbox_south input').val())
-      bounding_box = L.polygon([[north, west], [north, east], [south, east], [south, west]], {color: "#54F7A3", fillOpacity: 0.4, weight: 1})
-      bounding_box.id = 'bbox_layer'
-      bounding_box._interpolationFn = 'cartesian'
-      bounding_box.addTo(@map)
+        north=parseInt(el.find('div.bbox_north input').val())
+        west=parseInt(el.find('div.bbox_west input').val())
+        east=parseInt(el.find('div.bbox_east input').val())
+        south=parseInt(el.find('div.bbox_south input').val())
+        bounding_box = L.polygon([[north, west], [north, east], [south, east], [south, west]], {color: "#54F7A3", fillOpacity: 0.4, weight: 1})
+        bounding_box.id = 'bbox_layer'
+        bounding_box._interpolationFn = 'cartesian'
+        bounding_box.addTo(@map)
 
-    _buildMap: (el, event) =>
-      if !@map_initialized && $('#image-map').length > 0
-        @map_initialized = true
-        @map = L.map 'image-map',
-          minZoom: 0
-          maxZoom: 0
-          zoom: 0
-          center: [0, 0]
-          crs: _simpleScaledCrs(1)
-          zoomControl: false
-          attributionControl: false
-        @map.dragging.disable()
-        @map.touchZoom.disable()
-        @map.doubleClickZoom.disable()
-        @map.scrollWheelZoom.disable()
-        @map.tap.disable() if (@map.tap)
-        url = '<%= image_path('plate_carree_earth.png') %>'
-        L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(@map)
+    _buildMap: (mapId, el) =>
+      $('[id$=-map]').each (i, element) =>
+        if mapId == $(element).prop('id') && $('#' + mapId).length > 0 && !$('#' + mapId).hasClass('leaflet-container')
+          @map_initialized = true
+          @map = L.map mapId,
+            minZoom: 0
+            maxZoom: 0
+            zoom: 0
+            center: [0, 0]
+            crs: _simpleScaledCrs(1)
+            zoomControl: false
+            attributionControl: false
+          @map.dragging.disable()
+          @map.touchZoom.disable()
+          @map.doubleClickZoom.disable()
+          @map.scrollWheelZoom.disable()
+          @map.tap.disable() if (@map.tap)
+          url = '<%= image_path('plate_carree_earth.png') %>'
+          L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(@map)
 
-        @_redrawOnMap(el)
+          @_redrawOnMap(el)
 
     buildDom: ->
       result = super()
-      result.append("<div id='image-map'/>") if $('#image-map').length == 0
       children = result.children('.echoforms-children')
       children.find('>div').addClass('bbox_container')
       children.find('input[type="text"]').addClass('coordinate_input')
@@ -71,13 +72,19 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
       children.find('> div:nth-child(4)').addClass('bbox_south')
       children.find('> div.echoforms-help').css('float','left')
 
+      mapId = result.prop('id') + '-map'
+      result.append("<div id='" + mapId + "' class='image-map'/>") if $('#' + mapId).length == 0
+
       $('.access-item-options')
-        .on 'echoforms:modelchange', =>
-          @_buildMap(result, event)
         .on 'change', '.echoforms-control-checkbox:contains("Enter bounding box")', (event) =>
-          result.find('#image-map').toggle($('.bbox_container').is(':visible'))
-        .on 'change', '.coordinate_input', =>
-          @_redrawOnMap(result)
+          mapId = $(event.target).closest('.echoforms-children').find('[id$=-map]').prop('id')
+          el = $(event.target).closest('.echoforms-children').find('[id$=NWESBoundingBox]')
+          @_buildMap(mapId, el)
+          $('#' + mapId).toggle(el.find('.bbox_container').is(':visible'))
+        .on 'change', '.coordinate_input', (event) =>
+          mapId = $(event.target).closest('.echoforms-children').find('[id$=-map]').prop('id')
+          el = $(event.target).closest('.echoforms-children')
+          @_redrawOnMap(el)
       result
 
   class XYBoxSubsetter extends $.echoforms.controls.Grouping

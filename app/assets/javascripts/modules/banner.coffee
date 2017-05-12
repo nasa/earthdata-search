@@ -53,7 +53,7 @@
       displayBanner(banners[0]...)
     else
       $('#main-toolbar').animate({paddingTop: "25px", marginTop: 0}, {duration: config.defaultAnimationDurationMs})
-      setTimeout((->$('.master-overlay')?.masterOverlay('contentHeightChanged')), config.defaultAnimationDurationMs * 1.05)
+      setTimeout((->$('.master-overlay')?.masterOverlay?('contentHeightChanged')), config.defaultAnimationDurationMs * 1.05)
 
   removeBannersWithKey = (key) ->
     banners = (banner for banner in banners when banner[0] != key)
