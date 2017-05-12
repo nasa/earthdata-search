@@ -4,7 +4,7 @@
   height: 80%;
 }
 
-.modal.variables, .modal.customize-data, .modal.sitetour {
+.modal.variables, .modal.customize-data {
 
   .modal-body {
     padding: 0;
@@ -23,11 +23,6 @@
       float: right;
     }
   }
-
-  .modal-dialog {
-    width: 800px;
-    margin-top: 120px;
-  }
 }
 
 .modal-body {
@@ -38,5 +33,34 @@
   ul {
     list-style: circle;
     padding: 0 30px;
+  }
+}
+
+.modal-body-welcome {
+  background: asset-url('edsc-small-screen.png') no-repeat left;
+  padding-left: 245px;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.modal-dialog {
+  width: 800px;
+  margin-top: 120px;
+}
+
+.modal-footer {
+  padding: 15px;
+  height: inherit;
+
+  p {
+    padding: 5px;
+  }
+
+  .button.secondary {
+    @include list-panel-button;
+    padding: 7px 10px;
   }
 }
