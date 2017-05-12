@@ -13,7 +13,7 @@
         <a class="button text-button" id="closeInitialTourModal" data-dismiss="modal" href="#">Close</a>
         <button class='button' data-bind="click: function(){ $root.ui.sitetour.startTour(); }">Start Tour <i class='fa fa-arrow-circle-right'></i></button>
         <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
-          <input class='toggleHideTour' id='toggleHideTour' type='checkbox' data-bind="click: function(){ return true; }, checked: $root.ui.sitetour.toggleHideTour(); "/>
+          <input class='toggleHideTour' id='toggleHideTour' type='checkbox' data-bind="checked: $root.ui.sitetour.toggleHideTour(); "/>
           <small>Do not show again</small>
         </label>
       </div>
