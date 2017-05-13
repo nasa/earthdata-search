@@ -95,7 +95,7 @@ module Helpers
       end
       wait_for_xhr
       #close tour modal
-      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length")
+      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length > 0")
       if isModalUp
         find("#closeInitialTourModal").click
       end

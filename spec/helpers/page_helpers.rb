@@ -77,7 +77,7 @@ module Helpers
       visit url
       
       wait_for_xhr
-      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length")
+      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length > 0")
       if isModalUp
         find("#closeInitialTourModal").click
       end
@@ -95,7 +95,7 @@ module Helpers
 
     def dismiss_banner
       # Let's get the tour modal while we're at it...
-      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length")
+      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length > 0")
       if isModalUp
         find("#closeInitialTourModal").click
       end
