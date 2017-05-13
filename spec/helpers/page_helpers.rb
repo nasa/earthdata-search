@@ -77,10 +77,7 @@ module Helpers
       visit url
       
       wait_for_xhr
-      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length > 0")
-      if isModalUp
-        find("#closeInitialTourModal").click
-      end
+      page.execute_script("$('#closeInitialTourModal').trigger('click')")
     end
 
     def be_logged_in_as(key)
@@ -94,11 +91,9 @@ module Helpers
     end
 
     def dismiss_banner
+      wait_for_xhr
       # Let's get the tour modal while we're at it...
-      isModalUp = page.evaluate_script("return $('#closeInitialTourModal').length > 0")
-      if isModalUp
-        find("#closeInitialTourModal").click
-      end
+      page.execute_script("$('#closeInitialTourModal').trigger('click')")
       # Now the banner...
       while page.has_css?('.banner-close') do
         find('a[class="banner-close"]').click
