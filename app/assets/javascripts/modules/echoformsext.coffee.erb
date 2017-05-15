@@ -5,7 +5,7 @@
 #= require modules/map/leaflet-plugins/interpolation
 #= require modules/map/image_map
 
-do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.map.L.Proj, ImageMap=@edsc.map.ImageMap) ->
+do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.map.L.Proj, ImageMap=@edsc.map.ImageMap, hasPending=@edsc.util.xhr.hasPending) ->
 
   class BoundingBox extends  $.echoforms.controls.Grouping
     @selector="group[id*='NWESBoundingBox']"
@@ -75,10 +75,21 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
       mapId = result.prop('id') + '-map'
       result.append("<div id='" + mapId + "' class='image-map'/>") if $('#' + mapId).length == 0
 
+      $(document).ready ->
+        waitForEchoforms = setInterval (=>
+          checkbox = $('.echoforms-control-checkbox:contains("Enter bounding box")')
+          clearInterval(waitForEchoforms) unless hasPending()
+          if checkbox.find('input[type="checkbox"]').is(':checked')
+            mapId = $('.echoforms-control-checkbox:contains("Enter bounding box")').closest('.echoforms-children').find('[id$=-map]').prop('id')
+            el = $('.echoforms-control-checkbox:contains("Enter bounding box")').closest('.echoforms-children').find('[id*=NWESBoundingBox]')
+            BoundingBox.prototype._buildMap(mapId, el)
+            $('#' + mapId).toggle(el.find('.bbox_container').is(':visible'))
+          ), 0
+
       $('.access-item-options')
-        .on 'change', '.echoforms-control-checkbox:contains("Enter bounding box")', (event) =>
+        .on 'echoforms:modelchange', '.echoforms-control-checkbox:contains("Enter bounding box")', (event) =>
           mapId = $(event.target).closest('.echoforms-children').find('[id$=-map]').prop('id')
-          el = $(event.target).closest('.echoforms-children').find('[id$=NWESBoundingBox]')
+          el = $(event.target).closest('.echoforms-children').find('[id*=NWESBoundingBox]')
           @_buildMap(mapId, el)
           $('#' + mapId).toggle(el.find('.bbox_container').is(':visible'))
         .on 'change', '.coordinate_input', (event) =>
