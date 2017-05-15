@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Site tour" do
-  context "When loading the initial search page" do
+  context "When loading the initial search page while logged in" do
     before :each do
       Capybara.reset_sessions!
       login
@@ -13,7 +13,7 @@ describe "Site tour" do
       # The tour loads with 'Do not Show Again' unchecked - closing it immediately sets the preference to false
       # for this test.  This ensures the right starting point.
       find_button("End Tour").click
-      page.evaluate_script 'window.location.reload()'
+      page.execute_script 'window.location.reload()'
       wait_for_xhr
     end
 
@@ -70,7 +70,7 @@ describe "Site tour" do
               	before :each do
                   find(".toggleHideTour").click
                   find_button("End Tour").click
-                  page.evaluate_script 'window.location.reload()'
+                  page.execute_script 'window.location.reload()'
                   wait_for_xhr
               	end
               	it 'does not show the call-to-action modal' do
@@ -80,6 +80,34 @@ describe "Site tour" do
             end
           end
         end
+      end
+    end
+  end
+
+  context "When loading the initial search page without being logged in and clicking the 'Show Tour' button" do
+    before :each do
+      Capybara.reset_sessions!
+      visit "/search"  
+      wait_for_xhr
+      dismiss_banner
+      find_link("Show Tour").click
+      wait_for_xhr
+    end
+
+    it "shows the first popover of the tour" do
+      expect(page).to have_popover("Search")
+    end
+
+    context 'and when the "Do not show again" checkbox is set, the tour closed, and the page refreshed' do 
+      before :each do
+        find(".toggleHideTour").click
+        find_button("End Tour").click
+        page.execute_script 'window.location.reload()'
+        wait_for_xhr
+      end
+      
+      it 'does not show the call-to-action modal' do
+        expect(page).to_not have_css('#sitetourModal')
       end
     end
   end
@@ -99,7 +127,7 @@ describe "Site tour" do
     end
   end
 
-  context "When loading something other than the initial search page and then opening the Manage Account drop down" do
+  context "When loading something other than the initial search page while logged in and then opening the Manage Account drop down" do
     before :each do
       Capybara.reset_sessions!
       login
@@ -112,4 +140,15 @@ describe "Site tour" do
       expect(page).to_not have_link("Show Tour")
     end
   end  
+
+  context "When loading something other than the initial search page while not logged in" do
+    before :each do
+      visit '/search/collections?sb=0%2C0%2C10%2C10'  
+      wait_for_xhr
+      dismiss_banner
+    end
+    it "does not show the link to start the tour" do
+      expect(page).to_not have_link("Show Tour")
+    end
+  end   
 end
