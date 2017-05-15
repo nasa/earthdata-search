@@ -36,7 +36,7 @@ describe 'Service options order with boundingbox1 field', reset: false do
     end
 
     it 'shows a map with the entered bounding box on it' do
-      expect(page).to have_selector('#image-map')
+      expect(page).to have_selector('.image-map')
       expect(page).to have_selector(".leaflet-overlay-pane path[stroke='#54F7A3']")
     end
 
