@@ -5,7 +5,7 @@ data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
 
-@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, PreferencesModel = data.Preferences) ->
+@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, PreferencesModel = data.Preferences, urlUtil=@edsc.util.url) ->
 
 
   tourOptions =
@@ -209,6 +209,11 @@ ns = @edsc.models.page
     unless window.edscportal
       e.preventDefault()
       startTour()
+
+  $(window).on 'statechange', ->
+    $('[id^="show-tour-"]').toggle(urlUtil.cleanPath()?.split('?')[0] in ["/search", "/", ""])
+  $(document).on 'ready', ->
+    $('[id^="show-tour-"]').toggle(urlUtil.cleanPath()?.split('?')[0] in ["/search", "/", ""])
 
   add = (key, options={}) ->
     unless tourRunning

@@ -56,7 +56,7 @@ ns.Preferences = do (ko
     serialize: =>
       json =
         show_tour: @showTour()
-        doNotShowTourAgain: if @doNotShowTourAgain() then 'true' else 'false'
+        doNotShowTourAgain: @doNotShowTourAgain().toString()
         dismissed_events: @dismissedEvents()
 
   exports = Preferences
