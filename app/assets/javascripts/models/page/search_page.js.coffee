@@ -35,6 +35,13 @@ ns.SearchPage = do (ko
                     StateManager = ui.StateManager) ->
   current = null
 
+  preferences = new PreferencesModel()
+  sitetour = new SiteTourModel();
+
+  initModal = () ->
+    $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' ||  window.location.href.indexOf('?tour=true') != -1)
+ 
+
   $(document).ready ->
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
@@ -43,8 +50,9 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
-    if (url.cleanPath()?.split('?')[0] in ["/search", "/", ""]) && current.preferences.serialize()?.doNotShowTourAgain == 'false'
-      $('#sitetourModal').modal('show')
+    
+    setTimeout initModal, 2000 if !window.edscportal
+
 
   class SearchPage
     constructor: ->
