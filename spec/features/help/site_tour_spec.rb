@@ -81,7 +81,7 @@ describe "Site tour" do
                   before :each do
                     first_collection_result.click_link 'View collection details'
                     wait_for_xhr
-                    find_link("Manage user account").click
+                    find_link("Manage user account").trigger('click')
                   end
                   it 'hides the "Show Tour" from the Manage Account drop down' do
                     expect(page).to_not have_link('Show Tour')
@@ -96,7 +96,7 @@ describe "Site tour" do
   end
 
   context "When loading the initial search page without being logged in and clicking the 'Show Tour' button" do
-    before :all do
+    before :each do
       Capybara.reset_sessions!
       visit "/search"  
       wait_for_xhr
@@ -108,29 +108,38 @@ describe "Site tour" do
     it "shows the first popover of the tour" do
       expect(page).to have_popover("Search")
     end
-
-    context 'and when the "Do not show again" checkbox is set, the tour closed, and the page refreshed' do 
-      before :each do
-        find(".toggleHideTour").click
-        find_button("End Tour").click
-        page.execute_script 'window.location.reload()'
-        wait_for_xhr
-      end
-      
-      it 'does not show the call-to-action modal' do
-        expect(page).to_not have_css('#sitetourModal')
-      end
+  end
+ 
+  context 'When loading the initial search page without being logged in, and then clicking the "Do not show again" checkbox so it is set, the tour closed, and the page refreshed' do 
+    before :all do
+      Capybara.reset_sessions!
+      visit "/search"  
+      wait_for_xhr
+      dismiss_banner
+      find_link("Show Tour").click
+      wait_for_xhr
+      find(".toggleHideTour").click
+      find_button("End Tour").click
+      page.execute_script 'window.location.reload()'
+      wait_for_xhr
     end
-
-    context 'and when a collection is clicked in order view its granules' do
-      before :each do
-        first_collection_result.click_link 'View collection details'
-        wait_for_xhr
-      end
       
-      it 'hides the "Show Tour" from the Manage Account drop down' do
-        expect(page).to_not have_link('Show Tour')
-      end
+    it 'does not show the call-to-action modal' do
+      expect(page).to_not have_css('#sitetourModal')
+    end
+  end
+
+  context "When loading the initial search page without being logged in and then clicking on one of the collections" do
+    before :each do
+      Capybara.reset_sessions!
+      visit "/search"  
+      wait_for_xhr
+      dismiss_banner
+      first(:link, 'View collection details').click
+      wait_for_xhr
+    end
+    it 'hides the "Show Tour" button' do
+      expect(page).to_not have_link('Show Tour')
     end
   end
 
