@@ -43,6 +43,9 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
 
+    if (url.cleanPath()?.split('?')[0] in ["/search", "/", ""]) && current.preferences.serialize()?.doNotShowTourAgain == 'false'
+      $('#sitetourModal').modal('show')
+
   class SearchPage
     constructor: ->
       @query = new QueryModel()
