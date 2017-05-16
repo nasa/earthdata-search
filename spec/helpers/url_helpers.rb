@@ -96,11 +96,10 @@ module Helpers
       wait_for_xhr
       #close tour modal
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
-      
-      # close banner if there are any (which block the 'Manage user account' link)
+      # close banner
       if close_banner.present? && close_banner || close_banner.nil?
         while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
-          find('.banner-close').click
+          page.execute_script("$('.banner-close').click()")
         end
       end
 
