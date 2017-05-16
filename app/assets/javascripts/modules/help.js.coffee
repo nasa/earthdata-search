@@ -198,7 +198,7 @@ ns = @edsc.models.page
     if tourRunning
       preferences = new PreferencesModel()
       preferences.showTour(false)
-      preferences.doNotShowTourAgain(doNotShowTourAgain)
+      preferences.doNotShowTourAgain(doNotShowTourAgain.toString())
       preferences.save()
       close()
       add('tour_end')
