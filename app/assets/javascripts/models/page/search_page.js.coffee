@@ -34,12 +34,13 @@ ns.SearchPage = do (ko
                     url = @edsc.util.url
                     StateManager = ui.StateManager) ->
   current = null
+
   preferences = new PreferencesModel()
   sitetour = new SiteTourModel();
-  
+
   initModal = () ->
     $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' ||  window.location.href.indexOf('?tour=true') != -1)
- 
+
   $(document).ready ->
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
