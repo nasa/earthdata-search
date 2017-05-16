@@ -55,7 +55,7 @@ describe "Granule selection", reset: false do
     end
 
     it "highlights the selected granule on the map" do
-      expect(page).to have_selector('#map path', count: 5)
+      expect(page).to have_selector('#map path', count: 3)
     end
 
     it "displays a link to remove the granule in the granule list" do
