@@ -146,7 +146,7 @@ this.edsc.util.url = do(window
 
 #   new ParamFlattener(['science_keywords_h', '0', 'category'], 'fsc', false)
   keywords = []
-  for index in [0...6]
+  for index in [0...30]
     keywords.push new ParamFlattener(['science_keywords_h', index, 'topic'], "fst#{index}", false)
     keywords.push new ParamFlattener(['science_keywords_h', index, 'term'], "fsm#{index}", false)
     keywords.push new ParamFlattener(['science_keywords_h', index, 'variable_level_1'], "fs1#{index}", false)
