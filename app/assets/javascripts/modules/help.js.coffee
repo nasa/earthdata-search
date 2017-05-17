@@ -41,7 +41,7 @@ ns = @edsc.models.page
                 <p>You can also add filters to refine your search:</p>
                 <ul><li><i class="fa fa-fw fa-clock-o"></i> Pick a temporal range from a calendar</li>
                 <li><i class="fa fa-fw fa-crop"></i> Manually set spatial boundaries</li>
-                <li><i class="fa fa-fw fa-eraser"></i> Clear your filters</li>
+                <li><i class="fa fa-fw fa-eraser"></i> Clear all of your filters</li>
                 </ul>'
       element: '#keywords'
       placement: 'bottom'
