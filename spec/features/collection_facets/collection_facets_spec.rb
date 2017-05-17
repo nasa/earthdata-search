@@ -276,25 +276,35 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
-    before(:all) do
+  context "when applied multiple science keyword facets" do
+    before :all do
       load_page :search, facets: true, env: :sit
       find("h3.panel-title", text: 'Keywords').click
       find(".facets-item", text: "Agriculture").click
       find(".facets-item", text: "Agricultural Chemicals").click
       find(".facets-item", text: "Fertilizers").click
-      fill_in :keywords, with: "somestringthatmatchesnocollections"
-      wait_for_xhr
     end
 
-    after(:all) do
-      reset_search
-      wait_for_xhr
+    it 'shows the select facet siblings' do
+      expect(page).to have_content("Agricultural Commodities")
+      expect(page).to have_content("Agricultural Engineering")
     end
 
-    it "continues to display applied science keyword facets in order" do
-      within(:css, '.keywords') do
-        expect(page).to have_text("Agriculture 0 Agricultural Chemicals 0 Fertilizers 0")
+    context "and search terms filter the collections list to no results" do
+      before(:all) do
+        fill_in :keywords, with: "somestringthatmatchesnocollections"
+        wait_for_xhr
+      end
+
+      after(:all) do
+        reset_search
+        wait_for_xhr
+      end
+
+      it "continues to display applied science keyword facets in order" do
+        within(:css, '.keywords') do
+          expect(page).to have_text("Agriculture 0 Agricultural Chemicals 0 Fertilizers 0")
+        end
       end
     end
   end
@@ -340,36 +350,6 @@ describe "Collection Facets", reset: false do
       expect(page).to have_content("Spectral/Engineering")
     end
   end
-
-  # context "when applying facets containing trailing whitespace" do
-  #   before :all do
-  #     find("h3.panel-title", text: 'Platform').click
-  #     find(".facets-item", text: "AquaRIUS_SAC-D ").click
-  #     wait_for_xhr
-  #   end
-  #
-  #   after :all do
-  #     reset_search
-  #     find("h3.panel-title", text: 'Platform').click
-  #   end
-  #
-  #   it "displays correct count on collection list pane" do
-  #     facet_count = 0
-  #     collection_count = -1
-  #
-  #     # get count from facet list
-  #     within '#master-overlay-parent' do
-  #       facet_count = find('h3', text: 'Platform').parent.parent.find('label.facets-item.selected').find('span.facet-item-collection-count').text
-  #     end
-  #
-  #     # get count from collection list pane
-  #     within '#collection-results' do
-  #       collection_count = find('header').find('h2').find('strong').text
-  #     end
-  #
-  #     expect(facet_count).to eq(collection_count)
-  #   end
-  # end
 
   context "when selecting a topic keyword" do
     before :all do
@@ -468,23 +448,6 @@ describe "Collection Facets", reset: false do
       expect(uri.query).to have_content('fl=')
     end
   end
-
-  # EDSC-790 - The metadata example was fixed
-  #context "when no collections have the EARTH SCIENCE category facet" do
-  #  before :all do
-  #    login
-  #    load_page :search, facets: true, q: 'octs'
-  #  end
-  #
-  #  after :all do
-  #    Capybara.reset_sessions!
-  #    load_page :search, facets: true
-  #  end
-  #
-  #  it "displays the first available facet's topics" do
-  #    expect(page).to have_content("Ocean Optics")
-  #  end
-  #end
 
   context "selecting multiple facets from different categories" do
     before :all do
