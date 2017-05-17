@@ -7,6 +7,7 @@
 #= require models/ui/service_options_list
 #= require models/ui/account_form
 #= require models/ui/feedback
+#= require models/ui/sitetour
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -23,6 +24,7 @@ ns.AccessPage = do (ko,
                     AccountFormModel = ui.AccountForm
                     TemporalModel = ui.Temporal
                     ProjectListModel = ui.ProjectList
+                    SiteTourModel = ui.SiteTour
                     ServiceOptionsListModel = ui.ServiceOptionsList
                     FeedbackModel = ui.Feedback
                     ) ->
@@ -45,6 +47,7 @@ ns.AccessPage = do (ko,
         accountForm: accountForm
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
         feedback: new FeedbackModel()
+        sitetour: new SiteTourModel()
 
       setTimeout((=>
         if pageData

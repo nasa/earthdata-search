@@ -75,7 +75,9 @@ module Helpers
 
       url = query.nil? ? path : path + '?' + query
       visit url
+      
       wait_for_xhr
+      page.execute_script("$('#closeInitialTourModal').trigger('click')")
     end
 
     def be_logged_in_as(key)
@@ -89,6 +91,10 @@ module Helpers
     end
 
     def dismiss_banner
+      wait_for_xhr
+      # Let's get the tour modal while we're at it...
+      page.execute_script("$('#closeInitialTourModal').trigger('click')")
+      # Now the banner...
       while page.has_css?('.banner-close') do
         find('a[class="banner-close"]').click
         wait_for_xhr

@@ -32,7 +32,7 @@
       setTimeout((->
         $banner.removeClass('banner-hidden')
         $('#main-toolbar').animate({paddingTop: 0, marginTop: $banner.outerHeight() + 22}, {duration: config.defaultAnimationDurationMs})
-        setTimeout((->$('.master-overlay')?.masterOverlay('contentHeightChanged')), config.defaultAnimationDurationMs * 1.05)
+        setTimeout((->$('.master-overlay')?.masterOverlay?('contentHeightChanged')), config.defaultAnimationDurationMs * 1.05)
       ), 0)
       $banner.on 'click', '.banner-close', onClickClose
 
