@@ -4,7 +4,7 @@ describe 'Map Zooming', reset: false do
   before :all do
     page.driver.resize_window(1680, 1050) # Default capybara window size
     Capybara.reset_sessions!
-    visit '/search'
+    load_page :search
   end
 
   after :all do
@@ -33,7 +33,7 @@ describe 'Map Zooming', reset: false do
   context 'when zooming with the zoom buttons' do
     context 'and the overlay is visible' do
       before :all do
-        visit '/search'
+        load_page :search
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
         sleep 0.2 # Allow animations to finish and avoid clickfailed
@@ -81,7 +81,7 @@ describe 'Map Zooming', reset: false do
   context 'when using the zoom home button' do
     context 'with spatial bounds' do
       before :all do
-        visit '/search'
+        load_page :search
         wait_for_xhr
         script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:0}, {lat: -20, lng: 0}]);"
         page.execute_script(script)
@@ -155,8 +155,7 @@ describe 'Map Zooming', reset: false do
   context 'on geo view' do
     context 'at the minimum zoom level' do
       before :all do
-        visit '/search'
-        wait_for_xhr
+        load_page :search
         click_on "Geographic (Equirectangular)"
         MapUtil.set_zoom(page, 0)
       end

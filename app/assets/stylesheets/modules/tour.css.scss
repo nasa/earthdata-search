@@ -1,7 +1,20 @@
 .popover.tour {
 	.popover-title {
 		font-weight: bold;
-		font-size: 1em;
+		font-size: 1.2em;
+		padding: 10px 20px;
+	}
+
+	.popover-content {
+		padding: 20px;
+
+		ul {
+			margin: 0 0 10px 0;
+		}
+
+		p {
+			margin-bottom: 10px;
+		}
 	}
 }
 

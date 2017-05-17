@@ -11,11 +11,11 @@
 #= require models/ui/granule_timeline
 #= require models/ui/state_manager
 #= require models/ui/feedback
+#= require models/ui/sitetour
 
 models = @edsc.models
 data = models.data
 ui = models.ui
-
 ns = models.page
 
 ns.SearchPage = do (ko
@@ -30,8 +30,16 @@ ns.SearchPage = do (ko
                     GranuleTimelineModel = ui.GranuleTimeline
                     PreferencesModel = data.Preferences
                     FeedbackModel = ui.Feedback
+                    SiteTourModel = ui.SiteTour
+                    url = @edsc.util.url
                     StateManager = ui.StateManager) ->
   current = null
+
+  preferences = new PreferencesModel()
+  sitetour = new SiteTourModel();
+
+  initModal = () ->
+    $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' ||  window.location.href.indexOf('?tour=true') != -1)
 
   $(document).ready ->
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
@@ -41,6 +49,8 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
+
+    setTimeout initModal, 2000 if !window.edscportal
 
   class SearchPage
     constructor: ->
@@ -55,6 +65,7 @@ ns.SearchPage = do (ko
         collectionsList: new CollectionsListModel(@query, @collections, @project)
         projectList: new ProjectListModel(@project, @collections)
         feedback: new FeedbackModel()
+        sitetour: new SiteTourModel()
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)

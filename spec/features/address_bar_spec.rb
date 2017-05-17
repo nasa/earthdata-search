@@ -9,7 +9,7 @@ describe 'Address bar', reset: false do
 
   context 'when loading collection details page from search page' do
     before :all do
-      visit '/search'
+      load_page :search
       wait_for_xhr
       first_collection_result.click_link 'View collection details'
       wait_for_xhr
@@ -41,7 +41,9 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS' }
+    before(:all) { 
+      visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS' 
+    }
 
     it 'loads the condition into the keywords field' do
       expect(page).to have_field('keywords', with: 'C1219032686-LANCEMODIS')
@@ -84,7 +86,9 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
+    before(:all) { 
+      visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' 
+    }
 
     it 'loads the condition into the temporal fields' do
       click_link "Temporal"
@@ -131,7 +135,9 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { visit '/search/collections?sb=0%2C0%2C10%2C10' }
+    before(:all) { 
+      visit '/search/collections?sb=0%2C0%2C10%2C10' 
+    }
 
     it 'draws the condition on the map' do
       expect(page).to have_selector('#map path', count: 1)
@@ -146,6 +152,8 @@ describe 'Address bar', reset: false do
   context 'when searching by facets' do
     before(:all) do
       visit '/search?test_facets=true&cmr_env=sit'
+      wait_for_xhr
+      dismiss_banner
       find("h3.panel-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
@@ -165,7 +173,10 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' }
+    before(:all) { 
+      visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' 
+      dismiss_banner
+    }
 
     it 'displays the selected facet condition' do
       within(:css, '.panel.projects .panel-body.facets') do
@@ -193,7 +204,9 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing project collections' do
-    before(:all) { visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' }
+    before(:all) { 
+      visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' 
+    }
 
     it 'restores the project' do
       expect(page).to have_visible_project_overview
@@ -214,7 +227,9 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a collection's granules" do
-    before(:all) { visit '/search/granules?p=C179003030-ORNL_DAAC' }
+    before(:all) { 
+      visit '/search/granules?p=C179003030-ORNL_DAAC' 
+    }
 
     it 'restores the collection granules view' do
       expect(page).to have_visible_granule_list
@@ -234,7 +249,9 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a collection's details" do
-    before(:all) { visit '/search/collection-details?p=C179003030-ORNL_DAAC' }
+    before(:all) { 
+      visit '/search/collection-details?p=C179003030-ORNL_DAAC' 
+    }
 
     it 'restores the collection details view' do
       expect(page).to have_visible_collection_details
@@ -545,7 +562,7 @@ describe 'Address bar', reset: false do
 
   context 'when changing the base layer' do
     before :all do
-      visit '/search'
+      load_page :search
       wait_for_xhr
       page.find_link('Layers').trigger(:mouseover)
       within '#map' do
@@ -561,6 +578,7 @@ describe 'Address bar', reset: false do
     context 'when refreshing the page' do
       before :all do
         visit '/search?m=0!0!2!1!2!'
+        dismiss_banner
         wait_for_xhr
       end
 
@@ -572,7 +590,7 @@ describe 'Address bar', reset: false do
 
   context 'when changing the map overlays' do
     before :all do
-      visit '/search'
+      load_page :search
       wait_for_xhr
       page.find_link('Layers').trigger(:mouseover)
       within '#map' do
@@ -589,6 +607,7 @@ describe 'Address bar', reset: false do
     context 'when refreshing the page' do
       before :all do
         visit '/search?m=0!0!2!1!0!0%2C1'
+        dismiss_banner
         wait_for_xhr
       end
 

@@ -23,3 +23,4 @@
 //= require modules/banner
 //= require modules/global_hooks
 //= require bootstrap/bootstrap
+//= require models/ui/sitetour

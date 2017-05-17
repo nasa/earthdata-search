@@ -16,7 +16,6 @@ describe "Granule list", reset: false do
   context "for all collections with granules" do
     use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
     hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
-
     it "provides a button to get collection details" do
       expect(granule_list).to have_link('View collection details')
     end
@@ -66,6 +65,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the edit filters button" do
       before :all do
+        dismiss_banner
         granule_list.click_link('Filter granules')
       end
 
@@ -94,6 +94,7 @@ describe "Granule list", reset: false do
 
     context "clicking the exclude granule button" do
       before :all do
+        dismiss_banner
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
         wait_for_xhr
