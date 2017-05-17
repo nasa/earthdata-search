@@ -54,9 +54,15 @@ describe "Granule selection", reset: false do
       expect(granule_list).to have_selector('.panel-list-selected', count: 1)
     end
 
-    it "highlights the selected granule on the map" do
-      expect(page).to have_selector('#map path', count: 5)
-    end
+   # EDSC-1395: Disabling this test for the moment as it is being flaky.
+   # This test is questionable as I do not see how the presence of 
+   # 5 locators of '#map path' is evidence that the selected granule is highlighted. 
+   # Further, this value seems to change from 5 to 3 then back to 5 almost 
+   # randomly, making this test very flaky.  Re-evaluate at appropriate time.
+
+   # it "highlights the selected granule on the map" do
+   #   expect(page).to have_selector('#map path', count: 5)
+   # end
 
     it "displays a link to remove the granule in the granule list" do
       expect(granule_list).to have_selector('.panel-list-remove', count: 1)

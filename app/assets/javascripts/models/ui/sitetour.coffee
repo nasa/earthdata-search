@@ -8,6 +8,7 @@ data = @edsc.models.data
 ns.SiteTour = do (ko, help = @edsc.help, PreferencesModel = data.Preferences,  urlUtil=@edsc.util.url) ->
   class SiteTour
     constructor: ->
+      @preferences = new PreferencesModel()
       @safePath = ko.observable(urlUtil.cleanPath()?.split('?')[0] in ["/search", "/", ""])
 
     startTour: () =>
@@ -15,8 +16,8 @@ ns.SiteTour = do (ko, help = @edsc.help, PreferencesModel = data.Preferences,  u
 
     toggleHideTour: () =>
       newPreference = $('#toggleHideTour:checked').val() == 'on'
-      preferences = new PreferencesModel()
-      preferences.doNotShowTourAgain(newPreference.toString())
-      preferences.save()
+      @preferences.doNotShowTourAgain(newPreference?.toString())
+      @preferences.save()
+      true
       
   exports = SiteTour
