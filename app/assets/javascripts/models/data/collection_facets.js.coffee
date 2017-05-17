@@ -119,52 +119,53 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       other && other.title == @title && other.param == @param
 
   class FacetsListModel
-    constructor: (@queryModel, item) ->
-      @title = item.title
+    constructor: (@queryModel, category) ->
+      @title = category.title
       @class_name = ko.computed => @title.toLowerCase().replace(' ', '-')
-      @param = item.param
+      @param = category.param
 
-      children = @_addAncestorsToFacetsList(item)
+      children = @_expandCategory(category)
       @children = ko.observable(children)
       @selectedValues = ko.computed(@_loadSelectedValues)
 
       isDefaultOpened = (@selectedValues().length > 0 ||
-                         item.title == 'Features')
+                         category.title == 'Features')
       @opened = ko.observable(isDefaultOpened)
       @closed = ko.computed => !@opened()
 
-    _addAncestorsToFacetsList: (item) ->
+    _expandCategory: (category) ->
       children = []
       ancestors = []
-      for child in item.children
-        if item.title == 'Features'
+      for topic in category.children
+        if category.title == 'Features'
           facets = @queryModel.facets()
           if facets && facets.length > 0
             featureQuery = facets.find (queryParam) ->
-              child.title == queryParam.title
-            child.applied = true if featureQuery
-          children.push(new Facet(this, child))
-        else if item.title == 'Keywords'
-          if child.applied
-            @_findAncestors(ancestors, child)
-            parent = ancestors.slice(-1)[0]
-            if parent
-              children.push new Facet(this, ancestor) for ancestor in ancestors
-              ancestors = []
-              if parent.children
-                children.push new Facet(this, grandChild) for grandChild in parent.children
-              else if parent.count == 0
-                continue
-            index = item.children.indexOf(child)
-            item.children[index] = null if index > -1
+              topic.title == queryParam.title
+            topic.applied = true if featureQuery
+          children.push(new Facet(this, topic))
+        else if category.title == 'Keywords'
+          if topic.applied
+            @_expandKeywords(children, topic)
+            index = category.children.indexOf(topic)
+            category.children[index] = null if index > -1
         else
-          children.push new Facet(this, child)
-
-      if item.title == 'Keywords'
-        children.push new Facet(this, child) for child in item.children when child? && child.count > 0
-
+          children.push new Facet(this, topic)
+      if category.title == 'Keywords'
+          children.push new Facet(this, child) for child in category.children when child? && child.count > 0
 
       children
+
+    _expandKeywords: (children, facet) ->
+      if facet.applied
+        children.push new Facet(this, facet)
+        if facet.children?
+          for child in facet.children
+            if child.applied
+              @_expandKeywords(children, child)
+            else
+              children.push new Facet(this, child)
+
 
     _findAncestors: (ancestors, item) ->
       ancestors.push item if item.applied && item.type == 'filter' && item.links.remove?.length > 0
@@ -173,9 +174,8 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
           if child.applied && child.links.remove?.length > 0
             @_findAncestors(ancestors, child)
 
-    setValues: (item) =>
-      newValues = @_addAncestorsToFacetsList(item)
-
+    setValues: (category) =>
+      newValues = @_expandCategory(category)
       facetsByTitle = {}
       for facet in @children()
         facetsByTitle[facet.title] = facet
@@ -208,14 +208,14 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
     update: (data) ->
       current = @results.peek()
       updated = []
-      for item, index in data
+      for category, index in data
         found = ko.utils.arrayFirst current, (result) ->
-          result.title == item.title
+          result.title == category.title
         if found
-          found.setValues(item)
+          found.setValues(category)
           updated[index] = found
         else
-          updated[index] = new FacetsListModel(@query, item)
+          updated[index] = new FacetsListModel(@query, category)
 
       # Remove 'current' facetsList that are not returned from CMR (e.g. after 'atmosphere -> cloud -> cloud properties'
       # being applied, CMR will not return 'processing_level_id_h' in facet-v2 since no collections have any process level
@@ -234,11 +234,17 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       updated
 
     _findAncestors: (ancestors, item) ->
-      ancestors.push item if item.applied && item.type == 'filter'
-      if item.children
-        for child in item.children
-          if child.applied && child.links.remove?.length > 0
-            @_findAncestors(ancestors, child)
+      # item is one of term, var1, var2, or var3
+      if item._hierarchyIndex() > 2 && item._hierarchyIndex() < 7
+        for facet in item.parent.children()
+          if facet.isSelected()
+            if item._hierarchyIndex() - facet._hierarchyIndex() == 1 && facet.children?
+              # could be direct parent. Reverse check to be sure
+              for child in facet.children
+                ancestors.push facet if child.title == item.title
+            else if item._hierarchyIndex() - facet._hierarchyIndex() > 1
+              # could be a grand parent.
+              @_findAncestors(ancestors, facet)
 
     removeFacet: (facet) =>
       @_removeSingleFacet(facet)
@@ -281,6 +287,12 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
       for param in facet.param
+        ancestors = []
+        @_findAncestors(ancestors, facet)
+        for ancestor in ancestors
+          index = facet.param[0].match(/science_keywords_h\[(\d+)\]\[.+\]/)[1]
+          newParam = ancestor.param[0].replace(/science_keywords_h\[\d+\]\[(.+)\]/g, "science_keywords_h[" + index + "][$1]")
+          @query.facets.push(title: ancestor.title, param: newParam)
         @query.facets.push(title: facet.title, param: param)
       @query.facets()
 
