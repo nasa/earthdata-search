@@ -23,7 +23,7 @@ describe 'Background jobs ordering', reset: false do
       click_button "Download project data"
       wait_for_xhr
       
-      find("#access-method-10").click
+      find("#access-method-00").click
 
       click_on 'Continue'
       click_on 'Submit'
