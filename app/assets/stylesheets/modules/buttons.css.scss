@@ -293,3 +293,7 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
     padding-bottom: 10px;
   }
 }
+
+.button-disabled {
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+}

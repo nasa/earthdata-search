@@ -56,7 +56,7 @@
                     <i class="fa fa-info-circle"></i>
                   </a>
                   <% if is_project %>
-                    <button class="button icon-button" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading.' : 'Download data'}">
+                    <button class="button icon-button" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download data'}">
                       <i class="fa fa-download"></i>
                     </button>
                     <!-- ko if: has_granules -->
