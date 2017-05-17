@@ -22,11 +22,11 @@ ns = @edsc.models.page
                 <div class='popover-content'></div>
                 <div class='popover-navigation'>
                   <div class='btn-group'>
-                    <button class='button-small button-outline' data-role='prev'>« Prev</button>
+                    <button class='button-small secondary' data-role='prev'><i class='fa fa-arrow-circle-left'></i> Prev</button>
                     <button class='button-small' data-role='next'>Next <i class='fa fa-arrow-circle-right'></i></button>
                   </div>
-                  <button class='button-small button-outline pull-left' data-role='end'>End Tour</button>
-                  <label class='pull-left' style='padding-top: 5px;padding-left: 5px;'>
+                  <button class='button-small pull-left' data-role='end'>End Tour</button>
+                  <label class='pull-left'>
                     <input data-role='toggleHideTour' class='toggleHideTour' type='checkbox' />
                     <small>Do not show again</small>
                   </label>
@@ -36,26 +36,26 @@ ns = @edsc.models.page
   tour = [{
       title: "Search"
       content: '<p>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
-                down to relevant collections.  An example search phrase could be "Land Surface Temperature over
-                Texas last month".  Results will be displayed in the collection panel below.</p>
-                <p>If you would prefer to pick a temporal range from a calendar (<i class="fa fa-clock-o"></i>) or 
-                manually set spatial boundaries (<i class="fa fa-fw fa-crop"></i>),
-                use the buttons to the right of the search box.</p>
-                <p>To start your search session over, click the eraser icon (<i class="fa fa-eraser"></i>) to clear all of your set filters.</p>
-                '
+                down to relevant collections.  An example search phrase could be <em>Land Surface Temperature over
+                Texas last month</em>. Results will be displayed in the collection panel below.</p>
+                <p>You can also add filters to refine your search:</p>
+                <ul><li><i class="fa fa-fw fa-clock-o"></i> Pick a temporal range from a calendar</li>
+                <li><i class="fa fa-fw fa-crop"></i> Manually set spatial boundaries</li>
+                <li><i class="fa fa-fw fa-eraser"></i> Clear your filters</li>
+                </ul>'
       element: '#keywords'
       placement: 'bottom'
       showNext: true
       },{
       title: "Search Results"
-      content: '<p>Search results will be shown in the Matching Collections panel below.  Each result will have summary 
+      content: '<p>Search results will be shown in the Matching Collections panel below. Each result will have summary
                 information along with relevant badges to allow you to quickly scan your search results to find the
-                right collection for you.  The panel can be resized by clicking and dragging the bar above the "Matching
-                Collections" tab.</p>
-                <p>To view more information about a collection, click on the <i class="fa fa-info-circle"></i> icon.</p>
-                <p>To view granules available for download, click anywhere on a collection.</p>
-                <p>Click on the <i class="fa fa-plus"></i> icon to add a collection to a project, which allows you to compare multiple collections.</p>
-'
+                right collection. The panel can be resized by clicking and dragging the bar above the <em>Matching
+                Collections</em> tab.</p>
+                <p>Collection options include:</p>
+                <ul><li><i class="fa fa-fw fa-info-circle"></i> View more information about a collection</li>
+                <li><i class="fa fa-fw fa-plus"></i> Add collections to your project to compare</li></ul>
+                <p>Click anywhere on a collection to view granules available for download</p>'
       element: '#collection-results-list'
       placement: 'top'
       showNext: true
@@ -83,7 +83,7 @@ ns = @edsc.models.page
       showNext: true
     }, {
       title: 'Toolbar'
-      content: '<p>Use the options available (upon logging in) in the application toolbar to view recent downloads, saved projects, and profile 
+      content: '<p>Use the options available (upon logging in) in the application toolbar to view recent downloads, saved projects, and profile
       information. You can provide feedback using our feedback module.</p>'
       element: '.user-info'
       placement: 'bottom'
@@ -155,7 +155,7 @@ ns = @edsc.models.page
     $el.attr('data-original-title', '')
     $el.popover('show')
     $el.popover({ html : true })
-    
+
     shown[queue[index].key] = true
 
     unless queue[index].advanceHook
@@ -173,9 +173,7 @@ ns = @edsc.models.page
         if index == 0
           $tip.find('[data-role=prev]').hide()
         if index < queue.length - 1
-          $tip.find('[data-role=end]').addClass('button-outline')
-        else
-          $tip.find('[data-role=end]').removeClass('button-outline')
+          $tip.find('[data-role=end]').addClass('secondary')
 
         $tip.find('[data-role=next]').toggle(queue[index].showNext)
       else
