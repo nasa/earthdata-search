@@ -73,6 +73,10 @@
   background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
   display: inline-block;
   font-size: 1.2em;
+
+  &:hover {
+    cursor: row-resize;
+  }
 }
 
 // A parent panel for the overlday.  For instance, collection facets are a parent
