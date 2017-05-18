@@ -62,7 +62,7 @@ ns.Collection = do (ko
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
-      
+
       @gibsLayers = ko.computed( (->
         available = []
         if @gibs()

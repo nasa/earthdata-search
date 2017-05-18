@@ -64,6 +64,23 @@ describe "Grid coordinate search", reset: false do
             expect(page).to have_no_field('Grid:')
           end
         end
+
+        context 'clearing grid search filter (by clicking the "x")' do
+          before :all do
+            select 'Coordinate System...', from: 'map-grid-system'
+            wait_for_xhr
+          end
+
+          after :all  do
+            choose_tool_from_site_toolbar('Grid')
+            select 'WRS-1 (Landsat 1-3)', from: 'map-grid-system'
+            choose_tool_from_site_toolbar('Point')
+          end
+
+          it 'clears the grid input filter' do
+            expect(page).not_to have_query_string('s2n=WRS-1')
+          end
+        end
       end
 
       context 'entering valid tile numbers and viewing granule results' do
@@ -125,7 +142,22 @@ describe "Grid coordinate search", reset: false do
       end
     end
 
-    context 'and clearing search filters' do
+    context 'and clearing grid search filter (by clicking the "x")' do
+      before :all do
+        page.find('a[title="Remove grid coordinates constraint"]').click
+      end
+
+      after :all do
+        choose_tool_from_site_toolbar('Grid')
+        wait_for_xhr
+      end
+
+      it 'hides the grid input fields' do
+        expect(page).to have_no_field('Grid:')
+      end
+    end
+
+    context 'and clearing all search filters' do
       before(:all) { click_on 'Clear Filters' }
       after :all do
         choose_tool_from_site_toolbar('Grid')
