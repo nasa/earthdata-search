@@ -43,6 +43,8 @@
 
       .actions {
         margin-top: .5em;
+        margin-right: 20px;
+        float: right;
       }
     }
 
@@ -100,7 +102,12 @@
       font-size: 1em;
       font-weight: bold;
     }
+
+    h2.facet-title {
+      padding: 0 0 10px 10px;
+    }
   }
+
 }
 
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
