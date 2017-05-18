@@ -90,6 +90,7 @@ ns.GridCondition = do (ko, KnockoutModel=@edsc.models.KnockoutModel) ->
           "Choose a coordinate system"
 
     clear: ->
+      window.edsc.page.ui.spatialType.isGrid(false)
       @selected(null)
       @coordinates(null)
 
