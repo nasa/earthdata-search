@@ -18,7 +18,7 @@ ns.DetailsModel = do (ko
       id = @id
       if id?
         path = "/#{type}s/#{id}.json"
-        # wai for /collections.json
+        # wait for /collections.json
         _timer = setInterval (=>
           unless window.edsc.util.xhr.hasPending()
             console.log("Request #{path}", this)
