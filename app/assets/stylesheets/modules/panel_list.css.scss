@@ -39,6 +39,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   h3 {
+    font-size: 1em;
     word-wrap: break-word;
   }
 }
@@ -55,9 +56,9 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .panel-list-item {
-    width: 300px;
+    width: 360px;
     float: left;
-    margin: 10px;
+    margin: 6px;
     border: 1px solid #e3e3e3;
   }
 
@@ -66,7 +67,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .granule-temporal-range {
-    width: 180px;
+    width: 160px;
     display: inline-block;
   }
 }
