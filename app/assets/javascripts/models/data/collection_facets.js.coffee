@@ -76,9 +76,8 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
     isAncestor: =>
       !@isFeature() && @isSelected() && @hasChildren()
 
-# NO NEED topic uses default css facets-item style
-#    isTopic: =>
-#      !@isFeature() && @_hierarchyIndex() == 2 && @_scienceKeywordFacet()
+    isTopic: =>
+      !@isFeature() && @_hierarchyIndex() == 2 && @_scienceKeywordFacet()
 
     isTerm: =>
       return true if @termFacet()
@@ -289,6 +288,13 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       for param in facet.param
         ancestors = []
         @_findAncestors(ancestors, facet)
+        if ancestors.length > 0 && !ancestors?[0].isTopic()
+          for _facet in facet.parent.children() when _facet.isTopic() && _facet.children?
+            for child in _facet.children when child.title == ancestors[0].title
+              ancestors.unshift _facet
+              break
+            break
+
         for ancestor in ancestors
           index = facet.param[0].match(/science_keywords_h\[(\d+)\]\[.+\]/)[1]
           newParam = ancestor.param[0].replace(/science_keywords_h\[\d+\]\[(.+)\]/g, "science_keywords_h[" + index + "][$1]")
