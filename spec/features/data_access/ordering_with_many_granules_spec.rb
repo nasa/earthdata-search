@@ -43,7 +43,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and selecting 'Order' option" do
         before :all do
-          choose 'Place Data Request'
+          choose 'Stage for Delivery'
           click_on 'Continue'
         end
 
@@ -94,7 +94,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
     context "with the first collection having no more than 2000 granules in the order" do
       before :all do
-        choose 'Place Data Request'
+        choose 'Stage for Delivery'
         click_on 'Continue'
       end
 
@@ -104,7 +104,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and the second collection having more than 2000 granules" do
         before :all do
-          choose 'Place Data Request'
+          choose 'Stage for Delivery'
           click_on 'Continue'
         end
 
@@ -152,7 +152,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and selecting 'Order' option" do
         before :all do
-          choose 'Place Data Request'
+          choose 'Stage for Delivery'
           click_on 'Continue'
         end
 

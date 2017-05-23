@@ -55,7 +55,7 @@ describe 'Background jobs ordering', reset: false do
       load_page 'data/configure', project: [orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
       wait_for_xhr
 
-      choose 'Place Data Request'
+      choose 'Stage for Delivery'
       select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
 
@@ -94,7 +94,7 @@ describe 'Background jobs ordering', reset: false do
       load_page 'data/configure', project: [orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
       wait_for_xhr
 
-      choose 'Place Data Request'
+      choose 'Stage for Delivery'
       select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
 

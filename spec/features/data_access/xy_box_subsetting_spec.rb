@@ -19,7 +19,7 @@ describe "Data Access XY Box Subsetting", reset: false do
 
     context 'selecting the spatial subsetting option' do
       before reset_scope do
-        choose 'Place Data Request'
+        choose 'Stage for Delivery'
         check 'Check here for Subsetting Options'
         check 'Spatial Subsetting?'
       end
@@ -116,7 +116,7 @@ describe "Data Access XY Box Subsetting", reset: false do
 
     context 'selecting the spatial subsetting option' do
       before reset_scope do
-        choose 'Place Data Request'
+        choose 'Stage for Delivery'
         check 'Check here for Subsetting Options'
         check 'Spatial Subsetting?'
       end
@@ -213,7 +213,7 @@ describe "Data Access XY Box Subsetting", reset: false do
 
     context 'selecting the spatial subsetting option' do
       before reset_scope do
-        choose 'Place Data Request'
+        choose 'Stage for Delivery'
         check 'Check here for Subsetting Options'
         check 'Spatial Subsetting?'
       end
@@ -246,7 +246,7 @@ describe "Data Access XY Box Subsetting", reset: false do
 
     context 'selecting the spatial subsetting option' do
       before reset_scope do
-        choose 'Place Data Request'
+        choose 'Stage for Delivery'
         check 'Check here for Subsetting Options'
         check 'Spatial Subsetting?'
       end

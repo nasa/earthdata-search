@@ -23,11 +23,11 @@ describe "Data Access workflow", reset: false do
       wait_for_xhr
     end
 
-    context "when clicking 'Place Data Request'on the first collection" do
+    context "when clicking 'Stage for Delivery'on the first collection" do
       before(:all) do
         selection = find(:css, ".access-item:nth-child(1)").find(:css, ".access-item-selection")
         within selection do
-          choose 'Place Data Request'
+          choose 'Stage for Delivery'
         end
         wait_for_xhr
       end
@@ -176,7 +176,7 @@ describe "Data Access workflow", reset: false do
         end
 
         it "displays options provided by orders" do
-          expect(page).to have_field('Place Data Request')
+          expect(page).to have_field('Stage for Delivery')
         end
       end
 
@@ -198,7 +198,7 @@ describe "Data Access workflow", reset: false do
 
     context "when displaying options for the last of multiple collections" do
       before :all do
-        choose "Place Data Request"
+        choose "Stage for Delivery"
         click_button "Continue"
       end
 
@@ -253,7 +253,7 @@ describe "Data Access workflow", reset: false do
 
     context "on the final step before submitting when contact information is required" do
       before :all do
-        choose "Place Data Request"
+        choose "Stage for Delivery"
         click_button "Continue"
         click_button "Continue"
       end
