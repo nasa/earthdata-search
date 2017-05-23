@@ -43,9 +43,9 @@ describe "Data download page", reset: false do
     before :all do
       load_page 'data/configure', project: [downloadable_collection_id, no_resource_collection_id]
 
-      choose 'Direct Download'
+      choose 'Download'
       click_on 'Continue'
-      choose 'Direct Download'
+      choose 'Download'
       click_on 'Submit'
     end
 
@@ -75,7 +75,7 @@ describe "Data download page", reset: false do
     before :all do
       load_page 'data/configure', project: [no_resource_collection_id]
 
-      choose 'Direct Download'
+      choose 'Download'
       click_on 'Submit'
     end
 
@@ -136,7 +136,7 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [no_granules_collection_id]
       wait_for_xhr
 
-      choose 'Direct Download'
+      choose 'Download'
       click_on 'Submit'
       wait_for_xhr
     end
