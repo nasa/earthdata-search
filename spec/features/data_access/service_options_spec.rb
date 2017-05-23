@@ -68,7 +68,7 @@ describe 'Service Options', reset: false do
       end
 
       it "prepopulates the options form with the filter's MBR" do
-        choose 'Customize'
+        choose 'Customize Product'
         check 'Enter bounding box'
         expect(page).to have_field('North', with: "3")
         expect(page).to have_field('South', with: "1")
@@ -84,7 +84,7 @@ describe 'Service Options', reset: false do
       end
 
       it "does not prepopulate the form" do
-        choose 'Customize'
+        choose 'Customize Product'
         check 'Enter bounding box'
         expect(page).to have_field('North', with: "90")
         expect(page).to have_field('South', with: "-90")

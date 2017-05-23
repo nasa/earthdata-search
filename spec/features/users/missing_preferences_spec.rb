@@ -33,7 +33,7 @@ describe "User missing ordering preferences", reset: false do
 
       click_button "Download project data"
 
-      choose 'Download'
+      choose 'Direct Download'
       click_button 'Submit'
     end
 

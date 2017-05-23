@@ -13,7 +13,7 @@ describe 'Service Options With MRT processing and reprojection', reset: false do
       first_granule_list_item.click_link "Download single granule data"
       wait_for_xhr
 
-      choose 'Customize'
+      choose 'Customize Product'
 
       fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
       select "MRT", from: "Select Processor"

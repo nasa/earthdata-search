@@ -75,7 +75,7 @@ describe "CWIC-enabled granule results", reset: false do
 
         context "and submitting a download order then viewing granule links" do
           before :all do
-            choose 'Download'
+            choose 'Direct Download'
             click_on 'Submit'
             wait_for_xhr
             click_on('View Download Links')

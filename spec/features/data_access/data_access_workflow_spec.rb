@@ -47,7 +47,7 @@ describe "Data Access workflow", reset: false do
           wait_for_xhr
           selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
           within selection do
-            choose 'Customize'
+            choose 'Customize Product'
             wait_for_xhr
           end
         end
@@ -69,7 +69,7 @@ describe "Data Access workflow", reset: false do
             synchronize do
               selection = find(:css, ".access-item:nth-child(3)").find(:css, ".access-item-selection")
               within selection do
-                choose 'Customize'
+                choose 'Customize Product'
                 wait_for_xhr
               end
             end

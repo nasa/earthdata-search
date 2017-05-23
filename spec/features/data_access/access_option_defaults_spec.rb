@@ -86,7 +86,7 @@ describe "Access Option Defaults", reset: true do
       load_page 'data/configure', page_options
       wait_for_xhr
 
-      choose 'Download'
+      choose 'Direct Download'
       click_on 'Add access method'
 
       within '.access-item-selection:nth-child(4)' do
@@ -141,7 +141,7 @@ describe "Access Option Defaults", reset: true do
       load_page 'data/configure', page_options
       wait_for_xhr
 
-      choose 'Download'
+      choose 'Direct Download'
       click_on 'Add access method'
 
       within '.access-item-selection:nth-child(4)' do

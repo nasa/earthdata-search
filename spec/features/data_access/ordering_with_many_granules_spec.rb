@@ -26,7 +26,7 @@ describe 'Access data with more than 2000 granules', reset: false do
 
       context "and selecting 'ESI service' option" do
         before :all do
-          choose 'Customize'
+          choose 'Customize Product'
           wait_for_xhr
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
