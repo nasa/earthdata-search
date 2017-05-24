@@ -97,6 +97,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       result
 
     fromJson: (jsonObj) ->
+      console.log jsonObj
       @method(jsonObj.method)
       @model = jsonObj.model
       @rawModel = jsonObj.rawModel
@@ -105,13 +106,14 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if jsonObj.type == 'service' || jsonObj.type == 'order'
         echoformContainer = null
         checkExistsTimer = setInterval (=>
-          echoformContainer = document.getElementsByClassName('access-form')[0]
-          if echoformContainer
+          echoformContainers = document.getElementsByClassName('access-form')
+          if echoformContainers?.length > 0
             clearTimeout checkExistsTimer
             setTimeout (=>
-              @loadForm(true) if jsonObj.type == 'service'
-              ko.applyBindingsToNode(echoformContainer, {echoform: this})
-              @loadForm(false)), 0
+              for echoformContainer in echoformContainers
+                @loadForm(true) if jsonObj.type == 'service'
+                ko.applyBindingsToNode(echoformContainer, {echoform: this})
+                @loadForm(false)), 0
         ), 0
 
       @orderId = jsonObj.order_id
