@@ -11,7 +11,6 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
     @selector="group[id*='NWESBoundingBox']"
 
     constructor: (args...) ->
-      @map_initialized = false
       @map
       super(args...)
 
@@ -25,8 +24,8 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
     _simpleScaledCrs = (scale) ->
       L.extend({}, L.CRS.Simple, projection: _scaledLonLatProjection(scale))
 
-    _redrawOnMap: (el) =>
-      if @map?
+    _redrawOnMap: (id, el) =>
+      if @map? && @map.getContainer().id == id
         @map.eachLayer (layer) =>
           @map.removeLayer(layer) if layer.id == 'bbox_layer'
 
@@ -39,11 +38,10 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
         bounding_box._interpolationFn = 'cartesian'
         bounding_box.addTo(@map)
 
-    _buildMap: (mapId, el) =>
+    _buildMap: (id, el) =>
       $('[id$=-map]').each (i, element) =>
-        if mapId == $(element).prop('id') && $('#' + mapId).length > 0 && !$('#' + mapId).hasClass('leaflet-container')
-          @map_initialized = true
-          @map = L.map mapId,
+        if id == $(element).prop('id') && $('#' + id).length > 0 && !$('#' + id).hasClass('leaflet-container')
+          @map = L.map id,
             minZoom: 0
             maxZoom: 0
             zoom: 0
@@ -59,7 +57,7 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
           url = '<%= image_path('plate_carree_earth.png') %>'
           L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(@map)
 
-          @_redrawOnMap(el)
+          @_redrawOnMap(id, el)
 
     buildDom: ->
       result = super()
@@ -72,12 +70,13 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
       children.find('> div:nth-child(4)').addClass('bbox_south')
       children.find('> div.echoforms-help').css('float','left')
 
-      mapId = result.prop('id') + '-map'
-      result.append("<div id='" + mapId + "' class='image-map'/>") if $('#' + mapId).length == 0
-
       $(document).ready ->
         waitForEchoforms = setInterval (=>
-          checkbox = $('.echoforms-control-checkbox:contains("Enter bounding box")')
+          formRoot = result.closest('.echoforms-control.echoforms-control-ui.echoforms-grouping-control')
+          rootControlIndex = formRoot.prop('id').split('-control-')[1]
+          mapId = result.prop('id') + rootControlIndex + '-map'
+          result.append("<div id='" + mapId + "' class='image-map'/>") if $('#' + mapId).length == 0
+          checkbox = formRoot.find('.echoforms-control-checkbox:contains("Enter bounding box")')
           clearInterval(waitForEchoforms) unless hasPending()
           if checkbox.find('input[type="checkbox"]').is(':checked')
             mapId = $('.echoforms-control-checkbox:contains("Enter bounding box")').closest('.echoforms-children').find('[id$=-map]').prop('id')
@@ -93,9 +92,9 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
           @_buildMap(mapId, el)
           $('#' + mapId).toggle(el.find('.bbox_container').is(':visible'))
         .on 'change', '.coordinate_input', (event) =>
-          mapId = $(event.target).closest('.echoforms-children').find('[id$=-map]').prop('id')
-          el = $(event.target).closest('.echoforms-children')
-          @_redrawOnMap(el)
+          mapId = $(event.target).closest('[id$="-NWESBoundingBox"]').find('[id$=-map]').prop('id')
+          el = $(event.target).closest('[id$="-NWESBoundingBox"]')
+          @_redrawOnMap(mapId, el)
       result
 
   class XYBoxSubsetter extends $.echoforms.controls.Grouping
