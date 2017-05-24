@@ -178,6 +178,8 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
+          <button id="reset-form" data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), click: $root.ui.serviceOptionsList.resetForm" class="button-next">Reset</button>
+          <button id="reload-previous" data-bind="click: $root.ui.serviceOptionsList.reloadPrevious" style="display: none;" class="button-next">Revert</button>
           <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.checkOrderSize" class="button-next">Continue</button>
           <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>

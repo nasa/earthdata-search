@@ -18,7 +18,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
     checkOrderSize: =>
       for accessCollection in @project.accessCollections()
         # find current collection
-        if accessCollection.collection.id == this._currentCollection().id
+        if accessCollection.collection.id == this.currentCollection().id
           # number of granules in the order
           if accessCollection.granuleAccessOptions().hits > 2000
             for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
@@ -56,10 +56,42 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     _moveActiveIndex: (newIndex) =>
       if @showGranules()
-        @_currentCollection().notifyRenderers('endAccessPreview')
+        @currentCollection().notifyRenderers('endAccessPreview')
       @activeIndex(newIndex)
       if @showGranules()
-        @_currentCollection().notifyRenderers('startAccessPreview')
+        @currentCollection().notifyRenderers('startAccessPreview')
+
+    resetForm: (item, e) =>
+      for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
+        for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
+          checkedAccessMethodName = checkedAccessMethod.method()
+          for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
+            if method.type == 'service' || method.type == 'order'
+              echoformContainer = $(e.target).closest('.access-item-body').find('div[id^="access-form-"]')
+              echoformContainer.empty?() if echoformContainer?
+              checkedAccessMethod.isReadFromDefaults = false
+              setTimeout (=>ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})), 0
+              $(e.target).hide()
+              $('#reload-previous').show()
+            else
+              ko.cleanNode(echoformContainer);
+      true
+
+    reloadPrevious: (item, e) =>
+      for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
+        for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
+          checkedAccessMethodName = checkedAccessMethod.method()
+          for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
+            if method.type == 'service' || method.type == 'order'
+              echoformContainer = $(e.target).closest('.access-item-body').find('div[id^="access-form-"]')
+              echoformContainer.empty?() if echoformContainer?
+              checkedAccessMethod.isReadFromDefaults = false
+              setTimeout (=>ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})), 0
+              $(e.target).hide()
+              $('#reset-form').show()
+            else
+              ko.cleanNode(echoformContainer);
+
 
     submitRequest: =>
       $('.access-submit').prop('disabled', true)
@@ -73,10 +105,10 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     showGranuleList: =>
       @showGranules(true)
-      @_currentCollection().notifyRenderers('startAccessPreview')
+      @currentCollection().notifyRenderers('startAccessPreview')
 
     hideGranuleList: =>
-      @_currentCollection().notifyRenderers('endAccessPreview')
+      @currentCollection().notifyRenderers('endAccessPreview')
       @showGranules(false)
 
     scrolled: (data, event) =>
@@ -91,7 +123,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()
 
-    _currentCollection: ->
+    currentCollection: ->
       @project.accessCollections()[@activeIndex()].collection
 
 
