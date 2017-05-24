@@ -13,9 +13,9 @@ describe 'Ordering with deprecated order options', reset: false do
     wait_for_xhr
   end
 
-  it "displays a radio button 'Place Data Request'" do
+  it "displays a radio button 'Stage for Delivery'" do
     within(:css, '.access-item-selection') do
-      expect(page).to have_text('Place Data Request')
+      expect(page).to have_text('Stage for Delivery')
     end
   end
 
@@ -29,7 +29,7 @@ describe 'Ordering with deprecated order options', reset: false do
     before :all do
       Delayed::Worker.delay_jobs = true
 
-      choose "Place Data Request"
+      choose "Stage for Delivery"
       click_on 'Continue'
       click_on 'Submit'
       wait_for_xhr

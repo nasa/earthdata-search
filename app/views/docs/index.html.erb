@@ -1,13 +1,13 @@
 <% content_for :toolbar do %>
     <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
       <p>
-        <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or collection name" autofocus>
+        <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic, collection, or place name" autofocus>
       </p>
     <% end %>
 <% end %>
     <section class="main-content">
 
-<!--      
+<!--
 <section class="homepage-search clearfix" style="clear:both">
   <div class="search">
     This is a search box within the homepage search.  It's currently only used on the site's landing screen.
@@ -223,7 +223,7 @@
   <section id="doc_example">
     <h2>Example Module</h2>
     <div class="docs-example">
-      
+
 <div class="doc-example">
   <h1>Parameter: Documentation</h1>
   <p class="css-test test-passing" style="display:none;">CSS is working</p>

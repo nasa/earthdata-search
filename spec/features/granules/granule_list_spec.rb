@@ -21,7 +21,7 @@ describe "Granule list", reset: false do
     end
 
     it "provides a button to get download the collection" do
-      expect(granule_list).to have_button('Download collection data')
+      expect(granule_list).to have_button('Download Data')
     end
 
     it "provides a button to edit granule filters" do
@@ -50,7 +50,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the download button" do
       before :all do
-        granule_list.click_button('Download collection data')
+        granule_list.click_button('Download Data')
       end
 
       after :all do

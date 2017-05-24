@@ -43,6 +43,8 @@
 
       .actions {
         margin-top: .5em;
+        margin-right: 20px;
+        float: right;
       }
     }
 
@@ -73,6 +75,10 @@
   background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
   display: inline-block;
   font-size: 1.2em;
+
+  &:hover {
+    cursor: row-resize;
+  }
 }
 
 // A parent panel for the overlday.  For instance, collection facets are a parent
@@ -96,7 +102,12 @@
       font-size: 1em;
       font-weight: bold;
     }
+
+    h2.facet-title {
+      padding: 0 0 10px 10px;
+    }
   }
+
 }
 
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
@@ -242,6 +253,7 @@
   margin: 0;
   padding: 0px 20px 0 20px;
   color: $overlay-heading-font-color;
+  border-bottom: 1px solid #ecf0f1;
 
   > * {
     display: inline-block;

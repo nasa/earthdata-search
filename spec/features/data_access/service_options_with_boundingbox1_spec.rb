@@ -17,7 +17,7 @@ describe 'Service options order with boundingbox1 field', reset: false do
       wait_for_xhr
 
       first_granule_list_item.click_link "Download single granule data"
-      choose 'Customize'
+      choose 'Customize Product'
 
       check 'Enter bounding box'
       wait_for_xhr

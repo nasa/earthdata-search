@@ -56,7 +56,7 @@ describe 'Duplicate Service Options', reset: false do
   context 'when setting options for a collection whose only option is "Download"' do
     before :all do
       wait_for_xhr
-      choose 'Download'
+      choose 'Direct Download'
       click_button 'Continue'
     end
 
@@ -73,10 +73,10 @@ describe 'Duplicate Service Options', reset: false do
     before :all do
       click_button 'Add access method'
       within '.access-item-selection:first-child' do
-        choose 'Download'
+        choose 'Direct Download'
       end
       within '.access-item-selection:nth-child(4)' do
-        choose 'Download'
+        choose 'Direct Download'
       end
       click_button 'Continue'
       click_button 'Submit'

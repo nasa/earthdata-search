@@ -20,7 +20,7 @@ describe 'OPeNDAP Retrieval', reset: false do
   context 'configuring a non-OPeNDAP collection and selecting the "Download" option' do
     before(:all) do
       load_page 'data/configure', project: [non_opendap_collection]
-      choose 'Download'
+      choose 'Direct Download'
     end
 
     it "displays no subsetting options" do
@@ -39,7 +39,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       load_page('data/configure',
                 project: [autodiscovered_opendap_collection],
                 bounding_box: [0, 0, 2, 2])
-      choose 'Download'
+      choose 'Direct Download'
     end
     it "displays a choice of file formats" do
       expect(page).to have_text('File format')
@@ -101,7 +101,7 @@ describe 'OPeNDAP Retrieval', reset: false do
                 project: [opendap_collection],
                 bounding_box: [0, 0, 2, 2],
                 temporal: ['2014-07-23T00:00:00Z', '2014-08-02T00:00:00Z'])
-      choose 'Download'
+      choose 'Direct Download'
     end
 
     it "displays a choice of file formats" do
@@ -163,7 +163,7 @@ describe 'OPeNDAP Retrieval', reset: false do
 
     it "presents parameters exposed by <Grid> elements" do
       pending "This collection no longer has opendap online access URLs"
-      choose 'Download'
+      choose 'Direct Download'
       choose 'ASCII'
       expect(page).to have_checked_field('toa_sw_all_mon')
       expect(page).to have_text('Top of The Atmosphere Shortwave Flux, Monthly Means, All-Sky conditions')
@@ -175,7 +175,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       load_page('data/configure',
                 project: [autodiscovered_opendap_collection],
                 bounding_box: [0, 0, 2, 2])
-      choose 'Download'
+      choose 'Direct Download'
       choose 'ASCII'
       uncheck 'lon_bnds'
       click_on 'Submit'
@@ -224,7 +224,7 @@ describe 'OPeNDAP Retrieval', reset: false do
                 project: [opendap_collection],
                 bounding_box: [0, 0, 2, 2],
                 temporal: ['2014-07-23T00:00:00Z', '2014-08-02T00:00:00Z'])
-      choose 'Download'
+      choose 'Direct Download'
       choose 'ASCII'
       uncheck 'AerosolModelMW'
       click_on 'Submit'
@@ -272,7 +272,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       load_page('data/configure',
                 project: [autodiscovered_opendap_collection],
                 bounding_box: [0, 0, 2, 2])
-      choose 'Download'
+      choose 'Direct Download'
       choose 'Original (No Subsetting)'
       click_on 'Submit'
       wait_for_xhr

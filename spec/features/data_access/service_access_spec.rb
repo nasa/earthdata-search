@@ -18,7 +18,7 @@ describe 'Services Access', reset: false do
 
     context 'when choosing the ESI Service' do
       before :all do
-        choose 'Customize'
+        choose 'Customize Product'
         wait_for_xhr
       end
 
@@ -58,7 +58,7 @@ describe 'Services Access', reset: false do
       before :all do
         # first time, the ESI option should not be selected and the form should not be auto populated.
         expect(page).not_to have_content("Reformat Output (Optional)")
-        choose 'Customize'
+        choose 'Customize Product'
         wait_for_xhr
         fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
         select 'NetCDF4-CF', from: 'Output File Format'
@@ -101,7 +101,7 @@ describe 'Services Access', reset: false do
       click_button "granule-filters-submit"
       wait_for_xhr
 
-      click_button "Download collection data"
+      click_button "Download Data"
       wait_for_xhr
     end
 
@@ -111,7 +111,7 @@ describe 'Services Access', reset: false do
 
     context 'when selecting the service access method' do
       before :all do
-        choose 'Customize'
+        choose 'Customize Product'
       end
 
       it 'displays the service echoform' do
