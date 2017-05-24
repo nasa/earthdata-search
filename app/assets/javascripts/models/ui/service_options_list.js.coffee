@@ -78,12 +78,12 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
       true
 
     reloadPrevious: (item, e) =>
-      for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
-        for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
+      for accessCollection, collectionIndex in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
+        for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
           checkedAccessMethodName = checkedAccessMethod.method()
           for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
             if method.type == 'service' || method.type == 'order'
-              echoformContainer = $(e.target).closest('.access-item-body').find('div[id^="access-form-"]')
+              echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionIndex + methodIndex+ '"]')
               echoformContainer.empty?() if echoformContainer?
               checkedAccessMethod.isReadFromDefaults = false
               setTimeout (=>ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})), 0
