@@ -67,11 +67,11 @@ class Retrieval < ActiveRecord::Base
 
         results_count = get_granule_count(client, params, token)
         results_count = 1000000 if results_count > 1000000
-        page_num = 0
-        page_size = 2000
 
         access_methods = collection['serviceOptions']['accessMethod']
         access_methods.each do |method|
+          page_num = 0
+          page_size = 2000
           begin
             if method['type'] == 'order'
               until page_num * page_size > results_count do
