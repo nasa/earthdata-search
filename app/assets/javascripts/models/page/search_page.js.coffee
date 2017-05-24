@@ -131,9 +131,6 @@ ns.SearchPage = do (ko
     showProject: (data, event) =>
       $('#view-project').click()
 
-    hideProject: (data, event) =>
-      $('#view-project').click()
-
   current = new SearchPage()
   setCurrent(current)
 
