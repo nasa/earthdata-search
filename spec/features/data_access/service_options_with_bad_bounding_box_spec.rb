@@ -15,7 +15,7 @@ describe 'Service Options order with bad bounding_box', reset: false do
       load_page 'data/configure', {project: [collection_id],
                                    granule_id: granule_id}
 
-      choose 'Customize'
+      choose 'Customize Product'
 
       check 'Enter bounding box'
       wait_for_xhr

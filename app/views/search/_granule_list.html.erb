@@ -11,9 +11,6 @@
           <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
-            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download collection data'}">
-              <i class="fa fa-download"></i> Download Collection Data
-            </button>
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
               <i class="fa fa-info-circle"></i>
             </a>
@@ -33,6 +30,9 @@
                data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-minus"></i>
             </a>
+            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download granule results'}">
+              <i class="fa fa-download"></i> Download Data
+            </button>
           </div>
           <!-- /ko -->
         </header>
@@ -84,7 +84,7 @@
                 <!-- /ko -->
 
               <h3 data-bind="attr: {id: 'granule-list-item-' + $index()}, text: displayName()"></h3>
-              <span data-bind="text: getTemporal()"></span>
+              <span class="granule-temporal-range" data-bind="text: getTemporal()"></span>
 
               <div class="panel-list-item-actions granule-item-actions">
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">

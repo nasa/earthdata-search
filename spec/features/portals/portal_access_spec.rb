@@ -15,7 +15,7 @@ describe "Portal access", reset: false do
       click_on('Download single granule data')
     end
     wait_for_xhr
-    choose 'Download'
+    choose 'Direct Download'
     click_on 'Submit'
     wait_for_xhr
   end
