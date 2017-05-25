@@ -168,6 +168,13 @@ ns.query = do (ko,
     canWrite: ->
       @value() is true || @value() is 'true'
 
+  class tagKeyParam extends QueryParam
+    canWrite: ->
+      @value() is 'false' || @value() is false
+    writeTo: (query) ->
+      @value('gov.nasa.eosdis') if @value() is 'false' || @value is false
+      query[@name()] = 'gov.nasa.eosdis'
+
   class DelimitedParam extends QueryParam
     constructor: (name, @delimiter="\n") ->
       super(name)
@@ -288,6 +295,11 @@ ns.query = do (ko,
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
       @hasGranules = @queryComponent(new BooleanParam('all_collections'), false)
+
+      
+
+      @hasNonEOSDIS = @queryComponent(new tagKeyParam('tag_key'), 'gov.nasa.eosdis', ephemeral: true)
+      
       super(parentQuery)
 
     clearFilters: =>

@@ -110,6 +110,8 @@
           <p class="collection-filters">
             <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
             <label for="has-granules">Include collections without granules</label>
+            <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
+            <label for="hasNonEOSDIS">Include non-EOSDIS collections</label>
           </p>
           <p data-bind="visible: project.isEmpty()"class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus-square"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
