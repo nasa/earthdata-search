@@ -71,26 +71,30 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
               echoformContainer.empty?() if echoformContainer?
               checkedAccessMethod.isReadFromDefaults = false
               setTimeout (=>ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})), 0
-              $(e.target).hide()
-              $('#reload-previous').show()
             else
               ko.cleanNode(echoformContainer);
+      $(e.target).hide()
+      $('#reload-previous-' + e.target.id.match(/reset-form-(.*)/)[1]).show()
       true
 
     reloadPrevious: (item, e) =>
+      collectionId = e.target.id.match(/reload-previous-(.*)/)[1]
       for accessCollection, collectionIndex in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
         for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
           checkedAccessMethodName = checkedAccessMethod.method()
           for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
             if method.type == 'service' || method.type == 'order'
-              echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionIndex + methodIndex+ '"]')
+              echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
               echoformContainer.empty?() if echoformContainer?
               checkedAccessMethod.isReadFromDefaults = false
-              setTimeout (=>ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})), 0
-              $(e.target).hide()
-              $('#reset-form').show()
+              ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
             else
               ko.cleanNode(echoformContainer);
+      $(e.target).hide()
+      $('#reset-form-' + collectionId).show()
+
+    _reloadFromSaved: (echoformContainer, checkedAccessMethod) =>
+      ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
 
 
     submitRequest: =>
