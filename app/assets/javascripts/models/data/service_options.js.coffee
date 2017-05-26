@@ -153,7 +153,9 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if defaultMethods
         for method in defaultMethods
           for available in availableMethods
-            validDefaults.push(method) if method.method == available.name
+            if method.method == available.name
+              method.collection_id = available.collection_id
+              validDefaults.push(method)
         @fromJson(accessMethod: validDefaults)
       @addAccessMethod() if methods.length == 0 && availableMethods.length > 0 && validDefaults.length == 0
       @canAddAccessMethod(availableMethods.length > 1 ||
