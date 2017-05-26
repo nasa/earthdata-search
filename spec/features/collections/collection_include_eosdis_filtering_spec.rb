@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe 'Collection include EOSIDS filtering', reset: false do
+describe 'Collection include EOSDIS filtering', reset: false do
   context "searching collections with 'Include non-EOSDIS collections' filter checked" do
     before :all do
       load_page :search
@@ -10,22 +10,6 @@ describe 'Collection include EOSIDS filtering', reset: false do
 
     it 'displays all collections' do
       expect(page).to have_content('31572 Matching Collections')
-    end
-
-    context 'applying another filter' do
-      before :all do
-        manually_create_point(0, 0)
-        wait_for_xhr
-      end
-
-      after :all do
-        clear_spatial
-        wait_for_xhr
-      end
-
-      it 'keeps both filters' do
-        expect(page.current_url).to have_content('sp=0%2C0')
-      end
     end
   end
 
@@ -38,6 +22,20 @@ describe 'Collection include EOSIDS filtering', reset: false do
 
     it 'only displays EOSDIS collections' do
       expect(page).to have_content('4832 Matching Collections')
+    end
+  end
+
+  context "when selecting a facet filter while searching collections with 'Include non-EOSDIS collections' filter unchecked" do
+    before :all do
+      load_page :search, facets: true
+      find("h3.panel-title", text: 'Keywords').click
+      wait_for_xhr
+      find(".facets-item", text: "Earth Science", match: :prefer_exact).click
+      find(:css, "#hasNonEOSDIS").set(false)
+    end
+
+    it "'OR's the results of the selected facets" do
+      expect(page).to have_content('4179 Matching Collections')
     end
   end
 end
