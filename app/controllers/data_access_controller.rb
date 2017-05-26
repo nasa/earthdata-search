@@ -365,6 +365,7 @@ class DataAccessController < ApplicationController
       name = option_def['name']
 
       config = {}
+      config[:collection_id] = collection_id
       config[:id] = option_id
       config[:type] = 'service'
       config[:form] = form

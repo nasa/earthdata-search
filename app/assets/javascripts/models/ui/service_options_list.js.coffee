@@ -71,7 +71,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
             echoformContainer.empty?() if echoformContainer?
             if method.type == 'service' || method.type == 'order'
               checkedAccessMethod.isReadFromDefaults = false
-              setTimeout (=>ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})), 0
+              ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})
             else
               ko.cleanNode(echoformContainer);
       $(e.target).hide()
