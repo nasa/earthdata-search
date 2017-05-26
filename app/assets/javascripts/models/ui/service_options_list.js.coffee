@@ -62,13 +62,14 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         @currentCollection().notifyRenderers('startAccessPreview')
 
     resetForm: (item, e) =>
+      collectionId = e.target.id.match(/reset-form-(.*)/)[1]
       for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
-        for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
+        for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
           checkedAccessMethodName = checkedAccessMethod.method()
           for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
+            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
+            echoformContainer.empty?() if echoformContainer?
             if method.type == 'service' || method.type == 'order'
-              echoformContainer = $(e.target).closest('.access-item-body').find('div[id^="access-form-"]')
-              echoformContainer.empty?() if echoformContainer?
               checkedAccessMethod.isReadFromDefaults = false
               setTimeout (=>ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})), 0
             else
@@ -83,9 +84,9 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
           checkedAccessMethodName = checkedAccessMethod.method()
           for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
+            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
+            echoformContainer.empty?() if echoformContainer?
             if method.type == 'service' || method.type == 'order'
-              echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
-              echoformContainer.empty?() if echoformContainer?
               checkedAccessMethod.isReadFromDefaults = false
               ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
             else
