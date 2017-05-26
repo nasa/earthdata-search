@@ -6,6 +6,10 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
+  h1.echoforms-label:empty {
+    display: none;
+  }
+
   .echoforms-control-ui {
     padding: 0;
     border-left-color: transparent;
