@@ -90,6 +90,30 @@ do (ko, $=jQuery) ->
         method = 'hide'
       $(element).modal(method)
 
+  ko.bindingHandlers.loadDefaultForm =
+    init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+    update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      $el = $(element)
+      if $el.data('echoforms')
+        $el.echoforms('destroy')
+        $el.off('echoforms:modelchange')
+
+      options = ko.unwrap(valueAccessor())
+      methodName = options.method()
+      if methodName?
+        method = null
+        for available in options.availableMethods
+          if available.name == methodName
+            method = available
+            break
+
+        if method? && available?.form?
+          form = available.form
+          $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+        else
+          options.isValid(true)
+        options.isReadFromDefaults = true
+
   ko.bindingHandlers.echoform =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
 
@@ -108,6 +132,7 @@ do (ko, $=jQuery) ->
             method = available
             break
         if method? && available?.form?
+          #TODO this should be set in 'options' and be sent to echoforms using "prepopulate" param.
           # EDSC-975: If the form contains an empty email address field, prepopulate it with the user's email
           available.form = available.form.replace('<ecs:email/>', '<ecs:email>' + edsc.page.account.email() + '</ecs:email>')
           originalForm = form = available.form
