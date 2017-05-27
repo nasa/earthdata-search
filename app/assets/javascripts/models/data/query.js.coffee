@@ -168,12 +168,27 @@ ns.query = do (ko,
     canWrite: ->
       @value() is true || @value() is 'true'
 
-  class tagKeyParam extends QueryParam
+  class NegatedBooleanParam extends QueryParam
     canWrite: ->
-      @value() is 'false' || @value() is false
+      @value() is false || @value() is 'false' || @value() is 'gov.nasa.eosdis'
+    
+    readFrom: (query) ->
+      for name in @names()
+        value = query[name]
+        if value?
+          @name(name)
+          @value(false)
+          break
+      null
+
+    canReadFrom: (query) ->
+      for name in @names()
+        if query[name]?
+          return if name == 'tag_key' then 'gov.nasa.eosdis' else true
+      true
+
     writeTo: (query) ->
-      # We've only one tag_key param to worry about here...
-      query[@name()] = 'gov.nasa.eosdis'
+      query[@name()] = if @name() == 'tag_key' then 'gov.nasa.eosdis' else true
 
   class DelimitedParam extends QueryParam
     constructor: (name, @delimiter="\n") ->
@@ -294,8 +309,9 @@ ns.query = do (ko,
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
-      @hasGranules = @queryComponent(new BooleanParam('all_collections'), false)
-      @hasNonEOSDIS = @queryComponent(new tagKeyParam('tag_key'), 'gov.nasa.eosdis', ephemeral: true)
+
+      @hasGranules = @queryComponent(new NegatedBooleanParam('all_collections'), true)
+      @hasNonEOSDIS = @queryComponent(new NegatedBooleanParam('tag_key'), true)
       
       super(parentQuery)
 
