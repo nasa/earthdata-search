@@ -34,7 +34,7 @@ describe 'Collection include EOSDIS filtering', reset: false do
       find(:css, "#hasNonEOSDIS").set(false)
     end
 
-    it "'OR's the results of the selected facets" do
+    it "'OR's the results of the selected facets by limiting them to EOSDIS-only collections" do
       expect(page).to have_content('4179 Matching Collections')
     end
   end
