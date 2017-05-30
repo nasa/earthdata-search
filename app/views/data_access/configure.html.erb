@@ -86,7 +86,7 @@
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <!-- ko foreach: availableMethods -->
                   <label data-bind="click: $parent.showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
-                    <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parentContext.$parentContext.$index() + $parentContext.$index() + $index(), form: 'access-form-' + $parentContext.$parentContext.$index() + $parentContext.$index(), name:  $parentContext.$parentContext.$index() + $parentContext.$index() +  '-access-method' }" type="radio" />
+                    <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[1].collection.id + '-' + $parentContext.$index() + $index(), form: 'access-form-' + $parents[1].collection.id + '-' + $parentContext.$index(), name: $parents[1].collection.id + '-' + $parentContext.$index() +  '-access-method' }" type="radio" />
                     <strong>
                       <!-- ko if: type == 'download' -->
                       <span>Direct Download</span>
@@ -111,7 +111,7 @@
                   </label>
                   <!-- /ko -->
                 </p>
-                <div class="access-form" data-bind="attr: {id: 'access-form-' + $parentContext.$index() + $index()}"></div>
+                <div class="access-form" data-bind="attr: {id: 'access-form-' + $parent.collection.id  + '-' + $index()}"></div>
                 <div class="access-subset-options" data-bind="if: subsetOptions">
                   <div class="access-subset-options-section">
                     <h5>File format</h5>
@@ -178,6 +178,8 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
+          <button data-tooltip="true" title="Reset all customization options to their default values." data-bind="visible: !$root.ui.serviceOptionsList.isLastOption() && isResetable, enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.resetForm, attr: {id: 'reset-form-' + collection.id}" class="button-next">Reset</button>
+          <button data-tooltip="true" title="Revert all customization options back to the saved values." data-bind="click: $root.ui.serviceOptionsList.reloadPrevious, attr: {id: 'reload-previous-' + collection.id}" style="display: none;" class="button-next">Revert</button>
           <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.checkOrderSize" class="button-next">Continue</button>
           <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>

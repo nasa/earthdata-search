@@ -18,7 +18,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
     checkOrderSize: =>
       for accessCollection in @project.accessCollections()
         # find current collection
-        if accessCollection.collection.id == this._currentCollection().id
+        if accessCollection.collection.id == this.currentCollection().id
           # number of granules in the order
           if accessCollection.granuleAccessOptions().hits > 2000
             for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
@@ -56,10 +56,47 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     _moveActiveIndex: (newIndex) =>
       if @showGranules()
-        @_currentCollection().notifyRenderers('endAccessPreview')
+        @currentCollection().notifyRenderers('endAccessPreview')
       @activeIndex(newIndex)
       if @showGranules()
-        @_currentCollection().notifyRenderers('startAccessPreview')
+        @currentCollection().notifyRenderers('startAccessPreview')
+
+    resetForm: (item, e) =>
+      collectionId = e.target.id.match(/reset-form-(.*)/)[1]
+      for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
+        for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
+          checkedAccessMethodName = checkedAccessMethod.method()
+          for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
+            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
+            echoformContainer.empty?() if echoformContainer?
+            if method.type == 'service' || method.type == 'order'
+              checkedAccessMethod.isReadFromDefaults = false
+              ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})
+            else
+              ko.cleanNode(echoformContainer);
+      $(e.target).hide()
+      $('#reload-previous-' + e.target.id.match(/reset-form-(.*)/)[1]).show()
+      true
+
+    reloadPrevious: (item, e) =>
+      collectionId = e.target.id.match(/reload-previous-(.*)/)[1]
+      for accessCollection, collectionIndex in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
+        for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
+          checkedAccessMethodName = checkedAccessMethod.method()
+          for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
+            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
+            echoformContainer.empty?() if echoformContainer?
+            if method.type == 'service' || method.type == 'order'
+              checkedAccessMethod.isReadFromDefaults = false
+              ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
+            else
+              ko.cleanNode(echoformContainer);
+      $(e.target).hide()
+      $('#reset-form-' + collectionId).show()
+
+    _reloadFromSaved: (echoformContainer, checkedAccessMethod) =>
+      ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
+
 
     submitRequest: =>
       $('.access-submit').prop('disabled', true)
@@ -73,10 +110,10 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     showGranuleList: =>
       @showGranules(true)
-      @_currentCollection().notifyRenderers('startAccessPreview')
+      @currentCollection().notifyRenderers('startAccessPreview')
 
     hideGranuleList: =>
-      @_currentCollection().notifyRenderers('endAccessPreview')
+      @currentCollection().notifyRenderers('endAccessPreview')
       @showGranules(false)
 
     scrolled: (data, event) =>
@@ -91,7 +128,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()
 
-    _currentCollection: ->
+    currentCollection: ->
       @project.accessCollections()[@activeIndex()].collection
 
 

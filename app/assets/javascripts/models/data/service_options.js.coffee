@@ -96,8 +96,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       result.subset = @subsetOptions()?.serialize()
       result
 
-    fromJson: (jsonObj) ->
-      console.log jsonObj
+    fromJson: (jsonObj, index=0) ->
       @method(jsonObj.method)
       @model = jsonObj.model
       @rawModel = jsonObj.rawModel
@@ -110,10 +109,15 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           if echoformContainers?.length > 0
             clearTimeout checkExistsTimer
             setTimeout (=>
+              accessMethodMatched = false
               for echoformContainer in echoformContainers
-                @loadForm(true) if jsonObj.type == 'service'
-                ko.applyBindingsToNode(echoformContainer, {echoform: this})
-                @loadForm(false)), 0
+                matches = echoformContainer.id.match(/access-form-(.*)-(\d+)/)
+                if !accessMethodMatched && matches[1] == jsonObj.collection_id && parseInt(matches[2], 10) == index
+                  accessMethodMatched = true
+                  @loadForm(true) if jsonObj.type == 'service'
+                  ko.applyBindingsToNode(echoformContainer, {echoform: this})
+                @loadForm(false)
+            ), 0
         ), 0
 
       @orderId = jsonObj.order_id
@@ -149,7 +153,9 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if defaultMethods
         for method in defaultMethods
           for available in availableMethods
-            validDefaults.push(method) if method.method == available.name
+            if method.method == available.name
+              method.collection_id = available.collection_id
+              validDefaults.push(method)
         @fromJson(accessMethod: validDefaults)
       @addAccessMethod() if methods.length == 0 && availableMethods.length > 0 && validDefaults.length == 0
       @canAddAccessMethod(availableMethods.length > 1 ||
@@ -175,9 +181,9 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
-      for json in jsonObj.accessMethod
+      for json, i in jsonObj.accessMethod
         method = new ServiceOptions(null, @_methods)
-        method.fromJson(json)
+        method.fromJson(json, i)
         @accessMethod.push(method)
       this
 

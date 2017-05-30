@@ -60,6 +60,13 @@ ns.Project = do (ko,
 
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
+      @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
+
+    _computeIsResetable: ->
+      if @granuleAccessOptions().defaults?
+        for method in @granuleAccessOptions().defaults.accessMethod
+          return true if method.collection_id == @collection.id
+      false
 
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
