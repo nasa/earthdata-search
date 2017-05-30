@@ -358,9 +358,13 @@ p.map-popup-info {
 }
 
 .echoforms-control .image-map {
-  position: relative;
-  top: -245px;
-  left: 420px;
+  position: absolute;
+  right: 60px;
   width: 360px;
   height: 180px;
+  margin-top: 20px;
+}
+
+.bbox_container {
+  float: left;
 }
