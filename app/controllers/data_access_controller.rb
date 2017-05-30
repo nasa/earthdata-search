@@ -283,6 +283,7 @@ class DataAccessController < ApplicationController
       end
 
       method = {
+        collection_id: collection_id,
         name: 'Download',
         type: 'download',
         subset: opendap_config.formats.present?,
@@ -325,6 +326,7 @@ class DataAccessController < ApplicationController
       if option_def['deprecated']
         config = nil
       else
+        config[:collection_id] = collection_id
         config[:id] = option_id
         config[:type] = 'order'
         config[:form] = option_def['form']
@@ -338,6 +340,7 @@ class DataAccessController < ApplicationController
     # If no order options exist, still place an order
     if defs.size == 0 && orderable_count > 0
       config = {}
+      config[:collection_id] = collection_id
       config[:id] = nil
       config[:name] = 'Order'
       config[:type] = 'order'
@@ -362,6 +365,7 @@ class DataAccessController < ApplicationController
       name = option_def['name']
 
       config = {}
+      config[:collection_id] = collection_id
       config[:id] = option_id
       config[:type] = 'service'
       config[:form] = form
