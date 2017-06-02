@@ -42,6 +42,31 @@
   }
 }
 
+/* Horizontal map toolbars */
+.leaflet-bar a {
+  float: left;
+
+  &:first-child {
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.leaflet-draw-section {
+  margin-bottom: 36px;
+}
+
+.leaflet-right .leaflet-draw-actions {
+  right: 76px;
+  top: auto;
+}
+
 .toolbar a.toggle-filter-stack {
   background: #111;
   color: #fff;
