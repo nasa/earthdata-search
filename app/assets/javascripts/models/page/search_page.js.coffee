@@ -130,7 +130,10 @@ ns.SearchPage = do (ko
 
     showProject: (data, event) =>
       $('#view-project').click()
-
+  
+  loc = window.location.pathname
+  if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
+    window.location.replace(loc + '/search' + window.location.search);
   current = new SearchPage()
   setCurrent(current)
 
