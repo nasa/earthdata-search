@@ -87,8 +87,13 @@
 }
 
 .leaflet-right .leaflet-draw-actions {
-  top: auto !important;
-  left: -115px;
+  top: -30px !important;
+  right: 0;
+
+  li:first-child a {
+    border-radius: 0;
+
+  }
 }
 
 .leaflet-draw-toolbar {
