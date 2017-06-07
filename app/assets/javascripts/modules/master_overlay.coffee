@@ -25,6 +25,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_updateMinMaxState()
       @contentHeightChanged()
       @_triggerStateChange()
+      maptools = $("#map .leaflet-top.leaflet-right")
+      maptools[0].style.top = "91%"
 
     maximize: ->
       @_updateMinMaxState()
@@ -34,6 +36,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       tmp = @_minimized
       @_minimized = false
       @_triggerStateChange() if tmp
+      maptools = $("#map .leaflet-top.leaflet-right")
+      maptools[0].style.top = "49%"
 
     manualShowParent: ->
       @_manualShowParent = true
