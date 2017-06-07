@@ -83,6 +83,7 @@
 }
 
 .leaflet-draw-actions {
+  top: inherit;
 }
 
 .leaflet-draw-toolbar {
@@ -98,6 +99,17 @@
 .leaflet-top.leaflet-right {
   top: 49%;
   z-index: 130;
+}
+
+.leaflet-control-layers {
+  border-radius: 4px;
+}
+
+.leaflet-retina .leaflet-control-layers-toggle, .leaflet-control-layers-toggle {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  background-size: 16px 16px;
 }
 
 .leaflet-bar.projection-switcher a {
