@@ -77,11 +77,16 @@
 .leaflet-draw-section {
   margin-bottom: 36px;
   padding-left: 30px;
+  float: right;
+  margin: 0 0 0 10px;
+  padding: 0;
 }
 
 .leaflet-draw-actions {
-  right: 76px !important;
-  top: 0 !important;
+}
+
+.leaflet-draw-toolbar {
+	margin-top: 0
 }
 
 .toolbar a.toggle-filter-stack {
@@ -91,8 +96,8 @@
 }
 
 .leaflet-top.leaflet-right {
-  top: 80px !important;
-  z-index: 100;
+  top: 49%;
+  z-index: 130;
 }
 
 .leaflet-bar.projection-switcher a {
