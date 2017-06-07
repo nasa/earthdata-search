@@ -78,8 +78,8 @@ ns = @edsc.models.page
     }, {
       title: "Map Tools"
       content: '<p>Use these standard map tools to configure and position the map as well as enable certain spatial search tools.</p>'
-      placement: 'left'
-      element: '.leaflet-control-zoom-in'
+      placement: 'top'
+      element: '.projection-switcher-arctic'
       showNext: true
     }, {
       title: 'Toolbar'
