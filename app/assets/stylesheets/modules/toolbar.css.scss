@@ -128,6 +128,12 @@
   background-size: 16px 16px;
 }
 
+.leaflet-control-scale {
+  position: absolute;
+  top: -50px;
+  right: 0;
+}
+
 .leaflet-bar.projection-switcher a {
   @include retina-image(projection-sprite, 90px 30px, png, null, '@2x', true);
 
