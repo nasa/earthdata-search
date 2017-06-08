@@ -14,8 +14,6 @@ interact(".master-overlay-main")
     var target = event.target;
     target.style.top = 100 - (((event.rect.height / $(window).height())) * 100) + '%';
     target.style.height = (((event.rect.height / $(window).height())) * 100) + '%';
-    var maptools = $("#map .leaflet-top.leaflet-right");
-    maptools[0].style.top = 99 - (((event.rect.height / $(window).height())) * 100) + '%';
 
     $(".master-overlay").masterOverlay("contentHeightChanged");
   });

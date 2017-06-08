@@ -25,8 +25,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_updateMinMaxState()
       @contentHeightChanged()
       @_triggerStateChange()
-      maptools = $("#map .leaflet-top.leaflet-right")
-      maptools[0].style.top = "91%"
 
     maximize: ->
       @_updateMinMaxState()
@@ -188,6 +186,11 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         scrollContentHeight = @root.find('.master-overlay-main').height()
         for section in $('.master-overlay-main').find('section')
           $(section).height(scrollContentHeight)
+
+        # map toolbars
+        target = $(".master-overlay-main");
+        maptools = $("#map .leaflet-top.leaflet-right")
+        maptools[0].style.top = 96 - (((($("#map").height() - target.position().top) / $("#map").height())) * 100) + '%';
 
         # collection details
         collectionDetail = $('#collection-details')
