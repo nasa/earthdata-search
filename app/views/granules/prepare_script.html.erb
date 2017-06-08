@@ -193,6 +193,7 @@ fetch_urls <<'EDSCEOF'
       var links = doc.links;
       preContent = document.getElementById('script');
       preContent.innerHTML += links.join("\n");
+      preContent.innerHTML += '\n'
       var next = getNextPageUrl();
       if (next) {
         fetchLinks(next);
