@@ -58,7 +58,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     onChangeDateTime = (dp, $input) ->
       $input.trigger('change')
 
-    root.find('.temporal-range-picker').datepicker
+    root.find('.temporal-range-picker').datepicker(
       format: "yyyy-mm-dd"
       startDate: "1960-01-01"
       endDate: new Date()
@@ -69,6 +69,11 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       todayHighlight: true
       forceParse: false
       keyboardNavigation: false
+      ).on 'click', (e) ->
+        $('.temporal-filter').click (e) ->
+          console.log "temporal filter click"
+          e.stopPropagation()
+          return
 
     root.find('.temporal-recurring-picker').datepicker(
       format: "mm-dd"
@@ -158,6 +163,10 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
   $(document).ready ->
     $(".temporal-dropdown-button").on 'click', ->
       $(this).parents('.dropdown').toggleClass('open')
+
+    $("#ui-datepicker-div").on 'click', (e) ->
+      e.stopPropagation();
+
     $('.collection-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
       modelPath: "query.temporal.pending",
