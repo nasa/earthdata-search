@@ -63,13 +63,13 @@ ns = @edsc.models.page
       title: "Facets"
       content: "<p>Refine your search further with available facets, such as:
                 <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
-                  <li>Features</li>
-                  <li>Keywords</li>
-                  <li>Platforms</li>
-                  <li>Instruments</li>
-                  <li>Organizations</li>
-                  <li>Projects</li>
-                  <li>Processing Levels</li>
+                  <li>Features - subsettable, near-real-time or has imagery</li>
+                  <li>Keywords - science terms describing collections</li> - science terms describing collections
+                  <li>Platforms - satellite, aircraft, etc. hosting Instruments</li>
+                  <li>Instruments - devices that make measurements</li>
+                  <li>Organizations - responsible for archiving and/or producing data</li>
+                  <li>Projects - mission or science project</li>
+                  <li>Processing Levels - raw, geophysical variables, grid, or model</li>
                 </ul></div></p>"
       element: "#master-overlay-parent"
       placement: 'right'
