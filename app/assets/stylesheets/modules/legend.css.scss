@@ -3,6 +3,11 @@
 	margin-left: 15px;
 }
 
+// Leaflet override
+.leaflet-right .leaflet-control {
+	clear: none;
+}
+
 .legend {
   text-shadow: 1px 1px 1px #fff;
 }
