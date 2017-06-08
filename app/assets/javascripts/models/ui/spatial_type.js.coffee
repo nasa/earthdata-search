@@ -82,6 +82,6 @@ ns.SpatialType = do (ko, $=jQuery) ->
         top = '90px'
       else if value == 'Rectangle'
         top = '178px'
-      document.getElementsByClassName('leaflet-top leaflet-right')?[0]?.style.top = top
+      # document.getElementsByClassName('leaflet-top leaflet-right')?[0]?.style.top = top
 
   exports = SpatialType
