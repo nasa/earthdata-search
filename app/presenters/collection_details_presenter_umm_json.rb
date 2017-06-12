@@ -32,18 +32,17 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     @collection[:granule_url] = "#{Rails.configuration.services['earthdata'][env]['cmr_root']}/search/granules.json"
 
     metadata_url = "#{Rails.configuration.services['earthdata'][env]['cmr_root']}/search/concepts/#{@collection[:id]}"
-    url_token = "?token=#{token}:#{client_id(env)}" if token
-    @collection[:html_url] = "#{metadata_url}.html#{url_token}"
-    @collection[:native_url] = "#{metadata_url}.native#{url_token}"
-    @collection[:atom_url] = "#{metadata_url}.atom#{url_token}"
-    @collection[:echo10_url] = "#{metadata_url}.echo10#{url_token}"
-    @collection[:iso19115_url] = "#{metadata_url}.iso19115#{url_token}"
-    @collection[:dif_url] = "#{metadata_url}.dif#{url_token}"
+    @collection[:html_url] = "#{metadata_url}.html"
+    @collection[:native_url] = "#{metadata_url}.native"
+    @collection[:atom_url] = "#{metadata_url}.atom"
+    @collection[:echo10_url] = "#{metadata_url}.echo10"
+    @collection[:iso19115_url] = "#{metadata_url}.iso19115"
+    @collection[:dif_url] = "#{metadata_url}.dif"
     @collection[:smap_iso_url] = nil # "#{metadata_url}.smap_iso"
     opensearch_url = "#{Rails.configuration.services['earthdata'][env]['opensearch_root']}/granules/descriptor_document.xml"
     data_center = ''
     data_center = collection_id.split('-').last if collection_id.is_a?(String)
-    @collection[:osdd_url] = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection[:short_name])}&versionId=#{@collection[:version_id]}&dataCenter=#{URI.encode_www_form_component(data_center)}&commit=Generate#{url_token}"
+    @collection[:osdd_url] = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection[:short_name])}&versionId=#{@collection[:version_id]}&dataCenter=#{URI.encode_www_form_component(data_center)}&commit=Generate"
   end
 
   def data_center(data_centers, type)
