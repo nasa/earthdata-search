@@ -290,6 +290,12 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
         ancestors = []
         @_findAncestors(ancestors, facet)
         for ancestor in ancestors
+          greatancestors = []
+          @_findAncestors(greatancestors, ancestor)
+          for great in greatancestors
+            index = facet.param[0].match(/science_keywords_h\[(\d+)\]\[.+\]/)[1]
+            newParam = great.param[0].replace(/science_keywords_h\[\d+\]\[(.+)\]/g, "science_keywords_h[" + index + "][$1]")
+            @query.facets.push(title: great.title, param: newParam)
           index = facet.param[0].match(/science_keywords_h\[(\d+)\]\[.+\]/)[1]
           newParam = ancestor.param[0].replace(/science_keywords_h\[\d+\]\[(.+)\]/g, "science_keywords_h[" + index + "][$1]")
           @query.facets.push(title: ancestor.title, param: newParam)
