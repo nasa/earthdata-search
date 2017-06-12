@@ -62,6 +62,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         @currentCollection().notifyRenderers('startAccessPreview')
 
     resetForm: (item, e) =>
+      console.debug "HELLO"
       collectionId = e.target.id.match(/reset-form-(.*)/)[1]
       for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
         for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
@@ -76,6 +77,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
               ko.cleanNode(echoformContainer);
       $(e.target).hide()
       $('#reload-previous-' + e.target.id.match(/reset-form-(.*)/)[1]).show()
+      console.debug "PROJECT: " + JSON.stringify(@project)
       true
 
     reloadPrevious: (item, e) =>
@@ -124,7 +126,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     downloadProject: ->
       $project = $('#data-access-project')
-
+      console.debug "PROJECT: " + @project.serialize()
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()
 
