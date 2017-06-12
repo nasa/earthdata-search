@@ -46,10 +46,10 @@ class CollectionDetailsPresenterEcho10 < DetailsPresenterEcho10
     @collection.associated_difs = associated_difs(collection.associated_difs)
 
     metadata_url = "#{Rails.configuration.services['earthdata'][env]['cmr_root']}/search/concepts/#{@collection.id}"
-    @collection.html_url = "#{metadata_url}.html
+    @collection.html_url = "#{metadata_url}.html"
     @collection.native_url = "#{metadata_url}.native"
     @collection.atom_url = "#{metadata_url}.atom"
-    @collection.echo10_url = "#{metadata_url}.echo10#"
+    @collection.echo10_url = "#{metadata_url}.echo10"
     @collection.iso19115_url = "#{metadata_url}.iso19115"
     @collection.dif_url = "#{metadata_url}.dif"
     @collection.smap_iso_url = nil #"#{metadata_url}.smap_iso"
