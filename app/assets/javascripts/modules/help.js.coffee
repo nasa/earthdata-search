@@ -35,7 +35,7 @@ ns = @edsc.models.page
 
   tour = [{
       title: "Search"
-      content: '<p>Use Earthdata Search Client\'s natural language processing-enabled search tool to quickly narrow
+      content: '<p>Use Earthdata Search\'s natural language processing-enabled search tool to quickly narrow
                 down to relevant collections.  An example search phrase could be <em>Land Surface Temperature over
                 Texas last month</em>. Results will be displayed in the collection panel below.</p>
                 <p>You can also add filters to refine your search:</p>
@@ -64,7 +64,7 @@ ns = @edsc.models.page
       content: "<p>Refine your search further with available facets, such as:
                 <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
                   <li>Features - subsettable, near-real-time or has imagery</li>
-                  <li>Keywords - science terms describing collections</li> - science terms describing collections
+                  <li>Keywords - science terms describing collections</li> 
                   <li>Platforms - satellite, aircraft, etc. hosting Instruments</li>
                   <li>Instruments - devices that make measurements</li>
                   <li>Organizations - responsible for archiving and/or producing data</li>
