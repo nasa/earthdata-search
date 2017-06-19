@@ -67,7 +67,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
           checkedAccessMethodName = checkedAccessMethod.method()
           for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
-            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
+            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex + '"]')
             echoformContainer.empty?() if echoformContainer?
             if method.type == 'service' || method.type == 'order'
               checkedAccessMethod.isReadFromDefaults = false
@@ -89,7 +89,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
           checkedAccessMethodName = checkedAccessMethod.method()
           for method in accessCollection.serviceOptions.granuleAccessOptions().methods when method.name == checkedAccessMethodName
-            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex+ '"]')
+            echoformContainer = $(e.target).closest('.access-item-body').find('div[id="access-form-' + collectionId + '-' + methodIndex + '"]')
             echoformContainer.empty?() if echoformContainer?
             if method.type == 'service' || method.type == 'order'
               checkedAccessMethod.isReadFromDefaults = false

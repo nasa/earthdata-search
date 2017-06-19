@@ -110,6 +110,18 @@ do (ko, $=jQuery) ->
         if method? && available?.form?
           form = available.form
           $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+          syncModel = ->
+            isValid = $(this).echoforms('isValid')
+            options.isValid(isValid)
+            if isValid
+              options.model = $(this).echoforms('serialize')
+              options.rawModel = $(this).echoforms('serialize', prune: false)
+            else
+              options.model = null
+              options.rawModel = null
+            null
+          $el.on 'echoforms:modelchange', syncModel
+          syncModel.call($el)
         else
           options.isValid(true)
         options.isReadFromDefaults = true
