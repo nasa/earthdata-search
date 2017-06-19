@@ -125,7 +125,6 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     downloadProject: ->
       $project = $('#data-access-project')
-      console.debug "PROJECT: " + @project.serialize()
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()
 
