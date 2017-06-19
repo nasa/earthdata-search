@@ -62,7 +62,6 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
         @currentCollection().notifyRenderers('startAccessPreview')
 
     resetForm: (item, e) =>
-      console.debug "HELLO"
       collectionId = e.target.id.match(/reset-form-(.*)/)[1]
       for accessCollection in @project.accessCollections() when accessCollection.collection.id == @currentCollection().id
         for checkedAccessMethod, methodIndex in accessCollection.serviceOptions.accessMethod()
@@ -72,12 +71,16 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
             echoformContainer.empty?() if echoformContainer?
             if method.type == 'service' || method.type == 'order'
               checkedAccessMethod.isReadFromDefaults = false
-              ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})
+              setTimeout (=>
+                ko.applyBindingsToNode(echoformContainer, {loadDefaultForm: checkedAccessMethod})
+                ), 5
             else
               ko.cleanNode(echoformContainer);
       $(e.target).hide()
       $('#reload-previous-' + e.target.id.match(/reset-form-(.*)/)[1]).show()
-      console.debug "PROJECT: " + JSON.stringify(@project)
+      $(document).trigger("echoforms:modelchange");
+      console.debug "PROJECT: " + JSON.stringify(@project.serialize())
+      console.debug "DONE2222222"
       true
 
     reloadPrevious: (item, e) =>
@@ -93,6 +96,9 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
               ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
             else
               ko.cleanNode(echoformContainer);
+      $(document).trigger('echoforms:modelchange')
+      console.debug "PROJECT: " + JSON.stringify(@project.serialize())
+      console.debug "DONEDONEDONE"
       $(e.target).hide()
       $('#reset-form-' + collectionId).show()
 
