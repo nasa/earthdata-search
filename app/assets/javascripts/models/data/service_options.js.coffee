@@ -99,7 +99,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     fromJson: (jsonObj, index=0) ->
       @method(jsonObj.method)
       @model = jsonObj.model
+      @modelSwap = jsonObj.model
       @rawModel = jsonObj.rawModel
+      @rawModelSwap = jsonObj.rawModel
+      @reset = false
+
       @type = jsonObj.type
 
       if jsonObj.type == 'service' || jsonObj.type == 'order'
@@ -164,11 +168,12 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     _computeIsReadyToDownload: ->
       return false unless @isLoaded()
       return true if @granuleAccessOptions().methods?.length == 0
-
+      
+      result = false
       for m in @accessMethod()
-        return false unless m.method()? && m.isValid()
-        return false if m.loadForm()
-      true
+        result = true if m.method()? && m.isValid()
+        result = true if !m.loadForm()
+      result
 
     addAccessMethod: =>
       @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods))
