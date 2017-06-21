@@ -99,10 +99,10 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     fromJson: (jsonObj, index=0) ->
       @method(jsonObj.method)
       @model = jsonObj.model
-      @modelSwap = jsonObj.model
+      @modelInitialValue = jsonObj.model
       @rawModel = jsonObj.rawModel
-      @rawModelSwap = jsonObj.rawModel
-      @reset = false
+      @rawModelInitialValue = jsonObj.rawModel
+      @hasBeenReset = false
 
       @type = jsonObj.type
 

@@ -98,7 +98,7 @@ do (ko, $=jQuery) ->
         $el.echoforms('destroy')
         $el.off('echoforms:modelchange')
       options = ko.unwrap(valueAccessor())
-      options.reset = true
+      options.hasBeenReset = true
       methodName = options.method()
       if methodName?
         method = null
@@ -148,7 +148,7 @@ do (ko, $=jQuery) ->
           # EDSC-975: If the form contains an empty email address field, prepopulate it with the user's email
           available.form = available.form.replace('<ecs:email/>', '<ecs:email>' + edsc.page.account.email() + '</ecs:email>')
           originalForm = form = available.form
-          model = if options.reset then options.rawModelSwap else options.rawModel
+          model = if options.hasBeenReset then options.rawModelInitialValue else options.rawModel
 
           if model? && !options.isReadFromDefaults
             shortNameRegex = /<ecs:SUBAGENT_ID>[\s\S]*<ecs:value>(.*)<\/ecs:value>[\s\S]*<\/ecs:SUBAGENT_ID>/
@@ -186,8 +186,8 @@ do (ko, $=jQuery) ->
             isValid = $(this).echoforms('isValid')
             options.isValid(isValid)
             if isValid
-              options.model = if options.reset then options.modelSwap else $(this).echoforms('serialize')
-              options.rawModel = if options.reset then options.rawModelSwap else $(this).echoforms('serialize', prune: false)
+              options.model = if options.hasBeenReset then options.modelInitialValue else $(this).echoforms('serialize')
+              options.rawModel = if options.hasBeenReset then options.rawModelInitialValue else $(this).echoforms('serialize', prune: false)
             else
               options.model = null
               options.rawModel = null
