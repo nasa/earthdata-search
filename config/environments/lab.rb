@@ -74,7 +74,7 @@ EarthdataSearchClient::Application.configure do
   config.logo_name = "Lab"
   config.env_name = "[Lab]"
   config.tophat_url = "https://cdn.earthdata.nasa.gov/tophat/tophat.js"
-  config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/EdSearch/feedback.js'
+  config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/SearchLab/feedback.js'
 
   config.url_limit = 2000
   config.cmr_env = 'prod'
