@@ -9,15 +9,10 @@ html {
 body {
   font-size: 16px;
   background-color: #222;
-  padding-top: 25px;
 }
 
-// Fixes to rendering glitches caused by tophat loading after page render
-#earthdata-tophat {
-  position: absolute !important;
-  left: 0;
-  right: 0;
-  top: 0;
+#earthdata-tophat2 {
+  height: 32px;
 }
 
 .wrap {
@@ -25,7 +20,7 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: -25px 0px -10px 0px;
+  margin: 0px 0px -10px 0px;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
 }
@@ -107,7 +102,7 @@ nav.main-nav {
 .toolbar-secondary {
   margin-right: 10px;
   z-index: 110;
-  margin-top: 35px;
+  margin-top: 10px;
   position: absolute;
   right: 0;
 }
