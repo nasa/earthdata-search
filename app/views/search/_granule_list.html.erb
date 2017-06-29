@@ -73,6 +73,7 @@
           <ul class="panel-list-list" data-bind="foreach: granules().results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true' || browse_flag === true, 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
+              <h3 data-bind="attr: {id: 'granule-list-item-' + $index()}, text: displayName()"></h3>
 
               <!-- ko if: browse_flag === 'true' || browse_flag === true -->
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
@@ -83,8 +84,7 @@
                 <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><i class="fa fa-times-circle"></i></a>
                 <!-- /ko -->
 
-              <h3 data-bind="attr: {id: 'granule-list-item-' + $index()}, text: displayName()"></h3>
-              <span class="granule-temporal-range" data-bind="text: getTemporal()"></span>
+              <div class="granule-temporal-range" data-bind="html: getTemporal()"></div>
 
               <div class="panel-list-item-actions granule-item-actions">
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
@@ -92,6 +92,15 @@
                 </a>
                 <a href="#" class="button icon-button" title="Download single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
                   <i class="fa fa-download"></i>
+                </a>
+                <a href="#" class="button icon-button" title="Configure and download single granule data">
+                  <i class="fa fa-gear"></i>
+                </a>
+                <a href="#" class="button icon-button" title="Add granule to project">
+                  <i class="fa fa-plus"></i>
+                </a>
+                <a href="#" class="button icon-button" title="Remove granule">
+                  <i class="fa fa-close"></i>
                 </a>
               </div>
             </li>

@@ -22,7 +22,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   border-top: 1px solid #e3e3e3;
   margin: 0;
   min-height: $panel-list-thumbnail-size + 30px;
-  padding: 10px 10px 10px 14px;
+  padding: 0;
   font-size: .8em;
   position: relative;
 
@@ -41,6 +41,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   h3 {
     font-size: 1em;
     word-wrap: break-word;
+    padding: 8px;
+    margin: 0;
   }
 }
 
@@ -56,7 +58,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .panel-list-item {
-    width: 360px;
+    width: 282px;
     float: left;
     margin: 6px;
     border: 1px solid #e3e3e3;
@@ -67,8 +69,21 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .granule-temporal-range {
-    width: 160px;
-    display: inline-block;
+
+
+    p {
+      margin: 0;
+      padding: 3px;
+      padding-left: 95px;
+    }
+
+    .temporal-start {
+      background: rgba(39, 174, 96,0.1);
+    }
+
+    .temporal-end {
+      background: rgba(192, 57, 43,0.1)
+    }
   }
 }
 
@@ -128,7 +143,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   display: block;
   float: left;
   position:relative;
-  margin-right: .5em;
   width: $panel-list-thumbnail-container-size;
   height: $panel-list-thumbnail-container-size;
   background-color: #222;
