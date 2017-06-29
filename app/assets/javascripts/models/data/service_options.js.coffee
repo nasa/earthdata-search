@@ -105,7 +105,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @hasBeenReset = false
 
       @type = jsonObj.type
-
       if jsonObj.type == 'service' || jsonObj.type == 'order'
         echoformContainer = null
         checkExistsTimer = setInterval (=>
@@ -119,7 +118,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
                 if !accessMethodMatched && matches[1] == jsonObj.collection_id && parseInt(matches[2], 10) == index
                   accessMethodMatched = true
                   @loadForm(true) if jsonObj.type == 'service'
-                  ko.applyBindingsToNode(echoformContainer, {echoform: this})
+                  $.when(ko.applyBindingsToNode(echoformContainer, echoform: this)).done ->
+                    $('.echoforms-element-select').each ->
+                      original = $(this).val()
+                      $(this).val('&').change().val(original).change()
+                      return
                 @loadForm(false)
             ), 0
         ), 0
