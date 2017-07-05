@@ -118,11 +118,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
                 if !accessMethodMatched && matches[1] == jsonObj.collection_id && parseInt(matches[2], 10) == index
                   accessMethodMatched = true
                   @loadForm(true) if jsonObj.type == 'service'
-                  $.when(ko.applyBindingsToNode(echoformContainer, echoform: this)).done ->
-                    $('.echoforms-element-select').each ->
-                      original = $(this).val()
-                      $(this).val('&').change().val(original).change()
-                      return
+                  ko.applyBindingsToNode(echoformContainer, {echoform: this})
                 @loadForm(false)
             ), 0
         ), 0
