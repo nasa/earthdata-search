@@ -49,6 +49,31 @@ class Retrieval < ActiveRecord::Base
     @description
   end
 
+  def self.failure(job)
+    Rails.logger.error "Delayed Job (ID: #{job.id}) has failed and will not be retried."
+  end
+
+  def self.before(job)
+    if job.attempts == 0
+      Rails.logger.error "Delayed Job (ID: #{job.id}) is beginning its work."
+    else
+      Rails.logger.error "Delayed Job (ID: #{job.id}) has begun its work after failing #{job.attempts} time."
+    end
+  end
+
+  def self.enqueue(job)
+    Rails.logger.error "A new delayed job as been enqueued into processing:" + job.inspect
+    Rails.logger.error "123handler: " + job.handler
+  end 
+
+  def self.error(job, exception)
+    Rails.logger.error "Delayed Job (ID: #{job.id}) has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
+  end
+
+  def self.success(job)
+    Rails.logger.error "Delayed Job (ID: #{job.id}) has completed processing."
+  end
+
   # Delayed Jobs calls this method to excute an order creation
   def self.process(id, token, env, base_url, access_token)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
@@ -56,6 +81,8 @@ class Retrieval < ActiveRecord::Base
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)
       end
+      Rails.logger.error "thisjob (ID: #{id}) has started processing." + token.inspect + base_url.inspect
+      1/0      
       retrieval = Retrieval.find_by_id(id)
       project = retrieval.jsondata
       user_id = retrieval.user.echo_id
@@ -119,7 +146,7 @@ class Retrieval < ActiveRecord::Base
 
                 # break the loop
                 if !Rails.configuration.enable_esi_order_chunking || limited_collection?(method['id'])
-                  Rais.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{method['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
+                  Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{method['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
                   page_num = results_count / page_size + 1
                 end
               end
