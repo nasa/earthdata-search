@@ -121,8 +121,10 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
                   # After the binding is complete, toggle select elements to trigger validation lest they be pruned
                   $.when(ko.applyBindingsToNode(echoformContainer, echoform: this)).done ->
                     $('.echoforms-element-select').each ->
-                      original = $(this).val()
-                      $(this).val('&').change().val(original).change()
+                      # Only concerning ourselves with projection selects at the moment...
+                      if $(this).find('option[value="NORTH POLAR STEREOGRAPHIC"]').length
+                        original = $(this).val()
+                        $(this).val('&').change().val(original).change()
                       return
                 @loadForm(false)
             ), 0
