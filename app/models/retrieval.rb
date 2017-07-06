@@ -49,29 +49,35 @@ class Retrieval < ActiveRecord::Base
     @description
   end
 
-  def self.failure(job)
-    Rails.logger.error "Delayed Job (ID: #{job.id}) has failed and will not be retried."
-  end
+  # EDSC-1542 before, enqueue, error, failure, and success are hooks provided by the Delayed_Job gem to allow visibility
+  # into its status.
+  # Before: Executed just as the work is started
+  # Enqueue: Executed right before the job is added to the queue - please note the job does not have an ID at this stage
+  # Error: Executed when the work encounters an exception - the work will be retried later, up to three times
+  # Failure: Executed when the work has errored with an exception three times in a row - after this, the job is abandoned
 
   def self.before(job)
     if job.attempts == 0
-      Rails.logger.error "Delayed Job (ID: #{job.id}) is beginning its work."
+      Rails.logger.info "Delayed Job (ID: #{job.id}) is beginning its work."
     else
-      Rails.logger.error "Delayed Job (ID: #{job.id}) has begun its work after failing #{job.attempts} time."
+      Rails.logger.info "Delayed Job (ID: #{job.id}) has begun its work after failing #{job.attempts} time."
     end
   end
 
   def self.enqueue(job)
-    Rails.logger.error "A new delayed job as been enqueued into processing:" + job.inspect
-    Rails.logger.error "123handler: " + job.handler
+    Rails.logger.info "A new delayed job as been enqueued into processing:" + job.inspect
   end 
 
   def self.error(job, exception)
     Rails.logger.error "Delayed Job (ID: #{job.id}) has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
   end
 
+  def self.failure(job)
+    Rails.logger.error "Delayed Job (ID: #{job.id}) has failed and will not be retried."
+  end
+
   def self.success(job)
-    Rails.logger.error "Delayed Job (ID: #{job.id}) has completed processing."
+    Rails.logger.info "Delayed Job (ID: #{job.id}) has completed processing."
   end
 
   # Delayed Jobs calls this method to excute an order creation
@@ -81,8 +87,8 @@ class Retrieval < ActiveRecord::Base
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)
       end
-      Rails.logger.error "thisjob (ID: #{id}) has started processing." + token.inspect + base_url.inspect
-      1/0      
+      Rails.logger.info "Delayed Job (ID: #{id}) has started its processing block." 
+     
       retrieval = Retrieval.find_by_id(id)
       project = retrieval.jsondata
       user_id = retrieval.user.echo_id
