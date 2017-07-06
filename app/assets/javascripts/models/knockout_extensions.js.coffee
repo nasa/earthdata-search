@@ -174,7 +174,7 @@ do (ko, $=jQuery) ->
                   inputs = projectionOptions.find('input[type=text]:visible')
                   $.each(inputs, (i, obj) ->
                     originalVal = $(obj).val()
-                    $(obj).val(originalVal + 1).trigger('change').val(originalVal).trigger('change')
+                    $(obj).val(originalVal + 1).change().val(originalVal).change()
                   )
 
           catch error
