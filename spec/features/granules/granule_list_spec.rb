@@ -96,7 +96,7 @@ describe "Granule list", reset: false do
       before :all do
         dismiss_banner
         first_granule_list_item.click
-        first_granule_list_item.click_link "Exclude this granule"
+        first_granule_list_item.click_link "Remove granule"
         wait_for_xhr
       end
 
@@ -119,7 +119,7 @@ describe "Granule list", reset: false do
         before :all do
           num_of_clicks = 19
           while num_of_clicks > 0
-            first_granule_list_item.click_link "Exclude this granule"
+            first_granule_list_item.click_link "Remove granule"
             num_of_clicks -= 1
             wait_for_xhr
           end
@@ -132,7 +132,7 @@ describe "Granule list", reset: false do
           view_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
 
           first_granule_list_item.click
-          first_granule_list_item.click_link "Exclude this granule"
+          first_granule_list_item.click_link "Remove granule"
           wait_for_xhr
         end
 
@@ -148,7 +148,7 @@ describe "Granule list", reset: false do
         end
 
         after :all do
-          first_granule_list_item.click_link "Exclude this granule"
+          first_granule_list_item.click_link "Remove granule"
         end
 
         it "shows the excluded granule in the granule list" do
@@ -174,7 +174,7 @@ describe "Granule list", reset: false do
           wait_for_xhr
           find('#granule-search').click_link('close')
           first_granule_list_item.click
-          first_granule_list_item.click_link "Exclude this granule"
+          first_granule_list_item.click_link "Remove granule"
           wait_for_xhr
         end
 

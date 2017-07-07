@@ -22,6 +22,10 @@
         return link.href if link.rel.indexOf('browse') != -1
       null
 
+    download_now_url: ->
+      return link.href for link in @links when link.rel.indexOf('/data#') != -1
+      '#'
+
     onThumbError: (granule) ->
       @browseError(true)
 
@@ -37,8 +41,7 @@
 
     _normalizeTime: (time) ->
       return null unless time?
-
-      time.replace(/\.0+Z/, 'Z')
+      time.replace(/([0-9-]+)T([0-9:]+)\.0+Z/, '$1 $2')
 
     equals: (other) ->
       other.id == @id

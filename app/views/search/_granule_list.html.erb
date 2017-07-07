@@ -37,7 +37,7 @@
           <!-- /ko -->
         </header>
         <div class="master-overlay-info">
-          <!-- ko if: granules().isLoaded() -->
+        <!-- ko if: granules().isLoaded() -->
           <p>
             Showing <span data-bind="text: granules().results().length"></span> of
             <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
@@ -47,10 +47,6 @@
             (<a href="#" data-bind="click: $root.ui.granuleTimeline.clear">Show All</a>)
             <!-- /ko -->
           </p>
-
-          <!-- ko if: granules().excludedGranulesList().length > 0 -->
-          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
-          <!-- /ko -->
 
           <p data-bind="if: granules().loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: granules().loadTime">0.000</span>s
@@ -66,8 +62,11 @@
             <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
           <!--/ko-->
 
+          <!-- ko if: granules().excludedGranulesList().length > 0 -->
+          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
 
+        <!-- /ko -->
         </div>
         <div id="granules-scroll" class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
           <ul class="panel-list-list" data-bind="foreach: granules().results()">
@@ -79,10 +78,7 @@
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
                   <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
                 </a>
-                <!-- /ko -->
-                <!-- ko if: $parent.canRemoveGranules() -->
-                <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><i class="fa fa-times-circle"></i></a>
-                <!-- /ko -->
+              <!-- /ko -->
 
               <div class="granule-temporal-range" data-bind="html: getTemporal()"></div>
 
@@ -90,18 +86,20 @@
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
                   <i class="fa fa-info-circle"></i>
                 </a>
-                <a href="#" class="button icon-button" title="Download single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
+                <a class="button icon-button" title="Download single granule data" target="_blank" data-bind="visible: online_access_flag, attr: {href: download_now_url()}">
                   <i class="fa fa-download"></i>
                 </a>
-                <a href="#" class="button icon-button" title="Configure and download single granule data">
+                <a href="#" class="button icon-button" title="Configure and download single granule data"  data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
                   <i class="fa fa-gear"></i>
                 </a>
                 <a href="#" class="button icon-button" title="Add granule to project">
                   <i class="fa fa-plus"></i>
                 </a>
-                <a href="#" class="button icon-button" title="Remove granule">
+                <!-- ko if: $parent.canRemoveGranules() -->
+                <a href="#" class="button icon-button" title="Remove granule" data-bind="click: $parent.removeGranule">
                   <i class="fa fa-close"></i>
                 </a>
+                <!-- /ko -->
               </div>
             </li>
           </ul>
