@@ -122,7 +122,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
                   $.when(ko.applyBindingsToNode(echoformContainer, echoform: this)).done ->
                     $('.echoforms-element-select').each ->
                       # Only concerning ourselves with projection selects at the moment...
-                      if $(this).find('option[value="NORTH POLAR STEREOGRAPHIC"]').length
+                      if (this.id.indexOf("projectselect") >= 0)
                         original = $(this).val()
                         $(this).val('&').change().val(original).change()
                       return
