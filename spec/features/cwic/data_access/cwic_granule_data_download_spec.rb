@@ -69,7 +69,7 @@ describe "CWIC-enabled data access", reset: false do
       login
       view_granule_results(dataset_id)
       within(first_granule_list_item) do
-        click_link 'Download single granule data'
+        click_link 'Configure and download single granule data'
       end
       wait_for_xhr
       choose 'Direct Download'

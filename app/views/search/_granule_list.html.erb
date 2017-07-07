@@ -86,7 +86,7 @@
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
                   <i class="fa fa-info-circle"></i>
                 </a>
-                <a class="button icon-button" title="Download single granule data" target="_blank" data-bind="visible: online_access_flag, attr: {href: download_now_url()}">
+                <a class="button icon-button" title="Download single granule data" target="_blank" data-bind="visible: !$parent.collection.cwic() && online_access_flag, attr: {href: download_now_url()}">
                   <i class="fa fa-download"></i>
                 </a>
                 <a href="#" class="button icon-button" title="Configure and download single granule data"  data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">

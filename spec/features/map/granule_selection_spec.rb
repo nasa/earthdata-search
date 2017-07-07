@@ -65,7 +65,7 @@ describe "Granule selection", reset: false do
    # end
 
     it "displays a link to remove the granule in the granule list" do
-      expect(granule_list).to have_selector('.panel-list-remove', count: 1)
+      expect(granule_list).to have_link('Remove granule')
     end
 
     it "displays a link to remove the granule on the map" do
@@ -184,7 +184,7 @@ describe "Granule selection", reset: false do
     end
 
     it "displays a link to remove the granule in the granule list" do
-      expect(granule_list).to have_selector('.panel-list-remove', count: 1)
+      expect(granule_list).to have_link('Remove granule')
     end
 
     it "displays a link to remove the granule on the map" do
