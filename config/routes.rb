@@ -38,7 +38,6 @@ EarthdataSearchClient::Application.routes.draw do
   end
 
   resources :docs
-  resources :events
 
   resources :projects, only: [:show, :create], defaults: {format: 'text'}
   get 'projects' => 'projects#index', format: 'html'

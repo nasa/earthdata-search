@@ -73,7 +73,7 @@ EarthdataSearchClient::Application.configure do
   config.analytics_id = 'UA-50960810-3'
   config.logo_name = ""
   config.env_name = ""
-  config.tophat_url = "https://cdn.earthdata.nasa.gov/tophat/tophat.js"
+  config.tophat_url = "https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
   config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/EdSearch/feedback.js'
 
   config.url_limit = 2000

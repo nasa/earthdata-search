@@ -12,7 +12,6 @@ ns.Preferences = do (ko
       # Default Preferences
       @showTour = ko.observable(true)
       @doNotShowTourAgain = ko.observable('false')
-      @dismissedEvents = ko.observableArray([])
       @isLoaded = ko.observable(false)
 
       @load()
@@ -51,12 +50,10 @@ ns.Preferences = do (ko
       return unless jsonObj?
       @showTour(jsonObj.show_tour != 'false')
       @doNotShowTourAgain(jsonObj.doNotShowTourAgain)
-      @dismissedEvents(jsonObj.dismissed_events ? [])
 
     serialize: =>
       json =
         show_tour: @showTour()
         doNotShowTourAgain: @doNotShowTourAgain()?.toString()
-        dismissed_events: @dismissedEvents()
 
   exports = Preferences

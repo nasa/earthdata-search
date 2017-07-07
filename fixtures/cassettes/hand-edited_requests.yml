@@ -701,37 +701,4 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Thu, 27 Oct 2016 17:37:05 GMT
   digest: boundingbox1_2
-- request:
-    method: get
-    uri: https://status.earthdata.nasa.gov/api/v1/notifications?domain=https%3A%2F%2Fsearch.earthdata.nasa.gov
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 26 Jan 2017 18:57:49 GMT
-  digest: 52815d9446ac5e6af7363a131c0e1c2cc320a755
-- request:
-    method: get
-    uri: https://status.earthdata.nasa.gov/api/v1/notifications?domain=https%3A%2F%2Fsearch.sit.earthdata.nasa.gov
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 26 Jan 2017 18:59:58 GMT
-  digest: 2f1d8508743f5b7aed8ef4c62577c71120a344f8
-- request:
-    method: get
-    uri: https://status.earthdata.nasa.gov/api/v1/notifications?domain=https%3A%2F%2Fsearch.uat.earthdata.nasa.gov
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 26 Jan 2017 18:58:43 GMT
-  digest: 984ab9beb07e84f424b39d67ddb3e1d832c912b7
 recorded_with: "VCR 2.6.0"

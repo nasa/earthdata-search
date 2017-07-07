@@ -1,10 +1,10 @@
 var extend = require('./extend'),
-    eventsKey = '_edsc_listeners';
+  eventsKey = '_edsc_listeners';
 
 module.exports = {
   on: function(events, fn, context) {
     var listeners = this[eventsKey] = this[eventsKey] || {},
-        i, len, event;
+      i, len, event;
     events = events.split(' ');
     for (i = 0, len = events.length; i < len; i++) {
       event = events[i];
@@ -18,7 +18,7 @@ module.exports = {
 
   off: function(events, fn, context) {
     var listeners = this[eventsKey],
-        i, j, len, eventListeners, listener;
+      i, j, len, eventListeners, listener;
     if (!listeners) {
       return this;
     }
@@ -48,8 +48,8 @@ module.exports = {
   fire: function(event, data) {
     // console.log(event, JSON.stringify(data));
     var listeners = this[eventsKey],
-        toFire = listeners && listeners[event],
-        e, i, len, listener;
+      toFire = listeners && listeners[event],
+      e, i, len, listener;
     if (toFire) {
       e = extend({}, (data || {}), {type: event, target: this});
       for (i = 0, len = toFire.length; i < len; i++) {
