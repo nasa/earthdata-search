@@ -73,8 +73,8 @@ EarthdataSearchClient::Application.configure do
 
   config.logo_name = ""
   config.env_name = ""
-  # SIT Tophat
-  config.tophat_url = "https://cdn.sit.earthdata.nasa.gov/tophat/tophat.js"
+  # UAT Tophat
+  config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat2/tophat2.js"
 
   config.url_limit = 2000
 end

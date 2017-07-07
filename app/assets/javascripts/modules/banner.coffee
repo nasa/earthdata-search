@@ -2,8 +2,6 @@
                 config = @edsc.config
                 date = @edsc.util.date
                 $=jQuery
-                preferences = @edsc.page.preferences
-                getJSON = @edsc.util.xhr.getJSON
               ) ->
   banners = []
   $banner = null
@@ -25,7 +23,6 @@
       else
         $message.text(message)
       $banner.data('banner.key', key)
-      $banner.data('banner.persist', options.persist)
       $('body').after($banner)
       # Do this in a timeout so the element has time to be placed in the DOM and animations can happen
       # $banner might be undefined. Keep an eye on this and file a bug if it happens again.
@@ -62,44 +59,8 @@
 
   onClickClose = ->
     if $banner?
-      if $banner.data('banner.key')? && $banner.data('banner.persist')
-        preferences.dismissedEvents.push($banner.data('banner.key'))
-        preferences.save()
       banners.shift()
       removeBannerAndOpenNext()
-
-  allEvents = []
-
-  showAllEvents = ->
-    dismissed = preferences.dismissedEvents()
-    # For pruning dismissed events that are no longer relevant
-    pruned = []
-    for event in allEvents
-      start = event.starttime
-      end = event.endtime
-      if dismissed.indexOf(event.id.toString()) == -1
-        showBanner(event.id, "#{if event.title? then event.title else ''} (#{date.timeSpanToHuman(start, end)})", event.message, {persist: true, className: "banner-#{event.notification_type.toLowerCase()}", html: true})
-      else
-        pruned.push(event.id)
-    preferences.dismissedEvents(pruned)
-    null
-
-  $(document).on 'click', '.banner-show-events', (e) ->
-    e.preventDefault()
-    banners = []
-    $banner?.remove()
-    $banner = null
-    preferences.dismissedEvents([])
-    preferences.save()
-    showAllEvents()
-
-  $(document).on 'ready', ->
-    preferences.onload ->
-      getJSON '/events', (data, status, xhr) ->
-        allEvents = data
-        if data.length > 0
-          $('.toolbar-secondary').prepend('<a href="#" class="banner-show-events toolbar-button" title="Show Outage Notices"><i class="fa fa-warning"></i></a>')
-          showAllEvents()
 
   # Errors for XHRs
   $(document).ajaxSend (event, xhr, settings) ->

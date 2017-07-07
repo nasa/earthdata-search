@@ -31,8 +31,8 @@ EarthdataSearchClient::Application.configure do
 
   config.logo_name = "DEV"
   config.env_name = "[DEV]"
-  # SIT Tophat
-  config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js"
+  # UAT Tophat
+  config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat2/tophat2.js"
   config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/EDSC-SIT/feedback.js'
 
   config.url_limit = 500

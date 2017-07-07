@@ -35,16 +35,9 @@
     <% end %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
-  <% # This is the recommended way to use Status app from the apps documentation. However we have to use the provided %>
-  <% # API in event_controller. Reasons being: %>
-  <% # 1. we need to combine PUMP calendar response with Status response before PUMP shutdown. %>
-  <% # 2. we need to show different notifications from different environments when cmr_env is set in the url. %>
-  <!--<script src="https://status.earthdata.nasa.gov/assets/banner_widget.js"></script>-->
 </head>
 <body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page">
-<!-- Add the Status banner -->
-<!--<div id="earthdata-notification-banner"></div>-->
-<!-- End Status banner -->
+    <div id="earthdata-tophat2"></div>
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
@@ -99,7 +92,7 @@
       </script>
     <% end %>
 
-    <%= javascript_include_tag Rails.configuration.tophat_url, async: true, defer: true if Rails.configuration.tophat_url.present? %>
+    <%= javascript_include_tag Rails.configuration.tophat_url, id: 'earthdata-tophat-script', :'data-show-fbm' => true, :'data-show-status' => true, :'data-status-api-url' => 'https://status.earthdata.nasa.gov/api/v1/notifications', async: true, defer: true if Rails.configuration.tophat_url.present? %>
 
     <% if Rails.configuration.feedback_url.present? %>
       <%= javascript_include_tag Rails.configuration.feedback_url, id: 'feedback-tag', async: true, defer: true if Rails.configuration.feedback_url.present? %>

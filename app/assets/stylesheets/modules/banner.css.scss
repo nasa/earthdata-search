@@ -11,36 +11,6 @@
   text-align: center;
 }
 
-.banner-message {
-  border: 0 solid #9ecdeb;
-  border-top: 3px solid #9ecdeb;
-  background-color: #c8e3f4;
-  color: #1f6d9e;
-  i {
-    color: #1f6d9e;
-  }
-}
-
-.banner-outage {
-  border: 0 solid #e4b9b9;
-  border-top: 3px solid #e4b9b9;
-  background-color: #f2dede;
-  color: #963b3b;
-  i {
-    color: #963b3b;
-  }
-}
-
-.banner-alert {
-  border: 0 solid #ffee94;
-  border-top: 3px solid #ffee94;
-  background-color: #fff6c7;
-  color: #c7a700;
-  i {
-    color: #c7a700;
-  }
-}
-
 .banner-hidden {
   top: -3em;
 }
