@@ -12,7 +12,7 @@ describe "Portal access", reset: false do
     login
     view_granule_results(collection_name)
     within(first_granule_list_item) do
-      click_on('Download single granule data')
+      click_on('Configure and download single granule data')
     end
     wait_for_xhr
     choose 'Direct Download'

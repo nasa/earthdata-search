@@ -55,9 +55,9 @@ describe "Granule selection", reset: false do
     end
 
    # EDSC-1395: Disabling this test for the moment as it is being flaky.
-   # This test is questionable as I do not see how the presence of 
-   # 5 locators of '#map path' is evidence that the selected granule is highlighted. 
-   # Further, this value seems to change from 5 to 3 then back to 5 almost 
+   # This test is questionable as I do not see how the presence of
+   # 5 locators of '#map path' is evidence that the selected granule is highlighted.
+   # Further, this value seems to change from 5 to 3 then back to 5 almost
    # randomly, making this test very flaky.  Re-evaluate at appropriate time.
 
    # it "highlights the selected granule on the map" do
@@ -65,7 +65,7 @@ describe "Granule selection", reset: false do
    # end
 
     it "displays a link to remove the granule in the granule list" do
-      expect(granule_list).to have_selector('.panel-list-remove', count: 1)
+      expect(granule_list).to have_link('Remove granule')
     end
 
     it "displays a link to remove the granule on the map" do
@@ -184,7 +184,7 @@ describe "Granule selection", reset: false do
     end
 
     it "displays a link to remove the granule in the granule list" do
-      expect(granule_list).to have_selector('.panel-list-remove', count: 1)
+      expect(granule_list).to have_link('Remove granule')
     end
 
     it "displays a link to remove the granule on the map" do
@@ -234,7 +234,7 @@ describe "Granule selection", reset: false do
 
     context "clicking the remove icon on the map" do
       before :all do
-        find_by_id("map").find('a[title="Exclude this granule"]').click
+        find_by_id("map").find('a[title="Remove granule"]').click
         wait_for_xhr
         page.evaluate_script("$('#map').data('map').map.panTo(new L.LatLng(2,-11))")
       end

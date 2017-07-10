@@ -41,8 +41,8 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { 
-      visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS' 
+    before(:all) {
+      visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS'
     }
 
     it 'loads the condition into the keywords field' do
@@ -86,8 +86,8 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { 
-      visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' 
+    before(:all) {
+      visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365'
     }
 
     it 'loads the condition into the temporal fields' do
@@ -135,8 +135,8 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { 
-      visit '/search/collections?sb=0%2C0%2C10%2C10' 
+    before(:all) {
+      visit '/search/collections?sb=0%2C0%2C10%2C10'
     }
 
     it 'draws the condition on the map' do
@@ -173,8 +173,8 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { 
-      visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' 
+    before(:all) {
+      visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS'
       dismiss_banner
     }
 
@@ -204,8 +204,8 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing project collections' do
-    before(:all) { 
-      visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' 
+    before(:all) {
+      visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC'
     }
 
     it 'restores the project' do
@@ -227,8 +227,8 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a collection's granules" do
-    before(:all) { 
-      visit '/search/granules?p=C179003030-ORNL_DAAC' 
+    before(:all) {
+      visit '/search/granules?p=C179003030-ORNL_DAAC'
     }
 
     it 'restores the collection granules view' do
@@ -249,8 +249,8 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a collection's details" do
-    before(:all) { 
-      visit '/search/collection-details?p=C179003030-ORNL_DAAC' 
+    before(:all) {
+      visit '/search/collection-details?p=C179003030-ORNL_DAAC'
     }
 
     it 'restores the collection details view' do
@@ -462,7 +462,7 @@ describe 'Address bar', reset: false do
     end
 
     it "restores the granule selection on the map" do
-      expect(page.find('#map')).to have_text('1988-02-01T00:00:00Z')
+      expect(page.find('#map')).to have_text('1988-02-01 00:00:00')
     end
   end
 

@@ -12,7 +12,7 @@ describe 'Services Access', reset: false do
       Capybara.reset_sessions!
       load_page :search, focus: disabled_serviceable_collection_id
       login
-      first_granule_list_item.click_link "Download single granule data"
+      first_granule_list_item.click_link "Configure and download single granule data"
       wait_for_xhr
     end
 
@@ -51,7 +51,7 @@ describe 'Services Access', reset: false do
       Capybara.reset_sessions!
       load_page :search, focus: smap_collection_id
       login
-      first_granule_list_item.click_link "Download single granule data"
+      first_granule_list_item.click_link "Configure and download single granule data"
     end
 
     context "when submitting the ESI service access method for two consecutive times" do
