@@ -57,29 +57,39 @@ class Retrieval < ActiveRecord::Base
   # Failure: Executed when the work has errored with an exception three times in a row - after this, the job is abandoned
 
   def self.before(job)
-    queued_jobs = DelayedJob.where('failed_at IS NULL')
-    if job.attempts == 0
-      Rails.logger.info "Delayed Job (ID: #{job.id}) is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
-    else
-      Rails.logger.info "Delayed Job (ID: #{job.id}) has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      queued_jobs = DelayedJob.where('failed_at IS NULL')
+      if job.attempts == 0
+        logger.info "Delayed Job #{job.id} is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+      else
+        logger.info "Delayed Job #{job.id} has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+      end
     end
   end
 
   def self.enqueue(job)
-    queued_jobs = DelayedJob.where('failed_at IS NULL')
-    Rails.logger.info "A new delayed job is being enqueued into processing - there are #{queued_jobs.size - 1} orders ahead of this job in the queue."
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      queued_jobs = DelayedJob.where('failed_at IS NULL')
+      logger.info "A new delayed job is being enqueued into processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
+    end
   end 
 
   def self.error(job, exception)
-    Rails.logger.error "Delayed Job (ID: #{job.id}) has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.error "Delayed Job #{job.id} has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
+    end
   end
 
   def self.failure(job)
-    Rails.logger.error "Delayed Job (ID: #{job.id}) has failed and will not be retried."
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.error "Delayed Job #{job.id} has failed and will not be retried."
+    end
   end
 
   def self.success(job)
-    Rails.logger.info "Delayed Job (ID: #{job.id}) has completed processing."
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.info "Delayed Job #{job.id} has completed processing."
+    end
   end
 
   # Delayed Jobs calls this method to execute an order creation
