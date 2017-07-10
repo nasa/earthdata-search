@@ -57,15 +57,17 @@ class Retrieval < ActiveRecord::Base
   # Failure: Executed when the work has errored with an exception three times in a row - after this, the job is abandoned
 
   def self.before(job)
+    queued_jobs = DelayedJob.where('failed_at IS NULL')
     if job.attempts == 0
-      Rails.logger.info "Delayed Job (ID: #{job.id}) is beginning its work."
+      Rails.logger.info "Delayed Job (ID: #{job.id}) is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
     else
-      Rails.logger.info "Delayed Job (ID: #{job.id}) has begun its work after failing #{job.attempts} time."
+      Rails.logger.info "Delayed Job (ID: #{job.id}) has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
     end
   end
 
   def self.enqueue(job)
-    Rails.logger.info "A new delayed job as been enqueued into processing:" + job.inspect
+    queued_jobs = DelayedJob.where('failed_at IS NULL')
+    Rails.logger.info "A new delayed job is being enqueued into processing - there are #{queued_jobs.size - 1} orders ahead of this job in the queue."
   end 
 
   def self.error(job, exception)
@@ -80,14 +82,13 @@ class Retrieval < ActiveRecord::Base
     Rails.logger.info "Delayed Job (ID: #{job.id}) has completed processing."
   end
 
-  # Delayed Jobs calls this method to excute an order creation
+  # Delayed Jobs calls this method to execute an order creation
   def self.process(id, token, env, base_url, access_token)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       if Rails.env.test?
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)
       end
-      Rails.logger.info "Delayed Job (ID: #{id}) has started its processing block." 
      
       retrieval = Retrieval.find_by_id(id)
       project = retrieval.jsondata
@@ -172,7 +173,6 @@ class Retrieval < ActiveRecord::Base
           end
         end
       end
-
       retrieval.jsondata = project
       retrieval.save!
     end
