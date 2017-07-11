@@ -92,7 +92,7 @@
       </script>
     <% end %>
 
-    <%= javascript_include_tag Rails.configuration.tophat_url, id: 'earthdata-tophat-script', :'data-show-fbm' => true, :'data-show-status' => true, :'data-status-api-url' => 'https://status.earthdata.nasa.gov/api/v1/notifications', async: true, defer: true if Rails.configuration.tophat_url.present? %>
+    <%= javascript_include_tag Rails.configuration.tophat_url, id: 'earthdata-tophat-script', :'data-show-status' => true, :'data-status-api-url' => 'https://status.earthdata.nasa.gov/api/v1/notifications', async: true, defer: true if Rails.configuration.tophat_url.present? %>
 
     <% if Rails.configuration.feedback_url.present? %>
       <%= javascript_include_tag Rails.configuration.feedback_url, id: 'feedback-tag', async: true, defer: true if Rails.configuration.feedback_url.present? %>
