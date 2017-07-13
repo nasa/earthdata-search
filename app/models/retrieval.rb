@@ -49,13 +49,57 @@ class Retrieval < ActiveRecord::Base
     @description
   end
 
-  # Delayed Jobs calls this method to excute an order creation
+  # EDSC-1542 before, enqueue, error, failure, and success are hooks provided by the Delayed_Job gem to allow visibility
+  # into its status.
+  # Before: Executed just as the work is started
+  # Enqueue: Executed right before the job is added to the queue - please note the job does not have an ID at this stage
+  # Error: Executed when the work encounters an exception - the work will be retried later, up to three times
+  # Failure: Executed when the work has errored with an exception three times in a row - after this, the job is abandoned
+
+  def self.before(job)
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      queued_jobs = DelayedJob.where(failed_at: nil)
+      if job.attempts == 0
+        logger.info "Delayed Job #{job.id} is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+      else
+        logger.info "Delayed Job #{job.id} has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+      end
+    end
+  end
+
+  def self.enqueue(job)
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      queued_jobs = DelayedJob.where(failed_at: nil)
+      logger.info "A new delayed job is being enqueued into processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
+    end
+  end 
+
+  def self.error(job, exception)
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.error "Delayed Job #{job.id} has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
+    end
+  end
+
+  def self.failure(job)
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.error "Delayed Job #{job.id} has failed and will not be retried."
+    end
+  end
+
+  def self.success(job)
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.info "Delayed Job #{job.id} has completed processing."
+    end
+  end
+
+  # Delayed Jobs calls this method to execute an order creation
   def self.process(id, token, env, base_url, access_token)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       if Rails.env.test?
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)
       end
+     
       retrieval = Retrieval.find_by_id(id)
       project = retrieval.jsondata
       user_id = retrieval.user.echo_id
@@ -119,7 +163,7 @@ class Retrieval < ActiveRecord::Base
 
                 # break the loop
                 if !Rails.configuration.enable_esi_order_chunking || limited_collection?(method['id'])
-                  Rais.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{method['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
+                  Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{method['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
                   page_num = results_count / page_size + 1
                 end
               end
@@ -139,7 +183,6 @@ class Retrieval < ActiveRecord::Base
           end
         end
       end
-
       retrieval.jsondata = project
       retrieval.save!
     end
