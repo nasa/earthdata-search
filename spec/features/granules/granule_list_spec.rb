@@ -16,6 +16,15 @@ describe "Granule list", reset: false do
   context "for all collections with granules" do
     use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
     hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
+
+    it 'provides a text field to search for single granule by granule ID' do
+      expect(page).to have_selector('#granule_id')
+    end
+
+    it 'provides a link to search for multiple granules by granule IDs' do
+      expect(page).to have_link('Search Multiple')
+    end
+
     it "provides a button to get collection details" do
       expect(granule_list).to have_link('View collection details')
     end
@@ -26,6 +35,49 @@ describe "Granule list", reset: false do
 
     it "provides a button to edit granule filters" do
       expect(granule_list).to have_link('Filter granules')
+    end
+
+    context 'clicking on the "Search Multiple" link' do
+      before :all do
+        click_link 'Search Multiple'
+      end
+
+      after :all do
+        click_link 'Reset'
+        wait_for_xhr
+      end
+
+      it 'displays the search multiple granules by IDs modal' do
+        expect(page).to have_content('Search Multiple Granule IDs')
+      end
+
+      it 'displays the instructions' do
+        expect(page).to have_selector('.instructions')
+      end
+
+      context 'entering multiple granule IDs' do
+        before :all do
+          fill_in "granule-id-field", with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf\nMOD10A1.A2016001.h31v12*"
+          click_link 'Search'
+          wait_for_xhr
+        end
+
+        after :all do
+          click_link 'Search Multiple'
+          click_link 'Reset'
+          wait_for_xhr
+          click_link 'Search Multiple'
+        end
+
+        it 'filters granules down to 2 results' do
+          expect(page).to have_content('Showing 2 of 2 matching granules')
+        end
+
+        it 'finds the granules' do
+          expect(page).to have_content('MOD10A1.A2016001.h31v13.005.2016006204744.hdf')
+          expect(page).to have_content('MOD10A1.A2016001.h31v12.005.2016006204741.hdf')
+        end
+      end
     end
 
     context "clicking on the collection details button" do

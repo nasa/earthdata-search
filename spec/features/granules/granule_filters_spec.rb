@@ -192,60 +192,6 @@ describe "Granule search filters", reset: false do
       end
     end
 
-    context "when searching by granule id" do
-      after :each do
-        first_project_collection.click_link "Show granule filters"
-        click_button "granule-filters-clear"
-        expect(project_overview).to reset_granules_to(before_granule_count)
-      end
-
-      context "with single granule id field" do
-        it "selecting Granule ID filters granules" do
-          fill_in "granule_id", with: "*2006227720*"
-          click_button "granule-filters-submit"
-          expect(project_overview).to filter_granules_from(before_granule_count)
-        end
-
-        it "clicking the clear button clears granule id field" do
-          fill_in "granule_id", with: "*2006227720*"
-          click_button "granule-filters-submit"
-          expect(project_overview).to filter_granules_from(before_granule_count)
-
-          first_project_collection.click_link "Show granule filters"
-          click_button "granule-filters-clear"
-          expect(project_overview).to reset_granules_to(before_granule_count)
-
-          expect(page).to have_field("granule_id", with: "")
-          click_button "granule-filters-submit"
-        end
-      end
-
-      context "with granule id textarea" do
-        before :each do
-          click_link "Search Multiple"
-        end
-
-        it "searching with a pattern filters granules" do
-          fill_in "granule_id_field", with: "*2006227720*"
-          click_button "granule-filters-submit"
-          expect(project_overview).to filter_granules_from(before_granule_count)
-        end
-
-        it "clicking the clear button clears granule id textarea" do
-          fill_in "granule_id_field", with: "*2006227720*"
-          click_button "granule-filters-submit"
-          expect(project_overview).to filter_granules_from(before_granule_count)
-
-          first_project_collection.click_link "Show granule filters"
-          click_button "granule-filters-clear"
-          expect(project_overview).to reset_granules_to(before_granule_count)
-
-          expect(page).to have_field("granule_id_field", with: "")
-          click_button "granule-filters-submit"
-        end
-      end
-    end
-
     # JS: New layout may make these tests invalid
     #
     # context "when excluding by granule id" do
