@@ -47,6 +47,14 @@ ns.CollectionsList = do ($ = jQuery
           id = collections.completedRequestId
           document.getElementById('collection-scroll-pane')?.scrollTop = 0
 
+    toggleBrowseImage: ->
+      event.stopPropagation();
+      if $('#toggleBrowseImageButton').html().indexOf("fa-minus") >= 0 
+        $('#toggleBrowseImageButton').html('<i class="fa fa-plus"></i>')
+      else
+        $('#toggleBrowseImageButton').html('<i class="fa fa-minus"></i>')
+      $('#browseImageDiv').toggle();
+
     escapePortal: (data, event) ->
       href = window.location.href.replace(/\/portal\/[\w]+/, '')
       window.location.href = href

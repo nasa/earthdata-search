@@ -261,6 +261,17 @@ p.map-popup-info {
   }
 }
 
+.toggleImageBrowse {
+  position: absolute;
+  z-index: 50;
+  right: 50px;
+  top: 110px;
+}
+
+#toggleBrowseImageButton {
+  color: white;
+}
+
 .granule-browse {
   position: absolute;
   z-index: 49;
