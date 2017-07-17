@@ -107,17 +107,12 @@ describe HealthController, type: :controller do
         mock_client = Object.new
         allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
         res = MockResponse.edsc_dependency({"availability"=>"NO"})
-        expect(mock_client).to receive(:get_echo_availability).and_return(res)
         expect(mock_client).to receive(:get_cmr_availability).and_return(res)
         expect(mock_client).to receive(:get_cmr_search_availability).and_return(res)
         res = MockResponse.connection_failed(nil)
-        expect(mock_client).to receive(:get_urs_availability).and_return(res)
-        expect(mock_client).to receive(:get_opensearch_availability).and_return(res)
-        expect(mock_client).to receive(:get_browse_scaler_availability).and_return(res)
 
         get :index, format: 'json'
-        json = JSON.parse response.body
-        expect(json['dependencies']['urs']).to eq({"ok?"=>false, "error"=>"Response code is 500"})
+        expect(response.status).to eq(503)
       end
     end
 
