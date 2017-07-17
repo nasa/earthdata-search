@@ -124,11 +124,11 @@ class Health
       if condition.nil?
         {ok?: true}
       else
-        condition ? {ok?: true} : (@ok = false; {ok?: false, error: response.body.to_json})
+        condition ? {ok?: true} : (@ok = false; {ok?: false, error: response.body.to_json, status: response.status})
       end
     else
       @ok = false
-      {ok?: false, error: "Response code is #{response.status}"}
+      {ok?: false, status: response.status}
     end
   end
 end
