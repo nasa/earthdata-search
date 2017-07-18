@@ -291,6 +291,10 @@ ns.Collection = do (ko
       else
         @archive_center
 
+    metadata_url: (collection, e) ->
+      win = window.open(@details()["#{e.target.text.toLowerCase()}_url"], '_blank')
+      win.focus()
+
     fromJson: (jsonObj) ->
       @json = jsonObj
 
