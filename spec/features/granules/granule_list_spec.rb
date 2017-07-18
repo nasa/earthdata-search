@@ -17,12 +17,8 @@ describe "Granule list", reset: false do
     use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
     hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
 
-    it 'provides a text field to search for single granule by granule ID' do
-      expect(page).to have_selector('#granule_id')
-    end
-
-    it 'provides a link to search for multiple granules by granule IDs' do
-      expect(page).to have_link('Search Multiple')
+    it 'provides a text field to search for single or multiple granules by granule IDs' do
+      expect(page).to have_selector('#granule-ids')
     end
 
     it "provides a button to get collection details" do
@@ -37,46 +33,24 @@ describe "Granule list", reset: false do
       expect(granule_list).to have_link('Filter granules')
     end
 
-    context 'clicking on the "Search Multiple" link' do
+    context 'entering multiple granule IDs' do
       before :all do
-        click_link 'Search Multiple'
-      end
-
-      after :all do
-        click_link 'Reset'
+        fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf, MOD10A1.A2016001.h31v12*\t"
         wait_for_xhr
       end
 
-      it 'displays the search multiple granules by IDs modal' do
-        expect(page).to have_content('Search Multiple Granule IDs')
+      after :all do
+        fill_in 'granule-ids', with: "\t"
+        wait_for_xhr
       end
 
-      it 'displays the instructions' do
-        expect(page).to have_selector('.instructions')
+      it 'filters granules down to 2 results' do
+        expect(page).to have_content('Showing 2 of 2 matching granules')
       end
 
-      context 'entering multiple granule IDs' do
-        before :all do
-          fill_in "granule-id-field", with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf\nMOD10A1.A2016001.h31v12*"
-          click_link 'Search'
-          wait_for_xhr
-        end
-
-        after :all do
-          click_link 'Search Multiple'
-          click_link 'Reset'
-          wait_for_xhr
-          click_link 'Search Multiple'
-        end
-
-        it 'filters granules down to 2 results' do
-          expect(page).to have_content('Showing 2 of 2 matching granules')
-        end
-
-        it 'finds the granules' do
-          expect(page).to have_content('MOD10A1.A2016001.h31v13.005.2016006204744.hdf')
-          expect(page).to have_content('MOD10A1.A2016001.h31v12.005.2016006204741.hdf')
-        end
+      it 'finds the granules' do
+        expect(page).to have_content('MOD10A1.A2016001.h31v13.005.2016006204744.hdf')
+        expect(page).to have_content('MOD10A1.A2016001.h31v12.005.2016006204741.hdf')
       end
     end
 

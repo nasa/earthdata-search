@@ -5,8 +5,6 @@ describe "Granule search filters", reset: false do
     before_granule_count = 0
 
     before(:all) do
-      page.driver.resize_window(2000, 5000) # Avoid having to scroll to click
-
       # Labs parameter enables additional attribute searching
       load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
 
@@ -17,10 +15,6 @@ describe "Granule search filters", reset: false do
       first_project_collection.click_link "Show granule filters"
       number_granules = project_overview.text.match /\d+ Granules/
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
-    end
-
-    after :all do
-      page.driver.resize_window(1280, 1024)
     end
 
     before :each do

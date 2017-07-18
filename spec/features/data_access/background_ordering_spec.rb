@@ -14,9 +14,7 @@ describe 'Background jobs ordering', reset: false do
 
       load_page :search, focus: aster_collection_id
       login
-      click_link "Search Multiple"
-      fill_in "granule-id-field", with: "AST_L1A#00311092015232127_11102015081255.hdf\nAST_L1A#00311092015223445_11102015075930.hdf"
-      click_link 'Search'
+      fill_in "granule-ids", with: "AST_L1A#00311092015232127_11102015081255.hdf, AST_L1A#00311092015223445_11102015075930.hdf\t"
       wait_for_xhr
 
       click_button "Download Data"
