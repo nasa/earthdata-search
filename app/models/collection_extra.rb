@@ -163,7 +163,7 @@ class CollectionExtra < ActiveRecord::Base
               extra.granule = extra.browseable_granule = browseable.first['id']
             end
           else
-            puts JSON.pretty_generate(response.body)
+            puts response.body.to_json
           end
         end
         if extra.granule.nil?
@@ -174,7 +174,7 @@ class CollectionExtra < ActiveRecord::Base
             granules = response.body['feed']['entry']
             extra.granule = granules.first['id'] if granules.first
           else
-            puts JSON.pretty_generate(response.body)
+            puts response.body.to_json
           end
         end
         puts "Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule

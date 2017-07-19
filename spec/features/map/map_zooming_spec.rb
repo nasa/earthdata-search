@@ -55,18 +55,18 @@ describe 'Map Zooming', reset: false do
         within '.master-overlay-main' do
           find('.master-overlay-minimize').click
         end
-        wait_for_xhr
+        zoom_level = MapUtil.get_zoom(page)
         find('.leaflet-control-zoom-in').click
-        wait_for_xhr
+        wait_for_zoom_animation zoom_level
       end
 
       after :all do
         synchronize(30) do
           # Synchronize because animations can cause occlusion if execution is very fast
+          zoom_level = MapUtil.get_zoom(page)
           find('.leaflet-control-zoom-out').click
-          wait_for_xhr
+          wait_for_zoom_animation zoom_level
           find('.master-overlay-maximize').click
-          wait_for_xhr
         end
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
@@ -226,6 +226,7 @@ describe 'Map Zooming', reset: false do
   context 'on polar view (e.g. EPSG3031 - South Polar Stereographic)' do
     context 'at the maximum zoom level' do
       before :all do
+        load_page :search
         click_on "North Polar Stereographic"
         MapUtil.set_zoom(page, 4)
       end
