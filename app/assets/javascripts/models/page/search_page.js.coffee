@@ -39,7 +39,7 @@ ns.SearchPage = do (ko
   sitetour = new SiteTourModel();
 
   initModal = () ->
-    $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' ||  window.location.href.indexOf('?tour=true') != -1)
+    $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1)
 
   $(document).ready ->
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
@@ -50,7 +50,7 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
 
-    setTimeout initModal, 2000 if !window.edscportal
+    preferences.ready.done(-> initModal()) if !window.edscportal
 
   class SearchPage
     constructor: ->
