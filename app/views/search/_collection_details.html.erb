@@ -58,15 +58,17 @@
           <div class="dropdown detail-dropdown">
             <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Metadata Formats <i class="fa fa-caret-down"></i></a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.html_url }">HTML</a></li>
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.native_url }">Native</a></li>
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.atom_url }">ATOM</a></li>
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.echo10_url }">ECHO10</a></li>
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.iso19115_url }">ISO19115</a></li>
+              <!-- ko with: $root.ui.collectionsList.selected() -->
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">HTML</a></li>
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">Native</a></li>
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">ATOM</a></li>
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">ECHO10</a></li>
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">ISO19115</a></li>
               <!-- ko if: $data.smap_iso_url -->
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></li>
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">SMAP ISO</a></li>
               <!-- /ko -->
-              <li><a class="dropdown-link" data-bind="attr: { href: $data.dif_url }">DIF</a></li>
+              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url">DIF</a></li>
+              <!--/ko-->
             </ul>
           </div>
           <div class="dropdown detail-dropdown">
