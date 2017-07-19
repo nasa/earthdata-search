@@ -68,7 +68,6 @@ describe 'Map Zooming', reset: false do
           wait_for_zoom_animation zoom_level
           find('.master-overlay-maximize').click
         end
-        page.save_screenshot '1.png'
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
