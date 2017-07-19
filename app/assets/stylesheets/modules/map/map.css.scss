@@ -261,12 +261,29 @@ p.map-popup-info {
   }
 }
 
+.toggle-image-browse {
+  position: absolute;
+  z-index: 50;
+  right: 40px;
+  top: 120px;
+
+  a {
+    color: rgba(192, 57, 43,1.0);
+    font-size: 1.2em;
+  }
+
+  .open-browse {
+    color: rgba(46, 204, 113,1.0);
+  }
+}
+
 .granule-browse {
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
   position: absolute;
   z-index: 49;
   right: 50px;
   top: 132px;
-  border: 1px solid rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.5);
 
   &.busy {
     width: 256px;
