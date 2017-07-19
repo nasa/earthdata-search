@@ -7,8 +7,8 @@ data = @edsc.models.data
 
 ns.SiteTour = do (ko, help = @edsc.help, PreferencesModel = data.Preferences,  urlUtil=@edsc.util.url) ->
   class SiteTour
-    constructor: ->
-      @preferences = new PreferencesModel()
+    constructor: (preferences) ->
+      @preferences = preferences
       @safePath = ko.observable(urlUtil.cleanPath()?.split('?')[0] in ["/search", "/", ""])
 
     startTour: () =>
