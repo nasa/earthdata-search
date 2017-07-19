@@ -14,7 +14,7 @@ class GibsConfiguration
       response = client.add_tag(tag_key, config[:config], config[:collections], token, true, false) do |tag|
         tag['product'] || tag[:product]
       end
-      puts JSON.pretty_generate(response.body) unless response.success?
+      puts response.body.to_json unless response.success?
       all_conditions << config[:collections]['condition']
     end
     # TODO: Update cleanup logic to use https://bugs.earthdata.nasa.gov/browse/CMR-2609
