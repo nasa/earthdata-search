@@ -40,8 +40,9 @@ describe "Granule list", reset: false do
       end
 
       after :all do
-        fill_in 'granule-ids', with: "\t"
-        wait_for_xhr
+        click_link "Filter granules"
+        click_button "granule-filters-clear"
+        find('#granule-search').click_link('close')
       end
 
       it 'filters granules down to 2 results' do

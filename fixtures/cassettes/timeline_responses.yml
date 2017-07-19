@@ -733,30 +733,6 @@ e11cd86b9ba6a814a979bf2f3550f3a228b2bad4:
       encoding: UTF-8
       string: '[{"concept-id":"C14758250-LPDAAC_ECS","intervals":[[1330387200,1383004800,13406],[1383091200,1383609600,95],[1383696000,1389744000,1384],[1389916800,1392768000,143],[1392854400,1425254400,6740]]}]'
     http_version: 
-66f6f1037a0bf0784f0106a6354aba764b2064b2:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - fbc880b8-7455-438e-b184-5587a178bdf9
-      date:
-      - Wed, 19 Jul 2017 16:01:55 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '600'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"concept-id":"C14758250-LPDAAC_ECS","intervals":[[1330387200,1362441600,2320],[1362528000,1364947200,188],[1365033600,1368489600,211],[1368576000,1380585600,789],[1380672000,1383004800,114],[1383091200,1383609600,21],[1383696000,1389744000,370],[1389916800,1390003200,3],[1390176000,1390521600,4],[1390608000,1391040000,6],[1391126400,1391558400,7],[1391644800,1391904000,6],[1392076800,1392768000,18],[1392854400,1393200000,7],[1393286400,1396569600,184],[1396656000,1398988800,116],[1399075200,1400803200,86],[1400889600,1405641600,273],[1405728000,1409270400,191],[1409356800,1425254400,1063]]}]'
-    http_version: 
 706cda508a749aa8b5ad3f44cff3080be00ea13e:
   response:
     status:
@@ -6168,9 +6144,9 @@ a1e4e345b8121c07d1ec1f8284ebb29ca91ae7a8:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 8d2a442d-9831-4ade-bae8-13c67d51206b
+      - c4be9437-cf66-482d-a870-63578f5f31bd
       date:
-      - Wed, 12 Jul 2017 20:04:20 GMT
+      - Wed, 19 Jul 2017 21:18:24 GMT
       server:
       - nginx
       strict-transport-security:
