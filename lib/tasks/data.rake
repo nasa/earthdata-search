@@ -106,11 +106,11 @@ namespace :data do
         job = CronJobHistory.find_by_id id
         job.last_run = Time.now
         job.status = 'failed'
-        job.message = $!.message
+        job.message = [$!.message, $!.backtrace].join("\n")
       else
-        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: $!.message, host: Socket.gethostname)
+        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: [$!.message, $!.backtrace].join("\n"), host: Socket.gethostname)
       end
-      puts "Cron job #{task} failed with error #{$!.message} on #{Socket.gethostname}"
+      puts "Cron job #{task} failed with error on #{Socket.gethostname}: #{[$!.message, $!.backtrace].join("\n")}"
       job.save!
       return
     else
