@@ -222,9 +222,9 @@
   <!-- ko if: ui.collectionsList.focused() -->
   <!-- ko with: ui.collectionsList.focused() -->
   <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) && !stickied().browseError() -->
-  <div class="toggleImageBrowse">
-    <a href="#" class="pull-right" id="toggleBrowseImageButton" data-bind="click: function() { $root.ui.collectionsList.toggleBrowseImage()};" data-toggle="collapse" data-target="#browseImageDiv">
-      <i class="fa fa-minus"></i>
+  <div class="toggle-image-browse">
+    <a href="#" class="pull-right" id="toggleBrowseImageButton" data-bind="click: function() { $root.ui.collectionsList.toggleBrowseImage()};" data-toggle="collapse" data-target="#browseImageDiv" title="Toggle browse image display">
+      <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>
     </a>
   </div>
   <div class="granule-browse collapse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">

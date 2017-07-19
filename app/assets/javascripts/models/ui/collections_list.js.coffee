@@ -49,11 +49,11 @@ ns.CollectionsList = do ($ = jQuery
 
     toggleBrowseImage: ->
       event.stopPropagation();
-      if $('#toggleBrowseImageButton').html().indexOf("fa-minus") >= 0 
-        $('#toggleBrowseImageButton').html('<i class="fa fa-plus"></i>')
+      if $('#toggleBrowseImageButton').html().indexOf("fa-close") >= 0
+        $('#toggleBrowseImageButton').html('<span class="fa-stack open-browse"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-plus fa-stack-1x fa-inverse"></i></span>')
       else
-        $('#toggleBrowseImageButton').html('<i class="fa fa-minus"></i>')
-      $('#browseImageDiv').toggle();
+        $('#toggleBrowseImageButton').html('<span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>')
+      $('#browseImageDiv').toggle('fast');
 
     escapePortal: (data, event) ->
       href = window.location.href.replace(/\/portal\/[\w]+/, '')
