@@ -15,10 +15,10 @@ describe 'Granule metadata' do
   end
 
   it 'provides metadata in multiple formats' do
-    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC"]')
-    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.atom"]')
-    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.echo10"]')
-    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.iso19115"]')
+    expect(page).to have_link('Native')
+    expect(page).to have_link('ATOM')
+    expect(page).to have_link('ECHO 10')
+    expect(page).to have_link('ISO 19115')
   end
 
   context 'when a logged in user views granule metadata' do
