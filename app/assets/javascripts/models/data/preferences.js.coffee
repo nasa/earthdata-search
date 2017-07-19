@@ -13,10 +13,11 @@ ns.Preferences = do (ko
       @showTour = ko.observable(true)
       @doNotShowTourAgain = ko.observable('false')
       @isLoaded = ko.observable(false)
-
       @load()
 
     load: ->
+      readyDeferred = new $.Deferred()
+      this.ready = readyDeferred
       data = window.edscprefs
       window.edscprefs = null
 
@@ -28,6 +29,7 @@ ns.Preferences = do (ko
           console.log "Loaded site preferences, #{JSON.stringify(data)}"
           @fromJson(data)
           @isLoaded(true)
+          readyDeferred.resolve()
       null
 
     onload: (fn) ->
