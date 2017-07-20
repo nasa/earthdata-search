@@ -370,7 +370,7 @@ ns.query = do (ko,
       @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
       @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
-      @granuleIds = @queryComponent(new DelimitedParam('readable_granule_name'), '')
+      @granuleIds = @queryComponent(new DelimitedParam('readable_granule_name', ', '), '')
       @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
       @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
 
