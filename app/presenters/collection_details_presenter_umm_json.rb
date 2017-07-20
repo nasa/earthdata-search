@@ -145,7 +145,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
         polygons = Array.wrap(geometry['GPolygons'])
         polygons.each do |polygon|
           s = 'Polygon: ('
-          polygon['Boundary'].each_with_index do |point, i|
+          polygon['Boundary']['Points'].each_with_index do |point, i|
             latitude = point['Latitude']
             longitude = point['Longitude']
             s += "(#{degrees(latitude)}, #{degrees(longitude)})"
