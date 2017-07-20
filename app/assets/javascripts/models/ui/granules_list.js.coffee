@@ -168,6 +168,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
             $(list).animate({scrollTop : scroll }, edsc.config.defaultAnimationDurationMs, 'swing')
 
     _onKeyDown: (e) =>
+      return true if e.target.id == 'granule-ids'
       stickied = @stickied()
       key = e.keyCode
       removalKeys = [
@@ -262,5 +263,8 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
 
     state: (selected) ->
       @_hasSelected(selected)
+
+    clearGranuleIds: =>
+      @granules().query.granuleIds('')
 
   exports = GranulesList

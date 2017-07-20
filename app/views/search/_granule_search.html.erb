@@ -15,32 +15,6 @@
     <!-- /ko -->
 
   <dl>
-    <!--ko ifnot: cwic()-->
-      <dt>Granule ID</dt>
-      <dd class="granule-id-search search-single">
-        <section class="single-granule-id-search">
-          <input data-bind="value: granuleQuery.granuleIds" id="granule_id" type="text" placeholder="Search Granule IDs..." />
-          or
-          <a href="#" class="search-granules-multiple button-small button-outline-light">
-            Search Multiple <i class="fa fa-arrow-circle-o-right"></i>
-          </a>
-          <p class="instructions">* (asterisk) will match any number of characters, and ? (question mark) will match exactly one character.</p>
-        </section>
-        <section class="multiple-granule-id-search">
-          <p>
-            <a href="#" class="search-granules-one button-small button-outline-light">
-              <i class="fa fa-arrow-circle-o-left"></i> Search One
-            </a>
-          </p>
-          <p class="instructions">
-            Enter one ID or pattern per line.
-            * (asterisk) will match any number of characters, and ? (question mark) will match exactly one character.
-          </p>
-          <textarea data-bind="value: granuleQuery.granuleIds" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
-        </section>
-
-      </dd>
-    <!-- /ko -->
       <dt>Temporal</dt>
       <dd>
         <!-- ko with: granuleDatasource().temporalModel().pending -->

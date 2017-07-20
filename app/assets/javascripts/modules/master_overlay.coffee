@@ -215,6 +215,12 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
           newHeight = granuleList.height() - granuleList.find('.master-overlay-nav').outerHeight() - granuleList.find('.master-overlay-info').outerHeight() - granuleList.find('header').outerHeight()
           granuleList.find(@scope('.content')).height(newHeight)
 
+        # granule filter
+        granuleFilter = $('#granule-search')
+        if granuleFilter.offset().left <= window.innerWidth
+          newLeft = window.innerWidth - granuleFilter.width()
+          granuleFilter.parents(@scope('.secondary')).offset({top: granuleFilter.parents(@scope('.secondary-content')).offset().top, left: newLeft})
+
         # granule details
         granuleDetails = $('#granule-details')
         if granuleDetails.is(':visible')

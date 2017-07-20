@@ -37,7 +37,6 @@
           <!-- /ko -->
         </header>
         <div class="master-overlay-info">
-        <!-- ko if: granules().isLoaded() -->
           <p>
             Showing <span data-bind="text: granules().results().length"></span> of
             <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
@@ -60,13 +59,16 @@
 
           <!--ko ifnot: $data.collection.cwic()-->
             <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
+
+            <p class="granule-id-search">
+              <input id="granule-ids" type="text" placeholder="Search Single or Multiple Granule IDs..." data-bind="value: $data.collection.granuleIds, valueUpdate: 'keyup'" data-tooltip="true" title="* (asterisk) will match any number of characters, and ? (question mark) will match exactly one character.
+Separate multiple granule IDs by space, comma, or new line."/>
+            </p>
           <!--/ko-->
 
           <!-- ko if: granules().excludedGranulesList().length > 0 -->
           <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
-
-        <!-- /ko -->
         </div>
         <div id="granules-scroll" class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
           <ul class="panel-list-list" data-bind="foreach: granules().results()">

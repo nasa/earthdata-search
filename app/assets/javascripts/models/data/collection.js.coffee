@@ -84,6 +84,11 @@ ns.Collection = do (ko
       @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
       @cwic = @computed((-> @granuleDatasourceName() == 'cwic'), this, deferEvaluation: true)
 
+      @granuleIds = @computed
+        read: => @granuleQuery.granuleIds().replace(/\s\n/g, ', ')
+        write: (value) => @granuleQuery.granuleIds(value.split(/[,\s\n]\s*/g).join(", "))
+        deferEvaluation: true
+
       @visible = ko.observable(false)
       @disposable(@visible.subscribe(@_visibilityChange))
 

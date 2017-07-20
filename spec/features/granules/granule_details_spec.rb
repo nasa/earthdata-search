@@ -9,9 +9,7 @@ describe 'Granule details', reset: false do
     first_collection_result.click
     wait_for_xhr
     # Select a specific granule
-    click_link 'Filter granules'
-    fill_in 'granule_id', with: 'FIFE_STRM_15M.80611715.s15'
-    click_button 'Apply'
+    fill_in 'granule-ids', with: "FIFE_STRM_15M.80611715.s15\t"
     wait_for_xhr
     first_granule_list_item.click_link('View granule details')
     wait_for_xhr
