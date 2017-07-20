@@ -95,10 +95,7 @@ describe 'Services Access', reset: false do
       Capybara.reset_sessions!
       load_page :search, focus: serviceable_collection_id
       login
-      click_link "Filter granules"
-      click_link "Search Multiple"
-      fill_in "granule_id_field", with: "AMSR_E_L3_5DaySnow_V10_20110928.hdf\nAMSR_E_L3_5DaySnow_V10_20110923.hdf\nAMSR_E_L3_5DaySnow_V10_20110918.hdf\nAMSR_E_L3_5DaySnow_V10_20110913.hdf\nAMSR_E_L3_5DaySnow_V10_20110908.hdf\nAMSR_E_L3_5DaySnow_V10_20110903.hdf\nAMSR_E_L3_5DaySnow_V10_20110829.hdf\nAMSR_E_L3_5DaySnow_V10_20110824.hdf\nAMSR_E_L3_5DaySnow_V10_20110819.hdf\nAMSR_E_L3_5DaySnow_V10_20110814.hdf\nAMSR_E_L3_5DaySnow_V10_20110809.hdf\nAMSR_E_L3_5DaySnow_V10_20110804.hdf"
-      click_button "granule-filters-submit"
+      fill_in "granule-ids", with: "AMSR_E_L3_5DaySnow_V10_20110928.hdf, AMSR_E_L3_5DaySnow_V10_20110923.hdf, AMSR_E_L3_5DaySnow_V10_20110918.hdf, AMSR_E_L3_5DaySnow_V10_20110913.hdf, AMSR_E_L3_5DaySnow_V10_20110908.hdf, AMSR_E_L3_5DaySnow_V10_20110903.hdf, AMSR_E_L3_5DaySnow_V10_20110829.hdf, AMSR_E_L3_5DaySnow_V10_20110824.hdf, AMSR_E_L3_5DaySnow_V10_20110819.hdf, AMSR_E_L3_5DaySnow_V10_20110814.hdf, AMSR_E_L3_5DaySnow_V10_20110809.hdf, AMSR_E_L3_5DaySnow_V10_20110804.hdf\t"
       wait_for_xhr
 
       click_button "Download Data"

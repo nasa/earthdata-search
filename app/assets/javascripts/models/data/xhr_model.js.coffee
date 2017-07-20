@@ -42,7 +42,6 @@ ns.XhrModel = do (ko
           edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true) unless url.indexOf('/granules/timeline.json') > -1
 
           if url.indexOf('/granules/timeline.json') > -1
-            $('.master-overlay').removeClass('is-master-overlay-secondary-hidden');
             currentPage=window.edsc.models.page.current
             currentPage.ui.projectList.showFilters(currentPage.project.focusedProjectCollection().collection)
       )

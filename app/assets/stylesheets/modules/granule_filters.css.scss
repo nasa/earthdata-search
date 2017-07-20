@@ -1,3 +1,4 @@
+$granule-ids-input-width: 350px;
 .master-overlay-secondary-content {
   color: #C9C9C9;
 
@@ -104,6 +105,29 @@
   margin: -2.5em 0 0 1em;
   padding: .1em 1em;
   font-size: .9em;
+}
+
+.granule-id-search input[type='text']{
+  margin: -2.5em 0 0 1em;
+  padding: 0 1em;
+  font-size: .9em;
+  min-width: 350px;
+}
+
+.master-overlay-info {
+  .tooltip {
+    width: $granule-ids-input-width;
+  }
+
+  .tooltip-inner {
+    white-space: pre-wrap;
+    text-align: left;
+    max-width: $granule-ids-input-width;
+  }
+}
+
+#granule-id-field {
+  width: 100%;
 }
 
 .master-overlay-info .undo {

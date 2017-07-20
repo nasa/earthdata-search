@@ -12,15 +12,12 @@ describe 'Background jobs ordering', reset: false do
     before :all do
       Delayed::Worker.delay_jobs = true
 
-      load_page :search, {project: [aster_collection_id], view: :project}
+      load_page :search, focus: aster_collection_id
       login
-      first_project_collection.click_link "Show granule filters"
-      click_link "Search Multiple"
-      fill_in "granule_id_field", with: "AST_L1A#00311092015232127_11102015081255.hdf\nAST_L1A#00311092015223445_11102015075930.hdf"
-      click_button "granule-filters-submit"
+      fill_in "granule-ids", with: "AST_L1A#00311092015232127_11102015081255.hdf, AST_L1A#00311092015223445_11102015075930.hdf\t"
       wait_for_xhr
 
-      click_button "Download project data"
+      click_button "Download Data"
       wait_for_xhr
 
       find("#access-method-C14758250-LPDAAC_ECS-010").click
