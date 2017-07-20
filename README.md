@@ -42,7 +42,7 @@ See public/licenses.txt
 
 ### Prerequisites
 
-* Ruby 2.1.2
+* Ruby 2.2.2
 * [Pow](http://pow.cx/) is recommended for local testing with Earthdata Login
 * A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) is strongly recommended.
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
