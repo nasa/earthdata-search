@@ -61,7 +61,8 @@
             <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
 
             <p class="granule-id-search">
-              <input id="granule-ids" type="text" placeholder="Search Single or Multiple Granule IDs..." data-bind="value: $data.collection.granuleIds, valueUpdate: 'keyup'" data-tooltip="true" title="* (asterisk) will match any number of characters, and ? (question mark) will match exactly one character. Separate multiple granule IDs by space, comma, or new line."/>
+              <input id="granule-ids" type="text" placeholder="Search Single or Multiple Granule IDs..." data-bind="value: $data.collection.granuleIds, valueUpdate: 'keyup'" data-tooltip="true" title="* (asterisk) will match any number of characters, and ? (question mark) will match exactly one character.
+Separate multiple granule IDs by space, comma, or new line."/>
             </p>
           <!--/ko-->
 
