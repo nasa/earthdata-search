@@ -27,6 +27,15 @@ portals: &portals
     scripts:
       - edsc-portal.ornl.min.js
       
+  above:
+    org: ABoVE
+    title: Search
+    params:
+      project:
+        - ABoVE
+    scripts:
+      - edsc-portal.ornl.min.js
+      
   ornldaac:
     org: ORNL DAAC
     title: Search
