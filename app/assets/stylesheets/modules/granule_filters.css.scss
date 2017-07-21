@@ -107,16 +107,20 @@ $granule-ids-input-width: 350px;
   font-size: .9em;
 }
 
-.granule-id-search input[type='text']{
+.master-overlay-info .granule-id-search {
   margin: -2.5em 0 0 1em;
-  padding: 0 1em;
-  font-size: .9em;
-  min-width: 350px;
+
+  input[type='text']{
+    padding: 0 1em;
+    font-size: .9em;
+    min-width: 300px;
+  }
 }
 
-.master-overlay-info {
+.master-overlay-info, .master-overlay-global-actions {
   .tooltip {
     width: $granule-ids-input-width;
+    font-size: .8em;
   }
 
   .tooltip-inner {
