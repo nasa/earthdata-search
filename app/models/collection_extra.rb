@@ -9,7 +9,7 @@ class CollectionExtra < ActiveRecord::Base
   store :orbit, coder: JSON
 
   def self.build_echo_client(env=(@cmr_env || Rails.configuration.cmr_env))
-    puts "Building echo client for env: #{env || 'env not working'}"
+    puts "[#{Time.now}] Building echo client for env: #{env || 'env not working'}"
     Echo::Client.client_for_environment(env, Rails.configuration.services)
   end
 
@@ -18,7 +18,7 @@ class CollectionExtra < ActiveRecord::Base
     if response.success? && response.body['token']
       response.body['token']['id']
     else
-      puts 'System token not created successfully'
+      puts '[#{Time.now}] System token not created successfully'
       nil
     end
   end
@@ -34,7 +34,7 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def self.sync_esi(client, token)
-    puts 'Starting sync ESI'
+    puts "[#{Time.now}] Starting sync ESI"
     option_response = client.get_all_service_order_information(token)
 
     if option_response.success?
@@ -47,8 +47,8 @@ class CollectionExtra < ActiveRecord::Base
 
       ids_no_longer_esi_capable = esi_tagged_ids - esi_capable_ids
       ids_become_esi_capable = esi_capable_ids - esi_tagged_ids
-      puts "Number of collections that should no longer bear ESI tag: #{ids_no_longer_esi_capable.size}."
-      puts "Number of collections that should be tagged ESI capable: #{ids_become_esi_capable.size}."
+      puts "[#{Time.now}] Number of collections that should no longer bear ESI tag: #{ids_no_longer_esi_capable.size}."
+      puts "[#{Time.now}] Number of collections that should be tagged ESI capable: #{ids_become_esi_capable.size}."
 
       # collections that no longer ESI capable:
       client.bulk_remove_tag(tag_key('subset_service.esi'), ids_no_longer_esi_capable.map{|elem| {'concept-id' => elem}}, token) if ids_no_longer_esi_capable.size > 0
@@ -56,14 +56,14 @@ class CollectionExtra < ActiveRecord::Base
       # collections that just get the ESI configs
       client.add_tag(tag_key('subset_service.esi'), nil, ids_become_esi_capable, token, false, false) if ids_become_esi_capable.size > 0
     end
-    puts 'Finished adding ESI tags'
+    puts "[#{Time.now}] Finished adding ESI tags"
     nil
   end
 
   def self.sync_gibs(client, token)
-    puts "Starting sync GIBS"
+    puts "[#{Time.now}] Starting sync GIBS"
     GibsConfiguration.new.sync_tags!(tag_key('gibs'), client, token)
-    puts "Finished adding GIBS tags"
+    puts "[#{Time.now}] Finished adding GIBS tags"
   end
 
   def self.sync_tags
@@ -82,11 +82,11 @@ class CollectionExtra < ActiveRecord::Base
       client.create_tag_if_needed(tag_key(tag), token)
     end
 
-    puts "Starting sync OPENDAP"
+    puts "[#{Time.now}] Starting sync OPENDAP"
     each_collection(client, {has_granules: true}, token) do |collection|
       sync_opendap(client, token, collection)
     end
-    puts "Finished adding OPENDAP tags"
+    puts "[#{Time.now}] Finished adding OPENDAP tags"
 
     sync_esi(client, token)
     sync_gibs(client, token)
@@ -177,18 +177,18 @@ class CollectionExtra < ActiveRecord::Base
             puts response.body.to_json
           end
         end
-        puts "Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
+        puts "[#{Time.now}] Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
       end
 
       begin
         extra.save! if extra.changed?
       rescue ActiveRecord::RecordNotUnique => e
-        puts "#{e.message}"
+        puts "[#{Time.now}] #{e.message}"
       end
 
       processed_count += 1
 
-      puts "#{processed_count} / #{hits}"
+      puts "[#{Time.now}] #{processed_count} / #{hits}"
     end
   end
 
@@ -270,9 +270,9 @@ class CollectionExtra < ActiveRecord::Base
         yield collection
         processed_count += 1
       end
-      puts "#{processed_count} / #{hits} Collections Processed"
+      puts "[#{Time.now}] #{processed_count} / #{hits} Collections Processed"
     end while processed_count < hits && collections.size > 0
-    puts "#{processed_count} Collections Processed in #{Time.now - start}s"
+    puts "[#{Time.now}] #{processed_count} Collections Processed in #{Time.now - start}s"
 
     nil
   end

@@ -49,21 +49,21 @@ namespace :data do
 
             if Socket.gethostname == task1.host
               # last time it was run on task1.host. Yield to the other instance this time.
-              puts "Cron job #{task} has been run on #{task1.host}. Stop."
+              puts "[#{Time.now}] Cron job #{task} has been run on #{task1.host}. Stop."
               return
             elsif task2.present? && Socket.gethostname == task2.host # && Socket.gethostname != task1.host
               # last time it was run on task2.host. Yield to the other instance this time.
-              puts "Cron job #{task} has been run on #{task2.host}. Stop."
+              puts "[#{Time.now}] Cron job #{task} has been run on #{task2.host}. Stop."
               return
             elsif task2.present? # && Socket.gethostname != task1.host && Socket.gethostname != task2.host
               # Both task1 and task2 exist in history
               # However, IPs of both the instances have changed (after a new deployment).
-              puts "This is possibly a new deployment. Wait randomly for 0 to 60 seconds and retry."
+              puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for 0 to 60 seconds and retry."
               sleep rand(0..60)
               tried += 1
-              puts "Wait is done. Retrying (#{tried}) on #{Socket.gethostname}."
+              puts "[#{Time.now}] Wait is done. Retrying (#{tried}) on #{Socket.gethostname}."
               if tried == 10
-                puts "Cron job #{task} is being started on #{Socket.gethostname}."
+                puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
                 job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
                 job.save!
                 id = job.id
@@ -73,8 +73,8 @@ namespace :data do
               end
             else # task2.nil?
               # task1 not nil. But the host name is different now which means it is no different than a fresh deployment.
-              puts "Cron job #{task} has been run for #{history_tasks.size} times (in total from both hosts) during the past #{(1.5 * interval).to_i / 3600.0} hours."
-              puts "Cron job #{task} is being started on #{Socket.gethostname}."
+              puts "[#{Time.now}] Cron job #{task} has been run for #{history_tasks.size} times (in total from both hosts) during the past #{(1.5 * interval).to_i / 3600.0} hours."
+              puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
               job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
               job.save!
               id = job.id
@@ -83,12 +83,12 @@ namespace :data do
             end
           else
             # neither has been run.
-            puts "Cron job #{task} has not been run for #{(1.5 * interval).to_i / 3600.0} hours on #{Socket.gethostname}. Wait randomly for 0 to 60 seconds and retry."
+            puts "[#{Time.now}] Cron job #{task} has not been run for #{(1.5 * interval).to_i / 3600.0} hours on #{Socket.gethostname}. Wait randomly for 0 to 60 seconds and retry."
             sleep rand(0..60)
             tried += 1
-            puts "Wait is done. Retrying (#{tried}) on #{Socket.gethostname}."
+            puts "[#{Time.now}] Wait is done. Retrying (#{tried}) on #{Socket.gethostname}."
             if tried == 10
-              puts "Cron job #{task} is being started on #{Socket.gethostname}."
+              puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
               job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
               job.save!
               id = job.id
@@ -106,11 +106,11 @@ namespace :data do
         job = CronJobHistory.find_by_id id
         job.last_run = Time.now
         job.status = 'failed'
-        job.message = [$!.message, $!.backtrace].join("\n")
+        job.message = $!.message
       else
-        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: [$!.message, $!.backtrace].join("\n"), host: Socket.gethostname)
+        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: $!.message, host: Socket.gethostname)
       end
-      puts "Cron job #{task} failed with error on #{Socket.gethostname}: #{[$!.message, $!.backtrace].join("\n")}"
+      puts "[#{Time.now}] Cron job #{task} failed with error on #{Socket.gethostname}: #{[$!.message, $!.backtrace].join("\n")}"
       job.save!
       return
     else
@@ -121,7 +121,7 @@ namespace :data do
       else
         job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
       end
-      puts "Cron job #{task} completed successfully on #{Socket.gethostname}."
+      puts "[#{Time.now}] Cron job #{task} completed successfully on #{Socket.gethostname}."
       job.save!
     end
   end
