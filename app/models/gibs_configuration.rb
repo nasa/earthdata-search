@@ -14,7 +14,10 @@ class GibsConfiguration
       response = client.add_tag(tag_key, config[:config], config[:collections], token, true, false) do |tag|
         tag['product'] || tag[:product]
       end
-      puts response.body.to_json unless response.success?
+      unless response.success?
+        puts "[#{Time.now}] add_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+        raise "[#{Time.now}] add_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+      end
       all_conditions << config[:collections]['condition']
     end
     # TODO: Update cleanup logic to use https://bugs.earthdata.nasa.gov/browse/CMR-2609
@@ -24,7 +27,11 @@ class GibsConfiguration
                         {'tag' => {'tag_key' => tag_key}},
                         {'not' => {'or' => all_conditions}}]}
     }
-    client.remove_tag(tag_key, tag_removal_condition, token)
+    response = client.remove_tag(tag_key, tag_removal_condition, token)
+    unless response.success?
+      puts "[#{Time.now}] remove_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+      raise "[#{Time.now}] remove_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+    end
     true
   end
 
