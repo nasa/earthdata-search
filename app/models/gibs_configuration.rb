@@ -11,10 +11,18 @@ class GibsConfiguration
 
     all_conditions = []
     configs.each do |config|
-      response = client.add_tag(tag_key, config[:config], config[:collections], token, true, false) do |tag|
-        tag['product'] || tag[:product]
+      begin
+        response = client.add_tag(tag_key, config[:config], config[:collections], token, true, false) do |tag|
+          tag['product'] || tag[:product]
+        end
+        unless response.success?
+          puts "[#{Time.now}] add_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+          raise "[#{Time.now}] add_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+        end
+      rescue
+        puts "[#{Time.now}] add_tag threw an exception: #{[$!.message, $!.backtrace].join("\n")}"
+        raise "[#{Time.now}] add_tag threw an exception: #{[$!.message, $!.backtrace].join("\n")}"
       end
-      puts response.body.to_json unless response.success?
       all_conditions << config[:collections]['condition']
     end
     # TODO: Update cleanup logic to use https://bugs.earthdata.nasa.gov/browse/CMR-2609
@@ -24,7 +32,16 @@ class GibsConfiguration
                         {'tag' => {'tag_key' => tag_key}},
                         {'not' => {'or' => all_conditions}}]}
     }
-    client.remove_tag(tag_key, tag_removal_condition, token)
+    begin
+      response = client.remove_tag(tag_key, tag_removal_condition, token)
+      unless response.success?
+        puts "[#{Time.now}] remove_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+        raise "[#{Time.now}] remove_tag failed with status: #{response.status}, error: #{response.body.to_json}"
+      end
+    rescue
+      puts "[#{Time.now}] remove_tag threw an exception: #{[$!.message, $!.backtrace].join("\n")}"
+      raise "[#{Time.now}] remove_tag threw an exception: #{[$!.message, $!.backtrace].join("\n")}"
+    end
     true
   end
 
