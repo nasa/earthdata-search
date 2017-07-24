@@ -165,7 +165,7 @@ ns.Collection = do (ko
 
     thumbnail: ->
       granule = @browseable_granule
-      collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
+      collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1 if @links?
       if collection_id?
         "#{scalerUrl}/browse_images/datasets/#{collection_id}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else if granule?
