@@ -24,8 +24,8 @@
                  autofocus>
         </p>
       <% end %>
-      <div class="dropdown" id="temporal-dropdown">
-        <a href="#" class="button temporal-dropdown-button dropdown-button" title="Temporal">
+      <div class="dropdown keep-open" id="temporal-dropdown">
+        <a href="#" class="button temporal-dropdown-button dropdown-button" data-toggle="dropdown" title="Temporal">
           <i class="fa fa-clock-o"></i>
           <i class="fa fa-caret-down"></i>
         </a>
@@ -38,7 +38,8 @@
         </ul>
       </div>
 
-      <div class="dropdown" data-bind="with: ui.spatialType">
+
+      <div class="dropdown" data-bind="with: ui.spatialType" id="spatial-dropdown">
         <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Spatial"><i class="fa fa-fw" data-bind="css: icon"></i><i class="fa fa-caret-down"></i></a>
         <ul class="dropdown-menu spatial-selection">
           <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
