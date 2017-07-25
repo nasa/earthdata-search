@@ -87,6 +87,10 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       keyboardNavigation: false
       ).on 'show', ->
         $(this).data('datepicker').picker.addClass('datepicker-temporal-recurring')
+       .on 'click', (e) ->
+        $('.temporal-filter').click (e) ->
+          e.stopPropagation()
+          return
 
     # Set end time to 23:59:59
     DatePickerProto = Object.getPrototypeOf($('.temporal').data('datepicker'))
