@@ -71,7 +71,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       keyboardNavigation: false
       ).on 'click', (e) ->
         $('.temporal-filter').click (e) ->
-          console.log "temporal filter click"
           e.stopPropagation()
           return
 
