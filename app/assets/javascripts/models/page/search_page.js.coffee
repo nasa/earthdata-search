@@ -89,6 +89,8 @@ ns.SearchPage = do (ko
         @_focus.notifyRenderers('startSearchFocus')
 
     clearFilters: =>
+      # EDSC-1448: The temporal dropdown is 'special' and needs to be programmatically closed...
+      $('#temporal-dropdown.open').removeClass('open');
       @query.clearFilters()
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()

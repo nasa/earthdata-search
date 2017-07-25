@@ -161,11 +161,22 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     $('.temporal-range-stop').datepicker('update')
 
   $(document).ready ->
-    $(".temporal-dropdown-button").on 'click', ->
-      $(this).parents('.dropdown').toggleClass('open')
 
-    $("#ui-datepicker-div").on 'click', (e) ->
-      e.stopPropagation();
+    # EDSC-1448: If the spatial dropdown is opened, then the temporal dropdown - if open - should close itself...
+    $("#spatial-dropdown").on 'click', (e) ->
+      $('#temporal-dropdown.open').removeClass('open');
+
+    # EDSC-1448: .keep-open is a special class for the temporal dropdown - the presence of a datepicker
+    # within a dropdown can cause the dropdown to erroneously close when a date is picked.  This prevents that issue.
+
+    $(".dropdown.keep-open").on 'shown.bs.dropdown', (e) ->
+      this.closable = false
+
+    $(".dropdown.keep-open").on 'click', (e) ->
+      this.closable = true
+
+    $(".dropdown.keep-open").on 'hide.bs.dropdown', (e) ->
+      return this.closable
 
     $('.collection-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
