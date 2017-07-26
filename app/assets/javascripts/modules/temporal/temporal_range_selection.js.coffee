@@ -58,7 +58,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     onChangeDateTime = (dp, $input) ->
       $input.trigger('change')
 
-    root.find('.temporal-range-picker').datepicker
+    root.find('.temporal-range-picker').datepicker(
       format: "yyyy-mm-dd"
       startDate: "1960-01-01"
       endDate: new Date()
@@ -69,6 +69,10 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       todayHighlight: true
       forceParse: false
       keyboardNavigation: false
+      ).on 'click', (e) ->
+        $('.temporal-filter').click (e) ->
+          e.stopPropagation()
+          return
 
     root.find('.temporal-recurring-picker').datepicker(
       format: "mm-dd"
@@ -83,6 +87,10 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       keyboardNavigation: false
       ).on 'show', ->
         $(this).data('datepicker').picker.addClass('datepicker-temporal-recurring')
+      .on 'click', (e) ->
+        $('.temporal-filter').click (e) ->
+          e.stopPropagation()
+          return  
 
     # Set end time to 23:59:59
     DatePickerProto = Object.getPrototypeOf($('.temporal').data('datepicker'))
@@ -156,8 +164,22 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     $('.temporal-range-stop').datepicker('update')
 
   $(document).ready ->
-    $(".temporal-dropdown-button").on 'click', ->
-      $(this).parents('.dropdown').toggleClass('open')
+    # EDSC-1448: If the spatial dropdown is opened, then the temporal dropdown - if open - should close itself...
+    $("#spatial-dropdown").on 'click', (e) ->
+      $('#temporal-dropdown.open').removeClass('open');
+
+    # EDSC-1448: .keep-open is a special class for the temporal dropdown - the presence of a datepicker
+    # within a dropdown can cause the dropdown to erroneously close when a date is picked.  This prevents that issue.
+
+    $(".dropdown.keep-open").on 'shown.bs.dropdown', (e) ->
+      this.closable = false
+
+    $(".dropdown.keep-open").on 'click', (e) ->
+      this.closable = true
+
+    $(".dropdown.keep-open").on 'hide.bs.dropdown', (e) ->
+      return this.closable
+ 
     $('.collection-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
       modelPath: "query.temporal.pending",
