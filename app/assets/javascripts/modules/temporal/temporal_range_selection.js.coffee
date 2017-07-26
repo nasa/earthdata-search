@@ -87,7 +87,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       keyboardNavigation: false
       ).on 'show', ->
         $(this).data('datepicker').picker.addClass('datepicker-temporal-recurring')
-      ).on 'click', (e) ->
+      .on 'click', (e) ->
         $('.temporal-filter').click (e) ->
           e.stopPropagation()
           return  
