@@ -52,7 +52,7 @@ a.endpoint-label {
   height: auto;
   max-height: 142px;
   overflow: hidden;
-  margin-top: 12px;
+  margin: 12px 0;
   white-space: pre-line;
 }
 
@@ -156,4 +156,23 @@ a.endpoint-label {
 
 .contact-content {
   margin-bottom: .8em;
+}
+
+.field-title {
+  font-size: .8em;
+}
+
+.field-content-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+
+.field-content-item {
+  width: 350px;
+  background-color: #dadada;
+  border-radius: 5px;
+  padding: 6px 15px;
+  margin-right: 20px;
 }

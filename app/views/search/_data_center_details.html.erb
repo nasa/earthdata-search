@@ -1,0 +1,36 @@
+<dl>
+  <!--ko if: $data.ContactInstruction-->
+    <dt>Contact Instruction:</dt>
+    <dd data-bind="text: $data.ContactInstruction"></dd>
+  <!--/ko-->
+
+  <!--ko if: $data.ContactMechanisms-->
+  <dt>Contact Mechanisms:</dt>
+    <!--ko foreach: $data.ContactMechanisms-->
+      <dd><!-- ko text: $data.Type--><!-- /ko -->: <!-- ko text: $data.Value --><!-- /ko --></dd>
+    <!--/ko-->
+  <!--/ko-->
+
+  <!--ko if: $data.ServiceHours-->
+    <dt>Service Hours:</dt>
+    <dd data-bind="text: $data.ServiceHours"></dd>
+  <!--/ko-->
+
+  <!--ko if: $data.Addresses-->
+  <dt>Addresses:</dt>
+    <!--ko foreach: $data.Addresses-->
+      <!--ko foreach: $data.StreetAddresses-->
+        <dd data-bind="text: $data"></dd>
+      <!--/ko-->
+      <dd data-bind="text: $data.City"></dd>
+      <dd data-bind="text: $data.StateProvice"></dd>
+      <dd data-bind="text: $data.PostalCode"></dd>
+      <dd data-bind="text: $data.Country"></dd>
+    <!--/ko-->
+  <!--/ko-->
+
+  <!--ko if: $data.RelatedUrls-->
+  <dt>Related URLs:</dt>
+  <dd>TBI</dd>
+  <!--/ko-->
+</dl>

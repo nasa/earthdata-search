@@ -97,18 +97,6 @@
               <!-- /ko -->
             </ul>
           </div>
-
-          <dl class="flex-column">
-            <!-- ko if: $data.related_urls.length > 0 -->
-            <dt>Related URLs:</dt>
-            <dd>
-              <!-- ko foreach: $data.highlighted_urls -->
-              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
-              <!-- /ko -->
-              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
-            </dd>
-            <!-- /ko -->
-          </dl>
         </div>
         <!-- end of second row -->
 
@@ -121,34 +109,197 @@
         <!-- /ko -->
         <!-- end of description -->
 
-        <!-- third row: misc info -->
+        <!--third row: data centers-->
+
+        <ul class="data-centers-cards cards">
+          <li class="card">
+            <div class="card-header">
+              <h5 itemprop="provider" class="card-header-title" title="ORNL_DAAC">
+                ORNL_DAAC
+              </h5>
+              <!-- Data Center Roles -->
+              <!-- Show multiple roles in a popover -->
+              <a href="javascript:void(0)" class="webui-popover-link card-header-badge">Multiple Roles <i class="fa fa-plus"></i></a>
+              <div class="webui-popover-content">
+                <p>ARCHIVER</p>
+                <p>DISTRIBUTOR</p>
+                <p>ORIGINATOR</p>
+                <p>PROCESSOR</p>
+              </div>
+
+            </div>
+            <div class="card-body active">
+              <div class="card-body-details">
+                <h6>THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)</h6>
+                <p>
+                  5700 Rivertech Ct<br>
+                  Suite 300<br>
+                  Riverdale,
+                  Maryland
+                  20737
+                </p>
+              </div>
+              <div class="card-body-aside">
+                <h6>08:00 to 17:00 Mon - Fri</h6>
+                <ul>
+                  <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:bo.sun@nasa.gov" title="bo.sun@nasa.gov">Email</a>
+                  </li>
+                  <li>
+                    <i class="fa fa-phone-square"></i>
+                    301-851-8435
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-body-details-full">
+                <h6>Additional Address</h6>
+                <p>
+                  1234 Another St<br>
+                  Another City,
+                  Maryland
+                  20123
+                </p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-body-details-full">
+                <h6>Additional Address</h6>
+                <p>
+                  3rd Address St<br>
+                  Third City,
+                  Maryland
+                  20123
+                </p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-body-details-full">
+                <h6>Contact Details</h6>
+                <p>This is a piece of sample contact instruction.</p>
+              </div>
+            </div>
+            <div class="card-body ">
+              <div class="card-body-details-full">
+                <p>Data Center Related URL 1</p>
+                <a href="https://daac.ornl.gov/" itemprop="url">https://daac.ornl.gov/</a><br>
+                <ul class="arrow-tag-group-list">
+                  <li itemprop="keyword" class="arrow-tag-group-item">
+                    Home Page
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card-body ">
+              <div class="card-body-details-full">
+                <p>Data Center Related URL 2</p>
+                <a href="https://search.sit.earthdata.nasa.gov" itemprop="url">https://search.sit.earthdata.nasa.gov</a><br>
+                <ul class="arrow-tag-group-list">
+                  <li itemprop="keyword" class="arrow-tag-group-item">
+                    Home Page
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card-body ">
+              <div class="card-body-details-full">
+                <p>Hey, Last one</p>
+                <a href="https://search.sit.earthdata.nasa.gov" itemprop="url">https://search.sit.earthdata.nasa.gov</a><br>
+                <ul class="arrow-tag-group-list">
+                  <li itemprop="keyword" class="arrow-tag-group-item">
+                    Home Page
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card-navigation">
+              <ul>
+                <li class="card-navigation-control">
+                  <a href="" class="card-navigation-control-back">
+                    <i class="fa fa-chevron-left"></i>
+                  </a>
+                </li>
+                <li class="card-navigation-pagination">
+                  <i class="fa fa-circle"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle-o"></i>
+                  <i class="fa fa-circle-o"></i>
+                </li>
+                <li class="card-navigation-control">
+                  <a href="" class="card-navigation-control-forward">
+                    <i class="fa fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+
+        <!--ko foreach: data_centers-->
+        <div data-bind="text: shortname_roles" class="field-title"></div>
+        <ul class="field-content-list">
+          <!--ko foreach: $data.contact_groups-->
+            <li class="field-content-item">
+              <%= render 'data_center_details' %>
+            </li>
+          <!--/ko-->
+          <!--ko foreach: $data.contact_persons-->
+          <li class="field-content-item">
+            <%= render 'data_center_details' %>
+          </li>
+          <!--/ko-->
+          <!--ko if: $data.contact_information-->
+          <li class="field-content-item">
+            <!--ko with: $data.contact_information-->
+              <%= render 'data_center_details' %>
+            <!--/ko-->
+          </li>
+          <!--/ko-->
+          <!--ko if: contact_groups == null && contact_persons == null && contact_information == null -->
+          <li class="field-content-item">
+            No contact information for this data center.
+          </li>
+          <!--/ko-->
+        </ul>
+        <!--/ko-->
+
+        <!--end of third row-->
+
+        <!-- fourth row: misc info -->
         <div class="row">
           <dl class="flex-column">
-            <dt>Processing Center:</dt>
-            <dd data-bind="text: $data.processing_center"></dd>
-            <dt>Archive Center:</dt>
-            <dd data-bind="text: $data.archive_center"></dd>
+            <!-- ko if: $data.related_urls.length > 0 -->
+            <dt>Related URLs:</dt>
+            <dd>
+              <!-- ko foreach: $data.highlighted_urls -->
+              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
+              <!-- /ko -->
+              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
+            </dd>
+            <!-- /ko -->
+          </dl>
+          <dl class="flex-column">
             <dt>Short Name:</dt>
             <dd data-bind="text: $data.short_name"></dd>
           </dl>
           <dl class="flex-column">
-            <dt>Contacts:</dt>
-            <dd data-bind="foreach: $data.contacts">
-              <div class="contact-content">
-                <div data-bind="text: name"></div>
-                <div data-bind="foreach: contact_mechanisms">
-                  <span data-bind="text: $data"></span><br />
-                </div>
-              </div>
-            </dd>
             <!-- ko foreach: $data.online_access_urls -->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data}" target="_blank">Download Page</a></dt>
             <!-- /ko -->
           </dl>
         </div>
-        <!-- end of third row -->
+        <!-- end of fourth row -->
 
-        <!-- fourth row: science keywords -->
+        <!-- fifth row: science keywords -->
         <div class="row">
           <dl>
             <dt>Science Keywords:</dt>
@@ -168,7 +319,7 @@
             <!-- /ko -->
           </dl>
         </div>
-        <!-- end of fourth row -->
+        <!-- end of fifth row -->
       </div>
     </div>
   </div>
