@@ -256,4 +256,14 @@ describe 'Collection details', reset: false do
       end
     end
   end
+
+  context 'when selecting a collection with polygon spatial' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1267337984-ASF'
+    end
+
+    it 'displays the spatial' do
+      expect(page).to have_content('Polygon: ((89.99°, -179.999999°)(65.0°, -179.999999°)(65.0°, -90.0°)(65.0°, 0.0°)(65.0°, 90.0°)(65.0°, 179.999999°)(89.99°, 179.999999°)(89.99°, 90.0°)(89.99°, 0.0°)(89.99°, -90.0°)(89.99°, -179.999999°))')
+    end
+  end
 end
