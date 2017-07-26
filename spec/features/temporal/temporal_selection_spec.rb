@@ -12,6 +12,18 @@ describe "Temporal" do
     reset_search
   end
 
+  context 'When opening the temporal dropdown, and then opening the spatial dropdown' do
+    before :all do
+      click_link "Temporal"
+      expect(page).to have_content("Start")
+      click_link "Spatial"
+    end
+
+    it 'closes the temporal dropdown' do
+      expect(page).to have_no_content("Start")
+    end
+  end
+
   context "range selection" do
     it "allows the user to search from a start date time to the present" do
       click_link "Temporal"
