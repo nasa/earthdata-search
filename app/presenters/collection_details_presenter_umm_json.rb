@@ -149,7 +149,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
             latitude = point['Latitude']
             longitude = point['Longitude']
             s += "(#{degrees(latitude)}, #{degrees(longitude)})"
-            s += ', ' if i + 1 < polygon['Boundary'].size
+            s += ', ' if i + 1 < polygon['Boundary']['Points'].size
           end
           s += ')'
           spatial_list << s

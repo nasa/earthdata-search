@@ -45,7 +45,7 @@ describe CollectionDetailsPresenterUmmJson do
   end
 
   it 'converts spatial polygons' do
-    spatial = { 'HorizontalSpatialDomain' => { 'Geometry' => { 'GPolygons' => [{ 'Boundary' => [{ 'Longitude' => '-180.00', 'Latitude' => '-53.00' }, { 'Longitude' => '180.00', 'Latitude' => '-53.00' }, { 'Longitude' => '180.00', 'Latitude' => '-89.00' }, { 'Longitude' => '-180.00', 'Latitude' => '-89.00' }] }] } } }
+    spatial = { 'HorizontalSpatialDomain' => { 'Geometry' => { 'GPolygons' => [{ 'Boundary' => {'Points' => [{ 'Longitude' => '-180.00', 'Latitude' => '-53.00' }, { 'Longitude' => '180.00', 'Latitude' => '-53.00' }, { 'Longitude' => '180.00', 'Latitude' => '-89.00' }, { 'Longitude' => '-180.00', 'Latitude' => '-89.00' }]} }] } } }
     @collection['SpatialExtent'] = spatial
     CollectionDetailsPresenterUmmJson.new(@collection)
     @collection[:spatial].should eq(["Polygon: ((-53.00\xC2\xB0, -180.00\xC2\xB0), (-53.00\xC2\xB0, 180.00\xC2\xB0), (-89.00\xC2\xB0, 180.00\xC2\xB0), (-89.00\xC2\xB0, -180.00\xC2\xB0))"])
