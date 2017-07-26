@@ -33,6 +33,13 @@ describe "Granule list", reset: false do
       expect(granule_list).to have_link('Filter granules')
     end
 
+    it 'provides a button to download single granule' do
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        expect(page).to have_link('Download single granule data')
+        expect(page).to have_css('a[href="ftp://n5eil01u.ecs.nsidc.org/DP0/BRWS/Browse.001/2016.09.08/BROWSE.MOD10A1.A2016250.h21v17.005.2016252125119.1.jpg"]')
+      end
+    end
+
     context 'entering multiple granule IDs' do
       before :all do
         fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf, MOD10A1.A2016001.h31v12*\t"
