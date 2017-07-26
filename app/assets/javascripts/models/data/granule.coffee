@@ -23,7 +23,7 @@
       null
 
     download_now_url: ->
-      return link.href for link in @links when link.rel.indexOf('/data#') != -1 if @links? @links.length > 0
+      return link.href for link in @links when link.rel.indexOf('/data#') != -1 if @links? && @links.length > 0
       '#'
 
     onThumbError: (granule) ->
