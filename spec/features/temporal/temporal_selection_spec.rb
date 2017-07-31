@@ -14,6 +14,7 @@ describe "Temporal" do
 
   context 'When opening the temporal dropdown, and then opening the spatial dropdown' do
     before :all do
+      load_page :search
       click_link "Temporal"
       expect(page).to have_content("Start")
       click_link "Spatial"
