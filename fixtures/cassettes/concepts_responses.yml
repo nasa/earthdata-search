@@ -1086,6 +1086,121 @@ c0397529a3db7377532830fd690da96652354208:
         1) Cylindrical projection, 2) Northern polar projection, 3) Southern polar
         projection.","orbit_parameters":{},"id":"C1236303848-NSIDC_ECS","original_format":"ISO-SMAP","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false}'
     http_version: 
+2cc5633aa91d0d85904d4c8539c96cd4e7e946da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 402eb720-91e7-4bef-8510-c922c8441236
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Wed, 26 Jul 2017 05:18:31 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '3125'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"ShortName":"SI_M12_CSV","Abstract":"Eulerian sea ice motion data
+        set","RelatedUrls":[{"Description":"The ASF Search and Ordering Interface","URLContentType":"DistributionURL","Type":"GET
+        DATA","URL":"https://vertex.daac.asf.alaska.edu/"}],"DataDates":[{"Date":"2016-05-27T00:44:52.000Z","Type":"CREATE"},{"Date":"2016-05-27T00:44:52.000Z","Type":"UPDATE"}],"SpatialExtent":{"HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"GEODETIC","GPolygons":[{"Boundary":{"Points":[{"Longitude":-179.999999,"Latitude":89.99},{"Longitude":-179.999999,"Latitude":65.0},{"Longitude":-90.0,"Latitude":65.0},{"Longitude":0.0,"Latitude":65.0},{"Longitude":90.0,"Latitude":65.0},{"Longitude":179.999999,"Latitude":65.0},{"Longitude":179.999999,"Latitude":89.99},{"Longitude":90.0,"Latitude":89.99},{"Longitude":0.0,"Latitude":89.99},{"Longitude":-90.0,"Latitude":89.99},{"Longitude":-179.999999,"Latitude":89.99}]}}]}},"GranuleSpatialRepresentation":"GEODETIC"},"AdditionalAttributes":[{"Name":"FLIGHT_LINE","Description":"Flight
+        line identifies where the aircraft/instument has flown to acquire data.","DataType":"STRING"},{"Name":"GROUP_ID","Description":"ID
+        that helps ASF group products","DataType":"STRING"},{"Name":"OFF_NADIR_ANGLE","Description":"The
+        angle the sensor points away from the satellite''s nadir (off to the side.
+        Larger angles correspond to imaging farther away from the satellite.","DataType":"FLOAT"},{"Name":"MD5SUM","Description":"Checksum","DataType":"STRING"},{"Name":"GRANULE_TYPE","Description":"Identifies
+        the type of data by combining platform, beam mode type, and coverage (frame/swath","DataType":"STRING"},{"Name":"ASCENDING_DESCENDING","Description":"Describes
+        whether the satellite travel direction was ascending towards the north pole,
+        or descending towards the south pole.","DataType":"STRING"},{"Name":"FAR_END_LAT","Description":"Latitude
+        of the granule where imaging ended farthest from the satellite. For an ascending
+        satellite, it locates the upper right corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"INSAR_STACK_SIZE","Description":"The
+        number of SAR images over the same location in the entire ASF archive. Used
+        for data that may be used for interferometry.","DataType":"INT"},{"Name":"BEAM_MODE_TYPE","Description":"In
+        most cases the same as beam mode. For Radarsat indicates both resolution and
+        off-nadir pointing angle. Standard beam mode becomes ST1 though ST7 beammodetype,
+        with ST7 pointing farthest from the satellite.","DataType":"STRING"},{"Name":"INSAR_BASELINE","Description":"The
+        perpendicular distance between two satellites when they took the related two
+        images. Useful for identifying image pairs to use for interferometry.","DataType":"FLOAT"},{"Name":"CENTER_FRAME_ID","Description":"ID
+        of the center frame","DataType":"STRING"},{"Name":"CENTER_ESA_FRAME","Description":"The
+        Europenan Space Agency equivalent to the value in the FRAME_NUMBER field","DataType":"INT"},{"Name":"ACQUISITION_DATE","Description":"Date
+        the data was acquired by the satellite or aircraft + instrument.","DataType":"STRING"},{"Name":"MISSION_NAME","Description":"The
+        sitenames where AIRSAR, AIMOSS, and UAVSAR acqusitions were taken.","DataType":"STRING"},{"Name":"CENTER_LON","Description":"Longitude
+        of the center of the scene or frame.","DataType":"FLOAT"},{"Name":"NEAR_START_LAT","Description":"Latitude
+        of the granule where imaging began nearest to the satellite. For an ascending
+        satellite, it locates the lower left corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"BEAM_MODE","Description":"The
+        general type of active sensor used. Values indicate image resolution: such
+        as standard, fine, wide, scansar wide, SM (strip mode, EW(extra wide. OR indicate
+        resolution + polarization: FBS (fine beam dual polarization, FBD (fine beam
+        dual pol. OR atipically the type of product: TOPSAR (high resolution DEM,
+        RPI (repeat pass interferometry, XTI (across track interferometry. OR resolution
+        and product type IW (interferometric wide.","DataType":"STRING"},{"Name":"BEAM_MODE_DESC","Description":"Text
+        that describes the beam mode","DataType":"STRING"},{"Name":"PROCESSING_TYPE","Description":"Indicates
+        the type of product, such as browse, metadata, L1, complex, amplitude, projected,
+        terrain corrected.","DataType":"STRING"},{"Name":"PROCESSING_DESCRIPTION","Description":"Describes
+        what the data was processed to. For example: low resolution terrain corrected
+        ALOS data.","DataType":"STRING"},{"Name":"FRAME_NUMBER","Description":"The
+        designated frame or scene as defined by various space agencies (ESA, JAXA,
+        CSA each of which have their own scheme. The frame describes a box over the
+        Earth at a fixed latitude. Combined with a path number (for longitude it identifies
+        a specific piece of ground.","DataType":"INT"},{"Name":"PROCESSING_LEVEL","Description":"Indicates
+        how much processing has been done to the data: L1, L1.0 unprocessed; L1.1
+        single look complex; L1, L1.5 amplitude image","DataType":"STRING"},{"Name":"PROCESSING_DATE","Description":"The
+        date the data was processed","DataType":"STRING"},{"Name":"NEAR_START_LON","Description":"Longitude
+        of the granule where imaging began nearest the satellite. For an ascending
+        satellite, it locates the lower left corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"DOPPLER","Description":"The
+        doppler centroid frequency - Useful for sar processing and interferometry.
+        Related to the squint of the satellite.","DataType":"FLOAT"},{"Name":"FAR_START_LAT","Description":"Latitude
+        of the granule where imaging began farthest from the satellite. For an ascending
+        satellite, it locates the lower right corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"NEAR_END_LON","Description":"Longitude
+        of the granule where imaging ended nearest to the satellite. For an ascending
+        satellite, it locates the upper left corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"PROCESSING_TYPE_DISPLAY","Description":"Label
+        that will be displayed in ASF''s Vertex interface","DataType":"STRING"},{"Name":"POLARIZATION","Description":"Radar
+        transmissions are polarized, with components normally termed vertical (V and
+        horizontal (H. Vertical means that the electric vector is in the plane of
+        incidence; horizontal means the electric vector is perpendicular to the plane
+        of incidence.","DataType":"STRING"},{"Name":"FAR_START_LON","Description":"Latitude
+        of the granule where imaging began farthest from the satellite. For an ascending
+        satellite, it locates the lower right corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"THUMBNAIL_URL","Description":"URL
+        that points to this granule''s thumbnail image","DataType":"STRING"},{"Name":"ASF_PLATFORM","Description":"Internal
+        ASF platform name","DataType":"STRING"},{"Name":"INSAR_STACK_ID","Description":"An
+        ASF-assigned unique number used internally to unifiy SAR images over the same
+        location. Used for data that might be used for interferometry.","DataType":"INT"},{"Name":"LOOK_DIRECTION","Description":"SAR
+        imagery is taken with the sensor pointing either left or right of the satellite.
+        Most data is right-looking. A small amount of Radarsat is left-looking.","DataType":"STRING"},{"Name":"PATH_NUMBER","Description":"The
+        path describes a path the satellite will follow over the earth similar to
+        longitude; each path has an assigned number. Combined with a frame number
+        is identifies a specific piece of ground.","DataType":"INT"},{"Name":"NEAR_END_LAT","Description":"Latitude
+        of the granule where imaging ended nearest to the satellite. For an ascending
+        satellite, it locates the upper left corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"FARADAY_ROTATION","Description":"An
+        effect of the ionisphere that rotates polarizations from HH or VV or HV or
+        VH. Significant for L or P band. Rotation over 5 degrees reduces usefulness
+        for applications such as forest biomass. Effect is reduced at solar minimum.","DataType":"STRING"},{"Name":"FAR_END_LON","Description":"Longitude
+        of the granule where imaging ended farthest from the satellite. For an ascending
+        satellite, it locates the upper right corner of a north-oriented image.","DataType":"FLOAT"},{"Name":"BYTES","Description":"Product
+        size in bytes.","DataType":"FLOAT"},{"Name":"CENTER_LAT","Description":"Latitude
+        of the center of the scene or frame.","DataType":"FLOAT"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"CRYOSPHERE","Term":"SEA ICE","VariableLevel1":"ICE DEFORMATION"},{"Category":"EARTH
+        SCIENCE","Topic":"CRYOSPHERE","Term":"SEA ICE","VariableLevel1":"SEA ICE MOTION"}],"EntryTitle":"SEA_ICE_MEaSURES_Kinematics_M12_CSV","CollectionProgress":"Not
+        provided","ProcessingLevel":{"ProcessingLevelDescription":"Sea ice data processed
+        using Eulerian algorithms to derive motion and deformation and provided as
+        a csv for ease of use.","Id":"2"},"Platforms":[{"Type":"Spacecraft","ShortName":"Seaice","LongName":"Seaice","Instruments":[{"ShortName":"SAR","LongName":"Synthetic
+        Aperture Radar","OperationalModes":["Arctic","Antarctic"]}]}],"Version":"1","TemporalExtents":[{"TemporalRangeType":"Continuous
+        Range","PrecisionOfSeconds":1,"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"2007-04-02T00:00:00.000Z","EndingDateTime":"2011-04-02T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["PROCESSOR"],"ShortName":"Alaska
+        Satellite Facility"},{"Roles":["ARCHIVER"],"ShortName":"Alaska Satellite Facility"},{"Roles":["ARCHIVER"],"ShortName":"Not
+        provided","ContactInformation":{"ContactMechanisms":[{"Type":"Primary","Value":"907-474-5041"},{"Type":"Email","Value":"uso@asf.alaska.edu"}]}}]}'
+    http_version: 
 5e63bc956df687d12363d0cdb9a65f6e4d0c5706:
   response:
     status:
