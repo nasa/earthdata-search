@@ -1,36 +1,52 @@
-<dl>
-  <!--ko if: $data.ContactInstruction-->
-    <dt>Contact Instruction:</dt>
-    <dd data-bind="text: $data.ContactInstruction"></dd>
-  <!--/ko-->
+<p class="meta-info" data-bind="text: $data.name"></p>
+<p class="meta-info" data-bind="text: $parent.longname"></p>
+<!--ko if: $data.contact_information-->
+  <!-- ko with: $data.contact_information -->
+    <!-- ko if: $data.ContactInstruction -->
+    <p class="meta-info" data-bind="text: $data.ContactInstruction"></p>
+    <!-- /ko -->
 
-  <!--ko if: $data.ContactMechanisms-->
-  <dt>Contact Mechanisms:</dt>
-    <!--ko foreach: $data.ContactMechanisms-->
-      <dd><!-- ko text: $data.Type--><!-- /ko -->: <!-- ko text: $data.Value --><!-- /ko --></dd>
+    <!--ko if: $data.ServiceHours-->
+    <p class="meta-info">Service Hours: <span data-bind="text: $data.ServiceHours"></span></p>
     <!--/ko-->
   <!--/ko-->
 
-  <!--ko if: $data.ServiceHours-->
-    <dt>Service Hours:</dt>
-    <dd data-bind="text: $data.ServiceHours"></dd>
-  <!--/ko-->
-
-  <!--ko if: $data.Addresses-->
-  <dt>Addresses:</dt>
-    <!--ko foreach: $data.Addresses-->
-      <!--ko foreach: $data.StreetAddresses-->
-        <dd data-bind="text: $data"></dd>
+  <ul class="flex-column">
+    <!-- ko with: $data.contact_information -->
+      <!--ko foreach: $data.Addresses-->
+      <li>
+          <!--ko foreach: $data.StreetAddresses-->
+            <p data-bind="text: $data"></p>
+          <!--/ko-->
+          <p>
+            <span data-bind="text: $data.City"></span>
+            <!-- ko if: $data.StateProvince -->
+            ,
+            <!-- /ko -->
+            <span data-bind="text: $data.StateProvince"></span>
+            <span data-bind="text: $data.PostalCode"></span>
+          </p>
+          <p data-bind="text: $data.Country"></p>
+      </li>
       <!--/ko-->
-      <dd data-bind="text: $data.City"></dd>
-      <dd data-bind="text: $data.StateProvice"></dd>
-      <dd data-bind="text: $data.PostalCode"></dd>
-      <dd data-bind="text: $data.Country"></dd>
-    <!--/ko-->
-  <!--/ko-->
 
-  <!--ko if: $data.RelatedUrls-->
-  <dt>Related URLs:</dt>
-  <dd>TBI</dd>
-  <!--/ko-->
-</dl>
+      <li>
+      <!--ko foreach: $data.ContactMechanisms-->
+        <p><span style="width: 15px;" data-bind="css: $root.ui.collectionsList.selected().contactMechanismIcon($data.Type)"></span> <!-- ko text: $data.Value --><!-- /ko --></p>
+      <!--/ko-->
+      </li>
+
+      <li>
+      <!--ko foreach: $data.RelatedUrls-->
+        <p>
+          <a data-bind="attr: {href: $data.URL}, text: $data.Type"></a>
+        </p>
+      <!--/ko-->
+      </li>
+    <!--/ko-->
+  </ul>
+<!--/ko-->
+
+<!--ko ifnot: $data.contact_information -->
+<p>No contact information for this data center.</p>
+<!--/ko-->

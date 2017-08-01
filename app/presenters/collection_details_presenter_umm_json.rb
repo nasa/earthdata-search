@@ -49,8 +49,9 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     data_centers.map do |dc|
       {
           shortname_roles: "#{dc['ShortName']} (#{dc['Roles'].join(', ')})",
-          contact_groups: dc['ContactGroups'] ? contact_groups(dc['ContactGroups']) : nil,
-          contact_persons: dc['ContactPersons'] ? contact_persons(dc['ContactPersons']) : nil,
+          longname:"#{dc['LongName']}",
+          # contact_groups: dc['ContactGroups'] ? contact_groups(dc['ContactGroups']) : nil,
+          # contact_persons: dc['ContactPersons'] ? contact_persons(dc['ContactPersons']) : nil,
           contact_information: dc['ContactInformation'] ? dc['ContactInformation'] : nil
       }
     end
@@ -68,8 +69,8 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
   def contact_persons(contact_persons)
     contact_persons.map do |cp|
       {
-          name: "#{cp['LastName']} (#{cp['Roles'].join(', ')})",
-          contact_information: cp['ContactInformation'] ? contact_information(cp['ContactInformation']) : nil
+          name: "#{cp['FirstName'] ? cp['FirstName'] + ' ' : nil}#{cp['LastName']} (#{cp['Roles'].join(', ')})",
+          contact_information: cp['ContactInformation'] ? cp['ContactInformation'] : nil
       }
     end
   end

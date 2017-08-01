@@ -167,12 +167,18 @@ a.endpoint-label {
   flex-direction: row;
   flex-wrap: wrap;
   margin: 0 0 12px;
+
+  p.meta-info {
+    margin-bottom: 5px;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
 }
 
 .field-content-item {
-  width: 350px;
-  background-color: #dadada;
-  border-radius: 5px;
-  padding: 6px 15px;
-  margin-right: 20px;
+  width: 550px;
+  padding: 0 15px 6px;
+  font-size: .9em;
 }
