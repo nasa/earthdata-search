@@ -108,6 +108,8 @@ class CollectionsController < ApplicationController
     
     params['two_d_coordinate_system'].delete 'coordinates' if params['two_d_coordinate_system'].present?
 
+    params['options[temporal][limit_to_granules]'] = true
+
     params
   end
 
