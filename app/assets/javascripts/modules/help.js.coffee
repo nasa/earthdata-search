@@ -63,7 +63,7 @@ ns = @edsc.models.page
       title: "Facets"
       content: "<p>Refine your search further with available facets, such as:
                 <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
-                  <li>Features - subsettable, near-real-time or has imagery</li>
+                  <li>Features - has map imagery, is near-real-time, or is subsettable</li>
                   <li>Keywords - science terms describing collections</li> 
                   <li>Platforms - satellite, aircraft, etc. hosting Instruments</li>
                   <li>Instruments - devices that make measurements</li>
@@ -77,14 +77,28 @@ ns = @edsc.models.page
       top: null
     }, {
       title: "Map Tools"
-      content: '<p>Use these standard map tools to configure and position the map as well as enable certain spatial search tools.</p>'
+      content: '<p>Use these map tools to configure and position the map as well as enable certain spatial tools.
+                <ul><li><i class="fa fa-fw fa-trash"></i> Delete a layer</li>
+                <li><i class="fa fa-fw fa-edit"></i> Edit a layer</li>
+                <li><i class="fa fa-fw fa-map-pin"></i> Coordinate, rectangular, and polygonal spatial search tools</li>
+                <li><i class="fa fa-fw fa-edit"></i> Arctic map projection</li>
+                <li><i class="fa fa-fw fa-recycle"></i> Geographic map projection</li>
+                <li><i class="fa fa-fw fa-edit"></i> Anarctic map projection</li>
+                <li><i class="fa fa-fw fa-edit"></i> Zoom tools
+                <li><i class="fa fa-fw fa-edit"></i> Map types</li></ul></p>'
       placement: 'top'
       element: '.projection-switcher-arctic'
       showNext: true
     }, {
       title: 'Toolbar'
-      content: '<p>Use the options available (upon logging in) in the application toolbar to view recent downloads, saved projects, and profile
-      information. You can provide feedback using our feedback module.</p>'
+      content: '<p>This is the end of the tour. Using this toolbar, you can:
+        <div style=\'margin-left: 15px;\'><ul style=\'list-style-type: disc;\'>
+        <li> Provide feedback</li>
+        <li> Or login to Earthdata for more user tools</li></ul></div></p>
+        <p>When logged in, you can also:
+        <div style=\'margin-left: 15px;\'><ul style=\'list-style-type: disc;\'>
+        <li> Save your current project</li>
+        <li> View profile information, recent downloads, saved projects, or show this tour again</li></ul></div></p>'
       element: '.user-info'
       placement: 'bottom'
     }]
