@@ -44,6 +44,8 @@ module Helpers
           params['ok'] = options[:q]
         end
         params['ff'] = options[:ff] if options[:ff]
+        params['fpj'] = options[:fpj] if options[:fpj]
+        params['fl'] = options[:fl] if options[:fl]
         params['test_facets'] = true if options[:facets]
 
         p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
