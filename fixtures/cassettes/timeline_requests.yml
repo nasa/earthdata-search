@@ -5,6 +5,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: attribute%5B%5D=int%2CLowerLeftQuadCloudCoverage%2C50%2C100&concept_id=C14758250-LPDAAC_ECS&day_night_flag=BOTH&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Aug 2017 15:53:10 GMT
+  digest: ce9e4f0d1a6f91c78c726cc7c5134ab209f64481
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: attribute%5B%5D=int%2CLowerLeftQuadCloudCoverage%2C50%2C100&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
@@ -548,6 +565,23 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 19 May 2016 16:20:04 GMT
   digest: 98d1fc50def49443569ab6efb4f82ed48817818e
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=BOTH&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Aug 2017 16:02:09 GMT
+  digest: 2f40a600d02c1842158bec3c8c40c3cd1e7afd18
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
