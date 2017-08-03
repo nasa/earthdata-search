@@ -168,12 +168,39 @@ a.endpoint-label {
   flex-wrap: wrap;
   margin: 0 0 12px;
 
-  p.meta-info {
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+.flex-column.data-centers {
+  dd {
+    margin-bottom: 0;
+  }
+
+  ul {
     margin-bottom: 5px;
   }
 
   li {
-    margin-bottom: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.contact-mechanisms {
+  width: 100%;
+
+  dt {
+    float: left;
+    width: 18%; // 'TDD/TTY Phone' is the widest contact type.
+  }
+
+  dd {
+    float: left;
+    width: 82%;
+    font-weight: normal;
+    margin-bottom: 0;
   }
 }
 

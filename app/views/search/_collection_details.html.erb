@@ -97,6 +97,17 @@
               <!-- /ko -->
             </ul>
           </div>
+          <dl class="flex-column">
+            <!-- ko if: $data.related_urls.length > 0 -->
+            <dt>Related URLs:</dt>
+            <dd>
+              <!-- ko foreach: $data.highlighted_urls -->
+              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
+              <!-- /ko -->
+              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
+            </dd>
+            <!-- /ko -->
+          </dl>
         </div>
         <!-- end of second row -->
 
@@ -110,7 +121,7 @@
         <!-- end of description -->
 
         <!--third row: data centers-->
-        <dl class="flex-column">
+        <dl class="flex-column data-centers">
           <dt>Data Centers:</dt>
           <!--ko foreach: data_centers-->
           <dd data-bind="text: shortname_roles"></dd>
@@ -128,17 +139,6 @@
 
         <!-- fourth row: misc info -->
         <div class="row">
-          <dl class="flex-column">
-            <!-- ko if: $data.related_urls.length > 0 -->
-            <dt>Related URLs:</dt>
-            <dd>
-              <!-- ko foreach: $data.highlighted_urls -->
-              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
-              <!-- /ko -->
-              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
-            </dd>
-            <!-- /ko -->
-          </dl>
           <dl class="flex-column">
             <dt>Short Name:</dt>
             <dd data-bind="text: $data.short_name"></dd>

@@ -60,7 +60,6 @@ ns.Collection = do (ko
       @hasAtomData = ko.observable(false)
 
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
-#      @contactMechanismIcon = ko.observable('test')
 
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
@@ -120,19 +119,6 @@ ns.Collection = do (ko
 
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
-
-    contactMechanismIcon: (type) ->
-      if type not in ['Direct Line', 'Fax', 'Mobile', 'TDD/TTY Phone', 'Telephone', 'U.S. toll free']
-        if type == 'Facebook'
-          return 'fa fa-facebook-official'
-        else if type == 'Email'
-          return 'fa fa-envelope'
-        else if type == 'Twitter'
-          return 'fa fa-twitter-square'
-        else
-          return 'fa fa-address-card'
-      else
-        return 'fa fa-phone-square'
 
     _computeMaxOrderSize: ->
       @id in edsc.config.asterCollections && @granuleDatasource()?.data().hits() > 100
