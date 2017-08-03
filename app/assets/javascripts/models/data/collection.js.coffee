@@ -128,9 +128,12 @@ ns.Collection = do (ko
       # Loop for each loaded granules, as long as we found one that capable of day/night filtering or cloud cover filtering,
       # it stops.
       for _granule in @cmrGranulesModel.results()
+        console.debug JSON.stringify(_granule)
         _capabilities['day_night_flag'] = true if _granule.day_night_flag? && _granule.day_night_flag.toUpperCase() in ['DAY', 'NIGHT', 'BOTH']
         _capabilities['cloud_cover'] = true if _granule.cloud_cover?
-        break if _capabilities['day_night_flag'] && _capabilities['cloud_cover']
+        _capabilities['orbit_calculated_spatial_domains'] = true if _granule.orbit_calculated_spatial_domains?
+        
+        break if _capabilities['day_night_flag'] && _capabilities['cloud_cover'] && _capabilities['orbit_calculated_spatial_domains']
       _capabilities
 
     _computeTimeRange: ->
