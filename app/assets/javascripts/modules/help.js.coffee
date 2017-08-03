@@ -76,27 +76,44 @@ ns = @edsc.models.page
       showNext: true
       top: null
     }, {
+
       title: "Map Tools"
       content: '<p>Use these map tools to configure and position the map as well as enable certain spatial tools.
-                <ul><li><i class="fa fa-fw fa-trash"></i> Delete a layer</li>
-                <li><i class="fa fa-fw fa-edit"></i> Edit a layer</li>
-                <li><i class="fa fa-fw fa-map-pin"></i> Coordinate, rectangular, and polygonal spatial search tools</li>
-                <li><i class="fa fa-fw fa-edit"></i> Arctic map projection</li>
-                <li><i class="fa fa-fw fa-recycle"></i> Geographic map projection</li>
-                <li><i class="fa fa-fw fa-edit"></i> Anarctic map projection</li>
-                <li><i class="fa fa-fw fa-edit"></i> Zoom tools
-                <li><i class="fa fa-fw fa-edit"></i> Map types</li></ul></p>'
+                  <table><tr>
+                    <td width="40%">
+                      <ul class="icon-list">
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-edit-remove"></i> Delete a layer</li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-edit-edit"></i> Edit a layer</li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-marker"></i> Search by spatial coordinate </li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-rectangle"></i> Search by spatial rectangle</li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-polygon"></i> Search by spatial polygon</li>
+                      </ul>
+                    </td>
+                    <td width="60%">
+                      <ul class="icon-list">
+                        <li class="projection-draw-list"><i class="projection-draw-arctic"></i> North Polar map projection</li>
+                        <li class="projection-draw-list"><i class="projection-draw-geographic"></i> Geographic map projection</li>
+                        <li class="projection-draw-list"><i class="projection-draw-antarctic"></i> South Polar map projection</li>
+                        <li class="zoom-draw-list"><i class="fa fa-fw fa-plus"></i> Zoom in </li>
+                        <li class="zoom-draw-list"><i class="fa fa-fw fa-home"></i> Reset zoom </li>
+                        <li class="zoom-draw-list"><i class="fa fa-fw fa-minus"></i> Zoom out </li>
+                        <li><i class="map-layers"></i> Map layers</li></ul>
+                    </td>
+                  </tr></table>
+                </p>'
       placement: 'top'
       element: '.projection-switcher-arctic'
       showNext: true
     }, {
       title: 'Toolbar'
       content: '<p>This is the end of the tour. Using this toolbar, you can:
-        <div style=\'margin-left: 15px;\'><ul style=\'list-style-type: disc;\'>
-        <li> Provide feedback</li>
-        <li> Or login to Earthdata for more user tools</li></ul></div></p>
+        <div style="margin-left: 15px;">
+          <ul>
+            <li class="toolbar-draw-list"><i class="fa fa-bullhorn"></i> Provide feedback</li>
+            <li class="toolbar-draw-list"><i class="fa fa-lock"></i> Login to Earthdata for more user tools</li>\
+          </ul></div></p>
         <p>When logged in, you can also:
-        <div style=\'margin-left: 15px;\'><ul style=\'list-style-type: disc;\'>
+        <div style="margin-left: 15px;"><ul style="list-style-type: disc;">
         <li> Save your current project</li>
         <li> View profile information, recent downloads, saved projects, or show this tour again</li></ul></div></p>'
       element: '.user-info'
