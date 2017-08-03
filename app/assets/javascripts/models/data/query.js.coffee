@@ -15,6 +15,7 @@ ns.query = do (ko,
                urlUtil=@edsc.util.url
                extend=$.extend) ->
 
+
   # This is a little gross, but we're allowing an override of temporal
   # query values on the configure page only to disambiguate the user's
   # intent when they set a temporal constraint and a timeline focus.

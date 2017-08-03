@@ -76,7 +76,20 @@
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeValue(granuleQuery.equatorialCrossingLongitude.max())" class="error">Value must be within 0 to (+/–)180</span>
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeRange(granuleQuery.equatorialCrossingLongitude.min(),granuleQuery.equatorialCrossingLongitude.max())" class="error">Minimum must be less than Maximum</span>
         </p>
+        <script>
+  $( document ).ready(function() {
+    console.error("boogity")
+    $('#orbit-range-start').datepicker();
+    $('.datepicker').datepicker();
+  });
 
+</script>
+         <div class="input-group date" data-provide="datepicker">
+    <input type="text" class="form-control">
+    <div class="input-group-addon">
+        <span class="glyphicon glyphicon-th"></span>
+    </div>
+</div>
         <p>
           <label for="equatorial-crossing-date-min">Equatorial Crossing Date Start:</label><br /><input id="equatorial-crossing-date-min" data-bind="value: granuleQuery.equatorialCrossingDate.min" type="text" placeholder="Example: 2015-01-24T00:00:00">
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateValue(granuleQuery.equatorialCrossingDate.min())" class="error">Value must be of the format 2015-01-24T00:00:00</span>
