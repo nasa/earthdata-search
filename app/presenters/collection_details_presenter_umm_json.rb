@@ -48,7 +48,8 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     return nil unless data_centers.present? && data_centers.size > 0
     data_centers.map do |dc|
       {
-          shortname_roles: "#{dc['ShortName'].downcase == 'not provided' ? 'Name Not Provided' : dc['ShortName']} (#{dc['Roles'].join(', ')})",
+          shortname: "#{dc['ShortName'].downcase == 'not provided' ? 'Name Not Provided' : dc['ShortName']}",
+          roles: dc['Roles'],
           longname:"#{dc['LongName']}",
           # contact_groups: dc['ContactGroups'] ? contact_groups(dc['ContactGroups']) : nil,
           # contact_persons: dc['ContactPersons'] ? contact_persons(dc['ContactPersons']) : nil,

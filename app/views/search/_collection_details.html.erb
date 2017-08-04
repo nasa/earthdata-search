@@ -124,7 +124,12 @@
         <dl class="flex-column data-centers">
           <dt>Data Centers:</dt>
           <!--ko foreach: data_centers-->
-          <dd data-bind="text: shortname_roles"></dd>
+          <dd>
+            <!--ko text: shortname--><!--/ko-->
+            <!--ko foreach: roles-->
+              <span class="data-center-role-label" data-bind="text: $data"></span>
+            <!--/ko-->
+          </dd>
             <ul class="field-content-list">
               <li class="field-content-item">
                 <!--ko with: $data-->
