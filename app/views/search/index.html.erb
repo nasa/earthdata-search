@@ -7,10 +7,12 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
-  <%= render partial: 'shared/feedback' %>
-  <%= render partial: 'workspace_name' %>
-  <%= render partial: 'shared/login' %>
+  <div class="landing-secondary-toolbar-container" style="display: none;">
+    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
+    <%= render partial: 'shared/feedback' %>
+    <%= render partial: 'workspace_name' %>
+    <%= render partial: 'shared/login' %>
+  </div>
 <% end %>
 
 <% content_for :toolbar do %>
