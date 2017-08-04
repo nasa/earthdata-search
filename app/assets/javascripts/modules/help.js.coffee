@@ -61,8 +61,8 @@ ns = @edsc.models.page
       showNext: true
       },{
       title: "Facets"
-      content: "<p>Refine your search further with available facets, such as:
-                <div style='margin-left: 15px;'><ul style='list-style-type: disc;'>
+      content: '<p>Refine your search further with available facets, such as:
+                <div class="tour-indent"><ul class="bullet-list">
                   <li>Features - has map imagery, is near-real-time, or is subsettable</li>
                   <li>Keywords - science terms describing collections</li> 
                   <li>Platforms - satellite, aircraft, etc. hosting Instruments</li>
@@ -70,7 +70,7 @@ ns = @edsc.models.page
                   <li>Organizations - responsible for archiving and/or producing data</li>
                   <li>Projects - mission or science project</li>
                   <li>Processing Levels - raw, geophysical variables, grid, or model</li>
-                </ul></div></p>"
+                </ul></div></p>'
       element: "#master-overlay-parent"
       placement: 'right'
       showNext: true
@@ -107,13 +107,13 @@ ns = @edsc.models.page
     }, {
       title: 'Toolbar'
       content: '<p>This is the end of the tour. Using this toolbar, you can:
-        <div style="margin-left: 15px;">
+        <div class="tour-indent">
           <ul>
             <li class="toolbar-draw-list"><i class="fa fa-bullhorn"></i> Provide feedback</li>
             <li class="toolbar-draw-list"><i class="fa fa-lock"></i> Login to Earthdata for more user tools</li>\
           </ul></div></p>
         <p>When logged in, you can also:
-        <div style="margin-left: 15px;"><ul style="list-style-type: disc;">
+        <div class="tour-indent"><ul class="bullet-list">
         <li> Save your current project</li>
         <li> View profile information, recent downloads, saved projects, or show this tour again</li></ul></div></p>'
       element: '.user-info'

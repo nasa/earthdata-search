@@ -32,6 +32,14 @@
 /* Unordered List with Icons For Map Tools Tour Section
 /* ================================================================== */
 
+ul.bullet-list {
+  list-style-type: disc;
+}
+
+div.tour-indent {
+  margin-left: 15px;
+}
+
 ul.icon-list li {
   padding-left:20px;
 }
