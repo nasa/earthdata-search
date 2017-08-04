@@ -8,6 +8,10 @@
 	.popover-content {
 		padding: 20px;
 
+        td {
+          vertical-align: top;
+        }
+
 		ul {
 			margin: 0 0 10px 0;
 		}
@@ -36,7 +40,7 @@ ul.bullet-list {
   list-style-type: disc;
 }
 
-div.tour-indent {
+div.tour-list {
   margin-left: 15px;
 }
 

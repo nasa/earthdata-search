@@ -39,9 +39,10 @@ ns = @edsc.models.page
                 down to relevant collections.  An example search phrase could be <em>Land Surface Temperature over
                 Texas last month</em>. Results will be displayed in the collection panel below.</p>
                 <p>You can also add filters to refine your search:</p>
-                <ul><li><i class="fa fa-fw fa-clock-o"></i> Pick a temporal range from a calendar</li>
-                <li><i class="fa fa-fw fa-crop"></i> Manually set spatial boundaries</li>
-                <li><i class="fa fa-fw fa-eraser"></i> Clear all of your filters</li>
+                <ul>
+                  <li><i class="fa fa-fw fa-clock-o"></i> Pick a temporal range from a calendar</li>
+                  <li><i class="fa fa-fw fa-crop"></i> Manually set spatial boundaries</li>
+                  <li><i class="fa fa-fw fa-eraser"></i> Clear all of your filters</li>
                 </ul>'
       element: '#keywords'
       placement: 'bottom'
@@ -53,8 +54,10 @@ ns = @edsc.models.page
                 right collection. The panel can be resized by clicking and dragging the bar above the <em>Matching
                 Collections</em> tab.</p>
                 <p>Collection options include:</p>
-                <ul><li><i class="fa fa-fw fa-info-circle"></i> View more information about a collection</li>
-                <li><i class="fa fa-fw fa-plus"></i> Add collections to your project to compare</li></ul>
+                  <ul>
+                    <li><i class="fa fa-fw fa-info-circle"></i> View more information about a collection</li>
+                    <li><i class="fa fa-fw fa-plus"></i> Add collections to your project to compare</li>
+                  </ul>
                 <p>Click anywhere on a collection to view granules available for download</p>'
       element: '#collection-results-list'
       placement: 'top'
@@ -62,15 +65,18 @@ ns = @edsc.models.page
       },{
       title: "Facets"
       content: '<p>Refine your search further with available facets, such as:
-                <div class="tour-indent"><ul class="bullet-list">
-                  <li>Features - has map imagery, is near-real-time, or is subsettable</li>
-                  <li>Keywords - science terms describing collections</li> 
-                  <li>Platforms - satellite, aircraft, etc. hosting Instruments</li>
-                  <li>Instruments - devices that make measurements</li>
-                  <li>Organizations - responsible for archiving and/or producing data</li>
-                  <li>Projects - mission or science project</li>
-                  <li>Processing Levels - raw, geophysical variables, grid, or model</li>
-                </ul></div></p>'
+                  <div class="tour-list">
+                    <ul class="bullet-list">
+                      <li>Features - has map imagery, is near-real-time, or is subsettable</li>
+                      <li>Keywords - science terms describing collections</li>
+                      <li>Platforms - satellite, aircraft, etc. hosting Instruments</li>
+                      <li>Instruments - devices that make measurements</li>
+                      <li>Organizations - responsible for archiving and/or producing data</li>
+                      <li>Projects - mission or science project</li>
+                      <li>Processing Levels - raw, geophysical variables, grid, or model</li>
+                    </ul>
+                  </div>
+                </p>'
       element: "#master-overlay-parent"
       placement: 'right'
       showNext: true
@@ -80,20 +86,20 @@ ns = @edsc.models.page
       title: "Map Tools"
       content: '<p>Use these map tools to configure and position the map as well as enable certain spatial tools.
                   <table><tr>
-                    <td width="40%">
+                    <td>
                       <ul class="icon-list">
                         <li class="leaflet-draw-list"><i class="leaflet-draw-edit-remove"></i> Delete a layer</li>
                         <li class="leaflet-draw-list"><i class="leaflet-draw-edit-edit"></i> Edit a layer</li>
-                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-marker"></i> Search by spatial coordinate </li>
-                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-rectangle"></i> Search by spatial rectangle</li>
-                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-polygon"></i> Search by spatial polygon</li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-marker"></i> Spatial coordinate search </li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-rectangle"></i> Bounding box search</li>
+                        <li class="leaflet-draw-list"><i class="leaflet-draw-draw-polygon"></i> Polygon search</li>
                       </ul>
                     </td>
-                    <td width="60%">
+                    <td>
                       <ul class="icon-list">
-                        <li class="projection-draw-list"><i class="projection-draw-arctic"></i> North Polar map projection</li>
-                        <li class="projection-draw-list"><i class="projection-draw-geographic"></i> Geographic map projection</li>
-                        <li class="projection-draw-list"><i class="projection-draw-antarctic"></i> South Polar map projection</li>
+                        <li class="projection-draw-list"><i class="projection-draw-arctic"></i> North Polar projection</li>
+                        <li class="projection-draw-list"><i class="projection-draw-geographic"></i> Geographic projection</li>
+                        <li class="projection-draw-list"><i class="projection-draw-antarctic"></i> South Polar projection</li>
                         <li class="zoom-draw-list"><i class="fa fa-fw fa-plus"></i> Zoom in </li>
                         <li class="zoom-draw-list"><i class="fa fa-fw fa-home"></i> Reset zoom </li>
                         <li class="zoom-draw-list"><i class="fa fa-fw fa-minus"></i> Zoom out </li>
@@ -107,15 +113,21 @@ ns = @edsc.models.page
     }, {
       title: 'Toolbar'
       content: '<p>This is the end of the tour. Using this toolbar, you can:
-        <div class="tour-indent">
-          <ul>
-            <li class="toolbar-draw-list"><i class="fa fa-bullhorn"></i> Provide feedback</li>
-            <li class="toolbar-draw-list"><i class="fa fa-lock"></i> Login to Earthdata for more user tools</li>\
-          </ul></div></p>
-        <p>When logged in, you can also:
-        <div class="tour-indent"><ul class="bullet-list">
-        <li> Save your current project</li>
-        <li> View profile information, recent downloads, saved projects, or show this tour again</li></ul></div></p>'
+                  <div class="tour-list">
+                    <ul>
+                      <li class="toolbar-draw-list"><i class="fa fa-bullhorn"></i> Provide feedback</li>
+                      <li class="toolbar-draw-list"><i class="fa fa-lock"></i> Login to Earthdata for more user tools</li>
+                    </ul>
+                  </div>
+                </p>
+                <p>When logged in, you can also:
+                  <div class="tour-list">
+                    <ul class="bullet-list">
+                      <li> Save your current project</li>
+                      <li> View profile information, recent downloads, saved projects, or show this tour again</li>
+                    </ul>
+                  </div>
+                </p>'
       element: '.user-info'
       placement: 'bottom'
     }]
