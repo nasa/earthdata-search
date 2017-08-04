@@ -10,7 +10,12 @@
   <!-- ko with: $data.contact_information -->
     <dl class="contact-mechanisms">
     <!--ko foreach: $data.ContactMechanisms-->
+      <!--ko if: $data.Type == 'Email'-->
+      <dt><b data-bind="text: $data.Type + ':'"></b></dt> <dd><a data-bind="text: $data.Value, attr: {href: 'mailto:' + $data.Value}"></a></dd>
+      <!--/ko-->
+      <!--ko ifnot: $data.Type == 'Email'-->
       <dt><b data-bind="text: $data.Type + ':'"></b></dt> <dd data-bind="text: $data.Value"></dd>
+      <!--/ko-->
     <!--/ko-->
     </dl>
   <!--/ko-->
