@@ -7,10 +7,12 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
-  <%= render partial: 'shared/feedback' %>
-  <%= render partial: 'workspace_name' %>
-  <%= render partial: 'shared/login' %>
+  <div class="landing-secondary-toolbar-container" style="display: none;">
+    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
+    <%= render partial: 'shared/feedback' %>
+    <%= render partial: 'workspace_name' %>
+    <%= render partial: 'shared/login' %>
+  </div>
 <% end %>
 
 <% content_for :toolbar do %>
@@ -269,7 +271,7 @@
 
     <div class="old-ie">
       <h1>Your browser is out of date</h1>
-      <p>In order to use <%= site_name %>, you must upgrade your web browser. Alternatively, you can use <a href="http://reverb.echo.nasa.gov/">Reverb</a></p>
+      <p>In order to use <%= site_name %>, you must upgrade your web browser. Alternatively, you can use <a href="https://access.earthdata.nasa.gov">Earthdata Access</a></p>
       <p>To upgrade your browser, click on the icons below to go to the download page</p>
       <ul>
         <li>
@@ -304,8 +306,6 @@
         </li>
       </ul>
     </div>
-
-    <p class="landing-dialog-loading">Please wait while the application loads</p>
   </div>
 </div>
 
