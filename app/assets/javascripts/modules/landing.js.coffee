@@ -6,3 +6,4 @@ do ($ = jQuery
       $('.landing-hidden').toggle(!isLandingPage)
       $('.landing-visible').toggle(isLandingPage)
       $('.landing-toolbar-container').show()
+      $('.landing-secondary-toolbar-container').show()
