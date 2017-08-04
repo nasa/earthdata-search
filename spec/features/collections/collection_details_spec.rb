@@ -13,11 +13,11 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('Archive Center: LPDAAC')
-        expect(page).to have_content('Processing Center: LPDAAC')
+        expect(page).to have_content('LPDAAC ARCHIVER')
+        expect(page).to have_content('LPDAAC PROCESSOR')
         expect(page).to have_content('Short Name: AST_L1AE')
         expect(page).to have_content('VERSION 003')
-        expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (Telephone) 605-594-6963 (Fax) lpdaac@usgs.gov')
+        expect(page).to have_content('Telephone:605-594-6116Fax:605-594-6963Email:lpdaac@usgs.gov')
         expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
         expect(page).to have_content('Science Keywords: Earth ScienceSpectral/EngineeringInfrared Wavelengths Earth ScienceSpectral/EngineeringVisible Wavelengths')
@@ -69,7 +69,7 @@ describe 'Collection details', reset: false do
     it 'displays the collection details' do
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
-        expect(page).to have_content('Archive Center: Not provided')
+        expect(page).to have_content('Name Not Provided ARCHIVER')
         expect(page).to have_content('Short Name: SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
         expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
@@ -112,7 +112,7 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('Contacts: JAXA G-PORTAL z-gportal-support@ml.jaxa.jp')
+      expect(page).to have_content('JP/JAXA/SAOC ARCHIVER DISTRIBUTOR')
     end
   end
 
@@ -212,13 +212,13 @@ describe 'Collection details', reset: false do
     end
   end
 
-  context 'when selecting a collection with multiple contacts values from DataCenters and ContactPersons' do
+  context 'when selecting a collection with multiple data centers' do
     before :all do
       load_page '/search/collection-details', focus: 'C1220111401-NSIDCV0'
     end
 
-    it 'displays all spatial content' do
-      expect(page).to have_content('Contacts: NSIDC DAAC USER SERVICES nsidc@nsidc.org +1 (303) 492-2468 (Fax) +1 (303) 492-6199 (Telephone) Julienne Stroeve stroeve@nsidc.org Walt Meier walter.n.meier@nasa.gov Donald Cavalieri Donald.J.Cavalieri@nasa.gov 1-301-614-5644 (Fax) 1-301-614-5901 (Telephone) NSIDC USER SERVICES nsidc@nsidc.org 1 (303) 492-2468 (Fax) 1 (303) 492-6199 (Telephone)')
+    it 'displays all data center content' do
+      expect(page).to have_content('NASA NSIDC DAAC ORIGINATOR No contact information for this data center. NASA/NSIDC_DAAC ARCHIVER DISTRIBUTOR')
     end
   end
 

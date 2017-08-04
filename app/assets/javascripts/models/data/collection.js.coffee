@@ -60,6 +60,7 @@ ns.Collection = do (ko
       @hasAtomData = ko.observable(false)
 
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
+
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
 
