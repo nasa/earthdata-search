@@ -72,7 +72,8 @@ describe CollectionDetailsPresenterUmmJson do
     @collection[:temporal].should eq(['1984-12-25 to 1988-03-04'])
   end
 
-  it 'converts contacts' do
+  # No longer applicable
+  xit 'converts contacts' do
     data_centers = [{ 'Roles' => ['PROCESSOR'], 'ShortName' => 'AMSR-E SIPS-GHRC', 'ContactGroups' => [], 'ContactPersons' => [] }, { 'Roles' => ['ARCHIVER'], 'ShortName' => 'NSIDC', 'ContactGroups' => [], 'ContactPersons' => [] }, { 'Roles' => ['ORIGINATOR'], 'ShortName' => 'Not provided', 'ContactGroups' => [], 'ContactPersons' => [{ 'Roles' => ['Technical Contact'], 'FirstName' => 'Eni', 'LastName' => 'Njoku' }], 'ContactInformation' => { 'ContactMechanisms' => [{ 'Type' => 'Email', 'Value' => 'eni.g.njoku@jpl.nasa.gov' }], 'Addresses' => [{ 'StreetAddresses' => ['M/S 300-233, Jet Propulsion Laboratory, 4800 Oak Grove Drive'], 'City' => 'Pasadena', 'StateProvince' => 'CA', 'Country' => 'USA', 'PostalCode' => '91109' }] } }, { 'Roles' => ['ARCHIVER'], 'ShortName' => 'NASA DAAC at the National Snow and Ice Data Center', 'ContactGroups' => [], 'ContactPersons' => [], 'ContactInformation' => { 'ServiceHours' => '9=>00 A.M. to 5=>00 P.M., U.S. Mountain Time, Monday through Friday, excluding U.S. holidays.', 'ContactInstruction' => 'Contact by e-mail first', 'ContactMechanisms' => [{ 'Type' => 'Telephone', 'Value' => '303-492-6199' }, { 'Type' => 'Fax', 'Value' => '303-492-2468' }, { 'Type' => 'Email', 'Value' => 'nsidc@nsidc.org' }], 'Addresses' => [{ 'StreetAddresses' => ['1540 30th St Campus Box 449'], 'City' => 'Boulder', 'StateProvince' => 'Colorado', 'Country' => 'USA', 'PostalCode' => '80309-0449' }] } }]
     @collection['DataCenters'] = data_centers
     CollectionDetailsPresenterUmmJson.new(@collection)
@@ -100,7 +101,8 @@ describe CollectionDetailsPresenterUmmJson do
     expect(@collection.online_access_urls).to eq([{ 'URL' => 'http://www.example.com', 'description' => 'http://www.example.com' }])
   end
 
-  it 'converts no contacts to empty array' do
+  # No longer applicable
+  xit 'converts no contacts to empty array' do
     CollectionDetailsPresenterUmmJson.new(@collection)
     @collection[:contacts].should eq([])
   end

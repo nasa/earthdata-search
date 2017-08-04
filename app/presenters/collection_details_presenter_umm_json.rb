@@ -7,12 +7,10 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     @collection[:description] = collection['Abstract']
     @collection[:short_name] = collection['ShortName']
     @collection[:version_id] = collection['Version']
-    @collection[:archive_center] = data_center(collection['DataCenters'], 'ARCHIVER')
-    @collection[:processing_center] = data_center(collection['DataCenters'], 'PROCESSOR')
+    @collection[:data_centers] = data_centers(collection['DataCenters'])
     @collection[:processing_level_id] = collection['ProcessingLevel']['Id'] if collection['ProcessingLevel'].present?
 
     @collection[:temporal] = temporal(collection['TemporalExtents'])
-    @collection[:contacts] = contacts(collection)
     @collection[:science_keywords] = science_keywords(collection['ScienceKeywords']) if collection['ScienceKeywords']
 
     @collection[:highlighted_urls] = related_urls(collection, true)
@@ -41,74 +39,46 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     @collection[:dif_url] = "#{metadata_url}.dif#{url_token}"
     @collection[:smap_iso_url] = nil # "#{metadata_url}.smap_iso"
     opensearch_url = "#{Rails.configuration.services['earthdata'][env]['opensearch_root']}/granules/descriptor_document.xml"
-    data_center = ''
-    data_center = collection_id.split('-').last if collection_id.is_a?(String)
-    @collection[:osdd_url] = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection[:short_name])}&versionId=#{@collection[:version_id]}&dataCenter=#{URI.encode_www_form_component(data_center)}&commit=Generate#{url_token}"
+    provider = ''
+    provider = collection_id.split('-').last if collection_id.is_a?(String)
+    @collection[:osdd_url] = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection[:short_name])}&versionId=#{@collection[:version_id]}&dataCenter=#{URI.encode_www_form_component(provider)}&commit=Generate#{url_token}"
   end
 
-  def data_center(data_centers, type)
-    return nil unless data_centers.present?
-    centers = data_centers.select { |dc| dc['Roles'].include? type }
-    centers.first['ShortName'] unless centers.empty?
+  def data_centers(data_centers)
+    return nil unless data_centers.present? && data_centers.size > 0
+    data_centers.map do |dc|
+      {
+          shortname: "#{dc['ShortName'].downcase == 'not provided' ? 'Name Not Provided' : dc['ShortName']}",
+          roles: dc['Roles'],
+          longname:"#{dc['LongName']}",
+          # contact_groups: dc['ContactGroups'] ? contact_groups(dc['ContactGroups']) : nil,
+          # contact_persons: dc['ContactPersons'] ? contact_persons(dc['ContactPersons']) : nil,
+          contact_information: dc['ContactInformation'] ? dc['ContactInformation'] : nil
+      }
+    end
+  end
+
+  def contact_groups(contact_groups)
+    contact_groups.map do |cg|
+      {
+          name: "#{cg['GroupName']} (#{cg['Roles'].join(', ')})",
+          contact_information: cg['ContactInformation'] ? cg['ContactInformation'] : nil
+      }
+    end
+  end
+
+  def contact_persons(contact_persons)
+    contact_persons.map do |cp|
+      {
+          name: "#{cp['FirstName'] ? cp['FirstName'] + ' ' : nil}#{cp['LastName']} (#{cp['Roles'].join(', ')})",
+          contact_information: cp['ContactInformation'] ? cp['ContactInformation'] : nil
+      }
+    end
   end
 
   def associated_difs(dif_id)
     url = "http://gcmd.gsfc.nasa.gov/getdif.htm?#{dif_id}"
     { url: url, id: dif_id }
-  end
-
-  def contacts(metadata)
-    contacts = []
-    # contacts from 'DataCenters'
-    if metadata['DataCenters'].present?
-      metadata['DataCenters'].select { |dc| dc['ContactPersons'].present? && !dc['ContactPersons'].empty? || dc['ContactInformation'].present? && !dc['ContactInformation'].empty? }.each do |dc|
-        # name
-        if dc['ContactPersons'].present?
-          first_name = dc['ContactPersons'].first['FirstName']
-          last_name = dc['ContactPersons'].first['LastName']
-          name = "#{first_name} #{last_name}"
-        else
-          name = dc['ShortName']
-        end
-        # contact_mechanisms
-        contact_mechanisms = nil
-        if dc['ContactInformation'].present?
-          ci = dc['ContactInformation']
-          if ci['ContactMechanisms'].present?
-            contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
-          elsif dc['ContactPersons'].present?
-            dc['ContactPersons'].each do |cp|
-              if cp['ContactInformation'].present?
-                ci = cp['ContactInformation']
-                if ci['ContactMechanisms'].present?
-                  contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
-                end
-              end
-            end
-          end
-        end
-        contacts.push(name: name, contact_mechanisms: contact_mechanisms) if contact_mechanisms.present?
-      end
-    end
-
-    # contacts from "Root/ContactPersons"
-    if metadata['ContactPersons'].present?
-      metadata['ContactPersons'].each do |cp|
-        # name
-        name = "#{cp['FirstName']} #{cp['LastName']}"
-        # contact_mechanisms
-        contact_mechanisms = nil
-        if cp['ContactInformation'].present?
-          ci = cp['ContactInformation']
-          if ci['ContactMechanisms'].present?
-            contact_mechanisms = ci['ContactMechanisms'].map { |cm| "#{cm['Value']}#{cm['Type'] == 'Email' ? '' : " (#{cm['Type']})"}" }
-          end
-        end
-        contacts.push(name: name, contact_mechanisms: contact_mechanisms) if contact_mechanisms.present?
-      end
-    end
-
-    contacts
   end
 
   def science_keywords(keywords)
