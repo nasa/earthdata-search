@@ -8,6 +8,10 @@
 	.popover-content {
 		padding: 20px;
 
+        td {
+          vertical-align: top;
+        }
+
 		ul {
 			margin: 0 0 10px 0;
 		}
@@ -25,4 +29,103 @@
   width: 16px;
   display: inline-block;
   vertical-align: middle;
+}
+
+
+/* ================================================================== */
+/* Unordered List with Icons For Map Tools Tour Section
+/* ================================================================== */
+
+ul.bullet-list {
+  list-style-type: disc;
+}
+
+div.tour-list {
+  margin-left: 15px;
+}
+
+ul.icon-list li {
+  padding-left:20px;
+}
+
+li.leaflet-draw-list i {
+  background-image: image-url("leaflet.draw-0.2.2/spritesheet-2x.png");
+  background-size: 270px 30px;
+  content: '';
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  margin-left: -25px;
+  margin-top: -3px;
+
+}
+
+i.leaflet-draw-edit-remove {
+  background-position: -182px -2px;
+}
+
+i.leaflet-draw-edit-edit {
+  background-position: -152px -2px;
+}
+
+i.leaflet-draw-draw-marker {
+  background-position: -122px -2px;
+}
+
+i.leaflet-draw-draw-polygon {
+  background-position: -31px -2px;
+}
+
+i.leaflet-draw-draw-rectangle {
+  background-position: -62px -2px;
+}
+
+i.leaflet-draw-draw-circle {
+  background-position: -92px -2px;
+}
+
+li.projection-draw-list i {
+  background-image: image-url("projection-sprite@2x.png");
+  background-size: 90px 30px;
+  content: '';
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  margin-top: -3px;
+  margin-left: -25px;
+}
+
+i.projection-draw-arctic {
+  background-position: 32px -2px;
+}
+
+i.projection-draw-geographic {
+  background-position: -30px -2px;
+}
+
+i.projection-draw-antarctic {
+  background-position: -92px -2px;
+}
+
+li.zoom-draw-list i {
+  position: absolute;
+  margin-top: 3px;
+  margin-left: -20px;
+}
+
+i.map-layers {
+  background-image: image_url("leaflet-0.7/layers-2x.png");
+  background-size: 15px 15px;
+  content: '';
+  width: 15px;
+  height: 16px;
+  position: absolute;
+  margin-top: 2px;
+  margin-left: -19px;
+}
+
+li.toolbar-draw-list i {
+  position: absolute;
+  margin-top: 3px;
+  margin-left: -18px;
 }
