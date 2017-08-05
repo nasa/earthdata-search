@@ -2,14 +2,14 @@
   <div data-bind="visible: !isRecurring()" id="temporal-date-range" class="tab-pane active temporal-date-range">
     <div class="datetime-field" id="temporal_start_button">
       <label for="<%= prefix %>-temporal-range-start">Start</label><br />
-      <input data-bind="value: start.humanDateString"
+      <input data-bind="value: start.humanDateString" data-date-format="yyyy-mm-dd 00:00:00"
              id="<%= prefix %>-temporal-range-start"
              class="temporal temporal-range-picker temporal-start temporal-range-start"
              type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
     </div>
     <div class="datetime-field" id="temporal_end_button">
       <label for="<%= prefix %>-temporal-range-stop">End</label><br />
-      <input data-bind="value: stop.humanDateString"
+      <input data-bind="value: stop.humanDateString" data-date-format="yyyy-mm-dd 23:59:59"
              id="<%= prefix %>-temporal-range-stop"
              class="temporal temporal-range-picker temporal-stop temporal-range-stop"
              type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
@@ -19,14 +19,14 @@
   <div data-bind="visible: isRecurring()" id="temporal-recurring" class="tab-pane temporal-recurring">
     <div class="datetime-field" id="temporal_start_button">
       <label for="<%= prefix %>-temporal-recurring-start">Start</label><br />
-      <input data-bind="value: start.humanDateString"
+      <input data-bind="value: start.humanDateString" data-date-format="mm-dd 00:00:00"
              id="<%= prefix %>-temporal-recurring-start"
              class="temporal temporal-recurring-picker temporal-start temporal-recurring-start"
              type="text" placeholder="MM-DD HH:MM:SS"/>
     </div>
     <div class="datetime-field" id="temporal_end_button">
       <label for="<%= prefix %>-temporal-recurring-stop">End</label><br />
-      <input data-bind="value: stop.humanDateString"
+      <input data-bind="value: stop.humanDateString" data-date-format="mm-dd 23:59:59"
              id="<%= prefix %>-temporal-recurring-stop"
              class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop"
              type="text" placeholder="MM-DD HH:MM:SS"/>
