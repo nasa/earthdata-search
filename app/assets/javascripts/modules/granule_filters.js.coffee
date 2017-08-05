@@ -9,15 +9,3 @@ do ($ = jQuery) ->
     content = $(this).parents('.granule-id-search')
     content.addClass("search-single")
     content.removeClass("search-multiple")
-
-
-    
-
-
-
-
-
-      
-
-
-    
