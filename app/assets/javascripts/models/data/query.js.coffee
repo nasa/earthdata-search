@@ -15,6 +15,7 @@ ns.query = do (ko,
                urlUtil=@edsc.util.url
                extend=$.extend) ->
 
+
   # This is a little gross, but we're allowing an override of temporal
   # query values on the configure page only to disambiguate the user's
   # intent when they set a temporal constraint and a timeline focus.
@@ -359,8 +360,13 @@ ns.query = do (ko,
       @isValid = @computed(read: @_computeIsValid, deferEvaluation: true)
       @attributes = new GranuleAttributes(attributes)
 
+   
+
       @temporal = new Temporal()
       @cloudCover = new Range()
+      @orbitNumber = new Range()
+      @equatorialCrossingLongitude = new Range()
+      @equatorialCrossingDate = new Range()
 
       @queryComponent(new QueryParam('echo_collection_id'), collectionId, ephemeral: true)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition)
@@ -370,6 +376,9 @@ ns.query = do (ko,
       @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
       @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
+      @orbitNumberComponent = @queryComponent(new QueryParam('orbit_number'), @orbitNumber.params)
+      @equatorialCrossingLongitudeComponent = @queryComponent(new QueryParam('equator_crossing_longitude'), @equatorialCrossingLongitude.params)
+      @equatorialCrossingDateComponent = @queryComponent(new QueryParam('equator_crossing_date'), @equatorialCrossingDate.params)
       @granuleIds = @queryComponent(new DelimitedParam('readable_granule_name', ', '), '')
       @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
       @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
@@ -386,7 +395,16 @@ ns.query = do (ko,
       (@attributes.isValid() &&
        @validateCloudCoverValue(@cloudCover.min()) &&
        @validateCloudCoverValue(@cloudCover.max()) &&
-       @validateCloudCoverRange(@cloudCover.min(), @cloudCover.max()))
+       @validateCloudCoverRange(@cloudCover.min(), @cloudCover.max()) &&
+       @validateOrbitNumberValue(@orbitNumber.min()) &&
+       @validateOrbitNumberValue(@orbitNumber.max()) &&
+       @validateOrbitNumberRange(@orbitNumber.min(), @orbitNumber.max()) &&
+       @validateEquatorialCrossingLongitudeValue(@equatorialCrossingLongitude.min()) &&
+       @validateEquatorialCrossingLongitudeValue(@equatorialCrossingLongitude.max()) &&
+       @validateEquatorialCrossingLongitudeRange(@equatorialCrossingLongitude.min(), @equatorialCrossingLongitude.max()) &&
+       @validateEquatorialCrossingDateValue(@equatorialCrossingDate.min()) &&
+       @validateEquatorialCrossingDateValue(@equatorialCrossingDate.max()) &&
+       @validateEquatorialCrossingDateRange(@equatorialCrossingDate.min(), @equatorialCrossingDate.max()))
 
     validateCloudCoverValue: (cloud_cover_value) =>
       value = parseFloat(cloud_cover_value)
@@ -394,6 +412,35 @@ ns.query = do (ko,
 
     validateCloudCoverRange: (min, max) =>
       isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
+
+    validateOrbitNumberValue: (orbit_number_value) =>
+      value = parseInt(orbit_number_value)
+      isNaN(value) || value >= 0
+
+    validateOrbitNumberRange: (min, max) =>
+      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)  
+
+    validateEquatorialCrossingLongitudeValue: (equatorial_value) =>
+      value = parseFloat(equatorial_value)
+      isNaN(value) || (value >= -180.0 && value <= 180.0)
+
+    validateEquatorialCrossingLongitudeRange: (min, max) =>
+      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max) 
+
+    validateEquatorialCrossingDateValue: (date_value) =>
+      regEx = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/
+      if date_value
+        date_value.match(regEx) != null 
+      else if date_value != null
+        true
+      else
+        false
+
+    validateEquatorialCrossingDateRange: (min, max) =>
+      if min && max
+        Date.parse(min) <= Date.parse(max)
+      else
+        true        
 
     _computeProject: (facets) =>
       project = ''
