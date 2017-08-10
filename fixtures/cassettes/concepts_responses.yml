@@ -2903,6 +2903,73 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
         0"},"Platforms":[{"Type":"test type","ShortName":"testing","LongName":"testing
         long name"}],"Version":"2","TemporalExtents":[{"SingleDateTimes":["2015-09-20T00:00:00.000Z"]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"short_name","ContactInformation":{}}]}'
     http_version: 
+b254400c8d4ce110ceccdc75a040c6dab2e88e49:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 4c3ad386-70b2-4b84-9987-cc0d660b4c3f
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Wed, 09 Aug 2017 17:21:57 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1547'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ShortName":"EDSC-1140_dev6","Version":"2","EntryTitle":"Collection
+        created to test EDSC-1140","Abstract":"Collection created to test EDSC-1140","ProcessingLevel":{"Id":"Not
+        Provided"},"CollectionProgress":"COMPLETE","RelatedUrls":[{"Description":"Related
+        URL collection level 1","URLContentType":"CollectionURL","Type":"PROJECT HOME
+        PAGE","URL":"https://search.sit.earthdata.nasa.gov"},{"Description":"Related
+        URL collection level 2","URLContentType":"CollectionURL","Type":"DATA SET
+        LANDING PAGE","URL":"https://localhost:15400"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"AGRICULTURE","Term":"AGRICULTURAL AQUATIC SCIENCES","VariableLevel1":"AQUACULTURE"},{"Category":"EARTH
+        SCIENCE","Topic":"AGRICULTURE","Term":"AGRICULTURAL AQUATIC SCIENCES","VariableLevel1":"FISHERIES"}],"Platforms":[{"Type":"Aircraft","ShortName":"EDSC-1140-platform-shortname"}],"TemporalExtents":[{"TemporalRangeType":"SingleDateTime","EndsAtPresentFlag":true,"SingleDateTimes":["2017-07-31T00:00:00.000Z"]}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","GranuleSpatialRepresentation":"CARTESIAN"},"DataCenters":[{"Roles":["ARCHIVER","DISTRIBUTOR","ORIGINATOR","PROCESSOR"],"ShortName":"AAG","LongName":"Association
+        of American Geographers","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://www.aag.org/"}]},"ContactPersons":[{"Roles":["Investigator","Metadata
+        Author","User Services","Science Software Development"],"FirstName":"Bo","LastName":"Sun","ContactInformation":{"ServiceHours":"8:00-17000","ContactInstruction":"a7a
+        da gutjga  adfla fa  a  ihbjkn","ContactMechanisms":[{"Type":"Email","Value":"something@somewhere.com"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["4 main st","line 2"],"City":"fourth city","StateProvince":"Alabama","PostalCode":"17195-48585"}],"RelatedUrls":[{"Description":"Data
+        Center Contact Person Related URL 1 ","URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://www.aag.org/"}]}}]},{"Roles":["DISTRIBUTOR","ORIGINATOR","PROCESSOR"],"ShortName":"AALTO","LongName":"Aalto
+        University","ContactGroups":[{"Roles":["Technical Contact","Science Contact"],"GroupName":"Group
+        name","ContactInformation":{"ServiceHours":"18 - 24","ContactInstruction":"contact
+        instructions contact instructions","ContactMechanisms":[{"Type":"Mobile","Value":"512673y8u495"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["5 main st"],"City":"Fifth City","StateProvince":"Alabama","PostalCode":"8758"}],"RelatedUrls":[{"Description":"Data
+        Center Contact Group Related URL 5","URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://gjiod.co"}]}}]},{"Roles":["ARCHIVER","DISTRIBUTOR","ORIGINATOR","PROCESSOR"],"ShortName":"52N","LongName":"52
+        North","ContactInformation":{"ServiceHours":"8:00 - 17:00","ContactInstruction":"This
+        is a piece of sample contact instruction.","ContactMechanisms":[{"Type":"Direct
+        Line","Value":"123-456-7890"},{"Type":"Email","Value":"bo.sun@nasa.gov"},{"Type":"Facebook","Value":"facebook.url"},{"Type":"Fax","Value":"123-456-7890"},{"Type":"Mobile","Value":"1234567890"},{"Type":"Modem","Value":"1234567890"},{"Type":"Primary","Value":"1234567890"},{"Type":"TDD/TTY
+        Phone","Value":"1234567890"},{"Type":"Telephone","Value":"1234567890"},{"Type":"Twitter","Value":"twitter.url"},{"Type":"U.S.
+        toll free","Value":"1234567890"},{"Type":"Other","Value":"=other="}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["1 main st","line 2","line 3"],"City":"first city","StateProvince":"Alabama","PostalCode":"12345"},{"Country":"United
+        States","StreetAddresses":["2 main st","line 2","line 3"],"City":"second city","StateProvince":"Alabama","PostalCode":"54321"}],"RelatedUrls":[{"Description":"Related
+        URL datacenter level 1","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"http://52north.org"},{"Description":"Related
+        URL datacenter level 2","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"https://search.sit.earthdata.nasa.gov"}]}},{"Roles":["ARCHIVER","DISTRIBUTOR","ORIGINATOR"],"ShortName":"973
+        DATA CENTER","LongName":"Data Archive, Sharing Network for Resource and Environment
+        Project of 973 Program","ContactInformation":{"ServiceHours":"8-18","ContactInstruction":"contact
+        instructions contact instructions contact instructions ","ContactMechanisms":[{"Type":"Direct
+        Line","Value":"1234567890"},{"Type":"Email","Value":"bo.sun@nasa.gov"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["3 main st","line 2","line 3"],"City":"third city","StateProvince":"Alabama","PostalCode":"67890"}],"RelatedUrls":[{"Description":"Related
+        URL datacenter level 3","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"http://www.973geodata.cn"}]}}],"MetadataDates":[{"Type":"CREATE","Date":"2017-07-31T17:40:00.000Z"},{"Type":"UPDATE","Date":"2017-08-09T17:04:00.000Z"}],"DOI":{"DOI":"The
+        Digitial Object Identifier.","Authority":"The authority who created the DOI."}}'
+    http_version: 
 9cdc3d2600617b4e45da2c985f5e22fccc93aaa6:
   response:
     status:

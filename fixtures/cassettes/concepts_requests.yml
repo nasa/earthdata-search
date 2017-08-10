@@ -642,6 +642,21 @@ http_interactions:
   digest: 6ed9bf22b9e9afd46544b3003dd4e3554577dfe2
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200235634-EDF_DEV06.umm_json_v1_9
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Aug 2017 17:21:48 GMT
+  digest: b254400c8d4ce110ceccdc75a040c6dab2e88e49
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C24936-LAADS.umm_json_v1_9
     body:
       encoding: US-ASCII

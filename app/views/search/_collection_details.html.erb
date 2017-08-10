@@ -148,6 +148,12 @@
             <dt>Short Name:</dt>
             <dd data-bind="text: $data.short_name"></dd>
           </dl>
+          <!--ko if: $data.DOI-->
+          <dl class="flex-column">
+            <dt>DOI:</dt>
+            <dd data-bind="text: $data.DOI.DOI ? $data.DOI.DOI : 'DOI not provided'"></dd>
+          </dl>
+          <!--/ko-->
           <dl class="flex-column">
             <!-- ko foreach: $data.online_access_urls -->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data}" target="_blank">Download Page</a></dt>

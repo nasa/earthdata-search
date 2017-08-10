@@ -266,4 +266,15 @@ describe 'Collection details', reset: false do
       expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
     end
   end
+
+  context 'when selecting a collection with DOI field' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true
+    end
+
+    it 'displays the DOI and the Authority' do
+      expect(page).to have_content('DOI:')
+      expect(page).to have_content('The Digitial Object Identifier.')
+    end
+  end
 end
