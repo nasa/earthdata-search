@@ -7897,4 +7897,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Mon, 06 Jun 2016 22:07:49 GMT
   digest: 3b20076bd5ed19d3c18c10a5ae429ee0549cf0ed
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=nsidc-0051%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 08 Aug 2017 15:23:20 GMT
+  digest: 4d326ad9b24b9c9a2c4f8385603d490595e5980a
 recorded_with: VCR 2.6.0
