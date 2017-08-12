@@ -58,7 +58,7 @@ ns.Collection = do (ko
       @granuleCount = ko.observable(0)
 
       @hasAtomData = ko.observable(false)
-      @orbitFriendly = ko.observable(true)
+      @orbitFriendly = ko.observable(false)
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
 
       @detailsLoaded = ko.observable(false)
