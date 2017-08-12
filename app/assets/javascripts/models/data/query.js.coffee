@@ -437,7 +437,7 @@ ns.query = do (ko,
         false
 
     validateEquatorialCrossingDateRange: (min, max) =>
-      if min && max
+      if Date.parse(min) && Date.parse(max)
         Date.parse(min) <= Date.parse(max)
       else
         true        

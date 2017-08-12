@@ -462,7 +462,6 @@ describe "Granule search filters", reset: false do
 
     it 'filters when the equatorial crossing date start and end times are set' do
       fill_in "Equatorial Crossing Date Start:", with: "2015-01-24"
-      page.find(".master-overlay-secondary-content").click
       fill_in "Equatorial Crossing Date End:", with: "2015-01-25"
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
