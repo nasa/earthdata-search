@@ -774,6 +774,176 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:31:05 GMT
+  digest: 41a7898c551280834851809b7948af0ede8bcb72
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:31:11 GMT
+  digest: aa8e11590d8b469c77596f5bbb0cf5641341745b
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:30:39 GMT
+  digest: f52a0a9d469006d00aa1e17e0478821fb86d62cc
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:31:20 GMT
+  digest: 2b76fdf93cc33be8b61e9042c8191e238ac7a54c
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_longitude%5Bmax%5D=-40&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:30:48 GMT
+  digest: ea2d4d5cbdeb708994aaf2ff4d4dda4a62a08551
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_longitude%5Bmin%5D=-45&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:30:32 GMT
+  digest: c6d01b0207768c4d20bf5bd60519b763e43590d2
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:30:51 GMT
+  digest: 1f2e0938b6dc703a1b2edc3b480cdcc0d68df142
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&orbit_number%5Bmax%5D=30009&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:31:23 GMT
+  digest: 5a28b49929a2dad8c6868bf31405996c55c8f213
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&orbit_number%5Bmin%5D=30000&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:31:01 GMT
+  digest: 8168fb7012b2d3e2a0ce4f717a3aaf94c791c452
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sat, 12 Aug 2017 18:30:30 GMT
+  digest: 0a0e7cf2ab8013bd619fe35a1026c9825bdc5dce
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C107705227-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
