@@ -4,7 +4,7 @@ describe "Granule search filters", reset: false do
   context "for granules that can be filtered by day/night flag or cloud cover" do
     before_granule_count = 0
 
-    before(:all) do
+    before(:each) do
       # Labs parameter enables additional attribute searching
       load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
 
@@ -231,7 +231,10 @@ describe "Granule search filters", reset: false do
         fill_in "End", with: "12-31 00:00:00\t"
         script = "edsc.page.project.searchGranulesCollection().granuleDatasource().cmrQuery().temporal.pending.years([2005, 2010])"
         js_click_apply ".master-overlay-content"
+        click_button "Apply"
+        wait_for_xhr
         expect(project_overview).to filter_granules_from(before_granule_count)
+        first_project_collection.click_link "Show granule filters"
         js_uncheck_recurring 'granule'
         click_button "granule-filters-clear"
         wait_for_xhr
@@ -259,7 +262,13 @@ describe "Granule search filters", reset: false do
     end
 
     context "when searching by additional attributes" do
-      before(:all) do
+      before(:each) do
+        load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
+        temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
+        temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
+        set_temporal(temporal_start_date, temporal_stop_date)
+        wait_for_xhr
+        first_project_collection.click_link "Show granule filters"
         fill_in('DAR_ID', with: '')
         wait_for_xhr
         fill_in('LowerLeftQuadCloudCoverage', with: "50 - 100\t")
@@ -267,7 +276,10 @@ describe "Granule search filters", reset: false do
       end
 
       it "filters granules using the additional attribute values" do
+        click_button "Apply"
+        wait_for_xhr
         expect(project_overview).to filter_granules_from(before_granule_count)
+        first_project_collection.click_link "Show granule filters"
       end
 
       context "when clearing the attribute search" do
@@ -281,7 +293,10 @@ describe "Granule search filters", reset: false do
         end
 
         it "resets the granule search" do
-          expect(project_overview).to reset_granules_to(before_granule_count)
+          click_button "Apply"
+          wait_for_xhr
+          expect(project_overview).to filter_granules_from(before_granule_count)
+          first_project_collection.click_link "Show granule filters"
         end
       end
     end
@@ -358,6 +373,100 @@ describe "Granule search filters", reset: false do
     it "the param is carried over to the granule search" do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
       expect(Project.find(project_id).path).to include('pg[0][project]=')
+    end
+  end
+
+  context "for granules that cannot be filtered by orbit spatial parameters" do
+
+    before(:all) do
+      # Labs parameter enables additional attribute searching
+      load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
+
+      temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
+      temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
+      set_temporal(temporal_start_date, temporal_stop_date)
+      wait_for_xhr
+      first_project_collection.click_link "Show granule filters"
+    end
+
+    it 'does not show the orbit spatial parameters in the granule filter list' do
+      expect(page).to_not have_content('Orbit Spatial Parameters')
+    end
+  end
+
+  context "for granules that can be filtered by orbit spatial parameters" do
+    before_granule_count = 0
+    before(:each) do
+      load_page :search, project: ['C1000001167-NSIDC_ECS'], view: :project, labs: true
+      wait_for_xhr
+      first_project_collection.click_link "Show granule filters"
+      number_granules = project_overview.text.match /\d+ Granules/
+      before_granule_count = number_granules.to_s.split(" ")[0].to_i
+    end
+    # Capybara::Screenshot.screenshot_and_save_page
+    it 'shows the orbit spatial parameters in the granule filter list' do
+      expect(page).to have_content('Orbit Spatial Parameters')
+    end
+
+    it 'filters when only the orbit number min is set' do
+      fill_in "Orbit Number Min:", with: "30000"
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when only the orbit number max is set' do
+      fill_in "Orbit Number Max:", with: "30009"
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when the orbit number min and max are set' do
+      fill_in "Orbit Number Min:", with: "30000"
+      fill_in "Orbit Number Max:", with: "30009"
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when only the equatorial crossing longitude min is set' do
+      fill_in "Equatorial Crossing Longitude Min:", with: "-45"
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when only the equatorial crossing longitude max is set' do
+      fill_in "Equatorial Crossing Longitude Max:", with: "-40"
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when the equatorial crossing longitude min and max are set' do
+      fill_in "Equatorial Crossing Longitude Min:", with: "-45"
+      fill_in "Equatorial Crossing Longitude Max:", with: "-40"
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when only the equatorial crossing date start time is set' do
+      fill_in "Equatorial Crossing Date Start:", with: "2015-01-24"
+      page.find(".master-overlay-secondary-content").click
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when only the equatorial crossing date end time is set' do
+      fill_in "Equatorial Crossing Date End:", with: "2015-01-25"
+      page.find(".master-overlay-secondary-content").click
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
+    end
+
+    it 'filters when the equatorial crossing date start and end times are set' do
+      fill_in "Equatorial Crossing Date Start:", with: "2015-01-24"
+      page.find(".master-overlay-secondary-content").click
+      fill_in "Equatorial Crossing Date End:", with: "2015-01-25"
+      page.find(".master-overlay-secondary-content").click
+      click_button "Apply"
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
   end
 end

@@ -68,11 +68,11 @@
           <span data-bind="visible: !granuleQuery.validateOrbitNumberRange(granuleQuery.orbitNumber.min(),granuleQuery.orbitNumber.max())" class="error">Minimum must be less than Maximum</span>
         </p>
         <p>
-          <label for="equatorial-crossing-longitude-min">Equatorial Crossing Longitude Min:</label><br /><input id="equatorial-crossing-longitude-min" data-bind="value: granuleQuery.equatorialCrossingLongitude.min" type="text" placeholder="Example: -40">
+          <label for="equatorial-crossing-longitude-min">Equatorial Crossing Longitude Min:</label><br /><input id="equatorial-crossing-longitude-min" data-bind="value: granuleQuery.equatorialCrossingLongitude.min" type="text" placeholder="Example: -45">
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeValue(granuleQuery.equatorialCrossingLongitude.min())" class="error">Value must be within 0 to (+/–)180</span>
         </p>
         <p>
-          <label for="equatorial-crossing-longitude-max">Equatorial Crossing Longitude Max:</label><br /><input id="equatorial-crossing-longitude-max" data-bind="value: granuleQuery.equatorialCrossingLongitude.max" type="text" placeholder="Example: -45">
+          <label for="equatorial-crossing-longitude-max">Equatorial Crossing Longitude Max:</label><br /><input id="equatorial-crossing-longitude-max" data-bind="value: granuleQuery.equatorialCrossingLongitude.max" type="text" placeholder="Example: -40">
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeValue(granuleQuery.equatorialCrossingLongitude.max())" class="error">Value must be within 0 to (+/–)180</span>
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeRange(granuleQuery.equatorialCrossingLongitude.min(),granuleQuery.equatorialCrossingLongitude.max())" class="error">Minimum must be less than Maximum</span>
         </p>
