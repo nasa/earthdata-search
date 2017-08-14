@@ -1,0 +1,835 @@
+earthdata:
+  # Endpoints for Earthdata.  These must remain in sync, because for instance ECHO SIT can't accept tokens from URS prod
+  prod:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_rest_root: "https://cmr.earthdata.nasa.gov/legacy-services/rest"
+    echo_catalog_rest_root: "https://api.echo.nasa.gov/catalog-rest"
+    cmr_root: "https://cmr.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+  uat:
+    urs_root: "https://uat.urs.earthdata.nasa.gov"
+    echo_rest_root: "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest"
+    echo_catalog_rest_root: "https://cmr.uat.earthdata.nasa.gov/catalog-rest"
+    cmr_root: "https://cmr.uat.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.uat.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.uat.earthdata.nasa.gov/browse-scaler"
+  sit:
+    urs_root: "https://sit.urs.earthdata.nasa.gov"
+    echo_rest_root: "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest"
+    echo_catalog_rest_root: "https://cmr.sit.earthdata.nasa.gov/catalog-rest"
+    cmr_root: "https://cmr.sit.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.sit.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.sit.earthdata.nasa.gov/browse-scaler"
+  lab:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
+    cmr_root: "https://cmr.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+
+  scan:
+    urs_root: "https://urs.earthdata.nasa.gov"
+    echo_root: "https://cmr.earthdata.nasa.gov/legacy-services"
+    cmr_root: "https://cmr.earthdata.nasa.gov"
+    opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
+    browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
+
+cwic_root: "http://cwic.wgiss.ceos.org/"
+
+# Earthdata Search Client specific configs
+#     limited_collections:       The collection concept IDs included below will be limited to 100 granules when ordering.
+#     enable_esi_order_chunking: enable/disable ESI order chunking for a specific environment.
+edsc:
+  development:
+    enable_esi_order_chunking: true
+  test:
+    enable_esi_order_chunking: true
+  sit:
+    limited_collections: C1002-LPDAAC_TBD
+    enable_esi_order_chunking: true
+  uat:
+    limited_collections: C1070-PVC_TS2, C1000-LPDAAC_TS2, C1052-LPDAAC_TS1, C1218664486-CUMULUS, C1216391161-LPCUMULUS, C1071-PVC_TS2, C98791-LPDAAC_TS1, C1216100909-LPDAAC_TS2, C1216257556-LPDAAC_TS1, C1216101022-LPDAAC_TS2, C1216257557-LPDAAC_TS1, C1216101026-LPDAAC_TS2, C1216257558-LPDAAC_TS1, C1216101028-LPDAAC_TS2, C1216257559-LPDAAC_TS1, C1216101030-LPDAAC_TS2, C1216257560-LPDAAC_TS1, C1216101032-LPDAAC_TS2, C1216257561-LPDAAC_TS1, C1216101034-LPDAAC_TS2, C1216257562-LPDAAC_TS1, C1216101036-LPDAAC_TS2, C1216257563-LPDAAC_TS1, C1216101038-LPDAAC_TS2, C1216257593-LPDAAC_TS1, C1216101040-LPDAAC_TS2, C1216257565-LPDAAC_TS1
+    enable_esi_order_chunking: true
+  production:
+    limited_collections: C14758250-LPDAAC_ECS, C190733714-LPDAAC_ECS, C1299783607-LPDAAC_ECS, C1299783800-LPDAAC_ECS, C1299783608-LPDAAC_ECS, C1299783630-LPDAAC_ECS, C1299783574-LPDAAC_ECS, C1299783609-LPDAAC_ECS, C1299783631-LPDAAC_ECS, C1299783579-LPDAAC_ECS, C1299783651-LPDAAC_ECS, C1299783684-LPDAAC_ECS
+    enable_esi_order_chunking: true
+
+# Every (EDSC, URS) environment pair has a different client id.  Yay combinatorics.
+urs:
+  production:
+    "https://urs.earthdata.nasa.gov": "6VThsdWMcfrKzLEP_A5xCQ"
+  uat:
+    "https://urs.earthdata.nasa.gov": "HoOcKmts_X6VtUtDYxNmbQ"
+    "https://uat.urs.earthdata.nasa.gov": "f9SNO2nTTMVzG9uLa3vxqA"
+    "https://sit.urs.earthdata.nasa.gov": "oSSc0lV8dZeqqPC1UsZx7Q"
+  sit:
+    "https://urs.earthdata.nasa.gov": "ObPbuvn1Clh8PCphoJ4oLA"
+    "https://uat.urs.earthdata.nasa.gov": "e_QqKiCh7IkQefVdJL4BVg"
+    "https://sit.urs.earthdata.nasa.gov": "oSSc0lV8dZeqqPC1UsZx7Q"
+  development:
+    "https://urs.earthdata.nasa.gov": <%= ENV['URS_CLIENT_ID_PROD_DEV'] %>
+    "https://uat.urs.earthdata.nasa.gov": <%= ENV['URS_CLIENT_ID_UAT_DEV'] %>
+    "https://sit.urs.earthdata.nasa.gov": <%= ENV['URS_CLIENT_ID_SIT_DEV'] %>
+  test:
+    "https://urs.earthdata.nasa.gov": <%= ENV['URS_CLIENT_ID_PROD_DEV'] %>
+    "https://uat.urs.earthdata.nasa.gov": <%= ENV['URS_CLIENT_ID_UAT_DEV'] %>
+    "https://sit.urs.earthdata.nasa.gov": <%= ENV['URS_CLIENT_ID_SIT_DEV'] %>
+  lab:
+    "https://urs.earthdata.nasa.gov": "QTwF6cmUjImOi5wlJhbvLA"
+    "https://uat.urs.earthdata.nasa.gov": "ShmAmFGyAS9yQaKGR-ruvA"
+    "https://sit.urs.earthdata.nasa.gov": "oSSc0lV8dZeqqPC1UsZx7Q"
+  scan:
+    "https://urs.earthdata.nasa.gov": "Ok3vmnPCVTHowuuw4EeQCA"
+    "https://uat.urs.earthdata.nasa.gov": "DUAgv2wAXFDGBRgohFkMJA"
+    "https://sit.urs.earthdata.nasa.gov": "oSSc0lV8dZeqqPC1UsZx7Q"
+
+opendap:
+  C191855458-LARC:
+    granule_url_template:
+      https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/{od_time_start_dot}/{producer_granule_id}
+    ddx_url:
+      https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
+  C7085910-LARC_ASDC:
+    granule_url_template:
+      https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/{producer_granule_id}
+    ddx_url:
+      https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc.ddx
+  C183451149-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRH3ST8.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRH3ST8.005/2002/AIRS.2002.09.01.L3.RetStd_H008.v5.0.14.0.G07183213133.hdf.ncml.ddx
+  C183451150-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRH3STD.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRH3STD.005/2002/AIRS.2002.08.31.L3.RetStd_H001.v5.0.14.0.G07178195754.hdf.ncml.ddx
+  C183451151-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRH3STM.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRH3STM.005/2002/AIRS.2002.09.01.L3.RetStd_H030.v5.0.14.0.G07185100430.hdf.ncml.ddx
+  C183451154-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRS3ST8.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRS3ST8.005/2007/AIRS.2007.06.03.L3.RetStd_IR008.v5.0.14.0.G07261123909.hdf.ncml.ddx
+  C183451155-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRS3STD.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRS3STD.005/2007/AIRS.2007.06.01.L3.RetStd_IR001.v5.0.14.0.G07313121034.hdf.ncml.ddx
+  C183451156-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRS3STM.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRS3STM.005/2007/AIRS.2007.06.01.L3.RetStd_IR030.v5.0.14.0.G07318171713.hdf.ncml.ddx
+  C183451157-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C28.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C28.005/2002/AIRS.2002.09.01.L3.CO2Std008.v5.4.12.70.X09264142333.hdf.ddx
+  C188143118-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C2D.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C2D.005/2002/AIRS.2002.09.01.L3.CO2Std001.v5.4.12.70.X09264142435.hdf.ddx
+  C183451159-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C2M.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C2M.005/2002/AIRS.2002.09.01.L3.CO2Std030.v5.4.12.67.X09261085054.hdf.ddx
+  C183451162-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRX3ST8.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRX3ST8.005/2002/AIRS.2002.09.01.L3.RetStd008.v5.0.14.0.G07210053643.hdf.ncml.ddx
+  C188143422-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRX3STD.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRX3STD.005/2002/AIRS.2002.08.31.L3.RetStd001.v5.0.14.0.G07283180815.hdf.ncml.ddx
+  C183451164-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRX3STM.005/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/ncml/Aqua_AIRS_Level3/AIRX3STM.005/2002/AIRS.2002.09.01.L3.RetStd030.v5.0.14.0.G07283162057.hdf.ncml.ddx
+  C201055192-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRS3ST8.006/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRS3ST8.006/2002/AIRS.2002.09.01.L3.RetStd_IR008.v6.0.9.0.G13214173707.hdf.ddx
+  C201055805-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRS3STD.006/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRS3STD.006/2002/AIRS.2002.08.31.L3.RetStd_IR001.v6.0.9.0.G13214161357.hdf.ddx
+  C201055825-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRS3STM.006/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRS3STM.006/2002/AIRS.2002.09.01.L3.RetStd_IR030.v6.0.9.0.G13214181234.hdf.ddx
+  C201056347-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3ST8.006/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3ST8.006/2002/AIRS.2002.09.01.L3.RetStd008.v6.0.9.0.G13208041820.hdf.ddx
+  C201056348-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.08.31.L3.RetStd001.v6.0.9.0.G13208034313.hdf.ddx
+  C201071398-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STM.006/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STM.006/2002/AIRS.2002.09.01.L3.RetStd030.v6.0.9.0.G13208054216.hdf.ddx
+  C181553784-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMAEROe.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMAEROe.003/2004/OMI-Aura_L3-OMAEROe_2004m1001_v003-2011m1109t080411.he5.ddx
+  C195023933-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMAERUVd.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMAERUVd.003/2004/OMI-Aura_L3-OMAERUVd_2004m1001_v003-2012m0325t082343.he5.ddx
+  C179080973-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMDOAO3e.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMDOAO3e.003/2004/OMI-Aura_L3-OMDOAO3e_2004m1001_v003-2011m1109t084506.he5.ddx
+  C188290526-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMNO2d.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMNO2d.003/2004/OMI-Aura_L3-OMNO2d_2004m1001_v003-2013m0109t110353.he5.ddx
+  C194770326-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMSO2e.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMSO2e.003/2004/OMI-Aura_L3-OMSO2e_2004m1001_v003-2012m0409t095851.he5.ddx
+  C194770326-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMSO2e.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMSO2e.003/2004/OMI-Aura_L3-OMSO2e_2004m1001_v003-2012m0409t095851.he5.ddx
+  C179080976-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3e.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3e.003/2004/OMI-Aura_L3-OMTO3e_2004m1001_v003-2012m0409t101417.he5.ddx
+  C188290546-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3d.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3d.003/2004/OMI-Aura_L3-OMTO3d_2004m1001_v003-2012m0405t174138.he5.ddx
+  C179080976-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3e.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3e.003/2004/OMI-Aura_L3-OMTO3e_2004m1001_v003-2012m0409t101417.he5.ddx
+  C181833032-GSFCS4PA:
+    granule_url_template:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMUVBd.003/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMUVBd.003/2004/OMI-Aura_L3-OMUVBd_2004m1001_v003-2013m0314t081851.he5.ddx
+  C180742679-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAC0FXCHM.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAC0FXCHM.5.2.0/1979/MERRA300.prod.assim.const_2d_chm_Fx.00000000.hdf.ddx
+  C180742678-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAC0NXASM.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAC0NXASM.5.2.0/1979/MERRA300.prod.assim.const_2d_asm_Nx.00000000.hdf.ddx
+  C180788518-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAI1NXINT.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAI1NXINT.5.2.0/1979/01/MERRA100.prod.assim.inst1_2d_int_Nx.19790101.hdf.ddx
+  C180152130-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAI3CPASM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAI3CPASM.5.2.0/1979/01/MERRA100.prod.assim.inst3_3d_asm_Cp.19790101.hdf.ddx
+  C180139830-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAI3NECHM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAI3NECHM.5.2.0/1979/01/MERRA100.prod.assim.inst3_3d_chm_Ne.19790101.hdf.ddx
+  C180152131-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAI6NPANA.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAI6NPANA.5.2.0/1979/01/MERRA100.prod.assim.inst6_3d_ana_Np.19790101.hdf.ddx
+  C180152132-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAI6NVANA.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAI6NVANA.5.2.0/1979/01/MERRA100.prod.assim.inst6_3d_ana_Nv.19790101.hdf.ddx
+  C180152133-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAIMCPASM.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAIMCPASM.5.2.0/1979/MERRA100.prod.assim.instM_3d_asm_Cp.197901.hdf.ddx
+  C180152134-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAIMNPANA.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAIMNPANA.5.2.0/1979/MERRA100.prod.assim.instM_3d_ana_Np.197901.hdf.ddx
+  C180152135-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAIMNXINT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MAIMNXINT.5.2.0/1979/MERRA100.prod.assim.instM_2d_int_Nx.197901.hdf.ddx
+  C180458120-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MAIUCPASM.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MAIUCPASM.5.2.0/1979/MERRA100.prod.assim.instU_3d_asm_Cp.197901.hdf.ddx
+  C180458121-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MAIUNPANA.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MAIUNPANA.5.2.0/1979/MERRA100.prod.assim.instU_3d_ana_Np.197901.hdf.ddx
+  C180458122-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MAIUNXINT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MAIUNXINT.5.2.0/1979/MERRA100.prod.assim.instU_2d_int_Nx.197901.hdf.ddx
+  C180152136-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXFLX.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXFLX.5.2.0/1979/01/MERRA100.prod.assim.tavg1_2d_flx_Nx.19790101.hdf.ddx
+  C180152137-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXINT.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXINT.5.2.0/1979/01/MERRA100.prod.assim.tavg1_2d_int_Nx.19790101.hdf.ddx
+  C180152138-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXLND.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXLND.5.2.0/1979/01/MERRA100.prod.assim.tavg1_2d_lnd_Nx.19790101.hdf.ddx
+  C194815885-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXOCN.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXOCN.5.2.0/1979/01/MERRA100.prod.assim.tavg1_2d_ocn_Nx.19790101.hdf.ddx
+  C180152139-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXRAD.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXRAD.5.2.0/1979/01/MERRA101.prod.assim.tavg1_2d_rad_Nx.19790101.hdf.ddx
+  C180152140-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXSLV.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MAT1NXSLV.5.2.0/1979/01/MERRA100.prod.assim.tavg1_2d_slv_Nx.19790101.hdf.ddx
+  C180152141-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPCLD.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPCLD.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_cld_Cp.19790101.hdf.ddx
+  C180152142-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPMST.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPMST.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_mst_Cp.19790101.hdf.ddx
+  C180152143-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPODT.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPODT.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_odt_Cp.19790101.hdf.ddx
+  C180152144-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPQDT.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPQDT.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_qdt_Cp.19790101.hdf.ddx
+  C180152145-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPRAD.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPRAD.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_rad_Cp.19790101.hdf.ddx
+  C180152146-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPTDT.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPTDT.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_tdt_Cp.19790101.hdf.ddx
+  C180152147-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPTRB.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPTRB.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_trb_Cp.19790101.hdf.ddx
+  C180152148-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPUDT.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA/MAT3CPUDT.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_udt_Cp.19790101.hdf.ddx
+  C180139831-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3FECHM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3FECHM.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_chm_Fe.19790101.hdf.ddx
+  C180139832-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3FVCHM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3FVCHM.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_chm_Fv.19790101.hdf.ddx
+  C180139833-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3FXCHM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3FXCHM.5.2.0/1979/01/MERRA100.prod.assim.tavg3_2d_chm_Fx.19790101.hdf.ddx
+  C180139834-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3NECHM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3NECHM.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_chm_Ne.19790101.hdf.ddx
+  C180139835-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3NVCHM.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA/MAT3NVCHM.5.2.0/1979/01/MERRA100.prod.assim.tavg3_3d_chm_Nv.19790101.hdf.ddx
+  C180152149-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPCLD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPCLD.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_cld_Cp.197901.hdf.ddx
+  C180152150-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPMST.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPMST.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_mst_Cp.197901.hdf.ddx
+  C180152151-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPODT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPODT.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_odt_Cp.197901.hdf.ddx
+  C180152152-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPQDT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPQDT.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_qdt_Cp.197901.hdf.ddx
+  C180152153-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPRAD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPRAD.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_rad_Cp.197901.hdf.ddx
+  C180152154-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPTDT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPTDT.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_tdt_Cp.197901.hdf.ddx
+  C180152155-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPTRB.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPTRB.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_trb_Cp.197901.hdf.ddx
+  C180152156-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPUDT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMCPUDT.5.2.0/1979/MERRA100.prod.assim.tavgM_3d_udt_Cp.197901.hdf.ddx
+  C180139836-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMFXCHM.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMFXCHM.5.2.0/1979/MERRA100.prod.assim.tavgM_2d_chm_Fx.197901.hdf.ddx
+  C180152157-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXFLX.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXFLX.5.2.0/1979/MERRA100.prod.assim.tavgM_2d_flx_Nx.197901.hdf.ddx
+  C180152158-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXINT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXINT.5.2.0/1979/MERRA100.prod.assim.tavgM_2d_int_Nx.197901.hdf.ddx
+  C180152159-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXLND.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXLND.5.2.0/1979/MERRA100.prod.assim.tavgM_2d_lnd_Nx.197901.hdf.ddx
+  C194815886-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXOCN.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXOCN.5.2.0/1979/MERRA100.prod.assim.tavgM_2d_ocn_Nx.197901.hdf.ddx
+  C180152160-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXRAD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXRAD.5.2.0/1979/MERRA101.prod.assim.tavgM_2d_rad_Nx.197901.hdf.ddx
+  C180152161-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXSLV.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MATMNXSLV.5.2.0/1979/MERRA100.prod.assim.tavgM_2d_slv_Nx.197901.hdf.ddx
+  C180458123-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPCLD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPCLD.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_cld_Cp.197901.hdf.ddx
+  C180458124-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPMST.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPMST.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_mst_Cp.197901.hdf.ddx
+  C180458125-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPODT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPODT.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_odt_Cp.197901.hdf.ddx
+  C180458126-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPQDT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPQDT.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_qdt_Cp.197901.hdf.ddx
+  C180458127-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPRAD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPRAD.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_rad_Cp.197901.hdf.ddx
+  C180458128-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPTDT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPTDT.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_tdt_Cp.197901.hdf.ddx
+  C180458129-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPTRB.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPTRB.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_trb_Cp.197901.hdf.ddx
+  C180458130-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPUDT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr3.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUCPUDT.5.2.0/1979/MERRA100.prod.assim.tavgU_3d_udt_Cp.197901.hdf.ddx
+  C180457780-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUFXCHM.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr1.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUFXCHM.5.2.0/1979/MERRA100.prod.assim.tavgU_2d_chm_Fx.197901.hdf.ddx
+  C180458131-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXFLX.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXFLX.5.2.0/1979/MERRA100.prod.assim.tavgU_2d_flx_Nx.197901.hdf.ddx
+  C180458132-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXINT.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXINT.5.2.0/1979/MERRA100.prod.assim.tavgU_2d_int_Nx.197901.hdf.ddx
+  C180458133-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXLND.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXLND.5.2.0/1979/MERRA100.prod.assim.tavgU_2d_lnd_Nx.197901.hdf.ddx
+  C194815887-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXOCN.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXOCN.5.2.0/1979/MERRA100.prod.assim.tavgU_2d_ocn_Nx.197901.hdf.ddx
+  C180458134-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXRAD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXRAD.5.2.0/1979/MERRA101.prod.assim.tavgU_2d_rad_Nx.197901.hdf.ddx
+  C180458135-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXSLV.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MATUNXSLV.5.2.0/1979/MERRA100.prod.assim.tavgU_2d_slv_Nx.197901.hdf.ddx
+  C196779398-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MST1NXMLD.5.2.0/{time_start:4}/{od_month}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA/MST1NXMLD.5.2.0/1980/01/MERRA100.prod.simul.tavg1_2d_mld_Nx.19800101.hdf.ddx
+  C196779399-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MSTMNXMLD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_MONTHLY/MSTMNXMLD.5.2.0/1980/MERRA100.prod.simul.tavgM_2d_mld_Nx.198001.hdf.ddx
+  C196779458-GSFCS4PA:
+    granule_url_template:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MSTUNXMLD.5.2.0/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://goldsmr2.sci.gsfc.nasa.gov/opendap/MERRA_DIURNAL/MSTUNXMLD.5.2.0/1980/MERRA100.prod.simul.tavgU_2d_mld_Nx.198001.hdf.ddx
+  C203661507-GSFCS4PA:
+    granule_url_template:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L305.004/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L305.004/1997/DeepBlue-SeaWiFS-0.5_L3_19970904_v004-20130603T205559Z.h5.ddx
+  C203660561-GSFCS4PA:
+    granule_url_template:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L310.004/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L310.004/1997/DeepBlue-SeaWiFS-1.0_L3_19970904_v004-20130603T205559Z.h5.ddx
+  C203692847-GSFCS4PA:
+    granule_url_template:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L3M05.004/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L3M05.004/1997/DeepBlue-SeaWiFS-0.5_L3M_199709_v004-20130604T123234Z.h5.ddx
+  C203692935-GSFCS4PA:
+    granule_url_template:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L3M10.004/{time_start:4}/{producer_granule_id}
+    ddx_url:
+      http://measures.gsfc.nasa.gov/opendap/SWDB/SWDB_L3M10.004/1997/DeepBlue-SeaWiFS-1.0_L3M_199709_v004-20130604T140651Z.h5.ddx
+
+modaps:
+  C1000000014-LANCEMODIS:
+    short_name: MOD00F
+  C1000000008-LANCEMODIS:
+    short_name: MOD01
+  C1000000010-LANCEMODIS:
+    short_name: MOD021KM
+  C1000000018-LANCEMODIS:
+    short_name: MOD02HKM
+
+  C1000000011-LANCEMODIS:
+    short_name: MOD02QKM
+  # C145828724-LAADS: # not NRT
+  #   short_name: MOD02SSH
+  C1000000006-LANCEMODIS:
+    short_name: MOD03
+  C1000000019-LANCEMODIS:
+    short_name: MOD04_L2
+  C1000000027-LANCEMODIS:
+    short_name: MOD05_L2
+  C1000000045-LANCEMODIS:
+    short_name: MOD06_L2
+  C1000000015-LANCEMODIS:
+    short_name: MOD07_L2
+
+  # C90759595-LAADS: # not NRT
+  # C186808720-LAADS: # not NRT
+  #   short_name: MOD08_D3
+
+  # C90760179-LAADS: # not NRT
+  # C186808721-LAADS: # not NRT
+  #   short_name: MOD08_E3
+
+  # C90760180-LAADS: # not NRT
+  # C186808740-LAADS: # not NRT
+  #   short_name: MOD08_M3
+
+  C1000000017-LANCEMODIS:
+    short_name: MOD09
+
+  # C107705227-LPDAAC_ECS: # not NRT
+  #   short_name: MOD09A1
+
+  C1000000000-LANCEMODIS:
+    short_name: MOD09CMG
+
+  # C107705231-LPDAAC_ECS: # not NRT
+  #   short_name: MOD09Q1
+
+  # C16893868-LPDAAC_ECS: # not NRT
+  # C108956779-LPDAAC_ECS: # not NRT
+  # C187016581-LPDAAC_ECS: # not NRT
+    # short_name: MOD11A1
+
+  # C16893875-LPDAAC_ECS: # not NRT
+  # C108956780-LPDAAC_ECS: # not NRT
+  #   short_name: MOD11A2
+
+  # C16893867-LPDAAC_ECS: # not NRT
+  # C108956781-LPDAAC_ECS: # not NRT
+  # C187016584-LPDAAC_ECS: # not NRT
+    # short_name: MOD11B1
+
+  # C16893876-LPDAAC_ECS: # not NRT
+  # C183810881-LPDAAC_ECS: # not NRT
+  # C187016586-LPDAAC_ECS: # not NRT
+    # short_name: MOD11C1
+
+  # C16893877-LPDAAC_ECS: # not NRT
+  # C183810883-LPDAAC_ECS: # not NRT
+  # C187016587-LPDAAC_ECS: # not NRT
+  #   short_name: MOD11C2
+
+  # C16893878-LPDAAC_ECS: # not NRT
+  # C183810885-LPDAAC_ECS: # not NRT
+  # C187016589-LPDAAC_ECS: # not NRT
+    # short_name: MOD11C3
+
+  # C16893879-LPDAAC_ECS: GIBS, but # not NRT
+  # C108956785-LPDAAC_ECS: GIBS, but # not NRT
+  # C187016591-LPDAAC_ECS: GIBS, but # not NRT
+    # short_name: MOD11_L2
+
+  # C107705232-LPDAAC_ECS: # not NRT
+  #   short_name: MOD13A1
+
+  # C107705233-LPDAAC_ECS: # not NRT
+  #   short_name: MOD13A2
+
+  # C107705234-LPDAAC_ECS: # not NRT
+  #   short_name: MOD13A3
+
+  # C183810888-LPDAAC_ECS: # not NRT
+  #   short_name: MOD13C1
+
+  # C183810890-LPDAAC_ECS: # not NRT
+  #   short_name: MOD13C2
+
+  # C107705237-LPDAAC_ECS: # not NRT
+  #   short_name: MOD13Q1
+
+  C1000000004-LANCEMODIS:
+    short_name: MOD14
+
+  # C107705239-LPDAAC_ECS: # not NRT
+  #   short_name: MOD14A1
+
+  # C107705240-LPDAAC_ECS: # not NRT
+  #   short_name: MOD14A2
+
+  # C111553410-LPDAAC_ECS: # not NRT
+  #   short_name: MOD15A2
+
+  # C117500873-LPDAAC_ECS: # not NRT
+  # C197806429-LPDAAC_ECS: # not NRT
+    # short_name: MOD17A2
+
+  C1000000005-LANCEMODIS:
+    short_name: MOD35_L2
+  C1000000060-LANCEMODIS:
+    short_name: MYD00F
+  C1000000009-LANCEMODIS:
+    short_name : MYD01
+  C1000000007-LANCEMODIS:
+    short_name: MYD021KM
+  C1000000025-LANCEMODIS:
+    short_name: MYD02HKM
+
+  C1000000023-LANCEMODIS:
+    short_name: MYD02QKM
+
+  # C145828723-LAADS: # not NRT
+    # short_name: MYD02SSH
+
+  C1000000001-LANCEMODIS:
+    short_name: MYD03
+  C1000000003-LANCEMODIS:
+    short_name: MYD04_L2
+  C1219032686-LANCEMODIS:
+    short_name: MYD04_L2
+  C1000000028-LANCEMODIS:
+    short_name: MYD05_L2
+  C1000000030-LANCEMODIS:
+    short_name: MYD06_L2
+  C1000000013-LANCEMODIS:
+    short_name: MYD07_L2
+
+  # C90762771-LAADS: # not NRT
+  # C186802639-LAADS: # not NRT
+  #   short_name: MYD08_D3
+  # C90763471-LAADS: # not NRT
+  # C186802661-LAADS: # not NRT
+  #   short_name: MYD08_E3
+  # C90763472-LAADS: # not NRT
+  # C186802662-LAADS: # not NRT
+  #   short_name: MYD08_M3
+
+  C1000000002-LANCEMODIS:
+    short_name: MYD09
+
+  # C115315490-LPDAAC_ECS: # not NRT
+  #   short_name: MYD09A1
+  # C183810889-LPDAAC_ECS: # not NRT
+  #   short_name: MYD09CMG
+  # C115315489-LPDAAC_ECS: # GIBS, but not NRT
+  #   short_name: MYD09GA
+  # C115315491-LPDAAC_ECS: # GIBS, but not NRT
+  #   short_name: MYD09GQ
+  # C115315492-LPDAAC_ECS: # not NRT
+  #   short_name: MYD09Q1
+
+  # C28466910-LPDAAC_ECS: # not NRT
+  # C115314846-LPDAAC_ECS: # not NRT
+  # C187016582-LPDAAC_ECS: # not NRT
+  #   short_name: MYD11A1
+
+  # C28466912-LPDAAC_ECS: # not NRT
+  # C115315494-LPDAAC_ECS: # not NRT
+    # short_name: MYD11A2
+
+  # C28466913-LPDAAC_ECS: # not NRT
+  # C115315495-LPDAAC_ECS: # not NRT
+  # C187016583-LPDAAC_ECS: # not NRT
+    # short_name: MYD11B1
+
+  # C28466914-LPDAAC_ECS: # not NRT
+  # C183810891-LPDAAC_ECS: # not NRT
+  # C187016585-LPDAAC_ECS: # not NRT
+    # short_name: MYD11C1
+
+  # C28466915-LPDAAC_ECS: # not NRT
+  # C183810892-LPDAAC_ECS: # not NRT
+  # C187016588-LPDAAC_ECS: # not NRT
+    # short_name: MYD11C2
+
+  # C46552062-LPDAAC_ECS: # not NRT
+  # C183810893-LPDAAC_ECS: # not NRT
+  # C187016590-LPDAAC_ECS: # not NRT
+    # short_name: MYD11C3
+
+  # C28466909-LPDAAC_ECS: # GIBS, but not NRT
+  # C115315498-LPDAAC_ECS: # GIBS, but not NRT
+  # C187016592-LPDAAC_ECS: # GIBS, but not NRT
+    # short_name: MYD11_L2
+
+  # C115315500-LPDAAC_ECS: # not NRT
+  #   short_name: MYD13A1
+  # C115315499-LPDAAC_ECS: # not NRT
+  #   short_name: MYD13A2
+  # C115315504-LPDAAC_ECS: # not NRT
+  #   short_name: MYD13A3
+  # C183810894-LPDAAC_ECS: # not NRT
+  #   short_name: MYD13C1
+  # C183810895-LPDAAC_ECS: # not NRT
+  #   short_name: MYD13C2
+  # C115315503-LPDAAC_ECS: # not NRT
+  #   short_name: MYD13Q1
+
+  C1000000021-LANCEMODIS:
+    short_name: MYD14
+
+  # C115315502-LPDAAC_ECS: # not NRT
+  #   short_name: MYD14A1
+  # C115314847-LPDAAC_ECS: # not NRT
+    # short_name: MYD14A2
+  # C115315505-LPDAAC_ECS: # not NRT
+  #   short_name: MYD15A2
+  # C117500875-LPDAAC_ECS: # not NRT
+  #   short_name: MYD17A2
+
+  C1000000044-LANCEMODIS:
+    short_name: MYD35_L2
+
+  # C90763475-LAADS: # not NRT
+  # C186802643-LAADS: # not NRT
+  #   short_name: MYDATML2
+
+  # C90764067-LAADS: # not NRT
+  #   short_name: MYDCSR_8
+  # C90764068-LAADS: # not NRT
+  #   short_name: MYDCSR_B
+  # C90764069-LAADS: # not NRT
+  #   short_name: MYDCSR_D
+  # C90764159-LAADS: # not NRT
+  #   short_name: MYDCSR_G
+
+  # C61468243-NSIDC_ECS:
+  # C184437554-NSIDC_ECS:
+  #   short_name: NISE
+
+  C190733713-LPDAAC_ECS:
+    short_name: MCD12Q2
