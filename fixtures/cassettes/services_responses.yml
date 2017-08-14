@@ -4085,6 +4085,30 @@ ae2b60150cb4d6448085c6e81a781b44c7291485:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179003380-ORNL_DAAC"}'
     http_version: 
+6a8eddb4c22c0cc7216341595f122ba9ee7fade8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Mon, 14 Aug 2017 11:03:10 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '73'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179003620-ORNL_DAAC"}'
+    http_version: 
 5022062e58d8056909ae09702cbae67d54fd0e03:
   response:
     status:
