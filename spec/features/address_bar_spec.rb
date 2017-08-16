@@ -193,13 +193,13 @@ describe 'Address bar', reset: false do
   context 'when adding collections to a project' do
     before(:all) do
       visit '/search/collections'
-      add_collection_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
+      add_collection_to_project('C179003620-ORNL_DAAC', 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
       add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
       click_link "Clear Filters"
     end
 
     it 'saves the project in the address bar' do
-      expect(page).to have_query_string('p=!C179001887-SEDAC!C179002914-ORNL_DAAC')
+      expect(page).to have_query_string('p=!C179003620-ORNL_DAAC!C179002914-ORNL_DAAC')
     end
   end
 

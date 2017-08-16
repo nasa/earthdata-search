@@ -7,9 +7,8 @@ describe "Granule search overlay", reset: false do
   end
 
   before(:each) do
-    load_page :search, q: 'MODIS/Aqua Near Real Time (NRT) Geolocation Angles'
-    target_collection_result('MODIS/Aqua Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 1km').click_link "Add collection to the current project"
-    target_collection_result('MODIS/Aqua Near Real Time (NRT) Geolocation Angles Daily L2G Global 1km SIN Grid Day V005').click_link "Add collection to the current project"
+    add_collection_to_project('C1219032680-LANCEMODIS', 'MODIS/Aqua Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 1km')
+    add_collection_to_project('C1280303098-LANCEAMSR2', 'NRT AMSR2 UNIFIED L2B HALF-ORBIT 25 KM EASE-GRID SURFACE SOIL MOISTURE V0')
 
     find("#view-project").click
   end
@@ -60,12 +59,6 @@ describe "Granule search overlay", reset: false do
 
       expect(page).to_not have_visible_granule_search
       expect(page).to have_no_link("Hide granule filters")
-    end
-
-    it "should not show 'Filter Granules' button for collections without granules" do
-      within("#project-overview") do
-        expect(page).to have_xpath(".//a[@title='No granules']", count: 1)
-      end
     end
 
   end

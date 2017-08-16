@@ -47,5 +47,19 @@ describe "CWIC-capable collection search results", reset: false do
         expect(first_collection_result).to have_no_text("Int'l / Interagency")
       end
     end
+
+    context 'collection-only collection' do
+      before :all do
+        load_page :search, ac: true, q: 'nsidc-0051', env: :uat
+      end
+
+      after :all do
+        load_page :search, env: :uat
+      end
+
+      it "doesn't show add to project icon" do
+        expect(first_collection_result).not_to have_link("Add collection to the current project")
+      end
+    end
   end
 end

@@ -1367,6 +1367,17 @@ http_interactions:
   digest: b8b607b7fafe2f89ca629dad8c06ba1a51157f17
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1219032680-LANCEMODIS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 14 Aug 2017 14:32:02 GMT
+  digest: 7781622719d22621b43c2150c0c28cec0d440d72
+- request:
+    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1219032686-LANCEMODIS
     body:
       encoding: US-ASCII
@@ -1453,6 +1464,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 20 Jan 2017 22:29:25 GMT
   digest: 3f1e31654f5063bb2b765fc9f4b269ff166ffa1b
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1280303098-LANCEAMSR2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 14 Aug 2017 14:32:06 GMT
+  digest: dcc1b851d9cfa0f33cba4b738b2c4639b2a1eb3e
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C138500-PODAAC
@@ -1552,6 +1574,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 11 Nov 2016 17:20:08 GMT
   digest: ae2b60150cb4d6448085c6e81a781b44c7291485
+- request:
+    method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179003620-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 14 Aug 2017 11:03:18 GMT
+  digest: 6a8eddb4c22c0cc7216341595f122ba9ee7fade8
 - request:
     method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C187016591-LPDAAC_ECS
