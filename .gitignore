@@ -46,6 +46,7 @@ test_results
 config/initializers/cookies_serializer.rb
 config/initializers/filter_parameter_logging.rb
 config/secrets.yml
+config/services.yml
 
 dist
 node_modules
