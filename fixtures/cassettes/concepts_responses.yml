@@ -1746,6 +1746,73 @@ f3ad8a9ba79165f7b5d0e6d91d44fbd2a948f181:
         data base, using the partial thin-plate splining algorithm. (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/CLIMATE/guides/cramer_leemans.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/416_1.png"}]}'
     http_version: 
+777ee368c307f20e424bd2f58da2c3806b0253a5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - b629c57b-ed23-43bc-a3bb-4e601bc21b07
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Thu, 17 Aug 2017 03:25:33 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1756'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"CollectionCitations":[{"OtherCitationDetails":"Dentener, F.J. 2006.
+        Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050. ORNL
+        DAAC, Oak Ridge, Tennessee, USA. http://dx.doi.org/10.3334/ORNLDAAC/830"}],"MetadataDates":[{"Date":"2006-04-14T00:00:00.000Z","Type":"UPDATE"}],"ShortName":"1860_1993_2050_NITROGEN_830","Abstract":"This
+        data set provides global gridded estimates of atmospheric deposition of total
+        inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of
+        nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and
+        projections for the year 2050. The data set was generated using a global three-dimensional
+        chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude
+        by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000).
+        Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario
+        data (IPCC, 1996; 2000) were used as input to the model.","DOI":{"Authority":"ORNL_DAAC","DOI":"10.3334/ORNLDAAC/830"},"RelatedUrls":[{"Description":"This
+        link allows direct data access via Earthdata login","URLContentType":"DistributionURL","Type":"GET
+        DATA","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/"},{"Description":"ORNL
+        DAAC Data Set Documentation","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html"},{"Description":"Data
+        set Landing Page DOI URL","URLContentType":"CollectionURL","Type":"DOI","URL":"https://doi.org/10.3334/ORNLDAAC/830"},{"Description":"Data
+        Set Documentation","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg"},{"Description":"Data
+        Set Documentation","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf"},{"Description":"Data
+        Set Documentation","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf"},{"Description":"Browse
+        Image","URLContentType":"VisualizationURL","Type":"GET RELATED VISUALIZATION","URL":"https://webmap.ornl.gov/sdat/pimg/830_1_fit.png"},{"Description":"Web
+        Coverage Service for this collection.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830"}],"DataDates":[{"Date":"2006-04-14T00:00:00.000Z","Type":"CREATE"},{"Date":"2006-04-14T00:00:00.000Z","Type":"UPDATE"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"CARTESIAN"},"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"NITROGEN
+        COMPOUNDS"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        CHEMISTRY","VariableLevel1":"NITROGEN COMPOUNDS","VariableLevel2":"NITROGEN
+        OXIDES"}],"EntryTitle":"Global Maps of Atmospheric Nitrogen Deposition, 1860,
+        1993, and 2050","Distributions":[{"Fees":"0"}],"CollectionProgress":"COMPLETE","ProcessingLevel":{"ProcessingLevelDescription":"Variables
+        mapped on uniform space-time grid scales with completeness and consistency","Id":"3"},"Platforms":[{"Type":"NOT
+        APPLICABLE","ShortName":"NOT APPLICABLE","Instruments":[{"ShortName":"NOT
+        APPLICABLE","ComposedOf":[{"ShortName":"NOT APPLICABLE"}]}]}],"Projects":[{"ShortName":"climate","LongName":"Climate
+        Collection"}],"Version":"1","TemporalExtents":[{"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"1860-01-01T00:00:00.000Z","EndingDateTime":"2050-12-31T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"ORNL_DAAC"},{"Roles":["ARCHIVER"],"ShortName":"ORNL
+        DAAC User Services","ContactInformation":{"ContactMechanisms":[{"Type":"Direct
+        Line","Value":"(865) 241-3952"},{"Type":"Email","Value":"uso@daac.ornl.gov"}],"Addresses":[{"StreetAddresses":["ORNL
+        DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory"],"City":"Oak
+        Ridge","StateProvince":"Tennessee","Country":"USA","PostalCode":"37831-6407"}]}}]}'
+    http_version: 
 0727ee940e6a987bb4f7f1fca2cab66561a112c2:
   response:
     status:
@@ -2902,6 +2969,73 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
         Test","CollectionProgress":"Not provided","ProcessingLevel":{"ProcessingLevelDescription":"none","Id":"Level
         0"},"Platforms":[{"Type":"test type","ShortName":"testing","LongName":"testing
         long name"}],"Version":"2","TemporalExtents":[{"SingleDateTimes":["2015-09-20T00:00:00.000Z"]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"short_name","ContactInformation":{}}]}'
+    http_version: 
+b254400c8d4ce110ceccdc75a040c6dab2e88e49:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 4c3ad386-70b2-4b84-9987-cc0d660b4c3f
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Wed, 09 Aug 2017 17:21:57 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1547'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ShortName":"EDSC-1140_dev6","Version":"2","EntryTitle":"Collection
+        created to test EDSC-1140","Abstract":"Collection created to test EDSC-1140","ProcessingLevel":{"Id":"Not
+        Provided"},"CollectionProgress":"COMPLETE","RelatedUrls":[{"Description":"Related
+        URL collection level 1","URLContentType":"CollectionURL","Type":"PROJECT HOME
+        PAGE","URL":"https://search.sit.earthdata.nasa.gov"},{"Description":"Related
+        URL collection level 2","URLContentType":"CollectionURL","Type":"DATA SET
+        LANDING PAGE","URL":"https://localhost:15400"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"AGRICULTURE","Term":"AGRICULTURAL AQUATIC SCIENCES","VariableLevel1":"AQUACULTURE"},{"Category":"EARTH
+        SCIENCE","Topic":"AGRICULTURE","Term":"AGRICULTURAL AQUATIC SCIENCES","VariableLevel1":"FISHERIES"}],"Platforms":[{"Type":"Aircraft","ShortName":"EDSC-1140-platform-shortname"}],"TemporalExtents":[{"TemporalRangeType":"SingleDateTime","EndsAtPresentFlag":true,"SingleDateTimes":["2017-07-31T00:00:00.000Z"]}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","GranuleSpatialRepresentation":"CARTESIAN"},"DataCenters":[{"Roles":["ARCHIVER","DISTRIBUTOR","ORIGINATOR","PROCESSOR"],"ShortName":"AAG","LongName":"Association
+        of American Geographers","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://www.aag.org/"}]},"ContactPersons":[{"Roles":["Investigator","Metadata
+        Author","User Services","Science Software Development"],"FirstName":"Bo","LastName":"Sun","ContactInformation":{"ServiceHours":"8:00-17000","ContactInstruction":"a7a
+        da gutjga  adfla fa  a  ihbjkn","ContactMechanisms":[{"Type":"Email","Value":"something@somewhere.com"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["4 main st","line 2"],"City":"fourth city","StateProvince":"Alabama","PostalCode":"17195-48585"}],"RelatedUrls":[{"Description":"Data
+        Center Contact Person Related URL 1 ","URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://www.aag.org/"}]}}]},{"Roles":["DISTRIBUTOR","ORIGINATOR","PROCESSOR"],"ShortName":"AALTO","LongName":"Aalto
+        University","ContactGroups":[{"Roles":["Technical Contact","Science Contact"],"GroupName":"Group
+        name","ContactInformation":{"ServiceHours":"18 - 24","ContactInstruction":"contact
+        instructions contact instructions","ContactMechanisms":[{"Type":"Mobile","Value":"512673y8u495"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["5 main st"],"City":"Fifth City","StateProvince":"Alabama","PostalCode":"8758"}],"RelatedUrls":[{"Description":"Data
+        Center Contact Group Related URL 5","URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://gjiod.co"}]}}]},{"Roles":["ARCHIVER","DISTRIBUTOR","ORIGINATOR","PROCESSOR"],"ShortName":"52N","LongName":"52
+        North","ContactInformation":{"ServiceHours":"8:00 - 17:00","ContactInstruction":"This
+        is a piece of sample contact instruction.","ContactMechanisms":[{"Type":"Direct
+        Line","Value":"123-456-7890"},{"Type":"Email","Value":"bo.sun@nasa.gov"},{"Type":"Facebook","Value":"facebook.url"},{"Type":"Fax","Value":"123-456-7890"},{"Type":"Mobile","Value":"1234567890"},{"Type":"Modem","Value":"1234567890"},{"Type":"Primary","Value":"1234567890"},{"Type":"TDD/TTY
+        Phone","Value":"1234567890"},{"Type":"Telephone","Value":"1234567890"},{"Type":"Twitter","Value":"twitter.url"},{"Type":"U.S.
+        toll free","Value":"1234567890"},{"Type":"Other","Value":"=other="}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["1 main st","line 2","line 3"],"City":"first city","StateProvince":"Alabama","PostalCode":"12345"},{"Country":"United
+        States","StreetAddresses":["2 main st","line 2","line 3"],"City":"second city","StateProvince":"Alabama","PostalCode":"54321"}],"RelatedUrls":[{"Description":"Related
+        URL datacenter level 1","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"http://52north.org"},{"Description":"Related
+        URL datacenter level 2","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"https://search.sit.earthdata.nasa.gov"}]}},{"Roles":["ARCHIVER","DISTRIBUTOR","ORIGINATOR"],"ShortName":"973
+        DATA CENTER","LongName":"Data Archive, Sharing Network for Resource and Environment
+        Project of 973 Program","ContactInformation":{"ServiceHours":"8-18","ContactInstruction":"contact
+        instructions contact instructions contact instructions ","ContactMechanisms":[{"Type":"Direct
+        Line","Value":"1234567890"},{"Type":"Email","Value":"bo.sun@nasa.gov"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["3 main st","line 2","line 3"],"City":"third city","StateProvince":"Alabama","PostalCode":"67890"}],"RelatedUrls":[{"Description":"Related
+        URL datacenter level 3","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"http://www.973geodata.cn"}]}}],"MetadataDates":[{"Type":"CREATE","Date":"2017-07-31T17:40:00.000Z"},{"Type":"UPDATE","Date":"2017-08-09T17:04:00.000Z"}],"DOI":{"DOI":"The
+        Digitial Object Identifier.","Authority":"The authority who created the DOI."}}'
     http_version: 
 9cdc3d2600617b4e45da2c985f5e22fccc93aaa6:
   response:

@@ -266,4 +266,28 @@ describe 'Collection details', reset: false do
       expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
     end
   end
+
+  context 'when selecting a collection with invalid DOI field' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true
+    end
+
+    it 'displays the DOI and the Authority' do
+      expect(page).to have_content('DOI:')
+      expect(page).to have_content('The Digitial Object Identifier.')
+      expect(page).not_to have_link('The Digitial Object Identifier.')
+    end
+  end
+
+  context 'when selecting a collection with valid DOI field' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C179003620-ORNL_DAAC'
+    end
+
+    it 'displays the DOI and the Authority' do
+      expect(page).to have_content('DOI:')
+      expect(page).to have_content('10.3334/ORNLDAAC/830')
+      expect(page).to have_link('10.3334/ORNLDAAC/830')
+    end
+  end
 end

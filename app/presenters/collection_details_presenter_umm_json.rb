@@ -6,6 +6,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     @collection[:dataset_id] = collection_id
     @collection[:description] = collection['Abstract']
     @collection[:short_name] = collection['ShortName']
+    @collection[:doi] = doi(collection['DOI'])
     @collection[:version_id] = collection['Version']
     @collection[:data_centers] = data_centers(collection['DataCenters'])
     @collection[:processing_level_id] = collection['ProcessingLevel']['Id'] if collection['ProcessingLevel'].present?
@@ -42,6 +43,22 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     provider = ''
     provider = collection_id.split('-').last if collection_id.is_a?(String)
     @collection[:osdd_url] = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection[:short_name])}&versionId=#{@collection[:version_id]}&dataCenter=#{URI.encode_www_form_component(provider)}&commit=Generate#{url_token}"
+  end
+
+  def doi(doi)
+    if doi && doi['DOI']
+      doi = doi['DOI']
+      if doi.match(/^doi:.+/)
+        return {doi_link: "https://dx.doi.org/#{doi.match(/doi:(.+)/)[1]}", doi_text: doi}
+      elsif doi.match(/^[^\s]+(\/[^\s]+){1,}\/?/)
+        return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
+      elsif doi.match(/https:\/\/dx\.doi\.org.+/)
+        return {doi_link: doi, doi_text: doi}
+      else
+        return {doi_text: doi, doi_link: nil}
+      end
+    end
+    {doi_link: nil, doi_text: nil}
   end
 
   def data_centers(data_centers)
