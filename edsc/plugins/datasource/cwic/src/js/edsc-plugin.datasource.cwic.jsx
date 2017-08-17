@@ -77,10 +77,10 @@ export default class CwicDatasourcePlugin {
       let url = granules.cwicUrl({count: 100});
       if (url) {
         let downloadUrl = url.replace(/^\/cwic/, '/cwic/edsc_download');
-        if (granules.query.excludedGranules()) {
+        if (granules.query.excludedGranules() && granules.query.excludedGranules().length > 0) {
           downloadUrl += "&cx=" + granules.query.excludedGranules().join('!');
         }
-        result.push({title: "View Download Links", url: urlUtil.fullPath(downloadUrl)});
+        result.push({title: "Download Data Links File", url: urlUtil.fullPath(downloadUrl + "&download_format=text"), tooltip: 'Download executable shell script (requires UNIX environment)'});
       }
     }
 
