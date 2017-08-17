@@ -50,7 +50,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       doi = doi['DOI']
       if doi.match(/^doi:.+/)
         return {doi_link: "https://dx.doi.org/#{doi.match(/doi:(.+)/)[1]}", doi_text: doi}
-      elsif doi.match(/^[^\s]+(\/[^\s]){1,}\/?/)
+      elsif doi.match(/^[^\s]+(\/[^\s]+){1,}\/?/)
         return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
       elsif doi.match(/https:\/\/dx\.doi\.org.+/)
         return {doi_link: doi, doi_text: doi}
