@@ -1746,6 +1746,73 @@ f3ad8a9ba79165f7b5d0e6d91d44fbd2a948f181:
         data base, using the partial thin-plate splining algorithm. (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/CLIMATE/guides/cramer_leemans.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/416_1.png"}]}'
     http_version: 
+777ee368c307f20e424bd2f58da2c3806b0253a5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - b629c57b-ed23-43bc-a3bb-4e601bc21b07
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Thu, 17 Aug 2017 03:25:33 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1756'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"CollectionCitations":[{"OtherCitationDetails":"Dentener, F.J. 2006.
+        Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050. ORNL
+        DAAC, Oak Ridge, Tennessee, USA. http://dx.doi.org/10.3334/ORNLDAAC/830"}],"MetadataDates":[{"Date":"2006-04-14T00:00:00.000Z","Type":"UPDATE"}],"ShortName":"1860_1993_2050_NITROGEN_830","Abstract":"This
+        data set provides global gridded estimates of atmospheric deposition of total
+        inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of
+        nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and
+        projections for the year 2050. The data set was generated using a global three-dimensional
+        chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude
+        by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000).
+        Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario
+        data (IPCC, 1996; 2000) were used as input to the model.","DOI":{"Authority":"ORNL_DAAC","DOI":"10.3334/ORNLDAAC/830"},"RelatedUrls":[{"Description":"This
+        link allows direct data access via Earthdata login","URLContentType":"DistributionURL","Type":"GET
+        DATA","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/"},{"Description":"ORNL
+        DAAC Data Set Documentation","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html"},{"Description":"Data
+        set Landing Page DOI URL","URLContentType":"CollectionURL","Type":"DOI","URL":"https://doi.org/10.3334/ORNLDAAC/830"},{"Description":"Data
+        Set Documentation","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg"},{"Description":"Data
+        Set Documentation","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf"},{"Description":"Data
+        Set Documentation","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf"},{"Description":"Browse
+        Image","URLContentType":"VisualizationURL","Type":"GET RELATED VISUALIZATION","URL":"https://webmap.ornl.gov/sdat/pimg/830_1_fit.png"},{"Description":"Web
+        Coverage Service for this collection.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830"}],"DataDates":[{"Date":"2006-04-14T00:00:00.000Z","Type":"CREATE"},{"Date":"2006-04-14T00:00:00.000Z","Type":"UPDATE"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"CARTESIAN"},"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"NITROGEN
+        COMPOUNDS"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        CHEMISTRY","VariableLevel1":"NITROGEN COMPOUNDS","VariableLevel2":"NITROGEN
+        OXIDES"}],"EntryTitle":"Global Maps of Atmospheric Nitrogen Deposition, 1860,
+        1993, and 2050","Distributions":[{"Fees":"0"}],"CollectionProgress":"COMPLETE","ProcessingLevel":{"ProcessingLevelDescription":"Variables
+        mapped on uniform space-time grid scales with completeness and consistency","Id":"3"},"Platforms":[{"Type":"NOT
+        APPLICABLE","ShortName":"NOT APPLICABLE","Instruments":[{"ShortName":"NOT
+        APPLICABLE","ComposedOf":[{"ShortName":"NOT APPLICABLE"}]}]}],"Projects":[{"ShortName":"climate","LongName":"Climate
+        Collection"}],"Version":"1","TemporalExtents":[{"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"1860-01-01T00:00:00.000Z","EndingDateTime":"2050-12-31T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"ORNL_DAAC"},{"Roles":["ARCHIVER"],"ShortName":"ORNL
+        DAAC User Services","ContactInformation":{"ContactMechanisms":[{"Type":"Direct
+        Line","Value":"(865) 241-3952"},{"Type":"Email","Value":"uso@daac.ornl.gov"}],"Addresses":[{"StreetAddresses":["ORNL
+        DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory"],"City":"Oak
+        Ridge","StateProvince":"Tennessee","Country":"USA","PostalCode":"37831-6407"}]}}]}'
+    http_version: 
 0727ee940e6a987bb4f7f1fca2cab66561a112c2:
   response:
     status:
