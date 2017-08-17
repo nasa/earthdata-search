@@ -33,7 +33,7 @@
           <p class="data-access-collection-name" data-bind="text: title"></p>
           <div class="data-access-collection-actions">
             <!-- ko foreach: links -->
-            <a class="button text-button" href="#" target="_blank" data-bind="text: title, attr: {href: url}"></a>
+            <a class="button text-button" href="#" target="_blank" data-bind="text: title, attr: {href: url, title: tooltip}" data-tooltip="true" data-placement="bottom"></a>
             <!-- /ko -->
           </div>
         </li>

@@ -80,7 +80,7 @@ export default class CwicDatasourcePlugin {
         if (granules.query.excludedGranules() && granules.query.excludedGranules().length > 0) {
           downloadUrl += "&cx=" + granules.query.excludedGranules().join('!');
         }
-        result.push({title: "Download Data Links File", url: urlUtil.fullPath(downloadUrl + "&download_format=text"), tooltip: 'Download executable shell script (requires UNIX environment)'});
+        result.push({title: "Download Data Links File", url: urlUtil.fullPath(downloadUrl + "&download_format=text"), tooltip: 'Download text file containing data URLs'});
       }
     }
 
