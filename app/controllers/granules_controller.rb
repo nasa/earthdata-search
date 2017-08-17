@@ -80,12 +80,16 @@ class GranulesController < ApplicationController
           fetched_links << url
         end
       end
-      # Set custom header causes local rails server to throw 'socket hang up' error.
-      # response.headers['CMR-Hits'] = hits
-      response_body = {}
-      response_body['CMR-Hits'] = hits
-      response_body['links'] = fetched_links
-      render json: response_body, status: catalog_response.status
+      if request.format == 'text/plain'
+        return fetched_links.join("\n")
+      else
+        # Set custom header causes local rails server to throw 'socket hang up' error.
+        # response.headers['CMR-Hits'] = hits
+        response_body = {}
+        response_body['CMR-Hits'] = hits
+        response_body['links'] = fetched_links
+        render json: response_body, status: catalog_response.status
+      end
     else
       render json: catalog_response.body, status: catalog_response.status
     end
@@ -112,6 +116,8 @@ class GranulesController < ApplicationController
     @query = query.merge({'project' => request[:project], 'page_num' => page_num, 'page_size' => 2000, 'browse' => (url_type.to_s == 'browse'), 'collection' => collection_id})
     if request.format == 'html'
       render 'download.html.erb', stream: true, layout: false
+    elsif request.format == :text
+      send_data fetch_links, filename: "#{collection_id}_data_urls.txt"
     else
       url_mapper = OpendapConfiguration.find(collection_id, echo_client, token)
 

@@ -227,6 +227,10 @@ describe "Data download page", reset: false do
       expect(page).to have_link('View Download Links')
     end
 
+    it "displays a link to download a file containing direct download urls for collections chosen for direct download" do
+      expect(page).to have_link('Download Data Links File')
+    end
+
     it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
       expect(page).to have_link('Download Access Script')
     end
