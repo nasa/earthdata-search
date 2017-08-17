@@ -148,6 +148,17 @@
             <dt>Short Name:</dt>
             <dd data-bind="text: $data.short_name"></dd>
           </dl>
+          <!--ko if: $data.doi.doi_link || $data.doi.doi_text-->
+          <dl class="flex-column">
+            <dt>DOI:</dt>
+            <!--ko if: $data.doi.doi_link-->
+            <dd><a target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}"><!-- ko text: $data.doi.doi_text --><!-- /ko --></a></dd>
+            <!--/ko-->
+            <!--ko ifnot: $data.doi.doi_link-->
+            <dd data-bind="text: $data.doi.doi_text"></dd>
+            <!--/ko-->
+          </dl>
+          <!--/ko-->
           <dl class="flex-column">
             <!-- ko foreach: $data.online_access_urls -->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data}" target="_blank">Download Page</a></dt>
