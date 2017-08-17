@@ -43,7 +43,7 @@ describe "Data access status page", reset: false do
       Retrieval.destroy_all
     end
 
-    it "displays a textual summary of downlaod history" do
+    it "displays a textual summary of download history" do
       expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other collection")
     end
 
