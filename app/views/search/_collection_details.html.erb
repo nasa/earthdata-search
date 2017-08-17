@@ -152,7 +152,7 @@
           <dl class="flex-column">
             <dt>DOI:</dt>
             <!--ko if: $data.doi.doi_link-->
-            <dd><a href="#" data-bind="attr: {href: $data.doi.doi_link}"><!-- ko text: $data.doi.doi_text --><!-- /ko --></a></dd>
+            <dd><a target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}"><!-- ko text: $data.doi.doi_text --><!-- /ko --></a></dd>
             <!--/ko-->
             <!--ko ifnot: $data.doi.doi_link-->
             <dd data-bind="text: $data.doi.doi_text"></dd>
