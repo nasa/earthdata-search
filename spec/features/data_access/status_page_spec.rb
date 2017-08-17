@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Data access status page", reset: false do
-  context "when the current user has recent data retrievals" do
+  context "when the current user has download history" do
     before :all do
       Capybara.reset_sessions!
       Retrieval.destroy_all
@@ -43,7 +43,7 @@ describe "Data access status page", reset: false do
       Retrieval.destroy_all
     end
 
-    it "displays a textual summary of recent retrievals" do
+    it "displays a textual summary of downlaod history" do
       expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other collection")
     end
 
@@ -86,14 +86,14 @@ describe "Data access status page", reset: false do
           expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
         end
 
-        it "indicates that there are no recent data retrievals" do
-          expect(page).to have_content("No recent retrievals")
+        it "indicates that there is no download history" do
+          expect(page).to have_content("No download history")
         end
       end
     end
   end
 
-  context "when the current user has no recent data retrievals" do
+  context "when the current user has no download history" do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false
@@ -101,8 +101,8 @@ describe "Data access status page", reset: false do
       visit '/data/status'
     end
 
-    it "indicates that there are no recent retrievals" do
-      expect(page).to have_content("No recent retrievals")
+    it "indicates that there is no download history" do
+      expect(page).to have_content("No download history")
     end
   end
 
