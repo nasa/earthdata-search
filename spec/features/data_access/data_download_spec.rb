@@ -44,8 +44,6 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [downloadable_collection_id]
 
       choose 'Download'
-      click_on 'Continue'
-      choose 'Download'
       click_on 'Submit'
     end
 
@@ -194,10 +192,7 @@ describe "Data download page", reset: false do
       load_page 'data/configure', {project: [downloadable_collection_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       wait_for_xhr
 
-      # Download the first
       choose 'Direct Download'
-      click_on 'Continue'
-      # Confirm address
       click_on 'Submit'
       wait_for_xhr
     end
