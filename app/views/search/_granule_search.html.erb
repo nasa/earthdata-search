@@ -80,12 +80,12 @@
         <p>
           <label for="equatorial-crossing-date-min">Equatorial Crossing Date Start:</label>
           <div class="input-group">
-            <input id="equatorial-crossing-date-min" data-date-format="yyyy-mm-ddT00:00:00" data-provide="datepicker" data-bind="value: granuleQuery.equatorialCrossingDate.min" type="text" class="date datepicker orbitDatepickers" placeholder="Example: 2015-01-24T00:00:00">
+            <input id="equatorial-crossing-date-min" data-bind="value: granuleQuery.equatorialCrossingDate.min" type="text" class="date datepicker orbitDatepickers" placeholder="YYYY-MM-DDT00:00:00">
           </div>
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateValue(granuleQuery.equatorialCrossingDate.min())" class="error">Value must be of the format 2015-01-24T00:00:00</span>
         </p>
         <p>
-          <label for="equatorial-crossing-date-max">Equatorial Crossing Date End:</label><br /><input id="equatorial-crossing-date-max" data-date-format="yyyy-mm-ddT23:59:59" data-provide="datepicker" data-bind="value: granuleQuery.equatorialCrossingDate.max" type="text" class="date datepicker orbitDatepickers" placeholder="Example: 2015-01-25T23:59:59">
+          <label for="equatorial-crossing-date-max">Equatorial Crossing Date End:</label><br /><input id="equatorial-crossing-date-max" data-bind="value: granuleQuery.equatorialCrossingDate.max" type="text" class="date datepicker orbitDatepickers" placeholder="YYYY-MM-DDT23:59:59">
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateValue(granuleQuery.equatorialCrossingDate.max())" class="error">Value must be of the format 2015-01-24T00:00:00</span>
           <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateRange(granuleQuery.equatorialCrossingDate.min(),granuleQuery.equatorialCrossingDate.max())" class="error">The start date must be before the end date</span>
         </p>
