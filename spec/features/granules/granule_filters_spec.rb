@@ -447,22 +447,22 @@ describe "Granule search filters", reset: false do
     end
 
     it 'filters when only the equatorial crossing date start time is set' do
-      fill_in "Equatorial Crossing Date Start:", with: "2015-01-24"
+      page.execute_script("$('#equatorial-crossing-date-min').datepicker('setDate', '2015-01-24')")
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it 'filters when only the equatorial crossing date end time is set' do
-      fill_in "Equatorial Crossing Date End:", with: "2015-01-25"
+      page.execute_script("$('#equatorial-crossing-date-max').datepicker('setDate', '2015-01-25')")
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it 'filters when the equatorial crossing date start and end times are set' do
-      fill_in "Equatorial Crossing Date Start:", with: "2015-01-24"
-      fill_in "Equatorial Crossing Date End:", with: "2015-01-25"
+      page.execute_script("$('#equatorial-crossing-date-min').datepicker('setDate', '2015-01-24')")
+      page.execute_script("$('#equatorial-crossing-date-max').datepicker('setDate', '2015-01-25')")
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)

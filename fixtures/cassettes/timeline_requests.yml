@@ -2801,6 +2801,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-10T02%3A31%3A27.260Z&interval=month&start_date=1973-02-15T02%3A31%3A27.260Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 18 Aug 2017 20:18:04 GMT
+  digest: f38baff729854e0a756b26262f26b2da87790b79
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-10T02%3A31%3A27.261Z&interval=month&start_date=1973-02-15T02%3A31%3A27.261Z
     headers:
       User-Agent:
