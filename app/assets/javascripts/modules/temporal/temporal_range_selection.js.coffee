@@ -59,7 +59,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       $input.trigger('change')
 
     root.find('.temporal-range-picker').datepicker
-      format: "yyyy-mm-dd"
       startDate: "1960-01-01"
       endDate: new Date()
       startView: 2
