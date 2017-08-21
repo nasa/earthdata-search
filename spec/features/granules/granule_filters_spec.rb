@@ -412,12 +412,14 @@ describe "Granule search filters", reset: false do
       fill_in "Orbit Number Min:", with: "30000"
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][on][min]=30000')
     end
 
     it 'filters when only the orbit number max is set' do
       fill_in "Orbit Number Max:", with: "30009"
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][on][max]=30009')
     end
 
     it 'filters when the orbit number min and max are set' do
@@ -425,18 +427,21 @@ describe "Granule search filters", reset: false do
       fill_in "Orbit Number Max:", with: "30009"
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][on][min]=30000&pg[1][on][max]=30009')
     end
 
     it 'filters when only the equatorial crossing longitude min is set' do
       fill_in "Equatorial Crossing Longitude Min:", with: "-45"
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecl][min]=-45')
     end
 
     it 'filters when only the equatorial crossing longitude max is set' do
       fill_in "Equatorial Crossing Longitude Max:", with: "-40"
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecl][max]=-40')
     end
 
     it 'filters when the equatorial crossing longitude min and max are set' do
@@ -444,6 +449,7 @@ describe "Granule search filters", reset: false do
       fill_in "Equatorial Crossing Longitude Max:", with: "-40"
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecl][min]=-45&pg[1][ecl][max]=-40')
     end
 
     it 'filters when only the equatorial crossing date start time is set' do
@@ -451,6 +457,7 @@ describe "Granule search filters", reset: false do
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][min]=2015-01-24T00%3A00%3A00')
     end
 
     it 'filters when only the equatorial crossing date end time is set' do
@@ -458,6 +465,7 @@ describe "Granule search filters", reset: false do
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][max]=2015-01-25T23%3A59%3A59')
     end
 
     it 'filters when the equatorial crossing date start and end times are set' do
@@ -466,6 +474,7 @@ describe "Granule search filters", reset: false do
       page.find(".master-overlay-secondary-content").click
       click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
+      expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][min]=2015-01-24T00%3A00%3A00&pg[1][ecd][max]=2015-01-25T23%3A59%3A59')
     end
   end
 end
