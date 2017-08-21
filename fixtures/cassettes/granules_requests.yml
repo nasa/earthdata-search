@@ -1008,6 +1008,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_date%5Bmax%5D=2015-01-01T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-01T00%3A00%3A00&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 21 Aug 2017 23:25:22 GMT
+  digest: 3eefdfa707fbba3ad60b656d558616e50a71d546
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&page_num=1&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
