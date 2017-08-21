@@ -476,5 +476,29 @@ describe "Granule search filters", reset: false do
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][min]=2015-01-24T00%3A00%3A00&pg[1][ecd][max]=2015-01-25T23%3A59%3A59')
     end
+
+    it 'loads the orbit number fields correctly when read from URL parameters' do
+      load_page "search/granules?p=C1000001167-NSIDC_ECS&pg[0][on][min]=30000&pg[0][on][max]=30009&m=-1.4765625!-19.23046875!3!1!0!0%2C2&tl=1487536527!4!!&q=C1000001167-NSIDC_ECS&ok=C1000001167-NSIDC_ECS"
+      wait_for_xhr
+      click_link "Filter granules"
+      expect(find('#orbit-number-min').value).to eql('30000')
+      expect(find('#orbit-number-max').value).to eql('30009')
+    end
+
+    it 'loads the equatorial crossing longitude fields correctly when read from URL parameters' do
+      load_page "search/granules?p=C1000001167-NSIDC_ECS&pg[0][ecl][min]=-45&pg[0][ecl][max]=-40&m=-1.546875!-19.23046875!3!1!0!0%2C2&tl=1487536527!4!!&q=C1000001167-NSIDC_ECS&ok=C1000001167-NSIDC_ECS"
+      wait_for_xhr
+      click_link "Filter granules"
+      expect(find('#equatorial-crossing-longitude-min').value).to eql('-45')
+      expect(find('#equatorial-crossing-longitude-max').value).to eql('-40')
+    end
+
+    it 'loads the equatorial crossing date fields correctly when read from URL parameters' do
+      load_page "search/granules?p=C1000001167-NSIDC_ECS&pg[0][ecd][min]=2015-01-24T00%3A00%3A00&pg[0][ecd][max]=2015-01-25T23%3A59%3A59&m=-1.546875!-19.23046875!3!1!0!0%2C2&tl=1487536527!4!!&q=C1000001167-NSIDC_ECS&ok=C1000001167-NSIDC_ECS"
+      wait_for_xhr
+      click_link "Filter granules"
+      expect(find('#equatorial-crossing-date-min').value).to eql('2015-01-24T00:00:00')
+      expect(find('#equatorial-crossing-date-max').value).to eql('2015-01-25T23:59:59')
+    end
   end
 end

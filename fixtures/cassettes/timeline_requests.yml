@@ -944,6 +944,74 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&equator_crossing_date%5Bmax%5D=2015-01-01T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-01T00%3A00%3A00&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&interval=day&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&start_date=2015-08-20T20%3A35%3A27.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 21 Aug 2017 23:25:26 GMT
+  digest: d79df44d2084ab46a2ebeb109376518785a0d336
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&interval=day&start_date=2015-08-20T20%3A35%3A27.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 21 Aug 2017 23:57:42 GMT
+  digest: 26ae7bf4d0728dbec933f7025ce5348a91d2291d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&interval=day&start_date=2015-08-20T20%3A35%3A27.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 21 Aug 2017 23:57:37 GMT
+  digest: 30b306ae58e92015d6aefd2cd6de0176108bfcf5
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&interval=day&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&start_date=2015-08-20T20%3A35%3A27.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 21 Aug 2017 23:42:37 GMT
+  digest: 03f9ea6b577d7e0a78bb7b3843bf3cb6de4178f2
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C107705227-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
