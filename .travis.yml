@@ -6,7 +6,9 @@ cache:
 sudo: false
 dist: trusty
 script:
+  - bin/print '---------------------exec bin/setup-----------------------------'
   - xvfb-run bundle exec bin/setup
+  - bin/print '---------------------exec rake travis:ci-----------------------------'
   - xvfb-run bundle exec rake travis:ci
 #addons:
 #  apt:
