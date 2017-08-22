@@ -3,7 +3,7 @@ cache:
   bundler: true
   directories:
     - node_modules
-sudo: false
+sudo: required
 dist: trusty
 before_install:
   - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
