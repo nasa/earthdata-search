@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/bilts/capybara-webkit.git
-  revision: 042822d7c6f78457bd2ba118f38c553cc7589c8d
-  branch: disable-screenshots
-  specs:
-    capybara-webkit (1.1.1)
-      capybara (>= 2.0.2, < 2.2.0)
-      json
-
-GIT
   remote: https://github.com/namick/obfuscate_id.git
   revision: a89da600f389c53c88362ce5133d8d3945776464
   ref: a89da600f389c53c88362ce5133d8d3945776464
@@ -73,6 +64,9 @@ GEM
     capybara-screenshot (0.3.19)
       capybara (>= 1.0, < 3)
       launchy
+    capybara-webkit (1.3.1)
+      capybara (>= 2.0.2, < 2.5.0)
+      json
     chronic (0.10.2)
     cliver (0.3.2)
     coffee-rails (4.0.1)
@@ -300,7 +294,7 @@ DEPENDENCIES
   bourbon
   capybara
   capybara-screenshot
-  capybara-webkit!
+  capybara-webkit
   coffee-rails (~> 4.0.0)
   coffee-script
   colored

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Map Zooming', reset: false do
   before :all do
-    page.driver.resize_window(1680, 1050) # Default capybara window size
+    page.driver.resize_window_to(page.driver.current_window_handle, 1280, 1024)
     Capybara.reset_sessions!
     load_page :search
   end
@@ -123,7 +123,7 @@ describe 'Map Zooming', reset: false do
     end
 
     context "on polar view" do
-      
+
       before :all do
         find("#collection-results").find_link("Minimize").click
         wait_for_xhr
