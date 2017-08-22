@@ -4,9 +4,18 @@ cache:
   directories:
     - node_modules
 sudo: false
+dist: trusty
 script:
+  - xvfb-run bundle exec rake
   - bundle exec bin/setup
   - bundle exec rake travis:ci
+addons:
+  apt:
+    sources:
+      - ubuntu-sdk-team
+    packages:
+      - libqt5webkit5-dev
+      - qtdeclarative5-dev
 #after_failure:
 #  - cat ./log/test.log
 env:
