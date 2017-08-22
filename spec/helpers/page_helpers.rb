@@ -3,7 +3,7 @@ module Helpers
     def wait_for_xhr
       ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
         synchronize(30) do
-          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_falsey
         end
       end
     end

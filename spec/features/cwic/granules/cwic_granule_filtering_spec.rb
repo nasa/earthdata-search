@@ -54,7 +54,7 @@ describe "CWIC Granule list", reset: false do
         it "filters granules", acceptance: true do
           number_granules = granule_list.text.match /\d+ matching granules/
           after_granule_count = number_granules.to_s.split(" ")[0].to_i
-          expect(after_granule_count < before_granule_count).to be_true
+          expect(after_granule_count < before_granule_count).to be_truthy
         end
 
         it "has query param 'pg[0][qt]' in the url", acceptance: true do

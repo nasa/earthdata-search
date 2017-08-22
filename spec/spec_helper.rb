@@ -138,7 +138,7 @@ RSpec.configure do |config|
     Headless.new(:destroy_on_exit => false).start
   end
 
-  config.before :each do
+  config.before :each do |example|
     Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
   end
 
@@ -174,7 +174,7 @@ RSpec.configure do |config|
     Helpers::Instrumentation.report_performance
   end
 
-  config.after :each do
+  config.after :each do |example|
     if example.exception != nil
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)

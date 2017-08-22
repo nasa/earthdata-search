@@ -119,13 +119,13 @@ describe Echo::ClientMiddleware::Echo10GranuleMiddleware do
   it 'operates on CMR URLS' do
     response = Object.new
     env = { url: URI('http://example.com/concepts/1234.echo10'), response: response, body: {'Granule' => {}}}
-    expect(middleware.parse_response?(env)).to be_true
+    expect(middleware.parse_response?(env)).to be_truthy
   end
 
   it 'does not operate on requests with no granule body' do
     response = Object.new
     env = { url: URI('http://example.com/catalog-rest/echo_catalog/granules.json'), response: response, body: {'Collection' => {}}}
-    expect(middleware.parse_response?(env)).to be_false
+    expect(middleware.parse_response?(env)).to be_falsey
   end
 
 end

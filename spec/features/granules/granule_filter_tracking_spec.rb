@@ -29,7 +29,7 @@ describe "Granule filter tracking", reset: false do
       it 'maintains information on the collection' do
         synchronize do
           has_reference = page.evaluate_script(has_reference_script)
-          expect(has_reference).to be_true
+          expect(has_reference).to be_truthy
         end
       end
 
@@ -42,7 +42,7 @@ describe "Granule filter tracking", reset: false do
         it 'restores the original granule filters that had been set' do
           synchronize do
             has_reference = page.evaluate_script(has_reference_script)
-            expect(has_reference).to be_true
+            expect(has_reference).to be_truthy
           end
         end
       end
@@ -70,7 +70,7 @@ describe "Granule filter tracking", reset: false do
       it 'forgets the collection' do
         synchronize do
           has_reference = page.evaluate_script(has_reference_script)
-          expect(has_reference).to be_false
+          expect(has_reference).to be_falsey
         end
       end
     end
