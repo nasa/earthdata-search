@@ -67,6 +67,10 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "#{File.basename(meta[:file_path])}-#{meta[:line_number]}"
 end
 
+Capybara::Webkit.configure do |config|
+  config.allow_unknown_urls
+end
+
 RSpec.configure do |config|
 
   # ## Mock Framework
@@ -86,8 +90,8 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
-  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
-  wait_time = Capybara.default_wait_time
+  Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
+  wait_time = Capybara.default_max_wait_time
 
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
@@ -144,12 +148,12 @@ RSpec.configure do |config|
 
   config.before :all do
     file_time = Time.now
-    Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
+    Capybara.default_max_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
     Capybara.current_session.driver.resize_window_to(Capybara.current_session.driver.current_window_handle, 1280, 1024)
   end
 
   config.after :all do
-    Capybara.default_wait_time = wait_time
+    Capybara.default_max_wait_time = wait_time
     Delayed::Worker.delay_jobs = false
     timings[self.class.display_name] = Time.now - file_time
     index += 1
