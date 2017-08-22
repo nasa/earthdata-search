@@ -42,12 +42,7 @@ group :development do
   gem 'rubocop', require: false
 end
 
-group :production do
-  gem 'pg'
-  gem 'rails_12factor'
-end
-
-group :sit, :uat, :lab do
+group :production, :sit, :uat, :lab do
   gem 'pg'
   gem 'rails_12factor'
 end
@@ -75,9 +70,9 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets, :test do
-  gem 'sass-rails',   '~> 4.0.0'
+  gem 'sass-rails',   '~> 5.0'
   gem 'coffee-script', :require => 'coffee_script'
-  gem 'coffee-rails', '~> 4.0.0'
+  gem 'coffee-rails', '~> 4.2'
 
   gem 'uglifier', '>= 1.3.0'
 end
