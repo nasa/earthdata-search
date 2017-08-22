@@ -7,11 +7,17 @@ defaults: &defaults
   # Domain as configured in the URS application.  The configured application must be in the ECHO group.
   urs_callback_url: "http://<urs_domain>/urs_callback"
 
+  # Earthdata Login Client IDs. Refer this page on how to create an application:
+  # https://developer.earthdata.nasa.gov/urs/urs-integration/how-to-register-an-application
+  urs_client_id_prod: "<urs_client_id_in_prod>"
+  urs_client_id_uat: "<urs_client_id_in_uat>"
+  urs_client_id_sit: "<urs_client_id_in_sit>"
+
   # Root URL for an ogre shapefile conversion service (See: http://ogre.adc4gis.com/)
   ogre_url: "<ogre_url>"
 
   # Root URL for CLAVIN-based spatial and temporal extractor.
-  nlp_parser_url: http://localhost:15400/
+  nlp_parser_url: "<edsc_nlp_url>"
 
   # URL and API user id for a placename search service.  The URL should stay the same, but you will need
   # to register an API user.
