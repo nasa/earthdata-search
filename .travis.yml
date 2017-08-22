@@ -1,5 +1,4 @@
 language: ruby
-dist: precise
 cache:
   bundler: true
   directories:
