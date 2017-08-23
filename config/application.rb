@@ -112,7 +112,8 @@ module EarthdataSearchClient
     portals = YAML.load_file(Rails.root.join('config/portals.yml'))
     config.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
 
-    config.services = YAML.load_file(Rails.root.join('config/services.yml'))
+    services = ERB.new File.new(Rails.root.join('config/services.yml.erb')).read
+    config.services = YAML.load services.result(binding)
     config.cmr_env = 'prod'
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]

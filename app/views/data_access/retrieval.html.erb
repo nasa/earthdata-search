@@ -33,7 +33,7 @@
           <p class="data-access-collection-name" data-bind="text: title"></p>
           <div class="data-access-collection-actions">
             <!-- ko foreach: links -->
-            <a class="button text-button" href="#" target="_blank" data-bind="text: title, attr: {href: url}"></a>
+            <a class="button text-button" href="#" target="_blank" data-bind="text: title, attr: {href: url, title: tooltip}" data-tooltip="true" data-placement="bottom"></a>
             <!-- /ko -->
           </div>
         </li>
@@ -70,7 +70,7 @@
           <!-- /ko -->
           <div class="data-access-collection-actions">
             <!-- ko if: downloadBrowseUrl -->
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
+            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}" title="View clickable browse links in browser" data-tooltip="true" data-placement="bottom">View Browse Image Links</a>
             <!-- /ko -->
             <!-- ko if: cancel_link -->
               <a data-bind="attr: {href: cancel_link}"
@@ -167,7 +167,7 @@
         <i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path "/"%>">Start a New <%= site_name %> Session</a>
       </li>
       <li>
-        <i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path '/data/status' %>">View Your Recent Data Retrievals</a>
+        <i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path '/data/status' %>">View Your Download Status & History</a>
       </li>
     </ul>
   </section>

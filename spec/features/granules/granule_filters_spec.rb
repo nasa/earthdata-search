@@ -216,9 +216,13 @@ describe "Granule search filters", reset: false do
     context "when searching by temporal" do
 
       it "selecting temporal range filters granules" do
+        js_uncheck_recurring 'granule'
+        click_button "granule-filters-clear"
+        wait_for_xhr
         fill_in "Start", with: "2013-12-01 00:00:00\t"
         fill_in "End", with: "2013-12-31 00:00:00\t"
         js_click_apply ".master-overlay-content"
+        wait_for_xhr
         expect(project_overview).to filter_granules_from(before_granule_count)
         js_uncheck_recurring 'granule'
         click_button "granule-filters-clear"
@@ -230,6 +234,7 @@ describe "Granule search filters", reset: false do
         fill_in "Start", with: "12-01 00:00:00\t"
         fill_in "End", with: "12-31 00:00:00\t"
         script = "edsc.page.project.searchGranulesCollection().granuleDatasource().cmrQuery().temporal.pending.years([2005, 2010])"
+        page.execute_script(script)
         js_click_apply ".master-overlay-content"
         click_button "Apply"
         wait_for_xhr

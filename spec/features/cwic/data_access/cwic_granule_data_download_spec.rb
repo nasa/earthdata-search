@@ -47,6 +47,9 @@ describe "CWIC-enabled data access", reset: false do
       expect(page).to have_link('View Download Links')
     end
 
+    it 'provides a button to download links in a file' do
+      expect(page).to have_link('Download Data Links File')
+    end
 
     context "and clicking the view download links button" do
       before(:all) do

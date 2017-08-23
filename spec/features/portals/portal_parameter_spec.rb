@@ -45,10 +45,10 @@ describe "Portal parameters", reset: true do
       end
     end
 
-    context "and selecting the recent retrievals page" do
+    context "and selecting the download status & history page" do
       before :each do
         click_link 'Manage user account'
-        click_link 'Recent Retrievals'
+        click_link 'Download Status & History'
       end
       xit "carries the portal parameter to the next page" do
         expect(page).to have_path_prefix("/portal/simple/")

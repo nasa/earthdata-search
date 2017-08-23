@@ -24,9 +24,6 @@ describe "Timeline display", reset: false do
   context 'in the project list' do
     before :all do
       wait_for_xhr
-      # No granules
-      add_collection_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
-
       # 4 collections with granules
       add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
@@ -48,12 +45,6 @@ describe "Timeline display", reset: false do
       expect(timeline).to have_selector('.C179002914-ORNL_DAAC')
       expect(timeline).to have_selector('.C179003030-ORNL_DAAC')
       expect(timeline).to have_selector('.C1000000000-ORNL_DAAC')
-    end
-
-    it 'does not display collections without granules' do
-      timeline = page.find('#timeline svg')
-
-      expect(timeline).to have_no_selector('.C179001887-SEDAC')
     end
 
     it 'does not display more than three collections' do

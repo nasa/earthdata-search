@@ -61,6 +61,21 @@ describe "Temporal constraint disambiguation", reset: true do
         expect(page).to have_content("What temporal selection would you like to use?")
       end
 
+      it 'presents the user with a dialog with a close button' do
+        expect(page).to have_selector("#choose-temporal-modal a.modal-close")
+      end
+
+      context 'clicking the close button' do
+        before(:each) { find("#choose-temporal-modal a.modal-close").click }
+
+        it 'closes the temporal constraint modal' do
+          expect(page).not_to have_content("What temporal selection would you like to use?")
+        end
+
+        after(:each) { find('.master-overlay-global-actions').click_on "Download Data" }
+
+      end
+
       context 'choosing to use the temporal constraint' do
         before(:each) { click_on "Use Temporal Constraint" }
 

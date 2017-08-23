@@ -41,10 +41,8 @@ describe "Data download page", reset: false do
 
   context "when some accessed collections have additional resource or documentation links" do
     before :all do
-      load_page 'data/configure', project: [downloadable_collection_id, no_resource_collection_id]
+      load_page 'data/configure', project: [downloadable_collection_id]
 
-      choose 'Download'
-      click_on 'Continue'
       choose 'Download'
       click_on 'Submit'
     end
@@ -60,13 +58,6 @@ describe "Data download page", reset: false do
     it "displays titles for collections with additional resources and documentation" do
       within('.data-access-resources') do
         expect(page).to have_content("MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005")
-      end
-    end
-
-    it "displays no information for collections without additional resources and documentation" do
-      expect(page).to have_content(no_resource_collection_title)
-      within('.data-access-resources') do
-        expect(page).to have_no_content(no_resource_collection_title)
       end
     end
   end
@@ -198,13 +189,10 @@ describe "Data download page", reset: false do
 
   context "when collections have been selected for direct download" do
     before :all do
-      load_page 'data/configure', {project: [downloadable_collection_id, non_downloadable_collection_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
+      load_page 'data/configure', {project: [downloadable_collection_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       wait_for_xhr
 
-      # Download the first
       choose 'Direct Download'
-      click_on 'Continue'
-      # Confirm address
       click_on 'Submit'
       wait_for_xhr
     end
@@ -227,13 +215,12 @@ describe "Data download page", reset: false do
       expect(page).to have_link('View Download Links')
     end
 
-    it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
-      expect(page).to have_link('Download Access Script')
+    it "displays a link to download a file containing direct download urls for collections chosen for direct download" do
+      expect(page).to have_link('Download Data Links File')
     end
 
-    it "displays links for direct downloads for collection only collections" do
-      expect(page).to have_content(non_downloadable_collection_title)
-      expect(page).to have_content('Data download page')
+    it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
+      expect(page).to have_link('Download Access Script')
     end
 
     context 'upon clicking a "View Download Links" button' do
