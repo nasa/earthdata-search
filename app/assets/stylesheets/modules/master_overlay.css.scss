@@ -176,6 +176,9 @@
     padding-left: $facet-overlay-width;
 
     &.master-overlay-no-min {
+      background-image: asset-url('ecf0f1.png');
+      background-repeat: repeat-x;
+      background-position: 0 60px;
       padding-left: 0;
 
       h4 {
