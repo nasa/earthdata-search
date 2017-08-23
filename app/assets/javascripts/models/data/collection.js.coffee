@@ -298,7 +298,7 @@ ns.Collection = do (ko
         @archive_center
 
     metadata_url: (collection, e) ->
-      win = window.open(@details()["#{e.target.text.toLowerCase()}_url"], '_blank')
+      win = window.open(@details()["#{e.target.attributes['data-metadata-type'].value.toLowerCase()}_url"], '_blank')
       win.focus()
 
     fromJson: (jsonObj) ->
