@@ -1014,9 +1014,9 @@ e0da703e6a8378342160e7854ddd335180013ed5:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 36c46d9f-6b43-4bb3-819f-b77c4a620694
+      - 15c707ae-2114-481f-96d3-fbb347217b2d
       date:
-      - Sat, 12 Aug 2017 18:31:00 GMT
+      - Tue, 22 Aug 2017 23:54:59 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1038,9 +1038,9 @@ aa8e11590d8b469c77596f5bbb0cf5641341745b:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - ccd924b9-9247-4a85-80c8-4820901e1fde
+      - ebd15e29-4e3c-4654-b991-9e0683edfee8
       date:
-      - Sat, 12 Aug 2017 18:31:06 GMT
+      - Tue, 22 Aug 2017 23:54:43 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1062,9 +1062,9 @@ f52a0a9d469006d00aa1e17e0478821fb86d62cc:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 3e58a057-bb76-4a93-a630-c681dd39af6a
+      - 18736ec0-6d56-4563-a829-de18d497acc0
       date:
-      - Sat, 12 Aug 2017 18:30:33 GMT
+      - Tue, 22 Aug 2017 23:55:05 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1086,9 +1086,9 @@ f52a0a9d469006d00aa1e17e0478821fb86d62cc:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 9f4516fc-473e-4b04-8901-563216791d20
+      - bf86dddb-2ade-4a2b-9db1-e7855a1593d5
       date:
-      - Sat, 12 Aug 2017 18:31:16 GMT
+      - Tue, 22 Aug 2017 23:54:55 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1112,9 +1112,9 @@ ea2d4d5cbdeb708994aaf2ff4d4dda4a62a08551:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 95bbb01f-45a4-41d2-b77f-9095f1795a14
+      - 2ef8480e-a92e-4478-bf4a-7b2ff66f3744
       date:
-      - Sat, 12 Aug 2017 18:30:42 GMT
+      - Tue, 22 Aug 2017 23:54:43 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1136,9 +1136,9 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 33e7dc60-8ebd-4b0a-9490-df7e11cb9641
+      - cfad0aaa-4322-4517-aecc-442f0dc1e6b6
       date:
-      - Sat, 12 Aug 2017 18:30:27 GMT
+      - Tue, 22 Aug 2017 23:55:20 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1160,9 +1160,9 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - ad52f13b-6af0-45b2-84c3-66135f0ba340
+      - 4e13e9a6-e3b9-4cb5-86ae-82460c82fb92
       date:
-      - Sat, 12 Aug 2017 18:30:46 GMT
+      - Tue, 22 Aug 2017 23:55:35 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1184,9 +1184,9 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 941ac1e0-c889-4a40-a93b-510cca10c8c4
+      - b78976f1-6518-4fad-af00-c24b786f539e
       date:
-      - Sat, 12 Aug 2017 18:31:17 GMT
+      - Tue, 22 Aug 2017 23:54:47 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1208,9 +1208,9 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - f4f83e65-8fcc-48f9-b284-242d845e9039
+      - 49b22e86-898a-4c0f-a2da-74fcb5d0f3b1
       date:
-      - Sat, 12 Aug 2017 18:30:56 GMT
+      - Tue, 22 Aug 2017 23:55:28 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1232,9 +1232,9 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 9a0791f0-2d70-4780-834c-f47732051b3a
+      - c8bc88ef-5e02-4357-be65-cd67bd66a453
       date:
-      - Sat, 12 Aug 2017 18:30:25 GMT
+      - Tue, 22 Aug 2017 23:54:18 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1247,30 +1247,6 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
       encoding: UTF-8
       string: '[{"concept-id":"C1000001167-NSIDC_ECS","intervals":[[1330387200,1425254400,334405]]}]'
     http_version: 
-d79df44d2084ab46a2ebeb109376518785a0d336:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 1828fc36-3729-4f37-aceb-6c7f0acd9153
-      date:
-      - Mon, 21 Aug 2017 23:25:09 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
 26ae7bf4d0728dbec933f7025ce5348a91d2291d:
   response:
     status:
@@ -1280,9 +1256,9 @@ d79df44d2084ab46a2ebeb109376518785a0d336:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - fc19b701-183a-4458-a5e9-f3026b9510a3
+      - 10d24ace-bd1b-4062-9556-deadce73bff5
       date:
-      - Mon, 21 Aug 2017 23:57:26 GMT
+      - Tue, 22 Aug 2017 23:55:16 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1304,9 +1280,9 @@ d79df44d2084ab46a2ebeb109376518785a0d336:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 7a097fbc-89b6-456f-8731-ff66a739794e
+      - b46285a6-b855-4748-b582-6fd79ee44920
       date:
-      - Mon, 21 Aug 2017 23:57:22 GMT
+      - Tue, 22 Aug 2017 23:55:22 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1330,9 +1306,9 @@ d79df44d2084ab46a2ebeb109376518785a0d336:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 1fc03924-01ec-4376-8265-e8bf308eee37
+      - 4576aac3-6c46-43fc-98f1-f06c3febb665
       date:
-      - Mon, 21 Aug 2017 23:42:20 GMT
+      - Tue, 22 Aug 2017 23:54:26 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1539,6 +1515,30 @@ b00bb8542b7c36db99316559e7a76942397958b5:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+cbfe58479213895cf0bd888f0f69943f9eb7739e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - fc26dd74-3181-4899-b718-433a59388a43
+      date:
+      - Mon, 14 Aug 2017 14:32:07 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
@@ -3767,30 +3767,6 @@ e2b1ae4d82db335bc43927d06188e80dbea77f5a:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
     http_version: 
-f38baff729854e0a756b26262f26b2da87790b79:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 3c0e6d52-b0c6-49b1-8050-56a726863337
-      date:
-      - Fri, 18 Aug 2017 20:18:05 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '102'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
-    http_version: 
 8899ca9e18780871b642a8930b399bc9472d47bb:
   response:
     status:
@@ -5599,30 +5575,6 @@ f63256636f4889778bc26a49175829f57504149a:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-adb1031c674f743593d6993dc6e4f99af326ba4c:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - fb8ab25f-30df-40bc-89c7-32469616da04
-      date:
-      - Tue, 22 Aug 2017 17:55:25 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '2'
-      connection:
-      - Close
     body:
       encoding: UTF-8
       string: "[]"

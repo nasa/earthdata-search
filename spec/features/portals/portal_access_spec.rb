@@ -36,7 +36,7 @@ describe "Portal access", reset: false do
       Retrieval.destroy_all
     end
 
-    context "visiting the main Earthdata Search site's recent retrievals page" do
+    context "visiting the main Earthdata Search site's download status & history page" do
       before :all do
         load_page '/data/status'
       end
@@ -68,7 +68,7 @@ describe "Portal access", reset: false do
       Retrieval.destroy_all
     end
 
-    context "visiting an Earthdata Search portal's recent retrievals page" do
+    context "visiting an Earthdata Search portal's download status & history page" do
       before :all do
         load_page '/data/status', portal: 'simple'
       end

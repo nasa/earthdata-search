@@ -108,7 +108,6 @@
           url = toLocalUrl(url);
 
           var request = new XMLHttpRequest();
-          console.log("----- url: " + url);
           var hashedIdsStr = url.split('&').pop().split('cx=', 2);
           if (hashedIdsStr.length == 2) {
             hashedIds = hashedIdsStr[1].split('!');
