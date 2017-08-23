@@ -12,6 +12,7 @@ require 'helpers/instrumentation'
 #File.truncate(Rails.root.join("log/test.log"), 0)
 
 require 'capybara-screenshot/rspec'
+require 'capybara/rspec'
 require 'rack_session_access/capybara'
 
 if ENV['driver'] == 'poltergeist'
