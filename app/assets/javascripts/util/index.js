@@ -1,4 +1,4 @@
-//= require interactjs-1.2.8.min
+//= require interactjs-1.2.9.min
 //= require util/compat
 //= require util/deparam
 //= require util/drag
