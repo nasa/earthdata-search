@@ -99,7 +99,6 @@ ns.SearchPage = do (ko
       if @project.focusedProjectCollection()
         @project.focusedProjectCollection().collection.granuleDatasource().clearFilters()
 
-
     clearSpatial: =>
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
