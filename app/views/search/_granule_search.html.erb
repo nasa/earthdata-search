@@ -54,6 +54,43 @@
         </p>
       </dd>
       <!-- /ko -->
+      <!-- ko if: availableFilters()['orbit_calculated_spatial_domains'] -->
+      <dt>Orbit Spatial Parameters</dt>
+      <dd>
+        <p>Find granules with specific orbital spatial characteristics.</p>
+        <p>
+          <label for="orbit-number-min">Orbit Number Min:</label><br /><input id="orbit-number-min" data-bind="value: granuleQuery.orbitNumber.min" type="text" placeholder="Example: 30000">
+          <span data-bind="visible: !granuleQuery.validateOrbitNumberValue(granuleQuery.orbitNumber.min())" class="error">Value must be a positive integer</span>
+        </p>
+        <p>
+          <label for="orbit-number-max">Orbit Number Max:</label><br /><input id="orbit-number-max" data-bind="value: granuleQuery.orbitNumber.max" type="text" placeholder="Example: 30009">
+          <span data-bind="visible: !granuleQuery.validateOrbitNumberValue(granuleQuery.orbitNumber.max())" class="error">Value must be a positive integer</span>
+          <span data-bind="visible: !granuleQuery.validateOrbitNumberRange(granuleQuery.orbitNumber.min(),granuleQuery.orbitNumber.max())" class="error">Minimum must be less than Maximum</span>
+        </p>
+        <p>
+          <label for="equatorial-crossing-longitude-min">Equatorial Crossing Longitude Min:</label><br /><input id="equatorial-crossing-longitude-min" data-bind="value: granuleQuery.equatorialCrossingLongitude.min" type="text" placeholder="Example: -45">
+          <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeValue(granuleQuery.equatorialCrossingLongitude.min())" class="error">Value must be within 0 to (+/–)180</span>
+        </p>
+        <p>
+          <label for="equatorial-crossing-longitude-max">Equatorial Crossing Longitude Max:</label><br /><input id="equatorial-crossing-longitude-max" data-bind="value: granuleQuery.equatorialCrossingLongitude.max" type="text" placeholder="Example: -40">
+          <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeValue(granuleQuery.equatorialCrossingLongitude.max())" class="error">Value must be within 0 to (+/–)180</span>
+          <span data-bind="visible: !granuleQuery.validateEquatorialCrossingLongitudeRange(granuleQuery.equatorialCrossingLongitude.min(),granuleQuery.equatorialCrossingLongitude.max())" class="error">Minimum must be less than Maximum</span>
+        </p>
+         
+        <p>
+          <label for="equatorial-crossing-date-min">Equatorial Crossing Date Start:</label>
+          <div class="input-group">
+            <input id="equatorial-crossing-date-min" data-bind="value: granuleQuery.equatorialCrossingDate.min" type="text" class="date datepicker orbitDatepickers" placeholder="YYYY-MM-DDT00:00:00">
+          </div>
+          <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateValue(granuleQuery.equatorialCrossingDate.min())" class="error">Value must be of the format 2015-01-24T00:00:00</span>
+        </p>
+        <p>
+          <label for="equatorial-crossing-date-max">Equatorial Crossing Date End:</label><br /><input id="equatorial-crossing-date-max" data-bind="value: granuleQuery.equatorialCrossingDate.max" type="text" class="date datepicker orbitDatepickers" placeholder="YYYY-MM-DDT23:59:59">
+          <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateValue(granuleQuery.equatorialCrossingDate.max())" class="error">Value must be of the format 2015-01-24T00:00:00</span>
+          <span data-bind="visible: !granuleQuery.validateEquatorialCrossingDateRange(granuleQuery.equatorialCrossingDate.min(),granuleQuery.equatorialCrossingDate.max())" class="error">The start date must be before the end date</span>
+        </p>
+      </dd>
+      <!-- /ko -->
       <!-- ko if: searchable_attributes && ($root.labs() || has_feature('attribute_search')) -->
       <dt>Collection-Specific Attributes</dt>
       <dd>
