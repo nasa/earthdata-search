@@ -15,6 +15,50 @@
         <!-- /ko -->
       </h4>
     <!-- /ko -->
+    <div class="cta-buttons">
+      <div class="dropdown detail-dropdown">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Metadata Formats <i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-menu">
+          <!-- ko with: $root.ui.collectionsList.selected() -->
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">Web View</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ISO19115">ISO19115</a></li>
+          <!-- ko if: $data.smap_iso_url -->
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="SMAP ISO">SMAP ISO</a></li>
+          <!-- /ko -->
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="DIF">DIF</a></li>
+          <!--/ko-->
+        </ul>
+      </div>
+      <div class="dropdown detail-dropdown">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">API Endpoints <i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-menu">
+          <!-- ko with: $root.ui.collectionsList.selected() -->
+          <!-- ko if: granuleDatasourceName() == "cmr" -->
+          <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
+          <!-- /ko -->
+
+          <!-- ko foreach: gibs() -->
+          <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
+          <!-- /ko -->
+
+          <!-- ko if: opendap_url() -->
+          <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
+          <!-- /ko -->
+
+          <!-- ko if: modaps() -->
+          <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
+          <!-- /ko -->
+
+          <!-- ko if: osddUrl() -->
+          <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
+          <!-- /ko -->
+          <!-- /ko -->
+        </ul>
+      </div>
+    </div>
   </header>
 
   <!-- /ko -->
@@ -27,9 +71,24 @@
       <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
         <!-- first row: mini map | spatial/temporal -->
         <div class="row">
-          <div class="flex-column">
+          <div class="flex-column-aside">
             <div id="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
           </div>
+          <div class="flex-column">
+            <!-- description -->
+            <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
+            <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
+            <div class="description-toggle">
+              <i class="fa fa-chevron-down"></i>
+            </div>
+            <!-- /ko -->
+            <!-- end of description -->
+          </div>
+        </div>
+        <!-- end of first row -->
+
+        <!-- second row: metadata links | api endpionts | relative urls-->
+        <div class="row">
           <dl class="flex-column">
               <dt>Spatial Coordinates:</dt>
               <dd>
@@ -50,53 +109,6 @@
                 <!-- /ko -->
               </dd>
           </dl>
-        </div>
-        <!-- end of first row -->
-
-        <!-- second row: metadata links | api endpionts | relative urls-->
-        <div class="row">
-          <div class="dropdown detail-dropdown">
-            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Metadata Formats <i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <!-- ko with: $root.ui.collectionsList.selected() -->
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">Web View</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ISO19115">ISO19115</a></li>
-              <!-- ko if: $data.smap_iso_url -->
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="SMAP ISO">SMAP ISO</a></li>
-              <!-- /ko -->
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="DIF">DIF</a></li>
-              <!--/ko-->
-            </ul>
-          </div>
-          <div class="dropdown detail-dropdown">
-            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">API Endpoints <i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <!-- ko with: $root.ui.collectionsList.selected() -->
-              <!-- ko if: granuleDatasourceName() == "cmr" -->
-              <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
-              <!-- /ko -->
-
-              <!-- ko foreach: gibs() -->
-              <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
-              <!-- /ko -->
-
-              <!-- ko if: opendap_url() -->
-              <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
-              <!-- /ko -->
-
-              <!-- ko if: modaps() -->
-              <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
-              <!-- /ko -->
-
-              <!-- ko if: osddUrl() -->
-              <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
-              <!-- /ko -->
-              <!-- /ko -->
-            </ul>
-          </div>
           <dl class="flex-column">
             <!-- ko if: $data.related_urls.length > 0 -->
             <dt>Related URLs:</dt>
@@ -110,15 +122,6 @@
           </dl>
         </div>
         <!-- end of second row -->
-
-        <!-- description -->
-        <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
-        <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
-        <div class="description-toggle">
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <!-- /ko -->
-        <!-- end of description -->
 
         <!--third row: data centers-->
         <dl class="flex-column data-centers">

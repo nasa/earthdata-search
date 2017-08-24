@@ -53,7 +53,13 @@ ul.dropdown-menu {
 }
 
 .detail-dropdown {
-  margin-right: 10px;
+
+  .button {
+    @include dark-button;
+    font-style: normal;
+    line-height: 1.428571429em; // Bootstrap value.  Weird.
+    text-decoration: none;
+  }
 }
 
 .temporal-dropdown {

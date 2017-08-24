@@ -7,6 +7,21 @@
   .master-overlay-back {
     text-decoration: none;
   }
+
+  header {
+
+    h4 {
+      float: left;
+      width: 65%;
+    }
+
+    .cta-buttons {
+      float: right;
+      margin: 20px 20px 0 0;
+    }
+  }
+
+
 }
 
 .version-label {

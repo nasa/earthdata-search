@@ -125,6 +125,12 @@
   .master-overlay-content {
     background: rgba(236, 240, 241,1.0);
   }
+
+  .tab-pane {
+    .master-overlay-content {
+      background: none;
+    }
+  }
 }
 
 // The secondary section in the overlay. Granule filters
@@ -486,14 +492,19 @@ a.master-overlay-show-parent {
 }
 
 .flex-column {
-  -ms-flex: 1 1 270px;
-  flex: 1 1 270px; //mini-map width is 270px
+  -ms-flex: 0 0 380px;
+  flex: 2 2 380px; //mini-map width is 270px
   dd {
     font-size: 0.9em;
     font-weight: bold;
     margin-bottom: 10px;
     word-wrap: break-word;
   }
+}
+
+.flex-column-aside {
+  -ms-flex: 0 0 380px;
+  flex: 0 0 380px; //mini-map width is 380px
 }
 
 .master-overlay-content .flex-column {
