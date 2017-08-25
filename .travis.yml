@@ -9,6 +9,7 @@ before_install:
   - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
   - sudo apt-get update -qq
   - sudo apt-get install -qq libqt5webkit5-dev qtdeclarative5-dev
+  - sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
   - export QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
 #install:
 #  - sudo apt-get -y install qt55[QTPACKAGE]
