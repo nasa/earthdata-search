@@ -1,13 +1,15 @@
 language: ruby
-dist: precise
+dist: trusty
 cache:
   bundler: true
   directories:
     - node_modules
-sudo: false
+sudo: required
 script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
+before_install:
+  - sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 #after_failure:
 #  - cat ./log/test.log
 before_install:
