@@ -124,7 +124,7 @@ describe 'Address bar', reset: false do
 
     context 'clearing filters' do
       before :all do
-        click_link ("Clear Filters")
+        click_link "Clear Filters"
         wait_for_xhr
       end
 
