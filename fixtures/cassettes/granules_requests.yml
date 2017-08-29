@@ -1008,6 +1008,176 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:25 GMT
+  digest: 6e29db5e1a29abfd786cb49c3cae837e258f032d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:06 GMT
+  digest: 490f55717c6eeda991a714c88225e3925b9d3e4d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:31 GMT
+  digest: cdb05bfcddb1d7580d688b0363f6a636f49518a3
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:18 GMT
+  digest: e3d37c19aef39ec12ca64a9ef69f9403d7427a4c
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_longitude%5Bmax%5D=-40&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:54:58 GMT
+  digest: 4d6af307160fa93b2c5d6b6a7e0e4d6869d826b3
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&equator_crossing_longitude%5Bmin%5D=-45&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:35 GMT
+  digest: 5d4dd82640f1651ab24744757fc4700a8434b3e6
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:54:52 GMT
+  digest: 02c7d5dc2a9d801dc4f32a2245dbf33a4bd7a995
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&orbit_number%5Bmax%5D=30009&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:12 GMT
+  digest: 91d16c15f5e384d63dd64804da8b2d7875d1d77d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&orbit_number%5Bmin%5D=30000&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:55:51 GMT
+  digest: 1b87684cf544c9712b81716cac9cae94af1f0410
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000001167-NSIDC_ECS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 22 Aug 2017 23:54:46 GMT
+  digest: 3e43724bb64328709798c40f4532123f6bf20fa5
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C107705227-LPDAAC_ECS&echo_granule_id=G1342587410-LPDAAC_ECS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
