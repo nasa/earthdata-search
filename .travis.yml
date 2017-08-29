@@ -9,7 +9,7 @@ script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
 before_install:
-  - sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+  - sudo apt-get install gstreamer1.12.2-plugins-base gstreamer1.12.2-tools gstreamer1.12.2-x
 #after_failure:
 #  - cat ./log/test.log
 before_install:
