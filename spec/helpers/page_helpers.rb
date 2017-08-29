@@ -3,7 +3,7 @@ module Helpers
     def wait_for_xhr
       ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
         synchronize(30) do
-          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_falsey
         end
       end
     end
@@ -21,7 +21,7 @@ module Helpers
       end
     end
 
-    def synchronize(seconds=Capybara.default_wait_time)
+    def synchronize(seconds=Capybara.default_max_wait_time)
       start_time = Time.now
 
       count = 0
@@ -75,7 +75,7 @@ module Helpers
 
       url = query.nil? ? path : path + '?' + query
       visit url
-      
+
       wait_for_xhr
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
     end

@@ -25,7 +25,7 @@ group :test do
   gem 'capybara'
   # This is a revision which disables screenshots, one behind the disable-screenshots
   #  branch, which also tries (and fails) to avoid problems with concurrent test runs.
-  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
+  gem 'capybara-webkit'#, git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
   gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
@@ -42,12 +42,7 @@ group :development do
   gem 'rubocop', require: false
 end
 
-group :production do
-  gem 'pg'
-  gem 'rails_12factor'
-end
-
-group :sit, :uat, :lab do
+group :production, :sit, :uat, :lab do
   gem 'pg'
   gem 'rails_12factor'
 end
@@ -55,7 +50,7 @@ end
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
   gem 'thin'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~>2.99.0'
   gem 'colored'
   gem 'vcr'
   gem 'sqlite3'
@@ -75,9 +70,9 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets, :test do
-  gem 'sass-rails',   '~> 4.0.0'
+  gem 'sass-rails',   '~> 5.0'
   gem 'coffee-script', :require => 'coffee_script'
-  gem 'coffee-rails', '~> 4.0.0'
+  gem 'coffee-rails', '~> 4.2'
 
   gem 'uglifier', '>= 1.3.0'
 end

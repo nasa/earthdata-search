@@ -67,6 +67,10 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "#{File.basename(meta[:file_path])}-#{meta[:line_number]}"
 end
 
+Capybara::Webkit.configure do |config|
+  config.allow_unknown_urls
+end
+
 RSpec.configure do |config|
 
   # ## Mock Framework
@@ -86,8 +90,8 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
-  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
-  wait_time = Capybara.default_wait_time
+  Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
+  wait_time = Capybara.default_max_wait_time
 
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
@@ -138,20 +142,20 @@ RSpec.configure do |config|
     Headless.new(:destroy_on_exit => false).start
   end
 
-  config.before :each do
+  config.before :each do |example|
     Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
   end
 
   config.before :all do
     file_time = Time.now
-    Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
-    Capybara.current_session.driver.resize_window(1280, 1024)
+    Capybara.default_max_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
+    Capybara.current_session.driver.resize_window_to(Capybara.current_session.driver.current_window_handle, 1280, 1024)
   end
 
   config.after :all do
-    Capybara.default_wait_time = wait_time
+    Capybara.default_max_wait_time = wait_time
     Delayed::Worker.delay_jobs = false
-    timings[self.class.display_name] = Time.now - file_time
+    timings[self.class.description] = Time.now - file_time
     index += 1
     puts " (Suite #{index} of #{count})"
 
@@ -174,7 +178,7 @@ RSpec.configure do |config|
     Helpers::Instrumentation.report_performance
   end
 
-  config.after :each do
+  config.after :each do |example|
     if example.exception != nil
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)

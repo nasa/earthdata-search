@@ -45,8 +45,8 @@ describe "CWIC-enabled granule results view", reset: false do
             expect(page).not_to have_link('Back to Granules')
             expect(page.response_headers['Content-Type']).to eq('application/atom+xml;charset=UTF-8')
             metadata = page.source
-            expect(metadata.include? '<?xml').to be_true
-            expect(metadata.include? '<feed').to be_true
+            expect(metadata.include? '<?xml').to be_truthy
+            expect(metadata.include? '<feed').to be_truthy
           end
         end
       end

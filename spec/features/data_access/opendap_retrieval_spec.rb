@@ -162,7 +162,7 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it "presents parameters exposed by <Grid> elements" do
-      pending "This collection no longer has opendap online access URLs"
+      skip "This collection no longer has opendap online access URLs"
       choose 'Direct Download'
       choose 'ASCII'
       expect(page).to have_checked_field('toa_sw_all_mon')

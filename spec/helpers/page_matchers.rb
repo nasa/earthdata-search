@@ -29,7 +29,7 @@ RSpec::Matchers.define :have_query_param do |params|
     synchronize do
       # Test one at a time to be order-independent
       params.each do |k, v|
-        expect(query(page).include?({k => v}.to_param)).to be_true
+        expect(query(page).include?({k => v}.to_param)).to be_truthy
       end
     end
   end
