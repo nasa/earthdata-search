@@ -26,10 +26,10 @@ describe 'Collection details', reset: false do
 
     context 'and when the metadata formats toggle is clicked' do
       before :all do
-        click_link 'Metadata Formats'
+        click_link 'View More Metadata'
       end
       it 'provides the metadata formats links' do
-        expect(page).to have_link('HTML')
+        expect(page).to have_link('Web View')
         expect(page).to have_link('Native')
         expect(page).to have_link('ATOM')
         expect(page).to have_link('ECHO10')
@@ -80,10 +80,10 @@ describe 'Collection details', reset: false do
 
     context 'and when the metadata formats toggle is clicked' do
       before :all do
-        click_link 'Metadata Formats'
+        click_link 'View More Metadata'
       end
       it 'provides the metadata formats links' do
-        expect(page).to have_link('HTML')
+        expect(page).to have_link('Web View')
         expect(page).to have_link('Native')
         expect(page).to have_link('ATOM')
         expect(page).to have_link('ECHO10')
