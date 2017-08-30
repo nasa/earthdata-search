@@ -112,10 +112,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by spatial' do
     before(:all) do
-      visit '/search/map'
-      wait_for_xhr
-      create_bounding_box(0, 0, 10, 10)
-      wait_for_xhr
+      load_page :search, q: 'C14758250-LPDAAC_ECS', sb: [0,0,10,10]
     end
 
     it 'saves the spatial condition in the address bar' do
@@ -129,10 +126,7 @@ describe 'Address bar', reset: false do
       end
 
       after :all do
-        visit '/search'
-        wait_for_xhr
-        create_bounding_box(0, 0, 10, 10)
-        wait_for_xhr
+        load_page :search, q: 'C14758250-LPDAAC_ECS', sb: [0,0,10,10]
       end
 
       it 'removes the spatial condition from the address bar' do
@@ -143,8 +137,6 @@ describe 'Address bar', reset: false do
     context 'setting granule filters' do
       before(:all) do
         expect(page.current_url).to have_content("sb=0%2C0%2C10%2C10")
-        fill_in "keywords", with: 'C14758250-LPDAAC_ECS'
-        wait_for_xhr
         first_collection_result.click
         wait_for_xhr
         click_link 'Filter granules'
@@ -156,7 +148,6 @@ describe 'Address bar', reset: false do
         wait_for_xhr
         select 'Day only', from: "day-night-select"
         wait_for_xhr
-        page.save_screenshot('screenshot.png')
         check 'Find only granules that have browse images.'
         wait_for_xhr
         fill_in "Minimum:", with: "2.5"
