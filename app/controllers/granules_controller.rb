@@ -139,15 +139,12 @@ class GranulesController < ApplicationController
     catalog_response = echo_client.get_granules(param.merge(page_num: 1), token)
     if catalog_response.success?
       granules = catalog_response.body['feed']['entry']
-      first_info = nil
+      
       granules.each do |granule|
-        url_mapper.info_urls_for(granule).each do |url|
-          first_info = url if url
-          break if first_info
-        end
-        break if first_info != nil
+        first_info = url_mapper.info_urls_for(granule).first
+        return first_info if first_info
       end
-      return first_info if first_info
+      url_mapper.send("#{url_type}_urls_for", granules.first).first
     else
       @errors = catalog_response.body
       nil
