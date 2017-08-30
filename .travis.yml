@@ -8,14 +8,10 @@ sudo: required
 script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
-#before_install:
-#  - sudo apt-get install qt5-default libqt5webkit5-dev xvfb gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 #after_failure:
 #  - cat ./log/test.log
 before_install:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-env:
-  global:
 addons:
   apt:
     sources:
