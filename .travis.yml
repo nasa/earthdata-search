@@ -8,15 +8,31 @@ sudo: required
 script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
-before_install:
-  - sudo apt-get install qt5-default libqt5webkit5-dev xvfb gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+#before_install:
+#  - sudo apt-get install qt5-default libqt5webkit5-dev xvfb gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 #after_failure:
 #  - cat ./log/test.log
 before_install:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 env:
   global:
+addons:
+  apt:
+    sources:
+      - ubuntu-sdk-team
+    packages:
+      - libqt5webkit5-dev
+      - qtdeclarative5-dev
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-tools
+      - gstreamer1.0-x
+env:
+  global:
     - CI_NODE_TOTAL=4
+    - BUNDLE_JOBS=4
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
+    - JAVA_OPTS=-Djava.security.egd=file:/dev/urandom
   matrix:
     - CI_NODE_INDEX=0
     - CI_NODE_INDEX=1
