@@ -20,8 +20,8 @@ if ENV['driver'] == 'poltergeist'
   Capybara.default_driver = :poltergeist
 else
   require 'capybara-webkit'
-  Capybara.javascript_driver = :webkit
-  Capybara.default_driver = :webkit
+  Capybara.javascript_driver = :webkit_debug
+  Capybara.default_driver = :webkit_debug
 end
 
 # Avoid appending screenshot paths in CI environments, since it messes with repeat failure detection
