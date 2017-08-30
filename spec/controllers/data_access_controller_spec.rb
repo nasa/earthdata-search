@@ -10,7 +10,7 @@ describe DataAccessController do
     let(:order_refs) { [{'id' => 'opt_1', 'name' => 'Order Option 1'}, {'id' => 'opt_2', 'name' => 'Order Option 2'}] }
     let(:order_forms) { {'opt_1' => '<first_form/>', 'opt_2' => '<second_form/>'} }
     let(:service_ref) { {'id' => 'opt_1'} }
-    let(:service_form) { {'opt_1' => {'form' => '<service_form/>', 'name' => 'Service Option 1', 'name' => 'Service Option 1'}} }
+    let(:service_form) { {'opt_1' => {'form' => '<service_form/>', 'name' => 'Service Option 1'}} }
 
     let(:body) do
       session[:urs_user] = {present: true}

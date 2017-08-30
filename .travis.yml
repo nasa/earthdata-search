@@ -9,7 +9,7 @@ script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
 before_install:
-  - sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-nice gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-base-dbg gstreamer1.0-gnomevfs
+  - sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-nice gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-base-dbg
 #after_failure:
 #  - cat ./log/test.log
 before_install:
