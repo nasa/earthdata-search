@@ -428,85 +428,85 @@ describe "Collection Facets", reset: false do
   #     end
   #   end
   # end
-  #
-  # context "selecting a processing level facet" do
-  #   before :all do
-  #     find("h3.panel-title", text: 'Processing level').click
-  #     within(:css, '.processing-levels') do
-  #       find(".facets-item", text: "1", match: :prefer_exact).click
-  #     end
-  #     wait_for_xhr
-  #   end
-  #
-  #   after(:all) do
-  #     reset_search
-  #     find("h3.panel-title", text: 'Processing level').click
-  #   end
-  #
-  #   it "shortens the query parameter to 'fl' in the url" do
-  #     uri = URI.parse(current_url)
-  #     expect(uri.query).to have_content('fl=')
-  #   end
-  # end
-  #
-  # context "selecting multiple facets from different categories" do
-  #   before :all do
-  #     find("h3.panel-title", text: 'Organizations').click
-  #     within(:css, '.organizations') do
-  #       find(".facets-item", text: "DOE/ORNL/ESD/CDIAC", match: :prefer_exact).click
-  #     end
-  #     wait_for_xhr
-  #
-  #     find("h3.panel-title", text: 'Platforms').click
-  #     within(:css, '.platforms') do
-  #       find(".facets-item", text: "BUOYS", match: :prefer_exact).click
-  #     end
-  #     wait_for_xhr
-  #     expect(page).to have_no_content("Instruments")
-  #     expect(page).to have_no_content("Projects")
-  #     expect(page).to have_no_content("Processing levels")
-  #
-  #   end
-  #
-  #   it "'AND's the results of different categories and 'OR's the results of the same category" do
-  #     expect(page).to have_content('1 Matching Collections')
-  #
-  #     within(:css, '.platforms') do
-  #       find(".facets-item", text: "DC-8", match: :prefer_exact).click
-  #     end
-  #
-  #     expect(page).to have_content('2 Matching Collections')
-  #   end
-  #
-  #   context "and clear filters" do
-  #     before :all do
-  #       click_link "Clear Filters"
-  #       wait_for_xhr
-  #     end
-  #
-  #     it "maintains the original facet category order" do
-  #       expect(page).to have_content("WEATHER STATIONS 149 Instruments")
-  #       find("h3.panel-title", text: 'Platforms').click
-  #     end
-  #   end
-  # end
-  #
-  # context "selecting multiple facets from same category" do
-  #   before :all do
-  #     load_page :search, facets: true, env: :sit
-  #     find("h3.panel-title", text: 'Keywords').click
-  #     find(".facets-item", text: "Agriculture", match: :prefer_exact).click
-  #     expect(page).to have_content('1628 Matching Collections')
-  #   end
-  #
-  #   after :all do
-  #     find(".facets-item", text: "Agriculture", match: :prefer_exact).click
-  #     find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
-  #   end
-  #
-  #   it "'OR's the results of the selected facets" do
-  #     find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
-  #     expect(page).to have_content('5607 Matching Collections')
-  #   end
-  # end
+
+  context "selecting a processing level facet" do
+    before :all do
+      find("h3.panel-title", text: 'Processing level').click
+      within(:css, '.processing-levels') do
+        find(".facets-item", text: "1", match: :prefer_exact).click
+      end
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+      find("h3.panel-title", text: 'Processing level').click
+    end
+
+    it "shortens the query parameter to 'fl' in the url" do
+      uri = URI.parse(current_url)
+      expect(uri.query).to have_content('fl=')
+    end
+  end
+
+  context "selecting multiple facets from different categories" do
+    before :all do
+      find("h3.panel-title", text: 'Organizations').click
+      within(:css, '.organizations') do
+        find(".facets-item", text: "DOE/ORNL/ESD/CDIAC", match: :prefer_exact).click
+      end
+      wait_for_xhr
+
+      find("h3.panel-title", text: 'Platforms').click
+      within(:css, '.platforms') do
+        find(".facets-item", text: "BUOYS", match: :prefer_exact).click
+      end
+      wait_for_xhr
+      expect(page).to have_no_content("Instruments")
+      expect(page).to have_no_content("Projects")
+      expect(page).to have_no_content("Processing levels")
+
+    end
+
+    it "'AND's the results of different categories and 'OR's the results of the same category" do
+      expect(page).to have_content('1 Matching Collections')
+
+      within(:css, '.platforms') do
+        find(".facets-item", text: "DC-8", match: :prefer_exact).click
+      end
+
+      expect(page).to have_content('2 Matching Collections')
+    end
+
+    context "and clear filters" do
+      before :all do
+        click_link "Clear Filters"
+        wait_for_xhr
+      end
+
+      it "maintains the original facet category order" do
+        expect(page).to have_content("WEATHER STATIONS 149 Instruments")
+        find("h3.panel-title", text: 'Platforms').click
+      end
+    end
+  end
+
+  context "selecting multiple facets from same category" do
+    before :all do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
+      find(".facets-item", text: "Agriculture", match: :prefer_exact).click
+      expect(page).to have_content('1628 Matching Collections')
+    end
+
+    after :all do
+      find(".facets-item", text: "Agriculture", match: :prefer_exact).click
+      find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
+    end
+
+    it "'OR's the results of the selected facets" do
+      find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
+      expect(page).to have_content('5607 Matching Collections')
+    end
+  end
 end
