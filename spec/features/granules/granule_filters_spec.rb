@@ -89,7 +89,7 @@ describe "Granule search filters", reset: false do
 
         page.execute_script('$("#cloud-cover-min").trigger("change"); null;')
         page.find(".master-overlay-secondary-content").click
-        page.execute_script("$('#granule-filters-submit').click()")
+        click_button "Apply"
         wait_for_xhr
 
         expect(current_url).not_to have_content("pg[1][cc][min]")
@@ -236,7 +236,7 @@ describe "Granule search filters", reset: false do
         script = "edsc.page.project.searchGranulesCollection().granuleDatasource().cmrQuery().temporal.pending.years([2005, 2010])"
         page.execute_script(script)
         js_click_apply ".master-overlay-content"
-        page.execute_script("$('#granule-filters-submit').click()")
+        click_button "Apply"
         wait_for_xhr
         expect(project_overview).to filter_granules_from(before_granule_count)
         first_project_collection.click_link "Show granule filters"
@@ -281,7 +281,7 @@ describe "Granule search filters", reset: false do
       end
 
       it "filters granules using the additional attribute values" do
-        page.execute_script("$('#granule-filters-submit').click()")
+        click_button "Apply"
         wait_for_xhr
         expect(project_overview).to filter_granules_from(before_granule_count)
         first_project_collection.click_link "Show granule filters"
@@ -298,7 +298,7 @@ describe "Granule search filters", reset: false do
         end
 
         it "resets the granule search" do
-          page.execute_script("$('#granule-filters-submit').click()")
+          click_button "Apply"
           wait_for_xhr
           expect(project_overview).to filter_granules_from(before_granule_count)
           first_project_collection.click_link "Show granule filters"
@@ -415,14 +415,14 @@ describe "Granule search filters", reset: false do
 
     it 'filters when only the orbit number min is set' do
       fill_in "Orbit Number Min:", with: "30000"
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][on][min]=30000')
     end
 
     it 'filters when only the orbit number max is set' do
       fill_in "Orbit Number Max:", with: "30009"
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][on][max]=30009')
     end
@@ -430,21 +430,21 @@ describe "Granule search filters", reset: false do
     it 'filters when the orbit number min and max are set' do
       fill_in "Orbit Number Min:", with: "30000"
       fill_in "Orbit Number Max:", with: "30009"
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][on][min]=30000&pg[1][on][max]=30009')
     end
 
     it 'filters when only the equatorial crossing longitude min is set' do
       fill_in "Equatorial Crossing Longitude Min:", with: "-45"
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecl][min]=-45')
     end
 
     it 'filters when only the equatorial crossing longitude max is set' do
       fill_in "Equatorial Crossing Longitude Max:", with: "-40"
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecl][max]=-40')
     end
@@ -452,7 +452,7 @@ describe "Granule search filters", reset: false do
     it 'filters when the equatorial crossing longitude min and max are set' do
       fill_in "Equatorial Crossing Longitude Min:", with: "-45"
       fill_in "Equatorial Crossing Longitude Max:", with: "-40"
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecl][min]=-45&pg[1][ecl][max]=-40')
     end
@@ -477,7 +477,7 @@ describe "Granule search filters", reset: false do
       page.execute_script("$('#equatorial-crossing-date-min').datepicker('setDate', '2015-01-24')")
       page.execute_script("$('#equatorial-crossing-date-max').datepicker('setDate', '2015-01-25')")
       page.find(".master-overlay-secondary-content").click
-      page.execute_script("$('#granule-filters-submit').click()")
+      click_button "Apply"
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][min]=2015-01-24T00%3A00%3A00&pg[1][ecd][max]=2015-01-25T23%3A59%3A59')
     end
