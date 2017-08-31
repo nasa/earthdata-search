@@ -255,179 +255,179 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  # context "when applied one science keyword facets and search terms filter the collections list to no results" do
-  #   before(:all) do
-  #     load_page :search, facets: true, env: :sit
-  #     find("h3.panel-title", text: 'Keywords').click
-  #     find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
-  #     fill_in :keywords, with: "somestringthatmatchesnocollections"
-  #     wait_for_xhr
-  #   end
-  #
-  #   after(:all) do
-  #     reset_search
-  #     wait_for_xhr
-  #   end
-  #
-  #   it "continues to display applied facets" do
-  #     within(:css, '.panel.keywords .panel-body.facets') do
-  #       expect(page).to have_content("Atmosphere")
-  #     end
-  #   end
-  # end
-  #
-  # context "when applied multiple science keyword facets" do
-  #   before :all do
-  #     load_page :search, facets: true, env: :sit
-  #     find("h3.panel-title", text: 'Keywords').click
-  #     find(".facets-item", text: "Agriculture").click
-  #     find(".facets-item", text: "Agricultural Chemicals").click
-  #     find(".facets-item", text: "Fertilizers").click
-  #   end
-  #
-  #   it 'shows the select facet siblings' do
-  #     expect(page).to have_content("Agricultural Commodities")
-  #     expect(page).to have_content("Agricultural Engineering")
-  #   end
-  #
-  #   context "and search terms filter the collections list to no results" do
-  #     before(:all) do
-  #       fill_in :keywords, with: "somestringthatmatchesnocollections"
-  #       wait_for_xhr
-  #     end
-  #
-  #     after(:all) do
-  #       reset_search
-  #       wait_for_xhr
-  #     end
-  #
-  #     it "continues to display applied science keyword facets in order" do
-  #       within(:css, '.keywords') do
-  #         expect(page).to have_text("Agriculture 0 Agricultural Chemicals 0 Fertilizers 0")
-  #       end
-  #     end
-  #   end
-  # end
-  #
-  # context "when applied facets and search terms filter the collections list to no results" do
-  #   before(:all) do
-  #     find("h3.panel-title", text: 'Project').click
-  #     find(".facets-item", text: "EOSDIS").click
-  #     fill_in :keywords, with: "somestringthatmatchesnocollections"
-  #     wait_for_xhr
-  #   end
-  #
-  #   after(:all) do
-  #     reset_search
-  #     find("h3.panel-title", text: 'Project').click
-  #   end
-  #
-  #   it "continues to display applied facets with counts of 0" do
-  #     expect(page).to have_content("EOSDIS 0")
-  #   end
-  # end
-  #
-  # # EDSC-622 - We had been displaying duplicate entries with special characters escaped
-  # context "when applying facets containing special characters" do
-  #   before(:all) do
-  #     load_page :search, facets: true, env: :sit
-  #     fill_in :keywords, with: "C1000000560-DEV08"
-  #     wait_for_xhr
-  #     find("h3.panel-title", text: 'Keywords').click
-  #     find(".facet-title", text: "Spectral/Engineering").click
-  #     wait_for_xhr
-  #   end
-  #
-  #   after(:all) do
-  #     reset_search
-  #   end
-  #
-  #   it "does not display a duplicate entry with special characters escaped" do
-  #     expect(page).to have_no_content("Spectral%2FEngineering")
-  #   end
-  #
-  #   it "displays the selected entry" do
-  #     expect(page).to have_content("Spectral/Engineering")
-  #   end
-  # end
-  #
-  # context "when selecting a topic keyword" do
-  #   before :all do
-  #     load_page :search, facets: true, env: :sit
-  #     find("h3.panel-title", text: 'Keywords').click
-  #     find(".facet-title", text: /\AAtmosphere\z/).click
-  #     wait_for_xhr
-  #   end
-  #
-  #   after(:all) do
-  #     reset_search
-  #   end
-  #
-  #   it "displays term keywords" do
-  #     expect(page).to have_content("Aerosols")
-  #   end
-  #
-  #   context "when selecting a term keyword" do
-  #     before :all do
-  #       first(".facet-title", text: /\AAerosols\z/).click
-  #       wait_for_xhr
-  #     end
-  #
-  #     after :all do
-  #       first(".facet-title", text: /\AAerosols\z/).click
-  #       wait_for_xhr
-  #     end
-  #
-  #     it "displays variable_level_1 keywords" do
-  #       expect(page).to have_content("Aerosol Extinction")
-  #     end
-  #   end
-  #
-  #   context "when the top level keyword is unchecked" do
-  #     before :all do
-  #       first(".facet-title", text: /\AAerosols\z/).click
-  #       wait_for_xhr
-  #       find(".facets-item", text: "Aerosol Extinction").click
-  #       wait_for_xhr
-  #       find(".facet-title", text: /\AAtmosphere\z/).click
-  #       wait_for_xhr
-  #     end
-  #
-  #     after :all do
-  #       reset_search
-  #       find(".facet-title", text: /\AAtmosphere\z/).click
-  #       wait_for_xhr
-  #     end
-  #
-  #     it "removes the children keywords" do
-  #       expect(page).to have_no_content("Aerosols")
-  #       expect(page).to have_no_content("Aerosol Extinction")
-  #     end
-  #   end
-  #
-  #   context 'when a middle level keyword is unchecked' do
-  #     before :all do
-  #       first(".facet-title", text: /\AAerosols\z/).click
-  #       wait_for_xhr
-  #       find(".facets-item", text: "Aerosol Extinction").click
-  #       wait_for_xhr
-  #       find(".facet-title", text: /\AAerosols\z/).click
-  #       wait_for_xhr
-  #     end
-  #
-  #     after :all do
-  #       reset_search
-  #       find(".facet-title", text: /\AAtmosphere\z/).click
-  #       wait_for_xhr
-  #     end
-  #
-  #     it 'removes the children keywords but leaves the parent' do
-  #       expect(page).to have_css('.facets-item.selected[title="Atmosphere"]')
-  #       expect(page).to have_no_css('.facets-item.selected[title="Aerosols"]')
-  #       expect(page).to have_no_css('.facets-item.selected[title="Aerosol Extinction"]')
-  #     end
-  #   end
-  # end
+  context "when applied one science keyword facets and search terms filter the collections list to no results" do
+    before(:all) do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
+      find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
+      fill_in :keywords, with: "somestringthatmatchesnocollections"
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+      wait_for_xhr
+    end
+
+    it "continues to display applied facets" do
+      within(:css, '.panel.keywords .panel-body.facets') do
+        expect(page).to have_content("Atmosphere")
+      end
+    end
+  end
+
+  context "when applied multiple science keyword facets" do
+    before :all do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
+      find(".facets-item", text: "Agriculture").click
+      find(".facets-item", text: "Agricultural Chemicals").click
+      find(".facets-item", text: "Fertilizers").click
+    end
+
+    it 'shows the select facet siblings' do
+      expect(page).to have_content("Agricultural Commodities")
+      expect(page).to have_content("Agricultural Engineering")
+    end
+
+    context "and search terms filter the collections list to no results" do
+      before(:all) do
+        fill_in :keywords, with: "somestringthatmatchesnocollections"
+        wait_for_xhr
+      end
+
+      after(:all) do
+        reset_search
+        wait_for_xhr
+      end
+
+      it "continues to display applied science keyword facets in order" do
+        within(:css, '.keywords') do
+          expect(page).to have_text("Agriculture 0 Agricultural Chemicals 0 Fertilizers 0")
+        end
+      end
+    end
+  end
+
+  context "when applied facets and search terms filter the collections list to no results" do
+    before(:all) do
+      find("h3.panel-title", text: 'Project').click
+      find(".facets-item", text: "EOSDIS").click
+      fill_in :keywords, with: "somestringthatmatchesnocollections"
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+      find("h3.panel-title", text: 'Project').click
+    end
+
+    it "continues to display applied facets with counts of 0" do
+      expect(page).to have_content("EOSDIS 0")
+    end
+  end
+
+  # EDSC-622 - We had been displaying duplicate entries with special characters escaped
+  context "when applying facets containing special characters" do
+    before(:all) do
+      load_page :search, facets: true, env: :sit
+      fill_in :keywords, with: "C1000000560-DEV08"
+      wait_for_xhr
+      find("h3.panel-title", text: 'Keywords').click
+      find(".facet-title", text: "Spectral/Engineering").click
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+    end
+
+    it "does not display a duplicate entry with special characters escaped" do
+      expect(page).to have_no_content("Spectral%2FEngineering")
+    end
+
+    it "displays the selected entry" do
+      expect(page).to have_content("Spectral/Engineering")
+    end
+  end
+
+  context "when selecting a topic keyword" do
+    before :all do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
+      find(".facet-title", text: /\AAtmosphere\z/).click
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+    end
+
+    it "displays term keywords" do
+      expect(page).to have_content("Aerosols")
+    end
+
+    context "when selecting a term keyword" do
+      before :all do
+        first(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+      end
+
+      after :all do
+        first(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+      end
+
+      it "displays variable_level_1 keywords" do
+        expect(page).to have_content("Aerosol Extinction")
+      end
+    end
+
+    context "when the top level keyword is unchecked" do
+      before :all do
+        first(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+        find(".facets-item", text: "Aerosol Extinction").click
+        wait_for_xhr
+        find(".facet-title", text: /\AAtmosphere\z/).click
+        wait_for_xhr
+      end
+
+      after :all do
+        reset_search
+        find(".facet-title", text: /\AAtmosphere\z/).click
+        wait_for_xhr
+      end
+
+      it "removes the children keywords" do
+        expect(page).to have_no_content("Aerosols")
+        expect(page).to have_no_content("Aerosol Extinction")
+      end
+    end
+
+    context 'when a middle level keyword is unchecked' do
+      before :all do
+        first(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+        find(".facets-item", text: "Aerosol Extinction").click
+        wait_for_xhr
+        find(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+      end
+
+      after :all do
+        reset_search
+        find(".facet-title", text: /\AAtmosphere\z/).click
+        wait_for_xhr
+      end
+
+      it 'removes the children keywords but leaves the parent' do
+        expect(page).to have_css('.facets-item.selected[title="Atmosphere"]')
+        expect(page).to have_no_css('.facets-item.selected[title="Aerosols"]')
+        expect(page).to have_no_css('.facets-item.selected[title="Aerosol Extinction"]')
+      end
+    end
+  end
 
   context "selecting a processing level facet" do
     before :all do
