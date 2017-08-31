@@ -234,9 +234,7 @@ describe 'Address bar', reset: false do
 
   context 'when setting granule filters' do
     before(:all) do
-      visit '/search?q=C14758250-LPDAAC_ECS'
-      wait_for_xhr
-      dismiss_banner
+      load_page :search, q: 'C14758250-LPDAAC_ECS'
       first_collection_result.click
       wait_for_xhr
       click_link 'Filter granules'
@@ -254,6 +252,7 @@ describe 'Address bar', reset: false do
       wait_for_xhr
       fill_in "Maximum:", with: "5.0\t"
       wait_for_xhr
+      click_button 'Apply'
     end
 
     it 'saves the granule filters in the address bar' do
