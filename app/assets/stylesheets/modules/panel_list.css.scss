@@ -84,43 +84,50 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .granule-temporal-range {
-    display: block;
 
     .temporal-start {
       background: rgba(39, 174, 96,0.1);
+      text-align: justify;
+      overflow: hidden
     }
 
     .temporal-end {
       background: rgba(192, 57, 43,0.1);
       border-bottom: 1px solid rgba(192, 57, 43,0.2);
+      overflow: hidden
     }
-
 
     .temporal-start h5, .temporal-start p {
       margin: 0px;
-      @if $panel-list-thumbnail-size == 4px {
-        padding: 4.5px 35px;
-      } @else {
-        padding: 4.5px 9px;
-      }
-
+      padding: 4.2px 9px;
       display: inline-block;
       font-size: .9em;
     }
+
     .temporal-start h5 {
       color: rgba(39, 174, 96,1);
       width: 50px;
     }
 
+    .temporal-start p{
+      float: right;
+    }
+
     .temporal-end h5, .temporal-end p {
       margin: 0px;
-      padding: 4.5px 9px;
+      padding: 4.2px 9px;
       display: inline-block;
       font-size: .9em;
     }
+
     .temporal-end h5 {
       color: rgba(192, 57, 43,1);
       width: 50px;
+    }
+
+    .temporal-end p{
+      float: right;
+      wrap-option: none;
     }
   }
 
@@ -129,7 +136,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     border-top-right-radius: 3px;
     padding: 8px;
   }
-
 }
 
 .panel-list-item > p {
