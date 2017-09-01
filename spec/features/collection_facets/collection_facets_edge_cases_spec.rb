@@ -24,6 +24,27 @@ describe "Collection Facets", reset: false do
     end
   end
 
+  context "when applied one science keyword facets and search terms filter the collections list to no results" do
+    before(:all) do
+      load_page :search, facets: true, env: :sit
+      find("h3.panel-title", text: 'Keywords').click
+      find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
+      fill_in :keywords, with: "somestringthatmatchesnocollections"
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+      wait_for_xhr
+    end
+
+    it "continues to display applied facets" do
+      within(:css, '.panel.keywords .panel-body.facets') do
+        expect(page).to have_content("Atmosphere")
+      end
+    end
+  end
+
   # EDSC-622 - We had been displaying duplicate entries with special characters escaped
   context "when applying facets containing special characters" do
     before(:all) do
