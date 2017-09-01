@@ -6,6 +6,7 @@ cache:
     - node_modules
 sudo: required
 before_script:
+  - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
@@ -16,16 +17,16 @@ script:
 #  - cat ./log/test.log
 before_install:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-addons:
-  apt:
-    sources:
-      - ubuntu-sdk-team
-    packages:
-      - libqt5webkit5-dev
-      - qtdeclarative5-dev
-      - gstreamer1.0-plugins-base
-      - gstreamer1.0-tools
-      - gstreamer1.0-x
+#addons:
+#  apt:
+#    sources:
+#      - ubuntu-sdk-team
+#    packages:
+#      - libqt5webkit5-dev
+#      - qtdeclarative5-dev
+#      - gstreamer1.0-plugins-base
+#      - gstreamer1.0-tools
+#      - gstreamer1.0-x
 env:
   global:
     - CI_NODE_TOTAL=4
