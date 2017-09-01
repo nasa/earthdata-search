@@ -88,13 +88,13 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     .temporal-start {
       background: rgba(39, 174, 96,0.1);
       text-align: justify;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .temporal-end {
       background: rgba(192, 57, 43,0.1);
       border-bottom: 1px solid rgba(192, 57, 43,0.2);
-      overflow: hidden
+      overflow: hidden;
     }
 
     .temporal-start h5, .temporal-start p {
@@ -109,7 +109,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
       width: 50px;
     }
 
-    .temporal-start p{
+    .temporal-start p {
       float: right;
     }
 
@@ -125,7 +125,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
       width: 50px;
     }
 
-    .temporal-end p{
+    .temporal-end p {
       float: right;
       wrap-option: none;
     }
