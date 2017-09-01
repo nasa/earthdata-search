@@ -37,7 +37,8 @@
       return time_start unless time_end?
       return time_end unless time_start?
 
-      "<p class=\"temporal-start\">#{time_start}</p><p class=\"temporal-end\">#{time_end}</p>"
+#      "<p class=\"temporal-start\"><h5 class=\"temporal-start-label\">START</h5>#{time_start}</p><p class=\"temporal-end\"><h5 class=\"temporal-end-label\">END</h5>#{time_end}</p>"
+      "<div class=\"temporal-start\"> <h5>START</h5><p>#{time_start}</p></div><div class=\"temporal-end\"> <h5>END</h5><p>#{time_end}</p></div>"
 
     _normalizeTime: (time) ->
       return null unless time?
