@@ -32,7 +32,7 @@ before_install:
   - which qmake
   - echo '---end of qt-------------------------------'
   - echo '---begin of openssl-------------------------------'
-  - brew upgrade openssl
+  # - brew upgrade openssl
   - BREW_PREFIX_OPENSSL=$(brew --prefix openssl)
   - gem install eventmachine -v '1.0.4' -- --with-cppflags=-I$BREW_PREFIX_OPENSSL/include
   - echo '---end of openssl-------------------------------'
@@ -50,6 +50,8 @@ before_install:
 #      - gstreamer1.0-plugins-base
 #      - gstreamer1.0-tools
 #      - gstreamer1.0-x
+install:
+  - bundle install
 env:
   global:
     - CI_NODE_TOTAL=4
