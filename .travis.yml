@@ -34,7 +34,11 @@ before_install:
   - brew upgrade openssl
   - BREW_PREFIX_OPENSSL=$(brew --prefix openssl)
   - gem install eventmachine -v '1.0.4' -- --with-cppflags=-I$BREW_PREFIX_OPENSSL/include
-  - echo '---begin of openssl-------------------------------'
+  - echo '---end of openssl-------------------------------'
+  - echo '---begin of bundle-------------------------------'
+  - gem install bundler
+  - bundle install
+  - echo '---end of bundle-------------------------------'
 #addons:
 #  apt:
 #    sources:
