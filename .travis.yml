@@ -32,6 +32,7 @@ before_install:
   - echo '---end of qt-------------------------------'
   - echo '---begin of openssl-------------------------------'
   - brew install openssl
+  - gem install eventmachine -v '1.0.4' -- --with-cppflags=-I/usr/local/opt/openssl/include
   - echo '---begin of openssl-------------------------------'
 #addons:
 #  apt:
