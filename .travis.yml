@@ -32,7 +32,8 @@ before_install:
   - echo '---end of qt-------------------------------'
   - echo '---begin of openssl-------------------------------'
   - brew upgrade openssl
-  - PKG_CONFIG_PATH=”$(brew --prefix openssl)/lib/pkgconfig” gem install eventmachine -v '1.0.4'
+  - BREW_PREFIX_OPENSSL=$(brew --prefix openssl)
+  - gem install eventmachine -v '1.0.4' -- --with-cppflags=-I$BREW_PREFIX_OPENSSL/include
   - echo '---begin of openssl-------------------------------'
 #addons:
 #  apt:
