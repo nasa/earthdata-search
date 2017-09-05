@@ -52,7 +52,8 @@ before_install:
 #      - gstreamer1.0-x
 install:
   - bundle install
-  - rake db:migrate RAILS_ENV=test
+  - bundle exec bin/setup
+  - bundle exec rake travis:ci
 env:
   global:
     - CI_NODE_TOTAL=4
