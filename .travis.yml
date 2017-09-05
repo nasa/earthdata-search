@@ -5,21 +5,18 @@ cache:
   directories:
     - node_modules
 sudo: required
+# https://blog.travis-ci.com/2017-08-29-trusty-image-updates
 group: deprecated-2017Q3
-#before_script:
-#  - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-script:
-  - bundle exec bin/setup
-  - bundle exec rake travis:ci
-#after_failure:
-#  - cat ./log/test.log
 before_install:
   - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - qmake -version
+script:
+  - bundle exec bin/setup
+  - bundle exec rake travis:ci
 env:
   global:
-    - CI_NODE_TOTAL=7
+    - CI_NODE_TOTAL=9
   matrix:
     - CI_NODE_INDEX=0
     - CI_NODE_INDEX=1
@@ -28,6 +25,8 @@ env:
     - CI_NODE_INDEX=4
     - CI_NODE_INDEX=5
     - CI_NODE_INDEX=6
+    - CI_NODE_INDEX=7
+    - CI_NODE_INDEX=8
     - JASMINE=true
 branches:
   only: # Only build master. Pull requests to master also get built.
