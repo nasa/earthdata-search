@@ -86,8 +86,12 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
-  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
+  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 15).to_i
   wait_time = Capybara.default_wait_time
+
+  config.after :all do
+    Timecop.return
+  end
 
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
