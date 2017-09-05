@@ -8,7 +8,6 @@ describe 'Service Options Reset and Revert', reset: false do
 
     load_page 'data/configure', project: ['C90762182-LAADS'], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
     wait_for_xhr
-    p "-----------#{page.current_url}"
 
     choose 'Direct Download'
     click_on 'Add access method'

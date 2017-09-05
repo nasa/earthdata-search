@@ -6,7 +6,7 @@ describe "Portal escape link", reset: false do
       load_page :search, portal: 'simple', q: 'modis'
     end
 
-    it "provides an obvious link to the non-portal view of Earthdata Search which preserves the current filters", acceptance: true do
+    xit "provides an obvious link to the non-portal view of Earthdata Search which preserves the current filters", acceptance: true do
       expect(page).to have_link('Leave the Simple Portal')
       expect(page).to have_text('Looking for more collections? Leave the Simple Portal')
 
