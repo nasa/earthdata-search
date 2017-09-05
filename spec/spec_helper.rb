@@ -89,10 +89,6 @@ RSpec.configure do |config|
   Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 15).to_i
   wait_time = Capybara.default_wait_time
 
-  config.after :all do
-    Timecop.return
-  end
-
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
 
