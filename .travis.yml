@@ -53,7 +53,7 @@ before_install:
 install:
   - bundle install
   - bundle exec bin/setup
-  - bundle exec rake travis:ci
+  - bundle exec rake travis:ci RAILS_ENV=test
 env:
   global:
     - CI_NODE_TOTAL=4
