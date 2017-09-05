@@ -16,7 +16,7 @@ script:
   - bundle exec rake travis:ci
 env:
   global:
-    - CI_NODE_TOTAL=9
+    - CI_NODE_TOTAL=7
   matrix:
     - CI_NODE_INDEX=0
     - CI_NODE_INDEX=1
@@ -25,8 +25,6 @@ env:
     - CI_NODE_INDEX=4
     - CI_NODE_INDEX=5
     - CI_NODE_INDEX=6
-    - CI_NODE_INDEX=7
-    - CI_NODE_INDEX=8
     - JASMINE=true
 branches:
   only: # Only build master. Pull requests to master also get built.
