@@ -24,13 +24,13 @@ script:
 #  - cat ./log/test.log
 before_install:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - echo '---begin of qt-------------------------------'
-#  - brew install qt@5.5
+  - echo '---begin of qt-------------------------------'
+  - brew install qt@5.5
 #  - echo 'export PATH="$(brew --prefix qt@5.5)/bin:$PATH"' >> ~/.bashrc
 
-#  - brew link --force qt@5.5
-#  - which qmake
-#  - echo '---end of qt-------------------------------'
+  - brew link --force qt@5.5
+  - which qmake
+  - echo '---end of qt-------------------------------'
   - echo '---begin of openssl-------------------------------'
   # - brew upgrade openssl
   - BREW_PREFIX_OPENSSL=$(brew --prefix openssl)
@@ -52,6 +52,7 @@ before_install:
 #      - gstreamer1.0-x
 install:
   - bundle install
+  - rake db:migrate RAILS_ENV=test
 env:
   global:
     - CI_NODE_TOTAL=4
