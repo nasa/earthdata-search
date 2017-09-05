@@ -10,7 +10,7 @@ group: deprecated-2017Q3
 #  - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 script:
   - bundle exec bin/setup
-  - travis_wait 30 bundle exec rake travis:ci
+  - bundle exec rake travis:ci
 #after_failure:
 #  - cat ./log/test.log
 before_install:
