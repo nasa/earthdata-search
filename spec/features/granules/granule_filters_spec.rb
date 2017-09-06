@@ -471,7 +471,6 @@ describe "Granule search filters", reset: false do
 
     it 'filters when only the equatorial crossing date end time is set' do
       page.execute_script("$('#equatorial-crossing-date-max').datepicker('setDate', '2015-01-25')")
-      page.find(".master-overlay-secondary-content").click
       page.execute_script('$("#granule-filters-submit").click()')
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][max]=2015-01-25T23%3A59%3A59')
