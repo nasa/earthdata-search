@@ -53,70 +53,22 @@ namespace :data do
             # last time it was run on task2.host. Yield to the other instance this time.
             puts "[#{Time.now}] Cron job #{task} has been run on #{task2.host}. Stop."
             return
-          elsif task2.present? # && Socket.gethostname != task1.host && Socket.gethostname != task2.host
+          else
             # Both task1 and task2 exist in history
-            # However, IPs of both the instances have changed (after a new deployment).
-            puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for 0 to 60 seconds and retry task #{task}."
-            sleep rand(0..60)
-            puts "[#{Time.now}] Wait is done. Retrying task #{task} on #{Socket.gethostname}."
-            # check one more time to make sure the task hasn't been started from the other instance in the past 10 minutes.
-            recents = CronJobHistory.where(task_name: task).where(last_run: (Time.now - 10.minutes)..Time.now)
-            if recents.size == 0
-              puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
-              job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
-              job.save!
-              id = job.id
-              yield
-            else
-              return
-            end
-          else # task2.nil?
+            # task2.present? && Socket.gethostname != task1.host && Socket.gethostname != task2.host
+            # or
             # task2.nil? or task2.not_nil? and task1.not_nil?
-            # Meaning the IPs on one or both of the hosts have changed due to possibly a new deployment
-            # Wait for 0 ~ 600 sec
-            delay = rand(0..600)
-            puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for #{delay} seconds and retry task #{task} on #{Socket.gethostnameo}."
-            sleep delay
-            puts "[#{Time.now}] Wait is done. Retrying #{task} on #{Socket.gethostname}."
-            # check one more time to make sure the task hasn't been started from the other instance in the past 10 minutes.
-            recents = CronJobHistory.where(task_name: task).where(last_run: (Time.now - 10.minutes)..Time.now)
-            if recents.size == 0
-              puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
-              job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
-              job.save!
-              id = job.id
-              yield
-            else
-              puts "[#{Time.now}] Cron job #{task} has been started on other host(s). Stop."
-              return
-            end
+            wait_and_run task
           end
         else
-          # Wait for 0 ~ 600 sec
-          delay = rand(0..600)
-          # neither has been run.
-          puts "[#{Time.now}] Cron job #{task} has not been run for #{(1.5 * interval).to_i / 3600.0} hours on #{Socket.gethostname}. Wait randomly for #{delay} seconds and retry."
-          sleep delay
-          puts "[#{Time.now}] Wait is done. Retrying #{task} on #{Socket.gethostname}."
-          # check one more time to make sure the task hasn't been started from the other instance in the past 10 minutes.
-          recents = CronJobHistory.where(task_name: task).where(last_run: (Time.now - 10.minutes)..Time.now)
-          if recents.size == 0
-            puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
-            job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
-            job.save!
-            id = job.id
-            yield
-          else
-            puts "[#{Time.now}] Cron job #{task} has been started on other host(s). Stop."
-            return
-          end
+          wait_and_run task
         end
       else
         yield
       end
     rescue
-      if id.present?
-        job = CronJobHistory.find_by_id id
+      if @task_id.present?
+        job = CronJobHistory.find_by_id @task_id
         job.last_run = Time.now
         job.status = 'failed'
         job.message = $!.message
@@ -127,8 +79,8 @@ namespace :data do
       job.save!
       return
     else
-      if id.present?
-        job = CronJobHistory.find_by_id id
+      if @task_id.present?
+        job = CronJobHistory.find_by_id @task_id
         job.last_run = Time.now
         job.status = 'succeeded'
       else
@@ -136,6 +88,26 @@ namespace :data do
       end
       puts "[#{Time.now}] Cron job #{task} completed successfully on #{Socket.gethostname}."
       job.save!
+    end
+  end
+
+  def wait_and_run(task)
+    # Wait for 0 ~ 600 sec
+    delay = rand(0..600)
+    puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for #{delay} seconds and retry task #{task} on #{Socket.gethostnameo}."
+    sleep delay
+    puts "[#{Time.now}] Wait is done. Retrying task #{task} on #{Socket.gethostname}."
+    # check one more time to make sure the task hasn't been started from the other instance in the past 10 minutes.
+    recents = CronJobHistory.where(task_name: task).where(last_run: (Time.now - 10.minutes)..Time.now)
+    if recents.size == 0
+      puts "[#{Time.now}] Cron job #{task} is being started on #{Socket.gethostname}."
+      job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'running', host: Socket.gethostname)
+      job.save!
+      @task_id = job.id
+      yield
+    else
+      puts "[#{Time.now}] Cron job #{task} has been started on other host(s). Stop."
+      return
     end
   end
 
