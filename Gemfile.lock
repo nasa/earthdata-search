@@ -122,7 +122,7 @@ GEM
       ruby-progressbar (~> 1.4)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    headless (1.0.2)
+    headless (2.3.1)
     hike (1.2.3)
     i18n (0.7.0)
     jasmine (2.0.3)
