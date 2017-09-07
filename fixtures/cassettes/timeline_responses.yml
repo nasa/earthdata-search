@@ -823,6 +823,30 @@ c083851dcdda0ca2b9828db0b3f9ede74a2da8fb:
       encoding: UTF-8
       string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
     http_version: 
+6d66b8f10d0cf568de7d0d51b9da168ee4aa07d7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d6204ff7-6a91-40ab-8f45-2f0e1028891e
+      date:
+      - Thu, 07 Sep 2017 19:03:15 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
 94b05ee1808a9ba8cffd3b5257fc74ef234ca452:
   response:
     status:
@@ -6215,6 +6239,30 @@ dd1cf1b6b0c55d508c711ca6b3e14ab599f11748:
       encoding: UTF-8
       string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1198972800,1229817600,108780],[1229990400,1293840000,225158]]}]'
     http_version: 
+833e77bf87aeb3a208a76d157573cdedcfe39cd3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 57a5a31b-5690-4519-a4f7-b17075a936b6
+      date:
+      - Thu, 07 Sep 2017 19:10:43 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 3b84318a78c7af2664825803c6b2f38ce1eeee4c:
   response:
     status:
@@ -6673,6 +6721,486 @@ a1e4e345b8121c07d1ec1f8284ebb29ca91ae7a8:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+e05ca72c0ec44440239506c2f2916e2d8c47751d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 0f75c27e-1411-4557-a990-f3764ee7aaae
+      date:
+      - Thu, 07 Sep 2017 19:02:54 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+1a65e3fa82cc274274c9b9f637b33e449a1c191d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - bcabb6bc-66d0-46c6-a332-29c99eb7b0ab
+      date:
+      - Thu, 07 Sep 2017 19:02:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+29da93cb04bc68458ce495ad7179c80c2c547b7f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 37fa104c-4844-499c-83c8-80853fe7e46c
+      date:
+      - Thu, 07 Sep 2017 19:02:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+6bce00b01998051491896279a96f804297e961aa:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5aa30d2b-78ef-48da-a73c-c28bff4d83ae
+      date:
+      - Thu, 07 Sep 2017 19:02:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+c28920515c904315db21a5cc335275463ab4e9a0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8fc43f93-499d-4d3c-b7d1-388dfd9f7176
+      date:
+      - Thu, 07 Sep 2017 19:02:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+863804d026214eb4914b3b10e986198911bb2eca:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e1cf04bd-a4ed-4153-b487-184d6ac7c895
+      date:
+      - Thu, 07 Sep 2017 19:02:41 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+2c118244c3e3db62b9ef69878de6c55be66919b4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8c5f1f07-98ad-44aa-9fe8-cb7564e5a814
+      date:
+      - Thu, 07 Sep 2017 19:02:41 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+74e0654f5d6c7085beacc65c99aa32fc12f43ad8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5464a15f-3f90-45ba-be12-ba18227f475c
+      date:
+      - Thu, 07 Sep 2017 19:02:42 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+9d50d3009d8735c3ba40c5d6f280ae3a574fa79a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5bd0ed37-13f7-4802-927b-22b257341171
+      date:
+      - Thu, 07 Sep 2017 19:02:39 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+7be274af9dbccb5a4e655f04c93fdbfb4e4a1cc1:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b61c7cd2-8b01-445d-b642-4265de925e2e
+      date:
+      - Thu, 07 Sep 2017 19:02:37 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+f7ec29036f4eb9ee773e75a60d45f8e109840f31:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 53b49063-67d5-4765-851a-e578b3475350
+      date:
+      - Thu, 07 Sep 2017 19:02:33 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+d0216ec2d8bba20d08d6dcb53935e22a38b75d2a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 637d4997-071c-4946-8351-75102744f7ca
+      date:
+      - Thu, 07 Sep 2017 19:02:38 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+57863ee273044e98431b1fc781081546494167a8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 0a2e3f86-95c0-4ff2-a1fb-1dfa2a87ae76
+      date:
+      - Thu, 07 Sep 2017 19:02:35 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+97bf1ad5e78b33915b8c5a06cb14cf2ea086a0be:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 648c0172-a2ab-483a-a1c1-df0c0662bb45
+      date:
+      - Thu, 07 Sep 2017 19:02:35 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+0f421248c839d6d04f7057bfc3b56c5d34be3584:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4d4ad6da-f927-47b5-8aed-d933117b2711
+      date:
+      - Thu, 07 Sep 2017 19:02:32 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+df63b4af14460e2fcd08926d22a4cdff3e2b4b01:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 7079c668-9aae-42fc-9a04-884f7b2f46f1
+      date:
+      - Thu, 07 Sep 2017 19:02:29 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+8b52dbbcd33aef2a00cf7d211aa6592f0538d223:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b6a2061b-5d18-4e96-9e85-cdc88b9d865d
+      date:
+      - Thu, 07 Sep 2017 19:02:30 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+592836d2af97536038ace350c40dcbb66861b721:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9e78e660-60f0-42bd-bedb-5b728c83056e
+      date:
+      - Thu, 07 Sep 2017 19:02:25 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+80dca0cc83b15e95dfaf21f1530b5f622f6eab6d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 86bac7ff-efce-4c46-b0cb-233152ec533f
+      date:
+      - Thu, 07 Sep 2017 19:02:28 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
+    http_version: 
+279755864deffb2711918cc792d1569a0283eff4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - cc73ff15-4edb-480c-9a93-4f2bf3b033c5
+      date:
+      - Thu, 07 Sep 2017 19:02:26 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1330387200,1425254400,334427]]}]'
