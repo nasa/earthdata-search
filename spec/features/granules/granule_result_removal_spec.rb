@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe "Granule result removal", reset: false do
-  first_granule_temporal = 'START1988-03-01 00:00:00 END1988-03-04 00:00:00'
   second_granule_temporal = 'START1988-02-01 00:00:00 END1988-03-01 00:00:00'
   second_granule_temporal_map = '1988-02-01 00:00:00 1988-03-01 00:00:00'
 
