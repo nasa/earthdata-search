@@ -132,7 +132,8 @@ module Helpers
     private
 
     def nth_panel(root, n)
-      root.find(".panel-list-item:nth-child(#{n})")
+      # Added 'h3' here to make sure that the test clicks on the card, not a button on the card.
+      root.find(".panel-list-item:nth-child(#{n}) h3")
     end
 
     def nth_ccol(root, n)
