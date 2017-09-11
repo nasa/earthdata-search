@@ -2321,6 +2321,30 @@ bdf45934a685c90585e3f9d566d8581b7a8e266e:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.52221953246E8,555987600,2],[560044800,5.60257153246E8,1]]}]'
     http_version: 
+6064a42bca57edf4807ecd3a144794acee4e2b57:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 1ba7b3d9-4c03-42e1-a92c-e2e27c25ae0f
+      date:
+      - Mon, 11 Sep 2017 20:36:19 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '113'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.52229721052E8,555987600,2],[560044800,5.60264921052E8,1]]}]'
+    http_version: 
 afdea0e6f0a0a683d4eed2032586d30b5410457e:
   response:
     status:
@@ -3055,6 +3079,30 @@ a28429422aad680915185ee894695bb11600cb17:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.08805953246E8,556070400,19],[560044800,573523200,6]]}]'
     http_version: 
+7b0c86d86bd8a5a7b8c95fa0cb6c73cf4e1abe26:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - c932715f-d6df-45a0-8601-d37a8f90a00f
+      date:
+      - Mon, 11 Sep 2017 20:36:15 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '108'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.08813721052E8,556070400,19],[560044800,573523200,6]]}]'
+    http_version: 
 19e74643ca3c8a7c1c063c87cc2e493c53b888cb:
   response:
     status:
@@ -3541,6 +3589,30 @@ b9a60e6ddb33623e30c5fb8c8ad2aeb6787dbce1:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[573177600,573523200,1]]}]'
     http_version: 
+31ec8764081395131b2484decd4f5c80039e8cad:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 786c58aa-883d-4bc2-abbf-3f4d98449ce8
+      date:
+      - Mon, 11 Sep 2017 20:37:41 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '108'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.10191999999E8,556070400,18],[560044800,573523200,6]]}]'
+    http_version: 
 f263b8f6574b88f6bc4f710982cbef6dbaeae501:
   response:
     status:
@@ -3765,6 +3837,30 @@ dd812441d723e756a36cdefde45db05adc1bb6de:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
     http_version: 
+61fdb8066ebcb8c790a18e6b9480950c7bb26a96:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 73d7e22e-aa97-4c5a-b7b0-97a635b85a74
+      date:
+      - Mon, 11 Sep 2017 20:36:16 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
 45334598181f9e7086f3216bcab38d7f6a82b663:
   response:
     status:
@@ -3939,6 +4035,30 @@ e2b1ae4d82db335bc43927d06188e80dbea77f5a:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
+55f308c8fe1c17efe036b3b4ad5fdc99073c034a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 85f9a119-cebb-47fe-9082-f69f778f2744
+      date:
+      - Mon, 11 Sep 2017 20:18:00 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
@@ -4307,6 +4427,30 @@ c31525470cc691ccd1259728674ab6a9d0557c2c:
       encoding: UTF-8
       string: "[]"
     http_version: 
+3d18e43082abf59784c67870e66fef858fd72c94:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 0e4c0339-96d8-444e-9058-ffdcf260d5c2
+      date:
+      - Mon, 11 Sep 2017 20:58:24 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 6265d42c2deb381a5f4ecb7c2f9eaa7ce47289bf:
   response:
     status:
@@ -4433,6 +4577,30 @@ b49157fd7db35aa44ade19aaafe983378c93bca3:
       - Mon, 24 Apr 2017 23:18:35 GMT
       server:
       - nginx/1.10.3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+bfc767f62779c440aff704d69d197b41155e09d3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - a470553a-60b1-48ae-a82d-5194e7e5e772
+      date:
+      - Mon, 11 Sep 2017 20:58:16 GMT
+      server:
+      - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       content-length:
@@ -4663,6 +4831,30 @@ d0b8469416de9e97e2036a44fa7f770542f3bedf:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
+    http_version: 
+cf0fedc668439aff5e1dc6b96c2bd9199e47aa3b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - a04cf83b-db1e-4f72-a50e-cc0989212e17
+      date:
+      - Mon, 11 Sep 2017 20:36:08 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '78'
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
