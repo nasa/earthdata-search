@@ -123,7 +123,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
 
     latlngs = (latLng(latlng) for latlng in latlngs)
 
-    # http://www.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
+    # http://blog.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
 
     delta = 0
     len = latlngs.length
@@ -154,7 +154,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
 
     if delta < -360 + EPSILON
       NORTH_POLE | SOUTH_POLE
-    else if delta < EPSILON
+    else if delta < 180 + EPSILON
       angles = (latlng.lng for latlng in latlngs)
       dir = _rotationDirection(angles)
 
