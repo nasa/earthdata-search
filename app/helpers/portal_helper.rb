@@ -22,7 +22,7 @@ module PortalHelper
 
   def site_name
     if portal?
-      "#{portal['title'] || portal_id.titleize} Portal"
+      "#{portal['org'] || portal_id.titleize} Portal"
     else
       "Earthdata Search"
     end
