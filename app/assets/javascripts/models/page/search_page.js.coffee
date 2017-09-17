@@ -12,6 +12,7 @@
 #= require models/ui/state_manager
 #= require models/ui/feedback
 #= require models/ui/sitetour
+#= require models/ui/reverb_retirement
 
 models = @edsc.models
 data = models.data
@@ -31,12 +32,14 @@ ns.SearchPage = do (ko
                     PreferencesModel = data.Preferences
                     FeedbackModel = ui.Feedback
                     SiteTourModel = ui.SiteTour
+                    ReverbRetirementModel = ui.ReverbRetirement
                     url = @edsc.util.url
                     StateManager = ui.StateManager) ->
   current = null
 
   preferences = new PreferencesModel()
-  sitetour = new SiteTourModel();
+  sitetour = new SiteTourModel()
+  reverbRetirement = new ReverbRetirementModel()
 
   initModal = () ->
     $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1)
@@ -49,8 +52,11 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
-
-    preferences.ready.done(-> initModal()) if !window.edscportal
+    
+    if document.referrer == "https://reverb.echo.nasa.gov" && reverbRetirement.getCookie('ReadyForReverbRetirement') != 'true'
+      $('#reverbRetirementModal').modal('show')
+    else
+      preferences.ready.done(-> initModal()) if !window.edscportal
 
   class SearchPage
     constructor: ->
@@ -66,6 +72,7 @@ ns.SearchPage = do (ko
         projectList: new ProjectListModel(@project, @collections)
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
+        reverbRetirement: new ReverbRetirementModel()
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)
