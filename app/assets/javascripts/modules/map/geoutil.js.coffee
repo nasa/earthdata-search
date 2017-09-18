@@ -121,9 +121,11 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
   containsPole = (latlngs) ->
     return false if latlngs.length < 3
 
-    latlngs = (latLng(latlng) for latlng in latlngs)
+    # http://blog.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
 
-    # http://www.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
+    # Add second point to the end per the algorithm
+    latlngs.push latlngs[1]
+    latlngs = (latLng(latlng) for latlng in latlngs)
 
     delta = 0
     len = latlngs.length
@@ -149,6 +151,9 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
         delta1 = 0
 
       delta += delta0 + delta1
+
+    # clean up the added point after calculating 'delta'
+    latlngs.pop()
 
     delta = delta * RAD_TO_DEG
 
