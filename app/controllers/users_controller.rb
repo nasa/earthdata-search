@@ -45,6 +45,7 @@ class UsersController < ApplicationController
 
   def get_site_preferences
     user_id = get_user_id
+    
     if user_id
       user = User.where(echo_id: get_user_id).first
       if user
