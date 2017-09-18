@@ -29,7 +29,6 @@
     onThumbError: (granule) ->
       @browseError(true)
 
-
     getTemporal: ->
       time_end = @_normalizeTime(@time_end)
       time_start = @_normalizeTime(@time_start)
