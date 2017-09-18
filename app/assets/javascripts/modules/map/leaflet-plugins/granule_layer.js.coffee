@@ -565,7 +565,7 @@ ns.GranuleLayer = do (L
         temporalLabel = "<p>#{temporal[0]}</p>"
       else if temporal[1]
         temporalLabel = "<p>#{temporal[1]}</p>"
-        
+
       excludeHtml = ''
       if @collection.granuleDatasource()?.hasCapability('excludeGranules')
         excludeHtml = '<a class="panel-list-remove" href="#" title="Remove granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>'
