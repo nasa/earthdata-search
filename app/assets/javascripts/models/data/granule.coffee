@@ -34,21 +34,15 @@
       time_end = @_normalizeTime(@time_end)
       time_start = @_normalizeTime(@time_start)
 
-      return time_start if time_start == time_end
-      return time_start unless time_end?
-      return time_end unless time_start?
+#      return time_start if time_start == time_end
+#      return time_start unless time_end?
+#      return time_end unless time_start?
+      return [time_start, null] if time_start == time_end
+      return [time_start, null] unless time_end?
+      return [null, time_end] unless time_start?
 
-      "<p class=\"temporal-start\">#{time_start}</p><p class=\"temporal-end\">#{time_end}</p>"
-
-    getTemporalLabels: ->
-      time_end = @_normalizeTime(@time_end)
-      time_start = @_normalizeTime(@time_start)
-
-      return time_start if time_start == time_end
-      return time_start unless time_end?
-      return time_end unless time_start?
-
-      "<div class=\"temporal-start\"> <h5>START</h5><p>#{time_start}</p></div><div class=\"temporal-end\"> <h5>END</h5><p>#{time_end}</p></div>"
+#      "<p class=\"temporal-start\">#{time_start}</p><p class=\"temporal-end\">#{time_end}</p>"
+      [time_start, time_end]
 
     _normalizeTime: (time) ->
       return null unless time?
