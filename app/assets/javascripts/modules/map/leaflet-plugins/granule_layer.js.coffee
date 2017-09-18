@@ -551,19 +551,27 @@ ns.GranuleLayer = do (L
 
       granule.buildLayer(clickable: false, color: @color, fillColor: @color, opacity: 1)
 
+
     _stickyLayer: (granule) ->
       return null unless granule?
 
       layer = granule.buildLayer(fillOpacity: 0, clickable: false, color: @color, fillColor: @color, opacity: 1)
 
       temporal = granule.getTemporal()
-      temporalHtml = generateTemporalFormat(temporal)
+
+      if temporal[0] && temporal[1]
+        temporalLabel = "<p>#{temporal[0]}</p><p>#{temporal[1]}</p>"
+      else if temporal[0]
+        temporalLabel = "<p>#{temporal[0]}</p>"
+      else if temporal[1]
+        temporalLabel = "<p>#{temporal[1]}</p>"
+        
       excludeHtml = ''
       if @collection.granuleDatasource()?.hasCapability('excludeGranules')
         excludeHtml = '<a class="panel-list-remove" href="#" title="Remove granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>'
       icon = L.divIcon
         className: 'granule-spatial-label',
-        html: "<span class=\"granule-spatial-label-temporal\">#{temporalHtml}</span>#{excludeHtml}"
+        html: "<span class=\"granule-spatial-label-temporal\">#{temporalLabel}</span>#{excludeHtml}"
 
 
       marker = L.marker([0, 0], clickable: false, icon: icon)
@@ -586,13 +594,6 @@ ns.GranuleLayer = do (L
 
       layer
 
-    generateTemporalFormat: (temporalArr) ->
-      if temporalArr[0] && temporalArr[1]
-        return "<p>#{temporalArr[0]}</p><p>#{temporalArr[1]}</p>"
-      else if temporalArr[0]
-        return "<p>#{temporalArr[0]}</p>"
-      else if temporalArr[1]
-        return "<p>#{temporalArr[1]}</p>"
 
 
   exports = GranuleLayer
