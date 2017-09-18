@@ -12,7 +12,6 @@ ns.ReverbRetirement = do (ko) ->
       decodedCookie = decodeURIComponent(document.cookie)
       ca = decodedCookie.split(';')
       i = 0
-      answer = ""
       while i < ca.length
         c = ca[i];
         while c.charAt(0) == ' ' 
