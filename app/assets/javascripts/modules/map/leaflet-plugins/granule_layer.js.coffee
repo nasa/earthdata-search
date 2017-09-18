@@ -551,7 +551,6 @@ ns.GranuleLayer = do (L
 
       granule.buildLayer(clickable: false, color: @color, fillColor: @color, opacity: 1)
 
-
     _stickyLayer: (granule) ->
       return null unless granule?
 

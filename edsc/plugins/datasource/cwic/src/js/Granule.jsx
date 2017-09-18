@@ -73,7 +73,7 @@ let CwicGranule = (function() {
 
   CwicGranule.prototype.getTemporal = function () {
     let date = this.date || this.temporal;
-    return date != null ? this.date.replace(/([0-9-]+)T([0-9:]+)Z/, '$1 $2').split('/') : null;
+    return date != null ? this.date.replace(/([0-9-]+)T([0-9:]+)Z/g, '$1 $2 ').split('/') : null;
   };
 
   return CwicGranule;
