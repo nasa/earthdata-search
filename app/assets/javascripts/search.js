@@ -20,6 +20,6 @@
 //= require modules/map/geoutil
 //= require modules/map/mbr
 //= require models/index
-//= require models/page/search_page.js.coffee.erb
+//= require models/page/search_page
 //= require modules/index
 //= require bootstrap/bootstrap

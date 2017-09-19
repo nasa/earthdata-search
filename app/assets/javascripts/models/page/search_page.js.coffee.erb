@@ -57,7 +57,6 @@ ns.SearchPage = do (ko
       $('#from-reverb-modal').modal('show')
 
     $('#stay-in-edsc').click ->
-      console.log "-- stay!"
       Cookies.set 'stay-in-edsc', 'true', { expires: 365, path: '/' }
       Cookies.remove 'go-back-to-reverb'
       ajax
@@ -65,13 +64,12 @@ ns.SearchPage = do (ko
         url: "/stay_in_edsc"
         success: (data) => console.log("'stay_in_edsc' metric logged.")
 
-    $("[id^='back-to-reverb']").click ->
-      console.log "-- redirecting back to reverb..."
+    $("[id^='back-to-reverb']").click (e)->
       Cookies.set 'go-back-to-reverb', 'true', { expires: new Date(new Date().getTime() + 1 * 60 * 1000), path: '/' }
       Cookies.remove 'stay-in-edsc'
       ajax
         dataType: 'json'
-        url: "/back_to_reverb"
+        url: "/back_to_reverb?source=#{e.target.id}"
         success: (data) => console.log("'back_to_reverb' metric logged.")
 
     preferences.ready.done(-> initModal()) if !window.edscportal

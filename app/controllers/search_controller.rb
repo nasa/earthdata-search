@@ -17,7 +17,15 @@ class SearchController < ApplicationController
   end
 
   def back_to_reverb
-    metrics_event('reverb_redirect', 'back_to_reverb')
+    # prevent param injection
+    if params[:source] == 'back-to-reverb-link'
+      source = 'toolbar link'
+    elsif params[:source] == 'back-to-reverb-button'
+      source = 'modal button'
+    else
+      source = 'unknown'
+    end
+    metrics_event('reverb_redirect', 'back_to_reverb', {source: source})
     respond_with :nothing
   end
 end
