@@ -1,0 +1,18 @@
+<div class="modal fade sitetour" id="from-reverb-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h2 class="modal-title">Redirected from Reverb</h2>
+      </div>
+      <div class="modal-body">
+        <p>Stay here?</p>
+        <p style="height: 200px;">modal content continues...</p>
+      </div>
+      <div class="modal-footer">
+        <a class="button primary" id="stay-in-edsc" data-dismiss="modal" href="#">Yes</a>
+        <a class="button secondary" href="<%=ENV['reverb_root'] || Rails.configuration.services['edsc'][Rails.env]['reverb_root'].to_s%>" id="back-to-reverb-button">Go back to Reverb</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -32,6 +32,7 @@ ns.SearchPage = do (ko
                     FeedbackModel = ui.Feedback
                     SiteTourModel = ui.SiteTour
                     url = @edsc.util.url
+                    ajax=@edsc.util.xhr.ajax
                     StateManager = ui.StateManager) ->
   current = null
 
@@ -49,6 +50,27 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
+
+    # Check referer. If it is from 'reverb' and there is no 'stay-in-edsc' cookie, show modal.
+    # Check cookie. If no 'go-back-to-reverb' found, stay. Otherwise, redirect to Reverb
+    if document.referrer.match('<%=ENV['reverb_root'] || Rails.configuration.services['edsc'][Rails.env]['reverb_root'].to_s%>'.replace(/https?:\/\//, '')) && !Cookies.get('stay-in-edsc')
+      $('#from-reverb-modal').modal('show')
+
+    $('#stay-in-edsc').click ->
+      Cookies.set 'stay-in-edsc', 'true', { expires: 365, path: '/' }
+      Cookies.remove 'go-back-to-reverb'
+      ajax
+        dataType: 'json'
+        url: "/stay_in_edsc"
+        success: (data) => console.log("'stay_in_edsc' metric logged.")
+
+    $("[id^='back-to-reverb']").click (e)->
+      Cookies.set 'go-back-to-reverb', 'true', { expires: new Date(new Date().getTime() + 1 * 60 * 1000), path: '/' }
+      Cookies.remove 'stay-in-edsc'
+      ajax
+        dataType: 'json'
+        url: "/back_to_reverb?source=#{e.target.id}"
+        success: (data) => console.log("'back_to_reverb' metric logged.")
 
     preferences.ready.done(-> initModal()) if !window.edscportal
 
@@ -134,7 +156,7 @@ ns.SearchPage = do (ko
 
     showProject: (data, event) =>
       $('#view-project').click()
-  
+
   loc = window.location.pathname
   if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
     window.location.replace(loc + '/search' + window.location.search);

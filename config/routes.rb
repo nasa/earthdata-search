@@ -62,6 +62,8 @@ EarthdataSearchClient::Application.routes.draw do
 
   get 'search(/*overlay_params)' => 'search#index'
   get 'extract_filters' => 'search#extract_filters', format: 'json'
+  get 'stay_in_edsc' => 'search#stay_in_edsc', format: 'json'
+  get 'back_to_reverb' => 'search#back_to_reverb', format: 'json'
   get 'health' => 'health#index', format: 'json'
   root :to => 'search#index'
 
