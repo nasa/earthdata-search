@@ -8,12 +8,12 @@ ns.ReverbRetirement = do (ko) ->
     constructor: ->
 
     returnToReverb: () =>
-      Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
+      Cookies.set('ReadyForReverbRetirement', 'false', { expires: 7 })
       $('#reverbRetirementModal').modal('hide')
       window.location.replace(document.referrer)
     
     stayWithEDSC: () =>
-      Cookies.set('ReadyForReverbRetirement', 'true', { expires: 90 })
+      Cookies.set('ReadyForReverbRetirement', 'true', { expires: 7 })
       $('#reverbRetirementModal').modal('hide')
     
   exports = ReverbRetirement
