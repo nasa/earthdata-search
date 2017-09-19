@@ -2,6 +2,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.color-2.1.2
+//= require js.cookie
 //= require knockout
 //= require knockout.mapping
 //= require toastr
@@ -19,6 +20,6 @@
 //= require modules/map/geoutil
 //= require modules/map/mbr
 //= require models/index
-//= require models/page/search_page
+//= require models/page/search_page.js.coffee.erb
 //= require modules/index
 //= require bootstrap/bootstrap

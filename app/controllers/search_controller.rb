@@ -11,4 +11,13 @@ class SearchController < ApplicationController
     respond_with TextSearchClient.parse_text(params[:q])
   end
 
+  def stay_in_edsc
+    metrics_event('reverb_redirect', 'stay_in_edsc')
+    respond_with :nothing
+  end
+
+  def back_to_reverb
+    metrics_event('reverb_redirect', 'back_to_reverb')
+    respond_with :nothing
+  end
 end
