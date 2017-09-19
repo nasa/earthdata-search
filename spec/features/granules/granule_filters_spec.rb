@@ -4,6 +4,10 @@ describe "Granule search filters", reset: false do
   context "for granules that can be filtered by day/night flag or cloud cover" do
     before_granule_count = 0
 
+    before :all do
+      page.driver.resize_window(2000, 3000)
+    end
+
     before(:each) do
       # Labs parameter enables additional attribute searching
       load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
@@ -459,16 +463,14 @@ describe "Granule search filters", reset: false do
 
     it 'filters when only the equatorial crossing date start time is set' do
       page.execute_script("$('#equatorial-crossing-date-min').datepicker('setDate', '2015-01-24')")
-      page.find(".master-overlay-secondary-content").click
-      click_button "Apply"
+      page.execute_script('$("#granule-filters-submit").click()')
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][min]=2015-01-24T00%3A00%3A00')
     end
 
     it 'filters when only the equatorial crossing date end time is set' do
       page.execute_script("$('#equatorial-crossing-date-max').datepicker('setDate', '2015-01-25')")
-      page.find(".master-overlay-secondary-content").click
-      click_button "Apply"
+      page.execute_script('$("#granule-filters-submit").click()')
       expect(project_overview).to filter_granules_from(before_granule_count)
       expect(page).to have_query_string('labs=true&p=!C1000001167-NSIDC_ECS&pg[1][ecd][max]=2015-01-25T23%3A59%3A59')
     end

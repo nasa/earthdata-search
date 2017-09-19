@@ -11,7 +11,7 @@ setup_auth_curl() {
     status=$(curl -s -z "$(date)" -w %{http_code} <%= raw @first_link %> | tail -1)
     if [[ "$status" -ne "200" && "$status" -ne "304" ]]; then
         <% # Check if this is an FTP retrieval %>
-        <% if @first_link.start_with? 'ftp' %>
+        <% if @first_link != nil && @first_link.start_with?('ftp') %>
         <% # FTP retrieval. Extract hostname and set netrc %>
         # FTP retrieval. Set netrc file before curl-ing.
         echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> $netrc
@@ -27,7 +27,7 @@ setup_auth_wget() {
     # if login is unsuccessful
     touch ~/.netrc
     chmod 0600 ~/.netrc
-    <% if @first_link.start_with? 'ftp' %>
+    <% if @first_link && @first_link.start_with?('ftp') %>
     ftp_hostname='<%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>'
     credentials=$(grep $ftp_hostname ~/.netrc)
     if [ -z "$credentials" ]; then

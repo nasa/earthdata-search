@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "Granule result removal", reset: false do
-  first_granule_temporal = '1988-03-01 00:00:00 1988-03-04 00:00:00'
-  second_granule_temporal = '1988-02-01 00:00:00 1988-03-01 00:00:00'
+  second_granule_temporal = 'START1988-02-01 00:00:00 END1988-03-01 00:00:00'
+  second_granule_temporal_map = '1988-02-01 00:00:00 1988-03-01 00:00:00'
 
   context 'pressing the delete key while focused on a granule' do
     before :all do
@@ -25,7 +25,7 @@ describe "Granule result removal", reset: false do
     end
 
     it "focuses the next granule on the map" do
-      expect(page).to have_selector('.granule-spatial-label-temporal', count: 1, text: second_granule_temporal)
+      expect(page).to have_selector('.granule-spatial-label-temporal', count: 1, text: second_granule_temporal_map)
     end
   end
 

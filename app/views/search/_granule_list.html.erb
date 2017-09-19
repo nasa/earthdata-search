@@ -82,7 +82,19 @@ Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
                 </a>
               <!-- /ko -->
 
-              <div class="granule-temporal-range" data-bind="html: getTemporal()"></div>
+              <div class="granule-temporal-range">
+                <!-- ko with: getTemporal() -->
+                  <!--ko if: ($data[0] && !$data[1])-->
+                  <div class="temporal-start"><h5>START</h5><p data-bind="text: $data[0]"></p></div>
+                  <!--/ko-->
+                  <!--ko if: ($data[1] && !$data[0])-->
+                  <div class="temporal-end"><h5>END</h5><p data-bind="text: $data[1]"></p></div>
+                  <!--/ko-->
+                  <!--ko if: ($data[0] && $data[1])-->
+                  <div class="temporal-start"><h5>START</h5><p data-bind="text: $data[0]"></p></div><div class="temporal-end"><h5>END</h5><p data-bind="text: $data[1]"></p></div>
+                  <!-- /ko -->
+                <!-- /ko -->
+              </div>
 
               <div class="panel-list-item-actions granule-item-actions">
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">

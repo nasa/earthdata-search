@@ -12,7 +12,7 @@ describe "CWIC-enabled granule results", reset: false do
     context "clicking the button to remove a granule" do
 
       before :all do
-        first_granule_list_item.click
+        page.find('#granule-list').find(".panel-list-item:nth-child(#{1}) h3").click
         keypress('#granule-list', :delete)
         wait_for_xhr
       end
@@ -30,7 +30,7 @@ describe "CWIC-enabled granule results", reset: false do
 
         after :all do
           click_button('Apply your selections')
-          first_granule_list_item.click
+          page.find('#granule-list').find(".panel-list-item:nth-child(#{1}) h3").click
           keypress('#granule-list', :delete)
           wait_for_xhr
         end

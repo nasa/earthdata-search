@@ -112,10 +112,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by spatial' do
     before(:all) do
-      visit '/search/map'
-      wait_for_xhr
-      create_bounding_box(0, 0, 10, 10)
-      wait_for_xhr
+      load_page :search, q: 'C14758250-LPDAAC_ECS', sb: [0,0,10,10]
     end
 
     it 'saves the spatial condition in the address bar' do
@@ -128,8 +125,52 @@ describe 'Address bar', reset: false do
         wait_for_xhr
       end
 
+      after :all do
+        load_page :search, q: 'C14758250-LPDAAC_ECS', sb: [0,0,10,10]
+      end
+
       it 'removes the spatial condition from the address bar' do
         expect(page.current_url).not_to have_content("sb=0%2C0%2C10%2C10")
+      end
+    end
+
+    context 'setting granule filters' do
+      before(:all) do
+        expect(page.current_url).to have_content("sb=0%2C0%2C10%2C10")
+        first_collection_result.click
+        wait_for_xhr
+        click_link 'Filter granules'
+        wait_for_xhr
+
+        fill_in "Start", with: "2013-12-01 00:00:00\t"
+        fill_in "End", with: "2013-12-31 00:00:00\t"
+        js_click_apply ".master-overlay-content"
+        wait_for_xhr
+        select 'Day only', from: "day-night-select"
+        wait_for_xhr
+        check 'Find only granules that have browse images.'
+        wait_for_xhr
+        fill_in "Minimum:", with: "2.5"
+        wait_for_xhr
+        fill_in "Maximum:", with: "5.0\t"
+        wait_for_xhr
+      end
+
+      it 'saves the granule filters in the address bar' do
+        project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
+        expect(Project.find(project_id).path).to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
+      end
+
+      context 'clearing filters' do
+        before(:all) do
+          click_link "Clear Filters"
+          wait_for_xhr
+        end
+
+        it 'removes the granule filter and spatial conditions from the address bar' do
+          expect(page.current_url).not_to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
+          expect(page.current_url).not_to include("sb=0%2C0%2C10%2C10")
+        end
       end
     end
   end
@@ -187,6 +228,47 @@ describe 'Address bar', reset: false do
 
     it 'filters collections using the condition' do
       expect(page).to have_no_text('2000 Pilot Environmental Sustainability Index (ESI)')
+    end
+  end
+
+
+  context 'when setting granule filters' do
+    before(:all) do
+      load_page :search, q: 'C14758250-LPDAAC_ECS'
+      first_collection_result.click
+      wait_for_xhr
+      click_link 'Filter granules'
+      wait_for_xhr
+
+      fill_in "Start", with: "2013-12-01 00:00:00\t"
+      fill_in "End", with: "2013-12-31 00:00:00\t"
+      js_click_apply ".master-overlay-content"
+      wait_for_xhr
+      select 'Day only', from: "day-night-select"
+      wait_for_xhr
+      check 'Find only granules that have browse images.'
+      wait_for_xhr
+      fill_in "Minimum:", with: "2.5"
+      wait_for_xhr
+      fill_in "Maximum:", with: "5.0\t"
+      wait_for_xhr
+      click_button 'Apply'
+    end
+
+    it 'saves the granule filters in the address bar' do
+      project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
+      expect(Project.find(project_id).path).to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
+    end
+
+    context 'clearing filters' do
+      before(:all) do
+        click_link "Clear Filters"
+        wait_for_xhr
+      end
+
+      it 'removes the granule filter conditions from the address bar' do
+        expect(page.current_url).not_to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
+      end
     end
   end
 
@@ -339,6 +421,7 @@ describe 'Address bar', reset: false do
       view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
       expect(page).to have_select 'day-night-select', selected: 'Day only'
     end
+
   end
 
   context "when panning and zooming the map" do
