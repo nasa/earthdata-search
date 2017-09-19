@@ -370,6 +370,37 @@
     margin: 0;
     padding: 0;
   }
+
+  .card-row {
+    padding-bottom: 130px;
+  }
+
+  .card {
+    -ms-flex: 0 1 320px;
+    flex: 0 1 320px;
+    background: #ecf0f1;
+    border: 1px solid darken(#ecf0f1, 5%);
+    border-radius: 5px;
+    padding: 12px;
+    margin: 0px 10px 10px 0;
+    min-height: 100px;
+    font-size: 0.9em;
+
+    h5 {
+      margin: 0 0 5px 0;
+      padding: 0;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    ul {
+      margin: 0;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+  }
 }
 
 .master-overlay-minimize, .master-overlay-maximize {
@@ -487,15 +518,14 @@ a.master-overlay-show-parent {
   -js-display: flex;
   display: -ms-flexbox;
   -ms-flex-direction: row;
-  -ms-flex-wrap: wrap;
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
   justify-content: flex-start;
 }
 
 .flex-column {
-  -ms-flex: 0 0 380px;
-  flex: 2 2 380px; //mini-map width is 270px
+  flex: 1 0 auto;
+  width: 260px;
   dd {
     font-size: 0.9em;
     font-weight: bold;
@@ -505,8 +535,14 @@ a.master-overlay-show-parent {
 }
 
 .flex-column-aside {
-  -ms-flex: 0 0 380px;
-  flex: 0 0 380px; //mini-map width is 380px
+  margin-right: 20px;
+  width: 360px;
+}
+
+.flex-column-sk {
+  margin-right: 20px;
+  flex: 3 0 300px;
+
 }
 
 .master-overlay-content .flex-column {

@@ -10,6 +10,7 @@
     <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
     <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
       <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
+        <small class="short-name-label" data-bind="text: $data.short_name"></small>
         <!-- ko if: details().version_id -->
           <small class="version-label"> VERSION <!-- ko text: details().version_id --><!-- /ko --></small>
         <!-- /ko -->
@@ -73,47 +74,62 @@
         <div class="row">
           <div class="flex-column-aside">
             <div id="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+            <!--ko foreach: $data.spatial -->
+            <div class="spatial-bounding"><span data-bind="text: $data"></span></div>
+            <!--/ko-->
           </div>
-          <dl class="flex-column">
+          <div class="flex-column">
             <!--ko if: $data.doi.doi_link || $data.doi.doi_text-->
-              <dt>DOI:</dt>
               <!--ko if: $data.doi.doi_link-->
-              <dd><a target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}"><!-- ko text: $data.doi.doi_text --><!-- /ko --></a></dd>
+              <a class="doi-badge" target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}">DOI: <!-- ko text: $data.doi.doi_text --><!-- /ko --></a>
               <!--/ko-->
               <!--ko ifnot: $data.doi.doi_link-->
-              <dd data-bind="text: $data.doi.doi_text"></dd>
+              <small class="doi-badge" data-bind="text: $data.doi.doi_text"></small>
               <!--/ko-->
             <!--/ko-->
-              <dt>Spatial Coordinates:</dt>
-              <dd>
-                <!--ko foreach: $data.spatial -->
-                <span data-bind="text: $data"></span><br/>
-                <!--/ko-->
-              </dd>
+            <dl>
               <dt>Temporal Extent:</dt>
               <dd>
                 <!--ko foreach: $data.temporal -->
                 <span data-bind="text: $data"></span><br/>
                 <!--/ko-->
               </dd>
+              <!-- ko if: $data.related_urls.length > 0 -->
+              <dt>Related URLs:</dt>
+              <dd>
+                <!-- ko foreach: $data.highlighted_urls -->
+                <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
+                <!-- /ko -->
+                <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
+              </dd>
+              <!-- /ko -->
               <dt>GIBS Imagery Projection Availability:</dt>
               <dd>
                 <!-- ko with: $root.ui.collectionsList.selected() -->
                 <span data-bind="text: gibsLayers()"></span>
                 <!-- /ko -->
               </dd>
-          </dl>
-          <dl class="flex-column">
-            <!-- ko if: $data.related_urls.length > 0 -->
-            <dt>Related URLs:</dt>
-            <dd>
-              <!-- ko foreach: $data.highlighted_urls -->
-              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
+            </dl>
+          </div>
+          <div class="flex-column-sk">
+            <dl>
+              <dt>Science Keywords:</dt>
+              <!-- ko if: $data.science_keywords.length == 0 -->
+              <dd>Not Available</dd>
               <!-- /ko -->
-              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
-            </dd>
-            <!-- /ko -->
-          </dl>
+              <!-- ko if: $data.science_keywords.length > 0 -->
+              <dd data-bind="foreach: $data.science_keywords">
+                <div class="arrow-tag-group">
+                  <ul class="arrow-tag-group-list">
+                    <!-- ko foreach: $data -->
+                    <li class="arrow-tag-group-item" data-bind="text: $data"></li>
+                    <!-- /ko -->
+                  </ul>
+                </div>
+              </dd>
+              <!-- /ko -->
+            </dl>
+          </div>
         </div>
         <!-- end of first row -->
 
@@ -132,33 +148,9 @@
         </div>
         <!-- end of second row -->
 
-        <!--third row: data centers-->
-        <dl class="flex-column data-centers">
-          <dt>Data Centers:</dt>
-          <!--ko foreach: data_centers-->
-          <dd>
-            <!--ko text: shortname--><!--/ko-->
-            <!--ko foreach: roles-->
-              <span class="data-center-role-label" data-bind="text: $data"></span>
-            <!--/ko-->
-          </dd>
-            <ul class="field-content-list">
-              <li class="field-content-item">
-                <!--ko with: $data-->
-                  <%= render 'data_center_details' %>
-                <!--/ko-->
-              </li>
-            </ul>
-          <!--/ko-->
-        </dl>
-
-        <!--end of third row-->
-
         <!-- fourth row: misc info -->
         <div class="row">
           <dl class="flex-column">
-            <dt>Short Name:</dt>
-            <dd data-bind="text: $data.short_name"></dd>
           </dl>
           <dl class="flex-column">
             <!-- ko foreach: $data.online_access_urls -->
@@ -169,24 +161,22 @@
         <!-- end of fourth row -->
 
         <!-- fifth row: science keywords -->
-        <div class="row">
-          <dl>
-            <dt>Science Keywords:</dt>
-            <!-- ko if: $data.science_keywords.length == 0 -->
-            <dd>Not Available</dd>
-            <!-- /ko -->
-            <!-- ko if: $data.science_keywords.length > 0 -->
-            <dd data-bind="foreach: $data.science_keywords">
-              <div class="arrow-tag-group">
-                <ul class="arrow-tag-group-list">
-                  <!-- ko foreach: $data -->
-                  <li class="arrow-tag-group-item" data-bind="text: $data"></li>
-                  <!-- /ko -->
-                </ul>
-              </div>
-            </dd>
-            <!-- /ko -->
-          </dl>
+        <div class="row card-row">
+          <!--ko foreach: data_centers-->
+          <div class="card">
+            <h5><!--ko text: shortname--><!--/ko--></h5>
+            <!--ko foreach: roles-->
+              <span class="data-center-role-label" data-bind="text: $data"></span>
+            <!--/ko-->
+            <ul>
+              <li>
+                <!--ko with: $data-->
+                  <%= render 'data_center_details' %>
+                <!--/ko-->
+              </li>
+            </ul>
+          </div>
+          <!--/ko-->
         </div>
         <!-- end of fifth row -->
       </div>

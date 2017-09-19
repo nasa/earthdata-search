@@ -1,3 +1,6 @@
+$steel-blue:    rgb(68,   85, 101);
+$midnight-blue: rgb(44,   62,  80);
+
 .details /*.tab-content*/ {
   a {
     text-decoration: underline;
@@ -12,16 +15,23 @@
 
     h4 {
       float: left;
-      width: 65%;
+      width: 66%;
     }
 
     .cta-buttons {
       float: right;
-      margin: 20px 20px 0 0;
+      margin: 15px 20px 0 0;
     }
   }
 
 
+}
+
+.spatial-bounding {
+  padding: 10px;
+  font-size: 0.8em;
+  background: #3B4856;
+  color: #fff;
 }
 
 .version-label {
@@ -29,6 +39,18 @@
   display: inline-block;
   vertical-align: middle;
   background: #7f33a0;
+  border-radius: 4px;
+  font-size: 0.6em;
+  font-weight: normal;
+  padding: 3px 10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.short-name-label {
+  display: inline-block;
+  vertical-align: middle;
+  background: #ecf0f1;
   border-radius: 4px;
   font-size: 0.6em;
   font-weight: normal;
@@ -58,8 +80,6 @@
   font-size: 0.7em;
   font-weight: normal;
   padding: 3px 10px;
-  margin-bottom: 5px;
-  margin-left: 5px;
 }
 
 a.endpoint-label {
@@ -102,9 +122,10 @@ a.endpoint-label {
 }
 
 .arrow-tag-group {
-  height: 2em;
+  height: 1em;
+  display: inline-block;
+  margin-right: 10px;
 }
-
 
 .arrow-tag-group-list {
   list-style: none;
@@ -114,44 +135,43 @@ a.endpoint-label {
 
 }
 
-
 .arrow-tag-group-item {
   display: inline;
-
   float: left;
-  background: #3B4856;
+  background: $steel-blue;
   text-align: center;
   padding: 2px 3px 0 15px;
   position: relative;
-
   font-size: 12px;
+  line-height: 1.7em;
   text-decoration: none;
+  text-transform: uppercase;
   color: #fff;
 }
 
 .arrow-tag-group-item:after {
   content: "";
-  border-top: 10px solid transparent;
+  border-top: 11px solid transparent;
   border-bottom: 10px solid transparent;
-  border-left: 10px solid #3B4856;
+  border-left: 10px solid $steel-blue;
   position: absolute; right: -10px; top: 0;
   z-index: 1;
 }
 
 .arrow-tag-group-item:before {
   content: "";
-  border-top: 10px solid transparent;
+  border-top: 12px solid transparent;
   border-bottom: 9px solid transparent;
-  border-left: 10px solid #3B4856;
+  border-left: 10px solid $steel-blue;
   position: absolute; left: 0; top: 0;
-  background-color: #3B4856;
+  background-color: $steel-blue;
 }
 
 .arrow-tag-group-item:first-child {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
-  padding-left: 5px;
-  background: #293746;
+  padding-left: 10px;
+  background: $midnight-blue;
 }
 
 .arrow-tag-group-item:first-child:before {
@@ -163,19 +183,19 @@ a.endpoint-label {
 }
 
 .arrow-tag-group-item:last-child {
-  padding-right: 5px;
+  padding-right: 10px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
-  background: #4F5D6B;
+  background: lighten($steel-blue, 10%);
 }
 
 .arrow-tag-group-item:last-child:before {
-  background: #4F5D6B;
+  background: lighten($steel-blue, 10%);
 }
 
 .arrow-tag-group-item:last-child:after {
   display: none;
-  border-left: 10px solid #4F5D6B;
+  border-left: 10px solid lighten($steel-blue, 10%);
 }
 
 .col-sm-12 dt {
@@ -220,13 +240,13 @@ a.endpoint-label {
   width: 100%;
 
   dt {
-    float: left;
-    width: 18%; // 'TDD/TTY Phone' is the widest contact type.
+    display: inline-block;
+    width: 25%; // 'TDD/TTY Phone' is the widest contact type.
   }
 
   dd {
-    float: left;
-    width: 82%;
+    display: inline-block;
+    width: 70%;
     font-weight: normal;
     margin-bottom: 0;
   }
@@ -236,4 +256,11 @@ a.endpoint-label {
   width: 550px;
   padding: 0 15px 6px;
   font-size: .9em;
+}
+
+.doi-badge {
+  background: #bdc3c7;
+  padding: 5px 10px;
+  border-radius: 3px;
+  display: inline-block;
 }
