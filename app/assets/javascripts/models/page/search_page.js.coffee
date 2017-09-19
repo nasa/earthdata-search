@@ -13,6 +13,7 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/reverb_retirement
+#= require util/js.cookies
 
 models = @edsc.models
 data = models.data
@@ -53,7 +54,7 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
     
-    if document.referrer == "https://reverb.echo.nasa.gov" && reverbRetirement.getCookie('ReadyForReverbRetirement') != 'true'
+    if document.referrer == "https://reverb.echo.nasa.gov" && Cookies.get('ReadyForReverbRetirement') != 'true'
       $('#reverbRetirementModal').modal('show')
     else
       preferences.ready.done(-> initModal()) if !window.edscportal
