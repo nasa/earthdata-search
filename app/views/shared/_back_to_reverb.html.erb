@@ -2,7 +2,7 @@
   href="<%=ENV['reverb_root'] || Rails.configuration.services['edsc'][Rails.env]['reverb_root'].to_s%>"
   id="back-to-reverb-link"
   style="display: none;"
-  class="feedback toolbar-button"
+  class="toolbar-button"
   data-bind="visible: document.referrer.match('<%=ENV['reverb_root'] || Rails.configuration.services['edsc'][Rails.env]['reverb_root'].to_s%>'.replace(/https?:\/\//, ''))"
 >
   !!!GO BACK TO REVERB!!!
