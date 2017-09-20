@@ -8,7 +8,7 @@
 
 <% content_for :toolbar_secondary do %>
   <div class="landing-secondary-toolbar-container" style="display: none;">
-    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
+    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: $root.ui.projectList.showProjectPage" class="toolbar-button" href="#">My Project</a></span>
     <%= render partial: 'shared/feedback' %>
     <%= render partial: 'workspace_name' %>
     <%= render partial: 'shared/login' %>
@@ -117,7 +117,7 @@
           </p>
           <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
-            You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" class="master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">Project</a>
+            You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" data-bind="click: $root.ui.projectList.showProjectPage" href="#">Project</a>
           </p>
           <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
             <% if Rails.configuration.feedback_url.present? %>
@@ -144,50 +144,6 @@
               <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave the <%= site_name %></a>
             </p>
             <% end %>
-          </div>
-        </div>
-      </section>
-      <section id="project-overview" class="master-overlay-hide-self master-overlay-no-min">
-        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
-            <i class="fa fa-arrow-circle-o-left"></i> Back to Collection Search
-          </a>
-        </nav>
-        <header class="with-options">
-          <h2>Project Collections</h2>
-          <div class="master-overlay-global-actions actions">
-            <button class="button retrieve" data-bind="click: project.exceedCollectionLimit() ? function(){} : $root.ui.projectList.loginAndDownloadProject, css: {'button-disabled': project.exceedCollectionLimit(), retrieve: !project.exceedCollectionLimit()}, attr: {'data-placement': 'bottom', 'data-tooltip': project.exceedCollectionLimit().toString(), 'title': project.exceedCollectionLimit() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download project data'}">
-              <i class="fa fa-download"></i> Download Project Data
-            </button>
-
-            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button" >
-              <i class="fa fa-eye"></i>
-            </a>
-            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button button-active" >
-              <i class="fa fa-eye"></i>
-            </a>
-          </div>
-        </header>
-        <div class="master-overlay-content panel-list">
-          <ul id="project-collections-list"
-              class="panel-list-list knockout-template"
-              data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
-            <%= render partial: 'collection_list_item', locals: {is_project: true} %>
-          </ul>
-          <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
-            <p>
-              Use this space to collect collections of interest as you adjust your search parameters.
-            </p>
-            <p>
-              To add a collection to your project, click the <i class="fa fa-plus"></i> icon on the desired collection.
-              Once collected, you can use the tools available in this view to compare collections on the map or on a timeline
-              and choose granules you want from each.
-            </p>
-            <p>
-              When you are satisfied with your selections, click the <i class="fa fa-download"></i> button to
-              access your data.
-            </p>
           </div>
         </div>
       </section>
