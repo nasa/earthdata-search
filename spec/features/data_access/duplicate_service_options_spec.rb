@@ -8,9 +8,9 @@ describe 'Duplicate Service Options', reset: false do
   non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before :all do
-    load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
+    load_page :search, focus: [downloadable_collection_id, non_downloadable_collection_id]
     login
-    click_button "Download project data"
+    click_button "Download Data"
     wait_for_xhr
   end
 

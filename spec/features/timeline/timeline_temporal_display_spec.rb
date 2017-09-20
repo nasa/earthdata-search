@@ -13,7 +13,7 @@ describe "Timeline temporal display", reset: false do
   stop_year = 2014
 
   before :all do
-    load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC'], view: :project
+    load_page :search, focus: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
     wait_for_xhr
     pan_to_time(max_date)
   end

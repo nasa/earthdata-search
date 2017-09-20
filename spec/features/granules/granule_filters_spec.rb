@@ -10,7 +10,7 @@ describe "Granule search filters", reset: false do
 
     before(:each) do
       # Labs parameter enables additional attribute searching
-      load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
+      load_page :search, focus: ['C14758250-LPDAAC_ECS'], labs: true
 
       temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
       temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
@@ -272,7 +272,7 @@ describe "Granule search filters", reset: false do
 
     context "when searching by additional attributes" do
       before(:each) do
-        load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
+        load_page :search, focus: ['C14758250-LPDAAC_ECS'], labs: true
         temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
         temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
         set_temporal(temporal_start_date, temporal_stop_date)
@@ -357,7 +357,7 @@ describe "Granule search filters", reset: false do
 
   context "for granules that can't be filtered by day/night flag or cloud cover" do
     before :all do
-      load_page :search, project: ['C1236224182-GES_DISC'], view: :project
+      load_page :search, focus: ['C1236224182-GES_DISC']
       first_project_collection.click_link "Show granule filters"
     end
 
@@ -389,7 +389,7 @@ describe "Granule search filters", reset: false do
 
     before(:all) do
       # Labs parameter enables additional attribute searching
-      load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
+      load_page :search, focus: ['C14758250-LPDAAC_ECS'], labs: true
 
       temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
       temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
@@ -406,7 +406,7 @@ describe "Granule search filters", reset: false do
   context "for granules that can be filtered by orbit spatial parameters" do
     before_granule_count = 0
     before(:each) do
-      load_page :search, project: ['C1000001167-NSIDC_ECS'], view: :project, labs: true
+      load_page :search, focus: ['C1000001167-NSIDC_ECS'], labs: true
       wait_for_xhr
       first_project_collection.click_link "Show granule filters"
       number_granules = project_overview.text.match /\d+ Granules/
