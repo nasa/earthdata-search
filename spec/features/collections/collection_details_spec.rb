@@ -274,8 +274,8 @@ describe 'Collection details', reset: false do
 
     it 'displays the DOI and the Authority' do
       expect(page).to have_content('DOI')
-      expect(page).to have_content('The Digitial Object Identifier.')
-      expect(page).not_to have_link('The Digitial Object Identifier.')
+      expect(page).to have_content('THE DIGITIAL OBJECT IDENTIFIER.')
+      expect(page).not_to have_link('THE DIGITIAL OBJECT IDENTIFIER.')
     end
   end
 
