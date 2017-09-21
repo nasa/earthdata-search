@@ -9,7 +9,7 @@ describe "Limited Collections", reset: false do
     load_page :search, q: 'C14758250-LPDAAC_ECS', close_banner: true
   end
 
-  context 'when the number of granules exceeds the collection limit (ASTER for example) in a project' do
+  pending 'when the number of granules exceeds the collection limit (ASTER for example) in a project' do
     before :all do
       target_collection_result('ASTER L1A Reconstructed Unprocessed Instrument Data V003').click_link 'Add collection to the current project'
       find('div[class="toolbar-secondary"]').click_link 'My Project'

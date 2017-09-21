@@ -19,20 +19,22 @@ describe "Timeline temporal selection", reset: false do
   start_drag_date = DateTime.new(1990, 1, 1, 0, 0, 0, '+0')
   stop_drag_date = DateTime.new(1985, 1, 1, 0, 0, 0, '+0')
 
-  before :all do
-    load_page :search
-    add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
-    add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+  pending 'Refactor project panel to 2e2 services project page.' do
+    before :all do
+      load_page :search
+      add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
+      add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
-    find("#view-project").click
-    zoom_out_button = find('.timeline-zoom-out')
-    zoom_out_button.click
-    pan_to_time(present - 25.years)
+      find("#view-project").click
+      zoom_out_button = find('.timeline-zoom-out')
+      zoom_out_button.click
+      pan_to_time(present - 25.years)
 
-    wait_for_xhr
+      wait_for_xhr
+    end
   end
 
-  context 'when temporal conditions are set outside of the timeline' do
+  pending 'when temporal conditions are set outside of the timeline' do
     before :all do
       set_temporal(local_start_date, local_stop_date, nil, 0)
       set_temporal(global_start_date, global_stop_date)
@@ -141,7 +143,7 @@ describe "Timeline temporal selection", reset: false do
     end
   end
 
-  context 'when no temporal conditions are set' do
+  pending 'when no temporal conditions are set' do
     context 'dragging the timeline header' do
       before(:all) { drag_temporal(stop_drag_date, start_drag_date) }
       after(:all) { unset_temporal }
