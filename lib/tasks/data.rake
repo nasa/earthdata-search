@@ -94,7 +94,7 @@ namespace :data do
   def wait_and_run(task)
     # Wait for 0 ~ 600 sec
     delay = rand(0..600)
-    puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for #{delay} seconds and retry task #{task} on #{Socket.gethostnameo}."
+    puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for #{delay} seconds and retry task #{task} on #{Socket.gethostname}."
     sleep delay
     puts "[#{Time.now}] Wait is done. Retrying task #{task} on #{Socket.gethostname}."
     # check one more time to make sure the task hasn't been started from the other instance in the past 10 minutes.
