@@ -53,8 +53,9 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
-    
-    if document.referrer == "https://reverb.echo.nasa.gov" && Cookies.get('ReadyForReverbRetirement') != 'true'
+
+    reverb = ["http://echo-reverb-rails.dev", "https://testbed.echo.nasa.gov", "https://api-test.echo.nasa.gov", "https://testbed.echo.nasa.gov", "https://reverb.echo.nasa.gov"]
+    if $.inArray(document.referrer, reverb) != -1 && Cookies.get('ReadyForReverbRetirement') != 'true'
       $('#reverbRetirementModal').modal('show')
     else
       preferences.ready.done(-> initModal()) if !window.edscportal
