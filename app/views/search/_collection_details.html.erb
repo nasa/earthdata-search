@@ -81,10 +81,10 @@
           <div class="flex-column">
             <!--ko if: $data.doi.doi_link || $data.doi.doi_text-->
               <!--ko if: $data.doi.doi_link-->
-              <a class="doi-badge" target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}">DOI: <!-- ko text: $data.doi.doi_text --><!-- /ko --></a>
+              <a target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}"><span class="doi-badge">DOI <span data-bind="text: $data.doi.doi_text"></span></span></a>
               <!--/ko-->
               <!--ko ifnot: $data.doi.doi_link-->
-              <small class="doi-badge" data-bind="text: $data.doi.doi_text"></small>
+              <span class="doi-badge">DOI <span data-bind="text: $data.doi.doi_text"></span></span>
               <!--/ko-->
             <!--/ko-->
             <dl>
