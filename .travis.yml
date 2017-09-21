@@ -1,7 +1,7 @@
 language: ruby
 dist: trusty
 cache:
-  bundler: true
+#  bundler: true
   directories:
     - node_modules
 sudo: required
@@ -11,6 +11,8 @@ before_install:
   - sudo apt-get install qt4-default qt4-dev-tools qt4-qmake qt4-qtconfig libqt4-webkit libqt4-webkit-dbg # qtdeclarative4-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - qmake -version
+#install:
+#  - bundle install --jobs=3 --retry=3 --deployment --force --path=${BUNDLE_PATH:-vendor/bundle}
 script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
