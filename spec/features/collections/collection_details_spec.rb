@@ -13,12 +13,12 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LPDAACARCHIVER')
-        expect(page).to have_content('LPDAACPROCESSOR')
+        expect(page).to have_content('LPDAAC ARCHIVER')
+        expect(page).to have_content('LPDAAC PROCESSOR')
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
-        expect(page).to have_content('Telephone:605-594-6116Fax:605-594-6963Email:lpdaac@usgs.gov')
-        expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+        expect(page).to have_content('Telephone: 605-594-6116 Fax: 605-594-6963 Email: lpdaac@usgs.gov')
+        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
         expect(page).to have_content('Science Keywords: Earth ScienceSpectral/EngineeringInfrared Wavelengths Earth ScienceSpectral/EngineeringVisible Wavelengths')
       end
@@ -69,12 +69,12 @@ describe 'Collection details', reset: false do
     it 'displays the collection details' do
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
-        expect(page).to have_content('Name Not ProvidedARCHIVER')
+        expect(page).to have_content('Name Not Provided ARCHIVER')
         expect(page).to have_content('SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
         expect(page).to have_content('Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 2015-03-31 to 2020-12-31')
-        expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceSoils')
+        expect(page).to have_content('Science Keywords: EARTH SCIENCELAND SURFACESOILS')
       end
     end
 
@@ -112,7 +112,7 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('JP/JAXA/SAOCARCHIVER DISTRIBUTOR')
+      expect(page).to have_content('JP/JAXA/SAOC ARCHIVER DISTRIBUTOR')
     end
   end
 
@@ -218,7 +218,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays all data center content' do
-      expect(page).to have_content('NASA NSIDC DAAC ORIGINATOR No contact information for this data center. NASA/NSIDC_DAACARCHIVER DISTRIBUTOR')
+      expect(page).to have_content('NASA NSIDC DAACORIGINATOR No contact information for this data center. NASA/NSIDC_DAACARCHIVER DISTRIBUTOR')
     end
   end
 
@@ -273,7 +273,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the DOI and the Authority' do
-      expect(page).to have_content('DOI')
+      expect(page).to have_content('DOI:')
       expect(page).to have_content('The Digitial Object Identifier.')
       expect(page).not_to have_link('The Digitial Object Identifier.')
     end
@@ -285,7 +285,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the DOI and the Authority' do
-      expect(page).to have_content('DOI')
+      expect(page).to have_content('DOI:')
       expect(page).to have_content('10.3334/ORNLDAAC/830')
       expect(page).to have_link('10.3334/ORNLDAAC/830')
     end
