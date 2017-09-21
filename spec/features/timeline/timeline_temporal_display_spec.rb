@@ -12,11 +12,12 @@ describe "Timeline temporal display", reset: false do
   start_year = 2012
   stop_year = 2014
 
-  pending ''
-  before :all do
-    load_page :search, focus: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
-    wait_for_xhr
-    pan_to_time(max_date)
+  pending 'Refactor project panel to project page.' do
+    before :all do
+      load_page :search, focus: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
+      wait_for_xhr
+      pan_to_time(max_date)
+    end
   end
 
   pending "when there is no temporal range selected" do
