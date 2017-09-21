@@ -8,7 +8,7 @@ sudo: required
 # https://blog.travis-ci.com/2017-08-29-trusty-image-updates
 group: deprecated-2017Q3
 before_install:
-  - sudo apt-get install qt4-default qt4-dev-tools qt4-qmake qt4-qtconfig libqt4-webkit libqt4-webkit-dbg # qtdeclarative4-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+  - sudo apt-get install qt4-default qt4-dev-tools qt4-qmake qt4-qtconfig libqt4-webkit libqt4-webkit-dbg gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - qmake -version
 #install:
