@@ -54,7 +54,6 @@ ns.SearchPage = do (ko
 
     reverbRetirement = new ReverbRetirementModel()
 
-    # Potentially initiating two modals is awkward; let's momentarily suppress the tour modal in the case that this is a reverb redirect...
     if reverbRetirement.referrerIsReverb() && Cookies.get('ReadyForReverbRetirement') != 'true'
       $('#reverbRetirementModal').modal('show')
 
