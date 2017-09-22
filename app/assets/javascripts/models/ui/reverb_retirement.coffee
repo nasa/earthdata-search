@@ -21,7 +21,7 @@ ns.ReverbRetirement = do (ko) ->
       # metrics_event('reverb_redirect', 'back_to_reverb', {source: source}) 
       # Strip out extra stuff to forward to reverb main page
       referrer = document.referrer.match(/:\/\/(.[^/]+)/)[1];
-      # window.location.replace(referrer)
+      window.location.replace(referrer)
     
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 90 })
