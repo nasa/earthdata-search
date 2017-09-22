@@ -14,14 +14,16 @@ ns.ReverbRetirement = do (ko) ->
       reverb = ["echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
       return $.inArray(referrer, reverb) != -1 
 
-    returnToReverb: () =>
+    returnToReverb: (source = 'modal link') =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
+      metrics_event('reverb_redirect', 'back_to_reverb', {source: source})
       # Strip out extra stuff to forward to reverb main page
       referrer = "https://" + document.referrer.match(/:\/\/(.[^/]+)/)[1];
       window.location.replace(referrer)
     
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 90 })
+      metrics_event('reverb_redirect', 'stay_in_edsc')
       $('#reverbRetirementModal').modal('hide')
     
   exports = ReverbRetirement
