@@ -12,7 +12,7 @@ ns.ReverbRetirement = do (ko) ->
       referrer = document.referrer.match(/:\/\/(.[^/]+)/)[1];
       console.log "Checking referrer: " + referrer
       # To semi-test locally, add "", "localhost:3000", to the array below (or whatever is appropriate for your local instance)
-      reverb = ["", "localhost:3000", "echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
+      reverb = ["echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
       return $.inArray(referrer, reverb) != -1 
 
     returnToReverb: (source = 'modal link') =>
