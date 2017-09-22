@@ -13,7 +13,6 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/reverb_retirement
-#= require util/js.cookies
 
 models = @edsc.models
 data = models.data
@@ -40,8 +39,7 @@ ns.SearchPage = do (ko
 
   preferences = new PreferencesModel()
   sitetour = new SiteTourModel()
-  reverbRetirement = new ReverbRetirementModel()
-
+  
   initModal = () ->
     $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1)
 
@@ -54,8 +52,9 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
 
-    reverb = ["http://echo-reverb-rails.dev", "https://testbed.echo.nasa.gov", "https://api-test.echo.nasa.gov", "https://testbed.echo.nasa.gov", "https://reverb.echo.nasa.gov"]
-    if $.inArray(document.referrer, reverb) != -1 && Cookies.get('ReadyForReverbRetirement') != 'true'
+    reverbRetirement = new ReverbRetirementModel()
+
+    if reverbRetirement.referrerIsReverb() && Cookies.get('ReadyForReverbRetirement') != 'true'
       $('#reverbRetirementModal').modal('show')
     else
       preferences.ready.done(-> initModal()) if !window.edscportal
