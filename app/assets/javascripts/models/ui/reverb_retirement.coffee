@@ -12,7 +12,7 @@ ns.ReverbRetirement = do (ko) ->
       console.log "Checking referrer: " + referrer
       # To semi-test locally, add "", "localhost:3000", to the array below (or whatever is appropriate for your local instance)
       reverb = ["echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
-      return $.inArray(document.referrer, reverb) != -1 
+      return $.inArray(referrer, reverb) != -1 
 
     returnToReverb: () =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
