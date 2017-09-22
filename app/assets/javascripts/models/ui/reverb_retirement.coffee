@@ -9,7 +9,7 @@ ns.ReverbRetirement = do (ko) ->
 
     referrerIsReverb: () =>
       # To semi-test locally, add "", "http://localhost:3000/search", to the array below (or whatever is appropriate for your local instance)
-      reverb = ["", "http://localhost:3000/search", "http://echo-reverb-rails.dev", "https://testbed.echo.nasa.gov", "https://api-test.echo.nasa.gov", "https://testbed.echo.nasa.gov", "https://reverb.echo.nasa.gov"]
+      reverb = ["http://echo-reverb-rails.dev", "https://testbed.echo.nasa.gov", "https://api-test.echo.nasa.gov", "https://testbed.echo.nasa.gov", "https://reverb.echo.nasa.gov"]
       return $.inArray(document.referrer, reverb) != -1 
 
     returnToReverb: () =>
