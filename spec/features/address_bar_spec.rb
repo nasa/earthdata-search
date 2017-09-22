@@ -285,7 +285,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context 'when loading a url containing project collections' do
+  pending 'when loading a url containing project collections' do
     before(:all) {
       visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC'
     }
