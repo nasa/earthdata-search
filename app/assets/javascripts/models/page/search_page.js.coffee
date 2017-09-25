@@ -52,8 +52,11 @@ ns.SearchPage = do (ko
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
 
-    reverbRetirement = new ReverbRetirementModel()
+    # These lines for testing only - delete before merging!
+    # Object.defineProperty(document, "referrer", {get : => return "https://testbed.echo.nasa.gov"; });
+    # Cookies.set('ReadyForReverbRetirement', 'false')
 
+    reverbRetirement = new ReverbRetirementModel()
     if reverbRetirement.referrerIsReverb() && Cookies.get('ReadyForReverbRetirement') != 'true'
       $('#reverbRetirementModal').modal('show')
 
