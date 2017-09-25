@@ -1,38 +1,34 @@
 language: ruby
 dist: trusty
 cache:
-#  bundler: true
+  bundler: true
   directories:
     - node_modules
 sudo: required
 # https://blog.travis-ci.com/2017-08-29-trusty-image-updates
 group: deprecated-2017Q3
 before_install:
-  - sudo apt-get install qt4-default qt4-dev-tools qt4-qmake qt4-qtconfig libqt4-webkit libqt4-webkit-dbg gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - qmake -version
-#install:
-#  - bundle install --jobs=3 --retry=3 --deployment --force --path=${BUNDLE_PATH:-vendor/bundle}
 script:
   - bundle exec bin/setup
   - bundle exec rake travis:ci
 env:
   global:
-#    - CI_NODE_TOTAL=7
-    - CI_NODE_TOTAL=4
+    - CI_NODE_TOTAL=7
   matrix:
     - CI_NODE_INDEX=0
     - CI_NODE_INDEX=1
     - CI_NODE_INDEX=2
     - CI_NODE_INDEX=3
-#    - CI_NODE_INDEX=4
-#    - CI_NODE_INDEX=5
-#    - CI_NODE_INDEX=6
+    - CI_NODE_INDEX=4
+    - CI_NODE_INDEX=5
+    - CI_NODE_INDEX=6
     - JASMINE=true
 branches:
   only: # Only build master. Pull requests to master also get built.
     - master
-    - EDSC-1630
 deploy:
   provider: script
   script: bin/ecc-sync
