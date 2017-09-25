@@ -16,12 +16,9 @@ ns.ReverbRetirement = do (ko) ->
 
     returnToReverb: (source = 'modal link') =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
-      
       # metrics go here once it's figured out...
       # metrics_event('reverb_redirect', 'back_to_reverb', {source: source}) 
-      
-      referrer = document.referrer.match(/:\/\/(.[^/]+)/)[1];
-      window.location.replace("https://" + referrer)
+      window.location.replace("https://" + document.referrer.match(/:\/\/(.[^/]+)/)[1])
     
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 90 })
