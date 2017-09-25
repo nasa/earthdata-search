@@ -4,7 +4,8 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.ReverbRetirement = do (ko) ->
+ns.ReverbRetirement = do (ko,
+                          ajax = @edsc.util.xhr.ajax) ->
   class ReverbRetirement
     constructor: ->
 
@@ -16,14 +17,32 @@ ns.ReverbRetirement = do (ko) ->
 
     returnToReverb: (source = 'modal link') =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
-      # metrics go here once it's figured out...
-      # metrics_event('reverb_redirect', 'back_to_reverb', {source: source}) 
+
+      data['type'] = 'reverb_redirect'
+      data['data'] = 'back_to_reverb'
+      data['other_data'] = source
+      ajax
+        data: JSON.stringify(data)
+        dataType: 'json'
+        url: "/metrics"
+        method: 'post'
+        success: (data) ->
+          console.log data
       window.location.replace("https://" + document.referrer.match(/:\/\/(.[^/]+)/)[1])
     
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 90 })
-      # metrics go here once it's figured out...
-      # metrics_event('reverb_redirect', 'stay_in_edsc') %>
+
+      data['type'] = 'reverb_redirect'
+      data['data'] = 'stay_in_edsc'
+      data['other_data'] = ""
+      ajax
+        data: JSON.stringify(data)
+        dataType: 'json'
+        url: "/metrics"
+        method: 'post'
+        success: (data) ->
+          console.log data
       $('#reverbRetirementModal').modal('hide')
     
   exports = ReverbRetirement
