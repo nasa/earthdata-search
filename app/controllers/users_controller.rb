@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
   def get_site_preferences
     user_id = get_user_id
-
+    
     if user_id
       user = User.where(echo_id: get_user_id).first
       if user
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
         render json: nil, status: :ok
       end
     else
-      site_preferences = session[:site_preferences]
+      site_preferences = cookies[:site_preferences]
       render json: site_preferences, status: :ok
     end
   end
@@ -67,8 +67,11 @@ class UsersController < ApplicationController
       user.save
       render json: user.site_preferences, status: :ok
     else
-      session[:site_preferences] = params[:site_preferences]
-      render json: session[:site_preferences], status: :ok
+      cookies[:site_preferences] = {
+        value: params[:site_preferences].to_json,
+        expires: 10.years.from_now
+      }
+      render json: cookies[:site_preferences], status: :ok
     end
   end
 end
