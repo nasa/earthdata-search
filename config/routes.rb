@@ -60,7 +60,7 @@ EarthdataSearchClient::Application.routes.draw do
   get 'data/status' => 'data_access#status'
   post 'data/remove' => 'data_access#remove', format: 'json'
 
-  post 'metrics' => 'search#metrics_event'
+  post 'metrics' => 'search#log_metrics_event'
 
   get 'search(/*overlay_params)' => 'search#index'
   get 'extract_filters' => 'search#extract_filters', format: 'json'

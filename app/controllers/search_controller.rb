@@ -11,13 +11,12 @@ class SearchController < ApplicationController
     respond_with TextSearchClient.parse_text(params[:q])
   end
 
-  def metrics_event
-    Rails.logger.info "We made it!"
-    type = params[:type]
-    data = params[:data]
-    other_data = params[:other_data]
-    metrics_event(type, data, other_data)
-    # this response makes no sense I'm sure - just trying to get something that doesn't error out
-    respond_with(Rails.logger.info params.inspect, status: :ok)
+  def log_metrics_event
+    if params[:other_data] && params[:other_data] != "" then
+      metrics_event(params[:type], params[:data], eval(params[:other_data])) 
+    else 
+      metrics_event(params[:type], params[:data])
+    end
+    render nothing: true, status: :ok, content_type: "text/html"
   end
 end

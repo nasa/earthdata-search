@@ -15,14 +15,13 @@ ns.ReverbRetirement = do (ko,
       reverb = ["echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
       return $.inArray(referrer, reverb) != -1 
 
-    returnToReverb: (source = 'modal link') =>
+    returnToReverb: (source) =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
-
       data['type'] = 'reverb_redirect'
       data['data'] = 'back_to_reverb'
-      data['other_data'] = source
+      data['other_data'] = "{source: '" + source + "'}"
       ajax
-        data: JSON.stringify(data)
+        data: JSON.parse(JSON.stringify(data))
         dataType: 'json'
         url: "/metrics"
         method: 'post'
@@ -35,9 +34,9 @@ ns.ReverbRetirement = do (ko,
 
       data['type'] = 'reverb_redirect'
       data['data'] = 'stay_in_edsc'
-      data['other_data'] = ""
+      data['other_data'] = null
       ajax
-        data: JSON.stringify(data)
+        data: JSON.parse(JSON.stringify(data))
         dataType: 'json'
         url: "/metrics"
         method: 'post'
