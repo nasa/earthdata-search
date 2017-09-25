@@ -12,10 +12,12 @@ class SearchController < ApplicationController
   end
 
   def log_metrics_event
-    if params[:other_data] && params[:other_data] != "" then
-      metrics_event(params[:type], params[:data], eval(params[:other_data])) 
-    else 
-      metrics_event(params[:type], params[:data])
+    if params[:type] && params[:data] then
+      if params[:other_data] && params[:other_data] != "" then
+        metrics_event(params[:type], params[:data], eval(params[:other_data])) 
+      else 
+        metrics_event(params[:type], params[:data])
+      end
     end
     render nothing: true, status: :ok, content_type: "text/html"
   end
