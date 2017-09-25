@@ -10,9 +10,9 @@ ns.ReverbRetirement = do (ko) ->
 
     referrerIsReverb: () =>
       console.log "Checking referrer: " + document.referrer
-      referrer = document.referrer.match(/:\/\/(.[^/]+)/)[1] if referrer
+      referrer = if document.referrer then document.referrer.match(/:\/\/(.[^/]+)/)[1] else false
       reverb = ["echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
-      return $.inArray(referrer, reverb) == -1 
+      return $.inArray(referrer, reverb) != -1 
 
     returnToReverb: (source = 'modal link') =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
