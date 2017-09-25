@@ -88,12 +88,6 @@
               <!--/ko-->
             <!--/ko-->
             <dl>
-              <dt>Temporal Extent:</dt>
-              <dd>
-                <!--ko foreach: $data.temporal -->
-                <span data-bind="text: $data"></span><br/>
-                <!--/ko-->
-              </dd>
               <!-- ko if: $data.related_urls.length > 0 -->
               <dt>Related URLs:</dt>
               <dd>
@@ -103,6 +97,12 @@
                 <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
               </dd>
               <!-- /ko -->
+              <dt>Temporal Extent:</dt>
+              <dd>
+                <!--ko foreach: $data.temporal -->
+                <span data-bind="text: $data"></span><br/>
+                <!--/ko-->
+              </dd>
               <dt>GIBS Imagery Projection Availability:</dt>
               <dd>
                 <!-- ko with: $root.ui.collectionsList.selected() -->
