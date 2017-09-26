@@ -20,6 +20,14 @@ module PortalHelper
     end
   end
 
+  def site_org
+    if portal?
+      "#{portal['org'] || portal_id.titleize}"
+    else
+      "Earthdata Search"
+    end
+  end
+
   def site_name
     if portal?
       "#{portal['org'] || portal_id.titleize} Portal"

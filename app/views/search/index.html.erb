@@ -141,7 +141,7 @@
             <% if portal? %>
             <p class="portal-escape" data-bind="visible: !collections.isLoading()">
               Looking for more collections?
-              <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave the <%= site_name %></a>
+              <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave <%= site_org %>'s <%= site_name %></a>
             </p>
             <% end %>
           </div>
