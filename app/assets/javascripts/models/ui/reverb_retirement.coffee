@@ -14,8 +14,8 @@ ns.ReverbRetirement = do (ko,
       console.log "Checking referrer: " + document.referrer
       console.log "Checking referrer against ENV value: " + edsc.config.reverb_url
       referrer = if document.referrer then document.referrer.match(/:\/\/(.[^/]+)/)[1] else false
-      reverb = edsc.config.reverb_url.match(/:\/\/(.[^/]+)/)[1]
-      return referrer == reverb
+      reverb = if edsc.config.reverb_url then edsc.config.reverb_url.match(/:\/\/(.[^/]+)/)[1] else false
+      return referrer == reverb && referrer
 
     returnToReverb: (source) =>
       Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
