@@ -5,14 +5,16 @@ ns = @edsc.models.ui
 data = @edsc.models.data
 
 ns.ReverbRetirement = do (ko,
-                          ajax = @edsc.util.xhr.ajax) ->
+                          ajax = @edsc.util.xhr.ajax,
+                          config=@edsc.models.data.config) ->
   class ReverbRetirement
     constructor: ->
 
     referrerIsReverb: () =>
       console.log "Checking referrer: " + document.referrer
       referrer = if document.referrer then document.referrer.match(/:\/\/(.[^/]+)/)[1] else false
-      reverb = ["echo-reverb-rails.dev", "testbed.echo.nasa.gov", "api-test.echo.nasa.gov", "testbed.echo.nasa.gov", "reverb.echo.nasa.gov"]
+      reverb = [edsc.config.reverb_url]
+      console.log "Checking referrer against: " + JSON.stringify(reverb)
       return $.inArray(referrer, reverb) != -1 
 
     returnToReverb: (source) =>
