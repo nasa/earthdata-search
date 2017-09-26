@@ -53,6 +53,7 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% elsif Rails.env.development? %>
 
@@ -76,6 +77,7 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% else %>
   # Production config
@@ -97,5 +99,6 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% end %>

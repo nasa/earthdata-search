@@ -12,9 +12,9 @@ ns.ReverbRetirement = do (ko,
 
     referrerIsReverb: () =>
       console.log "Checking referrer: " + document.referrer
+      console.log "Checking referrer against ENV value: " + edsc.config.reverb_url
       referrer = if document.referrer then document.referrer.match(/:\/\/(.[^/]+)/)[1] else false
       reverb = [edsc.config.reverb_url.match(/:\/\/(.[^/]+)/)[1]]
-      console.log "Checking referrer against: " + JSON.stringify(reverb)
       return $.inArray(referrer, reverb) != -1 
 
     returnToReverb: (source) =>
