@@ -13,7 +13,6 @@
   match = /cmr_env=(\w+)/.exec(query)
   cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
 
-  
 
   if cmr_env == 'uat'
     reverb_url = "<%= ENV['reverb_url'] || Rails.configuration.services['earthdata']['uat']['reverb_url']%>"
