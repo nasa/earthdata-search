@@ -1,0 +1,72 @@
+.project {
+
+  min-height: calc(100vh - 67px);
+  display: flex;
+
+  .project-info-sidebar {
+    color: #fff;
+    width: 300px;
+    padding: 0 20px;
+    box-shadow: 5px 0 0 rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+
+  .project-collections {
+    background: #e3e3e3;
+    flex: 1;
+
+    h2 {
+      font-size: 1.8em;
+      font-weight: 200;
+    }
+
+    h2, ul {
+      margin: 0;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      padding: 20px;
+    }
+
+    .project-collection-cards {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px 0 0 20px;
+    }
+
+    .collection-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      flex: 0 0 300px;
+      min-height: 160px;
+      margin: 0 20px 20px 0;
+
+      h3 {
+        font-size: 0.8em;
+
+      }
+    }
+
+    .project-stats {
+      li {
+        display: inline-block;
+        font-size: 2em;
+        padding-right: 40px;
+        color: #bdc3c7;
+      }
+
+      .value {
+        font-weight: bold;
+        color: #424242;
+      }
+    }
+  }
+
+  .bounding-box {
+    width: 260px;
+    height: 160px;
+    background: #111;
+  }
+
+}
