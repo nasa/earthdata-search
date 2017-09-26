@@ -13,6 +13,9 @@
   match = /cmr_env=(\w+)/.exec(query)
   cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
 
+  
+  reverb_url = "<%= ENV['reverb_url']%>"
+
   if cmr_env == 'uat'
     browse_scaler_url = "<%= ENV['browse_scaler_url_uat'] ||  Rails.configuration.services['earthdata']['uat']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
