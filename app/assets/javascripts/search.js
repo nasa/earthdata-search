@@ -2,7 +2,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.color-2.1.2
-//= require util/js.cookies
+//= require js.cookies
 //= require knockout
 //= require knockout.mapping
 //= require toastr
