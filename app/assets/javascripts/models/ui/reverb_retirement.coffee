@@ -1,6 +1,3 @@
-#= require util/js.cookies
-#= require util/metrics
-
 ns = @edsc.models.ui
 data = @edsc.models.data
 
@@ -18,7 +15,7 @@ ns.ReverbRetirement = do (ko,
       return referrer == reverb && referrer
 
     returnToReverb: (source) =>
-      Cookies.set('ReadyForReverbRetirement', 'false', { expires: 90 })
+      Cookies.set('ReadyForReverbRetirement', 'false', { expires: 120 })
       data['type'] = 'reverb_redirect'
       data['data'] = 'back_to_reverb'
       data['other_data'] = "{source: '" + source + "'}"
@@ -32,7 +29,7 @@ ns.ReverbRetirement = do (ko,
       window.location.replace("https://" + document.referrer.match(/:\/\/(.[^/]+)/)[1])
     
     stayWithEDSC: () =>
-      Cookies.set('ReadyForReverbRetirement', 'true', { expires: 90 })
+      Cookies.set('ReadyForReverbRetirement', 'true', { expires: 120 })
 
       data['type'] = 'reverb_redirect'
       data['data'] = 'stay_in_edsc'
