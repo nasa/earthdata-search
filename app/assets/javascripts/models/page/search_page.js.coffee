@@ -13,6 +13,7 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/reverb_retirement
+#= require util/js.cookies
 
 models = @edsc.models
 data = models.data
@@ -51,10 +52,6 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
-
-    # These lines for testing only - delete before merging!
-    # Object.defineProperty(document, "referrer", {get : => return "https://reverb.echo.nasa.gov"; });
-    # Cookies.set('ReadyForReverbRetirement', 'false')
 
     reverbRetirement = new ReverbRetirementModel()
     if reverbRetirement.referrerIsReverb() && Cookies.get('ReadyForReverbRetirement') != 'true'
