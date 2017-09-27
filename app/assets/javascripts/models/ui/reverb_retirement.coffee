@@ -26,7 +26,7 @@ ns.ReverbRetirement = do (ko,
         method: 'post'
         success: (data) ->
           console.log data
-      window.location.replace("https://" + document.referrer.match(/:\/\/(.[^/]+)/)[1])
+      window.location.replace(edsc.config.reverb_url)
     
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 120 })
