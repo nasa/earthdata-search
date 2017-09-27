@@ -13,7 +13,6 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/reverb_retirement
-#= require util/js.cookies
 
 models = @edsc.models
 data = models.data
