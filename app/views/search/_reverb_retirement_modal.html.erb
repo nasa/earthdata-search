@@ -1,0 +1,18 @@
+<div class="modal fade sitetour" id="reverbRetirementModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h2 class="modal-title" id="reverbRetirementModalLabel">Welcome to Earthdata Search!</h2>
+      </div>
+      <div class="modal-body modal-body-welcome">
+        <p>You have been redirected to Earthdata Search because <strong>Reverb is being retired on January 1st, 2018</strong>. Earthdata Search is replacing Reverb. If you would like to go return to Reverb for the time being, you may do so by clicking "Return to Reverb" below. Or you can choose to use Earthdata Search for now.</p>
+        <p>At any point you may opt to return back to Reverb. We will remind you periodically that Reverb is retiring as its retirement date draws closer. If you would like to take a tour of Earthdata Search's main features, you may do so after choosing to stay on Earthdata Search. If you would like a more in-depth demonstration of Earthdata Search, <a href="https://www.youtube.com/watch?v=eJFHMestpCo" title="Webinar - Discover and Access NASA's Earth Science Data with Earthdata Search" target="_blank">watch this recorded webinar</a>.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="button" data-bind="click: $root.ui.reverbRetirement.stayWithEDSC">Stay with EDSC</button>
+        <button class="button secondary" data-bind="click: function(){$root.ui.reverbRetirement.returnToReverb('modal link')};">Return to Reverb</button>
+      </div>
+    </div>
+  </div>
+</div>

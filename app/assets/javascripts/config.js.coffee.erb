@@ -13,6 +13,7 @@
   match = /cmr_env=(\w+)/.exec(query)
   cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
 
+  reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['edsc'][Rails.env]['reverb_root']%>"
   if cmr_env == 'uat'
     browse_scaler_url = "<%= ENV['browse_scaler_url_uat'] ||  Rails.configuration.services['earthdata']['uat']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
@@ -50,6 +51,7 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% elsif Rails.env.development? %>
 
@@ -73,6 +75,7 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% else %>
   # Production config
@@ -94,5 +97,6 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% end %>
