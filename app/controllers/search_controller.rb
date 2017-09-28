@@ -14,12 +14,14 @@ class SearchController < ApplicationController
   def log_metrics_event
     if params[:type] && params[:data] then
       if params[:type] == 'reverb_redirect'
-        if params[:other_data] && params[:other_data] != "" then
-          if params[:other_data] == "{source: 'modal link'}" || params[:other_data] == "{source: 'toolbar link'}"
-            metrics_event(params[:type], params[:data], eval(params[:other_data])) 
+        if params[:data] == 'back_to_reverb' || params[:data] == 'stay_in_edsc' then
+          if params[:other_data] && params[:other_data] != "" then
+            if params[:other_data] == "{source: 'modal link'}" || params[:other_data] == "{source: 'toolbar link'}"
+              metrics_event(params[:type], params[:data], eval(params[:other_data])) 
+            end
+          else 
+            metrics_event(params[:type], params[:data])
           end
-        else 
-          metrics_event(params[:type], params[:data])
         end
       end
     end
