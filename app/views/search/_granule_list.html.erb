@@ -8,7 +8,6 @@
         <!-- ko with: ui.collectionsList.focused() -->
         <header class="with-options">
           <h2 data-bind="text: collection.title"></h2>
-          <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
@@ -35,6 +34,7 @@
             </button>
           </div>
           <!-- /ko -->
+          <div id="datasource-caveats"></div>
         </header>
         <div class="master-overlay-info">
           <p>
