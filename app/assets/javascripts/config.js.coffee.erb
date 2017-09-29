@@ -13,19 +13,21 @@
   match = /cmr_env=(\w+)/.exec(query)
   cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
 
-  reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['edsc'][Rails.env]['reverb_root']%>"
   if cmr_env == 'uat'
     browse_scaler_url = "<%= ENV['browse_scaler_url_uat'] ||  Rails.configuration.services['earthdata']['uat']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['uat']['enable_esi_order_chunking'].to_s %>" == 'true')
+    reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['earthdata']['uat']['reverb_root']%>"
   else if cmr_env == 'sit'
     browse_scaler_url = "<%= ENV['browse_scaler_url_sit'] ||  Rails.configuration.services['earthdata']['sit']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['sit']['limited_collections'] %>".split /\s*,\s*/
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['sit']['enable_esi_order_chunking'].to_s %>" == 'true')
+    reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['earthdata']['sit']['reverb_root']%>"
   else
     browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['production']['limited_collections'] %>".split /\s*,\s*/
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['production']['enable_esi_order_chunking'].to_s %>" == 'true')
+    reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['earthdata']['prod']['reverb_root']%>"
 
   <% if Rails.env.test? %>
 
