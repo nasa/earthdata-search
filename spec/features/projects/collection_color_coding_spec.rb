@@ -20,7 +20,7 @@ describe "Project collection color coding", reset: false do
     leave_granule_results
   end
 
-  context 'in the project view' do
+  pending 'in the project view' do
     before :all do
       first_collection_result.click_link "Add collection to the current project"
       second_collection_result.click_link "Add collection to the current project"

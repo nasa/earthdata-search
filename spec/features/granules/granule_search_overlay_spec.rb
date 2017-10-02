@@ -1,16 +1,18 @@
 require "spec_helper"
 
 describe "Granule search overlay", reset: false do
-  before(:all) do
-    Capybara.reset_sessions!
-    load_page :search, ff: 'Near Real Time'
-  end
+  pending "Refactor project panel to e2e services project page" do
+    before(:all) do
+      Capybara.reset_sessions!
+      load_page :search, ff: 'Near Real Time'
+    end
 
-  before(:each) do
-    add_collection_to_project('C1219032680-LANCEMODIS', 'MODIS/Aqua Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 1km')
-    add_collection_to_project('C1280303098-LANCEAMSR2', 'NRT AMSR2 UNIFIED L2B HALF-ORBIT 25 KM EASE-GRID SURFACE SOIL MOISTURE V0')
+    before(:each) do
+      add_collection_to_project('C1219032680-LANCEMODIS', 'MODIS/Aqua Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 1km')
+      add_collection_to_project('C1280303098-LANCEAMSR2', 'NRT AMSR2 UNIFIED L2B HALF-ORBIT 25 KM EASE-GRID SURFACE SOIL MOISTURE V0')
 
-    find("#view-project").click
+      find("#view-project").click
+    end
   end
 
   after(:each) do
@@ -18,7 +20,7 @@ describe "Granule search overlay", reset: false do
     reset_project
   end
 
-  context "when clicking the 'Filter Granules' button" do
+  pending "when clicking the 'Filter Granules' button" do
     before(:each) do
       first_project_collection.click_link "Show granule filters"
     end

@@ -20,7 +20,7 @@ describe "Project collection dragging", reset: false do
     wait_for_xhr
   end
 
-  context "dragging and dropping a collection to a new position" do
+  pending "dragging and dropping a collection to a new position" do
     before :all do
       load_page :search, project: [first_collection_id, second_collection_id]
       find("#view-project").click
@@ -37,7 +37,7 @@ describe "Project collection dragging", reset: false do
       expect(page.find('.timeline-row')).to have_text("#{second_collection_title}#{first_collection_title}")
     end
 
-    # EDSC-1394: I am not seeing any indication of granule visualization at this point in the test steps - 
+    # EDSC-1394: I am not seeing any indication of granule visualization at this point in the test steps -
     # not even on production.  This test is dubious.  Suppressing for now.
     #it "updates the z-index of the collections visualized on the map" do
      # expect(page).to have_selector("#granule-vis-#{second_collection_id}[style*=\"z-index: 16\"]")
@@ -54,7 +54,7 @@ describe "Project collection dragging", reset: false do
     end
   end
 
-  context "dragging and dropping a collection to its original position" do
+  pending "dragging and dropping a collection to its original position" do
     before :all do
       load_page :search, project: [first_collection_id, second_collection_id]
       find("#view-project").click
@@ -71,7 +71,7 @@ describe "Project collection dragging", reset: false do
       expect(page.find('.timeline-row')).to have_text("#{first_collection_title}#{second_collection_title}")
     end
 
-   # EDSC-1394: I am not seeing any indication of granule visualization at this point in the test steps - 
+   # EDSC-1394: I am not seeing any indication of granule visualization at this point in the test steps -
    # not even on production.  This test is dubious.  Suppressing for now.
    # it "maintains the z-index of the collections visualized on the map" do
    #   expect(page).to have_selector("#granule-vis-#{first_collection_id}[style*=\"z-index: 16\"]")
