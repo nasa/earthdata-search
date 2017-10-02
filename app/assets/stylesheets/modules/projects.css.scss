@@ -6,13 +6,29 @@
   .project-info-sidebar {
     color: #fff;
     width: 300px;
-    padding: 0 20px;
+    padding: 0;
     box-shadow: 5px 0 0 rgba(0,0,0,0.1);
     z-index: 1;
+
+    header {
+      padding: 0 20px;
+    }
+  }
+
+  .project-info-details {
+    min-height: calc(100vh - 226px);
+    padding: 0 20px;
+
+  }
+
+  .project-info-actions {
+    background: lighten(#000, 10%);
+    color: #fff;
+    height: 65px;
   }
 
   .project-collections {
-    background: #e3e3e3;
+    background: $light-grey;
     flex: 1;
 
     h2 {
@@ -30,7 +46,9 @@
     .project-collection-cards {
       display: flex;
       flex-wrap: wrap;
+      align-content: flex-start;
       padding: 20px 0 0 20px;
+      min-height: calc(100vh - 300px);
     }
 
     .collection-card {
@@ -39,7 +57,7 @@
       padding: 10px;
       border-radius: 5px;
       flex: 0 0 300px;
-      min-height: 160px;
+      height: 160px;
       margin: 0 20px 20px 0;
 
       h3 {
@@ -53,12 +71,12 @@
         display: inline-block;
         font-size: 2em;
         padding-right: 40px;
-        color: #bdc3c7;
+        color: darken($light-grey, 20%);
       }
 
       .value {
         font-weight: bold;
-        color: #424242;
+        color: $overlay-heading-font-color;
       }
     }
   }
@@ -66,7 +84,13 @@
   .bounding-box {
     width: 260px;
     height: 160px;
-    background: #111;
+    background: #000; // Temporary
+  }
+
+  .project-collection-notes {
+    background: darken($light-grey, 5%);
+    color: $overlay-heading-font-color;
+    height: 65px;
   }
 
 }
