@@ -8,13 +8,15 @@
   <!--/ko-->
 
   <!-- ko with: $data.contact_information -->
-    <dl class="contact-mechanisms">
     <!--ko foreach: $data.ContactMechanisms-->
       <!--ko if: $data.Type == 'Email'-->
-      <dt><b data-bind="text: $data.Type + ':'"></b></dt> <dd><a data-bind="attr: {href: 'mailto:' + $data.Value, title: $data.Value}">View Address</a></dd>
+        <p><a data-bind="text: $data.Value, attr: {href: 'mailto:' + $data.Value, title: $data.Value}"></a></p>
       <!--/ko-->
+    <!--/ko-->
+    <dl class="contact-mechanisms">
+    <!--ko foreach: $data.ContactMechanisms-->
       <!--ko if: $data.Type == 'Facebook'-->
-      <dt><b data-bind="text: $data.Type + ':'"></b></dt> <dd><a data-bind="attr: {href: 'mailto:' + $data.Value, title: $data.Value}">Profile link</a></dd>
+      <dt><b data-bind="text: $data.Type + ':'"></b></dt> <dd><a data-bind="attr: {href: $data.Value, title: $data.Value}">Profile link</a></dd>
       <!--/ko-->
       <!--ko ifnot: $data.Type == 'Email' || $data.Type == 'Facebook'-->
       <dt><b data-bind="text: $data.Type + ':'"></b></dt> <dd data-bind="text: $data.Value"></dd>

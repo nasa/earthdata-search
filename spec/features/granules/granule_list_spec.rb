@@ -74,7 +74,7 @@ describe "Granule list", reset: false do
 
       it "displays the collection details" do
         expect(page).to have_visible_collection_details
-        expect(page).to have_content('View Address')
+        expect(page).to have_content('nsidc@nsidc.org')
       end
 
       it "displays back navigation with the appropriate text" do
