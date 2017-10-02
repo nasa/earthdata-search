@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Timeline zooming", reset: false do
+describe "Timeline zooming", pending: 'Refactor project panel to 2e2 services project page.', reset: false do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
   month_start = DateTime.new(2014, 1, 31, 2, 30, 0, '+0')
@@ -14,19 +14,21 @@ describe "Timeline zooming", reset: false do
 
   start = present - 31.days
 
-  before :all do
-    load_page :search
+  pending 'Refactor project panel to 2e2 services project page.' do
+    before :all do
+      load_page :search
 
-    add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+      add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
-    set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
+      set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
 
-    find("#view-project").click
-    pan_to_time(present)
-    wait_for_xhr
+      find("#view-project").click
+      pan_to_time(present)
+      wait_for_xhr
+    end
   end
 
-  context "when zooming in on the timeline" do
+  pending "when zooming in on the timeline" do
     before(:all) { click_timeline_zoom_in }
     after(:all)  { click_timeline_zoom_out }
 
@@ -64,7 +66,7 @@ describe "Timeline zooming", reset: false do
   end
 
 
-  context "when zooming out on the timeline" do
+  pending "when zooming out on the timeline" do
     before(:all) { click_timeline_zoom_out }
     after(:all) { click_timeline_zoom_in }
 

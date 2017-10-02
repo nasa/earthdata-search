@@ -6,12 +6,12 @@ describe "User missing ordering preferences", reset: false do
 
   context "when configuring a data access request" do
     before :all do
-      load_page :search, project: [collection_id], view: :project
+      load_page :search, focus: [collection_id]
       wait_for_xhr
 
       login 'edscbasic'
 
-      click_button "Download project data"
+      click_button "Download Data"
 
       choose "Stage for Delivery"
       wait_for_xhr
@@ -26,12 +26,12 @@ describe "User missing ordering preferences", reset: false do
 
   context "when accessing downloadable data", pending_fixtures: true do
     before :all do
-      load_page :search, project: [collection_id], view: :project
+      load_page :search, focus: [collection_id]
       wait_for_xhr
 
       login 'edscbasic'
 
-      click_button "Download project data"
+      click_button "Download Data"
 
       choose 'Direct Download'
       click_button 'Submit'

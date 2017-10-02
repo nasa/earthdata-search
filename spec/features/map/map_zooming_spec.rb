@@ -123,14 +123,14 @@ describe 'Map Zooming', reset: false do
     end
 
     context "on polar view" do
-      
+
       before :all do
         find("#collection-results").find_link("Minimize").click
         wait_for_xhr
       end
       after :all do
         click_on "Geographic (Equirectangular)"
-        find_by_id("collection-results").find_link("Maximize").click
+        page.execute_script("$('#collection-results .master-overlay-maximize').click();")
         wait_for_xhr
         script = "$('#map').data('map').map.setView([0, 0], 2);"
         page.execute_script(script)

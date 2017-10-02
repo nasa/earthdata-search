@@ -291,4 +291,9 @@ ns.ProjectList = do (ko
     hideRelatedUrls: ->
       $('#related-urls-modal').modal('hide')
 
+    showProjectPage: ->
+      backParam = "&back=#{encodeURIComponent(urlUtil.fullPath(urlUtil.cleanPath().split('?')[0]))}"
+      path = '/projects/new?' + urlUtil.realQuery() + backParam
+      window.location.href = urlUtil.fullPath(path)
+
   exports = ProjectList

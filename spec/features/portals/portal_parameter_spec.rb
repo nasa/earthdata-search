@@ -78,8 +78,8 @@ describe "Portal parameters", reset: true do
     context "and choosing to access data" do
       before :each do
         downloadable_collection_id = 'C90762182-LAADS'
-        load_page :search, project: [downloadable_collection_id], view: :project, portal: 'simple'
-        click_button "Download project data"
+        load_page :search, focus: [downloadable_collection_id], portal: 'simple'
+        click_button "Download Data"
       end
 
       it "carries the portal parameter to the next page" do
