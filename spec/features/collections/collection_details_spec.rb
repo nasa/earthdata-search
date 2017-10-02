@@ -234,11 +234,12 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with related urls' do
     before do
-      load_page '/search/collection-details', focus: 'C1000000577-DEV07', env: :sit
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit
     end
 
     it 'displays highlighted urls' do
-      expect(collection_details).to have_content "User's Guide"
+      expect(collection_details).to have_content "Data Set Landing Page"
+      expect(collection_details).to have_content "ATBD"
     end
 
     context 'when clicking View All Related URLs' do
@@ -249,9 +250,31 @@ describe 'Collection details', reset: false do
         click_on 'View All Related URLs'
       end
 
-      it 'displays all related urls' do
+      it 'displays all related urls grouped by URLContentType' do
         within '#related-urls-modal' do
-          expect(page).to have_content "General Documentation User's Guide General Documentation"
+          expect(page).to have_css 'h4:contains("Collection URL")'
+          expect(page).not_to have_css 'h4:contains("Collection URLs")'
+          expect(page).not_to have_css 'h4:contains("Publication URLs")'
+          expect(page).not_to have_css 'h4:contains("Publication URL")'
+        end
+      end
+
+      it 'displays types and subtypes of related urls' do
+        within '#related-urls-modal' do
+          expect(page).to have_content 'GET DATALANCE'
+        end
+      end
+
+      it 'displays urls in alphabetical order' do
+        within '#related-urls-modal' do
+          expect(page).to have_content 'http://www.usersguide.come VIEW RELATED INFORMATION https://www.example.com VIEW RELATED INFORMATIONALGORITHM THEORETICAL BASIS DOCUMENT www.lpdaac.org'
+        end
+      end
+
+      it "doesn't display EDSC or Reverb URLs" do
+        within '#related-urls-modal' do
+          expect(page).not_to have_content 'GET DATAEARTHDATA SEARCH'
+          expect(page).not_to have_content 'GET DATAREVERB'
         end
       end
     end

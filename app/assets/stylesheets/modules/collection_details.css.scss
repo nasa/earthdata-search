@@ -285,3 +285,14 @@ a.endpoint-label {
   }
 
 }
+
+.modal-list ul {
+  .arrow-tag-group-list {
+    padding: 0;
+  }
+}
+
+.display-url {
+  white-space: nowrap;
+  overflow-x: scroll;
+}
