@@ -58,10 +58,10 @@ namespace :data do
             # task2.present? && Socket.gethostname != task1.host && Socket.gethostname != task2.host
             # or
             # task2.nil? or task2.not_nil? and task1.not_nil?
-            wait_and_run task
+            wait_and_run(task, &block)
           end
         else
-          wait_and_run task
+          wait_and_run(task, &block)
         end
       else
         yield
@@ -91,10 +91,10 @@ namespace :data do
     end
   end
 
-  def wait_and_run(task)
+  def wait_and_run(task, &block)
     # Wait for 0 ~ 600 sec
     delay = rand(0..600)
-    puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for #{delay} seconds and retry task #{task} on #{Socket.gethostnameo}."
+    puts "[#{Time.now}] This is possibly a new deployment. Wait randomly for #{delay} seconds and retry task #{task} on #{Socket.gethostname}."
     sleep delay
     puts "[#{Time.now}] Wait is done. Retrying task #{task} on #{Socket.gethostname}."
     # check one more time to make sure the task hasn't been started from the other instance in the past 10 minutes.

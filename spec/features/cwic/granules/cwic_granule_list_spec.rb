@@ -36,7 +36,7 @@ describe "CWIC Granule list", reset: false do
 
       it "displays the collection details", acceptance: true do
         expect(page).to have_visible_collection_details
-        expect(page).to have_content('Data Centers: DOI/USGS/EROS ARCHIVER DISTRIBUTOR')
+        expect(page).to have_content('DOI/USGS/EROSARCHIVER DISTRIBUTOR')
       end
 
       it "displays back navigation with the appropriate text", acceptance: true do
