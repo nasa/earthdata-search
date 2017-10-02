@@ -21,7 +21,7 @@ describe 'Collections overlay', :reset => false do
     expect(page).to have_visible_collection_details
   end
 
-  context "after returning to the collection list from the project view" do
+  pending "after returning to the collection list from the project view" do
     before(:all) do
       first_collection_result.click_link "Add collection to the current project"
       second_collection_result.click_link "Add collection to the current project"
@@ -39,7 +39,7 @@ describe 'Collections overlay', :reset => false do
     end
   end
 
-  context "clicking to close facet list and adding collections to a project" do
+  pending "clicking to close facet list and adding collections to a project" do
     before :all do
       load_page :search, facets: true
       manual_close_facet_list

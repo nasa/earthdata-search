@@ -47,7 +47,7 @@ describe "Collection keyword searches", reset: false do
   end
 
   context "returning to the collection results list" do
-    context "after navigating to a project sub-page" do
+    pending "after navigating to a project sub-page" do
       use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
 
       before(:all) do

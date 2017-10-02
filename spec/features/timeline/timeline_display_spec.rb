@@ -21,7 +21,7 @@ describe "Timeline display", reset: false do
     end
   end
 
-  context 'in the project list' do
+  pending 'in the project list' do
     before :all do
       wait_for_xhr
       # 4 collections with granules
@@ -96,7 +96,7 @@ describe "Timeline display", reset: false do
 
   end
 
-  context 'in the granule result list, coming from the project' do
+  pending 'in the granule result list, coming from the project' do
     before :all do
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
@@ -116,7 +116,7 @@ describe "Timeline display", reset: false do
     end
   end
 
-  context 'with a temporal condition' do
+  pending 'with a temporal condition' do
     start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')
     stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
 

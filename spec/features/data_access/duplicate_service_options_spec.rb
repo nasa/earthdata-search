@@ -7,14 +7,16 @@ describe 'Duplicate Service Options', reset: false do
   non_downloadable_collection_id = 'C179001887-SEDAC'
   non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  before :all do
-    load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
-    login
-    click_button "Download project data"
-    wait_for_xhr
+  pending "Refactor project panel to e2e services project page" do
+    before :all do
+      load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
+      login
+      click_button "Download Data"
+      wait_for_xhr
+    end
   end
 
-  context "when setting options for downloadable collection" do
+  pending "when setting options for downloadable collection" do
     after :all do
       reset_access_page
     end
@@ -53,7 +55,7 @@ describe 'Duplicate Service Options', reset: false do
     end
   end
 
-  context 'when setting options for a collection whose only option is "Download"' do
+  pending 'when setting options for a collection whose only option is "Download"' do
     before :all do
       wait_for_xhr
       choose 'Direct Download'
@@ -69,7 +71,7 @@ describe 'Duplicate Service Options', reset: false do
     end
   end
 
-  context "when submitting with multiple access options" do
+  pending "when submitting with multiple access options" do
     before :all do
       click_button 'Add access method'
       within '.access-item-selection:first-child' do

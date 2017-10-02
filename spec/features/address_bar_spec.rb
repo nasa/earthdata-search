@@ -285,7 +285,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context 'when loading a url containing project collections' do
+  pending 'when loading a url containing project collections' do
     before(:all) {
       visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC'
     }
@@ -369,7 +369,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "setting granule query conditions within the project" do
+  pending "setting granule query conditions within the project" do
     before(:all) do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
       view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
@@ -409,7 +409,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "loading a URL with saved query conditions" do
+  pending "loading a URL with saved query conditions" do
     before :all do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS!C179002883-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
       wait_for_xhr

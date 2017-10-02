@@ -52,4 +52,11 @@ class ProjectsController < ApplicationController
     project = Project.find(params[:project_id])
     render json: project.destroy, status: :ok
   end
+
+  def new
+    @back_path = request.query_parameters['back']
+    if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
+      @back_path = '/search/collections'
+    end
+  end
 end

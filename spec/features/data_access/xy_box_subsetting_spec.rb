@@ -11,9 +11,9 @@ describe "Data Access XY Box Subsetting", reset: false do
 
   context 'when ordering a collection with XY Box subsetting and a spatial constraint in the northern hemisphere' do
     before reset_scope do
-      load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [80, 0, 85, 10]
+      load_page :search, focus: ['C115003855-NSIDC_ECS'], bounding_box: [80, 0, 85, 10]
       login
-      click_button "Download project data"
+      click_button "Download Data"
       wait_for_xhr
     end
 
@@ -108,9 +108,9 @@ describe "Data Access XY Box Subsetting", reset: false do
 
   context 'when ordering a collection with XY Box subsetting and a spatial constraint in the southern hemisphere' do
     before reset_scope do
-      load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, point: [-80, 10]
+      load_page :search, focus: ['C115003855-NSIDC_ECS'], point: [-80, 10]
       wait_for_xhr
-      click_button "Download project data"
+      click_button "Download Data"
       wait_for_xhr
     end
 
@@ -205,9 +205,9 @@ describe "Data Access XY Box Subsetting", reset: false do
 
   context 'when ordering a collection with XY Box subsetting and a spatial constraint near the equator' do
     before reset_scope do
-      load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [10, 0, 80, 10]
+      load_page :search, focus: ['C115003855-NSIDC_ECS'], bounding_box: [10, 0, 80, 10]
       wait_for_xhr
-      click_button "Download project data"
+      click_button "Download Data"
       wait_for_xhr
     end
 
@@ -238,9 +238,9 @@ describe "Data Access XY Box Subsetting", reset: false do
 
   context 'when ordering a collection with XY Box subsetting and no spatial constraint' do
     before reset_scope do
-      load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [10, 0, 80, 10]
+      load_page :search, focus: ['C115003855-NSIDC_ECS'], bounding_box: [10, 0, 80, 10]
       wait_for_xhr
-      click_button "Download project data"
+      click_button "Download Data"
       wait_for_xhr
     end
 
