@@ -48,10 +48,16 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
   def doi(doi)
     if doi && doi['DOI']
       doi = doi['DOI']
+      doi = doi.gsub('https://', '')
+      doi = doi.gsub('http://', '')
       if doi.match(/^doi:.+/)
         return {doi_link: "https://dx.doi.org/#{doi.match(/doi:(.+)/)[1]}", doi_text: doi}
       elsif doi.match(/^[^\s]+(\/[^\s]+){1,}\/?/)
-        return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
+        if doi.match('dx.doi.org')
+          return {doi_link: "https://#{doi}", doi_text: doi} 
+        else
+          return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
+        end
       elsif doi.match(/https:\/\/dx\.doi\.org.+/)
         return {doi_link: doi, doi_text: doi}
       else
