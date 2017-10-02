@@ -62,5 +62,9 @@
   .button.secondary {
     @include list-panel-button;
     padding: 7px 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
