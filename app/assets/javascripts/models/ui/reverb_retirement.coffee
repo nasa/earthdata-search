@@ -7,6 +7,9 @@ ns.ReverbRetirement = do (ko,
   class ReverbRetirement
     constructor: ->
 
+    reverbUrl: ->
+      edsc.config.reverb_url
+
     referrerIsReverb: () =>
       console.log "Checking referrer: " + document.referrer
       console.log "Checking referrer against ENV value: " + edsc.config.reverb_url
@@ -26,8 +29,7 @@ ns.ReverbRetirement = do (ko,
         method: 'post'
         success: (data) ->
           console.log data
-      window.location.replace(edsc.config.reverb_url)
-    
+
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 120 })
 
@@ -42,5 +44,5 @@ ns.ReverbRetirement = do (ko,
         success: (data) ->
           console.log data
       $('#reverbRetirementModal').modal('hide')
-    
+
   exports = ReverbRetirement
