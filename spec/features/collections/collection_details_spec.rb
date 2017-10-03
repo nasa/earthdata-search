@@ -17,7 +17,7 @@ describe 'Collection details', reset: false do
         expect(page).to have_content('LPDAACPROCESSOR')
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
-        expect(page).to have_content('Telephone: 605-594-6116 Fax: 605-594-6963 Email: lpdaac@usgs.gov')
+        expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116 Fax: 605-594-6963')
         expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
         expect(page).to have_content('Science Keywords: EARTH SCIENCESPECTRAL/ENGINEERINGINFRARED WAVELENGTHS EARTH SCIENCESPECTRAL/ENGINEERINGVISIBLE WAVELENGTHS')
