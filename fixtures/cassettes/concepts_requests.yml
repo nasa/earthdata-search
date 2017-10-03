@@ -132,7 +132,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 08 Mar 2017 15:15:45 GMT
+  recorded_at: Tue, 03 Oct 2017 18:04:36 GMT
   digest: d7fb0692d7fe1bfad11ee1e7f524d798474029db
 - request:
     method: get

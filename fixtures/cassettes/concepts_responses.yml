@@ -306,30 +306,37 @@ d7fb0692d7fe1bfad11ee1e7f524d798474029db:
       code: 200
       message: 
     headers:
-      date:
-      - Wed, 08 Mar 2017 15:15:45 GMT
-      content-type:
-      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
-      access-control-expose-headers:
-      - CMR-Hits, CMR-Request-Id
       access-control-allow-origin:
       - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - faf559b5-3ed1-48ad-b334-597fbf891abd
+      - efd83811-5798-4dd7-b8f4-c6148b98131e
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Tue, 03 Oct 2017 18:03:58 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
       vary:
       - Accept-Encoding, User-Agent
+      content-length:
+      - '4463'
       connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-      strict-transport-security:
-      - max-age=31536000
+      - Close
     body:
-      encoding: UTF-8
-      string: '{"LocationKeywords":[{"Category":"CONTINENT","Type":"ANTARCTICA","DetailedLocation":"Windmill
-        Islands"},{"Category":"GEOGRAPHIC REGION","Type":"POLAR"}],"MetadataDates":[{"Date":"2004-07-30T00:00:00.000Z","Type":"CREATE"},{"Date":"2015-11-29T00:00:00.000Z","Type":"UPDATE"}],"ISOTopicCategories":["environment","geoscientificInformation","oceans"],"ShortName":"ASAC_2201_HCL_0.5","Abstract":"These
-        results are for the 0.5 hour extraction of HCl.\n\nSee also the metadata records
-        for the 4 hour extraction of HCl, and the time trial data for 1 M HCl extractions.\n\nA
+      encoding: ASCII-8BIT
+      string: '{"CollectionCitations":[{"SeriesName":"CAASM Metadata","Creator":"Snape,
+        I., Riddle, M.J., Gore, D., Stark, J.S., Scouller, R. and Stark, S.C.","Title":"0.5
+        hour 1 M HCl extraction data for the Windmill Islands marine sediments","OnlineResource":{"Linkage":"https://data.aad.gov.au/aadc/metadata/metadata_redirect.cfm?md=/AMD/AU/ASAC_2201_HCL_0.5","Name":"Data
+        Set Citation","Description":"Data Set Citation"},"Publisher":"Australian Antarctic
+        Data Centre","ReleaseDate":"2004-08-02T00:00:00.000Z"}],"LocationKeywords":[{"Category":"CONTINENT","Type":"ANTARCTICA","DetailedLocation":"Windmill
+        Islands"},{"Category":"GEOGRAPHIC REGION","Type":"POLAR"}],"MetadataDates":[{"Date":"2004-07-30T00:00:00.000Z","Type":"CREATE"},{"Date":"2017-04-26T00:00:00.000Z","Type":"UPDATE"}],"ISOTopicCategories":["ENVIRONMENT","GEOSCIENTIFIC
+        INFORMATION","OCEANS"],"ShortName":"ASAC_2201_HCL_0.5","Abstract":"These results
+        are for the 0.5 hour extraction of HCl.\n\nSee also the metadata records for
+        the 4 hour extraction of HCl, and the time trial data for 1 M HCl extractions.\n\nA
         regional survey of potential contaminants in marine or estuarine sediments
         is often one of the first steps in a post-disturbance environmental impact
         assessment. Of the many different chemical extraction or digestion procedures
@@ -360,10 +367,11 @@ d7fb0692d7fe1bfad11ee1e7f524d798474029db:
         in Antarctic marine sediments","DOI":{"DOI":"doi:10.1016/j.chemosphere.2004.05.042"},"Pages":"491-504","Volume":"57","OnlineResource":{"Linkage":"Not%20provided","Name":"Reference
         Online Resource","Description":"Reference Online Resource"},"Author":"Snape,
         I., Scouller, R.C., Stark, S.C., Stark, J., Riddle, M.J., Gore, D.B.","Issue":"6"}],"DOI":{"DOI":"doi:10.4225/15/5747A30D1F767"},"RelatedUrls":[{"Description":"Download
-        point for the data","Relation":["GET DATA"],"URLs":["http://data.aad.gov.au/aadc/portal/download_file.cfm?file_id=1677"]},{"Description":"Public
-        information for ASAC project 2201","Relation":["VIEW PROJECT HOME PAGE"],"URLs":["https://secure3.aad.gov.au/proms/public/projects/report_project_public.cfm?project_no=2201"]},{"Description":"Citation
-        reference for this metadata record and dataset","Relation":["VIEW RELATED
-        INFORMATION"],"URLs":["http://data.aad.gov.au/aadc/metadata/citation.cfm?entry_id=ASAC_2201_HCL_0.5"]}],"ContactPersons":[{"Roles":["Investigator","Technical
+        point for the data","URLContentType":"DistributionURL","Type":"GET DATA","URL":"http://data.aad.gov.au/aadc/portal/download_file.cfm?file_id=1677"},{"Description":"Public
+        information for ASAC project 2201","URLContentType":"CollectionURL","Type":"PROJECT
+        HOME PAGE","URL":"https://secure3.aad.gov.au/proms/public/projects/report_project_public.cfm?project_no=2201"},{"Description":"Citation
+        reference for this metadata record and dataset","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","URL":"http://data.aad.gov.au/aadc/metadata/citation.cfm?entry_id=ASAC_2201_HCL_0.5"}],"ContactPersons":[{"Roles":["Investigator","Technical
         Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"ian.snape@aad.gov.au"},{"Type":"Fax","Value":"+61
         3 6232 3158"},{"Type":"Telephone","Value":"+61 3 6232 3591"}],"Addresses":[{"StreetAddresses":["Australian
         Antarctic Division","203 Channel Highway"],"City":"Kingston","StateProvince":"Tasmania","Country":"Australia","PostalCode":"7050"}]},"FirstName":"IAN","LastName":"SNAPE"},{"Roles":["Investigator"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"martin.riddle@aad.gov.au"},{"Type":"Fax","Value":"+61
@@ -428,7 +436,8 @@ d7fb0692d7fe1bfad11ee1e7f524d798474029db:
         Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"metadata@aad.gov.au"},{"Type":"Fax","Value":"+61
         3 6232 3351"},{"Type":"Telephone","Value":"+61 3 6232 3244"}],"Addresses":[{"StreetAddresses":["Australian
         Antarctic Division","203 Channel Highway"],"City":"Kingston","StateProvince":"Tasmania","Country":"Australia","PostalCode":"7050"}]},"FirstName":"DATA
-        OFFICER","LastName":"AADC"}],"ContactInformation":{"RelatedUrls":[{"URLs":["http://data.aad.gov.au"]}]}}],"DataLanguage":"eng"}'
+        OFFICER","LastName":"AADC"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://data.aad.gov.au"}]}}],"DataLanguage":"eng"}'
     http_version: 
 2dd9404de0e8f41574631802719ef600e7da588c:
   response:
