@@ -11,7 +11,7 @@
       </div>
       <div class="modal-footer">
         <button class="button" data-bind="click: $root.ui.reverbRetirement.stayWithEDSC">Stay with Earthdata Search</button>
-        <a class="button secondary" data-bind="click: function(){$root.ui.reverbRetirement.returnToReverb('modal link')};">Return to Reverb</a>
+        <a class="button secondary" data-bind="attr: {href: $root.ui.reverbRetirement.reverbUrl()}, click: function(){$root.ui.reverbRetirement.returnToReverb('modal link')};">Return to Reverb</a>
       </div>
     </div>
   </div>
