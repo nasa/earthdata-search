@@ -26,7 +26,7 @@ ns.ReverbRetirement = do (ko,
         method: 'post'
         success: (data) ->
           console.log data
-      window.location.replace(edsc.config.reverb_url)
+      $('<form action="' + edsc.config.reverb_url + '"></form>').appendTo('body').submit();    
     
     stayWithEDSC: () =>
       Cookies.set('ReadyForReverbRetirement', 'true', { expires: 120 })
