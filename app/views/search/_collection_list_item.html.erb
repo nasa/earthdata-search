@@ -5,7 +5,7 @@
               <div class="panel-list-drag-handle"></div>
               <% end %>
               <div class="panel-list-thumbnail-container" data-bind="css: {'panel-list-thumbnail-placeholder': !thumbnail()}">
-                <img class="panel-list-thumbnail"  data-bind="attr: {src: thumbnail(), alt: escape(dataset_id), onerror: 'this.src = \'' + defaultThumbnail() + '\''}">
+                <img class="panel-list-thumbnail"  data-bind="attr: {src: thumbnail(), alt: escape(dataset_id), onerror: 'this.src = \'/images/image-unavailable.svg\''}">
               </div>
               <div class="panel-list-info-container">
                 <h3 data-bind="text: dataset_id"></h3>

@@ -173,9 +173,6 @@ ns.Collection = do (ko
         url += "#{separator}clientId=#{config.cmrClientId}"
       url
 
-    defaultThumbnail: ->
-      "/images/image-unavailable.svg"
-
     thumbnail: ->
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1 if @links?
