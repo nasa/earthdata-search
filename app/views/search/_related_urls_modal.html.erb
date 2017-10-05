@@ -4,7 +4,7 @@
       <div class="modal-header">
         <h3 class="modal-title">Related URLs</h3>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-related-urls">
         <!--ko if: $root.ui.collectionsList.selected()-->
           <!--ko with: $root.ui.collectionsList.selected().details()-->
             <!--ko foreach: $data.related_urls-->
@@ -13,7 +13,6 @@
                 <!--ko foreach: urls-->
                   <ul class="modal-list">
                     <li>
-                      <a class="display-url" data-bind="attr: {href: URL}, text: URL"></a>
                       <div>
                         <ul class="arrow-tag-group-list">
                           <li class="arrow-tag-group-item" data-bind="text: Type"></li>
@@ -21,6 +20,7 @@
                           <li class="arrow-tag-group-item" data-bind="text: Subtype"></li>
                           <!--/ko-->
                         </ul>
+                        <p><a class="display-url" data-bind="attr: {href: URL}, text: URL"></a></p>
                       </div>
                     </li>
                   </ul>

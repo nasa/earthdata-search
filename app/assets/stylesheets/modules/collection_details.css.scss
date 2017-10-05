@@ -293,6 +293,6 @@ a.endpoint-label {
 }
 
 .display-url {
-  white-space: nowrap;
+  word-wrap: break-word;
   overflow-x: scroll;
 }
