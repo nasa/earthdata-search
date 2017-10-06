@@ -266,7 +266,7 @@ describe 'Collection details', reset: false do
 
       it 'displays urls in alphabetical order' do
         within '#related-urls-modal' do
-          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATIONhttps://www.example.comwww.lpdaac.org ALGORITHM THEORETICAL BASIS DOCUMENT'
+          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATIONALGORITHM THEORETICAL BASIS DOCUMENT https://www.example.com VIEW RELATED INFORMATIONGENERAL DOCUMENTATION www.lpdaac.org'
         end
       end
 
