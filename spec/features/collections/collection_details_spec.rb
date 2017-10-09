@@ -300,7 +300,18 @@ describe 'Collection details', reset: false do
       expect(page).not_to have_link('THE DIGITIAL OBJECT IDENTIFIER.')
     end
   end
+  
+  context 'when selecting a collection with a DOI field which contains "http://"' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+    end
 
+    it 'updates the URL to contain "https://"" instead' do
+      expect(page).to have_selector("a[href='https://dx.doi.org/10.5067/AQUA/AIRS/DATA301']")
+    end
+  end
+
+  
   context 'when selecting a collection with valid DOI field' do
     before :all do
       load_page '/search/collection-details', focus: 'C179003620-ORNL_DAAC'
