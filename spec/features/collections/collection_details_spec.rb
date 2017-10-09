@@ -13,8 +13,8 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LPDAACARCHIVER')
-        expect(page).to have_content('LPDAACPROCESSOR')
+        expect(page).to have_content('LP DAACARCHIVER')
+        expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
         expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116 Fax: 605-594-6963')
@@ -107,12 +107,12 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection without contacts in the xml' do
     before :all do
-      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H'
+      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H', ac: true
       first_collection_result.click_link('View collection details')
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('JP/JAXA/SAOCARCHIVER DISTRIBUTOR')
+      expect(page).to have_content('JP/JAXA/SAOCARCHIVER')
     end
   end
 
@@ -214,11 +214,11 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with multiple data centers' do
     before :all do
-      load_page '/search/collection-details', focus: 'C1220111401-NSIDCV0'
+      load_page '/search/collection-details', focus: 'C179460405-LPDAAC_ECS'
     end
 
     it 'displays all data center content' do
-      expect(page).to have_content('NASA NSIDC DAACORIGINATOR No contact information for this data center. NASA/NSIDC_DAACARCHIVER DISTRIBUTOR')
+      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR LP DAACARCHIVER')
     end
   end
 
@@ -234,11 +234,12 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with related urls' do
     before do
-      load_page '/search/collection-details', focus: 'C1000000577-DEV07', env: :sit
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'displays highlighted urls' do
-      expect(collection_details).to have_content "User's Guide"
+      expect(collection_details).to have_content "Data Set Landing Page"
+      expect(collection_details).to have_content "ATBD"
     end
 
     context 'when clicking View All Related URLs' do
@@ -249,9 +250,30 @@ describe 'Collection details', reset: false do
         click_on 'View All Related URLs'
       end
 
-      it 'displays all related urls' do
+      it 'displays all related urls grouped by URLContentType' do
         within '#related-urls-modal' do
-          expect(page).to have_content "General Documentation User's Guide General Documentation"
+          expect(page).to have_content 'Collection URL'
+          expect(page).not_to have_content 'Collection URLs'
+          expect(page).to have_content 'Publication URLs'
+        end
+      end
+
+      it 'displays types and subtypes of related urls' do
+        within '#related-urls-modal' do
+          expect(page).to have_content 'GET DATALANCE'
+        end
+      end
+
+      it 'displays urls in alphabetical order' do
+        within '#related-urls-modal' do
+          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATIONALGORITHM THEORETICAL BASIS DOCUMENT https://www.example.com VIEW RELATED INFORMATIONGENERAL DOCUMENTATION www.lpdaac.org'
+        end
+      end
+
+      it "doesn't display EDSC or Reverb URLs" do
+        within '#related-urls-modal' do
+          expect(page).not_to have_content 'GET DATAEARTHDATA SEARCH'
+          expect(page).not_to have_content 'GET DATAREVERB'
         end
       end
     end

@@ -14,8 +14,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     @collection[:temporal] = temporal(collection['TemporalExtents'])
     @collection[:science_keywords] = science_keywords(collection['ScienceKeywords']) if collection['ScienceKeywords']
 
-    @collection[:highlighted_urls] = related_urls(collection, true)
-    @collection[:related_urls] = related_urls(collection, false)
+    @collection[:related_urls] = related_urls(collection)
 
     @collection[:online_access_urls] = collection['RelatedUrls'].select { |ru| ru['Relation'].present? && ru['Relation'].include?('GET DATA') }.map { |ru| ru['URLs'] } .flatten if collection['RelatedUrls'].present?
     @collection[:spatial] = spatial(collection['SpatialExtent'])
@@ -160,36 +159,57 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
     spatial_list.flatten
   end
 
-  def related_urls(collection, highlighted_only = false)
-    related_urls = []
+  def related_urls(collection)
+    # order matters
+    collection_urls = { content_type: 'CollectionURL', label: 'Collection URL', urls: [] }
+    distribution_urls = { content_type: 'DistributionURL', label: 'Distribution URL', urls: [] }
+    publication_urls = { content_type: 'PublicationURL', label: 'Publication URL', urls: [] }
+    visualization_urls = { content_type: 'VisualizationURL', label: 'Visualization URL', urls: [] }
+    highlighted_urls = { content_type: 'HighlightedURL', label: 'Highlighted URL', urls: [] }
+    related_urls = [collection_urls, distribution_urls, publication_urls, visualization_urls, highlighted_urls]
 
-    collection.fetch('RelatedUrls', []).each do |related_url|
-      content_type = related_url.fetch('URLContentType', '').downcase
-      type = related_url.fetch('Type', '').downcase
-      subtype = related_url.fetch('Subtype', '').downcase
-
-      if highlighted_only
-        if content_type == 'collectionurl' && type == 'data set landing page'
-          name = 'Data Set Landing Page'
+    # CMR uses a hard-coded map to do the translation\ cmr_metadata_preview/app/helpers/cmr_metadata_preview/options_helper.rb
+    collection.fetch('RelatedUrls', []).each do |ru|
+      if ru['URLContentType'] == 'CollectionURL' && ru['Type'] == 'DATA SET LANDING PAGE'
+        ru['HighlightedType'] = 'Data Set Landing Page'
+        highlighted_urls[:urls].push ru
+      end
+      if ru['URLContentType'] == 'PublicationURL' && ru['Type'] == 'VIEW RELATED INFORMATION'
+        if ru['Subtype'] == 'DATA QUALITY'
+          ru['HighlightedType'] = 'QA'
+          highlighted_urls[:urls].push ru
         end
-        if content_type == 'publicationurl' && type == 'view related information'
-          name = 'QA' if subtype == 'data quality'
-          name = 'ATBD' if subtype == 'algorithm theoretical basis document'
-          name = "User's Guide" if subtype == "user's guide"
+        if ru['Subtype'] == 'ALGORITHM THEORETICAL BASIS DOCUMENT'
+          ru['HighlightedType'] = 'ATBD'
+          highlighted_urls[:urls].push ru
         end
-
-        next unless ['Data Set Landing Page', 'QA', 'ATBD', "User\'s Guide"].include?(name)
-      else
-        name = type.titleize
-        name = subtype.titleize unless subtype.empty?
+        if ru['Subtype'] == "USER'S GUIDE"
+          ru['HighlightedType'] = "User's Guide"
+          highlighted_urls[:urls].push ru
+        end
       end
 
-      url = related_url.fetch('URL', '')
+      # exclude EDSC and Reverb URLs
+      next if ru['URL'] =~ /search\.(?:sit|uat)?\.?earthdata\.nasa\.gov/ || ru['URL'] =~ /echo\.nasa\.gov/
 
-      related_urls << {
-        url: format_url(url),
-        name: name
-      }
+
+      format_url(ru['URL'])
+      ru['Subtype'] = '' if ru['Subtype'].nil?
+
+      if ru['URLContentType'] == 'CollectionURL'
+        collection_urls[:urls].push ru
+      elsif ru['URLContentType'] == 'DistributionURL'
+        distribution_urls[:urls].push ru
+      elsif ru['URLContentType'] == 'PublicationURL'
+        publication_urls[:urls].push ru
+      elsif ru['URLContentType'] == 'VisualizationURL'
+        visualization_urls[:urls].push ru
+      end
+    end
+
+    # URLs hsould be listed alphabetically and grouped by Type
+    related_urls.each do |url_category|
+      url_category[:urls].sort_by! {|url| [url['Type'], url['Subtype'], url['URL']]}
     end
 
     related_urls
