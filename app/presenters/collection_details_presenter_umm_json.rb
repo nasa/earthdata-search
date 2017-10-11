@@ -52,8 +52,8 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       doi = doi.gsub("doi:", '')
       doi = doi.gsub("dx.doi.org/", '')
       doi = doi.gsub("doi.org/", '')
-      if doi.match(/^[^\s]+(\/[^\s]+){1,}\/?/)
-        return {doi_link: "https://#{doi}", doi_text: doi} 
+      if !doi.blank?
+        return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi} 
       else
         return {doi_text: doi, doi_link: nil}
       end
