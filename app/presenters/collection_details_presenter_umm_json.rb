@@ -47,16 +47,13 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
   def doi(doi)
     if doi && doi['DOI']
       doi = doi['DOI']
-      # EDSC-1645: This string varies a *lot* - clean up permutations so that we start from the same place...
+      # EDSC-1645: This string varies - clean up permutations so that we start from the same place...
       doi = doi.gsub(/^https?\:\/\//, '')
+      doi = doi.gsub("doi:", '')
       doi = doi.gsub("dx.doi.org/", '')
       doi = doi.gsub("doi.org/", '')
       if doi.match(/^[^\s]+(\/[^\s]+){1,}\/?/)
-        if doi.match('dx.doi.org')
-          return {doi_link: "https://#{doi}", doi_text: doi} 
-        else
-          return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
-        end
+        return {doi_link: "https://#{doi}", doi_text: doi} 
       else
         return {doi_text: doi, doi_link: nil}
       end
