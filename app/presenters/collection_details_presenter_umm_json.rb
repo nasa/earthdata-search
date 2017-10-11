@@ -50,6 +50,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       # EDSC-1645: This string varies - clean up permutations so that we start from the same place...
       doi = doi.gsub(/^https?\:\/\//, '')
       doi = doi.gsub("doi:", '')
+      doi = doi.gsub("10.", '')
       doi = doi.gsub("dx.doi.org/", '')
       doi = doi.gsub("doi.org/", '')
       if !doi.blank?
