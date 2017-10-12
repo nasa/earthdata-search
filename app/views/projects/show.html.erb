@@ -3,8 +3,7 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a class="toolbar-button" href="<%= @back_path %><%=request.query_string ? "#{strip_param_by_key('back')}" : nil%>"><i class="fa fa-arrow-circle-o-left"></i> Back <%= back_link_label %></a>
-  <%= render partial: 'shared/workspace_name' %>
+  <a class="back-button" href="<%= edsc_path @project.path %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
@@ -37,7 +36,10 @@
     </footer>
   </section>
   <section class="project-collections">
-    <h2><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
+    <div class="project-title-container">
+      <h2><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
+      <%= render partial: 'shared/workspace_name' %>
+    </div>
     <ul class="project-stats">
       <li><span class="value">6</span> Collections</li>
       <li><span class="value">45</span> Granules</li>

@@ -6,10 +6,6 @@ class Project < ActiveRecord::Base
 
   default_scope { order('updated_at DESC') }
 
-  def url
-    "#{self.path.split('?')[0]}?projectId=#{self.to_param}"
-  end
-
   def number_collections
     collection_list = self.path[/[?&]p=([\w!-]+)/, 1]
     collection_ids = collection_list.split('!').map(&:presence).compact.uniq

@@ -245,7 +245,10 @@ this.edsc.util.url = do(window
         console.log "Saved project #{id}"
         console.log "Path: #{path}"
         savedId = data
-        History.pushState(state, document.title, fullPath("/projects/#{savedId}"))
+        if path.split('?')[0].match(/\/projects\/\d+/)
+          History.pushState(state, document.title, fullPath("/projects/#{savedId}"))
+        else
+          History.pushState(state, document.title, fullPath("/#{path.split('?')[0]}?projectId=#{savedId}"))
         $(document).trigger('edsc.saved') if workspaceName?
 
 
