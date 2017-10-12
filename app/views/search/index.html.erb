@@ -8,11 +8,10 @@
 
 <% content_for :toolbar_secondary do %>
   <div class="landing-secondary-toolbar-container" style="display: none;">
-    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: $root.ui.projectList.showProjectPage" class="toolbar-button" href="#">My Project</a></span>
+    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: $root.ui.projectList.showProjectPage" class="toolbar-button" href="/projects/new">My Project</a></span>
     <%= render partial: 'shared/back_to_reverb' %>
-    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
     <%= render partial: 'shared/feedback' %>
-    <%= render partial: 'workspace_name' %>
+    <%= render partial: 'shared/workspace_name' %>
     <%= render partial: 'shared/login' %>
   </div>
 <% end %>
@@ -119,7 +118,7 @@
           </p>
           <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
-            You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" data-bind="click: $root.ui.projectList.showProjectPage" href="#">Project</a>
+            You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" data-bind="click: $root.ui.projectList.showProjectPage" href="/projects/new">Project</a>
           </p>
           <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
             <% if Rails.configuration.feedback_url.present? %>

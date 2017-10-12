@@ -64,13 +64,13 @@ describe "Viewing Projects", reset: false do
       it "shows the project url to be copied" do
         script = "$('#share-url').val();"
         url = page.evaluate_script script
-        expect(url).to match(/\/search\/collections\?projectId=(\d+)$/)
+        expect(url).to match(/\/projects\/(\d+)/)
       end
 
       it "highlights the url" do
         script = "window.getSelection().toString();"
         highlighted_text = page.evaluate_script script
-        expect(highlighted_text).to match(/\/search\/collections\?projectId=(\d+)$/)
+        expect(highlighted_text).to match(/\/projects\/(\d+)/)
       end
     end
 

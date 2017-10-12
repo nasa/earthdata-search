@@ -208,7 +208,7 @@ this.edsc.util.url = do(window
     ajax
       method: 'get'
       dataType: 'json'
-      url: "/projects/#{id}"
+      url: "/projects/#{id}.json"
       success: (data) ->
         if params.length > 0
           prefix = '&'
@@ -245,7 +245,7 @@ this.edsc.util.url = do(window
         console.log "Saved project #{id}"
         console.log "Path: #{path}"
         savedId = data
-        History.pushState(state, document.title, fullPath("/#{path.split('?')[0]}?projectId=#{savedId}"))
+        History.pushState(state, document.title, fullPath("/projects/#{savedId}"))
         $(document).trigger('edsc.saved') if workspaceName?
 
 
@@ -259,6 +259,12 @@ this.edsc.util.url = do(window
         result = savedPath
       else
         fetchId(id, param(params))
+    else if path.match(/\/projects\/(\d+)\??.*/)
+      id = path.match(/\/projects\/(\d+)\??.*/)[1]
+      if savedPath? && savedId == id
+        result = savedPath
+      else
+        fetchId(id, [])
     else
       result = path
     result = result.replace(/^\/#/, '/') if result? # IE 9 bug with URL hashes
@@ -290,7 +296,7 @@ this.edsc.util.url = do(window
     path = path + paramStr
     # Avoid shortening urls when cmr_env is set
     isTooLong = path.length > config.urlLimit && path.indexOf('cmr_env=') == -1
-    if workspaceName || isTooLong
+    if workspaceName || isTooLong || path.indexOf('/projects/new') == 0
       if path != savedPath || (workspaceName && savedName != workspaceName)
         # assign a guid
         shortenPath(path, state, workspaceName)

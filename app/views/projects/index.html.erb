@@ -1,5 +1,5 @@
 <% content_for :javascript do %>
-  <%= javascript_include_tag "account" %>
+  <%= javascript_include_tag "projects" %>
 <% end %>
 
 <% content_for :toolbar_secondary do %>
@@ -31,7 +31,7 @@
           <% @projects.each do |project| %>
           <tr class="<%= cycle("odd", "even") -%>">
             <td>
-              <strong><a href="<%= project.url %>" class="project-url"><%= project.name %></a></strong>
+              <strong><a href="/projects/<%= project.to_param %>?back=<%= projects_path %>" class="project-url"><%= project.name %></a></strong>
             </td>
             <td>
               <%= pluralize(project.number_collections, 'collection') %>

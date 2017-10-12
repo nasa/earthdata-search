@@ -1,9 +1,10 @@
 <% content_for :javascript do %>
-  <%= javascript_include_tag "account" %>
+  <%= javascript_include_tag "projects" %>
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a class="toolbar-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-o-left"></i> Back <%= request.referrer && request.referrer.include?('search') ? 'to Search Session' : '' %></a>
+  <a class="toolbar-button" href="<%= @back_path %><%=request.query_string ? "#{strip_param_by_key('back')}" : nil%>"><i class="fa fa-arrow-circle-o-left"></i> Back <%= back_link_label %></a>
+  <%= render partial: 'shared/workspace_name' %>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
@@ -36,7 +37,7 @@
     </footer>
   </section>
   <section class="project-collections">
-    <h2>Great Lakes Surface Reflectance Study</h2>
+    <h2><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
     <ul class="project-stats">
       <li><span class="value">6</span> Collections</li>
       <li><span class="value">45</span> Granules</li>

@@ -30,17 +30,24 @@ module Helpers
     end
 
     def project_id
-      query[query_re, 1].to_i
+      page.current_url[query_re, 1].to_i
     end
 
-    def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI')
+    def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI', name='Test Project')
       user = User.first
       project = Project.new
       project.path = path
-      project.name = "Test Project"
+      project.name = name
       project.user_id = user.id
       project.save!
       project
+    end
+
+    def visit_project(name='Test Project')
+      create_project(name: name)
+      visit '/projects'
+      click_link 'Test Project'
+      expect(page).to have_content('Back to Project List')
     end
   end
 end

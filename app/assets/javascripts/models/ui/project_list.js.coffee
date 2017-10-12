@@ -294,6 +294,7 @@ ns.ProjectList = do (ko
     showProjectPage: ->
       backParam = "&back=#{encodeURIComponent(urlUtil.fullPath(urlUtil.cleanPath().split('?')[0]))}"
       path = '/projects/new?' + urlUtil.realQuery() + backParam
+      $(window).trigger('edsc.save_workspace')
       window.location.href = urlUtil.fullPath(path)
 
   exports = ProjectList
