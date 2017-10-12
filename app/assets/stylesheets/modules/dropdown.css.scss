@@ -12,11 +12,6 @@
   display: inline-block;
   position: relative;
 
-  &.save-dropdown {
-    float: left;
-    display: block;
-  }
-
   .dropdown-menu {
     position: absolute;
     z-index: 81;
