@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a class="back-button" href="<%= edsc_path @project.path %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
+  <a class="back-button back-to-search" href="<%= edsc_path @project.path.split('?')[0] %>?projectId=<%=@project.to_param%>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>

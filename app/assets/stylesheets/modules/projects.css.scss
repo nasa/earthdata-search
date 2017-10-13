@@ -108,9 +108,16 @@
     float: right;
   }
 
-  .dropdown.save-dropdown {
-    vertical-align: middle;
-    padding-bottom: 0;
+  .dropdown
+  {
+    .save-dropdown {
+      vertical-align: middle;
+      padding-bottom: 0;
+    }
+
+    ul {
+      padding: 0;
+    }
   }
 
   .save-icon {

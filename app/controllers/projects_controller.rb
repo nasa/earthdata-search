@@ -10,11 +10,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @back_path = request.query_parameters['back']
-    if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
-      @back_path = '/search/collections'
-    end
-
     @project = Project.find(params[:id])
     if current_user.present? && current_user.id == @project.user_id
       respond_to do |format|
@@ -72,10 +67,11 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @back_path = request.query_parameters['back']
-    if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
-      @back_path = '/search/collections'
-    end
+    query_string = request.query_string
+    @project = Project.new
+    @project.path = "#{URI(request.referer).path}?#{query_string}"
+    @project.name = params[:workspace_name] if params[:workspace_name]
+    @project.user_id = current_user.id if current_user
     render 'show'
   end
 end
