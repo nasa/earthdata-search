@@ -47,7 +47,7 @@ module Helpers
       create_project(name: name)
       visit '/projects'
       click_link 'Test Project'
-      expect(page).to have_content('Back to Project List')
+      expect(page).to have_content('Back to Search Session')
     end
   end
 end

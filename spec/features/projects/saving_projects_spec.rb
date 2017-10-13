@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Saving Projects', reset: false do
   context 'when adding a name to a project' do
     let(:path) { '/search/collections?p=!C179002914-ORNL_DAAC!C179003030-ORNL_DAAC' }
-    let(:query_re) { /projects\/(\d+)$/ }
+    let(:query_re) { /^projectId=(\d+)$/ }
 
     before :all do
       Capybara.reset_sessions!
@@ -19,7 +19,7 @@ describe 'Saving Projects', reset: false do
     end
 
     it "shortens the url" do
-      expect(current_url).to match(query_re)
+      expect(query).to match(query_re)
       expect(Project.find(project_id).path).to eql(path)
     end
 
@@ -35,7 +35,7 @@ describe 'Saving Projects', reset: false do
       end
 
       it "keeps the same short url" do
-        expect(current_url).to match(query_re)
+        expect(query).to match(query_re)
         expect(Project.find(project_id).path).to eql(path)
       end
 

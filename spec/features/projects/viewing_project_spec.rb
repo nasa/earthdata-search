@@ -11,7 +11,7 @@ describe "Viewing Single Project", reset: false do
     end
 
     it 'shows project title' do
-      expect(page).to have_css('div.workspace-name', text: 'Test Project')
+      expect(page).to have_css('.save-icon')
       expect(page).to have_css('h2', text:'Test Project')
     end
   end
