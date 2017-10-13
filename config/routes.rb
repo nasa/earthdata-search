@@ -41,6 +41,7 @@ EarthdataSearchClient::Application.routes.draw do
 
   get 'projects/new' => 'projects#new', format: 'html'
   get 'projects/:id' => 'projects#show', defaults: {format: 'html'}
+  get 'search/project' => 'projects#show', defaults: {format: 'html'}
   post 'projects' => 'projects#create', defaults: {format: 'text'}
   get 'projects' => 'projects#index', format: 'html'
   post 'projects/remove' => 'projects#remove', format: 'json'

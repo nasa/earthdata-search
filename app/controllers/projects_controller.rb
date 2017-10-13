@@ -10,7 +10,12 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
+    if params[:id].nil?
+      @project = Project.find(params[:projectId].to_i)
+    else
+      @project = Project.find(params[:id])
+    end
+
     if current_user.present? && current_user.id == @project.user_id
       respond_to do |format|
         format.html { @project }
