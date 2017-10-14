@@ -59,6 +59,7 @@ describe 'Saving Projects', reset: false do
       it "shows the project name" do
         click_link 'Rename your project'
         expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project')
+        click_link 'Rename your project'
       end
     end
   end
