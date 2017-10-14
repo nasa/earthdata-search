@@ -34,13 +34,19 @@
     h2 {
       font-size: 1.8em;
       font-weight: 200;
+      max-width: calc(100% - 380px);
+      display: inline-block;
+      vertical-align: middle;
     }
 
     h2, ul {
       margin: 0;
       background: #fff;
-      border-bottom: 1px solid #ccc;
       padding: 20px;
+    }
+
+    ul {
+      border-bottom: 1px solid #ccc;
     }
 
     .project-collection-cards {
@@ -93,4 +99,35 @@
     height: 65px;
   }
 
+  i.save-success, i.after-save {
+    display: none;
+    color: #2ecc71;
+  }
+
+  .save-project {
+    float: right;
+  }
+
+  .dropdown
+  {
+    .save-dropdown {
+      vertical-align: middle;
+      padding-bottom: 0;
+    }
+
+    ul {
+      padding: 0;
+    }
+  }
+
+  .save-icon {
+    color: #a1a1a1;
+    font-size: 18px;
+  }
+
+  .project-title-container {
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    vertical-align: top;
+  }
 }

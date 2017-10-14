@@ -145,7 +145,7 @@
 
       return "#{root}/collections" if state.current == 'collection-results'
 
-      root += '/project' if state.children.indexOf('project-overview') != -1
+      root += '/projects' if state.children.indexOf('project-overview') != -1
       return root if state.current == 'project-overview'
 
       root += "/granules" if state.children.indexOf('granule-list') != -1

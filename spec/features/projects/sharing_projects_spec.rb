@@ -29,7 +29,8 @@ describe "Sharing Projects", reset: false do
       expect(page).to have_content 'You have 2 collections in your current Project'
     end
 
-    it "inflates the url" do
+    # test is OBE
+    xit "inflates the url" do
       expect(query).to_not match(query_re)
     end
   end
@@ -66,7 +67,8 @@ describe "Sharing Projects", reset: false do
       expect(project_id).to_not eq(new_project_id)
     end
 
-    it "changes the url to include a new project id" do
+    # OBE
+    xit "changes the url to include a new project id" do
       expect(page.current_url).to include(new_project_id)
       expect(page.current_url).to_not include(project_id)
     end

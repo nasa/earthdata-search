@@ -12,11 +12,6 @@
   display: inline-block;
   position: relative;
 
-  &.save-dropdown {
-    float: left;
-    display: block;
-  }
-
   .dropdown-menu {
     position: absolute;
     z-index: 81;
@@ -142,6 +137,26 @@ input.day-of-year-input {
 }
 
 .toolbar-secondary {
+  .back-button {
+    @include linear-gradient(#fff, #eee);
+    border: 1px solid #e3e3e3;
+    color: #424242;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 5px 14px;
+    margin-left: 8px;
+    display: block;
+    float: left;
+    @include transition(all 0.2s ease-in-out);
+    outline: none;
+    text-decoration: none;
+    margin-top: 6px;
+
+    &:hover {
+      background: rgba(255,255,255,1);
+    }
+  }
+
   a.toolbar-button {
     color: #424242;
     background: rgba(255,255,255,.85);

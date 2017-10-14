@@ -1,10 +1,10 @@
 <!-- ko if: window.tokenExpiresIn !== null -->
 <div class="dropdown save-dropdown">
   <!-- ko if: workspaceName -->
-    <a href="javascript:void(0)" data-toggle="dropdown" class="save workspace-name-button toolbar-button" title="Rename your project">
+    <a href="javascript:void(0)" data-toggle="dropdown" class="save toolbar-button" title="Rename your project">
       <div class="workspace-name">
         <i class="fa fa-check-circle save-success"></i>
-        <span class="toolbar-text truncate" data-bind="text: workspaceName"></span>
+        <i class="fa fa-floppy-o save-icon"></i>
       </div>
     </a>
   <!-- /ko -->
@@ -20,9 +20,6 @@
         <button class="save-workspace-name" type="submit">Save</button>
       </form>
     </li>
-    <!-- <li>
-      View Saved Projects
-    </li> -->
   </ul>
 </div>
 <!-- /ko -->

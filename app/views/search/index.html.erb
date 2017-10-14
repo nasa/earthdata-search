@@ -8,11 +8,10 @@
 
 <% content_for :toolbar_secondary do %>
   <div class="landing-secondary-toolbar-container" style="display: none;">
-    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: $root.ui.projectList.showProjectPage" class="toolbar-button" href="#">My Project</a></span>
+    <span><a data-bind="visible: !$root.ui.projectList.visible() && !project.isEmpty(), click: $root.ui.projectList.showProjectPage" href="#" class="toolbar-button">My Project</a></span>
     <%= render partial: 'shared/back_to_reverb' %>
-    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
     <%= render partial: 'shared/feedback' %>
-    <%= render partial: 'workspace_name' %>
+    <%= render partial: 'shared/workspace_name' %>
     <%= render partial: 'shared/login' %>
   </div>
 <% end %>
