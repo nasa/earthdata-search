@@ -24,12 +24,14 @@ describe 'Saving Projects', reset: false do
     end
 
     it "shows the project name" do
-      expect(page).to have_content('Test Project')
+      click_link 'Rename your project'
+      expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project')
+      click_link 'Rename your project'
     end
 
     context "when renaming the project" do
       before :all do
-        click_link 'Test Project'
+        click_link 'Rename your project'
         fill_in "workspace-name", with: "Test Project 2\t"
         click_save_project_name
       end
@@ -40,7 +42,9 @@ describe 'Saving Projects', reset: false do
       end
 
       it "shows the new project name" do
-        expect(page).to have_content('Test Project 2')
+        click_link 'Rename your project'
+        expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project 2')
+        click_link 'Rename your project'
       end
     end
 
@@ -53,7 +57,8 @@ describe 'Saving Projects', reset: false do
       end
 
       it "shows the project name" do
-        expect(page).to have_content('Test Project')
+        click_link 'Rename your project'
+        expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project')
       end
     end
   end

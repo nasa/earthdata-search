@@ -180,6 +180,11 @@ input.day-of-year-input {
     font-weight: bold;
   }
 
+  i.save-success, i.after-save {
+    display: none;
+    color: #2ecc71;
+  }
+
   /*
   img {
     padding: 2px;
