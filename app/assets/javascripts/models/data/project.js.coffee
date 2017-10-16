@@ -12,6 +12,7 @@ ns.Project = do (ko,
                  ajax = @edsc.util.xhr.ajax
                  urlUtil = @edsc.util.url
                  QueryModel = ns.query.CollectionQuery,
+                 GranuleQueryModel = ns.query.GranuleQuery,
                  CollectionsModel = ns.Collections
                  ServiceOptionsModel = ns.ServiceOptions
                  Collection = ns.Collection) ->
@@ -113,6 +114,7 @@ ns.Project = do (ko,
 
   class Project
     constructor: (@query) ->
+      console.log "--==== project constructor"
       @_collectionIds = ko.observableArray()
       @_collectionsById = {}
 
@@ -131,6 +133,14 @@ ns.Project = do (ko,
         owner: this
         deferEvaluation: true
       @_pending = ko.observable(null)
+
+      @projectGranules=ko.computed(read: @_readProjectGranules, write: @_writeProjectGranules, owner: this, deferEvaluation: true)
+
+    _readProjectGranules: ->
+      console.log "------------- read project granules."
+
+    _writeProjectGranules: ->
+      console.log "+++++++++++++ write project granules."
 
     _computeAllReadyToDownload: ->
       return false for ds in @accessCollections() when !ds.serviceOptions.readyToDownload()

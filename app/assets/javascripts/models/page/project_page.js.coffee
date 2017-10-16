@@ -6,7 +6,6 @@
 #= require models/ui/service_options_list
 #= require models/ui/feedback
 #= require models/ui/sitetour
-#= require models/ui/granules_list
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -23,8 +22,6 @@ ns.ProjectPage = do (ko,
   SiteTourModel = ui.SiteTour
   ServiceOptionsListModel = ui.ServiceOptionsList
   FeedbackModel = ui.Feedback
-  ajax=@edsc.util.xhr.ajax
-  GranulesList = ui.GranulesList
 ) ->
 
   class ProjectPage
@@ -37,8 +34,7 @@ ns.ProjectPage = do (ko,
       @preferences = new PreferencesModel()
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
-      @projectSummary = ko.computed(@_computeProjectSummary, this, deferEvaluation: true)
-      @isLoaded = ko.observable(false)
+      @projectGranules = ko.computed(@_computeProjectGranules, this, deferEvaluation: true)
 
       projectList = new ProjectListModel(@project)
       @ui =
@@ -60,41 +56,14 @@ ns.ProjectPage = do (ko,
       @project.serialized(urlUtil.currentParams())
       @workspaceName(urlUtil.getProjectName())
 
-    _computeProjectSize: ->
-      if @project.collections?().length > 0
-        totalSizeInMB = 0.0
-        for collection in @project.collections()
-          totalSizeInMB += collection['total_size']
-        @_convertSize(totalSizeInMB)
-
-    _computeProjectSummary: ->
-      if @project.collections?().length > 0
-        projectGranules = 0
-        projectSize = 0.0
-        loadedCollectionNum = 0
-        for collection in @project.collections()
-          granules = collection.cmrGranulesModel
-          if granules.isLoaded()
-            loadedCollectionNum += 1
-            _size = 0
-            _size += parseFloat(granule.granule_size) for granule in granules.results()
-            totalSize = _size / granules.results().length * granules.hits()
-            projectGranules += granules.hits()
-            collection.granule_hits(granules.hits())
-            projectSize += totalSize
-            collection.total_size(@_convertSize(totalSize)['size'])
-            collection.unit(@_convertSize(totalSize)['unit'])
-
-        @isLoaded(true) if loadedCollectionNum == @project.collections?().length
-
-        {projectGranules: projectGranules, projectSize: @_convertSize(projectSize)}
-
-    _convertSize: (_size) ->
-      _units = ['MB', 'GB', 'TB', 'PB', 'EB']
-      while _size > 1024 && _units.length > 1
-        _size = parseFloat(_size) / 1024
-        _units.shift()
-      {size: _size.toFixed(1), unit: _units[0]}
+    _computeProjectGranules: =>
+      if @project.collections()?.length > 0
+        total = 0
+        total += c.granuleCount() for c in @project.collections()
+        excluded = 0
+        for pg in @project.serialized().pg when pg.exclude? && @project.serialized().pg?
+          excluded += pg.exclude.echo_granule_id.length
+        total - excluded
 
   setCurrent(new ProjectPage())
 
