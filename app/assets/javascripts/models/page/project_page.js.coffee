@@ -58,8 +58,8 @@ ns.ProjectPage = do (ko,
 
     _computeProjectGranules: =>
       if @project.collections()?.length > 0
-        total = 0
-        total += c.granuleCount() for c in @project.collections()
+        if @project?.collections?().length > 0
+          total = @project.collections().reduce (x,y) -> x.granuleCount?() ? 0 + y.granuleCount()
         excluded = 0
         for pg in @project.serialized().pg when pg.exclude? && @project.serialized().pg?
           excluded += pg.exclude.echo_granule_id.length
