@@ -11,7 +11,7 @@ data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
 
-ns.ProjectsPage = do (ko,
+ns.ProjectPage = do (ko,
   setCurrent = ns.setCurrent
   urlUtil = @edsc.util.url
   QueryModel = data.query.CollectionQuery
@@ -24,14 +24,17 @@ ns.ProjectsPage = do (ko,
   FeedbackModel = ui.Feedback
 ) ->
 
-  class ProjectsPage
+  class ProjectPage
     constructor: ->
       @query = new QueryModel()
-      @project = new ProjectModel(@query, false)
+      @project = new ProjectModel(@query)
+      @projectQuery =
+      @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
       @bindingsLoaded = ko.observable(false)
       @preferences = new PreferencesModel()
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
+      @projectGranules = ko.computed(@_computeProjectGranules, this, deferEvaluation: true)
 
       projectList = new ProjectListModel(@project)
       @ui =
@@ -53,6 +56,15 @@ ns.ProjectsPage = do (ko,
       @project.serialized(urlUtil.currentParams())
       @workspaceName(urlUtil.getProjectName())
 
-  setCurrent(new ProjectsPage())
+    _computeProjectGranules: =>
+      if @project.collections()?.length > 0
+        total = 0
+        total += c.granuleCount() for c in @project.collections()
+        excluded = 0
+        for pg in @project.serialized().pg when pg.exclude? && @project.serialized().pg?
+          excluded += pg.exclude.echo_granule_id.length
+        total - excluded
 
-  exports = ProjectsPage
+  setCurrent(new ProjectPage())
+
+  exports = ProjectPage

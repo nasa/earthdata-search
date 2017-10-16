@@ -37,6 +37,8 @@ EarthdataSearchClient::Application.routes.draw do
     end
   end
 
+  get 'collections/granule_size'
+
   resources :docs
 
   get 'projects/new' => 'projects#new', format: 'html'

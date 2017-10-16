@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  respond_to :json, only: [:project_metadata]
   def index
     if current_user.present?
       # TODO PQ EDSC-1038: Include portal information here
@@ -78,5 +79,9 @@ class ProjectsController < ApplicationController
     @project.name = params[:workspace_name] if params[:workspace_name]
     @project.user_id = current_user.id if current_user
     render 'show'
+  end
+
+  def project_metadata
+
   end
 end

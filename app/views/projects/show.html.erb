@@ -41,8 +41,8 @@
       <%= render partial: 'shared/workspace_name' %>
     </div>
     <ul class="project-stats">
-      <li><span class="value">6</span> Collections</li>
-      <li><span class="value">45</span> Granules</li>
+      <li><span class="value" data-bind="text: project.collections().length"></span> Collections</li>
+      <li><span class="value" data-bind="text: projectGranules"></span> Granules</li>
       <li><span class="value">574</span> MB</li>
     </ul>
     <div class="project-collection-cards">
