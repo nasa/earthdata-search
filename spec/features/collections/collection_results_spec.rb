@@ -103,7 +103,7 @@ describe "Collection results", reset: false do
   it "doesn't' show version_id for collections that don't have one" do
     fill_in "keywords", with: 'C1214605943-SCIOPS'
     wait_for_xhr
-    expect(page).to have_no_content("vNot provided")
+    expect(page).to have_no_content("Not provided")
   end
 
   it "indicates if a collection's data collection is ongoing" do
