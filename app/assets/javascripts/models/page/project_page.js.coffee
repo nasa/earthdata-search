@@ -40,8 +40,7 @@ ns.ProjectPage = do (ko,
       @projectGranules = ko.computed(@_computeProjectGranules, this, deferEvaluation: true)
       @loadingSize = ko.observable(true)
       @projectLoaded = ko.observable(@project.collections?().length > 0)
-      @projectSize = ko.observable({size: 'Loading', unit: 'granule size'})
-      @sizeLoaded = ko.observable(false)
+      @projectSummary = ko.observable({size: 'Loading', unit: 'granule size', granule_count: 'Loading', collection_count: 'Loading', collections:[]})
 
       projectList = new ProjectListModel(@project)
       @ui =
@@ -59,7 +58,7 @@ ns.ProjectPage = do (ko,
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
 
-      _timer = setInterval((=> @_retrieveProjectSize(_timer)), 0)
+      _timer = setInterval((=> @_retrieveProjectMetadata(_timer)), 0)
 
     _loadFromUrl: (e)=>
       @project.serialized(urlUtil.currentParams())
@@ -67,6 +66,8 @@ ns.ProjectPage = do (ko,
 
     _computeProjectGranules: =>
       if @project.collections?().length > 0
+        for c in @project.collections()
+          glist = new GranulesList(c)
         total = 0
         total += c.granuleCount() for c in @project.collections()
         excluded = 0
@@ -76,11 +77,11 @@ ns.ProjectPage = do (ko,
       else
         'Loading'
 
-    _retrieveProjectSize: (_timer) =>
+    _retrieveProjectMetadata: (_timer) =>
       collectionIds = urlUtil.currentParams()['p']?.split('!')
       collectionIds?.shift()
 
-      if @project.collections?().length == collectionIds?.length && collectionIds?.length > 0 && !@sizeLoaded()
+      if @project.collections?().length == collectionIds?.length && collectionIds?.length > 0
         clearInterval(_timer)
         serialized = @project.serialized()
         p = serialized.p.split('!')
@@ -91,25 +92,25 @@ ns.ProjectPage = do (ko,
           if shifted == ''
             # start from index 0
             for c, i in p
-              _elem = {collection: c, granuleCount: @project.collections()[i].granuleCount() - (serialized.pg[i].exclude?.echo_granule_id.length ? 0)}
+              _elem = {collection: c, excluded: serialized.pg[i].exclude?.echo_granule_id.length ? 0}
               data.push(_elem)
           else
             # start from index 1
             for c, i in p
-              _elem = {collection: c, granuleCount: @project.collections()[i].granuleCount() - (serialized.pg[i + 1].exclude?.echo_granule_id.length ? 0)}
+              _elem = {collection: c, excluded: serialized.pg[i + 1].exclude?.echo_granule_id.length ? 0}
               data.push(_elem)
 
-          @sizeLoaded(true)
-
+          console.log "Loading project summary..."
           ajax
             dataType: 'json'
             type: 'post'
-            url: 'project_size'
+            url: 'project_summary'
             contentType: 'application/json',
-            data: JSON.stringify({'entries': data})
+            data: JSON.stringify({'entries': data, 'query': urlUtil.currentParams()})
             success: (data) =>
-              data.size = Math.ceil(data.size)
-              @projectSize(data)
+              console.log "Loaded project summary", data
+              data.size = data.size.toFixed(1)
+              @projectSummary(data)
 
   setCurrent(new ProjectPage())
 

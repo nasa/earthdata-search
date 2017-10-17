@@ -305,7 +305,7 @@ this.edsc.util.url = do(window
         shortenPath(path, state, workspaceName)
         return
 
-    if cleanPath() && cleanPath() != path && !window.location.href.split('?')[1]?.match(/^projectId=\d+$/)
+    if cleanPath() && cleanPath() != path #&& !window.location.href.split('?')[1]?.match(/^projectId=\d+$/)
       savedPath = path
       savedId = null
       if push

@@ -44,7 +44,7 @@ EarthdataSearchClient::Application.routes.draw do
   get 'search/project' => 'projects#show', defaults: {format: 'html'}
   post 'projects' => 'projects#create', defaults: {format: 'text'}
   get 'projects' => 'projects#index', format: 'html'
-  post 'projects/project_size' => 'projects#project_size', format: 'json'
+  post 'projects/project_summary' => 'projects#project_summary', format: 'json'
   post 'projects/remove' => 'projects#remove', format: 'json'
 
   resources :placenames, only: [:index], defaults: {format: 'json'}
