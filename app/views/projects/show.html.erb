@@ -41,23 +41,17 @@
       <%= render partial: 'shared/workspace_name' %>
     </div>
     <ul class="project-stats">
-      <li><span class="value" data-bind="text: project.collections().length"></span> Collections</li>
-      <li><span class="value" data-bind="text: projectGranules"></span> Granules</li>
-      <li><span class="value">574</span> MB</li>
+      <li><span class="value" data-bind="text: project.collections().length"></span> <!-- ko text: project.collections().length > 1 ? 'Collections' : 'Collection' --><!-- /ko --></li>
+      <li><span class="value" data-bind="text: projectGranules"></span> <!-- ko text: projectGranules() > 1 ? 'Granules' : 'Granule' --><!--/ko--></li>
+      <li><span class="value" data-bind="text: projectSize()['size']"></span> <!-- ko text: projectSize()['unit']--><!-- /ko --></li>
     </ul>
     <div class="project-collection-cards">
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
+      <!--ko foreach: project.collections()-->
+        <div class="collection-card">
+          <h3 data-bind="text: title"></h3>
+          <div class="granule-count" data-bind="text: "></div>
+        </div>
+      <!--/ko-->
     </div>
     <footer class="project-collection-notes">
 

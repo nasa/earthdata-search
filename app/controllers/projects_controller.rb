@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  respond_to :json, only: [:project_metadata]
+  respond_to :json, only: [:project_size]
   def index
     if current_user.present?
       # TODO PQ EDSC-1038: Include portal information here
@@ -35,9 +35,9 @@ class ProjectsController < ApplicationController
           format.json { render json: @project, status: :ok }
         end
       else
-        project.name = nil
+        @project.name = nil
         # project does not belong to the current user, reload the page in JS
-        project.user_id = -1
+        @project.user_id = -1
         respond_to do |format|
           format.html { render 'projects/show' }
           format.json { render json: @project, status: :ok }
@@ -75,13 +75,42 @@ class ProjectsController < ApplicationController
   def new
     query_string = request.query_string
     @project = Project.new
-    @project.path = "#{URI(request.referer).path}?#{query_string}"
+    @project.path = "/search?#{query_string}"
     @project.name = params[:workspace_name] if params[:workspace_name]
     @project.user_id = current_user.id if current_user
+    @project.save!
     render 'show'
   end
 
-  def project_metadata
+  def project_size
+    size = 0.0
+    params['entries'].each do |entry|
+      sanitize_entry! entry
+      catalog_response = echo_client.get_granules({echo_collection_id: entry[:collection], page_size: 20}, token)
+      if catalog_response.success?
+        granules = catalog_response.body['feed']['entry']
+        if granules.size > 0
+          sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
+          size += (sizeMB / granules.size) * (entry['granuleCount'])
+        end
+      else
+        respond_with({error: catalog_response.body}, status: catalog_response.status, location: nil)
+      end
+    end
 
+    units = ['MB', 'GB', 'TB', 'PB', 'EB']
+    while size > 1024 && units.size > 1
+      size = size.to_f / 1024
+      units.shift()
+    end
+
+    result = {size: size, unit: units.first}
+    respond_with result, status: :ok, location: nil
+  end
+
+  private
+
+  def sanitize_entry!(entry)
+    entry['collection'].match(/C\d+-.+/)
   end
 end
