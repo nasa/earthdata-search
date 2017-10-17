@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
-  respond_to :json, only: [:project_size]
+  include CollectionParams
+
+  respond_to :json, only: [:project_summary]
+
   def index
     if current_user.present?
       # TODO PQ EDSC-1038: Include portal information here
@@ -82,35 +85,56 @@ class ProjectsController < ApplicationController
     render 'show'
   end
 
-  def project_size
-    size = 0.0
-    params['entries'].each do |entry|
-      sanitize_entry! entry
-      catalog_response = echo_client.get_granules({echo_collection_id: entry[:collection], page_size: 20}, token)
-      if catalog_response.success?
-        granules = catalog_response.body['feed']['entry']
-        if granules.size > 0
-          sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
-          size += (sizeMB / granules.size) * (entry['granuleCount'])
+  def project_summary
+    sanitize_params! params
+    collection_ids = params[:entries].map {|e| e[:collection]}
+    collection_params = collection_params_for_request(request)
+    collection_params[:echo_collection_id] = collection_ids
+    collection_params.merge!(params[:query])
+    catalog_response = echo_client.get_collections(collection_params, token)
+
+    if catalog_response.success?
+      results = {size: nil, unit: 'MB', granule_count: 0, collection_count: 0, collections:[]}
+      size = 0.0
+      granule_count = 0
+      collection_count = 0
+      entries = catalog_response.body['feed']['entry']
+      entries.each do |entry|
+        granule_response = echo_client.get_granules({echo_collection_id: entry[:id], page_size: 20}, token)
+        if granule_response.success?
+          granules = granule_response.body['feed']['entry']
+          if granules.size > 0
+            sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
+            size += (sizeMB / granules.size) * (entry['granule_count'])
+            granule_count += entry['granule_count']
+            collection_count += 1
+            results[:collections].push entry
+          end
+        else
+          respond_with(granule_response.body, status: granule_response.status, location: nil)
         end
-      else
-        respond_with({error: catalog_response.body}, status: catalog_response.status, location: nil)
       end
-    end
 
-    units = ['MB', 'GB', 'TB', 'PB', 'EB']
-    while size > 1024 && units.size > 1
-      size = size.to_f / 1024
-      units.shift()
-    end
+      units = ['MB', 'GB', 'TB', 'PB', 'EB']
+      while size > 1024 && units.size > 1
+        size = size.to_f / 1024
+        units.shift()
+      end
 
-    result = {size: size, unit: units.first}
-    respond_with result, status: :ok, location: nil
+      results[:size] = size
+      results[:unit] = units.first
+      results[:granule_count] = granule_count
+      results[:collection_count] = collection_count
+
+      respond_with results, status: :ok, location: nil
+    else
+      respond_with(catalog_response.body, status: catalog_response.status, location: nil)
+    end
   end
 
   private
 
-  def sanitize_entry!(entry)
-    entry['collection'].match(/C\d+-.+/)
+  def sanitize_params!(params)
+    params[:query].delete(:p) if params[:query].present?
   end
 end
