@@ -37,9 +37,6 @@ ns.ProjectPage = do (ko,
       @preferences = new PreferencesModel()
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
-      @projectGranules = ko.computed(@_computeProjectGranules, this, deferEvaluation: true)
-      @loadingSize = ko.observable(true)
-      @projectLoaded = ko.observable(@project.collections?().length > 0)
       @projectSummary = ko.observable({size: 'Loading', unit: 'granule size', granule_count: 'Loading', collection_count: 'Loading', collections:[]})
 
       projectList = new ProjectListModel(@project)
@@ -58,26 +55,13 @@ ns.ProjectPage = do (ko,
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
 
-      _timer = setInterval((=> @_retrieveProjectMetadata(_timer)), 0)
+      _timer = setInterval((=> @_retrieveProjectSummary(_timer)), 0)
 
     _loadFromUrl: (e)=>
       @project.serialized(urlUtil.currentParams())
       @workspaceName(urlUtil.getProjectName())
 
-    _computeProjectGranules: =>
-      if @project.collections?().length > 0
-        for c in @project.collections()
-          glist = new GranulesList(c)
-        total = 0
-        total += c.granuleCount() for c in @project.collections()
-        excluded = 0
-        for pg in @project.serialized().pg when pg.exclude? && @project.serialized().pg?
-          excluded += pg.exclude.echo_granule_id.length
-        total - excluded
-      else
-        'Loading'
-
-    _retrieveProjectMetadata: (_timer) =>
+    _retrieveProjectSummary: (_timer) =>
       collectionIds = urlUtil.currentParams()['p']?.split('!')
       collectionIds?.shift()
 
