@@ -61,8 +61,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       $(document).on 'click', 'a.direct-download', ->
         options = [
           {"accessMethod": [{
-            "method": "Download",
-            "type": "direct_download"}]
+            "method": "Single Granule Download"}]
           }
         ]
         $(document).trigger('dataaccessevent', [@collection, options])
