@@ -36,10 +36,11 @@ describe "Viewing Single Project", reset: false do
       load_page :search, project: ['C14758250-LPDAAC_ECS']
       login
       click_link 'My Project'
+      wait_for_xhr
     end
 
     it 'shows total in-project collections, granules, and size' do
-      expect(page).to have_content('1 Collection 2822702 Granules 262 TB')
+      expect(page).to have_content('1 Collection 3114216 Granules 853.2 TB')
     end
   end
 end
