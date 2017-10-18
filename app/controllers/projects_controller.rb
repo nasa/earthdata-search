@@ -100,14 +100,18 @@ class ProjectsController < ApplicationController
       collection_count = 0
       entries = catalog_response.body['feed']['entry']
       entries.each do |entry|
+        _size = 0.0
         granule_response = echo_client.get_granules({echo_collection_id: entry[:id], page_size: 20}, token)
         if granule_response.success?
           granules = granule_response.body['feed']['entry']
           if granules.size > 0
             sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
-            size += (sizeMB / granules.size) * (entry['granule_count'])
+            _size += (sizeMB / granules.size) * (entry['granule_count'])
+            size += _size
             granule_count += entry['granule_count']
             collection_count += 1
+            entry[:size] = size_and_unit(_size)[:size]
+            entry[:unit] = size_and_unit(_size)[:unit]
             results[:collections].push entry
           end
         else
@@ -115,14 +119,8 @@ class ProjectsController < ApplicationController
         end
       end
 
-      units = ['MB', 'GB', 'TB', 'PB', 'EB']
-      while size > 1024 && units.size > 1
-        size = size.to_f / 1024
-        units.shift()
-      end
-
-      results[:size] = size
-      results[:unit] = units.first
+      results[:size] = size_and_unit(size)[:size]
+      results[:unit] = size_and_unit(size)[:unit]
       results[:granule_count] = granule_count
       results[:collection_count] = collection_count
 
@@ -134,7 +132,16 @@ class ProjectsController < ApplicationController
 
   private
 
+  def size_and_unit(size)
+    units = ['MB', 'GB', 'TB', 'PB', 'EB']
+    while size > 1024 && units.size > 1
+      size = size.to_f / 1024
+      units.shift()
+    end
+    {size: size, unit: units.first}
+  end
+
   def sanitize_params!(params)
-    params[:query].delete(:p) if params[:query].present?
+    params[:query].except!(:p, :pg, :tl, :features) if params[:query].present?
   end
 end
