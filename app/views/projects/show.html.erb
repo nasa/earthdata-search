@@ -41,8 +41,8 @@
       <%= render partial: 'shared/workspace_name' %>
     </div>
     <ul class="project-stats">
-      <li><span class="value" data-bind="text: project.collections().length"></span> <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko --></li>
       <li><span class="value" data-bind="text: projectSummary()['granule_count']"></span> <!-- ko text: projectSummary()['granule_count'] != 1 ? 'Granules' : 'Granule' --><!--/ko--></li>
+      <li><span class="value" data-bind="text: project.collections().length"></span> <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko --></li>
       <li><span class="value" data-bind="text: projectSummary()['size']"></span> <!-- ko text: projectSummary()['unit']--><!-- /ko --></li>
     </ul>
     <div class="project-collection-cards">
