@@ -101,17 +101,20 @@ class ProjectsController < ApplicationController
       entries = catalog_response.body['feed']['entry']
       entries.each do |entry|
         _size = 0.0
-        granule_response = echo_client.get_granules({echo_collection_id: entry[:id], page_size: 20}, token)
+        _granule_count = 0
+        granule_response = echo_client.get_granules({echo_collection_id: entry['id'], page_size: 20}.merge(params[:entries].select{|e| e[:collection] == entry['id']}.first[:query]), token)
         if granule_response.success?
           granules = granule_response.body['feed']['entry']
           if granules.size > 0
             sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
-            _size += (sizeMB / granules.size) * (entry['granule_count'])
+            _size += (sizeMB / granules.size) * (granule_response.headers['cmr-hits'].to_i)
             size += _size
-            granule_count += entry['granule_count']
+            _granule_count += granule_response.headers['cmr-hits'].to_i
+            granule_count += _granule_count
             collection_count += 1
-            entry[:size] = size_and_unit(_size)[:size]
-            entry[:unit] = size_and_unit(_size)[:unit]
+            entry['size'] = size_and_unit(_size)[:size]
+            entry['unit'] = size_and_unit(_size)[:unit]
+            entry['project_granule_count'] = _granule_count
             results[:collections].push entry
           end
         else
@@ -143,5 +146,6 @@ class ProjectsController < ApplicationController
 
   def sanitize_params!(params)
     params[:query].except!(:p, :pg, :tl, :features) if params[:query].present?
+    params[:entries].each {|entry| entry[:query].except!(:v)}
   end
 end
