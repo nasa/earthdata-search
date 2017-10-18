@@ -67,22 +67,14 @@ ns.ProjectPage = do (ko,
 
       if @project.collections?().length == collectionIds?.length && collectionIds?.length > 0
         clearInterval(_timer)
-        serialized = @project.serialized()
+        serialized = urlUtil.currentParams()
         p = serialized.p.split('!')
         shifted = p.shift() # remove first repeated or nil collection id
         if p.length == collectionIds.length
           data = []
-
-          if shifted == ''
-            # start from index 0
-            for c, i in p
-              _elem = {collection: c, excluded: serialized.pg[i].exclude?.echo_granule_id.length ? 0}
-              data.push(_elem)
-          else
-            # start from index 1
-            for c, i in p
-              _elem = {collection: c, excluded: serialized.pg[i + 1].exclude?.echo_granule_id.length ? 0}
-              data.push(_elem)
+          for c, i in p
+            _elem = {collection: c, query: serialized.pg[i + 1]}
+            data.push(_elem)
 
           console.log "Loading project summary..."
           ajax
