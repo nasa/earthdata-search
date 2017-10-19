@@ -37,7 +37,7 @@ ns.ProjectPage = do (ko,
       @preferences = new PreferencesModel()
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
-      @projectSummary = ko.observable({size: 'Loading', unit: 'granule size', granule_count: 'Loading', collection_count: 'Loading', collections:[]})
+      @projectSummary = ko.computed(@_computeProjectSummary, this, deferEvaluation: true)
 
       projectList = new ProjectListModel(@project)
       @ui =
@@ -55,38 +55,39 @@ ns.ProjectPage = do (ko,
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
 
-      _timer = setInterval((=> @_retrieveProjectSummary(_timer)), 0)
-
     _loadFromUrl: (e)=>
       @project.serialized(urlUtil.currentParams())
       @workspaceName(urlUtil.getProjectName())
 
-    _retrieveProjectSummary: (_timer) =>
-      collectionIds = urlUtil.currentParams()['p']?.split('!')
-      collectionIds?.shift()
+    _computeProjectSize: ->
+      if @project.collections?().length > 0
+        totalSizeInMB = 0.0
+        for collection in @project.collections()
+          totalSizeInMB += collection['total_size']
+        @_convertSize(totalSizeInMB)
 
-      if @project.collections?().length == collectionIds?.length && collectionIds?.length > 0
-        clearInterval(_timer)
-        serialized = urlUtil.currentParams()
-        p = serialized.p.split('!')
-        shifted = p.shift() # remove first repeated or nil collection id
-        if p.length == collectionIds.length
-          data = []
-          for c, i in p
-            _elem = {collection: c, query: serialized.pg[i + 1]}
-            data.push(_elem)
+    _computeProjectSummary: ->
+      if @project.collections?().length > 0
+        projectGranules = 0
+        projectSize = 0.0
+        for collection in @project.collections()
+          granules = collection.cmrGranulesModel
+          if granules.isLoaded()
+            _size = 0
+            _size += parseFloat(granule.granule_size) for granule in granules.results()
+            totalSize = _size / granules.results().length * granules.hits()
+            projectGranules += granules.hits()
+            [collection['total_size'], collection['unit']] = [totalSize, 'MB']
+            projectSize += totalSize
 
-          console.log "Loading project summary..."
-          ajax
-            dataType: 'json'
-            type: 'post'
-            url: 'project_summary'
-            contentType: 'application/json',
-            data: JSON.stringify({'entries': data, 'query': urlUtil.currentParams()})
-            success: (data) =>
-              console.log "Loaded project summary", data
-              data.size = data.size.toFixed(1)
-              @projectSummary(data)
+        {projectGranules: projectGranules, projectSize: @_convertSize(projectSize)}
+
+    _convertSize: (_size) ->
+      _units = ['MB', 'GB', 'TB', 'PB', 'EB']
+      while _size > 1024 && _units.length > 1
+        _size = parseFloat(_size) / 1024
+        _units.shift()
+      {size: _size.toFixed(1), unit: _units[0]}
 
   setCurrent(new ProjectPage())
 
