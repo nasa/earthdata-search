@@ -40,7 +40,7 @@ describe "Viewing Single Project", reset: false do
     end
 
     it 'shows total in-project collections, granules, and size' do
-      expect(page).to have_content('1 Collection 3114216 Granules 853.2 TB')
+      expect(page).to have_content('2813384 Granules 1 Collection 269.8 TB')
     end
   end
 end
