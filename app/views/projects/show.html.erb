@@ -50,7 +50,7 @@
           <span class="value" data-bind="text: project.collections().length"></span>
           <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
         </li>
-        <li>
+        <li data-bind="visible: sizeProvided">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
           <span id="info-container">
