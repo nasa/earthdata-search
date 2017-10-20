@@ -10,6 +10,7 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
+             urlUtil = @edsc.util.url
              ZoomHome = ns.L.ZoomHome,
              Legend = @edsc.Legend,
              page = @edsc.page,
@@ -72,36 +73,46 @@ ns.Map = do (window,
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
-    constructor: (el, projection='geo') ->
+    constructor: (el, projection='geo', boundingBox = false) ->
+      @boundingBox = boundingBox
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
 
       map.loadingLayers = 0
 
-      map.addControl(L.control.scale(position: 'topright'))
+      if !@boundingBox
+        map.addControl(L.control.scale(position: 'topright'))
+        map.addLayer(new GranuleVisualizationsLayer())
+        map.addLayer(new MouseEventsLayer())
 
+        map.addControl(new ZoomHome())
+        map.addControl(new ProjectionSwitcher())
+        map.addControl(new SpatialSelection())
+
+        @legendControl = new LegendControl(position: 'topleft')
+        map.addControl(@legendControl)
+      
       @_buildLayerSwitcher()
-      map.addLayer(new GranuleVisualizationsLayer())
-      map.addLayer(new MouseEventsLayer())
-
-      map.addControl(new ZoomHome())
-      map.addControl(new ProjectionSwitcher())
-      map.addControl(new SpatialSelection())
-
-      @legendControl = new LegendControl(position: 'topleft')
-      map.addControl(@legendControl)
-
       @setProjection(projection)
       @setBaseMap("Blue Marble")
       @setOverlays([OVERLAYS[0], OVERLAYS[2]])
+     
+      if !@boundingBox
+        @time = ko.computed(@_computeTime, this)
+        map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
+        @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
+          map.fire('edsc.visiblecollectionschange', collections: collections)
 
-      @time = ko.computed(@_computeTime, this)
-
-      map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
-      @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
-        map.fire('edsc.visiblecollectionschange', collections: collections)
-
+      if @boundingBox
+        map.dragging.disable()
+        map.touchZoom.disable()
+        map.doubleClickZoom.disable()
+        map.scrollWheelZoom.disable()
+        # Disable tap handler, if present.
+        map.tap.disable() if (map.tap)
+        latlon = urlUtil.currentParams().bounding_box.split(",")
+        map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
       @_setupStatePersistence()
 
     # Removes the map from the page
@@ -211,9 +222,10 @@ ns.Map = do (window,
       for own k, layer of baseMaps
         @map.addLayer(layer)
         break
-
       @_layerControl = L.control.layers(baseMaps, overlayMaps)
-      @map.addControl(@_layerControl)
+      if !@boundingBox
+        
+        @map.addControl(@_layerControl)
 
     _rebuildLayers: ->
       layerControl = @_layerControl

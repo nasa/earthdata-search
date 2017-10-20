@@ -6,6 +6,12 @@
 #= require models/ui/service_options_list
 #= require models/ui/feedback
 #= require models/ui/sitetour
+#= require modules/map/coordinate
+#= require modules/map/arc
+#= require modules/map/geoutil
+#= require modules/map/mbr
+#= require modules/map/image_map
+#= require modules/map/index
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -24,6 +30,9 @@ ns.ProjectsPage = do (ko,
   FeedbackModel = ui.Feedback
 ) ->
 
+  $(document).ready ->
+    @map = new window.edsc.map.Map(document.getElementById('bounding-box-map'), 'geo', true)
+
   class ProjectsPage
     constructor: ->
       @query = new QueryModel()
@@ -34,6 +43,7 @@ ns.ProjectsPage = do (ko,
       @workspaceNameField = ko.observable(null)
 
       projectList = new ProjectListModel(@project)
+      
       @ui =
         temporal: new TemporalModel(@query)
         projectList: projectList
