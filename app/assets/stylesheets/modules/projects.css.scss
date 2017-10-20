@@ -66,6 +66,11 @@
       background: #ebebeb;
       border-radius: 5px;
       overflow: hidden;
+      @include transition(all 0.1s linear);
+
+      &:hover {
+        border: 1px solid rgba($ocean-blue, 0.3);
+      }
 
 
       .collection-card-content {
@@ -98,6 +103,11 @@
             display: inline;
             font-size: 1em;
             padding-left: 10px;
+            cursor: default;
+
+            span {
+              margin: 0 2px;
+            }
 
             .enabled {
               color: #359ad9
@@ -154,6 +164,12 @@
         text-decoration: none;
         color: darken($light-grey, 20%);
         font-size: large;
+        vertical-align: middle;
+        @include transition(color 0.1s linear);
+
+        &:hover {
+          color: darken($light-grey, 40%);
+        }
       }
 
       .tooltip {

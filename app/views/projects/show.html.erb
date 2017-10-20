@@ -54,10 +54,7 @@
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
           <span id="info-container">
-            <a class="info" href="#" data-container="#info-container" data-tooltip="true" data-placement="right" data-title="Mark, this total is the sum of all the collections listed below. For each collection, the total size of the in-project granules is estimated from the first 20 granules total size divided by 20 and then times the total hits.
-For example, 100 granules of collection A are picked into this project and the total size of the first 20 granules is 512 MB.
-Then the total granule size for this collection A is 512 / 20 * 100 = 512 * 5 = 2.5 GB.
-"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+            <a class="info" href="#" data-container="#info-container" data-tooltip="true" data-placement="right" data-title="This is the estimated overall size of your project. If no size information exists in a granule's metadata, it will not be included in this number. The size is estimated based upon the first 20 granules added to your project from each collection."><i class="fa fa-info-circle" aria-hidden="true"></i></a>
           </span>
         </li>
       </ul>
@@ -70,10 +67,18 @@ Then the total granule size for this collection A is 512 / 20 * 100 = 512 * 5 = 
             <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
               <div class="label-primary"><span data-bind="text: granule_hits"></span> <!--ko text: granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
               <div class="collection-capability">
-                <span data-bind="css: {enabled: has_spatial}"><i class="fa fa-globe" aria-hidden="true"></i></span>
-                <span data-bind="css: {enabled: has_variables}"><i class="fa fa-tags" aria-hidden="true"></i></span>
-                <span data-bind="css: {enabled: has_transforms}"><i class="fa fa-sliders" aria-hidden="true"></i></span>
-                <span data-bind="css: {enabled: has_formats}"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                <span data-bind="css: {enabled: has_spatial}">
+                  <i class="fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Spatial subsetting options available"></i>
+                </span>
+                <span data-bind="css: {enabled: has_variables}">
+                  <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
+                </span>
+                <span data-bind="css: {enabled: has_transforms}">
+                  <i class="fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Data transformation options available"></i>
+                </span>
+                <span data-bind="css: {enabled: has_formats}">
+                  <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
+                </span>
               </div>
               <div class="label-secondary" data-bind="fadeVisible: $root.isLoaded">
                 <span>Estimated Size: </span><!-- ko text: total_size() + ' ' + unit() --><!--/ko--></div>
