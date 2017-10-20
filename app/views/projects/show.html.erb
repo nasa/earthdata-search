@@ -41,7 +41,7 @@
       <%= render partial: 'shared/workspace_name' %>
     </div>
     <div class="project-stats">
-      <ul class="transparent" data-bind="fadeVisible: isLoaded">
+      <ul data-bind="fadeVisible: isLoaded">
         <li>
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
@@ -53,13 +53,19 @@
         <li>
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
+          <span id="info-container">
+            <a class="info" href="#" data-container="#info-container" data-tooltip="true" data-placement="right" data-title="Mark, this total is the sum of all the collections listed below. For each collection, the total size of the in-project granules is estimated from the first 20 granules total size divided by 20 and then times the total hits.
+For example, 100 granules of collection A are picked into this project and the total size of the first 20 granules is 512 MB.
+Then the total granule size for this collection A is 512 / 20 * 100 = 512 * 5 = 2.5 GB.
+"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+          </span>
         </li>
       </ul>
     </div>
     <div class="project-collection-cards">
       <!--ko foreach: project.collections()-->
         <div class="collection-card">
-          <div class="collection-card-main">
+          <div class="collection-card-content">
             <h3 data-bind="text: title"></h3>
             <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
               <div class="label-primary"><span data-bind="text: granule_hits"></span> <!--ko text: granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
