@@ -120,22 +120,21 @@
         background-color: #ededed;
 
         .action-button {
-          @include linear-gradient(#fff, #ddd);
+          @include gradient-animation(#fff, #ddd, #fff, #fff, .2s);
+          display: inline-block;
           border: 1px solid #e3e3e3;
           color: #424242;
           border-radius: 5px;
           font-size: 1em;
           padding: 5px 14px;
           margin-left: 8px;
-          display: block;
-          float: left;
-          @include transition(all 0.2s ease-in-out);
           outline: none;
           text-decoration: none;
           margin-top: 12px;
+          cursor: pointer;
 
-          &:hover {
-            background: rgba(255,255,255,1);
+          &:before {
+            border-radius: 5px;
           }
         }
       }
@@ -205,8 +204,7 @@
     float: right;
   }
 
-  .dropdown
-  {
+  .dropdown {
     .save-dropdown {
       vertical-align: middle;
       padding-bottom: 0;

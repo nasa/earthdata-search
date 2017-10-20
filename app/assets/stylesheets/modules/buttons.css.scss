@@ -1,3 +1,27 @@
+@mixin gradient-animation( $grad-one-start, $grad-one-end, $grad-two-start, $grad-two-end, $transTime ){
+  background-size: 100%;
+  @include linear-gradient($grad-one-start, $grad-one-end);
+  position: relative;
+  z-index: 100;
+  &:before {
+    @include linear-gradient($grad-two-start, $grad-two-end);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime;
+  }
+  &:hover {
+     &:before {
+       opacity: 1;
+     }
+  }
+}
+
 @mixin light-button {
   background: #1c1c1c;
   color: #bdc3c7;
