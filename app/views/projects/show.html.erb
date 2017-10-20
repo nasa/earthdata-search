@@ -40,20 +40,22 @@
       <h2><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
       <%= render partial: 'shared/workspace_name' %>
     </div>
-    <ul class="project-stats">
-      <li>
-        <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
-        <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
-      </li>
-      <li>
-        <span class="value" data-bind="text: project.collections().length"></span>
-        <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
-      </li>
-      <li>
-        <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
-        <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
-      </li>
-    </ul>
+    <div class="project-stats">
+      <ul class="transparent" data-bind="fadeVisible: isLoaded">
+        <li>
+          <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
+          <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
+        </li>
+        <li>
+          <span class="value" data-bind="text: project.collections().length"></span>
+          <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
+        </li>
+        <li>
+          <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
+          <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
+        </li>
+      </ul>
+    </div>
     <div class="project-collection-cards">
       <!--ko foreach: project.collections()-->
         <div class="collection-card">

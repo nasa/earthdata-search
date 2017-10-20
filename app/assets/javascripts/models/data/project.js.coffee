@@ -12,7 +12,6 @@ ns.Project = do (ko,
                  ajax = @edsc.util.xhr.ajax
                  urlUtil = @edsc.util.url
                  QueryModel = ns.query.CollectionQuery,
-                 GranuleQueryModel = ns.query.GranuleQuery,
                  CollectionsModel = ns.Collections
                  ServiceOptionsModel = ns.ServiceOptions
                  Collection = ns.Collection) ->
