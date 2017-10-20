@@ -68,7 +68,7 @@
       overflow: hidden;
 
 
-      .collection-card-main {
+      .collection-card-content {
         height: 151px;
         background: #fff;
         padding: 10px;
@@ -148,6 +148,22 @@
       .value {
         font-weight: bold;
         color: $overlay-heading-font-color;
+      }
+
+      .info {
+        text-decoration: none;
+        color: darken($light-grey, 20%);
+        font-size: large;
+      }
+
+      .tooltip {
+        width: 400px;
+      }
+
+      .tooltip-inner {
+        white-space: pre-wrap;
+        text-align: left;
+        max-width: 400px;
       }
     }
   }
