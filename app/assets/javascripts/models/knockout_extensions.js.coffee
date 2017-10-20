@@ -198,6 +198,16 @@ do (ko, $=jQuery) ->
         mbr.style.width = Math.round(max_lng - min_lng + 2*borderWidth) + 'px'
         element.appendChild(mbr)
 
+  ko.bindingHandlers.fadeVisible =
+    init: (element, valueAccessor) ->
+      # Initially set the element to be instantly visible/hidden depending on the value
+      value = valueAccessor()
+      $(element).toggle(ko.unwrap(value)) # Use "unwrapObservable" so we can handle values that may or may not be observable
+    update: (element, valueAccessor) ->
+      # Whenever the value subsequently changes, slowly fade the element in or out
+      value = valueAccessor()
+      if ko.unwrap(value) then $(element).fadeIn() else $(element).fadeOut()
+
   # Truncate utility: http://jsfiddle.net/dima_k/bZEQM/1/
   ko.bindingHandlers.truncatedText = update: (element, valueAccessor, allBindingsAccessor) ->
     originalText = ko.utils.unwrapObservable(valueAccessor())

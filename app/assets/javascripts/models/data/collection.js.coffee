@@ -322,6 +322,15 @@ ns.Collection = do (ko
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)
+      @_setObservable('granule_hits', jsonObj)
+      @_setObservable('total_size', jsonObj)
+      @_setObservable('unit', jsonObj)
+      @_setObservable('has_spatial', jsonObj)
+      @_setObservable('has_transforms', jsonObj)
+      @_setObservable('has_formats', jsonObj)
+      @_setObservable('has_variables', jsonObj)
+
+
       @gibs(@getValueForTag('extra.gibs'))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"

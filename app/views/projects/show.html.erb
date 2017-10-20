@@ -40,24 +40,29 @@
       <h2><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
       <%= render partial: 'shared/workspace_name' %>
     </div>
-    <ul class="project-stats">
-      <li><span class="value">6</span> Collections</li>
-      <li><span class="value">45</span> Granules</li>
-      <li><span class="value">574</span> MB</li>
-    </ul>
+    <div class="project-stats">
+      <ul class="transparent" data-bind="fadeVisible: isLoaded">
+        <li>
+          <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
+          <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
+        </li>
+        <li>
+          <span class="value" data-bind="text: project.collections().length"></span>
+          <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
+        </li>
+        <li>
+          <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
+          <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
+        </li>
+      </ul>
+    </div>
     <div class="project-collection-cards">
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
-      <div class="collection-card">
-        <h3>AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V006 (AIRS3STD) at GES DISC</h3>
-      </div>
+      <!--ko foreach: project.collections()-->
+        <div class="collection-card">
+          <h3 data-bind="text: title"></h3>
+          <div class="granule-count" data-bind="text: "></div>
+        </div>
+      <!--/ko-->
     </div>
     <footer class="project-collection-notes">
 
