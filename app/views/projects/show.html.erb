@@ -59,8 +59,24 @@
     <div class="project-collection-cards">
       <!--ko foreach: project.collections()-->
         <div class="collection-card">
-          <h3 data-bind="text: title"></h3>
-          <div class="granule-count" data-bind="text: "></div>
+          <div class="collection-card-main">
+            <h3 data-bind="text: title"></h3>
+            <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
+              <div class="label-primary"><span data-bind="text: granule_hits"></span> <!--ko text: granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
+              <div class="collection-capability">
+                <span data-bind="css: {enabled: has_spatial}"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <span data-bind="css: {enabled: has_variables}"><i class="fa fa-tags" aria-hidden="true"></i></span>
+                <span data-bind="css: {enabled: has_transforms}"><i class="fa fa-sliders" aria-hidden="true"></i></span>
+                <span data-bind="css: {enabled: has_formats}"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+              </div>
+              <div class="label-secondary" data-bind="fadeVisible: $root.isLoaded">
+                <span>Estimated Size: </span><!-- ko text: total_size() + ' ' + unit() --><!--/ko--></div>
+            </div>
+          </div>
+          <div class="action-container">
+            <a class="action-button"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
+            <a class="action-button"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
+          </div>
         </div>
       <!--/ko-->
     </div>
