@@ -1,3 +1,5 @@
+// gradient-animation mixin allows for the transition of gradient backgrounds, which is not supported by the css transition effect.
+// Simply include the gradient-animation mixin in your button (or whatever) CSS rules, specify the start and end values for your first and second gradients, and the transition time to fade between the two, and you're all set.
 @mixin gradient-animation( $grad-one-start, $grad-one-end, $grad-two-start, $grad-two-end, $transTime ){
   background-size: 100%;
   @include linear-gradient($grad-one-start, $grad-one-end);
