@@ -111,8 +111,39 @@ ns.Map = do (window,
         map.scrollWheelZoom.disable()
         # Disable tap handler, if present.
         map.tap.disable() if (map.tap)
-        latlon = urlUtil.currentParams().bounding_box.split(",")
-        map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
+        if urlUtil.currentParams().bounding_box
+          latlon = urlUtil.currentParams().bounding_box.split(",")
+          map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
+          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}])
+          shape._interpolationFn = 'cartesian'
+          map.addLayer(shape)
+        else if urlUtil.currentParams().polygon
+          latlon = urlUtil.currentParams().polygon.split(",")
+          minLat = 90
+          minLon = 180
+          maxLat = -90
+          maxLon = -180
+          i = 0
+          len = latlon.length
+          while i < len
+            if i % 2 == 0 # it's lng
+              if minLon > latlon[i] then minLon = latlon[i]
+              if maxLon < latlon[i] then maxLon = latlon[i]
+            else # it's lat
+              if minLat > latlon[i] then minLat = latlon[i]
+              if maxLat < latlon[i] then maxLat = latlon[i]
+            i++
+          map.fitBounds([{lat: minLat, lng:minLon}, {lat: maxLat, lng: maxLon}])
+          shape = L.polygon([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[5], lng:latlon[4]}, {lat: latlon[7], lng: latlon[6]}])
+          shape._interpolationFn = 'cartesian'
+          map.addLayer(shape)
+        else if urlUtil.currentParams().point
+          latlon = urlUtil.currentParams().point.split(",")
+          map.setView([latlon[1], latlon[0]], 4)
+          marker = L.featureGroup().addLayer(L.marker([latlon[1], latlon[0]]))
+          map.addLayer(marker)
+        else
+          map.fitBounds([{lat: -180, lng: -90}, {lat: 180, lng: 90}])
       @_setupStatePersistence()
 
     # Removes the map from the page
