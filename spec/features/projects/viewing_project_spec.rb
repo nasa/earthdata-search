@@ -16,7 +16,7 @@ describe "Viewing Single Project", reset: false do
     end
   end
 
-  context 'fo an un-saved project' do
+  context 'for an un-saved project' do
     before :all do
       Capybara.reset_sessions!
       load_page :search, project: ['C14758250-LPDAAC_ECS']
@@ -27,6 +27,20 @@ describe "Viewing Single Project", reset: false do
     it 'shows default project title' do
       expect(page).to have_css('h2', text:'Untitled Project')
       expect(page).to have_css('.save-icon')
+    end
+  end
+
+  context 'project summary' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, project: ['C14758250-LPDAAC_ECS']
+      login
+      click_link 'My Project'
+      wait_for_xhr
+    end
+
+    it 'shows total in-project collections, granules, and size' do
+      expect(page).to have_content('2813384 Granules 1 Collection 269.8 TB')
     end
   end
 end

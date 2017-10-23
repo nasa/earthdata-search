@@ -105,7 +105,7 @@ class CollectionsController < ApplicationController
     if params['all_collections'].nil? || params['all_collections'].present? && params.delete('all_collections').to_s != 'true'
       params['has_granules'] = true
     end
-    
+
     params['two_d_coordinate_system'].delete 'coordinates' if params['two_d_coordinate_system'].present?
 
     params['options[temporal][limit_to_granules]'] = true
@@ -140,12 +140,11 @@ class CollectionsController < ApplicationController
         {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
         {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
         {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
-     }]
+                     }]
     if facets.present? && facets['children']
       feature_facet + facets['children']
     else
       feature_facet
     end
   end
-
 end

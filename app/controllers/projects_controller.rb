@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+
   def index
     if current_user.present?
       # TODO PQ EDSC-1038: Include portal information here
@@ -34,9 +35,9 @@ class ProjectsController < ApplicationController
           format.json { render json: @project, status: :ok }
         end
       else
-        project.name = nil
+        @project.name = nil
         # project does not belong to the current user, reload the page in JS
-        project.user_id = -1
+        @project.user_id = -1
         respond_to do |format|
           format.html { render 'projects/show' }
           format.json { render json: @project, status: :ok }
@@ -74,9 +75,10 @@ class ProjectsController < ApplicationController
   def new
     query_string = request.query_string
     @project = Project.new
-    @project.path = "#{URI(request.referer).path}?#{query_string}"
+    @project.path = "/search?#{query_string}"
     @project.name = params[:workspace_name] if params[:workspace_name]
     @project.user_id = current_user.id if current_user
+    @project.save!
     render 'show'
   end
 end
