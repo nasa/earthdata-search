@@ -59,11 +59,11 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
 
       # Track single granule direct downloads
       $(document).on 'click', 'a.direct-download', ->
-        options = [
-          {"accessMethod": [{
-            "method": "Single Granule Download"}]
-          }
-        ]
+        options =
+          accessMethod: [
+            method: "Single Granule Download"
+            type: "single_granule"
+          ]
         $(document).trigger('dataaccessevent', [@collection, options])
 
       @_setupSwipeEvents($granuleList)
