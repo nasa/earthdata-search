@@ -36,7 +36,7 @@ describe "Granule list", reset: false do
     it 'provides a button to download single granule' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         expect(page).to have_link('Download single granule data')
-        expect(page).to have_css('a[href="https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2017.01.01/MOD10A1.A2017001.h34v09.005.2017003060855.hdf"]')
+        expect(page).to have_css('a[href~="/granules/single_download/G1360367376-NSIDC_ECS?cmr_env=prod"]')
       end
     end
 

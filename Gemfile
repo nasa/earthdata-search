@@ -92,6 +92,7 @@ gem 'daemons'
 
 gem 'nokogiri'
 gem 'responders', '~> 2.0'
+gem 'rubyzip', '>= 1.0.0'
 
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'

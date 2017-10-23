@@ -1,3 +1,5 @@
+require 'zip'
+
 class GranulesController < ApplicationController
   include GranuleUtils
 
@@ -28,6 +30,32 @@ class GranulesController < ApplicationController
       respond_with(GranuleDetailsPresenterEcho10.new(response.body.first, params[:id], token, cmr_env), status: response.status)
     else
       respond_with(response.body, status: response.status)
+    end
+  end
+
+  def single_download
+    response = echo_client.get_concept(params[:id], token, 'json')
+    if response.success?
+      compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+        response.body['links'].select{|l| l['rel'].match(/\/data#/) }.each do |link|
+          Rails.logger.info "Fetching from link: #{link}"
+          href = link['href']
+          uri = URI.parse(href)
+          file_name = File.basename(uri.path)
+
+          zos.put_next_entry file_name
+          begin
+          zos.print open(href).read
+          rescue Errno::ETIMEDOUT => e
+            render json: {"errors": [e.message]}, status: 500
+            return
+          end
+        end
+      end
+      compressed_filestream.rewind
+      send_data compressed_filestream.read, filename: "#{params[:id]}.zip", type: 'application/zip', disposition: 'attachment', stream: 'true'
+    else
+      render json: response.body, status: response.status
     end
   end
 

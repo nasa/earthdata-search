@@ -33,7 +33,7 @@ class OpendapConfiguration
   def self.prototype_ddx(collection_or_id, client, token=nil)
     collection = collection_or_id
     if collection.is_a?(String)
-      collection_response = client.get_collection(collection, token, 'json')
+      collection_response = client.get_concept(collection, token, 'json')
       return nil unless collection_response.success?
       collection = collection_response.body
     end

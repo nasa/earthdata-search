@@ -53,7 +53,7 @@ describe Echo::Client do
     it 'with valid collection ID' do
       expect(connection).to receive(:get).with(collection_url, {}).and_return(resp)
 
-      response = cmr_client.get_collection('C14758250-LPDAAC_ECS', nil, 'umm_json_v1_9')
+      response = cmr_client.get_concept('C14758250-LPDAAC_ECS', nil, 'umm_json_v1_9')
       expect(response.faraday_response).to eq(resp)
     end
 
@@ -64,7 +64,7 @@ describe Echo::Client do
       expect(body).to receive(:granule_url=).with(granule_url)
       expect(body).to receive(:granule_url).and_return(granule_url)
 
-      response = cmr_client.get_collection('C14758250-LPDAAC_ECS')
+      response = cmr_client.get_concept('C14758250-LPDAAC_ECS')
       expect(response.body[0].granule_url).to_not be_nil
     end
   end
