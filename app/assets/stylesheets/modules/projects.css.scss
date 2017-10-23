@@ -55,24 +55,89 @@
       align-content: flex-start;
       padding: 20px 0 0 20px;
       min-height: calc(100vh - 300px);
+      background: #f4f4f4;
     }
 
     .collection-card {
-      background: #fff;
+      flex: 0 0 350px;
+      height: 210px;
       border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 5px;
-      flex: 0 0 300px;
-      height: 160px;
       margin: 0 20px 20px 0;
+      background: #ebebeb;
+      border-radius: 5px;
+      overflow: hidden;
 
-      h3 {
-        font-size: 0.8em;
 
+      .collection-card-main {
+        height: 151px;
+        background: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+
+        h3 {
+          font-size: 0.9em;
+          min-height: 60px;
+        }
+
+        .collection-extra {
+          margin-top: 15px;
+
+          .label-primary {
+            font-size: 1.6em;
+            font-weight: bold;
+            display: inline;
+          }
+
+          .label-secondary {
+            font-size: .9em;
+            color: #a1a1a1;
+          }
+
+          .collection-capability {
+            color: #c9c9c9;
+            display: inline;
+            font-size: 1em;
+            padding-left: 10px;
+
+            .enabled {
+              color: #359ad9
+            }
+          }
+        }
+      }
+
+      .action-container {
+        background-color: #ededed;
+
+        .action-button {
+          @include linear-gradient(#fff, #ddd);
+          border: 1px solid #e3e3e3;
+          color: #424242;
+          border-radius: 5px;
+          font-size: 1em;
+          padding: 5px 14px;
+          margin-left: 8px;
+          display: block;
+          float: left;
+          @include transition(all 0.2s ease-in-out);
+          outline: none;
+          text-decoration: none;
+          margin-top: 12px;
+
+          &:hover {
+            background: rgba(255,255,255,1);
+          }
+        }
       }
     }
 
+
+
     .project-stats {
+      height: 86px;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+
       li {
         display: inline-block;
         font-size: 2em;
