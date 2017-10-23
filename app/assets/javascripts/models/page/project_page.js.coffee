@@ -39,6 +39,7 @@ ns.ProjectPage = do (ko,
       @workspaceNameField = ko.observable(null)
       @projectSummary = ko.computed(@_computeProjectSummary, this, deferEvaluation: true)
       @isLoaded = ko.observable(false)
+      @sizeProvided = ko.observable(true)
 
       projectList = new ProjectListModel(@project)
       @ui =
@@ -77,13 +78,19 @@ ns.ProjectPage = do (ko,
           if granules.isLoaded()
             loadedCollectionNum += 1
             _size = 0
-            _size += parseFloat(granule.granule_size) for granule in granules.results()
+            _size += parseFloat(granule.granule_size ? 0) for granule in granules.results()
             totalSize = _size / granules.results().length * granules.hits()
             projectGranules += granules.hits()
             collection.granule_hits(granules.hits())
             projectSize += totalSize
-            collection.total_size(@_convertSize(totalSize)['size'])
-            collection.unit(@_convertSize(totalSize)['unit'])
+            if totalSize == 0 && granules.hits() > 0
+              collection.total_size('Not Provided')
+              collection.unit('')
+              @sizeProvided(false)
+            else
+              collection.total_size(@_convertSize(totalSize)['size'])
+              collection.unit(@_convertSize(totalSize)['unit'])
+              @sizeProvided(true)
 
         @isLoaded(true) if loadedCollectionNum == @project.collections?().length
 

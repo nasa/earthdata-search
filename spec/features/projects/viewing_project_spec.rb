@@ -43,4 +43,32 @@ describe "Viewing Single Project", reset: false do
       expect(page).to have_content('2813384 Granules 1 Collection 269.8 TB')
     end
   end
+
+  context 'project card' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, project: ['C14758250-LPDAAC_ECS']
+      login
+      click_link 'My Project'
+      wait_for_xhr
+    end
+
+    it 'shows project title' do
+      within '.collection-card:first-child' do
+        expect(page).to have_content('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
+      end
+    end
+
+    it 'shows total number of granules included in the project' do
+      within '.collection-card:first-child' do
+        expect(page).to have_content('2813384 Granules')
+      end
+    end
+
+    it 'shows estimated total granule size' do
+      within '.collection-card:first-child' do
+        expect(page).to have_content('Estimated Size: 269.8 TB')
+      end
+    end
+  end
 end
