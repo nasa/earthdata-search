@@ -114,7 +114,7 @@ ns.Map = do (window,
         if urlUtil.currentParams().bounding_box
           latlon = urlUtil.currentParams().bounding_box.split(",")
           map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
-          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}])
+          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}], {color: "#00ffff", fillOpacity: 0.4, weight: 1})
           shape._interpolationFn = 'cartesian'
           map.addLayer(shape)
         else if urlUtil.currentParams().polygon
@@ -134,13 +134,13 @@ ns.Map = do (window,
               if maxLat < latlon[i] then maxLat = latlon[i]
             i++
           map.fitBounds([{lat: minLat, lng:minLon}, {lat: maxLat, lng: maxLon}])
-          shape = L.polygon([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[5], lng:latlon[4]}, {lat: latlon[7], lng: latlon[6]}])
+          shape = L.polygon([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[5], lng:latlon[4]}, {lat: latlon[7], lng: latlon[6]}], {color: "#00ffff", fillOpacity: 0.4, weight: 1})
           shape._interpolationFn = 'cartesian'
           map.addLayer(shape)
         else if urlUtil.currentParams().point
           latlon = urlUtil.currentParams().point.split(",")
           map.setView([latlon[1], latlon[0]], 4)
-          marker = L.featureGroup().addLayer(L.marker([latlon[1], latlon[0]]))
+          marker = L.featureGroup().addLayer(L.marker([latlon[1], latlon[0]]), {color: "#00ffff", fillOpacity: 0.4, weight: 1})
           map.addLayer(marker)
         else
           map.fitBounds([{lat: -180, lng: -90}, {lat: 180, lng: 90}])
