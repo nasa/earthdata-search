@@ -86,6 +86,35 @@ ns.ProjectList = do (ko
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
 
+    showType: =>
+      type = ""
+      if urlUtil.currentParams().bounding_box then type = "Rectangle"
+      if urlUtil.currentParams().polygon then type = "Polygon"
+      if urlUtil.currentParams().point then type = "Point"
+      type
+
+    hasType: =>
+      urlUtil.currentParams().bounding_box || urlUtil.currentParams().polygon || urlUtil.currentParams().point
+    
+    showTemporal: =>
+      if urlUtil.currentParams().temporal
+        m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+        label = "" 
+        dates = urlUtil.currentParams().temporal.split(",")
+        formattedDate = new Date(dates[0])
+        d = formattedDate.getDate()
+        m =  formattedDate.getMonth()
+        y = formattedDate.getFullYear();
+        label = if m then m_names[m] + " " + d + ", " + y else "Beginning of time "
+        formattedDate = new Date(dates[1])
+        d = formattedDate.getDate()
+        m =  formattedDate.getMonth()
+        y = formattedDate.getFullYear();
+        label += if m then " - " + m_names[m] + " " + d + ", " + y else " - End of Time"
+        label
+      else
+        false
+
     awaitingStatus: =>
       @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
 

@@ -119,22 +119,15 @@ ns.Map = do (window,
           map.addLayer(shape)
         else if urlUtil.currentParams().polygon
           latlon = urlUtil.currentParams().polygon.split(",")
-          minLat = 90
-          minLon = 180
-          maxLat = -90
-          maxLon = -180
-          i = 0
           len = latlon.length
-          while i < len
-            if i % 2 == 0 # it's lng
-              if minLon > latlon[i] then minLon = latlon[i]
-              if maxLon < latlon[i] then maxLon = latlon[i]
-            else # it's lat
-              if minLat > latlon[i] then minLat = latlon[i]
-              if maxLat < latlon[i] then maxLat = latlon[i]
-            i++
-          map.fitBounds([{lat: minLat, lng:minLon}, {lat: maxLat, lng: maxLon}])
-          shape = L.polygon([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[5], lng:latlon[4]}, {lat: latlon[7], lng: latlon[6]}], {color: "#00ffff", fillOpacity: 0.4, weight: 1})
+          corners = new Array()
+          i = 0
+          while (i + 1) < len
+            corner = {lat: latlon[i + 1], lng: latlon[i]}
+            corners.push(corner)
+            i = i + 2
+          map.fitBounds(corners)
+          shape = L.polygon(corners, {color: "#00ffff", fillOpacity: 0.4, weight: 1})
           shape._interpolationFn = 'cartesian'
           map.addLayer(shape)
         else if urlUtil.currentParams().point

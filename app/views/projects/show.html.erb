@@ -25,7 +25,9 @@
 
     <div class="project-info-details">
       <div class="bounding-box">
-        <div id="bounding-box-map" class="bounding-box-map"  ></div>
+        <div id="bounding-box-map" class="bounding-box-map"></div>
+        <div data-bind="visible: $root.ui.projectList.hasType()"><i class='fa fa-map-o' aria-hidden='true'></i>  <span data-bind="text: $root.ui.projectList.showType()"></span></div>
+        <div data-bind="visible: $root.ui.projectList.showTemporal()"><i class='fa fa-calendar' aria-hidden='true'></i>  <span data-bind="text: $root.ui.projectList.showTemporal()"></span></div>
       </div>
       <h3>Variables</h3>
       <h3>Transformations</h3>
