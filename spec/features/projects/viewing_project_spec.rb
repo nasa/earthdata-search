@@ -47,7 +47,7 @@ describe "Viewing Single Project", reset: false do
   context 'project card' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS']
+      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
       login
       click_link 'My Project'
       wait_for_xhr
@@ -68,6 +68,13 @@ describe "Viewing Single Project", reset: false do
     it 'shows estimated total granule size' do
       within '.collection-card:first-child' do
         expect(page).to have_content('Estimated Size: 269.8 TB')
+      end
+    end
+
+    it 'truncates long project title' do
+      within '.collection-card:nth-child(2)' do
+        expect(page).to have_content('NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN...')
+        expect(page).to have_css("h3[title='NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN, WATER VAPOR OVER OCEAN AND CLOUD LIQUID WATER OVER OCEAN V0']")
       end
     end
   end
