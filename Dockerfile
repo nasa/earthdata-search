@@ -17,4 +17,6 @@ RUN bundle install
 RUN mkdir -p /earthdata-search/tmp
 RUN chmod 755 /earthdata-search/tmp
 
+RUN chmod +x ./start.sh
+
 CMD rails s -b 0.0.0.0
