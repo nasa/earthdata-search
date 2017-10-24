@@ -14,6 +14,12 @@
     margin: 0;
     color: $overlay-heading-font-color;
 
+    #datasource-caveats {
+      clear: both;
+      font-size: 0.8em;
+      padding: 0 20px;
+    }
+
     h2 {
       font-size: 1.2em;
       margin: 0;
@@ -125,6 +131,14 @@
   .master-overlay-content {
     background: rgba(236, 240, 241,1.0);
   }
+
+  .tab-pane {
+
+    width: 100%;
+    .master-overlay-content {
+      background: none;
+    }
+  }
 }
 
 // The secondary section in the overlay. Granule filters
@@ -176,6 +190,9 @@
     padding-left: $facet-overlay-width;
 
     &.master-overlay-no-min {
+      background-image: asset-url('ecf0f1.png');
+      background-repeat: repeat-x;
+      background-position: 0 60px;
       padding-left: 0;
 
       h4 {
@@ -359,6 +376,37 @@
     margin: 0;
     padding: 0;
   }
+
+  .card-row {
+    padding-bottom: 130px;
+  }
+
+  .card {
+    -ms-flex: 0 1 320px;
+    flex: 0 1 320px;
+    background: #ecf0f1;
+    border: 1px solid darken(#ecf0f1, 5%);
+    border-radius: 5px;
+    padding: 12px;
+    margin: 0px 10px 10px 0;
+    min-height: 100px;
+    font-size: 0.9em;
+
+    h5 {
+      margin: 0 0 5px 0;
+      padding: 0;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    ul {
+      margin: 0;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+  }
 }
 
 .master-overlay-minimize, .master-overlay-maximize {
@@ -476,21 +524,31 @@ a.master-overlay-show-parent {
   -js-display: flex;
   display: -ms-flexbox;
   -ms-flex-direction: row;
-  -ms-flex-wrap: wrap;
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
   justify-content: flex-start;
 }
 
 .flex-column {
-  -ms-flex: 1 1 270px;
-  flex: 1 1 270px; //mini-map width is 270px
+  flex: 1 0 auto;
+  width: 270px;
   dd {
     font-size: 0.9em;
     font-weight: bold;
     margin-bottom: 10px;
     word-wrap: break-word;
   }
+}
+
+.flex-column-aside {
+  margin-right: 20px;
+  width: 360px;
+}
+
+.flex-column-sk {
+  margin-right: 20px;
+  flex: 3 0 300px;
+
 }
 
 .master-overlay-content .flex-column {

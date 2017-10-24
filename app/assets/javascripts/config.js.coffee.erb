@@ -17,14 +17,17 @@
     browse_scaler_url = "<%= ENV['browse_scaler_url_uat'] ||  Rails.configuration.services['earthdata']['uat']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['uat']['limited_collections'] %>".split /\s*,\s*/
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['uat']['enable_esi_order_chunking'].to_s %>" == 'true')
+    reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['earthdata']['uat']['reverb_root']%>"
   else if cmr_env == 'sit'
     browse_scaler_url = "<%= ENV['browse_scaler_url_sit'] ||  Rails.configuration.services['earthdata']['sit']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['sit']['limited_collections'] %>".split /\s*,\s*/
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['sit']['enable_esi_order_chunking'].to_s %>" == 'true')
+    reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['earthdata']['sit']['reverb_root']%>"
   else
     browse_scaler_url = "<%= ENV['browse_scaler_url_production'] ||  Rails.configuration.services['earthdata']['prod']['browse_scaler_root'] %>"
     limited_collections = "<%= Rails.configuration.services['edsc']['production']['limited_collections'] %>".split /\s*,\s*/
     enable_esi_order_chunking = ("<%= ENV['enable_esi_order_chunking'] || Rails.configuration.services['edsc']['production']['enable_esi_order_chunking'].to_s %>" == 'true')
+    reverb_url = "<%=ENV['reverb_root'] || Rails.configuration.services['earthdata']['prod']['reverb_root']%>"
 
   <% if Rails.env.test? %>
 
@@ -50,6 +53,7 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% elsif Rails.env.development? %>
 
@@ -73,6 +77,7 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% else %>
   # Production config
@@ -94,5 +99,6 @@
     thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
+    reverb_url: reverb_url
 
   <% end %>

@@ -60,11 +60,12 @@ EarthdataSearchClient::Application.routes.draw do
   get 'data/status' => 'data_access#status'
   post 'data/remove' => 'data_access#remove', format: 'json'
 
+  post 'metrics' => 'search#log_metrics_event'
+
   get 'search(/*overlay_params)' => 'search#index'
   get 'extract_filters' => 'search#extract_filters', format: 'json'
   get 'health' => 'health#index', format: 'json'
   root :to => 'search#index'
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

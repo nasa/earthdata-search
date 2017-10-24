@@ -10,11 +10,56 @@
     <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
     <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
       <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
+        <small class="short-name-label" data-bind="text: $data.short_name"></small>
         <!-- ko if: details().version_id -->
           <small class="version-label"> VERSION <!-- ko text: details().version_id --><!-- /ko --></small>
         <!-- /ko -->
       </h4>
     <!-- /ko -->
+    <div class="cta-buttons">
+      <div class="dropdown detail-dropdown">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">View More Metadata <i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-menu">
+          <!-- ko with: $root.ui.collectionsList.selected() -->
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">Web View</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ISO19115">ISO19115</a></li>
+          <!-- ko if: $data.smap_iso_url -->
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="SMAP ISO">SMAP ISO</a></li>
+          <!-- /ko -->
+          <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="DIF">DIF</a></li>
+          <!--/ko-->
+        </ul>
+      </div>
+      <div class="dropdown detail-dropdown">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">API Endpoints <i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-menu">
+          <!-- ko with: $root.ui.collectionsList.selected() -->
+          <!-- ko if: granuleDatasourceName() == "cmr" -->
+          <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
+          <!-- /ko -->
+
+          <!-- ko foreach: gibs() -->
+          <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
+          <!-- /ko -->
+
+          <!-- ko if: opendap_url() -->
+          <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
+          <!-- /ko -->
+
+          <!-- ko if: modaps() -->
+          <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
+          <!-- /ko -->
+
+          <!-- ko if: osddUrl() -->
+          <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
+          <!-- /ko -->
+          <!-- /ko -->
+        </ul>
+      </div>
+    </div>
   </header>
 
   <!-- /ko -->
@@ -27,16 +72,31 @@
       <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
         <!-- first row: mini map | spatial/temporal -->
         <div class="row">
-          <div class="flex-column">
+          <div class="flex-column-aside">
             <div id="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+            <!--ko foreach: $data.spatial -->
+            <div class="spatial-bounding"><span data-bind="text: $data"></span></div>
+            <!--/ko-->
           </div>
-          <dl class="flex-column">
-              <dt>Spatial Coordinates:</dt>
+          <div class="flex-column">
+            <!--ko if: $data.doi.doi_link || $data.doi.doi_text-->
+              <!--ko if: $data.doi.doi_link-->
+              <a target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}"><span class="doi-badge">DOI <span data-bind="text: $data.doi.doi_text"></span></span></a>
+              <!--/ko-->
+              <!--ko ifnot: $data.doi.doi_link-->
+              <span class="doi-badge">DOI <span data-bind="text: $data.doi.doi_text"></span></span>
+              <!--/ko-->
+            <!--/ko-->
+            <dl>
+              <!-- ko if: $data.related_urls.length > 0 -->
+              <dt>Related URLs:</dt>
               <dd>
-                <!--ko foreach: $data.spatial -->
-                <span data-bind="text: $data"></span><br/>
-                <!--/ko-->
+                <!-- ko foreach: $data.related_urls[4].urls -->
+                <a data-bind="attr: {href: URL}, text: HighlightedType" target="_blank"></a> |
+                <!-- /ko -->
+                <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
               </dd>
+              <!-- /ko -->
               <dt>Temporal Extent:</dt>
               <dd>
                 <!--ko foreach: $data.temporal -->
@@ -49,116 +109,49 @@
                 <span data-bind="text: gibsLayers()"></span>
                 <!-- /ko -->
               </dd>
-          </dl>
+            </dl>
+          </div>
+          <div class="flex-column-sk">
+            <dl>
+              <dt>Science Keywords:</dt>
+              <!-- ko if: $data.science_keywords.length == 0 -->
+              <dd>Not Available</dd>
+              <!-- /ko -->
+              <!-- ko if: $data.science_keywords.length > 0 -->
+              <dd data-bind="foreach: $data.science_keywords">
+                <div class="arrow-tag-group">
+                  <ul class="arrow-tag-group-list">
+                    <!-- ko foreach: $data -->
+                    <li class="arrow-tag-group-item" data-bind="text: $data"></li>
+                    <!-- /ko -->
+                  </ul>
+                </div>
+              </dd>
+              <!-- /ko -->
+            </dl>
+          </div>
         </div>
         <!-- end of first row -->
 
         <!-- second row: metadata links | api endpionts | relative urls-->
         <div class="row">
-          <div class="dropdown detail-dropdown">
-            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">View More Metadata <i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <!-- ko with: $root.ui.collectionsList.selected() -->
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">Web View</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ISO19115">ISO19115</a></li>
-              <!-- ko if: $data.smap_iso_url -->
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="SMAP ISO">SMAP ISO</a></li>
-              <!-- /ko -->
-              <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="DIF">DIF</a></li>
-              <!--/ko-->
-            </ul>
-          </div>
-          <div class="dropdown detail-dropdown">
-            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">API Endpoints <i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <!-- ko with: $root.ui.collectionsList.selected() -->
-              <!-- ko if: granuleDatasourceName() == "cmr" -->
-              <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
-              <!-- /ko -->
-
-              <!-- ko foreach: gibs() -->
-              <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
-              <!-- /ko -->
-
-              <!-- ko if: opendap_url() -->
-              <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
-              <!-- /ko -->
-
-              <!-- ko if: modaps() -->
-              <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
-              <!-- /ko -->
-
-              <!-- ko if: osddUrl() -->
-              <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
-              <!-- /ko -->
-              <!-- /ko -->
-            </ul>
-          </div>
-          <dl class="flex-column">
-            <!-- ko if: $data.related_urls.length > 0 -->
-            <dt>Related URLs:</dt>
-            <dd>
-              <!-- ko foreach: $data.highlighted_urls -->
-              <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
-              <!-- /ko -->
-              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
-            </dd>
+          <div class="flex-column">
+            <!-- description -->
+            <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
+            <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
+            <div class="description-toggle">
+              <i class="fa fa-chevron-down"></i>
+            </div>
             <!-- /ko -->
-          </dl>
+            <!-- end of description -->
+          </div>
         </div>
         <!-- end of second row -->
-
-        <!-- description -->
-        <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
-        <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
-        <div class="description-toggle">
-          <i class="fa fa-chevron-down"></i>
-        </div>
-        <!-- /ko -->
-        <!-- end of description -->
-
-        <!--third row: data centers-->
-        <dl class="flex-column data-centers">
-          <dt>Data Centers:</dt>
-          <!--ko foreach: data_centers-->
-          <dd>
-            <!--ko text: shortname--><!--/ko-->
-            <!--ko foreach: roles-->
-              <span class="data-center-role-label" data-bind="text: $data"></span>
-            <!--/ko-->
-          </dd>
-            <ul class="field-content-list">
-              <li class="field-content-item">
-                <!--ko with: $data-->
-                  <%= render 'data_center_details' %>
-                <!--/ko-->
-              </li>
-            </ul>
-          <!--/ko-->
-        </dl>
-
-        <!--end of third row-->
 
         <!-- fourth row: misc info -->
         <div class="row">
           <dl class="flex-column">
-            <dt>Short Name:</dt>
-            <dd data-bind="text: $data.short_name"></dd>
           </dl>
-          <!--ko if: $data.doi.doi_link || $data.doi.doi_text-->
-          <dl class="flex-column">
-            <dt>DOI:</dt>
-            <!--ko if: $data.doi.doi_link-->
-            <dd><a target="_blank" href="#" data-bind="attr: {href: $data.doi.doi_link}"><!-- ko text: $data.doi.doi_text --><!-- /ko --></a></dd>
-            <!--/ko-->
-            <!--ko ifnot: $data.doi.doi_link-->
-            <dd data-bind="text: $data.doi.doi_text"></dd>
-            <!--/ko-->
-          </dl>
-          <!--/ko-->
           <dl class="flex-column">
             <!-- ko foreach: $data.online_access_urls -->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data}" target="_blank">Download Page</a></dt>
@@ -168,24 +161,22 @@
         <!-- end of fourth row -->
 
         <!-- fifth row: science keywords -->
-        <div class="row">
-          <dl>
-            <dt>Science Keywords:</dt>
-            <!-- ko if: $data.science_keywords.length == 0 -->
-            <dd>Not Available</dd>
-            <!-- /ko -->
-            <!-- ko if: $data.science_keywords.length > 0 -->
-            <dd data-bind="foreach: $data.science_keywords">
-              <div class="arrow-tag-group">
-                <ul class="arrow-tag-group-list">
-                  <!-- ko foreach: $data -->
-                  <li class="arrow-tag-group-item" data-bind="text: $data"></li>
-                  <!-- /ko -->
-                </ul>
-              </div>
-            </dd>
-            <!-- /ko -->
-          </dl>
+        <div class="row card-row">
+          <!--ko foreach: data_centers-->
+          <div class="card">
+            <h5><!--ko text: shortname--><!--/ko--></h5>
+            <!--ko foreach: roles-->
+              <span class="data-center-role-label" data-bind="text: $data"></span>
+            <!--/ko-->
+            <ul>
+              <li>
+                <!--ko with: $data-->
+                  <%= render 'data_center_details' %>
+                <!--/ko-->
+              </li>
+            </ul>
+          </div>
+          <!--/ko-->
         </div>
         <!-- end of fifth row -->
       </div>

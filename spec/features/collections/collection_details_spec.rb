@@ -13,14 +13,14 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LPDAAC ARCHIVER')
-        expect(page).to have_content('LPDAAC PROCESSOR')
-        expect(page).to have_content('Short Name: AST_L1AE')
+        expect(page).to have_content('LP DAACARCHIVER')
+        expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
+        expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
-        expect(page).to have_content('Telephone:605-594-6116Fax:605-594-6963Email:lpdaac@usgs.gov')
-        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+        expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116 Fax: 605-594-6963')
+        expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
-        expect(page).to have_content('Science Keywords: Earth ScienceSpectral/EngineeringInfrared Wavelengths Earth ScienceSpectral/EngineeringVisible Wavelengths')
+        expect(page).to have_content('Science Keywords: EARTH SCIENCESPECTRAL/ENGINEERINGINFRARED WAVELENGTHS EARTH SCIENCESPECTRAL/ENGINEERINGVISIBLE WAVELENGTHS')
       end
     end
 
@@ -69,12 +69,12 @@ describe 'Collection details', reset: false do
     it 'displays the collection details' do
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
-        expect(page).to have_content('Name Not Provided ARCHIVER')
-        expect(page).to have_content('Short Name: SPL3SMP_E')
+        expect(page).to have_content('Name Not ProvidedARCHIVER')
+        expect(page).to have_content('SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
-        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
+        expect(page).to have_content('Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 2015-03-31 to 2020-12-31')
-        expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceSoils')
+        expect(page).to have_content('Science Keywords: EARTH SCIENCELAND SURFACESOILS')
       end
     end
 
@@ -107,12 +107,12 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection without contacts in the xml' do
     before :all do
-      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H'
+      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H', ac: true
       first_collection_result.click_link('View collection details')
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('JP/JAXA/SAOC ARCHIVER DISTRIBUTOR')
+      expect(page).to have_content('JP/JAXA/SAOCARCHIVER')
     end
   end
 
@@ -214,11 +214,11 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with multiple data centers' do
     before :all do
-      load_page '/search/collection-details', focus: 'C1220111401-NSIDCV0'
+      load_page '/search/collection-details', focus: 'C179460405-LPDAAC_ECS'
     end
 
     it 'displays all data center content' do
-      expect(page).to have_content('NASA NSIDC DAAC ORIGINATOR No contact information for this data center. NASA/NSIDC_DAAC ARCHIVER DISTRIBUTOR')
+      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR LP DAACARCHIVER')
     end
   end
 
@@ -234,11 +234,12 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with related urls' do
     before do
-      load_page '/search/collection-details', focus: 'C1000000577-DEV07', env: :sit
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'displays highlighted urls' do
-      expect(collection_details).to have_content "User's Guide"
+      expect(collection_details).to have_content "Data Set Landing Page"
+      expect(collection_details).to have_content "ATBD"
     end
 
     context 'when clicking View All Related URLs' do
@@ -249,9 +250,30 @@ describe 'Collection details', reset: false do
         click_on 'View All Related URLs'
       end
 
-      it 'displays all related urls' do
+      it 'displays all related urls grouped by URLContentType' do
         within '#related-urls-modal' do
-          expect(page).to have_content "General Documentation User's Guide General Documentation"
+          expect(page).to have_content 'Collection URL'
+          expect(page).not_to have_content 'Collection URLs'
+          expect(page).to have_content 'Publication URLs'
+        end
+      end
+
+      it 'displays types and subtypes of related urls' do
+        within '#related-urls-modal' do
+          expect(page).to have_content 'GET DATALANCE'
+        end
+      end
+
+      it 'displays urls in alphabetical order' do
+        within '#related-urls-modal' do
+          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATIONALGORITHM THEORETICAL BASIS DOCUMENT https://www.example.com VIEW RELATED INFORMATIONGENERAL DOCUMENTATION www.lpdaac.org'
+        end
+      end
+
+      it "doesn't display EDSC or Reverb URLs" do
+        within '#related-urls-modal' do
+          expect(page).not_to have_content 'GET DATAEARTHDATA SEARCH'
+          expect(page).not_to have_content 'GET DATAREVERB'
         end
       end
     end
@@ -273,19 +295,30 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the DOI and the Authority' do
-      expect(page).to have_content('DOI:')
-      expect(page).to have_content('The Digitial Object Identifier.')
-      expect(page).not_to have_link('The Digitial Object Identifier.')
+      expect(page).to have_content('DOI')
+      expect(page).to have_content('THE DIGITIAL OBJECT IDENTIFIER.')
+      expect(page).not_to have_link('THE DIGITIAL OBJECT IDENTIFIER.')
+    end
+  end
+  
+  context 'when selecting a collection with a DOI field which contains "http://"' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+    end
+
+    it 'updates the URL to contain "https://"" instead' do
+      expect(page).to have_selector("a[href='https://dx.doi.org/10.5067/AQUA/AIRS/DATA301']")
     end
   end
 
+  
   context 'when selecting a collection with valid DOI field' do
     before :all do
       load_page '/search/collection-details', focus: 'C179003620-ORNL_DAAC'
     end
 
     it 'displays the DOI and the Authority' do
-      expect(page).to have_content('DOI:')
+      expect(page).to have_content('DOI')
       expect(page).to have_content('10.3334/ORNLDAAC/830')
       expect(page).to have_link('10.3334/ORNLDAAC/830')
     end

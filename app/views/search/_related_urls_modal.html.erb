@@ -4,9 +4,31 @@
       <div class="modal-header">
         <h3 class="modal-title">Related URLs</h3>
       </div>
-      <div class="modal-body">
-        <ul id="related-urls-list">
-        </ul>
+      <div class="modal-body modal-body-related-urls">
+        <!--ko if: $root.ui.collectionsList.selected()-->
+          <!--ko with: $root.ui.collectionsList.selected().details()-->
+            <!--ko foreach: $data.related_urls-->
+              <!--ko if: urls.length > 0 && $index() < 4-->
+                <h4 data-bind="text: urls.length > 1 ? label + 's' : label"></h4>
+                <!--ko foreach: urls-->
+                  <ul class="modal-list">
+                    <li>
+                      <div>
+                        <ul class="arrow-tag-group-list">
+                          <li class="arrow-tag-group-item" data-bind="text: Type"></li>
+                          <!--ko if: $data.Subtype !== ''-->
+                          <li class="arrow-tag-group-item" data-bind="text: Subtype"></li>
+                          <!--/ko-->
+                        </ul>
+                        <p><a class="display-url" data-bind="attr: {href: URL}, text: URL"></a></p>
+                      </div>
+                    </li>
+                  </ul>
+                <!--/ko-->
+              <!--/ko-->
+            <!--/ko-->
+          <!--/ko-->
+        <!--/ko-->
       </div>
       <div class="modal-footer">
         <a class="button text-button" href="#" data-bind="click: $root.ui.projectList.hideRelatedUrls">Close</a>

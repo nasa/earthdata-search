@@ -57,6 +57,15 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
         # click's mousedown.  Ugh.
         setTimeout((=> @_hasFocus(true)), 500)
 
+      # Track single granule direct downloads
+      $(document).on 'click', 'a.direct-download', ->
+        options =
+          accessMethod: [
+            method: "Single Granule Download"
+            type: "single_granule"
+          ]
+        $(document).trigger('dataaccessevent', [@collection, options])
+
       @_setupSwipeEvents($granuleList)
       map.focusCollection(@collection)
 

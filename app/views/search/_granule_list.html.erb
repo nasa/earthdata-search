@@ -8,7 +8,6 @@
         <!-- ko with: ui.collectionsList.focused() -->
         <header class="with-options">
           <h2 data-bind="text: collection.title"></h2>
-          <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
@@ -35,6 +34,7 @@
             </button>
           </div>
           <!-- /ko -->
+          <div id="datasource-caveats"></div>
         </header>
         <div class="master-overlay-info">
           <p>
@@ -100,7 +100,7 @@ Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
                   <i class="fa fa-info-circle"></i>
                 </a>
-                <a class="button icon-button" title="Download single granule data" target="_blank" data-bind="visible: !$parent.collection.cwic() && online_access_flag, attr: {href: download_now_url()}">
+                <a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parent.collection.cwic() && online_access_flag, attr: {href: download_now_url()}">
                   <i class="fa fa-download"></i>
                 </a>
                 <a href="#" class="button icon-button" title="Configure and download single granule data"  data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
