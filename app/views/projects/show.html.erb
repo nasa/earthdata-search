@@ -63,7 +63,7 @@
       <!--ko foreach: project.collections()-->
         <div class="collection-card">
           <div class="collection-card-content">
-            <h3 data-bind="text: title"></h3>
+            <h3 data-bind="text: truncatedTitle, attr: {title: title}"></h3>
             <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
               <div class="label-primary"><span data-bind="text: granule_hits"></span> <!--ko text: granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
               <div class="collection-capability">

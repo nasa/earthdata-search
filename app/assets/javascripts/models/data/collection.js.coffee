@@ -330,6 +330,8 @@ ns.Collection = do (ko
       @_setObservable('has_formats', jsonObj)
       @_setObservable('has_variables', jsonObj)
 
+      @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
+
 
       @gibs(@getValueForTag('extra.gibs'))
 
