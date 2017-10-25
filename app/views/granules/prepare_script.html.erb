@@ -81,9 +81,9 @@ prompt_credentials() {
     read -p "Username (<%= @user %>): " username
     username=${username:-<%= @user %>}
     read -s -p "Password: " password
-    echo "\nmachine urs.earthdata.nasa.gov\tlogin $username\tpassword $password" >> $netrc
+    echo "machine urs.earthdata.nasa.gov login $username password $password" >> $netrc
     <% if @first_link && @first_link.start_with?('ftp') %>
-    echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> $netrc
+    echo "machine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %> login $username password $password" >> $netrc
     <% end %>
     echo
 }
