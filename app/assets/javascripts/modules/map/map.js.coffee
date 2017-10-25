@@ -73,15 +73,15 @@ ns.Map = do (window,
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
-    constructor: (el, projection='geo', boundingBox = false) ->
-      @boundingBox = boundingBox
+    constructor: (el, projection='geo', isMinimap = false) ->
+      @isMinimap = isMinimap
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
 
       map.loadingLayers = 0
 
-      if !@boundingBox
+      if !@isMinimap
         map.addControl(L.control.scale(position: 'topright'))
         map.addLayer(new GranuleVisualizationsLayer())
         map.addLayer(new MouseEventsLayer())
@@ -98,13 +98,13 @@ ns.Map = do (window,
       @setBaseMap("Blue Marble")
       @setOverlays([OVERLAYS[0], OVERLAYS[2]])
      
-      if !@boundingBox
+      if !@isMinimap
         @time = ko.computed(@_computeTime, this)
         map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
         @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
           map.fire('edsc.visiblecollectionschange', collections: collections)
 
-      if @boundingBox
+      if @isMinimap
         map.dragging.disable()
         map.touchZoom.disable()
         map.doubleClickZoom.disable()
@@ -247,8 +247,7 @@ ns.Map = do (window,
         @map.addLayer(layer)
         break
       @_layerControl = L.control.layers(baseMaps, overlayMaps)
-      if !@boundingBox
-        
+      if !@isMinimap
         @map.addControl(@_layerControl)
 
     _rebuildLayers: ->
