@@ -119,6 +119,35 @@
 
       .modal-body {
         max-height: 500px;
+        padding: 0;
+
+        ul {
+          padding: 0;
+
+          li {
+            padding: 20px 25px;
+            border-bottom: 1px solid #ddd;
+
+
+            h5 {
+              font-size: 1.1em;
+              margin: 0;
+            }
+
+            span {
+              font-size: 1em;
+              color: #aaa;
+            }
+
+            .modal-item-actions {
+              float: right;
+
+              button {
+
+              }
+            }
+          }
+        }
       }
 
       .collection-card-content {
