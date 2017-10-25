@@ -8,11 +8,17 @@
       <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
         <ul data-bind="foreach: granuleDatasource().data().results()">
           <li>
-            <h5 data-bind="text: displayName()"></h5>
-            <span data-bind="text: getTemporal()"></span>
-            <div>
+            <span>
+              <h5 data-bind="text: displayName()"></h5>
+              <span data-bind="text: getTemporal()"></span>
+            </span>
 
-            </div>
+            <span class="modal-item-actions">
+              <button><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+
+              <button><i class="fa fa-download" aria-hidden="true"></i></button>
+              <button><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </span>
           </li>
         </ul>
       </div>
