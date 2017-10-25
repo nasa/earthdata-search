@@ -25,18 +25,30 @@
     min-height: calc(100vh - 226px);
     padding: 0 20px;
   }
-  
+
   .project-details {
-    font-size: .8em;
+    font-size: .9em;
     margin-left: 3px;
   }
-  
+
   .project-details-row {
-    margin-left: 10px;
+    padding: 0.15em 0;
   }
+
+  .collection-constraint-details {
+    padding: 5px 10px;
+  }
+
   .bounding-box {
+    width: 260px;
+    background: #121212;
     padding: 5px;
+
+    .fa {
+      font-size: .8em
+    }
   }
+
   .project-info-actions {
     background: lighten(#000, 10%);
     color: #fff;
@@ -198,11 +210,6 @@
         max-width: 400px;
       }
     }
-  }
-
-  .bounding-box {
-    width: 260px;
-    background: #000; // Temporary
   }
 
   .project-collection-notes {
