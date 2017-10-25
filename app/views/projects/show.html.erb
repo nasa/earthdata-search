@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a class="back-button back-to-search" href="<%= edsc_path @project.path.split('?')[0] %>?projectId=<%=@project.to_param%>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
+  <a class="back-button back-to-search toolbar-button" href="<%= edsc_path @project.path.split('?')[0] %>?projectId=<%=@project.to_param%>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
@@ -43,7 +43,7 @@
       <%= render partial: 'shared/workspace_name' %>
     </div>
     <div class="project-stats">
-      <ul class="transparent" data-bind="fadeVisible: isLoaded">
+      <ul data-bind="fadeVisible: isLoaded">
         <li>
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
@@ -52,17 +52,44 @@
           <span class="value" data-bind="text: project.collections().length"></span>
           <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
         </li>
-        <li>
+        <li data-bind="visible: sizeProvided">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
+          <span id="info-container">
+            <a class="info" href="#" data-container="#info-container" data-tooltip="true" data-placement="right" data-title="This is the estimated overall size of your project. If no size information exists in a granule's metadata, it will not be included in this number. The size is estimated based upon the first 20 granules added to your project from each collection."><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+          </span>
         </li>
       </ul>
     </div>
     <div class="project-collection-cards">
       <!--ko foreach: project.collections()-->
         <div class="collection-card">
-          <h3 data-bind="text: title"></h3>
-          <div class="granule-count" data-bind="text: "></div>
+          <div class="collection-card-content">
+            <h3 data-bind="text: truncatedTitle, attr: {title: title}"></h3>
+            <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
+              <div class="label-primary"><span data-bind="text: granule_hits"></span> <!--ko text: granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
+              <div class="collection-capability">
+                <span data-bind="css: {enabled: has_spatial}">
+                  <i class="fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Spatial subsetting options available"></i>
+                </span>
+                <span data-bind="css: {enabled: has_variables}">
+                  <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
+                </span>
+                <span data-bind="css: {enabled: has_transforms}">
+                  <i class="fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Data transformation options available"></i>
+                </span>
+                <span data-bind="css: {enabled: has_formats}">
+                  <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
+                </span>
+              </div>
+              <div class="label-secondary" data-bind="fadeVisible: $root.isLoaded">
+                <span>Estimated Size: </span><!-- ko text: total_size() + ' ' + unit() --><!--/ko--></div>
+            </div>
+          </div>
+          <div class="action-container">
+            <a class="action-button"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
+            <a class="action-button"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
+          </div>
         </div>
       <!--/ko-->
     </div>

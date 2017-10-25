@@ -1,3 +1,9 @@
+.projects-page {
+  .wrap {
+    border-top: 5px solid $ocean-blue;
+  }
+}
+
 .project {
 
   min-height: calc(100vh - 67px);
@@ -77,9 +83,14 @@
       background: #ebebeb;
       border-radius: 5px;
       overflow: hidden;
+      @include transition(all 0.1s linear);
+
+      &:hover {
+        border: 1px solid rgba($ocean-blue, 0.3);
+      }
 
 
-      .collection-card-main {
+      .collection-card-content {
         height: 151px;
         background: #fff;
         padding: 10px;
@@ -109,6 +120,11 @@
             display: inline;
             font-size: 1em;
             padding-left: 10px;
+            cursor: default;
+
+            span {
+              margin: 0 2px;
+            }
 
             .enabled {
               color: #359ad9
@@ -121,22 +137,21 @@
         background-color: #ededed;
 
         .action-button {
-          @include linear-gradient(#fff, #ddd);
+          @include gradient-animation(#fff, #ddd, #fff, #fff, .2s);
+          display: inline-block;
           border: 1px solid #e3e3e3;
           color: #424242;
           border-radius: 5px;
           font-size: 1em;
           padding: 5px 14px;
           margin-left: 8px;
-          display: block;
-          float: left;
-          @include transition(all 0.2s ease-in-out);
           outline: none;
           text-decoration: none;
           margin-top: 12px;
+          cursor: pointer;
 
-          &:hover {
-            background: rgba(255,255,255,1);
+          &:before {
+            border-radius: 5px;
           }
         }
       }
@@ -159,6 +174,28 @@
       .value {
         font-weight: bold;
         color: $overlay-heading-font-color;
+      }
+
+      .info {
+        text-decoration: none;
+        color: darken($light-grey, 20%);
+        font-size: large;
+        vertical-align: middle;
+        @include transition(color 0.1s linear);
+
+        &:hover {
+          color: darken($light-grey, 40%);
+        }
+      }
+
+      .tooltip {
+        width: 400px;
+      }
+
+      .tooltip-inner {
+        white-space: pre-wrap;
+        text-align: left;
+        max-width: 400px;
       }
     }
   }
@@ -183,8 +220,7 @@
     float: right;
   }
 
-  .dropdown
-  {
+  .dropdown {
     .save-dropdown {
       vertical-align: middle;
       padding-bottom: 0;
