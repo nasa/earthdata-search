@@ -152,7 +152,13 @@ ns.ProjectPage = do (ko,
       # Return true if any of the spatial subsettings exist
       hasBoundingBox || hasPolygon
 
-  current = new ProjectPage()
-  setCurrent(current)
+    scrolled: (data, event) =>
+      elem = event.target
+      if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
+        collectionId = $(elem).closest('.modal').prop('id').split('-modal')[0]
+        collection = @project.collections().filter((collection) -> collection.id == collectionId).pop()
+        collection.granuleDatasource().data().loadNextPage()
+
+  setCurrent(new ProjectPage())
 
   exports = ProjectPage

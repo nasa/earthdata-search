@@ -97,8 +97,9 @@
           </div>
           <div class="action-container">
             <a class="action-button"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
-            <a class="action-button"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
+            <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
           </div>
+          <%= render partial: 'granule_list_modal' %>
         </div>
       <!--/ko-->
     </div>

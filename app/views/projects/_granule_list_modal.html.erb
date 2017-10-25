@@ -1,0 +1,21 @@
+<div class="modal fade" data-bind="attr: {id: id + '-modal'}" tabindex="-1" role="dialog" aria-labelledby="granule-list-modal-title" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+        <h1 class="modal-title" id="granule-list-modal-title">Collection Details</h1>
+      </div>
+      <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
+        <ul data-bind="foreach: granuleDatasource().data().results()">
+          <li>
+            <h5 data-bind="text: displayName()"></h5>
+            <span data-bind="text: getTemporal()"></span>
+            <div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

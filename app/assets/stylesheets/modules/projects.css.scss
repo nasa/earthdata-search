@@ -100,6 +100,26 @@
         border: 1px solid rgba($ocean-blue, 0.3);
       }
 
+      .modal-header {
+        background-color: #fff;
+
+        h1 {
+          padding-left: 10px;
+        }
+
+        .close {
+          background-color: #fff;
+          background-image: none;
+          float: right;
+          color: #e1e1e1;
+          font-size: 1.8em;
+          text-shadow: none;
+        }
+      }
+
+      .modal-body {
+        max-height: 500px;
+      }
 
       .collection-card-content {
         height: 151px;
