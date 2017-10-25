@@ -3,6 +3,7 @@
 #= require models/data/preferences
 #= require models/ui/temporal
 #= require models/ui/project_list
+#= require models/ui/project_ui
 #= require models/ui/service_options_list
 #= require models/ui/feedback
 #= require models/ui/sitetour
@@ -21,6 +22,7 @@ ns.ProjectPage = do (ko,
   PreferencesModel = data.Preferences
   TemporalModel = ui.Temporal
   ProjectListModel = ui.ProjectList
+  ProjectUIModel = ui.ProjectUI
   SiteTourModel = ui.SiteTour
   ServiceOptionsListModel = ui.ServiceOptionsList
   FeedbackModel = ui.Feedback
@@ -46,9 +48,11 @@ ns.ProjectPage = do (ko,
       @sizeProvided = ko.observable(true)
 
       projectList = new ProjectListModel(@project)
+      projectUI = new ProjectUIModel(@project)
       @ui =
         temporal: new TemporalModel(@query)
         projectList: projectList
+        projectUI: projectUI
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
 
