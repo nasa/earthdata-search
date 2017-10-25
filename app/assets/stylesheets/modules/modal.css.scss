@@ -31,7 +31,7 @@
   overflow-y: scroll;
 
   ul {
-    list-style: circle;
+    list-style: none;
     padding: 0 30px;
   }
 }
@@ -44,6 +44,25 @@
     padding: 0;
     margin: 0;
   }
+}
+
+.modal-body-related-urls {
+
+  h4 {
+    margin: 20px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $light-grey;
+  }
+
+  ul {
+    padding: 0;
+    margin: 5px 0 0 0;
+  }
+
+  p {
+    margin: 0 0 10px 0;
+  }
+
 }
 
 .modal-dialog {

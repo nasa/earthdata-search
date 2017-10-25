@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+
   def index
     if current_user.present?
       # TODO PQ EDSC-1038: Include portal information here
@@ -10,27 +11,45 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    project = Project.find(params[:id])
-    if current_user.present? && current_user.id == project.user_id
-      render :json => project.to_json
+    if params[:id].nil?
+      @project = Project.find(params[:projectId].to_i)
+    else
+      @project = Project.find(params[:id])
+    end
+
+    if current_user.present? && current_user.id == @project.user_id
+      respond_to do |format|
+        format.html { @project }
+        format.json { render json: @project, status: :ok }
+      end
     else
       # if path is too long, create new project
-      if project.path.size > Rails.configuration.url_limit
+      if @project.path.size > Rails.configuration.url_limit
         new_project = Project.new
-        new_project.path = project.path
+        new_project.path = @project.path
         new_project.user_id = current_user.id if current_user
         new_project.save!
-        render json: {path: new_project.path, new_id: new_project.to_param}
+        @project = new_project.dup
+        respond_to do |format|
+          format.html { @project }
+          format.json { render json: @project, status: :ok }
+        end
       else
-        project.name = nil
+        @project.name = nil
         # project does not belong to the current user, reload the page in JS
-        project.user_id = -1
-        render json: project.to_json
+        @project.user_id = -1
+        respond_to do |format|
+          format.html { render 'projects/show' }
+          format.json { render json: @project, status: :ok }
+        end
       end
     end
 
   rescue ActiveRecord::RecordNotFound => e
-    render :text => '/'
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404.html", status: :not_found }
+      format.json { render json: '{}' }
+    end
   end
 
   def create
@@ -54,9 +73,12 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @back_path = request.query_parameters['back']
-    if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
-      @back_path = '/search/collections'
-    end
+    query_string = request.query_string
+    @project = Project.new
+    @project.path = "/search?#{query_string}"
+    @project.name = params[:workspace_name] if params[:workspace_name]
+    @project.user_id = current_user.id if current_user
+    @project.save!
+    render 'show'
   end
 end

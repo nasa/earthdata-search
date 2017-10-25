@@ -44,15 +44,14 @@ describe 'Collection API Endpoints', reset: false do
 
   context 'when viewing the collection details for a collection with OPeNDAP' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'C1214305813-AU_AADC'
-      wait_for_xhr
-      click_link "View collection details"
-      wait_for_xhr
+      load_page '/search/collection-details', focus: 'C1214305813-AU_AADC', ac: true
+      click_on 'View All Related URLs'
     end
 
     it 'provides a link to the OPeNDAP endpoint' do
-      expect(collection_details).to have_css('a[href="http://data.aad.gov.au/aadc/portal/download_file.cfm?file_id=1677"]')
+      within '#related-urls-modal' do
+        expect(page).to have_css('a[href="http://data.aad.gov.au/aadc/portal/download_file.cfm?file_id=1677"]')
+      end
     end
   end
 

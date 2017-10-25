@@ -1,3 +1,9 @@
+.projects-page {
+  .wrap {
+    border-top: 5px solid $ocean-blue;
+  }
+}
+
 .project {
 
   min-height: calc(100vh - 67px);
@@ -34,21 +40,38 @@
     h2 {
       font-size: 1.8em;
       font-weight: 200;
+<<<<<<< HEAD
+=======
+      max-width: calc(100% - 380px);
+      display: inline-block;
+      vertical-align: middle;
+>>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
     }
 
     h2, ul {
       margin: 0;
       background: #fff;
+<<<<<<< HEAD
       border-bottom: 1px solid #ccc;
       padding: 20px;
     }
 
+=======
+      padding: 20px;
+    }
+
+    ul {
+      border-bottom: 1px solid #ccc;
+    }
+
+>>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
     .project-collection-cards {
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
       padding: 20px 0 0 20px;
       min-height: calc(100vh - 300px);
+<<<<<<< HEAD
     }
 
     .collection-card {
@@ -67,6 +90,100 @@
     }
 
     .project-stats {
+=======
+      background: #f4f4f4;
+    }
+
+    .collection-card {
+      flex: 0 0 350px;
+      height: 210px;
+      border: 1px solid #ddd;
+      margin: 0 20px 20px 0;
+      background: #ebebeb;
+      border-radius: 5px;
+      overflow: hidden;
+      @include transition(all 0.1s linear);
+
+      &:hover {
+        border: 1px solid rgba($ocean-blue, 0.3);
+      }
+
+
+      .collection-card-content {
+        height: 151px;
+        background: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+
+        h3 {
+          font-size: 0.9em;
+          min-height: 60px;
+        }
+
+        .collection-extra {
+          margin-top: 15px;
+
+          .label-primary {
+            font-size: 1.6em;
+            font-weight: bold;
+            display: inline;
+          }
+
+          .label-secondary {
+            font-size: .9em;
+            color: #a1a1a1;
+          }
+
+          .collection-capability {
+            color: #c9c9c9;
+            display: inline;
+            font-size: 1em;
+            padding-left: 10px;
+            cursor: default;
+
+            span {
+              margin: 0 2px;
+            }
+
+            .enabled {
+              color: #359ad9
+            }
+          }
+        }
+      }
+
+      .action-container {
+        background-color: #ededed;
+
+        .action-button {
+          @include gradient-animation(#fff, #ddd, #fff, #fff, .2s);
+          display: inline-block;
+          border: 1px solid #e3e3e3;
+          color: #424242;
+          border-radius: 5px;
+          font-size: 1em;
+          padding: 5px 14px;
+          margin-left: 8px;
+          outline: none;
+          text-decoration: none;
+          margin-top: 12px;
+          cursor: pointer;
+
+          &:before {
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+
+
+
+    .project-stats {
+      height: 86px;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+
+>>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
       li {
         display: inline-block;
         font-size: 2em;
@@ -78,6 +195,31 @@
         font-weight: bold;
         color: $overlay-heading-font-color;
       }
+<<<<<<< HEAD
+=======
+
+      .info {
+        text-decoration: none;
+        color: darken($light-grey, 20%);
+        font-size: large;
+        vertical-align: middle;
+        @include transition(color 0.1s linear);
+
+        &:hover {
+          color: darken($light-grey, 40%);
+        }
+      }
+
+      .tooltip {
+        width: 400px;
+      }
+
+      .tooltip-inner {
+        white-space: pre-wrap;
+        text-align: left;
+        max-width: 400px;
+      }
+>>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
     }
   }
 
@@ -93,4 +235,37 @@
     height: 65px;
   }
 
+<<<<<<< HEAD
+=======
+  i.save-success, i.after-save {
+    display: none;
+    color: #2ecc71;
+  }
+
+  .save-project {
+    float: right;
+  }
+
+  .dropdown {
+    .save-dropdown {
+      vertical-align: middle;
+      padding-bottom: 0;
+    }
+
+    ul {
+      padding: 0;
+    }
+  }
+
+  .save-icon {
+    color: #a1a1a1;
+    font-size: 18px;
+  }
+
+  .project-title-container {
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    vertical-align: top;
+  }
+>>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
 }

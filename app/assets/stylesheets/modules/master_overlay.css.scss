@@ -14,6 +14,12 @@
     margin: 0;
     color: $overlay-heading-font-color;
 
+    #datasource-caveats {
+      clear: both;
+      font-size: 0.8em;
+      padding: 0 20px;
+    }
+
     h2 {
       font-size: 1.2em;
       margin: 0;
@@ -525,7 +531,7 @@ a.master-overlay-show-parent {
 
 .flex-column {
   flex: 1 0 auto;
-  width: 260px;
+  width: 270px;
   dd {
     font-size: 0.9em;
     font-weight: bold;

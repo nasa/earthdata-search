@@ -6,6 +6,7 @@ ns.ProjectList = do (ko
                     urlUtil=@edsc.util.url
                     xhrUtil=@edsc.util.xhr
                     dateUtil=@edsc.util.date
+                    deparam = @edsc.util.deparam
                     $ = jQuery
                     wait=@edsc.util.xhr.wait
                     ajax = @edsc.util.xhr.ajax) ->
@@ -286,17 +287,18 @@ ns.ProjectList = do (ko
       all_visible
 
     showRelatedUrls: ->
-      for related_url in this.related_urls
-        $('ul#related-urls-list').append("<li><a href='#{related_url.url}' target='_blank'>#{related_url.name}</a></li>")
       $('#related-urls-modal').modal('show')
 
     hideRelatedUrls: ->
-      $('ul#related-urls-list li').remove()
       $('#related-urls-modal').modal('hide')
 
     showProjectPage: ->
-      backParam = "&back=#{encodeURIComponent(urlUtil.fullPath(urlUtil.cleanPath().split('?')[0]))}"
-      path = '/projects/new?' + urlUtil.realQuery() + backParam
+      projectId = deparam(urlUtil.realQuery()).projectId
+      if projectId
+        path = "/projects/#{projectId}"
+      else
+        path = '/projects/new?' + urlUtil.currentQuery()
+      $(window).trigger('edsc.save_workspace')
       window.location.href = urlUtil.fullPath(path)
 
   exports = ProjectList

@@ -12,11 +12,6 @@
   display: inline-block;
   position: relative;
 
-  &.save-dropdown {
-    float: left;
-    display: block;
-  }
-
   .dropdown-menu {
     position: absolute;
     z-index: 81;
@@ -169,12 +164,27 @@ input.day-of-year-input {
     display: none;
     color: #2ecc71;
   }
+}
 
-  /*
-  img {
-    padding: 2px;
-    background: #263646;
-    border-radius: 30px;
+.projects-page {
+  .toolbar-secondary {
+    a.toolbar-button {
+      @include gradient-animation(#fff, #ddd, #fff, #fff, .2s);
+      border: 1px solid #e3e3e3;
+      color: #424242;
+      border-radius: 5px;
+      font-size: 1em;
+      padding: 5px 14px;
+      margin-left: 8px;
+      display: block;
+      float: left;
+      outline: none;
+      text-decoration: none;
+      margin-top: 6px;
+
+      &:before {
+        border-radius: 5px;
+      }
+    }
   }
-  */
 }

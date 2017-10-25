@@ -263,7 +263,7 @@ a.endpoint-label {
   font-size: 0.8em;
   display: inline-block;
   border-radius: 4px;
-  padding: 0 0 0 0.6em;
+  padding: 0 0 0.1em 0.6em;
   padding-right: 0;
   background: #2980b9;
   color: #fff;
@@ -284,4 +284,15 @@ a.endpoint-label {
     display: inline-block;
   }
 
+}
+
+.modal-list ul {
+  .arrow-tag-group-list {
+    padding: 0;
+  }
+}
+
+.display-url {
+  word-wrap: break-word;
+  overflow-x: scroll;
 }

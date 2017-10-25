@@ -91,8 +91,8 @@
               <!-- ko if: $data.related_urls.length > 0 -->
               <dt>Related URLs:</dt>
               <dd>
-                <!-- ko foreach: $data.highlighted_urls -->
-                <a data-bind="attr: {href: $data.url}, text: $data.name" target="_blank"></a> |
+                <!-- ko foreach: $data.related_urls[4].urls -->
+                <a data-bind="attr: {href: URL}, text: HighlightedType" target="_blank"></a> |
                 <!-- /ko -->
                 <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
               </dd>

@@ -1,5 +1,5 @@
 <% content_for :javascript do %>
-  <%= javascript_include_tag "account" %>
+  <%= javascript_include_tag "projects" %>
 <% end %>
 
 <% content_for :toolbar_secondary do %>
@@ -9,7 +9,7 @@
 
 <div class="data-access">
   <nav class="data-access-nav">
-      <a href="javascript:history.back()"><i class="fa fa-arrow-circle-o-left"></i> Back <%= request.referrer && request.referrer.include?('search') ? 'to Search Session' : '' %></a>
+      <a href="search"><i class="fa fa-arrow-circle-o-left"></i> Back <%= request.referrer && request.referrer.include?('search') ? 'to Search Session' : '' %></a>
   </nav>
   <header>
     <h1><i class="fa fa-folder-o"></i> Saved Projects</h1>
@@ -31,7 +31,7 @@
           <% @projects.each do |project| %>
           <tr class="<%= cycle("odd", "even") -%>">
             <td>
-              <strong><a href="<%= project.url %>" class="project-url"><%= project.name %></a></strong>
+              <strong><a href="/projects/<%= project.to_param %>" class="project-url"><%= project.name %></a></strong>
             </td>
             <td>
               <%= pluralize(project.number_collections, 'collection') %>
