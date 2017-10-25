@@ -11,6 +11,8 @@
       @details = @asyncComputed({}, 100, @_computeGranuleDetails, this)
       @detailsLoaded = ko.observable(false)
       @browseError = ko.observable(false)
+      @dataLinks = ko.observableArray([])
+      @download_now_urls()
 
     edsc_browse_url: (w, h) ->
       w ?= 170
@@ -22,9 +24,11 @@
         return link.href if link.rel.indexOf('browse') != -1
       null
 
-    download_now_url: ->
-      return link.href for link in @links when link.rel.indexOf('/data#') != -1 if @links? && @links.length > 0
-      '#'
+    download_now_urls: ->
+      links = []
+      if @links? && @links.length > 0
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1
+      @dataLinks(links)
 
     onThumbError: (granule) ->
       @browseError(true)
