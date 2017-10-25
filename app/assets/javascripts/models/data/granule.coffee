@@ -23,8 +23,7 @@
       null
 
     download_now_url: ->
-      return link.href for link in @links when link.rel.indexOf('/data#') != -1 if @links? && @links.length > 0
-      '#'
+      "/granules/single_download/#{@id}?cmr_env=#{edsc.config.cmr_env}"
 
     onThumbError: (granule) ->
       @browseError(true)

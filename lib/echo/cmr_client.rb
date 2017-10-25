@@ -23,7 +23,7 @@ module Echo
       post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))
     end
 
-    def get_collection(id, token = nil, format = 'echo10')
+    def get_concept(id, token = nil, format = 'echo10')
       get("/search/concepts/#{id}.#{format}", {}, token_header(token))
     end
 

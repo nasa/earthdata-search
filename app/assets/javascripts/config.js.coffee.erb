@@ -54,6 +54,7 @@
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
     reverb_url: reverb_url
+    cmr_env: cmr_env
 
   <% elsif Rails.env.development? %>
 
@@ -78,6 +79,7 @@
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
     reverb_url: reverb_url
+    cmr_env: cmr_env
 
   <% else %>
   # Production config
@@ -100,5 +102,6 @@
     asterCollections: limited_collections
     enableEsiOrderChunking: enable_esi_order_chunking
     reverb_url: reverb_url
+    cmr_env: cmr_env
 
   <% end %>

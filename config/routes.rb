@@ -29,6 +29,8 @@ EarthdataSearchClient::Application.routes.draw do
   end
   post 'collections/collection_relevancy' => 'collections#collection_relevancy'
 
+  get 'granules/single_download/:id' => 'granules#single_download'
+
   resources :granules, only: [:create, :show], defaults: {format: 'json'} do
     collection do
       post 'timeline'
