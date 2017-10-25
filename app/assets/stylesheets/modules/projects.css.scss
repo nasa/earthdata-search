@@ -18,14 +18,25 @@
   .project-info-details {
     min-height: calc(100vh - 226px);
     padding: 0 20px;
-
   }
-
+  
+  .project-details {
+    font-size: .8em;
+    margin-left: 3px;
+  }
+  
+  .project-details-row {
+    margin-left: 10px;
+  }
+  .bounding-box {
+    padding: 5px;
+  }
   .project-info-actions {
     background: lighten(#000, 10%);
     color: #fff;
     height: 65px;
   }
+
 
   .project-collections {
     background: $light-grey;

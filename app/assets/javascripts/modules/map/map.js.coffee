@@ -114,7 +114,7 @@ ns.Map = do (window,
         if urlUtil.currentParams().bounding_box
           latlon = urlUtil.currentParams().bounding_box.split(",")
           map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
-          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}], {color: "#00ffff", fillOpacity: 0.4, weight: 1})
+          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}], {color: "#00ffff", fillOpacity: 0.1, weight: 3})
           shape._interpolationFn = 'cartesian'
           map.addLayer(shape)
         else if urlUtil.currentParams().polygon
