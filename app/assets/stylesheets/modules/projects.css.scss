@@ -40,23 +40,14 @@
     h2 {
       font-size: 1.8em;
       font-weight: 200;
-<<<<<<< HEAD
-=======
       max-width: calc(100% - 380px);
       display: inline-block;
       vertical-align: middle;
->>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
     }
 
     h2, ul {
       margin: 0;
       background: #fff;
-<<<<<<< HEAD
-      border-bottom: 1px solid #ccc;
-      padding: 20px;
-    }
-
-=======
       padding: 20px;
     }
 
@@ -64,33 +55,12 @@
       border-bottom: 1px solid #ccc;
     }
 
->>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
     .project-collection-cards {
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
       padding: 20px 0 0 20px;
       min-height: calc(100vh - 300px);
-<<<<<<< HEAD
-    }
-
-    .collection-card {
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 5px;
-      flex: 0 0 300px;
-      height: 160px;
-      margin: 0 20px 20px 0;
-
-      h3 {
-        font-size: 0.8em;
-
-      }
-    }
-
-    .project-stats {
-=======
       background: #f4f4f4;
     }
 
@@ -183,7 +153,6 @@
       background: #fff;
       border-bottom: 1px solid #ccc;
 
->>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
       li {
         display: inline-block;
         font-size: 2em;
@@ -195,8 +164,6 @@
         font-weight: bold;
         color: $overlay-heading-font-color;
       }
-<<<<<<< HEAD
-=======
 
       .info {
         text-decoration: none;
@@ -219,7 +186,6 @@
         text-align: left;
         max-width: 400px;
       }
->>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
     }
   }
 
@@ -235,8 +201,6 @@
     height: 65px;
   }
 
-<<<<<<< HEAD
-=======
   i.save-success, i.after-save {
     display: none;
     color: #2ecc71;
@@ -267,5 +231,4 @@
     border-bottom: 1px solid #ccc;
     vertical-align: top;
   }
->>>>>>> cafe3aa61d6522430633717b844bc58e3012bb1a
 }
