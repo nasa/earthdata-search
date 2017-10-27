@@ -24,7 +24,29 @@
   .project-info-details {
     min-height: calc(100vh - 226px);
     padding: 0 20px;
+  }
 
+  .project-details {
+    font-size: .9em;
+    margin-left: 3px;
+  }
+
+  .project-details-row {
+    padding: 0.15em 0;
+  }
+
+  .collection-constraint-details {
+    padding: 5px 10px;
+  }
+
+  .bounding-box {
+    width: 260px;
+    background: #121212;
+    padding: 5px;
+
+    .fa {
+      font-size: .8em
+    }
   }
 
   .project-info-actions {
@@ -32,6 +54,7 @@
     color: #fff;
     height: 65px;
   }
+
 
   .project-collections {
     background: $light-grey;
@@ -187,12 +210,6 @@
         max-width: 400px;
       }
     }
-  }
-
-  .bounding-box {
-    width: 260px;
-    height: 160px;
-    background: #000; // Temporary
   }
 
   .project-collection-notes {
