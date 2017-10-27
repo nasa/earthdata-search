@@ -64,19 +64,19 @@ ns.ProjectPage = do (ko,
 
     showType: =>
       type = ""
-      if urlUtil.currentParams().bounding_box then type = "Rectangle"
-      if urlUtil.currentParams().polygon then type = "Polygon"
-      if urlUtil.currentParams().point then type = "Point"
+      if @query.serialize().bounding_box then type = "Rectangle"
+      if @query.serialize().polygon then type = "Polygon"
+      if @query.serialize().point then type = "Point"
       type
 
     hasType: =>
-      urlUtil.currentParams().bounding_box || urlUtil.currentParams().polygon || urlUtil.currentParams().point
+      @query.serialize().bounding_box || @query.serialize().polygon || @query.serialize().point
     
     showTemporal: =>
-      if urlUtil.currentParams().temporal
+      if @query.serialize().temporal
         m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
         label = "" 
-        dates = urlUtil.currentParams().temporal.split(",")
+        dates = @query.serialize().temporal.split(",")
         date1 = dates[0].split("T")[0].split("-")
         formattedDate = new Date(date1[0] + "-" + date1[1].replace(/^0+/, '') + "-" + date1[2].replace(/^0+/, ''))
         d1 = formattedDate.getDate()
