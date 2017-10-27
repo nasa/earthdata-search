@@ -122,7 +122,7 @@ ns.Collection = do (ko
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
     _computeMaxOrderSize: ->
-      @id in edsc.config.asterCollections && @granuleDatasource()?.data().hits() > 100
+      @granuleDatasource()?.data().hits() > @tags()['edsc.limited_collections']?['data']['limit']
 
     # Since CMR doesn't support this feature, we get them from the granules that are already loaded.
     _computeAvailableFilters: ->
