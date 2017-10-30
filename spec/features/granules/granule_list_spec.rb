@@ -277,13 +277,13 @@ describe "Granule list", reset: false do
     context 'clicking on the single granule download button' do
       before :all do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          find('.direct-download').click
+          find('a[data-toggle="dropdown"]').click
         end
       end
 
       after :all do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          find('.direct-download').click
+          find('a[data-toggle="dropdown"]').click
         end
       end
 
