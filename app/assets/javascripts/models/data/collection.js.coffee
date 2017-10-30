@@ -126,7 +126,7 @@ ns.Collection = do (ko
       hits = @granuleDatasource().data().hits() if @granuleDatasource()
       limit = 0
       limit = @tags()['edsc.limited_collections']['data']['limit'] if @tags() && @tags()['edsc.limited_collections']
-      hits > limit
+      hits < limit
 
     # Since CMR doesn't support this feature, we get them from the granules that are already loaded.
     _computeAvailableFilters: ->
