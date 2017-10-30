@@ -77,7 +77,7 @@ ns.Collection = do (ko
 
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
-      
+
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
       @granuleDatasource = ko.observable(null)
@@ -122,7 +122,11 @@ ns.Collection = do (ko
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
     _computeMaxOrderSize: ->
-      @granuleDatasource()?.data().hits() > @tags()['edsc.limited_collections']?['data']['limit']
+      hits = 0
+      hits = @granuleDatasource().data().hits() if @granuleDatasource()
+      limit = 0
+      limit = @tags()['edsc.limited_collections']['data']['limit'] if @tags() && @tags()['edsc.limited_collections']
+      hits > limit
 
     # Since CMR doesn't support this feature, we get them from the granules that are already loaded.
     _computeAvailableFilters: ->
@@ -142,7 +146,7 @@ ns.Collection = do (ko
         break if _capabilities['day_night_flag'] && _capabilities['cloud_cover'] && _capabilities['orbit_calculated_spatial_domains']
       _capabilities
 
-    
+
     _computeTimeRange: ->
       if @hasAtomData()
         result = dateUtil.timeSpanToIsoDate(@time_start, @time_end)
