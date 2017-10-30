@@ -91,7 +91,7 @@ ns.Map = do (window,
   
         @legendControl = new LegendControl(position: 'topleft')
         map.addControl(@legendControl)
-
+      
       @_buildLayerSwitcher()
       @setProjection(projection)
       @setBaseMap("Blue Marble")
@@ -141,8 +141,9 @@ ns.Map = do (window,
     # Removes the map from the page
     destroy: ->
       @map.remove()
-      @time.dispose()
-      @_granuleVisualizationSubscription.dispose()
+      if !@isMiniMap
+        @time.dispose()
+        @_granuleVisualizationSubscription.dispose()
 
     _setupStatePersistence: ->
       @serialized = state = ko.observable(null)
