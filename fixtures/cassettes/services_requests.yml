@@ -1048,7 +1048,7 @@ http_interactions:
   digest: 2b80c39a8970471032b8b3f33f9421db2379215d
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179003620-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003620-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1059,7 +1059,7 @@ http_interactions:
   digest: 6a8eddb4c22c0cc7216341595f122ba9ee7fade8
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=+
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=+
     body:
       encoding: US-ASCII
       string: ''
@@ -1070,7 +1070,7 @@ http_interactions:
   digest: 6d99eba109c016baf26a90f2f0be36b49785caca
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=
     body:
       encoding: US-ASCII
       string: ''
@@ -1081,7 +1081,7 @@ http_interactions:
   digest: 8c51110aedcbf1a72ec9c8120ab992bc801a3982
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=A
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=A
     body:
       encoding: US-ASCII
       string: ''
@@ -1092,7 +1092,7 @@ http_interactions:
   digest: 5a38187fc95fdd338fc8ace4800d06820a8e1bdf
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=AQUARIUS_SAC-D+as
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AQUARIUS_SAC-D+as
     body:
       encoding: US-ASCII
       string: ''
@@ -1103,7 +1103,7 @@ http_interactions:
   digest: 346982954a5253b617be02d7e2ff7982928d5ff2
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=AST
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AST
     body:
       encoding: US-ASCII
       string: ''
@@ -1114,7 +1114,7 @@ http_interactions:
   digest: 6fe65c7a40a26cfb83075825ef7b6213facb67d4
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L%25
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L%25
     body:
       encoding: US-ASCII
       string: ''
@@ -1125,7 +1125,7 @@ http_interactions:
   digest: 978c3e4dc4ebe5ffbdf477b234295007906057bf
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L1A
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L1A
     body:
       encoding: US-ASCII
       string: ''
@@ -1136,7 +1136,7 @@ http_interactions:
   digest: 0381b4c0bce91aad122a1849724482124fb0ddcf
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L1AE
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L1AE
     body:
       encoding: US-ASCII
       string: ''
@@ -1147,7 +1147,7 @@ http_interactions:
   digest: afe67b7807ce81e76e9d9759ee7bab7a383970fa
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AST_L
     body:
       encoding: US-ASCII
       string: ''
@@ -1158,7 +1158,7 @@ http_interactions:
   digest: 8910a347a7858454475094be75aa5657e43bac0b
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000000-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000000-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1169,7 +1169,7 @@ http_interactions:
   digest: 2cf6c1ac6245f723deb5a6653902d4bf2cefede7
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000083-DEMO_PROV
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000083-DEMO_PROV
     body:
       encoding: US-ASCII
       string: ''
@@ -1180,7 +1180,7 @@ http_interactions:
   digest: 6d0c3837fbe0634f65e76ed1c3d74e49f5d9bab5
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000257-DEV07
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000257-DEV07
     body:
       encoding: US-ASCII
       string: ''
@@ -1191,7 +1191,7 @@ http_interactions:
   digest: c35b58634ad4e3b5aa71fa845f3587a0da082d70
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000316-LARC_ASDC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000316-LARC_ASDC
     body:
       encoding: US-ASCII
       string: ''
@@ -1202,7 +1202,7 @@ http_interactions:
   digest: 799ca534c7882d090b73f0409691e41b9e039096
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000560-DEV08
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000560-DEV08
     body:
       encoding: US-ASCII
       string: ''
@@ -1213,7 +1213,7 @@ http_interactions:
   digest: e49ef0e2790cf76b145e7c3ebc71d3eb47f18982
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000560-NSIDC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000560-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1224,7 +1224,7 @@ http_interactions:
   digest: 25f25311f882558f08c6c7f6767828d18f4d0f2a
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000561-NSIDC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000561-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1235,7 +1235,7 @@ http_interactions:
   digest: 6e89fe075bc7ef7505996e794bb9b7eb836a6506
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000580-NSIDC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000580-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1246,7 +1246,7 @@ http_interactions:
   digest: 8efdae5dd348791411cc92e97c97c92d5fafc58c
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001002-EDF_OPS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001002-EDF_OPS
     body:
       encoding: US-ASCII
       string: ''
@@ -1257,7 +1257,7 @@ http_interactions:
   digest: eeb81c0ebdb7a180d90fd215f872db7246a67b68
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001409-EDF_OPS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001409-EDF_OPS
     body:
       encoding: US-ASCII
       string: ''
@@ -1268,7 +1268,7 @@ http_interactions:
   digest: c4f1d5666a4bcd5f030e4379de2dbef2d28dfa4e
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1002-LPDAAC_TBD
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1002-LPDAAC_TBD
     body:
       encoding: US-ASCII
       string: ''
@@ -1279,7 +1279,7 @@ http_interactions:
   digest: b1725a1259ec7ee11e30801ec89b5228094df06b
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C119124186-NSIDC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C119124186-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1290,7 +1290,7 @@ http_interactions:
   digest: 51d4109757e14a4468043aeb4e5f30780c31d5a7
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1200019403-MMT_2
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1200019403-MMT_2
     body:
       encoding: US-ASCII
       string: ''
@@ -1301,7 +1301,7 @@ http_interactions:
   digest: 15f98ffa4dd44c6fafa8a735047c7dc9bb16eafe
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1200208323-SCIOPS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1200208323-SCIOPS
     body:
       encoding: US-ASCII
       string: ''
@@ -1312,7 +1312,7 @@ http_interactions:
   digest: 96b072430c968fc429eaceb749f7d5be27348540
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1204449891-GCMDTEST
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1204449891-GCMDTEST
     body:
       encoding: US-ASCII
       string: ''
@@ -1323,7 +1323,7 @@ http_interactions:
   digest: 3a079426572bfcd1849413cb0457233e1fbfb0b9
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1211793450-PODAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1211793450-PODAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1334,7 +1334,7 @@ http_interactions:
   digest: 940ea83508c713095e4d98e21d79525e265f33bb
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1214305813-AU_AADC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1214305813-AU_AADC
     body:
       encoding: US-ASCII
       string: ''
@@ -1345,7 +1345,7 @@ http_interactions:
   digest: 21a7180be797e85cb8f15c254c71a66708c2c406
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1214605943-SCIOPS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1214605943-SCIOPS
     body:
       encoding: US-ASCII
       string: ''
@@ -1356,7 +1356,7 @@ http_interactions:
   digest: 1ed7b2d5363063b964d6d9306573c735b57c2947
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1216386350-NSIDC_TS1
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1216386350-NSIDC_TS1
     body:
       encoding: US-ASCII
       string: ''
@@ -1367,7 +1367,7 @@ http_interactions:
   digest: 1bcf536c4d772e66c8eb4a38f58a86f7b86fa035
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1216393716-EDF_OPS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1216393716-EDF_OPS
     body:
       encoding: US-ASCII
       string: ''
@@ -1378,7 +1378,7 @@ http_interactions:
   digest: efc1cafdaaf8e1dfb4289d3c18d59ef628e89adc
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219032680-LANCEMODIS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219032680-LANCEMODIS
     body:
       encoding: US-ASCII
       string: ''
@@ -1389,7 +1389,7 @@ http_interactions:
   digest: 82792dd275876341ae9cbe7daa1bc8643c859f0b
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219032686-LANCEMODIS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219032686-LANCEMODIS
     body:
       encoding: US-ASCII
       string: ''
@@ -1400,7 +1400,7 @@ http_interactions:
   digest: 7e29bee58cddc4993f63266c1399e4c7fb7c47d8
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219224200-NSIDCV0
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219224200-NSIDCV0
     body:
       encoding: US-ASCII
       string: ''
@@ -1411,7 +1411,7 @@ http_interactions:
   digest: 563d18f3f0d2e28a21b4b6f03d4b4ecfb69085b6
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219252422-LANCEMODIS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1219252422-LANCEMODIS
     body:
       encoding: US-ASCII
       string: ''
@@ -1422,7 +1422,7 @@ http_interactions:
   digest: a41a43cbbf7c9d5d08701490681958bf69555583
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1220111370-NSIDCV0
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1220111370-NSIDCV0
     body:
       encoding: US-ASCII
       string: ''
@@ -1433,7 +1433,7 @@ http_interactions:
   digest: 951df165027c478d50b5fd841498a1eb7040b810
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1220566654-USGS_LTA
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1220566654-USGS_LTA
     body:
       encoding: US-ASCII
       string: ''
@@ -1444,7 +1444,7 @@ http_interactions:
   digest: 660a474af03624a5070204f3d5f2f50647d24178
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1234044620-GES_DISC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1234044620-GES_DISC
     body:
       encoding: US-ASCII
       string: ''
@@ -1455,7 +1455,7 @@ http_interactions:
   digest: 4b89e9b99131ef1a9e61c85aaf73ea8c41a055e4
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1236224151-GES_DISC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1236224151-GES_DISC
     body:
       encoding: US-ASCII
       string: ''
@@ -1466,7 +1466,7 @@ http_interactions:
   digest: ac8f70df1c3aedc53252698f98f8edb98dfd7f22
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1236303849-NSIDC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1236303849-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1477,7 +1477,7 @@ http_interactions:
   digest: 1ed754524cb8b5e9f9444fb1536c882b7d0c66f6
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C1280303098-LANCEAMSR2
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1280303098-LANCEAMSR2
     body:
       encoding: US-ASCII
       string: ''
@@ -1488,7 +1488,7 @@ http_interactions:
   digest: 9f8dd94400889b58ea13982c4257791620230faf
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C138500-PODAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C138500-PODAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1499,7 +1499,7 @@ http_interactions:
   digest: b6f1bf3e07ada94504467ebc45693170c12c8dd3
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C14758250-LPDAAC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C14758250-LPDAAC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1510,7 +1510,7 @@ http_interactions:
   digest: d52d3bb4c245798d82fcae6a73990fe5cbe44bd9
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179001887-SEDAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179001887-SEDAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1521,7 +1521,7 @@ http_interactions:
   digest: 5911001845736b965ff97b4adfed43ba47149f43
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002107-SEDAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002107-SEDAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1532,7 +1532,7 @@ http_interactions:
   digest: e13ebfeca55e08ce88f0b7df9ce4ff20e22d01b0
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002914-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002914-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1543,7 +1543,7 @@ http_interactions:
   digest: ef50f2c1d6b2a48c64335d411f021f8cbf5c85e2
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002945-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002945-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1554,7 +1554,7 @@ http_interactions:
   digest: da97686e53da55199e61fd8f98d331aee25429cc
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002986-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002986-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1565,7 +1565,7 @@ http_interactions:
   digest: 7e2ca01090191d3fcaaa063fb5f44cedbaafdc57
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1576,7 +1576,7 @@ http_interactions:
   digest: af2e4c9407b8b3ea2437836d0e548151854e4f57
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003380-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003380-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1587,7 +1587,7 @@ http_interactions:
   digest: e0c2b561f8719620ab7f909d2c7a0ea46b26d006
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003620-ORNL_DAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003620-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1598,7 +1598,7 @@ http_interactions:
   digest: 0b2e0b136998a4edec7cad71c29c2def712d2fcc
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C187016591-LPDAAC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C187016591-LPDAAC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1609,7 +1609,7 @@ http_interactions:
   digest: 7fb1216c37d0ddb484dbbe0aae410eba6b2b6d5a
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C197265171-LPDAAC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C197265171-LPDAAC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1620,7 +1620,7 @@ http_interactions:
   digest: 53537c53346fdf5a5dd7e07b4ceaddbb6d186313
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C24936-LAADS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C24936-LAADS
     body:
       encoding: US-ASCII
       string: ''
@@ -1631,7 +1631,7 @@ http_interactions:
   digest: e990f01437627dd2492659a175e74a2042788992
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C2921042-PODAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C2921042-PODAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1642,7 +1642,7 @@ http_interactions:
   digest: dc50d22d82eae8076b90031a5bb406e6713f2786
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C32000-PODAAC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C32000-PODAAC
     body:
       encoding: US-ASCII
       string: ''
@@ -1653,7 +1653,7 @@ http_interactions:
   digest: f4228bd50417ebac1b7ef752128010d0414d18e8
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C4543622-LARC_ASDC
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C4543622-LARC_ASDC
     body:
       encoding: US-ASCII
       string: ''
@@ -1664,7 +1664,7 @@ http_interactions:
   digest: 8159a3ad2fa19e6a8593634594745ba7eb5a2fd0
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=C92711294-NSIDC_ECS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C92711294-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -1675,7 +1675,7 @@ http_interactions:
   digest: de8dc46588145e56d64a56a4f9d9e63516ede12f
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=MODIS
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=MODIS
     body:
       encoding: US-ASCII
       string: ''
@@ -1686,7 +1686,7 @@ http_interactions:
   digest: 0877cf3fae8a2f168d31f382ca6f37a6cc947e98
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=Texas
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=Texas
     body:
       encoding: US-ASCII
       string: ''
@@ -1697,7 +1697,7 @@ http_interactions:
   digest: 6dc269bdada5280fee3ec2f8f04ec205ca2254cc
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=asdfasdfasdfasdfasdf
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=asdfasdfasdfasdfasdf
     body:
       encoding: US-ASCII
       string: ''
@@ -1708,7 +1708,7 @@ http_interactions:
   digest: 30c16284712e6b5e6db34f37457b679204a3e2e4
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=last+winter
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=last+winter
     body:
       encoding: US-ASCII
       string: ''
@@ -1719,7 +1719,7 @@ http_interactions:
   digest: 493810c1b6fb4e3c86e0a19372b07106cee593bf
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=snow+cover+in+Boston+last+winter
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=snow+cover+in+Boston+last+winter
     body:
       encoding: US-ASCII
       string: ''
@@ -1730,7 +1730,7 @@ http_interactions:
   digest: 317c5f85e0ae64e5882afbff40878d49e0fcc9cb
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=somestringthatmatchesnocollections
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=somestringthatmatchesnocollections
     body:
       encoding: US-ASCII
       string: ''
@@ -1741,7 +1741,7 @@ http_interactions:
   digest: 2df6a6aba39f9d025e36be502cb95bd0a59d6923
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.ecs.earthdata.nasa.gov/nlp?text=trigger500
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=trigger500
     body:
       encoding: US-ASCII
       string: ''
