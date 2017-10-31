@@ -43,6 +43,12 @@
 
       [time_start, time_end]
 
+    humanizeTemporal: ->
+      [start, end] = @getTemporal()
+      return "#{start} to #{end}" if start && end
+      return "Start: #{start}" if start
+      return "End: #{end}" if end
+
     _normalizeTime: (time) ->
       return null unless time?
       time.replace(/([0-9-]+)T([0-9:]+)\.0+Z/, '$1 $2')
