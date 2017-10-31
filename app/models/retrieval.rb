@@ -105,14 +105,21 @@ class Retrieval < ActiveRecord::Base
       user_id = retrieval.user.echo_id
       client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
-      retrieval.collections.each do |collection|
-        params = Rack::Utils.parse_nested_query(collection['params'])
+      retrieval.collections.each do |collection_hash|
+        params = Rack::Utils.parse_nested_query(collection_hash['params'])
         params.reject! { |p| ['datasource', 'short_name'].include? p }
 
         results_count = get_granule_count(client, params, token)
         results_count = 1000000 if results_count > 1000000
 
-        access_methods = collection['serviceOptions']['accessMethod']
+        response = client.get_collections({echo_collection_id: collection_hash['id'], include_tags: "#{Rails.configuration.cmr_tag_namespace}.*"},token)
+
+        collection = nil
+        if response.success?
+          collections = response.body['feed']['entry']
+          collection = collections.first if collections.present?
+        end
+        access_methods = collection_hash['serviceOptions']['accessMethod']
         access_methods.each do |method|
           page_num = 0
           page_size = 2000
@@ -121,7 +128,7 @@ class Retrieval < ActiveRecord::Base
               until page_num * page_size > results_count do
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
-                page_num = results_count / page_size + 1 if limited_collection?(method['id'])
+                page_num = results_count / page_size + 1 if limited_collection?(collection)
                 order_response = client.create_order(params,
                                                      method['id'],
                                                      method['method'],
@@ -138,17 +145,17 @@ class Retrieval < ActiveRecord::Base
               end
             elsif method['type'] == 'service'
               request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
-              method[:collection_id] = collection['id']
+              method[:collection_id] = collection_hash['id']
               Rails.logger.info "Total ESI service granules: #{results_count}."
 
               until page_num * page_size > results_count do
-                page_size = 100 if limited_collection?(method['id'])
+                page_size = collection['tags']['edsc.limited_collections']['data']['limit'] if limited_collection?(collection)
 
                 page_num += 1
                 params.merge!(page_size: page_size, page_num: page_num)
 
                 Rails.logger.info "page_size = #{page_size}, page_num = #{page_num}"
-                service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
+                service_response = MultiXml.parse(ESIClient.submit_esi_request(collection_hash['id'], params, method, request_url, client, token).body)
 
                 order_id = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
                 error_code = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
@@ -162,8 +169,8 @@ class Retrieval < ActiveRecord::Base
                 method[:error_message] << error_message
 
                 # break the loop
-                if !Rails.configuration.enable_esi_order_chunking || limited_collection?(method['id'])
-                  Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{method['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
+                if !Rails.configuration.enable_esi_order_chunking || limited_collection?(collection)
+                  Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{collection['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
                   page_num = results_count / page_size + 1
                 end
               end
@@ -216,9 +223,8 @@ class Retrieval < ActiveRecord::Base
 
   private
 
-  def self.limited_collection?(collection_id)
-    env = Rails.configuration.cmr_env == 'prod' ? 'production' : Rails.configuration.cmr_env
-    Rails.configuration.services['edsc'][env]['limited_collections'].split(/\s*,\s*/).include? collection_id
+  def self.limited_collection?(collection)
+    collection['tags'] && collection['tags']['edsc.limited_collections'] && collection['tags']['edsc.limited_collections']
   end
 
   def get_collection_id(id)
