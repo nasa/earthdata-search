@@ -9,6 +9,7 @@
 #= require models/ui/granules_list
 #= require modules/map/index
 
+
 data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
