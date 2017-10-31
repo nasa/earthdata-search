@@ -7,10 +7,10 @@ describe "Portal escape link", reset: false do
     end
 
     it "provides an obvious link to the non-portal view of Earthdata Search which preserves the current filters", acceptance: true do
-      expect(page).to have_link('Leave the Simple Portal')
-      expect(page).to have_text('Looking for more collections? Leave the Simple Portal')
+      expect(page).to have_link("Leave Simple's Simple Portal")
+      expect(page).to have_text("Looking for more collections? Leave Simple's Simple Portal")
 
-      click_link 'Leave the Simple Portal'
+      click_link "Leave Simple's Simple Portal"
       expect(page).to have_no_path_prefix("/portal")
       wait_for_xhr
       expect(page.find_field('keywords').value).to eql('modis')
