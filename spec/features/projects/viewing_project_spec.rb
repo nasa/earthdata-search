@@ -118,8 +118,6 @@ describe "Viewing Single Project", reset: false do
     end
   end
 
-  
-
   context 'project card' do
     before :all do
       Capybara.reset_sessions!
