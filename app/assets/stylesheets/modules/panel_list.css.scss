@@ -191,6 +191,19 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   &.granule-item-actions {
     float: left;
   }
+
+  ul.dropdown-menu {
+    background-color: #fff;
+    background-image: none;
+
+    a.dropdown-link:hover {
+      background: $dropdown-highlight;
+    }
+
+    > li > a.dropdown-link:hover {
+      color: #ddd;
+    }
+  }
 }
 
 .panel-list-thumbnail-container {
