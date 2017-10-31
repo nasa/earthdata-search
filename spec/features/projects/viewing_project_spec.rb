@@ -44,6 +44,82 @@ describe "Viewing Single Project", reset: false do
     end
   end
 
+  context 'minimap' do
+    context 'when a polygon has been selected' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+        wait_for_xhr
+        login
+        click_link 'My Project'
+        wait_for_xhr
+      end
+
+      it 'shows a map of the designated area' do
+        expect(find_by_id('bounding-box-map')).to have_css(".leaflet-map-pane")
+      end
+
+      it 'shows a label stating that a polygon is used' do
+        expect(find('.project-details')).to have_content('Polygon')
+      end
+
+      it 'draws the polygon spatial constraint on the map' do
+        expect(page).to have_selector('#bounding-box-map path', count: 1)
+      end
+    end
+
+    context 'when a rectangle has been selected' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
+        wait_for_xhr
+        login
+        click_link 'My Project'
+        wait_for_xhr
+      end
+
+      it 'shows a map of the designated area' do
+        expect(find_by_id('bounding-box-map')).to have_css(".leaflet-map-pane")
+      end
+
+      it 'shows a label stating that a rectangle is used' do
+        expect(find('.project-details')).to have_content('Rectangle')
+      end
+
+      it 'draws the rectangle spatial constraint on the map' do
+        expect(page).to have_selector('#bounding-box-map path', count: 1)
+      end
+    end
+
+    context 'when a point has been selected' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        create_point(0, 0)
+        wait_for_xhr
+        login
+        click_link 'My Project'
+        wait_for_xhr
+      end
+
+      it 'shows a map of the designated area' do
+        expect(find_by_id('bounding-box-map')).to have_css(".leaflet-map-pane")
+      end
+
+      it 'shows a label stating that a point is used' do
+        expect(find('.project-details')).to have_content('Point')
+      end
+
+      it "places a point spatial constraint on the map" do
+        expect(page).to have_css('#bounding-box-map .leaflet-marker-icon')
+      end
+    end
+  end
+
+  
+
   context 'project card' do
     before :all do
       Capybara.reset_sessions!
