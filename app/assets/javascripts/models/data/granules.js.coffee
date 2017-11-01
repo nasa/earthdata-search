@@ -65,7 +65,7 @@ ns.Granules = do (ko,
           @isLoaded(false)
           @_load(params, current, callback)
 
-    exclude: (granule) ->
+    exclude: (granule) =>
       results = @results()
       index = results.indexOf(granule)
 

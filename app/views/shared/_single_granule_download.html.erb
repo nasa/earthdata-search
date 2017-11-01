@@ -1,0 +1,13 @@
+<!--ko if: dataLinks().length == 1-->
+<a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parent.cwic() && online_access_flag, attr: {href: dataLinks()[0].href}">
+  <i class="fa fa-download"></i>
+</a>
+<!--/ko-->
+<!--ko if: dataLinks().length > 1-->
+<a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>
+<ul class="dropdown-menu" data-bind="foreach: dataLinks">
+  <li>
+    <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
+  </li>
+</ul>
+<!--/ko-->

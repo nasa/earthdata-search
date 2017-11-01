@@ -114,6 +114,9 @@
           color: #e1e1e1;
           font-size: 1.8em;
           text-shadow: none;
+          &:hover {
+            color: #9c9c9c;
+          }
         }
       }
 
@@ -125,25 +128,37 @@
           padding: 0;
 
           li {
-            padding: 20px 25px;
+            padding-top: 12px;
+            padding-left: 10px;
+            height: 110px;
             border-bottom: 1px solid #ddd;
 
 
-            h5 {
-              font-size: 1.1em;
-              margin: 0;
-            }
+            .granule-text-container {
+              padding: 25px;
 
-            span {
-              font-size: 1em;
-              color: #aaa;
-            }
+              h5 {
+                font-size: 1.1em;
+                margin: 0;
+              }
 
-            .modal-item-actions {
-              float: right;
+              span {
+                font-size: 1em;
+                color: #aaa;
+              }
 
-              button {
+              .modal-item-actions {
+                float: right;
+                margin-top: -25px;
 
+                a {
+                  color: #e1e1e1;
+                  font-size: 1.8em;
+
+                  &:hover {
+                    color: #9c9c9c;
+                  }
+                }
               }
             }
           }

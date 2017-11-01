@@ -8,17 +8,22 @@
       <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
         <ul data-bind="foreach: granuleDatasource().data().results()">
           <li>
-            <span>
-              <h5 data-bind="text: displayName()"></h5>
-              <span data-bind="text: humanizeTemporal()"></span>
-            </span>
+            <!-- ko if: browse_flag === 'true' || browse_flag === true -->
+            <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
+              <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
+            </a>
+            <!-- /ko -->
+            <div class="granule-text-container">
+              <span>
+                <h5 data-bind="text: displayName()"></h5>
+                <span data-bind="text: humanizeTemporal()"></span>
+              </span>
 
-            <span class="modal-item-actions">
-              <button><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-
-              <button><i class="fa fa-download" aria-hidden="true"></i></button>
-              <button><i class="fa fa-times-circle" aria-hidden="true"></i></button>
-            </span>
+              <span class="modal-item-actions">
+                <%= render 'shared/single_granule_download' %>
+                <a href="#" class="button icon-button" title="Remove granule" data-bind="click: $parent.granuleDatasource().data().exclude"><i class="fa fa-times-circle"></i></a>
+              </span>
+            </div>
           </li>
         </ul>
       </div>
