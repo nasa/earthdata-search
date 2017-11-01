@@ -6,6 +6,9 @@
         <h1 class="modal-title" id="granule-list-modal-title">Collection Details</h1>
       </div>
       <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
+        <!-- ko if: granuleDatasource().data().excludedGranulesList().length > 0 -->
+        <p class="undo">Granule excluded. <a href="#" data-bind="click: granuleDatasource().data().undoExclude">Undo</a></p>
+        <!-- /ko -->
         <ul data-bind="foreach: granuleDatasource().data().results()">
           <li>
             <!-- ko if: browse_flag === 'true' || browse_flag === true -->
