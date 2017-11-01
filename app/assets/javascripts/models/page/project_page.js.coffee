@@ -120,6 +120,7 @@ ns.ProjectPage = do (ko,
             _size = 0
             _size += parseFloat(granule.granule_size ? 0) for granule in granules.results()
             totalSize = _size / granules.results().length * granules.hits()
+            totalSize = 0 if isNaN(totalSize)
             projectGranules += granules.hits()
             collection.granule_hits(granules.hits())
             projectSize += totalSize
