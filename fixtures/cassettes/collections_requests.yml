@@ -1474,6 +1474,23 @@ http_interactions:
   digest: de133f8b4a860dc4f3361bfaf65e7fdde39c8c7f
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C179003030-ORNL_DAAC&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 01 Nov 2017 21:52:05 GMT
+  digest: d731a3be59bf8c7166d5046b5ff5541a3e4d0c51
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C90762182-LAADS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
