@@ -124,11 +124,13 @@ ns.Collection = do (ko
     _computeMaxOrderSize: ->
       hits = 0
       hits = @granuleDatasource().data().hits() if @granuleDatasource()
-      limit = 0
+      limit = -1
       limit = @tags()['edsc.limited_collections']['data']['limit'] if @tags() && @tags()['edsc.limited_collections']
-      hits < limit
-
-    # Since CMR doesn't support this feature, we get them from the granules that are already loaded.
+      if limit == -1
+        false
+      else
+        hits > limit
+# Since CMR doesn't support this feature, we get them from the granules that are already loaded.
     _computeAvailableFilters: ->
       _capabilities = {}
       # The following 'preloads' the available capabilities - this is necessary if zero granules are returned from a query.
