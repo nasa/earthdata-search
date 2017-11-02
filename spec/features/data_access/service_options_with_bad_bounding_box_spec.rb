@@ -3,7 +3,7 @@ require 'rake'
 
 describe 'Service Options order with bad bounding_box', reset: false do
   collection_id = 'C1236303846-NSIDC_ECS'
-  granule_id = 'G1286230578-NSIDC_ECS'
+  granule_id = 'G1353419373-NSIDC_ECS'
 
   context 'setting bounding box spatial query that will fail' do
     before :all do
@@ -12,8 +12,9 @@ describe 'Service Options order with bad bounding_box', reset: false do
       load_page :search
       login
 
-      load_page 'data/configure', {project: [collection_id],
+      load_page 'data/configure', {focus: collection_id,
                                    granule_id: granule_id}
+      p "----------- #{current_url}"
 
       choose 'Customize Product'
 
@@ -31,11 +32,6 @@ describe 'Service Options order with bad bounding_box', reset: false do
       within '.access-item-actions' do
         click_on 'Continue'
       end
-
-      # the tooManyGranulesModal is taking its time showing up, and this unfortunate sleep is the only way (so far) to get it behave
-      sleep(1)
-      find_by_id("tooManyGranulesModal").click_link("Continue")
-
       click_on 'Submit'
       wait_for_xhr
     end
