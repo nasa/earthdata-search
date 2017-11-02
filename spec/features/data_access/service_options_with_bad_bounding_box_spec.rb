@@ -14,7 +14,6 @@ describe 'Service Options order with bad bounding_box', reset: false do
 
       load_page 'data/configure', {focus: collection_id,
                                    granule_id: granule_id}
-      p "----------- #{current_url}"
 
       choose 'Customize Product'
 
