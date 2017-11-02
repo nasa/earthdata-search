@@ -1440,6 +1440,40 @@ http_interactions:
   digest: 195ba11625a6709e0b28c016387fc778684abcd9
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C1236303848-NSIDC_ECS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 02 Nov 2017 01:31:24 GMT
+  digest: 3d15f9e0afca605321026ceb8b5a8f66c98b83ba
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C128599377-NSIDC_ECS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 02 Nov 2017 01:31:02 GMT
+  digest: 9a29e8f44136122a650f9c5b264688dfa14631f3
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C14758250-LPDAAC_ECS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1489,6 +1523,23 @@ http_interactions:
       - edsc
   recorded_at: Wed, 01 Nov 2017 21:52:05 GMT
   digest: d731a3be59bf8c7166d5046b5ff5541a3e4d0c51
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C179014698-NSIDC_ECS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 02 Nov 2017 01:31:10 GMT
+  digest: 6187f5df5c9dea1a8d5eab4821ee55e9a5ff4072
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C90762182-LAADS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
