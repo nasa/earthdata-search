@@ -60,6 +60,7 @@ ns.Collection = do (ko
       @hasAtomData = ko.observable(false)
       @orbitFriendly = ko.observable(false)
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
+      @has_spatial = @asyncComputed(null, 100, @_computeHasSpatial, this)
 
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
@@ -74,7 +75,6 @@ ns.Collection = do (ko
           available.push("None")
         return available.join(", ")),
         this)
-
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       
@@ -325,10 +325,11 @@ ns.Collection = do (ko
       @_setObservable('granule_hits', jsonObj)
       @_setObservable('total_size', jsonObj)
       @_setObservable('unit', jsonObj)
-      @_setObservable('has_spatial', jsonObj)
+      # @_setObservable('has_spatial', jsonObj)
       @_setObservable('has_transforms', jsonObj)
       @_setObservable('has_formats', jsonObj)
       @_setObservable('has_variables', jsonObj)
+      @_setObservable('associations', jsonObj)
 
       @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
 
@@ -344,15 +345,39 @@ ns.Collection = do (ko
       @_loadDatasource()
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)
 
-
       if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
         @has_granules = @canFocus()
+
+    _computeHasSpatial: ->
+      if @associations()?['services']?.length > 0
+        for serviceId in @associations()['services'] when !@has_spatial()
+          @_getServices(serviceId)
 
     _setObservable: (prop, jsonObj) =>
       this[prop] ?= ko.observable(undefined)
       this[prop](jsonObj[prop] ? this[prop]())
 
+    _getServices: (id)->
+      ajax
+        dataType: 'json'
+        url: "/services/#{id}"
+        success: (data) =>
+          if data['ServiceOptions']?['SubsetType'].length > 0
+            for subsetType in data['ServiceOptions']['SubsetType']
+              if subsetType == 'Spatial'
+                @has_spatial(true)
+                break
+
     has_feature: (key) ->
       @getValueForTag("features.#{key}")
+
+    variables_enabled: ->
+      false
+
+    transforms_enabled: ->
+      false
+
+    formats_enabled: ->
+      false
 
   exports = Collection
