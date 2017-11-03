@@ -37,6 +37,8 @@ EarthdataSearchClient::Application.routes.draw do
     end
   end
 
+  resources :services, only: [:show], defaults: {format: 'json'}
+
   resources :docs
 
   get 'projects/new' => 'projects#new', format: 'html'
