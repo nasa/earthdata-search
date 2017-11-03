@@ -65,6 +65,8 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
+  gem 'byebug'
+  gem 'rubocop'
 end
 
 group :assets, :development, :test do
