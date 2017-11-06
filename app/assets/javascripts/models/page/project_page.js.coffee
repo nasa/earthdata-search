@@ -50,7 +50,6 @@ ns.ProjectPage = do (ko,
       @ui =
         temporal: new TemporalModel(@query)
         projectList: projectList
-        projectPage: this
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
 
