@@ -702,6 +702,25 @@ http_interactions:
   digest: 9cdc3d2600617b4e45da2c985f5e22fccc93aaa6
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/S0001-GES_DISC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+      cmr-prototype-umm:
+      - 'true'
+  recorded_at: Fri, 03 Nov 2017 22:08:50 GMT
+  digest: c81ea715c1f4ddc821c4631a93613c600d5fa89a
+- request:
+    method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1204424196-GCMDTEST.umm_json_v1_9
     body:
       encoding: US-ASCII

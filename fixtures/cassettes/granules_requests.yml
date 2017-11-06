@@ -4111,6 +4111,23 @@ http_interactions:
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: bounding_box=0%2C0%2C2%2C2&echo_collection_id=C1200237736-MMT_1&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 03 Nov 2017 22:08:54 GMT
+  digest: dfc514fb82d6816c4957fb1218f770115785a9e2
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C1000000029-EDF_OPS&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=%2Afoo&readable_granule_name%5B%5D=%2Afoo2&readable_granule_name%5B%5D=%2Afoo3&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
@@ -4157,4 +4174,38 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 04 Nov 2016 18:36:41 GMT
   digest: 0a5b93d92fa7fae1ac5dcf11ce7bd0fb4b89c3b5
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1200237736-MMT_1&page_num=1&page_size=20&polygon=102%2C20%2C103%2C40%2C104%2C60%2C102%2C20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 06 Nov 2017 16:39:04 GMT
+  digest: 70fe26ad92f5a2fbf5579b0a2fc9644165fcff2a
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1200237736-MMT_1&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 03 Nov 2017 22:08:46 GMT
+  digest: 48ab22fed2edc0e3d8c77594c08089d41366882d
 recorded_with: VCR 2.6.0
