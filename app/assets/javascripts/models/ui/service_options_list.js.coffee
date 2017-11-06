@@ -30,7 +30,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
                 if method.name == checkedAccessMethodName &&
                   method.type != 'download' &&
                   (method.type == 'order' || method.type == 'service' && edsc.config.enableEsiOrderChunking ) &&
-                  accessCollection.collection.id not in edsc.config.asterCollections
+                  !accessCollection.collection.tags()['edsc.limited_collections']
                     numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
                     $("#number-of-orders").text(numberOfOrders)
                     $("#tooManyGranulesModal").modal('show')
@@ -43,9 +43,6 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
     isEsiOrderChunkingEnabled: ->
       edsc.config.enableEsiOrderChunking
-
-    isLimitedCollection: (projectCollection) ->
-      projectCollection.collection.id in edsc.config.asterCollections
 
     showNext: =>
       $("#tooManyGranulesModal").modal('hide')
