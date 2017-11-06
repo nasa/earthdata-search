@@ -9,7 +9,6 @@
 #= require models/ui/granules_list
 #= require modules/map/index
 
-
 data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
@@ -31,7 +30,7 @@ ns.ProjectPage = do (ko,
 
   $(document).ready ->
     @map = new window.edsc.map.Map(document.getElementById('bounding-box-map'), 'geo', true)
-
+    
   class ProjectPage
     constructor: ->
       @query = new QueryModel()
@@ -61,7 +60,7 @@ ns.ProjectPage = do (ko,
       setTimeout((=>
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
-    
+   
     showType: =>
       type = ""
       if @query.serialize().bounding_box then type = "Rectangle"
