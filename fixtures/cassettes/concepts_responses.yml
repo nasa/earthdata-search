@@ -2631,7 +2631,7 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         to JPL Earth System Grid (JPL ESG Link)","hreflang":"en-US","href":"http://esg-gateway.jpl.nasa.gov/home.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
-    http_version:
+    http_version: 
 3590d4a3d39fcf403f75acea942bb337a3deaf59:
   response:
     status:
@@ -3199,6 +3199,36 @@ b254400c8d4ce110ceccdc75a040c6dab2e88e49:
         Science Data Support Team","ContactInformation":{"ContactInstruction":"Contact
         for format/distribution issues.","ContactMechanisms":[{"Type":"Telephone","Value":"301-352-2144"},{"Type":"Email","Value":"laadshelp@listserv.gsfc.nasa.gov"}],"Addresses":[{"StreetAddresses":["7501
         Forbes Blvd, Suite 103"],"City":"Seabrook","StateProvince":"MD","Country":"USA","PostalCode":"20706"}]}}]}'
+    http_version: 
+c81ea715c1f4ddc821c4631a93613c600d5fa89a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 2a79d469-b58d-492c-9e95-994f800cd76f
+      content-type:
+      - application/vnd.nasa.cmr.umm+json; charset=utf-8
+      date:
+      - Fri, 03 Nov 2017 22:08:07 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '495'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"Name":"AIRX3STD","Type":"OPeNDAP","Version":"1.9","Description":"AIRS
+        Level-3 retrieval product created using AIRS IR, AMSU without HSB.","OnlineResource":{"Linkage":"https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/","Name":"OPeNDAP
+        Service for AIRS Level-3 retrieval products","Description":"OPeNDAP Service"},"ServiceOptions":{"SubsetType":["Spatial","Variable"],"SupportedProjections":["Geographic"],"SupportedFormats":["netCDF-3","netCDF-4","Binary","ASCII"]}}'
     http_version: 
 dd6bb53568341c00648f150b266611f0362d1853:
   response:
