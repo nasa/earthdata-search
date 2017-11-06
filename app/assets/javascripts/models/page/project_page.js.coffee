@@ -100,7 +100,7 @@ ns.ProjectPage = do (ko,
             projectGranules += granules.hits()
             collection.granule_hits(granules.hits())
             projectSize += totalSize
-            if totalSize == 0 && granules.hits() > 0
+            if isNaN(totalSize) || (totalSize == 0 && granules.hits() > 0)
               collection.total_size('Not Provided')
               collection.unit('')
               @sizeProvided(false)
