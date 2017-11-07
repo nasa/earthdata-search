@@ -62,12 +62,15 @@ ns.ProjectPage = do (ko,
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
    
     showType: =>
-      type = ""
-      if @query.serialize().bounding_box then type = "Rectangle"
-      if @query.serialize().polygon then type = "Polygon"
-      if @query.serialize().point then type = "Point"
-      type
-  
+      if @query.serialize().bounding_box
+        return "Rectangle"
+      else if @query.serialize().polygon
+        return "Polygon"
+      else if @query.serialize().point
+        return "Point"
+      else
+        return ""
+
     hasType: =>
       @query.serialize().bounding_box || @query.serialize().polygon || @query.serialize().point
 
