@@ -715,8 +715,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-      cmr-prototype-umm:
-      - 'true'
   recorded_at: Fri, 03 Nov 2017 22:08:50 GMT
   digest: c81ea715c1f4ddc821c4631a93613c600d5fa89a
 - request:
