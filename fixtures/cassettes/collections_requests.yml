@@ -6346,8 +6346,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      cmr-prototype-umm:
-      - 'true'
   recorded_at: Mon, 06 Nov 2017 13:28:20 GMT
   digest: 5ca8efa5a558c394dcfad333d90acc07bf4bd513
 - request:
@@ -6438,8 +6436,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      cmr-prototype-umm:
-      - 'true'
   recorded_at: Mon, 06 Nov 2017 13:28:16 GMT
   digest: f20991056e17f411bf1e853f5d36fc6ce144cb6d
 - request:
@@ -7940,8 +7936,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      cmr-prototype-umm:
-      - 'true'
   recorded_at: Mon, 06 Nov 2017 16:39:03 GMT
   digest: a80007b0b55d1f06e0ca05218457b5aae9bfd8b0
 - request:
