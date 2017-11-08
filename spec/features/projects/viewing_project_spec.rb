@@ -8,6 +8,7 @@ describe "Viewing Single Project", reset: false do
       load_page :search
       login
       visit_project
+      wait_for_xhr
     end
 
     it 'shows project title' do
