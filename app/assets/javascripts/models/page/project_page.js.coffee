@@ -7,6 +7,7 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/granules_list
+#= require modules/map/index
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -27,6 +28,9 @@ ns.ProjectPage = do (ko,
   GranulesList = ui.GranulesList
 ) ->
 
+  $(document).ready ->
+    @map = new window.edsc.map.Map(document.getElementById('bounding-box-map'), 'geo', true)
+    
   class ProjectPage
     constructor: ->
       @query = new QueryModel()
@@ -56,6 +60,19 @@ ns.ProjectPage = do (ko,
       setTimeout((=>
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
+   
+    showType: =>
+      if @query.serialize().bounding_box
+        return "Rectangle"
+      else if @query.serialize().polygon
+        return "Polygon"
+      else if @query.serialize().point
+        return "Point"
+      else
+        return ""
+
+    hasType: =>
+      @query.serialize().bounding_box || @query.serialize().polygon || @query.serialize().point
 
     _loadFromUrl: (e)=>
       @project.serialized(urlUtil.currentParams())

@@ -10,6 +10,7 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
+             urlUtil = @edsc.util.url,
              ZoomHome = ns.L.ZoomHome,
              Legend = @edsc.Legend,
              page = @edsc.page,
@@ -72,43 +73,77 @@ ns.Map = do (window,
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
-    constructor: (el, projection='geo') ->
+    constructor: (el, projection='geo', isMinimap = false) ->
+      @isMinimap = isMinimap
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
 
       map.loadingLayers = 0
-
-      map.addControl(L.control.scale(position: 'topright'))
-
+      if !@isMinimap
+        map.addControl(L.control.scale(position: 'topright'))
+        map.addLayer(new GranuleVisualizationsLayer())
+        map.addLayer(new MouseEventsLayer())
+  
+        map.addControl(new ZoomHome())
+        map.addControl(new ProjectionSwitcher())
+        map.addControl(new SpatialSelection())
+  
+        @legendControl = new LegendControl(position: 'topleft')
+        map.addControl(@legendControl)
+      
       @_buildLayerSwitcher()
-      map.addLayer(new GranuleVisualizationsLayer())
-      map.addLayer(new MouseEventsLayer())
-
-      map.addControl(new ZoomHome())
-      map.addControl(new ProjectionSwitcher())
-      map.addControl(new SpatialSelection())
-
-      @legendControl = new LegendControl(position: 'topleft')
-      map.addControl(@legendControl)
-
       @setProjection(projection)
       @setBaseMap("Blue Marble")
       @setOverlays([OVERLAYS[0], OVERLAYS[2]])
 
-      @time = ko.computed(@_computeTime, this)
-
-      map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
-      @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
-        map.fire('edsc.visiblecollectionschange', collections: collections)
+      if !@isMinimap
+        @time = ko.computed(@_computeTime, this)
+        map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
+        @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
+          map.fire('edsc.visiblecollectionschange', collections: collections)
+      if @isMinimap
+        map.dragging.disable()
+        map.touchZoom.disable()
+        map.doubleClickZoom.disable()
+        map.scrollWheelZoom.disable()
+        # Disable tap handler, if present.
+        map.tap.disable() if (map.tap)
+        if urlUtil.currentParams().bounding_box
+          latlon = urlUtil.currentParams().bounding_box.split(",")
+          map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
+          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}], {color: "#00ffff", fillOpacity: 0.1, weight: 3})
+          shape._interpolationFn = 'cartesian'
+          map.addLayer(shape)
+        else if urlUtil.currentParams().polygon
+          latlon = urlUtil.currentParams().polygon.split(",")
+          len = latlon.length
+          corners = new Array()
+          i = 0
+          while (i + 1) < len
+            corner = {lat: latlon[i + 1], lng: latlon[i]}
+            corners.push(corner)
+            i = i + 2
+          map.fitBounds(corners)
+          shape = L.polygon(corners, {color: "#00ffff", fillOpacity: 0.4, weight: 1})
+          shape._interpolationFn = 'cartesian'
+          map.addLayer(shape)
+        else if urlUtil.currentParams().point
+          latlon = urlUtil.currentParams().point.split(",")
+          map.setView([latlon[1], latlon[0]], 4)
+          marker = L.featureGroup().addLayer(L.marker([latlon[1], latlon[0]]), {color: "#00ffff", fillOpacity: 0.4, weight: 1})
+          map.addLayer(marker)
+        else
+          map.fitBounds([{lat: -180, lng: -90}, {lat: 180, lng: 90}])
 
       @_setupStatePersistence()
 
     # Removes the map from the page
     destroy: ->
       @map.remove()
-      @time.dispose()
-      @_granuleVisualizationSubscription.dispose()
+      if !@isMiniMap
+        @time.dispose()
+        @_granuleVisualizationSubscription.dispose()
 
     _setupStatePersistence: ->
       @serialized = state = ko.observable(null)
@@ -213,7 +248,8 @@ ns.Map = do (window,
         break
 
       @_layerControl = L.control.layers(baseMaps, overlayMaps)
-      @map.addControl(@_layerControl)
+      if !@isMinimap
+        @map.addControl(@_layerControl)
 
     _rebuildLayers: ->
       layerControl = @_layerControl
