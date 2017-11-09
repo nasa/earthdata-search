@@ -106,7 +106,7 @@ Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
                   </a>
                 <!--/ko-->
                 <!--ko if: dataLinks().length > 1-->
-                  <a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>
+                  <a href="#" data-toggle="dropdown" class="button icon-button" title="Download single granule data" aria-expanded="false"><i class="fa fa-download"></i></a>
                   <ul class="dropdown-menu" data-bind="foreach: dataLinks">
                     <li>
                       <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
