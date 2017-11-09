@@ -144,6 +144,7 @@ describe "Viewing Single Project", reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search, project: ['C1200237736-MMT_1'], env: :sit, bounding_box: [0, 0, 2, 2]
+      wait_for_xhr
       login
       click_link 'My Project'
       wait_for_xhr
@@ -167,6 +168,7 @@ describe "Viewing Single Project", reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search, project: ['C1200237736-MMT_1'], env: :sit, polygon: [20, 102, 40, 103, 60, 104, 80, 105]
+      wait_for_xhr
       login
       click_link 'My Project'
       wait_for_xhr
