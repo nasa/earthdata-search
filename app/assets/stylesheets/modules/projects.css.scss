@@ -100,71 +100,6 @@
         border: 1px solid rgba($ocean-blue, 0.3);
       }
 
-      .modal-header {
-        background-color: #fff;
-
-        h1 {
-          padding-left: 10px;
-        }
-
-        .close {
-          background-color: #fff;
-          background-image: none;
-          float: right;
-          color: #e1e1e1;
-          font-size: 1.8em;
-          text-shadow: none;
-          &:hover {
-            color: #9c9c9c;
-          }
-        }
-      }
-
-      .modal-body {
-        max-height: 500px;
-        padding: 0;
-
-        ul {
-          padding: 0;
-
-          li {
-            padding-top: 12px;
-            padding-left: 10px;
-            height: 110px;
-            border-bottom: 1px solid #ddd;
-
-
-            .granule-text-container {
-              padding: 25px;
-
-              h5 {
-                font-size: 1.1em;
-                margin: 0;
-              }
-
-              span {
-                font-size: 1em;
-                color: #aaa;
-              }
-
-              .modal-item-actions {
-                float: right;
-                margin-top: -25px;
-
-                a {
-                  color: #e1e1e1;
-                  font-size: 1.8em;
-
-                  &:hover {
-                    color: #9c9c9c;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
       .collection-card-content {
         height: 151px;
         background: #fff;
@@ -308,5 +243,80 @@
     background: #fff;
     border-bottom: 1px solid #ccc;
     vertical-align: top;
+  }
+
+  /* Project Modals */
+  .modal-header {
+    background-color: #fff;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    .close {
+      background-color: #fff;
+      background-image: none;
+      float: right;
+      color: #e1e1e1;
+      font-size: 1.8em;
+      text-shadow: none;
+      padding: 5px 0 0 0;
+      &:hover {
+        color: #9c9c9c;
+      }
+    }
+  }
+
+  .modal-body {
+    max-height: 500px;
+    padding: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    ul {
+      padding: 0;
+    }
+
+    li {
+      padding: 0;
+      border-bottom: 1px solid #ddd;
+      height: 86px;
+
+      &:nth-child(odd) {
+        background: #f3f3f3;
+      }
+    }
+
+    .panel-list-thumbnail-container {
+      border: 0;
+      margin: 0 15px 0 0;
+    }
+
+    .granule-text-container {
+      padding: 15px 25px;
+
+      h5 {
+        font-size: 1.1em;
+        margin: 0;
+        color: #424242;
+      }
+
+      span {
+        font-size: 1em;
+        color: #aaa;
+      }
+
+      .modal-item-actions {
+        float: right;
+        margin-top: -25px;
+
+        a {
+          color: #e1e1e1;
+          font-size: 1.8em;
+
+          &:hover {
+            color: #9c9c9c;
+          }
+        }
+      }
+    }
   }
 }
