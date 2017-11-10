@@ -122,7 +122,7 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1200237736-MMT_1'], env: :sit
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit
       login
       click_link 'My Project'
       wait_for_xhr
@@ -134,8 +134,8 @@ describe "Viewing Single Project", reset: false do
         expect(page).to have_css('span.enabled', count: 0)
 
         expect(page).to have_css('i.fa.fa-globe')
-        expect(page).to have_css('i.fa.fa-tags')
         expect(page).to have_css('i.fa.fa-sliders')
+        expect(page).to have_css('i.fa.fa-file-text-o')
       end
     end
   end
@@ -143,7 +143,7 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations with spatial subsetting enabled via bounding box' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1200237736-MMT_1'], env: :sit, bounding_box: [0, 0, 2, 2]
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit, bounding_box: [0, 0, 2, 2]
       wait_for_xhr
       login
       click_link 'My Project'
@@ -158,8 +158,8 @@ describe "Viewing Single Project", reset: false do
         within 'span.enabled' do
           expect(page).to have_css('i.fa.fa-globe')
         end
-        expect(page).to have_css('i.fa.fa-tags')
         expect(page).to have_css('i.fa.fa-sliders')
+        expect(page).to have_css('i.fa.fa-file-text-o')
       end
     end
   end
@@ -167,7 +167,7 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations with spatial subsetting enabled via polygon' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1200237736-MMT_1'], env: :sit, polygon: [20, 102, 40, 103, 60, 104, 80, 105]
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit, polygon: [20, 102, 40, 103, 60, 104, 80, 105]
       wait_for_xhr
       login
       click_link 'My Project'
@@ -182,8 +182,8 @@ describe "Viewing Single Project", reset: false do
         within 'span.enabled' do
           expect(page).to have_css('i.fa.fa-globe')
         end
-        expect(page).to have_css('i.fa.fa-tags')
         expect(page).to have_css('i.fa.fa-sliders')
+        expect(page).to have_css('i.fa.fa-file-text-o')
       end
     end
   end
