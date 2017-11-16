@@ -1,43 +1,59 @@
+#= require models/data/grid
 #= require models/data/query
+#= require models/data/collections
 #= require models/data/project
 #= require models/data/preferences
+#= require models/data/spatial_entry
+#= require models/ui/spatial_type
 #= require models/ui/temporal
+#= require models/ui/collections_list
 #= require models/ui/project_list
+#= require models/ui/granule_timeline
+#= require models/ui/state_manager
 #= require models/ui/service_options_list
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/granules_list
-#= require modules/map/index
 
-data = @edsc.models.data
-ui = @edsc.models.ui
-ns = @edsc.models.page
+
+models = @edsc.models
+data = models.data
+ui = models.ui
+ns = models.page
 
 ns.ProjectPage = do (ko,
-  setCurrent = ns.setCurrent
-  urlUtil = @edsc.util.url
-  QueryModel = data.query.CollectionQuery
-  ProjectModel = data.Project
-  PreferencesModel = data.Preferences
-  TemporalModel = ui.Temporal
-  ProjectListModel = ui.ProjectList
-  SiteTourModel = ui.SiteTour
-  ServiceOptionsListModel = ui.ServiceOptionsList
-  FeedbackModel = ui.Feedback
-  ajax=@edsc.util.xhr.ajax
-  GranulesList = ui.GranulesList
-) ->
+                     setCurrent = ns.setCurrent
+                     urlUtil = @edsc.util.url
+                     QueryModel = data.query.CollectionQuery
+                     CollectionsModel = data.Collections
+                     ProjectModel = data.Project
+                     SpatialEntry = data.SpatialEntry
+                     SpatialTypeModel = ui.SpatialType
+                     CollectionsListModel = ui.CollectionsList
+                     PreferencesModel = data.Preferences
+                     TemporalModel = ui.Temporal
+                     ProjectListModel = ui.ProjectList
+                     SiteTourModel = ui.SiteTour
+                     ServiceOptionsListModel = ui.ServiceOptionsList
+                     FeedbackModel = ui.Feedback
+                     ajax=@edsc.util.xhr.ajax
+                     GranulesList = ui.GranulesList
+                     StateManager = ui.StateManager
+                   ) ->
+  current = null
 
   $(document).ready ->
-    @map = new window.edsc.map.Map(document.getElementById('bounding-box-map'), 'geo', true)
+    current.map = map = new window.edsc.map.Map(document.getElementById('bounding-box-map'), 'geo', true)
     
   class ProjectPage
     constructor: ->
       @query = new QueryModel()
+      @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
-      @projectQuery =
-      @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
-      @bindingsLoaded = ko.observable(false)
+      @projectQuery = @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
+      
+      @spatialEntry = new SpatialEntry(@query.spatial)
+      
       @preferences = new PreferencesModel()
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
@@ -46,11 +62,16 @@ ns.ProjectPage = do (ko,
       @sizeProvided = ko.observable(true)
 
       projectList = new ProjectListModel(@project)
+
       @ui =
+        spatialType: new SpatialTypeModel(@query)
         temporal: new TemporalModel(@query)
         projectList: projectList
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
+
+      @spatialError = ko.computed(@_computeSpatialError)
+      @bindingsLoaded = ko.observable(false)
 
       $(window).on 'edsc.save_workspace', (e)=>
         urlUtil.saveState('/search/collections', urlUtil.currentParams(), true, @workspaceNameField())
@@ -73,6 +94,15 @@ ns.ProjectPage = do (ko,
 
     hasType: =>
       @query.serialize().bounding_box || @query.serialize().polygon || @query.serialize().point
+
+    _computeSpatialError: =>
+      error = @collections.error()
+      if error?
+        for e in error
+          return e if e? && (e.indexOf('polygon') != -1 ||
+                              e.indexOf('box') != -1 ||
+                              e.indexOf('point') != -1)
+      null
 
     _loadFromUrl: (e)=>
       @project.serialized(urlUtil.currentParams())
@@ -119,7 +149,7 @@ ns.ProjectPage = do (ko,
         _size = parseFloat(_size) / 1024
         _units.shift()
       {size: _size.toFixed(1), unit: _units[0]}
-
-  setCurrent(new ProjectPage())
-
+  
+  current = new ProjectPage()
+  setCurrent(current)
   exports = ProjectPage

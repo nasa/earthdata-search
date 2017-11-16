@@ -109,7 +109,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       
 
     # Set end time to 23:59:59
-    DatePickerProto = Object.getPrototypeOf($('.temporal').data('datepicker'))
+    DatePickerProto = if $( ".temporal" ).length then Object.getPrototypeOf($('.temporal').data('datepicker')) else false
     unless originalSetDate?
       originalFill = DatePickerProto.fill
       DatePickerProto.fill = ->
