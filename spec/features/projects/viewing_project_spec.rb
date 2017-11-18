@@ -8,11 +8,12 @@ describe "Viewing Single Project", reset: false do
       load_page :search
       login
       visit_project
+      wait_for_xhr
     end
 
     it 'shows project title' do
       expect(page).to have_css('.save-icon')
-      expect(page).to have_css('h2', text:'Test Project')
+      expect(page).to have_css('h2', text: 'Test Project')
     end
   end
 
@@ -25,7 +26,7 @@ describe "Viewing Single Project", reset: false do
     end
 
     it 'shows default project title' do
-      expect(page).to have_css('h2', text:'Untitled Project')
+      expect(page).to have_css('h2', text: 'Untitled Project')
       expect(page).to have_css('.save-icon')
     end
   end
@@ -114,6 +115,75 @@ describe "Viewing Single Project", reset: false do
 
       it "places a point spatial constraint on the map" do
         expect(page).to have_css('#bounding-box-map .leaflet-marker-icon')
+      end
+    end
+  end
+
+  context 'project configurations' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit
+      login
+      click_link 'My Project'
+      wait_for_xhr
+    end
+
+    it 'shows configuration icons' do
+      within '.collection-capability' do
+        expect(page).to have_css('span', count: 3)
+        expect(page).to have_css('span.enabled', count: 0)
+
+        expect(page).to have_css('i.fa.fa-globe')
+        expect(page).to have_css('i.fa.fa-sliders')
+        expect(page).to have_css('i.fa.fa-file-text-o')
+      end
+    end
+  end
+
+  context 'project configurations with spatial subsetting enabled via bounding box' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit, bounding_box: [0, 0, 2, 2]
+      wait_for_xhr
+      login
+      click_link 'My Project'
+      wait_for_xhr
+    end
+
+    it 'shows configuration icons with spatial enabled' do
+      within '.collection-capability' do
+        expect(page).to have_css('span', count: 3)
+        expect(page).to have_css('span.enabled', count: 1)
+
+        within 'span.enabled' do
+          expect(page).to have_css('i.fa.fa-globe')
+        end
+        expect(page).to have_css('i.fa.fa-sliders')
+        expect(page).to have_css('i.fa.fa-file-text-o')
+      end
+    end
+  end
+
+  context 'project configurations with spatial subsetting enabled via polygon' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit, polygon: [20, 102, 40, 103, 60, 104, 80, 105]
+      wait_for_xhr
+      login
+      click_link 'My Project'
+      wait_for_xhr
+    end
+
+    it 'shows configuration icons with spatial enabled' do
+      within '.collection-capability' do
+        expect(page).to have_css('span', count: 3)
+        expect(page).to have_css('span.enabled', count: 1)
+
+        within 'span.enabled' do
+          expect(page).to have_css('i.fa.fa-globe')
+        end
+        expect(page).to have_css('i.fa.fa-sliders')
+        expect(page).to have_css('i.fa.fa-file-text-o')
       end
     end
   end

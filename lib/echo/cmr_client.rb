@@ -18,6 +18,10 @@ module Echo
       get("/search/collections.#{format}", query, token_header(token))
     end
 
+    def get_service(id, options = {}, token = nil)
+      get("/search/concepts/#{id}", {}, token_header(token))
+    end
+
     def json_query_collections(query, token = nil, options = {})
       format = options.delete(:format) || 'json'
       post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))

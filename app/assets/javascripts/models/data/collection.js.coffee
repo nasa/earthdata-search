@@ -75,7 +75,6 @@ ns.Collection = do (ko
         return available.join(", ")),
         this)
 
-
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
@@ -325,10 +324,11 @@ ns.Collection = do (ko
       @_setObservable('granule_hits', jsonObj)
       @_setObservable('total_size', jsonObj)
       @_setObservable('unit', jsonObj)
-      @_setObservable('has_spatial', jsonObj)
+      @_setObservable('has_spatial_subsetting', jsonObj)
       @_setObservable('has_transforms', jsonObj)
       @_setObservable('has_formats', jsonObj)
       @_setObservable('has_variables', jsonObj)
+      @_setObservable('associations', jsonObj)
 
       @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
 
@@ -344,7 +344,6 @@ ns.Collection = do (ko
       @_loadDatasource()
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)
 
-
       if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
         @has_granules = @canFocus()
 
@@ -354,5 +353,14 @@ ns.Collection = do (ko
 
     has_feature: (key) ->
       @getValueForTag("features.#{key}")
+
+    variables_enabled: ->
+      false
+
+    transforms_enabled: ->
+      false
+
+    formats_enabled: ->
+      false
 
   exports = Collection

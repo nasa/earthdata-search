@@ -124,7 +124,7 @@ ns.ProjectPage = do (ko,
             projectGranules += granules.hits()
             collection.granule_hits(granules.hits())
             projectSize += totalSize
-            if totalSize == 0 && granules.hits() > 0
+            if isNaN(totalSize) || (totalSize == 0 && granules.hits() > 0)
               collection.total_size('Not Provided')
               collection.unit('')
               @sizeProvided(false)
@@ -143,7 +143,17 @@ ns.ProjectPage = do (ko,
         _size = parseFloat(_size) / 1024
         _units.shift()
       {size: _size.toFixed(1), unit: _units[0]}
-  
+
+    spatial_enabled: ->
+      serializedObj = @project.serialized()
+
+      hasBoundingBox = serializedObj.bounding_box?.length > 0
+      hasPolygon     = serializedObj.polygon?.length > 0
+
+      # Return true if any of the spatial subsettings exist
+      hasBoundingBox || hasPolygon
+
   current = new ProjectPage()
   setCurrent(current)
+
   exports = ProjectPage
