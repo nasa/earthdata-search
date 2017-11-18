@@ -22,7 +22,6 @@
 //= require modules/map/geoutil
 //= require modules/map/mbr
 //= require models/index
-//= require models/page/current
 //= require models/page/project_page
 //= require modules/index
 //= require bootstrap/bootstrap

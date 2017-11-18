@@ -1,15 +1,10 @@
-#= require models/data/grid
 #= require models/data/query
-#= require models/data/collections
 #= require models/data/project
 #= require models/data/preferences
 #= require models/data/spatial_entry
 #= require models/ui/spatial_type
 #= require models/ui/temporal
-#= require models/ui/collections_list
 #= require models/ui/project_list
-#= require models/ui/granule_timeline
-#= require models/ui/state_manager
 #= require models/ui/service_options_list
 #= require models/ui/feedback
 #= require models/ui/sitetour
@@ -38,7 +33,6 @@ ns.ProjectPage = do (ko,
                      FeedbackModel = ui.Feedback
                      ajax=@edsc.util.xhr.ajax
                      GranulesList = ui.GranulesList
-                     StateManager = ui.StateManager
                    ) ->
   current = null
 
@@ -50,8 +44,9 @@ ns.ProjectPage = do (ko,
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
-      @projectQuery = @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
-      
+      @projectQuery = 
+      @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
+      @bindingsLoaded = ko.observable(false)
       @spatialEntry = new SpatialEntry(@query.spatial)
       
       @preferences = new PreferencesModel()
@@ -62,7 +57,6 @@ ns.ProjectPage = do (ko,
       @sizeProvided = ko.observable(true)
 
       projectList = new ProjectListModel(@project)
-
       @ui =
         spatialType: new SpatialTypeModel(@query)
         temporal: new TemporalModel(@query)
@@ -71,7 +65,7 @@ ns.ProjectPage = do (ko,
         sitetour: new SiteTourModel()
 
       @spatialError = ko.computed(@_computeSpatialError)
-      @bindingsLoaded = ko.observable(false)
+      
 
       $(window).on 'edsc.save_workspace', (e)=>
         urlUtil.saveState('/search/collections', urlUtil.currentParams(), true, @workspaceNameField())

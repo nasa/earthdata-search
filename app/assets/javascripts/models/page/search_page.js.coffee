@@ -61,11 +61,11 @@ ns.SearchPage = do (ko
   class SearchPage
     constructor: ->
       @query = new QueryModel()
-
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
       @preferences = new PreferencesModel()
       @spatialEntry = new SpatialEntry(@query.spatial)
+
       @ui =
         spatialType: new SpatialTypeModel(@query)
         collectionsList: new CollectionsListModel(@query, @collections, @project)
@@ -145,7 +145,6 @@ ns.SearchPage = do (ko
   loc = window.location.pathname
   if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
     window.location.replace(loc + '/search' + window.location.search);
-  
   current = new SearchPage()
   setCurrent(current)
 

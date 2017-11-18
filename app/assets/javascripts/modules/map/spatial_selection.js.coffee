@@ -302,5 +302,4 @@ ns.SpatialSelection = do (window,
         when 'arctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3413.projection, type)
         when 'antarctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3031.projection, type)
         else console.error("Cannot render spatial type #{type}")
-      
   exports = SpatialSelection
