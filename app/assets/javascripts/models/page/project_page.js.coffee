@@ -24,7 +24,6 @@ ns.ProjectPage = do (ko,
                      ProjectModel = data.Project
                      SpatialEntry = data.SpatialEntry
                      SpatialTypeModel = ui.SpatialType
-                     CollectionsListModel = ui.CollectionsList
                      PreferencesModel = data.Preferences
                      TemporalModel = ui.Temporal
                      ProjectListModel = ui.ProjectList
