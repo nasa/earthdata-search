@@ -143,7 +143,8 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations with spatial subsetting enabled via bounding box' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1000000968-DEV08'], env: :sit, bounding_box: [0, 0, 2, 2]
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit
+      create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       login
       click_link 'My Project'
@@ -167,7 +168,8 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations with spatial subsetting enabled via polygon' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1000000968-DEV08'], env: :sit, polygon: [20, 102, 40, 103, 60, 104, 80, 105]
+      load_page :search, project: ['C1000000968-DEV08'], env: :sit
+      create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       login
       click_link 'My Project'

@@ -29,7 +29,7 @@ module Helpers
       root = 'collection-results-list' if root == 'collection-results'
       page.execute_script("$('##{root} .panel-list-item:contains(\"#{col_name}\")').click()")
       #item.click # This causes intermittent failures based on timing
-      # wait_for_xhr
+      wait_for_xhr
       wait_for_visualization_load
       expect(page).to have_visible_granule_list
     rescue => e

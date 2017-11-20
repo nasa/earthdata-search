@@ -26,7 +26,7 @@ describe "Sharing Projects", reset: false do
     end
 
     it "shows the contents of the project" do
-      expect(page).to have_content 'You have 2 collections in your current Project'
+      expect(page).to have_content 'You have 1 collection in your current Project'
     end
 
     # test is OBE
