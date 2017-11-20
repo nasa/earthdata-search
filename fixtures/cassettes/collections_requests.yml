@@ -6365,6 +6365,21 @@ http_interactions:
   digest: 5ca8efa5a558c394dcfad333d90acc07bf4bd513
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?bounding_box=10%2C-10%2C-10%2C10&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&has_granules=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 22 Nov 2017 14:28:46 GMT
+  digest: c2b26caa9608247f49cfd95126e7791c07939aa7
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1000000029-EDF_OPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&has_granules=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -7953,6 +7968,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 22 Jul 2016 01:40:09 GMT
   digest: 1622447059de6b0713fc1a075dd8d72327585736
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?polygon=10%2C10%2C-10%2C10%2C-10%2C-10%2C10%2C-10%2C10%2C10&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&has_granules=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 22 Nov 2017 14:28:39 GMT
+  digest: 2b970715f307dcc3619f91add8ebdd94c0bb961a
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?polygon=102%2C20%2C103%2C40%2C104%2C60%2C102%2C20&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&has_granules=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true

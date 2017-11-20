@@ -14,7 +14,7 @@ describe "Viewing Projects", reset: false do
     end
 
     it "shows a list of saved projects" do
-      expect(page).to have_content "Test Project 2 collections"
+      expect(page).to have_content "Test Project 1 collection"
     end
 
     context "when clicking on a project" do
@@ -43,7 +43,7 @@ describe "Viewing Projects", reset: false do
       end
 
       it "removes the project from the list" do
-        expect(page).to have_no_content 'Test Project 2 collections'
+        expect(page).to have_no_content 'Test Project 1 collection'
         expect(page).to have_content 'No saved projects'
       end
     end
@@ -66,13 +66,13 @@ describe "Viewing Projects", reset: false do
         script = "$('#share-url').val();"
         url = page.evaluate_script script
         page.save_screenshot '1.png'
-        expect(url).to match(/p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI$/)
+        expect(url).to match(/p=!C179003030-ORNL_DAAC$/)
       end
 
       it "highlights the url" do
         script = "window.getSelection().toString();"
         highlighted_text = page.evaluate_script script
-        expect(highlighted_text).to match(/p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI$/)
+        expect(highlighted_text).to match(/p=!C179003030-ORNL_DAAC$/)
       end
     end
 
