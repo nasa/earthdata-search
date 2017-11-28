@@ -9,6 +9,8 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/granules_list
+#= require models/ui/variable_list
+#= require modules/map/index
 
 
 models = @edsc.models
@@ -32,6 +34,7 @@ ns.ProjectPage = do (ko,
                      FeedbackModel = ui.Feedback
                      ajax=@edsc.util.xhr.ajax
                      GranulesList = ui.GranulesList
+                     VariableSelector = ui.VariableSelector
                    ) ->
   current = null
 
@@ -43,7 +46,6 @@ ns.ProjectPage = do (ko,
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
-      @projectQuery = 
       @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
       @bindingsLoaded = ko.observable(false)
       @spatialEntry = new SpatialEntry(@query.spatial)
@@ -62,6 +64,7 @@ ns.ProjectPage = do (ko,
         projectList: projectList
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
+        variableSelector: new VariableSelector(@project)
 
       @spatialError = ko.computed(@_computeSpatialError)
       

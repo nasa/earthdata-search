@@ -1,0 +1,40 @@
+<div class="modal fade collection-customization" data-bind="attr: {id: id + '-customization-modal'}" role="dialog" tabindex="-1" aria-labelledby="collection-customization-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+
+        <h1 class="modal-title" id="collection-customization-modal-title"><i class="fa fa-cog"></i> Select Customization Options</h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="customization-column">
+          <span class="fa fa-tags"></span>
+          <p>Use science keywords to subset your collection granules by measurements and variables.</p>
+
+          <div class="action-container">
+            <a class="action-button" data-toggle="modal" data-dismiss="modal" data-bind="click: $root.ui.variableSelector.displayModal">Variable Selection</a>
+          </div>
+        </div>
+
+        <div class="customization-column">
+          <span class="fa fa-sliders"></span>
+          <p>Further subset your granules by a geographic area and adjust the default projections.</p>
+
+          <div class="action-container">
+            <a class="action-button">Transformations</a>
+          </div>
+        </div>
+
+        <div class="customization-column">
+          <span class="fa fa-file-text-o"></span>
+          <p>GeoTIFF and other file output format options.</p>
+
+          <div class="action-container">
+            <a class="action-button">Output Formats</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

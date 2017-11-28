@@ -61,6 +61,7 @@ ns.Project = do (ko,
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
       @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
+      @selectedVariables = ko.observableArray([])
 
     _computeIsResetable: ->
       if @granuleAccessOptions().defaults?
@@ -83,9 +84,26 @@ ns.Project = do (ko,
       $(document).trigger('dataaccessevent', [@collection.id])
       success = (data) =>
         console.log "Finished loading access options for #{@collection.id}"
+        console.log data
         @granuleAccessOptions(data)
       retry = => @_loadGranuleAccessOptions
       dataSource.loadAccessOptions(success, retry)
+
+    findSelectedVariable: (variable) =>
+      selectedVariablePosition = @indexOfSelectedVariable(variable)
+
+      return null if selectedVariablePosition == -1
+
+      @selectedVariables()[selectedVariablePosition]
+
+    indexOfSelectedVariable: (variable) =>
+      for asdf, index in @selectedVariables()
+        if variable.meta()['concept-id'] == asdf.meta()['concept-id']
+          return index
+      -1
+
+    hasSelectedVariable: (variable) =>
+      @indexOfSelectedVariable(variable) != -1
 
     fromJson: (jsonObj) ->
       @serviceOptions.fromJson(jsonObj.serviceOptions)
@@ -228,6 +246,9 @@ ns.Project = do (ko,
       collections = (ds.serialize() for ds in @accessCollections())
       {query: param(@serialized()), collections: collections, source: urlUtil.realQuery()}
 
+    ###*
+     * Retreive a ProjectCollection object for the collection matching the provided concept-id
+     ###
     getProjectCollection: (id) ->
       focus = @focusedProjectCollection()
       if focus?.collection.id == id

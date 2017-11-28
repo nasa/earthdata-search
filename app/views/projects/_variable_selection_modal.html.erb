@@ -1,0 +1,50 @@
+<div class="modal fade variable-selection" id="variable-subsetting-modal" data-bind="with: $root.ui.variableSelector" role="dialog" tabindex="-1" aria-labelledby="variable-selection-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+
+        <h1 class="modal-title" id="variable-selection-modal-title"><i class="fa fa-tags"></i> Variable Selection</h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="keyword-list" data-bind="visible: !selectedKeyword()">
+          <ul id="associated-variables" data-bind="foreach: keywordMappings">
+            <li>
+              <a href="#" data-bind="click: $parent.selectKeyword, text: $data.keyword"></a>
+              <!-- ko if: $data.selected > 0 -->
+              <span class="pill" data-bind="text: $data.selected + ' selected'"></span>
+              <!-- /ko -->
+            </li>
+          </ul>
+        </div>
+
+        <div class="variable-list" data-bind="with: selectedKeyword(), visible: selectedKeyword()">
+          <span class="selected-keyword">
+            <a href="#" data-bind="click: $parent.clearKeyword">All Leafnodes</a>
+            <i class="fa fa-angle-right"></i>
+            <strong data-bind="text: $data.keyword"></strong>
+          </span>
+
+          <div>
+            <input type="checkbox" class="select-all" data-bind="checked: $parent.hasAllKeywordsSelected()">
+            <label>Select all variables</label><br />
+          </div>
+
+          <div data-bind="foreach: $data.variables">
+            <input type="checkbox" data-bind="click: $parents[1].handleVariableSelection, checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data)">
+
+            <label>
+              <b data-bind="text: $data.umm().Name"></b>
+              <i data-bind="text: $data.umm().LongName"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a class="action-button" data-dismiss="modal">Done</a>
+      </div>
+    </div>
+  </div>
+</div>

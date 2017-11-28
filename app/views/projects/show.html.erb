@@ -7,6 +7,7 @@
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
+
 <div class="project">
   <section class="project-info-sidebar">
     <header>
@@ -32,6 +33,16 @@
         </div>
       </div>
       <h3>Variables</h3>
+      <ul data-bind="foreach: project.collections()">
+        <!-- ko if: $parent.project.getProjectCollection($data.id).selectedVariables().length > 0 -->
+        <li>
+          <span data-bind="text: $data.id"></span>
+          <ul data-bind="foreach: $parent.project.getProjectCollection($data.id).selectedVariables">
+            <li data-bind="text: $data.displayName()"></li>
+          </ul>
+        </li>
+        <!-- /ko -->
+      </ul>
       <h3>Transformations</h3>
       <h3>Output Formats</h3>
     </div>
@@ -64,7 +75,7 @@
       </ul>
     </div>
     <div class="project-collection-cards">
-      <!--ko foreach: project.collections()-->
+      <!-- ko foreach: project.collections()-->
         <div class="collection-card">
           <div class="collection-card-content">
             <h3 data-bind="text: truncatedTitle, attr: {title: title}"></h3>
@@ -97,15 +108,19 @@
             </div>
           </div>
           <div class="action-container">
-            <a class="action-button"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
+            <a class="action-button" data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-customization-modal'}"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
+
             <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
           </div>
+          <%= render partial: 'collection_customization_modal' %>
           <%= render partial: 'granule_list_modal' %>
         </div>
-      <!--/ko-->
+      <!-- /ko -->
     </div>
     <footer class="project-collection-notes">
 
     </footer>
   </section>
+  
+  <%= render partial: 'variable_selection_modal' %>
 </div>
