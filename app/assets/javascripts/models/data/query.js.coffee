@@ -42,7 +42,6 @@ ns.query = do (ko,
 
     canWrite: ->
       value = @value()
-      console.error "can write: " + value
       value = value.trim() if typeof value == "string"
       value? && (!value.length? || value.length > 0)
 
@@ -53,7 +52,6 @@ ns.query = do (ko,
       false
 
     writeTo: (query) ->
-      console.error "writeTo: " + @value()
       query[@name()] = @value()
 
     readFrom: (query) ->
@@ -270,7 +268,6 @@ ns.query = do (ko,
 
     _readComponents: (components, query) ->
       for component in components
-        console.error "_readComponents: " + JSON.stringify(query)
         component.params(query)
 
     fromJson: (query) => @_readComponents(@_serialized, query)
@@ -301,13 +298,10 @@ ns.query = do (ko,
       @grid = new GridCondition()
       @temporal = new Temporal()
 
-      console.error "weeeee"
       @testFacets = @queryComponent(new QueryParam('test_facets'), '')
       @portal = @queryComponent(new QueryParam('portal'), '')
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
-      console.error "2before temporal component"
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
-      console.error "after temporal component"
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
       @mbr = @computed(read: @_computeMbr, owner: this, deferEvaluation: true)
       @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
@@ -320,7 +314,6 @@ ns.query = do (ko,
       @hasGranules = @queryComponent(new NegatedBooleanParam('all_collections'), true)
       @hasNonEOSDIS = @queryComponent(new NegatedBooleanParam('tag_key'), true)
       
-      console.error "temporalComponent: " + @temporalComponent()
       super(parentQuery)
 
     clearFilters: =>

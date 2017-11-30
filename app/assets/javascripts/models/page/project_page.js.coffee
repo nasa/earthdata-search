@@ -92,18 +92,24 @@ ns.ProjectPage = do (ko,
       if @query.serialize().temporal
         m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
         label = "" 
-        console.error @query.serialize().temporal
         dates = @query.serialize().temporal.split(",")
+        JSON.stringify(dates)
         date1 = dates[0].split("T")[0].split("-")
-        formattedDate = new Date(date1[0] + "-" + date1[1].replace(/^0+/, '') + "-" + date1[2].replace(/^0+/, ''))
-        d1 = formattedDate.getDate()
-        m1 = formattedDate.getMonth()
-        y1 = formattedDate.getFullYear();
+        d1 = m1 = y1 = false
+        if date1[1]
+          formattedDate = new Date(date1[0] + "-" + date1[1].replace(/^0+/, '') + "-" + date1[2].replace(/^0+/, ''))
+          d1 = formattedDate.getDate()
+          m1 = formattedDate.getMonth()
+          y1 = formattedDate.getFullYear();
         date2 = dates[1].split("T")[0].split("-")
-        formattedDate = new Date(date2[0] + "-" + date2[1].replace(/^0+/, '') + "-" + date2[2].replace(/^0+/, ''))
-        d2 = formattedDate.getDate()
-        m2 = formattedDate.getMonth()
-        y2 = formattedDate.getFullYear();
+        d2 = false
+        m2 = false
+        y2 = false
+        if date2[1]
+          formattedDate = new Date(date2[0] + "-" + date2[1].replace(/^0+/, '') + "-" + date2[2].replace(/^0+/, ''))
+          d2 = formattedDate.getDate()
+          m2 = formattedDate.getMonth()
+          y2 = formattedDate.getFullYear();
         if y1==y2
           if m1==m2
             label = m_names[m1] + " " + d1 + " - " + d2 + ", " + y1
