@@ -66,7 +66,7 @@ describe "Viewing Single Project", reset: false do
       end
 
       it 'draws the polygon spatial constraint on the map' do
-        expect(page).to have_selector('#bounding-box-map path', count: 1)
+        expect(page).to have_selector('#bounding-box-map path', count: 2)
       end
     end
 

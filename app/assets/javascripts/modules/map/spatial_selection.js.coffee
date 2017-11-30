@@ -19,6 +19,9 @@ ns.SpatialSelection = do (window,
   errorColor = '#990000'
 
   class SpatialSelection
+    constructor: (isMinimap = false) ->
+      @isMinimap = isMinimap
+
     addTo: (map) ->
       @map = map
       drawnItems = @_drawnItems = new L.FeatureGroup()
@@ -53,9 +56,10 @@ ns.SpatialSelection = do (window,
           featureGroup: drawnItems
         position: 'topright'
 
-      drawControl.addTo(map)
+      drawControl.addTo(map) if !@isMinimap
 
       spatialModel = currentPage.query.spatial
+      
       @_querySubscription = spatialModel.subscribe(@_onSpatialChange)
       @_spatialErrorSubscription = currentPage.spatialError.subscribe(@_onSpatialErrorChange)
       @_onSpatialChange(spatialModel())
@@ -78,8 +82,9 @@ ns.SpatialSelection = do (window,
       @_toolSubscription = spatialType.name.subscribe(@_onToolChange)
       @_onToolChange(spatialType.name())
 
-      @_shapefileLayer = new ShapefileLayer(selection: @_colorOptions)
-      map.addLayer(@_shapefileLayer)
+      if !@isMinimap
+        @_shapefileLayer = new ShapefileLayer(selection: @_colorOptions)
+        map.addLayer(@_shapefileLayer)
 
     onRemove: (map) ->
       @map = null
@@ -192,6 +197,8 @@ ns.SpatialSelection = do (window,
 
     _onSpatialChange: (newValue) =>
       if !newValue? || newValue.length == 0
+        if @isMinimap
+          @map.fitBounds([{lat: -180, lng: -90}, {lat: 180, lng: 90}])
         @_removeSpatial()
       else
         @_loadSpatialParams(newValue)
@@ -220,12 +227,13 @@ ns.SpatialSelection = do (window,
       marker.type = 'marker'
       @_drawnItems.addLayer(marker)
 
-      # pan to empty area
-      masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
-      facetOverlay = document.getElementById('master-overlay-parent')
-      offsetWidth = 0 - (if util.isElementInViewPort(facetOverlay) then facetOverlay.offsetWidth else 0) / 2
-      offsetHeight = masterOverlay?.offsetHeight / 4
-      @map.panTo(marker.getLatLng()).panBy([offsetWidth, offsetHeight])
+      if !@isMinimap
+        # pan to empty area
+        masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
+        facetOverlay = document.getElementById('master-overlay-parent')
+        offsetWidth = 0 - (if util.isElementInViewPort(facetOverlay) then facetOverlay.offsetWidth else 0) / 2
+        offsetHeight = masterOverlay?.offsetHeight / 4
+        @map.panTo(marker.getLatLng()).panBy([offsetWidth, offsetHeight])
 
     _renderRectangle: (shape) ->
       # southwest longitude should not be greater than northeast
@@ -237,12 +245,13 @@ ns.SpatialSelection = do (window,
       rect.type = 'rectangle'
       @_drawnItems.addLayer(rect)
 
-      # pan to empty area
-      masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
-      facetOverlay = document.getElementById('master-overlay-parent')
-      offsetWidth = 0 - (if util.isElementInViewPort(facetOverlay) then facetOverlay.offsetWidth else 0) / 2
-      offsetHeight = masterOverlay?.offsetHeight / 4
-      @map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offsetWidth, offsetHeight])
+      if !@isMinimap
+        # pan to empty area
+        masterOverlay = document.getElementsByClassName('master-overlay-main')?[0]
+        facetOverlay = document.getElementById('master-overlay-parent')
+        offsetWidth = 0 - (if util.isElementInViewPort(facetOverlay) then facetOverlay.offsetWidth else 0) / 2
+        offsetHeight = masterOverlay?.offsetHeight / 4
+        @map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offsetWidth, offsetHeight])
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
@@ -285,6 +294,8 @@ ns.SpatialSelection = do (window,
         L.latLng(pointStr.split(',').reverse())
 
       @_oldLayer = null
+      if @isMinimap
+        @map.fitBounds(shape)
 
       switch type
         when 'point'     then @_renderMarker(shape)
@@ -293,5 +304,4 @@ ns.SpatialSelection = do (window,
         when 'arctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3413.projection, type)
         when 'antarctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3031.projection, type)
         else console.error("Cannot render spatial type #{type}")
-
   exports = SpatialSelection

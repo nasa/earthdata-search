@@ -84,11 +84,9 @@ ns.Map = do (window,
         map.addControl(L.control.scale(position: 'topright'))
         map.addLayer(new GranuleVisualizationsLayer())
         map.addLayer(new MouseEventsLayer())
-  
         map.addControl(new ZoomHome())
         map.addControl(new ProjectionSwitcher())
         map.addControl(new SpatialSelection())
-  
         @legendControl = new LegendControl(position: 'topleft')
         map.addControl(@legendControl)
       
@@ -103,39 +101,13 @@ ns.Map = do (window,
         @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
           map.fire('edsc.visiblecollectionschange', collections: collections)
       if @isMinimap
+        map.addControl(new SpatialSelection(@isMinimap))
         map.dragging.disable()
         map.touchZoom.disable()
         map.doubleClickZoom.disable()
         map.scrollWheelZoom.disable()
         # Disable tap handler, if present.
         map.tap.disable() if (map.tap)
-        if urlUtil.currentParams().bounding_box
-          latlon = urlUtil.currentParams().bounding_box.split(",")
-          map.fitBounds([{lat: latlon[1], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}])
-          shape = L.polygon([{lat: latlon[3], lng:latlon[0]}, {lat: latlon[3], lng: latlon[2]}, {lat: latlon[1], lng:latlon[2]}, {lat: latlon[1], lng: latlon[0]}], {color: "#00ffff", fillOpacity: 0.1, weight: 3})
-          shape._interpolationFn = 'cartesian'
-          map.addLayer(shape)
-        else if urlUtil.currentParams().polygon
-          latlon = urlUtil.currentParams().polygon.split(",")
-          len = latlon.length
-          corners = new Array()
-          i = 0
-          while (i + 1) < len
-            corner = {lat: latlon[i + 1], lng: latlon[i]}
-            corners.push(corner)
-            i = i + 2
-          map.fitBounds(corners)
-          shape = L.polygon(corners, {color: "#00ffff", fillOpacity: 0.4, weight: 1})
-          shape._interpolationFn = 'cartesian'
-          map.addLayer(shape)
-        else if urlUtil.currentParams().point
-          latlon = urlUtil.currentParams().point.split(",")
-          map.setView([latlon[1], latlon[0]], 4)
-          marker = L.featureGroup().addLayer(L.marker([latlon[1], latlon[0]]), {color: "#00ffff", fillOpacity: 0.4, weight: 1})
-          map.addLayer(marker)
-        else
-          map.fitBounds([{lat: -180, lng: -90}, {lat: 180, lng: 90}])
-
       @_setupStatePersistence()
 
     # Removes the map from the page
