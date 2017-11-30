@@ -1,3 +1,7 @@
+// Card colors
+$card-background: rgba(235,235,235,1);
+
+
 .projects-page {
   .wrap {
     border-top: 5px solid $ocean-blue;
@@ -8,6 +12,29 @@
 
   min-height: calc(100vh - 67px);
   display: flex;
+
+  .action-container {
+    background-color: #ededed;
+  }
+
+  .action-button {
+    @include gradient-animation(#fff, #efefef, #fff, #fff, .2s);
+    display: inline-block;
+    border: 1px solid #e3e3e3;
+    color: #424242;
+    border-radius: 3px;
+    font-size: 1em;
+    padding: 6px 14px;
+    margin-left: 8px;
+    outline: none;
+    text-decoration: none;
+    margin-top: 8px;
+    cursor: pointer;
+
+    &:before {
+      border-radius: 3px;
+    }
+  }
 
   .project-info-sidebar {
     color: #fff;
@@ -25,7 +52,7 @@
     min-height: calc(100vh - 226px);
     padding: 0 20px;
   }
- 
+
   .project-details {
     font-size: .9em;
     margin-left: 3px;
@@ -46,7 +73,7 @@
 
     .fa {
       font-size: .8em
-    }   
+    }
   }
 
   .project-info-actions {
@@ -89,21 +116,23 @@
     .collection-card {
       flex: 0 0 350px;
       height: 210px;
-      border: 1px solid #ddd;
+      border: 1px solid darken($light-grey, 5%);
+      box-shadow: 0 0 15px rgba(0,0,0,0.04);
       margin: 0 20px 20px 0;
-      background: #ebebeb;
+      background: $card-background;
       border-radius: 5px;
       overflow: hidden;
-      @include transition(all 0.1s linear);
+      @include transition(all 0.15s linear);
 
       &:hover {
-        border: 1px solid rgba($ocean-blue, 0.3);
+        border: 1px solid darken($light-grey, 10%);
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
       }
 
       .collection-card-content {
-        height: 151px;
+        height: 155px;
         background: #fff;
-        padding: 10px;
+        padding: 15px;
         border-bottom: 1px solid #ccc;
 
         h3 {
@@ -127,9 +156,9 @@
 
           .collection-capability {
             color: #c9c9c9;
-            display: inline;
+            display: inline-block;
             font-size: 1em;
-            padding-left: 10px;
+            padding-left: 5px;
             cursor: default;
 
             span {
@@ -139,29 +168,6 @@
             .enabled {
               color: #359ad9
             }
-          }
-        }
-      }
-
-      .action-container {
-        background-color: #ededed;
-
-        .action-button {
-          @include gradient-animation(#fff, #ddd, #fff, #fff, .2s);
-          display: inline-block;
-          border: 1px solid #e3e3e3;
-          color: #424242;
-          border-radius: 5px;
-          font-size: 1em;
-          padding: 5px 14px;
-          margin-left: 8px;
-          outline: none;
-          text-decoration: none;
-          margin-top: 12px;
-          cursor: pointer;
-
-          &:before {
-            border-radius: 5px;
           }
         }
       }
@@ -274,6 +280,8 @@
   .modal-body {
     max-height: 500px;
     padding: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 
     ul {
       padding: 0;
@@ -325,8 +333,20 @@
   }
 
   .modal-footer {
-    background-color: #f3f3f3;
     text-align: left;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    p {
+      margin: 5px 0 0 0;
+      padding: 0;
+      display: inline-block;
+    }
+
+    .action-button {
+      float: right;
+      margin: 0;
+    }
   }
 
   .collection-customization {
@@ -382,7 +402,7 @@
       text-align: center;
       text-transform: uppercase;
       margin-bottom: 10px;
-      
+
       a {
         color: #fff;
       }
