@@ -160,6 +160,8 @@ ns.ProjectPage = do (ko,
         collection = @project.collections().filter((collection) -> collection.id == collectionId).pop()
         collection.granuleDatasource().data().loadNextPage()
 
-  setCurrent(new ProjectPage())
+  # setCurrent(new ProjectPage())
+  current = new ProjectPage()
+  setCurrent(current)
 
   exports = ProjectPage

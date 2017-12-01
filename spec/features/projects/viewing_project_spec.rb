@@ -265,31 +265,31 @@ describe "Viewing Single Project", reset: false do
         end
       end
 
-      it 'shows a button to exclude the granule from the project' do
-        within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-          expect(page).to have_link('Remove granule')
-        end
-      end
+      # it 'shows a button to exclude the granule from the project' do
+      #   within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
+      #     expect(page).to have_link('Remove granule')
+      #   end
+      # end
 
-      context 'clicking exclude icon' do
-        before :all do
-          within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-            click_link('Remove granule')
-          end
-        end
+      # context 'clicking exclude icon' do
+      #   before :all do
+      #     within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
+      #       click_link('Remove granule')
+      #     end
+      #   end
 
-        after :all do
-          within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-            click_link('Undo')
-          end
-        end
+      #   after :all do
+      #     within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
+      #       click_link('Undo')
+      #     end
+      #   end
 
-        it 'excludes the granule from the project' do
-          within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-            expect(page).not_to have_content('AST_L1A#00310302017231617_10312017070847.hdf')
-          end
-        end
-      end
+      #   it 'excludes the granule from the project' do
+      #     within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
+      #       expect(page).not_to have_content('AST_L1A#00310302017231617_10312017070847.hdf')
+      #     end
+      #   end
+      # end
     end
   end
 end
