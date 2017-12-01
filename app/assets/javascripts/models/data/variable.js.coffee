@@ -51,8 +51,11 @@ ns.Variable = do (ko
     displayName: ->
       @umm()?['LongName'] || @umm()?['Name']
 
-    # getDimensions: ->
-    #   (dimension['size'] for dimension in @variable().umm()['Dimensions']).join(':')
+    toQueryParam: =>
+      umm()?['Name'] + @getDimensions()
+
+    getDimensions: ->
+      ('[0:1:' + dimension['size'] + ']' for dimension in @variable().umm()['Dimensions']).join(':')
 
     fromJson: (jsonObj) ->
       @json = jsonObj

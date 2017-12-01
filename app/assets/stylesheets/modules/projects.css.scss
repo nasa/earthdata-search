@@ -425,5 +425,15 @@ $card-background: rgba(235,235,235,1);
         padding: 10px 20px;
       }
     }
+
+    .collection-variable-list {
+      margin: 10px 0;
+
+      p.description {
+        margin: 0 0 0 20px;
+        color: #777;
+        font-size: .9em;
+      }
+    }
   }
 }

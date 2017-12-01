@@ -111,6 +111,8 @@
             <a class="action-button" data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-customization-modal'}"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
 
             <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
+
+            <a class="action-button" data-bind="visible: has_opendap, attr: {'href': $data.opendapRootUrl}"><i class="fa fa-download" aria-hidden="true"></i></a>
           </div>
           <%= render partial: 'collection_customization_modal' %>
           <%= render partial: 'granule_list_modal' %>

@@ -31,9 +31,11 @@ ns.VariableSelector = do (ko
       # Select All Checkbox
       $(document).on 'click', '.select-all', (e) =>
         if @selectedKeyword()
+          isSelected = $(e.target).is(':checked')
+          
           for variable in @selectedKeyword().variables
-            @handleVariableSelection(variable, e)
-
+            @triggerVariableSelection(variable, isSelected)
+      
     ###*
      * Determine whether or not the currently selected keyword has all of its variables selected
      ###
@@ -60,13 +62,16 @@ ns.VariableSelector = do (ko
     handleVariableSelection: (variable, e) =>
       isSelected = $(e.target).is(':checked')
 
+      @triggerVariableSelection(variable, isSelected)
+
+      # Continue propagation allowing the checkbox to check and un-check itself
+      true
+
+    triggerVariableSelection: (variable, isSelected) ->
       if isSelected
         @selectedProjectCollection().selectedVariables.push(variable)
       else
         @selectedProjectCollection().selectedVariables.remove(variable)
-
-      # Continue propagation allowing the checkbox to check and un-check itself
-      true
 
     ###*
      * Creates the full navigation structure used in displaying variables grouped by their ScienceKeywords

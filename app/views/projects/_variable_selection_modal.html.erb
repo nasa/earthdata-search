@@ -27,23 +27,26 @@
           </span>
 
           <div>
-            <input type="checkbox" class="select-all" data-bind="checked: $parent.hasAllKeywordsSelected()">
-            <label>Select all variables</label><br />
+            <label>
+              <input type="checkbox" class="select-all" data-bind="checked: $parent.hasAllKeywordsSelected()">
+              Select All Variables
+            </label>
           </div>
 
           <div data-bind="foreach: $data.variables">
-            <input type="checkbox" data-bind="click: $parents[1].handleVariableSelection, checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data)">
-
-            <label>
-              <b data-bind="text: $data.umm().Name"></b>
-              <i data-bind="text: $data.umm().LongName"></i>
-            </label>
+            <div class="collection-variable-list">
+              <label>
+                <input type="checkbox" data-bind="click: $parents[1].handleVariableSelection, checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data)">
+                <b data-bind="text: $data.umm().Name"></b>
+              </label>
+              <p class="description" data-bind="text: $data.umm().LongName"></p>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="modal-footer">
-        <a class="action-button">Done</a>
+        <a class="action-button" data-dismiss="modal">Done</a>
       </div>
     </div>
   </div>
