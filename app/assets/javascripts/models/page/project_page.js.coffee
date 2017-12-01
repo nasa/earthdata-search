@@ -126,7 +126,7 @@ ns.ProjectPage = do (ko,
         label
       else
         false
-
+        
     _computeSpatialError: =>
       error = @collections.error()
       if error?
