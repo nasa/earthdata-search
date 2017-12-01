@@ -406,23 +406,29 @@ $card-background: rgba(235,235,235,1);
 
   .variable-selection {
     .variable-list {
-      padding: 20px;
+      padding: 0;
+
+      > div {
+        padding: 0 20px;
+      }
     }
 
     .selected-keyword {
-      display: inline-block;
-      color: #fff;
-      font-size: .8em;
-      background-color: $feedback-button-color;
-      padding: 5px 10px;
-      border-radius: 3px;
-      text-align: center;
+      display: block;
+      font-size: 1em;
+      padding: 10px 20px;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid $light-grey;
+      background: lighten($light-grey, 5%);
 
       a {
-        color: #fff;
       }
+    }
+
+    .child-spacer {
+      padding: 0 5px;
+      color: darken($light-grey, 10%);
     }
 
     .pill {
