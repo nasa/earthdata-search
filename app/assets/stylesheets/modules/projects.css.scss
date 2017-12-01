@@ -51,6 +51,22 @@ $card-background: rgba(235,235,235,1);
   .project-info-details {
     min-height: calc(100vh - 226px);
     padding: 0 20px;
+
+    h3, ul {
+      color: #eee;
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+
+    li span {
+      font-weight: bold;
+    }
+
+    > ul > li {
+      font-size: 0.8em;
+      border-top: 1px solid #424242;
+      padding: 5px;
+    }
   }
 
   .project-details {
@@ -70,6 +86,7 @@ $card-background: rgba(235,235,235,1);
     width: 260px;
     background: #121212;
     padding: 5px;
+    margin-bottom: 10px;
 
     .fa {
       font-size: .8em
