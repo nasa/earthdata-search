@@ -28,7 +28,7 @@
         <div id="bounding-box-map" class="bounding-box-map"></div>
         <div class="collection-constraint-details">
           <div class="project-details-row" data-bind="visible: $root.hasType()"><i class='fa fa-map-o fa-fw' aria-hidden='true'></i>  <span class="project-details" data-bind="text: $root.showType()"></span></div>
-          <div class="project-details-row" data-bind="visible: $root.showTemporal()"><i class='fa fa-calendar-o fa-fw' aria-hidden='true'></i>  <span class="project-details" data-bind="text: $root.showTemporal()"></span></div>
+          <div class="project-details-row" data-bind="visible: $root.showTemporal()"><i class='fa fa-calendar-o fa-fw' aria-hidden='true'></i>  <span class="project-details" id="temporal-label" data-bind="text: $root.showTemporal()"></span></div>
         </div>
       </div>
       <h3>Variables</h3>
