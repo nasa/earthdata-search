@@ -90,39 +90,25 @@ ns.ProjectPage = do (ko,
 
     showTemporal: =>
       if @query.serialize().temporal
+
         m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
         label = "" 
         dates = @query.serialize().temporal.split(",")
         
-        dateStart = dates[0].split("T")[0].split("-")
-        d1 = m1 = y1 = false
+        dateStart = moment(dates[0].split("T")[0].split("-")).subtract(1, 'months') # months start at '0', so we need to subtract one
+        dateEnd = moment(dates[1].split("T")[0].split("-")).subtract(1, 'months')
 
-        if dateStart[1] # is the start date a valid date?
-          formattedDate = new Date(dateStart[0] + "-" + dateStart[1].replace(/^0+/, '') + "-" + dateStart[2].replace(/^0+/, ''))
-          d1 = formattedDate.getDate()
-          m1 = formattedDate.getMonth()
-          y1 = formattedDate.getFullYear();
-        
-        dateEnd = dates[1].split("T")[0].split("-")
-        d2 = m2 = y2 = false
-
-        if dateEnd[1]  # is the end date a valid date?
-          formattedDate = new Date(dateEnd[0] + "-" + dateEnd[1].replace(/^0+/, '') + "-" + dateEnd[2].replace(/^0+/, ''))
-          d2 = formattedDate.getDate()
-          m2 = formattedDate.getMonth()
-          y2 = formattedDate.getFullYear();
-          
-        if y1==y2 # if the start and end years are the same
-          if m1==m2 # and if the start and end months are the same
-            # then format only showing the month and the year a single time (e.g., Jan 1 - 10, 2011)
-            label = m_names[m1] + " " + d1 + " - " + d2 + ", " + y1
+        if dateStart.year() == dateEnd.year()
+          if dateStart.month() == dateEnd.month()
+            # format only showing the month and the year a single time (e.g., Jan 1 - 10, 2011)
+            label = dateStart.format("MMM DD") + " - " + dateEnd.format("DD, YYYY")
           else
-            # then format only showing the year a single time (e.g., Jan 1 - Feb 10, 2011)
-            label = m_names[m1] + " " + d1 + " - " + m_names[m2] + " " + d2 + ", " + y1
+            # format only showing the year a single time (e.g., Jan 1 - Feb 10, 2011)
+            label = dateStart.format("MMM DD") + " - " + dateEnd.format("MMM DD, YYYY")
         else
           # Otherwise, show the full date range (e.g., Jan 1, 2010 - Feb 10, 2011)
-          label = if m1 then m_names[m1] + " " + d1 + ", " + y1 else "Beginning of time "
-          label += if m2 then " - " + m_names[m2] + " " + d2 + ", " + y2 else " - End of Time"
+          label = if dateStart.isValid() then dateStart.format("MMM DD, YYYY") else "Beginning of time "
+          label += if dateEnd.isValid() then " - " + dateEnd.format("MMM DD, YYYY") else " - End of Time"
         label
       else
         false
