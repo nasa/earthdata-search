@@ -108,7 +108,7 @@ ns.ProjectPage = do (ko,
         else
           # Otherwise, show the full date range (e.g., Jan 1, 2010 - Feb 10, 2011)
           label = if dateStart.isValid() then dateStart.format("MMM DD, YYYY") else "Beginning of time "
-          label += if dateEnd.isValid() then " - " + dateEnd.format("MMM DD, YYYY") else " - End of Time"
+          label += if dateEnd.isValid() then " - " + dateEnd.format("MMM DD, YYYY") else " - End of time"
         label
       else
         false

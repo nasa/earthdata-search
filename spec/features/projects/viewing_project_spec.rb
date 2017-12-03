@@ -55,13 +55,46 @@ describe "Viewing Single Project", reset: false do
         fill_in "Start", with: "2010-01-01 00:00:00\t\t"
         fill_in "End", with: "2014-02-01 00:00:00\t\t"
         js_click_apply ".temporal-dropdown"
-        Capybara::Screenshot.screenshot_and_save_page
+        wait_for_xhr
         click_link 'My Project'
       end
       it 'shows the start and end dates of that range within the temporal label' do
         expect(find('#temporal-label')).to have_content('Jan 01, 2010 - Feb 01, 2014')
       end
     end
+
+    context 'when a start date has been selected without an end date' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        login
+        click_link "Temporal"
+        fill_in "Start", with: "2010-01-01 00:00:00\t\t"
+        js_click_apply ".temporal-dropdown"
+        wait_for_xhr
+        click_link 'My Project'
+      end
+      it 'shows only the start of that range within the temporal label' do
+        expect(find('#temporal-label')).to have_content('Jan 01, 2010 - End of time')
+      end
+    end
+
+    context 'when an end date has been selected without a start date' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        login
+        click_link "Temporal"
+        fill_in "End", with: "2014-02-01 00:00:00\t\t"
+        js_click_apply ".temporal-dropdown"
+        wait_for_xhr
+        click_link 'My Project'
+      end
+      it 'shows only the end of that range within the temporal label' do
+        expect(find('#temporal-label')).to have_content('Beginning of time - Feb 01, 2014')
+      end
+    end
+
   end
   
   context 'minimap' do
