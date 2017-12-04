@@ -93,8 +93,8 @@ ns.ProjectPage = do (ko,
       if @query.serialize().temporal
         dates = @query.serialize().temporal.split(",")
         
-        dateStart = moment(dates[0]).subtract(1, 'months') # months start at '0', so we need to subtract one
-        dateEnd = moment(dates[1]).subtract(1, 'months')
+        dateStart = moment(dates[0].split("T")[0]) 
+        dateEnd = moment(dates[1].split("T")[0])
 
         if dateStart.year() == dateEnd.year()
           if dateStart.month() == dateEnd.month()
