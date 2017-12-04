@@ -54,8 +54,9 @@ describe "Viewing Single Project", reset: false do
         click_link "Temporal"
         fill_in "Start", with: "2010-01-01 00:00:00\t\t"
         fill_in "End", with: "2014-02-01 00:00:00\t\t"
-        js_click_apply ".temporal-dropdown"
         wait_for_xhr
+        click_button('Apply Filter')
+        sleep 1
         click_link 'My Project'
       end
       it 'shows the start and end dates of that range within the temporal label' do
@@ -70,8 +71,9 @@ describe "Viewing Single Project", reset: false do
         login
         click_link "Temporal"
         fill_in "Start", with: "2010-01-01 00:00:00\t\t"
-        js_click_apply ".temporal-dropdown"
         wait_for_xhr
+        click_button('Apply Filter')
+        sleep 1
         click_link 'My Project'
       end
       it 'shows only the start of that range within the temporal label' do
@@ -86,8 +88,9 @@ describe "Viewing Single Project", reset: false do
         login
         click_link "Temporal"
         fill_in "End", with: "2014-02-01 00:00:00\t\t"
-        js_click_apply ".temporal-dropdown"
         wait_for_xhr
+        click_button('Apply Filter')
+        sleep 1
         click_link 'My Project'
       end
       it 'shows only the end of that range within the temporal label' do
