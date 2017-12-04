@@ -89,14 +89,12 @@ ns.ProjectPage = do (ko,
       @query.serialize().bounding_box || @query.serialize().polygon || @query.serialize().point
 
     showTemporal: =>
+      label = ""
       if @query.serialize().temporal
-
-        m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-        label = "" 
         dates = @query.serialize().temporal.split(",")
         
-        dateStart = moment(dates[0].split("T")[0].split("-")).subtract(1, 'months') # months start at '0', so we need to subtract one
-        dateEnd = moment(dates[1].split("T")[0].split("-")).subtract(1, 'months')
+        dateStart = moment(dates[0]).subtract(1, 'months') # months start at '0', so we need to subtract one
+        dateEnd = moment(dates[1]).subtract(1, 'months')
 
         if dateStart.year() == dateEnd.year()
           if dateStart.month() == dateEnd.month()
@@ -111,7 +109,7 @@ ns.ProjectPage = do (ko,
           label += if dateEnd.isValid() then " - " + dateEnd.format("MMM DD, YYYY") else " - End of time"
         label
       else
-        false
+        label
         
     _computeSpatialError: =>
       error = @collections.error()
