@@ -49,14 +49,7 @@ describe "Viewing Single Project", reset: false do
     context 'when a date range has been selected' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
-        login
-        click_link "Temporal"
-        fill_in "Start", with: "2010-01-01 00:00:00\t\t"
-        fill_in "End", with: "2014-02-01 00:00:00\t\t"
-        wait_for_xhr
-        click_button('Apply Filter')
-        expect(page).to have_query_string('p=!C14758250-LPDAAC_ECS!C1000000000-LANCEAMSR2&qt=2010-01-01T00%3A00%3A00.000Z%2C2014-02-01T00%3A00%3A00.000Z')
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z', '2014-02-01T00:00:01Z']
         click_link 'My Project'
       end
       it 'shows the start and end dates of that range within the temporal label' do
@@ -67,13 +60,7 @@ describe "Viewing Single Project", reset: false do
     context 'when a start date has been selected without an end date' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
-        login
-        click_link "Temporal"
-        fill_in "Start", with: "2010-01-01 00:00:00\t\t"
-        wait_for_xhr
-        click_button('Apply Filter')
-        expect(page).to have_query_string('p=!C14758250-LPDAAC_ECS!C1000000000-LANCEAMSR2&qt=2010-01-01T00%3A00%3A00.000Z%2C')
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z']
         click_link 'My Project'
       end
       it 'shows only the start of that range within the temporal label' do
@@ -84,13 +71,7 @@ describe "Viewing Single Project", reset: false do
     context 'when an end date has been selected without a start date' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
-        login
-        click_link "Temporal"
-        fill_in "End", with: "2014-02-01 00:00:00\t\t"
-        wait_for_xhr
-        click_button('Apply Filter')
-        expect(page).to have_query_string('p=!C14758250-LPDAAC_ECS!C1000000000-LANCEAMSR2&qt=%2C2014-02-01T00%3A00%3A00.000Z')
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['', '2014-02-01T00:00:01Z']
         click_link 'My Project'
       end
       it 'shows only the end of that range within the temporal label' do
