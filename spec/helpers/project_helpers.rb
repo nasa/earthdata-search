@@ -35,7 +35,7 @@ module Helpers
 
     # def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI', name='Test Project')
     def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC', name='Test Project')
-      user = User.first
+      user = User.find_by(echo_id: page.get_rack_session_key('user_id'))
       project = Project.new
       project.path = path
       project.name = name
