@@ -93,8 +93,8 @@ ns.ProjectPage = do (ko,
       if @query.serialize().temporal
         dates = @query.serialize().temporal.split(",")
         
-        dateStart = moment(dates[0].split("T")[0]) 
-        dateEnd = moment(dates[1].split("T")[0])
+        dateStart = moment.utc(dates[0]) 
+        dateEnd = moment.utc(dates[1])
 
         if dateStart.year() == dateEnd.year()
           if dateStart.month() == dateEnd.month()
