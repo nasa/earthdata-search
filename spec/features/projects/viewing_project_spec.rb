@@ -64,7 +64,7 @@ describe "Viewing Single Project", reset: false do
         click_link 'My Project'
       end
       it 'shows only the start of that range within the temporal label' do
-        expect(find('#temporal-label')).to have_content('Jan 01, 2010 - End of time')
+        expect(find('#temporal-label')).to have_content('Jan 01, 2010 - Any end time')
       end
     end
 
@@ -75,7 +75,7 @@ describe "Viewing Single Project", reset: false do
         click_link 'My Project'
       end
       it 'shows only the end of that range within the temporal label' do
-        expect(find('#temporal-label')).to have_content('Beginning of time - Feb 01, 2014')
+        expect(find('#temporal-label')).to have_content('Any start time - Feb 01, 2014')
       end
     end
 
