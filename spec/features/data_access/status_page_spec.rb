@@ -115,7 +115,20 @@ describe "Data access status page", reset: false do
     end
 
     it "displays 404 page" do
-      expect(page).to have_content("The page you were looking for doesn't exist.")
+      expect(page).to have_content("The page you were looking for does not exist.")
+    end
+  end
+
+  context "when the current user tries to access a page resulting in a 500 server error" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, overlay: false
+      login
+      visit '/500'
+    end
+
+    it "displays 500 page" do
+      expect(page).to have_content("The link you followed appears to be broken.")
     end
   end
 end
