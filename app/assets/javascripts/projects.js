@@ -3,6 +3,7 @@
 //= require jquery_ujs
 //= require jquery.color-2.1.2
 //= require js.cookies
+//= require moment.min
 //= require knockout
 //= require knockout.mapping
 //= require toastr

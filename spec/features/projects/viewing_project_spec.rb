@@ -45,6 +45,42 @@ describe "Viewing Single Project", reset: false do
     end
   end
 
+  context 'temporal label' do
+    context 'when a date range has been selected' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z', '2014-02-01T00:00:01Z']
+        click_link 'My Project'
+      end
+      it 'shows the start and end dates of that range within the temporal label' do
+        expect(find('#temporal-label')).to have_content('Jan 01, 2010 - Feb 01, 2014')
+      end
+    end
+
+    context 'when a start date has been selected without an end date' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z']
+        click_link 'My Project'
+      end
+      it 'shows only the start of that range within the temporal label' do
+        expect(find('#temporal-label')).to have_content('Jan 01, 2010 - Any end time')
+      end
+    end
+
+    context 'when an end date has been selected without a start date' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['', '2014-02-01T00:00:01Z']
+        click_link 'My Project'
+      end
+      it 'shows only the end of that range within the temporal label' do
+        expect(find('#temporal-label')).to have_content('Any start time - Feb 01, 2014')
+      end
+    end
+
+  end
+  
   context 'minimap' do
     context 'when a polygon has been selected' do
       before :all do

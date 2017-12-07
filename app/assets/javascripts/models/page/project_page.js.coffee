@@ -88,6 +88,29 @@ ns.ProjectPage = do (ko,
     hasType: =>
       @query.serialize().bounding_box || @query.serialize().polygon || @query.serialize().point
 
+    showTemporal: =>
+      label = ""
+      if @query.serialize().temporal
+        dates = @query.serialize().temporal.split(",")
+        
+        dateStart = moment.utc(dates[0]) 
+        dateEnd = moment.utc(dates[1])
+
+        if dateStart.year() == dateEnd.year()
+          if dateStart.month() == dateEnd.month()
+            # format only showing the month and the year a single time (e.g., Jan 1 - 10, 2011)
+            label = dateStart.format("MMM DD") + " - " + dateEnd.format("DD, YYYY")
+          else
+            # format only showing the year a single time (e.g., Jan 1 - Feb 10, 2011)
+            label = dateStart.format("MMM DD") + " - " + dateEnd.format("MMM DD, YYYY")
+        else
+          # Otherwise, show the full date range (e.g., Jan 1, 2010 - Feb 10, 2011)
+          label = if dateStart.isValid() then dateStart.format("MMM DD, YYYY") else "Any start time "
+          label += if dateEnd.isValid() then " - " + dateEnd.format("MMM DD, YYYY") else " - Any end time"
+        label
+      else
+        label
+        
     _computeSpatialError: =>
       error = @collections.error()
       if error?
