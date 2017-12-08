@@ -2,7 +2,7 @@ FROM ruby:2.2.2
 
 # Install dependencies
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresql-client
-RUN apt-get install -y qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x npm
+RUN apt-get install -y qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x npm cron
 
 # Copy the Rails application into place
 COPY . /earthdata-search
