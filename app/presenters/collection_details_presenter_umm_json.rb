@@ -193,8 +193,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       # exclude EDSC and Reverb URLs
       next if ru['URL'] =~ /search\.(?:sit|uat)?\.?earthdata\.nasa\.gov/ || ru['URL'] =~ /echo\.nasa\.gov/
 
-
-      format_url(ru['URL'])
+      format_url(ru['URL']) unless ru['URL'].nil?
       ru['Subtype'] = '' if ru['Subtype'].nil?
 
       if ru['URLContentType'] == 'CollectionURL'

@@ -3,12 +3,17 @@ class CollectionsController < ApplicationController
 
   around_action :log_execution_time
 
-  UNLOGGED_PARAMS = ['include_facets', 'hierarchical_facets', 'include_tags', 'include_granule_counts']
+  UNLOGGED_PARAMS = %w(
+    include_facets
+    hierarchical_facets
+    include_tags
+    include_granule_counts
+  ).freeze
 
   def index
     collection_params = collection_params_for_request(request)
     unless params['echo_collection_id']
-      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS).merge({user_id: session[:user_id]}))
+      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS).merge(user_id: session[:user_id]))
     end
     catalog_response = echo_client.get_collections(collection_params, token)
 
@@ -27,10 +32,10 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    metrics_event('details', {collections: [params[:id]]})
-    #TODO make 1_4 configurable (yml + ENV)
-    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_9')
+    metrics_event('details', collections: [params[:id]])
 
+    # TODO: make 1_9 configurable (yml + ENV)
+    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_9')
 
     if response.success?
       respond_with(CollectionDetailsPresenterUmmJson.new(response.body, params[:id], token, cmr_env), status: response.status)
@@ -40,8 +45,9 @@ class CollectionsController < ApplicationController
   end
 
   def use
-    metrics_event('view', {collections: [params[:id]]})
-    render :json => result, status: :ok
+    metrics_event('view', collections: [params[:id]])
+
+    render json: result, status: :ok
   end
 
   def collection_relevancy
@@ -56,7 +62,7 @@ class CollectionsController < ApplicationController
     }
 
     metrics_event('collection_relevancy', data)
-    render :json => 'ok', status: :ok
+    render json: 'ok', status: :ok
   end
 
   private
@@ -66,7 +72,7 @@ class CollectionsController < ApplicationController
 
     params.delete(:portal)
     if portal? && portal[:params]
-      params.deep_merge!(portal[:params]) do |key, v1, v2|
+      params.deep_merge!(portal[:params]) do |_key, v1, v2|
         if v1.is_a?(Array) && v2.is_a?(Array)
           v1 + v2
         else
@@ -76,11 +82,10 @@ class CollectionsController < ApplicationController
     end
 
     test_facets = params.delete(:test_facets)
-    if Rails.env.test? && !test_facets
-      params = params.except('include_facets')
-    end
 
-    features = Hash[Array.wrap(params.delete(:features)).map {|f| [f, true]}]
+    params = params.except('include_facets') if Rails.env.test? && !test_facets
+
+    features = Hash[Array.wrap(params.delete(:features)).map { |f| [f, true] }]
     if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
@@ -96,7 +101,7 @@ class CollectionsController < ApplicationController
     end
 
     params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*",
-                              "org.ceos.wgiss.cwic.granules.prod"].join(',')
+                              'org.ceos.wgiss.cwic.granules.prod'].join(',')
 
     # params['include_facets'] = 'v2'
 
@@ -105,7 +110,7 @@ class CollectionsController < ApplicationController
     if params['all_collections'].nil? || params['all_collections'].present? && params.delete('all_collections').to_s != 'true'
       params['has_granules'] = true
     end
-    
+
     params['two_d_coordinate_system'].delete 'coordinates' if params['two_d_coordinate_system'].present?
 
     params['options[temporal][limit_to_granules]'] = true
@@ -137,15 +142,15 @@ class CollectionsController < ApplicationController
 
   def add_fake_json_facets(facets)
     feature_facet = [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
-        {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-        {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-        {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
-     }]
+      {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
+      {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
+      {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
+    }]
+    
     if facets.present? && facets['children']
       feature_facet + facets['children']
     else
       feature_facet
     end
   end
-
 end
