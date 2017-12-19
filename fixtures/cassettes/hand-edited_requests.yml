@@ -271,6 +271,19 @@ http_interactions:
   digest: on_collections_loaded_for_invalid_token
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&has_granules=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:47:34 GMT
+  digest: on_collections_loaded_for_invalid_token_newest
+- request:
+    method: get
     uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000002756
     body:
       encoding: US-ASCII
