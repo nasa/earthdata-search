@@ -148,6 +148,50 @@
           </div>
         </div>
       </section>
+      <section id="project-overview" class="master-overlay-hide-self master-overlay-no-min">
+        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <nav class="master-overlay-nav">
+          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
+            <i class="fa fa-arrow-circle-o-left"></i> Back to Collection Search
+          </a>
+        </nav>
+        <header class="with-options">
+          <h2>Project Collections</h2>
+          <div class="master-overlay-global-actions actions">
+            <button class="button retrieve" data-bind="click: project.exceedCollectionLimit() ? function(){} : $root.ui.projectList.loginAndDownloadProject, css: {'button-disabled': project.exceedCollectionLimit(), retrieve: !project.exceedCollectionLimit()}, attr: {'data-placement': 'bottom', 'data-tooltip': project.exceedCollectionLimit().toString(), 'title': project.exceedCollectionLimit() ? 'Due to significant processing times, orders for this collection are limited to 2000 granules (100 for ASTER Level 3 products). Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download project data'}">
+              <i class="fa fa-download"></i> Download Project Data
+            </button>
+
+            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button" >
+              <i class="fa fa-eye"></i>
+            </a>
+            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button button-active" >
+              <i class="fa fa-eye"></i>
+            </a>
+          </div>
+        </header>
+        <div class="master-overlay-content panel-list">
+          <ul id="project-collections-list"
+              class="panel-list-list knockout-template"
+              data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
+            <%= render partial: 'collection_list_item', locals: {is_project: true} %>
+          </ul>
+          <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
+            <p>
+              Use this space to collect collections of interest as you adjust your search parameters.
+            </p>
+            <p>
+              To add a collection to your project, click the <i class="fa fa-plus"></i> icon on the desired collection.
+              Once collected, you can use the tools available in this view to compare collections on the map or on a timeline
+              and choose granules you want from each.
+            </p>
+            <p>
+              When you are satisfied with your selections, click the <i class="fa fa-download"></i> button to
+              access your data.
+            </p>
+          </div>
+        </div>
+      </section>
       <%= render partial: 'granule_list' %>
       <%= render partial: 'granule_details' %>
       <%= render partial: 'collection_details' %>

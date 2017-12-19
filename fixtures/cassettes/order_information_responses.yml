@@ -4207,6 +4207,40 @@ d9ece9ada588c5cf69ee0f5e940c3b5766caabd0:
       string: '[{"order_information":{"catalog_item_ref":{"id":"G1342587410-LPDAAC_ECS","location":"http://internal.cmr.earthdata.nasa.gov/search/concepts/G1342587410-LPDAAC_ECS","name":"G1342587410-LPDAAC_ECS"},"option_definition_refs":[{"id":"EC7AA66E-00D6-ED42-3043-B2F1534AA85A","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/option_definitions/EC7AA66E-00D6-ED42-3043-B2F1534AA85A","name":"Delivery
         Option"}],"orderable":true,"price":0.0}}]'
     http_version: 
+c595c9a42c9f3b2bd9ef0c6eed9efe44d6c5878c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 02 Nov 2017 02:10:40 GMT
+      etag:
+      - '"d652a3242c8bc5aa9b57a9c640abe92c"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzBiMWEzZGI3ZGQyMmY2Y2VmOWFkZmUxYTg0NWNjOGM%3D--633055aa25ef24f5e459e59ee78ed6242514a400;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '3.532000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '456'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"order_information":{"catalog_item_ref":{"id":"G1353419373-NSIDC_ECS","location":"http://cmr-search-prod.ngap.earthdata.nasa.gov:8080/search/concepts/G1353419373-NSIDC_ECS","name":"G1353419373-NSIDC_ECS"},"option_definition_refs":[{"id":"B864E577-C9FB-9009-8264-651D2DCCE580","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/option_definitions/B864E577-C9FB-9009-8264-651D2DCCE580","name":"Order
+        with QA"}],"orderable":true,"price":0.0}}]'
+    http_version: 
 d8a28116e7868c7626f529f45d12b09e79f95c88:
   response:
     status:

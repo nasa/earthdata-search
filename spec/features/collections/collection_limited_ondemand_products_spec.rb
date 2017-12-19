@@ -39,7 +39,7 @@ describe "Limited Collections", reset: false do
 
     it 'displays tooltip on mouseover' do
       page.evaluate_script "$('.button-disabled').trigger('mouseover')"
-      expect(page).to have_content('Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.')
+      expect(page).to have_content('Due to significant processing times, orders for this collection are limited to 2000 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.')
     end
 
     context 'when the results are filtered down within 100 granules' do

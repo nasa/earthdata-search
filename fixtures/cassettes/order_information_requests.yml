@@ -404,6 +404,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1353419373-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 02 Nov 2017 02:08:53 GMT
+  digest: c595c9a42c9f3b2bd9ef0c6eed9efe44d6c5878c
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1373128825-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128850-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129003-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128984-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128818-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128891-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128985-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128952-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128976-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129057-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129104-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128815-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129044-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128848-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129142-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128901-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128816-LPDAAC_ECS&catalog_item_id%5B%5D=G1373128889-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129021-LPDAAC_ECS&catalog_item_id%5B%5D=G1373129111-LPDAAC_ECS
     headers:
       User-Agent:
