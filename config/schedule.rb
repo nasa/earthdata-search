@@ -24,7 +24,8 @@ set :output, {:error => '/proc/1/fd/2', :standard => '/proc/1/fd/1'}
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 # Set environment variables for cron jobs (e.g. DATABASE_URL which is needed by delete_expired_sessions
-ENV.each { |k, v| env(k, v) }
+# ignore RUBYOPT until we can determine who is setting it and prevent that
+ENV.reject{|k, v| k == "RUBYOPT"}.each{ |k, v| env(k, v) }
 
 set :environment, Rails.env
 set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
