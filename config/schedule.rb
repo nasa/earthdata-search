@@ -17,14 +17,19 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
+# Ensure output is captured by docker output and ends up in splunk
+set :output, {:error => '/proc/1/fd/2', :standard => '/proc/1/fd/1'}
+
 # Learn more: http://github.com/javan/whenever
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
-set :output, ENV["NGAP_LOG"]
+# Set environment variables for cron jobs (e.g. DATABASE_URL which is needed by delete_expired_sessions
+# ignore RUBYOPT until we can determine who is setting it and prevent that
+ENV.reject{|k, v| k == "RUBYOPT"}.each{ |k, v| env(k, v) }
 
 set :environment, Rails.env
 set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
-job_type :edsc_rake, "cd :path && :environment_variable=:environment foreman run bundle exec rake :task --silent :output"
+job_type :edsc_rake, "cd :path && :environment_variable=:environment /usr/local/bundle/bin/bundle exec rake :task :output"
 
 every 1.hour do
   edsc_rake "data:load:tags"

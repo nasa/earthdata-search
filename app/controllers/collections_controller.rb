@@ -34,7 +34,7 @@ class CollectionsController < ApplicationController
   def show
     metrics_event('details', collections: [params[:id]])
 
-    # TODO: make 1_4 configurable (yml + ENV)
+    # TODO: make 1_9 configurable (yml + ENV)
     response = echo_client.get_collection(params[:id], token, 'umm_json_v1_9')
 
     if response.success?
@@ -142,10 +142,11 @@ class CollectionsController < ApplicationController
 
   def add_fake_json_facets(facets)
     feature_facet = [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
-        {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-        {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-        {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
-                     }]
+      {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
+      {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
+      {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
+    }]
+    
     if facets.present? && facets['children']
       feature_facet + facets['children']
     else

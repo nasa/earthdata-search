@@ -16,11 +16,11 @@ describe 'Invalid user token', reset: false do
       wait_for_xhr
     end
 
-    it 'logs out the user' do
+    xit 'logs out the user' do
       expect(page).to have_content 'Earthdata Login'
     end
 
-    it 'displays search results' do
+    xit 'displays search results' do
       expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)'
     end
   end
