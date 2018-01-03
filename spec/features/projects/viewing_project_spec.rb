@@ -41,7 +41,8 @@ describe "Viewing Single Project", reset: false do
     end
 
     it 'shows total in-project collections, granules, and size' do
-      expect(page).to have_content('2813384 Granules 1 Collection 269.8 TB')
+      # expect(page).to have_content('3119878 Granules 1 Collection 269.8 TB')
+      expect(page).to have_content('3119878 Granules 1 Collection 17.0 TB')
     end
   end
 
@@ -243,13 +244,14 @@ describe "Viewing Single Project", reset: false do
 
     it 'shows total number of granules included in the project' do
       within '.collection-card:first-child' do
-        expect(page).to have_content('2813384 Granules')
+        expect(page).to have_content('3119878 Granules')
       end
     end
 
     it 'shows estimated total granule size' do
       within '.collection-card:first-child' do
-        expect(page).to have_content('Estimated Size: 269.8 TB')
+        # expect(page).to have_content('Estimated Size: 269.8 TB')
+        expect(page).to have_content('Estimated Size: 17.0 TB')
       end
     end
 
@@ -291,13 +293,15 @@ describe "Viewing Single Project", reset: false do
 
       it 'shows granule title' do
         within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-          expect(page).to have_content('AST_L1A#00305172016231102_05182016080215.hdf')
+          # expect(page).to have_content('AST_L1A#00305172016231102_05182016080215.hdf')
+          expect(page).to have_content('AST_L1A#00310252017225846_10262017075931.hdf')
         end
       end
 
       it 'shows granule temporal' do
         within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-          expect(page).to have_content('Start: 2016-05-17 23:11:02')
+          # expect(page).to have_content('Start: 2016-05-17 23:11:02')
+          expect(page).to have_content('Start: 2017-10-25 22:58:46')
         end
       end
 
