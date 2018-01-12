@@ -5080,6 +5080,21 @@ http_interactions:
   digest: 1e65f51b1578b243441da43be2e942bfc9ee0af3
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&has_granules=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C204690560-LAADS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 12 Jan 2018 20:44:53 GMT
+  digest: f1d3936f23cf6ae500811617e4f4a71581381977
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=Aqua_AMSR-E_L3_TB_23.8GHz-H%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII

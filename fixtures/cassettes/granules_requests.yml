@@ -3673,6 +3673,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: echo_collection_id=C204690560-LAADS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 12 Jan 2018 20:44:56 GMT
+  digest: fe9a918d000222ea890ce0b152287b00cbf3d339
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C4543622-LARC_ASDC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
