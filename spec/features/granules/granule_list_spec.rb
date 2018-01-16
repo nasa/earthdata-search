@@ -271,8 +271,8 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    use_collection 'C179003620-ORNL_DAAC', 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050'
-    hook_granule_results('Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
+    use_collection 'C204690560-LAADS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006'
+    hook_granule_results('MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006')
 
     context 'clicking on the single granule download button' do
       before :all do
@@ -289,7 +289,7 @@ describe "Granule list", reset: false do
 
       it 'shows a dropdown with all the downloadable granules' do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          expect(page).to have_content('This link provides direct download access to the granule.')
+          expect(page).to have_content('Download Link 1')
           expect(page).to have_content('Download Link 2')
         end
       end
