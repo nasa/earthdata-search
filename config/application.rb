@@ -59,7 +59,7 @@ module EarthdataSearchClient
     end
 
     # Precompile application.js, application.css, and any file that's not
-    config.assets.precompile += ['application.js', 'application.css', 'splash.css', 'search.js', 'account.js']
+    config.assets.precompile += ['application.js', 'application.css', 'splash.css', 'search.js', 'data_access.js', 'account.js']
     config.assets.precompile << Proc.new do |path|
       !%w(.js .css .map).include?(File.extname(path)) ||
         config.is_plugin.call(path) ||
