@@ -20,4 +20,6 @@ RUN chmod 755 /earthdata-search/tmp
 RUN chmod +x ./start.sh
 RUN chmod +x ./jobs.sh
 
+RUN bundle exec rake assets:precompile
+
 CMD rails s -b 0.0.0.0
