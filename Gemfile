@@ -18,6 +18,11 @@ gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89
 gem 'atomic'
 gem 'rack-rewrite'
 
+# Assets compilation requires a database connection in Rails 4+ which we don't have while
+# building our Docker image, we use this gem to fake it
+# http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
+gem 'activerecord-nulldb-adapter'
+
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl'
