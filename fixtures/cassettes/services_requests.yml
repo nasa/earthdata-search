@@ -1587,17 +1587,6 @@ http_interactions:
   digest: f85034a1b85aba95a56845fe4e3ced74b346c672
 - request:
     method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003620-ORNL_DAAC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Mon, 14 Aug 2017 11:03:18 GMT
-  digest: f85034a1b85aba95a56845fe4e3ced74b346c672
-- request:
-    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C187016591-LPDAAC_ECS
     body:
       encoding: US-ASCII
@@ -1618,6 +1607,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 11 Nov 2016 17:08:54 GMT
   digest: 8a14ed1747f0bcdb5a901e458073edd75e994a6a
+- request:
+    method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C204690560-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 22 Jan 2018 20:30:20 GMT
+  digest: 937985488058b4b1e0eef90741b14dbdb1f5bea2
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C24936-LAADS
