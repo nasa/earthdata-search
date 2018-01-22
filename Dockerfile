@@ -20,4 +20,9 @@ RUN chmod 755 /earthdata-search/tmp
 RUN chmod +x ./start.sh
 RUN chmod +x ./jobs.sh
 
+# Assets compilation requires a database connection in Rails 4+ which we don't have while
+# building our Docker image, we use a gem to fake it
+# http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
+RUN DB_ADAPTER=nulldb bundle exec rake assets:precompile
+
 CMD rails s -b 0.0.0.0
