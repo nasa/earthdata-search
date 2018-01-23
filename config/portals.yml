@@ -50,6 +50,13 @@ portals: &portals
     scripts:
       - edsc-portal.ornl.min.js
 
+  cwic:
+      org: CWIC
+      title: Search
+      params:
+        tag-key:
+          - edsc.portal.cwic.collections
+
 examples: &examples
   example:
 
