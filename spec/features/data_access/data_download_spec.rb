@@ -272,6 +272,34 @@ describe "Data download page", reset: false do
         end
       end
     end
+    context 'upon clicking a "Download Data Links File" button' do
+      before :all do
+        click_link "Download Data Links File"
+      end
+
+      it "displays a page with a shell script on it which performs the user's query" do
+        within_last_window do
+          expect(page).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
+        end
+      end
+
+      context 'and click "Download Links File" button' do
+        before :all do
+          within_last_window do
+            synchronize do
+              expect(page).to have_link('Download Links File')
+            end
+            click_link 'Download Links File'
+          end
+        end
+
+        it 'downloads a list of links' do
+          within_last_window do
+            expect(page.source).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
+          end
+        end
+      end
+    end
   end
 
   context "when no collections have been selected for direct download" do
