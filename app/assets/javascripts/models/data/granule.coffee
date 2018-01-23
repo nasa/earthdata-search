@@ -27,7 +27,7 @@
     download_now_urls: ->
       links = []
       if @links? && @links.length > 0
-        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.inherited != true
       @dataLinks(links)
 
     onThumbError: (granule) ->
