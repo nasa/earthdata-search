@@ -211,15 +211,14 @@ do (ko, $=jQuery) ->
   ko.bindingHandlers.descriptionLinks =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       description = $($.parseHTML(bindingContext.$data.description))
-      newDescription = ''
-      for el in description
+      for el, i in description
         if el.nodeName == 'A' && el.host != window.location.host
           $(el).attr('target', '_blank')
           icon = "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i>"
-          newDescription += (el.outerHTML + icon)
+          description[i] = el.outerHTML + icon
         else if el.nodeName == 'A' && el.host == window.location.host
-          newDescription += $(el.outerHTML).text()
+          description[i] = $(el.outerHTML).text()
         else
-          newDescription += $(el).text()
+          description[i] = $(el).text()
 
-      ko.applyBindingsToNode(element, { 'html': newDescription}, bindingContext)
+      ko.applyBindingsToNode(element, { 'html': (el for el in description).join('')}, bindingContext)
