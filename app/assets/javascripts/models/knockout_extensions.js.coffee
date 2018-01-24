@@ -215,7 +215,8 @@ do (ko, $=jQuery) ->
       for el in description
         if el.nodeName == 'A' && el.host != window.location.host
           $(el).attr('target', '_blank')
-          newDescription += el.outerHTML
+          icon = "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i>"
+          newDescription += (el.outerHTML + icon)
         else if el.nodeName == 'A' && el.host == window.location.host
           newDescription += $(el.outerHTML).text()
         else
