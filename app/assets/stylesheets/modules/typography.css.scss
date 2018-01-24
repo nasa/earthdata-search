@@ -17,6 +17,17 @@ a:link, a:visited {
   &.modal-close:hover {
     color: #444;
   }
+
+  &.ext {
+
+    &:after {
+      display: inline-block;
+      padding-left: 0.3em;
+      font-size: 0.9em;
+      font-family: "EUI-Icon-Library";
+      content: "\f111";
+    }
+  }
 }
 
 a:hover {
