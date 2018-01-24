@@ -207,3 +207,18 @@ do (ko, $=jQuery) ->
     ko.bindingHandlers.text.update element, ->
       truncatedText
     return
+
+  ko.bindingHandlers.descriptionLinks =
+    init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      description = $($.parseHTML(bindingContext.$data.description))
+      newDescription = ''
+      for el in description
+        if el.nodeName == 'A' && el.host != window.location.host
+          $(el).attr('target', '_blank')
+          newDescription += el.outerHTML
+        else if el.nodeName == 'A' && el.host == window.location.host
+          newDescription += $(el.outerHTML).text()
+        else
+          newDescription += $(el).text()
+
+      ko.applyBindingsToNode(element, { 'html': newDescription}, bindingContext)
