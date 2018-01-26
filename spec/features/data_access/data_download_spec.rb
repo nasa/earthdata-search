@@ -28,6 +28,8 @@ describe "Data download page", reset: false do
   browseable_collection_params = {project: [browseable_collection_id],
                                temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
 
+  
+
   before(:all) do
     AccessConfiguration.destroy_all
     load_page :search, overlay: false
@@ -187,6 +189,29 @@ describe "Data download page", reset: false do
     end
   end
 
+  context "when a collection with more than 2000 granules has been selected for direct download" do
+    before :all do
+      login
+      load_page 'data/configure', project: 'C1000000561-NSIDC_ECS'
+      wait_for_xhr
+      login
+      choose 'Direct Download'
+      click_on 'Submit'
+      wait_for_xhr
+    end
+    context 'upon clicking a "View Download Links" button' do
+      before :all do
+        click_link "View Download Links"
+        wait_for_xhr
+      end
+
+      it "displays a page containing direct download hyperlinks for the collection's granules in a new window" do
+        within_last_window do
+          expect(page).to have_link("ftp://n5eil01u.ecs.nsidc.org/DP5/AMSA/AE_SI6.003/2011.10.01/AMSR_E_L3_SeaIce6km_V15_20111001.hdf")
+        end
+      end
+    end
+  end
   context "when collections have been selected for direct download" do
     before :all do
       load_page 'data/configure', {project: [downloadable_collection_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
@@ -267,34 +292,6 @@ describe "Data download page", reset: false do
         it 'downloads a shell script' do
           within_last_window do
             expect(page.source).to have_content('#!/bin/sh')
-            expect(page.source).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
-          end
-        end
-      end
-    end
-    context 'upon clicking a "Download Data Links File" button' do
-      before :all do
-        click_link "Download Data Links File"
-      end
-
-      it "displays a page with a shell script on it which performs the user's query" do
-        within_last_window do
-          expect(page).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
-        end
-      end
-
-      context 'and click "Download Links File" button' do
-        before :all do
-          within_last_window do
-            synchronize do
-              expect(page).to have_link('Download Links File')
-            end
-            click_link 'Download Links File'
-          end
-        end
-
-        it 'downloads a list of links' do
-          within_last_window do
             expect(page.source).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
           end
         end
