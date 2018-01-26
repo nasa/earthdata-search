@@ -191,10 +191,8 @@ describe "Data download page", reset: false do
 
   context "when a collection with more than 2000 granules has been selected for direct download" do
     before :all do
-      login
       load_page 'data/configure', project: 'C1000000561-NSIDC_ECS'
       wait_for_xhr
-      login
       choose 'Direct Download'
       click_on 'Submit'
       wait_for_xhr
