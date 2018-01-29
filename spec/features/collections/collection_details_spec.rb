@@ -202,6 +202,26 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context 'when selecting a collection with a description with links' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+    end
+
+    it 'only displays one link total' do
+      expect(page.find(:css, "div.long-paragraph.collapsed")).to have_selector("a", count:1)
+    end
+
+    it 'displays the external link' do
+      expect(page).to have_link("Greenland Ice Mapping Project (GIMP)", href: "http://nsidc.org/data/measures/gimp")
+      find_link("Greenland Ice Mapping Project (GIMP)")[:target].should == '_blank'
+
+    end
+
+    it 'does not display a link for relative paths' do
+      expect(page).not_to have_link("Bad Link", href:"/data/measures/gimp")
+    end
+  end
+
   context 'when selecting a collection with multiple spatial values' do
     before :all do
       load_page '/search/collection-details', focus: 'C1214560151-JAXA'
