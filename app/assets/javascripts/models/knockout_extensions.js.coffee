@@ -214,7 +214,7 @@ do (ko, $=jQuery) ->
       for el, i in description
         if el.nodeName == 'A' && el.host != window.location.host
           $(el).attr('target', '_blank')
-          $(el).attr('class', 'ext')
+          $(el).addClass('ext')
           description[i] = el.outerHTML
         else if el.nodeName == 'A' && el.host == window.location.host
           description[i] = $(el.outerHTML).text()
