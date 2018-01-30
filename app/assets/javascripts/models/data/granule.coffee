@@ -26,8 +26,12 @@
 
     download_now_urls: ->
       links = []
+      done = []
       if @links? && @links.length > 0
-        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.inherited != true
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.rel.indexOf('http') != -1 && link.inherited != true
+        done.push(link.rel.replace("https", "ftp").replace(".html", "")) for link in @links when link.rel.indexOf('/data#') != -1 && link.rel.indexOf('http://') != -1 && link.inherited != true
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.rel.indexOf('ftp://') != -1 && done.indexOf(link.rel) == -1
+
       @dataLinks(links)
 
     onThumbError: (granule) ->
