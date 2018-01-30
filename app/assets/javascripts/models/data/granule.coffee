@@ -26,11 +26,15 @@
 
     download_now_urls: ->
       links = []
-      done = []
+      filter = []
       if @links? && @links.length > 0
-        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.rel.indexOf('http') != -1 && link.inherited != true
-        done.push(link.rel.replace("https", "ftp").replace(".html", "")) for link in @links when link.rel.indexOf('/data#') != -1 && link.rel.indexOf('http://') != -1 && link.inherited != true
-        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.rel.indexOf('ftp://') != -1 && done.indexOf(link.rel) == -1
+        # Step one - add all links that are 'http' and are not inherited
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.href.indexOf('http') != -1 && link.inherited != true
+        # Step two - create 'filter' array which stores the file names of all previous http links
+        filter.push(link.href.substr(link.href.lastIndexOf('/') + 1).replace(".html", "")) for link in @links when link.rel.indexOf('/data#') != -1 && link.href.indexOf('http') != -1 && link.inherited != true
+        # Step three - add all links that are 'ftp' which call filenames that are *not* in the filter (meaning, have not already
+        # been added with an http link)
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.href.indexOf('ftp://') != -1 && filter.indexOf(link.href.substr(link.href.lastIndexOf('/') + 1)) == -1 && link.inherited != true
 
       @dataLinks(links)
 
