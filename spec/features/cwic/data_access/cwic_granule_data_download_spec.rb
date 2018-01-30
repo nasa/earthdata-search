@@ -44,7 +44,7 @@ describe "CWIC-enabled data access", reset: false do
     end
 
     it "provides a button to view download links", acceptance: true do
-      expect(page).to have_link('View Download Links')
+      expect(page).to have_link('View/Download Data Links')
     end
 
     it 'provides a button to download links in a file' do
@@ -53,7 +53,7 @@ describe "CWIC-enabled data access", reset: false do
 
     context "and clicking the view download links button" do
       before(:all) do
-        click_on('View Download Links')
+        click_on('View/Download Data Links')
       end
       it 'presents a list of download links with associated link titles', acceptance: true do
         within_last_window do
@@ -78,7 +78,7 @@ describe "CWIC-enabled data access", reset: false do
       choose 'Direct Download'
       click_on 'Submit'
       wait_for_xhr
-      click_on('View Download Links')
+      click_on('View/Download Data Links')
     end
 
     it 'provides a list of download links for the single granule' do
