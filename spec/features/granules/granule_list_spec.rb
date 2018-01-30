@@ -295,4 +295,22 @@ describe "Granule list", reset: false do
       end
     end
   end
+
+  context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
+    # A collection known to have duplicate downloadable links
+    use_collection 'C1444742099-PODAAC', 'PODAAC-CYGNS-L3X20'
+    hook_granule_results('PODAAC-CYGNS-L3X20')
+    before :all do
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        # If the test works, this dropdown won't even exist...
+        if page.has_css?('a[data-toggle="dropdown"]')
+          find('a[data-toggle="dropdown"]').click 
+        end
+      end
+    end
+    
+    it 'only shows the http link' do
+      expect(page).not_to have_link("The FTP location for the granule.")
+    end
+  end
 end

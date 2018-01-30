@@ -1752,6 +1752,17 @@ http_interactions:
   digest: 186ad8f8d0bf8d82cb805125293cbf363e157bfc
 - request:
     method: get
+    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1444742099-PODAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 30 Jan 2018 21:03:33 GMT
+  digest: 9c6a00b2f66edd5e7257dbc75abd0487796df269
+- request:
+    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179002107-SEDAC
     body:
       encoding: US-ASCII

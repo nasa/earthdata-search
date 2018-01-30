@@ -1741,6 +1741,30 @@ f5801e117ff4523a275fccd3ef6ed5ca040c1e7a:
       encoding: UTF-8
       string: '[{"concept-id":"C128599377-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
     http_version: 
+bfa2c73867d1fb977c53c76dd3648b7881163272:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 374ea067-edab-4458-9810-7e5f3e1a3b81
+      date:
+      - Tue, 30 Jan 2018 21:03:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 cf8b100bff82fcafbe5253fb00ca0c0394c23a8d:
   response:
     status:

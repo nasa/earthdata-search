@@ -4493,6 +4493,30 @@ d63cb049375aff72da5b367d65d787ce978ec49f:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"trigger500"}'
     http_version: 
+9c6a00b2f66edd5e7257dbc75abd0487796df269:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Tue, 30 Jan 2018 21:03:04 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '71'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1444742099-PODAAC"}'
+    http_version: 
 3ef62e8415dbc5c2c1a0ba09d54309fdc1505b9a:
   response:
     status:
