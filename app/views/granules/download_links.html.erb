@@ -48,8 +48,7 @@
   Please click the button to download these links. <a href="#" id="download-button">Download Links File</a>
 </div>
 
-<ul id="links" style="display: none;">
-</ul>
+<ul id="links" style="display: none;"></ul>
 
 <script>
   (function () {
@@ -61,7 +60,7 @@
 
     document.addEventListener('EdscScriptLoaded', function(){
       var dlLink = document.getElementById('download-button');
-      dlLink.scriptFileContent = document.getElementById("links").textContent;
+      dlLink.scriptFileContent = document.getElementById("links").innerText;
       dlLink.scriptFileName = 'download.txt';
 
       var isIE = /*@cc_on!@*/false || !!document.documentMode;
@@ -91,9 +90,19 @@
       return url;
     }
 
+    function renderEntry(link) {
+      var ul = document.getElementById('links');
+      var li = document.createElement('LI');
+      var a = document.createElement('A');
+      a.setAttribute('href', link);
+      a.textContent = link;
+      li.appendChild(a);
+      ul.appendChild(li);
+    }
+
+
     function finish() {
       preContent = document.getElementById('links');
-      preContent.innerHTML += '\n';
 
       var event = document.createEvent('Event');
       event.initEvent('EdscScriptLoaded', true, true);
@@ -110,11 +119,12 @@
       document.getElementById('loading').innerHTML = 'Preparing links for download, please wait (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000)) + ' of ' + cmrHits + ')';
       var links = doc.links;
       preContent = document.getElementById('links');
-      preContent.innerHTML += links.join("\n");
+      for (var i = 0; i < links.length; i++) {
+        renderEntry(links[i]);
+      }
       document.getElementById('links').style.display = "block"
       var next = getNextPageUrl();
       if (next) {
-        preContent.innerHTML += '\n'
         fetchLinks(next);
       }
       else {

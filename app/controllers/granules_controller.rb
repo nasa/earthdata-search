@@ -114,25 +114,23 @@ class GranulesController < ApplicationController
     url_type = :browse if request[:browse] == true || request[:browse] == 'true'
     page_num = params.delete('page_num') || 1
     @query = query.merge({'project' => request[:project], 'page_num' => page_num, 'page_size' => 2000, 'browse' => (url_type.to_s == 'browse'), 'collection' => collection_id})
-    if request.format == 'html'
-      render 'download.html.erb', stream: true, layout: false
-    else
-      url_mapper = OpendapConfiguration.find(collection_id, echo_client, token)
 
-      if url_type == :download
-        method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
-        url_mapper.apply_subsetting(method['subset'])
-      end
+    url_mapper = OpendapConfiguration.find(collection_id, echo_client, token)
 
-      @first_link = first_link(Rack::Utils.parse_nested_query(collection['params']), echo_client, token, url_mapper, url_type)
-
-      @user = earthdata_username
-      if request.format == :text
-        render 'download_links.html.erb', layout:false
-      else
-        render 'prepare_script.html.erb', layout: false
-      end
+    if url_type == :download
+      method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+      url_mapper.apply_subsetting(method['subset'])
     end
+
+    @first_link = first_link(Rack::Utils.parse_nested_query(collection['params']), echo_client, token, url_mapper, url_type)
+
+    @user = earthdata_username
+    if request.format == :text || request.format == 'html'
+      render 'download_links.html.erb', layout:false
+    else
+      render 'prepare_script.html.erb', layout: false
+    end
+    
   end
 
   private
