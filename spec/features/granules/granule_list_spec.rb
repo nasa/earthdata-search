@@ -271,8 +271,8 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    use_collection 'C204690560-LAADS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006'
-    hook_granule_results('MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006')
+    use_collection 'C1000000042-LANCEAMSR2', 'NRT AMSR2 DAILY L3 12.5 KM TB AND SEA ICE CONCENTRATION POLAR GRIDS V0'
+    hook_granule_results('NRT AMSR2 DAILY L3 12.5 KM TB AND SEA ICE CONCENTRATION POLAR GRIDS V0')
 
     context 'clicking on the single granule download button' do
       before :all do
@@ -289,8 +289,8 @@ describe "Granule list", reset: false do
 
       it 'shows a dropdown with all the downloadable granules' do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          expect(page).to have_content('Download Link 1')
-          expect(page).to have_content('Download Link 2')
+          expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (primary)')
+          expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (backup)')
         end
       end
     end
