@@ -95,7 +95,7 @@ module Helpers
       # Let's get the tour modal while we're at it...
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
       # Now the banner...
-      while page.has_css?('.banner-close') do
+      if page.has_css?('a[class="banner-close"]')
         find('a[class="banner-close"]').click
         wait_for_xhr
       end
