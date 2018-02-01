@@ -14,9 +14,10 @@ describe "Granule list", reset: false do
   end
 
   context "for all collections with granules" do
-    use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
-    hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
-
+    before :all do
+      visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
+      wait_for_xhr
+    end
     it 'provides a text field to search for single or multiple granules by granule IDs' do
       expect(page).to have_selector('#granule-ids')
     end
@@ -220,10 +221,11 @@ describe "Granule list", reset: false do
   end
 
   context "for collections with many granule results" do
-    use_collection 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
-
+    before :all do
+      visit('/search/granules?p=C179002914-ORNL_DAAC&tl=1501695072!4!!&q=C179002914-ORNL_DAAC&ok=C179002914-ORNL_DAAC')
+      wait_for_xhr
+    end
     context "clicking on a collection result" do
-      hook_granule_results('30 Minute Rainfall Data (FIFE)', :each)
 
       it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
@@ -235,10 +237,12 @@ describe "Granule list", reset: false do
   end
 
   context "for collections with few granule results" do
-    use_collection 'C179003380-ORNL_DAAC', 'A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves'
+    before :all do
+      visit('/search/granules?p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
+      wait_for_xhr
+    end
 
     context "clicking on a collection result" do
-      hook_granule_results('A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves')
 
       it "displays all available granule results" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 2)
@@ -251,10 +255,12 @@ describe "Granule list", reset: false do
   end
 
   context "for collections without granules" do
-    use_collection 'C179002107-SEDAC', 'Anthropogenic Biomes of the World, Version 1'
 
     context "clicking on a collection result" do
       before :all do
+        visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
+        wait_for_xhr
+        dismiss_banner
         expect(page).to have_visible_collection_results
         first_collection_result.click
         wait_for_xhr
@@ -271,11 +277,11 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    use_collection 'C204690560-LAADS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006'
-    hook_granule_results('MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006')
 
     context 'clicking on the single granule download button' do
       before :all do
+        visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
+        wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
         end
@@ -289,10 +295,28 @@ describe "Granule list", reset: false do
 
       it 'shows a dropdown with all the downloadable granules' do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          expect(page).to have_content('Download Link 1')
-          expect(page).to have_content('Download Link 2')
+          expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (primary)')
+          expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (backup)')
         end
       end
+    end
+  end
+
+  context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
+    before :all do
+      # A collection known to have duplicate downloadable links
+      visit('/search/granules?p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
+      wait_for_xhr
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        # If the test works, this dropdown won't even exist...
+        if page.has_css?('a[data-toggle="dropdown"]')
+          find('a[data-toggle="dropdown"]').click 
+        end
+      end
+    end
+    
+    it 'only shows the http link' do
+      expect(page).not_to have_link("The FTP location for the granule.")
     end
   end
 end
