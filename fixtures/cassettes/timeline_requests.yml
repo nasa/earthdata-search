@@ -801,25 +801,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Feb 2018 17:24:50 GMT
+  recorded_at: Thu, 01 Feb 2018 18:00:23 GMT
   digest: c386fcf88b55ef4db90c0c3ad89c3adb93760a31
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000042-LANCEAMSR2&end_date=2011-01-01T00%3A00%3A00.000Z&interval=day&start_date=2007-12-30T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Thu, 01 Feb 2018 05:42:41 GMT
-  digest: bac2ff02e5a753bd278ed3fef8fd6672b4284b91
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1337,7 +1320,7 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
-      string: concept_id=C1444742099-PODAAC&end_date=1988-10-25T23%3A59%3A59.999Z&interval=day&start_date=1985-10-23T23%3A59%3A59.999Z
+      string: concept_id=C1444742099-PODAAC&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -1347,25 +1330,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Feb 2018 17:24:16 GMT
-  digest: cf1b074df74936e4fee5e385d8a0fb398deee714
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1444742099-PODAAC&end_date=2011-01-01T00%3A00%3A00.000Z&interval=day&start_date=2007-12-30T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Thu, 01 Feb 2018 05:43:09 GMT
-  digest: 93f859cc16e28a28924c0465ac0e41de6ff5eb8a
+  recorded_at: Thu, 01 Feb 2018 17:59:06 GMT
+  digest: c03050d4ab85544fb5ebd2b246e2b05e48cc159d
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json

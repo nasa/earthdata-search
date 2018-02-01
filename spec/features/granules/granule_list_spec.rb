@@ -297,10 +297,10 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
-    # A collection known to have duplicate downloadable links
-    use_collection 'C1444742099-PODAAC', 'PODAAC-CYGNS-L3X20'
-    hook_granule_results('PODAAC-CYGNS-L3X20')
     before :all do
+      # A collection known to have duplicate downloadable links
+      visit('/search/granules?p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
+      wait_for_xhr
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         # If the test works, this dropdown won't even exist...
         if page.has_css?('a[data-toggle="dropdown"]')

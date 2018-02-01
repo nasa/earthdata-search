@@ -1058,33 +1058,9 @@ c386fcf88b55ef4db90c0c3ad89c3adb93760a31:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 96a724d9-c470-4c1b-b5f9-558321c8883c
+      - 6616045c-6621-4fd6-b3f4-f448746fa96a
       date:
-      - Thu, 01 Feb 2018 17:24:48 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-bac2ff02e5a753bd278ed3fef8fd6672b4284b91:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 6cabcf1c-2656-45e4-b827-e3772ff99e0f
-      date:
-      - Thu, 01 Feb 2018 05:42:45 GMT
+      - Thu, 01 Feb 2018 18:01:07 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1789,7 +1765,7 @@ f5801e117ff4523a275fccd3ef6ed5ca040c1e7a:
       encoding: UTF-8
       string: '[{"concept-id":"C128599377-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
     http_version: 
-cf1b074df74936e4fee5e385d8a0fb398deee714:
+c03050d4ab85544fb5ebd2b246e2b05e48cc159d:
   response:
     status:
       code: 200
@@ -1798,44 +1774,20 @@ cf1b074df74936e4fee5e385d8a0fb398deee714:
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - dbedab43-a3a5-420f-a96f-f0eb1022837c
+      - b6bb7f98-12bc-4ad2-bcf2-348a1a0eaf8a
       date:
-      - Thu, 01 Feb 2018 17:23:37 GMT
+      - Thu, 01 Feb 2018 17:59:18 GMT
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       content-length:
-      - '2'
+      - '160'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: "[]"
-    http_version: 
-93f859cc16e28a28924c0465ac0e41de6ff5eb8a:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 449090ac-dd6f-476d-927c-b16e78f20435
-      date:
-      - Thu, 01 Feb 2018 05:42:33 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
+      string: '[{"concept-id":"C1444742099-PODAAC","intervals":[[1489795200,1495584000,67],[1496275200,1499817600,41],[1500768000,1510358400,111],[1511568000,1513296000,20]]}]'
     http_version: 
 cf8b100bff82fcafbe5253fb00ca0c0394c23a8d:
   response:
