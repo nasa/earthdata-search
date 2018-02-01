@@ -1752,17 +1752,6 @@ http_interactions:
   digest: 186ad8f8d0bf8d82cb805125293cbf363e157bfc
 - request:
     method: get
-    uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C1000000042-LANCEAMSR2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 01 Feb 2018 18:00:17 GMT
-  digest: eae9c5fb737dc40c673dbd2ee98bf23fa437c205
-- request:
-    method: get
     uri: https://edsc-nlp.ngap.earthdata.nasa.gov/nlp?text=C179002107-SEDAC
     body:
       encoding: US-ASCII

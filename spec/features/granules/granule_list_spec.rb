@@ -14,9 +14,10 @@ describe "Granule list", reset: false do
   end
 
   context "for all collections with granules" do
-    use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
-    hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
-
+    before :all do
+      visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
+      wait_for_xhr
+    end
     it 'provides a text field to search for single or multiple granules by granule IDs' do
       expect(page).to have_selector('#granule-ids')
     end
@@ -220,10 +221,11 @@ describe "Granule list", reset: false do
   end
 
   context "for collections with many granule results" do
-    use_collection 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
-
+    before :all do
+      visit('/search/granules?p=C179002914-ORNL_DAAC&tl=1501695072!4!!&q=C179002914-ORNL_DAAC&ok=C179002914-ORNL_DAAC')
+      wait_for_xhr
+    end
     context "clicking on a collection result" do
-      hook_granule_results('30 Minute Rainfall Data (FIFE)', :each)
 
       it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
@@ -235,10 +237,12 @@ describe "Granule list", reset: false do
   end
 
   context "for collections with few granule results" do
-    use_collection 'C179003380-ORNL_DAAC', 'A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves'
+    before :all do
+      visit('/search/granules?p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
+      wait_for_xhr
+    end
 
     context "clicking on a collection result" do
-      hook_granule_results('A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves')
 
       it "displays all available granule results" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 2)
@@ -251,10 +255,12 @@ describe "Granule list", reset: false do
   end
 
   context "for collections without granules" do
-    use_collection 'C179002107-SEDAC', 'Anthropogenic Biomes of the World, Version 1'
 
     context "clicking on a collection result" do
       before :all do
+        visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
+        wait_for_xhr
+        dismiss_banner
         expect(page).to have_visible_collection_results
         first_collection_result.click
         wait_for_xhr
@@ -271,11 +277,11 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    use_collection 'C1000000042-LANCEAMSR2', 'NRT AMSR2 DAILY L3 12.5 KM TB AND SEA ICE CONCENTRATION POLAR GRIDS V0'
-    hook_granule_results('NRT AMSR2 DAILY L3 12.5 KM TB AND SEA ICE CONCENTRATION POLAR GRIDS V0')
 
     context 'clicking on the single granule download button' do
       before :all do
+        visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
+        wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
         end

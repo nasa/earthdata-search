@@ -1049,30 +1049,6 @@ a08acca69f95ed3209679bf691c963a42b32711d:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000000-ORNL_DAAC","intervals":[[1330387200,1338595200,3]]}]'
     http_version: 
-c386fcf88b55ef4db90c0c3ad89c3adb93760a31:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 6616045c-6621-4fd6-b3f4-f448746fa96a
-      date:
-      - Thu, 01 Feb 2018 18:01:07 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
 3ebf746fb5ece902493d10c05cea7a0e0039707c:
   response:
     status:
@@ -1764,30 +1740,6 @@ f5801e117ff4523a275fccd3ef6ed5ca040c1e7a:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C128599377-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
-    http_version: 
-c03050d4ab85544fb5ebd2b246e2b05e48cc159d:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - b6bb7f98-12bc-4ad2-bcf2-348a1a0eaf8a
-      date:
-      - Thu, 01 Feb 2018 17:59:18 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '160'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"concept-id":"C1444742099-PODAAC","intervals":[[1489795200,1495584000,67],[1496275200,1499817600,41],[1500768000,1510358400,111],[1511568000,1513296000,20]]}]'
     http_version: 
 cf8b100bff82fcafbe5253fb00ca0c0394c23a8d:
   response:
