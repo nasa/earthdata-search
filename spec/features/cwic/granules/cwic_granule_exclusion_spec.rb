@@ -78,7 +78,7 @@ describe "CWIC-enabled granule results", reset: false do
             choose 'Direct Download'
             click_on 'Submit'
             wait_for_xhr
-            click_on('View/Download Data Links')
+            click_on('View Download Links')
           end
 
           after :all do

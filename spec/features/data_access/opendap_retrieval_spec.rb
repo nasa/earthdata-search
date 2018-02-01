@@ -179,7 +179,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'ASCII'
       uncheck 'lon_bnds'
       click_on 'Submit'
-      click_link "View Download Links"
+      click_link "View/Download Data Links"
     end
 
     after(:all) do
@@ -228,7 +228,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'ASCII'
       uncheck 'AerosolModelMW'
       click_on 'Submit'
-      click_link "View Download Links"
+      click_link "View/Download Data Links"
     end
 
     after(:all) do
@@ -276,7 +276,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'Original (No Subsetting)'
       click_on 'Submit'
       wait_for_xhr
-      click_link "View Download Links"
+      click_link "View/Download Data Links"
     end
 
     after(:all) do
