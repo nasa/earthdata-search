@@ -82,7 +82,7 @@ group :assets, :test do
   gem 'uglifier', '>= 1.3.0'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails',  '= 4.0.4'
 gem 'bourbon'
 gem 'knockoutjs-rails'
 gem 'figaro'
