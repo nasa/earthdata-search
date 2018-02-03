@@ -40,7 +40,7 @@ ns.ProjectionSwitcher = do (L) ->
 
     setProjection: (proj) ->
       $root = @$root
-      $link = @$root.children("[href=##{proj}]")
+      $link = @$root.children("[href=\\##{proj}]")
 
       $link.siblings().removeClass('leaflet-disabled')
       $link.addClass('leaflet-disabled')
