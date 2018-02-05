@@ -1084,8 +1084,10 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 20 Jan 2017 22:29:20 GMT
-  digest: 25815ad6f07ca8b0a8a82d55ec29bf9ebb7dcaf8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 05 Feb 2018 21:13:34 GMT
+  digest: 34cf3f0b1f586936676fbeaedc25153bc0f8f4e6
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1103,7 +1105,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 21 Nov 2016 20:15:38 GMT
+  recorded_at: Mon, 05 Feb 2018 21:13:39 GMT
   digest: e88c5b2ab9a200745d19275183d76198f4de4539
 - request:
     method: post
@@ -1122,7 +1124,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 21 Nov 2016 20:21:25 GMT
+  recorded_at: Mon, 05 Feb 2018 21:13:43 GMT
   digest: 2097fc72f884a76d0f80db0931dcba01644cb9af
 - request:
     method: post
@@ -1141,7 +1143,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 21 Nov 2016 20:15:30 GMT
+  recorded_at: Mon, 05 Feb 2018 21:13:31 GMT
   digest: 66dc839aba498b2b8d006d23c6c4e2c2cb21c82c
 - request:
     method: post

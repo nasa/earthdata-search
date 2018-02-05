@@ -206,7 +206,8 @@ describe "Data download page", reset: false do
       it "displays a page containing direct download hyperlinks for the collection's granules in a new window" do
         within_last_window do
           expect(page).to have_text("Collection granule links have been retrieved")
-          expect(page).to have_link("ftp://n5eil01u.ecs.nsidc.org/DP5/AMSA/AE_SI6.003/2011.08.03/AMSR_E_L3_SeaIce6km_V15_20110803.hdf")
+          expect(page).to have_content("https://", count: 3385)
+          expect(page).to have_link("https://n5eil01u.ecs.nsidc.org/DP5/AMSA/AE_SI6.003/2011.08.03/AMSR_E_L3_SeaIce6km_V15_20110803.hdf")
         end
       end
 
