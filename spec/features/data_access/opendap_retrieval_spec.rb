@@ -188,7 +188,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       login
     end
 
-    it 'provides a URL describing metadata about the collection\'s parameters' do
+    it 'provides a URL describing metadata about the collection\'s parameters', pending_fixtures: true do
       within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*=".nc.info"]')
       end
