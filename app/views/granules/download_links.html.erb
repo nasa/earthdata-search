@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title><%= site_page_title('Download Granule Links') %></title>
+  <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+  <style>
+    #links {
+      min-height: 20px;
+      padding: 19px;
+      margin-bottom: 20px;
+      background-color: #f5f5f5;
+      border: 1px solid #e3e3e3;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    }
+
+    #download-button {
+      color: #fff;
+      background-color: #5382b1;
+      background-image: -webkit-linear-gradient(#5382b1, #315880);
+      background-image: linear-gradient(#5382b1, #315880);
+      border: none;
+      text-shadow: 1px 1px 1px #315880;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-size: small;
+      text-decoration: none;
+    }
+
+    div {
+      margin: 20px;
+    }
+
+    pre {
+      font-size: smaller;
+    }
+  </style>
+</head>
+<body>
+<div id="errors"></div>
+<div id="loading">Initiating download of granule links...</div>
+<div id="download-description" style="display: none;">
+  <h2>Collection granule links have been retrieved</h2>
+  Please click the button to download these links. <a href="#" id="download-button">Download Links File</a>
+</div>
+
+<ul id="links" style="display: none;"></ul>
+
+<script>
+  (function () {
+
+    function downloadFileIE(e) {
+      var blob = new Blob([e.target.scriptFileContent]);
+      window.navigator.msSaveOrOpenBlob(blob, e.target.scriptFileName);
+    }
+
+    document.addEventListener('EdscScriptLoaded', function(){
+      var dlLink = document.getElementById('download-button');
+      dlLink.scriptFileContent = document.getElementById("links").innerText;
+      dlLink.scriptFileName = 'download.txt';
+
+      var isIE = /*@cc_on!@*/false || !!document.documentMode;
+      if (isIE) {
+        dlLink.addEventListener('click', downloadFileIE);
+      }
+      else {
+        var file = new Blob([dlLink.scriptFileContent], {type: 'text/plain;charset:utf-8'});
+        dlLink.href = URL.createObjectURL(file);
+        dlLink.download = dlLink.scriptFileName;
+      }
+    });
+
+    var browseOnly = <%= @query.delete('browse') %>;
+    var currentPage = <%= @query['page_num'] %>;
+    var project = <%= @query['project'] %>;
+    var collection = '<%= @query['collection'] %>';
+    var cmrHits = -1;
+
+    function getNextPageUrl() {
+      queryPageNum = parseInt(url.match(/page_num=(\d+)/)[1]);
+      if (queryPageNum * 2000 > cmrHits) {
+        return null;
+      }
+      currentPage++;
+      url = url.replace(/page_num=\d+/, 'page_num=' + currentPage);
+      return url;
+    }
+
+    function renderEntry(link) {
+      var ul = document.getElementById('links');
+      var li = document.createElement('LI');
+      var a = document.createElement('A');
+      a.setAttribute('href', link);
+      a.textContent = link;
+      li.appendChild(a);
+      ul.appendChild(li);
+    }
+
+
+    function finish() {
+      preContent = document.getElementById('links');
+
+      var event = document.createEvent('Event');
+      event.initEvent('EdscScriptLoaded', true, true);
+      document.getElementById("download-button").dispatchEvent(event);
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('download-button').style.display = 'inline';
+      document.getElementById('download-description').style.display = 'inherit';
+    }
+
+    function onLoad() {
+      var doc = JSON.parse(this.response);
+      cmrHits = doc['CMR-Hits'];
+      document.getElementById('loading').innerHTML = 'Preparing links for download, please wait (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000)) + ' of ' + cmrHits + ')';
+      var links = doc.links;
+      preContent = document.getElementById('links');
+      for (var i = 0; i < links.length; i++) {
+        renderEntry(links[i]);
+      }
+      document.getElementById('links').style.display = "block"
+      var next = getNextPageUrl();
+      if (next) {
+        fetchLinks(next);
+      }
+      else {
+        finish();
+      }
+    }
+
+    function onError() {
+      document.getElementById('loading').textContent = "There was an error loading granules. Refresh this page to try again.";
+      finish();
+    }
+
+    function onAbort() {
+      finish();
+    }
+
+    function fetchLinks(url) {
+      var request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.send(null);
+
+      request.addEventListener("load", onLoad, false);
+      request.addEventListener("error", onError, false);
+      request.addEventListener("abort", onAbort, false);
+    }
+
+    var url = "/granules/fetch_links.json?page_num=1&browse=" + browseOnly + "&project=" + project + "&collection=" + collection;
+    fetchLinks(url);
+  })();
+</script>
+
+</body></html>

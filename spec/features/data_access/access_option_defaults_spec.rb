@@ -163,7 +163,7 @@ describe "Access Option Defaults", reset: true do
 
       click_on 'Submit'
       wait_for_xhr
-      expect(page).to have_link('View Download Links')
+      expect(page).to have_link('View/Download Data Links')
       expect(page).to have_no_content('The following collections are being processed')
 
       load_page 'data/configure', page_options

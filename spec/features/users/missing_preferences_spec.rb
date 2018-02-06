@@ -39,7 +39,7 @@ describe "User missing ordering preferences", reset: false do
 
     it "shows the data retrieval page", pending_fixtures: true do
       expect(page).to have_content(collection_title)
-      expect(page).to have_link('View Download Links')
+      expect(page).to have_link('View/Download Data Links')
     end
   end
 end

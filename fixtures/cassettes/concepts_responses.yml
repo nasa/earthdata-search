@@ -2632,28 +2632,6 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
     http_version: 
-3590d4a3d39fcf403f75acea942bb337a3deaf59:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      date:
-      - Mon, 28 Mar 2016 02:53:48 GMT
-      content-type:
-      - application/json
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 9ebac737-4e8c-44f5-9e52-5061d8c2fa9f
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Token edsc-access does not exist"]}'
-    http_version: 
 22773077a42ba7efc9a0d56017a1d43ae54bd2a0:
   response:
     status:

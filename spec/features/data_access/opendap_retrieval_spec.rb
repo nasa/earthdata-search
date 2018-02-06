@@ -179,7 +179,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'ASCII'
       uncheck 'lon_bnds'
       click_on 'Submit'
-      click_link "View Download Links"
+      click_link "View/Download Data Links"
     end
 
     after(:all) do
@@ -189,20 +189,20 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'provides a URL describing metadata about the collection\'s parameters', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*=".nc.info"]')
       end
     end
 
     it 'provides links the data in the selected file format', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*=".nc.ascii?"]')
         expect(page).to have_css('a[href*="http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo"]')
       end
     end
 
     it 'subsets the data to the selected parameters', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*="lat_bnds"]')
         expect(page).to have_css('a[href*="time_bnds"]')
         expect(page).to have_css('a[href*="tos"]')
@@ -211,7 +211,7 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'applies spatial subsetting', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*="tos[0:102][90:92][180:182]"]')
       end
     end
@@ -228,7 +228,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'ASCII'
       uncheck 'AerosolModelMW'
       click_on 'Submit'
-      click_link "View Download Links"
+      click_link "View/Download Data Links"
     end
 
     after(:all) do
@@ -238,13 +238,13 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'provides a URL describing metadata about the collection\'s parameters', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*=".he5.info"]')
       end
     end
 
     it 'provides links the data in the selected file format', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*=".he5.ascii?"]')
         expect(page).to have_css('a[href*="http://acdisc.gsfc.nasa.gov/opendap"]')
         expect(page).to have_no_content('a[href*="http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa/"]')
@@ -252,7 +252,7 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'subsets the data to the selected parameters', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*="AbsorbingAerosolOpticalThicknessMW"]')
         expect(page).to have_css('a[href*="AerosolOpticalThicknessMW"]')
         expect(page).to have_no_css('a[href*="AerosolModelMW"]')
@@ -260,7 +260,7 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'applies spatial subsetting', pending_fixtures: true do
-      within_window('Earthdata Search - Downloads') do
+      within_window('Earthdata Search - Download Granule Links') do
         expect(page).to have_css('a[href*="AbsorbingAerosolOpticalThicknessMW[0:4][360:368][720:728]"]')
         expect(page).to have_css('a[href$="lon[720:728],lat[360:368],nWavelDiagnostic"]')
       end
@@ -276,7 +276,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'Original (No Subsetting)'
       click_on 'Submit'
       wait_for_xhr
-      click_link "View Download Links"
+      click_link "View/Download Data Links"
     end
 
     after(:all) do
