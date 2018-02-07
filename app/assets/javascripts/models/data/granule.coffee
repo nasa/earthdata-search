@@ -67,5 +67,4 @@
     getFileName: (str) ->
       filename = str.substring(str.lastIndexOf('/')+1);
 
-
   exports = Granule
