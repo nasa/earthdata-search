@@ -96,21 +96,14 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
 
 
     submitRequest: =>
-      for accessCollection in @project.accessCollections()
-        # find current collection
-        if accessCollection.collection.id == this.currentCollection().id
-          # number of granules in the order
-          console.error accessCollection.granuleAccessOptions().hits
-          $("#delayWarningModal").modal('show')
-      
-      # $('.access-submit').prop('disabled', true)
-      # if @needsContactInfo() && @accountForm.isEditingNotificationPreference()
-      #  @accountForm.saveAccountEdit =>
-      #    @downloadProject()
-      #  # re-enable button if saveAccountEdit fails
-      #  $('.access-submit').prop('disabled', false)
-      # else
-      #  @downloadProject()
+      $('.access-submit').prop('disabled', true)
+      if @needsContactInfo() && @accountForm.isEditingNotificationPreference()
+        @accountForm.saveAccountEdit =>
+          @downloadProject()
+        # re-enable button if saveAccountEdit fails
+        $('.access-submit').prop('disabled', false)
+      else
+        @downloadProject()
 
     showGranuleList: =>
       @showGranules(true)

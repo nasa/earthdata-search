@@ -89,8 +89,16 @@ ns.ProjectList = do (ko
       @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
 
     loginAndDownloadCollection: (collection) =>
-      @project.focus(collection)
-      @configureProject()
+      $('#delayOk').on 'click', =>
+        @project.focus(collection)
+        @configureProject()
+      limit = false
+      limit = collection.tags()['edsc.collection_alerts']['data']['limit'] if collection.tags() && collection.tags()['edsc.collection_alerts']
+      if limit && collection.granuleCount() > limit
+        $("#delayWarningModal").modal('show')
+      else
+        @project.focus(collection)
+        @configureProject()
 
     loginAndDownloadGranule: (collection, granule) =>
       @project.focus(collection)
