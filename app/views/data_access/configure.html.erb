@@ -236,3 +236,25 @@
   </div>
 </div>
 <!--end modal-->
+
+<!--begin modal-->
+<div class="modal fade" id="delayWarningModal" tabindex="-1" role="dialog" aria-labelledby="delayWarningModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h4 class="modal-title" id="delayWarningModalLabel">Possible Delay Ahead</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          This order includes a collection that is known to cause delays.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-left"></i> Refine your search</a>
+        <a class="button text-button" data-dismiss="modal" href="#">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end modal-->
