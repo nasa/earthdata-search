@@ -322,12 +322,14 @@ describe "Granule list", reset: false do
 
   context "for collections that are known to cause download delays" do
     before :all do
-      visit('/search/granules?p=DELAY_ORDER&tl=1501695072!4!!&q=DELAY_ORDER&ok=DELAY_ORDER')
+      visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
       wait_for_xhr
+      Capybara::Screenshot.screenshot_and_save_page
       click_button('Download Data')
     end
     it "shows a modal warning of the delay" do
       expect(page).to have_css('#delayWarningModalLabel')
+      expect(page).to have_text('This is an optional message.')
     end
   end
 end
