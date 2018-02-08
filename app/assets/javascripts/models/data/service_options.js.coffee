@@ -152,6 +152,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         deferEvaluation: true
       @canAddAccessMethod = ko.observable(false)
       @readyToDownload = @computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
+      @accessMethodSelected = @computed(@_computeAccessMethodSelected, this, deferEvaluation: true)
 
     _onAccessOptionsLoad: (options) ->
       availableMethods = options.methods
@@ -179,6 +180,12 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       for m in @accessMethod()
         result = true if m.method()? && m.isValid()
         result = true if !m.loadForm()
+      result
+
+    _computeAccessMethodSelected: ->
+      result = true
+      for m in @accessMethod()
+        result = false if m.serialize().method == null
       result
 
     addAccessMethod: =>

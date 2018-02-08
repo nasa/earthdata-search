@@ -123,6 +123,7 @@ ns.Project = do (ko,
       @searchGranulesCollection = ko.observable(null)
       @accessCollections = ko.computed(read: @_computeAccessCollections, owner: this, deferEvaluation: true)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
+      @accessMethodsSelected = ko.computed(@_computeAccessMethodsSelected, this, deferEvaluation: true)
       @visibleCollections = ko.computed(read: @_computeVisibleCollections, owner: this, deferEvaluation: true)
 
       @serialized = ko.computed
@@ -135,6 +136,10 @@ ns.Project = do (ko,
     _computeAllReadyToDownload: ->
       return false for ds in @accessCollections() when !ds.serviceOptions.readyToDownload()
       true
+
+    _computeAccessMethodsSelected: ->
+      return true for ds in @accessCollections() when ds.serviceOptions.accessMethodSelected()
+      false
 
     _computeAccessCollections: ->
       focused = @focusedProjectCollection()
