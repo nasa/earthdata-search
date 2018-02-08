@@ -96,7 +96,7 @@ ns.ProjectList = do (ko
       limit = collection.tags()['edsc.collection_alerts']['data']['limit'] if collection.tags() && collection.tags()['edsc.collection_alerts']
       if limit && collection.granuleCount() > limit
         message = collection.tags()['edsc.collection_alerts']['data']['message']
-        if message then $("#delayOptionalMessage").text(message) else $("#delayOptionalMessage").text("")
+        if message then $("#delayOptionalMessage").text("Message from data provider: " + message) else $("#delayOptionalMessage").text("")
         $("#delayWarningModal").modal('show')
       else
         @project.focus(collection)

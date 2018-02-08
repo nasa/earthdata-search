@@ -328,7 +328,7 @@ describe "Granule list", reset: false do
     end
     it "shows a modal warning of the delay" do
       expect(page).to have_css('#delayWarningModalLabel')
-      expect(page).to have_text('This is an optional message.')
+      expect(page).to have_text('Message from data provider: This is an optional message.')
     end
   end
 end
