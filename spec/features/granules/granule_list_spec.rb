@@ -324,7 +324,6 @@ describe "Granule list", reset: false do
     before :all do
       visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
       wait_for_xhr
-      Capybara::Screenshot.screenshot_and_save_page
       click_button('Download Data')
     end
     it "shows a modal warning of the delay" do
