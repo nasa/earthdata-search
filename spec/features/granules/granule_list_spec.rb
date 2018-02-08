@@ -319,4 +319,15 @@ describe "Granule list", reset: false do
       expect(page).not_to have_link("The FTP location for the granule.")
     end
   end
+
+  context "for collections that are known to cause download delays" do
+    before :all do
+      visit('/search/granules?p=DELAY_ORDER&tl=1501695072!4!!&q=DELAY_ORDER&ok=DELAY_ORDER')
+      wait_for_xhr
+      click_button('Download Data')
+    end
+    it "shows a modal warning of the delay" do
+      expect(page).to have_css('#delayWarningModalLabel')
+    end
+  end
 end
