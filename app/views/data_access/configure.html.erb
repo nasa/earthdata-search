@@ -181,7 +181,7 @@
           <button data-tooltip="true" title="Reset all customization options to their default values." data-bind="visible: !$root.ui.serviceOptionsList.isLastOption() && isResetable, enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.resetForm, attr: {id: 'reset-form-' + collection.id}" class="button-next">Reset</button>
           <button data-tooltip="true" title="Revert all customization options back to the saved values." data-bind="click: $root.ui.serviceOptionsList.reloadPrevious, attr: {id: 'reload-previous-' + collection.id}" style="display: none;" class="button-next">Revert</button>
           <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.checkOrderSize" class="button-next">Continue</button>
-          <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload() && $root.project.accessMethodsSelected(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
+          <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
     </li>
@@ -200,7 +200,7 @@
         </div>
         <div class="access-item-actions">
           <button data-bind="click: ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="enable: project.allReadyToDownload() && project.accessMethodsSelected(), click: ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
+          <button data-bind="enable: project.allReadyToDownload(), click: ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
     </li>

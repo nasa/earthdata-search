@@ -2729,6 +2729,38 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
     http_version: 
+3590d4a3d39fcf403f75acea942bb337a3deaf59:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - a3272690-dbd3-437b-a99f-e76dcc6ca588
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 14 Feb 2018 22:20:23 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '572'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2000-03-01T00:00:00.000Z","version_id":"3A","updated":"2017-06-27T00:00:00.000Z","dataset_id":"CER_SSF_Terra-FM1-MODIS_Edition3A","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LARC_ASDC","short_name":"CER_SSF_Terra-FM1-MODIS_Edition3A","organizations":["NASA/LARC/SD/ASDC"],"title":"CER_SSF_Terra-FM1-MODIS_Edition3A","coordinate_system":"CARTESIAN","summary":"CERES
+        Single Scanner Satellite Footprint, TOA, Surface Fluxes and Clouds (SSF) data
+        in HDF.","time_end":"2017-03-01T23:59:59.000Z","orbit_parameters":{},"id":"C4543622-LARC_ASDC","has_formats":false,"original_format":"ECHO10","archive_center":"NASA/LARC/SD/ASDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/sites/default/files/project/ceres/quality_summaries/CER_SSF_Terra_Edition3A.pdf"}]}'
+    http_version: 
 22773077a42ba7efc9a0d56017a1d43ae54bd2a0:
   response:
     status:
