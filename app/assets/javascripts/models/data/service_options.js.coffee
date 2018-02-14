@@ -61,6 +61,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @subsetOptions(null)
         result
 
+
     showSpinner: (item, e)=>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
@@ -183,9 +184,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       result
 
     _computeAccessMethodSelected: ->
-      result = true
+      result = false  
       for m in @accessMethod()
-        result = false if m.serialize().method == null
+        if @granuleAccessOptions().methods?.length == 1
+          m.method(m.availableMethods[0].name)
+        result = true if m.serialize().method != null
       result
 
     addAccessMethod: =>
