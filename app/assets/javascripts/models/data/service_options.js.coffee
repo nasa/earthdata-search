@@ -177,13 +177,14 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       return true if @granuleAccessOptions().methods?.length == 0
       
       result = false
+      selected = false
       for m in @accessMethod()
         if @granuleAccessOptions().methods?.length == 1
           m.method(m.availableMethods[0].name)
         result = true if m.method()? && m.isValid()
         result = true if !m.loadForm()
-        result = true if m.serialize().method != null
-      result
+        selected = true if m.serialize().method != null
+      result && selected
 
     addAccessMethod: =>
       @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods))
