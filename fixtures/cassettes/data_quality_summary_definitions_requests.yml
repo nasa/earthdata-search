@@ -11,7 +11,7 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 14 Feb 2018 20:49:24 GMT
+  recorded_at: Wed, 14 Feb 2018 21:02:44 GMT
   digest: b124dcf6e87eae664cf4e8af17c1bb1e0172e536
 - request:
     method: get
@@ -330,7 +330,7 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 14 Feb 2018 20:48:54 GMT
+  recorded_at: Wed, 14 Feb 2018 21:02:22 GMT
   digest: 478a2977088c6666dd6480d64c0a0f84e5dc2027
 - request:
     method: get

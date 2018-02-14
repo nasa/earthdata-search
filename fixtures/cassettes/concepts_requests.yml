@@ -15,7 +15,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 14 Feb 2018 20:49:25 GMT
+  recorded_at: Wed, 14 Feb 2018 21:02:45 GMT
   digest: cbc3867bd1ae51bd279b77d1c61bac5c64577483
 - request:
     method: get
@@ -450,7 +450,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 14 Feb 2018 20:48:54 GMT
+  recorded_at: Wed, 14 Feb 2018 21:02:24 GMT
   digest: d77b79097ef1512e50af0c4c9b71b82ce13e05ac
 - request:
     method: get
@@ -563,23 +563,6 @@ http_interactions:
       - edsc
   recorded_at: Mon, 28 Mar 2016 02:36:39 GMT
   digest: b8790055866bfcd5fe029ae66c0c65ed32ec751b
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C4543622-LARC_ASDC.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 28 Mar 2016 02:53:52 GMT
-  digest: 3590d4a3d39fcf403f75acea942bb337a3deaf59
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C7085910-LARC_ASDC.json
@@ -702,7 +685,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 02 Oct 2017 16:37:34 GMT
+  recorded_at: Fri, 26 Jan 2018 15:09:53 GMT
   digest: 5cf5d7f76f99ec3c555b563138b6d5b9f4b4322e
 - request:
     method: get

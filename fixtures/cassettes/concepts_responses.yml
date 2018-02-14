@@ -10,11 +10,11 @@ cbc3867bd1ae51bd279b77d1c61bac5c64577483:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - 7c0d8924-0e62-4484-9c44-f0c106f08c8c
+      - a6dd242a-dd6a-46f1-8a02-b827f7e23d62
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 14 Feb 2018 20:50:02 GMT
+      - Wed, 14 Feb 2018 21:01:39 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1802,11 +1802,11 @@ d77b79097ef1512e50af0c4c9b71b82ce13e05ac:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - 320d679a-a41e-41ae-9cda-7f98f68c18b3
+      - 798baf24-7918-41df-b255-a6bf899f9ba0
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 14 Feb 2018 20:50:33 GMT
+      - Wed, 14 Feb 2018 21:04:03 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2729,28 +2729,6 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
     http_version: 
-3590d4a3d39fcf403f75acea942bb337a3deaf59:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      date:
-      - Mon, 28 Mar 2016 02:53:48 GMT
-      content-type:
-      - application/json
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 9ebac737-4e8c-44f5-9e52-5061d8c2fa9f
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Token edsc-access does not exist"]}'
-    http_version: 
 22773077a42ba7efc9a0d56017a1d43ae54bd2a0:
   response:
     status:
@@ -3112,11 +3090,11 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - ff6f1983-0922-4db7-bf07-403ada8a58a9
+      - 0288e4c6-5d54-4a23-9fba-6080bcdf8f95
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
       date:
-      - Mon, 02 Oct 2017 16:37:40 GMT
+      - Fri, 26 Jan 2018 15:09:55 GMT
       server:
       - nginx
       strict-transport-security:
@@ -3124,15 +3102,18 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
       vary:
       - Accept-Encoding, User-Agent
       content-length:
-      - '2233'
+      - '2425'
       connection:
       - Close
     body:
       encoding: ASCII-8BIT
-      string: '{"MetadataDates":[{"Type":"CREATE","Date":"2017-02-27T15:04:00.000Z"},{"Type":"UPDATE","Date":"2017-09-27T16:04:00.000Z"}],"ShortName":"Mark
+      string: '{"MetadataDates":[{"Type":"CREATE","Date":"2017-02-27T15:04:00.000Z"},{"Type":"UPDATE","Date":"2018-01-24T03:06:00.000Z"}],"ShortName":"Mark
         II","Abstract":"This collection contains observations from the ASTER instrument.  ASTER
         (Advanced Spaceborne Thermal Emission and Reflection Radiometer) is a high
-        resolution imaging instrument that is flying on the Terra satellite. ","RelatedUrls":[{"Description":"A
+        resolution imaging instrument that is flying on the Terra satellite.  \r\n\r\nThis
+        is a test link: \u003ca href=\"http://nsidc.org/data/measures/gimp\"\u003eGreenland
+        Ice Mapping Project (GIMP)\u003c/a\u003e\r\n\r\nThis is a bad link which should
+        not be clickable: \u003ca href=\"/data/measures/gimp\"\u003eBad Link\u003c/a\u003e","DOI":{"DOI":"http://dx.doi.org/10.5067/AQUA/AIRS/DATA301"},"RelatedUrls":[{"Description":"A
         description can be entered. Some descriptions may be short, but some may be
         up to 4,000 characters.","URLContentType":"PublicationURL","Type":"VIEW RELATED
         INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"www.lpdaac.org"},{"URLContentType":"PublicationURL","Type":"VIEW
@@ -3143,7 +3124,7 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
         RELATED INFORMATION","URL":"http://www.usersguide.come"},{"URLContentType":"DistributionURL","Type":"GET
         DATA","Subtype":"LANCE","URL":"http://www.lancedata.com"},{"Description":"Link
         to Reverb. Should be stripped out of EDSC display.","URLContentType":"DistributionURL","Type":"GET
-        DATA","Subtype":"REVERB","URL":"https://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle"}],"DataDates":[{"Type":"CREATE","Date":"2014-01-01T00:00:00.000Z"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"CARTESIAN"},"ScienceKeywords":[{"Category":"EARTH
+        DATA","Subtype":"REVERB","URL":"https://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle"}],"DataDates":[{"Date":"2014-01-01T00:00:00.000Z","Type":"CREATE"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"CARTESIAN"},"ScienceKeywords":[{"Category":"EARTH
         SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE THERMAL PROPERTIES","VariableLevel1":"LAND
         SURFACE TEMPERATURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
         RADIATIVE PROPERTIES","VariableLevel1":"REFLECTANCE"},{"Category":"EARTH SCIENCE","Topic":"BIOLOGICAL
@@ -3152,28 +3133,31 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
         SCIENCE","Topic":"HUMAN DIMENSIONS","Term":"INFRASTRUCTURE","VariableLevel1":"CULTURAL
         FEATURES"},{"Category":"EARTH SCIENCE","Topic":"HUMAN DIMENSIONS","Term":"INFRASTRUCTURE","VariableLevel1":"ELECTRICITY"},{"Category":"EARTH
         SCIENCE","Topic":"HUMAN DIMENSIONS","Term":"INFRASTRUCTURE","VariableLevel1":"PIPELINES"},{"Category":"EARTH
-        SCIENCE","Topic":"HUMAN DIMENSIONS","Term":"INFRASTRUCTURE","VariableLevel1":"TRANSPORTATION"}],"EntryTitle":"ASTER
-        Level 1A - Cloned","CollectionProgress":"IN WORK","ProcessingLevel":{"Id":"4"},"Platforms":[{"Type":"Earth
+        SCIENCE","Topic":"HUMAN DIMENSIONS","Term":"INFRASTRUCTURE","VariableLevel1":"TRANSPORTATION"},{"Category":"EARTH
+        SCIENCE","Topic":"OCEANS","Term":"MARINE VOLCANISM","VariableLevel1":"HYDROTHERMAL
+        VENTS"},{"Category":"EARTH SCIENCE","Topic":"BIOLOGICAL CLASSIFICATION","Term":"BACTERIA/ARCHAEA","VariableLevel1":"CYANOBACTERIA
+        (BLUE-GREEN ALGAE)"}],"EntryTitle":"ASTER Level 1A - Cloned","CollectionProgress":"IN
+        WORK","CollectionDataType":"NEAR_REAL_TIME","ProcessingLevel":{"Id":"4"},"Platforms":[{"Type":"Earth
         Observation Satellites","ShortName":"TERRA","LongName":"Earth Observing System,
         TERRA (AM-1)","Instruments":[{"ShortName":"ASTER","LongName":"Advanced Spaceborne
-        Thermal Emission and Reflection Radiometer"}]}],"Version":"84","TemporalExtents":[{"TemporalRangeType":"RangeDateTime","EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2010-01-01T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"LP
-        DAAC","LongName":"Land Processes Distributed Active Archive Center","ContactInformation":{"ContactMechanisms":[{"Type":"Telephone","Value":"555-555-1212"}],"Addresses":[{"Country":"United
-        States","City":"Sioux Falls","StateProvince":"South Dakota","PostalCode":"12345"}],"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
-        PAGE","URL":"https://lpdaac.usgs.gov/"}]},"ContactPersons":[{"Roles":["Science
+        Thermal Emission and Reflection Radiometer"}]}],"Version":"84","TemporalExtents":[{"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2010-01-01T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ARCHIVER"],"ShortName":"LP
+        DAAC","LongName":"Land Processes Distributed Active Archive Center","ContactPersons":[{"Roles":["Science
         Contact"],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
         PAGE","URL":"https://lpdaac.usgs.gov/"}],"ServiceHours":"9-5","ContactInstruction":"email
-        first","ContactMechanisms":[{"Type":"Email","Value":"jsmith@lpdaac.org"},{"Type":"Telephone","Value":"555-555-1212"}]},"FirstName":"James","LastName":"Smith"}]},{"Roles":["DISTRIBUTOR","PROCESSOR"],"ShortName":"AAG","LongName":"Association
-        of American Geographers","ContactInformation":{"ServiceHours":"10-2","ContactInstruction":"Email
-        or text","ContactMechanisms":[{"Type":"Direct Line","Value":"555-555-5555"},{"Type":"Email","Value":"thisisa.longemail-address.fortesting@insane.com"},{"Type":"Facebook","Value":"https://www.facebook.com/firstname.lastname.10"},{"Type":"Telephone","Value":"777-777-7777"},{"Type":"Twitter","Value":"m_reese"},{"Type":"Fax","Value":"111-111-1111"},{"Type":"Email","Value":"another@email.net"},{"Type":"U.S.
-        toll free","Value":"800-888-8888"}],"Addresses":[{"Country":"United States","StreetAddresses":["10769
-        My Street Lane","C/O Mark Reese","Who uses line 3?"],"City":"Dallas","StateProvince":"Texas","PostalCode":"75238"},{"StreetAddresses":["805
-        Sunset Ln"],"City":"Plano","StateProvince":"Texas","PostalCode":"75087"}],"RelatedUrls":[{"Description":"This
+        first","ContactMechanisms":[{"Type":"Email","Value":"jsmith@lpdaac.org"},{"Type":"Telephone","Value":"555-555-1212"}]},"FirstName":"James","LastName":"Smith"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://lpdaac.usgs.gov/"}],"ContactMechanisms":[{"Type":"Telephone","Value":"555-555-1212"}],"Addresses":[{"City":"Sioux
+        Falls","StateProvince":"South Dakota","Country":"United States","PostalCode":"12345"}]}},{"Roles":["DISTRIBUTOR","PROCESSOR"],"ShortName":"AAG","LongName":"Association
+        of American Geographers","ContactInformation":{"RelatedUrls":[{"Description":"This
         data center has been created to test a data center card in Earthdata Search.
         It has a lot of content that should expose how things look when metadata authors
         haven''t edited content to an optimal degree. Sometimes it''s an oversight,
         sometimes it is unavoidable, but it is always a challenge to design for the
         maximum and minimum variety that we see throughout EOSDIS.","URLContentType":"DataCenterURL","Type":"HOME
-        PAGE","URL":"http://www.aag.org/"}]}}],"DataLanguage":"eng","CollectionDataType":"NEAR_REAL_TIME","DOI":{"DOI":"http://dx.doi.org/10.5067/AQUA/AIRS/DATA301"}}'
+        PAGE","URL":"http://www.aag.org/"}],"ServiceHours":"10-2","ContactInstruction":"Email
+        or text","ContactMechanisms":[{"Type":"Direct Line","Value":"555-555-5555"},{"Type":"Email","Value":"thisisa.longemail-address.fortesting@insane.com"},{"Type":"Facebook","Value":"https://www.facebook.com/firstname.lastname.10"},{"Type":"Telephone","Value":"777-777-7777"},{"Type":"Twitter","Value":"m_reese"},{"Type":"Fax","Value":"111-111-1111"},{"Type":"Email","Value":"another@email.net"},{"Type":"U.S.
+        toll free","Value":"800-888-8888"}],"Addresses":[{"StreetAddresses":["10769
+        My Street Lane","C/O Mark Reese","Who uses line 3?"],"City":"Dallas","StateProvince":"Texas","Country":"United
+        States","PostalCode":"75238"},{"StreetAddresses":["805 Sunset Ln"],"City":"Plano","StateProvince":"Texas","PostalCode":"75087"}]}}],"DataLanguage":"eng"}'
     http_version: 
 b254400c8d4ce110ceccdc75a040c6dab2e88e49:
   response:

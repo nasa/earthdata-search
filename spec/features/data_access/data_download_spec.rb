@@ -28,6 +28,8 @@ describe "Data download page", reset: false do
   browseable_collection_params = {project: [browseable_collection_id],
                                temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
 
+  
+
   before(:all) do
     AccessConfiguration.destroy_all
     load_page :search, overlay: false
@@ -187,6 +189,35 @@ describe "Data download page", reset: false do
     end
   end
 
+  context "when a collection with more than 2000 granules has been selected for direct download" do
+    before :all do
+      load_page 'data/configure', project: 'C1000000561-NSIDC_ECS'
+      wait_for_xhr
+      choose 'Direct Download'
+      click_on 'Submit'
+      wait_for_xhr
+    end
+    context 'upon clicking a "View/Download Data Links" button' do
+      before :all do
+        click_link "View/Download Data Links"
+        wait_for_xhr
+      end
+
+      it "displays a page containing direct download hyperlinks for the collection's granules in a new window" do
+        within_last_window do
+          expect(page).to have_text("Collection granule links have been retrieved")
+          expect(page).to have_content("https://", count: 3385)
+          expect(page).to have_link("https://n5eil01u.ecs.nsidc.org/DP5/AMSA/AE_SI6.003/2011.08.03/AMSR_E_L3_SeaIce6km_V15_20110803.hdf")
+        end
+      end
+
+      it "does not display inherited collection-level download links" do
+        within_last_window do
+          expect(page).to have_no_link("http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1")
+        end
+      end
+    end
+  end
   context "when collections have been selected for direct download" do
     before :all do
       load_page 'data/configure', {project: [downloadable_collection_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
@@ -212,34 +243,11 @@ describe "Data download page", reset: false do
     end
 
     it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
-      expect(page).to have_link('View Download Links')
-    end
-
-    it "displays a link to download a file containing direct download urls for collections chosen for direct download" do
-      expect(page).to have_link('Download Data Links File')
+      expect(page).to have_link('View/Download Data Links')
     end
 
     it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
       expect(page).to have_link('Download Access Script')
-    end
-
-    context 'upon clicking a "View Download Links" button' do
-      before :all do
-        click_link "View Download Links"
-        wait_for_xhr
-      end
-
-      it "displays a page containing direct download hyperlinks for the collection's granules in a new window" do
-        within_last_window do
-          expect(page).to have_link("ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf")
-        end
-      end
-
-      it "does not display inherited collection-level download links" do
-        within_last_window do
-          expect(page).to have_no_link("http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1")
-        end
-      end
     end
 
     context 'upon clicking a "Download Access Script" button' do

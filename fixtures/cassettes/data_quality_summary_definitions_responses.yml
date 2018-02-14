@@ -10,7 +10,7 @@ b124dcf6e87eae664cf4e8af17c1bb1e0172e536:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 14 Feb 2018 20:51:03 GMT
+      - Wed, 14 Feb 2018 21:01:38 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -18,7 +18,7 @@ b124dcf6e87eae664cf4e8af17c1bb1e0172e536:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.091000'
+      - '0.038000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -564,7 +564,7 @@ a69cff963f537411aa2b581456e656971c4de799:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 14 Feb 2018 20:49:13 GMT
+      - Wed, 14 Feb 2018 21:04:02 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -572,7 +572,7 @@ a69cff963f537411aa2b581456e656971c4de799:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.055000'
+      - '0.097000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -817,7 +817,7 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       - chunked
     body:
       encoding: UTF-8
-      string: |-
+      string: |
         <?xml version="1.0" encoding="UTF-8"?>
         <data_quality_summary_definition>
           <id>3C37FE59-7568-1D93-9D36-730668C0F9E5</id>
