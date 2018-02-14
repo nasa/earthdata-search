@@ -2,6 +2,19 @@
 http_interactions:
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000020-LANCEAMSR2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 14 Feb 2018 20:49:31 GMT
+  digest: 6330dfc1e7b230fae615d0164833bc592748ee80
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000445-NSIDC_ECS
     body:
       encoding: US-ASCII
@@ -238,6 +251,19 @@ http_interactions:
       - edsc
   recorded_at: Thu, 19 May 2016 16:32:45 GMT
   digest: 65ad1c81659c80e70aa1950ee30ba9d347ac71fd
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C179003620-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 14 Feb 2018 20:49:00 GMT
+  digest: c597d5927a8856135a8e0c9a261755f9e804d126
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C179014698-NSIDC_ECS

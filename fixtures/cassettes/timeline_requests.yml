@@ -791,6 +791,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C1000000020-LANCEAMSR2&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 14 Feb 2018 20:49:19 GMT
+  digest: e75293edc236df7a765fc87ad2119b9f0ffb13da
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C1000000062-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&project=2009_AN_NASA&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
