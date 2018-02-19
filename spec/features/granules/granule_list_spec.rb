@@ -278,7 +278,7 @@ describe "Granule list", reset: false do
 
   context 'for collections whose granules have more than one downloadable links' do
 
-    context 'clicking on the single granule download button' do
+    context 'clicking on the single granule download button when the links have titles' do
       before :all do
         visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
         wait_for_xhr
@@ -297,6 +297,32 @@ describe "Granule list", reset: false do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (primary)')
           expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (backup)')
+        end
+      end
+    end
+
+    context 'clicking on the single granule download button when the links do not have titles' do
+      before :all do
+        visit('/search/granules?p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
+        wait_for_xhr
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          find('a[data-toggle="dropdown"]').click
+        end
+      end
+
+      after :all do
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          find('a[data-toggle="dropdown"]').click
+        end
+      end
+
+      it 'shows a dropdown with all the downloadable granules' do
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ex_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ey_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_v1.2.meta')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vx_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vy_v1.2.tif')
         end
       end
     end
