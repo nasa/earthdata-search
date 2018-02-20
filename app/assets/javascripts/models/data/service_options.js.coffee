@@ -182,7 +182,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           m.method(m.availableMethods[0].name)
         result = true if m.method()? && m.isValid()
         result = true if !m.loadForm()
-        selected = true if m.method()? == true
+        selected = true if m.method()?
       result && selected
 
     addAccessMethod: =>
