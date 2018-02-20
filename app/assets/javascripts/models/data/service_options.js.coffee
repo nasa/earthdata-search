@@ -61,7 +61,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @subsetOptions(null)
         result
 
-
     showSpinner: (item, e)=>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
