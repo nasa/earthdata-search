@@ -85,22 +85,29 @@ ns.ProjectList = do (ko
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
 
+    _launchDownload: (collection) =>
+      @project.focus(collection)
+      @configureProject()
+
     awaitingStatus: =>
       @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
 
     loginAndDownloadCollection: (collection) =>
       $('#delayOk').on 'click', =>
-        @project.focus(collection)
-        @configureProject()
+        @_launchDownload(collection)
       limit = false
-      limit = collection.tags()['edsc.collection_alerts']['data']['limit'] if collection.tags() && collection.tags()['edsc.collection_alerts']
+      if collection.tags()
+        if collection.tags()['edsc.collection_alerts']
+          limit = collection.tags()['edsc.collection_alerts']['data']['limit']
       if limit && collection.granuleCount() > limit
         message = collection.tags()['edsc.collection_alerts']['data']['message']
-        if message && message.length > 0 then $("#delayOptionalMessage").text("Message from data provider: " + message) else $("#delayOptionalMessage").text("")
+        if message && message.length > 0
+          $("#delayOptionalMessage").text("Message from data provider: " + message) 
+        else 
+          $("#delayOptionalMessage").text("")
         $("#delayWarningModal").modal('show')
       else
-        @project.focus(collection)
-        @configureProject()
+        @_launchDownload(collection)
 
     loginAndDownloadGranule: (collection, granule) =>
       @project.focus(collection)
