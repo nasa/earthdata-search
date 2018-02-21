@@ -6909,4 +6909,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 04 Nov 2016 18:36:43 GMT
   digest: 40aeb9e9068c7af924f875ac30e2b085d2a155ac
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C24931-LAADS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 08 Feb 2018 20:31:05 GMT
+  digest: 79a3a79488ba12685b94a83ed49835b584df541a
 recorded_with: VCR 2.6.0

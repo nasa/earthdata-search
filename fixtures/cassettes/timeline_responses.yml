@@ -9237,3 +9237,27 @@ ef4a818f7f48e160eec387ecc6edfde9d5303d7d:
       encoding: UTF-8
       string: '[{"concept-id":"C1000001002-EDF_OPS","intervals":[[1293840000,1294099200,2]]}]'
     http_version: 
+79a3a79488ba12685b94a83ed49835b584df541a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d54e9338-95b3-4538-a45a-8e0382ba38cf
+      date:
+      - Thu, 08 Feb 2018 20:31:20 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
