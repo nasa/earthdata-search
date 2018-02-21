@@ -278,7 +278,7 @@ describe "Granule list", reset: false do
 
   context 'for collections whose granules have more than one downloadable links' do
 
-    context 'clicking on the single granule download button' do
+    context 'clicking on the single granule download button when the links have titles' do
       before :all do
         visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
         wait_for_xhr
@@ -300,6 +300,32 @@ describe "Granule list", reset: false do
         end
       end
     end
+
+    context 'clicking on the single granule download button when the links do not have titles' do
+      before :all do
+        visit('/search/granules?p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
+        wait_for_xhr
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          find('a[data-toggle="dropdown"]').click
+        end
+      end
+
+      after :all do
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          find('a[data-toggle="dropdown"]').click
+        end
+      end
+
+      it 'shows a dropdown with all the downloadable granules' do
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ex_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ey_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_v1.2.meta')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vx_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vy_v1.2.tif')
+        end
+      end
+    end
   end
 
   context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
@@ -317,6 +343,18 @@ describe "Granule list", reset: false do
     
     it 'only shows the http link' do
       expect(page).not_to have_link("The FTP location for the granule.")
+    end
+  end
+
+  context "for collections that are known to cause download delays" do
+    before :all do
+      visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
+      wait_for_xhr
+      click_button('Download Data')
+    end
+    it "shows a modal warning of the delay" do
+      expect(page).to have_css('#delayWarningModalLabel')
+      expect(page).to have_text('Message from data provider: This is an optional message.')
     end
   end
 end

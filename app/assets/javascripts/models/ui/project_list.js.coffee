@@ -85,12 +85,29 @@ ns.ProjectList = do (ko
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
 
+    _launchDownload: (collection) =>
+      @project.focus(collection)
+      @configureProject()
+
     awaitingStatus: =>
       @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
 
     loginAndDownloadCollection: (collection) =>
-      @project.focus(collection)
-      @configureProject()
+      $('#delayOk').on 'click', =>
+        @_launchDownload(collection)
+      limit = false
+      if collection.tags()
+        if collection.tags()['edsc.collection_alerts']
+          limit = collection.tags()['edsc.collection_alerts']['data']['limit']
+      if limit && collection.granuleCount() > limit
+        message = collection.tags()['edsc.collection_alerts']['data']['message']
+        if message && message.length > 0
+          $("#delayOptionalMessage").text("Message from data provider: " + message) 
+        else 
+          $("#delayOptionalMessage").text("")
+        $("#delayWarningModal").modal('show')
+      else
+        @_launchDownload(collection)
 
     loginAndDownloadGranule: (collection, granule) =>
       @project.focus(collection)
