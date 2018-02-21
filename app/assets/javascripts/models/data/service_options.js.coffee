@@ -180,6 +180,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         if @granuleAccessOptions().methods?.length == 1
           m.method(m.availableMethods[0].name)
         result = true if (m.isValid() || !m.loadForm()) && m.method()?
+      message = if result then "" else "A data access method must be selected in order for this button to be enabled."
+      $('.access-submit').prop('title', message);
       result
 
     addAccessMethod: =>
