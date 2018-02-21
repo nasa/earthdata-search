@@ -177,8 +177,9 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       
       result = false
       for m in @accessMethod()
-        result = true if m.method()? && m.isValid()
-        result = true if !m.loadForm()
+        if @granuleAccessOptions().methods?.length == 1
+          m.method(m.availableMethods[0].name)
+        result = true if (m.isValid() || !m.loadForm()) && m.method()?
       result
 
     addAccessMethod: =>

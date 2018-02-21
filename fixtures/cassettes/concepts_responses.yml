@@ -1,4 +1,61 @@
 ---
+cbc3867bd1ae51bd279b77d1c61bac5c64577483:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - a6dd242a-dd6a-46f1-8a02-b827f7e23d62
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 14 Feb 2018 21:01:39 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1674'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2017-05-22T23:05:14.000Z","version_id":"0","updated":"2017-10-03T13:14:00.000Z","dataset_id":"NRT
+        AMSR2 DAILY L3 GLOBAL SNOW WATER EQUIVALENT EASE-GRIDS V0","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LANCEAMSR2","short_name":"A2_DySno_NRT","organizations":["NASA/MSFC/AMSR
+        SIPS/LANCE","Global Hydrology Resource Center, Marshall Space Flight Center,
+        NASA"],"title":"NRT AMSR2 DAILY L3 GLOBAL SNOW WATER EQUIVALENT EASE-GRIDS
+        V0","coordinate_system":"CARTESIAN","summary":"The Advanced Microwave Scanning
+        Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission -
+        Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial,
+        oceanic, and atmospheric parameters for the investigation of global water
+        and energy cycles.  Near real-time (NRT) products are generated within 3 hours
+        of the last observations in the file, by the Land Atmosphere Near real-time
+        Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing
+        System (AMSR SIPS), which is collocated with the Global Hydrology Resource
+        Center (GHRC) DAAC.  The GCOM-W1 AMSR2 Level-3 Snow Water Equivalent (SWE)
+        data set contains snow water equivalent (SWE) data and quality assurance flags
+        mapped to Northern and Southern Hemisphere 25 km Equal-Area Scalable Earth
+        Grids (EASE-Grids).  Data are stored in HDF-EOS5 format and are available
+        via HTTP from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level3/daysnow/.  If
+        data latency is not a primary concern, please consider using science quality
+        products.  Science products are created using the best available ancillary,
+        calibration and ephemeris information.  Science quality products are an internally
+        consistent, well-calibrated record of the Earth''s geophysical properties
+        to support science.  The AMSR SIPS plans to start producing initial AMSR2
+        standard science quality data products in late 2015 and they will be available
+        from the NSIDC DAAC.  Notice: All LANCE AMSR2 data should be used with the
+        understanding that these are preliminary products.  Cross calibration with
+        AMSR-E products has not been performed.  As updates are made to the L1R data
+        set, those changes will be reflected in this higher level product.","orbit_parameters":{},"id":"C1000000020-LANCEAMSR2","has_formats":false,"original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","archive_center":"NASA/MSFC/AMSR
+        SIPS/LANCE","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/data/level3/daysnow/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L3_DailySnow_P00_20160705_N_SWE.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L3_DailySnow_P00_20160705_N_SWE.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L3_DailySnow_P00_20160705_S_SWE.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.itsc.uah.edu/amsr2-science/data/level3/daysnow/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level3/daysnow/R00/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://worldview.earthdata.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/data-recipes/how-georeference-and-convert-nrt-amsr2-snow-water-equivalent-polar-ease-grid-data"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"}]}'
+    http_version: 
 09e0c203c0062a024f78b6b5518d576482f7459e:
   response:
     status:
@@ -1734,6 +1791,46 @@ f3ad8a9ba79165f7b5d0e6d91d44fbd2a948f181:
         data base, using the partial thin-plate splining algorithm. (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/CLIMATE/guides/cramer_leemans.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/416_1.png"}]}'
     http_version: 
+d77b79097ef1512e50af0c4c9b71b82ce13e05ac:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 798baf24-7918-41df-b255-a6bf899f9ba0
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 14 Feb 2018 21:04:03 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '992'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1860-01-01T00:00:00.000Z","version_id":"1","updated":"2006-04-14T00:00:00.000Z","dataset_id":"Global
+        Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"1860_1993_2050_NITROGEN_830","organizations":["ORNL_DAAC"],"title":"Global
+        Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050","coordinate_system":"CARTESIAN","summary":"This
+        data set provides global gridded estimates of atmospheric deposition of total
+        inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of
+        nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and
+        projections for the year 2050. The data set was generated using a global three-dimensional
+        chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude
+        by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000).
+        Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario
+        data (IPCC, 1996; 2000) were used as input to the model.","time_end":"2050-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C179003620-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/830"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://daac.ornl.gov/graphics/browse/sdat-tds/830_1_fit.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830"}]}'
+    http_version: 
 777ee368c307f20e424bd2f58da2c3806b0253a5:
   response:
     status:
@@ -2631,6 +2728,38 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         to JPL Earth System Grid (JPL ESG Link)","hreflang":"en-US","href":"http://esg-gateway.jpl.nasa.gov/home.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
+    http_version: 
+3590d4a3d39fcf403f75acea942bb337a3deaf59:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - a3272690-dbd3-437b-a99f-e76dcc6ca588
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 14 Feb 2018 22:20:23 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '572'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2000-03-01T00:00:00.000Z","version_id":"3A","updated":"2017-06-27T00:00:00.000Z","dataset_id":"CER_SSF_Terra-FM1-MODIS_Edition3A","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LARC_ASDC","short_name":"CER_SSF_Terra-FM1-MODIS_Edition3A","organizations":["NASA/LARC/SD/ASDC"],"title":"CER_SSF_Terra-FM1-MODIS_Edition3A","coordinate_system":"CARTESIAN","summary":"CERES
+        Single Scanner Satellite Footprint, TOA, Surface Fluxes and Clouds (SSF) data
+        in HDF.","time_end":"2017-03-01T23:59:59.000Z","orbit_parameters":{},"id":"C4543622-LARC_ASDC","has_formats":false,"original_format":"ECHO10","archive_center":"NASA/LARC/SD/ASDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/sites/default/files/project/ceres/quality_summaries/CER_SSF_Terra_Edition3A.pdf"}]}'
     http_version: 
 22773077a42ba7efc9a0d56017a1d43ae54bd2a0:
   response:

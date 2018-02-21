@@ -434,6 +434,36 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1422858360-ORNL_DAAC&catalog_item_id%5B%5D=G1422858365-ORNL_DAAC&catalog_item_id%5B%5D=G1422858369-ORNL_DAAC&catalog_item_id%5B%5D=G1422858374-ORNL_DAAC&catalog_item_id%5B%5D=G1422858379-ORNL_DAAC&catalog_item_id%5B%5D=G1422858385-ORNL_DAAC&catalog_item_id%5B%5D=G1422858390-ORNL_DAAC&catalog_item_id%5B%5D=G1422858394-ORNL_DAAC&catalog_item_id%5B%5D=G1422858400-ORNL_DAAC&catalog_item_id%5B%5D=G1422858405-ORNL_DAAC&catalog_item_id%5B%5D=G1422858411-ORNL_DAAC&catalog_item_id%5B%5D=G1422858416-ORNL_DAAC&catalog_item_id%5B%5D=G1422858421-ORNL_DAAC&catalog_item_id%5B%5D=G1422858431-ORNL_DAAC&catalog_item_id%5B%5D=G1422858435-ORNL_DAAC&catalog_item_id%5B%5D=G1422858439-ORNL_DAAC&catalog_item_id%5B%5D=G1422858445-ORNL_DAAC&catalog_item_id%5B%5D=G1422858450-ORNL_DAAC&catalog_item_id%5B%5D=G1422858455-ORNL_DAAC&catalog_item_id%5B%5D=G1422858461-ORNL_DAAC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 14 Feb 2018 21:02:31 GMT
+  digest: 770baf8f819765ec8ee1bd70f86ecfb628d04b7f
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1454455250-LANCEAMSR2&catalog_item_id%5B%5D=G1454457881-LANCEAMSR2&catalog_item_id%5B%5D=G1454204648-LANCEAMSR2&catalog_item_id%5B%5D=G1454054021-LANCEAMSR2&catalog_item_id%5B%5D=G1453942955-LANCEAMSR2&catalog_item_id%5B%5D=G1453818467-LANCEAMSR2&catalog_item_id%5B%5D=G1453560988-LANCEAMSR2&catalog_item_id%5B%5D=G1453063881-LANCEAMSR2&catalog_item_id%5B%5D=G1452936370-LANCEAMSR2&catalog_item_id%5B%5D=G1452836716-LANCEAMSR2&catalog_item_id%5B%5D=G1452675487-LANCEAMSR2&catalog_item_id%5B%5D=G1452747202-LANCEAMSR2&catalog_item_id%5B%5D=G1452676357-LANCEAMSR2&catalog_item_id%5B%5D=G1452591191-LANCEAMSR2&catalog_item_id%5B%5D=G1452486294-LANCEAMSR2&catalog_item_id%5B%5D=G1452288458-LANCEAMSR2
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 14 Feb 2018 21:02:50 GMT
+  digest: 887dcca4da568369948a4c81ca0820d348a9e310
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G179098142-ORNL_DAAC&catalog_item_id%5B%5D=G179098143-ORNL_DAAC&catalog_item_id%5B%5D=G179098144-ORNL_DAAC&catalog_item_id%5B%5D=G179098245-ORNL_DAAC&catalog_item_id%5B%5D=G179098246-ORNL_DAAC&catalog_item_id%5B%5D=G179098247-ORNL_DAAC&catalog_item_id%5B%5D=G179098248-ORNL_DAAC&catalog_item_id%5B%5D=G179098249-ORNL_DAAC&catalog_item_id%5B%5D=G179098250-ORNL_DAAC&catalog_item_id%5B%5D=G179098251-ORNL_DAAC&catalog_item_id%5B%5D=G179098252-ORNL_DAAC&catalog_item_id%5B%5D=G179098253-ORNL_DAAC&catalog_item_id%5B%5D=G179098254-ORNL_DAAC&catalog_item_id%5B%5D=G179098255-ORNL_DAAC&catalog_item_id%5B%5D=G179098256-ORNL_DAAC
     headers:
       User-Agent:
