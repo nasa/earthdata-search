@@ -11,6 +11,9 @@ describe "Data Access workflow", reset: false do
   test_collection_1 = 'C90762182-LAADS'
   test_collection_2 = 'C1000000560-NSIDC_ECS'
   test_collection_3 = 'C1000000561-NSIDC_ECS'
+  
+  collection_with_one_option = "C1000000020-LANCEAMSR2"
+  collection_with_two_options = "C179003620-ORNL_DAAC"
 
   let(:echo_id) { "4C0390AF-BEE1-32C0-4606-66CAFDD4131D" }
 
@@ -297,6 +300,33 @@ describe "Data Access workflow", reset: false do
           expect(page).to have_content "Collection Only"
         end
       end
+    end
+  end
+
+  context 'when a collection has only a single download mechanism' do
+    before(:all) do
+      load_page :search, {project: [collection_with_one_option], view: :project}
+      login
+      click_button "Download project data"
+      wait_for_xhr
+    end
+
+    it 'preselects the only option available' do
+      find(:css, '#access-method-C1000000020-LANCEAMSR2-00').should be_checked
+    end
+  end
+
+  context 'when a collection has two download mechanisms' do
+    before(:all) do
+      load_page :search, {project: [collection_with_two_options], view: :project}
+      login
+      click_button "Download project data"
+      wait_for_xhr
+    end
+
+    it 'does not select either option' do
+      find(:css, '#access-method-C179003620-ORNL_DAAC-00').should_not be_checked
+      find(:css, '#access-method-C179003620-ORNL_DAAC-01').should_not be_checked
     end
   end
 

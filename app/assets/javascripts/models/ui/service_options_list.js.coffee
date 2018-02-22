@@ -24,13 +24,15 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
             for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
               checkedAccessMethodName = checkedAccessMethod.method()
               for method in accessCollection.serviceOptions.granuleAccessOptions().methods
+                
+                limitedCollection = if accessCollection.collection.tags() then accessCollection.collection.tags()['edsc.limited_collections'] else false
+
                 # method.type == 'download': continue without chunking
                 # method.type == 'order':    ASTER ? first 2000 granules : chunking
                 # method.type == 'service':  enabled ? (ASTER ? first 100 : chunking) : first 2000.
                 if method.name == checkedAccessMethodName &&
                   method.type != 'download' &&
-                  (method.type == 'order' || method.type == 'service' && edsc.config.enableEsiOrderChunking ) &&
-                  !accessCollection.collection.tags()['edsc.limited_collections']
+                  (method.type == 'order' || method.type == 'service' && edsc.config.enableEsiOrderChunking ) && !limitedCollection
                     numberOfOrders = Math.ceil(accessCollection.granuleAccessOptions().hits / 2000)
                     $("#number-of-orders").text(numberOfOrders)
                     $("#tooManyGranulesModal").modal('show')
