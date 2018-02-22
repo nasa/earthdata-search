@@ -180,6 +180,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         if @granuleAccessOptions().methods?.length == 1
           m.method(m.availableMethods[0].name)
         result = true if (m.isValid() || !m.loadForm()) && m.method()?
+      if result
+        $('.access-submit').prop('title', "");
       result
 
     addAccessMethod: =>
