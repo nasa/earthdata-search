@@ -8,20 +8,20 @@ describe "CWIC portal", reset: false do
     load_page :search, portal: 'cwic'
     wait_for_xhr
   end
-  it "displays the CWIC and CEOS livery", acceptance: true do
+  it 'displays the CWIC and CEOS livery', acceptance: true do
     expect(page).to have_css("img[src*='ceos-logo.png']")
+    expect(page).to have_xpath("//a/img[contains(@src,'ceos-logo.png')]")
     expect(page).to have_text('CWIC Search')
-    expect(page).to have_link('http://ceos.org/')
   end
-  it "does not display the EOSDIS-specific inputs", acceptance: true do
-    #expect(page).to have_selector('a[href^="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA"]')
-  end
-
-  it "checks the Non-EOSDIS checkbox", acceptance: true do
-      #expect(page).to have_selector('a[href^="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA"]')
+  it 'does not display the EOSDIS-specific inputs', acceptance: true do
+    expect(page).to have_selector('input#hasNonEOSDIS', visible: false)
+    expect(page).to have_selector('input#has-granules', visible: false)
   end
 
-  it "unchecks the has-granules checkbox", acceptance: true do
-
+  it 'Sets up the collection check boxes appropriately for CWIC', acceptance: true do
+    has_non_eosdis = find('input#hasNonEOSDIS', visible: false)
+    expect(has_non_eosdis).to be_checked
+    has_granules = find('input#has-granules', visible: false)
+    expect(has_granules).not_to be_checked
   end
 end
