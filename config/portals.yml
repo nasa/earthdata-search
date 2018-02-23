@@ -56,6 +56,13 @@ portals: &portals
     params:
       tag-key:
         - edsc.portal.cwic.collections
+    logos:
+      - id: ceos-logo
+        image: /images/portals/cwic/ceos-logo.png
+        link: http://ceos.org/
+        title: CEOS Home
+    scripts:
+      - edsc-portal.cwic.js
 
 examples: &examples
   example:
