@@ -7,7 +7,7 @@ describe "CWIC Granule list", reset: false do
   context "for all collections with granules" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, q: 'USGS_EDC_EO1_ALI'
+      load_page :search, q: 'USGS_EDC_EO1_ALI', ac: true
     end
 
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
@@ -70,13 +70,13 @@ describe "CWIC Granule list", reset: false do
   # The link has an invalid negative "startIndex" query param when there is no granule results returned.
   context "Filtering out all granules of a CWIC collection" do
     before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA'
+    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
   end
 
     hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
     before :all do
-      expect(page).to have_text("Showing 20 of 85202 matching granules")
+      expect(page).to have_text("Showing 20")
       granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
       fill_in "Start", with: "1960-02-02 00:00:00\t"
       fill_in "End", with: "1960-02-02 23:59:59\t"

@@ -3,8 +3,8 @@ require "spec_helper"
 # Reset because this spec is heavily dependent on the database, which gets
 # cleared between runs
 describe "Access Option Defaults", reset: true do
-  collection_id = 'C90762182-LAADS'
-  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  collection_id = 'C203234523-LAADS'
+  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
 
   page_options = {project: [collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']}
 
@@ -123,7 +123,7 @@ describe "Access Option Defaults", reset: true do
       before :all do
         latest = AccessConfiguration.last
         # Insert an invalid piece of data here which used to trigger an error.
-        AccessConfiguration.connection.execute("INSERT INTO access_configurations (id, user_id, dataset_id, echoform_digest) VALUES (#{latest.nil? ? 1 : latest.id + 1}, 1, 'C90762182-LAADS', '\"[{\"id\":\"download\"}]\"')")
+        AccessConfiguration.connection.execute("INSERT INTO access_configurations (id, user_id, dataset_id, echoform_digest) VALUES (#{latest.nil? ? 1 : latest.id + 1}, 1, 'C203234523-LAADS', '\"[{\"id\":\"download\"}]\"')")
         load_page 'data/configure', page_options
         wait_for_xhr
       end

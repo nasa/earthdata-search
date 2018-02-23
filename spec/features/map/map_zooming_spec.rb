@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe 'Map Zooming', reset: false do
+describe 'Map Zooming', reset: false, skip_locally: true do
+  it 'is currently skipped due to zoom issues on os x'
   before :all do
     page.driver.resize_window(1680, 1050) # Default capybara window size
     Capybara.reset_sessions!
@@ -11,28 +12,11 @@ describe 'Map Zooming', reset: false do
     page.driver.resize_window(1280, 1024)
   end
 
-  # context 'when zooming with the mouse scroll wheel' do
-  #   before :all do
-  #     # zoom in with mouse
-  #     script = '''
-  #       # couldn't find anything that worked here
-  #     '''
-  #     page.evaluate_script script
-  #   end
-  #
-  #   after :all do
-  #     # zoom out with mouse
-  #     expect(page).to have_query_string('m=0!0!2!1')
-  #   end
-  #
-  #   it 'zooms to the mouse location' do
-  #     expect(page).to have_query_string('m=15!15!3!1')
-  #   end
-  # end
-
   context 'when zooming with the zoom buttons' do
     context 'and the overlay is visible' do
       before :all do
+        Capybara.reset_sessions!
+
         load_page :search
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
@@ -220,8 +204,6 @@ describe 'Map Zooming', reset: false do
       end
     end
   end
-
-
 
   context 'on polar view (e.g. EPSG3031 - South Polar Stereographic)' do
     context 'at the maximum zoom level' do

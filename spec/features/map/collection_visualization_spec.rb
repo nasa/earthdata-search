@@ -43,9 +43,6 @@ describe "Collection visualizations", reset: false do
           expect(page).to have_no_css('.leaflet-marker-icon')
         end
       end
-
     end
   end
-
-
 end

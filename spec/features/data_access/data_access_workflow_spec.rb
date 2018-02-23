@@ -2,14 +2,11 @@ require "spec_helper"
 require 'base64'
 
 describe "Data Access workflow", reset: false do
-  downloadable_collection_id = 'C90762182-LAADS'
-  downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  downloadable_collection_id = 'C203234523-LAADS'
+  downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
 
-  non_downloadable_collection_id = 'C179001887-SEDAC'
-  non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
-
-  test_collection_1 = 'C90762182-LAADS'
-  test_collection_2 = 'C1000000560-NSIDC_ECS'
+  test_collection_1 = 'C203234523-LAADS'
+  test_collection_2 = 'C194001241-LPDAAC_ECS'
   test_collection_3 = 'C1000000561-NSIDC_ECS'
   
   collection_with_one_option = "C1000000020-LANCEAMSR2"
@@ -20,7 +17,7 @@ describe "Data Access workflow", reset: false do
   context "when a user has three or more collections within a project" do
     before(:all) do
       Capybara.reset_sessions!
-      load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project
+      load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project, ac: true
       login
       click_button "Download project data"
       wait_for_xhr
@@ -37,16 +34,17 @@ describe "Data Access workflow", reset: false do
       it "displays the distribution options for the first collection" do
         form = find(:css, ".access-item:nth-child(1)").find(:css, ".access-form")
         synchronize(30) do
-          expect(form).to have_content("Distribution Options")
+          expect(form).to have_css(".echoforms-control")
         end
       end
       context "and then clicking continue and selecting 'Customize' for the second collection" do
         before(:all) do
           click_button "Continue"
-          wait_for_xhr
-          # the tooManyGranulesModal is taking its time showing up, and this unfortunate sleep is the only way (so far) to get it behave
-          sleep(1)
-          find_by_id("tooManyGranulesModal").click_link("Continue")
+
+          within("#tooManyGranulesModal") do
+            click_link("Continue")
+          end
+
           wait_for_xhr
           selection = find(:css, ".access-item:nth-child(2)").find(:css, ".access-item-selection")
           within selection do
@@ -63,10 +61,11 @@ describe "Data Access workflow", reset: false do
         context "and then clicking continue and selecting 'Customize' for the third collection" do
           before(:all) do
             click_button "Continue"
+
+            within("#tooManyGranulesModal") do
+              click_link("Continue")
+            end
             wait_for_xhr
-            # the tooManyGranulesModal is taking its time showing up, and this unfortunate sleep is the only way (so far) to get it behave
-            sleep(1)
-            find_by_id("tooManyGranulesModal").click_link("Continue")
           end
           it "displays the option subsetting for the third collection" do
             synchronize do
@@ -101,7 +100,7 @@ describe "Data Access workflow", reset: false do
   context "when the user is not logged in" do
     before(:all) do
       Capybara.reset_sessions!
-      load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
+      load_page :search, project: [downloadable_collection_id], view: :project
       wait_for_xhr
       click_button "Download project data"
       wait_for_xhr
@@ -121,7 +120,7 @@ describe "Data Access workflow", reset: false do
 
   context "when the user is logged in" do
     before(:all) do
-      load_page :search, {project: [downloadable_collection_id, non_downloadable_collection_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
+      load_page :search, {project: [downloadable_collection_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       login
       click_button "Download project data"
       wait_for_xhr
@@ -142,12 +141,12 @@ describe "Data Access workflow", reset: false do
       end
 
       it "displays granule information" do
-        expect(page).to have_content "27 Granules"
+        expect(page).to have_content "49 Granules"
       end
 
-      it 'displays a "continue" button' do
-        expect(page).to have_content "Continue"
-      end
+      # it 'displays a "continue" button' do
+      #   expect(page).to have_content "Continue"
+      # end
 
       it 'displays no "back" button' do
         within(".data-access-content") do
@@ -166,12 +165,17 @@ describe "Data Access workflow", reset: false do
         end
 
         it "displays granule information" do
-          expect(page).to have_content "MYD02QKM.A2014191.0330.005.2014191162458.hdf"
+          expect(page).to have_content "MYD021KM.A2014191.0355.006.2014191161026.hdf"
         end
 
         it "displays more granules when scrolling" do
           page.execute_script "$('.granule-list div')[0].scrollTop = 10000"
-          expect(page).to have_css '.granule-list h5', count: 27
+          wait_for_xhr
+
+          page.execute_script "$('.granule-list div')[0].scrollTop = 20000"
+          wait_for_xhr
+
+          expect(page).to have_css '.granule-list h5', count: 49
         end
 
         it "displays an option to download" do
@@ -183,82 +187,82 @@ describe "Data Access workflow", reset: false do
         end
       end
 
-      context 'and clicking the "continue" button' do
-        before :all do
-          choose "Download"
-          click_button "Continue"
-        end
+      # context 'and clicking the "continue" button' do
+      #   before :all do
+      #     choose "Download"
+      #     click_button "Continue"
+      #   end
 
-        after :all do
-          reset_access_page
-        end
+      #   after :all do
+      #     reset_access_page
+      #   end
 
-        it 'displays the next collection in the list' do
-          expect(page).to have_content "Collection Only"
-        end
-      end
+      #   it 'displays the next collection in the list' do
+      #     expect(page).to have_content "Collection Only"
+      #   end
+      # end
     end
 
-    context "when displaying options for the last of multiple collections" do
-      before :all do
-        choose "Stage for Delivery"
-        click_button "Continue"
-      end
+    # context "when displaying options for the last of multiple collections" do
+    #   before :all do
+    #     choose "Stage for Delivery"
+    #     click_button "Continue"
+    #   end
 
-      after :all do
-        reset_access_page
-      end
+    #   after :all do
+    #     reset_access_page
+    #   end
 
-      it "displays granule information" do
-        expect(page).to have_content "Collection Only"
-      end
+    #   it "displays granule information" do
+    #     expect(page).to have_content "Collection Only"
+    #   end
 
-      it 'displays a "continue" button to confirm contact information' do
-        expect(page).to have_content "Continue"
-      end
+    #   it 'displays a "continue" button to confirm contact information' do
+    #     expect(page).to have_content "Continue"
+    #   end
 
-      it 'displays a "back" button' do
-        within(".data-access-content") do
-          expect(page).to have_content "Back"
-        end
-      end
+    #   it 'displays a "back" button' do
+    #     within(".data-access-content") do
+    #       expect(page).to have_content "Back"
+    #     end
+    #   end
 
-      context 'and clicking the "back" button' do
-        before :all do
-          click_button "Back"
-        end
+    #   context 'and clicking the "back" button' do
+    #     before :all do
+    #       click_button "Back"
+    #     end
 
-        it 'displays the previous collection in the list' do
-          expect(page).to have_content "27 Granules"
-        end
-      end
-    end
+    #     it 'displays the previous collection in the list' do
+    #       expect(page).to have_content "49 Granules"
+    #     end
+    #   end
+    # end
 
-    context "on the final collection's step when contact information is not required" do
-      before :all do
-        choose "Download"
-        click_button "Continue"
-      end
+    # context "on the final collection's step when contact information is not required" do
+    #   before :all do
+    #     choose "Download"
+    #     click_button "Continue"
+    #   end
 
-      after :all do
-        reset_access_page
-      end
+    #   after :all do
+    #     reset_access_page
+    #   end
 
-      it "displays a submit button" do
-        expect(page).to have_button("Submit")
-      end
+    #   it "displays a submit button" do
+    #     expect(page).to have_button("Submit")
+    #   end
 
-      it "does not ask for contact information" do
-        expect(page).to have_no_text("Contact Information")
-      end
+    #   it "does not ask for contact information" do
+    #     expect(page).to have_no_text("Contact Information")
+    #   end
 
-    end
+    # end
 
     context "on the final step before submitting when contact information is required" do
       before :all do
         choose "Stage for Delivery"
         click_button "Continue"
-        click_button "Continue"
+        # click_button "Continue"
       end
 
       after :all do
@@ -281,25 +285,25 @@ describe "Data Access workflow", reset: false do
         expect(page).to have_content "Submit"
       end
 
-      it 'displays a "back" button' do
-        within(".data-access-content") do
-          expect(page).to have_content "Back"
-        end
-      end
+      # it 'displays a "back" button' do
+      #   within(".data-access-content") do
+      #     expect(page).to have_content "Back"
+      #   end
+      # end
 
-      context 'clicking the "back" button' do
-        before :all do
-          click_button "Back"
-        end
+      # context 'clicking the "back" button' do
+      #   before :all do
+      #     click_button "Back"
+      #   end
 
-        after :all do
-          click_button "Continue"
-        end
+      #   after :all do
+      #     click_button "Continue"
+      #   end
 
-        it 'displays the previous collection in the list' do
-          expect(page).to have_content "Collection Only"
-        end
-      end
+      #   it 'displays the previous collection in the list' do
+      #     expect(page).to have_content "Collection Only"
+      #   end
+      # end
     end
   end
 

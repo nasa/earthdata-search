@@ -4,7 +4,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA'
+    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
   end
 
   context do

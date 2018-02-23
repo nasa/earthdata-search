@@ -5,12 +5,12 @@ describe "CWIC-enabled collection details", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, ac: true
   end
 
-  after :all do
-    Capybara.reset_sessions!
-  end
+  # after :all do
+  #   Capybara.reset_sessions!
+  # end
 
   context "viewing the collection details for a CWIC-tagged collection" do
     use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'

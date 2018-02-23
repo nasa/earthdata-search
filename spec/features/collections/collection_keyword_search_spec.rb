@@ -5,7 +5,7 @@ describe "Collection keyword searches", reset: false do
 
   before(:all) do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, ac: true
   end
 
   # TODO: This should be in an after(:each) block, but it is too slow
@@ -16,33 +16,42 @@ describe "Collection keyword searches", reset: false do
   end
 
   # EDSC-1080
-  it "displays the specific collection C1219224200-NSIDCV0" do
-    fill_in 'keywords', with:'C1219224200-NSIDCV0'
+  it "displays the specific collection C1405947444-SCIOPS" do
+    fill_in 'keywords', with:'C1405947444-SCIOPS'
+    wait_for_xhr
     expect(page).to have_content('Antarctic Peninsula 100 m Digital Elevation Model Derived from ASTER GDEM')
   end
 
   it "displays the first 20 collection results" do
     fill_in "keywords", with: "A"
+    wait_for_xhr
     expect(page).to have_css('#collection-results-list .panel-list-item', count: 20)
   end
 
   it "displays collection results matching a full keyword" do
     fill_in "keywords", with: "AST_L1A"
+    wait_for_xhr
     expect(page).to have_content('ASTER L1A')
   end
 
   it "displays collection results matching a partial keyword" do
     fill_in "keywords", with: "AST_L"
+    wait_for_xhr
     expect(page).to have_content('ASTER L1A')
   end
 
-  it "displays all collections when keywords are cleared" do
+  # TODO: RDA // This won't always be the first collection. It's bgest to just check collection count
+  # which is done elsewhere
+  xit "displays all collections when keywords are cleared" do
     fill_in "keywords", with: " "
+    wait_for_xhr
     expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
   end
 
-  it "do not match wildcard characters" do
+  # TODO: RDA // The collection results panel is always shown now, this test seems to be OBE
+  xit "do not match wildcard characters" do
     fill_in "keywords", with: "AST_L%"
+    wait_for_xhr
     expect(page).to have_no_css('#collection-results .panel-list-item')
   end
 
@@ -68,6 +77,7 @@ describe "Collection keyword searches", reset: false do
 
       it "does not return to the collection results list when the keyword search is cleared" do
         fill_in "keywords", with: " "
+        wait_for_xhr
         first_granule_list_item.click_link('View granule details')
         expect(page).to have_visible_granule_details
       end
@@ -115,7 +125,7 @@ describe "Collection keyword searches", reset: false do
         granule_list.click_link('Filter granules')
         # JS: Consider moving; doesn't match new UI flow
         # first_granule_list_item.click_link('View granule details')
-        expect(page).to have_content('Find only granules that have browse images.')
+        # expect(page).to have_content('Find only granules that have browse images.')
         find('#granule-search').click_link('close')
       end
 
@@ -127,6 +137,7 @@ describe "Collection keyword searches", reset: false do
       it "does not return to the collection results list when the keyword search is cleared" do
         first_granule_list_item.click_link('View granule details')
         fill_in "keywords", with: " "
+        wait_for_xhr
         expect(page).to have_visible_granule_details
       end
 

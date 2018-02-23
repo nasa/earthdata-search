@@ -4,7 +4,7 @@ describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with granules' do
     before :all do
       load_page '/search', env: :sit
-      wait_for_xhr
+      # wait_for_xhr
       click_link "Temporal"
       fill_in "Start", with: "1985-12-01 00:00:00\t\t"
       js_click_apply ".temporal-dropdown"
@@ -57,7 +57,7 @@ describe 'Collection API Endpoints', reset: false do
 
   context 'when viewing the collection details for a collection with MODAPS WCS' do
     before :all do
-      load_page :search
+      load_page :search, ac: true
       fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
       wait_for_xhr
       click_link "View collection details"

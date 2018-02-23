@@ -56,7 +56,9 @@ describe 'Service options order with boundingbox1 field', reset: false do
 
       context 'after the order processes' do
         before :all do
-          Delayed::Worker.new.work_off
+          Delayed::Worker.new(quiet: false).work_off
+
+          page.evaluate_script('window.location.reload()')
         end
 
         it 'shows the order in the "Complete" state' do

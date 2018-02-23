@@ -66,7 +66,6 @@ module Helpers
       wait_for_xhr
     end
 
-
     def clear_shapefile
       begin
         click_link "Remove file"
@@ -79,7 +78,6 @@ module Helpers
       map_position_event('mousemove', *args)
       wait_for_xhr
     end
-
 
     def map_mouseout(*args)
       map_position_event('mouseout', *args)
@@ -117,7 +115,5 @@ module Helpers
       script = "edsc.models.page.current.query.spatial('#{type}:#{point_strs.join(':')}')"
       page.execute_script(script)
     end
-
-
   end
 end
