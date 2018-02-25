@@ -34,7 +34,7 @@ FileUtils.rm_rf(Rails.root.join("public/assets"))
 FileUtils.mkdir_p(Rails.root.join("tmp/screenshots"))
 
 # Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
+# in spec/helpers/ and its subdirectories.
 Dir[Rails.root.join("spec/helpers/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
@@ -42,7 +42,6 @@ Dir[Rails.root.join("spec/helpers/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
-
 
 load "#{::Rails.root}/db/seeds.rb" if ENV["seed"] == "true"
 
@@ -68,7 +67,6 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
 end
 
 RSpec.configure do |config|
-
   # config.before(:each) do
   #     if Capybara.current_driver == :webkit
   #       # Need to manually specify ignoring of SSL errors

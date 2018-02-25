@@ -80,6 +80,19 @@ http_interactions:
   digest: 21679697b96f14fdb24729cdee9022e7dc3faaea
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1358859924-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 26 Feb 2018 15:45:23 GMT
+  digest: 1e598b2cf9e500e75d1230761db6364c075bc246
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C14758250-LPDAAC_ECS
     body:
       encoding: US-ASCII

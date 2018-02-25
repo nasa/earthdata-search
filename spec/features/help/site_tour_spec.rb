@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Site tour" do
-  context "When loading the initial search page while logged in" do
+  context "When loading the initial search page while logged in", pending_updates: true do
     before :each do
       Capybara.reset_sessions!
       login

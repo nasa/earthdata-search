@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Timeline tooltip", reset: false do
+describe "Timeline tooltip", reset: false, pending_updates: true do
   before :all do
     Capybara.reset_sessions!
     page.driver.resize_window(1280, 1024)

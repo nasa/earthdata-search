@@ -179,6 +179,36 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       encoding: UTF-8
       string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
+1e598b2cf9e500e75d1230761db6364c075bc246:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 26 Feb 2018 15:45:24 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.074000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 560b44dfa1bce52eae7cb3a2840cf14ea30fa304:
   response:
     status:

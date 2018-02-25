@@ -35,7 +35,7 @@ describe "Temporal constraint disambiguation", reset: true do
     end
   end
 
-  context 'when a date is focused and no temporal constraint is set' do
+  context 'when a date is focused and no temporal constraint is set', pending_updates: true do
     before(:each) do
       click_timeline_date('1987')
       wait_for_xhr

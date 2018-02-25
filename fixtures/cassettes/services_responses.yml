@@ -2538,6 +2538,141 @@ f6f62cad4a16d1129b170e06a3606d476e1445b6:
             </requestStatus>
         </eesi:agentResponse>
     http_version: 
+bd1fde02d2331b64b9727367d7d74d5c6f5f0621:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      date:
+      - Sun, 25 Feb 2018 20:31:24 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN
+      location:
+      - https://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000053189
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000053189</orderId>
+                <Instructions>Your request has completed processing. However the request did not generate any output files</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <message>The files you selected contained no data that satisfy your subset constraints.</message>
+                <processDuration>PT1.121S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version: 
+303ef00ce400c01c2cf34ad827efd4e58ec6229e:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      date:
+      - Mon, 26 Feb 2018 16:44:19 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN
+      location:
+      - https://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000053232
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000053232</orderId>
+                <Instructions>Your request has completed processing. However the request did not generate any output files</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <message>The files you selected contained no data that satisfy your subset constraints.</message>
+                <processDuration>PT1.052S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version: 
+fbe262acf44eaa640406a9af426a8a46c1254ee5:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      date:
+      - Mon, 26 Feb 2018 21:16:13 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN
+      location:
+      - https://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000053242
+      content-type:
+      - application/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000053242</orderId>
+                <Instructions>Your request has completed processing. However the request did not generate any output files</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <message>The files you selected contained no data that satisfy your subset constraints.</message>
+                <processDuration>PT1.522S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>complete</status>
+                <numberProcessed>1</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version: 
 7030a70e40f478e95761438fae92d37f63a59ec9:
   response:
     status:
@@ -2617,6 +2752,50 @@ f6f62cad4a16d1129b170e06a3606d476e1445b6:
             </contactInformation>
             <processInfo>
                 <processDuration>PT0.073S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>pending</status>
+                <numberProcessed>0</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version: 
+90e50511246e77d9a01a2c4d7ff60d04549c2ea5:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      date:
+      - Mon, 26 Feb 2018 16:44:15 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN
+      location:
+      - https://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000053232
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000053232</orderId>
+                <Instructions>You may receive an email about your order if you specified an EMAIL address. &lt;br/&gt;&lt;br/&gt;The instructions used to process this order are:  Processing tool=GLAS. Bounding Box(es)=-139,-76,-100,-63. Granule id(s)=SC:GLAH06.034:52619741. Email address=test@email.com. Band(s)=/GLAH06.&lt;br/&gt;&lt;br/&gt;Note from Client: To view the status of your request, please see: http://127.0.0.1:54744//data/retrieve/9607531493</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT0.088S</processDuration>
                 <subagentId>GLAS</subagentId>
             </processInfo>
             <requestStatus>
@@ -2714,6 +2893,50 @@ abd7d6fa17b55bcc94324ec516652344a3dfde43:
             </requestStatus>
         </eesi:agentResponse>
     http_version: 
+c6567d888a68549e4f424a05e279ca315ca054f6:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      date:
+      - Sun, 25 Feb 2018 20:31:20 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN
+      location:
+      - https://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000053189
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000053189</orderId>
+                <Instructions>You may receive an email about your order if you specified an EMAIL address. &lt;br/&gt;&lt;br/&gt;The instructions used to process this order are:  Processing tool=GLAS. Bounding Box(es)=-139,-76,-100,-63. Granule id(s)=SC:GLAH06.034:52619741. Email address=test@email.com. Band(s)=/GLAH06.&lt;br/&gt;&lt;br/&gt;Note from Client: To view the status of your request, please see: http://127.0.0.1:56044//data/retrieve/5690339640</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT0.092S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>pending</status>
+                <numberProcessed>0</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version: 
 1418b4b5978fe567f092c4b439e75cbb05900714:
   response:
     status:
@@ -2797,6 +3020,50 @@ e10e9a790fac5e1ba950e942729a7d12a9931fd9:
             </processInfo>
             <requestStatus>
                 <status>pending</status>
+                <numberProcessed>0</numberProcessed>
+                <totalNumber>1</totalNumber>
+            </requestStatus>
+        </eesi:agentResponse>
+    http_version: 
+4b95d8588a10a381904b39da9f38306034fe3648:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      date:
+      - Mon, 26 Feb 2018 21:16:08 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN
+      location:
+      - https://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000053242
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:agentResponse xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e https://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <order>
+                <orderId>5000000053242</orderId>
+                <Instructions>You may receive an email about your order if you specified an EMAIL address. &lt;br/&gt;&lt;br/&gt;The instructions used to process this order are:  Processing tool=GLAS. Bounding Box(es)=-139,-76,-100,-63. Granule id(s)=SC:GLAH06.034:52619741. Email address=test@email.com. Band(s)=/GLAH06.&lt;br/&gt;&lt;br/&gt;Note from Client: To view the status of your request, please see: http://127.0.0.1:59082//data/retrieve/5087339640</Instructions>
+            </order>
+            <contactInformation>
+                <contactName>NSIDC User Services</contactName>
+                <contactEmail>nsidc@nsidc.org</contactEmail>
+            </contactInformation>
+            <processInfo>
+                <processDuration>PT0.076S</processDuration>
+                <subagentId>GLAS</subagentId>
+            </processInfo>
+            <requestStatus>
+                <status>processing</status>
                 <numberProcessed>0</numberProcessed>
                 <totalNumber>1</totalNumber>
             </requestStatus>

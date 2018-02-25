@@ -305,6 +305,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1452814638-ORNL_DAAC&catalog_item_id%5B%5D=G1452814935-ORNL_DAAC&catalog_item_id%5B%5D=G1452814819-ORNL_DAAC&catalog_item_id%5B%5D=G1452815266-ORNL_DAAC&catalog_item_id%5B%5D=G1452814817-ORNL_DAAC&catalog_item_id%5B%5D=G1452815190-ORNL_DAAC&catalog_item_id%5B%5D=G1452814988-ORNL_DAAC&catalog_item_id%5B%5D=G1452815038-ORNL_DAAC&catalog_item_id%5B%5D=G1452814575-ORNL_DAAC&catalog_item_id%5B%5D=G1452815349-ORNL_DAAC&catalog_item_id%5B%5D=G1452814952-ORNL_DAAC&catalog_item_id%5B%5D=G1452815359-ORNL_DAAC&catalog_item_id%5B%5D=G1452814873-ORNL_DAAC&catalog_item_id%5B%5D=G1452815022-ORNL_DAAC&catalog_item_id%5B%5D=G1452815247-ORNL_DAAC&catalog_item_id%5B%5D=G1452815301-ORNL_DAAC&catalog_item_id%5B%5D=G1452814747-ORNL_DAAC&catalog_item_id%5B%5D=G1452814880-ORNL_DAAC&catalog_item_id%5B%5D=G1452814856-ORNL_DAAC&catalog_item_id%5B%5D=G1452815246-ORNL_DAAC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 26 Feb 2018 15:45:27 GMT
+  digest: f9ef37d7df0515c08e407d24e2c62a94d83ed259
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1456440974-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441422-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441438-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441476-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441490-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441551-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441610-LPDAAC_ECS&catalog_item_id%5B%5D=G1456441614-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442001-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442010-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442011-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442014-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442019-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442021-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442025-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442029-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442031-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442032-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442035-LPDAAC_ECS&catalog_item_id%5B%5D=G1456442036-LPDAAC_ECS
     headers:
       User-Agent:

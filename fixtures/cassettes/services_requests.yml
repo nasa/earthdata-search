@@ -864,6 +864,45 @@ http_interactions:
   recorded_at: Sun, 25 Feb 2018 19:57:58 GMT
   digest: 682c88a9b277623051ea0af434f17e200992515d
 - request:
+    method: get
+    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053189
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      X-EDSC-REQUEST:
+      - '2'
+  recorded_at: Sun, 25 Feb 2018 20:31:27 GMT
+  digest: bd1fde02d2331b64b9727367d7d74d5c6f5f0621
+- request:
+    method: get
+    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053232
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      X-EDSC-REQUEST:
+      - '2'
+  recorded_at: Mon, 26 Feb 2018 16:44:22 GMT
+  digest: 303ef00ce400c01c2cf34ad827efd4e58ec6229e
+- request:
+    method: get
+    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053242
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      X-EDSC-REQUEST:
+      - '2'
+  recorded_at: Mon, 26 Feb 2018 21:16:16 GMT
+  digest: fbe262acf44eaa640406a9af426a8a46c1254ee5
+- request:
     method: post
     uri: https://n5eil01u.ecs.nsidc.org/egi/request
     body:
@@ -889,6 +928,19 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Sun, 25 Feb 2018 18:52:36 GMT
   digest: 85dde14bdcbc98993380a28411c808e00cc7ae05
+- request:
+    method: post
+    uri: https://n5eil01u.ecs.nsidc.org/egi/request
+    body:
+      encoding: UTF-8
+      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A54744%2F%2Fdata%2Fretrieve%2F9607531493&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Mon, 26 Feb 2018 16:44:18 GMT
+  digest: 90e50511246e77d9a01a2c4d7ff60d04549c2ea5
 - request:
     method: post
     uri: https://n5eil01u.ecs.nsidc.org/egi/request
@@ -920,6 +972,19 @@ http_interactions:
     uri: https://n5eil01u.ecs.nsidc.org/egi/request
     body:
       encoding: UTF-8
+      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A56044%2F%2Fdata%2Fretrieve%2F5690339640&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Sun, 25 Feb 2018 20:31:24 GMT
+  digest: c6567d888a68549e4f424a05e279ca315ca054f6
+- request:
+    method: post
+    uri: https://n5eil01u.ecs.nsidc.org/egi/request
+    body:
+      encoding: UTF-8
       string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A56870%2F%2Fdata%2Fretrieve%2F5133965043&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
     headers:
       User-Agent:
@@ -941,6 +1006,19 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Fri, 23 Feb 2018 21:58:01 GMT
   digest: e10e9a790fac5e1ba950e942729a7d12a9931fd9
+- request:
+    method: post
+    uri: https://n5eil01u.ecs.nsidc.org/egi/request
+    body:
+      encoding: UTF-8
+      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A59082%2F%2Fdata%2Fretrieve%2F5087339640&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Mon, 26 Feb 2018 21:16:12 GMT
+  digest: 4b95d8588a10a381904b39da9f38306034fe3648
 - request:
     method: get
     uri: https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx

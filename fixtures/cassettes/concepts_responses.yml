@@ -1032,6 +1032,50 @@ d7fb0692d7fe1bfad11ee1e7f524d798474029db:
         Satellite Facility"},{"Roles":["ARCHIVER"],"ShortName":"Alaska Satellite Facility"},{"Roles":["ARCHIVER"],"ShortName":"Not
         provided","ContactInformation":{"ContactMechanisms":[{"Type":"Primary","Value":"907-474-5041"},{"Type":"Email","Value":"uso@asf.alaska.edu"}]}}]}'
     http_version: 
+d0f614e05eeabbbd562460b9013bbdcf9dce6515:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - fd444796-feff-4ea0-932c-928aa012c460
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 26 Feb 2018 15:45:25 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1097'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"3","boxes":["39.38 -180 90 180"],"time_start":"2002-06-20T00:00:00.000Z","version_id":"1","updated":"2016-12-07T00:00:00.000Z","dataset_id":"ABoVE:
+        Fractional Open Water Cover for Pan-Arctic and ABoVE-Domain Regions, 2002-2015","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"ABoVE_Frac_Open_Water_1362","organizations":["ORNL_DAAC"],"title":"ABoVE:
+        Fractional Open Water Cover for Pan-Arctic and ABoVE-Domain Regions, 2002-2015","coordinate_system":"CARTESIAN","summary":"This
+        data set provides land surface fractional open water cover maps for two overlapping
+        regions: the entire pan-Arctic region (latitude > 45 degrees) and the Arctic-Boreal
+        Vulnerability Experiment (ABoVE) domain across Alaska and Canada. The data
+        are a 10-day averaged time step at 5-km spatial resolution for the period
+        2002-2015. Data represent the aerial portion of a grid cell covered by open
+        water. The data were produced using high frequency (89 GHz) brightness temperatures
+        from the Advanced Microwave Scanning Radiometer for EOS (AMSR-E) and the Advanced
+        Microwave Scanning Radiometer 2 (AMSR2), with other ancillary inputs from
+        AMSR-E/AMSR2 25-km products and the Moderate Resolution Imaging Spectroradiometer
+        (MODIS). The resulting data record for fractional water is suitable for documenting
+        open water patterns and inundation dynamics in boreal-Arctic ecosystems experiencing
+        rapid climate change.","time_end":"2015-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1358859924-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/above/ABoVE_Frac_Open_Water/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/ABOVE/guides/ABoVE_Frac_Open_Water.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/1362"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/above/ABoVE_Frac_Open_Water/comp/ABoVE_Frac_Open_Water.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://daac.ornl.gov/ABOVE/guides/ABoVE_Frac_Open_Water_Fig1.JPG"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=1362"}]}'
+    http_version: 
 9a55a8509703b3845b6925105f7cee3d5f6abd1f:
   response:
     status:
