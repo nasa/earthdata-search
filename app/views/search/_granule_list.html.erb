@@ -85,14 +85,7 @@ Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
               <div class="granule-temporal-range">
                 <!-- ko with: getTemporal() -->
                   <div class="temporal-start"><h5>START</h5><p data-bind="text: $data[0]"></p></div>
-                  <div class="temporal-end"><h5>END</h5>
-                    <!--ko if: $data[1]-->
-                    <p data-bind="text: $data[1]"></p>
-                    <!-- /ko -->
-                    <!--ko ifnot: $data[1]-->
-                    <p data-bind="text: 'Not Provided'"></p>
-                    <!-- /ko -->
-                  </div>
+                  <div class="temporal-end"><h5>END</h5><p data-bind="text: $data[1] ? $data[1] : 'Not Provided'"></p></div>
                 <!-- /ko -->
               </div>
 
