@@ -51,6 +51,7 @@ class DataAccessController < ApplicationController
     retrieval.project = project
     retrieval.save!
 
+    Rails.logger.info("The following task is being submitted to delayed_job: " + params[:project]) 
     Retrieval.delay.process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
 
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
