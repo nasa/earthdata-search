@@ -44,7 +44,7 @@ describe "Granule list", reset: false do
     it 'displays start and end temporal labels' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         expect(page).to have_content('START2017-01-01 23:45:00')
-        expect(page).to have_content('END 2017-01-01 23:50:00')
+        expect(page).to have_content('END2017-01-01 23:50:00')
       end
     end
 
@@ -372,7 +372,7 @@ describe "Granule list", reset: false do
     it "displays correct start and end temporal labels" do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         expect(page).to have_content('START2018-01-31 02:53:21')
-        expect(page).to have_content('END Not Provided')
+        expect(page).to have_content('ENDNot Provided')
       end
     end
   end
