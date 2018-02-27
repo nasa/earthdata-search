@@ -398,6 +398,17 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
+    uri: http://localhost:15400/nlp?text=C92711294-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 27 Feb 2018 04:55:45 GMT
+  digest: b9570c482b947a0139b588ef8beb03eb6844ce57
+- request:
+    method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
     body:
       encoding: US-ASCII

@@ -41,6 +41,13 @@ describe "Granule list", reset: false do
       end
     end
 
+    it 'displays start and end temporal labels' do
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        expect(page).to have_content('START2017-01-01 23:45:00')
+        expect(page).to have_content('END 2017-01-01 23:50:00')
+      end
+    end
+
     context 'entering multiple granule IDs' do
       before :all do
         fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf, MOD10A1.A2016001.h31v12*\t"
@@ -355,6 +362,18 @@ describe "Granule list", reset: false do
     it "shows a modal warning of the delay" do
       expect(page).to have_css('#delayWarningModalLabel')
       expect(page).to have_text('Message from data provider: This is an optional message.')
+    end
+  end
+
+  context "for collections that have granules without end times" do
+    before :all do
+      visit('/search/granules?cmr_env=uat&p=C1000-LPDAAC_TS2')
+    end
+    it "displays correct start and end temporal labels" do
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        expect(page).to have_content('START2018-01-31 02:53:21')
+        expect(page).to have_content('END Not Provided')
+      end
     end
   end
 end
