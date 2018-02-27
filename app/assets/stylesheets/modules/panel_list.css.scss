@@ -85,6 +85,11 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
   .granule-temporal-range {
 
+    td {
+      height: 24.4px;
+      width: 266px;
+    }
+
     .temporal-start {
       background: rgba(39, 174, 96,0.1);
       overflow: hidden;
