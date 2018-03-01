@@ -556,6 +556,17 @@ http_interactions:
   digest: 825d59d798eabac551876fa51b957a20077307aa
 - request:
     method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002986-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 01 Mar 2018 18:19:58 GMT
+  digest: 7409dc160f676b0dcdedd838199c764f67e4097b
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
     body:
       encoding: US-ASCII
