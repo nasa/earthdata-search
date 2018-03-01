@@ -9,7 +9,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:35 GMT
   digest: 252ba32bbe0ed5356d3b115918fd1779e50e5ba0
 - request:
     method: get
@@ -20,7 +20,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:33:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:26 GMT
   digest: e4857e156068cc0fde1e347913fac474dd37a606
 - request:
     method: get
@@ -31,7 +31,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:37 GMT
   digest: 7160906fba49d3daa23dd77b047ffbf7598e45e7
 - request:
     method: get
@@ -42,7 +42,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:53:35 GMT
+  recorded_at: Thu, 01 Mar 2018 16:57:27 GMT
   digest: 69fb74f852d5da0e8c29cd8fe4c0b91af7711aca
 - request:
     method: get
@@ -53,7 +53,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:37:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:24 GMT
   digest: 8845ced89e2af5cf075c459ae99f477e21c8e535
 - request:
     method: get
@@ -64,7 +64,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:33:28 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:52 GMT
   digest: 32fff6a2907ebbdc4f26b07e0602d0593a3812bc
 - request:
     method: get
@@ -75,7 +75,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:39:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:39 GMT
   digest: 5b1a2ca2ef5113f53ff59950950743fa9c699d86
 - request:
     method: get
@@ -86,7 +86,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:39:26 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:33 GMT
   digest: 33d6abdd2c68d8ac22c3961f5a628e7a4523f04f
 - request:
     method: get
@@ -97,7 +97,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:39:31 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:43 GMT
   digest: 605361e62eeda62f79d42f6263f34e7b7cc55b4b
 - request:
     method: get
@@ -108,7 +108,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:47:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:28 GMT
   digest: 3db5e4c96732abb8e447c3019e42b63c33c755b9
 - request:
     method: get
@@ -119,7 +119,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:54:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:50:18 GMT
   digest: 325ed393df2fa5349737ae01b8075e4a82931a99
 - request:
     method: get
@@ -130,7 +130,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:51:22 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:25 GMT
   digest: a694fc934ae2c7c76bae650117b25206bc043d7a
 - request:
     method: get
@@ -141,7 +141,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:51:17 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:19 GMT
   digest: 24eb7036f74d70f21e857038d2d489c11fcc0485
 - request:
     method: get
@@ -152,7 +152,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:50:57 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:19 GMT
   digest: 97b087ecee5d5a9af2aa89fec2c6bd4aea20888a
 - request:
     method: get
@@ -163,7 +163,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:51:02 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:25 GMT
   digest: 9534822a813906e1aa6b7b47cde17b62cc9738d1
 - request:
     method: get
@@ -174,8 +174,19 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:36:59 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:13 GMT
   digest: 58aa2b9f26dabb73c1c8750834bd2f66dfce6958
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0140342016021110P0_SG1_01
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Thu, 01 Mar 2018 16:36:31 GMT
+  digest: 6883c95043569823dea1a7450123835218a9bdb1
 - request:
     method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0360382001121111PP_PF1_01
@@ -185,19 +196,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:33:31 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:55 GMT
   digest: 74e6b08ac41f7484f5a30df1ade39fdad7f542fc
-- request:
-    method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A1990292016021110K3_SG1_01
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:37:05 GMT
-  digest: 6e3946d425cf4355ce7a40df7ea0df7094b48362
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/browse-scaler/availability
@@ -207,7 +207,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:39:17 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:19 GMT
   digest: a3c67c46886a10f55957a8abd1ff34d4c66514be
 - request:
     method: get
@@ -222,7 +222,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 20:39:16 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:19 GMT
   digest: d01537ac1b980a4377b21fabd637822e936f33b7
 - request:
     method: get
@@ -233,7 +233,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:30:33 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:35 GMT
   digest: 7b57cba41ae355a09a1cacded832660d3983b107
 - request:
     method: get
@@ -244,7 +244,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:46:43 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:31 GMT
   digest: 9eb6b283b46542aab0d2b2fff648eecfaa6d2982
 - request:
     method: get
@@ -255,19 +255,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:31:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:20 GMT
   digest: a23f9507b9b9de2044a55848487003b238b15bc8
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AQUARIUS_SAC-D+as
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:31:26 GMT
-  digest: cb85d069b840c5b03eb3ba6c31df77dcbcab9736
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=AST
@@ -277,7 +266,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:33 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:31 GMT
   digest: 71b1f9a9c4a7f57e8bbccb00f0b4d83be72afd29
 - request:
     method: get
@@ -288,7 +277,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:38:32 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:22 GMT
   digest: 4975c69ef3d4115e276ba2236bef09472e4b7179
 - request:
     method: get
@@ -299,7 +288,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:41:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:48 GMT
   digest: 71d1a49980789341ae8b5751ddaf021fb4fc82a3
 - request:
     method: get
@@ -310,7 +299,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:38:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:24 GMT
   digest: c932062b79abba67137561b12b1c852fad9cb4df
 - request:
     method: get
@@ -321,7 +310,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:37:42 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:20 GMT
   digest: 4349cf726f6bc6c4c023200bc8d8045b13f1fee8
 - request:
     method: get
@@ -332,7 +321,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:46:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:28 GMT
   digest: cf841069680040a624281e20239ca7d125562c60
 - request:
     method: get
@@ -343,7 +332,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:30:19 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:30 GMT
   digest: 6e401f9c470e894983efdfcdbedac81425c288d0
 - request:
     method: get
@@ -354,19 +343,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:47:15 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:57 GMT
   digest: f003b2788da134b80b2fb09933a2bc6411115764
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000575-DEV07
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 22:08:20 GMT
-  digest: 5adf91f6cd0835a556f7888f9ddcf08ec0fbd609
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001002-EDF_OPS
@@ -376,19 +354,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:47:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:43 GMT
   digest: 88ab09eb00ad433d405b20f156ce3e193fe6a4de
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001188-LARC_ASDC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:42:08 GMT
-  digest: 042decc6f71071dae6d4f391d74eb218db483820
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000001409-EDF_OPS
@@ -398,7 +365,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:46:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:32 GMT
   digest: 5cbcb5ecd0a79e186d228bcb2aa61724a6583010
 - request:
     method: get
@@ -409,19 +376,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:27 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:03 GMT
   digest: 52448e8005db07d4ad8cc03ff3eee107f26a804c
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1214605943-SCIOPS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:31:35 GMT
-  digest: 4548ce07bb4c1081e74cbec74fcf978b2feb65fc
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1216393716-EDF_OPS
@@ -431,7 +387,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:52:42 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:17 GMT
   digest: 99a6b557e4f777329cc3f8ec755f90306e76eb3b
 - request:
     method: get
@@ -442,7 +398,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:10 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:33 GMT
   digest: faef62bc8610560d231860905d69fb94cd176b74
 - request:
     method: get
@@ -453,7 +409,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:30:22 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:33 GMT
   digest: 6077c4c6a948b8b7fe3474401278debcb2852f72
 - request:
     method: get
@@ -464,7 +420,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:35:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:39:56 GMT
   digest: 3b6810736dd521cecf677e4953dff326e1f41e28
 - request:
     method: get
@@ -475,7 +431,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:42:10 GMT
+  recorded_at: Thu, 01 Mar 2018 16:50:15 GMT
   digest: 6566b10004dd1d934e23c0aec9a98e5c1a057da6
 - request:
     method: get
@@ -486,7 +442,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:37:43 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:22 GMT
   digest: d338f7bb0b09abf8bb732d1b5ec690f552af5b73
 - request:
     method: get
@@ -497,19 +453,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:34:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:01 GMT
   digest: 9477075771e5ecc174273b36c43392b05e8e46b5
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C138500-PODAAC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Sun, 25 Feb 2018 18:02:33 GMT
-  digest: c7ed7a478019ccdccc563c73c65569e6e5567a8e
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1386246913-NSIDCV0
@@ -519,7 +464,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:52:49 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:31 GMT
   digest: 9c3d5473de42e990c5f8f50f660da597dcd62863
 - request:
     method: get
@@ -530,7 +475,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:38:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:25 GMT
   digest: c31197d228063f0ab2328ff0a4cfc5f5b6b7b8fa
 - request:
     method: get
@@ -541,7 +486,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:38 GMT
   digest: e53ba1a520c58cc76397819e21cecf5f0e0ee5ea
 - request:
     method: get
@@ -552,7 +497,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:50:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:17 GMT
   digest: 6fbc7da5322639df9cb7eae133d4229918e2444f
 - request:
     method: get
@@ -563,7 +508,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Sun, 25 Feb 2018 18:11:15 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:34 GMT
   digest: a5f85679d37d49af1787ab573faff91dd93ef0f0
 - request:
     method: get
@@ -574,7 +519,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:32:32 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:45 GMT
   digest: 3cb2dfeb7022664db27a918d06a272fe818fcac1
 - request:
     method: get
@@ -585,7 +530,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:30:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:36 GMT
   digest: c8eb1788f2e5cde2c1b3a9acf8d196c32b5f6c60
 - request:
     method: get
@@ -596,7 +541,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:32:51 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:49 GMT
   digest: 9f58e36b46ca054de8acdc4302ecf85457a459cf
 - request:
     method: get
@@ -607,19 +552,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:53:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:33 GMT
   digest: 825d59d798eabac551876fa51b957a20077307aa
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179002986-ORNL_DAAC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 21:04:59 GMT
-  digest: 7409dc160f676b0dcdedd838199c764f67e4097b
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
@@ -629,7 +563,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:30:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:32 GMT
   digest: 96756634d05781b8824c7f324462bc6f4a386597
 - request:
     method: get
@@ -640,7 +574,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:55:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:50 GMT
   digest: f85034a1b85aba95a56845fe4e3ced74b346c672
 - request:
     method: get
@@ -651,7 +585,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:29:59 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:43 GMT
   digest: 3ab13e12edeac7bcbb6855b2f491b8683cf73fb9
 - request:
     method: get
@@ -662,7 +596,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:31:22 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:37 GMT
   digest: 937985488058b4b1e0eef90741b14dbdb1f5bea2
 - request:
     method: get
@@ -673,7 +607,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:30:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:23 GMT
   digest: 62631125012f017df24899d210ce58ccbd1aa107
 - request:
     method: get
@@ -684,7 +618,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:41:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:57 GMT
   digest: 7057600b4e9c0849e27acf2ed121852259fb80cb
 - request:
     method: get
@@ -695,7 +629,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:49:56 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:08 GMT
   digest: 0a121acd9714018241ed3dbd272e9a90df54f903
 - request:
     method: get
@@ -706,7 +640,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:45:35 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:34 GMT
   digest: 37be17343d50e3708b5852b2d71f2db8acd4dcc7
 - request:
     method: get
@@ -717,7 +651,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:48:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:26 GMT
   digest: da15b45a7adf3c6ac6915307a25d3ab1854ec9b5
 - request:
     method: get
@@ -728,7 +662,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:42:18 GMT
+  recorded_at: Thu, 01 Mar 2018 16:57:34 GMT
   digest: 87471c07b2f6a0d4e81556f64ba5299430a6f0ac
 - request:
     method: get
@@ -739,19 +673,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:48:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:20 GMT
   digest: cb47424fc7f34ca5d9ec5245c71685f8954a75f1
-- request:
-    method: get
-    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=nsidc-0051
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:42:07 GMT
-  digest: ae5a136b1ba5d967222908752572e69d91b5e504
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=snow+cover+in+Boston+last+winter
@@ -761,7 +684,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:48:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:11 GMT
   digest: d63cb049375aff72da5b367d65d787ce978ec49f
 - request:
     method: get
@@ -772,7 +695,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:38:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:23 GMT
   digest: 58bcfb50b046948a9711f246c5ff72b04fcf7af7
 - request:
     method: get
@@ -783,242 +706,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:56:31 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:41 GMT
   digest: 186ad8f8d0bf8d82cb805125293cbf363e157bfc
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000052946
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Fri, 23 Feb 2018 20:49:00 GMT
-  digest: deb4b4bc7d65acf3f9a3617d9738c234d0055e60
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053065
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Fri, 23 Feb 2018 21:35:29 GMT
-  digest: 604c76095c732f00ee3099937abf7d57175bc1ac
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053070
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Fri, 23 Feb 2018 21:58:05 GMT
-  digest: 98067e3f3018cc2e5d0c14261e0a617677b1f6bb
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053183
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Sun, 25 Feb 2018 16:29:14 GMT
-  digest: f6f62cad4a16d1129b170e06a3606d476e1445b6
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053186
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Sun, 25 Feb 2018 18:52:40 GMT
-  digest: 5d7332a2507c243d1a70cadede4d5b3397b54205
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053187
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Sun, 25 Feb 2018 19:57:58 GMT
-  digest: 682c88a9b277623051ea0af434f17e200992515d
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053189
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Sun, 25 Feb 2018 20:31:27 GMT
-  digest: bd1fde02d2331b64b9727367d7d74d5c6f5f0621
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053232
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Mon, 26 Feb 2018 16:44:22 GMT
-  digest: 303ef00ce400c01c2cf34ad827efd4e58ec6229e
-- request:
-    method: get
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request/5000000053242
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      X-EDSC-REQUEST:
-      - '2'
-  recorded_at: Mon, 26 Feb 2018 21:16:16 GMT
-  digest: fbe262acf44eaa640406a9af426a8a46c1254ee5
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A52348%2F%2Fdata%2Fretrieve%2F9609533453&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Sun, 25 Feb 2018 16:29:10 GMT
-  digest: 7030a70e40f478e95761438fae92d37f63a59ec9
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A54644%2F%2Fdata%2Fretrieve%2F4333964405&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Sun, 25 Feb 2018 18:52:36 GMT
-  digest: 85dde14bdcbc98993380a28411c808e00cc7ae05
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A54744%2F%2Fdata%2Fretrieve%2F9607531493&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Mon, 26 Feb 2018 16:44:18 GMT
-  digest: 90e50511246e77d9a01a2c4d7ff60d04549c2ea5
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A55463%2F%2Fdata%2Fretrieve%2F6794750343&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Sun, 25 Feb 2018 19:57:54 GMT
-  digest: 55670565ee4f946ab3c6e3a8333bad964938fa35
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A55597%2F%2Fdata%2Fretrieve%2F0394635053&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Fri, 23 Feb 2018 20:48:56 GMT
-  digest: abd7d6fa17b55bcc94324ec516652344a3dfde43
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A56044%2F%2Fdata%2Fretrieve%2F5690339640&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Sun, 25 Feb 2018 20:31:24 GMT
-  digest: c6567d888a68549e4f424a05e279ca315ca054f6
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A56870%2F%2Fdata%2Fretrieve%2F5133965043&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Fri, 23 Feb 2018 21:35:25 GMT
-  digest: 1418b4b5978fe567f092c4b439e75cbb05900714
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A57439%2F%2Fdata%2Fretrieve%2F5753339640&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Fri, 23 Feb 2018 21:58:01 GMT
-  digest: e10e9a790fac5e1ba950e942729a7d12a9931fd9
-- request:
-    method: post
-    uri: https://n5eil01u.ecs.nsidc.org/egi/request
-    body:
-      encoding: UTF-8
-      string: FILE_IDS=SC%3AGLAH06.034%3A52619741&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A59082%2F%2Fdata%2Fretrieve%2F5087339640&CLIENT=ESI&SUBAGENT_ID=GLAS&REQUEST_MODE=async&SUBSET_DATA_LAYERS=%2FGLAH06&BBOX%5B%5D=-139%2C-76%2C-100%2C-63&EMAIL=test%40email.com
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-  recorded_at: Mon, 26 Feb 2018 21:16:12 GMT
-  digest: 4b95d8588a10a381904b39da9f38306034fe3648
 - request:
     method: get
     uri: https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
@@ -1028,7 +717,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:32:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:01 GMT
   digest: 6bf87a5fa2776e3a7b6c7a5302456300f112e8b3
 - request:
     method: get
@@ -1039,7 +728,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:32:48 GMT
+  recorded_at: Thu, 01 Mar 2018 16:53:58 GMT
   digest: f8ab9ae82d5d59d6a12f1477ebf18a37868e8f98
 - request:
     method: get
@@ -1052,7 +741,7 @@ http_interactions:
       - Basic ZWFydGhkYXRhX3NlYXJjaF9kZXY6RWRzYzEyMyFAIw==
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:39:18 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:19 GMT
   digest: 9ce0bd1566373b313dc9b29dc08f3b5a3c9ff8c4
 - request:
     method: get
@@ -1063,6 +752,6 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Fri, 23 Feb 2018 20:46:51 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:55 GMT
   digest: c4bdaee98ebbd8ac715deaafd3b1275eb475566c
 recorded_with: VCR 2.6.0

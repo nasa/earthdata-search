@@ -13,7 +13,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:22:48 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:18 GMT
   digest: 4316f1525e7ecc0ef39c7125fd86c9f69b307da6
 - request:
     method: get
@@ -28,7 +28,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:20:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:26 GMT
   digest: bd93bc60196b46ad10515e13ccaef4ee3df62619
 - request:
     method: get
@@ -43,7 +43,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:18:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:39 GMT
   digest: b260e9d65eaa1a19f2e65d5d71dc1ff935e9a6c3
 - request:
     method: get
@@ -58,7 +58,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:25:57 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:30 GMT
   digest: 0d0792ea4876e005acdde62f849e7255144b7823
 - request:
     method: get
@@ -73,8 +73,10 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:03 GMT
-  digest: b2f1fb1b6438cb56ac3fca5c8f150120ab3eb1a6
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 01 Mar 2018 16:31:02 GMT
+  digest: 5755b8fe9e5db52861e59f0ee3dc0bcb1f5cf472
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?bounding_box=0%2C0%2C10%2C10&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C14758250-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
@@ -88,7 +90,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:01 GMT
+  recorded_at: Thu, 01 Mar 2018 16:53:12 GMT
   digest: 3af90b2a0658e506ec2527ad5d3512cec07722e9
 - request:
     method: get
@@ -103,7 +105,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:08:02 GMT
+  recorded_at: Thu, 01 Mar 2018 16:39:57 GMT
   digest: 3997e8895216dd0d1340d6b4a957ee7b701d7e80
 - request:
     method: get
@@ -118,7 +120,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:14:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:37 GMT
   digest: bd68640ff9cd30176588f74738a8da1542863df1
 - request:
     method: get
@@ -133,7 +135,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:03 GMT
   digest: 84c9addbe9f935a0337d424878bd225ad82c4de6
 - request:
     method: get
@@ -148,7 +150,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:22:58 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:25 GMT
   digest: 521db65bd61f9610b87f17d25675e1f00aa04e10
 - request:
     method: get
@@ -163,7 +165,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:18:36 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:31 GMT
   digest: b640e7b58f63c32a4c0be0d7177e87ea7144510b
 - request:
     method: get
@@ -178,10 +180,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 01 Mar 2018 15:04:18 GMT
-  digest: 4a72a046716dd74e7377d3975a5aeb99e8def27b
+  recorded_at: Thu, 01 Mar 2018 16:54:06 GMT
+  digest: 06caff5d231b0af7457f6a746ad3b0ad3fc3b3cb
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1000000042-LANCEAMSR2&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -195,7 +195,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:15 GMT
   digest: 67098fdec6f60cd10ef7783cbfe0828b63eaec8e
 - request:
     method: get
@@ -210,7 +210,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:11:43 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:24 GMT
   digest: afe1e1e3bef808ec766621a166becbd061000c54
 - request:
     method: get
@@ -225,7 +225,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:13 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:13 GMT
   digest: 760b284cf0a9e5bb830eed5a4ce646bdba095f16
 - request:
     method: get
@@ -242,7 +242,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:09:46 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:10 GMT
   digest: 960a0971b1c095be0918fa7a10fc8a6abb2dd399
 - request:
     method: get
@@ -257,7 +257,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:48:58 GMT
   digest: b4481eb75eaec5bbee892dcaed110ea95b6fdd78
 - request:
     method: get
@@ -274,7 +274,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:42 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:22 GMT
   digest: a83e26a11c5f40817e1a332d6e318df77a5baffb
 - request:
     method: get
@@ -291,7 +291,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 14:58:19 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:47 GMT
   digest: ebcb3fc2c1649cb282f570278ed5fa5eeb2cfb65
 - request:
     method: get
@@ -308,7 +308,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:46 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:13 GMT
   digest: b257e861e302a7e7e2e151deb6ef25d3c15b1fcf
 - request:
     method: get
@@ -323,7 +323,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:19:18 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:26 GMT
   digest: e9f0a22dc378326356491b7fdcdbf987b6f0f765
 - request:
     method: get
@@ -338,7 +338,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:51 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:28 GMT
   digest: 49e942f6b6dc34532969996f1fd00191c92f6b0d
 - request:
     method: get
@@ -353,7 +353,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:49 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:26 GMT
   digest: f0ebbca63602e50ea88dffdb653501c5b1c1c883
 - request:
     method: get
@@ -368,7 +368,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:24:58 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:09 GMT
   digest: 4afe573d42c53d1522f7758584e3e212d621cac8
 - request:
     method: get
@@ -383,7 +383,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:36 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:55 GMT
   digest: 5348b9a9241baecdea8f14a84058de8759e61e38
 - request:
     method: get
@@ -398,7 +398,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:21 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:38 GMT
   digest: 772abdc4d5bd7e55274f6b4d96b6c166afb8f34c
 - request:
     method: get
@@ -413,7 +413,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:19 GMT
   digest: d29901c8991dc6ce82c464b73ae60d259ae88950
 - request:
     method: get
@@ -428,7 +428,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:20:00 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:01 GMT
   digest: dbda51d5df4de883453df50f9748239edc8b63a6
 - request:
     method: get
@@ -443,7 +443,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:13:32 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:17 GMT
   digest: 6c55e682b64c4374ce35100bf0db426b89236b93
 - request:
     method: get
@@ -458,7 +458,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:33 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:22 GMT
   digest: 43e20848c99cc11c5d0acdbc444c58f63d68815d
 - request:
     method: get
@@ -473,7 +473,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:53 GMT
   digest: a5c40491e3cf380abb00256ecea93a15970636de
 - request:
     method: get
@@ -488,7 +488,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:04:07 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:03 GMT
   digest: 71f9a1879b788b9c82d000dea86254b68e477511
 - request:
     method: get
@@ -503,7 +503,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:13 GMT
+  recorded_at: Thu, 01 Mar 2018 16:53:01 GMT
   digest: 71859c6656dc53097b364b1f752c59467d8dc566
 - request:
     method: get
@@ -518,7 +518,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:15 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:55 GMT
   digest: f6d86118d73a8b8f800b6721a65f93cb87dd5734
 - request:
     method: get
@@ -533,7 +533,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:00 GMT
   digest: e05e0f55514908e1eaeeac9aa8f47fbfe67cb7b1
 - request:
     method: get
@@ -550,7 +550,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:09:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:39 GMT
   digest: 1fa2884305d8a3b339e95b7495dfa2fc22488ecc
 - request:
     method: get
@@ -565,7 +565,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:02:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:07 GMT
   digest: b6647f318dbbfc678eb0ead22f2ecbc514956fdd
 - request:
     method: get
@@ -580,7 +580,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:58 GMT
   digest: 9f8ac76158db7c91834ab39c3c4a199cc99c3717
 - request:
     method: get
@@ -595,7 +595,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:04:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:59 GMT
   digest: f8e4fa2daf0d774912e30fcf5d04b168016b3305
 - request:
     method: get
@@ -610,7 +610,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:11:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:03 GMT
   digest: e16b409c24da823a8ef48ab313a52b4480a74896
 - request:
     method: get
@@ -625,7 +625,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:52 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:11 GMT
   digest: 3344090abf450954c93b1780b7b29cf02ab47200
 - request:
     method: get
@@ -640,7 +640,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:18 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:21 GMT
   digest: 97fd67b252945beb476b7819f9970dfb45899e02
 - request:
     method: get
@@ -655,7 +655,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:56 GMT
   digest: 39f4833c9238a4c023fd39514f2b1dc985e89698
 - request:
     method: get
@@ -670,7 +670,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:43 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:03 GMT
   digest: 25814070eb8ab9737d3e325a5f90b2559bd218a8
 - request:
     method: get
@@ -685,7 +685,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:04 GMT
+  recorded_at: Thu, 01 Mar 2018 16:27:56 GMT
   digest: 5c38063b5a56126b081765c69f6ceae989a9efff
 - request:
     method: get
@@ -700,7 +700,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:56:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:09 GMT
   digest: afa0cfbac8a4477886058f8c8b01600f298497d3
 - request:
     method: get
@@ -715,7 +715,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:16 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:37 GMT
   digest: e23ebfd008acc7c7680e313a567fb114cb305d5d
 - request:
     method: get
@@ -730,7 +730,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:45 GMT
   digest: a58e7cfc2b22ad5ecce119c4f91a23706ca0dff8
 - request:
     method: get
@@ -747,7 +747,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:17:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:17 GMT
   digest: c8a2b5b4ba3f23500e136849f03f7f6e80221d8f
 - request:
     method: get
@@ -764,7 +764,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:15:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:26 GMT
   digest: 478fd2f8d55751f23df334ffbd1de809e11b2eed
 - request:
     method: get
@@ -781,7 +781,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:20:32 GMT
+  recorded_at: Thu, 01 Mar 2018 16:53:59 GMT
   digest: 210bcb4a4d654db10045f178f38a0bda3d8cf112
 - request:
     method: get
@@ -796,8 +796,10 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:56 GMT
-  digest: 04be943257e59dececd652869d1286bb021f3ea5
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 01 Mar 2018 16:32:50 GMT
+  digest: ff96604c127ce6be712045e7477cb502ef14ce67
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C197265171-LPDAAC_ECS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -811,7 +813,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:12 GMT
   digest: 968deba5b22df678e3d50b53eea3d1da04e4ecbe
 - request:
     method: get
@@ -826,7 +828,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:14:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:35 GMT
   digest: b04d98d7136799732e2499fd8704c1b7b9b7bfd3
 - request:
     method: get
@@ -841,7 +843,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:26 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:24 GMT
   digest: 6951ac355a8077010271921db0fa34bf680cb26d
 - request:
     method: get
@@ -858,7 +860,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:17 GMT
   digest: 7939cbb850b1d6395d999f7899f408521b61fdfb
 - request:
     method: get
@@ -873,7 +875,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:57 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:04 GMT
   digest: 2bad28d2602cc818f1fcbf53932156d80ef0a836
 - request:
     method: get
@@ -888,7 +890,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:05:49 GMT
+  recorded_at: Thu, 01 Mar 2018 16:50:56 GMT
   digest: 73108b4b82d03fd242aa60590e10e5fea63762b6
 - request:
     method: get
@@ -905,7 +907,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 14:58:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:41 GMT
   digest: e775edaa3ae4509c4243bbc8b14c31f09c6ac947
 - request:
     method: get
@@ -922,7 +924,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:19 GMT
   digest: bc8a8e71b6daae2697a7c8b233392fb29f8955fb
 - request:
     method: get
@@ -939,7 +941,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:13:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:54 GMT
   digest: acbce4de6ad58b5329a0f174b9056eee2118dc90
 - request:
     method: get
@@ -956,7 +958,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:20:36 GMT
+  recorded_at: Thu, 01 Mar 2018 16:53:57 GMT
   digest: ca23d4807e8e58372a8d5fdbbefd38daee739aa3
 - request:
     method: get
@@ -971,25 +973,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:33 GMT
   digest: 4f0272b447fc935b93e29a03de79c795bddecbec
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C1000000445-NSIDC_ECS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 01 Mar 2018 15:00:19 GMT
-  digest: e90c6e7914c27fa1b845edde0f2a598366160dfc
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id=C1000000561-NSIDC_ECS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
@@ -1005,7 +990,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:51 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:11 GMT
   digest: 64ced3a08fc5a34fbbec7d0b3e0b2e41eac72810
 - request:
     method: get
@@ -1022,7 +1007,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:22 GMT
   digest: a0133ceac3ee165caf796be72e761b08c3b855a4
 - request:
     method: get
@@ -1039,7 +1024,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:14 GMT
   digest: 292c2747a6df4110d3ae9ccb1a5ecc5ea76e6a45
 - request:
     method: get
@@ -1056,7 +1041,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:25:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:21 GMT
   digest: e6c81a344ee9706f6b0a644b8ec862b5c7d73aa6
 - request:
     method: get
@@ -1073,7 +1058,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:25:49 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:03 GMT
   digest: ee3872ecb309c9e7df1a62b3a4299f0b6718091c
 - request:
     method: get
@@ -1090,7 +1075,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:11:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:18 GMT
   digest: 36d6c756c8fe47d773481a55c5da966a252e1434
 - request:
     method: get
@@ -1107,7 +1092,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:11:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:29 GMT
   digest: d731a3be59bf8c7166d5046b5ff5541a3e4d0c51
 - request:
     method: get
@@ -1124,7 +1109,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:20:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:01 GMT
   digest: 0a979b0392e1fc0450285007cbd6a489cdcc1e35
 - request:
     method: get
@@ -1141,7 +1126,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:35 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:08 GMT
   digest: 32b13b514490620b50d67536e7f5b8f887bcd833
 - request:
     method: get
@@ -1158,7 +1143,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:05:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:04 GMT
   digest: ab6dc99a1c6925f7c4176eb5ca882f10a9ee3e5e
 - request:
     method: get
@@ -1175,7 +1160,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:19:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:20 GMT
   digest: e2dc6f05054312b2d3fab2c37254befd59c07934
 - request:
     method: get
@@ -1192,7 +1177,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:13:13 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:55 GMT
   digest: b5622b11c6e0e216b31020aa8d0e26be4adcd3d0
 - request:
     method: get
@@ -1207,7 +1192,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:31 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:50 GMT
   digest: c2dc044dc5451c5d09b6344f70d106fb4f485035
 - request:
     method: get
@@ -1222,7 +1207,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:49 GMT
   digest: 8d19092fc5cc99a64b8b3d1608174facabac1fe9
 - request:
     method: get
@@ -1237,7 +1222,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:52 GMT
   digest: e5f3202fe67c8aa3dc55769cc2929e1b5d7cf562
 - request:
     method: get
@@ -1252,7 +1237,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:31 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:06 GMT
   digest: d29bf68715ed6cd590711b5609d6ba11bb473f40
 - request:
     method: get
@@ -1267,7 +1252,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:05:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:51 GMT
   digest: 50004f5e7d142bb0b24fc6faa369fb4b1d208417
 - request:
     method: get
@@ -1282,7 +1267,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:33 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:29 GMT
   digest: fda786a1e5a508c3f19f21b43fa5d8affe81a28a
 - request:
     method: get
@@ -1297,7 +1282,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:36 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:33 GMT
   digest: d84fbcf68a892bed673c8d5dfe7c040dd945aea6
 - request:
     method: get
@@ -1312,7 +1297,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:37 GMT
   digest: ad141d2d03747e0fdfd36886081290b24224dc7d
 - request:
     method: get
@@ -1327,7 +1312,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:50 GMT
   digest: df24f40837de41f67751e3853084afcd34fcd90c
 - request:
     method: get
@@ -1342,7 +1327,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:23:59 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:48 GMT
   digest: b025d6160effc0ba360b8626f7a3f4fc536b652f
 - request:
     method: get
@@ -1357,7 +1342,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:01:04 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:57 GMT
   digest: 932854195cef472253d3be85e64ba555770ec0b6
 - request:
     method: get
@@ -1372,7 +1357,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:23 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:44 GMT
   digest: 675f28ea8552f912b67a71ba5ead1187bb2187a6
 - request:
     method: get
@@ -1387,7 +1372,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:10 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:06 GMT
   digest: 112e267d9a990742b085beddd5264150897c7611
 - request:
     method: get
@@ -1402,7 +1387,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:24 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:29 GMT
   digest: fca018ab0fecd1cd7927b9917c27486ae7883a6d
 - request:
     method: get
@@ -1417,7 +1402,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:57 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:43 GMT
   digest: dadfb8529ee73ae643a2a3c34d8a6fe813613c5b
 - request:
     method: get
@@ -1432,7 +1417,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:58:00 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:44 GMT
   digest: a889284beac3230696f2123620f91ba81817ae2f
 - request:
     method: get
@@ -1447,7 +1432,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:02 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:21 GMT
   digest: 7499a28a4b739fc93af6aabc5ab36a777c741b75
 - request:
     method: get
@@ -1462,7 +1447,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:04 GMT
   digest: d9692429921920b3b8be8d90acbfe19169fa8da6
 - request:
     method: get
@@ -1477,7 +1462,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:55 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:41 GMT
   digest: 71575503c485d96087776fbb058a7130aa74ec1c
 - request:
     method: get
@@ -1492,7 +1477,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:01:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:58 GMT
   digest: 78f3339d845e4ad75d8987fc8e8caa24fcdc90e3
 - request:
     method: get
@@ -1507,7 +1492,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:01 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:22 GMT
   digest: 42abff8b8425915be6caac1bd7c727d23cb21421
 - request:
     method: get
@@ -1522,7 +1507,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:24 GMT
   digest: e3188822dfceb9695ad01e7d70b0036a5e11ae28
 - request:
     method: get
@@ -1537,7 +1522,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:24:01 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:50 GMT
   digest: 0816bed2cb148947e49ec33e48331d22a5532930
 - request:
     method: get
@@ -1552,7 +1537,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:03 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:26 GMT
   digest: fe969f614bd68fae32e9c1b7aae649e28c175904
 - request:
     method: get
@@ -1567,7 +1552,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:05 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:28 GMT
   digest: ce92b19d5ce5ca656d247f1f61e0a414de2849ba
 - request:
     method: get
@@ -1582,7 +1567,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:30 GMT
   digest: c7ca71213fe369129db7fbf651b799778764be0e
 - request:
     method: get
@@ -1597,7 +1582,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:53:54 GMT
   digest: 071038787f48d64a34cfaad88791e29423d3c986
 - request:
     method: get
@@ -1612,7 +1597,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:59 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:19 GMT
   digest: fcc388fba74bc3806c843ab56ca547b3d4ac6db4
 - request:
     method: get
@@ -1627,7 +1612,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:45 GMT
   digest: 136874f8fc4893a9308d798652b184612552a6ed
 - request:
     method: get
@@ -1642,7 +1627,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:15:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:32 GMT
   digest: b12c773a5631fbecc5c06a87b7cb703f6dc2289f
 - request:
     method: get
@@ -1657,7 +1642,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:15:17 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:34 GMT
   digest: 9e707500fa57be52a5ef4d23eec25ebd96ba774e
 - request:
     method: get
@@ -1672,7 +1657,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:15:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:38 GMT
   digest: 3a8be7cc6080ad2f7742ae8399bcc827db8cde3e
 - request:
     method: get
@@ -1687,8 +1672,10 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:58:02 GMT
-  digest: 1f13d9ec7082783eec01acdf0c324744b76a7488
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 01 Mar 2018 16:32:42 GMT
+  digest: c24059cb7ea16ec386906eb32b9618a113346df3
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&echo_collection_id%5B%5D=C203234523-LAADS&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C203234523-LAADS%2A&include_has_granules=true&include_granule_counts=true
@@ -1704,7 +1691,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 15:05:52 GMT
+  recorded_at: Thu, 01 Mar 2018 16:50:53 GMT
   digest: 87fceb4094093671e1cb62d6a9ba5ad62f832615
 - request:
     method: get
@@ -1719,7 +1706,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:43 GMT
+  recorded_at: Thu, 01 Mar 2018 16:27:56 GMT
   digest: 5a7cd198d360ea1221fd0e511bfc7012da0525eb
 - request:
     method: get
@@ -1734,7 +1721,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:19 GMT
   digest: 82ce4d2c96902633a3953ab51523037c641c052b
 - request:
     method: get
@@ -1749,7 +1736,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:37:47 GMT
   digest: 0e8ae0140f02dc892e8b1a6be014d0501f8671b8
 - request:
     method: get
@@ -1764,7 +1751,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:19 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:59 GMT
   digest: 36590d81908ffee7bb3a91fd2fd60a5310d12e4a
 - request:
     method: get
@@ -1779,7 +1766,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:22:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:48 GMT
   digest: 1d3d1081b4b673c2dfdfdacf6d6676a4e394563a
 - request:
     method: get
@@ -1794,7 +1781,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:25:18 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:55 GMT
   digest: 5d39ff1ba772589485400983c8b05029c5f3eee1
 - request:
     method: get
@@ -1809,7 +1796,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:24 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:48 GMT
   digest: 93ea1cce9f5dfc04741c23a46720d04655e619d9
 - request:
     method: get
@@ -1824,7 +1811,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:55 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:20 GMT
   digest: 506a85fa878366314279f8af839d23b2c4ea312e
 - request:
     method: get
@@ -1839,7 +1826,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:23:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:00 GMT
   digest: 0a07bd7e3b0640b1fe65ad8f7d2fb3da57925b9a
 - request:
     method: get
@@ -1854,7 +1841,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:16 GMT
   digest: 1da85554fbd47602bcd789e684a3bc786087769e
 - request:
     method: get
@@ -1869,7 +1856,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:23:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:56 GMT
   digest: f619550656982c726088f70fb09cbf7fd2098598
 - request:
     method: get
@@ -1884,7 +1871,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:23:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:51 GMT
   digest: aadcf188ebf5268cdb38732682b8d095ba91518f
 - request:
     method: get
@@ -1899,7 +1886,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:40 GMT
+  recorded_at: Thu, 01 Mar 2018 16:49:01 GMT
   digest: 1dc7f17755db077d30d87cb2ce493de31f941737
 - request:
     method: get
@@ -1914,7 +1901,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:15:53 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:22 GMT
   digest: 22d0f837e9b588f54111ab859e75d3dea7c64d57
 - request:
     method: get
@@ -1929,7 +1916,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:04 GMT
   digest: 75e969b2e4482eed322b941a034dc255d41a8b10
 - request:
     method: get
@@ -1944,7 +1931,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:40 GMT
   digest: 99cbe0b35d736bb578f813ebdabc3432bc45b917
 - request:
     method: get
@@ -1959,7 +1946,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:08:01 GMT
+  recorded_at: Thu, 01 Mar 2018 16:39:56 GMT
   digest: 374677fc0dc41fad998eb8d38c5e7a2f7d9dfd07
 - request:
     method: get
@@ -1974,7 +1961,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:57 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:22 GMT
   digest: 05dd71b70cc628170195ec170ce2d53461df7f36
 - request:
     method: get
@@ -1989,7 +1976,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:02 GMT
   digest: 46cb15cdac903f8045cd74c148e96a7f144fc2a1
 - request:
     method: get
@@ -2004,7 +1991,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:23:44 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:05 GMT
   digest: 27182518aec36774c463f7ec0fec468eef1615f1
 - request:
     method: get
@@ -2019,7 +2006,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:56:52 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:17 GMT
   digest: aeb208530dba87dfef9d733da19344abaebd50fa
 - request:
     method: get
@@ -2034,7 +2021,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:35 GMT
   digest: 2eac8227ddecf31dcdc3d008525ff74095f1d781
 - request:
     method: get
@@ -2049,7 +2036,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:23 GMT
   digest: d6fd12ba72af58a190df86c1b8bcaf27361054cd
 - request:
     method: get
@@ -2064,7 +2051,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:34 GMT
   digest: 9d45e204e8cedb1aa3c6c47decf4e012c339efb1
 - request:
     method: get
@@ -2079,7 +2066,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:19:13 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:37 GMT
   digest: 7ad080158b94bbd1f52dfa19eff21fcbace0f5f4
 - request:
     method: get
@@ -2094,7 +2081,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:56:55 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:19 GMT
   digest: cda56284fd2f9c013c6b8c8d14fb33b31cfeb920
 - request:
     method: get
@@ -2109,7 +2096,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:21 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:27 GMT
   digest: c6f3b196fdc39a539e5e78a23c0838a40f173b31
 - request:
     method: get
@@ -2124,7 +2111,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:24 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:49 GMT
   digest: efe46fd8dcf002f3f7aa80e4987b0d4fbd3ef3dd
 - request:
     method: get
@@ -2139,7 +2126,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:19 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:34 GMT
   digest: e6981eacab5d95707739ac657e08507b99b29766
 - request:
     method: get
@@ -2154,7 +2141,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:45 GMT
   digest: a1476963b2def3e1cd6d8d5485733d8f8337cafa
 - request:
     method: get
@@ -2169,7 +2156,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:56:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:09 GMT
   digest: 2e822301ce5f23bab89566062f6126ce596f3368
 - request:
     method: get
@@ -2184,7 +2171,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:22 GMT
+  recorded_at: Thu, 01 Mar 2018 16:52:51 GMT
   digest: adeb811ce9101712e0dc983d16a3d54d23c6862c
 - request:
     method: get
@@ -2199,7 +2186,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:19 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:32 GMT
   digest: d53a52578884e55336051ff7fee054a825e8b938
 - request:
     method: get
@@ -2214,7 +2201,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:26 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:34 GMT
   digest: 13ca4c08f271ff59ed2d83e504d830f20a603c81
 - request:
     method: get
@@ -2229,7 +2216,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:05:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:50:58 GMT
   digest: 3505915c60a5a1cd071f2bf9058744f28a0a3c55
 - request:
     method: get
@@ -2244,7 +2231,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:48 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:37 GMT
   digest: f90e1b1c59ea5ee1f0de5c2fc8affe81d9256b3e
 - request:
     method: get
@@ -2259,7 +2246,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:13:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:58 GMT
   digest: b5d82efc9f12751d6ea3c5691a7783a1555e50b7
 - request:
     method: get
@@ -2274,7 +2261,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:34 GMT
   digest: 622ce97cfcb0b4ea8c80895122248429dbfad22c
 - request:
     method: get
@@ -2289,7 +2276,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:12 GMT
   digest: 0d45462985bcb12f685efd7abf3be4c8a5497901
 - request:
     method: get
@@ -2304,7 +2291,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:20 GMT
   digest: e85ff221e458f23c1a31470b37e760891715d94a
 - request:
     method: get
@@ -2319,7 +2306,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:24:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:57:36 GMT
   digest: 47cbc7b8b72599e1578687ab79e141eb440d9426
 - request:
     method: get
@@ -2334,7 +2321,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:02:53 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:21 GMT
   digest: 99f7e7a756456ce6cb26e7d7d78b507169997608
 - request:
     method: get
@@ -2349,7 +2336,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:21 GMT
   digest: f5bef2015d77662628d2fa9bf488e0b59d875019
 - request:
     method: get
@@ -2364,7 +2351,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:49 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:24 GMT
   digest: 7bd4ac6fa61e98b33e999cc1bb0e88d662029e4b
 - request:
     method: get
@@ -2379,7 +2366,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:55 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:22 GMT
   digest: e2848a822d845f661975fbc5dce8403b276d66f1
 - request:
     method: get
@@ -2394,7 +2381,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:12 GMT
   digest: 1499c8bd8ac9b512711aa38f84d857a8a8979a65
 - request:
     method: get
@@ -2409,7 +2396,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:22 GMT
   digest: c20bea5dc627ef44408812dab0f8b6f3bae90085
 - request:
     method: get
@@ -2424,7 +2411,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:54:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:34 GMT
   digest: 4b04a59ed0973c85d95c3f6e7e2245c56abc297d
 - request:
     method: get
@@ -2439,7 +2426,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:05:03 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:24 GMT
   digest: 2fcf3341475538835016fcb8be9744db2a291ab8
 - request:
     method: get
@@ -2454,7 +2441,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:15 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:31 GMT
   digest: 174e71bd2d0585dac7d4978273f23a7faf9b48ab
 - request:
     method: get
@@ -2469,7 +2456,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:21:52 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:26 GMT
   digest: 9060dbd5fc64342c0ea23a48d58ef0dc28358176
 - request:
     method: get
@@ -2484,7 +2471,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:22:03 GMT
+  recorded_at: Thu, 01 Mar 2018 16:28:33 GMT
   digest: 3e10167dd6abaf23407f6c4a90bc1d6441e68337
 - request:
     method: get
@@ -2499,7 +2486,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:10:13 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:23 GMT
   digest: b382f39076182dca513f15d90d53a78427f09231
 - request:
     method: get
@@ -2514,7 +2501,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:00:11 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:39 GMT
   digest: 8456f5d72b2f152eef6d83534f22a3f1c74940d8
 - request:
     method: get
@@ -2529,7 +2516,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:36 GMT
+  recorded_at: Thu, 01 Mar 2018 16:37:48 GMT
   digest: 858af9972ba46c0fc3505dc867985642fd8e17de
 - request:
     method: get
@@ -2544,7 +2531,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:37:49 GMT
   digest: 9b0a210231cdca902ba5a9db84ae58e1bb20266e
 - request:
     method: get
@@ -2559,7 +2546,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:52:38 GMT
+  recorded_at: Thu, 01 Mar 2018 16:37:50 GMT
   digest: 0161ff8373640a10cc27cb6f372c90b1e594e981
 - request:
     method: get
@@ -2574,7 +2561,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:24:04 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:46 GMT
   digest: 71a0dc841847c301163c140fba5adea8f3a18c83
 - request:
     method: get
@@ -2589,7 +2576,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:17:58 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:07 GMT
   digest: 502540d7de73e6eeeb98ad85398e572bed9c3ca7
 - request:
     method: get
@@ -2604,7 +2591,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:26:01 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:41 GMT
   digest: 4ba2dffde178d4410a7bdd899a2f69b15c3c195e
 - request:
     method: get
@@ -2619,7 +2606,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:25:23 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:38 GMT
   digest: 3f8018a634c90f7f91250f585e83306343c2dc3c
 - request:
     method: get
@@ -2634,7 +2621,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:18:05 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:10 GMT
   digest: 772b0779819f6123134c73013b93ee494adc49e3
 - request:
     method: get
@@ -2649,7 +2636,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:25:54 GMT
+  recorded_at: Thu, 01 Mar 2018 16:47:37 GMT
   digest: 994e81a3af35bdd401d388f68d304af33f9603c6
 - request:
     method: get
@@ -2664,7 +2651,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:18:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:12 GMT
   digest: fd104c7fc44b66b29e811be2d811367c5240cbf9
 - request:
     method: get
@@ -2679,7 +2666,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:19:05 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:59 GMT
   digest: 7bcb03fd5dfce20a1f49730437be535951dc50af
 - request:
     method: get
@@ -2694,7 +2681,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:49:28 GMT
   digest: ab75cddc99a05a27266e0f62db1f2ccae5ecd85b
 - request:
     method: get
@@ -2709,7 +2696,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:18:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:44 GMT
   digest: 760e2697eac92f5008745d7d3b16643956e0577b
 - request:
     method: get
@@ -2724,7 +2711,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:18:21 GMT
+  recorded_at: Thu, 01 Mar 2018 16:33:20 GMT
   digest: b5aa5986e895a6db2cae8d8e1b353fa033124203
 - request:
     method: get
@@ -2739,7 +2726,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:11:57 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:47 GMT
   digest: 73683c3016a2c8d38f871643ac3a7781f08fcb93
 - request:
     method: get
@@ -2754,7 +2741,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:02 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:24 GMT
   digest: d7ac7649185a525e1b91884e035a078b48e340ea
 - request:
     method: get
@@ -2769,7 +2756,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:59:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:49:30 GMT
   digest: 0d1d3cda481bfdc5316c3577c762862e822ff248
 - request:
     method: get
@@ -2784,7 +2771,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:02:47 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:18 GMT
   digest: 3e16192fd27f96719e8df9890aed204853797ad3
 - request:
     method: get
@@ -2799,7 +2786,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:53:37 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:00 GMT
   digest: 0a61d4795376df68636497bbd20e44684e91e9bf
 - request:
     method: get
@@ -2814,7 +2801,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:22:34 GMT
+  recorded_at: Thu, 01 Mar 2018 16:44:54 GMT
   digest: 03be9208c984d7b828399e99a72ef79123cb8dc3
 - request:
     method: get
@@ -2829,7 +2816,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:03 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:33 GMT
   digest: a94674185b28ad0b85e0c1bc0dfc01e82af88cfe
 - request:
     method: get
@@ -2844,7 +2831,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:32 GMT
   digest: e975c02b7ad27ad74f223fb7bad1b78e44ab00b3
 - request:
     method: get
@@ -2861,7 +2848,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 14:58:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:31:36 GMT
   digest: 2450213b3cdab29204885af4657ed5583b960eed
 - request:
     method: get
@@ -2876,7 +2863,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:05 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:28 GMT
   digest: 8c1a8affbbf2d115ea6190fd9e374fa3bef09cd0
 - request:
     method: get
@@ -2891,7 +2878,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:29 GMT
   digest: 6c4298eb125f8b2a4f4f7605cffcafcf7f979295
 - request:
     method: get
@@ -2906,7 +2893,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:01:02 GMT
+  recorded_at: Thu, 01 Mar 2018 16:48:01 GMT
   digest: 38ccf39afd147c5dbf024179573afcb831fa65ba
 - request:
     method: get
@@ -2921,7 +2908,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:02:43 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:22 GMT
   digest: f9c5a1670388a7953dc43c0f52b3ba856823ac7d
 - request:
     method: get
@@ -2936,7 +2923,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:36 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:16 GMT
   digest: c9f0c081f2a3cfa04c8a5d2003761ce91947219e
 - request:
     method: get
@@ -2951,7 +2938,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:51:22 GMT
   digest: 645b087d0d4e07e78bf5e1994213b1945b23ec40
 - request:
     method: get
@@ -2966,7 +2953,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:02:41 GMT
+  recorded_at: Thu, 01 Mar 2018 16:34:32 GMT
   digest: b476c53a2269a7e21ba94f40069cf6ede944735b
 - request:
     method: get
@@ -2981,7 +2968,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:02:45 GMT
+  recorded_at: Thu, 01 Mar 2018 16:42:19 GMT
   digest: bc5068f34fcfb33282f87a4137aa099bff8fda33
 - request:
     method: get
@@ -2996,7 +2983,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:23 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:36 GMT
   digest: ccd556e21349892d9977131d306b661374f0b906
 - request:
     method: get
@@ -3013,7 +3000,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 01 Mar 2018 14:58:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:49 GMT
   digest: 986fabb637839b4d87789c853e962053ec4935f4
 - request:
     method: get
@@ -3028,7 +3015,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:26:10 GMT
+  recorded_at: Thu, 01 Mar 2018 16:36:10 GMT
   digest: 34ccafa3aec4d0504e896af9b63113226fb576ea
 - request:
     method: get
@@ -3043,7 +3030,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:11:14 GMT
+  recorded_at: Thu, 01 Mar 2018 16:37:44 GMT
   digest: 8d0d46d87b6b96aabdb9831dc4d664ec0cf291a7
 - request:
     method: get
@@ -3058,7 +3045,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:20:12 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:13 GMT
   digest: 4de518aad3292fa94922025da87c0d83c8239f64
 - request:
     method: get
@@ -3073,7 +3060,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:20:06 GMT
+  recorded_at: Thu, 01 Mar 2018 16:32:22 GMT
   digest: 3b83e891d1248a4aadea2bdf3cd6a648ba74d03f
 - request:
     method: get
@@ -3088,7 +3075,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:02 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:26 GMT
   digest: 99f952152e725a865ad4ad2e84763a37159dbc77
 - request:
     method: get
@@ -3103,7 +3090,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:05:28 GMT
+  recorded_at: Thu, 01 Mar 2018 16:55:46 GMT
   digest: c117597a2dfb989d77f111303cdaa6eff0515631
 - request:
     method: get
@@ -3118,7 +3105,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:09:13 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:44 GMT
   digest: 40655e78bdded2bbbac61c2eb8eeace78a6239e3
 - request:
     method: get
@@ -3133,7 +3120,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:28 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:20 GMT
   digest: 254777816d85c855dd7b9b0a10d42ee858d6024d
 - request:
     method: get
@@ -3148,7 +3135,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:35 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:35 GMT
   digest: abba7c3a8c9a8a0aae2f9b176a02aab058127a02
 - request:
     method: get
@@ -3163,7 +3150,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:29 GMT
   digest: 1fd35d32bf7df6fbef9f124bcb2ad8afd5d51e45
 - request:
     method: get
@@ -3178,7 +3165,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:17 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:20 GMT
   digest: 522fda3d97f703a98bf831615419318c36c65fc1
 - request:
     method: get
@@ -3193,7 +3180,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:20 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:22 GMT
   digest: 13b62b1504aaaa90ea948efe87df5997727cafda
 - request:
     method: get
@@ -3208,7 +3195,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:32 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:29 GMT
   digest: acda1982fcef00d656f4c0ee1b2ac6fb04140893
 - request:
     method: get
@@ -3223,7 +3210,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:29 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:33 GMT
   digest: c00b990f475d23b5b986c49b741f0629492b5080
 - request:
     method: get
@@ -3238,7 +3225,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:25 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:26 GMT
   digest: 652af293e1ee1b034490ba9df2033cf273d41341
 - request:
     method: get
@@ -3253,7 +3240,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:12:23 GMT
+  recorded_at: Thu, 01 Mar 2018 16:56:24 GMT
   digest: 3ddaee78b77d79147eeb64504f197d212ddc393b
 - request:
     method: get
@@ -3268,7 +3255,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:03:27 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:22 GMT
   digest: a54f95a5ce8885dfc1ac408cb02a4c9b11d56507
 - request:
     method: get
@@ -3283,7 +3270,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:21 GMT
   digest: 92e6efa9a6fff14289e12848c177b4996010d969
 - request:
     method: get
@@ -3298,7 +3285,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:46 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:35 GMT
   digest: 4d2fd6f32bfe3003ac05b2d399ba6eda2228f8bb
 - request:
     method: get
@@ -3313,7 +3300,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:15:56 GMT
+  recorded_at: Thu, 01 Mar 2018 16:54:20 GMT
   digest: 3dee034f2076a22e36fa2ac3e1a5a1622cfed08d
 - request:
     method: get
@@ -3328,7 +3315,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:23:53 GMT
+  recorded_at: Thu, 01 Mar 2018 16:41:44 GMT
   digest: 23678db634eb1e0aa4294e05030bab835d908b4b
 - request:
     method: get
@@ -3343,7 +3330,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:04:01 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:20 GMT
   digest: a97404072a78d544cc06ae8d00624a25d76f784f
 - request:
     method: get
@@ -3358,7 +3345,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:55:30 GMT
+  recorded_at: Thu, 01 Mar 2018 16:45:31 GMT
   digest: e56c455966c7280b4262670ac78ebe69c04b6526
 - request:
     method: get
@@ -3373,7 +3360,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:19:09 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:24 GMT
   digest: fe7b3494b0873ab335dd0fd98bd89db66fba8101
 - request:
     method: get
@@ -3388,7 +3375,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:19:21 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:28 GMT
   digest: 1f994242656ea39d83fdd699be1aaf1d9249e613
 - request:
     method: get
@@ -3403,7 +3390,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:19:24 GMT
+  recorded_at: Thu, 01 Mar 2018 16:30:31 GMT
   digest: b9f66b59912d49d6c494d647a48c534215ea52d2
 - request:
     method: get
@@ -3418,8 +3405,23 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:04:03 GMT
+  recorded_at: Thu, 01 Mar 2018 16:35:21 GMT
   digest: 313484338a3691045c6bd94c2cc0d3c7d17ff5cc
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1000-LPDAAC_TS2&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 01 Mar 2018 16:46:32 GMT
+  digest: a3e7eb61b4ac24758ca81a66fed0cb3f70347fea
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -3433,7 +3435,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 14:57:05 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:14 GMT
   digest: a3955ab8f499a86caeb8835edd50e768b8cdd10e
 - request:
     method: get
@@ -3448,7 +3450,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 15:16:40 GMT
+  recorded_at: Thu, 01 Mar 2018 16:43:33 GMT
   digest: 2405794342b6005d6d0876c490afdf07958b292f
 - request:
     method: get
@@ -3465,6 +3467,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - 7cf16dc7bbe4d2aafc733c2e92ecf230a59d570bc4f25b8f36b645f96cdbd93c:iGoL4SxnweOcSyBxA5eeUA
-  recorded_at: Thu, 01 Mar 2018 14:57:08 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:17 GMT
   digest: e6d3b6f3e8fbb12f2f347e6b6b4b91ad605edc10
 recorded_with: VCR 2.6.0
