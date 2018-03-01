@@ -50,10 +50,22 @@ class DataAccessController < ApplicationController
     retrieval.user = user
     retrieval.project = project
     retrieval.save!
-
-    new_job = Retrieval.delay.process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
-    Rails.logger.info("A new delayed job with ID " + new_job.id.to_s + " has been created: " + params[:project]) 
-
+    
+    queue = "Default"
+    daacs = ENV["priority_daacs"].split(",")
+    collections = JSON.parse(params[:project])['collections']
+    daacs.each do |daac|
+      collections.each do |collection|
+        if collection['id'].include? daac
+          queue = daac
+          break
+        end
+      end
+      if queue != "Default"
+        break
+      end
+    end
+    Retrieval.delay(:queue => queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
 
