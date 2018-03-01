@@ -52,7 +52,7 @@ class DataAccessController < ApplicationController
     retrieval.save!
     
     queue = "Default"
-    daacs = ENV["priority_daacs"].split(",")
+    daacs = ENV["priority_daacs"] ? ENV["priority_daacs"].split(",") : []
     collections = JSON.parse(params[:project])['collections']
     daacs.each do |daac|
       collections.each do |collection|
