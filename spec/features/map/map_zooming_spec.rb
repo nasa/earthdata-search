@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Map Zooming', reset: false, skip_locally: true do
+describe 'Map Zooming', reset: false, ci_only: true do
   it 'is currently skipped due to zoom issues on os x'
   before :all do
     page.driver.resize_window(1680, 1050) # Default capybara window size
