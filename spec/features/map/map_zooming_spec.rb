@@ -34,7 +34,7 @@ describe 'Map Zooming', reset: false, ci_only: true do
       end
     end
 
-    context 'and the overlay is minimized' do
+    context 'and the overlay is minimized', pending_updates: true do
       before :all do
         within '.master-overlay-main' do
           find('.master-overlay-minimize').click
