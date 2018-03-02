@@ -1,16 +1,12 @@
-# EDSC-5 As a user, I want to see a simple search interface upon visiting the site
-#        so that I may quickly begin my search for collections
-
 require 'spec_helper'
 
-describe 'Site misc' do
-
+describe 'Site misc', reset: false do
   before :all do
     load_page :search
   end
 
   it 'displays the current NASA official' do
-    expect(page).to have_text('Stephen Berrick')
+    expect(page).to have_content('Stephen Berrick')
   end
 
   it 'does not display the previous NASA official' do

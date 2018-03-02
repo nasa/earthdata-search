@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'rake'
+# require 'rake'
 
 describe 'Service Options order with bad bounding_box', reset: false do
-  collection_id = 'C1236303846-NSIDC_ECS'
-  granule_id = 'G1353419373-NSIDC_ECS'
+  collection_id = 'C190757121-NSIDC_ECS'
+  granule_id = 'G190973506-NSIDC_ECS'
 
   context 'setting bounding box spatial query that will fail' do
     before :all do
@@ -22,10 +22,10 @@ describe 'Service Options order with bad bounding_box', reset: false do
 
       expect(page).to have_checked_field('Enter bounding box')
       fill_in 'Email Address', with: 'test@email.com'
-      fill_in 'North', with: '42'
-      fill_in 'West', with: '-120'
-      fill_in 'East', with: '-115'
-      fill_in 'South', with: '40'
+      fill_in 'North', with: '10'
+      fill_in 'West', with: '-75'
+      fill_in 'East', with: '-70'
+      fill_in 'South', with: '0'
       wait_for_xhr
 
       within '.access-item-actions' do
@@ -43,9 +43,9 @@ describe 'Service Options order with bad bounding_box', reset: false do
       expect(page).to have_text('Creating')
     end
 
-    context 'after the order fails' do
+    context 'after the order fails', pending_updates: true do
       before :all do
-        Delayed::Worker.new.work_off
+        Delayed::Worker.new(quiet: false).work_off
       end
 
       it 'shows the order in the "Failed" state' do
@@ -53,7 +53,7 @@ describe 'Service Options order with bad bounding_box', reset: false do
       end
 
       it 'shows an error message saying the subsetting failed' do
-        expect(page).to have_text('NoMatchingData-Subsetting was unsuccessful; no output files were produced. No data found that matched the subset constraints.')
+        expect(page).to have_text('SubsetAreaNotInFile')
       end
     end
   end

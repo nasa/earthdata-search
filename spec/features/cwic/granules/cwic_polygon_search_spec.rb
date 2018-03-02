@@ -8,8 +8,9 @@ describe "CWIC-enabled polygon searches", reset: false do
   context "when a polygon search condition has been applied" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, q: 'USGS_EDC_EO1_ALI'
+      load_page :search, q: 'USGS_EDC_EO1_ALI', ac: true
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+      wait_for_xhr
     end
 
     context "viewing CWIC granule results" do
@@ -20,7 +21,7 @@ describe "CWIC-enabled polygon searches", reset: false do
       end
 
       it "filters the result list based on the minimum bounding rectangle", acceptance: true do
-        expect(page).to have_content("Showing 20 of 805 matching granules")
+        expect(page).to have_content("Showing 20")
         params = page.evaluate_script('edsc.page.project.focus().granuleDatasource().toQueryParams()')
         expect(params).to have_key('mbr')
         expect(params).not_to have_key('polygon')
@@ -30,8 +31,9 @@ describe "CWIC-enabled polygon searches", reset: false do
     context "viewing CWIC granule results for the first time" do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, q: 'USGS_EDC_EO1_ALI'
+        load_page :search, q: 'USGS_EDC_EO1_ALI', ac: true
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+        wait_for_xhr
 
         view_granule_results(cwic_collection_name)
       end
@@ -44,8 +46,9 @@ describe "CWIC-enabled polygon searches", reset: false do
     context "viewing CWIC granule results after the first time" do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, q: 'USGS_EDC_EO1_ALI'
+        load_page :search, q: 'USGS_EDC_EO1_ALI', ac: true
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+        wait_for_xhr
 
         view_granule_results(cwic_collection_name)
         leave_granule_results
@@ -85,11 +88,12 @@ describe "CWIC-enabled polygon searches", reset: false do
   context "viewing non-CWIC granule results" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, q: 'C185174201-USGS_EROS'
+      load_page :search, q: 'C14758250-LPDAAC_ECS'
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+      wait_for_xhr
     end
 
-    hook_granule_results("Landsat 8 Operational Land Imager (OLI)_Thermal Infared Sensor (TIRS) Pre-WRS-2 V1")
+    hook_granule_results("ASTER L1A Reconstructed Unprocessed Instrument Data V003")
 
     it "does not display an indication that the search has been reduced to its minimum bounding rectangle", acceptance: true do
       expect(page).not_to have_selector('path[stroke-dasharray="2, 10"][stroke="#ff0000"]')

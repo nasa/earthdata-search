@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe 'Services Access', reset: false do
+# EDSC-1778 Adding pending_updates tag until ticket is completed. 
+describe 'Services Access', reset: false, pending_updates: true do
   serviceable_collection_id = 'C179014698-NSIDC_ECS'
   smap_collection_id = 'C1236303848-NSIDC_ECS'
   smap_collection_title = "SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid Brightness Temperatures V003"
@@ -33,7 +34,7 @@ describe 'Services Access', reset: false do
         end
 
         # Cannot reliably display a progress bar using recordings
-        it 'displays an error message', pending_fixtures: true do
+        it 'displays an error message' do
           wait_for_xhr
           within '.access-error-code' do
             expect(page).to have_content('CollectionDisabled')
@@ -123,7 +124,7 @@ describe 'Services Access', reset: false do
           click_on 'Submit'
         end
 
-        it 'displays a progress bar while the service is processing', pending_fixtures: true do
+        it 'displays a progress bar while the service is processing' do
           synchronize(120) do
             expect(page).to have_content("Processing") unless page.has_content?("Complete")
           end
@@ -136,7 +137,7 @@ describe 'Services Access', reset: false do
             wait_for_xhr
           end
 
-          it 'displays download urls', pending_fixtures: true do
+          it 'displays download urls' do
             expect(page).to have_content('Complete')
           end
         end

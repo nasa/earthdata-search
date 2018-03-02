@@ -34,7 +34,7 @@ FileUtils.rm_rf(Rails.root.join("public/assets"))
 FileUtils.mkdir_p(Rails.root.join("tmp/screenshots"))
 
 # Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
+# in spec/helpers/ and its subdirectories.
 Dir[Rails.root.join("spec/helpers/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
@@ -42,7 +42,6 @@ Dir[Rails.root.join("spec/helpers/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
-
 
 load "#{::Rails.root}/db/seeds.rb" if ENV["seed"] == "true"
 
@@ -68,7 +67,12 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
 end
 
 RSpec.configure do |config|
-
+  # config.before(:each) do
+  #     if Capybara.current_driver == :webkit
+  #       # Need to manually specify ignoring of SSL errors
+  #       page.driver.browser.ignore_ssl_errors
+  #     end
+  # end
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -117,9 +121,11 @@ RSpec.configure do |config|
     normalizers = []
     # Avoid recording tokens
     ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
-      token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
-      token = "#{token}:#{Rails.configuration.urs_client_id}" unless token.include? '-'
-      normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
+      ['prod', 'uat', 'sit', 'dev'].each do |env_key|
+        token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key][env_key]['access_token']
+        token = "#{token}:#{Rails.configuration.urs_client_id}" unless token.include? '-'
+        normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
+      end
     end
 
     normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')

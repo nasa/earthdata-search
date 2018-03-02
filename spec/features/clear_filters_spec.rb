@@ -16,14 +16,20 @@ describe "'Clear Filters' button", reset: false do
     expect(page.find("#keywords")).to have_no_text("AST_L1A")
   end
 
-  it "clears spatial" do
+  it 'clears spatial' do
     create_point(0, 0)
-    expect(page).to have_no_content("A minimal dif dataset")
-    expect(page).to have_content("ADVANCED MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1")
 
-    click_link "Clear Filters"
-    expect(page).to have_content("A minimal dif dataset")
-    expect(page).to have_content("ADVANCED MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1")
+    wait_for_xhr
+
+    collections_within_point = find('header.tab h2 strong').text
+
+    click_link 'Clear Filters'
+
+    wait_for_xhr
+
+    collections_without_point = find('header.tab h2 strong').text
+
+    expect(collections_without_point).to be > collections_within_point
   end
 
   context "clears temporal" do
@@ -78,16 +84,17 @@ describe "'Clear Filters' button", reset: false do
     end
   end
 
-  it "clears facets" do
-    find("h3.panel-title", text: 'Project').click
-    find(".facets-item", text: "EOSDIS").click
-    within(:css, '.projects') do
-      expect(page).to have_content("EOSDIS")
-      expect(page).to have_css(".facets-item.selected")
+  it 'clears facets' do
+    # 'Features' facet is already expanded, no need to click it
+    find('.facets-item', text: 'Map Imagery').click
+    
+    within(:css, '.features') do
+      expect(page).to have_content('Map Imagery')
+      expect(page).to have_css('.facets-item.selected')
     end
 
-    click_link "Clear Filters"
+    click_link 'Clear Filters'
 
-    expect(page).to have_no_css(".facets-item.selected")
+    expect(page).to have_no_css('.facets-item.selected')
   end
 end

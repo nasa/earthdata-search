@@ -10,7 +10,7 @@ b124dcf6e87eae664cf4e8af17c1bb1e0172e536:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 14 Feb 2018 21:01:38 GMT
+      - Fri, 23 Feb 2018 17:58:37 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -18,7 +18,7 @@ b124dcf6e87eae664cf4e8af17c1bb1e0172e536:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.038000'
+      - '0.046000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -35,61 +35,29 @@ b124dcf6e87eae664cf4e8af17c1bb1e0172e536:
       code: 200
       message: 
     headers:
-      strict-transport-security:
-      - max-age=15768000
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:42:14 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.102000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.083000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 27 Oct 2016 17:36:04 GMT
+      content-length:
+      - '2'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
-    http_version: 
-42256fedd0489ec24c443316dbef18e54df2b3bf:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"4fe3283590e40aaebbf396376e95ae1a"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.224000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 02 Jun 2016 19:11:51 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
 b9c9a723ae33ccc75c63c2d608e43542c37cf086:
   response:
@@ -97,77 +65,59 @@ b9c9a723ae33ccc75c63c2d608e43542c37cf086:
       code: 200
       message: 
     headers:
-      content-type:
-      - application/json; charset=utf-8
-      etag:
-      - '"9f40aa334584fe130aec2010b42c962a"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:36:12 GMT
+      etag:
+      - '"9f40aa334584fe130aec2010b42c962a"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.468000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.210000'
+      content-length:
+      - '213'
       connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
+      - Close
     body:
       encoding: UTF-8
       string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
-d2413454dc799ab1d75baa1145bb7a252b5e5e5d:
+9fa3e77f31feacafa7f34bce37796d2c91e02fd2:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:09:24 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.099000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.420000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 28 Sep 2015 17:28:00 GMT
+      content-length:
+      - '2'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
-    http_version: 
-0f58a41323aabdd38d5b7e672de16e46d8d3f5f2:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/json; charset=utf-8
-      etag:
-      - '"e221d0c1b61dd1093e5b18cf8d987b03"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '2.168000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"67F585F8-EA34-471F-A57E-BE10AC32A594","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594","name":"MODIS"}}]'
     http_version: 
 e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
   response:
@@ -175,24 +125,26 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"9dfc62149e07e7dffc01d4cb0d9810da"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:56:11 GMT
+      etag:
+      - '"bc9f1d750712360ba1f9bfb66e2bc81c"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.297000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.650000'
-      content-type:
-      - application/json;charset=utf-8
       content-length:
-      - '199'
-      date:
-      - Wed, 21 Jan 2015 13:49:50 GMT
+      - '212'
       connection:
-      - close
+      - Close
     body:
       encoding: UTF-8
       string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
@@ -203,181 +155,59 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"9dfc62149e07e7dffc01d4cb0d9810da"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:08:29 GMT
+      etag:
+      - '"bc9f1d750712360ba1f9bfb66e2bc81c"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.240000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.477000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 08 Apr 2015 17:57:18 GMT
-      connection:
-      - close
       transfer-encoding:
       - chunked
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
-45d44294079ff832ae7074b891b7d3502051034d:
+1e598b2cf9e500e75d1230761db6364c075bc246:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"4fe3283590e40aaebbf396376e95ae1a"'
       cache-control:
       - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.709000'
       content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
+      - application/json; charset=utf-8
       date:
-      - Mon, 07 Mar 2016 19:25:34 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
-    http_version: 
-a69cff963f537411aa2b581456e656971c4de799:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
+      - Mon, 26 Feb 2018 15:45:24 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.093000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 04 May 2016 19:08:08 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-3d7a8bc6a3e98768049af2d1844e1ec9799fc03f:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
       server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.077000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Fri, 19 Aug 2016 14:20:42 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-374be80ebee40c9624b6a48c5bafaa5d57712223:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
+      - nginx
       strict-transport-security:
-      - max-age=15768000
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      cache-control:
-      - max-age=0, private, must-revalidate
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.074000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.039000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 27 Oct 2016 21:08:30 GMT
+      content-length:
+      - '2'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
-    http_version: 
-64a1c351c5e7f5fd7ccb3b2191e981d0a4ef78ae:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"4fe3283590e40aaebbf396376e95ae1a"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.882000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 27 Jan 2016 01:20:46 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
     http_version: 
 560b44dfa1bce52eae7cb3a2840cf14ea30fa304:
   response:
@@ -385,29 +215,30 @@ a69cff963f537411aa2b581456e656971c4de799:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"dc8c2f79641fd38ed6282152ce64218d"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:03:50 GMT
+      etag:
+      - '"f2880b005d691e51e570a803bf1f1c08"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.165000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '1.002000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 12 Nov 2015 16:46:50 GMT
+      content-length:
+      - '254'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
-      string: '[{"reference":{"id":"6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","name":"ASTER_L1A_L1B"}}]'
+      string: '[{"reference":{"id":"FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","name":"ASTER
+        Level 1 and 2 Additional Processing Times"}}]'
     http_version: 
 93ef7a3bd3c6f5c1c365d5999801f9ff24510c46:
   response:
@@ -415,54 +246,26 @@ a69cff963f537411aa2b581456e656971c4de799:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:49:38 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.066000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.218000'
-      content-type:
-      - application/json;charset=utf-8
       content-length:
       - '2'
-      date:
-      - Wed, 21 Jan 2015 13:48:51 GMT
       connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-3403ff51d6381f2d1d828e78661a949770a55d58:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.169000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 08 Apr 2015 17:57:38 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
@@ -473,24 +276,26 @@ a69cff963f537411aa2b581456e656971c4de799:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:36:26 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.044000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.180000'
-      content-type:
-      - application/json;charset=utf-8
       content-length:
       - '2'
-      date:
-      - Wed, 21 Jan 2015 13:50:14 GMT
       connection:
-      - close
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
@@ -501,54 +306,26 @@ a69cff963f537411aa2b581456e656971c4de799:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:49:37 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.093000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.217000'
-      content-type:
-      - application/json;charset=utf-8
       content-length:
       - '2'
-      date:
-      - Wed, 21 Jan 2015 13:48:51 GMT
       connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-537b4b4bfcdea34745177829d4546ebba4a742cb:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.107000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Sat, 03 Oct 2015 21:49:46 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
@@ -564,7 +341,7 @@ a69cff963f537411aa2b581456e656971c4de799:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 14 Feb 2018 21:04:02 GMT
+      - Fri, 23 Feb 2018 17:57:59 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -572,7 +349,7 @@ a69cff963f537411aa2b581456e656971c4de799:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.097000'
+      - '0.135000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -583,118 +360,152 @@ a69cff963f537411aa2b581456e656971c4de799:
       encoding: UTF-8
       string: "[]"
     http_version: 
-ee31efa9f33eb3eff94b8af3ef4ffd52ea3b3e37:
+9de3c88b5b848bf3509d8b2a2ff3cebe2890dda8:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"4fe3283590e40aaebbf396376e95ae1a"'
       cache-control:
       - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '1.535000'
       content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
+      - application/json; charset=utf-8
       date:
-      - Tue, 05 May 2015 15:18:47 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
-    http_version: 
-18e2a29322032d47004965383c2d6aed7d3d5b02:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
+      - Fri, 23 Feb 2018 17:38:00 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
-      cache-control:
-      - max-age=0, private, must-revalidate
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.036000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.232000'
-      content-type:
-      - application/json;charset=utf-8
       content-length:
       - '2'
-      date:
-      - Wed, 21 Jan 2015 13:49:34 GMT
       connection:
-      - close
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
     http_version: 
-86d351643eeabb98070e3fadd7779dbbf7729c2e:
+55a690fa88992761a4b6daa2cf61f2b5525c7121:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:01:58 GMT
+      etag:
+      - '"238be64d28433463e4ed5b10dde71ef0"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.560000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.520000'
+      content-length:
+      - '213'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"71558EF5-C220-D8DA-29A1-A4A17D2F29CA","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/71558EF5-C220-D8DA-29A1-A4A17D2F29CA","name":"MOPITT"}}]'
+    http_version: 
+b93714f36b992af24eb8e6e28bf95b8f080f14cd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
       content-type:
-      - application/json;charset=utf-8
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:58:18 GMT
+      etag:
+      - '"e221d0c1b61dd1093e5b18cf8d987b03"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.269000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '212'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"67F585F8-EA34-471F-A57E-BE10AC32A594","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594","name":"MODIS"}}]'
+    http_version: 
+a426fa47ee11645530212fdc26da1489fdfb3ffe:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:52:40 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.076000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
       content-length:
       - '2'
-      date:
-      - Wed, 21 Jan 2015 13:48:53 GMT
       connection:
-      - close
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
     http_version: 
-6583b91a02a0126d6b822c87d6587bf54cd074be:
+35b36d3bf82cece227ea2541fb6b2a628cba0ad2:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:08:15 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.119000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.131000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 28 Mar 2016 02:36:35 GMT
+      content-length:
+      - '2'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
@@ -705,26 +516,26 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:36:43 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.035000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.372000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 23 Apr 2015 18:43:48 GMT
+      content-length:
+      - '2'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
@@ -735,97 +546,29 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:02:22 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.059000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.163000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 27 Jan 2016 20:02:45 GMT
+      content-length:
+      - '2'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: "[]"
-    http_version: 
-3542d0672359d331ffc53439e9870c77441cade5:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"5f995dd86b18a85501e99f41297a75fd"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.752000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 17 Sep 2015 01:42:28 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"3C37FE59-7568-1D93-9D36-730668C0F9E5","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5","name":"MODIS"}}]'
-    http_version: 
-52fdf23b43ee07fdf59143998568b48021dc4123:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"0ceac08799d4d4dbab24377c47fdf996"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.356000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 17 Sep 2015 01:42:28 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <data_quality_summary_definition>
-          <id>3C37FE59-7568-1D93-9D36-730668C0F9E5</id>
-          <summary>&lt;p&gt;------------------------------------------------------------------------------------&lt;br /&gt; MODIS DATA AT the Level 1 and Atmosphere Archive and &lt;br /&gt; Distribution System (LAADS) &lt;a href="http://ladsweb.nascom.nasa.gov/" target="_laads"&gt;http://ladsweb.nascom.nasa.gov/&lt;/a&gt; &lt;br /&gt;------------------------------------------------------------------------------------&lt;br /&gt;&lt;br /&gt; MODIS is described at: &lt;a href="http://modis.gsfc.nasa.gov/" target="_modis"&gt;http://modis.gsfc.nasa.gov/&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; L1B radiance calibration is described on the MODIS Characterization&lt;br /&gt;Support Team (MCST) main page: &lt;a href="http://mcst.gsfc.nasa.gov/" target="_modl1b"&gt;http://mcst.gsfc.nasa.gov/&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; Atmosphere products are described at:&lt;br /&gt; &lt;a href="http://modis-atmos.gsfc.nasa.gov/products.html" target="_atmos"&gt;http://modis-atmos.gsfc.nasa.gov/products.html&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; See also: &lt;a href="http://modaps.nascom.nasa.gov/services/" target="_modaps"&gt;http://modaps.nascom.nasa.gov/services/&lt;/a&gt;&lt;/p&gt;</summary>
-          <name>MODIS</name>
-          <updated_at type="datetime">2011-01-20T13:22:28Z</updated_at>
-          <provider_id>LAADS</provider_id>
-        </data_quality_summary_definition>
     http_version: 
 4daab4905e8625c9b7524d09fb96d22919b39e0f:
   response:
@@ -833,23 +576,29 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       code: 200
       message: 
     headers:
-      content-type:
-      - application/xml; charset=utf-8
-      etag:
-      - '"10a6490e45180bcaee32f7909f01bb16"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:58:20 GMT
+      etag:
+      - '"10a6490e45180bcaee32f7909f01bb16"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.101000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.121000'
+      content-length:
+      - '1293'
       connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
+      - Close
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         <?xml version="1.0" encoding="UTF-8"?>
         <data_quality_summary_definition>
           <id>67F585F8-EA34-471F-A57E-BE10AC32A594</id>
@@ -859,42 +608,42 @@ e5d32985213ec3843724214f16eb67b62ce42808:
           <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 
-7821e1f166cb65238302c261f7c9e0800e26c7e1:
+a717d7c9bb2d93e2aac08c2889f68bd4de481110:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"83087cc3c97613d0abb6e9970c33cab6"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:02:00 GMT
+      etag:
+      - '"bdf08bd021fbcffac14e86a5c579a154"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.197000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.350000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 12 Nov 2015 16:46:51 GMT
+      content-length:
+      - '569'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         <?xml version="1.0" encoding="UTF-8"?>
         <data_quality_summary_definition>
-          <id>6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D</id>
-          <summary>&lt;p&gt;The LP DAAC provides general access to all archived ASTER L1B scenes/granules over the US and US Territories, ASTER L1A &amp;amp; L1B Expedited products, and the ASTER Global Digital Elevation model at no-cost.&amp;nbsp; The on-demand products, such as the Level 1A, The higher-level products and L1B over international areas of interest are available only to approved users via an application process. More information on the application process and qualifications is available on the &lt;a href="https://lpdaac.usgs.gov/products/aster_policies" target="_blank"&gt;ASTER Policies Page&lt;/a&gt; under the heading Data Access for NASA Approved Users.&amp;nbsp; Otherwise, the on-demand data products are available through &lt;a href="http://ims.aster.ersdac.jspacesystems.or.jp/" target="_blank"&gt;Japan's ERSDAC WWW IMS&lt;/a&gt; interface at a cost. &lt;br /&gt;Please contact &lt;a href="https://lpdaac.usgs.gov/customer_service" target="_blank"&gt;LP DAAC User Services&lt;/a&gt; for additional information.&lt;br /&gt;&amp;nbsp; &lt;br /&gt;ASTER DATA PRODUCTS: &lt;br /&gt;-------------------- &lt;br /&gt;&amp;nbsp; &lt;br /&gt;ASTER data products are all validated. Before using any ASTER data product, the appropriate Product Release Notes as well as the metadata contained within the granule should be&amp;nbsp; consulted. &lt;br /&gt;Release Notes for each product may be found at:&amp;nbsp; &lt;br /&gt;&lt;a href="http://asterweb.jpl.nasa.gov/data_products.asp" target="_blank"&gt;http://asterweb.jpl.nasa.gov/data_products.asp&lt;/a&gt; &lt;br /&gt;&amp;nbsp;&lt;br /&gt;IMPORTANT: Before placing your order, please review the browse image for cloud cover by clicking on the Info (i) icon in the granule results listing.&amp;nbsp; The cloud cover amount shown may occasionally be inaccurate due to discrepancies in the cloud cover calculations.&lt;/p&gt;</summary>
-          <name>ASTER_L1A_L1B</name>
-          <updated_at type="datetime">2013-02-08T18:35:00Z</updated_at>
-          <provider_id>LPDAAC_ECS</provider_id>
+          <id>71558EF5-C220-D8DA-29A1-A4A17D2F29CA</id>
+          <summary>&lt;p&gt;Please read the latest Product Quality Statement associated with the MOPITT data you have selected.&amp;nbsp; &lt;br /&gt;&lt;a href="https://eosweb.larc.nasa.gov/project/mopitt/mopitt-quality-statements" target="_mopitt"&gt;Quality Summaries&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>MOPITT</name>
+          <updated_at type="datetime">2013-06-17T19:22:36Z</updated_at>
+          <provider_id>LARC</provider_id>
         </data_quality_summary_definition>
     http_version: 
 7a16596d8fda24c46eac15b0c43c010aa539d0cf:
@@ -903,29 +652,29 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"35bee4758cac370f4dbf73dd9deb7b52"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:56:12 GMT
+      etag:
+      - '"35bee4758cac370f4dbf73dd9deb7b52"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.107000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.424000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 21 Jan 2015 13:49:51 GMT
+      content-length:
+      - '2310'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         <?xml version="1.0" encoding="UTF-8"?>
         <data_quality_summary_definition>
           <id>77EDC43F-3BBC-2E39-BFBA-16DDE3540447</id>
@@ -946,29 +695,29 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"7cd8d34f81260d66e45fe59c44390187"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 17:36:13 GMT
+      etag:
+      - '"7cd8d34f81260d66e45fe59c44390187"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.181000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.688000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Tue, 05 May 2015 15:18:48 GMT
-      connection:
-      - close
       transfer-encoding:
       - chunked
+      connection:
+      - Close
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         <?xml version="1.0" encoding="UTF-8"?>
         <data_quality_summary_definition>
           <id>7F7F0445-FDFB-5D08-E982-9242C48FC0FB</id>
@@ -976,5 +725,44 @@ e5d32985213ec3843724214f16eb67b62ce42808:
           <name>AMSR-E</name>
           <updated_at type="datetime">2011-12-14T14:29:49Z</updated_at>
           <provider_id>NSIDC_ECS</provider_id>
+        </data_quality_summary_definition>
+    http_version: 
+580669ef94207c2708c75791d743cb364ec7d340:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Fri, 23 Feb 2018 18:03:51 GMT
+      etag:
+      - '"d609f976663ebc6f11a73b42c7ac2cda"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.113000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1057'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6</id>
+          <summary>&lt;p&gt;This particular data product requires additional processing. Due to the current demand, the turnaround time for producing these products has increased. As a result, orders are limited to&amp;nbsp;2000&amp;nbsp;granules per order.&amp;nbsp;To improve the efficiency of the additional processing, all orders up to 2000 granules will be divided into separate requests of 100 granules each with a unique download link for each set of 100 (or less) granules.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+        &lt;p&gt;Please contact LP DAAC User Services at&amp;nbsp;&lt;a href="mailto:lpdaac@usgs.gov" target="_blank"&gt;lpdaac@usgs.gov&lt;/a&gt;&amp;nbsp;with any questions or comments.&amp;nbsp;&lt;/p&gt;</summary>
+          <name>ASTER Level 1 and 2 Additional Processing Times</name>
+          <updated_at type="datetime">2018-02-07T19:11:42Z</updated_at>
+          <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 

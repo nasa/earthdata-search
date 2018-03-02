@@ -1,30 +1,30 @@
 ---
-b99e39f70e8bd26011052dc5f647e80655cc9c88:
+054b6a8e7e1c895b640a190f2b3728213facda9d:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"e8b40be704f263df8b86d54fc32fb9a1"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 22 Feb 2018 19:24:23 GMT
+      etag:
+      - '"e8b40be704f263df8b86d54fc32fb9a1"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.151000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.034000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Tue, 13 Oct 2015 20:31:56 GMT
+      content-length:
+      - '28'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: '{"availability":"Available"}'

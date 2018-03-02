@@ -27,11 +27,11 @@ describe 'Ordering without order options', reset: false do
     expect(page).to have_content(orderable_collection_title)
   end
 
-  it "indicates current order status", pending_fixtures: true do
+  it "indicates current order status" do
     expect(page).to have_text('Submitting')
   end
 
-  it "provides a link to cancel the order", pending_fixtures: true do
+  it "provides a link to cancel the order" do
     expect(page).to have_link("Cancel")
   end
 

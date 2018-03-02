@@ -101,15 +101,15 @@ describe "Collection GIBS visualizations", reset: false do
     end
   end
 
-  context 'when accessing GIBS-enabled collection "C1000000560-NSIDC_ECS"' do
+  context 'when accessing GIBS-enabled collection "C1000000020-LANCEAMSR2"' do
     before :all do
-      load_page :search, q: 'C1000000560-NSIDC_ECS'
-      view_granule_results('AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003')
+      load_page :search, q: 'C1000000020-LANCEAMSR2'
+      view_granule_results('NRT AMSR2 DAILY L3 GLOBAL SNOW WATER EQUIVALENT EASE-GRIDS V0')
       wait_for_xhr
     end
     
     it "displays GIBS imagery correctly" do
-      expect(page).to have_granule_visualizations('C1000000560-NSIDC_ECS')
+      expect(page).to have_granule_visualizations('C1000000020-LANCEAMSR2')
     end
   end
 

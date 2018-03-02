@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe "User missing ordering preferences", reset: false do
-  collection_id = 'C90762182-LAADS'
-  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  collection_id = 'C203234523-LAADS'
+  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
 
   context "when configuring a data access request" do
     before :all do
@@ -12,6 +12,7 @@ describe "User missing ordering preferences", reset: false do
       login 'edscbasic'
 
       click_button "Download project data"
+      wait_for_xhr
 
       choose "Stage for Delivery"
       wait_for_xhr
@@ -24,7 +25,7 @@ describe "User missing ordering preferences", reset: false do
     end
   end
 
-  context "when accessing downloadable data", pending_fixtures: true do
+  context "when accessing downloadable data" do
     before :all do
       load_page :search, project: [collection_id], view: :project
       wait_for_xhr
@@ -32,12 +33,14 @@ describe "User missing ordering preferences", reset: false do
       login 'edscbasic'
 
       click_button "Download project data"
+      wait_for_xhr
 
       choose 'Direct Download'
+
       click_button 'Submit'
     end
 
-    it "shows the data retrieval page", pending_fixtures: true do
+    it "shows the data retrieval page" do
       expect(page).to have_content(collection_title)
       expect(page).to have_link('View/Download Data Links')
     end

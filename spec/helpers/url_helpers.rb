@@ -8,10 +8,7 @@ module Helpers
         url = url.to_s
         url = '' if url == 'root'
         url = '/' + url unless url.start_with?('/')
-        result = [path_from_options(url, options), params_from_options(options)].map(&:presence).compact.join('?')
-        # Debugging
-        # puts "Page: #{result}"
-        result
+        [path_from_options(url, options), params_from_options(options)].map(&:presence).compact.join('?')
       end
 
       private
@@ -92,20 +89,24 @@ module Helpers
     def load_page(url, options={})
       close_banner = options.delete :close_banner
 
-      ActiveSupport::Notifications.instrument "edsc.performance", activity: "Page load" do
+      ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
+        options.each do |key, value|
+          page.set_rack_session(cmr_env: value) if key == 'cmr_env'
+        end
+
         visit QueryBuilder.new.add_to(url, options)
       end
       wait_for_xhr
-      #close tour modal
+
+      # Close tour modal
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
-      # close banner
+
+      # Close banner
       if close_banner.present? && close_banner || close_banner.nil?
         while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
           page.execute_script("$('.banner-close').click()")
         end
       end
-
-
     end
   end
 end

@@ -61,19 +61,19 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   end
 
   context "for polygon collections" do
-    use_collection 'C1219252422-LANCEMODIS', 'MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m'
+    use_collection 'C1219248591-LANCEMODIS', 'MODIS/Terra Near Real Time (NRT) Land Surface Temperature/Emissivity 5-Min L2 Swath 1km'
 
     before :all do
-      create_bounding_box(0, 0, 10, 15)
+      manually_create_bounding_box(0, 0, 10, 15)
       wait_for_xhr
     end
 
     context "visualizing a collection's granules" do
-      hook_granule_results('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
+      hook_granule_results('MODIS/Terra Near Real Time (NRT) Land Surface Temperature/Emissivity 5-Min L2 Swath 1km')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_granule_visualizations('C1219252422-LANCEMODIS')
+        expect(page).to have_granule_visualizations('C1219248591-LANCEMODIS')
       end
 
       context "and mousing over a visualized granule" do
@@ -103,10 +103,10 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "removing a visualized collection" do
-      hook_granule_results_back('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
+      hook_granule_results_back('MODIS/Terra Near Real Time (NRT) Land Surface Temperature/Emissivity 5-Min L2 Swath 1km')
 
       it "hides the collection's visualizations" do
-        expect(page).to have_no_granule_visualizations('C1219252422-LANCEMODIS')
+        expect(page).to have_no_granule_visualizations('C1219248591-LANCEMODIS')
       end
     end
   end
@@ -115,7 +115,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     use_collection 'C1236224151-GES_DISC', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V4.0 (AIRS_CPR_IND) at GES_DISC'
 
     before :all do
-      create_bounding_box(0, 0, 15, 15)
+      manually_create_bounding_box(0, 0, 15, 15)
       wait_for_xhr
     end
 

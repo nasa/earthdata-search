@@ -40,7 +40,8 @@ describe "Granule selection", reset: false do
 
   context "clicking on a granule in the result list" do
     before :all do
-      load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C90757595-LAADS'
+      load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C203234448-LAADS'
+
       # Click on a bottom one to test re-ordering
       nth_granule_list_item(10).click
       wait_for_xhr
@@ -165,7 +166,7 @@ describe "Granule selection", reset: false do
 
   context "clicking on a granule on the map" do
     before :all do
-      load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C90757595-LAADS'
+      load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C203234448-LAADS'
       map_mouseclick('#map', 2, -11)
       wait_for_xhr
     end

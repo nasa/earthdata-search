@@ -108,7 +108,7 @@ class CollectionsController < ApplicationController
     relevancy_param(params)
 
     if params['all_collections'].nil? || params['all_collections'].present? && params.delete('all_collections').to_s != 'true'
-      params['has_granules'] = true
+      params['has_granules_or_cwic'] = true
     end
 
     params['two_d_coordinate_system'].delete 'coordinates' if params['two_d_coordinate_system'].present?
@@ -129,10 +129,10 @@ class CollectionsController < ApplicationController
   #   processing_level_id
   #   data_center
   #   archive_center
-  # We should sort collection results by: sort_key[]=has_granules&sort_key[]=score
-  # Otherwise, we should sort collection results by: sort_key[]=has_granules&sort_key[]=entry_title
+  # We should sort collection results by: sort_key[]=has_granules_or_cwic&sort_key[]=score
+  # Otherwise, we should sort collection results by: sort_key[]=has_granules_or_cwic&sort_key[]=entry_title
   def relevancy_param(params)
-    params[:sort_key] = ['has_granules']
+    params[:sort_key] = ['has_granules_or_cwic']
     # sensor, archive_center and two_d_coordinate_system_name were removed from the available facets but it doesn't
     # hurt to list them here though.
     relevancy_capable_fields = [:keyword, :free_text, :platform, :instrument, :sensor, :two_d_coordinate_system_name,

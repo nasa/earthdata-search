@@ -262,6 +262,11 @@ describe "Granule list", reset: false do
   end
 
   context "for collections without granules" do
+    before do
+      set_temporal('2018-01-01 00:00:00', '2018-01-31 23:59:59')
+    end
+    
+    use_collection 'C1426717545-LANCEMODIS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT'
 
     context "clicking on a collection result" do
       before :all do

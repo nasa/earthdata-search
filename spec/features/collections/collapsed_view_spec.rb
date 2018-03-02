@@ -1,10 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Collections Collapsed View", reset: false do
-  extend Helpers::CollectionHelpers
-
+describe 'Collections Collapsed View', reset: false do
   context 'on the search results screen' do
-
     before :all do
       Capybara.reset_sessions!
       load_page :search, env: :sit

@@ -1,40 +1,33 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe 'Collection has-granules filtering', reset: false do
-  context "searching collections with 'show collections without granules' filter checked" do
+  context 'When disabling the \'show collections without granules\' filter' do
     before :all do
-      load_page :search, ac: true
+      load_page :search
+
+      @with_granules_collections_count = collection_results_header_value.text.to_i
+
+      find(:css, '#has-granules').set(false)
+      wait_for_xhr
     end
 
-    it 'displays all collections' do
-      expect(page).to have_content('32939 Matching Collections')
+    it 'increases the number of collections returned' do
+      all_collections_count = collection_results_header_value.text.to_i
+      expect(all_collections_count).to be > @with_granules_collections_count
     end
 
-    context 'applying another filter' do
+    context 'When re-enabling the \'show collections without granules\' filter' do
       before :all do
-        manually_create_point(0, 0)
+        @all_collections_count = collection_results_header_value.text.to_i
+
+        find(:css, '#has-granules').set(true)
         wait_for_xhr
       end
 
-      after :all do
-        clear_spatial
-        wait_for_xhr
+      it 'decreases the number of collections returned' do
+        with_granules_collections_count = collection_results_header_value.text.to_i
+        expect(@all_collections_count).to be > with_granules_collections_count
       end
-
-      it 'keeps both filters' do
-        expect(page.current_url).to have_content('ac=true')
-        expect(page.current_url).to have_content('sp=0%2C0')
-      end
-    end
-  end
-
-  context "searching collections with 'show collections without granules' filter unchecked" do
-    before :all do
-      load_page :search, ac: false
-    end
-
-    it 'displays collections that have granules' do
-      expect(page).to have_content('31572 Matching Collections')
     end
   end
 end

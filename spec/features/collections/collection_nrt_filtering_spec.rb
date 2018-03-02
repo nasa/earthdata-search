@@ -27,5 +27,4 @@ describe 'Collection NRT Filtering', reset: false do
       end
     end
   end
-
 end

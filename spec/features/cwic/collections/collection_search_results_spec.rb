@@ -1,64 +1,43 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "CWIC-capable collection search results", reset: false do
-  extend Helpers::CollectionHelpers
-
-  before :all do
-    Capybara.reset_sessions!
-    load_page :search, env: :uat
-  end
-
-  after :all do
-    Capybara.reset_sessions!
-  end
-
-  context "in the collection results list" do
-    context "when viewing a CWIC collection" do
+describe 'CWIC-enabled collection search results', reset: false do
+  context 'When viewing the collection results list' do
+    context 'When viewing a CWIC collection' do
       before :all do
-        fill_in "keywords", with: 'C1204449891-GCMDTEST'
-        wait_for_xhr
+        Capybara.reset_sessions!
+
+        # This is not a CWIC collection but this functionality is only
+        # in SIT at the time of writing this feature/test so we tagged
+        # a collection in SIT to test it.
+        load_page :search, q: 'C1000000575-DEV07', env: :sit
       end
 
-      after :all do
-        load_page :search, env: :uat
+      it 'shows the CWIC tagged collection' do
+        expect(first_collection_result).to have_content('AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V001')
       end
 
-      it "shows the CWIC tagged collection", acceptance: true do
-        expect(first_collection_result).to have_content('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
-      end
-
-      it "does not show a granule count", acceptance: true do
+      it 'does not show a granule count' do
         expect(first_collection_result).to have_no_text('Granules')
       end
 
-      it "displays an indication that its search and retrieval is provided externally", acceptance: true do
-        expect(first_collection_result).to have_text("Int'l / Interagency")
+      it 'displays an indication that its search and retrieval is provided externally' do
+        expect(first_collection_result).to have_text('Int\'l / Interagency')
       end
     end
 
-    context "a non-CWIC-tagged item" do
-      use_collection 'C1000000316-LARC_ASDC', 'FIRE_CI2_ER2_MAS'
+    context 'When viewing a non CWIC-tagged item' do
+      before :all do
+        Capybara.reset_sessions!
+        
+        load_page :search, q: 'C1000001188-LARC_ASDC'
+      end
 
-      it "shows a granule count", acceptance: true do
+      it 'shows a granule count' do
         expect(first_collection_result).to have_text('Granules')
       end
 
-      it "displays no indication of external search and retrieval", acceptance: true do
-        expect(first_collection_result).to have_no_text("Int'l / Interagency")
-      end
-    end
-
-    context 'collection-only collection' do
-      before :all do
-        load_page :search, ac: true, q: 'nsidc-0051', env: :uat
-      end
-
-      after :all do
-        load_page :search, env: :uat
-      end
-
-      it "doesn't show add to project icon" do
-        expect(first_collection_result).not_to have_link("Add collection to the current project")
+      it 'displays no indication of external search and retrieval' do
+        expect(first_collection_result).to have_no_text('Int\'l / Interagency')
       end
     end
   end

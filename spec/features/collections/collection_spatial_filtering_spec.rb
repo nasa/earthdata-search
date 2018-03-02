@@ -14,8 +14,7 @@ describe "Spatial manual entry", reset: false do
       it "filters collections using the selected point" do
         manually_create_point(67, -155)
         wait_for_xhr
-        expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
-        expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+        expect(page).to have_content("The MODIS/Terra Aerosol 5-Min L2 Swath 10km (MOD04_L2) product continues to provide full global coverage of aerosol properties from the Dark Target (DT) and Deep Blue (DB) algorithms.")
       end
 
       it "displays point coordinates in the manual entry text box" do
@@ -29,21 +28,29 @@ describe "Spatial manual entry", reset: false do
         expect(page).to have_text('Lon [-1155] must be between -180 and 180')
       end
 
-      context "changing the point selection" do
+      context 'setting a point' do
         before(:each) do
           manually_create_point(0, 0)
           wait_for_xhr
+        end
+
+        it 'sets a point at 0,0' do
           expect(page).to have_field('manual-coord-entry-point', with: '0,0')
-          manually_create_point(-75, 40)
-          wait_for_xhr
         end
 
-        it "updates the coordinates in the manual entry box" do
-          expect(page).to have_field('manual-coord-entry-point', with: '-75,40')
-        end
+        context 'and then changing the point' do
+          before(:each) do
+            manually_create_point(-75, 40)
+            wait_for_xhr
+          end
 
-        it "updates the collection filters using the new point selection" do
-          expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
+          it "updates the coordinates in the manual entry box" do
+            expect(page).to have_field('manual-coord-entry-point', with: '-75,40')
+          end
+
+          it "updates the collection filters using the new point selection" do
+            expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
+          end
         end
       end
 
@@ -60,7 +67,7 @@ describe "Spatial manual entry", reset: false do
         end
 
         it "removes the spatial point collection filter" do
-          expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
+          expect(page).to have_content("Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050")
         end
       end
     end
@@ -69,8 +76,8 @@ describe "Spatial manual entry", reset: false do
       it "filters collections using the selected bounding box" do
         manually_create_bounding_box(0, 0, 10, 10)
         wait_for_xhr
-        expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-        expect(page).to have_content("A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data")
+        # expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("MODIS/Terra Aerosol 5-Min L2 Swath 10km V006")
       end
 
       it "displays bounding box points in the manual entry text boxes" do
@@ -87,17 +94,17 @@ describe "Spatial manual entry", reset: false do
         before(:each) do
           manually_create_bounding_box(0, 0, 10, 10)
           wait_for_xhr
-          manually_create_bounding_box(-174, 69, -171, 72)
+          manually_create_bounding_box(69, -174, 72, -171)
           wait_for_xhr
         end
 
         it "updates the coordinates in the manual entry text boxes" do
-          expect(page).to have_field('manual-coord-entry-swpoint', with: '-174,69')
-          expect(page).to have_field('manual-coord-entry-nepoint', with: '-171,72')
+          expect(page).to have_field('manual-coord-entry-swpoint', with: '69,-174')
+          expect(page).to have_field('manual-coord-entry-nepoint', with: '72,-171')
         end
 
         it "updates the collection filters using the new bounding box selection" do
-          expect(page).to have_content("ACOS GOSAT/TANSO-FTS Level 2 Full Physics Standard Product V3.5 (ACOS_L2S) at GES DISC")
+          expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
         end
       end
 
@@ -115,12 +122,12 @@ describe "Spatial manual entry", reset: false do
         end
 
         it "removes the spatial bounding box collection filter" do
-          expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+          expect(page).to have_content("Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050")
         end
 
         context "then draw another bounding box" do
           before :all do
-            create_bounding_box(0, 0, 5, 5)
+            manually_create_bounding_box(0, 0, 5, 5)
             wait_for_xhr
           end
 

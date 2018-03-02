@@ -33,6 +33,10 @@ module Helpers
       page.find('#collection-results header h2')
     end
 
+    def collection_results_header_value
+      page.find('#collection-results header h2 strong')
+    end
+
     def unfeatured_collection_results
       page.find('#collection-results-list')
     end
