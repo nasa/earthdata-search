@@ -76,19 +76,19 @@ class Retrieval < ActiveRecord::Base
 
   def self.error(job, exception)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
-      logger.error "Delayed Job #{job.id} from the #{job.queue } queue has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
+      logger.error "Delayed Job #{job.id} from the #{job.queue} queue has encountered an error during its #{job.attempts + 1} attempt. That error is: #{exception}"
     end
   end
 
   def self.failure(job)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
-      logger.error "Delayed Job #{job.id} from the #{job.queue } queue has failed and will not be retried."
+      logger.error "Delayed Job #{job.id} from the #{job.queue} queue has failed and will not be retried."
     end
   end
 
   def self.success(job)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
-      logger.info "Delayed Job #{job.id} from the #{job.queue } queue has completed processing."
+      logger.info "Delayed Job #{job.id} from the #{job.queue} queue has completed processing."
     end
   end
 
