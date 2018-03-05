@@ -14,6 +14,7 @@ module GranuleUtils
       params.delete('cloud_cover') if min.empty? && max.empty?
     end
 
+    params.delete('variables') if params['variables']
     params.delete('datasource') if params['datasource']
     params.delete('short_name') if params['short_name']
 

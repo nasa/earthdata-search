@@ -7,7 +7,7 @@ ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
                  thumbnailWidth = @edsc.config.thumbnailWidth
-                 Granules=ns.Granules
+                 Granules = ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
@@ -16,10 +16,6 @@ ns.Collection = do (ko
                  dateUtil = @edsc.util.date
                  config = @edsc.config
                  ) ->
-
-  openSearchKeyToEndpoint =
-    cwic: (collection) ->
-
 
   collections = ko.observableArray()
 
@@ -39,7 +35,6 @@ ns.Collection = do (ko
 
       for collection in collections
         collection.granuleDatasourceAsync(aggregation)
-
 
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
@@ -120,9 +115,6 @@ ns.Collection = do (ko
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
-      @has_opendap = ko.observable(null)
-      @opendapRootUrl = @asyncComputed(null, 100, @_computeOpendapRootUrl, this)
-
     _computeMaxOrderSize: ->
       hits = 0
       hits = @granuleDatasource().data().hits() if @granuleDatasource()
@@ -149,7 +141,6 @@ ns.Collection = do (ko
         @orbitFriendly(true) if _granule.orbit_calculated_spatial_domains?
         break if _capabilities['day_night_flag'] && _capabilities['cloud_cover'] && _capabilities['orbit_calculated_spatial_domains']
       _capabilities
-
 
     _computeTimeRange: ->
       if @hasAtomData()
@@ -363,27 +354,10 @@ ns.Collection = do (ko
     has_feature: (key) ->
       @getValueForTag("features.#{key}")
 
-    variables_enabled: ->
-      false
-
     transforms_enabled: ->
       false
 
     formats_enabled: ->
       false
-
-    _computeOpendapRootUrl: ->
-      if @associations()?['services']?.length > 0
-        for serviceId in @associations()['services'] when !@has_opendap()
-          @_getOpendapService(serviceId)
-
-    _getOpendapService: (id)->
-      ajax
-        dataType: 'json'
-        url: "/services/#{id}"
-        success: (data) =>
-          if data['Type'] == 'OPeNDAP'
-            @opendapRootUrl(data['OnlineResource']?['Linkage'])
-            @has_opendap(true)
 
   exports = Collection

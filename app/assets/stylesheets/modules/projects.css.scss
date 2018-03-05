@@ -295,7 +295,7 @@ $card-background: rgba(235,235,235,1);
   }
 
   .modal-body {
-    max-height: 500px;
+    max-height: 400px;
     padding: 0;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -359,11 +359,6 @@ $card-background: rgba(235,235,235,1);
       padding: 0;
       display: inline-block;
     }
-
-    .action-button {
-      float: right;
-      margin: 0;
-    }
   }
 
   .collection-customization {
@@ -405,6 +400,11 @@ $card-background: rgba(235,235,235,1);
   }
 
   .variable-selection {
+    .message-container p {
+      margin: .75em;
+      font-weight: bold;
+    }
+
     .variable-list {
       padding: 0;
 
@@ -421,9 +421,6 @@ $card-background: rgba(235,235,235,1);
       margin-bottom: 15px;
       border-bottom: 1px solid $light-grey;
       background: lighten($light-grey, 5%);
-
-      a {
-      }
     }
 
     .child-spacer {
@@ -458,5 +455,21 @@ $card-background: rgba(235,235,235,1);
         font-size: .9em;
       }
     }
+
+    .modal-footer {
+      .action-container {
+        text-align: right;
+        background: #fff;
+
+        .action-button {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .selected-collection-variables {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }

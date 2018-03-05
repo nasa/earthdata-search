@@ -10,7 +10,6 @@
 #= require models/ui/sitetour
 #= require models/ui/granules_list
 #= require models/ui/variable_list
-#= require modules/map/index
 
 
 models = @edsc.models
@@ -70,9 +69,8 @@ ns.ProjectPage = do (ko,
       
 
       $(window).on 'edsc.save_workspace', (e)=>
-        urlUtil.saveState('/search/collections', urlUtil.currentParams(), true, @workspaceNameField())
-        @workspaceName(@workspaceNameField())
-        $('.save-dropdown').removeClass('open')
+        currentParams = @project.serialized()
+        urlUtil.saveState('/search/collections', currentParams, true)
 
       setTimeout((=>
         @_loadFromUrl()

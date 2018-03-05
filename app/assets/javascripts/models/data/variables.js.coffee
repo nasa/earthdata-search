@@ -13,17 +13,16 @@ ns.Variables = do (ko
       variables = (Variable.findOrCreate({meta: {'concept-id': id}}, query) for id in ids)
       needsLoad = (variable.meta()['concept-id'] for variable in variables when !variable.hasAtomData())
 
-      # awaitDatasources = ->
-      #   Variable.awaitDatasources variables, callback
+      awaitDatasources = ->
+        Variable.awaitDatasources variables, callback
 
       if needsLoad.length > 0
         params = {concept_id: needsLoad}
         new VariablesModel(query).search params, (results) =>
-          variables = results
           result.dispose() for result in results
-          callback(variables)
+          awaitDatasources()
       else
-        callback(variables)
+        awaitDatasources()
       null
 
     constructor: (query) ->

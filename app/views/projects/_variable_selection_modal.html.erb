@@ -2,12 +2,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
-
         <h1 class="modal-title" id="variable-selection-modal-title"><i class="fa fa-tags"></i> Variable Selection</h1>
       </div>
 
       <div class="modal-body">
+        <div class="message-container" data-bind="visible: _pending()">
+          <p>Loading...</p>
+        </div>
+
+        <div class="message-container" data-bind="visible: !_pending() && variables().length == 0">
+          <p>This collection doesn't have any associated variables.</p>
+        </div>
+
         <div class="keyword-list" data-bind="visible: !selectedKeyword()">
           <ul id="associated-variables" data-bind="foreach: keywordMappings">
             <li>
@@ -36,7 +42,7 @@
           <div data-bind="foreach: $data.variables">
             <div class="collection-variable-list">
               <label>
-                <input type="checkbox" data-bind="click: $parents[1].handleVariableSelection, checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data)">
+                <input type="checkbox" data-bind="checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data), attr: {value: $data.meta()['concept-id']}">
                 <b data-bind="text: $data.umm().Name"></b>
               </label>
               <p class="description" data-bind="text: $data.umm().LongName"></p>
@@ -46,7 +52,11 @@
       </div>
 
       <div class="modal-footer">
-        <a class="action-button" data-dismiss="modal">Done</a>
+        <div class="action-container">
+          <button class="button secondary" data-bind="visible: !selectedKeyword()" data-dismiss="modal">Done</button>
+          <button class="button secondary" data-bind="visible: selectedKeyword(), click: clearKeyword">Back</button>
+          <button class="save" data-bind="visible: selectedKeyword()">Save</button>
+        </div>
       </div>
     </div>
   </div>

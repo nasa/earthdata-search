@@ -19,6 +19,8 @@ ns.VariableSelector = do (ko
       @selectedKeyword = ko.observable(null)
       @keywordMappings = ko.computed(@_computeKeywordMappings, this, deferEvaluation: true)
 
+      @_pending = ko.observable(null)
+
       @query = new QueryModel()
 
       $(document).ready(@_onReady)
@@ -33,8 +35,13 @@ ns.VariableSelector = do (ko
         if @selectedKeyword()
           isSelected = $(e.target).is(':checked')
           
-          for variable in @selectedKeyword().variables
-            @triggerVariableSelection(variable, isSelected)
+          $('.collection-variable-list input[type="checkbox"]').prop('checked', isSelected)
+
+      # Save the currently selected variables
+      $(document).on 'click', '#variable-subsetting-modal button.save', (e) =>
+        @_saveSelectedVariableState()
+
+        $(window).trigger('edsc.save_workspace')
       
     ###*
      * Determine whether or not the currently selected keyword has all of its variables selected
@@ -57,21 +64,31 @@ ns.VariableSelector = do (ko
       count
 
     ###*
-     * Selects the variable being checked
+     * Retrieves a variable object provided a concept id
      ###
-    handleVariableSelection: (variable, e) =>
-      isSelected = $(e.target).is(':checked')
+    _getVariable: (concept_id) =>
+      for variable in @variables()
+        if concept_id == variable.meta()['concept-id']
+          return variable
+      null
 
-      @triggerVariableSelection(variable, isSelected)
+    ###*
+     * Writes the currently selected variables to the observable
+     ###
+    _saveSelectedVariableState: =>
+      # Pull out the selected variables before we wipe them below
+      selectedVariables = $('.collection-variable-list input[type="checkbox"]:checked')
 
-      # Continue propagation allowing the checkbox to check and un-check itself
-      true
+      # Rather than keep track of the delta, just wipe them all and re-add them below
+      @selectedProjectCollection().selectedVariables.removeAll()
 
-    triggerVariableSelection: (variable, isSelected) ->
-      if isSelected
-        @selectedProjectCollection().selectedVariables.push(variable)
-      else
-        @selectedProjectCollection().selectedVariables.remove(variable)
+      selectedVariables.each (index, element) =>
+        selectedVariableId = $(element).val()
+
+        @selectedProjectCollection().selectedVariables.push(@_getVariable(selectedVariableId))
+
+      # Sends the user back to the keyword list
+      @clearKeyword()
 
     ###*
      * Creates the full navigation structure used in displaying variables grouped by their ScienceKeywords
@@ -80,7 +97,7 @@ ns.VariableSelector = do (ko
       calculatedMappings = {}
 
       for variable in @variables()
-        for keyword in variable.umm().ScienceKeywords
+        for keyword in variable.umm()?.ScienceKeywords || []
           keywordPath = $.grep((keyword[keywordLevel] for keywordLevel in keywordLevels), Boolean)
 
           leafNode = keywordPath.pop()
@@ -89,7 +106,7 @@ ns.VariableSelector = do (ko
 
           calculatedMappings[leafNode].push(variable)
 
-      # Return an array of objects for easier digest from the view
+      # Return an array of objects for easier digest from the view instead of doing it in the view
       ({keyword: keyword, selected: @_countSelectedVariables(variables), variables: variables} for keyword, variables of calculatedMappings)
 
     ###*
@@ -103,15 +120,16 @@ ns.VariableSelector = do (ko
 
         # Prevent making unnecessary requests
         if variableIds
+          @_pending(true)
           VariablesModel.forIds variableIds, @query, (variables) =>
             @variables(variables)
+            @_pending(false)
 
     ###*
      * Sets the currently selected keyword
      ###
     selectKeyword: (selectedKeyword, e) =>
       @selectedKeyword(selectedKeyword)
-
 
     ###*
      * Clears the currently selected keyword

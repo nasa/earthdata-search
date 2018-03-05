@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a class="back-button back-to-search toolbar-button" href="<%= edsc_path @project.path.split('?')[0] %>?projectId=<%=@project.to_param%>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
+  <a class="back-button back-to-search toolbar-button" href="#" data-bind="click: project.backToSearch"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
@@ -33,14 +33,15 @@
         </div>
       </div>
       <h3>Variables</h3>
-      <ul data-bind="foreach: project.collections()">
-        <!-- ko if: $parent.project.getProjectCollection($data.id).selectedVariables().length > 0 -->
+      <ul class="selected-collection-variables" data-bind="foreach: project.collections()">
+        <!-- ko if: $parent.project.getProjectCollection($data.id).hasSelectedVariables() -->
         <li>
           <span data-bind="text: $data.id"></span>
-          <ul data-bind="foreach: $parent.project.getProjectCollection($data.id).selectedVariables">
+          <ul data-bind="foreach: $parent.project.getProjectCollection($data.id).selectedVariables()">
             <li data-bind="text: $data.displayName()"></li>
           </ul>
         </li>
+        <!-- / -->
         <!-- /ko -->
       </ul>
       <h3>Transformations</h3>
@@ -88,7 +89,7 @@
                 </span>
                 <!-- /ko -->
                 <!-- ko if: has_variables -->
-                <span data-bind="css: {enabled: variables_enabled()}">
+                <span data-bind="css: {enabled: $parent.project.getProjectCollection($data.id).hasSelectedVariables()}">
                   <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
                 </span>
                 <!-- /ko -->
@@ -108,11 +109,9 @@
             </div>
           </div>
           <div class="action-container">
-            <a class="action-button" data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-customization-modal'}"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
+            <a class="action-button customize" data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-customization-modal'}"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
 
             <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
-
-            <a class="action-button" data-bind="visible: has_opendap, attr: {'href': $data.opendapRootUrl}"><i class="fa fa-download" aria-hidden="true"></i></a>
           </div>
           <%= render partial: 'collection_customization_modal' %>
           <%= render partial: 'granule_list_modal' %>
@@ -125,4 +124,11 @@
   </section>
   
   <%= render partial: 'variable_selection_modal' %>
+
+  <!-- Hidden form for submitting project data for displaying opendap links -->
+  <form id="opendap-access" method="POST" action="<%= edsc_path '/granules/fetch_opendap_links' %>" style="display: none;">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+    <input id="opendap-access-project" name="project" type="hidden" />
+  </form>
+
 </div>

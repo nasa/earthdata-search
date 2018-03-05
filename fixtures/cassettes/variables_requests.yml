@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json?concept_id%5B%5D=V1200241814-EDF_OPS&concept_id%5B%5D=V1200241817-EDF_OPS&concept_id%5B%5D=V1200241815-EDF_OPS&concept_id%5B%5D=V1200241822-EDF_OPS&concept_id%5B%5D=V1200241816-EDF_OPS&concept_id%5B%5D=V1200241818-EDF_OPS&concept_id%5B%5D=V1200241821-EDF_OPS&concept_id%5B%5D=V1200241812-EDF_OPS&concept_id%5B%5D=V1200241813-EDF_OPS&concept_id%5B%5D=V1200241819-EDF_OPS&concept_id%5B%5D=V1200241820-EDF_OPS&concept_id%5B%5D=V1200241823-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 05 Mar 2018 15:23:37 GMT
+  digest: dfc0b400a8c27968e4d3b08bbe066e4b10a314d3
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json?concept_id%5B%5D=V1200241822-EDF_OPS&concept_id%5B%5D=V1200241823-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 05 Mar 2018 15:23:38 GMT
+  digest: 76bc8d8543b8825ae61c083e1d8643c9aa99172c
+recorded_with: VCR 2.6.0
