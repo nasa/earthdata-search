@@ -70,7 +70,7 @@ class Retrieval < ActiveRecord::Base
   def self.enqueue(job)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       queued_jobs = DelayedJob.where(failed_at: nil)
-      logger.info "A new delayed job is being enqueued into processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
+      logger.info "A new Delayed Job is being enqueued into processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
     end
   end 
 
