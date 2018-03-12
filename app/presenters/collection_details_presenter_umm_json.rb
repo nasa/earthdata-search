@@ -214,9 +214,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
 
     # related_urls should be empty if there are no Related URLs
     related_urls.each {|x| if !(x[:urls].empty?) then return related_urls end}
-    related_urls = []
-
-    related_urls
+    []
   end
 
   def format_url(url)
