@@ -137,7 +137,8 @@ ns.ProjectPage = do (ko,
         projectGranules = 0
         projectSize = 0.0
         loadedCollectionNum = 0
-        for collection in @project.collections()
+        for projectCollection in @project.collections()
+          collection = projectCollection.collection
           granules = collection.cmrGranulesModel
           if granules.isLoaded()
             loadedCollectionNum += 1

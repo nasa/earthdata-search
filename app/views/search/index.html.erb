@@ -174,7 +174,9 @@
           <ul id="project-collections-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
+            <!-- ko with: $data.collection -->
             <%= render partial: 'collection_list_item', locals: {is_project: true} %>
+            <!-- /ko -->
           </ul>
           <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
             <p>

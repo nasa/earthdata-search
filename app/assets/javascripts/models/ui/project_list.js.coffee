@@ -71,17 +71,17 @@ ns.ProjectList = do (ko
 
     _syncHitsCounts: =>
       return unless @collectionResults? && @collectionResults.loadTime()?
-      for collection in @project.collections()
+      for projectCollection in @project.collections()
         found = false
-        for result in @collectionResults.results() when result.id == collection.id
+        for result in @collectionResults.results() when result.id == projectCollection.collection.id
           found = true
           break
-        collection.granuleDatasource()?.data() unless found
+        projectCollection.collection.granuleDatasource()?.data() unless found
 
     _onReady: =>
       sortable('#project-collections-list')
       $('#project-collections-list').on 'sortupdate', (e, {item, startIndex, endIndex}) =>
-        collections = @project.collections().concat()
+        collections = (projectCollection.collection for projectCollection in @project.collections()).concat()
         [collection] = collections.splice(startIndex, 1)
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
@@ -277,13 +277,13 @@ ns.ProjectList = do (ko
 
     toggleViewAllCollections: =>
       visible = !@allCollectionsVisible()
-      for collection in @project.collections()
-        collection.visible(visible)
+      for projectCollection in @project.collections()
+        projectCollection.collection.visible(visible)
 
     _computeAllCollectionsVisible: =>
       all_visible = true
-      for collection in @project.collections()
-        all_visible = false if !collection.visible()
+      for projectCollection in @project.collections()
+        all_visible = false if !projectCollection.collection.visible()
       all_visible
 
     showRelatedUrls: ->

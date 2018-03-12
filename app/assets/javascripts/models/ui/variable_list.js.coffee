@@ -141,10 +141,10 @@ ns.VariableSelector = do (ko
      * Assign a variable to a nested navigation structure
      * @param {object} Collection object assigned to the card this modal was initiated from
      ###
-    displayModal: (collection) =>
-      @selectedCollection(collection)
+    displayModal: (projectCollection) =>
+      @selectedCollection(projectCollection.collection)
 
-      @selectedProjectCollection(@project.getProjectCollection(collection.id))
+      @selectedProjectCollection(projectCollection)
 
       $('#variable-subsetting-modal').modal('show')
 

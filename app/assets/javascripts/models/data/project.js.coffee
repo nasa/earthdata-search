@@ -123,6 +123,17 @@ ns.Project = do (ko,
       VariablesModel.forIds variables, {}, (variables) =>
         @selectedVariables(variables)
 
+    customizeButtonText: =>
+      return 'Edit Customizations' if @hasSelectedVariables()
+
+      'Customize'
+
+    transforms_enabled: ->
+      false
+
+    formats_enabled: ->
+      false
+
     serialize: ->
       options = @serviceOptions.serialize()
       $(document).trigger('dataaccessevent', [@collection.id, options])
@@ -188,11 +199,11 @@ ns.Project = do (ko,
         observable(projectCollection)
 
     getCollections: ->
-      @_collectionsById[id]?.collection for id in @_collectionIds()
+      @_collectionsById[id] for id in @_collectionIds()
 
     exceedCollectionLimit: ->
-      for c in @getCollections()
-        return true if c.isMaxOrderSizeReached()
+      for projectCollection in @getCollections()
+        return true if projectCollection.collection.isMaxOrderSizeReached()
       false
 
     setCollections: (collections) ->
@@ -207,7 +218,7 @@ ns.Project = do (ko,
       null
 
     _computeVisibleCollections: ->
-      collections = (collection for collection in @collections() when collection.visible())
+      collections = (collection for projectCollection in @collections() when projectCollection.collection.visible())
 
       focus = @focus()
       if focus && focus.visible() && collections.indexOf(focus) == -1
@@ -285,7 +296,7 @@ ns.Project = do (ko,
     _toQuery: ->
       return @_pending() if @_pending()?
       result = $.extend({}, @query.serialize())
-      collections = [@focus()].concat(@collections())
+      collections = [@focus()].concat(projectCollection.collection for projectCollection in @collections())
       ids = (ds?.id ? '' for ds in collections)
       if collections.length > 1 || collections[0]
         queries = [{}]

@@ -1,4 +1,4 @@
-<div class="modal fade" data-bind="attr: {id: id + '-modal'}" tabindex="-1" role="dialog" aria-labelledby="granule-list-modal-title" >
+<div class="modal fade" data-bind="attr: {id: collection.id + '-modal'}" tabindex="-1" role="dialog" aria-labelledby="granule-list-modal-title" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,10 +6,10 @@
         <h1 class="modal-title" id="granule-list-modal-title">Collection Details</h1>
       </div>
       <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
-        <!-- ko if: granuleDatasource().data().excludedGranulesList().length > 0 -->
-        <p class="undo">Granule excluded. <a href="#" data-bind="click: granuleDatasource().data().undoExclude">Undo</a></p>
+        <!-- ko if: collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
+        <p class="undo">Granule excluded. <a href="#" data-bind="click: collection.granuleDatasource().data().undoExclude">Undo</a></p>
         <!-- /ko -->
-        <ul data-bind="foreach: granuleDatasource().data().results()">
+        <ul data-bind="foreach: collection.granuleDatasource().data().results()">
           <li>
             <!-- ko if: browse_flag === 'true' || browse_flag === true -->
             <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">

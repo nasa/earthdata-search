@@ -354,10 +354,4 @@ ns.Collection = do (ko
     has_feature: (key) ->
       @getValueForTag("features.#{key}")
 
-    transforms_enabled: ->
-      false
-
-    formats_enabled: ->
-      false
-
   exports = Collection

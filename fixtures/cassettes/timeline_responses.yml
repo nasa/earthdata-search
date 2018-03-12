@@ -4039,6 +4039,30 @@ e2b1ae4d82db335bc43927d06188e80dbea77f5a:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
     http_version: 
+99502cb460f49c258684b7fa25e8235daddcf2b4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 736a021f-a7f3-43ef-b81c-b032e0c62bf2
+      date:
+      - Mon, 12 Mar 2018 00:18:53 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
 55f308c8fe1c17efe036b3b4ad5fdc99073c034a:
   response:
     status:
@@ -7512,6 +7536,32 @@ df63b4af14460e2fcd08926d22a4cdff3e2b4b01:
     body:
       encoding: UTF-8
       string: "[]"
+    http_version: 
+5c2997c3df01fba28bb97e479bc3ffd9f1ee735c:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - a0056475-79d1-4f47-b2dd-f7f7833e6278
+      content-type:
+      - application/json
+      date:
+      - Mon, 12 Mar 2018 00:20:56 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '47'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token edsc-access does not exist"]}'
     http_version: 
 36734f7f3df3ae9237d932b56268bb8cf1085d4b:
   response:

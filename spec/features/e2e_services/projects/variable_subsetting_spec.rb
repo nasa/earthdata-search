@@ -104,6 +104,10 @@ describe 'When viewing the project page', reset: false do
                 expect(page).to have_css('span.enabled i.fa.fa-tags')
               end
             end
+
+            it 'updates the Customize button text' do
+              expect(page).to have_css('.action-button.customize', text: 'Edit Customizations')
+            end
           end
         end
       end
