@@ -1032,6 +1032,68 @@ d7fb0692d7fe1bfad11ee1e7f524d798474029db:
         Satellite Facility"},{"Roles":["ARCHIVER"],"ShortName":"Alaska Satellite Facility"},{"Roles":["ARCHIVER"],"ShortName":"Not
         provided","ContactInformation":{"ContactMechanisms":[{"Type":"Primary","Value":"907-474-5041"},{"Type":"Email","Value":"uso@asf.alaska.edu"}]}}]}'
     http_version: 
+15aec1b6194aeff77e4bb8da9a61d5be5965c825:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - b435bb78-a780-4bef-b0db-8a424ba6568f
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.9; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 14:43:56 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1933'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"MetadataDates":[{"Date":"2016-06-03T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Gridded
+        joint TIR/NIR-based CO retrievals based on MERRA 2 meteorological fields,
+        time-varying N2O and updated HITRAN data","ShortName":"MOP03J","Abstract":"The
+        MOPITT L3 files contain daily and monthly mean gridded versions of the daily
+        L2 CO profile and total column retrievals. The averaging kernels associated
+        with each retrieval are also gridded and included in the L3 files. For a description
+        of the file contents, refer to the File Spec Document. Please see the MOPITT
+        L2 Data Quality Statement for additional information about the quality and
+        the limitations of the retrievals. [From the MOPITT V3 Level 3 Data Quality
+        Summary] Measurements Of Pollution In The Troposphere (MOPITT) was successfully
+        launched into sun-synchronous polar orbit aboard Terra, NASA''s first Earth
+        Observing System spacecraft on December 18, 1999. The MOPITT instrument was
+        constructed by a consortium of Canadian companies and funded by the Space
+        Science Division of the Canadian Space Agency.","DataDates":[{"Date":"2016-06-15T13:49:31.944Z","Type":"CREATE"},{"Date":"2016-07-05T11:36:30.766Z","Type":"UPDATE"}],"SpatialExtent":{"SpatialCoverageType":"HORIZ&VERT","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"CARTESIAN"},"AdditionalAttributes":[{"Value":"10.5067/TERRA/MOPITT/MOP03J_L3.007","Name":"identifier_product_doi","Description":"Digital
+        object identifier that uniquely identifies this data product","DataType":"STRING"},{"Value":"http://dx.doi.org","Name":"identifier_product_doi_authority","Description":"URL
+        of the digital object identifier resolving authority","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY/CARBON AND HYDROCARBON
+        COMPOUNDS","VariableLevel1":"CARBON MONOXIDE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AIR
+        QUALITY","VariableLevel1":"CARBON MONOXIDE"}],"EntryTitle":"MOPITT CO gridded
+        daily means (Near and Thermal Infrared Radiances) V007","CollectionProgress":"IN
+        WORK","TemporalKeywords":["daily"],"ProcessingLevel":{"ProcessingLevelDescription":"GRID","Id":"3"},"Platforms":[{"Type":"Spacecraft","ShortName":"TERRA","LongName":"Earth
+        Observing System, TERRA (AM-1)","Instruments":[{"ShortName":"MOPITT","LongName":"Measurements
+        of Pollution In The Troposphere","Technique":"Correlation Radiometry","ComposedOf":[{"ShortName":"2.3um
+        Radiometer","LongName":"Correlation Radiometer at 2.3 um","Technique":"Correlation
+        Radiometry"},{"ShortName":"2.4um Radiometer","LongName":"Correlation Radiometer
+        at 2.4 um","Technique":"Correlation Radiometry"},{"ShortName":"4.7um Radiometer","LongName":"Correlation
+        Radiometer at 4.7 um","Technique":"Correlation Radiometry"}]}]}],"Version":"007","TemporalExtents":[{"PrecisionOfSeconds":6,"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2000-03-03T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["PROCESSOR"],"ShortName":"LaRC"},{"Roles":["ARCHIVER"],"ShortName":"LaRC"},{"Roles":["ARCHIVER"],"ShortName":"Not
+        provided","ContactPersons":[{"Roles":["Technical Contact"],"FirstName":"Helen","LastName":"Worden"}],"ContactInformation":{"ContactInstruction":"None","ContactMechanisms":[{"Type":"Telephone","Value":"303-497-2912"},{"Type":"Telephone","Value":"303-497-1400"},{"Type":"Email","Value":"hmw@ucar.edu"}],"Addresses":[{"StreetAddresses":["Atmospheric
+        Chemistry Observations & Modeling (ACOM) Laboratory, National Center for Atmospheric
+        Research, P.O. Box 3000"],"City":"Boulder","StateProvince":"Colorado","Country":"USA","PostalCode":"80307"}]}},{"Roles":["ARCHIVER"],"ShortName":"NASA
+        Langley ASDC User Services","ContactInformation":{"ServiceHours":"8:00 A.M.
+        to 4:30 P.M., U.S. Eastern Time, Monday through Friday, excluding U.S. holidays.","ContactInstruction":"None","ContactMechanisms":[{"Type":"Telephone","Value":"757-864-8656"},{"Type":"Fax","Value":"757-864-8807"},{"Type":"Email","Value":"support-asdc@earthdata.nasa.gov"}],"Addresses":[{"StreetAddresses":["NASA
+        Langley Research Center, Mail Stop 157D"],"City":"Hampton","StateProvince":"Virginia","Country":"USA","PostalCode":"23681-2199"}]}}]}'
+    http_version: 
 d0f614e05eeabbbd562460b9013bbdcf9dce6515:
   response:
     status:
