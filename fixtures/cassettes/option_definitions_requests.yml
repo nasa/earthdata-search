@@ -53,6 +53,19 @@ http_interactions:
   digest: 583e4af4d8d9e1d9cd892df20b8bfcfae696d74d
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/option_definitions/4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 03:01:27 GMT
+  digest: 93eabed9b1914752584eaddeb038fbe9fb605a68
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/option_definitions/5F92533B-A6C8-896F-46D4-7516CE7CDDC4.json
     body:
       encoding: US-ASCII
@@ -223,6 +236,19 @@ http_interactions:
   digest: bab7027872369dcbf20e5b7a467cd2452ec7b295
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/option_definitions/9FB6E4CA-F0EC-B3A1-F06F-C24B8153EB9E.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 02:59:15 GMT
+  digest: e02fe4873c1e2204ec20137b3a699ac0c92172b3
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/option_definitions/A7B3B8F6-0EDC-DBEE-3686-54E8D7DE216D.json
     body:
       encoding: US-ASCII
@@ -319,6 +345,19 @@ http_interactions:
       - edsc
   recorded_at: Thu, 19 May 2016 16:27:02 GMT
   digest: b9ba3747086bddf1506c8cde20a1c6df0d3cd42f
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/option_definitions/C1E16008-633A-95D4-944C-901094B1C7A1.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 03:01:11 GMT
+  digest: c122341129ce5ed934b715973938a7ab85c2e080
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/option_definitions/D968EAE8-2913-FCCD-A515-3C87346736A3.json

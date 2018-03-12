@@ -12,6 +12,7 @@ describe 'Services Access', reset: false do
       Capybara.reset_sessions!
       load_page :search, focus: disabled_serviceable_collection_id
       login
+      wait_for_xhr
       first_granule_list_item.click_link "Configure and download single granule data"
       wait_for_xhr
     end

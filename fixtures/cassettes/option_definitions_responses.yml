@@ -335,6 +335,47 @@ a5d136f180d8f77db003d70ee959697212ccb6ae:
         = ''FtpPull''\" type=\"xsd:string\" valueElementName=\"value\"> \n        <item
         label=\"File\" value=\"FILEFORMAT\"/>\n      </select>   \n    </group>\n  </ui>\n</form>","id":"2D86BA00-9709-8CB9-CB0B-6A430894417A","name":"ASDC_FTPPULL","scope":"PROVIDER","sort_key":"1"}}'
     http_version: 
+93eabed9b1914752584eaddeb038fbe9fb605a68:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 03:01:41 GMT
+      etag:
+      - '"09287a9fb6e1c29e756b571d2aa63fbd"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.093000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1605'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"HTTPS Order
+        Without Browse","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
+        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                    </ecs:mediaformat>\n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
+        \n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <output
+        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
+        =''FtpPull''\" type=\"xsd:string\" value=\"''HTTPS Pull''\"/>\n             <output
+        id=\"FtpPullMediaFormatOutput\" label=\"Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n        </group> \n    </ui>\n</form>","id":"4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9","last_update":"2018-01-08T20:57:42Z","name":"Without
+        Browse","scope":"PROVIDER"}}'
+    http_version: 
 b7b10ce83fab0d83fd41058e14647c617ba647ae:
   response:
     status:
@@ -1048,6 +1089,54 @@ bab7027872369dcbf20e5b7a467cd2452ec7b295:
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"9940B026-5C7C-BC3E-049B-89F6D2A35AD8","name":"M*D29P1N
         Order Option","scope":"PROVIDER"}}'
     http_version: 
+e02fe4873c1e2204ec20137b3a699ac0c92172b3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 02:59:25 GMT
+      etag:
+      - '"cae03528eee4a4dd6035312d0a518701"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.087000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2327'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"HTTPS Order
+        with QA, PH, Browse","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
+        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                    </ecs:mediaformat>\n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderQA/>\n                   <ecs:orderPH/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <output
+        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
+        =''FtpPull''\" type=\"xsd:string\" value=\"''HTTPS Pull''\"/>\n             <output
+        id=\"FtpPullMediaFormatOutput\" label=\"Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n        </group>   \n        <group
+        id=\"checkancillaryoptions\" label=\"Additional file options:\" ref=\"ecs:ancillary\"
+        relevant=\"//ecs:do-ancillaryprocessing =  ''true''\"> \n          <input
+        label=\"Include associated Browse file in order\" ref=\"ecs:orderBrowse\"
+        type=\"xsd:boolean\"/>\n          <input label=\"Include associated Quality
+        Assurance file in order\" ref=\"ecs:orderQA\" type=\"xsd:boolean\"/>\n          <input
+        label=\"Include associated Production History file in order\" ref=\"ecs:orderPH\"
+        type=\"xsd:boolean\"/>\n        </group> \n    </ui>\n</form>","id":"9FB6E4CA-F0EC-B3A1-F06F-C24B8153EB9E","last_update":"2018-01-08T20:58:39Z","name":"With
+        QA, PH, Browse","scope":"PROVIDER"}}'
+    http_version: 
 026b1150618d3141d3639caefb6d18d45f04e77e:
   response:
     status:
@@ -1494,6 +1583,51 @@ b9ba3747086bddf1506c8cde20a1c6df0d3cd42f:
         label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
         required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
         label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","name":"AST_L1A","scope":"PROVIDER","sort_key":"A"}}'
+    http_version: 
+c122341129ce5ed934b715973938a7ab85c2e080:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 03:01:20 GMT
+      etag:
+      - '"34795473fc517420413f764fbdad7cb6"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.096000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1991'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"HTTPS Order
+        with QA","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
+        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                    </ecs:mediaformat>\n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderQA/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <output
+        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
+        =''FtpPull''\" type=\"xsd:string\" value=\"''HTTPS Pull''\"/>\n             <output
+        id=\"FtpPullMediaFormatOutput\" label=\"Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n        </group>   \n        <group
+        id=\"checkancillaryoptions\" label=\"Additional file options:\" ref=\"ecs:ancillary\"
+        relevant=\"//ecs:do-ancillaryprocessing =  ''true''\"> \n          <input
+        label=\"Include associated Quality Assurance file in order\" ref=\"ecs:orderQA\"
+        type=\"xsd:boolean\"/>\n        </group> \n    </ui>\n</form>","id":"C1E16008-633A-95D4-944C-901094B1C7A1","last_update":"2018-01-08T20:58:11Z","name":"With
+        QA","scope":"PROVIDER"}}'
     http_version: 
 e265ebdbf04bcba81068991a32d551f5c4b76dbd:
   response:

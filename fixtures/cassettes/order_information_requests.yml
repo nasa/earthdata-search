@@ -119,6 +119,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1001792123-NSIDC_ECS&catalog_item_id%5B%5D=G1001792699-NSIDC_ECS&catalog_item_id%5B%5D=G1001792897-NSIDC_ECS&catalog_item_id%5B%5D=G1001792362-NSIDC_ECS&catalog_item_id%5B%5D=G1001792677-NSIDC_ECS&catalog_item_id%5B%5D=G1001792528-NSIDC_ECS&catalog_item_id%5B%5D=G1001792087-NSIDC_ECS&catalog_item_id%5B%5D=G1001792857-NSIDC_ECS&catalog_item_id%5B%5D=G1001792898-NSIDC_ECS&catalog_item_id%5B%5D=G1001792682-NSIDC_ECS&catalog_item_id%5B%5D=G1001792048-NSIDC_ECS&catalog_item_id%5B%5D=G1001792250-NSIDC_ECS&catalog_item_id%5B%5D=G1001792595-NSIDC_ECS&catalog_item_id%5B%5D=G1001792005-NSIDC_ECS&catalog_item_id%5B%5D=G1001792579-NSIDC_ECS&catalog_item_id%5B%5D=G1001791939-NSIDC_ECS&catalog_item_id%5B%5D=G1001792168-NSIDC_ECS&catalog_item_id%5B%5D=G1001792227-NSIDC_ECS&catalog_item_id%5B%5D=G1001792735-NSIDC_ECS&catalog_item_id%5B%5D=G1001792150-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 03:07:56 GMT
+  digest: a3cb2f6332339e8a6da278aba09c36455746dc82
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1001792123-NSIDC_ECS
     headers:
       User-Agent:
@@ -434,6 +449,36 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1377801053-LPDAAC_ECS&catalog_item_id%5B%5D=G1377801056-LPDAAC_ECS&catalog_item_id%5B%5D=G1377801075-LPDAAC_ECS&catalog_item_id%5B%5D=G1377801105-LPDAAC_ECS&catalog_item_id%5B%5D=G1377902959-LPDAAC_ECS&catalog_item_id%5B%5D=G1377903001-LPDAAC_ECS&catalog_item_id%5B%5D=G1377903106-LPDAAC_ECS&catalog_item_id%5B%5D=G1377903677-LPDAAC_ECS&catalog_item_id%5B%5D=G1377903714-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904231-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904236-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904249-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904254-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904279-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904292-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904299-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904310-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904311-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904330-LPDAAC_ECS&catalog_item_id%5B%5D=G1377904336-LPDAAC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 03:06:40 GMT
+  digest: fc61c792499ae51b9f0d3c538c811a7616828552
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1458859448-NSIDC_ECS&catalog_item_id%5B%5D=G1458856852-NSIDC_ECS&catalog_item_id%5B%5D=G1458855980-NSIDC_ECS&catalog_item_id%5B%5D=G1458847624-NSIDC_ECS&catalog_item_id%5B%5D=G1458847626-NSIDC_ECS&catalog_item_id%5B%5D=G1458848154-NSIDC_ECS&catalog_item_id%5B%5D=G1458842040-NSIDC_ECS&catalog_item_id%5B%5D=G1458840027-NSIDC_ECS&catalog_item_id%5B%5D=G1458838584-NSIDC_ECS&catalog_item_id%5B%5D=G1458831307-NSIDC_ECS&catalog_item_id%5B%5D=G1458825413-NSIDC_ECS&catalog_item_id%5B%5D=G1458825368-NSIDC_ECS&catalog_item_id%5B%5D=G1458834360-NSIDC_ECS&catalog_item_id%5B%5D=G1458833567-NSIDC_ECS&catalog_item_id%5B%5D=G1458812801-NSIDC_ECS&catalog_item_id%5B%5D=G1458812446-NSIDC_ECS&catalog_item_id%5B%5D=G1458810895-NSIDC_ECS&catalog_item_id%5B%5D=G1458810875-NSIDC_ECS&catalog_item_id%5B%5D=G1458810799-NSIDC_ECS&catalog_item_id%5B%5D=G1458801018-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 03:01:10 GMT
+  digest: 3ab17e47287a3506796d453732171a9e334e5cee
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G179098142-ORNL_DAAC&catalog_item_id%5B%5D=G179098143-ORNL_DAAC&catalog_item_id%5B%5D=G179098144-ORNL_DAAC&catalog_item_id%5B%5D=G179098245-ORNL_DAAC&catalog_item_id%5B%5D=G179098246-ORNL_DAAC&catalog_item_id%5B%5D=G179098247-ORNL_DAAC&catalog_item_id%5B%5D=G179098248-ORNL_DAAC&catalog_item_id%5B%5D=G179098249-ORNL_DAAC&catalog_item_id%5B%5D=G179098250-ORNL_DAAC&catalog_item_id%5B%5D=G179098251-ORNL_DAAC&catalog_item_id%5B%5D=G179098252-ORNL_DAAC&catalog_item_id%5B%5D=G179098253-ORNL_DAAC&catalog_item_id%5B%5D=G179098254-ORNL_DAAC&catalog_item_id%5B%5D=G179098255-ORNL_DAAC&catalog_item_id%5B%5D=G179098256-ORNL_DAAC
     headers:
       User-Agent:
@@ -605,6 +650,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G186622287-NSIDC_ECS&catalog_item_id%5B%5D=G186622286-NSIDC_ECS&catalog_item_id%5B%5D=G186622294-NSIDC_ECS&catalog_item_id%5B%5D=G186622266-NSIDC_ECS&catalog_item_id%5B%5D=G186622272-NSIDC_ECS&catalog_item_id%5B%5D=G186622281-NSIDC_ECS&catalog_item_id%5B%5D=G186622278-NSIDC_ECS&catalog_item_id%5B%5D=G186622258-NSIDC_ECS&catalog_item_id%5B%5D=G186622270-NSIDC_ECS&catalog_item_id%5B%5D=G186622277-NSIDC_ECS&catalog_item_id%5B%5D=G186621662-NSIDC_ECS&catalog_item_id%5B%5D=G186621664-NSIDC_ECS&catalog_item_id%5B%5D=G186621656-NSIDC_ECS&catalog_item_id%5B%5D=G186621414-NSIDC_ECS&catalog_item_id%5B%5D=G186621647-NSIDC_ECS&catalog_item_id%5B%5D=G186621649-NSIDC_ECS&catalog_item_id%5B%5D=G186621642-NSIDC_ECS&catalog_item_id%5B%5D=G186621639-NSIDC_ECS&catalog_item_id%5B%5D=G186620971-NSIDC_ECS&catalog_item_id%5B%5D=G186620974-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 02:59:15 GMT
+  digest: bdab0d76b29e3759ffe217888b4916bead6fce00
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G186622287-NSIDC_ECS
     headers:
       User-Agent:
@@ -638,6 +698,21 @@ http_interactions:
       - edsc
   recorded_at: Thu, 19 May 2016 16:36:49 GMT
   digest: cc7e9c557c82d44b79656e3722bd580f46d5acf6
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G186650779-NSIDC_ECS&catalog_item_id%5B%5D=G186620095-NSIDC_ECS&catalog_item_id%5B%5D=G186620899-NSIDC_ECS&catalog_item_id%5B%5D=G186571864-NSIDC_ECS&catalog_item_id%5B%5D=G186546198-NSIDC_ECS&catalog_item_id%5B%5D=G186550988-NSIDC_ECS&catalog_item_id%5B%5D=G186509499-NSIDC_ECS&catalog_item_id%5B%5D=G186496188-NSIDC_ECS&catalog_item_id%5B%5D=G186473691-NSIDC_ECS&catalog_item_id%5B%5D=G186474599-NSIDC_ECS&catalog_item_id%5B%5D=G186449591-NSIDC_ECS&catalog_item_id%5B%5D=G186464213-NSIDC_ECS&catalog_item_id%5B%5D=G186409216-NSIDC_ECS&catalog_item_id%5B%5D=G186404508-NSIDC_ECS&catalog_item_id%5B%5D=G186393760-NSIDC_ECS&catalog_item_id%5B%5D=G186380700-NSIDC_ECS&catalog_item_id%5B%5D=G186366963-NSIDC_ECS&catalog_item_id%5B%5D=G186354319-NSIDC_ECS&catalog_item_id%5B%5D=G186341538-NSIDC_ECS&catalog_item_id%5B%5D=G186326647-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 03:01:27 GMT
+  digest: 3727f3fb8398b3deda13ac093f288cf2e45734c5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
