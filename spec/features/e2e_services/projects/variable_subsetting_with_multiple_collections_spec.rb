@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false do
+describe 'When viewing the project page', reset: false, pending_updates: true do
   before :all do
     load_page :search, project: ['C1200187767-EDF_OPS', 'C1000000029-EDF_OPS'], env: :sit
 
@@ -9,26 +9,25 @@ describe 'When viewing the project page', reset: false do
   end
 
   it 'displays that collections support variable subsetting' do
-    first('.collection-card') do
-      expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
-    end
+    first_collection_card = find('.collection-card', match: :first)
+    expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
   end
 
   context 'When choosing to customize a collection' do
     before :all do
-      within '.collection-card:nth-of-type(1)' do
-        find('.customize').click
-      end
+      collection_card = find('.collection-card', match: :first)
+
+      collection_card.find('.customize').click
     end
 
     it 'displays the customization modal' do
-      within '.modal.collection-customization .modal-header' do
+      within '.collection-customization .modal-header' do
         expect(page).to have_content('Select Customization Options')
       end
     end
 
     it 'displays the variable selection option within the modal' do
-      within '.modal.collection-customization .modal-body' do
+      within '.collection-customization .modal-body' do
         expect(page).to have_link('Variable Selection')
       end
     end
@@ -36,10 +35,11 @@ describe 'When viewing the project page', reset: false do
     context 'When choosing to select variables' do
       before :all do
         click_link('Variable Selection')
+        wait_for_xhr
       end
 
       it 'displays the variable selection modal' do
-        within '.modal.variable-selection .modal-header' do
+        within '.variable-selection .modal-header' do
           expect(page).to have_content('Variable Selection')
         end
         wait_for_xhr
@@ -100,7 +100,7 @@ describe 'When viewing the project page', reset: false do
             end
 
             it 'displays that collection has variable subsetting' do
-              first_collection_card = page.first('.collection-card')
+              first_collection_card = page.find('.collection-card', match: :first)
               expect(first_collection_card).to have_css('span.enabled i.fa.fa-tags')
             end
           end

@@ -18,14 +18,14 @@ describe 'Collection Facets With No Results', reset: false do
   context 'When selecting facets that result in empty categories' do
     it 'hides empty facet lists' do
       # Ensure that Instruments is shown
-      expect(page).to have_css('.panel.instruments .panel-heading')
+      expect(page).to have_css('.instruments .panel-heading')
 
       # Select a Keyword that will cause Instruments to disappear
       find('h3.panel-title', text: 'Keywords').click
-      find('.panel.keywords .facets-item', text: 'Earth Observation Satellites').click
+      find('.keywords .facets-item', text: 'Earth Observation Satellites').click
 
       # Ensure that empty facet category is no longer displayed
-      expect(page).to have_no_css('.panel.instruments .panel-heading')
+      expect(page).to have_no_css('.instruments .panel-heading')
     end
   end
 
@@ -39,7 +39,7 @@ describe 'Collection Facets With No Results', reset: false do
 
       # Select a facet that results in other facets being empty
       find('h3.panel-title', text: 'Platforms').click
-      find('.panel.platforms .facets-item', text: 'Aqua', match: :prefer_exact).click
+      find('.platforms .facets-item', text: 'Aqua', match: :prefer_exact).click
       wait_for_xhr
 
       # Collapse the category to ensure webkit can see the Projects category
@@ -56,14 +56,14 @@ describe 'Collection Facets With No Results', reset: false do
     context 'When one facet is selected' do
       before :all do
         find('h3.panel-title', text: 'Keywords').click
-        find('.panel.keywords .facets-item', text: 'Atmosphere', match: :prefer_exact).click
+        find('.keywords .facets-item', text: 'Atmosphere', match: :prefer_exact).click
 
         fill_in :keywords, with: 'somestringthatmatchesnocollections'
         wait_for_xhr
       end
 
       it 'displays the selected facet and empty result count' do
-        within '.panel.keywords .panel-body.facets' do
+        within '.keywords .panel-body.facets' do
           expect(page).to have_content('Atmosphere 0')
         end
       end
@@ -73,7 +73,7 @@ describe 'Collection Facets With No Results', reset: false do
       before :all do
         find('h3.panel-title', text: 'Keywords').click
 
-        within '.panel.keywords' do
+        within '.keywords' do
           find('.facets-item', text: 'Atmosphere', match: :prefer_exact).click
           wait_for_xhr
 
@@ -89,7 +89,7 @@ describe 'Collection Facets With No Results', reset: false do
       end
 
       it 'displays the selected facets and empty result count' do
-        within '.panel.keywords .panel-body.facets' do
+        within '.keywords .panel-body.facets' do
           expect(page).to have_text('Cryosphere 0 Oceans 0 Atmosphere 0')
         end
       end

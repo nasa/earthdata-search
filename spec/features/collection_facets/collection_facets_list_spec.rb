@@ -9,41 +9,41 @@ describe 'Collection Facet Display', reset: false do
     end
 
     it 'expands only Features by default' do
-      within '.panel.features' do
+      within '.features' do
         expect(page).to have_css('.facets-list-show', count: 1)
       end
     end
 
     it 'does not expand Keywords by default' do
-      within '.panel.keywords' do
+      within '.keywords' do
         expect(page).to_not have_css('.facets-list-show')
         expect(page).to have_css('.facets-list-hide', count: 1)
       end
     end
 
     it 'does not expand Platforms by default' do
-      within '.panel.platforms' do
+      within '.platforms' do
         expect(page).to_not have_css('.facets-list-show')
         expect(page).to have_css('.facets-list-hide', count: 1)
       end
     end
 
     it 'does not expand Instruments by default' do
-      within '.panel.instruments' do
+      within '.instruments' do
         expect(page).to_not have_css('.facets-list-show')
         expect(page).to have_css('.facets-list-hide', count: 1)
       end
     end
 
     it 'does not expand Organizations by default' do
-      within '.panel.organizations' do
+      within '.organizations' do
         expect(page).to_not have_css('.facets-list-show')
         expect(page).to have_css('.facets-list-hide', count: 1)
       end
     end
 
     it 'does not expand Processing levels by default' do
-      within '.panel.processing-levels' do
+      within '.processing-levels' do
         expect(page).to_not have_css('.facets-list-show')
         expect(page).to have_css('.facets-list-hide', count: 1)
       end
@@ -60,7 +60,7 @@ describe 'Collection Facet Display', reset: false do
     it 'shows at least one Keywords facet' do
       find('h3.panel-title', text: 'Keywords').click
 
-      expect(page).to have_css('.panel.keywords label.facets-item')
+      expect(page).to have_css('.keywords label.facets-item')
 
       # Collapse the panel to accomodate random order in tests
       find('h3.panel-title', text: 'Keywords').click
@@ -69,7 +69,7 @@ describe 'Collection Facet Display', reset: false do
     it 'shows at least one Platforms facet' do
       find('h3.panel-title', text: 'Platforms').click
 
-      expect(page).to have_css('.panel.platforms label.facets-item')
+      expect(page).to have_css('.platforms label.facets-item')
 
       # Collapse the panel to accomodate random order in tests
       find('h3.panel-title', text: 'Platforms').click
@@ -78,7 +78,7 @@ describe 'Collection Facet Display', reset: false do
     it 'shows at least one Instruments facet' do
       find('h3.panel-title', text: 'Instruments').click
 
-      expect(page).to have_css('.panel.instruments label.facets-item')
+      expect(page).to have_css('.instruments label.facets-item')
 
       # Collapse the panel to accomodate random order in tests
       find('h3.panel-title', text: 'Instruments').click
@@ -87,7 +87,7 @@ describe 'Collection Facet Display', reset: false do
     it 'shows at least one Projects facet' do
       find('h3.panel-title', text: 'Projects').click
 
-      expect(page).to have_css('.panel.projects label.facets-item')
+      expect(page).to have_css('.projects label.facets-item')
 
       # Collapse the panel to accomodate random order in tests
       find('h3.panel-title', text: 'Projects').click
@@ -96,7 +96,7 @@ describe 'Collection Facet Display', reset: false do
     it 'shows at least one Organizations facet' do
       find('h3.panel-title', text: 'Organizations').click
 
-      expect(page).to have_css('.panel.organizations label.facets-item')
+      expect(page).to have_css('.organizations label.facets-item')
 
       # Collapse the panel to accomodate random order in tests
       find('h3.panel-title', text: 'Organizations').click
@@ -105,7 +105,7 @@ describe 'Collection Facet Display', reset: false do
     it 'shows at least one Processing levels facet' do
       find('h3.panel-title', text: 'Processing levels').click
 
-      expect(page).to have_css('.panel.processing-levels label.facets-item')
+      expect(page).to have_css('.processing-levels label.facets-item')
 
       # Collapse the panel to accomodate random order in tests
       find('h3.panel-title', text: 'Processing levels').click

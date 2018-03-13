@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false do
+describe 'When viewing the project page', reset: false, pending_updates: true do
   before :all do
     load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
 
@@ -16,19 +16,19 @@ describe 'When viewing the project page', reset: false do
 
   context 'When choosing to customize a collection' do
     before :all do
-      within '.collection-card:nth-of-type(1)' do
-        find('.customize').click
-      end
+      collection_card = find('.collection-card', match: :first)
+
+      collection_card.find('.customize').click
     end
 
     it 'displays the customization modal' do
-      within '.modal.collection-customization .modal-header' do
+      within '.collection-customization .modal-header' do
         expect(page).to have_content('Select Customization Options')
       end
     end
 
     it 'displays the variable selection option within the modal' do
-      within '.modal.collection-customization .modal-body' do
+      within '.collection-customization .modal-body' do
         expect(page).to have_link('Variable Selection')
       end
     end
@@ -36,10 +36,11 @@ describe 'When viewing the project page', reset: false do
     context 'When choosing to select variables' do
       before :all do
         click_link('Variable Selection')
+        wait_for_xhr
       end
 
       it 'displays the variable selection modal' do
-        within '.modal.variable-selection .modal-header' do
+        within '.variable-selection .modal-header' do
           expect(page).to have_content('Variable Selection')
         end
         wait_for_xhr
@@ -51,7 +52,7 @@ describe 'When viewing the project page', reset: false do
 
       context 'When selecting a keyword to view its assigned variables' do
         before :all do
-          first('#associated-variables a').click
+          find('#associated-variables a', match: :first).click
         end
 
         it 'shows a link to go back to view all keywords' do
@@ -74,7 +75,7 @@ describe 'When viewing the project page', reset: false do
 
         context 'When selecting a keyword and saving' do
           before :all do
-            first('.collection-variable-list input[type="checkbox"]').set(true)
+            find('.collection-variable-list input[type="checkbox"]', match: :first).set(true)
 
             within '.modal-footer' do
               click_button 'Save'

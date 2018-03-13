@@ -35,8 +35,8 @@ describe 'Collection Facets Show/Hide', reset: false do
     before :all do
       find('h3.panel-title', text: 'Projects').click
 
-      within '.panel.projects' do
-        first('.facets-item').click
+      within '.projects' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
 
@@ -67,7 +67,7 @@ describe 'Collection Facets Show/Hide', reset: false do
       end
 
       it 'the facets are still selected' do
-        within '.panel.projects' do
+        within '.projects' do
           expect(page).to have_css('.facets-item.selected', count: 1)
         end
       end
@@ -78,15 +78,15 @@ describe 'Collection Facets Show/Hide', reset: false do
     before :all do
       find('h3.panel-title', text: 'Platforms').click
 
-      within '.panel.platforms' do
-        first('.facets-item').click
+      within '.platforms' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
 
       find('h3.panel-title', text: 'Projects').click
 
-      within '.panel.projects' do
-        first('.facets-item').click
+      within '.projects' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
 
@@ -117,10 +117,10 @@ describe 'Collection Facets Show/Hide', reset: false do
       end
 
       it 'the facets are still selected' do
-        within '.panel.platforms' do
+        within '.platforms' do
           expect(page).to have_css('.facets-item.selected', count: 1)
         end
-        within '.panel.projects' do
+        within '.projects' do
           expect(page).to have_css('.facets-item.selected', count: 1)
         end
       end
