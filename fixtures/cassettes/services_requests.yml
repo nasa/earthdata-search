@@ -200,6 +200,50 @@ http_interactions:
   digest: 74e6b08ac41f7484f5a30df1ade39fdad7f542fc
 - request:
     method: get
+    uri: http://localhost:15400/nlp?text=AST_L1AE
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 13 Mar 2018 15:57:05 GMT
+  digest: ca3d7345f2c73b6b210b399ad385d7c40837679d
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=C1216393716-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 13 Mar 2018 15:57:11 GMT
+  digest: 4e64915e87d6ec1c80802e36d6a3ddc6df5911bb
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=C1386246913-NSIDCV0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 13 Mar 2018 15:56:57 GMT
+  digest: 8b849487174c138af0b2fb703a4b0ddba8ae1015
+- request:
+    method: get
+    uri: http://localhost:15400/nlp?text=C179002945-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 13 Mar 2018 15:56:59 GMT
+  digest: 4123138ffb200cdffd193eb8e246ac15b38b6c2d
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/browse-scaler/availability
     body:
       encoding: US-ASCII
