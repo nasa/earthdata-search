@@ -17,7 +17,7 @@ module Helpers
     end
 
     def project_collection_ids
-      page.evaluate_script('edsc.models.page.current.project.collections().map(function(ds){return ds.dataset_id;})')
+      page.evaluate_script('edsc.models.page.current.project.collections().map(function(ds){return ds.collection.dataset_id;})')
     end
 
     def click_save_project_name
@@ -33,7 +33,6 @@ module Helpers
       query[query_re, 1].to_i
     end
 
-    # def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI', name='Test Project')
     def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC', name='Test Project')
       user = User.find_by(echo_id: page.get_rack_session_key('user_id'))
       project = Project.new

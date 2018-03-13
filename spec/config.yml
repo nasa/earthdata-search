@@ -6,15 +6,48 @@ token_user_password: <%= ENV['test_echo_token_password'] %>
 
 urs_tokens:
   edsc:
-    <<: *token_defaults
-    access_token: <%= (ENV['test_urs_edsc_access_token'] || 'edsc-access').inspect %>
-    refresh_token: <%= (ENV['test_urs_edsc_refresh_token'] || 'edsc-refresh').inspect %>
+    edsc_defaults: &edsc_defaults
+      <<: *token_defaults
+      access_token: <%= (ENV['test_urs_edsc_access_token'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_edsc_refresh_token'] || 'edsc-refresh').inspect %>
+    prod:
+      <<: *edsc_defaults
+      access_token: <%= (ENV['test_urs_edsc_access_token_prod'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_edsc_refresh_token_prod'] || 'edsc-refresh').inspect %>
+    uat:
+      <<: *edsc_defaults
+      access_token: <%= (ENV['test_urs_edsc_access_token_uat'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_edsc_refresh_token_uat'] || 'edsc-refresh').inspect %>
+    sit:
+      <<: *edsc_defaults
+      access_token: <%= (ENV['test_urs_edsc_access_token_sit'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_edsc_refresh_token_sit'] || 'edsc-refresh').inspect %>
+    dev:
+      <<: *edsc_defaults
   expired_token:
     <<: *token_defaults
-    access_token: <%= (ENV['test_urs_expired_access_token'] || 'expired-access').inspect %>
-    refresh_token: <%= (ENV['test_urs_expired_refresh_token'] || 'expired-refresh').inspect %>
-    expires_in: 1
+    expired_defaults: &expired_defaults
+      access_token: <%= (ENV['test_urs_expired_access_token'] || 'expired-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_expired_refresh_token'] || 'expired-refresh').inspect %>
+      expires_in: 1
+    prod:
+      <<: *expired_defaults
+    uat:
+      <<: *expired_defaults
+    sit:
+      <<: *expired_defaults
+    dev:
+      <<: *expired_defaults
   edscbasic:
-    <<: *token_defaults
-    access_token: <%= (ENV['test_urs_edscbasic_access_token'] || 'edscbasic-access').inspect %>
-    refresh_token: <%= (ENV['test_urs_edscbasic_refresh_token'] || 'edscbasic-refresh').inspect %>
+    basic_defaults: &basic_defaults
+      <<: *token_defaults
+      access_token: <%= (ENV['test_urs_edscbasic_access_token'] || 'edscbasic-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_edscbasic_refresh_token'] || 'edscbasic-refresh').inspect %>
+    prod:
+      <<: *basic_defaults
+    uat:
+      <<: *basic_defaults
+    sit:
+      <<: *basic_defaults
+    dev:
+      <<: *basic_defaults

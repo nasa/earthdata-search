@@ -6,7 +6,8 @@ describe 'Collection details', reset: false do
     before :all do
       load_page :search
       fill_in 'keywords', with: 'AST_L1AE'
-      expect(page).to have_content('ASTER Expedited L1A')
+      wait_for_xhr
+      # expect(page).to have_content('ASTER Expedited L1A')
       first_collection_result.click_link('View collection details')
       wait_for_xhr
     end
@@ -19,7 +20,7 @@ describe 'Collection details', reset: false do
         expect(page).to have_content('VERSION 003')
         expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116 Fax: 605-594-6963')
         expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
-        expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
+        expect(page).to have_content('Temporal Extent: 2000-03-04 ongoing')
         expect(page).to have_content('Science Keywords: EARTH SCIENCESPECTRAL/ENGINEERINGINFRARED WAVELENGTHS EARTH SCIENCESPECTRAL/ENGINEERINGVISIBLE WAVELENGTHS')
       end
     end
@@ -58,7 +59,7 @@ describe 'Collection details', reset: false do
       wait_for_xhr
       fill_in 'keywords', with: 'C1216393716-EDF_OPS'
       wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      click_link('View collection details')
       wait_for_xhr
     end
 
@@ -69,7 +70,7 @@ describe 'Collection details', reset: false do
     it 'displays the collection details' do
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
-        expect(page).to have_content('Name Not ProvidedARCHIVER')
+        expect(page).to have_content('EDF_OPSDISTRIBUTOR ARCHIVER')
         expect(page).to have_content('SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
         expect(page).to have_content('Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
@@ -101,8 +102,6 @@ describe 'Collection details', reset: false do
         expect(page).to have_link('OSDD')
       end
     end
-
-
   end
 
   context 'when selecting a collection without contacts in the xml' do
@@ -119,8 +118,11 @@ describe 'Collection details', reset: false do
   context 'when selecting a collection with point spatial' do
     before :all do
       load_page :search, q: 'C179003030-ORNL_DAAC'
-      expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
       first_collection_result.click_link('View collection details')
+    end
+
+    it 'dislpays the collection searched for in the results list' do
+      expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
     end
 
     it "does not display the collection's spatial bounds on the map" do
@@ -143,11 +145,12 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with polygon spatial' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'C1220111370-NSIDCV0'
-      expect(page).to have_content('AVHRR Leads-ARI Polar Gridded Brightness Temperatures')
+      load_page :search, ac: true
+      fill_in 'keywords', with: 'C1386246913-NSIDCV0'
+      wait_for_xhr
       first_collection_result.click_link('View collection details')
     end
+
 
     it "does not display the collection's spatial bounds on the map" do
       expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
@@ -168,13 +171,17 @@ describe 'Collection details', reset: false do
   #   end
   # end
 
-  context 'when selecting a collection with multiple temporal' do
+  # TODO: RDA // This collection doesn't exist anymore, it needs to be replaced.
+  context 'when selecting a collection with multiple temporal', pending_updates: true do
     before :all do
       load_page '/search/collection-details', env: :uat, focus: 'C1204482909-GCMDTEST'
+    end
+
+    xit 'displays the collection searched for in the results list' do
       expect(page).to have_content('CALIPSO Lidar Level 2 5km aerosol profile data V3-01')
     end
 
-    it 'displays all the temporal' do
+    xit 'displays all the temporal' do
       expect(page).to have_content('2006-06-13 to 2009-02-16')
       expect(page).to have_content('2009-03-17 to 2011-10-31')
     end
@@ -182,7 +189,10 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with multiple temporal fields but some of which have only BeginningDateTime' do
     before :all do
-      load_page '/search/collection-details', env: :uat, focus: 'C1204424196-GCMDTEST'
+      load_page '/search/collection-details', focus: 'C1214560374-JAXA', ac: true
+    end
+
+    it 'displays the correct title' do
       expect(page).to have_content('JAXA/EORC Tropical Cyclones database')
     end
 
@@ -202,9 +212,30 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context 'when selecting a collection with a description with links' do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+    end
+
+    it 'only displays one link total' do
+      expect(page.find(:css, "div.long-paragraph.collapsed")).to have_selector("a", count:1)
+    end
+
+    it 'displays the external link' do
+      expect(page).to have_link("Greenland Ice Mapping Project (GIMP)", href: "http://nsidc.org/data/measures/gimp")
+      find_link("Greenland Ice Mapping Project (GIMP)")[:target].should == '_blank'
+
+    end
+
+    it 'does not display a link for relative paths' do
+      expect(page).not_to have_link("Bad Link", href:"/data/measures/gimp")
+    end
+  end
+
   context 'when selecting a collection with multiple spatial values' do
     before :all do
-      load_page '/search/collection-details', focus: 'C1214560151-JAXA'
+      load_page '/search/collection-details', focus: 'C1214560151-JAXA', ac: true
+      wait_for_xhr
     end
 
     it 'displays all spatial content' do
@@ -228,7 +259,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the temporal correctly' do
-      expect(page).to have_content('1999-12-18 ongoing')
+      expect(page).to have_content('2000-02-24 ongoing')
     end
   end
 

@@ -1,40 +1,39 @@
 require "spec_helper"
 
 describe "CWIC-enabled data access", reset: false do
-
   extend Helpers::CollectionHelpers
 
   dataset_id = "EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data"
   search_params = {
-    q: 'USGS_EDC_EO1_ALI',
-    temporal: ['2016-01-21T00:00:00Z', '2016-01-21T23:59:59Z']
+    focus: 'C1220566654-USGS_LTA',
+    temporal: ['2016-01-21T00:00:00Z', '2016-01-21T23:59:59Z'],
+    ac: true
   }
 
-  after(:all) do
-    wait_for_xhr
-    AccessConfiguration.destroy_all if page.server.responsive?
-  end
-
-  context "configuring data access for a CWIC-tagged collection" do
+  context "When configuring data access for a CWIC-tagged collection" do
     before :all do
+      Capybara.reset_sessions!
       AccessConfiguration.destroy_all
       load_page :search, search_params
       login
+      wait_for_xhr
       view_granule_results(dataset_id)
       click_button 'Download Data'
       wait_for_xhr
     end
 
-    it 'provides the "Download" option', acceptance: true do
+    it 'provides the "Download" option' do
       expect(page).to have_field("Download")
     end
   end
 
-  context "choosing to download data for a CWIC-tagged collection" do
+  context "When choosing to download data for a CWIC-tagged collection" do
     before :all do
+      Capybara.reset_sessions!
       AccessConfiguration.destroy_all
       load_page :search, search_params
       login
+      wait_for_xhr
       view_granule_results(dataset_id)
       click_button 'Download Data'
       wait_for_xhr
@@ -43,7 +42,7 @@ describe "CWIC-enabled data access", reset: false do
       wait_for_xhr
     end
 
-    it "provides a button to view download links", acceptance: true do
+    it "provides a button to view download links" do
       expect(page).to have_link('View Download Links')
     end
 
@@ -55,7 +54,7 @@ describe "CWIC-enabled data access", reset: false do
       before(:all) do
         click_on('View Download Links')
       end
-      it 'presents a list of download links with associated link titles', acceptance: true do
+      it 'presents a list of download links with associated link titles' do
         within_last_window do
           expect(page).to have_no_text('Loading more...')
           expect(page).to have_link('Granule download URL', count: 21)
@@ -67,9 +66,11 @@ describe "CWIC-enabled data access", reset: false do
 
   context "choosing to download data for single CWIC-tagged granule" do
     before :all do
+      Capybara.reset_sessions!
       AccessConfiguration.destroy_all
       load_page :search, search_params
       login
+      wait_for_xhr
       view_granule_results(dataset_id)
       within(first_granule_list_item) do
         click_link 'Configure and download single granule data'
@@ -89,5 +90,4 @@ describe "CWIC-enabled data access", reset: false do
       end
     end
   end
-
 end

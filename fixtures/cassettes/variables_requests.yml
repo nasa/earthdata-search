@@ -13,7 +13,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 05 Mar 2018 15:23:37 GMT
+  recorded_at: Mon, 12 Mar 2018 16:00:58 GMT
   digest: dfc0b400a8c27968e4d3b08bbe066e4b10a314d3
 - request:
     method: get
@@ -28,6 +28,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 05 Mar 2018 15:23:38 GMT
+  recorded_at: Mon, 12 Mar 2018 16:00:59 GMT
   digest: 76bc8d8543b8825ae61c083e1d8643c9aa99172c
 recorded_with: VCR 2.6.0

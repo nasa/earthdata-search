@@ -58,15 +58,15 @@
     </div>
     <div class="project-stats">
       <ul data-bind="fadeVisible: isLoaded">
-        <li>
+        <li class="granule-count">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
         </li>
-        <li>
+        <li class="collection-count">
           <span class="value" data-bind="text: project.collections().length"></span>
           <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
         </li>
-        <li data-bind="visible: sizeProvided">
+        <li class="project-size" data-bind="visible: sizeProvided">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
           <span id="info-container">

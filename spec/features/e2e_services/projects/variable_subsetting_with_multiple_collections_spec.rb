@@ -9,8 +9,9 @@ describe 'When viewing the project page', reset: false do
   end
 
   it 'displays that collections support variable subsetting' do
-    first_collection_card = page.first('.collection-card')
-    expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
+    first('.collection-card') do
+      expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
+    end
   end
 
   context 'When choosing to customize a collection' do

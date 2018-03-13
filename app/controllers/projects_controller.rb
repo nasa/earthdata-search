@@ -45,11 +45,11 @@ class ProjectsController < ApplicationController
       end
     end
 
-  rescue ActiveRecord::RecordNotFound => e
-    respond_to do |format|
-      format.html { render file: "#{Rails.root}/public/404.html", status: :not_found }
-      format.json { render json: '{}' }
-    end
+  # rescue ActiveRecord::RecordNotFound => e
+  #   respond_to do |format|
+  #     format.html { render file: "#{Rails.root}/public/404.html", status: :not_found }
+  #     format.json { render json: '{}' }
+  #   end
   end
 
   def create

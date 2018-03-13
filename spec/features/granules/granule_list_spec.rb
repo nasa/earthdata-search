@@ -14,9 +14,10 @@ describe "Granule list", reset: false do
   end
 
   context "for all collections with granules" do
-    use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
-    hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
-
+    before :all do
+      visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
+      wait_for_xhr
+    end
     it 'provides a text field to search for single or multiple granules by granule IDs' do
       expect(page).to have_selector('#granule-ids')
     end
@@ -37,6 +38,13 @@ describe "Granule list", reset: false do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         expect(page).to have_link('Download single granule data')
         expect(page).to have_css('a[href="https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2017.01.01/MOD10A1.A2017001.h34v09.005.2017003060855.hdf"]')
+      end
+    end
+
+    it 'displays start and end temporal labels' do
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        expect(page).to have_content('START2017-01-01 23:45:00')
+        expect(page).to have_content('END2017-01-01 23:50:00')
       end
     end
 
@@ -220,10 +228,11 @@ describe "Granule list", reset: false do
   end
 
   context "for collections with many granule results" do
-    use_collection 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
-
+    before :all do
+      visit('/search/granules?p=C179002914-ORNL_DAAC&tl=1501695072!4!!&q=C179002914-ORNL_DAAC&ok=C179002914-ORNL_DAAC')
+      wait_for_xhr
+    end
     context "clicking on a collection result" do
-      hook_granule_results('30 Minute Rainfall Data (FIFE)', :each)
 
       it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
@@ -235,10 +244,12 @@ describe "Granule list", reset: false do
   end
 
   context "for collections with few granule results" do
-    use_collection 'C179003380-ORNL_DAAC', 'A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves'
+    before :all do
+      visit('/search/granules?p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
+      wait_for_xhr
+    end
 
     context "clicking on a collection result" do
-      hook_granule_results('A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves')
 
       it "displays all available granule results" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 2)
@@ -251,10 +262,17 @@ describe "Granule list", reset: false do
   end
 
   context "for collections without granules" do
-    use_collection 'C179002107-SEDAC', 'Anthropogenic Biomes of the World, Version 1'
+    before do
+      set_temporal('2018-01-01 00:00:00', '2018-01-31 23:59:59')
+    end
+    
+    use_collection 'C1426717545-LANCEMODIS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT'
 
     context "clicking on a collection result" do
       before :all do
+        visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
+        wait_for_xhr
+        dismiss_banner
         expect(page).to have_visible_collection_results
         first_collection_result.click
         wait_for_xhr
@@ -271,11 +289,11 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    use_collection 'C179003620-ORNL_DAAC', 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050'
-    hook_granule_results('Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
 
-    context 'clicking on the single granule download button' do
+    context 'clicking on the single granule download button when the links have titles' do
       before :all do
+        visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
+        wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
         end
@@ -289,9 +307,77 @@ describe "Granule list", reset: false do
 
       it 'shows a dropdown with all the downloadable granules' do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          expect(page).to have_content('This link provides direct download access to the granule.')
-          expect(page).to have_content('Download Link 2')
+          expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (primary)')
+          expect(page).to have_content('Online access to AMSR-2 Near-Real-Time LANCE Products (backup)')
         end
+      end
+    end
+
+    context 'clicking on the single granule download button when the links do not have titles' do
+      before :all do
+        visit('/search/granules?p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
+        wait_for_xhr
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          find('a[data-toggle="dropdown"]').click
+        end
+      end
+
+      after :all do
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          find('a[data-toggle="dropdown"]').click
+        end
+      end
+
+      it 'shows a dropdown with all the downloadable granules' do
+        within '#granules-scroll .panel-list-item:nth-child(1)' do
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ex_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ey_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_v1.2.meta')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vx_v1.2.tif')
+          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vy_v1.2.tif')
+        end
+      end
+    end
+  end
+
+  context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
+    before :all do
+      # A collection known to have duplicate downloadable links
+      visit('/search/granules?p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
+      wait_for_xhr
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        # If the test works, this dropdown won't even exist...
+        if page.has_css?('a[data-toggle="dropdown"]')
+          find('a[data-toggle="dropdown"]').click 
+        end
+      end
+    end
+    
+    it 'only shows the http link' do
+      expect(page).not_to have_link("The FTP location for the granule.")
+    end
+  end
+
+  context "for collections that are known to cause download delays" do
+    before :all do
+      visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
+      wait_for_xhr
+      click_button('Download Data')
+    end
+    it "shows a modal warning of the delay" do
+      expect(page).to have_css('#delayWarningModalLabel')
+      expect(page).to have_text('Message from data provider: This is an optional message.')
+    end
+  end
+
+  context "for collections that have granules without end times" do
+    before :all do
+      visit('/search/granules?cmr_env=uat&p=C1000-LPDAAC_TS2')
+    end
+    it "displays correct start and end temporal labels" do
+      within '#granules-scroll .panel-list-item:nth-child(1)' do
+        expect(page).to have_content('START2018-01-31 02:53:21')
+        expect(page).to have_content('ENDNot Provided')
       end
     end
   end

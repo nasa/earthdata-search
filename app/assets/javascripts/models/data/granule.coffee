@@ -26,8 +26,16 @@
 
     download_now_urls: ->
       links = []
+      filter = []
       if @links? && @links.length > 0
-        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1
+        # Step one - add all links that are 'http' and are not inherited
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.href.indexOf('http') != -1 && link.inherited != true
+        # Step two - create 'filter' array which stores the file names of all previous http links
+        filter.push(link.href.substr(link.href.lastIndexOf('/') + 1).replace(".html", "")) for link in @links when link.rel.indexOf('/data#') != -1 && link.href.indexOf('http') != -1 && link.inherited != true
+        # Step three - add all links that are 'ftp' which call filenames that are *not* in the filter (meaning, have not already
+        # been added with an http link)
+        links.push(link) for link in @links when link.rel.indexOf('/data#') != -1 && link.href.indexOf('ftp://') != -1 && filter.indexOf(link.href.substr(link.href.lastIndexOf('/') + 1)) == -1 && link.inherited != true
+
       @dataLinks(links)
 
     onThumbError: (granule) ->
@@ -61,5 +69,8 @@
         this.producer_granule_id
       else
         this.title
+
+    getFileName: (str) ->
+      filename = str.substring(str.lastIndexOf('/')+1);
 
   exports = Granule

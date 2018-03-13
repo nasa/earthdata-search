@@ -1,325 +1,30 @@
 ---
-a5d136f180d8f77db003d70ee959697212ccb6ae:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"816c1e391bf38824a2245cf84057b7b1"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.083000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 02 Jun 2016 19:11:53 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Order Options
-        for AE_SI12","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n                <!--
-        ECS distribution options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                     </ecs:mediaformat>\n                    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                    </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-processing>false</ecs:do-processing>\n                <ecs:processing>\n                    <!--
-        This must be populated with the subsetter''s endpoint -->\n                    <ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n                    <!--
-        This tag is a constant and is required for the HSA subsetter -->\n                    <ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n                    <!--
-        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
-        -->\n                    <hsa:SubsettingCriteria>                                                                         \n                        <!--
-        GranuleSize is required -->\n                        <hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n                        <hsa:spatial-subsetting
-        granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:XYBox>\n                         <hsa:Projection
-        granule-specific=\"true\">\n                         <hsa:Value>North Polar
-        Sterographic</hsa:Value>\n                         </hsa:Projection>\n\t\t\t\t\t\t\t<hsa:ULRow>0</hsa:ULRow>\n\t\t\t\t\t\t\t<hsa:ULCol>0</hsa:ULCol>\n\t\t\t\t\t\t\t<hsa:LRRow>0</hsa:LRRow>\n\t\t\t\t\t\t\t<hsa:LRCol>0</hsa:LRCol>\n\t\t\t\t\t\t</hsa:XYBox>                      \n                        <!--
-        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
-        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>SI_12km_NH_18V_ASC</hsa:FieldName>\n                                <!--
-        Add other field names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \n                    </hsa:SubsettingCriteria>\n                </ecs:processing>\n\t\t\t\t<ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderPH/>\n                   <ecs:orderQA/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n            </ecs:options>\n        </instance>\n        <!--
-        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n        </extension>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
-        Push\" value=\"FtpPush\"/>\n            </select>\n            \n            <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
-        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
-        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
-        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n            <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n            <select
-        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n        </group>\n        <input
-        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
-        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
-        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
-        = ''true'')</xpath>\n                     <alert>If you require processing,
-        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\t\t\n        <group
-        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
-        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
-        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush'')\">\n                     <input id=\"spatialSwitch\" label=\"Spatial
-        Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
-        = ''true''\" type=\"xsd:boolean\">\n                     </input>\n\t\t\t   \n        <group
-        id=\"XYBox\" label=\"XY Bounding Box\" ref=\"//hsa:XYBox\" relevant=\"//hsa:spatial-subsetting
-        = ''true''\">\n            <select label=\"Projections\" multiple=\"false\"
-        open=\"false\" ref=\"//hsa:Projection\" relevant=\"false\" type=\"xsd:string\"
-        valueElementName=\"Value\">\n                <item label=\"North Polar Stereographic\"
-        value=\"North Polar Sterographic\"/>\n                <item label=\"South
-        Polar Stereographic\" value=\"South Polar Sterographic\"/>  \n\t    </select>\n            <input
-        label=\"Upper Left Row\" ref=\"hsa:ULRow\" type=\"xsd:int\"/>             \n            <input
-        label=\"Upper Left Column\" ref=\"hsa:ULCol\" type=\"xsd:int\"/>              \n            <input
-        label=\"Lower Right Row\" ref=\"hsa:LRRow\" type=\"xsd:int\"/>              \n            <input
-        label=\"Lower Right Column\" ref=\"hsa:LRCol\" type=\"xsd:int\"/>         \n        </group>\n\t\t\n            <input
-        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
-        type=\"xsd:boolean\">\n            </input>                       \n            <group
-        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
-        = ''true''\">\n                <select label=\"Parameters\" multiple=\"true\"
-        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n                    <constraints>\n                       <constraint>\n                         <xpath>//hsa:FieldName
-        != ''''</xpath>\n                         <alert>If you require parameter
-        subsetting you must select a parameter</alert>\n                       </constraint>\n                    </constraints>\n                    <item
-        label=\"SI_12km_NH_18V_ASC\" value=\"SI_12km_NH_18V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_18V_DSC\" value=\"SI_12km_NH_18V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_18V_DAY\" value=\"SI_12km_NH_18V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_18H_ASC\" value=\"SI_12km_NH_18H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_18H_DSC\" value=\"SI_12km_NH_18H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_18H_DAY\" value=\"SI_12km_NH_18H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_23V_ASC\" value=\"SI_12km_NH_23V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_23V_DSC\" value=\"SI_12km_NH_23V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_23V_DAY\" value=\"SI_12km_NH_23V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_23H_ASC\" value=\"SI_12km_NH_23H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_23H_DSC\" value=\"SI_12km_NH_23H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_23H_DAY\" value=\"SI_12km_NH_23H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_36V_ASC\" value=\"SI_12km_NH_36V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_36V_DSC\" value=\"SI_12km_NH_36V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_36V_DAY\" value=\"SI_12km_NH_36V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_36H_ASC\" value=\"SI_12km_NH_36H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_36H_DSC\" value=\"SI_12km_NH_36H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_36H_DAY\" value=\"SI_12km_NH_36H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_89V_ASC\" value=\"SI_12km_NH_89V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_89V_DSC\" value=\"SI_12km_NH_89V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_89V_DAY\" value=\"SI_12km_NH_89V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_89H_ASC\" value=\"SI_12km_NH_89H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_89H_DSC\" value=\"SI_12km_NH_89H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_89H_DAY\" value=\"SI_12km_NH_89H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_ICECON_ASC\" value=\"SI_12km_NH_ICECON_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_ICECON_DSC\" value=\"SI_12km_NH_ICECON_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_ICECON_DAY\" value=\"SI_12km_NH_ICECON_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_ICEDIFF_ASC\" value=\"SI_12km_NH_ICEDIFF_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_ICEDIFF_DSC\" value=\"SI_12km_NH_ICEDIFF_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_ICEDIFF_DAY\" value=\"SI_12km_NH_ICEDIFF_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_NH_SNOWDEPTH_5DAY\" value=\"SI_12km_NH_SNOWDEPTH_5DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_18V_ASC\" value=\"SI_12km_SH_18V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_18V_DSC\" value=\"SI_12km_SH_18V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_18V_DAY\" value=\"SI_12km_SH_18V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_18H_ASC\" value=\"SI_12km_SH_18H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_18H_DSC\" value=\"SI_12km_SH_18H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_18H_DAY\" value=\"SI_12km_SH_18H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_23V_ASC\" value=\"SI_12km_SH_23V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_23V_DSC\" value=\"SI_12km_SH_23V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_23V_DAY\" value=\"SI_12km_SH_23V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_23H_ASC\" value=\"SI_12km_SH_23H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_23H_DSC\" value=\"SI_12km_SH_23H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_23H_DAY\" value=\"SI_12km_SH_23H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_36V_ASC\" value=\"SI_12km_SH_36V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_36V_DSC\" value=\"SI_12km_SH_36V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_36V_DAY\" value=\"SI_12km_SH_36V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_36H_ASC\" value=\"SI_12km_SH_36H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_36H_DSC\" value=\"SI_12km_SH_36H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_36H_DAY\" value=\"SI_12km_SH_36H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_89V_ASC\" value=\"SI_12km_SH_89V_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_89V_DSC\" value=\"SI_12km_SH_89V_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_89V_DAY\" value=\"SI_12km_SH_89V_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_89H_ASC\" value=\"SI_12km_SH_89H_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_89H_DSC\" value=\"SI_12km_SH_89H_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_89H_DAY\" value=\"SI_12km_SH_89H_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_ICECON_ASC\" value=\"SI_12km_SH_ICECON_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_ICECON_DSC\" value=\"SI_12km_SH_ICECON_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_ICECON_DAY\" value=\"SI_12km_SH_ICECON_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_ICEDIFF_ASC\" value=\"SI_12km_SH_ICEDIFF_ASC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_ICEDIFF_DSC\" value=\"SI_12km_SH_ICEDIFF_DSC\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_ICEDIFF_DAY\" value=\"SI_12km_SH_ICEDIFF_DAY\"/>\n\t\t\t\t\t<item
-        label=\"SI_12km_SH_SNOWDEPTH_5DAY\" value=\"SI_12km_SH_SNOWDEPTH_5DAY\"/>\n                </select>\n            </group>\t\t\n        </group>\n        <output
-        id=\"subsetWarningOuput\" label=\"\" type=\"xsd:string\" value=\"'' -- Ancillary
-        products cannot be ordered when subsetting is selected.''\"/>  \n\t\t<input
-        id=\"ancillarySwitch\" label=\"Check here for ancillary data options\" ref=\"ecs:do-ancillaryprocessing\"
-        type=\"xsd:boolean\"/>  \n        <group id=\"checkancillaryoptions\" label=\"
-        \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing =   ''true''\">
-        \n           <constraints>\n              <constraint>\n              <xpath>//ecs:do-processing
-        = ''false'' </xpath>\n              <alert>Subsetting option is not allowed
-        with ancillary data options</alert>\n              </constraint>\n          </constraints>\n        <input
-        label=\"Include associated Production History file in order?\" ref=\"ecs:orderPH\"
-        type=\"xsd:boolean\"/> \n       <input label=\"Include associated Quality
-        Assurance file in order?\" ref=\"ecs:orderQA\" type=\"xsd:boolean\"/>\n       <input
-        label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
-        type=\"xsd:boolean\"/>\n       </group> \n    </ui>\n</form>","id":"159A2C2A-BC8D-04E9-6217-BCB9E7626C91","name":"AE_SI12
-        Order Option","scope":"PROVIDER"}}'
-    http_version: 
-9149bd377e30a1219778c8a9521e34191ae7c066:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"1339483adfa4d7240823d2399bc652d2"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.090000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:22:51 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Available order
-        options for MOD29P1D or MYD29P1D","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n\t\t\t\t<!--
-        ECS distribution options example -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n\t\t\t\t\t<ecs:ftppush>\n\t\t\t\t\t<ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n\t\t\t\t\t</ecs:ftppush>\n\t\t\t\t</ecs:distribution>               \n\t\t\t\t<ecs:do-processing>false</ecs:do-processing>\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<!--
-        This must be populated with the subsetter''s endpoint -->\n\t\t\t\t\t<ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n\t\t\t\t\t<!--
-        This tag is a constant and is required for the HSA subsetter -->\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<!--
-        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
-        -->\n\t\t\t\t\t<hsa:SubsettingCriteria>\t\t\t\t\t\n\t\t\t\t\t\t<!-- GranuleSize
-        is required -->\n\t\t\t\t\t\t<hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n\t\t\t\t\t\t<!--
-        XYBox is optional, required only for geographic subsetting.  Mutually exclusive
-        with BoundingBox. -->\n\t\t\t\t\t    <hsa:spatial-subsetting granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:XYBox>\n                         <hsa:Projection
-        granule-specific=\"true\">\n                         <hsa:Value>North EASE-Grid</hsa:Value>\n                         </hsa:Projection>\n\t\t\t\t\t\t\t<hsa:ULRow>0</hsa:ULRow>\n\t\t\t\t\t\t\t<hsa:ULCol>0</hsa:ULCol>\n\t\t\t\t\t\t\t<hsa:LRRow>0</hsa:LRRow>\n\t\t\t\t\t\t\t<hsa:LRCol>0</hsa:LRCol>\n\t\t\t\t\t\t</hsa:XYBox>\n                        <!--
-        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
-        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>Sea_Ice_by_Reflectance</hsa:FieldName>\n                                <!--
-        Add other field names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \t\t\t\t\t\n\t\t\t\t\t</hsa:SubsettingCriteria>\n\t\t\t\t</ecs:processing>\n\t\t\t\t<ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n\t\t\t</ecs:options>\n\t\t</instance>\n       <!--
-        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n\t\t</extension>\n\t</model>\n\t<ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
-        Push\" value=\"FtpPush\"/>        \n            </select>\n\n            <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
-        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
-        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
-        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n          <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n           <item label=\"File\" value=\"FILEFORMAT\"/>\n          </select>\n          <select
-        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n           <item label=\"File\" value=\"FILEFORMAT\"/>\n          </select>\n        </group>\n        <input
-        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
-        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
-        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
-        = ''true'')</xpath>\n                     <alert>If you require processing,
-        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\n        <group
-        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
-        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
-        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush'')\">\n          <input id=\"spatialSwitch\" label=\"Spatial Subsetting?\"
-        ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
-        = ''true''\" type=\"xsd:boolean\">\n          </input>\n\t\t\t \n        <group
-        id=\"XYBox\" label=\"XY Bounding Box\" ref=\"//hsa:XYBox\" relevant=\"//hsa:spatial-subsetting
-        = ''true''\">\n            <select label=\"Projections\" multiple=\"false\"
-        open=\"false\" ref=\"//hsa:Projection\" relevant=\"false\" type=\"xsd:string\"
-        valueElementName=\"Value\">\n                <item label=\"North EASE-Grid\"
-        value=\"North EASE-Grid\"/>\n                <item label=\"South EASE-Grid\"
-        value=\"South EASE-Grid\"/>  \n\t    </select>\n            <input label=\"Upper
-        Left Row\" ref=\"hsa:ULRow\" type=\"xsd:int\"/>             \n            <input
-        label=\"Upper Left Column\" ref=\"hsa:ULCol\" type=\"xsd:int\"/>              \n            <input
-        label=\"Lower Right Row\" ref=\"hsa:LRRow\" type=\"xsd:int\"/>              \n            <input
-        label=\"Lower Right Column\" ref=\"hsa:LRCol\" type=\"xsd:int\"/>         \n        </group>\n  \n           <input
-        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
-        type=\"xsd:boolean\">\n            </input>                       \n         <group
-        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
-        = ''true''\">\n            <select label=\"Parameters\" multiple=\"true\"
-        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n              <constraints>\n                 <constraint>\n                    <xpath>//hsa:FieldName
-        != ''''</xpath>\n                    <alert>If you require parameter subsetting
-        you must select a parameter</alert>\n                 </constraint>\n              </constraints>\n                    <item
-        label=\"Sea_Ice_by_Reflectance\" value=\"Sea_Ice_by_Reflectance\"/>\n\t\t\t\t\t<item
-        label=\"Sea_Ice_by_Reflectance_Spatial_QA\" value=\"Sea_Ice_by_Reflectance_Spatial_QA\"/>\n\t\t\t\t\t<item
-        label=\"Ice_Surface_Temperature\" value=\"Ice_Surface_Temperature\"/>\n\t\t\t\t\t<item
-        label=\"Ice_Surface_Temperature_Spatial_QA\" value=\"Ice_Surface_Temperature_Spatial_QA\"/>\n\t\t\t\t\t<item
-        label=\"Sea_Ice_by_Ice_Surface_Temperature\" value=\"Sea_Ice_by_Ice_Surface_Temperature\"/>\n\t\t\t\t\t<item
-        label=\"Combined_Sea_Ice\" value=\"Combined_Sea_Ice\"/>\n\t        </select>\n        </group>\t\t\n    </group>\n\t\t<output
-        id=\"subsetWarningOuput\" label=\"\" type=\"xsd:string\" value=\"'' -- Browse
-        products cannot be ordered when subsetting is selected''\"/> \n    \t<input
-        id=\"ancillarySwitch\" label=\"Check here for Browse data options\" ref=\"ecs:do-ancillaryprocessing\"
-        type=\"xsd:boolean\"/>  \n        <group id=\"checkancillaryoptions\" label=\"
-        \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing =   ''true''\">
-        \n           <constraints>\n              <constraint>\n              <xpath>//ecs:do-processing
-        = ''false'' </xpath>\n              <alert>Subsetting option is not allowed
-        with ancillary data options</alert>\n              </constraint>\n          </constraints>\n\t\t    <input
-        label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
-        type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"19AFC933-5015-F5D6-0D38-C2414CCB520F","name":"M*D29P1D
-        Order Option","scope":"PROVIDER"}}'
-    http_version: 
 583e4af4d8d9e1d9cd892df20b8bfcfae696d74d:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"aa41aad14ef0f12a593028110c429b44"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 16:35:37 GMT
+      etag:
+      - '"aa41aad14ef0f12a593028110c429b44"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.073000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.080000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:32:00 GMT
+      content-length:
+      - '1621'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: '{"option_definition":{"deprecated":false,"description":"Order option
@@ -346,7 +51,7 @@ a5d136f180d8f77db003d70ee959697212ccb6ae:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 03:01:41 GMT
+      - Mon, 12 Mar 2018 16:39:11 GMT
       etag:
       - '"09287a9fb6e1c29e756b571d2aa63fbd"'
       server:
@@ -354,7 +59,7 @@ a5d136f180d8f77db003d70ee959697212ccb6ae:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.093000'
+      - '0.140000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -376,718 +81,52 @@ a5d136f180d8f77db003d70ee959697212ccb6ae:
         type=\"xsd:string\" value=\"''File''\"/>\n        </group> \n    </ui>\n</form>","id":"4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9","last_update":"2018-01-08T20:57:42Z","name":"Without
         Browse","scope":"PROVIDER"}}'
     http_version: 
-b7b10ce83fab0d83fd41058e14647c617ba647ae:
+7a0e867cbb0ee0e8e65f97c361128c1d8ff98822:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"ace3cde7faddbd040a8fdf397a1b9b42"'
       cache-control:
       - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.085000'
       content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
+      - application/json; charset=utf-8
       date:
-      - Thu, 19 May 2016 16:18:52 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":true,"description":"Ftp_Pull","form":"<form
-        xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:echo=\"http://provider_refer_system_must_match_this\"
-        xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://for_further_reference\">\n\n<!--
-        ORNL media option example  -->\n\n<import name=\"ECHO_SYSTEM_OPTIONS_V1\"/>\n<model>\n  <instance>\n    <providerOptions
-        xmlns=\"http://schema_verify_provider_instance_and_match_alias\" xmlns:prov=\"http://schema_verify_provider_instance_and_match_alias\"
-        xmlns:sys=\"http://schema_verify_system_instance_and_match_alias\">\n        <mediaOptions>\n          <mediaType/>\n          <mediaFormat/>\n       </mediaOptions>\n    </providerOptions>\n  </instance>\n</model>\n\n<ui>\n  <group
-        label=\"Media Options\" ref=\"prov:mediaOptions\">\n    <selectref idref=\"echo:mediaTypeSelect\"
-        label=\"Offered Media Delivery Types\" ref=\"prov:mediaType\">\n        <item
-        label=\"FTP Pull\" value=\"FTPPULL\"/>\n    </selectref>\n    <selectref idref=\"echo:mediaFormatSelect\"
-        label=\"Offered Media Format for FTPPULL\" ref=\"prov:mediaFormat\" relevant=\"prov:mediaType/prov:value=''FTPPULL''\">\n        <item
-        label=\"Tape Archive Format (TAR)\" value=\"TAR\"/>\n        <item label=\"Gzipped
-        Tape Archive Format (TARGZ)\" value=\"TARGZ\"/>\n        <item label=\"PK/Win
-        Zip Format\" value=\"WINZIP\"/>\n    </selectref>\n  </group>\n\n</ui>\n</form>","id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","name":"Ftp_Pull","scope":"PROVIDER"}}'
-    http_version: 
-bab75649e98fea59a8b8b07c1a32be3b50ae3df5:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
+      - Mon, 12 Mar 2018 16:34:56 GMT
       etag:
-      - '"efd41cd79031e1be0ae5fbeada478e9d"'
-      cache-control:
-      - max-age=0, private, must-revalidate
+      - '"fb78cd69e79ddd5992a9d5a3e163cd7c"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.069000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.081000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:17:57 GMT
+      content-length:
+      - '2443'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Available order
-        options for AE_Land","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
-        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n\t\t\t<ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n\t\t    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                   </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderPH/>\n                   <ecs:orderQA/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
+      string: '{"option_definition":{"deprecated":false,"description":"Only provide
+        FtpPull and FtpPush for collections\n\nDate: 03/26/2009","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://ecs.nasa.gov/options\">\n  <model>\n    <instance>\n      <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\">\n         <ecs:distribution>\n         <ecs:mediatype>\n          <ecs:value>FtpPull</ecs:value>
+        \n         </ecs:mediatype>\n  \t        <ecs:mediaformat>\n                <ecs:ftppull-format>\n                  <ecs:value>FILEFORMAT</ecs:value>\n                </ecs:ftppull-format>\n                <ecs:ftppush-format>\n                  <ecs:value>FILEFORMAT</ecs:value>\n                </ecs:ftppush-format>\n            </ecs:mediaformat>\n  \t           <ecs:ftppush>\n                 <ecs:user/>\n    \t         <ecs:password/>\n    \t         <ecs:host/>\n                 <ecs:directory/>\n                 <ecs:user-string/>\n              </ecs:ftppush>          \n        </ecs:distribution>\n      </ecs:options>\n    </instance>\n  </model>\n  <ui>\n\n    <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"//ecs:distribution\">\n      <select
         id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n\t\t<item label=\"FTP Push\" value=\"FtpPush\"/>\n            </select>\n        <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n            <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n            <secret label=\"Password\"
+        ref=\"//ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n        <item
+        label=\"FTP Pull\" value=\"FtpPull\"/>\n        <item label=\"FTP Push\" value=\"FtpPush\"/>\n      </select>\n\n      <group
+        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\">\n        <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\"/>\n        <secret label=\"Password\"
         ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\"
-        type=\"xsd:string\"/>\n            <input label=\"Hostname\" ref=\"ecs:host\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n            <input
+        type=\"xsd:string\"/>\n        <input label=\"Hostname\" ref=\"ecs:host\"
+        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n        <input
         label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        =  ''FtpPush''\" type=\"xsd:string\"/>\n            <input label=\"User string\"
-        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n        </group>\n             <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n
-        \t     </select>\n\t     <select id=\"mediaFormatSelectFTPPUSH\" label=\"Media
-        Format\" multiple=\"false\" open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\"
-        relevant=\"ecs:mediatype/ecs:value = ''FtpPush''\" required=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"File\" value=\"FILEFORMAT\"/>\n              </select>\n        </group>
-        \n        <input id=\"ancillarySwitch\" label=\"Check here for ancillary data
-        options\" ref=\"ecs:do-ancillaryprocessing\" type=\"xsd:boolean\"/>  \n        <group
-        id=\"checkancillaryoptions\" label=\" \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing
-        =  ''true''\"> \n          <input label=\"Include associated Production History
-        file in order?\" ref=\"ecs:orderPH\" type=\"xsd:boolean\"/> \n          <input
-        label=\"Include associated Quality Assurance file in order?\" ref=\"ecs:orderQA\"
-        type=\"xsd:boolean\"/>\n          <input label=\"Include associated Browse
-        file in order?\" ref=\"ecs:orderBrowse\" type=\"xsd:boolean\"/>\n        </group>
-        \n    </ui>\n</form>","id":"64E1376B-C01B-949F-B846-A46F36A49505","name":"AE_Land
-        Order Options","scope":"PROVIDER"}}'
-    http_version: 
-4a70646d5e60bf4ad51ada80c596be07fcd10b69:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"35061baf381b0b257e77b66a525e0f68"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.102000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:04 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L3 Orthorectified Images, GeoTIF Format","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST14DEM.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST14OTH</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L3 Orthorectified
-        Images, GeoTIF Format</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>GeoTIFF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:waterDetection
-        criteriaName=\"Water Detection\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:waterDetectionValue>On</lpdaac:waterDetectionValue>\n\t\t\t\t\t</lpdaac:waterDetection>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select label=\"Water
-        Detection:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:waterDetection\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
-        label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"67B936C6-25C0-70B0-74DE-DB6D398AC3D9","name":"AST14OTH","scope":"PROVIDER","sort_key":"P"}}'
-    http_version: 
-81d9923f3a086b0e6a5fa0a17a8e5f7abf20d825:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"1695e774608bfe9294f3ac5eac56d6a8"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.089000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:02 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Kinetic Temperature","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_08</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Kinetic Temperature</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","name":"AST_08","scope":"PROVIDER","sort_key":"J"}}'
-    http_version: 
-145d1a7d5c020289a8ada50a33481c7298bd700b:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"a05f2617aedce6ec7acbc96c62ffaaef"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.095000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:02 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Emissivity","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_05</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Emissivity</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"82D38BDE-E319-A530-8770-07A7A6F515AC","name":"AST_05","scope":"PROVIDER","sort_key":"D"}}'
-    http_version: 
-93e57e43f174df65ef818f65101aa00b8e361c1b:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"b664cadd002b280c52a339a740d4b9b7"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.076000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:04 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Radiance VNIR and SWIR Crosstalk-Corrected","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_09XT</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Radiance VNIR and SWIR Crosstalk-Corrected</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
-        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"88537F09-C291-396F-91DC-96ED6B1F3318","name":"AST_09XT","scope":"PROVIDER","sort_key":"L"}}'
-    http_version: 
-06ec3fcec7218b74470d213261e6b91c0d9a51a4:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"0a8b50165282450992dec71c373b2261"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.107000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:18:16 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Available Order
-        Options for AE_5DSno","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n                <!--
-        ECS distribution options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n                    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                    </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-processing>false</ecs:do-processing>\n                <ecs:processing>\n                    <!--
-        This must be populated with the subsetter''s endpoint -->\n                    <ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n                    <!--
-        This tag is a constant and is required for the HSA subsetter -->\n                    <ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n                    <!--
-        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
-        -->\n                    <hsa:SubsettingCriteria>                                                                         \n                        <!--
-        GranuleSize is required -->\n                        <hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n                        <hsa:spatial-subsetting
-        granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:LatLonBox>\n                            <hsa:NorthBound>90.0</hsa:NorthBound>\n                            <hsa:SouthBound>-90.0</hsa:SouthBound>\n                            <hsa:WestBound>-180.0</hsa:WestBound>\n                            <hsa:EastBound>180.0</hsa:EastBound>\n                        </hsa:LatLonBox>                     \n                        <!--
-        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
-        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>SWE_NorthernPentad</hsa:FieldName>\n                                <!--
-        Add other field names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \n                    </hsa:SubsettingCriteria>\n                </ecs:processing>\n            </ecs:options>\n        </instance>\n        <!--
-        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n        </extension>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
-        Push\" value=\"FtpPush\"/>\n             </select>\n            \n            <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
-        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
-        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
-        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n            <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n            <select
-        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n        </group>\n        <input
-        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
-        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
-        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
-        = ''true'')</xpath>\n                     <alert>If you require processing,
-        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\t\t\n        <group
-        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
-        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
-        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush'')\">\n               <input id=\"spatialSwitch\" label=\"Spatial
-        Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
-        = ''true''\" type=\"xsd:boolean\">\n               </input>\n \t\t\t   <group
-        id=\"LatLonBox\" label=\"Geographic Bounds\" ref=\"hsa:SubsettingCriteria/hsa:LatLonBox\"
-        relevant=\"hsa:SubsettingCriteria/hsa:spatial-subsetting = ''true''\">\n                <input
-        id=\"NorthBound\" label=\"North bound\" ref=\"hsa:NorthBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:NorthBound
-        &gt;= -90) and (//hsa:NorthBound &lt;= 90)</xpath>\n                            <alert>Latitude
-        must be between -90 and 90.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//hsa:NorthBound
-        &gt; //hsa:SouthBound</xpath>\n                            <alert>The northern
-        latitude must be greater than the southern latitude.</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
-        id=\"SouthBound\" label=\"South bound\" ref=\"hsa:SouthBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:SouthBound
-        &gt;= -90) and (//hsa:SouthBound &lt;= 90)</xpath>\n                            <alert>Latitude
-        must be between -90 and 90.</alert>\n                        </constraint>                \n                    </constraints>\n                </input>\n                <input
-        id=\"WestBound\" label=\"West bound\" ref=\"hsa:WestBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:WestBound
-        &gt;= -180) and (//hsa:WestBound &lt;= 180)</xpath>\n                            <alert>Longitude
-        must be between -180 and 180.</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
-        id=\"EastBound\" label=\"East bound\" ref=\"hsa:EastBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:EastBound
-        &gt;= -180) and (//hsa:EastBound &lt;= 180)</xpath>\n                            <alert>Longitude
-        must be between -180 and 180.</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n            </group>\n            <input
-        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
-        type=\"xsd:boolean\">\n            </input>                       \n            <group
-        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
-        = ''true''\">\n                <select label=\"Parameters\" multiple=\"true\"
-        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n                    <constraints>\n                       <constraint>\n                         <xpath>//hsa:FieldName
-        != ''''</xpath>\n                         <alert>If you require parameter
-        subsetting you must select a parameter</alert>\n                       </constraint>\n                    </constraints>\n                    <item
-        label=\"SWE_NorthernPentad\" value=\"SWE_NorthernPentad\"/>\n                    <item
-        label=\"Flags_NorthernPentad\" value=\"Flags_NorthernPentad\"/>\n                    <item
-        label=\"SWE_SouthernPentad\" value=\"SWE_SouthernPentad\"/>\n                    <item
-        label=\"Flags_SouthernPentad\" value=\"Flags_SouthernPentad\"/>\n               </select>\n            </group>\t\t\n        </group>\n    </ui>\n</form>","id":"906C81F9-4941-1D4D-2EB5-07B6DBBBBDFA","name":"AE_5DSno
-        Order Options","scope":"PROVIDER"}}'
-    http_version: 
-3170920dad21a2723dcdc67e210886150e332188:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"9908c35ba91252564fbbe3dd2aaf3654"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.076000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:01 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER L1B Registered
-        Radiance at the Sensor","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_04.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_L1B</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER L1B Registered Radiance
-        at the Sensor</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"96DBA166-0E46-8F4E-9D52-2AC4685268E7","name":"AST_L1B","scope":"PROVIDER","sort_key":"B"}}'
-    http_version: 
-a687bf12f7edfd1bd8d8c16e6631da53bb6f7124:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"76c2b469c0c50c1d19437bdb512c33f7"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.074000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:02 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L3 Digital Elevation Model, GeoTIF Format","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST14DEM.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull-->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST14DEM</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L3 Digital
-        Elevation Model, GeoTIF Format</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
-        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>GeoTIFF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:waterDetection
-        criteriaName=\"Water Detection\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:waterDetectionValue>On</lpdaac:waterDetectionValue>\n\t\t\t\t\t</lpdaac:waterDetection>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select label=\"Water
-        Detection:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:waterDetection\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
-        label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"9703E1B6-0334-2376-4BB2-A90C769D5D2B","name":"AST14DEM","scope":"PROVIDER","sort_key":"O"}}'
-    http_version: 
-bab7027872369dcbf20e5b7a467cd2452ec7b295:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"cbc74e1015164f6fa07b3cec24ab9e56"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.082000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:32:17 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Available order
-        options for MYD29P1N or MOD29P1N","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n\t\t\t\t<!--
-        ECS distribution options example -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n\t\t\t\t\t<ecs:ftppush>\n\t\t\t\t\t<ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n\t\t\t\t\t</ecs:ftppush>\n\t\t\t\t</ecs:distribution>               \n\t\t\t\t<ecs:do-processing>false</ecs:do-processing>\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<!--
-        This must be populated with the subsetter''s endpoint -->\n\t\t\t\t\t<ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n\t\t\t\t\t<!--
-        This tag is a constant and is required for the HSA subsetter -->\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<!--
-        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
-        -->\n\t\t\t\t\t<hsa:SubsettingCriteria>\t\t\t\t\t\n\t\t\t\t\t\t<!-- GranuleSize
-        is required -->\n\t\t\t\t\t\t<hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n\t\t\t\t\t\t<!--
-        XYBox is optional, required only for geographic subsetting.  Mutually exclusive
-        with BoundingBox. -->\n\t\t\t\t\t    <hsa:spatial-subsetting granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:XYBox>\n                         <hsa:Projection
-        granule-specific=\"true\">\n                         <hsa:Value>North EASE-Grid</hsa:Value>\n                         </hsa:Projection>\n\t\t\t\t\t\t\t<hsa:ULRow>0</hsa:ULRow>\n\t\t\t\t\t\t\t<hsa:ULCol>0</hsa:ULCol>\n\t\t\t\t\t\t\t<hsa:LRRow>0</hsa:LRRow>\n\t\t\t\t\t\t\t<hsa:LRCol>0</hsa:LRCol>\n\t\t\t\t\t\t</hsa:XYBox>\n                        <!--
-        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
-        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>Ice_Surface_Temperature</hsa:FieldName>\n                                <!--
-        Add other field names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \t\t\t\t\t\n\t\t\t\t\t</hsa:SubsettingCriteria>\n\t\t\t\t</ecs:processing>\n\t\t\t\t<ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n\t\t\t</ecs:options>\n\t\t</instance>\n       <!--
-        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n\t\t</extension>\n\t</model>\n\t<ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
-        Push\" value=\"FtpPush\"/>        \n            </select>\n\n            <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
-        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
-        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
-        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n          <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n           <item label=\"File\" value=\"FILEFORMAT\"/>\n          </select>\n          <select
-        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n           <item label=\"File\" value=\"FILEFORMAT\"/>\n          </select>\n        </group>\n        <input
-        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
-        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
-        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
-        = ''true'')</xpath>\n                     <alert>If you require processing,
-        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\n        <group
-        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
-        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
-        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush'')\">\n          <input id=\"spatialSwitch\" label=\"Spatial Subsetting?\"
-        ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
-        = ''true''\" type=\"xsd:boolean\">\n          </input>\n\t\t\t   \n        <group
-        id=\"XYBox\" label=\"XY Bounding Box\" ref=\"//hsa:XYBox\" relevant=\"//hsa:spatial-subsetting
-        = ''true''\">\n            <select label=\"Projections\" multiple=\"false\"
-        open=\"false\" ref=\"//hsa:Projection\" relevant=\"false\" type=\"xsd:string\"
-        valueElementName=\"Value\">\n                <item label=\"North EASE-Grid\"
-        value=\"North EASE-Grid\"/>\n                <item label=\"South EASE-Grid\"
-        value=\"South EASE-Grid\"/>  \n\t    </select>\n            <input label=\"Upper
-        Left Row\" ref=\"hsa:ULRow\" type=\"xsd:int\"/>             \n            <input
-        label=\"Upper Left Column\" ref=\"hsa:ULCol\" type=\"xsd:int\"/>              \n            <input
-        label=\"Lower Right Row\" ref=\"hsa:LRRow\" type=\"xsd:int\"/>              \n            <input
-        label=\"Lower Right Column\" ref=\"hsa:LRCol\" type=\"xsd:int\"/>         \n        </group>\n  \n           <input
-        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
-        type=\"xsd:boolean\">\n            </input>                       \n         <group
-        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
-        = ''true''\">\n            <select label=\"Parameters\" multiple=\"true\"
-        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n              <constraints>\n                 <constraint>\n                    <xpath>//hsa:FieldName
-        != ''''</xpath>\n                    <alert>If you require parameter subsetting
-        you must select a parameter</alert>\n                 </constraint>\n              </constraints>\n                   <item
-        label=\"Ice_Surface_Temperature\" value=\"Ice_Surface_Temperature\"/>\n\t\t\t\t\t<item
-        label=\"Ice_Surface_Temperature_Spatial_QA\" value=\"Ice_Surface_Temperature_Spatial_QA\"/>\n\t\t\t\t\t<item
-        label=\"Sea_Ice_by_Ice_Surface_Temperature\" value=\"Sea_Ice_by_Ice_Surface_Temperature\"/>\n\t        </select>\n        </group>\t\t\n    </group>\n\t\t<output
-        id=\"subsetWarningOuput\" label=\"\" type=\"xsd:string\" value=\"'' -- Browse
-        products cannot be ordered when subsetting is selected''\"/> \n    \t<input
-        id=\"ancillarySwitch\" label=\"Check here for Browse data options\" ref=\"ecs:do-ancillaryprocessing\"
-        type=\"xsd:boolean\"/>  \n        <group id=\"checkancillaryoptions\" label=\"
-        \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing =   ''true''\">
-        \n           <constraints>\n              <constraint>\n              <xpath>//ecs:do-processing
-        = ''false'' </xpath>\n              <alert>Subsetting option is not allowed
-        with ancillary data options</alert>\n              </constraint>\n          </constraints>\n\t\t    <input
-        label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
-        type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"9940B026-5C7C-BC3E-049B-89F6D2A35AD8","name":"M*D29P1N
-        Order Option","scope":"PROVIDER"}}'
+        = ''FtpPush''\" type=\"xsd:string\"/>\n        <input label=\"User string\"
+        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n      </group>\n    </group>\n    \n  </ui>\n</form>","id":"86796547-2EA7-2F05-B752-B533C47429EA","name":"FTPPull-FTPPush","scope":"PROVIDER","sort_key":"1"}}'
     http_version: 
 e02fe4873c1e2204ec20137b3a699ac0c92172b3:
   response:
@@ -1100,7 +139,7 @@ e02fe4873c1e2204ec20137b3a699ac0c92172b3:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 02:59:25 GMT
+      - Mon, 12 Mar 2018 16:32:47 GMT
       etag:
       - '"cae03528eee4a4dd6035312d0a518701"'
       server:
@@ -1108,7 +147,7 @@ e02fe4873c1e2204ec20137b3a699ac0c92172b3:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.087000'
+      - '0.064000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -1137,264 +176,7 @@ e02fe4873c1e2204ec20137b3a699ac0c92172b3:
         type=\"xsd:boolean\"/>\n        </group> \n    </ui>\n</form>","id":"9FB6E4CA-F0EC-B3A1-F06F-C24B8153EB9E","last_update":"2018-01-08T20:58:39Z","name":"With
         QA, PH, Browse","scope":"PROVIDER"}}'
     http_version: 
-026b1150618d3141d3639caefb6d18d45f04e77e:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"d0b51d858b91c102a0711d8d95b0afba"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.078000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Fri, 19 Aug 2016 14:20:44 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Order form
-        for FTP pull with option for QA","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
-        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n<ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n   <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                   </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderQA/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n<item label=\"FTP Push\" value=\"FtpPush\"/>\n            </select>\n        <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n            <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n            <secret label=\"Password\"
-        ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\"
-        type=\"xsd:string\"/>\n            <input label=\"Hostname\" ref=\"ecs:host\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n            <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        =  ''FtpPush''\" type=\"xsd:string\"/>\n            <input label=\"User string\"
-        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n        </group>\n             <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n
-        \t     </select>\n    <select id=\"mediaFormatSelectFTPPUSH\" label=\"Media
-        Format\" multiple=\"false\" open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\"
-        relevant=\"ecs:mediatype/ecs:value = ''FtpPush''\" required=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"File\" value=\"FILEFORMAT\"/>\n              </select>\n        </group>
-        \n        <input id=\"ancillarySwitch\" label=\"Check here for Ancillary data
-        options\" ref=\"ecs:do-ancillaryprocessing\" type=\"xsd:boolean\"/>  \n        <group
-        id=\"checkancillaryoptions\" label=\" \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing
-        =  ''true''\"> \n          <input label=\"Include associated Quality Assurance
-        file in order?\" ref=\"ecs:orderQA\" type=\"xsd:boolean\"/>\n        </group>
-        \n    </ui>\n</form>","id":"A7B3B8F6-0EDC-DBEE-3686-54E8D7DE216D","name":"FTP
-        order w/QA","scope":"PROVIDER"}}'
-    http_version: 
-4436c7388ba8310f57244afa01e8630b64569c84:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"51816506f465a3f12f784ce8d28ec421"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.077000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:04 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Radiance SWIR and VNIR","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_09</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Radiance SWIR and VNIR</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"A876D145-3D53-D9FF-985B-EFE14FC966F0","name":"AST_09","scope":"PROVIDER","sort_key":"K"}}'
-    http_version: 
-3e5f0a50357e424d6f74eb7f8fa04ac70207c6a5:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"167365454b47f1a8177d588a07b84f5d"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.080000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:36:48 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Available order
-        options for AE_Rain","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n                <!--
-        ECS distribution options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n                    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                    </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-processing>false</ecs:do-processing>\n                <ecs:processing>\n                    <!--
-        This must be populated with the subsetter''s endpoint -->\n                    <ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n                    <!--
-        This tag is a constant and is required for the HSA subsetter -->\n                    <ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n                    <!--
-        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
-        -->\n                    <hsa:SubsettingCriteria>                                                                         \n                        <!--
-        GranuleSize is required -->\n                        <hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n                        <hsa:spatial-subsetting
-        granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:LatLonBox>\n                            <hsa:NorthBound>90.0</hsa:NorthBound>\n                            <hsa:SouthBound>-90.0</hsa:SouthBound>\n                            <hsa:WestBound>-180.0</hsa:WestBound>\n                            <hsa:EastBound>180.0</hsa:EastBound>\n                        </hsa:LatLonBox>                     \n                        <!--
-        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
-        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>Rain
-        Rate</hsa:FieldName>\n                                <!-- Add other field
-        names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \n                    </hsa:SubsettingCriteria>\n                </ecs:processing>\n\t\t\t
-        <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing> \n                <ecs:ancillary>\n                   <ecs:orderPH/>\n                   <ecs:orderQA/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n            </ecs:options>\n        </instance>\n        <!--
-        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n        </extension>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
-        Push\" value=\"FtpPush\"/>\n            </select>\n            \n            <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
-        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
-        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
-        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n            <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n            <select
-        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n        </group>\n        <input
-        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
-        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
-        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
-        = ''true'')</xpath>\n                     <alert>If you require processing,
-        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\t\t\n        <group
-        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
-        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
-        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
-        = ''FtpPush'')\">\n               <input id=\"spatialSwitch\" label=\"Spatial
-        Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
-        = ''true''\" type=\"xsd:boolean\">\n               </input>\n\t\t\t     <group
-        id=\"LatLonBox\" label=\"Geographic Bounds\" ref=\"hsa:SubsettingCriteria/hsa:LatLonBox\"
-        relevant=\"hsa:SubsettingCriteria/hsa:spatial-subsetting = ''true''\">\n                <input
-        id=\"NorthBound\" label=\"North bound\" ref=\"hsa:NorthBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:NorthBound
-        &gt;= -90) and (//hsa:NorthBound &lt;= 90)</xpath>\n                            <alert>Latitude
-        must be between -90 and 90.</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//hsa:NorthBound
-        &gt; //hsa:SouthBound</xpath>\n                            <alert>The northern
-        latitude must be greater than the southern latitude.</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
-        id=\"SouthBound\" label=\"South bound\" ref=\"hsa:SouthBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:SouthBound
-        &gt;= -90) and (//hsa:SouthBound &lt;= 90)</xpath>\n                            <alert>Latitude
-        must be between -90 and 90.</alert>\n                        </constraint>                \n                    </constraints>\n                </input>\n                <input
-        id=\"WestBound\" label=\"West bound\" ref=\"hsa:WestBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:WestBound
-        &gt;= -180) and (//hsa:WestBound &lt;= 180)</xpath>\n                            <alert>Longitude
-        must be between -180 and 180.</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
-        id=\"EastBound\" label=\"East bound\" ref=\"hsa:EastBound\" type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>(//hsa:EastBound
-        &gt;= -180) and (//hsa:EastBound &lt;= 180)</xpath>\n                            <alert>Longitude
-        must be between -180 and 180.</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n            </group>\n            <input
-        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
-        type=\"xsd:boolean\">\n            </input>                       \n            <group
-        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
-        = ''true''\">\n                <select label=\"Parameters\" multiple=\"true\"
-        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n                    <constraints>\n                       <constraint>\n                         <xpath>//hsa:FieldName
-        != ''''</xpath>\n                         <alert>If you require parameter
-        subsetting you must select a parameter</alert>\n                       </constraint>\n                    </constraints>\n\t\t\t\t\t<item
-        label=\"Rain Rate\" value=\"Rain Rate\"/>\n                    <item label=\"Rain
-        Type\" value=\"Rain Type\"/>\n                </select>\n            </group>\t\t\n        </group>\n        <output
-        id=\"subsetWarningOuput\" label=\"\" type=\"xsd:string\" value=\"'' -- Ancillary
-        products cannot be ordered when subsetting is selected.''\"/>  \n\t\t<input
-        id=\"ancillarySwitch\" label=\"Check here for ancillary data options\" ref=\"ecs:do-ancillaryprocessing\"
-        type=\"xsd:boolean\"/>  \n        <group id=\"checkancillaryoptions\" label=\"
-        \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing =   ''true''\">
-        \n           <constraints>\n              <constraint>\n              <xpath>//ecs:do-processing
-        = ''false'' </xpath>\n              <alert>Subsetting option is not allowed
-        with ancillary data options</alert>\n              </constraint>\n          </constraints>\n        <input
-        label=\"Include associated Production History file in order?\" ref=\"ecs:orderPH\"
-        type=\"xsd:boolean\"/> \n       <input label=\"Include associated Quality
-        Assurance file in order?\" ref=\"ecs:orderQA\" type=\"xsd:boolean\"/>\n       <input
-        label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
-        type=\"xsd:boolean\"/>\n       </group> \n    </ui>\n</form>","id":"ACFC9F77-7CAC-A5D1-EEC2-8DF3823EE4F1","name":"AE_Rain
-        Order Option","scope":"PROVIDER"}}'
-    http_version: 
-49dca56abdb8f8a941d281a783972d3e1ebc4db1:
+f4520dc72a22e331b9fc648422d09d991e630b22:
   response:
     status:
       code: 200
@@ -1405,129 +187,39 @@ e02fe4873c1e2204ec20137b3a699ac0c92172b3:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 02 Nov 2017 02:10:41 GMT
+      - Mon, 12 Mar 2018 16:06:06 GMT
       etag:
-      - '"c0bd4156ddf14aed61b5d01594cdf431"'
+      - '"3da2eb4a599707b6785b03606d804d76"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.039000'
+      - '0.119000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '1996'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Order form
-        for FTP pull with option for QA","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+      string: '{"option_definition":{"deprecated":false,"description":"HTTPS Order
+        with browse","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
         xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
-        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n<ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n   <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                   </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderQA/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"HTTPS Pull\" value=\"FtpPull\"/>\n<item label=\"FTP Push\" value=\"FtpPush\"/>\n            </select>\n        <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n            <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n            <secret label=\"Password\"
-        ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\"
-        type=\"xsd:string\"/>\n            <input label=\"Hostname\" ref=\"ecs:host\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n            <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        =  ''FtpPush''\" type=\"xsd:string\"/>\n            <input label=\"User string\"
-        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n        </group>\n             <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n
-        \t     </select>\n    <select id=\"mediaFormatSelectFTPPUSH\" label=\"Media
-        Format\" multiple=\"false\" open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\"
-        relevant=\"ecs:mediatype/ecs:value = ''FtpPush''\" required=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"File\" value=\"FILEFORMAT\"/>\n              </select>\n        </group>
-        \n        <input id=\"ancillarySwitch\" label=\"Check here for Ancillary data
-        options\" ref=\"ecs:do-ancillaryprocessing\" type=\"xsd:boolean\"/>  \n        <group
-        id=\"checkancillaryoptions\" label=\" \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing
-        =  ''true''\"> \n          <input label=\"Include associated Quality Assurance
-        file in order?\" ref=\"ecs:orderQA\" type=\"xsd:boolean\"/>\n        </group>
-        \n    </ui>\n</form>","id":"B864E577-C9FB-9009-8264-651D2DCCE580","last_update":"2017-01-25T12:35:55Z","name":"Order
-        with QA","scope":"PROVIDER"}}'
-    http_version: 
-ba12b2eb4a79c3f422670d4986a666067ced77e4:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"0c8b2c05513a059e88d354a63cdaa8ed"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.088000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:04 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Reflectance VNIR and SWIR Crosstalk-Corrected","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_07XT</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Reflectance VNIR and SWIR Crosstalk-Corrected</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
-        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"BA87A7EE-0FE6-03EB-C5F3-3B494726055B","name":"AST_07XT","scope":"PROVIDER","sort_key":"I"}}'
+        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                    </ecs:mediaformat>\n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <output
+        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
+        =''FtpPull''\" type=\"xsd:string\" value=\"''HTTPS Pull''\"/>\n             <output
+        id=\"FtpPullMediaFormatOutput\" label=\"Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n        </group>   \n        <group
+        id=\"checkancillaryoptions\" label=\"Additional file options:\" ref=\"ecs:ancillary\"
+        relevant=\"//ecs:do-ancillaryprocessing =  ''true''\"> \n          <input
+        label=\"Include associated Browse file in order\" ref=\"ecs:orderBrowse\"
+        type=\"xsd:boolean\"/>\n        </group> \n    </ui>\n</form>","id":"AE90B3EA-46FC-7899-6983-D8A9A60875C6","last_update":"2018-01-08T20:57:15Z","name":"With
+        Browse","scope":"PROVIDER"}}'
     http_version: 
 b9ba3747086bddf1506c8cde20a1c6df0d3cd42f:
   response:
@@ -1535,26 +227,26 @@ b9ba3747086bddf1506c8cde20a1c6df0d3cd42f:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"74ef457c71fe8a0eb1e0ea74fe8606b0"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 16:00:53 GMT
+      etag:
+      - '"74ef457c71fe8a0eb1e0ea74fe8606b0"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.090000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.082000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:01 GMT
+      content-length:
+      - '3473'
       connection:
-      - close
-      transfer-encoding:
-      - chunked
+      - Close
     body:
       encoding: UTF-8
       string: '{"option_definition":{"deprecated":false,"description":"ASTER L1A Reconstructed
@@ -1584,194 +276,32 @@ b9ba3747086bddf1506c8cde20a1c6df0d3cd42f:
         required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
         label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","name":"AST_L1A","scope":"PROVIDER","sort_key":"A"}}'
     http_version: 
-c122341129ce5ed934b715973938a7ab85c2e080:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 03:01:20 GMT
-      etag:
-      - '"34795473fc517420413f764fbdad7cb6"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.096000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1991'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"HTTPS Order
-        with QA","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
-        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
-        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                    </ecs:mediaformat>\n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderQA/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <output
-        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
-        =''FtpPull''\" type=\"xsd:string\" value=\"''HTTPS Pull''\"/>\n             <output
-        id=\"FtpPullMediaFormatOutput\" label=\"Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n        </group>   \n        <group
-        id=\"checkancillaryoptions\" label=\"Additional file options:\" ref=\"ecs:ancillary\"
-        relevant=\"//ecs:do-ancillaryprocessing =  ''true''\"> \n          <input
-        label=\"Include associated Quality Assurance file in order\" ref=\"ecs:orderQA\"
-        type=\"xsd:boolean\"/>\n        </group> \n    </ui>\n</form>","id":"C1E16008-633A-95D4-944C-901094B1C7A1","last_update":"2018-01-08T20:58:11Z","name":"With
-        QA","scope":"PROVIDER"}}'
-    http_version: 
-e265ebdbf04bcba81068991a32d551f5c4b76dbd:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      content-type:
-      - application/json; charset=utf-8
-      etag:
-      - '"ef6871e646d08c0ba305c7b3435de76f"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.051000'
-      connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Order form
-        for FTP with QA, PH, and browse.","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
-        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n<ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n   <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                   </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n                <ecs:ancillary>\n                   <ecs:orderQA/>\n                   <ecs:orderPH/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n<item label=\"FTP Push\" value=\"FtpPush\"/>\n            </select>\n        <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n            <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n            <secret label=\"Password\"
-        ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\"
-        type=\"xsd:string\"/>\n            <input label=\"Hostname\" ref=\"ecs:host\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n            <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        =  ''FtpPush''\" type=\"xsd:string\"/>\n            <input label=\"User string\"
-        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n        </group>\n             <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n
-        \t     </select>\n    <select id=\"mediaFormatSelectFTPPUSH\" label=\"Media
-        Format\" multiple=\"false\" open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\"
-        relevant=\"ecs:mediatype/ecs:value = ''FtpPush''\" required=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"File\" value=\"FILEFORMAT\"/>\n              </select>\n        </group>
-        \n        <input id=\"ancillarySwitch\" label=\"Check here for Ancillary data
-        options\" ref=\"ecs:do-ancillaryprocessing\" type=\"xsd:boolean\"/>  \n        <group
-        id=\"checkancillaryoptions\" label=\" \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing
-        =  ''true''\"> \n          <input label=\"Include associated Production History
-        file in order?\" ref=\"ecs:orderPH\" type=\"xsd:boolean\"/> \n          <input
-        label=\"Include associated Quality Assurance file in order?\" ref=\"ecs:orderQA\"
-        type=\"xsd:boolean\"/>\n          <input label=\"Include associated Browse
-        file in order?\" ref=\"ecs:orderBrowse\" type=\"xsd:boolean\"/>\n        </group>
-        \n    </ui>\n</form>","id":"D968EAE8-2913-FCCD-A515-3C87346736A3","last_update":"2016-08-08T12:53:46Z","name":"FTP
-        order w/QA,PH, and Browse","scope":"PROVIDER"}}'
-    http_version: 
-a5a61b15764f485b859b95b4189af3d950d14822:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"cdb0d3ad6bfd4b14daa42fc097a511ac"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.085000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:03 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L3 DEM and Orthorectified Images, GeoTIF Format","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST14DEM.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST14DMO</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L3 DEM and
-        Orthorectified Images, GeoTIF Format</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
-        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>GeoTIFF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:waterDetection
-        criteriaName=\"Water Detection\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:waterDetectionValue>On</lpdaac:waterDetectionValue>\n\t\t\t\t\t</lpdaac:waterDetection>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select label=\"Water
-        Detection:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:waterDetection\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
-        label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"E1032659-E26F-226C-C668-4B5E3A7B5EB0","name":"AST14DMO","scope":"PROVIDER","sort_key":"Q"}}'
-    http_version: 
 044389dc81b11066c4ec61c7fe49b848c0879b92:
   response:
     status:
       code: 200
       message: 
     headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"23425487653fb0386bf8aa80fa766245"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 15:52:53 GMT
+      etag:
+      - '"23425487653fb0386bf8aa80fa766245"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.219000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.082000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:24:41 GMT
-      connection:
-      - close
       transfer-encoding:
       - chunked
+      connection:
+      - Close
     body:
       encoding: UTF-8
       string: '{"option_definition":{"deprecated":false,"description":"Ftp Push &
@@ -1799,97 +329,32 @@ a5a61b15764f485b859b95b4189af3d950d14822:
         ref=\"prov:odl[@name=''PASSWORD'']\" required=\"true()\" type=\"xs:string\"/>\n      <input
         label=\"FTP Path:\" ref=\"prov:odl[@name=''FTP_PATH'']\" type=\"xs:string\"/>\n    </group>\n    \n  </ui>\n</form>","id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","name":"FtpPushPull","scope":"PROVIDER"}}'
     http_version: 
-5c5ffa3c63848409f6078895d2241a8a54dac654:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"0020d19431204fc9be29d759195202c2"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.089000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:02 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Radiance TIR","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_09T</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Radiance TIR</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"E441136C-03AB-2A45-B698-7A62659FD463","name":"AST_09T","scope":"PROVIDER","sort_key":"M"}}'
-    http_version: 
 46ab8038ae7ea476219e2b75c827f2957fd6660a:
   response:
     status:
       code: 200
       message: 
     headers:
-      content-type:
-      - application/json; charset=utf-8
-      etag:
-      - '"91d811cf32a8162495a78a9511455c6f"'
       cache-control:
       - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 16:31:33 GMT
+      etag:
+      - '"91d811cf32a8162495a78a9511455c6f"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.139000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      x-runtime:
-      - '0.044000'
+      content-length:
+      - '3068'
       connection:
-      - close
-      server:
-      - Jetty(9.2.z-SNAPSHOT)
+      - Close
     body:
       encoding: UTF-8
       string: '{"option_definition":{"deprecated":false,"description":"Delivery Option","form":"<form
@@ -1916,136 +381,4 @@ a5a61b15764f485b859b95b4189af3d950d14822:
         label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
         type=\"xsd:string\" value=\"''File''\"/>        \n    </group>\n   </ui>\n</form>","id":"EC7AA66E-00D6-ED42-3043-B2F1534AA85A","name":"Delivery
         Option","scope":"PROVIDER"}}'
-    http_version: 
-6d746da16b1989db4ff4b53f0ede9bb8e0e9433b:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"879cef1156757d9797e4bcf65659e259"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.090000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 19 May 2016 16:27:04 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
-        L2 Surface Reflectance","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
-        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
-        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_07</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
-        Reflectance</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
-        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
-        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
-        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
-        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
-        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
-        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
-        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
-        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
-        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
-        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
-        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
-        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
-        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
-        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
-        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
-        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
-        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
-        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
-        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
-        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
-        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
-        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
-        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
-        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
-        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
-        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
-        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
-        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"F56BCDCE-BA50-059C-6E3F-ED793ACDCD41","name":"AST_07","scope":"PROVIDER","sort_key":"H"}}'
-    http_version: 
-f6c14c4da4d71572785d8e7cdc1477c0eb9cab0a:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      strict-transport-security:
-      - max-age=15768000
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"fc4fc270cf029437627624beeae37f0c"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.085000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 27 Oct 2016 17:36:05 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Generic form
-        for ordering without browse","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
-        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
-        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n\t\t\t<ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n\t\t    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                   </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
-        \n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
-        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
-        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
-        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"FTP Pull\" value=\"FtpPull\"/>\n\t\t<item label=\"FTP Push\" value=\"FtpPush\"/>\n            </select>\n        <group
-        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\">\n            <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\"/>\n            <secret label=\"Password\"
-        ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\"
-        type=\"xsd:string\"/>\n            <input label=\"Hostname\" ref=\"ecs:host\"
-        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n            <input
-        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
-        =  ''FtpPush''\" type=\"xsd:string\"/>\n            <input label=\"User string\"
-        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n        </group>\n             <select
-        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
-        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
-        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
-        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n
-        \t     </select>\n\t     <select id=\"mediaFormatSelectFTPPUSH\" label=\"Media
-        Format\" multiple=\"false\" open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\"
-        relevant=\"ecs:mediatype/ecs:value = ''FtpPush''\" required=\"ecs:mediatype/ecs:value
-        = ''FtpPush''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
-        label=\"File\" value=\"FILEFORMAT\"/>\n              </select>\n        </group>
-        \n    </ui>\n</form>","id":"F8D65838-A54A-FDCA-300D-FE6396AE5502","name":"FTP
-        order w/o browse","scope":"PROVIDER"}}'
     http_version: 

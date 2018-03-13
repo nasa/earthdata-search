@@ -53,19 +53,20 @@ describe 'Access data with more than 2000 granules', reset: false do
 
         it 'displays a warning about multiple emails' do
           expect(page).to have_text('Your order will be automatically split up into 2 orders. You will receive a set of emails for each order placed.')
-          expect(modal_footer).to have_link('Change access methods')
           expect(modal_footer).to have_link('Refine your search')
+          expect(modal_footer).to have_link('Change access methods')
           expect(modal_footer).to have_link('Continue')
         end
 
-        context 'when accepting the modal' do
+        context 'when accepting the modal', pending_updates: true do
           before :all do
-            sleep 1
+            # sleep 1
             within '.modal-footer' do
               click_link 'Continue'
             end
             click_on 'Submit'
             wait_for_xhr
+
           end
 
           it 'initially shows the order in the "Creating" state' do
@@ -73,8 +74,8 @@ describe 'Access data with more than 2000 granules', reset: false do
           end
 
           context 'after the order processes' do
-            before :all do
-              Delayed::Worker.new.work_off
+            before :each do
+              Delayed::Worker.new(quiet: false).work_off
             end
 
             it 'shows the order in the "Closed" state' do
@@ -113,31 +114,6 @@ describe 'Access data with more than 2000 granules', reset: false do
           expect(modal_footer).to have_link('Change access methods')
           expect(modal_footer).to have_link('Refine your search')
           expect(modal_footer).to have_link('Continue')
-        end
-
-        context 'when accepting the modal' do
-          before :all do
-            sleep 1
-            within '.modal-footer' do
-              click_link 'Continue'
-            end
-            click_on 'Submit'
-            wait_for_xhr
-          end
-
-          it 'initially shows the order in the "Creating" state' do
-            expect(page).to have_text('Creating')
-          end
-
-          context 'after the order processes' do
-            before :all do
-              Delayed::Worker.new.work_off
-            end
-
-            it 'shows the order in the "Closed" state' do
-              expect(page).to have_text('Closed')
-            end
-          end
         end
       end
     end

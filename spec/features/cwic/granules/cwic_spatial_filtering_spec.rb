@@ -4,7 +4,7 @@ describe "CWIC-enabled granule results", reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA'
+    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
   end
 
   after :each do
@@ -17,7 +17,7 @@ describe "CWIC-enabled granule results", reset: false do
 
     context "performing a granule search with a point condition applied using the standard interface" do
       before(:all) do
-        create_point(40, -75)
+        manually_create_point(40, -75)
         wait_for_xhr
       end
 
@@ -29,7 +29,7 @@ describe "CWIC-enabled granule results", reset: false do
 
     context "removing a point condition from a granule search" do
       before(:all) do
-        create_point
+        manually_create_point
         wait_for_xhr
         clear_spatial
         wait_for_xhr
@@ -42,7 +42,7 @@ describe "CWIC-enabled granule results", reset: false do
 
     context "performing a granule search with a bounding box condition applied using the standard interface" do
       before(:all) do
-        create_bounding_box(40, -75, 41, -74)
+        manually_create_bounding_box(40, -75, 41, -74)
         wait_for_xhr
       end
       it "filters the results list to matching granules", acceptance: true do
@@ -52,7 +52,7 @@ describe "CWIC-enabled granule results", reset: false do
 
     context "removing a bounding box condition from a granule search" do
       before(:all) do
-        create_bounding_box(40, -75, 41, -74)
+        manually_create_bounding_box(40, -75, 41, -74)
         wait_for_xhr
         clear_spatial
         wait_for_xhr

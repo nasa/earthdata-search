@@ -1,15 +1,34 @@
 require 'spec_helper'
 
 describe GibsConfiguration do
+  before :all do
+    # Loads WV json and merges in wv gibs.json
+    worldview_url = 'https://worldview.earthdata.nasa.gov/config/wv.json'
+    gibs_configuration = GibsConfiguration.new
+    @result_json = gibs_configuration.send(:load_configs, worldview_url)
+  end
+
   context 'load_configs' do
-    it 'merges custom configs into worldview configs' do
-      mopit_config = {:collections=>{"condition"=>{"concept_id"=>"C84942916-LARC"}}, :config=>{:match=>{"time_start"=>">=2000-02-01"}, :product=>"MISR_Cloud_Stereo_Height_Histogram_Bin_1.5-2.0km_Monthly", :maxNativeZoom=>5, :title=>"Cloud Stereo Height (No Wind Correction, 1.5 - 2.0 km, Monthly)", :source=>"Terra / MISR", :format=>"png", :resolution=>"2km", :geo=>true, :arctic=>false, :antarctic=>false, :geo_resolution=>"2km", :arctic_resolution=>nil, :antarctic_resolution=>nil}}
+    it 'merges custom configs into final configs' do
+      # This value only exists in our local gibs.json file
+      local_only_title = 'Carbon Monoxide (Daily, Day, Total Column)'
 
-      worldview_url = 'https://worldview.earthdata.nasa.gov/config/wv.json'
-      gibs_configuration = GibsConfiguration.new
-      result_json = gibs_configuration.send(:load_configs, worldview_url)
+      # Search for a known string that ONLY exists in local gibs.json
+      local_only_config = @result_json.find { |config| config[:config][:title] == local_only_title }
 
-      expect(result_json.last).to eq(mopit_config)
+      # Ensure that the local only value appears in the final merged result
+      expect(local_only_config).to_not be_nil
+    end
+
+    it 'merges world configs into final configs' do
+      # This value only exists in our local gibs.json file
+      wv_only_title = 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily'
+
+      # Search for a known string that ONLY exists in wv gibs.json
+      wv_only_config = @result_json.find { |config| config[:config][:product] == wv_only_title }
+
+      # Ensure that the wv only value appears in the final merged result
+      expect(wv_only_config).to_not be_nil
     end
   end
 end

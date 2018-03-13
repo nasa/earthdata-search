@@ -4,7 +4,7 @@ describe "CWIC-enabled granule results", reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA'
+    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
   end
 
   context "for CWIC-tagged collections" do
@@ -45,7 +45,7 @@ describe "CWIC-enabled granule results", reset: false do
 
         it "filters the results list to the period from the first recurring start to the last recurring end", acceptance: true do
           expect(first_granule_list_item).to have_text('2013-12-01')
-          expect(page).to have_text('Showing 20 of 6053 matching granules')
+          expect(page).to have_text('Showing 20')
         end
 
         context "and removing the recurring temporal condition" do

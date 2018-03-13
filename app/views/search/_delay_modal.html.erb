@@ -1,0 +1,24 @@
+<!--begin modal-->
+<div class="modal" id="delayWarningModal" tabindex="-1" role="dialog" aria-labelledby="delayWarningModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h4 class="modal-title" id="delayWarningModalLabel">Possible Delay Ahead</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          The amount of granules requested for download may result in a significant delay. You may wish to further refine your search to limit the size of your download. Are you sure you want to continue?
+        </p>
+        <p>
+          <span id='delayOptionalMessage'></span>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" id="delayOk" data-dismiss="modal" href="#">Continue</a>
+        <a class="button text-button" id="delayCancel" data-dismiss="modal" href="#">Refine Search</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end modal-->

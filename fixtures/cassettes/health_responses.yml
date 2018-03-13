@@ -1,20 +1,24 @@
 ---
-7ec5b68c21bb8347b2ab45f7892fd919550198b7:
+0f110279e395971e05cec02349d1044f01a510c2:
   response:
     status:
       code: 200
       message: 
     headers:
-      date:
-      - Tue, 13 Oct 2015 20:31:57 GMT
+      cmr-request-id:
+      - 837cfb00-0ac0-4d12-a45e-df4e0667e986
       content-type:
       - application/json; charset=utf-8
+      date:
+      - Mon, 12 Mar 2018 16:04:43 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
       content-length:
       - '208'
       connection:
-      - close
-      server:
-      - Jetty(7.x.y-SNAPSHOT)
+      - Close
     body:
       encoding: UTF-8
       string: '{"echo":{"ok?":true},"internal-metadata-db":{"ok?":true,"dependencies":{"oracle":{"ok?":true},"echo":{"ok?":true}}},"index-set":{"ok?":true,"dependencies":{"elastic_search":{"ok?":true},"echo":{"ok?":true}}}}'

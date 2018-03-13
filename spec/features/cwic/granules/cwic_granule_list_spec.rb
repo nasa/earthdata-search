@@ -4,7 +4,7 @@ describe "CWIC Granule list", reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA'
+    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
   end
 
   context "for all collections with granules" do
@@ -67,7 +67,7 @@ describe "CWIC Granule list", reset: false do
       hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
       it "displays temporal information on the granule list" do
-        expect(granule_list.text).to match(/START\d{4}-\d{2}-\d{2} 00:00:00 END\d{4}-\d{2}-\d{2} 00:00:00/)
+        expect(granule_list.text).to match(/START\d{4}-\d{2}-\d{2} END\d{4}-\d{2}-\d{2}/)
       end
     end
   end

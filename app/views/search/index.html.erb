@@ -158,7 +158,7 @@
         <header class="with-options">
           <h2>Project Collections</h2>
           <div class="master-overlay-global-actions actions">
-            <button class="button retrieve" data-bind="click: project.exceedCollectionLimit() ? function(){} : $root.ui.projectList.loginAndDownloadProject, css: {'button-disabled': project.exceedCollectionLimit(), retrieve: !project.exceedCollectionLimit()}, attr: {'data-placement': 'bottom', 'data-tooltip': project.exceedCollectionLimit().toString(), 'title': project.exceedCollectionLimit() ? 'Due to significant processing times, orders for this collection are limited to 2000 granules (100 for ASTER Level 3 products). Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download project data'}">
+            <button class="button retrieve" data-bind="click: project.exceedCollectionLimit() ? function(){} : $root.ui.projectList.loginAndDownloadProject, css: {'button-disabled': project.exceedCollectionLimit(), retrieve: !project.exceedCollectionLimit()}, attr: {'data-placement': 'bottom', 'data-tooltip': project.exceedCollectionLimit().toString(), 'title': project.exceedCollectionLimit() ? 'Due to significant processing times, orders for this collection are limited to 2000 granules (100 for ASTER Level 3 products). Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download project data'}">
               <i class="fa fa-download"></i> Download Project Data
             </button>
 
@@ -204,7 +204,7 @@
       <section id="granule-search" >
           <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <i class="fa fa-edit"></i> Granule Filters
+          <i class="fa fa-filter"></i> Granule Filters
         </nav>
         <!-- ko if: project.searchGranulesCollection() -->
         <header>
@@ -352,6 +352,7 @@
 <% content_for :global do %>
   <%= render partial: 'variables_modal' %>
   <%= render partial: 'sitetour_modal' %>
+  <%= render partial: 'delay_modal' %>
   <%= render partial: 'reverb_retirement_modal' %>
   <%= render partial: 'customize_data_modal' %>
   <%= render partial: 'related_urls_modal' %>
