@@ -207,12 +207,14 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       end
     end
 
-    # URLs hsould be listed alphabetically and grouped by Type
+    # URLs should be listed alphabetically and grouped by Type
     related_urls.each do |url_category|
       url_category[:urls].sort_by! {|url| [url['Type'], url['Subtype'], url['URL']]}
     end
 
-    related_urls
+    # related_urls should be empty if there are no Related URLs
+    related_urls.each {|x| if (x[:urls].any?) then return related_urls end}
+    []
   end
 
   def format_url(url)

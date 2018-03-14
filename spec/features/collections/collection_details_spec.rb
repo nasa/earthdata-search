@@ -310,6 +310,17 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context 'when selecting a collection without related urls' do
+    before do
+      load_page '/search/collection-details', focus: 'C1297504182-LARC'
+    end
+
+    it 'does not display option to view all related urls' do
+      expect(collection_details).not_to have_content 'Related URLs:'
+      expect(collection_details).not_to have_content 'View All Related URLs'
+    end
+  end
+
   context 'when selecting a collection with polygon spatial' do
     before :all do
       load_page '/search/collection-details', focus: 'C1267337984-ASF'
