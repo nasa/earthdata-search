@@ -21,7 +21,10 @@ RUN mkdir -p ./tmp
 RUN chmod 755 ./tmp
 
 RUN chmod +x ./start.sh
-RUN chmod +x ./jobs.sh
+RUN chmod +x ./cron.sh
+
+# Run asset precompile with a fake database URL(since we do not have the real DB_URL at build time and dont really need it to compile assets)
+RUN RAILS_ENV=production skip_node_compile=true DATABASE_URL=postgres://user:password@host:1111/db-name bundle exec rake assets:precompile
 
 # Run asset precompile with a fake database URL(since we do not have the real DB_URL at build time and dont really need it to compile assets)
 RUN RAILS_ENV=production skip_node_compile=true DATABASE_URL=postgres://user:password@host:1111/db-name bundle exec rake assets:precompile

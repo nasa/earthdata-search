@@ -9,6 +9,7 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/granules_list
+#= require models/ui/variable_list
 
 
 models = @edsc.models
@@ -32,6 +33,7 @@ ns.ProjectPage = do (ko,
                      FeedbackModel = ui.Feedback
                      ajax=@edsc.util.xhr.ajax
                      GranulesList = ui.GranulesList
+                     VariableSelector = ui.VariableSelector
                    ) ->
   current = null
 
@@ -43,7 +45,6 @@ ns.ProjectPage = do (ko,
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
-      @projectQuery = 
       @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
       @bindingsLoaded = ko.observable(false)
       @spatialEntry = new SpatialEntry(@query.spatial)
@@ -62,14 +63,14 @@ ns.ProjectPage = do (ko,
         projectList: projectList
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
+        variableSelector: new VariableSelector(@project)
 
       @spatialError = ko.computed(@_computeSpatialError)
       
 
       $(window).on 'edsc.save_workspace', (e)=>
-        urlUtil.saveState('/search/collections', urlUtil.currentParams(), true, @workspaceNameField())
-        @workspaceName(@workspaceNameField())
-        $('.save-dropdown').removeClass('open')
+        currentParams = @project.serialized()
+        urlUtil.saveState('/search/collections', currentParams, true)
 
       setTimeout((=>
         @_loadFromUrl()
@@ -136,7 +137,8 @@ ns.ProjectPage = do (ko,
         projectGranules = 0
         projectSize = 0.0
         loadedCollectionNum = 0
-        for collection in @project.collections()
+        for projectCollection in @project.collections()
+          collection = projectCollection.collection
           granules = collection.cmrGranulesModel
           if granules.isLoaded()
             loadedCollectionNum += 1

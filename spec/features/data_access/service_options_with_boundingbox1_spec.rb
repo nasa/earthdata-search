@@ -17,6 +17,7 @@ describe 'Service options order with boundingbox1 field', reset: false do
       wait_for_xhr
 
       first_granule_list_item.click_link "Configure and download single granule data"
+      wait_for_xhr
       choose 'Customize Product'
 
       check 'Enter bounding box'
@@ -54,9 +55,11 @@ describe 'Service options order with boundingbox1 field', reset: false do
         expect(page).to have_text('Creating')
       end
 
-      context 'after the order processes' do
+      context 'after the order processes', pending_updates: true do
         before :all do
-          Delayed::Worker.new.work_off
+          Delayed::Worker.new(quiet: false).work_off
+
+          page.evaluate_script('window.location.reload()')
         end
 
         it 'shows the order in the "Complete" state' do

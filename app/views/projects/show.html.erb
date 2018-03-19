@@ -3,10 +3,11 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
-  <a class="back-button back-to-search toolbar-button" href="<%= edsc_path @project.path.split('?')[0] %>?projectId=<%=@project.to_param%>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
+  <a class="back-button back-to-search toolbar-button" href="#" data-bind="click: project.backToSearch"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
   <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
+
 <div class="project">
   <section class="project-info-sidebar">
     <header>
@@ -32,6 +33,17 @@
         </div>
       </div>
       <h3>Variables</h3>
+      <ul class="selected-collection-variables" data-bind="foreach: project.collections()">
+        <!-- ko if: hasSelectedVariables() -->
+        <li>
+          <span data-bind="text: $data.id"></span>
+          <ul data-bind="foreach: selectedVariables()">
+            <li data-bind="text: $data.displayName()"></li>
+          </ul>
+        </li>
+        <!-- / -->
+        <!-- /ko -->
+      </ul>
       <h3>Transformations</h3>
       <h3>Output Formats</h3>
     </div>
@@ -46,15 +58,15 @@
     </div>
     <div class="project-stats">
       <ul data-bind="fadeVisible: isLoaded">
-        <li>
+        <li class="granule-count">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
         </li>
-        <li>
+        <li class="collection-count">
           <span class="value" data-bind="text: project.collections().length"></span>
           <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
         </li>
-        <li data-bind="visible: sizeProvided">
+        <li class="project-size" data-bind="visible: sizeProvided">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
           <span id="info-container">
@@ -64,48 +76,59 @@
       </ul>
     </div>
     <div class="project-collection-cards">
-      <!--ko foreach: project.collections()-->
+      <!-- ko foreach: project.collections()-->
         <div class="collection-card">
           <div class="collection-card-content">
-            <h3 data-bind="text: truncatedTitle, attr: {title: title}"></h3>
+            <h3 data-bind="text: collection.truncatedTitle, attr: {title: collection.title}"></h3>
             <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
-              <div class="label-primary"><span data-bind="text: granule_hits"></span> <!--ko text: granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
+              <div class="label-primary"><span data-bind="text: collection.granule_hits"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
               <div class="collection-capability">
-                <!-- ko if: has_spatial_subsetting -->
+                <!-- ko if: collection.has_spatial_subsetting() -->
                 <span data-bind="css: {enabled: $root.spatial_enabled()}">
                   <i class="fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Spatial subsetting options available"></i>
                 </span>
                 <!-- /ko -->
-                <!-- ko if: has_variables -->
-                <span data-bind="css: {enabled: variables_enabled()}">
+                <!-- ko if: collection.has_variables -->
+                <span data-bind="css: {enabled: hasSelectedVariables()}">
                   <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
                 </span>
                 <!-- /ko -->
-                <!-- ko if: has_transforms -->
+                <!-- ko if: collection.has_transforms -->
                 <span data-bind="css: {enabled: transforms_enabled()}">
                   <i class="fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Data transformation options available"></i>
                 </span>
                 <!-- /ko -->
-                <!-- ko if: has_formats -->
+                <!-- ko if: collection.has_formats -->
                 <span data-bind="css: {enabled: formats_enabled()}">
                   <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
                 </span>
                 <!-- /ko -->
               </div>
               <div class="label-secondary" data-bind="fadeVisible: $root.isLoaded">
-                <span>Estimated Size: </span><!-- ko text: total_size() + ' ' + unit() --><!--/ko--></div>
+                <span>Estimated Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko--></div>
             </div>
           </div>
           <div class="action-container">
-            <a class="action-button"><i class="fa fa-cog" aria-hidden="true"></i> Customize</a>
-            <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
+            <a class="action-button customize" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-customization-modal'}"><i class="fa fa-cog" aria-hidden="true"></i> <span data-bind="text: customizeButtonText()"></span></a>
+
+            <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
           </div>
+          <%= render partial: 'collection_customization_modal' %>
           <%= render partial: 'granule_list_modal' %>
         </div>
-      <!--/ko-->
+      <!-- /ko -->
     </div>
     <footer class="project-collection-notes">
 
     </footer>
   </section>
+  
+  <%= render partial: 'variable_selection_modal' %>
+
+  <!-- Hidden form for submitting project data for displaying opendap links -->
+  <form id="opendap-access" method="POST" action="<%= edsc_path '/granules/fetch_opendap_links' %>" style="display: none;">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+    <input id="opendap-access-project" name="project" type="hidden" />
+  </form>
+
 </div>

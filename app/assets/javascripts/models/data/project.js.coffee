@@ -1,20 +1,25 @@
+#= require models/data/query
 #= require models/data/collections
 #= require models/data/collection
+#= require models/data/variables
+
 
 ns = @edsc.models.data
 
 ns.Project = do (ko,
-                 document,
-                 $ = jQuery,
-                 extend = $.extend,
-                 param = $.param,
+                 document
+                 $ = jQuery
+                 extend = $.extend
+                 param = $.param
                  deparam = @edsc.util.deparam
                  ajax = @edsc.util.xhr.ajax
                  urlUtil = @edsc.util.url
-                 QueryModel = ns.query.CollectionQuery,
+                 QueryModel = ns.query.CollectionQuery
                  CollectionsModel = ns.Collections
+                 VariablesModel = ns.Variables
                  ServiceOptionsModel = ns.ServiceOptions
-                 Collection = ns.Collection) ->
+                 Collection = ns.Collection
+                 QueryParam = ns.QueryParam) ->
 
   # Maintains a finite pool of values to be distributed on demand.  Calling
   # next() on the pool returns either an unused value, prioritizing those
@@ -61,6 +66,7 @@ ns.Project = do (ko,
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
       @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
+      @selectedVariables = ko.observableArray([])
 
     _computeIsResetable: ->
       if @granuleAccessOptions().defaults?
@@ -83,12 +89,50 @@ ns.Project = do (ko,
       $(document).trigger('dataaccessevent', [@collection.id])
       success = (data) =>
         console.log "Finished loading access options for #{@collection.id}"
+        console.log data
         @granuleAccessOptions(data)
       retry = => @_loadGranuleAccessOptions
       dataSource.loadAccessOptions(success, retry)
 
+    findSelectedVariable: (variable) =>
+      selectedVariablePosition = @indexOfSelectedVariable(variable)
+
+      return null if selectedVariablePosition == -1
+
+      @selectedVariables()[selectedVariablePosition]
+
+    indexOfSelectedVariable: (variable) =>
+      for asdf, index in @selectedVariables()
+        if variable.meta()['concept-id'] == asdf.meta()['concept-id']
+          return index
+      -1
+
+    hasSelectedVariable: (variable) =>
+      @indexOfSelectedVariable(variable) != -1
+
+    hasSelectedVariables: =>
+      @selectedVariables().length > 0
+
     fromJson: (jsonObj) ->
       @serviceOptions.fromJson(jsonObj.serviceOptions)
+
+    setSelectedVariablesById: (variables) => 
+
+      # Retrieve the stored selected variables by concept id and assign
+      # them to the project collection
+      VariablesModel.forIds variables, {}, (variables) =>
+        @selectedVariables(variables)
+
+    customizeButtonText: =>
+      return 'Edit Customizations' if @hasSelectedVariables()
+
+      'Customize'
+
+    transforms_enabled: ->
+      false
+
+    formats_enabled: ->
+      false
 
     serialize: ->
       options = @serviceOptions.serialize()
@@ -109,6 +153,7 @@ ns.Project = do (ko,
       id: @collection.id
       params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
+      variables: @selectedVariables().map((v) => v.meta()['concept-id']).join(',')
       form_hashes: form_hashes
 
   class Project
@@ -154,11 +199,11 @@ ns.Project = do (ko,
         observable(projectCollection)
 
     getCollections: ->
-      @_collectionsById[id]?.collection for id in @_collectionIds()
+      @_collectionsById[id] for id in @_collectionIds()
 
     exceedCollectionLimit: ->
-      for c in @getCollections()
-        return true if c.isMaxOrderSizeReached()
+      for projectCollection in @getCollections()
+        return true if projectCollection.collection.isMaxOrderSizeReached()
       false
 
     setCollections: (collections) ->
@@ -173,7 +218,7 @@ ns.Project = do (ko,
       null
 
     _computeVisibleCollections: ->
-      collections = (collection for collection in @collections() when collection.visible())
+      collections = (collection for projectCollection in @collections() when projectCollection.collection.visible())
 
       focus = @focus()
       if focus && focus.visible() && collections.indexOf(focus) == -1
@@ -183,6 +228,16 @@ ns.Project = do (ko,
       for collection in Collection.visible()
         collections.push(collection) if collections.indexOf(collection) == -1
       collections
+
+    backToSearch: =>
+      projectId = deparam(urlUtil.realQuery()).projectId
+      if projectId
+        path = "/search?projectId=#{projectId}"
+      else
+        path = '/search?' + urlUtil.currentQuery()
+
+      $(window).trigger('edsc.save_workspace')
+      window.location.href = urlUtil.fullPath(path)
 
     # This seems like a UI concern, but really it's something that spans several
     # views and something we may eventually want to persist with the project or
@@ -228,6 +283,9 @@ ns.Project = do (ko,
       collections = (ds.serialize() for ds in @accessCollections())
       {query: param(@serialized()), collections: collections, source: urlUtil.realQuery()}
 
+    ###*
+     * Retreive a ProjectCollection object for the collection matching the provided concept-id
+     ###
     getProjectCollection: (id) ->
       focus = @focusedProjectCollection()
       if focus?.collection.id == id
@@ -238,7 +296,7 @@ ns.Project = do (ko,
     _toQuery: ->
       return @_pending() if @_pending()?
       result = $.extend({}, @query.serialize())
-      collections = [@focus()].concat(@collections())
+      collections = [@focus()].concat(projectCollection.collection for projectCollection in @collections())
       ids = (ds?.id ? '' for ds in collections)
       if collections.length > 1 || collections[0]
         queries = [{}]
@@ -247,17 +305,28 @@ ns.Project = do (ko,
         start = 0 if @focus() && !@hasCollection(@focus())
         for collection, i in collections[start...]
           datasource = collection.granuleDatasource()
+          projectCollection = @getProjectCollection(collection.id)
+
+          query = {}
+
+          # Only set the variables if there are any selected
+          if projectCollection.hasSelectedVariables()
+            query['variables'] = projectCollection.selectedVariables().map((v) => v.meta()['concept-id']).join(',')
+
           if datasource?
-            query = datasource.toBookmarkParams()
+            $.extend(query, datasource.toBookmarkParams())
+
             queries[i + start] = {} if Object.keys(query).length == 0
             query.v = 't' if (i + start) != 0 && collection.visible()
             # Avoid inserting an empty map
             for own k, v of query
               queries[i + start] = query
               break
+
         for q, index in queries
           queries[index] = {} if q == undefined
         result.pg = queries if queries.length > 0
+
       result
 
     _fromQuery: (value) ->
@@ -288,13 +357,24 @@ ns.Project = do (ko,
             queries = value["pg"] ? []
             for collection, i in collections
               query = queries[i + offset]
-              if query? && collection.granuleDatasource()?
-                collection.granuleDatasource().fromBookmarkParams(query, value)
-                collection.visible(true) if query.v == 't'
+
               if i == 0 && focused
                 @focus(collection)
               else
                 @addCollection(collection)
+
+              if query?
+                if query.variables
+                  variables = query.variables.split(',')
+
+                  # Retrieve the stored selected variables by concept id and assign
+                  # them to the project collection
+                  @getProjectCollection(collection.id).setSelectedVariablesById(variables)
+
+                if collection.granuleDatasource()?
+                  collection.granuleDatasource().fromBookmarkParams(query, value)
+                  collection.visible(true) if query.v == 't'
+
               collection.dispose() # forIds ends up incrementing reference count
               @getProjectCollection(collection.id).fromJson(pending[collection.id]) if pending[collection.id]
             @_pendingAccess = null

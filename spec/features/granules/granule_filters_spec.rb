@@ -17,6 +17,7 @@ describe "Granule search filters", reset: false do
       set_temporal(temporal_start_date, temporal_stop_date)
       wait_for_xhr
       first_project_collection.click_link "Show granule filters"
+      wait_for_xhr
       number_granules = project_overview.text.match /\d+ Granules/
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
     end
@@ -309,50 +310,6 @@ describe "Granule search filters", reset: false do
         end
       end
     end
-
-    # JS: New layout may make these tests invalid
-    #
-    # context "when sorting granules" do
-    #   before :all do
-    #     first_project_collection.click
-    #   end
-    #
-    #   after :all do
-    #     select 'Start Date, Newest first', from: "granule-sort"
-    #     wait_for_xhr
-    #     granule_list.click_link "Back to Collections"
-    #     first_project_collection.click_link "Show granule filters"
-    #   end
-    #
-    #   it "allows sorting by start date ascending" do
-    #     select 'Start Date, Oldest first', from: "granule-sort"
-    #     wait_for_xhr
-    #     expect(granule_list).to have_content "2000-03-04"
-    #     expect(granule_list).to have_no_content "2014-06-12"
-    #   end
-    #
-    #   it "allows sorting by start date descending" do
-    #     select 'Start Date, Newest first', from: "granule-sort"
-    #     wait_for_xhr
-    #     expect(granule_list).to have_no_content "2000-03-04"
-    #     expect(granule_list).to have_content "2014-12-31"
-    #   end
-    #
-    #   it "allows sorting by end date ascending" do
-    #     select 'End Date, Oldest first', from: "granule-sort"
-    #     wait_for_xhr
-    #     expect(granule_list).to have_content "2000-03-04"
-    #     expect(granule_list).to have_no_content "2014-06-22"
-    #   end
-    #
-    #   it "allows sorting by end date descending" do
-    #     select 'End Date, Newest first', from: "granule-sort"
-    #     wait_for_xhr
-    #     expect(granule_list).to have_no_content "2000-03-04"
-    #     expect(granule_list).to have_content "2014-12-31"
-    #   end
-    #
-    # end
   end
 
   pending "for granules that can't be filtered by day/night flag or cloud cover" do
@@ -370,11 +327,14 @@ describe "Granule search filters", reset: false do
     end
   end
 
-  context "When specify a collection level project/campaign param" do
+  context "When specifying a collection level project/campaign param" do
     before :all do
       load_page :search, facets: true, q: 'C1000000062-NSIDC_ECS'
-      find("h3.panel-title", text: 'Project').click
-      find(".facets-item", text: "2009_AN_NASA").click
+      find("h3.panel-title", text: 'Projects').click
+      within '.panel.projects' do
+        first(".facets-item").click
+      end
+      wait_for_xhr
       first_collection_result.click
       wait_for_xhr
     end

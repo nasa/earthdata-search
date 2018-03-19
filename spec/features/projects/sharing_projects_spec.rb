@@ -11,10 +11,10 @@ describe "Sharing Projects", reset: false do
 
   context "when viewing a project that has been shared" do
     before :all do
-      create_project
+      project = create_project
       logout
 
-      project_id = Project.first.to_param
+      project_id = project.to_param
       visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
       login

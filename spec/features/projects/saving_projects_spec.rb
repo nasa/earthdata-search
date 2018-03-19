@@ -7,13 +7,14 @@ describe 'Saving Projects', reset: false do
 
     before :all do
       Capybara.reset_sessions!
-      load_page :search
-      login
-      dismiss_banner
 
-      second_unfeatured_collection.click_link "Add collection to the current project"
-      first_unfeatured_collection.click_link "Add collection to the current project"
+      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
+
+      # Need to login so that we can save our project
+      login
+
       click_link 'Save your project'
+      
       fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
       click_save_project_name
     end

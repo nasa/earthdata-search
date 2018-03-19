@@ -53,24 +53,24 @@
                     <i class="fa fa-map-marker"></i>
                   </a>
                   <!-- /ko -->
-                  <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $parent.ui.collectionsList.showCollectionDetails" title="View collection details">
+                  <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
                     <i class="fa fa-info-circle"></i>
                   </a>
                   <% if is_project %>
-                    <button class="button icon-button" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download data'}">
+                    <button class="button icon-button" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to 100 granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download data'}">
                       <i class="fa fa-download"></i>
                     </button>
                     <!-- ko if: has_granules -->
                     <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
-                      <i class="fa fa-edit"></i>
+                      <i class="fa fa-filter"></i>
                     </a>
                     <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
-                      <i class="fa fa-edit"></i>
+                      <i class="fa fa-filter"></i>
                     </a>
                     <!-- /ko -->
                     <!-- ko ifnot: has_granules -->
                     <a href="#" class="button icon-button button-disabled" title="No granules">
-                      <i class="fa fa-edit"></i>
+                      <i class="fa fa-filter"></i>
                     </a>
                     <!-- /ko -->
                   <% end %>

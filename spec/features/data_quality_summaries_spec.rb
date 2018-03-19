@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Data Quality Summaries', :reset => false do
+describe 'Data Quality Summaries', reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search, overlay: false

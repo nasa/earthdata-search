@@ -97,7 +97,7 @@ describe "Grid coordinate search", reset: false do
         hook_granule_results('Landsat 1-5 Multispectral Scanner V1')
 
         before :all do
-          fill_in 'map-grid-coordinates', with: "111,111\t"
+          fill_in 'map-grid-coordinates', with: "24,24\t"
         end
 
         after :all do
@@ -105,7 +105,7 @@ describe "Grid coordinate search", reset: false do
         end
 
         it 'filters granules to those matching the given tile' do
-          expect(first_granule_list_item).to have_text('111111')
+          expect(first_granule_list_item).to have_text('024024')
         end
       end
 

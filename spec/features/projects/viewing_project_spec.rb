@@ -22,6 +22,7 @@ describe "Viewing Single Project", reset: false do
       Capybara.reset_sessions!
       load_page :search, project: ['C14758250-LPDAAC_ECS']
       login
+      wait_for_xhr
       click_link 'My Project'
     end
 
@@ -36,13 +37,25 @@ describe "Viewing Single Project", reset: false do
       Capybara.reset_sessions!
       load_page :search, project: ['C14758250-LPDAAC_ECS']
       login
+      wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
     end
 
-    it 'shows total in-project collections, granules, and size' do
-      # expect(page).to have_content('3119878 Granules 1 Collection 269.8 TB')
-      expect(page).to have_content('3119878 Granules 1 Collection 17.0 TB')
+    it 'shows total number of granules included in the project' do
+      first('.collection-card') do
+        within '.granule-count' do
+          expect(page.text).to match(/\d{1,8} Granules/)
+        end
+      end
+    end
+
+    it 'shows estimated total granule size' do
+      first('.collection-card') do
+        within '.project-size' do
+          expect(page.text).to match(/Estimated Size: \d{1,3}\.\d{1,2} TB/)
+        end
+      end
     end
   end
 
@@ -159,15 +172,16 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1000000968-DEV08'], env: :sit
+      load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
       login
+      wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
     end
 
     it 'shows configuration icons' do
       within '.collection-capability' do
-        expect(page).to have_css('span', count: 3)
+        expect(page).to have_css('span', count: 4)
         expect(page).to have_css('span.enabled', count: 0)
 
         expect(page).to have_css('i.fa.fa-globe')
@@ -180,17 +194,18 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations with spatial subsetting enabled via bounding box' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1000000968-DEV08'], env: :sit
+      load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
       create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       login
+      wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
     end
 
     it 'shows configuration icons with spatial enabled' do
       within '.collection-capability' do
-        expect(page).to have_css('span', count: 3)
+        expect(page).to have_css('span', count: 4)
         expect(page).to have_css('span.enabled', count: 1)
 
         within 'span.enabled' do
@@ -205,17 +220,18 @@ describe "Viewing Single Project", reset: false do
   context 'project configurations with spatial subsetting enabled via polygon' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C1000000968-DEV08'], env: :sit
+      load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       login
+      wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
     end
 
     it 'shows configuration icons with spatial enabled' do
       within '.collection-capability' do
-        expect(page).to have_css('span', count: 3)
+        expect(page).to have_css('span', count: 4)
         expect(page).to have_css('span.enabled', count: 1)
 
         within 'span.enabled' do
@@ -232,26 +248,30 @@ describe "Viewing Single Project", reset: false do
       Capybara.reset_sessions!
       load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
       login
+      wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
     end
 
     it 'shows project title' do
-      within '.collection-card:first-child' do
+      first('.collection-card') do
         expect(page).to have_content('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
       end
     end
 
     it 'shows total number of granules included in the project' do
-      within '.collection-card:first-child' do
-        expect(page).to have_content('3119878 Granules')
+      first('.collection-card') do
+        within '.granule-count' do
+          expect(page.text).to match(/\d{1,8} Granules/)
+        end
       end
     end
 
     it 'shows estimated total granule size' do
-      within '.collection-card:first-child' do
-        # expect(page).to have_content('Estimated Size: 269.8 TB')
-        expect(page).to have_content('Estimated Size: 17.0 TB')
+      first('.collection-card') do
+        within '.project-size' do
+          expect(page.text).to match(/Estimated Size: \d{1,3}\.\d{1,2} TB/)
+        end
       end
     end
 
@@ -286,22 +306,20 @@ describe "Viewing Single Project", reset: false do
       end
 
       it 'shows browse imagery when available' do
-        within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
+        first('#C14758250-LPDAAC_ECS-modal ul li') do
           expect(page).to have_css('a.panel-list-thumbnail-container')
         end
       end
 
       it 'shows granule title' do
-        within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-          # expect(page).to have_content('AST_L1A#00305172016231102_05182016080215.hdf')
-          expect(page).to have_content('AST_L1A#00310252017225846_10262017075931.hdf')
+        first('#C14758250-LPDAAC_ECS-modal ul li') do
+          expect(page).to have_content('AST_L1A#[\d_]*.hdf')
         end
       end
 
       it 'shows granule temporal' do
-        within '#C14758250-LPDAAC_ECS-modal ul li:first-child' do
-          # expect(page).to have_content('Start: 2016-05-17 23:11:02')
-          expect(page).to have_content('Start: 2017-10-25 22:58:46')
+        first('#C14758250-LPDAAC_ECS-modal ul li') do
+          expect(page.text).to match(/Start: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
         end
       end
 

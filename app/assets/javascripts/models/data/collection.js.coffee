@@ -7,7 +7,7 @@ ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
                  thumbnailWidth = @edsc.config.thumbnailWidth
-                 Granules=ns.Granules
+                 Granules = ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
@@ -16,10 +16,6 @@ ns.Collection = do (ko
                  dateUtil = @edsc.util.date
                  config = @edsc.config
                  ) ->
-
-  openSearchKeyToEndpoint =
-    cwic: (collection) ->
-
 
   collections = ko.observableArray()
 
@@ -39,7 +35,6 @@ ns.Collection = do (ko
 
       for collection in collections
         collection.granuleDatasourceAsync(aggregation)
-
 
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
@@ -146,7 +141,6 @@ ns.Collection = do (ko
         @orbitFriendly(true) if _granule.orbit_calculated_spatial_domains?
         break if _capabilities['day_night_flag'] && _capabilities['cloud_cover'] && _capabilities['orbit_calculated_spatial_domains']
       _capabilities
-
 
     _computeTimeRange: ->
       if @hasAtomData()
@@ -359,14 +353,5 @@ ns.Collection = do (ko
 
     has_feature: (key) ->
       @getValueForTag("features.#{key}")
-
-    variables_enabled: ->
-      false
-
-    transforms_enabled: ->
-      false
-
-    formats_enabled: ->
-      false
 
   exports = Collection

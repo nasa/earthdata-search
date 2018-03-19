@@ -2,7 +2,7 @@ module Helpers
   module PageHelpers
     def wait_for_xhr
       ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
-        synchronize(30) do
+        synchronize(60) do
           expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
         end
       end
@@ -39,7 +39,7 @@ module Helpers
             Capybara::Screenshot.screenshot_and_save_page
             raise
           end
-          sleep(0.05)
+          sleep(0.2)
           retry
         ensure
           @synchronized = false
@@ -57,6 +57,11 @@ module Helpers
     def reset_search(wait=true)
       page.execute_script('edsc.page.clearFilters()')
       wait_for_xhr if wait
+    end
+
+    def reset_facet_ui
+      page.execute_script("$('.facets-list-show').prev('.panel-heading').find('a').trigger('click')")
+      page.execute_script("$('.facets-list-hide:first').trigger('click')")
     end
 
     def logout
@@ -80,8 +85,15 @@ module Helpers
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
     end
 
+    def cmr_env
+      page.get_rack_session_key('cmr_env') rescue Rails.configuration.cmr_env
+    end
+
     def be_logged_in_as(key)
-      json = urs_tokens[key]
+      token_key = urs_tokens[key]
+
+      # Get environment specific keys for creating cassettes
+      json = token_key[cmr_env]
 
       page.set_rack_session(expires_in: json['expires_in'])
       page.set_rack_session(access_token: json['access_token'])

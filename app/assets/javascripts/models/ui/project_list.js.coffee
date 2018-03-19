@@ -71,27 +71,44 @@ ns.ProjectList = do (ko
 
     _syncHitsCounts: =>
       return unless @collectionResults? && @collectionResults.loadTime()?
-      for collection in @project.collections()
+      for projectCollection in @project.collections()
         found = false
-        for result in @collectionResults.results() when result.id == collection.id
+        for result in @collectionResults.results() when result.id == projectCollection.collection.id
           found = true
           break
-        collection.granuleDatasource()?.data() unless found
+        projectCollection.collection.granuleDatasource()?.data() unless found
 
     _onReady: =>
       sortable('#project-collections-list')
       $('#project-collections-list').on 'sortupdate', (e, {item, startIndex, endIndex}) =>
-        collections = @project.collections().concat()
+        collections = (projectCollection.collection for projectCollection in @project.collections()).concat()
         [collection] = collections.splice(startIndex, 1)
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
+
+    _launchDownload: (collection) =>
+      @project.focus(collection)
+      @configureProject()
 
     awaitingStatus: =>
       @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
 
     loginAndDownloadCollection: (collection) =>
-      @project.focus(collection)
-      @configureProject()
+      $('#delayOk').on 'click', =>
+        @_launchDownload(collection)
+      limit = false
+      if collection.tags()
+        if collection.tags()['edsc.collection_alerts']
+          limit = collection.tags()['edsc.collection_alerts']['data']['limit']
+      if limit && collection.granuleCount() > limit
+        message = collection.tags()['edsc.collection_alerts']['data']['message']
+        if message && message.length > 0
+          $("#delayOptionalMessage").text("Message from data provider: " + message) 
+        else 
+          $("#delayOptionalMessage").text("")
+        $("#delayWarningModal").modal('show')
+      else
+        @_launchDownload(collection)
 
     loginAndDownloadGranule: (collection, granule) =>
       @project.focus(collection)
@@ -277,13 +294,13 @@ ns.ProjectList = do (ko
 
     toggleViewAllCollections: =>
       visible = !@allCollectionsVisible()
-      for collection in @project.collections()
-        collection.visible(visible)
+      for projectCollection in @project.collections()
+        projectCollection.collection.visible(visible)
 
     _computeAllCollectionsVisible: =>
       all_visible = true
-      for collection in @project.collections()
-        all_visible = false if !collection.visible()
+      for projectCollection in @project.collections()
+        all_visible = false if !projectCollection.collection.visible()
       all_visible
 
     showRelatedUrls: ->

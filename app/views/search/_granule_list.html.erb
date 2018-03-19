@@ -15,10 +15,10 @@
             </a>
             <!-- ko if: has_granules -->
             <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
-              <i class="fa fa-edit"></i>
+              <i class="fa fa-filter"></i>
             </a>
             <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
-              <i class="fa fa-edit"></i>
+              <i class="fa fa-filter"></i>
             </a>
             <!-- /ko -->
             <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
@@ -29,7 +29,7 @@
                data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-minus"></i>
             </a>
-            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact lpdaac@usgs.gov with questions.' : 'Download granule results'}">
+            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
               <i class="fa fa-download"></i> Download Data
             </button>
           </div>
@@ -84,15 +84,8 @@ Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
 
               <div class="granule-temporal-range">
                 <!-- ko with: getTemporal() -->
-                  <!--ko if: ($data[0] && !$data[1])-->
                   <div class="temporal-start"><h5>START</h5><p data-bind="text: $data[0]"></p></div>
-                  <!--/ko-->
-                  <!--ko if: ($data[1] && !$data[0])-->
-                  <div class="temporal-end"><h5>END</h5><p data-bind="text: $data[1]"></p></div>
-                  <!--/ko-->
-                  <!--ko if: ($data[0] && $data[1])-->
-                  <div class="temporal-start"><h5>START</h5><p data-bind="text: $data[0]"></p></div><div class="temporal-end"><h5>END</h5><p data-bind="text: $data[1]"></p></div>
-                  <!-- /ko -->
+                  <div class="temporal-end"><h5>END</h5><p data-bind="text: $data[1] ? $data[1] : 'Not Provided'"></p></div>
                 <!-- /ko -->
               </div>
 
@@ -110,7 +103,7 @@ Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
                   <a href="#" data-toggle="dropdown" class="button icon-button" title="Download single granule data" aria-expanded="false"><i class="fa fa-download"></i></a>
                   <ul class="dropdown-menu" data-bind="foreach: dataLinks">
                     <li>
-                      <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
+                      <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : $parent.getFileName($data.href)" class="dropdown-link direct-download"></a>
                     </li>
                   </ul>
                 <!--/ko-->

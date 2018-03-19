@@ -9,31 +9,10 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 27 Oct 2016 17:36:04 GMT
+  recorded_at: Mon, 12 Mar 2018 16:39:20 GMT
   digest: 7a117c6a8679d6df3b41c3b0baecf9ceaed089e5
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1000000560-NSIDC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 02 Jun 2016 19:11:51 GMT
-  digest: 42256fedd0489ec24c443316dbef18e54df2b3bf
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1000000561-NSIDC_ECS
@@ -43,48 +22,23 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 21 Nov 2016 20:15:32 GMT
+  recorded_at: Mon, 12 Mar 2018 16:50:30 GMT
   digest: b9c9a723ae33ccc75c63c2d608e43542c37cf086
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1020-GHRC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1000001440-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 28 Sep 2015 17:28:02 GMT
-  digest: d2413454dc799ab1d75baa1145bb7a252b5e5e5d
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C107705227-LPDAAC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 10 Nov 2016 03:37:38 GMT
-  digest: 0f58a41323aabdd38d5b7e672de16e46d8d3f5f2
+  recorded_at: Mon, 12 Mar 2018 16:55:22 GMT
+  digest: 9fa3e77f31feacafa7f34bce37796d2c91e02fd2
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C115003855-NSIDC_ECS
@@ -94,13 +48,9 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:49:48 GMT
+  recorded_at: Mon, 12 Mar 2018 16:05:33 GMT
   digest: e5601c8b6ed08a52c7465ef54d7d39d0060f95a5
 - request:
     method: get
@@ -111,99 +61,10 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 08 Apr 2015 17:57:18 GMT
+  recorded_at: Mon, 12 Mar 2018 16:53:46 GMT
   digest: 21679697b96f14fdb24729cdee9022e7dc3faaea
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C119124186-NSIDC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 07 Mar 2016 19:25:33 GMT
-  digest: 45d44294079ff832ae7074b891b7d3502051034d
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1219032686-LANCEMODIS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 04 May 2016 19:08:09 GMT
-  digest: a69cff963f537411aa2b581456e656971c4de799
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1236303846-NSIDC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 19 Aug 2016 14:20:42 GMT
-  digest: 3d7a8bc6a3e98768049af2d1844e1ec9799fc03f
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1236303848-NSIDC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 27 Oct 2016 21:08:30 GMT
-  digest: 374be80ebee40c9624b6a48c5bafaa5d57712223
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C128599377-NSIDC_ECS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 27 Jan 2016 01:20:47 GMT
-  digest: 64a1c351c5e7f5fd7ccb3b2191e981d0a4ef78ae
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C14758250-LPDAAC_ECS
@@ -213,13 +74,9 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 12 Nov 2015 16:46:51 GMT
+  recorded_at: Mon, 12 Mar 2018 16:00:05 GMT
   digest: 560b44dfa1bce52eae7cb3a2840cf14ea30fa304
 - request:
     method: get
@@ -230,31 +87,10 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:48:49 GMT
+  recorded_at: Mon, 12 Mar 2018 16:54:41 GMT
   digest: 93ef7a3bd3c6f5c1c365d5999801f9ff24510c46
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C179002107-SEDAC
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 08 Apr 2015 17:57:38 GMT
-  digest: 3403ff51d6381f2d1d828e78661a949770a55d58
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C179002914-ORNL_DAAC
@@ -264,13 +100,9 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:50:12 GMT
+  recorded_at: Mon, 12 Mar 2018 16:41:40 GMT
   digest: 81fe7d448067205366475e1fbc9470c0ada96071
 - request:
     method: get
@@ -281,99 +113,75 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:48:48 GMT
+  recorded_at: Mon, 12 Mar 2018 16:31:48 GMT
   digest: 9d8e0c4d4210370564d68085c648c2a89677d8c8
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C179003216-ORNL_DAAC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C190757121-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Sat, 03 Oct 2015 21:49:46 GMT
-  digest: 537b4b4bfcdea34745177829d4546ebba4a742cb
+  recorded_at: Mon, 12 Mar 2018 16:32:15 GMT
+  digest: 9de3c88b5b848bf3509d8b2a2ff3cebe2890dda8
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C179014698-NSIDC_ECS
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C191855458-LARC
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Tue, 05 May 2015 15:18:47 GMT
-  digest: ee31efa9f33eb3eff94b8af3ef4ffd52ea3b3e37
+  recorded_at: Mon, 12 Mar 2018 16:34:29 GMT
+  digest: 55a690fa88992761a4b6daa2cf61f2b5525c7121
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C181553784-GSFCS4PA
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C194001241-LPDAAC_ECS
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:49:31 GMT
-  digest: 18e2a29322032d47004965383c2d6aed7d3d5b02
+  recorded_at: Mon, 12 Mar 2018 16:31:01 GMT
+  digest: b93714f36b992af24eb8e6e28bf95b8f080f14cd
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C2821-NSIDCV0
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C203234523-LAADS
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:48:51 GMT
-  digest: 86d351643eeabb98070e3fadd7779dbbf7729c2e
+  recorded_at: Mon, 12 Mar 2018 15:52:21 GMT
+  digest: a426fa47ee11645530212fdc26da1489fdfb3ffe
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C2930962-PODAAC
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C204690560-LAADS
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 28 Mar 2016 02:36:39 GMT
-  digest: 6583b91a02a0126d6b822c87d6587bf54cd074be
+  recorded_at: Mon, 12 Mar 2018 16:54:57 GMT
+  digest: 35b36d3bf82cece227ea2541fb6b2a628cba0ad2
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C4543622-LARC_ASDC
@@ -383,13 +191,9 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Thu, 23 Apr 2015 18:43:48 GMT
+  recorded_at: Mon, 12 Mar 2018 15:55:44 GMT
   digest: e5d32985213ec3843724214f16eb67b62ce42808
 - request:
     method: get
@@ -400,48 +204,10 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 27 Jan 2016 20:02:45 GMT
+  recorded_at: Mon, 12 Mar 2018 16:35:02 GMT
   digest: 31b66fd9f8a3ceaac4d6de58aef947697fa0eb95
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C90762182-LAADS
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 17 Sep 2015 01:42:28 GMT
-  digest: 3542d0672359d331ffc53439e9870c77441cade5
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 17 Sep 2015 01:42:29 GMT
-  digest: 52fdf23b43ee07fdf59143998568b48021dc4123
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594
@@ -451,31 +217,23 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 10 Nov 2016 03:37:38 GMT
+  recorded_at: Mon, 12 Mar 2018 16:31:03 GMT
   digest: 4daab4905e8625c9b7524d09fb96d22919b39e0f
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/71558EF5-C220-D8DA-29A1-A4A17D2F29CA
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 12 Nov 2015 16:46:51 GMT
-  digest: 7821e1f166cb65238302c261f7c9e0800e26c7e1
+  recorded_at: Mon, 12 Mar 2018 16:34:30 GMT
+  digest: a717d7c9bb2d93e2aac08c2889f68bd4de481110
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447
@@ -485,13 +243,9 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Jan 2015 13:49:49 GMT
+  recorded_at: Mon, 12 Mar 2018 16:05:34 GMT
   digest: 7a16596d8fda24c46eac15b0c43c010aa539d0cf
 - request:
     method: get
@@ -502,12 +256,21 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
       Echo-Token:
       - edsc
-  recorded_at: Tue, 05 May 2015 15:18:48 GMT
+  recorded_at: Mon, 12 Mar 2018 16:50:31 GMT
   digest: 425fe9a2c5c727eecc8749ec88df9989f3af9bfa
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 12 Mar 2018 16:00:06 GMT
+  digest: 580669ef94207c2708c75791d743cb364ec7d340
 recorded_with: VCR 2.6.0

@@ -133,11 +133,11 @@
         </div>
         <!-- end of first row -->
 
-        <!-- second row: metadata links | api endpionts | relative urls-->
+        <!-- second row: metadata links | api endpoints | relative urls-->
         <div class="row">
           <div class="flex-column">
             <!-- description -->
-            <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
+            <div class="long-paragraph collapsed" data-bind="descriptionLinks: $data.description"></div>
             <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
             <div class="description-toggle">
               <i class="fa fa-chevron-down"></i>

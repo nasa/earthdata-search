@@ -15,12 +15,12 @@ describe "Backend environments", reset: false do
 
   context "Setting cmr_env to 'uat'" do
     before :all do
-      load_page :search, env: :uat, q: 'C446457-ORNL_DAAC'
+      load_page :search, env: :uat, q: 'C1000000141-ORNL_DAAC'
       wait_for_xhr
     end
 
     it "displays collections from UAT" do
-      expect(page).to have_text("A Global Database of Soil Respiration Data, Version 1.0")
+      expect(page).to have_text("A Global Database of Soil Respiration Data, Version 3.0")
     end
   end
 

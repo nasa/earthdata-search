@@ -8,7 +8,7 @@ describe "Expired user token", reset: true do
   end
 
   context "Successful refreshing" do
-    let(:return_json) {urs_tokens['edsc']}
+    let(:return_json) {urs_tokens['edsc']['prod']}
     let(:access_token) {return_json['access_token']}
 
     before :each do

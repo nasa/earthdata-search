@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'Service Options', reset: false do
-  downloadable_collection_id = 'C90762182-LAADS'
-  downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  downloadable_collection_id = 'C203234523-LAADS'
+  downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V006'
 
   collection_with_intermittent_timeline_id = 'C179003030-ORNL_DAAC'
 
@@ -62,8 +62,8 @@ describe 'Service Options', reset: false do
   context "for collections with bounding box prepopulation options" do
     context "when the project's query has a spatial filter" do
       before :all do
-        load_page 'data/configure', {project: ['C1000000560-NSIDC_ECS'],
-                                     granule_id: 'G1001048061-NSIDC_ECS',
+        load_page 'data/configure', {project: ['C194001241-LPDAAC_ECS'],
+                                     granule_id: 'G1456440974-LPDAAC_ECS',
                                      bounding_box: [1, 2, 3, 4]}
       end
 
@@ -79,8 +79,8 @@ describe 'Service Options', reset: false do
 
     context "when the project's query has no spatial filter" do
       before :all do
-        load_page 'data/configure', {project: ['C1000000560-NSIDC_ECS'],
-                                     granule_id: 'G1001048061-NSIDC_ECS'}
+        load_page 'data/configure', {project: ['C194001241-LPDAAC_ECS'],
+                                     granule_id: 'G1456440974-LPDAAC_ECS'}
       end
 
       it "does not prepopulate the form" do
