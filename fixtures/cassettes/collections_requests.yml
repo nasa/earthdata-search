@@ -13,7 +13,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:04:35 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:55 GMT
   digest: 4316f1525e7ecc0ef39c7125fd86c9f69b307da6
 - request:
     method: get
@@ -28,7 +28,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:21 GMT
+  recorded_at: Fri, 23 Mar 2018 15:40:37 GMT
   digest: bd93bc60196b46ad10515e13ccaef4ee3df62619
 - request:
     method: get
@@ -43,23 +43,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:30 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:04 GMT
   digest: b260e9d65eaa1a19f2e65d5d71dc1ff935e9a6c3
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?bounding_box=-71.191155%2C42.22788%2C-70.748802%2C42.40082&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Wed, 14 Mar 2018 02:20:27 GMT
-  digest: 085abedabcf4520ff5122d1d02d4f39dd1f76f46
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?bounding_box=-75%2C40%2C-74%2C41&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1220566654-USGS_LTA%2A&include_has_granules=true&include_granule_counts=true
@@ -73,7 +58,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:27 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:11 GMT
   digest: 0d0792ea4876e005acdde62f849e7255144b7823
 - request:
     method: get
@@ -88,7 +73,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:18 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:56 GMT
   digest: b2f1fb1b6438cb56ac3fca5c8f150120ab3eb1a6
 - request:
     method: get
@@ -103,7 +88,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:57:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:30:00 GMT
   digest: 3af90b2a0658e506ec2527ad5d3512cec07722e9
 - request:
     method: get
@@ -118,7 +103,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:48:19 GMT
+  recorded_at: Fri, 23 Mar 2018 15:38:55 GMT
   digest: 3997e8895216dd0d1340d6b4a957ee7b701d7e80
 - request:
     method: get
@@ -133,7 +118,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:37 GMT
+  recorded_at: Fri, 23 Mar 2018 15:27:03 GMT
   digest: bd68640ff9cd30176588f74738a8da1542863df1
 - request:
     method: get
@@ -148,7 +133,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:47:08 GMT
+  recorded_at: Fri, 23 Mar 2018 15:40:01 GMT
   digest: 84c9addbe9f935a0337d424878bd225ad82c4de6
 - request:
     method: get
@@ -163,42 +148,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:08:05 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:11 GMT
   digest: 521db65bd61f9610b87f17d25675e1f00aa04e10
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?bounding_box=0%2C10%2C10%2C80&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:06:29 GMT
-  digest: 7af52d13d89c272a8540591ecf768c59dec276b1
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?bounding_box=0%2C80%2C10%2C85&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:06:06 GMT
-  digest: b6d10cc72b9b832f525327b66cdce05bfb274569
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?bounding_box=10%2C-10%2C-10%2C10&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -212,7 +163,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:46 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:41 GMT
   digest: 07abbee94261e19118939fe155473519f3cf684d
 - request:
     method: get
@@ -227,7 +178,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:39 GMT
+  recorded_at: Fri, 23 Mar 2018 15:22:36 GMT
   digest: b640e7b58f63c32a4c0be0d7177e87ea7144510b
 - request:
     method: get
@@ -242,7 +193,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:43 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:01 GMT
   digest: 67098fdec6f60cd10ef7783cbfe0828b63eaec8e
 - request:
     method: get
@@ -257,7 +208,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:56:38 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:21 GMT
   digest: afe1e1e3bef808ec766621a166becbd061000c54
 - request:
     method: get
@@ -272,7 +223,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:39:13 GMT
+  recorded_at: Fri, 23 Mar 2018 15:41:42 GMT
   digest: 760b284cf0a9e5bb830eed5a4ce646bdba095f16
 - request:
     method: get
@@ -289,7 +240,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:50:28 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:56 GMT
   digest: 960a0971b1c095be0918fa7a10fc8a6abb2dd399
 - request:
     method: get
@@ -306,7 +257,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:55:20 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:45 GMT
   digest: a83e26a11c5f40817e1a332d6e318df77a5baffb
 - request:
     method: get
@@ -323,7 +274,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:05:24 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:10 GMT
   digest: ebcb3fc2c1649cb282f570278ed5fa5eeb2cfb65
 - request:
     method: get
@@ -340,23 +291,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:53:43 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:35 GMT
   digest: b257e861e302a7e7e2e151deb6ef25d3c15b1fcf
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200187767-EDF_OPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Tue, 20 Mar 2018 18:17:39 GMT
-  digest: 9f2e3585b95dd60e4eeaf01bbd11171fa74ef84b
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1214305813-AU_AADC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -370,7 +306,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:00 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:08 GMT
   digest: e9f0a22dc378326356491b7fdcdbf987b6f0f765
 - request:
     method: get
@@ -385,7 +321,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:27 GMT
+  recorded_at: Fri, 23 Mar 2018 15:42:12 GMT
   digest: 49e942f6b6dc34532969996f1fd00191c92f6b0d
 - request:
     method: get
@@ -400,23 +336,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:35 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:57 GMT
   digest: f0ebbca63602e50ea88dffdb653501c5b1c1c883
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1219032680-LANCEMODIS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:00:22 GMT
-  digest: cc831cd352d68d04ae3a9a7b74e0b8ccb647a2d4
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1220566654-USGS_LTA&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -430,7 +351,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:03:05 GMT
+  recorded_at: Fri, 23 Mar 2018 15:28:02 GMT
   digest: 4afe573d42c53d1522f7758584e3e212d621cac8
 - request:
     method: get
@@ -445,7 +366,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:24 GMT
+  recorded_at: Fri, 23 Mar 2018 15:42:19 GMT
   digest: 772abdc4d5bd7e55274f6b4d96b6c166afb8f34c
 - request:
     method: get
@@ -460,23 +381,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:49 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:06 GMT
   digest: d29901c8991dc6ce82c464b73ae60d259ae88950
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1358859924-ORNL_DAAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:28:08 GMT
-  digest: dbda51d5df4de883453df50f9748239edc8b63a6
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1444742099-PODAAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -490,7 +396,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:09 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:55 GMT
   digest: 43e20848c99cc11c5d0acdbc444c58f63d68815d
 - request:
     method: get
@@ -505,7 +411,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:30 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:06 GMT
   digest: 886e9290771fe321e51e7997e47c59f835efbc55
 - request:
     method: get
@@ -520,7 +426,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:57:38 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:26 GMT
   digest: a5c40491e3cf380abb00256ecea93a15970636de
 - request:
     method: get
@@ -535,7 +441,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:03 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:21 GMT
   digest: 71f9a1879b788b9c82d000dea86254b68e477511
 - request:
     method: get
@@ -550,7 +456,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:56:52 GMT
+  recorded_at: Fri, 23 Mar 2018 15:30:51 GMT
   digest: 71859c6656dc53097b364b1f752c59467d8dc566
 - request:
     method: get
@@ -565,7 +471,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:56:54 GMT
+  recorded_at: Fri, 23 Mar 2018 15:30:45 GMT
   digest: f6d86118d73a8b8f800b6721a65f93cb87dd5734
 - request:
     method: get
@@ -582,7 +488,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:50:53 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:04 GMT
   digest: 1fa2884305d8a3b339e95b7495dfa2fc22488ecc
 - request:
     method: get
@@ -597,7 +503,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:13 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:16 GMT
   digest: b6647f318dbbfc678eb0ead22f2ecbc514956fdd
 - request:
     method: get
@@ -612,7 +518,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:41:29 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:31 GMT
   digest: 9f8ac76158db7c91834ab39c3c4a199cc99c3717
 - request:
     method: get
@@ -627,7 +533,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:26 GMT
+  recorded_at: Fri, 23 Mar 2018 15:30:25 GMT
   digest: 3344090abf450954c93b1780b7b29cf02ab47200
 - request:
     method: get
@@ -642,7 +548,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:05:26 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:25 GMT
   digest: 25814070eb8ab9737d3e325a5f90b2559bd218a8
 - request:
     method: get
@@ -657,7 +563,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:12 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:44 GMT
   digest: 5c38063b5a56126b081765c69f6ceae989a9efff
 - request:
     method: get
@@ -672,7 +578,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:58 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:05 GMT
   digest: afa0cfbac8a4477886058f8c8b01600f298497d3
 - request:
     method: get
@@ -687,7 +593,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:18 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:21 GMT
   digest: e23ebfd008acc7c7680e313a567fb114cb305d5d
 - request:
     method: get
@@ -702,7 +608,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:15 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:55 GMT
   digest: a58e7cfc2b22ad5ecce119c4f91a23706ca0dff8
 - request:
     method: get
@@ -719,7 +625,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 17:00:49 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:29 GMT
   digest: c8a2b5b4ba3f23500e136849f03f7f6e80221d8f
 - request:
     method: get
@@ -736,7 +642,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:32:12 GMT
+  recorded_at: Fri, 23 Mar 2018 15:33:00 GMT
   digest: 478fd2f8d55751f23df334ffbd1de809e11b2eed
 - request:
     method: get
@@ -753,7 +659,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:34:27 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:08 GMT
   digest: 210bcb4a4d654db10045f178f38a0bda3d8cf112
 - request:
     method: get
@@ -770,7 +676,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:30:59 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:34 GMT
   digest: ff96604c127ce6be712045e7477cb502ef14ce67
 - request:
     method: get
@@ -785,7 +691,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:53 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:05 GMT
   digest: 968deba5b22df678e3d50b53eea3d1da04e4ecbe
 - request:
     method: get
@@ -800,7 +706,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:35 GMT
+  recorded_at: Fri, 23 Mar 2018 15:27:01 GMT
   digest: b04d98d7136799732e2499fd8704c1b7b9b7bfd3
 - request:
     method: get
@@ -815,7 +721,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:49 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:51 GMT
   digest: 6951ac355a8077010271921db0fa34bf680cb26d
 - request:
     method: get
@@ -832,7 +738,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:54:39 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:42 GMT
   digest: 7939cbb850b1d6395d999f7899f408521b61fdfb
 - request:
     method: get
@@ -847,7 +753,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:02 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:49 GMT
   digest: 73108b4b82d03fd242aa60590e10e5fea63762b6
 - request:
     method: get
@@ -864,7 +770,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 15:52:19 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:29 GMT
   digest: e775edaa3ae4509c4243bbc8b14c31f09c6ac947
 - request:
     method: get
@@ -881,7 +787,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:54:55 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:38 GMT
   digest: bc8a8e71b6daae2697a7c8b233392fb29f8955fb
 - request:
     method: get
@@ -898,7 +804,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 15:55:42 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:34 GMT
   digest: acbce4de6ad58b5329a0f174b9056eee2118dc90
 - request:
     method: get
@@ -915,7 +821,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:35:00 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:14 GMT
   digest: ca23d4807e8e58372a8d5fdbbefd38daee739aa3
 - request:
     method: get
@@ -932,7 +838,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 15:52:15 GMT
+  recorded_at: Fri, 23 Mar 2018 15:27:56 GMT
   digest: e81780865c8fbca5e1c6267c3a6e032858b2febb
 - request:
     method: get
@@ -947,7 +853,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:08 GMT
+  recorded_at: Fri, 23 Mar 2018 15:33:15 GMT
   digest: 4f0272b447fc935b93e29a03de79c795bddecbec
 - request:
     method: get
@@ -964,7 +870,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:56:14 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:50 GMT
   digest: 64ced3a08fc5a34fbbec7d0b3e0b2e41eac72810
 - request:
     method: get
@@ -981,7 +887,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:55:44 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:47 GMT
   digest: a0133ceac3ee165caf796be72e761b08c3b855a4
 - request:
     method: get
@@ -998,7 +904,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:54:13 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:36 GMT
   digest: 292c2747a6df4110d3ae9ccb1a5ecc5ea76e6a45
 - request:
     method: get
@@ -1015,7 +921,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:03:12 GMT
+  recorded_at: Fri, 23 Mar 2018 15:28:07 GMT
   digest: e6c81a344ee9706f6b0a644b8ec862b5c7d73aa6
 - request:
     method: get
@@ -1032,7 +938,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:00:53 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:22 GMT
   digest: ee3872ecb309c9e7df1a62b3a4299f0b6718091c
 - request:
     method: get
@@ -1049,7 +955,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:54:42 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:44 GMT
   digest: 36d6c756c8fe47d773481a55c5da966a252e1434
 - request:
     method: get
@@ -1066,7 +972,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:54:16 GMT
+  recorded_at: Fri, 23 Mar 2018 15:33:06 GMT
   digest: d731a3be59bf8c7166d5046b5ff5541a3e4d0c51
 - request:
     method: get
@@ -1083,7 +989,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:34:54 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:10 GMT
   digest: 0a979b0392e1fc0450285007cbd6a489cdcc1e35
 - request:
     method: get
@@ -1100,7 +1006,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:55:18 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:33 GMT
   digest: 32b13b514490620b50d67536e7f5b8f887bcd833
 - request:
     method: get
@@ -1117,7 +1023,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 15:52:44 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:21 GMT
   digest: ab6dc99a1c6925f7c4176eb5ca882f10a9ee3e5e
 - request:
     method: get
@@ -1134,7 +1040,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:55:16 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:40 GMT
   digest: e2dc6f05054312b2d3fab2c37254befd59c07934
 - request:
     method: get
@@ -1151,68 +1057,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 15:56:05 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:35 GMT
   digest: b5622b11c6e0e216b31020aa8d0e26be4adcd3d0
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&data_center_h%5B%5D=Advanced+Spaceborne+Thermal+Emission+and+Reflection+Radiometer+%28ASTER%29&data_center_h%5B%5D=Agriculture+and+Agri-Food+Canada+%28AAFC%29&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:39 GMT
-  digest: 157454b2f4a6e8a1719761c621cd538b5a5c4ddf
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&data_center_h%5B%5D=Advanced+Spaceborne+Thermal+Emission+and+Reflection+Radiometer+%28ASTER%29&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:59 GMT
-  digest: d47b289194a27039fd6c1cb377705410ad43e733
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&data_center_h%5B%5D=Advanced+Spaceborne+Thermal+Emission+and+Reflection+Radiometer+%28ASTER%29&platform_h%5B%5D=Terra&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:36 GMT
-  digest: 4ee184b6aa38ef8b1f73dd9345980c1d76fa7d84
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&instrument_h%5B%5D=AIRS&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:55 GMT
-  digest: d29bf68715ed6cd590711b5609d6ba11bb473f40
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1226,7 +1072,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:11 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:31 GMT
   digest: 50004f5e7d142bb0b24fc6faa369fb4b1d208417
 - request:
     method: get
@@ -1241,7 +1087,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:16 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:48 GMT
   digest: fda786a1e5a508c3f19f21b43fa5d8affe81a28a
 - request:
     method: get
@@ -1256,7 +1102,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:19 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:51 GMT
   digest: d84fbcf68a892bed673c8d5dfe7c040dd945aea6
 - request:
     method: get
@@ -1271,7 +1117,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:22 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:53 GMT
   digest: ad141d2d03747e0fdfd36886081290b24224dc7d
 - request:
     method: get
@@ -1286,7 +1132,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:49:58 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:03 GMT
   digest: df24f40837de41f67751e3853084afcd34fcd90c
 - request:
     method: get
@@ -1301,7 +1147,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:06 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:26 GMT
   digest: b025d6160effc0ba360b8626f7a3f4fc536b652f
 - request:
     method: get
@@ -1316,23 +1162,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:40:58 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:13 GMT
   digest: 932854195cef472253d3be85e64ba555770ec0b6
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C203234448-LAADS%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:42 GMT
-  digest: 675f28ea8552f912b67a71ba5ead1187bb2187a6
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1346,7 +1177,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:57:31 GMT
+  recorded_at: Fri, 23 Mar 2018 15:30:35 GMT
   digest: 112e267d9a990742b085beddd5264150897c7611
 - request:
     method: get
@@ -1361,7 +1192,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:07:06 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:42 GMT
   digest: fca018ab0fecd1cd7927b9917c27486ae7883a6d
 - request:
     method: get
@@ -1376,7 +1207,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:53 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:00 GMT
   digest: dadfb8529ee73ae643a2a3c34d8a6fe813613c5b
 - request:
     method: get
@@ -1391,7 +1222,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:50:23 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:02 GMT
   digest: a889284beac3230696f2123620f91ba81817ae2f
 - request:
     method: get
@@ -1406,23 +1237,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:22 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:07 GMT
   digest: 7499a28a4b739fc93af6aabc5ab36a777c741b75
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&processing_level_id_h%5B%5D=0+-+Raw+Data&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:51 GMT
-  digest: d9692429921920b3b8be8d90acbfe19169fa8da6
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&project_h%5B%5D=2013_AN_NASA&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1436,7 +1252,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:55:01 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:58 GMT
   digest: 71575503c485d96087776fbb058a7130aa74ec1c
 - request:
     method: get
@@ -1451,7 +1267,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:40:59 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:14 GMT
   digest: 78f3339d845e4ad75d8987fc8e8caa24fcdc90e3
 - request:
     method: get
@@ -1466,7 +1282,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:09 GMT
   digest: 42abff8b8425915be6caac1bd7c727d23cb21421
 - request:
     method: get
@@ -1481,7 +1297,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:13 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:11 GMT
   digest: e3188822dfceb9695ad01e7d70b0036a5e11ae28
 - request:
     method: get
@@ -1496,7 +1312,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:09 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:28 GMT
   digest: 0816bed2cb148947e49ec33e48331d22a5532930
 - request:
     method: get
@@ -1511,7 +1327,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:15 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:14 GMT
   digest: fe969f614bd68fae32e9c1b7aae649e28c175904
 - request:
     method: get
@@ -1526,7 +1342,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:17 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:16 GMT
   digest: ce92b19d5ce5ca656d247f1f61e0a414de2849ba
 - request:
     method: get
@@ -1541,7 +1357,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:20 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:18 GMT
   digest: c7ca71213fe369129db7fbf651b799778764be0e
 - request:
     method: get
@@ -1556,7 +1372,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:41:07 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:10 GMT
   digest: 071038787f48d64a34cfaad88791e29423d3c986
 - request:
     method: get
@@ -1571,98 +1387,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:24 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:05 GMT
   digest: fcc388fba74bc3806c843ab56ca547b3d4ac6db4
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering&data_center_h%5B%5D=Level-1+and+Atmosphere+Archive+%26+Distribution+System+%28LAADS%29&data_center_h%5B%5D=MODIS+Adaptive+Processing+System+%28MODAPS%29&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C203234448-LAADS%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 16 Mar 2018 01:35:10 GMT
-  digest: 15b9d5ba7b8ae1a7c27086312de04c2eb89687da
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering&data_center_h%5B%5D=Level-1+and+Atmosphere+Archive+%26+Distribution+System+%28LAADS%29&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C203234448-LAADS%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 16 Mar 2018 01:35:08 GMT
-  digest: 24e53828b8cd85fc773317efb8bb8c6b7cf7fdca
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C203234448-LAADS%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:44 GMT
-  digest: 136874f8fc4893a9308d798652b184612552a6ed
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:00:11 GMT
-  digest: b12c773a5631fbecc5c06a87b7cb703f6dc2289f
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1219032680-LANCEMODIS%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:00:14 GMT
-  digest: 9e707500fa57be52a5ef4d23eec25ebd96ba774e
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1408830900-LANCEAMSR2%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:00:20 GMT
-  digest: 3a8be7cc6080ad2f7742ae8399bcc827db8cde3e
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&echo_collection_id%5B%5D=C203234523-LAADS&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1676,7 +1402,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:55:03 GMT
+  recorded_at: Fri, 23 Mar 2018 15:24:23 GMT
   digest: 1f13d9ec7082783eec01acdf0c324744b76a7488
 - request:
     method: get
@@ -1691,7 +1417,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:32:47 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:44 GMT
   digest: 761c0e024e2c466503e41bbae49b5135ef93dc41
 - request:
     method: get
@@ -1706,7 +1432,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:28 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:24 GMT
   digest: 784587c4a7e1c3b7633ede72fcd289e6a98f29df
 - request:
     method: get
@@ -1721,7 +1447,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:00 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:33 GMT
   digest: 5a7cd198d360ea1221fd0e511bfc7012da0525eb
 - request:
     method: get
@@ -1736,7 +1462,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:01 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:22 GMT
   digest: 82ce4d2c96902633a3953ab51523037c641c052b
 - request:
     method: get
@@ -1751,7 +1477,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:06 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:21 GMT
   digest: 0e8ae0140f02dc892e8b1a6be014d0501f8671b8
 - request:
     method: get
@@ -1766,7 +1492,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:56:58 GMT
+  recorded_at: Fri, 23 Mar 2018 15:30:49 GMT
   digest: 36590d81908ffee7bb3a91fd2fd60a5310d12e4a
 - request:
     method: get
@@ -1781,7 +1507,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:05:01 GMT
+  recorded_at: Fri, 23 Mar 2018 15:42:10 GMT
   digest: 5d39ff1ba772589485400983c8b05029c5f3eee1
 - request:
     method: get
@@ -1798,7 +1524,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:33:30 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:33 GMT
   digest: e8e67126ec8ac34322b645e531e8d7fb0ff46403
 - request:
     method: get
@@ -1813,7 +1539,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:04 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:55 GMT
   digest: 0a07bd7e3b0640b1fe65ad8f7d2fb3da57925b9a
 - request:
     method: get
@@ -1828,7 +1554,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:45 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:03 GMT
   digest: 1da85554fbd47602bcd789e684a3bc786087769e
 - request:
     method: get
@@ -1843,7 +1569,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:29 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:36 GMT
   digest: f619550656982c726088f70fb09cbf7fd2098598
 - request:
     method: get
@@ -1858,7 +1584,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:38 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:53 GMT
   digest: aadcf188ebf5268cdb38732682b8d095ba91518f
 - request:
     method: get
@@ -1873,7 +1599,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:14 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:31 GMT
   digest: 22d0f837e9b588f54111ab859e75d3dea7c64d57
 - request:
     method: get
@@ -1888,7 +1614,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:10 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:34 GMT
   digest: 75e969b2e4482eed322b941a034dc255d41a8b10
 - request:
     method: get
@@ -1903,7 +1629,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:48:00 GMT
+  recorded_at: Fri, 23 Mar 2018 15:29:07 GMT
   digest: 99cbe0b35d736bb578f813ebdabc3432bc45b917
 - request:
     method: get
@@ -1918,7 +1644,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:48:17 GMT
+  recorded_at: Fri, 23 Mar 2018 15:38:53 GMT
   digest: 374677fc0dc41fad998eb8d38c5e7a2f7d9dfd07
 - request:
     method: get
@@ -1933,7 +1659,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:47:06 GMT
+  recorded_at: Fri, 23 Mar 2018 15:39:59 GMT
   digest: 46cb15cdac903f8045cd74c148e96a7f144fc2a1
 - request:
     method: get
@@ -1948,23 +1674,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:35 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:43 GMT
   digest: 27182518aec36774c463f7ec0fec468eef1615f1
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1426717545-LANCEMODIS%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:28 GMT
-  digest: aeb208530dba87dfef9d733da19344abaebd50fa
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1443538967-NSIDC_ECS%2A&include_has_granules=true&include_granule_counts=true
@@ -1978,7 +1689,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:56:41 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:10 GMT
   digest: 2eac8227ddecf31dcdc3d008525ff74095f1d781
 - request:
     method: get
@@ -1993,7 +1704,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:11 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:57 GMT
   digest: d6fd12ba72af58a190df86c1b8bcaf27361054cd
 - request:
     method: get
@@ -2008,10 +1719,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 15:53:37 GMT
-  digest: 959edb6695d24cf9ba8bed0692c0eee984207566
+  recorded_at: Fri, 23 Mar 2018 15:28:22 GMT
+  digest: 9d45e204e8cedb1aa3c6c47decf4e012c339efb1
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C179001887-SEDAC%2A&include_has_granules=true&include_granule_counts=true
@@ -2025,7 +1734,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:11 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:20 GMT
   digest: 7ad080158b94bbd1f52dfa19eff21fcbace0f5f4
 - request:
     method: get
@@ -2040,7 +1749,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:31 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:37 GMT
   digest: cda56284fd2f9c013c6b8c8d14fb33b31cfeb920
 - request:
     method: get
@@ -2055,7 +1764,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:07:12 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:45 GMT
   digest: c6f3b196fdc39a539e5e78a23c0838a40f173b31
 - request:
     method: get
@@ -2070,7 +1779,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:37 GMT
+  recorded_at: Fri, 23 Mar 2018 15:29:42 GMT
   digest: efe46fd8dcf002f3f7aa80e4987b0d4fbd3ef3dd
 - request:
     method: get
@@ -2085,7 +1794,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:51:58 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:19 GMT
   digest: e6981eacab5d95707739ac657e08507b99b29766
 - request:
     method: get
@@ -2100,10 +1809,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 15:53:27 GMT
-  digest: c5d917a603cdb2d70a1137a68c1545e4779a462a
+  recorded_at: Fri, 23 Mar 2018 15:20:55 GMT
+  digest: a1476963b2def3e1cd6d8d5485733d8f8337cafa
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C179003380-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
@@ -2117,7 +1824,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:59 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:06 GMT
   digest: 2e822301ce5f23bab89566062f6126ce596f3368
 - request:
     method: get
@@ -2132,7 +1839,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:33 GMT
+  recorded_at: Fri, 23 Mar 2018 15:29:40 GMT
   digest: adeb811ce9101712e0dc983d16a3d54d23c6862c
 - request:
     method: get
@@ -2147,7 +1854,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:07:10 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:39 GMT
   digest: d53a52578884e55336051ff7fee054a825e8b938
 - request:
     method: get
@@ -2162,7 +1869,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:07:14 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:37 GMT
   digest: 13ca4c08f271ff59ed2d83e504d830f20a603c81
 - request:
     method: get
@@ -2177,7 +1884,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:04 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:51 GMT
   digest: 3505915c60a5a1cd071f2bf9058744f28a0a3c55
 - request:
     method: get
@@ -2192,7 +1899,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:56:39 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:08 GMT
   digest: f90e1b1c59ea5ee1f0de5c2fc8affe81d9256b3e
 - request:
     method: get
@@ -2207,7 +1914,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:31 GMT
   digest: b5d82efc9f12751d6ea3c5691a7783a1555e50b7
 - request:
     method: get
@@ -2222,7 +1929,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:08 GMT
+  recorded_at: Fri, 23 Mar 2018 15:33:16 GMT
   digest: 622ce97cfcb0b4ea8c80895122248429dbfad22c
 - request:
     method: get
@@ -2237,7 +1944,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:55:22 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:02 GMT
   digest: 0d45462985bcb12f685efd7abf3be4c8a5497901
 - request:
     method: get
@@ -2252,7 +1959,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:50 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:07 GMT
   digest: e85ff221e458f23c1a31470b37e760891715d94a
 - request:
     method: get
@@ -2267,7 +1974,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:36:24 GMT
+  recorded_at: Fri, 23 Mar 2018 15:32:38 GMT
   digest: 47cbc7b8b72599e1578687ab79e141eb440d9426
 - request:
     method: get
@@ -2282,7 +1989,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:04:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:35:26 GMT
   digest: 99f7e7a756456ce6cb26e7d7d78b507169997608
 - request:
     method: get
@@ -2297,7 +2004,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:45:29 GMT
+  recorded_at: Fri, 23 Mar 2018 15:36:10 GMT
   digest: f5bef2015d77662628d2fa9bf488e0b59d875019
 - request:
     method: get
@@ -2312,7 +2019,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:45:23 GMT
+  recorded_at: Fri, 23 Mar 2018 15:36:13 GMT
   digest: 7bd4ac6fa61e98b33e999cc1bb0e88d662029e4b
 - request:
     method: get
@@ -2327,7 +2034,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:45:20 GMT
+  recorded_at: Fri, 23 Mar 2018 15:36:08 GMT
   digest: e2848a822d845f661975fbc5dce8403b276d66f1
 - request:
     method: get
@@ -2342,7 +2049,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:00:44 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:24 GMT
   digest: 1499c8bd8ac9b512711aa38f84d857a8a8979a65
 - request:
     method: get
@@ -2357,7 +2064,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:04 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:49 GMT
   digest: c20bea5dc627ef44408812dab0f8b6f3bae90085
 - request:
     method: get
@@ -2372,7 +2079,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:06 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:24 GMT
   digest: 4b04a59ed0973c85d95c3f6e7e2245c56abc297d
 - request:
     method: get
@@ -2387,7 +2094,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:13 GMT
+  recorded_at: Fri, 23 Mar 2018 15:18:14 GMT
   digest: 2fcf3341475538835016fcb8be9744db2a291ab8
 - request:
     method: get
@@ -2402,7 +2109,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:46 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:03 GMT
   digest: 174e71bd2d0585dac7d4978273f23a7faf9b48ab
 - request:
     method: get
@@ -2417,7 +2124,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:45:26 GMT
+  recorded_at: Fri, 23 Mar 2018 15:36:06 GMT
   digest: 9060dbd5fc64342c0ea23a48d58ef0dc28358176
 - request:
     method: get
@@ -2432,7 +2139,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:45:36 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:57 GMT
   digest: 3e10167dd6abaf23407f6c4a90bc1d6441e68337
 - request:
     method: get
@@ -2447,7 +2154,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:55:33 GMT
+  recorded_at: Fri, 23 Mar 2018 15:28:13 GMT
   digest: b382f39076182dca513f15d90d53a78427f09231
 - request:
     method: get
@@ -2462,7 +2169,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:02 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:04 GMT
   digest: 8456f5d72b2f152eef6d83534f22a3f1c74940d8
 - request:
     method: get
@@ -2477,7 +2184,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:07 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:22 GMT
   digest: 858af9972ba46c0fc3505dc867985642fd8e17de
 - request:
     method: get
@@ -2492,7 +2199,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:09 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:23 GMT
   digest: 9b0a210231cdca902ba5a9db84ae58e1bb20266e
 - request:
     method: get
@@ -2507,7 +2214,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:34:10 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:25 GMT
   digest: 0161ff8373640a10cc27cb6f372c90b1e594e981
 - request:
     method: get
@@ -2522,7 +2229,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:11 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:24 GMT
   digest: 71a0dc841847c301163c140fba5adea8f3a18c83
 - request:
     method: get
@@ -2537,7 +2244,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:43 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:37 GMT
   digest: 502540d7de73e6eeeb98ad85398e572bed9c3ca7
 - request:
     method: get
@@ -2552,7 +2259,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:23 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:06 GMT
   digest: 4ba2dffde178d4410a7bdd899a2f69b15c3c195e
 - request:
     method: get
@@ -2567,7 +2274,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:05:11 GMT
+  recorded_at: Fri, 23 Mar 2018 15:41:52 GMT
   digest: 3f8018a634c90f7f91250f585e83306343c2dc3c
 - request:
     method: get
@@ -2582,7 +2289,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:45 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:43 GMT
   digest: 772b0779819f6123134c73013b93ee494adc49e3
 - request:
     method: get
@@ -2597,25 +2304,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:18 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:09 GMT
   digest: 994e81a3af35bdd401d388f68d304af33f9603c6
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=10%2C-80&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:05:27 GMT
-  digest: b9fc980e7adb60247fee9c723741aeece79ebbcc
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=40%2C-75&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -2629,23 +2319,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:49 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:47 GMT
   digest: fd104c7fc44b66b29e811be2d811367c5240cbf9
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?polygon=-114.0556640625%2C37.08984375%2C-114.0380859375%2C41.994140625%2C-119.9970703125%2C41.994140625%2C-119.9970703125%2C38.9970703125%2C-118.5732421875%2C38.00390625%2C-117.1318359375%2C36.94921875%2C-115.8486328125%2C35.9736328125%2C-114.6357421875%2C34.998046875%2C-114.6005859375%2C35.0771484375%2C-114.64453125%2C35.103515625%2C-114.57421875%2C35.138671875%2C-114.5654296875%2C35.1826171875%2C-114.6005859375%2C35.349609375%2C-114.6796875%2C35.4990234375%2C-114.6533203125%2C35.595703125%2C-114.7060546875%2C35.7099609375%2C-114.7060546875%2C35.8154296875%2C-114.6796875%2C35.8857421875%2C-114.732421875%2C35.9384765625%2C-114.732421875%2C36.052734375%2C-114.7587890625%2C36.0791015625%2C-114.6357421875%2C36.140625%2C-114.4423828125%2C36.123046875%2C-114.4072265625%2C36.1494140625%2C-114.328125%2C36.10546875%2C-114.2666015625%2C36.0263671875%2C-114.15234375%2C36.0263671875%2C-114.046875%2C36.193359375%2C-114.046875%2C37.001953125%2C-114.0556640625%2C37.08984375&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Tue, 13 Mar 2018 05:00:33 GMT
-  digest: 15ac354d74a4a6496f2d6daf0d8343c690c0c37c
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?polygon=-165%2C77%2C-173%2C72%2C-168%2C67%2C-159%2C69%2C-165%2C77&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -2659,7 +2334,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:11 GMT
+  recorded_at: Fri, 23 Mar 2018 15:22:59 GMT
   digest: 7bcb03fd5dfce20a1f49730437be535951dc50af
 - request:
     method: get
@@ -2674,7 +2349,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:40 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:37 GMT
   digest: ab75cddc99a05a27266e0f62db1f2ccae5ecd85b
 - request:
     method: get
@@ -2689,7 +2364,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:55 GMT
+  recorded_at: Fri, 23 Mar 2018 15:22:43 GMT
   digest: 760e2697eac92f5008745d7d3b16643956e0577b
 - request:
     method: get
@@ -2704,7 +2379,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:50:21 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:31 GMT
   digest: b5aa5986e895a6db2cae8d8e1b353fa033124203
 - request:
     method: get
@@ -2719,7 +2394,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:04:14 GMT
+  recorded_at: Fri, 23 Mar 2018 15:28:41 GMT
   digest: 73683c3016a2c8d38f871643ac3a7781f08fcb93
 - request:
     method: get
@@ -2734,7 +2409,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:04:24 GMT
+  recorded_at: Fri, 23 Mar 2018 15:28:15 GMT
   digest: d7ac7649185a525e1b91884e035a078b48e340ea
 - request:
     method: get
@@ -2749,7 +2424,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:54:42 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:32 GMT
   digest: 0d1d3cda481bfdc5316c3577c762862e822ff248
 - request:
     method: get
@@ -2764,7 +2439,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:58:50 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:18 GMT
   digest: cb26b65de4d258f81c4fedb47e0c1af672c4a951
 - request:
     method: get
@@ -2779,7 +2454,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:17 GMT
+  recorded_at: Fri, 23 Mar 2018 15:24:18 GMT
   digest: 0a61d4795376df68636497bbd20e44684e91e9bf
 - request:
     method: get
@@ -2794,7 +2469,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:10:00 GMT
+  recorded_at: Fri, 23 Mar 2018 15:24:14 GMT
   digest: 03be9208c984d7b828399e99a72ef79123cb8dc3
 - request:
     method: get
@@ -2809,7 +2484,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:45 GMT
+  recorded_at: Fri, 23 Mar 2018 15:24:27 GMT
   digest: a367f4f4b2c5ef079b5c115a88f85f0eaea3cc4d
 - request:
     method: get
@@ -2824,7 +2499,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:58:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:15 GMT
   digest: 4b1a7af00d213be6e1a0ec52553615508d13c376
 - request:
     method: get
@@ -2839,7 +2514,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:59:03 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:08 GMT
   digest: 029f5c545e1f6a9ef30a2cf72b0611baef8441a5
 - request:
     method: get
@@ -2854,7 +2529,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:03:47 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:33 GMT
   digest: c9f0c081f2a3cfa04c8a5d2003761ce91947219e
 - request:
     method: get
@@ -2869,7 +2544,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:03:34 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:36 GMT
   digest: 645b087d0d4e07e78bf5e1994213b1945b23ec40
 - request:
     method: get
@@ -2884,7 +2559,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:55 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:43 GMT
   digest: b476c53a2269a7e21ba94f40069cf6ede944735b
 - request:
     method: get
@@ -2899,7 +2574,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:50 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:23 GMT
   digest: bc5068f34fcfb33282f87a4137aa099bff8fda33
 - request:
     method: get
@@ -2916,7 +2591,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 12 Mar 2018 16:31:45 GMT
+  recorded_at: Fri, 23 Mar 2018 15:25:32 GMT
   digest: 986fabb637839b4d87789c853e962053ec4935f4
 - request:
     method: get
@@ -2931,7 +2606,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:36:59 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:35 GMT
   digest: 34ccafa3aec4d0504e896af9b63113226fb576ea
 - request:
     method: get
@@ -2946,7 +2621,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:44 GMT
+  recorded_at: Fri, 23 Mar 2018 15:40:31 GMT
   digest: 8d0d46d87b6b96aabdb9831dc4d664ec0cf291a7
 - request:
     method: get
@@ -2961,7 +2636,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:26 GMT
+  recorded_at: Fri, 23 Mar 2018 15:40:51 GMT
   digest: 4de518aad3292fa94922025da87c0d83c8239f64
 - request:
     method: get
@@ -2976,7 +2651,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:16 GMT
+  recorded_at: Fri, 23 Mar 2018 15:40:42 GMT
   digest: 3b83e891d1248a4aadea2bdf3cd6a648ba74d03f
 - request:
     method: get
@@ -2991,7 +2666,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:38 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:48 GMT
   digest: 99f952152e725a865ad4ad2e84763a37159dbc77
 - request:
     method: get
@@ -3006,7 +2681,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:56:47 GMT
+  recorded_at: Fri, 23 Mar 2018 15:36:30 GMT
   digest: c117597a2dfb989d77f111303cdaa6eff0515631
 - request:
     method: get
@@ -3021,7 +2696,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:58:15 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:22 GMT
   digest: e5e37015e89a4e9582cc035a7c4844a74baed558
 - request:
     method: get
@@ -3051,38 +2726,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:03:53 GMT
+  recorded_at: Fri, 23 Mar 2018 15:46:53 GMT
   digest: 40655e78bdded2bbbac61c2eb8eeace78a6239e3
-- request:
-    method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1000000968-DEV08&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:58:12 GMT
-  digest: 0f6facfaab22c887aae728317fe7bf653a8052e2
-- request:
-    method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200187767-EDF_OPS&echo_collection_id%5B%5D=C1000000029-EDF_OPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:04 GMT
-  digest: 71ef1f664aabcd85971ad518648b6c56a4696731
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200187767-EDF_OPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
@@ -3096,7 +2741,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:00:56 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:20 GMT
   digest: c9bb50bc70e75b5dcf9454bf18f9fa8355e209f8
 - request:
     method: get
@@ -3111,7 +2756,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:21 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:46 GMT
   digest: 254777816d85c855dd7b9b0a10d42ee858d6024d
 - request:
     method: get
@@ -3126,7 +2771,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:00 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:59 GMT
   digest: abba7c3a8c9a8a0aae2f9b176a02aab058127a02
 - request:
     method: get
@@ -3141,7 +2786,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:16 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:51 GMT
   digest: 1fd35d32bf7df6fbef9f124bcb2ad8afd5d51e45
 - request:
     method: get
@@ -3156,7 +2801,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:34 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:16 GMT
   digest: 522fda3d97f703a98bf831615419318c36c65fc1
 - request:
     method: get
@@ -3171,7 +2816,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:40 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:18 GMT
   digest: 13b62b1504aaaa90ea948efe87df5997727cafda
 - request:
     method: get
@@ -3186,7 +2831,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:51 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:25 GMT
   digest: acda1982fcef00d656f4c0ee1b2ac6fb04140893
 - request:
     method: get
@@ -3201,7 +2846,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:47 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:28 GMT
   digest: c00b990f475d23b5b986c49b741f0629492b5080
 - request:
     method: get
@@ -3216,7 +2861,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:42 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:23 GMT
   digest: 652af293e1ee1b034490ba9df2033cf273d41341
 - request:
     method: get
@@ -3231,7 +2876,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:36 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:20 GMT
   digest: 3ddaee78b77d79147eeb64504f197d212ddc393b
 - request:
     method: get
@@ -3246,7 +2891,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:52:48 GMT
+  recorded_at: Fri, 23 Mar 2018 15:19:21 GMT
   digest: a54f95a5ce8885dfc1ac408cb02a4c9b11d56507
 - request:
     method: get
@@ -3261,7 +2906,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:01 GMT
+  recorded_at: Fri, 23 Mar 2018 15:43:47 GMT
   digest: 92e6efa9a6fff14289e12848c177b4996010d969
 - request:
     method: get
@@ -3276,7 +2921,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:01:21 GMT
+  recorded_at: Fri, 23 Mar 2018 15:44:57 GMT
   digest: 4d2fd6f32bfe3003ac05b2d399ba6eda2228f8bb
 - request:
     method: get
@@ -3291,7 +2936,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:17 GMT
+  recorded_at: Fri, 23 Mar 2018 15:17:29 GMT
   digest: 3dee034f2076a22e36fa2ac3e1a5a1622cfed08d
 - request:
     method: get
@@ -3306,7 +2951,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:23 GMT
+  recorded_at: Fri, 23 Mar 2018 15:26:48 GMT
   digest: 23678db634eb1e0aa4294e05030bab835d908b4b
 - request:
     method: get
@@ -3321,7 +2966,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:00 GMT
   digest: a97404072a78d544cc06ae8d00624a25d76f784f
 - request:
     method: get
@@ -3336,7 +2981,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:18 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:53 GMT
   digest: e56c455966c7280b4262670ac78ebe69c04b6526
 - request:
     method: get
@@ -3351,7 +2996,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:52:51 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:12 GMT
   digest: fe7b3494b0873ab335dd0fd98bd89db66fba8101
 - request:
     method: get
@@ -3366,7 +3011,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:58:27 GMT
+  recorded_at: Fri, 23 Mar 2018 15:20:10 GMT
   digest: adc10f33c478eb47f9111935ac97aa58d99257d5
 - request:
     method: get
@@ -3381,7 +3026,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:52:55 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:03 GMT
   digest: 1f994242656ea39d83fdd699be1aaf1d9249e613
 - request:
     method: get
@@ -3396,7 +3041,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:52:57 GMT
+  recorded_at: Fri, 23 Mar 2018 15:23:05 GMT
   digest: b9f66b59912d49d6c494d647a48c534215ea52d2
 - request:
     method: get
@@ -3411,7 +3056,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:59 GMT
+  recorded_at: Fri, 23 Mar 2018 15:21:01 GMT
   digest: 313484338a3691045c6bd94c2cc0d3c7d17ff5cc
 - request:
     method: get
@@ -3426,7 +3071,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:04 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:11 GMT
   digest: a3e7eb61b4ac24758ca81a66fed0cb3f70347fea
 - request:
     method: get
@@ -3441,7 +3086,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:52:07 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:12 GMT
   digest: a3955ab8f499a86caeb8835edd50e768b8cdd10e
 - request:
     method: get
@@ -3456,7 +3101,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:01:28 GMT
+  recorded_at: Fri, 23 Mar 2018 15:45:00 GMT
   digest: 2405794342b6005d6d0876c490afdf07958b292f
 - request:
     method: get
@@ -3473,7 +3118,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - 9951de91c01200192a9ca34d722bd320a5318df43f39e651113dac6d34216e76:iGoL4SxnweOcSyBxA5eeUA
-  recorded_at: Mon, 12 Mar 2018 16:52:12 GMT
+  recorded_at: Fri, 23 Mar 2018 15:42:17 GMT
   digest: 5750f2cad89b7b4f92f8e89aefb0e0cb6d8b43ae
 - request:
     method: get
@@ -3488,6 +3133,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 13 Mar 2018 05:07:42 GMT
+  recorded_at: Fri, 23 Mar 2018 15:34:20 GMT
   digest: 54ef22ea367efff15d260bbeb70d694b77a9ab61
 recorded_with: VCR 2.6.0

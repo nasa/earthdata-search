@@ -63,7 +63,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         $nodes.hide()
         $nodes.filter(@scope('plugin')).remove()
         @_triggerStateChange()
-      @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs) if $nodes.size() > 0
+      @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs) if $nodes.length > 0
 
     pluginPushMaster: (dom, options) ->
       $(dom).addClass(@scope('plugin')).addClass(@scope('hide-self'))
