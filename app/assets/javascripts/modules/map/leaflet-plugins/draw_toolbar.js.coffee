@@ -168,8 +168,8 @@ L.DrawToolbar = do (L, Proj = LExt.Proj) ->
     _handlerActivated: (e) ->
       mode = @_modes[e.handler]
       button = $(mode.button)
-      mode.buttonIndex = button.prevAll('a:visible').size()
-      @_lastButtonIndex = button.parent().children('a:visible').size() - 1
+      mode.buttonIndex = button.prevAll('a:visible').length
+      @_lastButtonIndex = button.parent().children('a:visible').length - 1
 
       original._handlerActivated.call(this, e)
 

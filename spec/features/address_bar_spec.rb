@@ -199,7 +199,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('test_facets=true&ff=Map+Imagery')
+      expect(page).to have_query_string('test_facets=true&ff=Map%20Imagery')
     end
 
     context 'clearing filters' do
@@ -213,7 +213,7 @@ describe 'Address bar', reset: false do
 
   context 'when loading a url containing a facet condition' do
     before(:all) do
-      visit '/search?test_facets=true&ff=Map+Imagery'
+      visit '/search?test_facets=true&ff=Map%20Imagery'
       wait_for_xhr
       dismiss_banner
     end

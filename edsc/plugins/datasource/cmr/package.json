@@ -43,7 +43,7 @@
     "jasmine-core": "^2.3.4",
     "jasmine-jquery": "^2.1.0",
     "jasmine-reporters": "^2.0.7",
-    "jquery": "^2.2.4",
+    "jquery": "^3.2.1",
     "jstree": "3.0.1",
     "karma": "^0.13.9",
     "karma-cli": "^0.1.0",
