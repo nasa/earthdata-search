@@ -721,6 +721,19 @@ http_interactions:
   digest: 186ad8f8d0bf8d82cb805125293cbf363e157bfc
 - request:
     method: get
+    uri: https://f5eil01.edn.ecs.nasa.gov/sit/ous?format=json&coverage=G1200187775-EDF_OPS%2CG1200245955-EDF_OPS&RangeSubset=CH4_VMR_A_sdev%2CCH4_VMR_D_sdev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+  recorded_at: Wed, 21 Mar 2018 16:38:19 GMT
+  digest: 576dacf6fd4391efa105f9d671b46a856751d63e
+- request:
+    method: get
     uri: https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
     body:
       encoding: US-ASCII

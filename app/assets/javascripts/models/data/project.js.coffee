@@ -128,6 +128,35 @@ ns.Project = do (ko,
 
       'Customize'
 
+    generateDownloadPath: (variable_names) =>
+      path = '/granules/opendap_urls?collection_id=' + @collection.id
+
+      if variable_names.length > 0
+         path += '&variable_list=' + variable_names
+
+      path
+
+    sendToOusDownloadPage: =>
+      params = deparam(urlUtil.realQuery())
+
+      collectionList = params.p.split('!')
+      metadataLocation = collectionList.indexOf(@collection.id)
+
+      # Default the variable list
+      variable_ids = []
+
+      # Pull out variables from the url params if there are any set
+      if params.hasOwnProperty('pg')
+        if params.pg.length >= metadataLocation
+          variable_ids = params.pg[metadataLocation].uv.split('!')
+
+      # Ping CMR to get the names of the variables because OUS doesnt accept Concept IDs
+      VariablesModel.forIds variable_ids, {}, (variables) =>
+        variables_names = variables.map((v) => v.umm()['Name']).join(',')
+
+        # Navigate to the page that displays the the OUS results
+        window.location.href = @generateDownloadPath(variables_names)
+
     transforms_enabled: ->
       false
 
@@ -139,7 +168,7 @@ ns.Project = do (ko,
       $(document).trigger('dataaccessevent', [@collection.id, options])
 
       form_hashes = []
-      for method in @granuleAccessOptions().methods
+      for method in @granuleAccessOptions().methods || []
         for accessMethod in options.accessMethod
           form_hash = {}
           if ((method.id == null || method.id == undefined ) || accessMethod.id == method.id) && accessMethod.type == method.type
@@ -153,7 +182,7 @@ ns.Project = do (ko,
       id: @collection.id
       params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
-      variables: @selectedVariables().map((v) => v.meta()['concept-id']).join(',')
+      variables: @selectedVariables().map((v) => v.meta()['concept-id']).join('!')
       form_hashes: form_hashes
 
   class Project
@@ -311,7 +340,7 @@ ns.Project = do (ko,
 
           # Only set the variables if there are any selected
           if projectCollection.hasSelectedVariables()
-            query['variables'] = projectCollection.selectedVariables().map((v) => v.meta()['concept-id']).join(',')
+            query['variables'] = projectCollection.selectedVariables().map((v) => v.meta()['concept-id']).join('!')
 
           if datasource?
             $.extend(query, datasource.toBookmarkParams())
@@ -365,7 +394,7 @@ ns.Project = do (ko,
 
               if query?
                 if query.variables
-                  variables = query.variables.split(',')
+                  variables = query.variables.split('!')
 
                   # Retrieve the stored selected variables by concept id and assign
                   # them to the project collection

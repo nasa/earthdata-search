@@ -34,6 +34,14 @@ class ApplicationController < ActionController::Base
     @echo_client
   end
 
+  def ous_client
+    if @ous_client.nil?
+      service_configs = Rails.configuration.services
+      @ous_client = Ous::Client.client_for_environment(cmr_env, Rails.configuration.services)
+    end
+    @ous_client
+  end
+
   def cmr_env
     @cmr_env = session[:cmr_env] unless session[:cmr_env].nil?
     @cmr_env ||= request.headers['edsc-echo-env'] || request.query_parameters['cmr_env']
