@@ -66,16 +66,19 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       for m in @availableMethods when m.name == item.name
         clickedMethod = m
         break
-      echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
-      echoformContainer.empty?() if echoformContainer?
-      if clickedMethod.type == 'service' || clickedMethod.type == 'order'
-        @loadForm(true) if clickedMethod.type == 'service'
-        setTimeout (=>
-          ko.applyBindingsToNode(echoformContainer, {echoform: this})
-          @loadForm(false)), 0
-      else
-        ko.cleanNode(echoformContainer);
-        @loadForm(false)
+
+      if e.target.id
+        echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
+        echoformContainer.empty?() if echoformContainer?
+
+        if clickedMethod.type == 'service' || clickedMethod.type == 'order'
+          @loadForm(true) if clickedMethod.type == 'service'
+          setTimeout (=>
+            ko.applyBindingsToNode(echoformContainer, {echoform: this})
+            @loadForm(false)), 0
+        else
+          ko.cleanNode(echoformContainer);
+          @loadForm(false)
       true
 
     _computePrepopulatedFields: ->
