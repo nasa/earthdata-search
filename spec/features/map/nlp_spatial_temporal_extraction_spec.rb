@@ -47,7 +47,7 @@ describe "Spatial and temporal extraction", reset: false do
     end
 
     it 'is set in the query' do
-      expect(page.current_url).to include('qt=2017-12-01T00%3A00%3A00.000Z%2C2018-03-31T23%3A59%3A59.000Z&ok=last+winter')
+      expect(page.current_url).to include('qt=2017-12-01T00%3A00%3A00.000Z%2C2018-03-31T23%3A59%3A59.000Z&ok=last%20winter')
     end
   end
 
@@ -73,9 +73,9 @@ describe "Spatial and temporal extraction", reset: false do
     it 'is set in the query and adds q= and ok= query params to the url' do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
       path = Project.find(project_id).path
-      expect(path).to have_content('qt=2017-12-01T00%3A00%3A00.000Z%2C2018-03-31T23%3A59%3A59.000Z&q=snow+cover&ok=snow+cover+in+Boston+last+winter&sb=-71.191155%2C42.22788%2C-70.748802%2C42.40082')
-      expect(path).to have_text("q=snow+cover")
-      expect(path).to have_text("ok=snow+cover+in+Boston+last+winter")
+      expect(path).to have_content('qt=2017-12-01T00%3A00%3A00.000Z%2C2018-03-31T23%3A59%3A59.000Z&q=snow%20cover&ok=snow%20cover%20in%20Boston%20last%20winter&sb=-71.191155%2C42.22788%2C-70.748802%2C42.40082')
+      expect(path).to have_text("q=snow%20cover")
+      expect(path).to have_text("ok=snow%20cover%20in%20Boston%20last%20winter")
     end
 
     it 'is set on the map' do
