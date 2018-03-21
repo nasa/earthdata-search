@@ -34,6 +34,9 @@ EarthdataSearchClient::Application.routes.draw do
       post 'timeline'
       get 'download', defaults: { format: ['html', 'sh'] }
       get 'fetch_links'
+
+      get 'opendap_urls', format: :html
+      get 'fetch_opendap_urls'
     end
   end
 

@@ -2204,6 +2204,32 @@ d63cb049375aff72da5b367d65d787ce978ec49f:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"trigger500"}'
     http_version: 
+576dacf6fd4391efa105f9d671b46a856751d63e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Mar 2018 16:38:19 GMT
+      server:
+      - Apache/2.4.26 (Unix) OpenSSL/1.0.1e-fips mod_jk/1.2.40
+      content-type:
+      - application/json
+      vary:
+      - origin,accept-encoding
+      cache-control:
+      - no-cache
+      content-length:
+      - '448'
+      accept-ranges:
+      - bytes
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"agentResponse": { "downloadUrls": { "downloadUrl": ["https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.09.04.L3.RetStd001.v6.0.9.0.G13208020620.hdf.json?CH4_VMR_A_sdev,CH4_VMR_D_sdev,Latitude,Longitude","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user//FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.json?CH4_VMR_A_sdev,CH4_VMR_D_sdev,Latitude,Longitude"]}}}'
+    http_version: 
 6bf87a5fa2776e3a7b6c7a5302456300f112e8b3:
   response:
     status:

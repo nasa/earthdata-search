@@ -36,6 +36,36 @@ class GranulesController < ApplicationController
     render json: catalog_response.body, status: catalog_response.status
   end
 
+  # Action rendered with for the HTML view
+  def opendap_urls
+    @collection_id = params[:collection_id]
+    @variable_names = params[:variable_list]
+
+    render 'opendap_urls.html', layout: false
+  end
+
+  # JSON Endpoint for `opendap_urls` view
+  def fetch_opendap_urls
+    granules_params = {
+      echo_collection_id: params[:collection_id]
+    }
+    granules_response = echo_client.get_granules(granules_params, token)
+
+    if granules_response.success?
+      granule_ids = granules_response.body.fetch('feed', {}).fetch('entry', {}).map { |g| g['id'] }
+
+      ous_params = {
+        coverage: granule_ids.join(','), # Granule Concept IDs
+        RangeSubset: params[:variable_list] # UMM Variables, by name.
+      }
+
+      response = ous_client.get_coverage(ous_params)
+      render json: response.body.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []), layout: false
+    else
+      render json: [], layout: false
+    end
+  end
+
   def fetch_links
     retrieval = Retrieval.find(request[:project])
     collection_id = params[:collection]
@@ -51,10 +81,10 @@ class GranulesController < ApplicationController
     url_type = 'browse' if browse_only == true || browse_only == 'true'
 
     project = retrieval.project
-    collection = Array.wrap(project['collections']).find {|ds| ds['id'] == collection_id}
+    collection = Array.wrap(project['collections']).find { |ds| ds['id'] == collection_id }
 
     query = Rack::Utils.parse_nested_query(collection['params'])
-    catalog_response = echo_client.get_granules(query.merge({page_num: page_num, page_size: 2000, format: :json}), token)
+    catalog_response = echo_client.get_granules(query.merge(page_num: page_num, page_size: 2000, format: :json), token)
 
     if catalog_response.success?
       hits = catalog_response.headers['CMR-Hits'].to_i

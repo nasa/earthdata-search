@@ -17,6 +17,21 @@ http_interactions:
   digest: dfc0b400a8c27968e4d3b08bbe066e4b10a314d3
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json?concept_id%5B%5D=V1200241814-EDF_OPS&concept_id%5B%5D=V1200241817-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 20 Mar 2018 18:24:28 GMT
+  digest: aa41e8504f6e43adc0574ff0d18da8d220d8055e
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json?concept_id%5B%5D=V1200241822-EDF_OPS&concept_id%5B%5D=V1200241823-EDF_OPS
     body:
       encoding: US-ASCII

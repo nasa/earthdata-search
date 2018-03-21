@@ -109,9 +109,11 @@
             </div>
           </div>
           <div class="action-container">
-            <a class="action-button customize" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-customization-modal'}"><i class="fa fa-cog" aria-hidden="true"></i> <span data-bind="text: customizeButtonText()"></span></a>
+            <a class="action-button customize" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-customization-modal'}"><span data-bind="text: customizeButtonText()"></span></a>
 
-            <a class="action-button"  data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-modal'}"><i class="fa fa-window-restore" aria-hidden="true"></i> Details</a>
+            <a class="action-button details" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-modal'}">Details</a>
+
+            <a class="action-button download" href="#" data-bind="click: sendToOusDownloadPage" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
           </div>
           <%= render partial: 'collection_customization_modal' %>
           <%= render partial: 'granule_list_modal' %>
