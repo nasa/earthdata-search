@@ -74,6 +74,13 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
           expect(first_link).to have_content('CH4_VMR_A_sdev[*][79:90][209:220],Latitude[79:90],Longitude[209:220]')
         end
       end
+
+      it 'returns the links with the correct format' do
+        within_window('Earthdata Search - Download Granule Links') do
+          first_link = find('#links li:nth-child(1)')
+          expect(first_link).to have_content('.hdf.nc?')
+        end
+      end
     end
   end
 end

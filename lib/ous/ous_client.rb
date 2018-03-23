@@ -1,6 +1,6 @@
 module Ous
   class OusClient < BaseClient
-    def get_coverage(params, format = 'json')
+    def get_coverage(params, format = 'nc')
       default_params = {
         format: format
       }
