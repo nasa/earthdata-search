@@ -1,8 +1,4 @@
 class OgreClient
-  # Register custom middleware
-  Faraday.register_middleware(:response,
-                                :logging => Echo::ClientMiddleware::LoggingMiddleware)
-
   OGRE_URL = ENV['ogre_url']
 
   def self.convert_shapefile(options)
@@ -24,7 +20,7 @@ class OgreClient
       conn.request :multipart
       conn.request :url_encoded
 
-      conn.response :logging
+      conn.use Echo::ClientMiddleware::LoggingMiddleware
 
       conn.adapter  Faraday.default_adapter
     end

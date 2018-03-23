@@ -1,6 +1,3 @@
-Faraday.register_middleware(:response,
-                            :logging => Echo::ClientMiddleware::LoggingMiddleware)
-
 class CwicController < ApplicationController
   # This controller essentially passes all requests straight through to CWIC and only
   # does processing to log the request and response time
@@ -38,7 +35,7 @@ class CwicController < ApplicationController
 
   def build_raw_client
     Faraday.new(:url => root) do |conn|
-      conn.response :logging
+      conn.use Echo::ClientMiddleware::LoggingMiddleware
       conn.adapter Faraday.default_adapter
     end
   end

@@ -1,9 +1,4 @@
 class PlacesClient
-  # Register custom middleware
-  Faraday.register_middleware(:response,
-                              :logging => Echo::ClientMiddleware::LoggingMiddleware)
-
-
   PLACES_URL = ENV['places_url']
   USER_ID = ENV['places_user_id']
 
@@ -36,7 +31,7 @@ class PlacesClient
 
   def self.build_connection
     Faraday.new(:url => PLACES_URL) do |conn|
-      conn.response :logging
+      conn.use Echo::ClientMiddleware::LoggingMiddleware
       conn.response :json, :content_type => /\bjson$/
       conn.adapter  Faraday.default_adapter
     end

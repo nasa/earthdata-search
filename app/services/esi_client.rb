@@ -1,6 +1,4 @@
 class ESIClient
-  Faraday.register_middleware(:response, :logging => Echo::ClientMiddleware::LoggingMiddleware)
-
   def self.submit_esi_request(*args)
     new.submit_esi_request(*args)
   end
@@ -53,7 +51,7 @@ class ESIClient
   def build_connection
     Faraday.new do |conn|
       conn.request :url_encoded
-      conn.response :logging
+      conn.use Echo::ClientMiddleware::LoggingMiddleware
       conn.response :json, :content_type => /\bjson$/
       conn.adapter Faraday.default_adapter
     end

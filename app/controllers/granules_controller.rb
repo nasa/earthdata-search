@@ -40,6 +40,7 @@ class GranulesController < ApplicationController
   def opendap_urls
     @collection_id = params[:collection_id]
     @variable_names = params[:variable_list]
+    @spatial = params[:spatial]
 
     render 'opendap_urls.html', layout: false
   end
@@ -55,9 +56,21 @@ class GranulesController < ApplicationController
       granule_ids = granules_response.body.fetch('feed', {}).fetch('entry', {}).map { |g| g['id'] }
 
       ous_params = {
-        coverage: granule_ids.join(','), # Granule Concept IDs
-        RangeSubset: params[:variable_list] # UMM Variables, by name.
+        coverage: granule_ids.join(',')
       }
+
+      if params.key?(:variable_list) && params[:variable_list]
+        ous_params['RangeSubset'] = params[:variable_list]
+
+        if params.key?(:spatial) && params[:spatial]
+          bb = params[:spatial].split(',')
+
+          # WCS requires that this key be the same so we're adding it as an array
+          # and within the Ous Client we've configured Faraday to use `FlatParamsEncoder`
+          # that will prevent the addition of `[]` at the end of the keys in the url
+          ous_params['subset'] = ["lat(#{bb[1]},#{bb[3]})", "lon(#{bb[0]},#{bb[2]})"]
+        end
+      end
 
       response = ous_client.get_coverage(ous_params)
       render json: response.body.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []), layout: false

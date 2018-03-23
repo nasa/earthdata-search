@@ -1,9 +1,4 @@
 module Ous
-  # Register custom middleware
-  Faraday.register_middleware(:response,
-                              logging: Ous::ClientMiddleware::LoggingMiddleware,
-                              errors: Ous::ClientMiddleware::ErrorsMiddleware)
-
   class BaseClient
     def connection
       @connection ||= build_connection
@@ -54,13 +49,13 @@ module Ous
     end
 
     def build_connection
-      Faraday.new(url: @root) do |connection|
-        connection.response :logging
+      Faraday.new(url: @root, request: { params_encoder: Faraday::FlatParamsEncoder }) do |connection|
+        connection.use Ous::ClientMiddleware::LoggingMiddleware
 
         # The order of these handlers is important.  They are run last to first.
         # Our parsers depend on JSON / XML being converted to objects by earlier
         # parsers.
-        connection.response :errors, content_type: /\bjson$/
+        connection.use Ous::ClientMiddleware::ErrorsMiddleware, content_type: /\bjson$/
         connection.response :json, content_type: /\bjson$/
         connection.response :xml, content_type: /\bxml$/
 

@@ -1,11 +1,4 @@
 module Echo
-  # Register custom middleware
-  Faraday.register_middleware(:response,
-                              :logging => Echo::ClientMiddleware::LoggingMiddleware,
-                              :errors => Echo::ClientMiddleware::ErrorsMiddleware,
-                              :echo10_collections => Echo::ClientMiddleware::Echo10CollectionMiddleware,
-                              :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware)
-
   class BaseClient
     include Echo::QueryTransformations
 
@@ -70,15 +63,15 @@ module Echo
 
     def build_connection
       Faraday.new(:url => @root) do |conn|
-        conn.response :logging
+        conn.use Echo::ClientMiddleware::LoggingMiddleware
 
         # The order of these handlers is important.  They are run last to first.
         # Our parsers depend on JSON / XML being converted to objects by earlier
         # parsers.
-        conn.response :errors, :content_type => /\bjson$/
+        conn.use Echo::ClientMiddleware::ErrorsMiddleware, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
-        conn.response :echo10_granules, :content_type => /^application\/(echo10\+)?xml$/
-        conn.response :echo10_collections, :content_type => /^application\/(echo10\+)?xml$/
+        conn.use Echo::ClientMiddleware::Echo10GranuleMiddleware, :content_type => /^application\/(echo10\+)?xml$/
+        conn.use Echo::ClientMiddleware::Echo10CollectionMiddleware, :content_type => /^application\/(echo10\+)?xml$/
         conn.response :xml, :content_type => /\bxml$/
 
         yield(conn) if block_given?
