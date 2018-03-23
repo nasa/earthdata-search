@@ -128,8 +128,11 @@ ns.Project = do (ko,
 
       'Customize'
 
-    generateDownloadPath: (variable_names) =>
+    generateDownloadPath: (variable_names, spatial_bounds) =>
       path = '/granules/opendap_urls?collection_id=' + @collection.id
+
+      if spatial_bounds.length > 0
+         path += '&spatial=' + spatial_bounds
 
       if variable_names.length > 0
          path += '&variable_list=' + variable_names
@@ -138,6 +141,13 @@ ns.Project = do (ko,
 
     sendToOusDownloadPage: =>
       params = deparam(urlUtil.realQuery())
+
+      # Default the bounding box
+      bounding_box = []
+
+      # Pull out the bounding box from the url params if there are any set
+      if params.hasOwnProperty('sb')
+        bounding_box = params.sb
 
       collectionList = params.p.split('!')
       metadataLocation = collectionList.indexOf(@collection.id)
@@ -155,7 +165,7 @@ ns.Project = do (ko,
         variables_names = variables.map((v) => v.umm()['Name']).join(',')
 
         # Navigate to the page that displays the the OUS results
-        window.location.href = @generateDownloadPath(variables_names)
+        window.location.href = @generateDownloadPath(variables_names, bounding_box)
 
     transforms_enabled: ->
       false
