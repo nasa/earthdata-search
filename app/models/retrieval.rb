@@ -60,9 +60,9 @@ class Retrieval < ActiveRecord::Base
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       queued_jobs = DelayedJob.where(failed_at: nil)
       if job.attempts == 0
-        logger.info "Delayed Job #{job.id} from the #{job.queue } queue is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+        logger.info "Delayed Job #{job.id} from the #{job.queue} queue is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
       else
-        logger.info "Delayed Job #{job.id} from the #{job.queue } queue has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+        logger.info "Delayed Job #{job.id} from the #{job.queue} queue has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
       end
     end
   end
@@ -70,7 +70,7 @@ class Retrieval < ActiveRecord::Base
   def self.enqueue(job)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       queued_jobs = DelayedJob.where(failed_at: nil)
-      logger.info "A new Delayed Job is being enqueued into processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
+      logger.info "A new Delayed Job is being added to the #{job.queue} queue for processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
     end
   end 
 
