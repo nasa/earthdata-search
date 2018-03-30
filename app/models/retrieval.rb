@@ -58,19 +58,21 @@ class Retrieval < ActiveRecord::Base
 
   def self.before(job)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
-      queued_jobs = DelayedJob.where(failed_at: nil)
+      all_queued_jobs = DelayedJob.where(failed_at: nil)
+      same_queue_jobs = DelayedJob.where(failed_at: nil).where('queue = ?', job.queue)
       if job.attempts == 0
-        logger.info "Delayed Job #{job.id} from the #{job.queue } queue is beginning its work - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+        logger.info "Delayed Job #{job.id} from the #{job.queue} queue is beginning its work - there are #{same_queue_jobs.size - 1} orders ahead of it (#{all_queued_jobs.size - 1} total)."
       else
-        logger.info "Delayed Job #{job.id} from the #{job.queue } queue has begun its work after failing #{job.attempts} time - there are #{queued_jobs.size - 1} orders waiting in line behind it."
+        logger.info "Delayed Job #{job.id} from the #{job.queue} queue has begun its work after failing #{job.attempts} time - there are #{same_queued_jobs.size - 1} orders waiting in line behind it (#{all_queued_jobs.size - 1} total)."
       end
     end
   end
 
   def self.enqueue(job)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
-      queued_jobs = DelayedJob.where(failed_at: nil)
-      logger.info "A new Delayed Job is being enqueued into processing - there are #{queued_jobs.size} orders ahead of this job in the queue."
+      all_queued_jobs = DelayedJob.where(failed_at: nil)
+      same_queue_jobs = DelayedJob.where(failed_at: nil).where('queue = ?', job.queue)
+      logger.info "A new Delayed Job is being added to the #{job.queue} queue for processing - there are #{same_queue_jobs.size} orders ahead of it (#{all_queued_jobs.size} total)."
     end
   end 
 
