@@ -33,7 +33,7 @@ describe 'Collection API Endpoints', reset: false do
     end
 
     it 'provides the path to the GIBS endpoint' do
-      expect(collection_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
+      expect(collection_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/31.25/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
     end
 
     it 'provides the GIBS layers that are available to view' do

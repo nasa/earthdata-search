@@ -26,7 +26,7 @@ describe "Map interface", reset: false do
 
       MapUtil.tiles(page, '#map').each do |img|
         src = img['src']
-        expect(src).to match(/TILEMATRIXSET=EPSG4326/) # Plate Carree
+        expect(src).to match(/TILEMATRIXSET=31.25/) # Plate Carree
         expect(src).to match(/TILEMATRIX=2&/) # Zoomed to show whole Earth
       end
     end
@@ -55,7 +55,7 @@ describe "Map interface", reset: false do
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('31.25')
 
       click_link north_text
       expect(north_link).to have_class('leaflet-disabled')
@@ -67,14 +67,14 @@ describe "Map interface", reset: false do
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('31.25')
     end
 
     it "allows switching to south polar stereographic projection and back" do
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('31.25')
 
       click_link south_text
       expect(south_link).to have_class('leaflet-disabled')
@@ -86,7 +86,7 @@ describe "Map interface", reset: false do
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('31.25')
     end
 
     it "disables the current projection" do
