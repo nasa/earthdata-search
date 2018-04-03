@@ -63,7 +63,6 @@ describe "Map interface", reset: false do
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('250m')
     end
 
     it "allows switching to south polar stereographic projection and back" do
@@ -78,7 +77,6 @@ describe "Map interface", reset: false do
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('250m')
     end
 
     it "disables the current projection" do
