@@ -41,7 +41,7 @@
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 0
-    gibsUrl: "/assets/gibs-example.jpeg?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}"
+    gibsUrl: "/assets/gibs-example.jpeg?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}"
     browseScalerUrl: "/assets/gibs-example.jpeg#"
     present: -> Date.UTC(2014, 2, 1)
     animateMap: false
