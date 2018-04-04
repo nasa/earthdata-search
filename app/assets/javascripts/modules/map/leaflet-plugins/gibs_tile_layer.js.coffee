@@ -21,10 +21,13 @@ ns.GibsTileLayer = do (L,
       format: 'jpeg'
       tileSize: 512
       extra: ''
-
-    arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', lprojection: 'epsg3413', endpoint: 'arctic')
-    antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', lprojection: 'epsg3031', endpoint: 'antarctic')
-    geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', lprojection: 'epsg4326', endpoint: 'geo')
+    
+    today = new Date
+    month = today.getMonth() + 1 
+    time = today.getFullYear() + "-" + month + "-" + today.getDate()
+    arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', lprojection: 'epsg3413', endpoint: 'arctic', 'time': time)
+    antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', lprojection: 'epsg3031', endpoint: 'antarctic', 'time': time)
+    geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', lprojection: 'epsg4326', endpoint: 'geo', 'time': time)
 
     onAdd: (map) ->
       @options.time = dateUtil.isoUtcDateString(map.time ? yesterday) if @options.syncTime
@@ -46,7 +49,6 @@ ns.GibsTileLayer = do (L,
 
       time = options['time']
       options['timeparam'] = if time? then "TIME=#{time}&" else ""
-
       options
 
     url: ->

@@ -198,7 +198,7 @@ ns.GranuleLayer = do (L
         L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
       else
         this._url = this._originalUrl || this._url;
-        L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
+        L.TileLayer.prototype.getTileUrl.call(this, tilePoint) 
 
 
     drawTile: (canvas, back, tilePoint) ->
@@ -509,7 +509,6 @@ ns.GranuleLayer = do (L
       # GranuleCanvasLayer needs to handle time
       newOptions = L.extend({}, newOptions)
       delete newOptions.time
-
       url = @url()
 
       layer = new GranuleCanvasLayer(url, L.extend(@_toTileLayerOptions(newOptions), color: @color), @multiOptions)
