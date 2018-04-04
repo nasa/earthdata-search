@@ -21,22 +21,6 @@ describe "Base layer date display", reset: false do
     wait_for_xhr
   end
 
-  context 'when viewing a time-independent base layer' do
-    before(:all) do
-      page.find('.leaflet-control-layers').trigger(:mouseover)
-      choose 'Land / Water Map'
-    end
-
-    context 'selecting a date on the timeline' do
-      before(:all) { click_timeline_date('02', 'Feb') }
-      after(:all) { click_timeline_date('02', 'Feb') }
-
-      it 'does not update the base layer' do
-        expect('#map').to have_tiles_with_no_date
-      end
-    end
-  end
-
   context 'when viewing a time-dependent base layer' do
     before(:all) do
       page.find('.leaflet-control-layers').trigger(:mouseover)
