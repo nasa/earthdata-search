@@ -22,9 +22,12 @@ ns.GibsTileLayer = do (L,
       tileSize: 512
       extra: ''
     
-    today = new Date
-    month = today.getMonth() + 1 
-    time = today.getFullYear() + "-" + month + "-" + today.getDate()
+    date = new Date
+    month = date.getMonth() + 1 
+    month = "0" + month if month < 10
+    today = date.getDate()
+    today = "0" + today if today < 10
+    time = date.getFullYear() + "-" + month + "-" + today
     arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', lprojection: 'epsg3413', endpoint: 'arctic', 'time': time)
     antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', lprojection: 'epsg3031', endpoint: 'antarctic', 'time': time)
     geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', lprojection: 'epsg4326', endpoint: 'geo', 'time': time)
