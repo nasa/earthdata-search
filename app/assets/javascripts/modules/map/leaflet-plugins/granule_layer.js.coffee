@@ -200,7 +200,7 @@ ns.GranuleLayer = do (L
         this._url = this._originalUrl || this._url;
         gibsUrl = L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
         pos = gibsUrl.lastIndexOf('//');
-        gibsUrl = gibsUrl.substring(0,pos) + '/' + date + gibsUrl.substring(pos+1)
+        gibsUrl.substring(0,pos) + '/' + date + gibsUrl.substring(pos+1)
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
@@ -510,6 +510,7 @@ ns.GranuleLayer = do (L
       # GranuleCanvasLayer needs to handle time
       newOptions = L.extend({}, newOptions)
       delete newOptions.time
+      
       url = @url()
 
       layer = new GranuleCanvasLayer(url, L.extend(@_toTileLayerOptions(newOptions), color: @color), @multiOptions)
