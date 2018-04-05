@@ -17,19 +17,11 @@ ns.GibsTileLayer = do (L,
   # Implements the ILayer interface, so it may be added directly to an Leaflet
   # map
   class GibsTileLayer extends ProjectionSwitchingLayer
-    date = new Date
-    month = date.getMonth() + 1 
-    month = "0" + month if month < 10
-    today = date.getDate()
-    today = "0" + today if today < 10
-    time = date.getFullYear() + "-" + month + "-" + today
-    
     defaultOptions:
       format: 'jpeg'
       tileSize: 512
       extra: ''
-      time: time
-    
+
     arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', lprojection: 'epsg3413', endpoint: 'arctic')
     antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', lprojection: 'epsg3031', endpoint: 'antarctic')
     geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', lprojection: 'epsg4326', endpoint: 'geo')
@@ -54,6 +46,7 @@ ns.GibsTileLayer = do (L,
 
       time = options['time']
       options['timeparam'] = if time? then "TIME=#{time}&" else ""
+
       options
 
     url: ->
