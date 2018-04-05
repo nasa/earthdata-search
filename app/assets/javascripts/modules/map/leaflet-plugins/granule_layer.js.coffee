@@ -198,8 +198,9 @@ ns.GranuleLayer = do (L
         L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
       else
         this._url = this._originalUrl || this._url;
-        L.TileLayer.prototype.getTileUrl.call(this, tilePoint) 
-
+        gibsUrl = L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
+        pos = gibsUrl.lastIndexOf('//');
+        gibsUrl = gibsUrl.substring(0,pos) + '/' + date + gibsUrl.substring(pos+1)
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
