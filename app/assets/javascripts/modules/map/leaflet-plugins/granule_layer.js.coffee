@@ -199,6 +199,7 @@ ns.GranuleLayer = do (L
       else
         this._url = this._originalUrl || this._url;
         gibsUrl = L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
+        return gibsUrl if gibsUrl.lastIndexOf('//') == -1
         pos = gibsUrl.lastIndexOf('//');
         gibsUrl.substring(0,pos) + '/' + date + gibsUrl.substring(pos+1)
 
