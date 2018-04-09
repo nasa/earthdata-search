@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection "Subsetting Services" Filtering', reset: false do
+describe 'Collection "Customizable" Filtering', reset: false do
   before :all do
     Capybara.reset_sessions!
   end
@@ -35,10 +35,10 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
     end
   end
 
-  context 'when selecting the "Subsetting Services" filter' do
+  context 'when selecting the "Customizable" filter' do
     before :all do
       load_page :search, facets: true
-      find('.facets-item', text: 'Subsetting Services').click
+      find('.facets-item', text: 'Customizable').click
       wait_for_xhr
     end
 
@@ -46,9 +46,9 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
       expect(page).to have_css('.badge-subsetting', count: 20)
     end
 
-    context 'when un-selecting the "Subsetting Services" filter' do
+    context 'when un-selecting the "Customizable" filter' do
       before :all do
-        find('.facets-item', text: 'Subsetting Services').click
+        find('.facets-item', text: 'Customizable').click
         wait_for_xhr
       end
 
