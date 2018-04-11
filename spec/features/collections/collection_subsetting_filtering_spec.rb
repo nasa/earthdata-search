@@ -5,33 +5,33 @@ describe 'Collection "Customizable" Filtering', reset: false do
     Capybara.reset_sessions!
   end
 
-  context 'when a collection search result has ESI subsetting' do
+  context 'when a collection search result has ESI customizability' do
     before :all do
       load_page :search, q: 'C179014697-NSIDC_ECS'
     end
 
-    it 'displays the subsetting badge on the collection' do
-      expect(first_collection_result).to have_css('.badge-subsetting', count: 1)
+    it 'displays the customizable badge on the collection' do
+      expect(first_collection_result).to have_css('.badge-customizable', count: 1)
     end
   end
 
-  context 'when a collection search result has OPeNDAP subsetting' do
+  context 'when a collection search result has OPeNDAP customizability' do
     before :all do
       load_page :search, q: 'C179014688-NSIDC_ECS'
     end
 
-    it 'displays the subsetting badge on the collection' do
-      expect(first_collection_result).to have_css('.badge-subsetting', count: 1)
+    it 'displays the customizable badge on the collection' do
+      expect(first_collection_result).to have_css('.badge-customizable', count: 1)
     end
   end
 
-  context 'when a collection search result has no subsetting' do
+  context 'when a collection search result has no customizability' do
     before :all do
       load_page :search, q: 'C179002726-ORNL_DAAC'
     end
 
-    it 'displays the subsetting badge on the collection' do
-      expect(first_collection_result).to have_no_css('.badge-subsetting')
+    it 'displays the customizable badge on the collection' do
+      expect(first_collection_result).to have_no_css('.badge-customizable')
     end
   end
 
@@ -42,8 +42,8 @@ describe 'Collection "Customizable" Filtering', reset: false do
       wait_for_xhr
     end
 
-    it 'shows only subsetting-enabled collections' do
-      expect(page).to have_css('.badge-subsetting', count: 20)
+    it 'shows only customizable-enabled collections' do
+      expect(page).to have_css('.badge-customizable', count: 20)
     end
 
     context 'when un-selecting the "Customizable" filter' do
@@ -53,7 +53,7 @@ describe 'Collection "Customizable" Filtering', reset: false do
       end
 
       it 'shows all collections' do
-        expect(page).to have_css('.circle-badge-subsetting', count: 1)
+        expect(page).to have_css('.circle-badge-customizable', count: 1)
       end
     end
   end
