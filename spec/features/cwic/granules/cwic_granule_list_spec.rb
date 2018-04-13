@@ -26,7 +26,7 @@ describe "CWIC Granule list", reset: false do
     context "clicking on the collection details button" do
       before :all do
         wait_for_xhr
-        granule_list.find('.master-overlay-global-actions').click_link('View collection details')
+        granule_list.click_link('View collection details')
         wait_for_xhr
       end
 

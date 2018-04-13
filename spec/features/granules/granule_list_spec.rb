@@ -72,7 +72,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the collection details button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').click_link('View collection details')
+        granule_list.click_link('View collection details')
       end
 
       after :all do
@@ -265,7 +265,7 @@ describe "Granule list", reset: false do
     before do
       set_temporal('2018-01-01 00:00:00', '2018-01-31 23:59:59')
     end
-    
+
     use_collection 'C1426717545-LANCEMODIS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT'
 
     context "clicking on a collection result" do
@@ -348,11 +348,11 @@ describe "Granule list", reset: false do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         # If the test works, this dropdown won't even exist...
         if page.has_css?('a[data-toggle="dropdown"]')
-          find('a[data-toggle="dropdown"]').click 
+          find('a[data-toggle="dropdown"]').click
         end
       end
     end
-    
+
     it 'only shows the http link' do
       expect(page).not_to have_link("The FTP location for the granule.")
     end

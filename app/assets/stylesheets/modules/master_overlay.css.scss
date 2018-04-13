@@ -14,6 +14,11 @@
     margin: 0;
     color: $overlay-heading-font-color;
 
+    .special-thing-here {
+      border-right: 1px solid #e3e3e3;
+      width: 80%;
+    }
+
     #datasource-caveats {
       clear: both;
       font-size: 0.8em;
@@ -24,10 +29,19 @@
       font-size: 1.2em;
       margin: 0;
       padding: 10px 20px;
-      font-weight: 200;
+      font-weight: bold;
 
       &.loading {
         padding: 0;
+      }
+
+      .collection-title-link {
+        font-size: 0.8em;
+        font-weight: normal;
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: text-top;
+        text-decoration: underline;
       }
     }
 
@@ -44,13 +58,13 @@
       }
 
       h2 {
-        padding: 10px 0 10px 20px;
+        padding: 15px 15px 5px 20px;
+        width: 80%;
       }
 
       .actions {
-        margin-top: .5em;
-        margin-right: 20px;
-        float: right;
+        margin: 0;
+        padding: 0;
       }
     }
 
@@ -276,6 +290,12 @@
     display: inline-block;
   }
 
+  .granule-filter-link {
+    text-decoration: underline;
+    font-size: 0.9em;
+    margin-left: 5px;
+  }
+
   p.collection-filters {
     display: block;
 
@@ -334,8 +354,7 @@
 
 .master-overlay-global-actions {
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 3px;
+  display: inline-block;
 
   .button {
     @include list-panel-button;
