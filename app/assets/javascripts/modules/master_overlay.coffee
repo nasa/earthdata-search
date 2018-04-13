@@ -212,7 +212,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         # granule list
         granuleList = $('#granule-list')
         if granuleList.is(':visible')
-          newHeight = granuleList.height() - granuleList.find('.master-overlay-nav').outerHeight() - granuleList.find('.master-overlay-info').outerHeight() - granuleList.find('header').outerHeight()
+          newHeight = granuleList.height() - granuleList.find('.master-overlay-nav').outerHeight() - granuleList.find('.master-overlay-info').outerHeight() - granuleList.find('.special-thing-here h2').outerHeight()
           granuleList.find(@scope('.content')).height(newHeight)
 
         # granule filter

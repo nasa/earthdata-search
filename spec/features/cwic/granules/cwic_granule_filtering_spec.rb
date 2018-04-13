@@ -14,7 +14,7 @@ describe "CWIC Granule list", reset: false do
 
     context "clicking on the 'Filter granules' button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
+        granule_list.find('.master-overlay-info').click_link('Filter granules')
         expect(page).to have_css('#granule-search')
       end
 
@@ -77,7 +77,7 @@ describe "CWIC Granule list", reset: false do
 
     before :all do
       expect(page).to have_text("Showing 20")
-      granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
+      granule_list.find('.master-overlay-info').click_link('Filter granules')
       fill_in "Start", with: "1960-02-02 00:00:00\t"
       fill_in "End", with: "1960-02-02 23:59:59\t"
       js_click_apply ".master-overlay-content"

@@ -3304,6 +3304,21 @@ http_interactions:
   digest: 3ddaee78b77d79147eeb64504f197d212ddc393b
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=v2&point=0%2C0&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 11 Apr 2018 20:40:37 GMT
+  digest: e0033300ee95a5094c4d95c9a0915a002b160ba2
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
