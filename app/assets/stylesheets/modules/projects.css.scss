@@ -57,9 +57,7 @@ $card-background: rgba(235,235,235,1);
       padding: 10px 20px;
 
       .download-data {
-        &:hover {
-          border-radius: 2px;
-        }
+        overflow: hidden;
         color: #fff;
         @include gradient-animation(#289152, #217A46, #289152, #289152, .2s);
 
