@@ -24,8 +24,8 @@ describe "Temporal constraint disambiguation", reset: true do
     end
 
     context 'clicking the download button' do
-      before :each do 
-        find('.master-overlay-global-actions').click_on "Download Data"
+      before :each do
+        find('.master-overlay-global-actions').click_on "Download"
         wait_for_xhr
       end
 
@@ -42,8 +42,8 @@ describe "Temporal constraint disambiguation", reset: true do
     end
 
     context 'clicking the download button' do
-      before :each do 
-        find('.master-overlay-global-actions').click_on "Download Data"
+      before :each do
+        find('.master-overlay-global-actions').click_on "Download"
         wait_for_xhr
       end
 
@@ -61,8 +61,8 @@ describe "Temporal constraint disambiguation", reset: true do
     end
 
     context 'clicking the download button' do
-      before :each do 
-        find('.master-overlay-global-actions').click_on "Download Data"
+      before :each do
+        find('.master-overlay-global-actions').click_on "Download"
         wait_for_xhr
       end
 
@@ -81,7 +81,7 @@ describe "Temporal constraint disambiguation", reset: true do
           expect(page).not_to have_content("What temporal selection would you like to use?")
         end
 
-        after(:each) { find('.master-overlay-global-actions').click_on "Download Data" }
+        after(:each) { find('.master-overlay-global-actions').click_on "Download" }
       end
 
       context 'choosing to use the temporal constraint' do

@@ -3409,6 +3409,21 @@ http_interactions:
   digest: a97404072a78d544cc06ae8d00624a25d76f784f
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1426717545-LANCEMODIS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 24 Apr 2018 02:09:44 GMT
+  digest: b0c7360acd331c5e978ad1b7e98459dd48afa843
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C24931-LAADS%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3544,4 +3559,19 @@ http_interactions:
       - 7cf16dc7bbe4d2aafc733c2e92ecf230a59d570bc4f25b8f36b645f96cdbd93c:iGoL4SxnweOcSyBxA5eeUA
   recorded_at: Thu, 01 Mar 2018 16:29:17 GMT
   digest: e6d3b6f3e8fbb12f2f347e6b6b4b91ad605edc10
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&keyword=C1426717545-LANCEMODIS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 24 Apr 2018 02:50:41 GMT
+  digest: 54ef22ea367efff15d260bbeb70d694b77a9ab61
 recorded_with: VCR 2.6.0
