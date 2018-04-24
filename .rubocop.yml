@@ -35,3 +35,6 @@ Metrics/PerceivedComplexity:
 
 Style/CyclomaticComplexity:
   Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
