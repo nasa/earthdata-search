@@ -96,7 +96,6 @@
   background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
   display: inline-block;
   font-size: 1.2em;
-  z-index: 9000;
 
   &:hover {
     cursor: row-resize;
@@ -471,7 +470,7 @@ a.master-overlay-close {
 }
 
 a.master-overlay-back {
-  color: #424242;
+  color: #2980b9;
 }
 
 a.master-overlay-show-parent {
