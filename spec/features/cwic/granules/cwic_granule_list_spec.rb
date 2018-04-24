@@ -16,7 +16,7 @@ describe "CWIC Granule list", reset: false do
     end
 
     it "provides a button to download the collection", acceptance: true do
-      expect(granule_list).to have_button('Download Data')
+      expect(granule_list).to have_button('Download')
     end
 
     it "provides a button to edit granule filters", acceptance: true do

@@ -7,13 +7,10 @@
         <!-- ko if: ui.collectionsList.focused() && ui.collectionsList.focused().granules()  -->
         <!-- ko with: ui.collectionsList.focused() -->
         <header class="with-options">
-          <div class="special-thing-here">
+          <div class="collection-title-filters">
             <h2><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">View details</a><!-- /ko --></h2>
             <div id="datasource-caveats"></div>
             <div class="master-overlay-info">
-              <p data-bind="if: granules().loadTime() !== null" class="panel-list-meta">
-                Search Time: <span data-bind="text: granules().loadTime">0.000</span>s
-              </p>
 
               <!--ko ifnot: $data.collection.cwic()-->
                 <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
@@ -36,31 +33,35 @@
               <!-- /ko -->
             </div>
           </div>
-          <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
-               data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
-              <i class="fa fa-plus"></i>
-            </a>
-            <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
-               data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
-              <i class="fa fa-minus"></i>
-            </a>
-            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
-              <i class="fa fa-download"></i> Download Data
-            </button>
+              <strong data-bind="text: granules().hits() == 1 ? '1' : granules().hits()"></strong> <span data-bind="text: granules().hits() == 1 ? ' Granule' : ' Granules'"></span>
+            <!-- ko with: collection -->
+              <a href="#" class="add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                 data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                 <i class="fa fa-plus-circle"></i> Add to project
+              </a>
+              <a href="#" class="remove-from-project" data-pulse="#project-count" title="Remove collection from the current project"
+                 data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                Remove from project
+              </a>
+            <p>
+              <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
+                <i class="fa fa-download"></i> Download <span class="pill" data-bind="text: $parent.granules().hits() == 1 ? '1 Granule' : $parent.granules().hits() + ' Granules'"></span>
+              </button>
+            </p>
+            <!-- /ko -->
           </div>
-          <!-- /ko -->
         </header>
         <div id="granules-scroll" class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
           <p class="granule-match-stats">
-            Showing <strong><span data-bind="text: granules().results().length"></span></strong> of
+            Showing <span data-bind="text: granules().results().length"></span> of
             <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
             <span data-bind="text: granules().hits() == 1 ? '1 matching granule' : granules().hits() + ' matching granules'"></span>
             <!-- ko if: granules().parentQuery.focusedInterval() -->
             for the selected <span data-bind="text: granules().parentQuery.focusedInterval"></span>.
             (<a href="#" data-bind="click: $root.ui.granuleTimeline.clear">Show All</a>)
             <!-- /ko -->
+            <span data-bind="if: granules().loadTime() !== null" class="panel-list-meta">Search Time: <span data-bind="text: granules().loadTime">0.000</span>s</span>
           </p>
           <ul class="panel-list-list" data-bind="foreach: granules().results()">
 

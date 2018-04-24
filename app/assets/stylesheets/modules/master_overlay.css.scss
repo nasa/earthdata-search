@@ -14,9 +14,10 @@
     margin: 0;
     color: $overlay-heading-font-color;
 
-    .special-thing-here {
+    .collection-title-filters {
       border-right: 1px solid #e3e3e3;
-      width: 80%;
+      width: 75%;
+      box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
     }
 
     #datasource-caveats {
@@ -52,6 +53,7 @@
 
     &.with-options {
       margin: 0;
+      border-bottom: 1px solid #e3e3e3;
 
       > * {
         display: inline-block;
@@ -59,12 +61,11 @@
 
       h2 {
         padding: 15px 15px 5px 20px;
-        width: 80%;
       }
 
       .actions {
         margin: 0;
-        padding: 0;
+        padding: 10px;
       }
     }
 
@@ -95,6 +96,7 @@
   background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
   display: inline-block;
   font-size: 1.2em;
+  z-index: 9000;
 
   &:hover {
     cursor: row-resize;
@@ -284,7 +286,6 @@
   margin: 0;
   padding: 0px 20px 0 20px;
   color: $overlay-heading-font-color;
-  border-bottom: 1px solid #ecf0f1;
 
   > * {
     display: inline-block;
@@ -353,20 +354,40 @@
 }
 
 .master-overlay-global-actions {
-  padding: 0;
   display: inline-block;
+  vertical-align: top;
+  width: 23%;
+
+  .add-to-project, .remove-from-project {
+    font-size: 0.8em;
+    margin-top: 3px;
+    float: right;
+  }
 
   .button {
     @include list-panel-button;
-    padding: 6px 6px;
+    margin-top: 8px;
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    padding: 8px 10px;
+
+    .pill {
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
+      text-shadow: none;
+      font-size: 0.8em;
+      padding: 2px 10px;
+      margin-left: 5px;
+      vertical-align: bottom;
+      display: inline-block;
+    }
   }
 
   .retrieve {
     background: #27ae60;
     border: none;
     color: #fff;
-    padding-left: 10px;
-    padding-right: 10px;
 
     &:hover {
       background: #219853;
@@ -521,12 +542,6 @@ a.master-overlay-show-parent {
 .master-overlay-info .panel-list-meta, .panel-list-meta {
   display: inline-block;
   float: right;
-  text-align:right;
-  padding: 0;
-  margin: 0;
-  font-size: .8em;
-  color: #666;
-  line-height: 1.5;
 }
 
 .master-overlay-parent .panel-list-meta {
