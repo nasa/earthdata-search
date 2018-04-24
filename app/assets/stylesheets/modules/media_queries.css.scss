@@ -36,3 +36,14 @@
 		text-overflow: ellipsis;
 	}
 }
+
+/* Download button container sizing */
+@media (min-width: 1440px) {
+	.master-overlay header .collection-title-filters {
+		width: 80%;
+	}
+
+	.master-overlay-global-actions {
+		width: 18%;
+	}
+}
