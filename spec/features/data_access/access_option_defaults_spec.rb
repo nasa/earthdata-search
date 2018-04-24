@@ -105,7 +105,7 @@ describe "Access Option Defaults", reset: true do
       wait_for_xhr
     end
 
-    it "restores options from the first retrieval" do
+    xit "restores options from the first retrieval" do
       within '.access-item-selection:nth-child(1)' do
         expect(page).to have_checked_field('Download')
         expect(page).to have_unchecked_field('Stage for Delivery')

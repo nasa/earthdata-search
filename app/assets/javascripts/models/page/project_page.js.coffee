@@ -1,7 +1,6 @@
 #= require models/data/query
 #= require models/data/project
 #= require models/data/preferences
-#= require models/data/spatial_entry
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/project_list
@@ -10,7 +9,6 @@
 #= require models/ui/sitetour
 #= require models/ui/granules_list
 #= require models/ui/variable_list
-
 
 models = @edsc.models
 data = models.data
@@ -23,7 +21,6 @@ ns.ProjectPage = do (ko,
                      QueryModel = data.query.CollectionQuery
                      CollectionsModel = data.Collections
                      ProjectModel = data.Project
-                     SpatialEntry = data.SpatialEntry
                      SpatialTypeModel = ui.SpatialType
                      PreferencesModel = data.Preferences
                      TemporalModel = ui.Temporal
@@ -47,8 +44,7 @@ ns.ProjectPage = do (ko,
       @project = new ProjectModel(@query)
       @id = window.location.href.match(/\/projects\/(\d+)$/)?[1]
       @bindingsLoaded = ko.observable(false)
-      @spatialEntry = new SpatialEntry(@query.spatial)
-      
+
       @preferences = new PreferencesModel()
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
@@ -67,8 +63,7 @@ ns.ProjectPage = do (ko,
 
       @spatialError = ko.computed(@_computeSpatialError)
       
-
-      $(window).on 'edsc.save_workspace', (e)=>
+      $(window).on 'edsc.save_workspace', (e) =>
         currentParams = @project.serialized()
         urlUtil.saveState('/search/collections', currentParams, true)
 
@@ -139,24 +134,25 @@ ns.ProjectPage = do (ko,
         loadedCollectionNum = 0
         for projectCollection in @project.collections()
           collection = projectCollection.collection
-          granules = collection.cmrGranulesModel
-          if granules.isLoaded()
-            loadedCollectionNum += 1
-            _size = 0
-            _size += parseFloat(granule.granule_size ? 0) for granule in granules.results()
-            totalSize = _size / granules.results().length * granules.hits()
-            totalSize = 0 if isNaN(totalSize)
-            projectGranules += granules.hits()
-            collection.granule_hits(granules.hits())
-            projectSize += totalSize
-            if isNaN(totalSize) || (totalSize == 0 && granules.hits() > 0)
-              collection.total_size('Not Provided')
-              collection.unit('')
-              @sizeProvided(false)
-            else
-              collection.total_size(@_convertSize(totalSize)['size'])
-              collection.unit(@_convertSize(totalSize)['unit'])
-              @sizeProvided(true)
+          if collection.granuleDatasource()
+            granules = collection.granuleDatasource().data()
+            if granules.isLoaded()
+              loadedCollectionNum += 1
+              _size = 0
+              _size += parseFloat(granule.granule_size ? 0) for granule in granules.results()
+              totalSize = _size / granules.results().length * granules.hits()
+              totalSize = 0 if isNaN(totalSize)
+              projectGranules += granules.hits()
+              collection.granule_hits(granules.hits())
+              projectSize += totalSize
+              if isNaN(totalSize) || (totalSize == 0 && granules.hits() > 0)
+                collection.total_size('Not Provided')
+                collection.unit('')
+                @sizeProvided(false)
+              else
+                collection.total_size(@_convertSize(totalSize)['size'])
+                collection.unit(@_convertSize(totalSize)['unit'])
+                @sizeProvided(true)
 
         @isLoaded(true) if loadedCollectionNum == @project.collections?().length
 
@@ -184,6 +180,11 @@ ns.ProjectPage = do (ko,
         collectionId = $(elem).closest('.modal').prop('id').split('-modal')[0]
         collection = @project.collections().filter((collection) -> collection.id == collectionId).pop()
         collection.granuleDatasource().data().loadNextPage()
+
+    downloadProject: =>
+      $project = $('#data-access-project')
+      $project.val(JSON.stringify(@project.serialize()))
+      $('#data-access').submit()
 
   current = new ProjectPage()
   setCurrent(current)

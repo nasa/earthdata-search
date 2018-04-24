@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe "Viewing Single Project", reset: false do
-
+describe 'Viewing Single Project', reset: false do
   context 'for a saved project' do
     before :all do
       Capybara.reset_sessions!
@@ -24,6 +23,7 @@ describe "Viewing Single Project", reset: false do
       login
       wait_for_xhr
       click_link 'My Project'
+      wait_for_xhr
     end
 
     it 'shows default project title' do
@@ -92,9 +92,8 @@ describe "Viewing Single Project", reset: false do
         expect(find('#temporal-label')).to have_content('Any start time - Feb 01, 2014')
       end
     end
-
   end
-  
+
   context 'minimap' do
     context 'when a polygon has been selected' do
       before :all do
@@ -108,7 +107,7 @@ describe "Viewing Single Project", reset: false do
       end
 
       it 'shows a map of the designated area' do
-        expect(find_by_id('bounding-box-map')).to have_css(".leaflet-map-pane")
+        expect(find_by_id('bounding-box-map')).to have_css('.leaflet-map-pane')
       end
 
       it 'shows a label stating that a polygon is used' do
@@ -132,7 +131,7 @@ describe "Viewing Single Project", reset: false do
       end
 
       it 'shows a map of the designated area' do
-        expect(find_by_id('bounding-box-map')).to have_css(".leaflet-map-pane")
+        expect(find_by_id('bounding-box-map')).to have_css('.leaflet-map-pane')
       end
 
       it 'shows a label stating that a rectangle is used' do
@@ -156,14 +155,14 @@ describe "Viewing Single Project", reset: false do
       end
 
       it 'shows a map of the designated area' do
-        expect(find_by_id('bounding-box-map')).to have_css(".leaflet-map-pane")
+        expect(find_by_id('bounding-box-map')).to have_css('.leaflet-map-pane')
       end
 
       it 'shows a label stating that a point is used' do
         expect(find('.project-details')).to have_content('Point')
       end
 
-      it "places a point spatial constraint on the map" do
+      it 'places a point spatial constraint on the map' do
         expect(page).to have_css('#bounding-box-map .leaflet-marker-icon')
       end
     end

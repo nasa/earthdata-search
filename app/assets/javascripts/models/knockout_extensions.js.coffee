@@ -144,9 +144,10 @@ do (ko, $=jQuery) ->
             method = available
             break
         if method? && available?.form?
-          #TODO this should be set in 'options' and be sent to echoforms using "prepopulate" param.
+          # TODO this should be set in 'options' and be sent to echoforms using "prepopulate" param.
           # EDSC-975: If the form contains an empty email address field, prepopulate it with the user's email
-          available.form = available.form.replace('<ecs:email/>', '<ecs:email>' + edsc.page.account.email() + '</ecs:email>')
+          if edsc.page.account
+            available.form = available.form.replace('<ecs:email/>', '<ecs:email>' + edsc.page.account.email() + '</ecs:email>')
           originalForm = form = available.form
           model = if options.hasBeenReset then options.rawModelInitialValue else options.rawModel
 
@@ -155,6 +156,7 @@ do (ko, $=jQuery) ->
             shortName = shortNameRegex.exec(model)?[1]
 
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
+              
           # Handle problems if the underlying form has a breaking change
           try
             $el.echoforms(form: form, prepopulate: options.prepopulatedFields())

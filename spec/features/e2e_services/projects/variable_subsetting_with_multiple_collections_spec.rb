@@ -1,8 +1,11 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false, pending_updates: true do
+describe 'When viewing the project page with an OPeNDAP supported collection', reset: false do
   before :all do
     load_page :search, project: ['C1200187767-EDF_OPS', 'C1000000029-EDF_OPS'], env: :sit
+
+    login
+    wait_for_xhr
 
     click_link('My Project')
     wait_for_xhr
@@ -13,7 +16,7 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
     expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
   end
 
-  context 'When choosing to customize a collection' do
+  context 'When choosing to customize the collection' do
     before :all do
       collection_card = find('.collection-card', match: :first)
 

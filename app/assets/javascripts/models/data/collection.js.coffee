@@ -115,6 +115,8 @@ ns.Collection = do (ko
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
+      @hasEchoFormLoaded = ko.observable(false)
+
     _computeMaxOrderSize: ->
       hits = 0
       hits = @granuleDatasource().data().hits() if @granuleDatasource()
@@ -331,7 +333,6 @@ ns.Collection = do (ko
       @_setObservable('associations', jsonObj)
 
       @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
-
 
       @gibs(@getValueForTag('extra.gibs'))
 

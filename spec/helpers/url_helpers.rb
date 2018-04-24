@@ -94,7 +94,12 @@ module Helpers
           page.set_rack_session(cmr_env: value) if key == 'cmr_env'
         end
 
-        visit QueryBuilder.new.add_to(url, options)
+        url = QueryBuilder.new.add_to(url, options)
+
+        # Leave for debugging, comment out when not in use
+        # puts url
+
+        visit url
       end
       wait_for_xhr
 

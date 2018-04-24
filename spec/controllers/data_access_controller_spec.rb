@@ -83,6 +83,8 @@ describe DataAccessController do
           service_option_def_response = MockResponse.new('service_option_definition' => {'form' => service_form[id]['form'], 'name' => service_form[id]['name']})
           expect(mock_client).to receive('get_service_option_definition').with(id, session[:access_token]).and_return(service_option_def_response)
         end
+
+        expect(mock_client).to receive('get_collection').and_return(MockResponse.new({})).at_least(:once)
       end
 
       get :options, format: 'json'
@@ -115,7 +117,7 @@ describe DataAccessController do
         let(:downloadable) { 1 }
 
         it 'returns a response containing a "Download" access method' do
-          expect(body['methods'].size).to eql(1)
+          expect(body['methods'].size).to eql(2)
           expect(access_methods.first['name']).to eql('Download')
         end
 
@@ -180,7 +182,7 @@ describe DataAccessController do
         let(:downloadable) { 0 }
 
         it 'does not return "Download" as an access method' do
-          expect(body['methods']).to eql([])
+          expect(body['methods']).to eql([{ 'collection_id' => nil, 'name' => 'OPeNDAP', 'type' => 'opendap', 'subset' => false, 'parameters' => [], 'formats' => [], 'spatial' => nil, 'all' => true, 'umm_service' => nil, 'count' => 10 }])
         end
       end
 
@@ -188,13 +190,13 @@ describe DataAccessController do
         let(:orderable) { 1 }
 
         it 'returns a response containing access methods for each option' do
-          expect(access_methods.size).to eql(2)
+          expect(access_methods.size).to eql(3)
           expect(access_methods.first['name']).to eql('Order Option 1')
           expect(access_methods.second['name']).to eql('Order Option 2')
         end
 
         it 'retrieves and returns the corresponding form for each option' do
-          expect(access_methods.size).to eql(2)
+          expect(access_methods.size).to eql(3)
           expect(access_methods.first['form']).to eql('<first_form/>')
           expect(access_methods.second['form']).to eql('<second_form/>')
         end
@@ -259,7 +261,7 @@ describe DataAccessController do
         let(:option_defs) { nil }
 
         it 'does not return any order option access methods' do
-          expect(body['methods']).to eql([])
+          expect(body['methods']).to eql([{ 'collection_id' => nil, 'name' => 'OPeNDAP', 'type' => 'opendap', 'subset' => false, 'parameters' => [], 'formats' => [], 'spatial' => nil, 'all' => true, 'umm_service' => nil, 'count' => 10 }])
         end
       end
 
@@ -267,12 +269,12 @@ describe DataAccessController do
         let(:serviceable) { 1 }
 
         it 'returns a response containing a service access method' do
-          expect(access_methods.size).to eql(1)
+          expect(access_methods.size).to eql(2)
           expect(access_methods.first['name']).to eql('Service Option 1')
         end
 
         it 'retrieves and returns the corresponding form for each option' do
-          expect(access_methods.size).to eql(1)
+          expect(access_methods.size).to eql(2)
           expect(access_methods.first['form']).to eql('<service_form/>')
         end
       end
@@ -280,8 +282,8 @@ describe DataAccessController do
       context 'whose collection is not serviceable' do
         let(:serviceable) { 0 }
 
-        it 'does not return and service access methods' do
-          expect(access_methods.size).to eql(0)
+        it 'only returns the OPeNDAP method' do
+          expect(access_methods.size).to eql(1)
         end
       end
 
@@ -291,10 +293,10 @@ describe DataAccessController do
         let(:orderable) { 10 }
 
         it 'returns a response containing a download access method followed by access methods for each option' do
-          expect(access_methods.size).to eql(3)
+          expect(access_methods.size).to eql(4)
           expect(access_methods.first['name']).to eql('Download')
           expect(access_methods.second['name']).to eql('Order Option 1')
-          expect(access_methods.last['name']).to eql('Order Option 2')
+          expect(access_methods[-2]['name']).to eql('Order Option 2')
         end
       end
 
@@ -305,11 +307,11 @@ describe DataAccessController do
         let(:serviceable) { 1 }
 
         it 'returns a response containing a download access method followed by access methods for each option' do
-          expect(access_methods.size).to eql(4)
+          expect(access_methods.size).to eql(5)
           expect(access_methods.first['name']).to eql('Download')
           expect(access_methods.second['name']).to eql('Order Option 1')
           expect(access_methods.third['name']).to eql('Order Option 2')
-          expect(access_methods.last['name']).to eql('Service Option 1')
+          expect(access_methods[-2]['name']).to eql('Service Option 1')
         end
       end
 

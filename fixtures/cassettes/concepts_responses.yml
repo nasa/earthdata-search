@@ -1,4 +1,64 @@
 ---
+0a7b600b233b0d813493ac2f18a13ae682725aa0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - db4be48e-68cb-4848-95dd-ec4ab693694b
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 17:25:57 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1715'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"2","boxes":["-89.3 -180 89.2 180"],"time_start":"2018-02-27T00:00:00.000Z","version_id":"0","updated":"2017-10-03T13:14:00.000Z","dataset_id":"NRT
+        AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION,
+        WIND SPEED OVER OCEAN, WATER VAPOR OVER OCEAN AND CLOUD LIQUID WATER OVER
+        OCEAN V0","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LANCEAMSR2","short_name":"A2_RainOcn_NRT","organizations":["NASA/MSFC/AMSR
+        SIPS/LANCE"],"title":"NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM
+        2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN, WATER VAPOR OVER OCEAN
+        AND CLOUD LIQUID WATER OVER OCEAN V0","coordinate_system":"CARTESIAN","summary":"The
+        Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global
+        Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave
+        measurements of terrestrial, oceanic, and atmospheric parameters for the investigation
+        of global water and energy cycles.  Near real-time (NRT) products are generated
+        within 3 hours of the last observations in the file, by the Land Atmosphere
+        Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led
+        Processing System (AMSR SIPS), which is collocated with the Global Hydrology
+        Resource Center (GHRC) DAAC.  The GCOM-W1 AMSR2 Level-2B rain and ocean products
+        include global precipitation and ocean parameters (not including Sea Surface
+        Temperatures), calculated by the Goddard PROFiling algorithm (GPROF) 2010
+        version using as input the resampled brightness temperature (Level-1R) data
+        provided by the Japanese Aerospace Exploration Agency (JAXA).  Data are stored
+        in HDF-EOS5 format and are available via HTTP from the EOSDIS LANCE system
+        at https://lance.nsstc.nasa.gov/amsr2-science/data/level2/rainocean/.  If
+        data latency is not a primary concern, please consider using science quality
+        products.  Science products are created using the best available ancillary,
+        calibration and ephemeris information.  Science quality products are an internally
+        consistent, well-calibrated record of the Earth''s geophysical properties
+        to support science.  The AMSR SIPS plans to start producing initial AMSR2
+        standard science quality data products in late 2015 and they will be available
+        from the NSIDC DAAC.  Notice: All LANCE AMSR2 data should be used with the
+        understanding that these are preliminary products.  Cross calibration with
+        AMSR-E products has not been performed.  As updates are made to the L1R data
+        set, those changes will be reflected in this higher level product.","orbit_parameters":{},"id":"C1000000000-LANCEAMSR2","has_formats":false,"original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/data/level2/rainocean/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_WS.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_D_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_D_SP.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_SP.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_SR.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_WV.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.itsc.uah.edu/amsr2-science/data/level2/rainocean/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level2/rainocean/R00/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_RainOcn_NRT_dataset.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://worldview.earthdata.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"}]}'
+    http_version: 
 09e0c203c0062a024f78b6b5518d576482f7459e:
   response:
     status:
@@ -2737,6 +2797,38 @@ b9948f8e37013c8d027ba74c28c2be44266302e7:
             <DataFormat>ascii</DataFormat>
         </Granule>
     http_version: 
+8d4f00e5672ef89f18dd10fa854423765bb63b3f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 48ec4969-5473-4296-8869-de3c11bdfcff
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 18:22:10 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '738'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"2","time_start":"1999-10-01T12:00:00.000Z","version_id":"001","updated":"2015-05-26T14:55:22.387Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"EDF_OPS","short_name":"ACR3L2DM","organizations":["EDF_OPS","Langley
+        DAAC User Services","ACRIM SCF"],"title":"ACRIM III Level 2 Daily Mean Data
+        V001","summary":"This file contains Level 2 total solar irradiance in the
+        form of daily means gathered by the ACRIM instrument on the ACRIMSAT satellite.","orbit_parameters":{},"id":"C1000000029-EDF_OPS","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false}'
+    http_version: 
 4e5fe7086caa3f7f7fcc12ff3ff0ecb9b98cd5f7:
   response:
     status:
@@ -2792,6 +2884,107 @@ b9948f8e37013c8d027ba74c28c2be44266302e7:
         SCF","ContactInformation":{"ServiceHours":"Monday-Friday 09:00-16:00 PT","ContactInstruction":"E-mail
         Dr. Richard C. Willson","ContactMechanisms":[{"Type":"Telephone","Value":"619-522-2945"},{"Type":"Fax","Value":"619-522-2967"},{"Type":"Email","Value":"acrim@acrim.com"}],"Addresses":[{"StreetAddresses":["1001
         B Ave #200"],"City":"Coronado","StateProvince":"California","Country":"USA","PostalCode":"92118"}]}}]}'
+    http_version: 
+83dbac185244ab53e7cf4c9c4f77d2f26d5c0d03:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - d4d1f257-8ac5-41c8-994b-2b1b741ae865
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 18:21:30 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '765'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","version_id":"2","updated":"2015-02-10T17:20:34.449Z","dataset_id":"AMSR-E/Aqua
+        L2A Global Swath Spatially-Resampled Brightness Temperatures (Tb) V002","has_spatial_subsetting":false,"has_transforms":false,"associations":{"services":["S1200252658-DEV08"]},"has_variables":false,"data_center":"DEV08","short_name":"AE_L2A","organizations":["DEV08","National
+        Snow and Ice Data Center","AMSR-E SIPS-RSS"],"title":"AMSR-E/Aqua L2A Global
+        Swath Spatially-Resampled Brightness Temperatures (Tb) V002","coordinate_system":"CARTESIAN","summary":"The
+        AMSR-E/Aqua Level-2A swath product includes brightness temperatures at 6.9
+        GHz, 10.7 GHz, 18.7 GHz, 23.8 GHz, 36.5 GHz, and 89.0 GHz resampled at resolutions
+        of 56 km, 38 km, 21 km, 12 km, and 5.4 km.","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C1000000969-DEV08","has_formats":false,"original_format":"ECHO10","archive_center":"DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_l2a_tbs.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+    http_version: 
+9932a1706d449279bb97e8618f684cabff508f06:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 81eb9acc-48a6-4756-94fe-b675b346bdb8
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 17:27:23 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '2159'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"boxes":["-90 -180 90 180"],"time_start":"2002-08-30T00:00:00.000Z","version_id":"006","updated":"2014-12-18T00:00:00.000Z","dataset_id":"Aqua
+        AIRS Level 3 Daily Standard Physical Retrieval (AIRS+AMSU) V006 (AIRX3STD)
+        at GES DISC","has_spatial_subsetting":true,"has_transforms":true,"associations":{"variables":["V1200241814-EDF_OPS","V1200241817-EDF_OPS","V1200241815-EDF_OPS","V1200241822-EDF_OPS","V1200241816-EDF_OPS","V1200241818-EDF_OPS","V1200241821-EDF_OPS","V1200241812-EDF_OPS","V1200241813-EDF_OPS","V1200241819-EDF_OPS","V1200241820-EDF_OPS","V1200241823-EDF_OPS"],"services":["S1200245793-EDF_OPS"]},"has_variables":true,"data_center":"EDF_OPS","short_name":"AIRX3STD","organizations":["GESDISC","GES
+        DISC"],"title":"Aqua AIRS Level 3 Daily Standard Physical Retrieval (AIRS+AMSU)
+        V006 (AIRX3STD) at GES DISC","coordinate_system":"CARTESIAN","summary":"The
+        AIRS Level 3 Daily Gridded Product contains standard retrieval means, standard
+        deviations and input counts.  Each file covers a temporal period of 24 hours
+        for either the descending (equatorial crossing North to South @1:30 AM local
+        time) or ascending (equatorial crossing South to North @1:30 PM local time)
+        orbit. The data starts at the international dateline and progresses westward
+        (as do the subsequent orbits of the satellite) so that neighboring gridded
+        cells of data are no more than a swath of time apart (about 90 minutes). The
+        two parts of a scan line crossing the dateline are included in separate L3
+        files, according to the date, so that data points in a grid box are always
+        coincident in time.  The edge of the AIRS Level 3 gridded cells is at the
+        date line (the 180E/W longitude boundary). When plotted, this produces a map
+        with 0 degrees longitude in the center of the image unless the bins are reordered.
+        This method is preferred because the left (West) side of the image and the
+        right (East) side of the image contain data farthest apart in time. The gridding
+        scheme used by AIRS is the same as used by TOVS Pathfinder to create Level
+        3 products. The daily Level 3 products have gores between satellite paths
+        where there is no coverage for that day.The geophysical parameters have been
+        averaged and binned into 1 x 1 deg grid cells, from -180.0 to +180.0 deg longitude
+        and from -90.0 to +90.0 deg latitude. For each grid map of 4-byte floating-point
+        mean values there is a corresponding 4-byte floating-point map of standard
+        deviation and a 2-byte integer grid map of counts. The counts map provides
+        the user with the number of points per bin that were included in the mean
+        and can be used to generate custom multi-day maps from the daily gridded products.The
+        thermodynamic parameters are: Skin Temperature (land and sea surface), Air
+        Temperature at the surface, Profiles of Air Temperature and Water Vapor, Tropopause
+        Characteristics, Column Precipitable Water, Cloud Amount/Frequency, Cloud
+        Height, Cloud Top Pressure, Cloud Top Temperature, Reflectance, Emissivity,
+        Surface Pressure, Cloud Vertical Distribution.The trace gases parameters are:
+        Total Amounts and Vertical Profiles of Carbon Monoxide, Methane, and Ozone.The
+        actual names of the variables in the data files should be inferred from the
+        Processing File Description document.(The Shortname for this product is AIRX3STD).","orbit_parameters":{},"id":"C1200187767-EDF_OPS","has_formats":true,"original_format":"ECHO10","archive_center":"GESDISC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://acdisc.sci.gsfc.nasa.gov/ftp/data/s4pa/Aqua_AIRS_Level3/AIRX3STD.006/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=AIRX3STD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/SSW/#keywords=AIRX3STD006"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=GES_DISC_AIRX3STD_V006"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_airs?service=WMS&version=1.1.1&request=GetCapabilities"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_airs?service=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:4326&WIDTH=720&HEIGHT=360&LAYERS=AIRX3STD_TOTH2OVAP_A&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsAIRSL3?service=WCS&version=1.0.0&request=GetCapabilities"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsAIRSL3?service=WCS&version=1.0.0&request=GetCoverage&CRS=EPSG:4326&format=netCDF&resx=1.0&resy=1.0&BBOX=-179.5,-89.5,179.5,89.5&Coverage=AIRX3STD:CO_VMR_A&Time=2013-08-11"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://airs.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/AIRS/index.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"ftp://acdisc.sci.gsfc.nasa.gov/data/s4pa/Aqua_AIRS_Level3/AIRX3STD.006/doc/README.AIRS_V6.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"ftp://acdisc.gsfc.nasa.gov/data/s4pa//Aqua_AIRS_Level3/AIRX3STD.006/doc/README.AIRS_V6.pdf"}]}'
     http_version: 
 5cf5d7f76f99ec3c555b563138b6d5b9f4b4322e:
   response:

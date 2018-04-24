@@ -3,6 +3,7 @@ module Helpers
     def load_tokens!
       config = YAML.load(ERB.new(File.read(Rails.root.join('spec/config.yml'))).result)
       $_spec_config = config['urs_tokens']
+      
       if config['token_user_username'].present?
         client = Echo::Client.client_for_environment(Rails.configuration.cmr_env, Rails.configuration.services)
         response = client.create_token(config['token_user_username'], config['token_user_password'])

@@ -40,7 +40,7 @@ EarthdataSearchClient::Application.routes.draw do
     end
   end
 
-  resources :services, only: [:show], defaults: {format: 'json'}
+  resources :services, only: [:index, :show], defaults: {format: 'json'}
   resources :variables, only: [:index], defaults: {format: 'json'}
 
   resources :docs

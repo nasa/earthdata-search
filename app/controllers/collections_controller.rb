@@ -140,13 +140,22 @@ class CollectionsController < ApplicationController
     params[:sort_key].push 'score' unless (params.keys & relevancy_capable_fields.map(&:to_s)).empty?
   end
 
+  # These are facets that do no come back from CMR
   def add_fake_json_facets(facets)
-    feature_facet = [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
-      {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-      {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
-      {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
-    }]
-    
+    feature_facet = [
+      {
+        'title' => 'Features',
+        'type' => 'group',
+        'applied' => false,
+        'has_children' => true,
+        'children' => [
+          { 'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false },
+          { 'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false },
+          { 'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false }
+        ]
+      }
+    ]
+
     if facets.present? && facets['children']
       feature_facet + facets['children']
     else

@@ -181,6 +181,8 @@ ns.ProjectList = do (ko
         has_browse = collection.browseable_granule?
         collectionId = collection.id
         title = collection.dataset_id
+
+        # Download links from the DAAC
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'download'
           collections.push
             title: title,
@@ -188,6 +190,15 @@ ns.ProjectList = do (ko
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             error_code: m.errorCode
             error_message: m.errorMessage
+
+        # OPeNDAP links
+        for m in projectCollection.serviceOptions.accessMethod() when m.type == 'opendap'
+          collections.push
+            title: title,
+            links: collection.granuleDatasource()?.opendapLinks(id)
+            order_status: null
+            error_code: null
+            error_message: null
 
       collections
 

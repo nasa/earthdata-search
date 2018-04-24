@@ -1,5 +1,5 @@
 //= require modernizr-2.6.2-respond-1.1.0.min
-//= require jquery
+//= require jquery3
 //= require jquery_ujs
 //= require jquery.color-2.1.2
 //= require js.cookies
@@ -26,3 +26,5 @@
 //= require models/page/project_page
 //= require modules/index
 //= require bootstrap/bootstrap
+//= require jquery.echoforms-full.min
+//= require modules/echoformsext.coffee.erb

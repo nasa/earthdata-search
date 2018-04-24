@@ -1,5 +1,6 @@
 class GranulesController < ApplicationController
   include GranuleUtils
+  include VariableUtils
 
   around_action :log_execution_time
 
@@ -14,11 +15,9 @@ class GranulesController < ApplicationController
       catalog_response.headers.each do |key, value|
         response.headers[key] = value if key.start_with?('cmr-')
       end
-
-      render json: catalog_response.body, status: catalog_response.status
-    else
-      render json: catalog_response.body, status: catalog_response.status
     end
+
+    render json: catalog_response.body, status: catalog_response.status
   end
 
   def show
@@ -33,50 +32,87 @@ class GranulesController < ApplicationController
 
   def timeline
     catalog_response = echo_client.post_timeline(granule_params_for_request(request), token)
+
     render json: catalog_response.body, status: catalog_response.status
   end
 
   # Action rendered with for the HTML view
   def opendap_urls
-    @collection_id = params[:collection_id]
-    @variable_names = params[:variable_list]
-    @spatial = params[:spatial]
+    @collection_id = params[:collection]
 
-    render 'opendap_urls.html', layout: false
+    # When variables and additional project data aren't readily
+    # available we can send just the project with the collection
+    # to retrieve the details from the stored project
+    if params.key?(:project)
+      @project_id = params[:project]
+      project = Retrieval.find(@project_id)
+      project_params = Rack::Utils.parse_nested_query(project.jsondata['query'])
+
+      @spatial = project_params['bounding_box'] if project_params.key?('bounding_box')
+
+      # Get the location of the collection in the collections list
+      collection_index = project_params['p'].split('!').index(@collection_id)
+
+      # Retrieve the variable concept ids, if any exist
+      collection_variables = project_params.fetch('pg', {}).fetch(collection_index.to_s, {})['variables'] if collection_index
+
+      # OUS expects Variable names, so we'll retrieve them from CMR
+      @variable_names = variable_names({ cmr_format: 'umm_json', concept_id: collection_variables.split('!') }, token).join(',') if collection_variables
+    else
+      # When no project is provided, we expect that the necessary information is provided
+      @variable_names = params[:variable_list]
+      @spatial = params[:spatial]
+    end
+
+    @user = earthdata_username
+    @first_link = fetch_ous_response(
+      collection_id: @collection_id,
+      variable_list: @variable_names,
+      spatial: @spatial
+    ).fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []).first
+
+    if request.format == :text || request.format == 'html'
+      render 'opendap_urls.html', layout: false
+    else
+      render 'prepare_opendap_script.html.erb', layout: false
+    end
   end
 
-  # JSON Endpoint for `opendap_urls` view
-  def fetch_opendap_urls
+  def fetch_ous_response(params)
     granules_params = {
       echo_collection_id: params[:collection_id]
     }
     granules_response = echo_client.get_granules(granules_params, token)
 
-    if granules_response.success?
-      granule_ids = granules_response.body.fetch('feed', {}).fetch('entry', {}).map { |g| g['id'] }
+    return [] unless granules_response.success?
 
-      ous_params = {
-        coverage: granule_ids.join(',')
-      }
+    granule_ids = granules_response.body.fetch('feed', {}).fetch('entry', {}).map { |g| g['id'] }
 
-      if params.key?(:variable_list) && params[:variable_list]
-        ous_params['RangeSubset'] = params[:variable_list]
+    ous_params = {
+      coverage: granule_ids.join(',')
+    }
 
-        if params.key?(:spatial) && params[:spatial]
-          bb = params[:spatial].split(',')
+    if params.key?(:variable_list) && params[:variable_list]
+      ous_params['RangeSubset'] = params[:variable_list]
 
-          # WCS requires that this key be the same so we're adding it as an array
-          # and within the Ous Client we've configured Faraday to use `FlatParamsEncoder`
-          # that will prevent the addition of `[]` at the end of the keys in the url
-          ous_params['subset'] = ["lat(#{bb[1]},#{bb[3]})", "lon(#{bb[0]},#{bb[2]})"]
-        end
+      if params.key?(:spatial) && params[:spatial]
+        bb = params[:spatial].split(',')
+
+        # WCS requires that this key be the same so we're adding it as an array
+        # and within the OUS Client we've configured Faraday to use `FlatParamsEncoder`
+        # that will prevent the addition of `[]` at the end of the keys in the url
+        ous_params['subset'] = ["lat(#{bb[1]},#{bb[3]})", "lon(#{bb[0]},#{bb[2]})"]
       end
-
-      response = ous_client.get_coverage(ous_params)
-      render json: response.body.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []), layout: false
-    else
-      render json: [], layout: false
     end
+
+    ous_client.get_coverage(ous_params).body
+  end
+
+  # JSON Endpoint for `opendap_urls` view
+  def fetch_opendap_urls
+    ous_response = fetch_ous_response(params)
+
+    render json: ous_response.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []), layout: false
   end
 
   def fetch_links
@@ -136,7 +172,6 @@ class GranulesController < ApplicationController
     else
       render json: catalog_response.body, status: catalog_response.status
     end
-
   end
 
   def download
@@ -173,7 +208,6 @@ class GranulesController < ApplicationController
     else
       render 'prepare_script.html.erb', layout: false
     end
-    
   end
 
   private
@@ -182,7 +216,7 @@ class GranulesController < ApplicationController
     catalog_response = echo_client.get_granules(param.merge(page_num: 1), token)
     if catalog_response.success?
       granules = catalog_response.body['feed']['entry']
-      
+
       granules.each do |granule|
         first_info = url_mapper.info_urls_for(granule).first
         return first_info if first_info

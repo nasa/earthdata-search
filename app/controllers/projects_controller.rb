@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  # before_filter :set_env_session
 
   def index
     if current_user.present?
