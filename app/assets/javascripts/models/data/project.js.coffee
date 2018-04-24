@@ -3,7 +3,6 @@
 #= require models/data/collection
 #= require models/data/variables
 
-
 ns = @edsc.models.data
 
 ns.Project = do (ko,
@@ -58,6 +57,9 @@ ns.Project = do (ko,
     '#9B59B6'
   ])
 
+  # Currently supported UMM-S Record Types
+  supportedServiceTypes = ['OPeNDAP', 'WEB SERVICES']
+
   class ProjectCollection
     constructor: (@collection, @meta={}) ->
       @collection.reference()
@@ -67,6 +69,9 @@ ns.Project = do (ko,
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
       @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
       @selectedVariables = ko.observableArray([])
+      @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
+      @expectedUmmService = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
+      @loadingServiceType = ko.observable(false)
 
     _computeIsResetable: ->
       if @granuleAccessOptions().defaults?
@@ -85,14 +90,90 @@ ns.Project = do (ko,
       unless dataSource
         @granuleAccessOptions(hits: 0, methods: [])
         return
+
+      @loadingServiceType(true)
       console.log "Loading granule access options for #{@collection.id}"
       $(document).trigger('dataaccessevent', [@collection.id])
       success = (data) =>
         console.log "Finished loading access options for #{@collection.id}"
         console.log data
+
         @granuleAccessOptions(data)
+
+        # Done loading
+        @loadingServiceType(false)
       retry = => @_loadGranuleAccessOptions
       dataSource.loadAccessOptions(success, retry)
+
+
+    # Based on the fact that we are only supporting two UMM Service types we
+    # can infer which accessMethod the user *should* be choosing for a particular
+    # collection, here we are setting that accessMethod for use within the
+    # customization modals
+    _computeExpectedAccessMethod: =>
+      expectedMethod = null
+      $.each @granuleAccessOptions().methods, (index, accessMethod) =>
+        # For now we're using the first valid/supported UMM Service record found
+        if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
+          expectedMethod = accessMethod
+
+          # A non-false return statemet within jQuery's `.each` will
+          # simply continue rather than return, so we need to set a variable
+          # to null outside of the loop, set the value like we've done above
+          # when the conditional is true, and return false which will exit
+          # the loop
+          return false
+
+      expectedMethod
+
+    # Retrieve the user selected UMM Service from the access method. In the
+    # future this will be set by the user, but for now were just going to
+    # use the first supported UMM Service record as we'll only be assigning
+    # one UMM Service record to each collection. 
+    _computeExpectedUmmService: =>
+      # If we've already determined the expectedAccessMethod we'll just use the
+      # associated UMM Service record, the logic in this method is the same as determining
+      # the expectedAccessMethod
+      return @expectedAccessMethod().umm_service if @expectedAccessMethod()?
+
+      expectedUmmService = null
+      $.each @granuleAccessOptions().methods, (index, accessMethod) =>
+        # For now we're using the first valid/supported UMM Service record found
+        if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
+          expectedUmmService = accessMethod.umm_service
+
+          # A non-false return statement within jQuery's `.each` will
+          # simply continue rather than return, so we need to set a variable
+          # to null outside of the loop, set the value like we've done above
+          # when the conditional is true, and return false which will exit
+          # the loop
+          return false
+
+      expectedUmmService
+
+    launchCustomizationModal: =>
+      modalSuffixesByType = {
+        'OPeNDAP': '-customization-modal',
+        'WEB SERVICES': '-echo-forms-modal'
+      }
+
+      serviceType = @expectedUmmService()?.umm?.Type
+      
+      # Sets the accessMethod for the serviceOptionModel
+      if @serviceOptions.accessMethod().length > 0
+        console.log('Selected ' + @expectedAccessMethod().name + ' for ' + @collection.id)
+
+        # Prevent re-rendering the form if it has previously been selected
+        unless @collection.hasEchoFormLoaded()
+          @serviceOptions.accessMethod()[0].method(@expectedAccessMethod().name)
+          @serviceOptions.accessMethod()[0].renderServiceForm(@collection)
+
+      # Show the modal
+      $('#' + @collection.id + modalSuffixesByType[serviceType]).modal()
+
+      # We're not rendering the form again so if the use had scrolled before
+      # closing the modal we want to reset the modal the next time it's shown
+      $('.echo-forms .modal-body').animate({ scrollTop: (0) }, 0);
 
     findSelectedVariable: (variable) =>
       selectedVariablePosition = @indexOfSelectedVariable(variable)
@@ -117,7 +198,6 @@ ns.Project = do (ko,
       @serviceOptions.fromJson(jsonObj.serviceOptions)
 
     setSelectedVariablesById: (variables) => 
-
       # Retrieve the stored selected variables by concept id and assign
       # them to the project collection
       VariablesModel.forIds variables, {}, (variables) =>
@@ -127,45 +207,6 @@ ns.Project = do (ko,
       return 'Edit Customizations' if @hasSelectedVariables()
 
       'Customize'
-
-    generateDownloadPath: (variable_names, spatial_bounds) =>
-      path = '/granules/opendap_urls?collection_id=' + @collection.id
-
-      if spatial_bounds.length > 0
-         path += '&spatial=' + spatial_bounds
-
-      if variable_names.length > 0
-         path += '&variable_list=' + variable_names
-
-      path
-
-    sendToOusDownloadPage: =>
-      params = deparam(urlUtil.realQuery())
-
-      # Default the bounding box
-      bounding_box = []
-
-      # Pull out the bounding box from the url params if there are any set
-      if params.hasOwnProperty('sb')
-        bounding_box = params.sb
-
-      collectionList = params.p.split('!')
-      metadataLocation = collectionList.indexOf(@collection.id)
-
-      # Default the variable list
-      variable_ids = []
-
-      # Pull out variables from the url params if there are any set
-      if params.hasOwnProperty('pg')
-        if params.pg.length >= metadataLocation
-          variable_ids = params.pg[metadataLocation].uv.split('!')
-
-      # Ping CMR to get the names of the variables because OUS doesnt accept Concept IDs
-      VariablesModel.forIds variable_ids, {}, (variables) =>
-        variables_names = variables.map((v) => v.umm()['Name']).join(',')
-
-        # Navigate to the page that displays the the OUS results
-        window.location.href = @generateDownloadPath(variables_names, bounding_box)
 
     transforms_enabled: ->
       false
@@ -179,7 +220,9 @@ ns.Project = do (ko,
 
       form_hashes = []
       for method in @granuleAccessOptions().methods || []
+        console.log 'method.type: ' + method.type
         for accessMethod in options.accessMethod
+          console.log 'accessMethod.type: ' + accessMethod.type          
           form_hash = {}
           if ((method.id == null || method.id == undefined ) || accessMethod.id == method.id) && accessMethod.type == method.type
             if method.id?
@@ -193,6 +236,7 @@ ns.Project = do (ko,
       params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
       variables: @selectedVariables().map((v) => v.meta()['concept-id']).join('!')
+      selectedService: @expectedUmmService(),
       form_hashes: form_hashes
 
   class Project

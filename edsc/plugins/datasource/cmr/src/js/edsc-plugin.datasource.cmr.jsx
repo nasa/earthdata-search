@@ -81,6 +81,15 @@ export default class CmrDatasourcePlugin {
     }
     return result;
   }
+  opendapLinks(projectId) {
+    let collection = this._collection;
+    let base = urlUtil.fullPath(`/granules/opendap_urls.html?project=${projectId}&collection=${collection.id}`);
+    var result = [
+      {title: "View/Download Data Links", url: base, tooltip: 'View or download data URLs'},
+      {title: "Download Access Script", url: base.replace('.html', '.sh'), tooltip: 'Download executable shell script (requires UNIX environment)'}
+    ];
+    return result;
+  }
   hasQueryConfig() {
     if(this._query == null)
       return false;

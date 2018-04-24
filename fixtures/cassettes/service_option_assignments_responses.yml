@@ -1,4 +1,34 @@
 ---
+7ddfc489c00b314a5e509cb1ee71d1b1c6ac2fd0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 17:27:01 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.469000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 6755129108e23656f73763927ffb8dc97ece82df:
   response:
     status:
@@ -439,6 +469,96 @@ c6021ef25e571be15041bfc1f69d4a9b82ccce30:
       - max-age=31536000; includeSubDomains;
       x-runtime:
       - '1.694000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+8385f92b23532a3a2ae135e6deae222c46942bbd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 18:21:28 GMT
+      etag:
+      - '"8847f2e0fbddfaec642b01180d7b162c"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.556000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '554'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":false,"catalog_item_id":"C1000000029-EDF_OPS","id":"FBDE87A8-5935-36BA-D706-9A06D1947887","service_entry_id":"A6B2D5B4-3A58-3A10-AFF3-BDE67700CCA0","service_option_definition_id":"2882537F-E7FD-3F8B-64E6-57CAF36A9A0D"}},{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000029-EDF_OPS","id":"6DBC6485-51F1-C425-496C-E1AB1648B897","service_entry_id":"2582B150-BA08-A767-3128-F6C66C0362C6","service_option_definition_id":"E96C488E-B713-023E-8CCA-22B45AB0FFEE"}}]'
+    http_version: 
+5443157e5085d036a839ac7527d0f21c6311f24f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 18:22:49 GMT
+      etag:
+      - '"f0038fa38513c127df3205a97c505a59"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.636000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '275'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000969-DEV08","id":"E80371F5-E91F-0C1A-ABF5-384D0E7A9908","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"F431F03F-48FC-3DB3-59C8-9EBA698EBBDF"}}]'
+    http_version: 
+d2c7dcc695b9fef7365f62b6d82cb49d24b1c5de:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 17:26:21 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.596000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:

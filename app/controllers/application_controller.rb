@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ClientUtils
+
   protect_from_forgery
 
   before_filter :refresh_urs_if_needed, except: [:logout, :refresh_token]
@@ -13,47 +15,7 @@ class ApplicationController < ActionController::Base
     last_point || edsc_path(root_url)
   end
 
-
-  # DELETE ME: Portal debug
-  #before_filter :refresh_portals
-  #def refresh_portals
-  #  if Rails.env.development?
-  #    portals = YAML.load_file(Rails.root.join('config/portals.yml'))
-  #    Rails.configuration.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
-  #    Rails.logger.info "REFRESH -> #{Rails.configuration.portals}.inspect"
-  #  end
-  #end
-
   protected
-
-  def echo_client
-    if @echo_client.nil?
-      service_configs = Rails.configuration.services
-      @echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
-    end
-    @echo_client
-  end
-
-  def ous_client
-    if @ous_client.nil?
-      service_configs = Rails.configuration.services
-      @ous_client = Ous::Client.client_for_environment(cmr_env, Rails.configuration.services)
-    end
-    @ous_client
-  end
-
-  def cmr_env
-    @cmr_env = session[:cmr_env] unless session[:cmr_env].nil?
-    @cmr_env ||= request.headers['edsc-echo-env'] || request.query_parameters['cmr_env']
-    if request.query_parameters['cmr_env'] && !(['sit', 'uat', 'prod', 'ops'].include? request.query_parameters['cmr_env'])
-      @cmr_env = Rails.configuration.cmr_env
-    else
-      @cmr_env ||= Rails.configuration.cmr_env || 'prod'
-    end
-    @cmr_env = 'prod' if @cmr_env == 'ops'
-    @cmr_env
-  end
-  helper_method :cmr_env
 
   def set_env_session
     session[:cmr_env] = nil

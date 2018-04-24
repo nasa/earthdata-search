@@ -1,10 +1,13 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false, pending_updates: true do
+describe 'When viewing the project page', reset: false do
   before :all do
     # This collection is specifically configured for this test on SIT. Any changes can
     # and should be made to this test file if needed
     load_page :search, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit
+
+    login
+    wait_for_xhr
 
     # View the project
     click_link('My Project')
@@ -41,44 +44,45 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
 
     context 'When choosing to download a collection' do
       before :all do
-        # Find the collection card to work with
-        collection_card = find('.collection-card', match: :first)
-
-        collection_card.find('.action-button.download').click
-
+        page.find('.download-data').click
         wait_for_xhr
       end
 
       it 'displays a link to download the links' do
-        within_window('Earthdata Search - Download Granule Links') do
-          expect(page).to have_link('Download Links File')
-        end
+        expect(page).to have_link('View/Download Data Links')
       end
 
-      it 'displays OPeNDAP urls returned from OUS' do
-        within_window('Earthdata Search - Download Granule Links') do
-          expect(page).to have_content('Collection granule links have been retrieved')
+      context 'When clicking the View/Download Data Link' do
+        before :all do
+          click_link('View/Download Data Links')
+          wait_for_xhr
         end
-      end
 
-      it 'displays the correct number of links from OUS' do
-        within_window('Earthdata Search - Download Granule Links') do
-          expect(page).to have_css('#links li', count: 2)
+        it 'displays OPeNDAP urls returned from OUS' do
+          within_window('Earthdata Search - Download Granule Links') do
+            expect(page).to have_content('Collection granule links have been retrieved')
+          end
         end
-      end
 
-      it 'displays the selected variables correctly in the query params of each link' do
-        within_window('Earthdata Search - Download Granule Links') do
-          first_link = find('#links li:nth-child(1)')
-          expect(first_link).to have_content('CH4_VMR_D_sdev[*][79:90][209:220]')
-          expect(first_link).to have_content('CH4_VMR_A_sdev[*][79:90][209:220],Latitude[79:90],Longitude[209:220]')
+        it 'displays the correct number of links from OUS' do
+          within_window('Earthdata Search - Download Granule Links') do
+            expect(page).to have_css('#links li', count: 2)
+          end
         end
-      end
 
-      it 'returns the links with the correct format' do
-        within_window('Earthdata Search - Download Granule Links') do
-          first_link = find('#links li:nth-child(1)')
-          expect(first_link).to have_content('.hdf.nc?')
+        it 'displays the selected variables correctly in the query params of each link' do
+          within_window('Earthdata Search - Download Granule Links') do
+            first_link = find('#links li:nth-child(1)')
+            expect(first_link).to have_content('CH4_VMR_D_sdev[*][79:90][209:220]')
+            expect(first_link).to have_content('CH4_VMR_A_sdev[*][79:90][209:220],Latitude[79:90],Longitude[209:220]')
+          end
+        end
+
+        it 'returns the links with the correct format' do
+          within_window('Earthdata Search - Download Granule Links') do
+            first_link = find('#links li:nth-child(1)')
+            expect(first_link).to have_content('.hdf.nc?')
+          end
         end
       end
     end

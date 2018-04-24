@@ -48,7 +48,7 @@
       <h3>Output Formats</h3>
     </div>
     <footer class="project-info-actions">
-
+      <button data-bind="enable: $root.project.allReadyToDownload(), click: $root.downloadProject" href="#" class="download-data"><i class="fa fa-download" aria-hidden="true"></i> Download Data</button>
     </footer>
   </section>
   <section class="project-collections">
@@ -103,19 +103,22 @@
                   <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
                 </span>
                 <!-- /ko -->
+                <!-- <span data-bind="css: {enabled: serviceOptions.readyToDownload}">
+                  <i class="fa fa-check" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Collection is ready to download"></i>
+                </span> -->
               </div>
               <div class="label-secondary" data-bind="fadeVisible: $root.isLoaded">
-                <span>Estimated Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko--></div>
+                <span>Estimated Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko-->
+              </div>
             </div>
           </div>
           <div class="action-container">
-            <a class="action-button customize" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-customization-modal'}"><span data-bind="text: customizeButtonText()"></span></a>
+            <a class="action-button customize" data-toggle="modal" data-bind="click: launchCustomizationModal, css: {enabled: !loadingServiceType()}"><i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: loadingServiceType()"></i><span data-bind="text: customizeButtonText(), visible: !loadingServiceType()"></span></a>
 
             <a class="action-button details" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-modal'}">Details</a>
-
-            <a class="action-button download" href="#" data-bind="click: sendToOusDownloadPage" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
           </div>
           <%= render partial: 'collection_customization_modal' %>
+          <%= render partial: 'echo_forms_modal' %>
           <%= render partial: 'granule_list_modal' %>
         </div>
       <!-- /ko -->
@@ -126,6 +129,13 @@
   </section>
   
   <%= render partial: 'variable_selection_modal' %>
+
+  <form id="data-access" method="POST" action="<%=edsc_path "/data/retrieve"%>" style="display:none;">
+    <div>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <input id="data-access-project" name="project" type="hidden">
+    </div>
+  </form>
 
   <!-- Hidden form for submitting project data for displaying opendap links -->
   <form id="opendap-access" method="POST" action="<%= edsc_path '/granules/fetch_opendap_links' %>" style="display: none;">

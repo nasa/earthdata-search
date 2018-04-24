@@ -1,18 +1,18 @@
 class VariablesController < ApplicationController
+  include VariableUtils
+
   around_action :log_execution_time
 
   respond_to :json
 
   def index
-    # byebug
+    response = retrieve_variables({ cmr_format: 'umm_json' }.merge(params), token)
 
-    cmr_params = {
-      format: 'umm_json'
-    }
+    respond_with(response.body, status: response.status)
+  end
 
-    cmr_params[:concept_id] = params[:concept_id] if params[:concept_id].reject { |c| c.empty? }.any?
-
-    response = echo_client.get_variables(cmr_params, token)
+  def show
+    response = retrieve_variable(params[:id], token)
 
     respond_with(response.body, status: response.status)
   end

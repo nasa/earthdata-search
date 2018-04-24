@@ -248,6 +248,40 @@ http_interactions:
   digest: d01537ac1b980a4377b21fabd637822e936f33b7
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200245793-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Apr 2018 17:27:05 GMT
+  digest: de0e12bccebb5da12d02cb9f31beaaff071428bd
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200252658-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Apr 2018 18:22:30 GMT
+  digest: 8ba8810337047b47a08d780b583523f336eb774e
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=+
     body:
       encoding: US-ASCII
@@ -721,6 +755,19 @@ http_interactions:
   digest: 186ad8f8d0bf8d82cb805125293cbf363e157bfc
 - request:
     method: get
+    uri: https://f5eil01.edn.ecs.nasa.gov/sit/ous?RangeSubset=&coverage=G1200187775-EDF_OPS%2CG1200245955-EDF_OPS&format=nc&subset=lat%28%2C%29&subset=lon%28%2C%29
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+  recorded_at: Tue, 24 Apr 2018 17:59:17 GMT
+  digest: 7d65f2f5a9c35865189082ead0a42f9ecb46fa71
+- request:
+    method: get
     uri: https://f5eil01.edn.ecs.nasa.gov/sit/ous?RangeSubset=CH4_VMR_A_sdev%2CCH4_VMR_D_sdev&coverage=G1200187775-EDF_OPS%2CG1200245955-EDF_OPS&format=nc&subset=lat%280%2C10%29&subset=lon%2830%2C40%29
     body:
       encoding: US-ASCII
@@ -732,6 +779,19 @@ http_interactions:
       - application/json
   recorded_at: Thu, 22 Mar 2018 15:42:26 GMT
   digest: 9aff5cda79ef453d7630461acccdad84b02ebcb8
+- request:
+    method: get
+    uri: https://f5eil01.edn.ecs.nasa.gov/sit/ous?coverage=G1200187775-EDF_OPS%2CG1200245955-EDF_OPS&format=nc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+  recorded_at: Tue, 24 Apr 2018 17:59:16 GMT
+  digest: ba1e662fc1439461d4f41c420d2253aa6f81cc0a
 - request:
     method: get
     uri: https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx

@@ -12,29 +12,48 @@ module Echo
       get('/opensearch')
     end
 
+    ##
+    # Search methods
+    ##
     def get_collections(options = {}, token = nil)
-      format = options.delete(:format) || 'json'
+      format = options.delete('format') || 'json'
       query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
       get("/search/collections.#{format}", query, token_header(token))
     end
 
     def get_variables(options = {}, token = nil)
-      format = options.delete(:format) || 'json'
-
+      format = options.delete('cmr_format') || 'json'
       get("search/variables.#{format}", options, token_header(token))
     end
 
-    def get_service(id, options = {}, token = nil)
-      get("/search/concepts/#{id}", {}, token_header(token))
+    def get_services(options = {}, token = nil)
+      format = options.delete('cmr_format') || 'umm_json'
+      get("/search/services.#{format}", options, token_header(token))
+    end
+
+    ##
+    # Single concept methods
+    ##
+    def get_collection(id, token = nil, format = 'echo10')
+      get_concept(id, token: token, format: format)
+    end
+
+    def get_variable(id, token = nil, format = 'umm_json')
+      get_concept(id, token: token, format: format)
+    end
+
+    def get_service(id, token = nil, format = 'umm_json')
+      get_concept(id, token: token, format: format)
+    end
+
+    # Get a single concept by concept id
+    def get_concept(id, token: nil, format: 'umm_json')
+      get("/search/concepts/#{id}.#{format}", {}, token_header(token))
     end
 
     def json_query_collections(query, token = nil, options = {})
       format = options.delete(:format) || 'json'
       post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))
-    end
-
-    def get_collection(id, token = nil, format = 'echo10')
-      get("/search/concepts/#{id}.#{format}", {}, token_header(token))
     end
 
     def get_granules(options = {}, token = nil)

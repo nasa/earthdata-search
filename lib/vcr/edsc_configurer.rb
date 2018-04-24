@@ -130,15 +130,15 @@ module VCR
             cassette = 'orders'
             opts[:match_requests_on] << :token
             record = :none
-          elsif (request.method == :delete ||
-                 uri.include?('users/current.json') ||
-                 uri.include?('/rest/users.json') ||
-                 uri.include?('/preferences.json') ||
-                 (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
-                 (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
-                 uri.include?('C179002986-ORNL') && !uri.include?('/nlp?') ||
-                 (request.uri.include?('trigger500') && !request.uri.include?('/nlp?')) ||
-                 (request.uri.include?('urs.earthdata.nasa.gov/api')))
+          elsif request.method == :delete ||
+                uri.include?('users/current.json') ||
+                uri.include?('/rest/users.json') ||
+                uri.include?('/preferences.json') ||
+                (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
+                (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
+                uri.include?('C179002986-ORNL') && !uri.include?('/nlp?') ||
+                (request.uri.include?('trigger500') && !request.uri.include?('/nlp?')) ||
+                request.uri.include?('urs.earthdata.nasa.gov/api')
             cassette = 'hand-edited'
             record = :none
           elsif request.uri.include? '/search/granules/timeline.json'
@@ -152,23 +152,23 @@ module VCR
           elsif request.uri.include? '/rest/'
             parts = request.uri.split('/rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
-          elsif (request.uri.include? 'ops/egi/request') && ((request.uri.include? 'nsidc.org') || (request.uri.include?  '152.61.4.111'))
+          elsif (request.uri.include? 'ops/egi/request') && ((request.uri.include? 'nsidc.org') || (request.uri.include? '152.61.4.111'))
             opts[:match_requests_on] = [:method, :parsed_uri, :headers, :esi_request_body]
-            cassette = "hand-edited"
+            cassette = 'hand-edited'
             record = :none
           end
 
           if uri.include?('users/current.json') ||
-              uri.include?('preferences.json') ||
-              uri.include?('C179002986-ORNL')
+             uri.include?('preferences.json') ||
+             uri.include?('C179002986-ORNL')
             opts[:match_requests_on] << :token
           end
 
           record = :all if ENV['record'] && ENV['record'].split(',').include?(cassette)
           opts[:record] = record
 
-          ActiveSupport::Notifications.instrument "edsc.performance", activity: "HTTP Request (#{cassette})", cassette: cassette do
-              VCR.use_cached_cassette(cassette, opts, &request)
+          ActiveSupport::Notifications.instrument 'edsc.performance', activity: "HTTP Request (#{cassette})", cassette: cassette do
+            VCR.use_cached_cassette(cassette, opts, &request)
           end
         end
       end

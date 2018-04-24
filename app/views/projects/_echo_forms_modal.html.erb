@@ -1,0 +1,73 @@
+<div class="modal fade echo-forms" data-bind="attr: {id: collection.id + '-echo-forms-modal'}" role="dialog" tabindex="-1" aria-labelledby="echo-forms-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+
+        <h1 class="modal-title" id="echo-forms-modal-title"><i class="fa fa-cog"></i> Customization Options</h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="access-item-data-quality" data-bind="if: granuleAccessOptions().dqs && granuleAccessOptions().dqs.length > 0">
+          <h4>Quality Information</h4>
+          <!-- ko foreach: granuleAccessOptions().dqs -->
+          <p data-bind="html: data_quality_summary_definition.summary"></p>
+          <!-- /ko -->
+        </div>
+
+        <div class="access-item-options">
+          <!-- ko if: serviceOptions.isLoaded() -->
+            <!-- ko foreach: serviceOptions.accessMethod -->
+                <div data-bind="attr: { value: name, id: 'access-method-' + $parents[0].collection.id, form: 'access-form-' + $parents[0].collection.id, name: $parents[0].collection.id + '-access-method' }"></div>
+                  <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[0].collection.id}"></div>
+                  <div class="access-subset-options" data-bind="if: subsetOptions">
+                    <div class="access-subset-options-section">
+                      <h5>File format</h5>
+                      <!-- ko foreach: subsetOptions().formats -->
+                        <label class="radio-label">
+                          <input data-bind="checked: subsetOptions().formatName, attr: { value: name, name: '0-file-type' }" type="radio" />
+                          <span data-bind="text: name"></span>
+                        </label>
+                      <!-- /ko -->
+                    </div>
+                    <!-- ko if: subsetOptions().format().canSubset -->
+                      <!-- ko if: subsetOptions().config.spatial -->
+                        <div class="access-subset-options-section">
+                          <h5>Spatial subsetting</h5>
+                          <label>
+                            <input data-bind="checked: subsetOptions().subsetToSpatial" type="checkbox" />
+                            <span>Subset to my spatial search area's bounding box</span>
+                          </label>
+                          <div class="access-subset-map" data-bind="mapdisplay: subsetOptions().config.spatial"></div>
+                        </div>
+                      <!-- /ko -->
+                      <div class="access-subset-options-section">
+                        <h5>Parameters</h5>
+                        <!-- ko foreach: subsetOptions().parameters -->
+                          <div class="access-parameter">
+                            <label>
+                              <input data-bind="checked: selected" type="checkbox" />
+                              <span data-bind="text: id"></span>
+                            </label>
+                            <span class="description" data-bind="text: title"></span>
+                          </div>
+                        <!-- /ko -->
+                      </div>
+                    <!-- /ko -->
+                  </div>
+                <!-- </div> -->
+              <!-- /ko -->
+            <!-- /ko -->
+          <!-- /ko -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="action-container">
+          <button class="button secondary" data-dismiss="modal">Done</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1167,6 +1167,100 @@ d01537ac1b980a4377b21fabd637822e936f33b7:
         </body>
         </html>
     http_version: 
+de0e12bccebb5da12d02cb9f31beaaff071428bd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - 9dff565d-ad61-48dd-a665-77b831fc1d11
+      cmr-took:
+      - '34'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 17:26:28 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1111'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"hits":1,"took":33,"items":[{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"bmgttestuser","native-id":"AIRX3STD-OPeNDAP","concept-id":"S1200245793-EDF_OPS","revision-date":"2018-02-26T16:43:33Z","concept-type":"service"},"umm":{"OnlineAccessURLPatternSubstitution":"https://acdisc.gesdisc.eosdis.nasa.gov/opendap/","RelatedURLs":[{"Description":"OPeNDAP
+        Service for AIRX3STD.006","URLContentType":"DistributionURL","Type":"GET SERVICE","Subtype":"OPENDAP
+        DATA","URL":"https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/"}],"Type":"OPeNDAP","ServiceKeywords":[{"ServiceCategory":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTopic":"TRANSFORMATION/REPROJECTION"}],"ServiceOrganizations":[{"Roles":["SERVICE
+        PROVIDER"],"ShortName":"NASA/GESDISC","LongName":"GES DISC SERVICE HELP DESK
+        SUPPORT GROUP","ContactPersons":[{"Roles":["SERVICE PROVIDER"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"gsfc-help-disc
+        at lists.nasa.gov"},{"Type":"Telephone","Value":"301-614-5224"}],"Addresses":[{"StreetAddresses":["Goddard
+        Earth Sciences Data and Information Systems, Attn: User , NASA Goddard Space
+        Flight Center, Code 610.2"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"FirstName":"Mahabaleshwara","MiddleName":"
+        ","LastName":"Hegde"}]}],"ScienceKeywords":[{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        CHEMISTRY","VariableLevel1":"CARBON and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Description":"Access
+        the AIRS/Aqua Level 3 daily standard physical retrieval product (Without HSB)
+        through OPeNDAP","OnlineAccessURLPatternMatch":"https?://acdisc.gesdisc.eosdis.nasa.gov/+data/+s4pa/+","Version":"1.9","Name":"AIRX3STD.006","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"SupportedProjections":["Geographic"],"SupportedFormats":["HDF4","netCDF-3","netCDF-4","Binary","ASCII"]},"LongName":"AIRS/Aqua
+        L3 Daily Standard Physical Retrieval (AIRS+AMSU) 1 degree x 1 degree V006."}}]}'
+    http_version: 
+8ba8810337047b47a08d780b583523f336eb774e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - 20a442a6-24f8-4bca-a0cb-72ee87c537cf
+      cmr-took:
+      - '16'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Tue, 24 Apr 2018 18:22:38 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '933'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"hits":1,"took":15,"items":[{"meta":{"revision-id":3,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"mmt_service_807","concept-id":"S1200252658-DEV08","revision-date":"2018-04-24T18:16:29Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_DEV08 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi_DEV08","GetService":{"MimeType":"application/x-hdf","Protocol":"FTP","FullName":"AE_5DSno.002","DataID":"AE_5DSno.002","DataType":"HDF-EOS"}}],"Type":"WEB
+        SERVICES","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA INTEROPERABILITY","ServiceSpecificTerm":"DATA
+        REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"CRYOSPHERE","Term":"SNOW/ICE","VariableLevel1":"SNOW COVER"}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_DEV08
+        EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_DEV08","Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV08 EOSDIS Service
+        Implementation"}}]}'
+    http_version: 
 7b57cba41ae355a09a1cacded832660d3983b107:
   response:
     status:
@@ -2204,6 +2298,32 @@ d63cb049375aff72da5b367d65d787ce978ec49f:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"trigger500"}'
     http_version: 
+7d65f2f5a9c35865189082ead0a42f9ecb46fa71:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 24 Apr 2018 17:59:17 GMT
+      server:
+      - Apache/2.4.29 (Unix) OpenSSL/1.0.1e-fips mod_jk/1.2.43
+      content-type:
+      - application/json
+      vary:
+      - origin,accept-encoding
+      cache-control:
+      - no-cache
+      content-length:
+      - '348'
+      accept-ranges:
+      - bytes
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"agentResponse": { "downloadUrls": { "downloadUrl": ["https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.09.04.L3.RetStd001.v6.0.9.0.G13208020620.hdf.nc?","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user//FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?"]}}}'
+    http_version: 
 9aff5cda79ef453d7630461acccdad84b02ebcb8:
   response:
     status:
@@ -2229,6 +2349,32 @@ d63cb049375aff72da5b367d65d787ce978ec49f:
     body:
       encoding: UTF-8
       string: '{"agentResponse": { "downloadUrls": { "downloadUrl": ["https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user//FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?CH4_VMR_D_sdev[*][79:90][209:220],CH4_VMR_A_sdev[*][79:90][209:220],Latitude[79:90],Longitude[209:220]","https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.09.04.L3.RetStd001.v6.0.9.0.G13208020620.hdf.nc?CH4_VMR_D_sdev[*][79:90][209:220],CH4_VMR_A_sdev[*][79:90][209:220],Latitude[79:90],Longitude[209:220]"]}}}'
+    http_version: 
+ba1e662fc1439461d4f41c420d2253aa6f81cc0a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 24 Apr 2018 17:59:16 GMT
+      server:
+      - Apache/2.4.29 (Unix) OpenSSL/1.0.1e-fips mod_jk/1.2.43
+      content-type:
+      - application/json
+      vary:
+      - origin,accept-encoding
+      cache-control:
+      - no-cache
+      content-length:
+      - '348'
+      accept-ranges:
+      - bytes
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"agentResponse": { "downloadUrls": { "downloadUrl": ["https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.09.04.L3.RetStd001.v6.0.9.0.G13208020620.hdf.nc?","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user//FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?"]}}}'
     http_version: 
 6bf87a5fa2776e3a7b6c7a5302456300f112e8b3:
   response:

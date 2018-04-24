@@ -36,6 +36,11 @@ $card-background: rgba(235,235,235,1);
     }
   }
 
+  .action-button.customize {
+    min-width: 120px;
+    text-align: center;
+  }
+
   .project-info-sidebar {
     color: #fff;
     width: 300px;
@@ -45,6 +50,30 @@ $card-background: rgba(235,235,235,1);
 
     header {
       padding: 0 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px 20px;
+
+      .download-data {
+        &:hover {
+          border-radius: 2px;
+        }
+        color: #fff;
+        @include gradient-animation(#289152, #217A46, #289152, #289152, .2s);
+
+        width: 100%;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: .9em;
+
+        .fa {
+          color: #0D2D1A;
+          text-shadow: none;
+          margin-right: 10px;
+        }
+      }
     }
   }
 
@@ -347,6 +376,26 @@ $card-background: rgba(235,235,235,1);
         }
       }
     }
+
+    .access-form {
+      border: 0;
+      background: inherit;
+      font-size: .9em;
+
+      .echoforms-control {
+        padding: .7em 0 .5em 0;
+      }
+
+      .jstree-node {
+        border: none;
+        height: inherit;
+        background: inherit;
+      }
+
+      .jstree-children {
+        border: none;
+      }
+    }
   }
 
   .modal-footer {
@@ -358,6 +407,15 @@ $card-background: rgba(235,235,235,1);
       margin: 5px 0 0 0;
       padding: 0;
       display: inline-block;
+    }
+
+    .action-container {
+      text-align: right;
+      background: #fff;
+
+      .action-button {
+        margin-top: 0;
+      }
     }
   }
 
@@ -456,16 +514,6 @@ $card-background: rgba(235,235,235,1);
       }
     }
 
-    .modal-footer {
-      .action-container {
-        text-align: right;
-        background: #fff;
-
-        .action-button {
-          margin-top: 0;
-        }
-      }
-    }
   }
 
   .selected-collection-variables {

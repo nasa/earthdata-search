@@ -19,7 +19,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @subsetToSpatial = ko.observable(true)
 
     serialize: ->
-      result = {format: @formatName()}
+      result = { format: @formatName() }
       if @format()?.canSubset
         result.spatial = @config.spatial if @subsetToSpatial()
         result.parameters = (p.id for p in @parameters when p.selected())
@@ -33,6 +33,8 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @method = ko.observable(method)
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
+
+      # TODO: I don't think this is used
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -61,7 +63,21 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @subsetOptions(null)
         result
 
-    showSpinner: (item, e)=>
+    # Renders the echo form associated with the expectedAccessMethod
+    # for a provided collection
+    renderServiceForm: (collection) =>
+      echoformContainer = $('#' + $('#' + 'access-method-' + collection.id).attr('form'))
+      echoformContainer.empty?() if echoformContainer?
+
+      @loadForm(true)
+      setTimeout (=>
+        ko.applyBindingsToNode(echoformContainer, {echoform: this})
+
+        # Prevents the UI from re-rendering the form and wiping user selections
+        collection.hasEchoFormLoaded(true)
+        @loadForm(false)), 0
+
+    showSpinner: (item, e) =>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
         clickedMethod = m
@@ -117,7 +133,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
             setTimeout (=>
               accessMethodMatched = false
               for echoformContainer in echoformContainers
-                matches = echoformContainer.id.match(/access-form-(.*)-(\d+)/)
+                matches = echoformContainer.id.match(/access-form-(.*)/)
                 if !accessMethodMatched && matches[1] == jsonObj.collection_id && parseInt(matches[2], 10) == index
                   accessMethodMatched = true
                   @loadForm(true) if jsonObj.type == 'service'
@@ -175,16 +191,29 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 
     _computeIsReadyToDownload: ->
+      # Return false if the accessMethods have not finished loading
       return false unless @isLoaded()
-      return true if @granuleAccessOptions().methods?.length == 0
+
+      # Return true if no accessMethods are present
+      if @granuleAccessOptions().methods?.length == 0
+        console.log('Access Methods: ' + @granuleAccessOptions().methods)
+        return true
       
       result = false
       for m in @accessMethod()
+        # If only one accessMethod exists, select it for the user
+        # TODO: This is no longer desireable in E2E Services land
         if @granuleAccessOptions().methods?.length == 1
           m.method(m.availableMethods[0].name)
+
         result = true if (m.isValid() || !m.loadForm()) && m.method()?
+
       if result
+        # The submit button defaults to having a title that informs the user
+        # that they need to select an accessMethod, this clears that when a
+        # valid accessMethod has been selected
         $('.access-submit').prop('title', "");
+
       result
 
     addAccessMethod: =>
