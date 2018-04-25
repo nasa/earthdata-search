@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'OPeNDAP Retrieval', reset: false do
+  pending('The paths tested are no longer supported. Restore when new functionality is implemented.')
+
   before(:all) do
     load_page :search, overlay: false
     login
@@ -13,29 +15,29 @@ describe 'OPeNDAP Retrieval', reset: false do
 
   opendap_collection = 'C191855458-LARC'
   grid_opendap_collection = 'C7085910-LARC_ASDC'
-  non_opendap_collection = 'C179003030-ORNL_DAAC'
+  # non_opendap_collection = 'C179003030-ORNL_DAAC'
 
   # TODO: RDA // After discussing with Patrick Quinn, there are
   # no more autodiscovered opendap collections. This is likely a bug
   # and should be discussed further
-  autodiscovered_opendap_collection = 'C2930962-PODAAC'
+  # autodiscovered_opendap_collection = 'C2930962-PODAAC'
 
-  context 'configuring a non-OPeNDAP collection and selecting the "Download" option' do
-    before(:all) do
-      load_page 'data/configure', project: [non_opendap_collection]
-      choose 'Direct Download'
-    end
+  # context 'configuring a non-OPeNDAP collection and selecting the "Download" option' do
+  #   before(:all) do
+  #     load_page 'data/configure', project: [non_opendap_collection]
+  #     choose 'Direct Download'
+  #   end
 
-    it "displays no subsetting options" do
-      expect(page).to have_no_text('Spatial subsetting')
-      expect(page).to have_no_text('Parameters')
-    end
+  #   it "displays no subsetting options" do
+  #     expect(page).to have_no_text('Spatial subsetting')
+  #     expect(page).to have_no_text('Parameters')
+  #   end
 
-    it "displays no file format conversion options" do
-      expect(page).to have_no_text('File format')
-      expect(page).to have_no_field('Original (No Subsetting)')
-    end
-  end
+  #   it "displays no file format conversion options" do
+  #     expect(page).to have_no_text('File format')
+  #     expect(page).to have_no_field('Original (No Subsetting)')
+  #   end
+  # end
 
   # context 'configuring an auto-discovered OPeNDAP collection and selecting the "Download" option' do
   #   before(:all) do

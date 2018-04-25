@@ -1076,6 +1076,21 @@ http_interactions:
   digest: a35611a0de5c319687770b33c1a41860ca40e906
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon=-114.0556640625%2C37.08984375%2C-114.0380859375%2C41.994140625%2C-119.9970703125%2C41.994140625%2C-119.9970703125%2C38.9970703125%2C-118.5732421875%2C38.00390625%2C-117.1318359375%2C36.94921875%2C-115.8486328125%2C35.9736328125%2C-114.6357421875%2C34.998046875%2C-114.6005859375%2C35.0771484375%2C-114.64453125%2C35.103515625%2C-114.57421875%2C35.138671875%2C-114.5654296875%2C35.1826171875%2C-114.6005859375%2C35.349609375%2C-114.6796875%2C35.4990234375%2C-114.6533203125%2C35.595703125%2C-114.7060546875%2C35.7099609375%2C-114.7060546875%2C35.8154296875%2C-114.6796875%2C35.8857421875%2C-114.732421875%2C35.9384765625%2C-114.732421875%2C36.052734375%2C-114.7587890625%2C36.0791015625%2C-114.6357421875%2C36.140625%2C-114.4423828125%2C36.123046875%2C-114.4072265625%2C36.1494140625%2C-114.328125%2C36.10546875%2C-114.2666015625%2C36.0263671875%2C-114.15234375%2C36.0263671875%2C-114.046875%2C36.193359375%2C-114.046875%2C37.001953125%2C-114.0556640625%2C37.08984375&sort_key%5B%5D=has_granules_or_cwic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 26 Apr 2018 00:29:19 GMT
+  digest: b2091cbbefc08047077c6cf910bdbaea1ee0d9c2
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
