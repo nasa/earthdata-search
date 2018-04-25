@@ -2,59 +2,61 @@ require 'spec_helper'
 # require 'rake'
 
 describe 'Service Options order with bad bounding_box', reset: false do
-  collection_id = 'C190757121-NSIDC_ECS'
-  granule_id = 'G190973506-NSIDC_ECS'
+  pending('The paths tested are no longer supported. Restore when new functionality is implemented.')
 
-  context 'setting bounding box spatial query that will fail' do
-    before :all do
-      Delayed::Worker.delay_jobs = true
+  # collection_id = 'C190757121-NSIDC_ECS'
+  # granule_id = 'G190973506-NSIDC_ECS'
 
-      load_page :search
-      login
+  # context 'setting bounding box spatial query that will fail' do
+  #   before :all do
+  #     Delayed::Worker.delay_jobs = true
 
-      load_page 'data/configure', {focus: collection_id,
-                                   granule_id: granule_id}
+  #     load_page :search
+  #     login
 
-      choose 'Customize Product'
+  #     load_page 'data/configure', {focus: collection_id,
+  #                                  granule_id: granule_id}
 
-      check 'Enter bounding box'
-      wait_for_xhr
+  #     choose 'Customize Product'
 
-      expect(page).to have_checked_field('Enter bounding box')
-      fill_in 'Email Address', with: 'test@email.com'
-      fill_in 'North', with: '10'
-      fill_in 'West', with: '-75'
-      fill_in 'East', with: '-70'
-      fill_in 'South', with: '0'
-      wait_for_xhr
+  #     check 'Enter bounding box'
+  #     wait_for_xhr
 
-      within '.access-item-actions' do
-        click_on 'Continue'
-      end
-      click_on 'Submit'
-      wait_for_xhr
-    end
+  #     expect(page).to have_checked_field('Enter bounding box')
+  #     fill_in 'Email Address', with: 'test@email.com'
+  #     fill_in 'North', with: '10'
+  #     fill_in 'West', with: '-75'
+  #     fill_in 'East', with: '-70'
+  #     fill_in 'South', with: '0'
+  #     wait_for_xhr
 
-    after :all do
-      Delayed::Worker.delay_jobs = false
-    end
+  #     within '.access-item-actions' do
+  #       click_on 'Continue'
+  #     end
+  #     click_on 'Submit'
+  #     wait_for_xhr
+  #   end
 
-    it 'initially shows the order in the "Creating" state' do
-      expect(page).to have_text('Creating')
-    end
+  #   after :all do
+  #     Delayed::Worker.delay_jobs = false
+  #   end
 
-    context 'after the order fails', pending_updates: true do
-      before :all do
-        Delayed::Worker.new(quiet: false).work_off
-      end
+  #   it 'initially shows the order in the "Creating" state' do
+  #     expect(page).to have_text('Creating')
+  #   end
 
-      it 'shows the order in the "Failed" state' do
-        expect(page).to have_text('Failed')
-      end
+  #   context 'after the order fails', pending_updates: true do
+  #     before :all do
+  #       Delayed::Worker.new(quiet: false).work_off
+  #     end
 
-      it 'shows an error message saying the subsetting failed' do
-        expect(page).to have_text('SubsetAreaNotInFile')
-      end
-    end
-  end
+  #     it 'shows the order in the "Failed" state' do
+  #       expect(page).to have_text('Failed')
+  #     end
+
+  #     it 'shows an error message saying the subsetting failed' do
+  #       expect(page).to have_text('SubsetAreaNotInFile')
+  #     end
+  #   end
+  # end
 end

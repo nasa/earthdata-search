@@ -1,52 +1,54 @@
 require 'spec_helper'
 
 describe 'Ordering with deprecated order options', reset: false do
-  orderable_collection_id = 'C179003030-ORNL_DAAC'
-  granule_id = 'G179111301-ORNL_DAAC'
+  pending('The paths tested are no longer supported. Restore when new functionality is implemented.')
 
-  before :all do
-    Capybara.reset_sessions!
-    load_page :search, overlay: false
-    login
-    load_page 'data/configure', {project: [orderable_collection_id],
-                                 granule_id: [granule_id]}
-    wait_for_xhr
-  end
+  # orderable_collection_id = 'C179003030-ORNL_DAAC'
+  # granule_id = 'G179111301-ORNL_DAAC'
 
-  it "displays a radio button 'Stage for Delivery'" do
-    within(:css, '.access-item-selection') do
-      expect(page).to have_text('Stage for Delivery')
-    end
-  end
+  # before :all do
+  #   Capybara.reset_sessions!
+  #   load_page :search, overlay: false
+  #   login
+  #   load_page 'data/configure', {project: [orderable_collection_id],
+  #                                granule_id: [granule_id]}
+  #   wait_for_xhr
+  # end
 
-  it "hides deprecated order options" do
-    within(:css, '.access-item-selection') do
-      expect(page).to have_no_text('Ftp_Pull')
-    end
-  end
+  # it "displays a radio button 'Stage for Delivery'" do
+  #   within(:css, '.access-item-selection') do
+  #     expect(page).to have_text('Stage for Delivery')
+  #   end
+  # end
 
-  context "and proceeding to the retrieval page" do
-    before :all do
-      Delayed::Worker.delay_jobs = true
+  # it "hides deprecated order options" do
+  #   within(:css, '.access-item-selection') do
+  #     expect(page).to have_no_text('Ftp_Pull')
+  #   end
+  # end
 
-      choose "Stage for Delivery"
-      click_on 'Continue'
-      click_on 'Submit'
-      wait_for_xhr
+  # context "and proceeding to the retrieval page" do
+  #   before :all do
+  #     Delayed::Worker.delay_jobs = true
 
-      expect(page).to have_text('Creating')
-    end
+  #     choose "Stage for Delivery"
+  #     click_on 'Continue'
+  #     click_on 'Submit'
+  #     wait_for_xhr
 
-    after :all do
-      Delayed::Worker.delay_jobs = false
-    end
+  #     expect(page).to have_text('Creating')
+  #   end
 
-    it "completes the order without dropping any granules" do
-      expect(Delayed::Worker.new.work_off).to  eq([1, 0])
-      load_page "data/retrieve/#{Retrieval.last.to_param}"
+  #   after :all do
+  #     Delayed::Worker.delay_jobs = false
+  #   end
 
-      expect(page).to have_text('Submitting')
-      expect(page).to have_no_text('The following granules will not be processed')
-    end
-  end
+  #   it "completes the order without dropping any granules" do
+  #     expect(Delayed::Worker.new.work_off).to  eq([1, 0])
+  #     load_page "data/retrieve/#{Retrieval.last.to_param}"
+
+  #     expect(page).to have_text('Submitting')
+  #     expect(page).to have_no_text('The following granules will not be processed')
+  #   end
+  # end
 end

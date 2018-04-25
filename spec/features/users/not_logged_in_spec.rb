@@ -7,13 +7,15 @@ describe 'User not logged in', reset: false do
   end
 
   context 'when a user views the data configure page without being logged in' do
-    before :each do
-      load_page 'data/configure', project: ['C179003030-ORNL_DAAC']
-    end
+    pending('The paths tested are no longer supported. Restore when new functionality is implemented.')
 
-    it "sends them to log in first" do
-      expect(page).to have_content "EOSDIS Earthdata Login"
-    end
+    # before :each do
+    #   load_page 'data/configure', project: ['C179003030-ORNL_DAAC']
+    # end
+
+    # it "sends them to log in first" do
+    #   expect(page).to have_content "EOSDIS Earthdata Login"
+    # end
   end
 
   context 'when a user views the data status page without being logged in' do
