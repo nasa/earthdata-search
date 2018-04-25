@@ -18,12 +18,12 @@
       border-right: 1px solid #e3e3e3;
       width: 75%;
       box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
+      min-height: 95px;
     }
 
     #datasource-caveats {
-      clear: both;
-      font-size: 0.8em;
       padding: 0 20px;
+      color: #aaa;
     }
 
     h2 {
@@ -298,6 +298,7 @@
 
   p.collection-filters {
     display: block;
+    margin-bottom: 5px;
 
     label {
       margin-right: 5px;
@@ -361,6 +362,14 @@
     font-size: 0.8em;
     margin-top: 3px;
     float: right;
+  }
+
+  .remove-from-project {
+    color: #c0392b;
+  }
+
+  .global-action-link {
+    font-size: 0.8em;
   }
 
   .button {

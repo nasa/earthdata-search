@@ -77,12 +77,12 @@ describe "CWIC Granule list", reset: false do
     hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
     it "displays a help button to find out more information about CWIC collections", acceptance: true do
-      expect(page).to have_link("Learn More ...")
+      expect(page).to have_link("More details")
     end
 
     context "clicking on the CWIC help button" do
       before :all do
-        click_on "Learn More ..."
+        click_on "More details"
       end
 
       it "displays additional details about CWIC collections", acceptance: true do
@@ -107,7 +107,7 @@ describe "CWIC Granule list", reset: false do
     hook_granule_results
 
     it "does not display a help button to find out more information about CWIC collections", acceptance: true do
-      expect(page).not_to have_link("Learn More ...")
+      expect(page).not_to have_link("More details")
     end
   end
 end
