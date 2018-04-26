@@ -155,7 +155,7 @@
             <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="global-action-link">
               <i class="fa fa-eye"></i> Visualize all Collections
             </a>
-            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="global-action-link" >
+            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="global-action-link global-action-link-active" >
               <i class="fa fa-eye"></i> Hide Visualization
             </a>
             <button class="button retrieve" data-bind="click: project.exceedCollectionLimit() ? function(){} : $root.ui.projectList.loginAndDownloadProject, css: {'button-disabled': project.exceedCollectionLimit(), retrieve: !project.exceedCollectionLimit()}, attr: {'data-placement': 'bottom', 'data-tooltip': project.exceedCollectionLimit().toString(), 'title': project.exceedCollectionLimit() ? 'Due to significant processing times, orders for this collection are limited to 2000 granules (100 for ASTER Level 3 products). Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download project data'}">
