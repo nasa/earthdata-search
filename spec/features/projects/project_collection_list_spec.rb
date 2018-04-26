@@ -54,7 +54,7 @@ describe "Project collection list", reset: true do
       end
 
       it "highlights all project collections" do
-        expect(project_overview).to have_css('.master-overlay-global-actions a.button-active', count: 1)
+        expect(project_overview).to have_css('.master-overlay-global-actions a.global-action-link-active', count: 1)
       end
 
       it "un-highlights all project collections when clicking the button again" do

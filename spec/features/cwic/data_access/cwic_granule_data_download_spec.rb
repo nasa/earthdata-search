@@ -18,7 +18,7 @@ describe "CWIC-enabled data access", reset: false do
       login
       wait_for_xhr
       view_granule_results(dataset_id)
-      click_button 'Download Data'
+      click_button 'Download'
       wait_for_xhr
     end
 
@@ -35,7 +35,7 @@ describe "CWIC-enabled data access", reset: false do
       login
       wait_for_xhr
       view_granule_results(dataset_id)
-      click_button 'Download Data'
+      click_button 'Download'
       wait_for_xhr
       choose 'Direct Download'
       click_on 'Submit'

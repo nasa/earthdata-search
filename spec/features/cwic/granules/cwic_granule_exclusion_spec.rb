@@ -24,7 +24,7 @@ describe "CWIC-enabled granule results", reset: false do
 
       context "and undoing a removal" do
         before :all do
-          granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
+          granule_list.find('.master-overlay-info').click_link('Filter granules')
           click_link 'Add it back'
         end
 
@@ -56,7 +56,7 @@ describe "CWIC-enabled granule results", reset: false do
       context "and going to data access page" do
         before :all do
           login
-          click_button 'Download Data'
+          click_button 'Download'
           wait_for_xhr
         end
 
