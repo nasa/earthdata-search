@@ -163,7 +163,9 @@ fetch_urls <<'EDSCEOF'
     });
 
     var collection = '<%= @collection_id %>';
-    var project = '<%= @project_id %>';
+    var variables = '<%= @variable_names %>';
+    var spatial = '<%= @spatial %>';
+
 
     function finish() {
       preContent = document.getElementById('script');
@@ -204,7 +206,7 @@ fetch_urls <<'EDSCEOF'
       request.addEventListener("abort", onAbort, false);
     }
 
-    var url = "/granules/fetch_opendap_urls.json?collection_id=" + collection + "&project=" + project;
+    var url = "/granules/fetch_opendap_urls.json?collection_id=" + collection + "&variable_list=" + variables + "&spatial=" + spatial;
     fetchLinks(url);
   })();
 </script>

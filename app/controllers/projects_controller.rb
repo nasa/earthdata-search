@@ -1,6 +1,4 @@
 class ProjectsController < ApplicationController
-  # before_filter :set_env_session
-
   def index
     if current_user.present?
       # TODO PQ EDSC-1038: Include portal information here
