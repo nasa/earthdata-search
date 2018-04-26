@@ -54,7 +54,9 @@ describe 'When viewing the project page with an OPeNDAP supported collection', r
 
       context 'When selecting a keyword to view its assigned variables' do
         before :all do
-          first('#associated-variables a').click
+          within '#associated-variables' do
+            find('li a', match: :first).click
+          end
         end
 
         it 'shows a link to go back to view all keywords' do
