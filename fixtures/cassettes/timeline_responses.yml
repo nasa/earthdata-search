@@ -2105,6 +2105,30 @@ a84533a4947a665638502d8d98378104a480197a:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[573177600,573523200,1]]}]'
     http_version: 
+7e42a67a83c7c7e3a5fd2e1e7112bda1e5e06e6a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4003a1a2-8c1b-43e3-9032-8b4974eaee64
+      date:
+      - Mon, 09 Apr 2018 19:13:33 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '108'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.10278398999E8,556070400,18],[560044800,573523200,6]]}]'
+    http_version: 
 384d92cf966131f7300d4ed398f2ffb40ddfa1b5:
   response:
     status:
@@ -2489,6 +2513,30 @@ b35f4ef1c976d2bf19c093131d556ae745a93997:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
     http_version: 
+f90986486ca9024631f3e14422c79e2a476faf1e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 805a6f6b-6f15-4b37-9379-4802cd8b15a8
+      date:
+      - Mon, 09 Apr 2018 19:01:07 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
 27f145d6ea5b5abaf1ff0fde1135b9b7e4124e66:
   response:
     status:
@@ -2801,6 +2849,30 @@ c31525470cc691ccd1259728674ab6a9d0557c2c:
       encoding: UTF-8
       string: "[]"
     http_version: 
+6265d42c2deb381a5f4ecb7c2f9eaa7ce47289bf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5cd5d6ed-d781-4633-8422-628178620985
+      date:
+      - Mon, 09 Apr 2018 18:59:12 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 619191b0ce26e3da83e580484b1c1335a50386f1:
   response:
     status:
@@ -2813,6 +2885,30 @@ c31525470cc691ccd1259728674ab6a9d0557c2c:
       - 6828b431-27d7-4431-b8d4-f99eb94c9d30
       date:
       - Fri, 23 Feb 2018 17:55:14 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+62170f07e8b4c8a67e06609fc9b2747c0acd9cb4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - a420e2b7-93ad-40e8-8092-07923cf57c7f
+      date:
+      - Mon, 09 Apr 2018 18:59:25 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2957,6 +3053,30 @@ b9a36e6aa09b0192e0b382901f12755fd76a187d:
       - 90ea3edd-491f-40cd-8e93-8dfdf38ecb25
       date:
       - Fri, 23 Feb 2018 17:40:09 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '78'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
+    http_version: 
+8acb0d2da9a4d60708524f370143df34bce61190:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4cbb3f6f-ef12-44b0-9cbf-8dce3d49c1ab
+      date:
+      - Mon, 09 Apr 2018 19:01:03 GMT
       server:
       - nginx
       strict-transport-security:
@@ -4024,37 +4144,6 @@ ef4a818f7f48e160eec387ecc6edfde9d5303d7d:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1454261472,1455753600,5395],[1456617600,1483401600,94018]]}]'
-    http_version: 
-1da38b4dee99d98441d839d3aba9cbafbe84c823:
-  response:
-    status:
-      code: 400
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - 3855584d-d782-41bb-af21-c163701955c1
-      content-type:
-      - application/json
-      date:
-      - Fri, 23 Feb 2018 17:53:23 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '505'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"errors":["The query contained [6] conditions which used a leading
-        wildcard. This is more than the maximum allowed amount of [5]. The CMR allows
-        searching with patterns containing the wildcards * and ?. Patterns which start
-        with a wildcard are expensive to execute so the number of patterns that can
-        be used in one query is limited. If you would like to find alternative ways
-        to query please ask in the CMR Client Developer Forum. https://wiki.earthdata.nasa.gov/display/CMR/CMR+Client+Developer+Forum"]}'
     http_version: 
 32b25fb94817adc2a3afc29f745c7bc32ffbc48d:
   response:

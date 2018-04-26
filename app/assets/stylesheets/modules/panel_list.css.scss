@@ -312,15 +312,15 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   background-color: $gibs;
 }
 
-.badge-subsetting {
-  background-color: $subsetting;
+.badge-customizable {
+  background-color: $customizable;
   &:before {
-    content: "Subsetting";
+    content: "Customizable";
   }
 }
 
-.circle-badge-subsetting {
-  background-color: $subsetting;
+.circle-badge-customizable {
+  background-color: $customizable;
 }
 
 .badge-nrt {
