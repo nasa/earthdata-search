@@ -8,7 +8,7 @@
         <!-- ko with: ui.collectionsList.focused() -->
         <header class="with-options">
           <div class="collection-title-filters">
-            <h2><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">View details</a><!-- /ko --></h2>
+            <h2><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a><!-- /ko --></h2>
             <div id="datasource-caveats"></div>
             <div class="master-overlay-info">
 
@@ -23,7 +23,7 @@
 
               <!-- ko with: collection -->
                 <!-- ko if: has_granules -->
-                <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-show-secondary granule-filter-link" title="Filter granules">Granule filters</a>
+                <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-show-secondary granule-filter-link" title="Filter granules"><i class="fa fa-filter"></i> Granule filters</a>
                 <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-hide-secondary granule-filter-link" title="Hide granule filters">Granule filters</a>
                 <!-- /ko-->
               <!-- /ko-->

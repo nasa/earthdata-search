@@ -16,14 +16,6 @@
     <!-- /ko -->
   </header>
   <div class="master-overlay-info">
-    <p class="panel-list-meta">
-    <% if Rails.configuration.feedback_url.present? %>
-      <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Details', $root.ui.collectionsList.focused().selected().id)" class="button feedback-button">
-        <i class="fa fa-exclamation-circle"></i>
-        Report a metadata problem
-      </a>
-    <% end %>
-    </p>
   </div>
   <!-- /ko -->
 

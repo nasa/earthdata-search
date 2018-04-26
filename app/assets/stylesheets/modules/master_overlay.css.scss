@@ -16,7 +16,7 @@
 
     .collection-title-filters {
       border-right: 1px solid #e3e3e3;
-      width: 75%;
+      width: 72%;
       box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
       min-height: 95px;
     }
@@ -356,7 +356,7 @@
 .master-overlay-global-actions {
   display: inline-block;
   vertical-align: top;
-  width: 23%;
+  width: 26%;
 
   .add-to-project, .remove-from-project {
     font-size: 0.8em;
@@ -396,6 +396,7 @@
     background: #27ae60;
     border: none;
     color: #fff;
+    @include transition(background 0.2s ease-in-out);
 
     &:hover {
       background: #219853;
