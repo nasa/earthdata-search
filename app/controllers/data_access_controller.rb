@@ -385,7 +385,6 @@ class DataAccessController < ApplicationController
 
     # Generally this will end up being a single record
     access_methods = access_methods.map do |option_id, config|
-      Rails.logger.debug option_id
       # Given the order option definition guids retrieved previously, we'll
       # now ask Legacy Services for the full objects which will provide
       # all the details we need to display the appropriate order forms
