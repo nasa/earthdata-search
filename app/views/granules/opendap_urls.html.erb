@@ -74,9 +74,8 @@
       }
     });
 
-    var collection = '<%= @collection_id %>';
-    var variables = '<%= @variable_names %>';
-    var spatial = '<%= @spatial %>';
+    var collection = '<%= @collection %>';
+    var project = '<%= @project %>';
 
     function renderEntry(link) {
       var ul = document.getElementById('links');
@@ -133,7 +132,7 @@
       request.addEventListener("abort", onAbort, false);
     }
 
-    var url = "/granules/fetch_opendap_urls.json?collection_id=" + collection + "&variable_list=" + variables + "&spatial=" + spatial;
+    var url = "/granules/fetch_opendap_urls.json?collection=" + collection + "&project=" + project;
     fetchLinks(url);
   })();
 </script>

@@ -38,38 +38,17 @@ class GranulesController < ApplicationController
 
   # Action rendered with for the HTML view
   def opendap_urls
-    @collection_id = params[:collection]
+    @collection = params[:collection]
+    @project = params[:project]
 
-    # When variables and additional project data aren't readily
-    # available we can send just the project with the collection
-    # to retrieve the details from the stored project
-    if params.key?(:project)
-      @project_id = params[:project]
-      project = Retrieval.find(@project_id)
-      project_params = Rack::Utils.parse_nested_query(project.jsondata['query'])
+    ous_response = fetch_ous_response(params)
 
-      @spatial = project_params['bounding_box'] if project_params.key?('bounding_box')
-
-      # Get the location of the collection in the collections list
-      collection_index = project_params['p'].split('!').index(@collection_id)
-
-      # Retrieve the variable concept ids, if any exist
-      collection_variables = project_params.fetch('pg', {}).fetch(collection_index.to_s, {})['variables'] if collection_index
-
-      # OUS expects Variable names, so we'll retrieve them from CMR
-      @variable_names = variable_names({ cmr_format: 'umm_json', concept_id: collection_variables.split('!') }, token).join(',') if collection_variables
-    else
-      # When no project is provided, we expect that the necessary information is provided
-      @variable_names = params[:variable_list]
-      @spatial = params[:spatial]
-    end
-
+    # Prevent the user from having to type their earthdata username if they use the download script
     @user = earthdata_username
-    @first_link = fetch_ous_response(
-      collection_id: @collection_id,
-      variable_list: @variable_names,
-      spatial: @spatial
-    ).fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []).first
+
+    # To properly construct the download script we need the
+    # first link to ping and ensure its accessible
+    @first_link = ous_response.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []).first
 
     if request.format == :text || request.format == 'html'
       render 'opendap_urls.html', layout: false
@@ -78,40 +57,11 @@ class GranulesController < ApplicationController
     end
   end
 
-  def fetch_ous_response(params)
-    granules_params = {
-      echo_collection_id: params[:collection_id]
-    }
-    granules_response = echo_client.get_granules(granules_params, token)
-
-    return [] unless granules_response.success?
-
-    granule_ids = granules_response.body.fetch('feed', {}).fetch('entry', {}).map { |g| g['id'] }
-
-    ous_params = {
-      coverage: granule_ids.join(',')
-    }
-
-    if params.key?(:variable_list) && params[:variable_list]
-      ous_params['RangeSubset'] = params[:variable_list]
-
-      if params.key?(:spatial) && params[:spatial]
-        bb = params[:spatial].split(',')
-
-        # WCS requires that this key be the same so we're adding it as an array
-        # and within the OUS Client we've configured Faraday to use `FlatParamsEncoder`
-        # that will prevent the addition of `[]` at the end of the keys in the url
-        ous_params['subset'] = ["lat(#{bb[1]},#{bb[3]})", "lon(#{bb[0]},#{bb[2]})"]
-      end
-    end
-
-    ous_client.get_coverage(ous_params).body
-  end
-
   # JSON Endpoint for `opendap_urls` view
   def fetch_opendap_urls
     ous_response = fetch_ous_response(params)
 
+    # TODO: Render errors after OUS is moved to CMR
     render json: ous_response.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []), layout: false
   end
 
