@@ -9,6 +9,10 @@ class ESIClient
     new.get_esi_request(*args)
   end
 
+  def self.get_multi_esi_request(*args)
+    new.get_multi_esi_request(*args)
+  end
+
   def submit_esi_request(collection_id, params, method, request_url, client, token)
     service_url = get_service_url(collection_id, client, token)
 
@@ -31,13 +35,31 @@ class ESIClient
     post(service_url, options)
   end
 
-  def get_esi_request(collection_id, service_order_id, client, token, header_value)
-    service_url = get_service_url(collection_id, client, token)
+  def get_esi_request(collection_id, service_order_id, client, token, header_value, provided_service_url = nil)
+    service_url = provided_service_url || get_service_url(collection_id, client, token)
     get(service_url + '/' + service_order_id.to_s, {}, header_value)
+  end
+
+  def get_multi_esi_request(collection_id, service_order_id, client, token, header_value, provided_service_url = nil)
+    # This endpoint supports multiple requestIds, we'll use the newer format even if only one
+    # id was provided
+    service_order_query_params = Array.wrap(service_order_id).map { |id| "requestId[]=#{id}" }.join('&')
+
+    service_url = provided_service_url || get_service_url(collection_id, client, token)
+
+    get(service_url + '?' + service_order_query_params, {}, header_value)
   end
 
   def connection
     @connection ||= build_connection
+  end
+
+  def get_service_url(collection_id, client, token)
+      service_option_assignment = client.get_service_order_information(collection_id, token).body
+
+      service_entry_id = service_option_assignment[0]['service_option_assignment']['service_entry_id']
+
+      service_url = client.get_service_entry(service_entry_id, token).body['service_entry']['url']
   end
 
   private
@@ -59,13 +81,6 @@ class ESIClient
     end
   end
 
-  def get_service_url(collection_id, client, token)
-      service_option_assignment = client.get_service_order_information(collection_id, token).body
-
-      service_entry_id = service_option_assignment[0]['service_option_assignment']['service_entry_id']
-
-      service_url = client.get_service_entry(service_entry_id, token).body['service_entry']['url']
-  end
 
   def esi_fields
     @esi_fields ||= {}
