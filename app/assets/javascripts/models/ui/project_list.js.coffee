@@ -198,7 +198,7 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
-          # @pollProjectUpdates()
+          @pollProjectUpdates()
           canCancel = ['SUBMITTING', 'QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
             dataset_id: collection.dataset_id
@@ -236,7 +236,7 @@ ns.ProjectList = do (ko
             @project.fromJson(data)
           complete: =>
             shouldPoll = false
-        )), 5000)
+        )), 10000)
         @pollingIntervalId(intervalId)
 
     _computeSubmittedServiceOrders: ->
@@ -247,18 +247,18 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
-          # @pollProjectUpdates()
-          number_processed = m.serviceOptions.number_processed
+          @pollProjectUpdates()
+          total_processed = m.serviceOptions.total_processed
           total_number = m.serviceOptions.total_number
-          percent_done = (number_processed / total_number * 100).toFixed(0)
+          percent_done = (total_processed / total_number * 100).toFixed(0)
 
           serviceOrders.push
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus
             is_in_progress: m.orderStatus != 'creating' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
-            download_urls: m.serviceOptions.download_urls
-            number_processed: m.serviceOptions.number_processed
+            download_urls: m.serviceOptions.download_urls[m.orderId]
+            number_processed: m.serviceOptions.total_processed
             total_number: m.serviceOptions.total_number
             percent_done: percent_done
             percent_done_str: percent_done + '%'

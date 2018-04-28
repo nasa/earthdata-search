@@ -4145,6 +4145,37 @@ ef4a818f7f48e160eec387ecc6edfde9d5303d7d:
       encoding: UTF-8
       string: '[{"concept-id":"C92711294-NSIDC_ECS","intervals":[[1454261472,1455753600,5395],[1456617600,1483401600,94018]]}]'
     http_version: 
+1da38b4dee99d98441d839d3aba9cbafbe84c823:
+  response:
+    status:
+      code: 400
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e8cacc0b-aad9-4ef6-afd6-a08a585b0ca9
+      content-type:
+      - application/json
+      date:
+      - Fri, 27 Apr 2018 15:18:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '505'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"errors":["The query contained [6] conditions which used a leading
+        wildcard. This is more than the maximum allowed amount of [5]. The CMR allows
+        searching with patterns containing the wildcards * and ?. Patterns which start
+        with a wildcard are expensive to execute so the number of patterns that can
+        be used in one query is limited. If you would like to find alternative ways
+        to query please ask in the CMR Client Developer Forum. https://wiki.earthdata.nasa.gov/display/CMR/CMR+Client+Developer+Forum"]}'
+    http_version: 
 32b25fb94817adc2a3afc29f745c7bc32ffbc48d:
   response:
     status:

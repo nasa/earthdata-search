@@ -35,6 +35,8 @@ group :test do
 end
 
 group :development do
+  gem 'byebug'
+  
   gem 'quiet_assets'
 
   # For dumping additional metadata stored in DatasetExtras and similar
