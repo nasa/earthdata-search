@@ -70,7 +70,7 @@ describe 'Services Access', reset: false, pending_updates: true do
         click_on 'Submit'
 
         # Second time, the ESI form is now prepopulated
-        click_link 'Back to Data Access Options'
+        click_link 'Back to Project'
         wait_for_xhr
         click_on 'Continue'
         click_on 'Submit'
