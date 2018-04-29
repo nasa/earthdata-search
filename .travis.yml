@@ -7,15 +7,15 @@ cache:
 sudo: required
 # Uncomment to have screenshots dumped to S3
 # You will need to provide S3 information to travis as we do not have one for EDSC
-# addons:
-#   artifacts:
-#     debug: true
-#     paths:
-#       - capybara
-#     target_paths: $TRAVIS_BUILD_NUMBER
-#     working_dir: tmp/
-#     bucket: $ARTIFACTS_BUCKET
-#     s3_region: us-east-1
+addons:
+  artifacts:
+    debug: true
+    paths:
+      - capybara
+    target_paths: $TRAVIS_BUILD_NUMBER
+    working_dir: tmp/
+    bucket: $ARTIFACTS_BUCKET
+    s3_region: us-east-1
 
 # https://blog.travis-ci.com/2017-08-29-trusty-image-updates
 # group: deprecated-2017Q3
