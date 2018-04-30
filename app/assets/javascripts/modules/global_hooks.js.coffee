@@ -66,11 +66,15 @@ do (document
       map.on 'basemapchange', (e) ->
         metrics.createMapEvent("Set Base Map: #{e.name}")
 
-      map.on 'overlayschange', (e) ->
-        overlays = e.overlays
-        names = (name.split('*')[0] for name in overlays)
-        if names.length > 0
-          metrics.createMapEvent("Set Overlays: #{names.join(', ')}")
+      # Commenting out the following lines due to quota limits that we were
+      # hitting in Google Analytics. In the meantime, we need to run down
+      # any sort of requirements or reports that indicate we need to track
+      # these interactions. Otherwise, this doesn't really provide any value.
+      # map.on 'overlayschange', (e) ->
+      #   overlays = e.overlays
+      #   names = (name.split('*')[0] for name in overlays)
+      #   if names.length > 0
+      #     metrics.createMapEvent("Set Overlays: #{names.join(', ')}")
 
       map.on 'spatialtoolchange', (e) ->
         metrics.createMapEvent("Spatial: #{e.name}")
