@@ -258,7 +258,7 @@ ns.ProjectList = do (ko
             order_status: m.orderStatus
             is_in_progress: m.orderStatus != 'creating' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
             download_urls: m.serviceOptions.download_urls[m.orderId]
-            number_processed: m.serviceOptions.total_processed
+            total_processed: m.serviceOptions.total_processed
             total_number: m.serviceOptions.total_number
             percent_done: percent_done
             percent_done_str: percent_done + '%'
