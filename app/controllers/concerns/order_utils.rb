@@ -80,17 +80,19 @@ module OrderUtils
       else
         # We have to do a bit of hydration here on the response in order to make
         # it look like the pre-existing response.
-        successes = Array.wrap(multi_response.fetch('agentMultiResponse', {}).fetch('agentResponse', {})).map do |valid_multi_response|
+        successful_responses = multi_response.fetch('agentMultiResponse', {}).fetch('agentResponse', {})
+        successes = Array.wrap(successful_responses).map do |valid_multi_response|
           { 'agentResponse' => valid_multi_response }
-        end
+        end unless successful_responses.empty?
 
         # We have to take into account the possibility of one or more orders failing
-        errors = Array.wrap(multi_response.fetch('agentMultiResponse', {}).fetch('Exception', {})).map do |invalid_multi_response|
+        failed_responses = multi_response.fetch('agentMultiResponse', {}).fetch('Exception', {})
+        errors = Array.wrap(failed_responses).map do |invalid_multi_response|
           { 'Exception' => invalid_multi_response }
-        end
+        end unless failed_responses.empty?
 
         # Return both cases and we'll handle them below
-        successes + errors
+        (successes || []) + (errors || [])
       end
     end
   end
