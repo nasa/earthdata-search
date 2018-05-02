@@ -34,7 +34,8 @@ describe 'CWIC-enabled granule results', reset: false do
         end
       end
 
-      context 'and updating the query' do
+      # If the above test runs before this test, this test will fail
+      context 'and updating the query', pending_updates: true do
         before :all do
           visit current_url
           wait_for_xhr
@@ -83,6 +84,7 @@ describe 'CWIC-enabled granule results', reset: false do
 
           it 'provides a list of download links for the remaining granules' do
             within_last_window do
+              wait_for_xhr
               expect(page).to have_no_text('Loading more...')
               expect(page).to have_link('Granule download URL', count: 99)
             end
