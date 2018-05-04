@@ -45,8 +45,8 @@ describe 'When viewing the project page with more than one collection', reset: f
         collection_card.find('.remove').click
       end
 
-      it 'redirects the user back to the search page' do
-        expect(page.current_url).to include('/search')
+      it 'displays an appropriate message to the user' do
+        expect(page).to have_content('Your project is empty. Click here to return to search and add collections to your project.')
       end
     end
   end

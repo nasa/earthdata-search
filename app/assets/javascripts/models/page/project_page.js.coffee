@@ -157,6 +157,8 @@ ns.ProjectPage = do (ko,
         @isLoaded(true) if loadedCollectionNum == @project.collections?().length
 
         {projectGranules: projectGranules, projectSize: @_convertSize(projectSize)}
+      else
+        null
 
     _convertSize: (_size) ->
       _units = ['MB', 'GB', 'TB', 'PB', 'EB']
@@ -194,7 +196,7 @@ ns.ProjectPage = do (ko,
 
       # If the project is empty, send the user back to the search page
       if @project.collections?().length == 0
-        @project.backToSearch()
+        $('#project-empty-notice').show()
 
   current = new ProjectPage()
   setCurrent(current)

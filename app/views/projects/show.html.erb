@@ -58,6 +58,7 @@
     </div>
     <div class="project-stats">
       <ul data-bind="fadeVisible: isLoaded">
+        <!-- ko if: project.collections().length > 0 -->
         <li class="granule-count">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
           <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
@@ -73,10 +74,16 @@
             <a class="info" href="#" data-container="#info-container" data-tooltip="true" data-placement="right" data-title="This is the estimated overall size of your project. If no size information exists in a granule's metadata, it will not be included in this number. The size is estimated based upon the first 20 granules added to your project from each collection."><i class="fa fa-info-circle" aria-hidden="true"></i></a>
           </span>
         </li>
+        <!-- /ko -->
       </ul>
     </div>
+    
     <div class="project-collection-cards">
-      <!-- ko foreach: project.collections()-->
+      <!-- ko if: project.collections().length == 0 -->
+      <p class="empty-copy" id="project-empty-notice">Your project is empty. <a href="#" data-bind="click: project.backToSearch">Click here</a> to return to search and add collections to your project.</p>
+      <!-- /ko -->
+
+      <!-- ko foreach: project.collections() -->
         <div class="collection-card">
           <div class="collection-card-content">
             <h3 data-bind="text: collection.truncatedTitle, attr: {title: collection.title}"></h3>
