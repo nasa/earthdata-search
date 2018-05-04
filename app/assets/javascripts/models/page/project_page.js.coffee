@@ -194,7 +194,7 @@ ns.ProjectPage = do (ko,
 
       console.log('Collection removed from project, ' + @project.collections?().length + ' collection(s) remaining.')
 
-      # If the project is empty, send the user back to the search page
+      # If the project is empty, display an appropriate notice to the user
       if @project.collections?().length == 0
         $('#project-empty-notice').show()
 
