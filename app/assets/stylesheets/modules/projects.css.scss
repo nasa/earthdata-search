@@ -524,11 +524,11 @@ $card-background: rgba(235,235,235,1);
     margin-bottom: 0;
   }
 
-  p.empty-copy {
+  #project-empty-notice {
     display: none;
     font-size: 1.3em;
     font-style: italic;
-    color: rgba(0,0,0,0.5);
+    color: darken($light-grey, 20%);
     margin: 0 auto;
     padding-top: 3em;
   }
