@@ -186,6 +186,16 @@ ns.ProjectPage = do (ko,
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()
 
+    removeProjectCollection: (projectCollection) =>
+      @project.removeCollection(projectCollection.collection)
+      $(window).trigger('edsc.save_workspace')
+
+      console.log('Collection removed from project, ' + @project.collections?().length + ' collection(s) remaining.')
+
+      # If the project is empty, send the user back to the search page
+      if @project.collections?().length == 0
+        @project.backToSearch()
+
   current = new ProjectPage()
   setCurrent(current)
 

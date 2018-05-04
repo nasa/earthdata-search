@@ -44,9 +44,9 @@ describe 'Service options order with boundingbox1 field', reset: false do
     context 'placing a service order with a collection with a boundingbox1 field' do
       before :all do
         within '.access-item-actions' do
-          # sleep 2
           click_on 'Continue'
         end
+        
         click_on 'Submit'
         wait_for_xhr
       end
