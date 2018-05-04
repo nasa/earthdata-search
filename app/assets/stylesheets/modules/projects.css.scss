@@ -153,10 +153,6 @@ $card-background: rgba(235,235,235,1);
       padding: 20px;
     }
 
-    ul {
-      border-bottom: 1px solid #ccc;
-    }
-
     .project-collection-cards {
       display: flex;
       flex-wrap: wrap;
@@ -526,5 +522,14 @@ $card-background: rgba(235,235,235,1);
   .selected-collection-variables {
     margin-top: 0;
     margin-bottom: 0;
+  }
+
+  p.empty-copy {
+    display: none;
+    font-size: 1.3em;
+    font-style: italic;
+    color: rgba(0,0,0,0.5);
+    margin: 0 auto;
+    padding-top: 3em;
   }
 }
