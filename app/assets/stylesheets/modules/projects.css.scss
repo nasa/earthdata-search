@@ -41,6 +41,15 @@ $card-background: rgba(235,235,235,1);
     text-align: center;
   }
 
+  .action-button.remove {
+    margin-right: 8px;
+    float: right;
+
+    .fa {
+      color: #c0392b;
+    }
+  }
+
   .project-info-sidebar {
     color: #fff;
     width: 300px;

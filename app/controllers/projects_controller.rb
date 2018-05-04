@@ -1,20 +1,20 @@
 class ProjectsController < ApplicationController
   def index
     if current_user.present?
-      # TODO PQ EDSC-1038: Include portal information here
+      # TODO: PQ EDSC-1038: Include portal information here
       user_id = current_user.id
-      @projects = Project.where("user_id = ? AND name != ?", user_id, '')
+      @projects = Project.where('user_id = ? AND name != ?', user_id, '')
     else
       redirect_to edsc_path(root_url)
     end
   end
 
   def show
-    if params[:id].nil?
-      @project = Project.find(params[:projectId].to_i)
-    else
-      @project = Project.find(params[:id])
-    end
+    @project = if params[:id].nil?
+                 Project.find(params[:projectId].to_i)
+               else
+                 Project.find(params[:id])
+               end
 
     if current_user.present? && current_user.id == @project.user_id
       respond_to do |format|
@@ -29,6 +29,7 @@ class ProjectsController < ApplicationController
         new_project.user_id = current_user.id if current_user
         new_project.save!
         @project = new_project.dup
+
         respond_to do |format|
           format.html { @project }
           format.json { render json: @project, status: :ok }
@@ -52,8 +53,9 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    # TODO PQ EDSC-1038: Save portal information here
+    # TODO: PQ EDSC-1038: Save portal information here
     id = params[:id].presence
+
     begin
       project = Project.find(params[:id]) if id
     rescue ActiveRecord::RecordNotFound => e
@@ -63,11 +65,13 @@ class ProjectsController < ApplicationController
     project.name = params[:workspace_name] if params[:workspace_name]
     project.user_id = current_user.id if current_user
     project.save!
-    render :text => project.to_param
+
+    render text: project.to_param
   end
 
   def remove
     project = Project.find(params[:project_id])
+
     render json: project.destroy, status: :ok
   end
 
@@ -78,6 +82,7 @@ class ProjectsController < ApplicationController
     @project.name = params[:workspace_name] if params[:workspace_name]
     @project.user_id = current_user.id if current_user
     @project.save!
+
     render 'show'
   end
 end

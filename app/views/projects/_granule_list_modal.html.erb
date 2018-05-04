@@ -6,6 +6,7 @@
         <h1 class="modal-title" id="granule-list-modal-title">Collection Details</h1>
       </div>
       <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
+        <!-- ko if: collection.granuleDatasource() -->
         <!-- ko if: collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
         <p class="undo">Granule excluded. <a href="#" data-bind="click: collection.granuleDatasource().data().undoExclude">Undo</a></p>
         <!-- /ko -->
@@ -24,6 +25,7 @@
             </div>
           </li>
         </ul>
+        <!-- /ko -->
       </div>
     </div>
   </div>
