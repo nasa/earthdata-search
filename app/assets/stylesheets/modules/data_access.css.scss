@@ -1,8 +1,19 @@
 .data-access {
-  height: 100%;
   color: #888;
   padding-bottom: 70px;
   padding-top: 35px;
+
+  // TL: Temporarily flattening buttons only on this page.
+  a.text-button,
+  button {
+    background-image: none;
+    text-shadow: none;
+
+    &:hover {
+      background-image: none;
+      text-shadow: none;
+    }
+  }
 
   h1 {
     border-bottom: 1px solid #333;
@@ -72,6 +83,7 @@
 
   .link {
     text-decoration: underline;
+    word-wrap: break-word;
   }
 
   ol.data-access-content {
@@ -170,6 +182,9 @@ section.data-access-next {
   }
 }
 
+.data-access-content-title {
+  margin-top: 2em;
+}
 
 .data-access-collections-config {
   color: #333;
@@ -192,7 +207,27 @@ section.data-access-next {
 
 .data-access-collections-list {
   list-style-type: disc;
-  padding-left: 2em;
+  margin-left: 2em;
+}
+
+.data-access-collections-list-panel {
+  list-style-type: none;
+  margin: 0;
+
+  .data-access-collection {
+    border: 1px solid #bbb;
+    border-left: 5px solid $status-badge-default;
+    border-radius: 3px;
+    padding: 1em;
+
+    &.closed, &.complete {
+      border-left: 5px solid $status-badge-success;
+    }
+
+    &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+      border-left: 5px solid $status-badge-failure;
+    }
+  }
 }
 
 .data-access-collection {
@@ -200,23 +235,121 @@ section.data-access-next {
 }
 
 .data-access-collection-name {
+  display: inline-block;
   font-size:1.2em;
   font-weight: bold;
-  margin: .5em 0;
+  margin: 0;
+}
+
+.data-access-collection-body {
+  margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.data-access-collection-state {
+  width: 15%;
+  margin-top: 0.16em;
+  padding: .55em;
+  background: $status-badge-default;
+  border-radius: 2px;
+  vertical-align: top;
+  color: #fff;
+  text-align: center;
+  text-transform: capitalize;
+
+  &.closed, &.complete {
+    background: $status-badge-success;
+  }
+
+  &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+    background: $status-badge-failure;
+  }
+}
+
+.data-access-collection-state-text {
+  width: 83%;
+  margin-left: 1.5%;
+
+  p {
+    margin: 0;
+  }
 }
 
 .data-access-collection-actions {
-  margin: .5em 0;
+  margin: 0.75em 0 0;
 
   a.text-button {
-    margin-bottom: .3em;
+    margin-bottom: 0.3em;
+  }
+}
+
+.data-access-collection-est {
+  margin-right: 1em;
+  font-size: 1.15em;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.data-access-collection-percentage {
+  font-weight: 400;
+}
+
+.data-access-collection-contact {
+  margin-top: 1.5em;
+  font-size: 0.85em;
+  color: #888;
+}
+
+.data-access-services-orders {
+  list-style: none;
+  margin: 1em 0 0;
+  max-height: 385px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.data-access-services-order {
+  margin-top: 1em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  .progress {
+    margin-bottom: 0;
+  }
+}
+
+.data-access-order-id {
+  margin: 0;
+  font-size: 0.85em;
+  font-weight: 400;
+  color: #888;
+}
+
+.data-access-order-status {
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 0.05em .45em;
+  background: $status-badge-default;
+  border-radius: 2px;
+  font-size: 0.85em;
+  color: #fff;
+  text-align: center;
+  text-transform: capitalize;
+
+  &.closed, &.complete {
+    background: $status-badge-success;
+  }
+
+  &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+    background: $status-badge-failure;
   }
 }
 
 .access-error-wrap {
-  background-color: $light-grey;
-  padding: 0.5em;
-  border-radius: 2px;
+  margin-top: 1em;
 }
 
 .access-error-code {
@@ -411,22 +544,6 @@ section.data-access-next {
   white-space: nowrap;
 }
 
-.order-state {
-  background: #34495e;
-  padding: .3em .6em;
-  border-radius: 2px;
-  color: #fff;
-  text-transform: capitalize;
-
-  &.closed, &.complete {
-    background: #27ae60;
-  }
-
-  &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-    background: #e74c3c;
-  }
-}
-
 .access-subset-options {
   padding: 1em;
 
@@ -473,6 +590,11 @@ section.data-access-next {
 
 .data-access-services-links {
   margin-left: 30px;
+}
+
+.progress {
+  margin-top: 0.325em;
+  border: 1px solid #e0e0e0;
 }
 
 .progress-bar {

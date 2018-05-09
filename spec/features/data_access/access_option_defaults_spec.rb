@@ -98,7 +98,7 @@ describe "Access Option Defaults", reset: true do
       click_on 'Continue'
       click_on 'Submit'
       wait_for_xhr
-      expect(page).to have_content('The following collections are being processed')
+      expect(page).to have_content('When the data for the following orders becomes available')
       expect(page).to have_content(collection_title)
 
       load_page 'data/configure', page_options
@@ -152,7 +152,7 @@ describe "Access Option Defaults", reset: true do
 
       click_on 'Continue'
       click_on 'Submit'
-      expect(page).to have_content('The following collections are being processed')
+      expect(page).to have_content('When the data for the following orders becomes available')
 
       load_page 'data/configure', page_options
       wait_for_xhr
@@ -164,7 +164,7 @@ describe "Access Option Defaults", reset: true do
       click_on 'Submit'
       wait_for_xhr
       expect(page).to have_link('View/Download Data Links')
-      expect(page).to have_no_content('The following collections are being processed')
+      expect(page).to have_no_content('When the data for the following orders becomes available')
 
       load_page 'data/configure', page_options
       wait_for_xhr

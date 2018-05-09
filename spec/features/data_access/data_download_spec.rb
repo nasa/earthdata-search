@@ -28,7 +28,7 @@ describe "Data download page", reset: false do
   browseable_collection_params = {project: [browseable_collection_id],
                                temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
 
-  
+
 
   before(:all) do
     AccessConfiguration.destroy_all
@@ -229,7 +229,7 @@ describe "Data download page", reset: false do
     end
 
     it "displays information on using direct download" do
-      expect(page).to have_content('The following collections are available for immediate download')
+      expect(page).to have_content('Click the "View/Download Data Links" button to view or download a file containing links to your data.')
       expect(page).to have_content(downloadable_collection_title)
     end
 
@@ -310,7 +310,7 @@ describe "Data download page", reset: false do
     end
 
     it "displays information on obtaining data asynchronously" do
-      expect(page).to have_content('The following collections are being processed')
+      expect(page).to have_content('When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.')
       expect(page).to have_content(orderable_collection_title)
     end
 

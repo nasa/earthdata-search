@@ -102,7 +102,7 @@ module OrderUtils
 
     service_orders.each do |s|
       s['order_status'] = 'creating'
-      
+
       s['service_options'] = {
         'total_orders': 0,      # Number of total orders within the collection
         'total_complete': 0,    # Number of orders that have completed processing
@@ -118,7 +118,7 @@ module OrderUtils
 
         next
       end
-        
+
       next unless s['collection_id']
 
       response_json = get_normalized_esi_response(s['collection_id'], Array.wrap(s['order_id']), echo_client, token)
@@ -131,7 +131,7 @@ module OrderUtils
         service_order = {
           'download_urls': []
         }
-        
+
         # If an appropriate response was received
         if order_response['agentResponse']
 
@@ -178,6 +178,9 @@ module OrderUtils
         service_order['order_status'] = status['status']
         s['service_options']['orders'] << service_order
       end
+      s['order_status'] = 'in progress' unless s['service_options']['orders'].any? { |o| o['order_status'] == 'creating' }
+      s['order_status'] = 'failed' if s['service_options']['orders'].all? { |o| o['order_status'] == 'failed' }
+      s['order_status'] = 'complete' if s['service_options']['orders'].all? { |o| o['order_status'] == 'complete' || o['order_status'] == 'complete_with_errors' }
     end
   end
 end

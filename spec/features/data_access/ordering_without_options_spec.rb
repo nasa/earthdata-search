@@ -23,7 +23,7 @@ describe 'Ordering without order options', reset: false do
   end
 
   it "displays information on obtaining data asynchronously" do
-    expect(page).to have_content('The following collections are being processed')
+    expect(page).to have_content('When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.')
     expect(page).to have_content(orderable_collection_title)
   end
 
