@@ -30,7 +30,6 @@ ns.AccessPage = do (ko,
                     ) ->
 
   class AccessPage
-
     constructor: ->
       @query = new QueryModel()
       @project = new ProjectModel(@query, false)

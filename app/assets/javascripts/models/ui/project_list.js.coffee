@@ -342,19 +342,22 @@ ns.ProjectList = do (ko
     hideRelatedUrls: ->
       $('#related-urls-modal').modal('hide')
 
-    toggleMoreDetails: (data) =>
-      if data.collection_id not in @moreDetailsActive()
-        @moreDetailsActive.push(data.collection_id)
+    toggleMoreDetails: (collection_data) =>
+      if collection_data.collection_id not in @moreDetailsActive()
+        @moreDetailsActive.push(collection_data.collection_id)
       else
-        @moreDetailsActive.splice(@moreDetailsActive().indexOf(data.collection_id), 1)
+        @moreDetailsActive.splice(@moreDetailsActive().indexOf(collection_data.collection_id), 1)
 
-    toggleViewDownloads: (data) =>
-      if data.collection_id not in @downloadLinksActive()
-        @downloadLinksActive.push(data.collection_id)
+    toggleViewDownloads: (collection_data) =>
+      if collection_data.collection_id not in @downloadLinksActive()
+        @downloadLinksActive.push(collection_data.collection_id)
       else
-        @downloadLinksActive.splice(@downloadLinksActive().indexOf(data.collection_id), 1)
+        @downloadLinksActive.splice(@downloadLinksActive().indexOf(collection_data.collection_id), 1)
 
     orderStatusToClassName: (status) ->
       status.replace(' ', '-')
+
+    getPageURL: ->
+      window.location.href.replace(window.location.search, '')
 
   exports = ProjectList

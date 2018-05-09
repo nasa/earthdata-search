@@ -3,6 +3,18 @@
   padding-bottom: 70px;
   padding-top: 35px;
 
+  // TL: Temporarily flattening buttons only on this page.
+  a.text-button,
+  button {
+    background-image: none;
+    text-shadow: none;
+
+    &:hover {
+      background-image: none;
+      text-shadow: none;
+    }
+  }
+
   h1 {
     border-bottom: 1px solid #333;
     padding: 0 0 .2em 0;
@@ -170,6 +182,9 @@ section.data-access-next {
   }
 }
 
+.data-access-content-title {
+  margin-top: 2em;
+}
 
 .data-access-collections-config {
   color: #333;
@@ -196,22 +211,21 @@ section.data-access-next {
 }
 
 .data-access-collections-list-panel {
-
   list-style-type: none;
   margin: 0;
 
   .data-access-collection {
     border: 1px solid #bbb;
-    border-left: 5px solid #34495e;
+    border-left: 5px solid $status-badge-default;
     border-radius: 3px;
     padding: 1em;
 
     &.closed, &.complete {
-      border-left: 5px solid #27ae60;
+      border-left: 5px solid $status-badge-success;
     }
 
     &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-      border-left: 5px solid #e74c3c;
+      border-left: 5px solid $status-badge-failure;
     }
   }
 }
@@ -237,7 +251,7 @@ section.data-access-next {
   width: 15%;
   margin-top: 0.16em;
   padding: .55em;
-  background: #34495e;
+  background: $status-badge-default;
   border-radius: 2px;
   vertical-align: top;
   color: #fff;
@@ -245,11 +259,11 @@ section.data-access-next {
   text-transform: capitalize;
 
   &.closed, &.complete {
-    background: #27ae60;
+    background: $status-badge-success;
   }
 
   &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-    background: #e74c3c;
+    background: $status-badge-failure;
   }
 }
 
@@ -263,10 +277,10 @@ section.data-access-next {
 }
 
 .data-access-collection-actions {
-  margin: .75em 0 0;
+  margin: 0.75em 0 0;
 
   a.text-button {
-    margin-bottom: .3em;
+    margin-bottom: 0.3em;
   }
 }
 
@@ -296,7 +310,6 @@ section.data-access-next {
 }
 
 .data-access-services-order {
-
   margin-top: 1em;
 
   &:first-child {
@@ -319,19 +332,19 @@ section.data-access-next {
   display: inline-block;
   margin-right: 0.5em;
   padding: 0.05em .45em;
-  background: #34495e;
+  background: $status-badge-default;
   border-radius: 2px;
-  font-size: .85em;
+  font-size: 0.85em;
   color: #fff;
   text-align: center;
   text-transform: capitalize;
 
   &.closed, &.complete {
-    background: #27ae60;
+    background: $status-badge-success;
   }
 
   &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-    background: #e74c3c;
+    background: $status-badge-failure;
   }
 }
 
@@ -529,22 +542,6 @@ section.data-access-next {
 
 .data-retrieval-time-ago {
   white-space: nowrap;
-}
-
-.order-state {
-  background: #34495e;
-  padding: .3em .6em;
-  border-radius: 2px;
-  color: #fff;
-  text-transform: capitalize;
-
-  &.closed, &.complete {
-    background: #27ae60;
-  }
-
-  &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-    background: #e74c3c;
-  }
 }
 
 .access-subset-options {
