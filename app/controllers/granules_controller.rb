@@ -48,7 +48,7 @@ class GranulesController < ApplicationController
 
     # To properly construct the download script we need the
     # first link to ping and ensure its accessible
-    @first_link = ous_response.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []).first
+    @first_link = ous_response.fetch('items', []).first
 
     if request.format == :text || request.format == 'html'
       render 'opendap_urls.html', layout: false
@@ -61,8 +61,8 @@ class GranulesController < ApplicationController
   def fetch_opendap_urls
     ous_response = fetch_ous_response(params)
 
-    # TODO: Render errors after OUS is moved to CMR
-    render json: ous_response.fetch('agentResponse', {}).fetch('downloadUrls', {}).fetch('downloadUrl', []), layout: false
+    # TODO: Render errors after OUS is moved to CMR and supports error responses
+    render json: ous_response.fetch('items', []), layout: false
   end
 
   def fetch_links

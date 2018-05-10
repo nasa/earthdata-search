@@ -4,14 +4,21 @@ module Ous
       @connection ||= build_connection
     end
 
-    def initialize(root)
+    def initialize(root, urs_client_id=nil)
       @root = root
+      @urs_client_id = urs_client_id
     end
 
     protected
 
     def default_headers
       {}
+    end
+
+    def token_header(token)
+      # Token is a URS token, as opposed to an ECHO token
+      token = "#{token}:#{@urs_client_id}" if token.present? && !token.include?('-')
+      token.present? ? {'Echo-Token' => "#{token}"} : {}
     end
 
     def request(method, url, params, body, headers, options)
@@ -49,7 +56,7 @@ module Ous
     end
 
     def build_connection
-      Faraday.new(url: @root, request: { params_encoder: Faraday::FlatParamsEncoder }) do |connection|
+      Faraday.new(url: @root) do |connection|
         connection.use Ous::ClientMiddleware::LoggingMiddleware
 
         # The order of these handlers is important.  They are run last to first.
