@@ -2,13 +2,15 @@ module Ous
   class Client
     def self.client_for_environment(env, service_configs)
       env_config = service_configs['earthdata'][env]
-      Ous::Client.new(env_config)
+      urs_client_id = service_configs['urs'][Rails.env.to_s][env_config['urs_root']]
+
+      Ous::Client.new(env_config, urs_client_id)
     end
 
-    def initialize(service_config)
+    def initialize(service_config, urs_client_id)
       @config = service_config
       clients = []
-      clients << OusClient.new(@config['ous_root'])
+      clients << OusClient.new(@config['ous_root'], urs_client_id)
       @clients = clients
     end
 

@@ -73,8 +73,14 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
         it 'displays the selected variables correctly in the query params of each link' do
           within_window('Earthdata Search - Download Granule Links') do
             first_link = find('#links li:nth-child(1)')
-            expect(first_link).to have_content('CH4_VMR_D_sdev[*][79:90][209:220]')
-            expect(first_link).to have_content('CH4_VMR_A_sdev[*][79:90][209:220],Latitude[79:90],Longitude[209:220]')
+            expect(first_link).to have_content('CH4_VMR_D_sdev[*][79:1:90][209:1:220]')
+          end
+        end
+
+        it 'displays the selected spatial subsetting data within the link' do
+          within_window('Earthdata Search - Download Granule Links') do
+            first_link = find('#links li:nth-child(1)')
+            expect(first_link).to have_content('Latitude[79:1:90],Longitude[209:1:220]')
           end
         end
 

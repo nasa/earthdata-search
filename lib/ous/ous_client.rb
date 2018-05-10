@@ -1,11 +1,11 @@
 module Ous
   class OusClient < BaseClient
-    def get_coverage(params, format = 'nc')
+    def get_coverage(collection_id, params, token)
       default_params = {
-        format: format
+        format: 'nc'
       }
 
-      get('', default_params.merge(params))
+      get("collection/#{collection_id}", default_params.merge(params), token_header(token))
     end
   end
 end
