@@ -99,9 +99,6 @@ ns.Project = do (ko,
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
       @collection.dispose()
       @serviceOptions.dispose()
-      @selectedVariables.dispose()
-      @expectedAccessMethod.dispose()
-      @expectedUmmService.dispose()
 
     _loadGranuleAccessOptions: ->
       dataSource = @collection.granuleDatasource()
