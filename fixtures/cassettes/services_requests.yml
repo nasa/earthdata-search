@@ -259,7 +259,7 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Thu, 10 May 2018 15:54:40 GMT
+  recorded_at: Fri, 11 May 2018 12:59:25 GMT
   digest: f274885d846560c9342aa4403aa58a32155512e2
 - request:
     method: get

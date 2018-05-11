@@ -1178,18 +1178,18 @@ f274885d846560c9342aa4403aa58a32155512e2:
       content-type:
       - application/json
       date:
-      - Thu, 10 May 2018 15:53:31 GMT
+      - Fri, 11 May 2018 13:00:04 GMT
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       content-length:
-      - '1170'
+      - '552'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '{"hits":2,"took":0.819,"items":["https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.09.04.L3.RetStd001.v6.0.9.0.G13208020620.hdf.nc?CH4_VMR_A_ct[*][79:1:90][209:1:220],CH4_VMR_A_max[*][79:1:90][209:1:220],CH4_VMR_A_sdev[*][79:1:90][209:1:220],CH4_VMR_D_ct[*][79:1:90][209:1:220],CH4_VMR_D_max[*][79:1:90][209:1:220],CH4_VMR_D_sdev[*][79:1:90][209:1:220],CH4_VMR_TqJ_A_ct[*][79:1:90][209:1:220],CH4_VMR_TqJ_A_max[*][79:1:90][209:1:220],CH4_VMR_TqJ_A_sdev[*][79:1:90][209:1:220],CH4_VMR_TqJ_D_ct[*][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user//FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?CH4_VMR_A_ct[*][79:1:90][209:1:220],CH4_VMR_A_max[*][79:1:90][209:1:220],CH4_VMR_A_sdev[*][79:1:90][209:1:220],CH4_VMR_D_ct[*][79:1:90][209:1:220],CH4_VMR_D_max[*][79:1:90][209:1:220],CH4_VMR_D_sdev[*][79:1:90][209:1:220],CH4_VMR_TqJ_A_ct[*][79:1:90][209:1:220],CH4_VMR_TqJ_A_max[*][79:1:90][209:1:220],CH4_VMR_TqJ_A_sdev[*][79:1:90][209:1:220],CH4_VMR_TqJ_D_ct[*][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]"]}'
+      string: '{"hits":2,"took":0.576,"items":["https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/2002/AIRS.2002.09.04.L3.RetStd001.v6.0.9.0.G13208020620.hdf.nc?CH4_VMR_A_sdev[*][79:1:90][209:1:220],CH4_VMR_D_sdev[*][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user//FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?CH4_VMR_A_sdev[*][79:1:90][209:1:220],CH4_VMR_D_sdev[*][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]"]}'
     http_version: 
 de0e12bccebb5da12d02cb9f31beaaff071428bd:
   response:
