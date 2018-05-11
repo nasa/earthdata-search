@@ -131,7 +131,13 @@ prompt_credentials
         echo
         setup_auth_wget
         while read -r line; do
-        wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --keep-session-cookies -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+          # Get everything after the last '/'
+          filename="${line##*/}"
+
+          # Strip everything after '?'
+          stripped_query_params="${filename%%\?*}"
+
+          wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --output-document $stripped_query_params --keep-session-cookies -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
         done;
     else
         exit_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
