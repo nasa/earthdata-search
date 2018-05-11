@@ -167,15 +167,6 @@ ns.ProjectPage = do (ko,
         _units.shift()
       {size: _size.toFixed(1), unit: _units[0]}
 
-    spatial_enabled: ->
-      serializedObj = @project.serialized()
-
-      hasBoundingBox = serializedObj.bounding_box?.length > 0
-      hasPolygon     = serializedObj.polygon?.length > 0
-
-      # Return true if any of the spatial subsettings exist
-      hasBoundingBox || hasPolygon
-
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))

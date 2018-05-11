@@ -61,7 +61,7 @@ ns.Project = do (ko,
   supportedServiceTypes = ['OPeNDAP', 'WEB SERVICES']
 
   class ProjectCollection
-    constructor: (@collection, @meta={}) ->
+    constructor: (@project, @collection, @meta={}) ->
       @collection.reference()
       @meta.color ?= colorPool.next()
 
@@ -69,9 +69,25 @@ ns.Project = do (ko,
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
       @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
       @selectedVariables = ko.observableArray([])
+      @loadingServiceType = ko.observable(false)
       @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
       @expectedUmmService = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
-      @loadingServiceType = ko.observable(false)
+
+      # When the loadingServiceType is updated re-calculate the subsetting flags
+      @loadingServiceType.subscribe(@_computeSubsettingFlags)
+
+      # Update the variableSubsettingEnabled flag when we modify the selectedVariables
+      @selectedVariables.subscribe =>
+        @variableSubsettingEnabled(@selectedVariables().length > 0)
+
+      # Subsetting flags for the collection cards
+      @spatialSubsettingEnabled = ko.observable(false)
+      @variableSubsettingEnabled = ko.observable(false)
+      @transformationSubsettingEnabled = ko.observable(false)
+      @reformattingSubsettingEnabled = ko.observable(false)
+
+      # Re-calculate the subsetting flags when changes are made to an ECHO form
+      $(document).on 'echoforms:modelchange', @_computeSubsettingFlags
 
     _computeIsResetable: ->
       if @granuleAccessOptions().defaults?
@@ -83,7 +99,9 @@ ns.Project = do (ko,
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
       @collection.dispose()
       @serviceOptions.dispose()
-      @granuleAccessOptions.dispose()
+      @selectedVariables.dispose()
+      @expectedAccessMethod.dispose()
+      @expectedUmmService.dispose()
 
     _loadGranuleAccessOptions: ->
       dataSource = @collection.granuleDatasource()
@@ -92,7 +110,9 @@ ns.Project = do (ko,
         return
 
       @loadingServiceType(true)
+
       console.log "Loading granule access options for #{@collection.id}"
+
       $(document).trigger('dataaccessevent', [@collection.id])
       success = (data) =>
         console.log "Finished loading access options for #{@collection.id}"
@@ -103,8 +123,8 @@ ns.Project = do (ko,
         # Done loading
         @loadingServiceType(false)
       retry = => @_loadGranuleAccessOptions
-      dataSource.loadAccessOptions(success, retry)
 
+      dataSource.loadAccessOptions(success, retry)
 
     # Based on the fact that we are only supporting two UMM Service types we
     # can infer which accessMethod the user *should* be choosing for a particular
@@ -112,17 +132,18 @@ ns.Project = do (ko,
     # customization modals
     _computeExpectedAccessMethod: =>
       expectedMethod = null
-      $.each @granuleAccessOptions().methods, (index, accessMethod) =>
-        # For now we're using the first valid/supported UMM Service record found
-        if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
-          expectedMethod = accessMethod
+      if @granuleAccessOptions()
+        $.each @granuleAccessOptions().methods, (index, accessMethod) =>
+          # For now we're using the first valid/supported UMM Service record found
+          if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
+            expectedMethod = accessMethod
 
-          # A non-false return statemet within jQuery's `.each` will
-          # simply continue rather than return, so we need to set a variable
-          # to null outside of the loop, set the value like we've done above
-          # when the conditional is true, and return false which will exit
-          # the loop
-          return false
+            # A non-false return statemet within jQuery's `.each` will
+            # simply continue rather than return, so we need to set a variable
+            # to null outside of the loop, set the value like we've done above
+            # when the conditional is true, and return false which will exit
+            # the loop
+            return false
 
       expectedMethod
 
@@ -137,17 +158,18 @@ ns.Project = do (ko,
       return @expectedAccessMethod().umm_service if @expectedAccessMethod()?
 
       expectedUmmService = null
-      $.each @granuleAccessOptions().methods, (index, accessMethod) =>
-        # For now we're using the first valid/supported UMM Service record found
-        if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
-          expectedUmmService = accessMethod.umm_service
+      if @granuleAccessOptions()
+        $.each @granuleAccessOptions().methods, (index, accessMethod) =>
+          # For now we're using the first valid/supported UMM Service record found
+          if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
+            expectedUmmService = accessMethod.umm_service
 
-          # A non-false return statement within jQuery's `.each` will
-          # simply continue rather than return, so we need to set a variable
-          # to null outside of the loop, set the value like we've done above
-          # when the conditional is true, and return false which will exit
-          # the loop
-          return false
+            # A non-false return statement within jQuery's `.each` will
+            # simply continue rather than return, so we need to set a variable
+            # to null outside of the loop, set the value like we've done above
+            # when the conditional is true, and return false which will exit
+            # the loop
+            return false
 
       expectedUmmService
 
@@ -183,8 +205,8 @@ ns.Project = do (ko,
       @selectedVariables()[selectedVariablePosition]
 
     indexOfSelectedVariable: (variable) =>
-      for asdf, index in @selectedVariables()
-        if variable.meta()['concept-id'] == asdf.meta()['concept-id']
+      for selectedVariable, index in @selectedVariables()
+        if variable.meta()['concept-id'] == selectedVariable.meta()['concept-id']
           return index
       -1
 
@@ -204,15 +226,87 @@ ns.Project = do (ko,
         @selectedVariables(variables)
 
     customizeButtonText: =>
-      return 'Edit Customizations' if @hasSelectedVariables()
+      return 'Edit Customizations' if @spatialSubsettingEnabled() || @variableSubsettingEnabled() || @transformationSubsettingEnabled() || @reformattingSubsettingEnabled()
+
 
       'Customize'
 
-    transforms_enabled: ->
-      false
+    # When a user makes a changes to an ECHO form the accessMethods model
+    # is updated so we'll need to parse the updated model to check for the
+    # new values
+    _accessMethodModelXml: =>
+      if @serviceOptions.accessMethod().length > 0
+        if @serviceOptions.accessMethod()[0].rawModel
+          # Capybara-webkit does not seem to be able to parse/find tag namespaces so before
+          # parsing the XML we replace namespace colons with a hyphen
+          $($.parseXML(@serviceOptions.accessMethod()[0].rawModel.replace(/ecs\:/g, 'ecs-')))
 
-    formats_enabled: ->
-      false
+    _findWithinAccessMethodModel: (path) =>
+      xml = @_accessMethodModelXml()
+      xml.find(path).text() if xml
+
+    _computeSubsettingFlags: =>
+      @_computeSpatialSubsettingEnabled()
+      @_computeVariableSubsettingEnabled()
+      @_computeTransformationSubsettingEnabled()
+      @_computeReformattingSubsettingEnabled()
+        
+    _computeSpatialSubsettingEnabled: =>
+      if @expectedAccessMethod()?.type == 'opendap'
+        # For OPeNDAP collections we just pass along the spatial search params
+        serializedObj = @project.serialized()
+
+        hasBoundingBox = serializedObj.bounding_box?.length > 0
+        hasPolygon     = serializedObj.polygon?.length > 0
+
+        # Return true if any of the spatial subsettings exist
+        @spatialSubsettingEnabled(hasBoundingBox || hasPolygon)
+      else if @expectedAccessMethod()?.type == 'service'
+          is_spatially_subset = @_findWithinAccessMethodModel('ecs-spatial_subset_flag')
+
+          @spatialSubsettingEnabled(is_spatially_subset == "true")
+      else
+        @spatialSubsettingEnabled(false)
+
+    _computeVariableSubsettingEnabled: =>
+      if @expectedAccessMethod()?.type == 'opendap'
+        # OPeNDAP collections use a different means of calculating this value 
+      else if @expectedAccessMethod()?.type == 'service'
+        formXml = @_accessMethodModelXml()
+
+        if formXml
+          # We don't know what the root is that would live within `SUBSET_DATA_LAYERS` but
+          # when a value is selected it will live within `dataset` so we can check to see
+          # if that element exists, if it does a value has been selected in the tree view
+          has_variable_subsets = formXml.find('ecs-SUBSET_DATA_LAYERS').find('ecs-dataset').text()
+
+          @variableSubsettingEnabled(has_variable_subsets.length > 0)
+        else
+          @variableSubsettingEnabled(false)
+      else
+        @variableSubsettingEnabled(false)
+
+    _computeTransformationSubsettingEnabled: =>
+      if @expectedAccessMethod()?.type == 'opendap'
+        # OPeNDAP collections use a different means of calculating this value 
+      else if @expectedAccessMethod()?.type == 'service'
+          has_transformation_subsets = $.trim(@_findWithinAccessMethodModel('ecs-PROJECTION'))
+
+          # Check for the existense, a blank value, or the ESI equivelant of blank which is `&`
+          @transformationSubsettingEnabled(has_transformation_subsets.length > 0 && has_transformation_subsets != '&')
+      else
+        @transformationSubsettingEnabled(false)
+
+    _computeReformattingSubsettingEnabled: =>
+      if @expectedAccessMethod()?.type == 'opendap'
+        # OPeNDAP collections use a different means of calculating this value 
+      else if @expectedAccessMethod()?.type == 'service'
+          has_reformatting_subsets = $.trim(@_findWithinAccessMethodModel('ecs-FORMAT'))
+
+          # Check for the existense, a blank value, or the ESI equivelant of blank which is `&`
+          @reformattingSubsettingEnabled(has_reformatting_subsets.length > 0 && has_reformatting_subsets != '&')
+      else
+        @reformattingSubsettingEnabled(false)
 
     serialize: ->
       options = @serviceOptions.serialize()
@@ -220,9 +314,7 @@ ns.Project = do (ko,
 
       form_hashes = []
       for method in @granuleAccessOptions().methods || []
-        console.log 'method.type: ' + method.type
         for accessMethod in options.accessMethod
-          console.log 'accessMethod.type: ' + accessMethod.type          
           form_hash = {}
           if ((method.id == null || method.id == undefined ) || accessMethod.id == method.id) && accessMethod.type == method.type
             if method.id?
@@ -272,13 +364,13 @@ ns.Project = do (ko,
         @_collectionsById[id] for id in @_collectionIds()
 
     _readFocus: -> @focusedProjectCollection()?.collection
-    _writeFocus: (collection) ->
+    _writeFocus: (collection) =>
       observable = @focusedProjectCollection
       current = observable()
       unless current?.collection == collection
         current?.dispose()
         if collection?
-          projectCollection = new ProjectCollection(collection)
+          projectCollection = new ProjectCollection(this, collection)
         observable(projectCollection)
 
     getCollections: ->
@@ -289,13 +381,13 @@ ns.Project = do (ko,
         return true if projectCollection.collection.isMaxOrderSizeReached()
       false
 
-    setCollections: (collections) ->
+    setCollections: (collections) =>
       collectionIds = []
       collectionsById = {}
       for ds, i in collections
         id = ds.id
         collectionIds.push(id)
-        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds)
+        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(this, ds)
       @_collectionsById = collectionsById
       @_collectionIds(collectionIds)
       null
@@ -333,10 +425,10 @@ ns.Project = do (ko,
     isEmpty: () ->
       @_collectionIds.isEmpty()
 
-    addCollection: (collection) ->
+    addCollection: (collection) =>
       id = collection.id
 
-      @_collectionsById[id] ?= new ProjectCollection(collection)
+      @_collectionsById[id] ?= new ProjectCollection(this, collection)
       @_collectionIds.remove(id)
       @_collectionIds.push(id)
       null

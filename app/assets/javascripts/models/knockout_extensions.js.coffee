@@ -113,12 +113,10 @@ do (ko, $=jQuery) ->
           syncModel = ->
             isValid = $(this).echoforms('isValid')
             options.isValid(isValid)
-            if isValid
-              options.model = $(this).echoforms('serialize')
-              options.rawModel = $(this).echoforms('serialize', prune: false)
-            else
-              options.model = null
-              options.rawModel = null
+
+            options.model = $(this).echoforms('serialize')
+            options.rawModel = $(this).echoforms('serialize', prune: false)
+     
             null
           $el.on 'echoforms:modelchange', syncModel
           syncModel.call($el)
@@ -169,12 +167,10 @@ do (ko, $=jQuery) ->
           syncModel = ->
             isValid = $(this).echoforms('isValid')
             options.isValid(isValid)
-            if isValid
-              options.model = if options.hasBeenReset then options.modelInitialValue else $(this).echoforms('serialize')
-              options.rawModel = if options.hasBeenReset then options.rawModelInitialValue else $(this).echoforms('serialize', prune: false)
-            else
-              options.model = null
-              options.rawModel = null
+
+            options.model = if options.hasBeenReset then options.modelInitialValue else $(this).echoforms('serialize')
+            options.rawModel = if options.hasBeenReset then options.rawModelInitialValue else $(this).echoforms('serialize', prune: false)
+            
             null
           $el.on 'echoforms:modelchange', syncModel
           syncModel.call($el)

@@ -574,7 +574,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 24 Apr 2018 18:22:24 GMT
+  recorded_at: Thu, 10 May 2018 12:57:14 GMT
   digest: 83dbac185244ab53e7cf4c9c4f77d2f26d5c0d03
 - request:
     method: get

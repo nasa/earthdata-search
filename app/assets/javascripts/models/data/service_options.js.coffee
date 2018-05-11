@@ -196,7 +196,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
       # Return true if no accessMethods are present
       if @granuleAccessOptions().methods?.length == 0
-        console.log('Access Methods: ' + @granuleAccessOptions().methods)
         return true
       
       result = false
