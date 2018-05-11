@@ -2896,11 +2896,11 @@ b9948f8e37013c8d027ba74c28c2be44266302e7:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - d4d1f257-8ac5-41c8-994b-2b1b741ae865
+      - f7ecee26-ee02-4d57-9945-245a886a145f
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 24 Apr 2018 18:21:30 GMT
+      - Thu, 10 May 2018 12:57:51 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2908,18 +2908,18 @@ b9948f8e37013c8d027ba74c28c2be44266302e7:
       vary:
       - Accept-Encoding, User-Agent
       content-length:
-      - '765'
+      - '1061'
       connection:
       - Close
     body:
       encoding: ASCII-8BIT
       string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","version_id":"2","updated":"2015-02-10T17:20:34.449Z","dataset_id":"AMSR-E/Aqua
-        L2A Global Swath Spatially-Resampled Brightness Temperatures (Tb) V002","has_spatial_subsetting":false,"has_transforms":false,"associations":{"services":["S1200252658-DEV08"]},"has_variables":false,"data_center":"DEV08","short_name":"AE_L2A","organizations":["DEV08","National
+        L2A Global Swath Spatially-Resampled Brightness Temperatures (Tb) V002","has_spatial_subsetting":true,"has_transforms":true,"associations":{"variables":["V1200262331-DEV08","V1200262226-DEV08","V1200262312-DEV08","V1200262308-DEV08","V1200262224-DEV08","V1200262298-DEV08","V1200262242-DEV08","V1200262290-DEV08","V1200262310-DEV08","V1200262282-DEV08","V1200262192-DEV08","V1200262230-DEV08","V1200262184-DEV08","V1200262341-DEV08","V1200262234-DEV08","V1200262206-DEV08","V1200262276-DEV08","V1200262180-DEV08","V1200262300-DEV08","V1200262266-DEV08","V1200262347-DEV08","V1200262186-DEV08","V1200262188-DEV08","V1200262286-DEV08","V1200262339-DEV08","V1200262200-DEV08","V1200262332-DEV08","V1200262256-DEV08","V1200262258-DEV08","V1200262252-DEV08","V1200262210-DEV08","V1200262196-DEV08","V1200262343-DEV08","V1200262334-DEV08","V1200262238-DEV08","V1200262306-DEV08","V1200262272-DEV08","V1200262284-DEV08","V1200262246-DEV08","V1200262337-DEV08","V1200262335-DEV08","V1200262194-DEV08","V1200262323-DEV08","V1200262260-DEV08","V1200262262-DEV08","V1200262264-DEV08","V1200262268-DEV08","V1200262204-DEV08","V1200262216-DEV08","V1200262218-DEV08","V1200262316-DEV08","V1200262250-DEV08","V1200262244-DEV08","V1200262292-DEV08","V1200262212-DEV08","V1200262274-DEV08","V1200262278-DEV08","V1200262328-DEV08","V1200262222-DEV08","V1200262296-DEV08","V1200262324-DEV08","V1200262214-DEV08","V1200262228-DEV08","V1200262198-DEV08","V1200262333-DEV08","V1200262270-DEV08","V1200262294-DEV08","V1200262182-DEV08","V1200262202-DEV08","V1200262326-DEV08","V1200262248-DEV08","V1200262345-DEV08","V1200262325-DEV08","V1200262288-DEV08","V1200262321-DEV08","V1200262280-DEV08","V1200262190-DEV08","V1200262319-DEV08","V1200262318-DEV08","V1200262330-DEV08","V1200262220-DEV08","V1200262302-DEV08","V1200262232-DEV08","V1200262240-DEV08","V1200262351-DEV08","V1200262314-DEV08","V1200262254-DEV08","V1200262349-DEV08","V1200262304-DEV08","V1200262208-DEV08","V1200262327-DEV08","V1200262236-DEV08"],"services":["S1200252658-DEV08"]},"has_variables":true,"data_center":"DEV08","short_name":"AE_L2A","organizations":["DEV08","National
         Snow and Ice Data Center","AMSR-E SIPS-RSS"],"title":"AMSR-E/Aqua L2A Global
         Swath Spatially-Resampled Brightness Temperatures (Tb) V002","coordinate_system":"CARTESIAN","summary":"The
         AMSR-E/Aqua Level-2A swath product includes brightness temperatures at 6.9
         GHz, 10.7 GHz, 18.7 GHz, 23.8 GHz, 36.5 GHz, and 89.0 GHz resampled at resolutions
-        of 56 km, 38 km, 21 km, 12 km, and 5.4 km.","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C1000000969-DEV08","has_formats":false,"original_format":"ECHO10","archive_center":"DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_l2a_tbs.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+        of 56 km, 38 km, 21 km, 12 km, and 5.4 km.","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C1000000969-DEV08","has_formats":true,"original_format":"ECHO10","archive_center":"DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_l2a_tbs.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
     http_version: 
 9932a1706d449279bb97e8618f684cabff508f06:
   response:

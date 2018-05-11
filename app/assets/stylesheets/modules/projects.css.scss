@@ -426,6 +426,20 @@ $card-background: rgba(235,235,235,1);
     .modal-body {
       background: #f2f2f2;
       padding: 30px;
+      padding-bottom: 20px;
+    }
+
+    p.content {
+      padding: 15px 25px 0;
+      text-align: center;
+      color: darken($light-grey, 30%);
+    }
+
+    p.content .fa {
+      padding-right: 3px;
+    }
+
+    .customization-options {
       display: flex;
 
       .fa {

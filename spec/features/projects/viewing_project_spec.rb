@@ -169,75 +169,291 @@ describe 'Viewing Single Project', reset: false do
   end
 
   context 'project configurations' do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
-      login
-      wait_for_xhr
-      click_link 'My Project'
-      wait_for_xhr
-    end
+    context 'for an EGI collection' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C1000000969-DEV08'], env: :sit
+        login
+        wait_for_xhr
+        click_link 'My Project'
+        wait_for_xhr
+      end
 
-    it 'shows configuration icons' do
-      within '.collection-capability' do
-        expect(page).to have_css('span', count: 4)
-        expect(page).to have_css('span.enabled', count: 0)
+      it 'shows configuration icons' do
+        within '.collection-capability' do
+          expect(page).to have_css('span', count: 4)
+          expect(page).to have_css('span.enabled', count: 0)
 
-        expect(page).to have_css('i.fa.fa-globe')
-        expect(page).to have_css('i.fa.fa-sliders')
-        expect(page).to have_css('i.fa.fa-file-text-o')
+          expect(page).to have_css('i.fa.fa-globe')
+          expect(page).to have_css('i.fa.fa-tags')
+          expect(page).to have_css('i.fa.fa-sliders')
+          expect(page).to have_css('i.fa.fa-file-text-o')
+        end
+      end
+
+      # NOTE: ESI provides a default value for 'parameters' which results in the variable
+      # subsetting being enabled when any of the other subsetting values are enabled.
+      context 'project configurations with spatial subsetting enabled via bounding box' do
+        before :all do
+          collection_card = find('.collection-card', match: :first)
+
+          collection_card.find('.customize').click
+
+          check 'Enter bounding box'
+
+          within '.modal-footer' do
+            click_button 'Done'
+          end
+        end
+
+        it 'shows configuration icons with spatial enabled' do
+          within '.collection-capability' do
+            expect(page).to have_css('span', count: 4)
+            # ECHO forms defaults the value for the variables to 'ALL' so unless the
+            # user unchecks these values they will be saved when the form is saved
+            # for the first time.
+            expect(page).to have_css('span.enabled', count: 2)
+
+            expect(page).to have_css('span.enabled i.fa.fa-globe')
+            expect(page).to have_css('span.enabled i.fa.fa-tags')
+
+            expect(page).to have_css('i.fa.fa-sliders')
+            expect(page).to have_css('i.fa.fa-file-text-o')
+          end
+        end
+
+        context 'when spatial subsetting is disabled' do
+          before :all do
+            collection_card = find('.collection-card', match: :first)
+
+            collection_card.find('.customize').click
+
+            uncheck 'Enter bounding box'
+
+            within '.modal-footer' do
+              click_button 'Done'
+            end
+          end
+
+          it 'shows configuration icons with spatial disabled' do
+            within '.collection-capability' do
+              expect(page).to have_css('span', count: 4)
+              # ECHO forms defaults the value for the variables to 'ALL' so unless the
+              # user unchecks these values they will be saved when the form is saved
+              # for the first time.
+              expect(page).to have_css('span.enabled', count: 1)
+
+              expect(page).to have_css('span.enabled i.fa.fa-tags')
+
+              expect(page).to have_css('i.fa.fa-globe')
+              expect(page).to have_css('i.fa.fa-sliders')
+              expect(page).to have_css('i.fa.fa-file-text-o')
+            end
+          end
+        end
+      end
+
+      context 'project configurations with reformatting enabled' do
+        before :all do
+          collection_card = find('.collection-card', match: :first)
+
+          collection_card.find('.customize').click
+
+          within '#HEG-formatselect-element' do
+            find("option[value='GeoTIFF']").select_option
+          end
+
+          within '.modal-footer' do
+            click_button 'Done'
+          end
+        end
+
+        it 'shows configuration icons with reformatting enabled' do
+          within '.collection-capability' do
+            expect(page).to have_css('span', count: 4)
+            # ECHO forms defaults the value for the variables to 'ALL' so unless the
+            # user unchecks these values they will be saved when the form is saved
+            # for the first time.
+            expect(page).to have_css('span.enabled', count: 2)
+
+            expect(page).to have_css('span.enabled i.fa.fa-tags')
+            expect(page).to have_css('span.enabled i.fa.fa-file-text-o')
+
+            expect(page).to have_css('i.fa.fa-globe')
+            expect(page).to have_css('i.fa.fa-sliders')
+          end
+        end
+
+        context 'when reformatting is disabled' do
+          before :all do
+            collection_card = find('.collection-card', match: :first)
+
+            collection_card.find('.customize').click
+
+            within '#HEG-formatselect-element' do
+              find("option[value='']").select_option
+            end
+
+            within '.modal-footer' do
+              click_button 'Done'
+            end
+          end
+
+          it 'shows configuration icons with reformatting disabled' do
+            within '.collection-capability' do
+              expect(page).to have_css('span', count: 4)
+              # ECHO forms defaults the value for the variables to 'ALL' so unless the
+              # user unchecks these values they will be saved when the form is saved
+              # for the first time.
+              expect(page).to have_css('span.enabled', count: 1)
+
+              expect(page).to have_css('span.enabled i.fa.fa-tags')
+
+              expect(page).to have_css('i.fa.fa-globe')
+              expect(page).to have_css('i.fa.fa-sliders')
+              expect(page).to have_css('i.fa.fa-file-text-o')
+            end
+          end
+        end
+      end
+
+      context 'project configurations with transformations enabled' do
+        before :all do
+          collection_card = find('.collection-card', match: :first)
+
+          collection_card.find('.customize').click
+
+          within '#HEG-projectselect-element' do
+            find("option[value='LAMBERT AZIMUTHAL']").select_option
+          end
+
+          within '.modal-footer' do
+            click_button 'Done'
+          end
+        end
+
+        it 'shows configuration icons with transformations enabled' do
+          within '.collection-capability' do
+            expect(page).to have_css('span', count: 4)
+            # ECHO forms defaults the value for the variables to 'ALL' so unless the
+            # user unchecks these values they will be saved when the form is saved
+            # for the first time.
+            expect(page).to have_css('span.enabled', count: 2)
+
+            expect(page).to have_css('span.enabled i.fa.fa-tags')
+            expect(page).to have_css('span.enabled i.fa.fa-sliders')
+
+            expect(page).to have_css('i.fa.fa-globe')
+            expect(page).to have_css('i.fa.fa-file-text-o')
+          end
+        end
+
+        context 'when transofmrations is disabled' do
+          before :all do
+            collection_card = find('.collection-card', match: :first)
+
+            collection_card.find('.customize').click
+
+            within '#HEG-projectselect-element' do
+              find("option[value='&']").select_option
+            end
+
+            within '.modal-footer' do
+              click_button 'Done'
+            end
+          end
+
+          it 'shows configuration icons with transofmrations disabled' do
+            within '.collection-capability' do
+              expect(page).to have_css('span', count: 4)
+              # ECHO forms defaults the value for the variables to 'ALL' so unless the
+              # user unchecks these values they will be saved when the form is saved
+              # for the first time.
+              expect(page).to have_css('span.enabled', count: 1)
+
+              expect(page).to have_css('span.enabled i.fa.fa-tags')
+
+              expect(page).to have_css('i.fa.fa-globe')
+              expect(page).to have_css('i.fa.fa-sliders')
+              expect(page).to have_css('i.fa.fa-file-text-o')
+            end
+          end
+        end
       end
     end
-  end
 
-  context 'project configurations with spatial subsetting enabled via bounding box' do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
-      create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
-      wait_for_xhr
-      login
-      wait_for_xhr
-      click_link 'My Project'
-      wait_for_xhr
-    end
-
-    it 'shows configuration icons with spatial enabled' do
-      within '.collection-capability' do
-        expect(page).to have_css('span', count: 4)
-        expect(page).to have_css('span.enabled', count: 1)
-
-        within 'span.enabled' do
-          expect(page).to have_css('i.fa.fa-globe')
-        end
-        expect(page).to have_css('i.fa.fa-sliders')
-        expect(page).to have_css('i.fa.fa-file-text-o')
+    context 'for an OPeNDAP collection' do
+      before :all do
+        Capybara.reset_sessions!
+        load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
+        login
+        wait_for_xhr
+        click_link 'My Project'
+        wait_for_xhr
       end
-    end
-  end
 
-  context 'project configurations with spatial subsetting enabled via polygon' do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
-      create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
-      wait_for_xhr
-      login
-      wait_for_xhr
-      click_link 'My Project'
-      wait_for_xhr
-    end
+      it 'shows configuration icons' do
+        within '.collection-capability' do
+          expect(page).to have_css('span', count: 4)
+          expect(page).to have_css('span.enabled', count: 0)
 
-    it 'shows configuration icons with spatial enabled' do
-      within '.collection-capability' do
-        expect(page).to have_css('span', count: 4)
-        expect(page).to have_css('span.enabled', count: 1)
-
-        within 'span.enabled' do
           expect(page).to have_css('i.fa.fa-globe')
+          expect(page).to have_css('i.fa.fa-tags')
+          expect(page).to have_css('i.fa.fa-sliders')
+          expect(page).to have_css('i.fa.fa-file-text-o')
         end
-        expect(page).to have_css('i.fa.fa-sliders')
-        expect(page).to have_css('i.fa.fa-file-text-o')
+      end
+
+      context 'project configurations with spatial subsetting enabled via bounding box' do
+        before :all do
+          Capybara.reset_sessions!
+          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
+          create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
+          wait_for_xhr
+          login
+          wait_for_xhr
+          click_link 'My Project'
+          wait_for_xhr
+        end
+
+        it 'shows configuration icons with spatial enabled' do
+          within '.collection-capability' do
+            expect(page).to have_css('span', count: 4)
+            expect(page).to have_css('span.enabled', count: 1)
+
+            expect(page).to have_css('span.enabled i.fa.fa-globe')
+
+            expect(page).to have_css('i.fa.fa-tags')
+            expect(page).to have_css('i.fa.fa-sliders')
+            expect(page).to have_css('i.fa.fa-file-text-o')
+          end
+        end
+      end
+
+      context 'project configurations with spatial subsetting enabled via polygon' do
+        before :all do
+          Capybara.reset_sessions!
+          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
+          create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+          wait_for_xhr
+          login
+          wait_for_xhr
+          click_link 'My Project'
+          wait_for_xhr
+        end
+
+        it 'shows configuration icons with spatial enabled' do
+          within '.collection-capability' do
+            expect(page).to have_css('span', count: 4)
+            expect(page).to have_css('span.enabled', count: 1)
+
+            expect(page).to have_css('span.enabled i.fa.fa-globe')
+
+            expect(page).to have_css('i.fa.fa-tags')
+            expect(page).to have_css('i.fa.fa-sliders')
+            expect(page).to have_css('i.fa.fa-file-text-o')
+          end
+        end
       end
     end
   end
