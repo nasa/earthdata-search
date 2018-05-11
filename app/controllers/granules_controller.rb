@@ -36,6 +36,11 @@ class GranulesController < ApplicationController
     render json: catalog_response.body, status: catalog_response.status
   end
 
+  def set_ous_root
+    # Set the urs root for the download scripts to the appropriate URS environment
+    @urs_root = Rails.configuration.services['earthdata'][cmr_env]['urs_root'].sub(/^https?\:\/\//,'')
+  end
+
   # Action rendered with for the HTML view
   def opendap_urls
     @collection = params[:collection]
@@ -46,9 +51,16 @@ class GranulesController < ApplicationController
     # Prevent the user from having to type their earthdata username if they use the download script
     @user = earthdata_username
 
+    set_ous_root
+
     # To properly construct the download script we need the
     # first link to ping and ensure its accessible
-    @first_link = ous_response.fetch('items', []).first
+    # ----
+    # NOTE: We strip off any query params from this link because this variable
+    # is only used to ensure the endpoint works and certain characters in OPeNDAP
+    # land cause errors to be displayed on the screen. We only care that the host
+    # responds, the parameters are not important.
+    @first_link = ous_response.fetch('items', []).first[/[^@?]+/]
 
     if request.format == :text || request.format == 'html'
       render 'opendap_urls.html', layout: false
@@ -149,6 +161,8 @@ class GranulesController < ApplicationController
       method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
       url_mapper.apply_subsetting(method['subset'])
     end
+
+    set_ous_root
 
     @first_link = first_link(Rack::Utils.parse_nested_query(collection['params']), echo_client, token, url_mapper, url_type)
 
