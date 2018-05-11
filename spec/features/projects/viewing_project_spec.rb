@@ -169,7 +169,7 @@ describe 'Viewing Single Project', reset: false do
   end
 
   context 'project configurations' do
-    context 'for an EGI collection' do
+    context 'for an EGI collection', pending_updates: true do
       before :all do
         Capybara.reset_sessions!
         load_page :search, project: ['C1000000969-DEV08'], env: :sit
