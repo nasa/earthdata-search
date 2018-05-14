@@ -81,6 +81,16 @@ do (ko, $=jQuery) ->
 
   ko.bindingHandlers.showModal =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      # $(element).modal(
+      #     show: false
+      # )
+
+      # value = valueAccessor()
+
+      # if (ko.isObservable(value))
+      #   $(element).on('hidden.bs.modal', ->
+      #     value(false)
+      #   )
 
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       isShown = ko.unwrap(valueAccessor())

@@ -27,6 +27,8 @@
       </div>
       <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
+          <a href="#" class="all-facets" data-bind="click: $root.setFocusedFacetCategory">See All</a>
+
           <!-- ko foreach: children() -->
           <label class="facets-item" data-bind="css: {selected: isSelected(), 'facets-term': isTerm(), 'facets-var1': isVar1(), 'facets-var2': isVar2(), 'facets-var3': isVar3()}, attr: {title: title}">
             <input type="checkbox" data-bind="checked: isChecked(), click: $root.collections.facets.toggleFacet">
