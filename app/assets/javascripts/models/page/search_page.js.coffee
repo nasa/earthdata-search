@@ -13,6 +13,7 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/reverb_retirement
+#= require models/ui/full_facets_list
 
 models = @edsc.models
 data = models.data
@@ -33,6 +34,7 @@ ns.SearchPage = do (ko
                     FeedbackModel = ui.Feedback
                     SiteTourModel = ui.SiteTour
                     ReverbRetirementModel = ui.ReverbRetirement
+                    FullFacetsListModel = ui.FullFacetsList
                     url = @edsc.util.url
                     StateManager = ui.StateManager) ->
   current = null
@@ -73,6 +75,7 @@ ns.SearchPage = do (ko
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
         reverbRetirement: new ReverbRetirementModel()
+        fullFacetsList: new FullFacetsListModel
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)
@@ -83,6 +86,8 @@ ns.SearchPage = do (ko
 
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
+
+      @focusedFacet = ko.observable(null)
 
       @project.focus.subscribe(@_updateFocusRenderState)
 
@@ -141,6 +146,9 @@ ns.SearchPage = do (ko
 
     showProject: (data, event) =>
       $('#view-project').click()
+
+    setFocusedFacetCategory: (focusedFacet) =>
+      @ui.fullFacetsList.selectedFacetCategory(focusedFacet)
   
   loc = window.location.pathname
   if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
