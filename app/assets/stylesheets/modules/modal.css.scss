@@ -4,6 +4,10 @@
   height: 80%;
 }
 
+.modal-content {
+  height: 100%;
+}
+
 .modal.variables, .modal.customize-data {
 
   .modal-body {
@@ -34,6 +38,15 @@
     list-style: none;
     padding: 0 30px;
   }
+
+  .modal-has-content-header & {
+    /* 100% = dialog height, 175px = header + footer + content-header */
+    max-height: calc(100% - 175px);
+  }
+}
+
+.modal-body-trim {
+  padding: 0;
 }
 
 .modal-body-welcome {
@@ -72,7 +85,6 @@
 
 .modal-footer {
   padding: 15px;
-  height: inherit;
 
   p {
     padding: 5px;
@@ -86,4 +98,26 @@
       cursor: pointer;
     }
   }
+}
+
+.modal-content-header {
+  height: 55px;
+  width: 100%;
+  padding: 1em;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-content-header-label {
+  color: #888;
+  margin-right: 0.5em;
+}
+
+.modal-content-header-alpha {
+  display: inline-block;
+}
+
+.modal-content-header-alpha-item {
+  padding: 0.1em;
+  font-weight: bold;
 }

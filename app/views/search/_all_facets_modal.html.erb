@@ -1,19 +1,245 @@
 <!-- ko with: $root.ui.fullFacetsList -->
 <!-- ko if: selectedFacetCategory() -->
-<div class="modal fade" id="all-facets-modal" data-bind="showModal: selectedFacetCategory()" tabindex="-1" role="dialog">
+<div class="modal modal-has-content-header fade" id="all-facets-modal" data-bind="showModal: selectedFacetCategory()" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></a>
-        <h4 class="modal-title">All <span data-bind="text: selectedFacetCategory().title"></span> Facets</h4>
+        <h4 class="modal-title">Filter collections by <span data-bind="text: selectedFacetCategory().title"></span></h4>
       </div>
-      <div class="modal-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <section class="modal-content-header">
+        <span class="modal-content-header-label">Jump:</span>
+        <nav class="modal-content-header-alpha">
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-num">#</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-a">A</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-b">B</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-c">C</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-d">D</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-e">E</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-f">F</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-g">G</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-h">H</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-i">I</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-j">J</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-k">K</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-l">L</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-m">M</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-n">N</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-o">O</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-p">P</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-q">Q</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-r">R</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-s">S</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-t">T</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-u">U</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-v">V</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-w">W</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-x">X</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-y">Y</a>
+          <a class="modal-content-header-alpha-item" href="#view-all-modal-z">Z</a>
+        </nav>
+      </section>
+      <div class="modal-body modal-body-trim">
+        <div class="modal-content-body facets facets-light facets-modal">
+          <section id="view-all-modal-num" class="facets-modal-section">
+            <header class="facets-modal-divider">#</header>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+          </section>
+          <section id="view-all-modal-a" class="facets-modal-section">
+            <header class="facets-modal-divider">A</header>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+          </section>
+          <section id="view-all-modal-b" class="facets-modal-section">
+            <header class="facets-modal-divider">B</header>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+          </section>
+          <section id="view-all-modal-c" class="facets-modal-section">
+            <header class="facets-modal-divider">C</header>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+          </section>
+          <section id="view-all-modal-d" class="facets-modal-section">
+            <header class="facets-modal-divider">D</header>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+          </section>
+          <section id="view-all-modal-e" class="facets-modal-section">
+            <header class="facets-modal-divider">E</header>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+            <label class="facets-item" title="Item Name">
+              <input type="checkbox">
+              <span class="facet-title">Item Name</span>
+              <span class="facet-item-collection-count">Item Count</span>
+            </label>
+          </section>
+        </div>
       </div>
       <div class="modal-footer">
         <a class="button text-button" data-dismiss="modal" href="#">Close</a>
