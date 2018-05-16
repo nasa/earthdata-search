@@ -1,7 +1,6 @@
 #= require models/data/collections
 #= require models/data/query
 
-
 models = @edsc.models
 data = models.data
 ns = models.ui
@@ -12,6 +11,7 @@ ns.FullFacetsList = do (ko
                           extend = $.extend
                         ) ->
 
+  # Map the facet category titles to the CMR params for facet-size
   facet_category_mappings = {
     'Organizations': 'data-center',
     'Processing levels': 'processing-level-id',
@@ -22,36 +22,38 @@ ns.FullFacetsList = do (ko
   }
 
   class FullFacetsList
-    constructor: (@query, selectedFacetCategory) ->
-      @query = query
+    constructor: ->
+      @facetObjects = ko.computed(@_computeSelectedFacets, this, deferEvaluation: true)
 
-      # @query.params().facets_size = {
-      #   'data-center': 10000,
-      #   'processing-level-id': 10000,
-      #   'science-keywords': 10000,
-      #   'instrument': 10000,
-      #   'platform': 10000,
-      #   'project': 10000
-      # }
+      @selectedFacetCategory = ko.observable(null)
 
-      @collections = new CollectionsModel(@query)
+      @selectedFacetCategory.subscribe (selectedFacetCategory) =>
+        # The observable is disposed of on modal close
+        return if selectedFacetCategory == null
 
-      @selectedFacetCategory = ko.observable(selectedFacetCategory)
+        # Ask CMR for stuff
+        @_retrieveFacets(selectedFacetCategory)
 
-    toggleFullFacetsModal: (facetsModel) =>
+    _retrieveFacets: (facetCategory) =>
+      category_key = facet_category_mappings[facetCategory.title]
 
-      @selectedFacetCategory(facetsModel)
+      queryModel = facetCategory.queryModel
 
-      console.log(@selectedFacetCategory())
+      queryModel.params().facets_size = {}
+      queryModel.params().facets_size[category_key] = 10000
 
-      # Update the params to retrieve all of the facets for the selected category
-      category_key = facet_category_mappings[@selectedFacetCategory().title]
-      @query.params().facets_size = {}
-      @query.params().facets_size[category_key] = 10000
+      @collections = new CollectionsModel(queryModel)
 
       # This method retrieves the collections (and therefore facets)
       @collections.results()
 
-      $('#all-facets-modal').modal()
+    _computeSelectedFacets: =>
+      for facet in @collections.facets.results()
+        if facet.title == @selectedFacetCategory().title
+          return @_groupFacetsAlphabetically(facet.children())
+
+    # Groups facets by the first character for the UI
+    _groupFacetsAlphabetically: (facets) ->
+      facets
 
   exports = FullFacetsList

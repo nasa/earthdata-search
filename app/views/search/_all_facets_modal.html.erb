@@ -41,7 +41,14 @@
       </section>
       <div class="modal-body modal-body-trim">
         <div class="modal-content-body facets facets-light facets-modal">
-          <section id="view-all-modal-num" class="facets-modal-section">
+          <!-- ko foreach: facetObjects() -->
+          <label class="facets-item" title="Item Name">
+            <input type="checkbox">
+            <span class="facet-title" data-bind="text: title"></span>
+            <span class="facet-item-collection-count" data-bind="text: count"></span>
+          </label>
+          <!-- /ko -->
+          <!-- <section id="view-all-modal-num" class="facets-modal-section">
             <header class="facets-modal-divider">#</header>
             <label class="facets-item" title="Item Name">
               <input type="checkbox">
@@ -238,10 +245,11 @@
               <span class="facet-title">Item Name</span>
               <span class="facet-item-collection-count">Item Count</span>
             </label>
-          </section>
+          </section> -->
         </div>
       </div>
       <div class="modal-footer">
+        <span data-bind="text: collections.hits"></span>
         <a class="button text-button" data-dismiss="modal" href="#">Close</a>
       </div>
     </div>
