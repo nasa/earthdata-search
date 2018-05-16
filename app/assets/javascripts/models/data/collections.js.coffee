@@ -29,7 +29,6 @@ ns.Collections = do (ko
         awaitDatasources()
       null
 
-
     constructor: (query) ->
       super('/collections.json', query)
 
