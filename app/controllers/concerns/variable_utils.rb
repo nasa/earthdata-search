@@ -1,12 +1,12 @@
 module VariableUtils
   extend ActiveSupport::Concern
 
-  DEFAULT_PAGE_SIZE = 20
+  DEFAULT_PAGE_SIZE = 100
 
   def retrieve_variables(params = {}, token = nil)
     cmr_params = {
-      # page_size: DEFAULT_PAGE_SIZE
-    }.merge(params.stringify_keys).select { |k, _v| %w(concept_id cmr_format).include?(k) }
+      page_size: DEFAULT_PAGE_SIZE
+    }.merge(params).stringify_keys.select { |k, _v| %w(concept_id cmr_format page_size page_num).include?(k) }
 
     echo_client.get_variables(cmr_params, token)
   end

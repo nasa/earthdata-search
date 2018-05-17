@@ -26,11 +26,12 @@ ns.Variables = do (ko
       null
 
     constructor: (query) ->
+      @method = 'post'
       super('/variables.json', query)
 
     _decorateNextPage: (params, results) ->
       @page++
-      params.page_size = 20
+      params.page_size = 100
       params.page_num = @page
 
     _toResults: (data, current, params) ->

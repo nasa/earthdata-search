@@ -23,7 +23,8 @@ module Echo
 
     def get_variables(options = {}, token = nil)
       format = options.delete('cmr_format') || 'json'
-      get("search/variables.#{format}", options, token_header(token))
+      headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
+      post("search/variables.#{format}", options.to_query, headers)
     end
 
     def get_services(options = {}, token = nil)

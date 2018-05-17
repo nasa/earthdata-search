@@ -225,7 +225,6 @@ ns.Project = do (ko,
     customizeButtonText: =>
       return 'Edit Customizations' if @spatialSubsettingEnabled() || @variableSubsettingEnabled() || @transformationSubsettingEnabled() || @reformattingSubsettingEnabled()
 
-
       'Customize'
 
     # When a user makes a changes to an ECHO form the accessMethods model
