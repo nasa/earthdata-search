@@ -6,6 +6,8 @@ data = models.data
 ns = models.ui
 
 ns.FullFacetsList = do (ko
+                          document
+                          $ = jQuery
                           CollectionFacetsModel = ns.CollectionFacets
                           CollectionsModel = data.Collections
                           extend = $.extend
@@ -27,12 +29,31 @@ ns.FullFacetsList = do (ko
 
       @selectedFacetCategory = ko.observable(null)
 
+      @alphabet = ['#','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
       @selectedFacetCategory.subscribe (selectedFacetCategory) =>
         # The observable is disposed of on modal close
         return if selectedFacetCategory == null
 
         # Ask CMR for stuff
         @_retrieveFacets(selectedFacetCategory)
+
+      $(document).ready(@_onReady)
+
+    _onReady: =>
+      @_scrollToItem()
+
+    _scrollToItem: =>
+      $('body').on 'click', 'a.modal-content-header-alpha-item', (event) ->
+        if this.hash != ''
+          event.preventDefault();
+          hash = this.hash
+          container = $(hash).parents('.modal-body-view-all-facets')
+          offset = $(hash)[0].offsetTop
+
+          container.animate({
+            scrollTop: offset
+          }, 300)
 
     _retrieveFacets: (facetCategory) =>
       category_key = facet_category_mappings[facetCategory.title]
@@ -54,6 +75,21 @@ ns.FullFacetsList = do (ko
 
     # Groups facets by the first character for the UI
     _groupFacetsAlphabetically: (facets) ->
-      facets
+      alphabetizedList = {}
+      groupedList = []
+
+      for letter in @alphabet
+        alphabetizedList[letter] = []
+
+      for facet in facets
+        if !isNaN(facet.title[0])
+          alphabetizedList['#'].push facet
+        else
+          alphabetizedList[facet.title[0].toUpperCase()].push facet
+
+      for group of alphabetizedList
+        groupedList.push {letter: group, facets: alphabetizedList[group]}
+
+      groupedList
 
   exports = FullFacetsList
