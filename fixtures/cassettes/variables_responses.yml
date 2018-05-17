@@ -1,4 +1,282 @@
 ---
+f0b3b4d68b57e6c7d5276e08f4482f6658b83886:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '12'
+      cmr-request-id:
+      - d8de13bf-d3d2-47bd-95d5-db1099bfced7
+      cmr-took:
+      - '148'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Thu, 17 May 2018 19:53:59 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1397'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"hits":12,"took":146,"items":[{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_1","concept-id":"V1200241812-EDF_OPS","revision-date":"2018-01-16T15:59:13Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"int16","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-1,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":2}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"16-bit
+        count of the number of observations used in the calculation of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_A_ct","ValidRanges":[{"Min":0,"Max":32767}],"Units":"none","LongName":"16-bit
+        count of the number of observations of volume mixing ratio of methane in air
+        "}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_2","concept-id":"V1200241813-EDF_OPS","revision-date":"2018-01-16T15:59:14Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":4}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"
+        32 bit floating point maximum of the observations in this grid cell of volume
+        mixing ratio of methane in air.","Name":"CH4_VMR_A_max","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point maximum value per grid cell of volume mixing ratio of methane
+        in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_3","concept-id":"V1200241814-EDF_OPS","revision-date":"2018-01-16T15:59:15Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":6}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"  32
+        bit standard deviation over the observations in this grid cell of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_A_sdev","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point standard deviation per grid cell of volume mixing ratio
+        of methane in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_4","concept-id":"V1200241815-EDF_OPS","revision-date":"2018-01-16T15:59:15Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"int16","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-1,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":8}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"16-bit
+        count of the number of observations used in the calculation of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_D_ct","ValidRanges":[{"Min":0,"Max":32767}],"Units":"none","LongName":"16-bit
+        count of the number of observations of volume mixing ratio of methane in air
+        "}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_5","concept-id":"V1200241816-EDF_OPS","revision-date":"2018-01-16T15:59:16Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":10}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"
+        32 bit floating point maximum of the observations in this grid cell of volume
+        mixing ratio of methane in air.","Name":"CH4_VMR_D_max","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point maximum value per grid cell of volume mixing ratio of methane
+        in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_6","concept-id":"V1200241817-EDF_OPS","revision-date":"2018-01-16T15:59:17Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":12}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"  32
+        bit standard deviation over the observations in this grid cell of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_D_sdev","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point standard deviation per grid cell of volume mixing ratio
+        of methane in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_7","concept-id":"V1200241818-EDF_OPS","revision-date":"2018-01-16T15:59:18Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"int16","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-1,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":14}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"16-bit
+        count of the number of observations used in the calculation of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_TqJ_A_ct","ValidRanges":[{"Min":0,"Max":32767}],"Units":"none","LongName":"16-bit
+        count of the number of observations of volume mixing ratio of methane in air
+        "}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_8","concept-id":"V1200241819-EDF_OPS","revision-date":"2018-01-16T15:59:18Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":16}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"
+        32 bit floating point maximum of the observations in this grid cell of volume
+        mixing ratio of methane in air.","Name":"CH4_VMR_TqJ_A_max","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point maximum value per grid cell of volume mixing ratio of methane
+        in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_9","concept-id":"V1200241820-EDF_OPS","revision-date":"2018-01-16T15:59:19Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":18}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"  32
+        bit standard deviation over the observations in this grid cell of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_TqJ_A_sdev","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point standard deviation per grid cell of volume mixing ratio
+        of methane in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_10","concept-id":"V1200241821-EDF_OPS","revision-date":"2018-01-16T15:59:20Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"int16","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-1,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":20}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"16-bit
+        count of the number of observations used in the calculation of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_TqJ_D_ct","ValidRanges":[{"Min":0,"Max":32767}],"Units":"none","LongName":"16-bit
+        count of the number of observations of volume mixing ratio of methane in air
+        "}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_11","concept-id":"V1200241822-EDF_OPS","revision-date":"2018-01-16T15:59:20Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":22}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"
+        32 bit floating point maximum of the observations in this grid cell of volume
+        mixing ratio of methane in air.","Name":"CH4_VMR_TqJ_D_max","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point maximum value per grid cell of volume mixing ratio of methane
+        in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_12","concept-id":"V1200241823-EDF_OPS","revision-date":"2018-01-16T15:59:21Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":24}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"  32
+        bit standard deviation over the observations in this grid cell of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_TqJ_D_sdev","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point standard deviation per grid cell of volume mixing ratio
+        of methane in air"}}]}'
+    http_version: 
+2e4730ebb95b094a4b1d9d439eba87623a95b6b9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '2'
+      cmr-request-id:
+      - 8baf5b0d-0240-4a3a-bc26-60664ccb0775
+      cmr-took:
+      - '69'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Thu, 17 May 2018 19:58:33 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '972'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"hits":2,"took":68,"items":[{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_3","concept-id":"V1200241814-EDF_OPS","revision-date":"2018-01-16T15:59:15Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":6}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"  32
+        bit standard deviation over the observations in this grid cell of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_A_sdev","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point standard deviation per grid cell of volume mixing ratio
+        of methane in air"}},{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"rabbott","native-id":"edf_opendap_variable_6","concept-id":"V1200241817-EDF_OPS","revision-date":"2018-01-16T15:59:17Z","concept-type":"variable"},"umm":{"VariableType":"ANCILLARY_VARIABLE","DataType":"float","Offset":0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC CHEMISTRY","VariableLevel1":"CARBON
+        and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Scale":1,"Characteristics":{"Bounds":"Lon:
+        -180,  180 E; Lat: -90, 90 N","Size":3.9,"Structure":"int32: StdPressureLev,
+        CH4_VMR_A, CH4_VMR_A_ct, CH4_VMR_A_err, CH4_VMR_A_max, CH4_VMR_A_min, CH4_VMR_A_sdev,
+        CH4_VMR_D, CH4_VMR_D_ct, CH4_VMR_D_err, CH4_VMR_D_max, CH4_VMR_D_min, CH4_VMR_D_sdev,
+        CH4_VMR_TqJ_A, CH4_VMR_TqJ_A_ct, CH4_VMR_TqJ_A_err, CH4_VMR_TqJ_A_max, CH4_VMR_TqJ_A_min,
+        CH4_VMR_TqJ_A_sdev, CH4_VMR_TqJ_D, CH4_VMR_TqJ_D_ct, CH4_VMR_TqJ_D_err, CH4_VMR_TqJ_D_max,
+        CH4_VMR_TqJ_D_min, CH4_VMR_TqJ_D_sdev: 24 variables: different number of pressure
+        levels for each variable","Coordinates":"Alt: 705 kilometers; Period: 98.8
+        min; orbits per day: 14.5 (AIRS+AMSU)","GridMapping":"N/A","SizeUnits":"MB","StandardName":"methane","Reference":""},"FillValues":[{"Value":-9999,"Type":"Ancillary"}],"Sets":[{"Name":"AIRX3STD","Type":"AIRS+AMSU
+        Level 3 Gridded","Size":24,"Index":12}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"XDim","Size":180},{"Name":"YDim","Size":360}],"Definition":"  32
+        bit standard deviation over the observations in this grid cell of volume mixing
+        ratio of methane in air.","Name":"CH4_VMR_D_sdev","ValidRanges":[{"Min":0,"Max":1}],"Units":"ppv","LongName":"32
+        bit floating point standard deviation per grid cell of volume mixing ratio
+        of methane in air"}}]}'
+    http_version: 
 dfc0b400a8c27968e4d3b08bbe066e4b10a314d3:
   response:
     status:
