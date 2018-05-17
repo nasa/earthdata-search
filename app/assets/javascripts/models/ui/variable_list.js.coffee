@@ -79,9 +79,14 @@ ns.VariableSelector = do (ko
       # Pull out the selected variables before we wipe them below
       selectedVariables = $('.collection-variable-list input[type="checkbox"]:checked')
 
-      # Rather than keep track of the delta, just wipe them all and re-add them below
-      @selectedProjectCollection().selectedVariables.removeAll()
+      # Rather than keeping a delta within each keyword mapping, we'll just delete all
+      # selected variables within the currently selected keyword and re-add them below
+      for mapping in @keywordMappings()
+        if mapping.keyword == @selectedKeyword().keyword
+          @selectedProjectCollection().selectedVariables.remove (variable) =>
+            variable in @selectedKeyword().variables
 
+      # Add each of the selected variables (pulled out above) to the project collection
       selectedVariables.each (index, element) =>
         selectedVariableId = $(element).val()
 
@@ -145,6 +150,9 @@ ns.VariableSelector = do (ko
       @selectedCollection(projectCollection.collection)
 
       @selectedProjectCollection(projectCollection)
+
+      # Scroll to the top of the div when its opened
+      $('#variable-subsetting-modal .modal-body').animate({ scrollTop: (0) }, 0);
 
       $('#variable-subsetting-modal').modal('show')
 
