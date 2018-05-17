@@ -41,7 +41,7 @@ EarthdataSearchClient::Application.routes.draw do
   end
 
   resources :services, only: [:index, :show], defaults: {format: 'json'}
-  resources :variables, only: [:index], defaults: {format: 'json'}
+  match 'variables' => 'variables#index', defaults: { format: 'json' }, via: [:get, :post]
 
   resources :docs
 

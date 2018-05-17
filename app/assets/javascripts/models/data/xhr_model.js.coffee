@@ -115,15 +115,15 @@ ns.XhrModel = do (ko
       @isLoading(true)
       @isError(false)
 
-      requestId = @completedRequestId + 1
-      console.log("Request (#{requestId}): #{url}")
-      start = new Date()
-
       method = @method ? 'get'
       data = null
       if method == 'post'
         url = @path
         data = query
+
+      requestId = @completedRequestId + 1
+      console.log("Request [#{method.toUpperCase()}] (#{requestId}): #{url}")
+      start = new Date()
 
       @currentRequest = xhr = ajax
         method: method
@@ -140,7 +140,7 @@ ns.XhrModel = do (ko
           @error(null)
 
           #console.log("Response: #{@path}", requestId, params, data)
-          console.log("Complete (#{requestId}): #{url}")
+          console.log("Complete [#{method.toUpperCase()}] (#{requestId}): #{url}")
           results = @_toResults(data, current, params)
 
           @hitsEstimated(false)
@@ -163,7 +163,7 @@ ns.XhrModel = do (ko
 
         error: (response, type, reason) =>
           @isError(true)
-          console.log("Fail (#{requestId}) [#{reason}]: #{url}")
+          console.log("Fail [#{method.toUpperCase()}] (#{requestId}) [#{reason}]: #{url}")
           @_onFailure(response)
         null
 
