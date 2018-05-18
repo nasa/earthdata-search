@@ -75,7 +75,7 @@ ns.SearchPage = do (ko
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
         reverbRetirement: new ReverbRetirementModel()
-        fullFacetsList: new FullFacetsListModel
+        fullFacetsList: new FullFacetsListModel(@query)
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)
@@ -86,8 +86,6 @@ ns.SearchPage = do (ko
 
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
-
-      @focusedFacet = ko.observable(null)
 
       @project.focus.subscribe(@_updateFocusRenderState)
 

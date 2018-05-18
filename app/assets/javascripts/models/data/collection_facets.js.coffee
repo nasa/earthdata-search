@@ -52,8 +52,7 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
 
       if !link && @parent.title == 'Keywords'
         # hierarchical facet is applied and there is no applicable link
-        query = window.edsc.models.page.current.query
-        appliedKeywordsHash = query.params()['science_keywords_h']
+        appliedKeywordsHash = @parent.queryModel.params()['science_keywords_h']
         for appliedKeyword, i in appliedKeywordsHash
           Object.keys(appliedKeywordsHash[i]).forEach (key) =>
             title = appliedKeywordsHash[i][key]
@@ -280,8 +279,6 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
         if params['science_keywords_h']
           (tmp or tmp = []).push sk for sk in params['science_keywords_h'] when sk
           params['science_keywords_h'] = tmp
-
-
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
