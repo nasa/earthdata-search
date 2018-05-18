@@ -9,7 +9,7 @@
       </div>
       <section class="modal-content-header">
         <span class="modal-content-header-label">Jump:</span>
-        <nav class="modal-content-header-alpha" data-bind="foreach: facetObjects()">
+        <nav class="modal-content-header-alpha" data-bind="foreach: facetsForSelectedCategory()">
           <!-- ko if: facets.length -->
           <a class="modal-content-header-alpha-item modal-content-header-alpha-item-link"
             href="#"
@@ -21,14 +21,14 @@
           <!-- /ko -->
         </nav>
       </section>
-      <div class="modal-body modal-body-view-all-facets modal-body-trim" data-bind="css: {busy: facetObjects() == null}">
-        <div class="facets facets-light facets-modal" data-bind="foreach: facetObjects()">
+      <div class="modal-body modal-body-view-all-facets modal-body-trim" data-bind="css: {busy: facetsForSelectedCategory() == null}">
+        <div class="facets facets-light facets-modal" data-bind="foreach: facetsForSelectedCategory()">
           <!-- ko if: facets.length -->
           <section class="facets-modal-section" data-bind="attr: {id: 'facets-view-all-' + letter}">
             <header class="facets-modal-divider" data-bind="text: letter"></header>
             <!-- ko foreach: facets -->
             <label class="facets-item" title="Item Name" data-bind="attr: {title: title}">
-              <input type="checkbox" data-bind="checked: isChecked(), click: $root.collections.facets.toggleFacet">
+              <input type="checkbox" data-bind="checked: isChecked(), click: $parents[1].collections.facets.toggleFacet">
               <span class="facet-title" data-bind="text: title"></span>
               <span class="facet-item-collection-count" data-bind="text: count"></span>
             </label>
@@ -40,6 +40,7 @@
       <div class="modal-footer">
         <span class="modal-footer-status pull-left"><span data-bind="text: collections.hits">0</span> Matching Collections</span>
         <a class="button text-button" data-dismiss="modal" href="#">Close</a>
+        <a class="button text-button" data-dismiss="modal" href="#" data-bind="click: applyFacetsToSearch">Apply</a>
       </div>
     </div>
   </div>
