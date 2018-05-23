@@ -32,6 +32,7 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
       @title = item.title
       @type = item.type
       @hasChildren = ko.observable(item.has_children)
+      @childFacet = ko.observable(false)
       @termFacet = ko.observable(false)
       @var1Facet = ko.observable(false)
       @var2Facet = ko.observable(false)
@@ -74,6 +75,12 @@ ns.CollectionFacets = do (ko, currentPage = window.edsc.models.page.current) ->
 
     isAncestor: =>
       !@isFeature() && @isSelected() && @hasChildren()
+
+    isChild: =>
+      return true if @childFacet()
+      value = !@isFeature() && @isTerm() || @isVar1() || @isVar2() || @isVar3()
+      @childFacet(value)
+      value
 
     isTopic: =>
       !@isFeature() && @_hierarchyIndex() == 2 && @_scienceKeywordFacet()

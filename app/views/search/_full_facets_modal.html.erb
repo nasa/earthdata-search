@@ -13,7 +13,7 @@
           <!-- ko if: facets.length -->
           <a class="modal-content-header-alpha-item modal-content-header-alpha-item-link"
             href="#"
-            data-bind="text: letter, attr: {href: '#facets-view-all-' + letter}"></a>
+            data-bind="text: letter, attr: {href: '#' + $parent.getAnchorString(letter)}"></a>
           <!-- /ko -->
           <!-- ko ifnot: facets.length -->
           <span class="modal-content-header-alpha-item"
@@ -24,10 +24,10 @@
       <div class="modal-body modal-body-view-all-facets modal-body-trim" data-bind="css: {busy: facetsForSelectedCategory() == null}">
         <div class="facets facets-light facets-modal" data-bind="foreach: facetsForSelectedCategory()">
           <!-- ko if: facets.length -->
-          <section class="facets-modal-section" data-bind="attr: {id: 'facets-view-all-' + letter}">
+          <section class="facets-modal-section" data-bind="attr: {id: $parent.getAnchorString(letter)}">
             <header class="facets-modal-divider" data-bind="text: letter"></header>
             <!-- ko foreach: facets -->
-            <label class="facets-item" title="Item Name" data-bind="attr: {title: title}">
+            <label class="facets-item" title="Item Name" data-bind="css: {selected: isSelected(), 'facets-term': isTerm(), 'facets-var1': isVar1(), 'facets-var2': isVar2(), 'facets-var3': isVar3()}, attr: {title: title}">
               <input type="checkbox" data-bind="checked: isChecked(), click: $parents[1].collections.facets.toggleFacet">
               <span class="facet-title" data-bind="text: title"></span>
               <span class="facet-item-collection-count" data-bind="text: count"></span>
@@ -39,8 +39,8 @@
       </div>
       <div class="modal-footer">
         <span class="modal-footer-status pull-left"><span data-bind="text: collections.hits">0</span> Matching Collections</span>
-        <a class="button text-button" data-dismiss="modal" href="#">Close</a>
-        <a class="button text-button" data-dismiss="modal" href="#" data-bind="click: applyFacetsToSearch">Apply</a>
+        <button class="button secondary" data-dismiss="modal">Cancel</Button>
+        <button class="button" data-dismiss="modal" data-bind="click: applyFacetsToSearch">Apply</button>
       </div>
     </div>
   </div>

@@ -124,6 +124,7 @@
 }
 
 .panel-body-header {
+  min-height: 2.15em;
   margin: 0;
   padding: 0.4em 0.4em 0.4em 1.1em;
   color: #8c8c8c;
@@ -239,12 +240,12 @@
   padding-left: 4.2em;
 }
 
+.facets-modal {
+  padding-bottom: 15px;
+}
+
 .facets-modal-divider {
   padding: 15px;
   font-size: 1.25em;
   font-weight: bold;
-}
-
-.facets-modal-section {
-  margin-bottom: 15px;
 }
