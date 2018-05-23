@@ -97,22 +97,39 @@ ns.FullFacetsList = do (ko
 
     # Groups facets by the first character for the UI
     _groupFacetsAlphabetically: (facets) ->
-      alphabetizedList = {}
+      alphabetizedList = @_createEmptyAlphabeticList()
       groupedList = []
 
-      for letter in alphabet
-        alphabetizedList[letter] = []
+      current = '#'
 
-      for facet in facets
-        if !isNaN(facet.title[0])
-          alphabetizedList['#'].push facet
-        else
-          alphabetizedList[facet.title[0].toUpperCase()].push facet
+      # Loop through all the facets. If the current item does not match the
+      # current letter, we reset the current character to the first letter
+      # of the new item. Then, if the first character matches or the item is a
+      # child, we push it on to the collection for the current letter.
+
+      for facet, i in facets
+        if facet.title[0] != current && !facet.isChild()
+          current = alphabet[alphabet.indexOf(facet.title[0])]
+        if facet.title[0] == current || facet.isChild()
+          alphabetizedList[current].push facet
 
       for group of alphabetizedList
         groupedList.push {letter: group, facets: alphabetizedList[group]}
 
       groupedList
+
+    # Return an object whose keys are alphabetic characters
+    _createEmptyAlphabeticList: ->
+      alphabetizedList = {}
+      for letter in alphabet
+        alphabetizedList[letter] = []
+      alphabetizedList
+
+    # Allows conversion of the '#' symbol which is not valid in an id attribute
+    # and breaks the auto scrolling
+    getAnchorString: (letter) ->
+      return 'facets-view-all-num' if letter == '#'
+      'facets-view-all-' + letter
 
     # Applies the selected facets from the modal to the searchQuery
     # provided during instantiation
