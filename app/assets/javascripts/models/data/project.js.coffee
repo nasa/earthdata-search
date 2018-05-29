@@ -389,7 +389,7 @@ ns.Project = do (ko,
       null
 
     _computeVisibleCollections: ->
-      collections = (collection for projectCollection in @collections() when projectCollection.collection.visible())
+      collections = (projectCollection.collection for projectCollection in @collections() when projectCollection.collection.visible())
 
       focus = @focus()
       if focus && focus.visible() && collections.indexOf(focus) == -1
