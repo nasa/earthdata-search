@@ -61,6 +61,14 @@ ns.FullFacetsList = do (ko
     _onReady: =>
       @_scrollToItem()
 
+      # When the modal closes dispose of objects we created
+      $(document).on 'hidden.bs.modal', '#all-facets-modal', =>
+        @selectedFacetCategory(null)
+
+        # Without disposing of this object every time the modal is created we instantiate
+        # a new instance and end up making redundant HTTP requests
+        @collections.dispose()
+
     # Scroll to the desired section of the based on the first character of the facet
     _scrollToItem: =>
       $('body').on 'click', 'a.modal-content-header-alpha-item', (event) ->
@@ -78,19 +86,19 @@ ns.FullFacetsList = do (ko
     # then runs them through the method to organize them for the UI
     _computeSelectedFacets: =>
       for facet in @collections.facets.results()
-        if facet.title == @selectedFacetCategory().title
+        if facet.title == @selectedFacetCategory()?.title
           return @_groupFacetsAlphabetically(facet.children())
 
     # Construct the necessary objects to and ping CMR to retrieve collections and their facets
     _retrieveFacets: =>
       # Rather than using the provided query we'll copy its contents as to not
       # update the provided object in the modal
-      copiedQuery = new CollectionQuery()
-      copiedQuery.fromJson(@selectedFacetCategory().queryModel.serialize())
+      @copiedQuery = new CollectionQuery()
+      @copiedQuery.fromJson(@selectedFacetCategory().queryModel.serialize())
 
       # Instantiate our custom CollectionsModel with the copied query
       # object and selected facetCategory
-      @collections = new AllFacetsCollectionsModel(copiedQuery, @selectedFacetCategory())
+      @collections = new AllFacetsCollectionsModel(@copiedQuery, @selectedFacetCategory())
 
       # This method retrieves the collections (and therefore facets)
       @collections.results()
