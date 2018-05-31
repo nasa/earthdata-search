@@ -10,7 +10,6 @@ ns.FullFacetsList = do (ko
                           document
                           $ = jQuery
                           extend = $.extend
-
                           CollectionQuery = data.query.CollectionQuery
                           CollectionsModel = data.Collections
                         ) ->
@@ -61,7 +60,9 @@ ns.FullFacetsList = do (ko
     _onReady: =>
       @_scrollToItem()
 
-      # When the modal closes dispose of objects we created
+      # TODO: Not a huge fan of relying on the modal ID here. Ideally we can figure
+      # out a way to set selectedFacetCategory to null using the KO Binding and use
+      # the subscription above to then dispoose of object.
       $(document).on 'hidden.bs.modal', '#all-facets-modal', =>
         @selectedFacetCategory(null)
 
@@ -73,7 +74,7 @@ ns.FullFacetsList = do (ko
     _scrollToItem: =>
       $('body').on 'click', 'a.modal-content-header-alpha-item', (event) ->
         if this.hash != ''
-          event.preventDefault();
+          event.preventDefault()
           hash = this.hash
           container = $(hash).parents('.modal-body-view-all-facets')
           offset = $(hash)[0].offsetTop
@@ -137,6 +138,7 @@ ns.FullFacetsList = do (ko
     # and breaks the auto scrolling
     getAnchorString: (letter) ->
       return 'facets-view-all-num' if letter == '#'
+      
       'facets-view-all-' + letter
 
     # Applies the selected facets from the modal to the searchQuery
