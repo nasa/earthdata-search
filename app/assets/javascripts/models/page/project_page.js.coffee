@@ -26,10 +26,8 @@ ns.ProjectPage = do (ko,
                      TemporalModel = ui.Temporal
                      ProjectListModel = ui.ProjectList
                      SiteTourModel = ui.SiteTour
-                     ServiceOptionsListModel = ui.ServiceOptionsList
                      FeedbackModel = ui.Feedback
                      ajax=@edsc.util.xhr.ajax
-                     GranulesList = ui.GranulesList
                      VariableSelector = ui.VariableSelector
                    ) ->
   current = null
@@ -171,8 +169,8 @@ ns.ProjectPage = do (ko,
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         collectionId = $(elem).closest('.modal').prop('id').split('-modal')[0]
-        collection = @project.collections().filter((collection) -> collection.id == collectionId).pop()
-        collection.granuleDatasource().data().loadNextPage()
+        projectCollection = @project.collections().filter((collection) -> collection.collection.id == collectionId).pop()
+        projectCollection.collection.granuleDatasource().data().loadNextPage()
 
     downloadProject: =>
       $project = $('#data-access-project')
