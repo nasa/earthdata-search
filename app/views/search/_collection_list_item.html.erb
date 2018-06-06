@@ -16,34 +16,57 @@
                   <strong>• <span data-bind="text: timeRange"></span> •</strong>
                   <span data-bind="truncatedText: summary, maxLength: 280"></span>
                 </p>
-                <p>
-                  <span class="panel-list-badges">
-                    <!-- ko if: gibs() -->
-                    <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
-                    <!-- /ko -->
-                    <!-- ko if: opendap() -->
-                    <a href="#" class="badge badge-subsetting" data-tooltip="true" title="Supports spatial and parameter subsetting"></a>
-                    <!-- /ko -->
-                    <!-- ko if: nrt -->
-                    <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
-                    <!-- /ko -->
-                    <!-- ko if: cwic() -->
-                    <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
+                <p class="panel-list-badges">
+                  <!-- ko if: gibs() -->
+                  <span href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service">
+                    <span class="badge-content">Map Imagery</span>
+                  </span>
+                  <!-- /ko -->
+                  <!-- ko if: opendap() -->
+                  <span href="#" class="badge badge-subsetting">
+                    <span class="badge-content" data-tooltip="true" title="Supports spatial and parameter subsetting">Subsetting</span>
+                    <!-- ko if: has_spatial_subsetting() || has_variables() || has_transforms() || has_formats() -->
+                    <span  class="badge-content badge-content-secondary">
+                      <!-- ko if: has_spatial_subsetting() -->
+                      <i class="badge-content-icon fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Spatial subsetting options available"></i>
+                      <!-- /ko -->
+                      <!-- ko if: has_variables() -->
+                      <i class="badge-content-icon fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Variable subsetting options available"></i>
+                      <!-- /ko -->
+                      <!-- ko if: has_transforms() -->
+                      <i class="badge-content-icon fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Data transformation options available"></i>
+                      <!-- /ko -->
+                      <!-- ko if: has_formats() -->
+                      <i class="badge-content-icon fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Reformatting options available"></i>
+                      <!-- /ko -->
+                    </span>
                     <!-- /ko -->
                   </span>
-                  <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
-
-                    <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
-                    <span data-bind="text: short_name"></span> v<span data-bind="text: version_id"></span>
-                    <!-- /ko -->
-                    <!-- ko ifnot: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
-                    <span data-bind="text: short_name"></span>
-                    <!--/ko-->
-                    <!-- ko if: $data.org() -->
-                    - <span data-bind="text: org()"></span>
-                    <!-- /ko -->
+                  <!-- /ko -->
+                  <!-- ko if: nrt -->
+                  <span href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data">
+                    <span class="badge-content">NRT</span>
                   </span>
-                </p>
+                  <!-- /ko -->
+                  <!-- ko if: cwic() -->
+                  <span href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data">
+                    <span class="badge-content">CWIC</span>
+                  </span>
+                  <!-- /ko -->
+                  <span class="badge badge-meta" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
+                    <span class="badge-content">
+                      <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
+                      <span data-bind="text: short_name"></span> v<span data-bind="text: version_id"></span>
+                      <!-- /ko -->
+                      <!-- ko ifnot: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
+                      <span data-bind="text: short_name"></span>
+                      <!--/ko-->
+                      <!-- ko if: $data.org() -->
+                      - <span data-bind="text: org()"></span>
+                      <!-- /ko -->
+                    </span>
+                  </span>
+                </span>
               </div>
               <div class="panel-list-item-actions-container">
                 <div class="panel-list-item-actions">

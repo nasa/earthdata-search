@@ -255,16 +255,24 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list-badges {
 
+  display: flex;
+  margin: 0.5em 0 0 0;
+
   a {
     color: #fff;
   }
 
   .tooltip {
     width: $facet-overlay-width;
+    text-transform: none;
   }
 
   .tooltip.right .tooltip-arrow {
     border-right-color: #263c50;
+  }
+
+  .tooltip.top .tooltip-arrow {
+    border-top-color: #263c50;
   }
 
   .tooltip-inner {
@@ -275,15 +283,57 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .badge {
-  display: inline-block;
+  display: flex;
+  margin-right: 0.25em;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.badge-content {
+  padding: 5px 8px;
   color: #fff;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 12px;
   font-weight: bold;
-  padding: 3px 6px;
   text-align: center;
   text-transform: uppercase;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+
+  .badge-meta & {
+    text-transform: none;
+  }
+}
+
+.badge-gibs {
+  background-color: $gibs;
+}
+
+.badge-subsetting {
+  background-color: $subsetting;
+}
+
+.badge-nrt {
+  background-color: $nrt;
+  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
+.badge-cwic {
+  background-color: $cwic;
+  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
+.badge-content-secondary {
+    background: rgba(0, 0, 0, 0.23)
+}
+
+.fa.badge-content-icon {
+  font-size: 12px;
+  line-height: 12px;
+  margin: 0 1px;
+
+  &.fa-file-text-o {
+    margin-left: 2px;
+  }
 }
 
 .facets-list-hide .badge {
@@ -294,46 +344,16 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   margin: 0 .5em 0 0;
 }
 
-.badge-gibs {
-  background-color: $gibs;
-  &:before {
-    content: "Map Imagery";
-  }
-}
-
 .circle-badge-gibs {
   background-color: $gibs;
-}
-
-.badge-subsetting {
-  background-color: $subsetting;
-  &:before {
-    content: "Subsetting";
-  }
 }
 
 .circle-badge-subsetting {
   background-color: $subsetting;
 }
 
-.badge-nrt {
-  background-color: $nrt;
-  &:before {
-    content: "NRT";
-  }
-  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
-}
-
 .circle-badge-nrt {
   background-color: $nrt;
-}
-
-.badge-cwic {
-  background-color: $cwic;
-  &:before {
-    content: "CWIC";
-  }
-  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
 }
 
 .panel-header-toggle {
@@ -346,24 +366,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   color: #7f8c8d;
 }
 
-.panel-list-details {
-  background: rgba(0,0,0,0.3);
-  font-size: 9px;
-  line-height: 12px;
-  font-weight: bold;
-  padding: 3px 6px;
-  text-align: center;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
-  display: inline-block;
-  color: #fff;
-}
-
 .panel-list-comparison-details {
   font-size: .9em;
-}
-
-.granule-item-actions {
-
 }
 
 .panel-list-item:after {
