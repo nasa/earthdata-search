@@ -207,12 +207,18 @@ button {
   @include dark-button;
 }
 
-button:disabled {
+button:disabled,
+button:disabled:hover {
   @include linear-gradient(#cbcbcb, #cbcbcb);
   box-shadow: none;
   text-shadow: none;
   color: #888;
   border-color: #888;
+  cursor: not-allowed;
+
+  .fa {
+    color: #888;
+  }
 }
 
 .btn-group {
@@ -236,6 +242,33 @@ button:disabled {
   &.button-outline-light {
     @include light-button;
     font-weight: bold;
+  }
+}
+
+.button-full {
+  width: 100%;
+}
+
+.button-download-data {
+  overflow: hidden;
+  color: #fff;
+  background-color: #289152;
+  background-image: -webkit-linear-gradient(#289152, #217a46);
+  background-image: linear-gradient(#289152, #217a46);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: .9em;
+
+  .fa {
+    color: #0D2D1A;
+    text-shadow: none;
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background-color: #289152;
+    background-image: -webkit-linear-gradient(#289152, #289152);
+    background-image: linear-gradient(#289152, #289152);
   }
 }
 
