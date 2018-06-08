@@ -48,7 +48,11 @@
       <h3>Output Formats</h3>
     </div>
     <footer class="project-info-actions">
-      <button data-bind="enable: $root.project.allReadyToDownload(), click: $root.downloadProject" href="#" class="download-data"><i class="fa fa-download" aria-hidden="true"></i> Download Data</button>
+      <div class="project-download-tooltip" data-tooltip="true" data-bind="css: { 'project-download-tooltip-disabled': !$root.project.allReadyToDownload() }, attr: { 'title': $root.project.allReadyToDownload() ? '' : 'At least one of your collections is not configured correctly. Please double check your customization selections.', 'data-original-title': $root.project.allReadyToDownload() ? '' : 'At least one of your collections is not configured correctly. Please double check your customization selections.' }" title="At least one of your collections is not configured correctly. Please double check your customization selections.">
+        <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() }" href="#" class="button button-full button-download-data" disabled>
+          <i class="fa fa-download" aria-hidden="true"></i> Download Data
+        </button>
+      </div>
     </footer>
   </section>
   <section class="project-collections">
@@ -77,7 +81,7 @@
         <!-- /ko -->
       </ul>
     </div>
-    
+
     <div class="project-collection-cards">
       <!-- ko if: project.collections().length == 0 -->
       <p id="project-empty-notice">Your project is empty. <a href="#" data-bind="click: project.backToSearch">Click here</a> to return to search and add collections to your project.</p>
@@ -136,7 +140,7 @@
 
     </footer>
   </section>
-  
+
   <%= render partial: 'variable_selection_modal' %>
 
   <form id="data-access" method="POST" action="<%=edsc_path "/data/retrieve"%>" style="display:none;">

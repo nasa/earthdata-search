@@ -349,6 +349,7 @@ ns.Project = do (ko,
       @_pending = ko.observable(null)
 
     _computeAllReadyToDownload: ->
+      return false if !@accessCollections().length
       return false for ds in @accessCollections() when !ds.serviceOptions.readyToDownload()
       true
 

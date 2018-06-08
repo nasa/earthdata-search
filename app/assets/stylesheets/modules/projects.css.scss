@@ -64,23 +64,6 @@ $card-background: rgba(235,235,235,1);
     footer {
       text-align: center;
       padding: 10px 20px;
-
-      .download-data {
-        overflow: hidden;
-        color: #fff;
-        @include gradient-animation(#289152, #217A46, #289152, #289152, .2s);
-
-        width: 100%;
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: .9em;
-
-        .fa {
-          color: #0D2D1A;
-          text-shadow: none;
-          margin-right: 10px;
-        }
-      }
     }
   }
 
@@ -133,6 +116,16 @@ $card-background: rgba(235,235,235,1);
     background: lighten(#000, 10%);
     color: #fff;
     height: 65px;
+  }
+
+
+  .project-download-tooltip {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .project-download-tooltip-disabled {
+    cursor: not-allowed;
   }
 
   .project-collections {
