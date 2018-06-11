@@ -213,7 +213,7 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
-          @pollProjectUpdates()
+          # @pollProjectUpdates()
           canCancel = ['SUBMITTING', 'QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
             dataset_id: collection.dataset_id
@@ -263,7 +263,7 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
-          @pollProjectUpdates()
+          # @pollProjectUpdates()
           is_more_details_active = @moreDetailsActive().indexOf(collection.id) > -1
           is_download_links_active = @downloadLinksActive().indexOf(collection.id) > -1
           total_processed = m.serviceOptions.total_processed
