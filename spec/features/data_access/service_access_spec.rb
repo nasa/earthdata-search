@@ -100,7 +100,7 @@ describe 'Services Access', reset: false, pending_updates: true do
       fill_in "granule-ids", with: "AMSR_E_L3_5DaySnow_V10_20110928.hdf, AMSR_E_L3_5DaySnow_V10_20110923.hdf, AMSR_E_L3_5DaySnow_V10_20110918.hdf, AMSR_E_L3_5DaySnow_V10_20110913.hdf, AMSR_E_L3_5DaySnow_V10_20110908.hdf, AMSR_E_L3_5DaySnow_V10_20110903.hdf, AMSR_E_L3_5DaySnow_V10_20110829.hdf, AMSR_E_L3_5DaySnow_V10_20110824.hdf, AMSR_E_L3_5DaySnow_V10_20110819.hdf, AMSR_E_L3_5DaySnow_V10_20110814.hdf, AMSR_E_L3_5DaySnow_V10_20110809.hdf, AMSR_E_L3_5DaySnow_V10_20110804.hdf\t"
       wait_for_xhr
 
-      click_button "Download Data"
+      click_button "Download All"
       wait_for_xhr
     end
 

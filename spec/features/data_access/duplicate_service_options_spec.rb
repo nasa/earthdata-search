@@ -11,7 +11,7 @@ describe 'Duplicate Service Options', reset: false do
     before :all do
       load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       login
-      click_button "Download Data"
+      click_button "Download All"
       wait_for_xhr
     end
   end

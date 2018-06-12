@@ -126,7 +126,8 @@ ns.Collection = do (ko
         false
       else
         hits > limit
-# Since CMR doesn't support this feature, we get them from the granules that are already loaded.
+        
+    # Since CMR doesn't support this feature, we get them from the granules that are already loaded.
     _computeAvailableFilters: ->
       _capabilities = {}
       # The following 'preloads' the available capabilities - this is necessary if zero granules are returned from a query.

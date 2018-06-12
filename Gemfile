@@ -35,12 +35,13 @@ group :test do
 end
 
 group :development do
+  gem 'byebug'
+  
   gem 'quiet_assets'
 
   # For dumping additional metadata stored in DatasetExtras and similar
   gem 'seed_dump'
   gem 'rubocop', require: false
-  gem 'byebug'
 end
 
 group :sit, :uat, :production, :lab do

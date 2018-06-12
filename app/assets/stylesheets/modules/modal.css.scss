@@ -4,6 +4,10 @@
   height: 80%;
 }
 
+.modal-content-full {
+  height: 100%;
+}
+
 .modal.variables, .modal.customize-data {
 
   .modal-body {
@@ -25,6 +29,21 @@
   }
 }
 
+.modal-header {
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+
+  .modal-header & {
+    margin-top: 0.05em;
+  }
+}
+
 .modal-body {
   /* 100% = dialog height, 120px = header + footer */
   max-height: calc(100% - 120px);
@@ -34,6 +53,20 @@
     list-style: none;
     padding: 0 30px;
   }
+
+  &.busy {
+    background-position: center center;
+  }
+
+  .modal-has-content-header & {
+    /* 100% = dialog height, 175px = header + footer + content-header */
+    max-height: calc(100% - 175px);
+    min-height: calc(100% - 175px);
+  }
+}
+
+.modal-body-trim {
+  padding: 0;
 }
 
 .modal-body-welcome {
@@ -67,12 +100,12 @@
 
 .modal-dialog {
   width: 800px;
+  max-height: 720px;
   margin-top: 120px;
 }
 
 .modal-footer {
   padding: 15px;
-  height: inherit;
 
   p {
     padding: 5px;
@@ -82,14 +115,61 @@
     text-shadow: none;
 
     &.secondary {
-      @include gradient-animation(#fff, #ddd, #fff, #fff, .2s);
+      @include list-panel-button;
       border: 1px solid #e3e3e3;
       padding: 7px 10px;
-      color: #424242;
+      text-shadow: none;
 
       &:hover {
         cursor: pointer;
       }
     }
+  }
+}
+
+.modal-footer-status {
+  margin-top: 0.17em;
+  font-weight: 700;
+  font-size: 1.25em;
+  color: #424242;
+}
+
+.modal-content-header {
+  height: 55px;
+  width: 100%;
+  padding: 1em;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-content-header-label {
+  color: #888;
+  margin-right: 0.5em;
+}
+
+.modal-content-header-alpha {
+  display: inline-block;
+  color: #888;
+}
+
+.modal-content-header-alpha-item {
+  padding: 0.1em;
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+.modal-content-header-alpha-item-link {
+  cursor: pointer;
+
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    color: #1d6492;
   }
 }

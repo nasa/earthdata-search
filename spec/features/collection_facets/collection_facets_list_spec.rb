@@ -54,7 +54,7 @@ describe 'Collection Facet Display', reset: false do
 
       expect(page).to have_css('.facets-item', text: 'Map Imagery', match: :prefer_exact)
       expect(page).to have_css('.facets-item', text: 'Near Real Time', match: :prefer_exact)
-      expect(page).to have_css('.facets-item', text: 'Subsetting Services', match: :prefer_exact)
+      expect(page).to have_css('.facets-item', text: 'Customizable', match: :prefer_exact)
     end
 
     it 'shows at least one Keywords facet' do

@@ -46,6 +46,13 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 }
 
+.granule-match-stats {
+  color: lighten($overlay-heading-font-color, 15%);
+  font-size: 0.8em;
+  margin: 10px 20px 0 20px;
+  padding: 0;
+}
+
 .granule-list {
 
   .master-overlay-info {
@@ -53,7 +60,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .panel-list-list {
-    padding: 10px;
+    padding: 0 10px 10px 10px;
     background: #ecf0f1;
   }
 
@@ -134,6 +141,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     padding: 8px;
+    font-weight: normal;
   }
 }
 
@@ -170,8 +178,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   cursor: pointer;
 
   h3 {
-    background: rgba(52, 152, 219,1.0);
-    color: #fff;
+    color: rgba(52, 152, 219,1.0);
   }
 }
 
@@ -308,8 +315,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   background-color: $gibs;
 }
 
-.badge-subsetting {
-  background-color: $subsetting;
+.badge-customizable {
+  background-color: $customizable;
 }
 
 .badge-nrt {
@@ -348,8 +355,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   background-color: $gibs;
 }
 
-.circle-badge-subsetting {
-  background-color: $subsetting;
+.circle-badge-customizable {
+  background-color: $customizable;
 }
 
 .circle-badge-nrt {
@@ -379,8 +386,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 #granule-list:focus, #granule-list.has-focus {
   .panel-list-selected {
     h3 {
-      background: rgba(52, 152, 219,1.0);
-      color: #fff;
+      color: rgba(52, 152, 219,1.0);
     }
   }
 }
@@ -388,8 +394,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 .panel-list-selected {
 
   h3 {
-    background: rgba(52, 152, 219,1.0);
-    color: #fff;
+    color: rgba(52, 152, 219,1.0);
   }
 
   .panel-list-when-selected {

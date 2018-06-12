@@ -67,11 +67,10 @@ module VCR
       t1 = t1.first if t1.is_a?(Array)
       t2 = t2.first if t2.is_a?(Array)
       return false unless t1.present? == t1.present?
-      @persister.normalizers.select do |normalizer|
-        if normalizer.is_a?(HeaderNormalizer) && normalizer.header == 'Echo-Token'
-          t1 = normalizer.substitute if t1 == normalizer.value
-          t2 = normalizer.substitute if t2 == normalizer.value
-        end
+
+      @persister.normalizers.select { |n| n.is_a?(VCR::HeaderNormalizer) && n.header == 'Echo-Token' }.each do |normalizer|
+        t1 = normalizer.substitute if t1 == normalizer.value
+        t2 = normalizer.substitute if t2 == normalizer.value
       end
       t1 == t2
     end

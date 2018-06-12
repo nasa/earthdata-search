@@ -15,7 +15,7 @@ describe 'Background jobs ordering', reset: false do
       fill_in 'granule-ids', with: 'AST_L1A#00311092015232127_11102015081255.hdf, AST_L1A#00311092015223445_11102015075930.hdf'
       wait_for_xhr
 
-      click_button 'Download Data'
+      click_button 'Download'
       wait_for_xhr
 
       find('#access-method-C14758250-LPDAAC_ECS-00').click

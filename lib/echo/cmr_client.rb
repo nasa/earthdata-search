@@ -16,20 +16,26 @@ module Echo
     # Search methods
     ##
     def get_collections(options = {}, token = nil)
-      format = options.delete('format') || 'json'
-      query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
+      stringified_options = options.stringify_keys
+
+      format = stringified_options.delete('format') || 'json'
+      query = options_to_collection_query(stringified_options).merge(include_has_granules: true, include_granule_counts: true)
       get("/search/collections.#{format}", query, token_header(token))
     end
 
     def get_variables(options = {}, token = nil)
-      format = options.delete('cmr_format') || 'json'
+      stringified_options = options.stringify_keys
+
+      format = stringified_options.delete('cmr_format') || 'json'
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post("search/variables.#{format}", options.to_query, headers)
+      post("search/variables.#{format}", stringified_options.to_query, headers)
     end
 
     def get_services(options = {}, token = nil)
-      format = options.delete('cmr_format') || 'umm_json'
-      get("/search/services.#{format}", options, token_header(token))
+      stringified_options = options.stringify_keys
+
+      format = stringified_options.delete('cmr_format') || 'umm_json'
+      get("/search/services.#{format}", stringified_options, token_header(token))
     end
 
     ##

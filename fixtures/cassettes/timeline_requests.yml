@@ -8,14 +8,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C10%2C10&browse_only=true&cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:11 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:23 GMT
   digest: 630bda85ae99621f8d239dd489b09f637cda2daa
 - request:
     method: post
@@ -25,14 +25,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C10%2C10&browse_only=true&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:09 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:19 GMT
   digest: dbed2dd4d20bd7c99bc7a8f44746e14749f5e8c4
 - request:
     method: post
@@ -42,14 +42,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C10%2C10&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:04 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:17 GMT
   digest: a1da501125c76fc28adaa4e0a28fd0373f762ffe
 - request:
     method: post
@@ -59,14 +59,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C10%2C10&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:00 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:09 GMT
   digest: bdd0492ab84012455944895a7bb97ca4ef7d84e6
 - request:
     method: post
@@ -76,14 +76,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C15%2C10&concept_id=C1219248591-LANCEMODIS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:42:28 GMT
+  recorded_at: Tue, 12 Jun 2018 19:02:58 GMT
   digest: 8b1d7e1658dbfa4715bc2e4dc7dbd67523034c20
 - request:
     method: post
@@ -93,14 +93,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C15%2C10&concept_id=C1219248591-LANCEMODIS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:48:21 GMT
+  recorded_at: Mon, 11 Jun 2018 20:24:05 GMT
   digest: 7cf877a662914414efe8818584b77490160fd225
 - request:
     method: post
@@ -110,14 +110,14 @@ http_interactions:
       string: bounding_box=0%2C0%2C15%2C15&concept_id=C1236224151-GES_DISC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:41:24 GMT
+  recorded_at: Tue, 12 Jun 2018 19:04:02 GMT
   digest: 6322b3bfe3f19ce6983016ac13c59ab336542abf
 - request:
     method: post
@@ -127,32 +127,32 @@ http_interactions:
       string: bounding_box=0%2C0%2C15%2C15&concept_id=C1236224151-GES_DISC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:47:12 GMT
+  recorded_at: Mon, 11 Jun 2018 20:22:54 GMT
   digest: 61af3e9bde627965d31a651ea8330219245d60d5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1458873477-LAADS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+      string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1527340097-LAADS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:40 GMT
-  digest: b7196b6dc9ea370315e8aa203f0d77297dd93367
+  recorded_at: Mon, 11 Jun 2018 20:31:57 GMT
+  digest: d21d344d66ecc110c5a165c4f1cdb3c5dae73156
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -161,53 +161,15 @@ http_interactions:
       string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:51:38 GMT
+  recorded_at: Mon, 11 Jun 2018 20:31:49 GMT
   digest: a2ea5ffd545c157c8c169368d6bf6bae72ff4b80
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C10%2C10%2C80&concept_id=C115003855-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:06:32 GMT
-  digest: abe1485607c534520cc458d534217ecfdd354174
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C80%2C10%2C85&concept_id=C115003855-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:06:04 GMT
-  digest: 0c9efe9b1de65c1f26b2a38ca5d5c9d29ed99c41
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -216,14 +178,14 @@ http_interactions:
       string: browse_only=true&cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:55 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:41 GMT
   digest: 8fb3494534aead4439dfcc27b871d943ac631ea1
 - request:
     method: post
@@ -233,14 +195,14 @@ http_interactions:
       string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:53 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:36 GMT
   digest: 4bd32ffc910b370a4bde8e99dd0f32eee02b3c27
 - request:
     method: post
@@ -250,14 +212,14 @@ http_interactions:
       string: browse_only=true&concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:28 GMT
+  recorded_at: Mon, 11 Jun 2018 20:17:07 GMT
   digest: 9cd30eaec4b8a9a913c59401e897253fef8a418e
 - request:
     method: post
@@ -267,14 +229,14 @@ http_interactions:
       string: browse_only=true&concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:26:21 GMT
+  recorded_at: Tue, 12 Jun 2018 01:09:01 GMT
   digest: 6d66b8f10d0cf568de7d0d51b9da168ee4aa07d7
 - request:
     method: post
@@ -284,14 +246,14 @@ http_interactions:
       string: browse_only=true&concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:34 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:44 GMT
   digest: aae51c774d53af6af38e7827687102eca077eda2
 - request:
     method: post
@@ -301,15 +263,17 @@ http_interactions:
       string: concept_id=C1000000020-LANCEAMSR2&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:06 GMT
-  digest: e75293edc236df7a765fc87ad2119b9f0ffb13da
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:37:26 GMT
+  digest: 60cce6d73a3e27aedefcdd919c957ac26c9519f6
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -318,14 +282,14 @@ http_interactions:
       string: concept_id=C1000000042-LANCEAMSR2&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:45 GMT
+  recorded_at: Mon, 11 Jun 2018 20:39:48 GMT
   digest: fa5afb45a53c22f594722936316b225edfd58c33
 - request:
     method: post
@@ -335,14 +299,14 @@ http_interactions:
       string: concept_id=C1000000062-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&project=2013_AN_NASA&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:41:00 GMT
+  recorded_at: Mon, 11 Jun 2018 20:26:07 GMT
   digest: edf1446c90c375ed4dd3eeb7a126e4d06341786a
 - request:
     method: post
@@ -352,14 +316,14 @@ http_interactions:
       string: concept_id=C1000000300-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:56:40 GMT
+  recorded_at: Mon, 11 Jun 2018 20:43:20 GMT
   digest: dd211f49231fb53e71690939b1a0e2df6bb4f85f
 - request:
     method: post
@@ -369,68 +333,15 @@ http_interactions:
       string: concept_id=C1000000445-NSIDC_ECS&end_date=2011-01-14T00%3A00%3A00.000Z&interval=day&start_date=2008-01-12T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:39:16 GMT
+  recorded_at: Mon, 11 Jun 2018 20:36:28 GMT
   digest: bcee2d69e84a8832b7245978b2403cce6add2ec6
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000561-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:31 GMT
-  digest: 91e9a50ed45d588b2e07acd5d7f5943c4ea91c76
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000580-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:40 GMT
-  digest: e0da703e6a8378342160e7854ddd335180013ed5
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C115003855-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&point=10%2C-80&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:05:30 GMT
-  digest: d876fed63e5b5b2050d08c41034fef5d5173dda8
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -439,15 +350,17 @@ http_interactions:
       string: concept_id=C119124186-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:11 GMT
-  digest: 86d7747ca661c255897278a34677ed42e6bf4aa7
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:52:30 GMT
+  digest: 6e79c15cbb08c0150ca8f1b5ffb8de028f5a5d31
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -456,14 +369,14 @@ http_interactions:
       string: concept_id=C1236303849-NSIDC_ECS&end_date=2016-07-07T23%3A59%3A59.000Z&interval=day&start_date=2013-07-05T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:36 GMT
+  recorded_at: Mon, 11 Jun 2018 20:36:56 GMT
   digest: 00777a61dae299b76e2b6947ef4631672820cb95
 - request:
     method: post
@@ -473,14 +386,14 @@ http_interactions:
       string: concept_id=C1353062857-NSIDC_ECS&end_date=2019-02-08T16%3A31%3A11.000Z&interval=day&start_date=2016-02-06T16%3A31%3A11.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:53 GMT
+  recorded_at: Mon, 11 Jun 2018 20:39:53 GMT
   digest: 732552790020c296758a0ac021a546d46643fc1e
 - request:
     method: post
@@ -490,14 +403,14 @@ http_interactions:
       string: concept_id=C1444742099-PODAAC&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:15 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:02 GMT
   digest: c03050d4ab85544fb5ebd2b246e2b05e48cc159d
 - request:
     method: post
@@ -507,14 +420,14 @@ http_interactions:
       string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:49 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:33 GMT
   digest: 41094fb160cb07e0108ada6124edca622ac64298
 - request:
     method: post
@@ -524,17 +437,15 @@ http_interactions:
       string: concept_id=C14758250-LPDAAC_ECS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 15:53:39 GMT
-  digest: 1815698bf6b585959a73ccafa7314c36e3d70387
+  recorded_at: Mon, 11 Jun 2018 20:36:22 GMT
+  digest: 896e6266bff7003ace1ee067bee9375de6b0ba36
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -543,7 +454,7 @@ http_interactions:
       string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=AST_L1A%2300311092015232127_11102015081255.hdf&readable_granule_name%5B%5D=AST_L1A%2300311092015223445_11102015075930.hdf&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
@@ -551,9 +462,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:00:00 GMT
-  digest: 8fd61b30abd9ac7160bd659ec239f79c73cfb292
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:33:37 GMT
+  digest: 420e2cee397767a63b231861a03aed371454f809
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -562,14 +473,14 @@ http_interactions:
       string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&polygon=10%2C10%2C-10%2C10%2C-10%2C-10%2C10%2C-10%2C10%2C10&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:04:22 GMT
+  recorded_at: Mon, 11 Jun 2018 20:36:51 GMT
   digest: e8422155ecef952697d062b638a51eac34c38960
 - request:
     method: post
@@ -579,15 +490,51 @@ http_interactions:
       string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:57:40 GMT
-  digest: 6e4e6fe98731a011b123ca3ec52f1c7da44e012f
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:13:54 GMT
+  digest: 9ec50dfdae93e547c92087d38aaad0f0addcebcf
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C162886585-USGS_EROS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z&two_d_coordinate_system%5Bcoordinates%5D=24-24%3A24-24&two_d_coordinate_system%5Bname%5D=WRS-1
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 11 Jun 2018 20:26:24 GMT
+  digest: 17e34986683e02540d3a97860ddcc257480b5cb0
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C162886585-USGS_EROS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z&two_d_coordinate_system%5Bname%5D=WRS-1
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 11 Jun 2018 20:26:21 GMT
+  digest: 352533394306f3f1f932fd0536cb3a550d2f00c3
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -596,14 +543,14 @@ http_interactions:
       string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:37 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:24 GMT
   digest: f41c422e17e4111abe28b7fb6a06acbfac6f348e
 - request:
     method: post
@@ -613,14 +560,14 @@ http_interactions:
       string: concept_id=C179002914-ORNL_DAAC&end_date=1988-10-26T23%3A59%3A58.999Z&interval=day&start_date=1985-10-24T23%3A59%3A58.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:02:54 GMT
+  recorded_at: Mon, 11 Jun 2018 20:39:55 GMT
   digest: d7467b498dedd308370aef8900d81f518ab839c2
 - request:
     method: post
@@ -630,14 +577,14 @@ http_interactions:
       string: concept_id=C179002914-ORNL_DAAC&end_date=1988-10-26T23%3A59%3A59.000Z&interval=day&start_date=1985-10-24T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:41:30 GMT
+  recorded_at: Mon, 11 Jun 2018 20:34:31 GMT
   digest: 9bd456ab4b3734fec9a269f7c6a5fc00e49ba227
 - request:
     method: post
@@ -647,14 +594,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1971-07-01T23%3A59%3A59.999Z&interval=day&start_date=1968-06-29T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 13 Mar 2018 05:04:16 GMT
+  recorded_at: Tue, 12 Jun 2018 18:46:49 GMT
   digest: b693a5ebe5f4d8b4b94ff41f2cf4bb3dd405583c
 - request:
     method: post
@@ -664,14 +611,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1971-07-02T00%3A00%3A00.000Z&interval=day&start_date=1968-06-29T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:36:55 GMT
+  recorded_at: Mon, 11 Jun 2018 20:31:43 GMT
   digest: c4f6fb148f239714793a45dd3bb307d2dc8fb1cd
 - request:
     method: post
@@ -681,14 +628,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1986-03-04T00%3A00%3A00.000Z&interval=day&start_date=1983-03-02T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:43 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:45 GMT
   digest: 569d4ede6e67b2d1c5e6236860e8ea0b19295527
 - request:
     method: post
@@ -698,14 +645,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1987-09-02T00%3A00%3A00.000Z&interval=day&start_date=1984-08-30T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:36:56 GMT
+  recorded_at: Mon, 11 Jun 2018 20:31:44 GMT
   digest: 598bb3abe9c7201bdcdd70be6ccb2782168e206e
 - request:
     method: post
@@ -715,14 +662,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1988-12-04T11%3A59%3A59.997Z&interval=day&start_date=1985-12-02T11%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:35 GMT
+  recorded_at: Tue, 12 Jun 2018 04:22:19 GMT
   digest: 3a0af411fddb86ccccfa88eaf148b472aa46c597
 - request:
     method: post
@@ -732,14 +679,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1988-12-04T11%3A59%3A59.998Z&interval=day&start_date=1985-12-02T11%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:01:50 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:21 GMT
   digest: 09bb74c211fddad71a1a998f2bcde36b89f2d99c
 - request:
     method: post
@@ -749,14 +696,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-01-01T11%3A59%3A59.996Z&interval=day&start_date=1985-12-30T11%3A59%3A59.996Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:36 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:25 GMT
   digest: 094387527a6501268cba3dd8e844d2751d6d992b
 - request:
     method: post
@@ -766,14 +713,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-01-01T11%3A59%3A59.997Z&interval=day&start_date=1985-12-30T11%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:34 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:22 GMT
   digest: 2b885a77f7c96ad813755c1404b933bb6f5a0ff8
 - request:
     method: post
@@ -783,14 +730,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-01-01T11%3A59%3A59.998Z&interval=day&start_date=1985-12-30T11%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:30 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:18 GMT
   digest: 76de5e0997e44af1596af5a5d2d0dd4400f50b41
 - request:
     method: post
@@ -800,14 +747,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-02-01T11%3A59%3A59.996Z&interval=day&start_date=1986-01-30T11%3A59%3A59.996Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:01:51 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:24 GMT
   digest: 693fbdb62dda5989c0aa21707d2d859448ff9744
 - request:
     method: post
@@ -817,14 +764,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-02-01T11%3A59%3A59.997Z&interval=day&start_date=1986-01-30T11%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:33 GMT
+  recorded_at: Tue, 12 Jun 2018 04:22:17 GMT
   digest: a28429422aad680915185ee894695bb11600cb17
 - request:
     method: post
@@ -834,14 +781,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1422671947-ORNL_DAAC&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:56:49 GMT
+  recorded_at: Mon, 11 Jun 2018 20:26:10 GMT
   digest: 2cfd1e7eef1344622b4a7e7f96de424cf9f3d87a
 - request:
     method: post
@@ -851,14 +798,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=FIFE_STRM_15M.80611715.s15&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:33:58 GMT
+  recorded_at: Mon, 11 Jun 2018 20:13:28 GMT
   digest: a84533a4947a665638502d8d98378104a480197a
 - request:
     method: post
@@ -868,17 +815,15 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 15:53:29 GMT
-  digest: 660cfaaef4f374fc3207c9ee33e2c1ea8554a138
+  recorded_at: Mon, 11 Jun 2018 20:12:14 GMT
+  digest: 384d92cf966131f7300d4ed398f2ffb40ddfa1b5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -887,14 +832,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-07-03T12%3A00%3A00.000Z&interval=day&start_date=1986-07-01T12%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:47 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:02 GMT
   digest: 7d4ab7e7dce3d3d522b430d935cc45cc9add7854
 - request:
     method: post
@@ -904,14 +849,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=1995-03-02T00%3A00%3A00.000Z&interval=day&start_date=1992-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:15 GMT
+  recorded_at: Mon, 11 Jun 2018 20:15:46 GMT
   digest: 5fb4f6b15d63a27a2915a7fe5964cbb9e4a878bf
 - request:
     method: post
@@ -921,14 +866,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-07-13T11%3A59%3A59.996Z&interval=month&start_date=1972-06-20T11%3A59%3A59.996Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:39 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:27 GMT
   digest: 1ecb1ec5d6ca4e0506ba7fbf2d9a97422ef5ee63
 - request:
     method: post
@@ -938,14 +883,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-07-13T11%3A59%3A59.998Z&interval=month&start_date=1972-06-20T11%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:01:44 GMT
+  recorded_at: Tue, 12 Jun 2018 01:50:54 GMT
   digest: 7a10a4ffc01908a420edc519725c7e6cef9846e1
 - request:
     method: post
@@ -955,14 +900,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-07-13T11%3A59%3A59.999Z&interval=month&start_date=1972-06-20T11%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:26 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:35 GMT
   digest: 2dffcca511448ef123967e72d0176f1adf15c9a1
 - request:
     method: post
@@ -972,14 +917,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-09-14T23%3A59%3A59.000Z&interval=month&start_date=1972-08-22T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:58:59 GMT
+  recorded_at: Mon, 11 Jun 2018 20:14:43 GMT
   digest: 0e4a4d8ee44a1695ab4f9d9c10accf80c2c47549
 - request:
     method: post
@@ -989,14 +934,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-01-12T12%3A00%3A00.000Z&interval=month&start_date=1972-12-20T12%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:48 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:02 GMT
   digest: dde790418b3d01ef857064c4e1acbd8c6057f848
 - request:
     method: post
@@ -1006,14 +951,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T23%3A59%3A59.998Z&interval=month&start_date=1973-02-13T23%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:23 GMT
+  recorded_at: Tue, 12 Jun 2018 04:22:26 GMT
   digest: a908fc1743509e8380f47065fc96c16dff7fcf55
 - request:
     method: post
@@ -1023,14 +968,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T23%3A59%3A59.999Z&interval=month&start_date=1973-02-13T23%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:28:22 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:38 GMT
   digest: 2c642c5dbbfc9e957edf3b78934d57c7ee1068d7
 - request:
     method: post
@@ -1040,32 +985,15 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.575Z&interval=month&start_date=1973-02-14T19%3A20%3A31.575Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 16 Mar 2018 14:05:10 GMT
+  recorded_at: Tue, 12 Jun 2018 01:51:04 GMT
   digest: b35f4ef1c976d2bf19c093131d556ae745a93997
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.576Z&interval=month&start_date=1973-02-14T19%3A20%3A31.576Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Tue, 13 Mar 2018 04:12:10 GMT
-  digest: 99502cb460f49c258684b7fa25e8235daddcf2b4
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1074,14 +1002,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.577Z&interval=month&start_date=1973-02-14T19%3A20%3A31.577Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 14 Mar 2018 02:42:36 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:33 GMT
   digest: 1a6cfb3d4853c3f2f7ef5596052354d0584663cb
 - request:
     method: post
@@ -1091,14 +1019,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.578Z&interval=month&start_date=1973-02-14T19%3A20%3A31.578Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:16 GMT
+  recorded_at: Tue, 12 Jun 2018 01:24:12 GMT
   digest: 55f308c8fe1c17efe036b3b4ad5fdc99073c034a
 - request:
     method: post
@@ -1108,14 +1036,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-07T23%3A59%3A59.997Z&interval=month&start_date=1974-02-13T23%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:24 GMT
+  recorded_at: Tue, 12 Jun 2018 01:51:02 GMT
   digest: 27f145d6ea5b5abaf1ff0fde1135b9b7e4124e66
 - request:
     method: post
@@ -1125,14 +1053,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-07T23%3A59%3A59.998Z&interval=month&start_date=1974-02-13T23%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:28:23 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:39 GMT
   digest: 5b230a78a8dff8b3df82399c73770c052e6559bc
 - request:
     method: post
@@ -1142,14 +1070,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-07T23%3A59%3A59.999Z&interval=month&start_date=1974-02-13T23%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:20 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:32 GMT
   digest: 707c98124e0dc95609eb4d276931e340941cfd82
 - request:
     method: post
@@ -1159,14 +1087,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-08T00%3A00%3A00.000Z&interval=month&start_date=1974-02-14T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:55:24 GMT
+  recorded_at: Mon, 11 Jun 2018 20:20:55 GMT
   digest: fe610e70038185be47bcd3b2804a6a760083c2d9
 - request:
     method: post
@@ -1176,14 +1104,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-12T00%3A00%3A00.000Z&interval=month&start_date=1974-02-18T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:59:01 GMT
+  recorded_at: Mon, 11 Jun 2018 20:16:44 GMT
   digest: f4c28a5839bd38d8bc1e35e9a1893254e575660c
 - request:
     method: post
@@ -1193,14 +1121,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2005-03-08T23%3A59%3A59.997Z&interval=month&start_date=1975-02-14T23%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 13 Mar 2018 13:45:38 GMT
+  recorded_at: Tue, 12 Jun 2018 01:51:00 GMT
   digest: 92081f361a5c3c18406ecb412686cb8c9ba5850e
 - request:
     method: post
@@ -1210,14 +1138,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2005-03-08T23%3A59%3A59.999Z&interval=month&start_date=1975-02-14T23%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:18 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:30 GMT
   digest: 4e08f3e7e5825535559a2e3fb8089d2383a6f14a
 - request:
     method: post
@@ -1227,14 +1155,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2014-04-01T00%3A00%3A00.000Z&interval=hour&start_date=2013-12-29T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 15:53:48 GMT
+  recorded_at: Mon, 11 Jun 2018 20:35:42 GMT
   digest: 3fc0e4b435ec7c890615c260f1923795114d9839
 - request:
     method: post
@@ -1244,14 +1172,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2014-09-02T00%3A00%3A00.000Z&interval=day&start_date=2011-08-31T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:36:54 GMT
+  recorded_at: Mon, 11 Jun 2018 20:31:42 GMT
   digest: c31525470cc691ccd1259728674ab6a9d0557c2c
 - request:
     method: post
@@ -1261,14 +1189,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2015-02-05T00%3A26%3A03.157Z&interval=day&start_date=2012-02-03T00%3A26%3A03.157Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:10 GMT
+  recorded_at: Mon, 11 Jun 2018 20:42:02 GMT
   digest: 3d18e43082abf59784c67870e66fef858fd72c94
 - request:
     method: post
@@ -1278,14 +1206,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:09 GMT
+  recorded_at: Mon, 11 Jun 2018 20:42:00 GMT
   digest: 619191b0ce26e3da83e580484b1c1335a50386f1
 - request:
     method: post
@@ -1295,14 +1223,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2015-03-26T23%3A33%3A56.842Z&interval=day&start_date=2012-03-23T23%3A33%3A56.842Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:11 GMT
+  recorded_at: Mon, 11 Jun 2018 20:42:06 GMT
   digest: bfc767f62779c440aff704d69d197b41155e09d3
 - request:
     method: post
@@ -1312,7 +1240,7 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2016-01-10T01%3A59%3A59.500Z&interval=day&start_date=2013-01-07T01%3A59%3A59.500Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
@@ -1320,9 +1248,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:31:44 GMT
-  digest: 5c32993ef6061e8fc4a13be732a40b8f00b47e62
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:14:08 GMT
+  digest: 33534ad393d6559dcc57af74c7a58509d5a74590
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1331,14 +1259,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2016-02-12T12%3A30%3A00.000Z&interval=day&start_date=2013-02-09T12%3A30%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:57:08 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:59 GMT
   digest: eb8096ccd038ee9a43d498fe3b1285ac318ce1b1
 - request:
     method: post
@@ -1348,14 +1276,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2062-08-27T11%3A59%3A59.998Z&interval=year&start_date=1912-05-06T11%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:01:43 GMT
+  recorded_at: Tue, 12 Jun 2018 01:50:53 GMT
   digest: 1863351930c4460df29d20b3149acadf4e1e1534
 - request:
     method: post
@@ -1365,14 +1293,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2062-08-27T11%3A59%3A59.999Z&interval=year&start_date=1912-05-06T12%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:25 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:34 GMT
   digest: cd91552451e8f8c4853b7973c71bdf9728a95708
 - request:
     method: post
@@ -1382,14 +1310,14 @@ http_interactions:
       string: concept_id=C179003030-ORNL_DAAC&end_date=2063-02-26T12%3A00%3A00.000Z&interval=year&start_date=1912-11-05T12%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:01:51 GMT
+  recorded_at: Mon, 11 Jun 2018 20:21:06 GMT
   digest: 3ed138e836c0907f25449bfe86dc2de400cdc898
 - request:
     method: post
@@ -1399,49 +1327,53 @@ http_interactions:
       string: concept_id=C179003380-ORNL_DAAC&end_date=2011-01-01T23%3A59%3A59.000Z&interval=day&start_date=2007-12-30T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:02 GMT
+  recorded_at: Mon, 11 Jun 2018 20:39:42 GMT
   digest: e41480ffaf1a19861a77d5e08a9e924c79098082
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
-      string: concept_id=C179872798-USGS_EROS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z&two_d_coordinate_system%5Bcoordinates%5D=24-24%3A24-24&two_d_coordinate_system%5Bname%5D=WRS-1
+      string: concept_id=C179014699-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:56:57 GMT
-  digest: 58cf70bbc9f6d007aeb02edfb87265f24b065154
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 12 Jun 2018 00:30:13 GMT
+  digest: 384291acf634c83deee10a1d432b91538968a24b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
-      string: concept_id=C179872798-USGS_EROS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z&two_d_coordinate_system%5Bname%5D=WRS-1
+      string: concept_id=C181655997-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:56:56 GMT
-  digest: 6244f90fc0dea2e7f9ca76e53d84212c508f525d
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:38:07 GMT
+  digest: 826632a4a8fe77cedb87c828f6b552254c5a6e5b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1450,7 +1382,7 @@ http_interactions:
       string: concept_id=C203234523-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
@@ -1458,9 +1390,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Mon, 12 Mar 2018 16:31:50 GMT
-  digest: a466e22262071aff5821ba53beb975e198f08527
+      - edsc-access
+  recorded_at: Mon, 11 Jun 2018 20:14:17 GMT
+  digest: 1d8017af19b5424ce04ba6eae35bb6a5750b27da
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1469,14 +1401,14 @@ http_interactions:
       string: concept_id=C4543622-LARC_ASDC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:05:09 GMT
+  recorded_at: Mon, 11 Jun 2018 20:28:13 GMT
   digest: db98a6a491598d5e3bb59cf0881b228613ab6083
 - request:
     method: post
@@ -1486,32 +1418,15 @@ http_interactions:
       string: concept_id=C4543622-LARC_ASDC&end_date=2018-03-02T23%3A59%3A59.000Z&interval=day&start_date=2015-02-28T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:59 GMT
+  recorded_at: Tue, 12 Jun 2018 04:18:03 GMT
   digest: e4dfa97070c4b322697917b61416d4c856a474e1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:26:39 GMT
-  digest: c95e719b96d6b41bdc80e42a00f785a8bb9dfd36
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1520,14 +1435,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:06 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:19 GMT
   digest: 279755864deffb2711918cc792d1569a0283eff4
 - request:
     method: post
@@ -1537,14 +1452,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 13 Mar 2018 05:31:33 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:33 GMT
   digest: 72f8dffa956029f5f59c2389a68c89c928481428
 - request:
     method: post
@@ -1554,14 +1469,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:04 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:16 GMT
   digest: 3d16ca76035b153e58e3a8b9f7bc4a7987e0358e
 - request:
     method: post
@@ -1571,14 +1486,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366892-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366930-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:00 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:12 GMT
   digest: 1182c03256b397eb26882e5ec2fdbf03f5f7cd93
 - request:
     method: post
@@ -1588,14 +1503,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366892-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:59 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:09 GMT
   digest: 633e5defc9eded420269f23bb061d21021d63f7a
 - request:
     method: post
@@ -1605,14 +1520,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:57 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:08 GMT
   digest: c5790ad005a532e35b7b09fd8dbbe7ccbe6d536f
 - request:
     method: post
@@ -1622,14 +1537,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:56 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:06 GMT
   digest: 17c5f001347049f432a2206455972b5d2d9cf0b3
 - request:
     method: post
@@ -1639,14 +1554,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:55 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:05 GMT
   digest: 86f573fe0751095adba00f92f2b5b9034285b97e
 - request:
     method: post
@@ -1656,14 +1571,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:54 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:03 GMT
   digest: fd609ce960944754d3496b6cd6615fc1775607b9
 - request:
     method: post
@@ -1673,14 +1588,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:53 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:02 GMT
   digest: 9dc1924f14897b8ec443ab345405e7600c218bb9
 - request:
     method: post
@@ -1690,14 +1605,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:51 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:00 GMT
   digest: 44d5dbf4c595fc8543433a4a45e3f8a87e28a902
 - request:
     method: post
@@ -1707,14 +1622,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:50 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:59 GMT
   digest: fb47ca63120e551478d525d78b5ceb68399c5c1b
 - request:
     method: post
@@ -1724,14 +1639,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:48 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:58 GMT
   digest: e0c1d042f05daaf7152c15106ef1e57c339097c5
 - request:
     method: post
@@ -1741,14 +1656,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:46 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:57 GMT
   digest: 6809ea0c3d8d7b826c7132a6cd9742fa70842626
 - request:
     method: post
@@ -1758,14 +1673,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:45 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:55 GMT
   digest: 81b651b8d1eb23df3c6ef53744ff5531dfb69462
 - request:
     method: post
@@ -1775,14 +1690,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:44 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:54 GMT
   digest: 58d75d8cda674ed6f9662860251e0aa137d0c795
 - request:
     method: post
@@ -1792,14 +1707,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:43 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:53 GMT
   digest: b2e2ef37198f70a1423736aa1c6b7c164cd9a503
 - request:
     method: post
@@ -1809,14 +1724,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:42 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:52 GMT
   digest: f3f22b22df3346216cbba5fc3ee9e9dbc00db610
 - request:
     method: post
@@ -1826,14 +1741,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:41 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:50 GMT
   digest: 67fff40d280707ba739ab9802a9333189e027f8d
 - request:
     method: post
@@ -1843,14 +1758,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:40 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:50 GMT
   digest: ac8806fc8104cb4f7347b2f293d1db0ddbe57915
 - request:
     method: post
@@ -1860,14 +1775,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:39 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:48 GMT
   digest: dfac9225095f0bdb08439c217a88062dce875aa5
 - request:
     method: post
@@ -1877,14 +1792,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:37 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:47 GMT
   digest: ef4a818f7f48e160eec387ecc6edfde9d5303d7d
 - request:
     method: post
@@ -1894,14 +1809,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:31 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:41 GMT
   digest: 815c7a7ba5fa4d8fdbbe069969e75ad7a4c5df1e
 - request:
     method: post
@@ -1911,14 +1826,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:23 GMT
+  recorded_at: Tue, 12 Jun 2018 01:11:09 GMT
   digest: 7de31f7f7cb5966707f84c047636ec732ca7ea39
 - request:
     method: post
@@ -1928,14 +1843,14 @@ http_interactions:
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:11 GMT
+  recorded_at: Mon, 11 Jun 2018 20:40:34 GMT
   digest: 7cf20186fa682de16f0e8de0fbf440a4a67aba29
 - request:
     method: post
@@ -1945,14 +1860,14 @@ http_interactions:
       string: concept_id=C1000000029-EDF_OPS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=%2Afoo&readable_granule_name%5B%5D=%2Afoo2&readable_granule_name%5B%5D=%2Afoo3&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:03:57 GMT
+  recorded_at: Mon, 11 Jun 2018 20:42:39 GMT
   digest: 1da38b4dee99d98441d839d3aba9cbafbe84c823
 - request:
     method: post
@@ -1962,14 +1877,14 @@ http_interactions:
       string: concept_id=C1000000029-EDF_OPS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:03:55 GMT
+  recorded_at: Mon, 11 Jun 2018 20:42:37 GMT
   digest: 4bee31c6c15b48de1ec7edba8f3c78f063050980
 - request:
     method: post
@@ -1979,14 +1894,14 @@ http_interactions:
       string: concept_id=C1000001002-EDF_OPS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 16:02:25 GMT
+  recorded_at: Tue, 12 Jun 2018 01:02:16 GMT
   digest: 40aeb9e9068c7af924f875ac30e2b085d2a155ac
 - request:
     method: post
@@ -1996,14 +1911,14 @@ http_interactions:
       string: concept_id=C24931-LAADS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:04:21 GMT
+  recorded_at: Mon, 11 Jun 2018 20:41:47 GMT
   digest: 79a3a79488ba12685b94a83ed49835b584df541a
 - request:
     method: post
@@ -2013,13 +1928,13 @@ http_interactions:
       string: concept_id=C1000-LPDAAC_TS2&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 12 Mar 2018 17:03:06 GMT
+  recorded_at: Mon, 11 Jun 2018 20:39:32 GMT
   digest: 44a7421576fb3d0dd0fa17e7ead9948ca9bde89a
 recorded_with: VCR 2.6.0

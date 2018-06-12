@@ -6,6 +6,9 @@ describe 'Collection Colormaps', reset: false do
 
   before :all do
     load_page :search
+
+    login
+    wait_for_xhr
   end
   
   context 'when viewing a GIBS-enabled collection' do

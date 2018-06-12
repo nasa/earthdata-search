@@ -34,7 +34,7 @@ $dropdown-highlight: $ocean-blue;
 // Badges
 $nrt: #01cf6b;
 $gibs: #ec8101;
-$subsetting: #1b97e1;
+$customizable: #1b97e1;
 $cwic: #ccaa00;
 
 // Toolbar
@@ -61,3 +61,8 @@ $facet-overlay-width: 280px;
 
 // Collapsed Overlay
 $collapsed-overlay-width: 450px;
+
+// Order Status Badges
+$status-badge-default: #34495e;
+$status-badge-success: #27ae60;
+$status-badge-failure: #e74c3c;

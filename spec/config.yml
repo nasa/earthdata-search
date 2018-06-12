@@ -45,9 +45,15 @@ urs_tokens:
       refresh_token: <%= (ENV['test_urs_edscbasic_refresh_token'] || 'edscbasic-refresh').inspect %>
     prod:
       <<: *basic_defaults
+      access_token: <%= (ENV['test_urs_basic_access_token_prod'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_basic_refresh_token_prod'] || 'edsc-refresh').inspect %>
     uat:
       <<: *basic_defaults
+      access_token: <%= (ENV['test_urs_basic_access_token_uat'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_basic_refresh_token_uat'] || 'edsc-refresh').inspect %>
     sit:
       <<: *basic_defaults
+      access_token: <%= (ENV['test_urs_basic_access_token_sit'] || 'edsc-access').inspect %>
+      refresh_token: <%= (ENV['test_urs_basic_refresh_token_sit'] || 'edsc-refresh').inspect %>
     dev:
       <<: *basic_defaults

@@ -198,8 +198,11 @@ ns.GranuleLayer = do (L
         L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
       else
         this._url = this._originalUrl || this._url;
-        L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
-
+        gibsUrl = L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
+        # Test configuration will not have the '//' substring 
+        return gibsUrl if gibsUrl.lastIndexOf('//') == -1
+        pos = gibsUrl.lastIndexOf('//');
+        gibsUrl.substring(0,pos) + '/' + date + gibsUrl.substring(pos+1)
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0

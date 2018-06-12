@@ -20,6 +20,13 @@
     border: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+
+    &.download-dropdown {
+      margin-bottom: 4em;
+      max-height: 385px;
+      overflow: hidden;
+      overflow-y: scroll;
+    }
   }
 
   .dropdown-form {
@@ -187,4 +194,34 @@ input.day-of-year-input {
       }
     }
   }
+}
+
+.download-dropdown-header {
+  padding: 0.5em 1.125em 0;
+  font-size: 0.85em;
+  font-weight: 700;
+
+  p {
+    margin: 0;
+  }
+}
+
+.download-dropdown-header-secondary {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.download-dropdown-content {
+  padding: 0.5em 1em 0.5em;
+  color: #888;
+
+  ul > li {
+    color: #424242;
+
+    &:hover {
+      color: #888;
+    }
+  }
+
+
 }

@@ -86,7 +86,7 @@ class CollectionsController < ApplicationController
     params = params.except('include_facets') if Rails.env.test? && !test_facets
 
     features = Hash[Array.wrap(params.delete(:features)).map { |f| [f, true] }]
-    if features['Subsetting Services']
+    if features['Customizable']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
     end
@@ -151,7 +151,7 @@ class CollectionsController < ApplicationController
         'children' => [
           { 'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false },
           { 'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false },
-          { 'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false }
+          { 'title' => 'Customizable', 'type' => 'filter', 'applied' => false, 'has_children' => false }
         ]
       }
     ]

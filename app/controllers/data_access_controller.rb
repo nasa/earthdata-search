@@ -8,6 +8,7 @@ class DataAccessController < ApplicationController
   include CollectionUtils
   include GranuleUtils
   include ServiceUtils
+  include OrderUtils
 
   respond_to :json
 
@@ -55,103 +56,59 @@ class DataAccessController < ApplicationController
     retrieval.user = user
     retrieval.project = project
     retrieval.save!
-
-    new_job = Retrieval.delay.process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
-    Rails.logger.info("A new delayed job with ID " + new_job.id.to_s + " has been created: " + params[:project]) 
-
+    
+    queue = "Default"
+    daacs = ['NSIDC', 'LPDAAC']
+    collections = JSON.parse(params[:project])['collections']
+    daacs.each do |daac|
+      collections.each do |collection|
+        if collection['id'].include? daac
+          queue = daac
+          break
+        end
+      end
+      if queue != "Default"
+        break
+      end
+    end
+    new_job = Retrieval.delay(:queue => queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
+    Rails.logger.info("Delayed Job " + new_job.id.to_s + " has been sent into queue " + new_job.queue.to_s + " with:" + params[:project]) 
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
 
   def retrieval
     # TODO PQ EDSC-1039: Include portal information here
+    Rails.logger.info "Retrieving order status information for Retrieval Object ##{params[:id]}"
+
     id = Retrieval.deobfuscate_id params[:id].to_i
     @retrieval = Retrieval.find_by_id id
+
     render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
 
-    Rails.logger.info(@retrieval.to_json)
+    user = current_user
+    render file: "#{Rails.root}/public/401.html", status: :unauthorized  and return unless user
+    render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == @retrieval.user
 
     orders = @retrieval.collections.map do |collection|
       collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
     end.flatten.compact
 
+    Rails.logger.info "Retrieval Object ##{params[:id]} has #{orders.count} Order(s)"
+
+    # Retrieve status information about each order within this
+    # request and hydrate the objects with necessary data
+    hydrate_orders(orders)
+
     service_orders = @retrieval.collections.map do |collection|
       collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
     end.flatten.compact
 
-    if orders.size > 0
-      order_ids = orders.map {|o| o['order_id']}
-      order_ids.each do |order_id|
-          order_response = order_id && order_id.compact.size > 0 ? echo_client.get_orders({id: order_id}, token) : nil
-          if order_response && order_response.success?
-            echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
+    Rails.logger.info "Retrieval Object ##{params[:id]} has #{service_orders.count} Service Order(s)"
 
-            orders.each do |order|
-              Array.wrap(order['order_id']).each do |id|
-                echo_order = echo_orders[id]
+    # Retrieve status information about each order within this
+    # request and hydrate the objects with necessary data
+    hydrate_service_orders(service_orders)
 
-                if echo_order
-                  order['order_status'] = echo_order['state']
-                else
-                  # echo order_id doesn't exist yet
-                  order['order_status'] ||= 'creating'
-                end
-              end
-            end
-          end
-          # if no order numbers exist yet
-          if order_response.nil?
-            orders.each do |order|
-              order['order_status'] ||= 'creating'
-            end
-          end
-      end
-    end
-
-    # order_id is an array from retrieval.rb, but I need order_status, number_processed, total_number, etc. to match that array of order_ids
-    if service_orders.size > 0
-      service_orders.each do |s|
-        s['order_status'] = 'creating'
-        s['service_options'] = {}
-        s['service_options']['number_processed'] = 0
-        s['service_options']['total_number'] = 0
-        s['service_options']['download_urls'] = []
-
-        if (s['error_code'].is_a? String) || s['error_code'].present? && !s['error_code'].compact.empty?
-          s['order_status'] = 'failed'
-        elsif s['collection_id']
-          header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
-
-          Array.wrap(s['order_id']).each do |order_id|
-            response = ESIClient.get_esi_request(s['collection_id'], order_id, echo_client, token, header_value).body
-            response_json = MultiXml.parse(response)
-            urls = []
-            if response_json['agentResponse']
-              status = response_json['agentResponse']['requestStatus']
-              process_info = response_json['agentResponse']['processInfo']
-              urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
-            else
-              status = {'status' => 'failed'}
-              s['error_code'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Code']
-              s['error_message'] = Array.wrap(response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Message'])
-            end
-
-            s['order_status'] = status['status']
-            s['service_options']['number_processed'] += status['numberProcessed'].to_i
-            s['service_options']['total_number'] += status['totalNumber'].to_i
-            s['service_options']['download_urls'] += urls
-
-            if s['order_status'] == 'failed' && response_json['Exception'].nil? && !process_info.nil?
-              s['error_message'] = Array.wrap(process_info['message'])
-              s['error_code'] = 'Error Code Not Provided'
-            end
-          end
-        end
-      end
-    end
-
-    user = current_user
-    render file: "#{Rails.root}/public/401.html", status: :unauthorized  and return unless user
-    render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == @retrieval.user
     respond_to do |format|
       format.html
       format.json { render json: @retrieval.project.merge(id: @retrieval.to_param).to_json }

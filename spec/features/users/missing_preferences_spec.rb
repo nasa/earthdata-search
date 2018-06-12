@@ -11,7 +11,7 @@ describe 'User missing ordering preferences', reset: false do
       login 'edscbasic'
       wait_for_xhr
 
-      click_button 'Download Data'
+      click_button 'Download All'
       wait_for_xhr
 
       choose 'Stage for Delivery'
@@ -32,7 +32,7 @@ describe 'User missing ordering preferences', reset: false do
       login 'edscbasic'
       wait_for_xhr
 
-      click_button 'Download Data'
+      click_button 'Download All'
       wait_for_xhr
 
       choose 'Direct Download'

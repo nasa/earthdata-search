@@ -23,15 +23,15 @@
                   </span>
                   <!-- /ko -->
                   <!-- ko if: opendap() -->
-                  <span href="#" class="badge badge-subsetting">
-                    <span class="badge-content" data-tooltip="true" title="Supports spatial and parameter subsetting">Subsetting</span>
+                  <span href="#" class="badge badge-customizable">
+                    <span class="badge-content" data-tooltip="true" title="Supports spatial and parameter customizable">Customizable</span>
                     <!-- ko if: has_spatial_subsetting() || has_variables() || has_transforms() || has_formats() -->
                     <span  class="badge-content badge-content-secondary">
                       <!-- ko if: has_spatial_subsetting() -->
-                      <i class="badge-content-icon fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Spatial subsetting options available"></i>
+                      <i class="badge-content-icon fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Spatial customizable options available"></i>
                       <!-- /ko -->
                       <!-- ko if: has_variables() -->
-                      <i class="badge-content-icon fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Variable subsetting options available"></i>
+                      <i class="badge-content-icon fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Variable customizable options available"></i>
                       <!-- /ko -->
                       <!-- ko if: has_transforms() -->
                       <i class="badge-content-icon fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="top" data-title="Data transformation options available"></i>

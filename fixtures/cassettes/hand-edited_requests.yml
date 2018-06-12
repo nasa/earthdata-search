@@ -129,7 +129,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Echo-Token:
       - edsc
   recorded_at: Tue, 19 Aug 2014 20:12:08 GMT

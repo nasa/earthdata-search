@@ -138,8 +138,10 @@ RSpec.configure do |config|
         ['test'].each do |rails_env|
           client_id = config_services['urs'][rails_env][urs_root_url]
 
-          token = "#{configured_token}:#{client_id}" unless configured_token.include? '-'
-          normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
+          token = (configured_token.include? '-') ? configured_token : "#{configured_token}:#{client_id}"
+          substitute = token_key
+          substitute += "-access" unless configured_token.include? '-'
+          normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, substitute)
         end
       end
     end

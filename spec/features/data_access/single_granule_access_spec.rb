@@ -6,7 +6,6 @@ describe 'Single Granule Data Access', reset: false do
   context 'when the user is not logged in' do
     before(:each) do
       load_page :search, focus: downloadable_collection_id
-      wait_for_xhr
       first_granule_list_item.click_link "Configure and download single granule data"
     end
 

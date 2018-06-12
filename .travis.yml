@@ -41,7 +41,7 @@ env:
     - CI_NODE_INDEX=8
     - JASMINE=true
 branches:
-  only: # Only build master. Pull requests to master also get built.
+  only: # Only build master and e2e-services. All pull requests also get built
     - master
     - e2e-services
 deploy:

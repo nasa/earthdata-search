@@ -19,6 +19,11 @@
   &:hover {
     border-left-color: #30AB62;
     background-color: #2c2d2e;
+
+    .facets-light & {
+      background-color: #f1f1f1;
+      color: #2b2b2b;
+    }
   }
 
   &:first-child {
@@ -41,7 +46,6 @@
     width: 1em;
     height: 1em;
     vertical-align: top;
-    margin-top: 3px;
     opacity: .3;
     flex: none;
   }
@@ -53,6 +57,14 @@
   input[type="checkbox"]:focus {
     outline: 0 none;
     box-shadow: none;
+  }
+
+  .facets-light & {
+    color: #424242;
+  }
+
+  .facets-modal & {
+    padding-right: 15px;
   }
 }
 
@@ -109,6 +121,29 @@
   background-color: #121315;
   color: #fff;
   padding: 0;
+}
+
+.panel-body-header {
+  min-height: 2.15em;
+  margin: 0;
+  padding: 0.4em 0.4em 0.4em 1.35em;
+  color: #8c8c8c;
+  margin: 0;
+  font-size: 0.825em;
+
+  a {
+    color: #8c8c8c;
+
+    &:hover {
+      color: #797979;
+    }
+  }
+}
+
+.panel-body-view-all {
+  float: right;
+  font-weight: 700;
+  color: #8c8c8c;
 }
 
 .panel-default {
@@ -183,6 +218,10 @@
   white-space: nowrap;
   overflow-x: hidden;
   color: #ffffff;
+
+  .facets-light & {
+    color: #424242;
+  }
 }
 
 .facets-item.facets-term {
@@ -201,4 +240,12 @@
   padding-left: 4.2em;
 }
 
+.facets-modal {
+  padding-bottom: 15px;
+}
 
+.facets-modal-divider {
+  padding: 15px;
+  font-size: 1.25em;
+  font-weight: bold;
+}

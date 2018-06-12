@@ -30,7 +30,6 @@ describe 'Data download page', reset: false do
   # browseable_collection_params = {project: [browseable_collection_id],
   #                              temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
 
-  
 
   # before(:all) do
   #   AccessConfiguration.destroy_all

@@ -53,12 +53,15 @@ ns.ProjectList = do (ko
     constructor: (@project, @collectionResults) ->
       @visible = ko.observable(false)
       @needsTemporalChoice = ko.observable(false)
+      @moreDetailsActive = ko.observableArray()
+      @downloadLinksActive = ko.observableArray()
 
       @collectionLinks = ko.computed(@_computeCollectionLinks, this, deferEvaluation: true)
       @collectionsToDownload = ko.computed(@_computeCollectionsToDownload, this, deferEvaluation: true)
       @collectionOnly = ko.computed(@_computeCollectionOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
       @submittedServiceOrders = ko.computed(@_computeSubmittedServiceOrders, this, deferEvaluation: true)
+      @submittedServiceOrderTotal = ko.computed(@_computeSubmittedServiceOrderTotal, this, deferEvaluation: true)
       @pollProjectUpdates = ko.computed(@_computeProjectUpdates, this, deferEvaluation: true)
       @pollingIntervalId = ko.observable(null)
 
@@ -103,8 +106,8 @@ ns.ProjectList = do (ko
       if limit && collection.granuleCount() > limit
         message = collection.tags()['edsc.collection_alerts']['data']['message']
         if message && message.length > 0
-          $("#delayOptionalMessage").text("Message from data provider: " + message) 
-        else 
+          $("#delayOptionalMessage").text("Message from data provider: " + message)
+        else
           $("#delayOptionalMessage").text("")
         $("#delayWarningModal").modal('show')
       else
@@ -216,6 +219,7 @@ ns.ProjectList = do (ko
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
+            order_status_to_classname: @orderStatusToClassName(m.orderStatus)
             cancel_link: urlUtil.fullPath("/data/remove?order_id=#{m.orderId}") if canCancel
             is_in_progress: m.orderStatus == 'creating' || m.orderStatus.indexOf('PROCESSING') == 0 || canCancel
             dropped_granules: m.droppedGranules
@@ -248,7 +252,7 @@ ns.ProjectList = do (ko
             @project.fromJson(data)
           complete: =>
             shouldPoll = false
-        )), 5000)
+        )), 15000)
         @pollingIntervalId(intervalId)
 
     _computeSubmittedServiceOrders: ->
@@ -260,24 +264,54 @@ ns.ProjectList = do (ko
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
           @pollProjectUpdates()
-          number_processed = m.serviceOptions.number_processed
+          is_more_details_active = @moreDetailsActive().indexOf(collection.id) > -1
+          is_download_links_active = @downloadLinksActive().indexOf(collection.id) > -1
+          total_processed = m.serviceOptions.total_processed
           total_number = m.serviceOptions.total_number
-          percent_done = (number_processed / total_number * 100).toFixed(0)
-
+          percent_done = (total_processed / total_number * 100).toFixed(2)
+          total_orders = m.serviceOptions.total_orders
+          has_downloads_available = !$.isEmptyObject(m.serviceOptions.download_urls)
+          orders = []
+          for order in m.serviceOptions.orders
+            orders.push
+              order_id: order.order_id
+              contact: order.contact
+              order_status: order.order_status
+              total_number: order.total_number
+              total_processed: order.total_processed
+              download_urls: order.download_urls
+              percent_done: (order.total_processed / order.total_number * 100).toFixed(2)
           serviceOrders.push
+            collection_id: collection.id
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus
+            order_status_to_classname: @orderStatusToClassName(m.orderStatus)
             is_in_progress: m.orderStatus != 'creating' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
             download_urls: m.serviceOptions.download_urls
-            number_processed: m.serviceOptions.number_processed
+            has_downloads_available: has_downloads_available
+            total_processed: m.serviceOptions.total_processed
             total_number: m.serviceOptions.total_number
             percent_done: percent_done
             percent_done_str: percent_done + '%'
             downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             error_code: m.errorCode
             error_message: m.errorMessage
+            total_orders: m.serviceOptions.total_orders
+            complete_orders: m.serviceOptions.total_complete
+            orders: orders
+            contact: if orders && orders.length then orders[0].contact else false
+            is_more_details_active: is_more_details_active
+            is_download_links_active: is_download_links_active
       serviceOrders
+
+    _computeSubmittedServiceOrderTotal: ->
+      serviceOrders = []
+      serviceOrderTotal = 0
+      for projectCollection in @project.accessCollections()
+        for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
+          serviceOrderTotal += m.serviceOptions.orders.length
+      serviceOrderTotal
 
     _computeCollectionOnly: ->
       collections = []
@@ -328,5 +362,23 @@ ns.ProjectList = do (ko
         path = '/projects/new?' + urlUtil.currentQuery()
       $(window).trigger('edsc.save_workspace')
       window.location.href = urlUtil.fullPath(path)
+
+    toggleMoreDetails: (collection_data) =>
+      if collection_data.collection_id not in @moreDetailsActive()
+        @moreDetailsActive.push(collection_data.collection_id)
+      else
+        @moreDetailsActive.splice(@moreDetailsActive().indexOf(collection_data.collection_id), 1)
+
+    toggleViewDownloads: (collection_data) =>
+      if collection_data.collection_id not in @downloadLinksActive()
+        @downloadLinksActive.push(collection_data.collection_id)
+      else
+        @downloadLinksActive.splice(@downloadLinksActive().indexOf(collection_data.collection_id), 1)
+
+    orderStatusToClassName: (status) ->
+      status.replace(' ', '-')
+
+    getPageURL: ->
+      window.location.href.replace(window.location.search, '')
 
   exports = ProjectList

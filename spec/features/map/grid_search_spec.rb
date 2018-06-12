@@ -94,7 +94,8 @@ describe "Grid coordinate search", reset: false do
       end
 
       context 'entering valid tile numbers and viewing granule results' do
-        hook_granule_results('Landsat 1-5 Multispectral Scanner V1')
+        # hook_granule_results('Landsat 1-5 Multispectral Scanner V1')
+        hook_granule_results('Tri-Decadal Global Landsat Orthorectified MSS Scene V1')
 
         before :all do
           fill_in 'map-grid-coordinates', with: "24,24\t"
@@ -105,7 +106,7 @@ describe "Grid coordinate search", reset: false do
         end
 
         it 'filters granules to those matching the given tile' do
-          expect(first_granule_list_item).to have_text('024024')
+          expect(first_granule_list_item).to have_text('024R24')
         end
       end
 
