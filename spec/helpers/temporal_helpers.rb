@@ -19,7 +19,7 @@ module Helpers
       if collection_n.nil?
         script += "})(edsc.page.query.temporal.applied);"
       elsif collection_n == :focus
-        script += "})(edsc.page.project.focus().granuleDatasource().temporal());"
+        script += "})(edsc.page.project.focus().collection.granuleDatasource().temporal());"
       else
         script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
       end
@@ -34,7 +34,7 @@ module Helpers
       if collection_n.nil?
         script += "})(edsc.page.query.temporal.applied);"
       elsif collection_n == :focus
-        script += "})(edsc.page.project.focus().granuleDatasource().temporal());"
+        script += "})(edsc.page.project.focus().collection.granuleDatasource().temporal());"
       else
         script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
       end

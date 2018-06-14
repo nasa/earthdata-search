@@ -360,7 +360,7 @@ ns.Project = do (ko,
       else
         @_collectionsById[id] for id in @_collectionIds()
 
-    _readFocus: -> @focusedProjectCollection()?.collection
+    _readFocus: -> @focusedProjectCollection()
     _writeFocus: (collection) =>
       observable = @focusedProjectCollection
       current = observable()
@@ -392,7 +392,7 @@ ns.Project = do (ko,
     _computeVisibleCollections: ->
       collections = (projectCollection.collection for projectCollection in @collections() when projectCollection.collection.visible())
 
-      focus = @focus()
+      focus = @focus()?.collection
       if focus && focus.visible() && collections.indexOf(focus) == -1
         collections.push(focus)
 
@@ -425,9 +425,19 @@ ns.Project = do (ko,
     addCollection: (collection) =>
       id = collection.id
 
-      @_collectionsById[id] ?= new ProjectCollection(this, collection)
+      # If a collection already exists with this id, no need to proceed
+      return if @_collectionsById[id]
+
+      # If the focused collection is the collection being added, don't
+      # instantiate a new object
+      if @focus()?.collection?.id == id
+        @_collectionsById[id] = @focus()
+      else
+        @_collectionsById[id] = new ProjectCollection(this, collection)
+
       @_collectionIds.remove(id)
       @_collectionIds.push(id)
+
       null
 
     removeCollection: (collection) =>
@@ -468,17 +478,16 @@ ns.Project = do (ko,
     _toQuery: ->
       return @_pending() if @_pending()?
       result = $.extend({}, @query.serialize())
-      collections = [@focus()].concat(projectCollection.collection for projectCollection in @collections())
+      collections = [@focus()?.collection].concat(projectCollection.collection for projectCollection in @collections())
       ids = (ds?.id ? '' for ds in collections)
       if collections.length > 1 || collections[0]
         queries = [{}]
         result.p = ids.join('!')
         start = 1
-        start = 0 if @focus() && !@hasCollection(@focus())
+        start = 0 if @focus()?.collection && !@hasCollection(@focus()?.collection)
         for collection, i in collections[start...]
           datasource = collection.granuleDatasource()
           projectCollection = @getProjectCollection(collection.id)
-
           query = {}
 
           # Only set the variables if there are any selected
@@ -515,7 +524,8 @@ ns.Project = do (ko,
           value.pg ?= []
           value.pg[0] ?= {}
 
-          # if focused collection id is duplicated in params, copy query
+          # If the focused collection is also in the project copy its customizations to
+          # the focused position, 0
           if focused
             for id, i in collectionIds
               if i > 0 && id == collectionIds[0]
@@ -524,17 +534,32 @@ ns.Project = do (ko,
           CollectionsModel.forIds collectionIds, @query, (collections) =>
             @_pending(null)
             pending = @_pendingAccess ? {}
-            offset = 0
-            offset = 1 unless focused
+
+            # Default where we begin examining collections to 1 as position 0 is
+            # reservered for the focused collection
+            offset = 1
+
+            # Update the offset if there is a focused collection
+            offset = 0 if focused
+
+            # `pg` holds the collection specific customizations that have been made
             queries = value["pg"] ? []
+
+            # Iterate through the collections returned from `forIds` based on
+            # the collection ids in the URL
             for collection, i in collections
               query = queries[i + offset]
 
               if i == 0 && focused
+                # Set the focused collection if one exists
                 @focus(collection)
               else
+                # If this collection is the same as the focused collection
+                # addCollection will look it up and use it to avoid redundant objects
                 @addCollection(collection)
 
+              # If customizations have been made to this collection they will exist in
+              # the query object defined above
               if query?
                 if query.variables
                   variables = query.variables.split('!')

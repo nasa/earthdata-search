@@ -22,7 +22,7 @@ describe "CWIC-enabled polygon searches", reset: false do
 
       it "filters the result list based on the minimum bounding rectangle", acceptance: true do
         expect(page).to have_content("Showing 20")
-        params = page.evaluate_script('edsc.page.project.focus().granuleDatasource().toQueryParams()')
+        params = page.evaluate_script('edsc.page.project.focus().collection.granuleDatasource().toQueryParams()')
         expect(params).to have_key('mbr')
         expect(params).not_to have_key('polygon')
       end
@@ -104,7 +104,7 @@ describe "CWIC-enabled polygon searches", reset: false do
     end
 
     it "filters the result list based on the polygon constraint", acceptance: true do
-      params = page.evaluate_script('edsc.page.project.focus().granuleDatasource().toQueryParams()')
+      params = page.evaluate_script('edsc.page.project.focus().collection.granuleDatasource().toQueryParams()')
       expect(params).not_to have_key('mbr')
       expect(params).to have_key('polygon')
     end
