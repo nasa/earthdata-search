@@ -33,7 +33,8 @@ ns.ProjectPage = do (ko,
   current = null
 
   $(document).ready ->
-    current.map = map = new window.edsc.map.Map(document.getElementById('bounding-box-map'), 'geo', true)
+    mapContainer = document.getElementById('bounding-box-map')
+    current.map = map = new window.edsc.map.Map(mapContainer, 'geo', true) if mapContainer
     
   class ProjectPage
     constructor: ->
