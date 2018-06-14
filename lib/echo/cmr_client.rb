@@ -81,7 +81,7 @@ module Echo
         page_size: 1,
         sort_key: ['-start_date']
       }
-      response = get_granules(defaults.merge(options))
+      response = get_granules(defaults.merge(options), token)
       if response.success? && response.body['feed'] && response.body['feed']['entry'].present?
         response.body['feed']['entry'].first
       else
