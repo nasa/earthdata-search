@@ -36,7 +36,7 @@
       <ul class="selected-collection-variables" data-bind="foreach: project.collections()">
         <!-- ko if: hasSelectedVariables() -->
         <li>
-          <span data-bind="text: $data.id"></span>
+          <span data-bind="text: $data.collection.id"></span>
           <ul data-bind="foreach: selectedVariables()">
             <li data-bind="text: $data.displayName()"></li>
           </ul>

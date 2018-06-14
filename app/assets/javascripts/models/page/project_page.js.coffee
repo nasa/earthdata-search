@@ -176,6 +176,11 @@ ns.ProjectPage = do (ko,
         projectCollection.collection.granuleDatasource().data().loadNextPage()
 
     downloadProject: =>
+      # TODO: This is work around for code that takes action on focused
+      # collections during the download process. This should be removed
+      # before e2e-services is considered 'production ready'
+      @project.focusedProjectCollection(null)
+
       $project = $('#data-access-project')
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()

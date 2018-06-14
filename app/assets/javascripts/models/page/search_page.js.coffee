@@ -93,10 +93,10 @@ ns.SearchPage = do (ko
 
     _updateFocusRenderState: (newFocus) =>
       if @_focus
-        @_focus.notifyRenderers('endSearchFocus')
+        @_focus.collection.notifyRenderers('endSearchFocus')
       @_focus = newFocus
       if @_focus
-        @_focus.notifyRenderers('startSearchFocus')
+        @_focus.collection.notifyRenderers('startSearchFocus')
 
     clearFilters: =>
       # EDSC-1448: The temporal dropdown is 'special' and needs to be programmatically closed...

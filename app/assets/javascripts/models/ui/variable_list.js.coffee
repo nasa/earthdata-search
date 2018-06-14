@@ -162,4 +162,8 @@ ns.VariableSelector = do (ko
     wipeObservables: =>
       @selectedKeyword(null)
 
+      # Wipe the variables to prevent a different collections
+      # data from flashing when presented
+      @variables([])
+
   exports = VariableSelector
