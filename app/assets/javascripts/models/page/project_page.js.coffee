@@ -63,7 +63,9 @@ ns.ProjectPage = do (ko,
       
       $(window).on 'edsc.save_workspace', (e) =>
         currentParams = @project.serialized()
-        urlUtil.saveState('/search/collections', currentParams, true)
+        urlUtil.saveState('/search/collections', currentParams, true, @workspaceNameField())
+        @workspaceName(@workspaceNameField())
+        $('.save-dropdown').removeClass('open')
 
       setTimeout((=>
         @_loadFromUrl()
