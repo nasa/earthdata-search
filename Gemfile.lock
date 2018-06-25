@@ -177,7 +177,7 @@ GEM
     powerpack (0.1.1)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
-    rack (1.6.9)
+    rack (1.6.10)
     rack-rewrite (1.5.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -259,7 +259,7 @@ GEM
     seed_dump (3.1.0)
       activerecord
       activesupport
-    sprockets (2.12.4)
+    sprockets (2.12.5)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
