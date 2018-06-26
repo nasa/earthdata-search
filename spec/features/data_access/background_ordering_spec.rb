@@ -119,7 +119,7 @@ describe 'Background jobs ordering', reset: false do
         page.evaluate_script('window.location.reload()')
       end
 
-      it 'shows the order in the "Failed" state without reloading the page' do
+      it 'shows the order in the "Failed" state' do
         expect(page).to have_no_text('Creating')
         expect(page).to have_text('Failed')
       end
