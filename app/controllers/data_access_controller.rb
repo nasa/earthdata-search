@@ -4,7 +4,6 @@ require 'digest/sha1'
 class DataAccessController < ApplicationController
   include ActionView::Helpers::TextHelper
   include GranuleUtils
-  include OrderUtils
 
   respond_to :json
 
@@ -53,21 +52,7 @@ class DataAccessController < ApplicationController
     retrieval.project = project
     retrieval.save!
     
-    queue = "Default"
-    daacs = ['NSIDC', 'LPDAAC']
-    collections = JSON.parse(params[:project])['collections']
-    daacs.each do |daac|
-      collections.each do |collection|
-        if collection['id'].include? daac
-          queue = daac
-          break
-        end
-      end
-      if queue != "Default"
-        break
-      end
-    end
-    new_job = Retrieval.delay(:queue => queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
+    new_job = Retrieval.delay(:queue => retrieval.determine_queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
     Rails.logger.info("Delayed Job " + new_job.id.to_s + " has been sent into queue " + new_job.queue.to_s + " with:" + params[:project]) 
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
@@ -76,7 +61,7 @@ class DataAccessController < ApplicationController
     # TODO PQ EDSC-1039: Include portal information here
     Rails.logger.info "Retrieving order status information for Retrieval Object ##{params[:id]}"
 
-    id = Retrieval.deobfuscate_id params[:id].to_i
+    id = Retrieval.deobfuscate_id(params[:id].to_i)
     @retrieval = Retrieval.find_by_id id
 
     render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
@@ -85,25 +70,27 @@ class DataAccessController < ApplicationController
     render file: "#{Rails.root}/public/401.html", status: :unauthorized  and return unless user
     render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == @retrieval.user
 
-    orders = @retrieval.collections.map do |collection|
-      collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
-    end.flatten.compact
+    # Ignore this for ajax requests and purposfully place it after the
+    # check for ownership, we don't want randos causing jobs to be created
+    unless params[:format] == 'json'
+      # Check the database for any jobs that exist to create this order
+      processing_job = DelayedJob.where("handler LIKE '%method_name: :process%'")
+                                 .where("handler LIKE '%args:\n- #{id.to_i}%'")
+                                 .where(failed_at: nil)
 
-    Rails.logger.info "Retrieval Object ##{params[:id]} has #{orders.count} Order(s)"
+      # Check the database for any jobs that exist to refresh this orders data
+      retrieval_jobs = DelayedJob.where("handler LIKE '%method_name: :hydrate_jsondata%'")
+                                 .where("handler LIKE '%args:\n- #{id.to_i}%'")
+                                 .where(failed_at: nil)
 
-    # Retrieve status information about each order within this
-    # request and hydrate the objects with necessary data
-    hydrate_orders(orders)
-
-    service_orders = @retrieval.collections.map do |collection|
-      collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
-    end.flatten.compact
-
-    Rails.logger.info "Retrieval Object ##{params[:id]} has #{service_orders.count} Service Order(s)"
-
-    # Retrieve status information about each order within this
-    # request and hydrate the objects with necessary data
-    hydrate_service_orders(service_orders)
+      # If there are no jobs scheduled for this order and its not
+      # already complete create a new one to retrieve new data
+      if processing_job.empty? && retrieval_jobs.empty? && @retrieval.in_progress
+        Rails.logger.info "Queueing up a new job to retrieve order status information for Retrieval ##{id.to_i}"
+        
+        Retrieval.delay(queue: @retrieval.determine_queue).hydrate_jsondata(id.to_i, token, cmr_env)
+      end
+    end
 
     respond_to do |format|
       format.html

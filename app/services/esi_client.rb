@@ -15,19 +15,31 @@ class ESIClient
 
   def submit_esi_request(collection_id, params, method, request_url, client, token)
     service_url = get_service_url(collection_id, client, token)
-
-    # FILE_IDS is a comma seperated list of granule_ur's
-    granules = client.get_granules(params, token).body['feed']['entry'].map{|g| g['title']}
-
     options = {}
 
-    options['FILE_IDS'] = granules.join(',')
-    options['CLIENT_STRING'] = "To view the status of your request, please see: #{request_url}"
+    begin
+      granules_response = client.get_granules(params, token)
 
-    @model = Nokogiri::XML(method['model'].gsub(/>\s+</,"><").strip)
+      granules = if granules_response.success?
+                   granules_response.body['feed']['entry'].map{ |g| g['title'] }
+                 else
+                   Rails.logger.info "Error retrieving granules from CMR: #{e.errors.join('\n')}"
 
-    params_hash = build_params
-    options.merge!(params_hash)
+                   []
+                 end
+
+      options['FILE_IDS'] = granules.join(',')
+      options['CLIENT_STRING'] = "To view the status of your request, please see: #{request_url}"
+
+      @model = Nokogiri::XML(method['model'].gsub(/>\s+</, '><').strip)
+    rescue StandardError => e
+      Rails.logger.error 'Error preparing payload for ESI Request:'
+      Rails.logger.error e.message
+
+      e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+    end
+
+    options.merge!(build_params)
 
     Rails.logger.info " service_url: #{service_url}"
     Rails.logger.info " options:     #{options.inspect}"

@@ -34,5 +34,4 @@ describe 'Ordering without order options', reset: false do
   it "provides a link to cancel the order" do
     expect(page).to have_link("Cancel")
   end
-
 end
