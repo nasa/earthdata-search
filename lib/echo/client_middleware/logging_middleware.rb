@@ -32,6 +32,8 @@ module Echo
         end
         info(yellow("#{method} #{url}"))
         time(@logger, response_message) { super(env) }
+      rescue Faraday::Error => e
+        error(red(e))
       end
 
       private

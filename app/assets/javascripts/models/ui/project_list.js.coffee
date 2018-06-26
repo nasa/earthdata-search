@@ -89,6 +89,9 @@ ns.ProjectList = do (ko
         collections.splice(endIndex, 0, collection)
         @project.collections(collections)
 
+      if window.location.href.indexOf('/data/retrieve') != -1
+        @pollProjectUpdates()
+
     _launchDownload: (collection) =>
       @project.focus(collection)
       @configureProject()
@@ -213,7 +216,6 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
-          # @pollProjectUpdates()
           canCancel = ['SUBMITTING', 'QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
             dataset_id: collection.dataset_id
@@ -252,7 +254,7 @@ ns.ProjectList = do (ko
             @project.fromJson(data)
           complete: =>
             shouldPoll = false
-        )), 15000)
+        )), 10000)
         @pollingIntervalId(intervalId)
 
     _computeSubmittedServiceOrders: ->
@@ -262,18 +264,32 @@ ns.ProjectList = do (ko
         collection = projectCollection.collection
         collectionId = collection.id
         has_browse = collection.browseable_granule?
+        
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
-          # @pollProjectUpdates()
+          if m.serviceOptions
+            total_processed = m.serviceOptions.total_processed
+            total_number = m.serviceOptions.total_number
+            total_orders = m.serviceOptions.total_orders
+            total_complete = m.serviceOptions.total_complete
+            download_urls = m.serviceOptions.download_urls
+            orders = m.serviceOptions.orders
+          else
+            total_processed = 0
+            total_number = 0
+            total_orders = 0
+            total_complete = 0
+            download_urls = []
+            orders = []
+
           is_more_details_active = @moreDetailsActive().indexOf(collection.id) > -1
           is_download_links_active = @downloadLinksActive().indexOf(collection.id) > -1
-          total_processed = m.serviceOptions.total_processed
-          total_number = m.serviceOptions.total_number
           percent_done = (total_processed / total_number * 100).toFixed(2)
-          total_orders = m.serviceOptions.total_orders
-          has_downloads_available = !$.isEmptyObject(m.serviceOptions.download_urls)
-          orders = []
-          for order in m.serviceOptions.orders
-            orders.push
+          has_downloads_available = !$.isEmptyObject(download_urls)
+
+          service_orders = []
+
+          for order in orders
+            service_orders.push
               order_id: order.order_id
               contact: order.contact
               order_status: order.order_status
@@ -281,26 +297,27 @@ ns.ProjectList = do (ko
               total_processed: order.total_processed
               download_urls: order.download_urls
               percent_done: (order.total_processed / order.total_number * 100).toFixed(2)
+
           serviceOrders.push
             collection_id: collection.id
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus
-            order_status_to_classname: @orderStatusToClassName(m.orderStatus)
+            order_status_to_classname: @orderStatusToClassName(m.orderStatus || 'creating')
             is_in_progress: m.orderStatus != 'creating' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
-            download_urls: m.serviceOptions.download_urls
+            download_urls: download_urls
             has_downloads_available: has_downloads_available
-            total_processed: m.serviceOptions.total_processed
-            total_number: m.serviceOptions.total_number
+            total_processed: total_processed
+            total_number: total_number
             percent_done: percent_done
             percent_done_str: percent_done + '%'
             downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             error_code: m.errorCode
             error_message: m.errorMessage
-            total_orders: m.serviceOptions.total_orders
-            complete_orders: m.serviceOptions.total_complete
-            orders: orders
-            contact: if orders && orders.length then orders[0].contact else false
+            total_orders: total_orders
+            complete_orders: total_complete
+            orders: service_orders
+            contact: if service_orders && service_orders.length then service_orders[0].contact else false
             is_more_details_active: is_more_details_active
             is_download_links_active: is_download_links_active
       serviceOrders

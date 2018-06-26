@@ -44,7 +44,7 @@ describe 'Ordering with deprecated order options', reset: false do
   #   end
 
   #   it "completes the order without dropping any granules" do
-  #     expect(Delayed::Worker.new.work_off).to  eq([1, 0])
+  #     expect(Delayed::Worker.new.work_off).to  eq([2, 0])
   #     load_page "data/retrieve/#{Retrieval.last.to_param}"
 
   #     expect(page).to have_text('Submitting')
