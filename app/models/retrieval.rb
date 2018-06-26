@@ -101,99 +101,122 @@ class Retrieval < ActiveRecord::Base
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)
       end
-     
-      retrieval = Retrieval.find_by_id(id)
-      project = retrieval.jsondata
-      user_id = retrieval.user.echo_id
-      client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
-      retrieval.collections.each do |collection_hash|
-        params = Rack::Utils.parse_nested_query(collection_hash['params'])
-        params.reject! { |p| ['datasource', 'short_name'].include? p }
+      logger.tagged("Processing Retrieval Object #{id}") do
+        
+        retrieval = Retrieval.find_by_id(id)
+        project = retrieval.jsondata
+        user_id = retrieval.user.echo_id
+        client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
-        results_count = get_granule_count(client, params, token)
-        results_count = 1000000 if results_count > 1000000
+        retrieval.collections.each do |collection_hash|
+          params = Rack::Utils.parse_nested_query(collection_hash['params'])
+          params.reject! { |p| ['datasource', 'short_name'].include? p }
 
-        response = client.get_collections({echo_collection_id: collection_hash['id'], include_tags: "#{Rails.configuration.cmr_tag_namespace}.*"},token)
+          results_count = get_granule_count(client, params, token)
+          results_count = 1000000 if results_count > 1000000
 
-        collection = nil
-        if response.success?
-          collections = response.body['feed']['entry']
-          collection = collections.first if collections.present?
-        end
-        access_methods = collection_hash['serviceOptions']['accessMethod']
-        access_methods.each do |method|
-          page_num = 0
-          page_size = 2000
-          begin
-            if method['type'] == 'order'
-              until page_num * page_size > results_count do
-                page_num += 1
-                params.merge!(page_size: page_size, page_num: page_num)
-                page_num = results_count / page_size + 1 if limited_collection?(collection)
-                order_response = client.create_order(params,
-                                                     method['id'],
-                                                     method['method'],
-                                                     method['model'],
-                                                     user_id,
-                                                     token,
-                                                     client,
-                                                     access_token)
-                method[:order_id] ||= []
-                method[:order_id] << order_response[:order_id]
-                method[:dropped_granules] ||= []
-                method[:dropped_granules] += order_response[:dropped_granules]
-                Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
-              end
-            elsif method['type'] == 'service'
-              request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
-              method[:collection_id] = collection_hash['id']
-              Rails.logger.info "Total ESI service granules: #{results_count}."
+          response = client.get_collections({echo_collection_id: collection_hash['id'], include_tags: "#{Rails.configuration.cmr_tag_namespace}.*"},token)
 
-              until page_num * page_size > results_count do
-                page_size = collection['tags']['edsc.limited_collections']['data']['limit'] if limited_collection?(collection)
+          collection = nil
+          if response.success?
+            collections = response.body['feed']['entry']
+            collection = collections.first if collections.present?
+          end
+          access_methods = collection_hash['serviceOptions']['accessMethod']
+          access_methods.each do |method|
+            page_num = 0
+            page_size = 2000
+            begin
+              if method['type'] == 'order'
+                until page_num * page_size > results_count do
+                  page_num += 1
+                  params.merge!(page_size: page_size, page_num: page_num)
+                  page_num = results_count / page_size + 1 if limited_collection?(collection)
+                  order_response = client.create_order(params,
+                                                       method['id'],
+                                                       method['method'],
+                                                       method['model'],
+                                                       user_id,
+                                                       token,
+                                                       client,
+                                                       access_token)
+                  method[:order_id] ||= []
+                  method[:order_id] << order_response[:order_id]
+                  method[:dropped_granules] ||= []
+                  method[:dropped_granules] += order_response[:dropped_granules]
+                  Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+                end
+              elsif method['type'] == 'service'
+                request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
+                method[:collection_id] = collection_hash['id']
+                Rails.logger.info "Total ESI service granules: #{results_count}."
 
-                page_num += 1
-                params.merge!(page_size: page_size, page_num: page_num)
+                until page_num * page_size > results_count do
+                  page_size = collection['tags']['edsc.limited_collections']['data']['limit'] if limited_collection?(collection)
 
-                Rails.logger.info "page_size = #{page_size}, page_num = #{page_num}"
-                service_response = MultiXml.parse(ESIClient.submit_esi_request(collection_hash['id'], params, method, request_url, client, token).body)
+                  page_num += 1
+                  params.merge!(page_size: page_size, page_num: page_num)
 
-                order_id = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
-                error_code = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
-                error_message = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
+                  Rails.logger.info "page_size = #{page_size}, page_num = #{page_num}"
+                  service_response = begin
+                                       esi_response = ESIClient.submit_esi_request(collection_hash['id'], params, method, request_url, client, token).body
 
-                method[:order_id] ||= []
-                method[:order_id] << order_id
-                method[:error_code] = []
-                method[:error_code] << error_code
-                method[:error_message] = []
-                method[:error_message] << error_message
+                                       Rails.logger.info "Response from ESI Request: #{esi_response}"
 
-                # break the loop
-                if !Rails.configuration.enable_esi_order_chunking || limited_collection?(collection)
-                  Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{collection['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
-                  page_num = results_count / page_size + 1
+                                       MultiXml.parse(esi_response)
+                                     rescue StandardError => e
+                                       Rails.logger.error 'Error parsing response from ESI:'
+                                       Rails.logger.error e.message
+
+                                       e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+
+                                       # On exceptions return an exception with failed status code and relevant message
+                                       {
+                                         'Exception': {
+                                           'Code': 503,
+                                           'Message': e.message
+                                         }
+                                       }
+                                     end
+
+                  order_id = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
+                  error_code = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
+                  error_message = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
+
+                  method[:order_id] ||= []
+                  method[:order_id] << order_id
+                  method[:error_code] = []
+                  method[:error_code] << error_code
+                  method[:error_message] = []
+                  method[:error_message] << error_message
+
+                  # break the loop
+                  if !Rails.configuration.enable_esi_order_chunking || limited_collection?(collection)
+                    Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{collection['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
+                    page_num = results_count / page_size + 1
+                  end
                 end
               end
-            end
-          rescue => e
-            tag = SecureRandom.hex(8)
-            logger.tagged("retrieval-error") do
-              logger.tagged(tag) do
-                logger.error "Unable to process access method in retrieval #{id}: #{method.to_json}"
-                logger.error e.message
-                e.backtrace.each {|l| logger.error "\t#{l}"}
-                method[:order_status] = 'failed'
-                method[:error_code] = tag
-                method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
+            rescue => e
+              tag = SecureRandom.hex(8)
+              logger.tagged("retrieval-error") do
+                logger.tagged(tag) do
+                  logger.error "Unable to process access method in retrieval #{id}: #{method.to_json}"
+                  logger.error e.message
+                  e.backtrace.each {|l| logger.error "\t#{l}"}
+                  method[:order_status] = 'failed'
+                  method[:error_code] = tag
+                  method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
+                end
               end
             end
           end
         end
+
+        retrieval.jsondata = project
+        retrieval.save!
       end
-      retrieval.jsondata = project
-      retrieval.save!
     end
   rescue => e
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
