@@ -2645,6 +2645,40 @@ b9948f8e37013c8d027ba74c28c2be44266302e7:
         Dr. Richard C. Willson","ContactMechanisms":[{"Type":"Telephone","Value":"619-522-2945"},{"Type":"Fax","Value":"619-522-2967"},{"Type":"Email","Value":"acrim@acrim.com"}],"Addresses":[{"StreetAddresses":["1001
         B Ave #200"],"City":"Coronado","StateProvince":"California","Country":"USA","PostalCode":"92118"}]}}]}'
     http_version: 
+022ae02d1cb98c7736784372d15fdaf73d5b5d01:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 41b78037-7a36-4d78-aa45-23318c524b57
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 27 Jun 2018 21:13:04 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '628'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2013-11-07T14:08:47.384Z","dataset_id":"MODIS/Terra
+        Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V005","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1200269651-DEV08"]},"has_variables":false,"data_center":"DEV08","short_name":"MOD11A1","organizations":["EDF_DEV08","LP
+        DAAC User Services","MODAPS","MODIS Science Data Support Team"],"title":"MODIS/Terra
+        Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V005","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid","orbit_parameters":{},"id":"C1000000739-DEV08","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://lpdaac.usgs.gov/modis/dataprod.html"}]}'
+    http_version: 
 1d31084831e778e6bc2cfdf19cd496503faf2d8a:
   response:
     status:

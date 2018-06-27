@@ -249,6 +249,23 @@ http_interactions:
   digest: 341c42e07bd697844af51259392125f9192c3556
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200269651-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 27 Jun 2018 21:15:56 GMT
+  digest: 0b7087e0e2544a52028ecc33e826a134aede753f
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=+
     body:
       encoding: US-ASCII

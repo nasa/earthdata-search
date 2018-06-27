@@ -58,7 +58,7 @@ ns.Project = do (ko,
   ])
 
   # Currently supported UMM-S Record Types
-  supportedServiceTypes = ['OPeNDAP', 'WEB SERVICES']
+  supportedServiceTypes = ['OPeNDAP', 'WEB SERVICES', 'NOT PROVIDED']
 
   class ProjectCollection
     constructor: (@project, @collection, @meta={}) ->
@@ -173,7 +173,8 @@ ns.Project = do (ko,
     launchCustomizationModal: =>
       modalSuffixesByType = {
         'OPeNDAP': '-customization-modal',
-        'WEB SERVICES': '-echo-forms-modal'
+        'WEB SERVICES': '-echo-forms-modal',
+        'NOT PROVIDED': '-echo-forms-modal'
       }
 
       serviceType = @expectedUmmService()?.umm?.Type

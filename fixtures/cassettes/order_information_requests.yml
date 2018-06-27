@@ -680,6 +680,21 @@ http_interactions:
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1000003917-DEV08&catalog_item_id%5B%5D=G1000003919-DEV08&catalog_item_id%5B%5D=G1000003920-DEV08&catalog_item_id%5B%5D=G1000003924-DEV08&catalog_item_id%5B%5D=G1000003988-DEV08&catalog_item_id%5B%5D=G1000003991-DEV08&catalog_item_id%5B%5D=G1000003994-DEV08&catalog_item_id%5B%5D=G1000003995-DEV08&catalog_item_id%5B%5D=G1000004016-DEV08&catalog_item_id%5B%5D=G1000004020-DEV08&catalog_item_id%5B%5D=G1000007644-DEV08&catalog_item_id%5B%5D=G1000007640-DEV08&catalog_item_id%5B%5D=G1000007641-DEV08&catalog_item_id%5B%5D=G1000007642-DEV08&catalog_item_id%5B%5D=G1000007643-DEV08&catalog_item_id%5B%5D=G1000003930-DEV08&catalog_item_id%5B%5D=G1000003931-DEV08&catalog_item_id%5B%5D=G1000003933-DEV08&catalog_item_id%5B%5D=G1000003936-DEV08&catalog_item_id%5B%5D=G1000003938-DEV08
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 27 Jun 2018 21:15:54 GMT
+  digest: 3b4ed164e20c1f60c00502833edbb6664b2b3d5a
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1000007017-DEV08&catalog_item_id%5B%5D=G1000007024-DEV08&catalog_item_id%5B%5D=G1000007019-DEV08&catalog_item_id%5B%5D=G1000007018-DEV08&catalog_item_id%5B%5D=G1000007020-DEV08&catalog_item_id%5B%5D=G1000007022-DEV08&catalog_item_id%5B%5D=G1000007016-DEV08&catalog_item_id%5B%5D=G1000007021-DEV08&catalog_item_id%5B%5D=G1000007023-DEV08
     headers:
       User-Agent:

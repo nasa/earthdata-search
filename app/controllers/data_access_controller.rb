@@ -334,7 +334,7 @@ class DataAccessController < ApplicationController
         access_methods[option_id] ||= {
           name: option_name,
           count: 0,
-          # umm_service: get_service_for_collection_with_type(collection_id, 'WEB SERVICES')
+          umm_service: get_service_for_collection_with_type(collection_id, 'NOT PROVIDED')
         }
         access_methods[option_id][:count] += 1
       end

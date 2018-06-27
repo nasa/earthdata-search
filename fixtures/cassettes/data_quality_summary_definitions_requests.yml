@@ -301,6 +301,19 @@ http_interactions:
   digest: e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1000000739-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 27 Jun 2018 21:15:52 GMT
+  digest: 6e5040c202c1f5b63f2c7a76f03365d71a3f62d9
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C1000000969-DEV08
     body:
       encoding: US-ASCII
