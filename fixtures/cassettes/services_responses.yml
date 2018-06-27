@@ -1112,6 +1112,53 @@ cf9feed68ce94fe32d1d3f6b3e8728447ca6ed72:
         Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV08 EOSDIS Service
         Implementation"}}]}'
     http_version: 
+0b7087e0e2544a52028ecc33e826a134aede753f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - d2d486c7-223b-43c5-b359-baece41640ba
+      cmr-took:
+      - '13'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Wed, 27 Jun 2018 21:17:22 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '900'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"hits":1,"took":13,"items":[{"meta":{"revision-id":3,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"rabbott","native-id":"mmt_service_990","concept-id":"S1200269651-DEV08","revision-date":"2018-06-27T21:12:48Z","concept-type":"service"},"umm":{"RelatedURLs":[{"URLContentType":"DistributionURL","Type":"GET
+        DATA","Subtype":"EARTHDATA SEARCH","URL":"http://search.sit.earthdata.nasa.gov"}],"Type":"NOT
+        PROVIDED","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"WEB
+        SERVICES","ServiceTerm":"INFORMATION MANAGEMENT SERVICES","ServiceSpecificTerm":"WEB
+        FEATURE SERVICE"}],"ServiceOrganizations":[{"Roles":["AUTHOR"],"ShortName":"973
+        DATA CENTER","LongName":"Data Archive, Sharing Network for Resource and Environment
+        Project of 973 Program","ContactInformation":{"RelatedUrls":[{"URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"MAP SERVICE","URL":"http://www.973geodata.cn"}]}}],"Description":"Cum
+        sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus,
+        tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+        justo sit amet risus.","Version":"1","Name":"SFD Service","ServiceOptions":{"SubsetTypes":["Spatial","Temporal","Variable"],"SupportedFormats":["netCDF-4"],"SupportedProjections":["Geographic"],"InterpolationTypes":["Bicubic
+        Interpolation"]},"LongName":"Mollis Etiam Magna Fermentum Fringilla"}}]}'
+    http_version: 
 7b57cba41ae355a09a1cacded832660d3983b107:
   response:
     status:
