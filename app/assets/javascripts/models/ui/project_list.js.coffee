@@ -303,7 +303,7 @@ ns.ProjectList = do (ko
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus
-            order_status_to_classname: @orderStatusToClassName(m.orderStatus || 'creating')
+            order_status_to_classname: @orderStatusToClassName(m.orderStatus)
             is_in_progress: m.orderStatus != 'creating' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
             download_urls: download_urls
             has_downloads_available: has_downloads_available
