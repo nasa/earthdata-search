@@ -297,16 +297,27 @@ class Retrieval < ActiveRecord::Base
     end.flatten.compact
   end
 
-  # Return a list of all order statues for the object
+  # Return a list of all collection level order statues for the object
   def order_statuses
     collections.map do |collection|
       collection.fetch('serviceOptions', {}).fetch('accessMethod', []).map { |method| method['order_status'] }
     end.flatten.compact
   end
 
+  # Return a list of all order statues for each individual for the object
+  def all_order_statuses
+    collections.map do |d|
+      d.fetch('serviceOptions', {}).fetch('accessMethod', []).map do |m|
+        m.fetch('service_options', {}).fetch('orders', []).map do |o|
+          o['order_status']
+        end
+      end
+    end.flatten.compact
+  end
+
   # Returns whether or not the retrieval is still processing any of it's orders
   def in_progress
-    (order_statuses & ['creating', 'pending', 'processing']).any?
+    (all_order_statuses & ['creating', 'pending', 'processing']).any?
   end
 
   class << self
@@ -335,15 +346,15 @@ class Retrieval < ActiveRecord::Base
 
       retrieval.save
 
-      order_statuses = retrieval.collections.map do |d|
-        d.fetch('serviceOptions', {}).fetch('accessMethod', []).map do |m|
-          m.fetch('service_options', {}).fetch('orders', []).map do |o|
-            o['order_status']
-          end
-        end
-      end.flatten
+      # order_statuses = retrieval.collections.map do |d|
+      #   d.fetch('serviceOptions', {}).fetch('accessMethod', []).map do |m|
+      #     m.fetch('service_options', {}).fetch('orders', []).map do |o|
+      #       o['order_status']
+      #     end
+      #   end
+      # end.flatten
 
-      Rails.logger.info "Order statuses for Retrieval Object ##{id}: #{order_statuses}"
+      # Rails.logger.info "Order statuses for Retrieval Object ##{id}: #{order_statuses}"
 
       # If any of the orders are in creating or pending state we need to continue asking for updates
       if retrieval.in_progress
