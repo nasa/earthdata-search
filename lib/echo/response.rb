@@ -31,7 +31,7 @@ module Echo
     end
 
     def errors
-      body['errors'] || []
+      Array.wrap(body['errors']) || []
     end
   end
 end

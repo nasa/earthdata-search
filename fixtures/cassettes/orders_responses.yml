@@ -696,38 +696,6 @@ c777568dcea75568d9ca51c84b2d956e256f5a4e:
       encoding: UTF-8
       string: ''
     http_version: 
-db7b23c64a614ae97d4e6a1ae4f4fe8bc2ab800a:
-  response:
-    status:
-      code: 400
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 21:32:17 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzg5ODFhMDNjNzNlNzg0ZWEyNDVkZWY2M2QzODFlY2Q%3D--c263820d09a00c3931b5a791132fddf901d9b0c8;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.511000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '149'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Order items can not be added to a provider order in
-        state [CLOSED] with order id 36EF5386-6CE9-965D-5B3B-D429F6145CF8</error></errors>"
-    http_version: 
 0931e15b816c6530c501625d1a68be6a59e076a4:
   response:
     status:

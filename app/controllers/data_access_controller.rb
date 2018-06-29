@@ -72,7 +72,7 @@ class DataAccessController < ApplicationController
 
     # Ignore this for ajax requests and purposfully place it after the
     # check for ownership, we don't want randos causing jobs to be created
-    unless params[:format] == 'json'
+    unless params[:format] == 'json' || Rails.env.test?
       # Check the database for any jobs that exist to create this order
       processing_job = DelayedJob.where("handler LIKE '%method_name: :process%'")
                                  .where("handler LIKE '%args:\n- #{id.to_i}%'")
