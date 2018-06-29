@@ -497,15 +497,15 @@ describe 'Viewing Single Project', reset: false do
       end
     end
 
-    it 'shows details button' do
-      within '.collection-card:first-child .action-container' do
-        expect(page).to have_content('Details')
+    it 'shows view granules link' do
+      within '.collection-card:first-child .collection-extra .label-secondary' do
+        expect(page).to have_content('View Granules')
       end
     end
 
     context 'when granules detail modal is opened' do
       before :all do
-        within '.collection-card:first-child .action-container' do
+        within '.collection-card:first-child .collection-card-content' do
           find('a[data-target="#C14758250-LPDAAC_ECS-modal"]').click
         end
       end
