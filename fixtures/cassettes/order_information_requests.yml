@@ -410,6 +410,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1531531250-LARC_ASDC&catalog_item_id%5B%5D=G1531531251-LARC_ASDC&catalog_item_id%5B%5D=G1531531252-LARC_ASDC&catalog_item_id%5B%5D=G1531531253-LARC_ASDC&catalog_item_id%5B%5D=G1531531254-LARC_ASDC&catalog_item_id%5B%5D=G1531531255-LARC_ASDC&catalog_item_id%5B%5D=G1531531257-LARC_ASDC&catalog_item_id%5B%5D=G1531531258-LARC_ASDC&catalog_item_id%5B%5D=G1531531259-LARC_ASDC&catalog_item_id%5B%5D=G1531531260-LARC_ASDC&catalog_item_id%5B%5D=G1531531261-LARC_ASDC&catalog_item_id%5B%5D=G1531531262-LARC_ASDC&catalog_item_id%5B%5D=G1531531263-LARC_ASDC&catalog_item_id%5B%5D=G1531531264-LARC_ASDC&catalog_item_id%5B%5D=G1531531265-LARC_ASDC&catalog_item_id%5B%5D=G1531531266-LARC_ASDC&catalog_item_id%5B%5D=G1531531267-LARC_ASDC&catalog_item_id%5B%5D=G1531531268-LARC_ASDC&catalog_item_id%5B%5D=G1531531269-LARC_ASDC&catalog_item_id%5B%5D=G1531531270-LARC_ASDC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 02 Jul 2018 17:56:01 GMT
+  digest: 5e2f780d6ac74745afc9f230c55c2908e507c322
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G190973506-NSIDC_ECS
     headers:
       User-Agent:

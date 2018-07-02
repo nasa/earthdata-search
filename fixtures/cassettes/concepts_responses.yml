@@ -2612,6 +2612,65 @@ d0031194e04bbdeb0f531986053442c1864123dc:
         homepage for more data set information: \n\nhttps://modis-atmos.gsfc.nasa.gov/Webinar2014/MODIS_Atmos_Webinar-2_Munchak_3kmaerosol.pdf
         \n\nor, visit the MODIS Atmosphere Team homepage for 10km product information:\n\nhttps://modis-atmos.gsfc.nasa.gov/products/aerosol","orbit_parameters":{},"id":"C204690560-LAADS","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/ATBD_MOD04_C005_rev2.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ladsweb.modaps.eosdis.nasa.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/6/MYD04_3K/"}]}'
     http_version: 
+0e7b14c4f846dbf8667217e9ffca81f3688decc4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 69c68d5a-5839-4b33-95f8-b8178d98fcab
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 02 Jul 2018 17:52:59 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1649'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-07-01T00:00:00.000Z","dif_ids":["CER_FSW_Aqua-FM3-MODIS_Edition2B"],"version_id":"Edition2B","updated":"1970-01-01T00:00:00.000Z","dataset_id":"CERES
+        Monthly Gridded Single Satellite Fluxes and Clouds Aqua FM3 Edition2B","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LARC_ASDC","short_name":"CER_FSW_Aqua-FM3-MODIS","organizations":["NASA/LARC/SD/ASDC"],"title":"CERES
+        Monthly Gridded Single Satellite Fluxes and Clouds Aqua FM3 Edition2B","coordinate_system":"CARTESIAN","summary":"CER_FSW_Aqua-FM3-MODIS_Edition2B
+        legacy data are regional averages of instantaneous footprint computed fluxes
+        [TOA, surface, and in-atmospheric (profile)], associated TOA observed fluxes,
+        and cloud parameters only for the hours of satellite overpass (from CRS level2
+        product).The Monthly Gridded Radiative Fluxes and Clouds (FSW) product contains
+        a month of space and time averaged Clouds and the Earth''s Radiant Energy
+        System (CERES) data for a single scanner instrument. The FSW is also produced
+        for combinations of scanner instruments. All instantaneous fluxes from the
+        CERES CRS product for a month are sorted by 1-degree spatial regions and by
+        the Universal Time (UT) hour of observation. The mean of the instantaneous
+        fluxes for a given region-hour bin is determined and recorded on the FSW along
+        with other flux statistics and scene information. The mean adjusted fluxes
+        at the four atmospheric levels defined by CRS are also included for both clear-sky
+        and total-sky scenes. In addition, four cloud height categories are defined
+        by dividing the atmosphere into four intervals with boundaries at the surface,
+        700-, 500-, 300-hPa, and the Top-of-the-Atmosphere (TOA). The cloud layers
+        from CRS are put into one of the cloud height categories and averaged over
+        the region. The cloud properties are also column averaged and included on
+        the FSW.CERES is a key component of the Earth Observing System (EOS) program.
+        The CERES instruments provide radiometric measurements of the Earth''s atmosphere
+        from three broadband channels. The CERES missions are a follow-on to the successful
+        Earth Radiation Budget Experiment (ERBE) mission. The first CERES instrument
+        (PFM) was launched on November 27, 1997 as part of the Tropical Rainfall Measuring
+        Mission (TRMM). Two CERES instruments (FM1 and FM2) were launched into polar
+        orbit on board the EOS flagship Terra on December 18, 1999. Two additional
+        CERES instruments (FM3 and FM4) were launched on board EOS Aqua on May 4,
+        2002. The newest CERES instrument (FM5) was launched on board the Suomi National
+        Polar-orbiting Partnership (NPP) satellite on October 28, 2011.","time_end":"2006-04-30T23:59:59.000Z","orbit_parameters":{},"id":"C4521853-LARC_ASDC","has_formats":false,"original_format":"DIF10","archive_center":"NASA/LARC/SD/ASDC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/project/ceres/ceres_legacy_table"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://ceres.larc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/project/ceres/ceres_table"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://ceres.larc.nasa.gov/products.php?product=FSW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search/project?p=!C4521853-LARC_ASDC"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.5067/AQUA/CERES/FSW-FM3-MODIS_L3.002B"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://eosweb.larc.nasa.gov/citing-asdc-data"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://eosweb.larc.nasa.gov/sites/default/files/project/ceres/quality_summaries/CER_FSW_Edition2_Terra_Aqua.pdf"}]}'
+    http_version: 
 3590d4a3d39fcf403f75acea942bb337a3deaf59:
   response:
     status:

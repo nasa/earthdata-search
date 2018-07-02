@@ -142,19 +142,38 @@ class DataAccessController < ApplicationController
       if granules.size > 0
         hits = catalog_response.headers['cmr-hits'].to_i
 
-
-        sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
+        sizeMB = granules.reduce(0) { |size, granule| size + granule['granule_size'].to_f }
         size = (1024 * 1024 * sizeMB / granules.size) * hits
 
         units = ['Bytes', 'Kilobytes', 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes', 'Exabytes']
         while size > 1024 && units.size > 1
           size = size.to_f / 1024
-          units.shift()
+          units.shift
         end
 
         methods = get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits)
 
-        defaults = {service_options: nil} if echo_form_outdated?(defaults, methods)
+        defaults = { service_options: nil } if echo_form_outdated?(defaults, methods)
+
+        # If there are no defaults (no AccessConfigurations) and only 1 accessMethod,
+        # then set the default to that access method. NOTE: If there defaults then the
+        # `defaults` variable will be an AccessConfigration, if there are no defaults
+        # it is a Hash.
+        if methods.length == 1 && (defaults.is_a?(Hash) && defaults.compact.blank?)
+          only_method = methods[0]
+
+          # When a collection as been previously ordered we store the information the
+          # user selected in an AccessConfiguration object, since we don't have all of
+          # that information at this point we'll just set the necessary values for the
+          # UI to load correctly and select the only option avaialble.
+          defaults[:service_options] = {
+            accessMethod: [{
+              method: only_method[:name],
+              type: only_method[:type],
+              id: only_method[:id]
+            }]
+          }
+        end
 
         result = {
           hits: hits,
