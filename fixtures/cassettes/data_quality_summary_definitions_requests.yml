@@ -223,6 +223,19 @@ http_interactions:
   digest: 35b36d3bf82cece227ea2541fb6b2a628cba0ad2
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C4521853-LARC_ASDC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 02 Jul 2018 17:55:56 GMT
+  digest: 0c1f8f603295911cc69df96944b86eab2681122d
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C4543622-LARC_ASDC
     body:
       encoding: US-ASCII

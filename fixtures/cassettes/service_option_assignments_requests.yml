@@ -223,6 +223,19 @@ http_interactions:
   digest: c6021ef25e571be15041bfc1f69d4a9b82ccce30
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C4521853-LARC_ASDC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 02 Jul 2018 17:56:02 GMT
+  digest: a182708a499785870aa3e14513d67f34d425d966
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C4543622-LARC_ASDC
     body:
       encoding: US-ASCII
