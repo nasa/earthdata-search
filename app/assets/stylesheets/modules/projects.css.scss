@@ -140,7 +140,7 @@ $card-background: rgba(235,235,235,1);
       vertical-align: middle;
     }
 
-    h2, ul {
+    .project-panel {
       margin: 0;
       background: #fff;
       padding: 20px;
@@ -186,12 +186,13 @@ $card-background: rgba(235,235,235,1);
           margin-top: 15px;
 
           .label-primary {
+            display: inline;
             font-size: 1.6em;
             font-weight: bold;
-            display: inline;
           }
 
           .label-secondary {
+            margin: 0;
             font-size: .9em;
             color: #a1a1a1;
           }

@@ -57,11 +57,11 @@
   </section>
   <section class="project-collections">
     <div class="project-title-container">
-      <h2><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
+      <h2 class="project-panel"><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
       <%= render partial: 'shared/workspace_name' %>
     </div>
     <div class="project-stats">
-      <ul data-bind="fadeVisible: isLoaded">
+      <ul class="project-panel" data-bind="fadeVisible: isLoaded">
         <!-- ko if: project.collections().length > 0 -->
         <li class="granule-count">
           <span class="value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'"></span>
@@ -92,7 +92,9 @@
           <div class="collection-card-content">
             <h3 data-bind="text: collection.truncatedTitle, attr: {title: collection.title}"></h3>
             <div class="collection-extra" data-bind="fadeVisible: $root.isLoaded">
-              <div class="label-primary"><span data-bind="text: collection.granule_hits"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></div>
+              <div class="label-primary">
+                <span data-bind="text: collection.granule_hits"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></span>
+              </div>
               <div class="collection-capability">
                 <!-- ko if: collection.has_spatial_subsetting() -->
                 <span data-bind="css: {enabled: spatialSubsettingEnabled()}">
@@ -118,16 +120,18 @@
                   <i class="fa fa-check" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Collection is ready to download"></i>
                 </span> -->
               </div>
-              <div class="label-secondary" data-bind="fadeVisible: $root.isLoaded">
-                <span>Estimated Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko-->
-              </div>
+              <ul class="label-secondary list-inline list-divided" data-bind="fadeVisible: $root.isLoaded">
+                <li>
+                  <span>Estimated Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko-->
+                </li>
+                <li>
+                  <a class="clean underline subtle" href="#" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-modal'}">View Granules</a>
+                </li>
+              </ul>
             </div>
           </div>
           <div class="action-container">
             <a class="action-button customize" data-toggle="modal" data-bind="click: launchCustomizationModal, css: {enabled: !loadingServiceType()}"><i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: loadingServiceType()"></i><span data-bind="text: customizeButtonText(), visible: !loadingServiceType()"></span></a>
-
-            <a class="action-button details" data-toggle="modal" data-bind="attr: {'data-target': '#' + collection.id + '-modal'}">Details</a>
-
             <a class="action-button remove" title="Remove collection from the current project" data-bind="click: $root.removeProjectCollection"><i class="fa fa-minus"></i></a>
           </div>
           <%= render partial: 'collection_customization_modal' %>
