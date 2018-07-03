@@ -156,7 +156,7 @@ module Echo
       granules = if catalog_response.success?
                    catalog_response.body['feed']['entry']
                  else
-                   Rails.logger.info "Error retrieving granules from CMR: #{catalog_response.errors.join('\n')}"
+                   Rails.logger.info "[ERROR] Retrieving granules from CMR: #{catalog_response.errors.join('\n')}"
 
                    []
                  end
@@ -168,7 +168,7 @@ module Echo
                      Rails.logger.info "Response from ECHO Rest retriving order information: #{order_info_response.body.inspect}"
                      order_info_response.body
                    else
-                     Rails.logger.info "Error retrieving order information from ECHO Rest: #{catalog_response.errors.join('\n')}"
+                     Rails.logger.info "[ERROR] Retrieving order information from ECHO Rest: #{catalog_response.errors.join('\n')}"
 
                      {}
                    end
@@ -189,11 +189,11 @@ module Echo
       order_response = post('orders.json', { order: {}, digest: digest }.to_json, token_header(token))
 
       id = if order_response.success?
-             Rails.logger.info "Response from ECHO Rest creating empty order: #{order_response.body.inspect}"
+             Rails.logger.info "ECHO Order Response: #{order_response.body.inspect}"
 
              order_response.body.fetch('order', {})['id']
            else
-             Rails.logger.info "Error retrieving order information from ECHO Rest: #{catalog_response.errors.join('\n')}"
+             Rails.logger.info "[ERROR] Retrieving order information from ECHO Rest: #{catalog_response.errors.join('\n')}"
 
              nil
            end
@@ -212,19 +212,18 @@ module Echo
 
       order_items = granules.map { |g| { order_item: { catalog_item_id: g['id'] }.merge(common_options) } }
 
-      Rails.logger.info "ORDER ITEMS: #{order_items.to_json}"
       items_response = post("orders/#{id}/order_items/bulk_action", order_items.to_json, token_header(token), timeout: 600)
 
       unless items_response.success?
         # We don't need the response (its a nil body with 201)
-        Rails.logger.info "Error adding order_items to order `#{id}`: #{items_response.errors.join('\n')}"
+        Rails.logger.info "[ERROR] Adding order_items to order `#{id}`: #{items_response.errors.join('\n')}"
       end
 
       prefs_response = get_preferences(user_id, token, client, access_token)
       contact = if prefs_response.success?
                   prefs_response.body.fetch('preferences', {})['general_contact']
                 else
-                  Rails.logger.info "Error retrieving user preferences: #{prefs_response.errors.join('\n')}"
+                  Rails.logger.info "[ERROR] Retrieving user preferences: #{prefs_response.errors.join('\n')}"
 
                   nil
                 end
@@ -246,12 +245,12 @@ module Echo
 
       user_info_response = put("orders/#{id}/user_information", user_info.to_json, token_header(token))
       unless user_info_response.success?
-        Rails.logger.info "Error adding user information to order `#{id}`: #{user_info_response.errors.join('\n')}"
+        Rails.logger.info "[ERROR] Adding user information to order `#{id}`: #{user_info_response.errors.join('\n')}"
       end
 
       submission_response = post("orders/#{id}/submit", nil, token_header(token))
       unless submission_response.success?
-        Rails.logger.info "Error submitting order `#{id}`: #{submission_response.errors.join('\n')}"
+        Rails.logger.info "[ERROR] Submitting order `#{id}`: #{submission_response.errors.join('\n')}"
       end
 
       Rails.logger.info "Items response: #{items_response.body.inspect}"
