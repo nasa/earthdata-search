@@ -156,8 +156,8 @@ class DataAccessController < ApplicationController
         defaults = { service_options: nil } if echo_form_outdated?(defaults, methods)
 
         # If there are no defaults (no AccessConfigurations) and only 1 accessMethod,
-        # then set the default to that access method. NOTE: If there defaults then the
-        # `defaults` variable will be an AccessConfigration, if there are no defaults
+        # then set the default to that access method. NOTE: If there are defaults then
+        # the `defaults` variable will be an AccessConfigration, if there are no defaults
         # it is a Hash.
         if methods.length == 1 && (defaults.is_a?(Hash) && defaults.compact.blank?)
           only_method = methods[0]
