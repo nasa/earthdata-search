@@ -7,6 +7,8 @@ class Retrieval < ActiveRecord::Base
 
   after_save :update_access_configurations
 
+  after_create :log_obfuscation_info
+
   obfuscate_id spin: 53465485
 
   before_validation :default_order_status
@@ -18,6 +20,10 @@ class Retrieval < ActiveRecord::Base
         method['order_status'] = 'creating' unless method.key?('order_status')
       end
     end
+  end
+
+  def log_obfuscation_info
+    Rails.logger.info "Retrieval Object with obfuscated ID of #{to_param} has ID #{id}."
   end
 
   def portal
@@ -126,6 +132,8 @@ class Retrieval < ActiveRecord::Base
           results_count = get_granule_count(client, params, token)
           results_count = 1_000_000 if results_count > 1_000_000
 
+          Rails.logger.info "Granules Ordered: #{results_count}"
+
           response = client.get_collections({ echo_collection_id: collection_hash['id'], include_tags: "#{Rails.configuration.cmr_tag_namespace}.*" }, token)
 
           collection = if response.success?
@@ -185,11 +193,11 @@ class Retrieval < ActiveRecord::Base
                   service_response = begin
                                        esi_response = ESIClient.submit_esi_request(collection_hash['id'], params, method, request_url, client, token).body
 
-                                       Rails.logger.info "Response from ESI Request: #{esi_response}"
+                                       Rails.logger.info "ESI Order Response: #{esi_response}"
 
                                        MultiXml.parse(esi_response)
                                      rescue StandardError => e
-                                       Rails.logger.error 'Error parsing response from ESI:'
+                                       Rails.logger.error '[ERROR] Parsing response from ESI:'
                                        Rails.logger.error e.message
 
                                        e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
@@ -226,7 +234,7 @@ class Retrieval < ActiveRecord::Base
               tag = SecureRandom.hex(8)
               logger.tagged('retrieval-error') do
                 logger.tagged(tag) do
-                  logger.error "Unable to process access method in retrieval #{id}: #{method.to_json}"
+                  logger.error "[ERROR] Unable to process access method in retrieval #{id}: #{method.to_json}"
                   logger.error e.message
                   
                   e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
@@ -247,11 +255,13 @@ class Retrieval < ActiveRecord::Base
     end # Ends Logging Tag
   rescue StandardError => e
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
-      logger.tagged("retrieval-error") do
-        logger.error "Error Attempting to Submit Order #{id}"
-        logger.error e.message
+      logger.tagged("Processing Retrieval Object #{id}") do
+        logger.tagged('retrieval-error') do
+          logger.error "[ERROR] Attempting to Submit Order #{id}"
+          logger.error e.message
 
-        e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+          e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+        end
       end
     end
     raise e
@@ -323,44 +333,50 @@ class Retrieval < ActiveRecord::Base
   class << self
     # Called when orders are created to populate the project jsondata with up to date status information
     def hydrate_jsondata(id, token, cmr_env, force = false)
-      retrieval = Retrieval.find_by_id(id)
+      logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+        logger.tagged("Getting Status for Retrieval Object #{id}") do
+          retrieval = Retrieval.find_by_id(id)
 
-      # Retrieve a status of each order in this request
-      echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
+          # Retrieve a status of each order in this request
+          echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
 
-      orders = retrieval.get_orders_by_type('order')
+          orders = retrieval.get_orders_by_type('order')
 
-      Rails.logger.info "Retrieval Object ##{id} has #{orders.count} Order(s)"
+          Rails.logger.info "Retrieval Object ##{id} has #{orders.count} Order(s)"
 
-      # Retrieve status information about each order within this
-      # request and hydrate the objects with necessary data
-      Retrieval.hydrate_orders(orders, echo_client, token)
+          # Retrieve status information about each order within this
+          # request and hydrate the objects with necessary data
+          Retrieval.hydrate_orders(orders, echo_client, token)
 
-      service_orders = retrieval.get_orders_by_type('service')
+          service_orders = retrieval.get_orders_by_type('service')
 
-      Rails.logger.info "Retrieval Object ##{id} has #{service_orders.count} Service Order(s)"
+          Rails.logger.info "Retrieval Object ##{id} has #{service_orders.count} Service Order(s)"
 
-      # Retrieve status information about each order within this
-      # request and hydrate the objects with necessary data
-      Retrieval.hydrate_service_orders(service_orders, echo_client, token)
+          # Retrieve status information about each order within this
+          # request and hydrate the objects with necessary data
+          Retrieval.hydrate_service_orders(service_orders, echo_client, token)
 
-      retrieval.save
+          retrieval.save
 
-      # order_statuses = retrieval.collections.map do |d|
-      #   d.fetch('serviceOptions', {}).fetch('accessMethod', []).map do |m|
-      #     m.fetch('service_options', {}).fetch('orders', []).map do |o|
-      #       o['order_status']
-      #     end
-      #   end
-      # end.flatten
-
-      # Rails.logger.info "Order statuses for Retrieval Object ##{id}: #{order_statuses}"
-
-      # If any of the orders are in creating or pending state we need to continue asking for updates
-      if retrieval.in_progress
-        # The order isn't done processing, continue pinging for updated statuses
-        Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, cmr_env)
+          # If any of the orders are in creating or pending state we need to continue asking for updates
+          if retrieval.in_progress
+            # The order isn't done processing, continue pinging for updated statuses
+            Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, cmr_env)
+          end
+        end
       end
+    rescue StandardError => e
+      logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+        logger.tagged("Getting Status for Retrieval Object #{id}") do
+          logger.tagged('retrieval-error') do
+            logger.error "Error Attempting to Submit Order #{id}"
+            logger.error e.message
+
+            e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+          end
+        end
+      end
+      raise e
     end
 
     def hydrate_orders(orders, echo_client, token)
