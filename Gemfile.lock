@@ -162,7 +162,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     parallel (1.12.1)
     parser (2.5.0.5)
