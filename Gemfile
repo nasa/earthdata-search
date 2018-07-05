@@ -30,7 +30,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
   gem 'fuubar'
-  gem "rack_session_access"
+  gem 'rack_session_access'
   gem 'headless'
 end
 
