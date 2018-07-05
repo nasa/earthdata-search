@@ -327,7 +327,7 @@ class Retrieval < ActiveRecord::Base
 
   # Returns whether or not the retrieval is still processing any of it's orders
   def in_progress
-    (all_order_statuses & ['creating', 'pending', 'processing']).any?
+    (all_order_statuses & ['creating', 'pending', 'processing', 'submitting']).any?
   end
 
   class << self
