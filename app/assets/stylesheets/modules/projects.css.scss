@@ -193,8 +193,6 @@ $card-background: rgba(235,235,235,1);
 
           .label-secondary {
             margin: 0;
-            font-size: .9em;
-            color: #a1a1a1;
           }
 
           .collection-capability {
@@ -326,20 +324,6 @@ $card-background: rgba(235,235,235,1);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 
-    ul {
-      padding: 0;
-    }
-
-    li {
-      padding: 0;
-      border-bottom: 1px solid #ddd;
-      height: 86px;
-
-      &:nth-child(odd) {
-        background: #f3f3f3;
-      }
-    }
-
     .panel-list-thumbnail-container {
       border: 0;
       margin: 0 15px 0 0;
@@ -468,6 +452,16 @@ $card-background: rgba(235,235,235,1);
     }
   }
 
+  .keyword-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .keyword-list-item {
+    height: auto;
+    padding: 10px 20px;
+  }
+
   .variable-selection {
     .message-container p {
       margin: .75em;
@@ -475,21 +469,17 @@ $card-background: rgba(235,235,235,1);
     }
 
     .variable-list {
-      padding: 0;
+      padding: 10px 15px;
+    }
 
-      > div {
-        padding: 0 20px;
-      }
+    .variable-detail {
+      position: absolute;
     }
 
     .selected-keyword {
       display: block;
       font-size: 1em;
-      padding: 10px 20px;
       text-transform: uppercase;
-      margin-bottom: 15px;
-      border-bottom: 1px solid $light-grey;
-      background: lighten($light-grey, 5%);
     }
 
     .child-spacer {
@@ -505,26 +495,48 @@ $card-background: rgba(235,235,235,1);
       font-size: .8em;
       float: right;
     }
+  }
 
-    ul {
-      margin: 0;
+  .collection-variable-list-item {
+    padding: 5px 0;
+  }
 
-      li {
-        height: auto;
-        padding: 10px 20px;
-      }
+  .collection-variable-info {
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: top;
+  }
+
+  .collection-variable-heading {
+    display: inline-block;
+    margin: 0;
+  }
+
+  .collection-variable-longname {
+    font-style: italic;
+  }
+
+  .collection-variable-meta {
+    margin: 0;
+  }
+
+  .variable-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    padding: 15px;
+
+    .collection-variable-heading {
+      display: block;
+      margin-top: 2em;
     }
 
-    .collection-variable-list {
-      margin: 10px 0;
-
-      p.description {
-        margin: 0 0 0 20px;
-        color: #777;
-        font-size: .9em;
-      }
+    .collection-variable-longname {
+      margin-bottom: 0.75em;
     }
-
   }
 
   .selected-collection-variables {

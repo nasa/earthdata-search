@@ -5,6 +5,23 @@
         <h1 class="modal-title" id="variable-selection-modal-title"><i class="fa fa-tags"></i> Variable Selection</h1>
       </div>
 
+      <section class="modal-content-header modal-content-header-dark" data-bind="with: selectedKeyword(), visible: selectedKeyword()">
+        <span class="selected-keyword">
+          <a href="#" data-bind="click: $parent.clearSelections">All Leafnodes</a>
+          <i class="child-spacer fa fa-chevron-circle-right"></i>
+          <!-- ko if: !$parent.selectedVariable() -->
+          <strong data-bind="text: $data.keyword"></strong>
+          <!-- /ko -->
+          <!-- ko if: $parent.selectedVariable() -->
+            <a href="#" data-bind="click: $root.ui.variableSelector.clearVariable, text: $data.keyword"></a>
+          <!-- /ko -->
+          <span data-bind="with: $parent.selectedVariable(), visible: $parent.selectedVariable()">
+            <i class="child-spacer fa fa-chevron-circle-right"></i>
+            <strong data-bind="text: $data.umm().Name"></strong>
+          </span>
+        </span>
+      </section>
+
       <div class="modal-body">
         <div class="message-container" data-bind="visible: _pending()">
           <p>Loading...</p>
@@ -14,9 +31,9 @@
           <p>This collection doesn't have any associated variables.</p>
         </div>
 
-        <div class="keyword-list" data-bind="visible: !selectedKeyword()">
-          <ul id="associated-variables" data-bind="foreach: keywordMappings">
-            <li>
+        <div data-bind="visible: !selectedKeyword()">
+          <ul id="associated-variables" class="keyword-list list-alternating" data-bind="foreach: keywordMappings">
+            <li class="keyword-list-item">
               <a href="#" data-bind="click: $parent.selectKeyword, text: $data.keyword"></a>
               <!-- ko if: $data.selected > 0 -->
               <span class="pill" data-bind="text: $data.selected + ' selected'"></span>
@@ -26,36 +43,55 @@
         </div>
 
         <div class="variable-list" data-bind="with: selectedKeyword(), visible: selectedKeyword()">
-          <span class="selected-keyword">
-            <a href="#" data-bind="click: $parent.clearKeyword">All Leafnodes</a>
-            <i class="child-spacer fa fa-chevron-circle-right"></i>
-            <strong data-bind="text: $data.keyword"></strong>
-          </span>
-
-          <div>
+          <div class="collection-variable-list-item">
             <label>
               <input type="checkbox" class="select-all" data-bind="checked: $parent.hasAllKeywordsSelected()">
-              Select All Variables
+              <div class="collection-variable-info">
+                <span>Select All Variables</span>
+              </div>
             </label>
           </div>
-
           <div data-bind="foreach: $data.variables">
-            <div class="collection-variable-list">
+            <div class="collection-variable-list-item">
               <label>
                 <input type="checkbox" data-bind="checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data), attr: {value: $data.meta()['concept-id']}">
-                <b data-bind="text: $data.umm().Name"></b>
+                <div class="collection-variable-info">
+                  <h4 class="collection-variable-heading">
+                    <span class="collection-variable-name" data-bind="text: $data.umm().Name"></span>
+                  </h4>
+                  <ul class="collection-variable-meta text-info list-inline list-divided">
+                    <li class="collection-variable-longname" data-bind="text: $data.umm().LongName"></li>
+                    <li><a class="clean underline subtle" href="#" data-bind="click: $root.ui.variableSelector.selectVariable">View Details</a></li>
+                  </ul>
+                </div>
               </label>
-              <p class="description" data-bind="text: $data.umm().LongName"></p>
             </div>
           </div>
+        </div>
+
+        <div class="variable-details" data-bind="with: selectedVariable(), visible: selectedVariable()">
+          <button class="button-back" data-bind="click: $root.ui.variableSelector.clearVariable">
+            <i class="fa fa-chevron-left"></i> Back to Variables
+          </button>
+          <h2 class="collection-variable-heading">
+            <span class="collection-variable-name" data-bind="text: $data.umm().Name"></span>
+          </h2>
+          <p class="collection-variable-longname text-info" data-bind="text: $data.umm().LongName"></p>
+          <!-- ko if: $data.umm().Definition -->
+          <p class="collection-variable-description" data-bind="text: $data.umm().Definition"></p>
+          <!-- /ko -->
+          <!-- ko if: !$data.umm().Definition -->
+          <p class="collection-variable-description">No definition available for this variable.</p>
+          <!-- /ko -->
         </div>
       </div>
 
       <div class="modal-footer">
         <div class="action-container">
           <button class="button secondary" data-bind="visible: !selectedKeyword()" data-dismiss="modal">Done</button>
-          <button class="button secondary" data-bind="visible: selectedKeyword(), click: clearKeyword">Back</button>
-          <button class="save" data-bind="visible: selectedKeyword()">Save</button>
+          <button class="button secondary" data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword">Back</button>
+          <button class="button secondary" data-bind="visible: selectedKeyword() && selectedVariable(), click: clearVariable">Back</button>
+          <button class="save" data-bind="visible: selectedKeyword() && !selectedVariable()">Save</button>
         </div>
       </div>
     </div>
