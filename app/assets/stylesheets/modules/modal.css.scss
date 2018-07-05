@@ -49,11 +49,6 @@
   max-height: calc(100% - 120px);
   overflow-y: scroll;
 
-  ul {
-    list-style: none;
-    padding: 0 30px;
-  }
-
   &.busy {
     background-position: center center;
   }
@@ -140,6 +135,10 @@
   padding: 1em;
   background: #fff;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-content-header-dark {
+  background: lighten($light-grey, 5%);
 }
 
 .modal-content-header-label {

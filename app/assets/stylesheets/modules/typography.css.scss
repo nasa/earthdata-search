@@ -151,16 +151,31 @@ ul {
 }
 
 .list-inline {
-  li {
+  & > li {
    display: inline-block;
   }
 }
 
 .list-divided {
-  li:not(:first-child) {
+  padding: 0.2em 0;
+  line-height: 1.2em;
+
+  & > li:not(:first-child) {
     margin-left: 0.425em;
     padding-left: 0.85em;
-    border-left: 1px solid #a1a1a1;
+    border-left: 1px solid #c7c7c7;
+  }
+}
+
+.list-alternating {
+  padding: 0;
+
+  & > li {
+    border-bottom: 1px solid #ddd;
+
+    &:nth-child(odd) {
+      background: #f3f3f3;
+    }
   }
 }
 
@@ -235,4 +250,9 @@ span.instructions {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.text-info {
+  font-size: .9em;
+  color: #a1a1a1;
 }

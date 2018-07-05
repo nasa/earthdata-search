@@ -18,6 +18,7 @@ ns.VariableSelector = do (ko
       @variables = ko.asyncComputed([], 100, @_retrieveVariables, this, deferEvaluation: true)
       @selectedKeyword = ko.observable(null)
       @keywordMappings = ko.computed(@_computeKeywordMappings, this, deferEvaluation: true)
+      @selectedVariable = ko.observable(null);
 
       @_pending = ko.observable(null)
 
@@ -141,6 +142,25 @@ ns.VariableSelector = do (ko
      ###
     clearKeyword: (selectedKeyword, e) =>
       @selectedKeyword(null)
+
+    ###*
+     * Sets the currently selected variable. This will trigger the variable detail screen
+     ###
+    selectVariable: (selectedVariable) =>
+      @selectedVariable(selectedVariable)
+
+    ###*
+     * Clears the currently selected variable
+     ###
+    clearVariable: =>
+      @selectedVariable(null)
+
+    ###*
+     * Clears all current selections
+     ###
+    clearSelections: =>
+      @clearKeyword()
+      @clearVariable()
 
     ###*
      * Assign a variable to a nested navigation structure
