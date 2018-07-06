@@ -297,32 +297,9 @@ $card-background: rgba(235,235,235,1);
     background-color: #fff;
     padding-left: 25px;
     padding-right: 25px;
-
-    h1 {
-      .fa {
-        color: #e1e1e1;
-      }
-    }
-
-    .close {
-      background-color: #fff;
-      background-image: none;
-      float: right;
-      color: #e1e1e1;
-      font-size: 1.8em;
-      text-shadow: none;
-      padding: 5px 0 0 0;
-      &:hover {
-        color: #9c9c9c;
-      }
-    }
   }
 
   .modal-body {
-    max-height: 400px;
-    padding: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
 
     .panel-list-thumbnail-container {
       border: 0;

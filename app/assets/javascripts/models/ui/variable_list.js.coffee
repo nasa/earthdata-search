@@ -35,15 +35,15 @@ ns.VariableSelector = do (ko
       $(document).on 'click', '.select-all', (e) =>
         if @selectedKeyword()
           isSelected = $(e.target).is(':checked')
-          
-          $('.collection-variable-list input[type="checkbox"]').prop('checked', isSelected)
+
+          $('.collection-variables input[type="checkbox"]').prop('checked', isSelected)
 
       # Save the currently selected variables
       $(document).on 'click', '#variable-subsetting-modal button.save', (e) =>
         @_saveSelectedVariableState()
 
         $(window).trigger('edsc.save_workspace')
-      
+
     ###*
      * Determine whether or not the currently selected keyword has all of its variables selected
      ###
@@ -55,7 +55,7 @@ ns.VariableSelector = do (ko
       true
 
     ###*
-     * Determine the number of variables that are selected, and within the provided list. 
+     * Determine the number of variables that are selected, and within the provided list.
      ###
     _countSelectedVariables: (listToCheck) ->
       count = 0
@@ -78,7 +78,7 @@ ns.VariableSelector = do (ko
      ###
     _saveSelectedVariableState: =>
       # Pull out the selected variables before we wipe them below
-      selectedVariables = $('.collection-variable-list input[type="checkbox"]:checked')
+      selectedVariables = $('.collection-variables input[type="checkbox"]:checked')
 
       # Rather than keeping a delta within each keyword mapping, we'll just delete all
       # selected variables within the currently selected keyword and re-add them below

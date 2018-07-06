@@ -2,10 +2,10 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></a>
         <h1 class="modal-title" id="granule-list-modal-title">Collection Details</h1>
       </div>
-      <div class="modal-body" data-bind="event: {scroll: $root.scrolled}">
+      <div class="modal-body modal-body-trim" data-bind="event: {scroll: $root.scrolled}">
         <!-- ko if: collection.granuleDatasource() -->
         <!-- ko if: collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
         <p class="undo">Granule excluded. <a href="#" data-bind="click: collection.granuleDatasource().data().undoExclude">Undo</a></p>
@@ -25,17 +25,17 @@
 
               <span class="modal-item-actions">
                 <!--ko if: dataLinks().length == 1 -->
-                  <a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parent.collection.cwic() && online_access_flag, attr: {href: dataLinks()[0].href}">    
-                    <i class="fa fa-download"></i>    
-                  </a>    
-                <!--/ko-->    
-                <!--ko if: dataLinks().length > 1 -->    
-                  <a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>    
-                  <ul class="dropdown-menu" data-bind="foreach: dataLinks">   
-                    <li>    
-                      <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>    
-                    </li>   
-                  </ul>   
+                  <a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parent.collection.cwic() && online_access_flag, attr: {href: dataLinks()[0].href}">
+                    <i class="fa fa-download"></i>
+                  </a>
+                <!--/ko-->
+                <!--ko if: dataLinks().length > 1 -->
+                  <a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>
+                  <ul class="dropdown-menu" data-bind="foreach: dataLinks">
+                    <li>
+                      <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
+                    </li>
+                  </ul>
                 <!--/ko-->
               </span>
             </div>

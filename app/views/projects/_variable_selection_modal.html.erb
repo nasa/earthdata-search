@@ -1,6 +1,6 @@
-<div class="modal fade variable-selection" id="variable-subsetting-modal" data-bind="with: $root.ui.variableSelector" role="dialog" tabindex="-1" aria-labelledby="variable-selection-modal-title">
+<div class="modal fade variable-selection" id="variable-subsetting-modal" data-bind="with: $root.ui.variableSelector, css: {'modal-has-content-header': $root.ui.variableSelector.selectedKeyword() || $root.ui.variableSelector.selectedVariable()}" role="dialog" tabindex="-1" aria-labelledby="variable-selection-modal-title">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content modal-content-full">
       <div class="modal-header">
         <h1 class="modal-title" id="variable-selection-modal-title"><i class="fa fa-tags"></i> Variable Selection</h1>
       </div>
@@ -22,10 +22,7 @@
         </span>
       </section>
 
-      <div class="modal-body">
-        <div class="message-container" data-bind="visible: _pending()">
-          <p>Loading...</p>
-        </div>
+      <div class="modal-body modal-body-trim" data-bind="css: {busy: _pending()}">
 
         <div class="message-container" data-bind="visible: !_pending() && variables().length == 0">
           <p>This collection doesn't have any associated variables.</p>
@@ -51,7 +48,7 @@
               </div>
             </label>
           </div>
-          <div data-bind="foreach: $data.variables">
+          <div class="collection-variables" data-bind="foreach: $data.variables">
             <div class="collection-variable-list-item">
               <label>
                 <input type="checkbox" data-bind="checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data), attr: {value: $data.meta()['concept-id']}">
@@ -68,8 +65,9 @@
             </div>
           </div>
         </div>
-
-        <div class="variable-details" data-bind="with: selectedVariable(), visible: selectedVariable()">
+      </div>
+      <div class="modal-body-overlay"  data-bind="with: selectedVariable(), visible: selectedVariable()">
+        <div class="variable-details">
           <button class="button-back" data-bind="click: $root.ui.variableSelector.clearVariable">
             <i class="fa fa-chevron-left"></i> Back to Variables
           </button>
@@ -85,6 +83,7 @@
           <!-- /ko -->
         </div>
       </div>
+
 
       <div class="modal-footer">
         <div class="action-container">
