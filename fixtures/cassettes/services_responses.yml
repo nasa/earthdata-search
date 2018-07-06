@@ -1017,6 +1017,36 @@ d01537ac1b980a4377b21fabd637822e936f33b7:
         </body>
         </html>
     http_version: 
+2235b3c577b06a8cd281f03f2d9ff30fcbcad3e0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '6'
+      cmr-media-type:
+      - cmr-opendap.v2; format=*
+      cmr-took:
+      - '0.439'
+      content-type:
+      - application/json
+      date:
+      - Fri, 06 Jul 2018 20:29:27 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '1621'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":6,"took":0.439,"items":["https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2009.01.08/AIRS.2009.01.08.L3.RetStd001.v6.0.9.0.G13091205040.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2016.01.20/AIRS.2016.01.20.L3.RetStd001.v6.0.31.0.G16027144006.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2016.02.03/AIRS.2016.02.03.L3.RetStd001.v6.0.31.0.G16035170541.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2016.04.03/AIRS.2016.04.03.L3.RetStd001.v6.0.31.0.G16095182314.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2004.12.11/AIRS.2004.12.11.L3.RetStd001.v6.0.9.0.G13189111444.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]"]}'
+    http_version: 
 cf9feed68ce94fe32d1d3f6b3e8728447ca6ed72:
   response:
     status:

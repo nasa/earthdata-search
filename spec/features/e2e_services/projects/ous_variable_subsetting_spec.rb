@@ -27,11 +27,11 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
       wait_for_xhr
 
       # Select the first Science Keyword listed
-      find('#associated-variables a', text: 'Methane', match: :prefer_exact).click
+      find('#associated-variables a', text: 'EMISSIVITY', match: :prefer_exact).click
 
       # Select the first UMM Variable listed
-      find('.collection-variable-list input[value="V1200241814-EDF_OPS"]').set(true)
-      find('.collection-variable-list input[value="V1200241817-EDF_OPS"]').set(true)
+      find('.variable-list input[value="V1200265916-EDF_OPS"]').set(true)
+      find('.variable-list input[value="V1200265914-EDF_OPS"]').set(true)
 
       # Save the selections and return to the project page
       within '.modal-footer' do
@@ -44,7 +44,7 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
 
     context 'When choosing to download a collection' do
       before :all do
-        page.find('.download-data').click
+        page.find('.button-download-data').click
         wait_for_xhr
       end
 
@@ -66,14 +66,14 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
 
         it 'displays the correct number of links from OUS' do
           within_window('Earthdata Search - Download Granule Links') do
-            expect(page).to have_css('#links li', count: 2)
+            expect(page).to have_css('#links li', count: 6)
           end
         end
 
         it 'displays the selected variables correctly in the query params of each link' do
           within_window('Earthdata Search - Download Granule Links') do
             first_link = find('#links li:nth-child(1)')
-            expect(first_link).to have_content('CH4_VMR_D_sdev[*][79:1:90][209:1:220]')
+            expect(first_link).to have_content('EmisIR_A_max[0:1:3][79:1:90][209:1:220]')
           end
         end
 

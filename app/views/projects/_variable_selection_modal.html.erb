@@ -50,7 +50,7 @@
           </div>
           <div class="collection-variables" data-bind="foreach: $data.variables">
             <div class="collection-variable-list-item">
-              <label>
+              <label data-bind="attr: { id: $data.meta()['concept-id'] }">
                 <input type="checkbox" data-bind="checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data), attr: {value: $data.meta()['concept-id']}">
                 <div class="collection-variable-info">
                   <h4 class="collection-variable-heading">
@@ -58,7 +58,7 @@
                   </h4>
                   <ul class="collection-variable-meta text-info list-inline list-divided">
                     <li class="collection-variable-longname" data-bind="text: $data.umm().LongName"></li>
-                    <li><a class="clean underline subtle" href="#" data-bind="click: $root.ui.variableSelector.selectVariable">View Details</a></li>
+                    <li><a class="collection-variable-details-link clean underline subtle" href="#" data-bind="click: $root.ui.variableSelector.selectVariable">View Details</a></li>
                   </ul>
                 </div>
               </label>

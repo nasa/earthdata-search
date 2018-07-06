@@ -39,6 +39,44 @@ http_interactions:
   recorded_at: Thu, 17 May 2018 20:00:33 GMT
   digest: 2e4730ebb95b094a4b1d9d439eba87623a95b6b9
 - request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json
+    body:
+      encoding: UTF-8
+      string: concept_id%5B%5D=V1200265916-EDF_OPS&concept_id%5B%5D=V1200265914-EDF_OPS&page_num=1&page_size=100
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 06 Jul 2018 20:29:27 GMT
+  digest: a716c7ff3ba79149af7fa7799f4fbb9766490e52
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json
+    body:
+      encoding: UTF-8
+      string: concept_id%5B%5D=V1200265916-EDF_OPS&concept_id%5B%5D=V1200266510-EDF_OPS&concept_id%5B%5D=V1200266604-EDF_OPS&concept_id%5B%5D=V1200265914-EDF_OPS&concept_id%5B%5D=V1200266514-EDF_OPS&concept_id%5B%5D=V1200265908-EDF_OPS&concept_id%5B%5D=V1200266602-EDF_OPS&concept_id%5B%5D=V1200266554-EDF_OPS&concept_id%5B%5D=V1200266550-EDF_OPS&concept_id%5B%5D=V1200266512-EDF_OPS&concept_id%5B%5D=V1200266594-EDF_OPS&concept_id%5B%5D=V1200266664-EDF_OPS&concept_id%5B%5D=V1200266508-EDF_OPS&concept_id%5B%5D=V1200266596-EDF_OPS&concept_id%5B%5D=V1200265910-EDF_OPS&concept_id%5B%5D=V1200266556-EDF_OPS&concept_id%5B%5D=V1200265912-EDF_OPS&concept_id%5B%5D=V1200265918-EDF_OPS&concept_id%5B%5D=V1200266546-EDF_OPS&concept_id%5B%5D=V1200266552-EDF_OPS&concept_id%5B%5D=V1200266506-EDF_OPS&concept_id%5B%5D=V1200266548-EDF_OPS&page_num=1&page_size=100
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 06 Jul 2018 19:57:17 GMT
+  digest: 7279973c4a8aa3d271bb4e1ebeee93cb037dd824
+- request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/variables.umm_json?concept_id%5B%5D=V1200241814-EDF_OPS&concept_id%5B%5D=V1200241817-EDF_OPS&concept_id%5B%5D=V1200241815-EDF_OPS&concept_id%5B%5D=V1200241822-EDF_OPS&concept_id%5B%5D=V1200241816-EDF_OPS&concept_id%5B%5D=V1200241818-EDF_OPS&concept_id%5B%5D=V1200241821-EDF_OPS&concept_id%5B%5D=V1200241812-EDF_OPS&concept_id%5B%5D=V1200241813-EDF_OPS&concept_id%5B%5D=V1200241819-EDF_OPS&concept_id%5B%5D=V1200241820-EDF_OPS&concept_id%5B%5D=V1200241823-EDF_OPS
     body:
