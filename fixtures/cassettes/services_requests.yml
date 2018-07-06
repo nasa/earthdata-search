@@ -215,6 +215,21 @@ http_interactions:
   digest: d01537ac1b980a4377b21fabd637822e936f33b7
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/opendap/ous/collection/C1200187767-EDF_OPS?bounding_box=30%2C0%2C40%2C10&format=nc&variables%5B%5D=V1200265916-EDF_OPS&variables%5B%5D=V1200265914-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 06 Jul 2018 20:29:28 GMT
+  digest: 2235b3c577b06a8cd281f03f2d9ff30fcbcad3e0
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200245793-EDF_OPS
     body:
       encoding: US-ASCII
