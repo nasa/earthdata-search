@@ -140,7 +140,7 @@ class Retrieval < ActiveRecord::Base
                          collections = response.body['feed']['entry']
                          collection = collections.first if collections.present?
                        else
-                         logger.error "Failed to get collection #{collection_hash['id']} from CMR: #{response.errors.join('\n')}"
+                         logger.error "[ERROR] Failed to get collection #{collection_hash['id']} from CMR: #{response.errors.join('\n')}"
 
                          nil
                        end
@@ -232,7 +232,7 @@ class Retrieval < ActiveRecord::Base
               end
             rescue StandardError => e
               tag = SecureRandom.hex(8)
-              logger.tagged('retrieval-error') do
+              logger.tagged('processing-error') do
                 logger.tagged(tag) do
                   logger.error "[ERROR] Unable to process access method in retrieval #{id}: #{method.to_json}"
                   logger.error e.message
@@ -256,7 +256,7 @@ class Retrieval < ActiveRecord::Base
   rescue StandardError => e
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       logger.tagged("Processing Retrieval Object #{id}") do
-        logger.tagged('retrieval-error') do
+        logger.tagged('processing-error') do
           logger.error "[ERROR] Attempting to Submit Order #{id}"
           logger.error e.message
 
@@ -293,7 +293,11 @@ class Retrieval < ActiveRecord::Base
 
     daacs.each do |daac|
       collections.each do |collection|
-        return daac if collection['id'].include? daac
+        if collection['id'].include?(daac)
+          Rails.logger.info "Collection #{collection['id']} should be worked within the #{daac} queue."
+          
+          return daac
+        end
       end
     end
 
@@ -369,7 +373,7 @@ class Retrieval < ActiveRecord::Base
       logger.tagged("delayed_job version: #{Rails.configuration.version}") do
         logger.tagged("Getting Status for Retrieval Object #{id}") do
           logger.tagged('retrieval-error') do
-            logger.error "Error Attempting to Submit Order #{id}"
+            logger.error "[ERROR] Attempting to Submit Order #{id}"
             logger.error e.message
 
             e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
