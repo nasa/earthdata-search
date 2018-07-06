@@ -2,8 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
-
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></a>
         <h1 class="modal-title" id="collection-customization-modal-title"><i class="fa fa-cog"></i> Select Customization Options</h1>
       </div>
 
@@ -34,9 +33,9 @@
             <div class="action-container">
               <a class="action-button">Output Formats</a>
             </div>
-          </div>  
+          </div>
         </div>
-        
+
         <!-- ko if: spatialSubsettingEnabled() && expectedAccessMethod().type == 'opendap' -->
         <p class="content"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: project.backToSearch">Click here</a> to modify.</p>
         <!-- /ko -->
