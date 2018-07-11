@@ -1,66 +1,54 @@
 require 'spec_helper'
 
-describe 'Saving Projects', reset: false do
-  context 'when adding a name to a project' do
-    let(:path) { '/search/collections?p=!C179002914-ORNL_DAAC!C179003030-ORNL_DAAC' }
-    let(:query_re) { /^projectId=(\d+)$/ }
+describe 'Viewing an un-saved Project', reset: false do
+  before :all do
+    Capybara.reset_sessions!
 
+    be_logged_in_as('edsc')
+
+    load_page 'projects/new', project: ['C1200187767-EDF_OPS'], env: :sit
+  end
+
+  it 'displays the default project name' do
+    within '.project-title-container' do
+      expect(page).to have_content('Untitled Project')
+    end
+  end
+
+  it 'displays a save project button' do
+    within '.project-title-container' do
+      expect(page).to have_css('.toolbar-button.save')
+    end
+  end
+
+  context 'clicking the save project button' do
     before :all do
-      Capybara.reset_sessions!
-
-      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
-
-      # Need to login so that we can save our project
-      login
-
-      click_link 'Save your project'
-      
-      fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
-      click_save_project_name
+      within '.project-title-container' do
+        page.find('.toolbar-button.save').click
+      end
     end
 
-    it "shortens the url" do
-      expect(query).to match(query_re)
-      expect(Project.find(project_id).path).to eql(path)
+    it 'displays the project name form' do
+      expect(page).to have_field('workspace-name')
     end
 
-    it "shows the project name" do
-      click_link 'Rename your project'
-      expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project')
-      click_link 'Rename your project'
-    end
-
-    context "when renaming the project" do
+    context 'providing a name and clicking `Save`' do
       before :all do
-        click_link 'Rename your project'
-        fill_in "workspace-name", with: "Test Project 2\t"
-        click_save_project_name
-      end
+        fill_in 'workspace-name', with: 'EDSC NASA'
 
-      it "keeps the same short url" do
-        expect(query).to match(query_re)
-        expect(Project.find(project_id).path).to eql(path)
-      end
+        click_button 'Save'
 
-      it "shows the new project name" do
-        click_link 'Rename your project'
-        expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project 2')
-        click_link 'Rename your project'
-      end
-    end
-
-    context "when loading the named project" do
-      before :each do
-        project = create_project(path)
-
-        visit "/search/collections?projectId=#{project.to_param}"
         wait_for_xhr
       end
 
-      it "shows the project name" do
-        click_link 'Rename your project'
-        expect(page.evaluate_script("$('#workspace-name').val();")).to eql('Test Project')
-        click_link 'Rename your project'
+      it 'displays the updated project name' do
+        within '.project-title-container' do
+          expect(page).to have_content('EDSC NASA')
+        end
+      end
+
+      it 'shortens the url' do
+        expect(query).to match(/^projectId=(\d+)$/)
       end
     end
   end

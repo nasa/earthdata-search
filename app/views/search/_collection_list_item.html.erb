@@ -101,7 +101,7 @@
                      data-bind="visible: !$root.project.hasCollection($data) && $data.has_granules, click: $root.ui.projectList.toggleCollection">
                     <i class="fa fa-plus"></i>
                   </a>
-                  <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
+                  <a href="#" class="button icon-button remove-from-project button-active" data-pulse="#project-count" title="Remove collection from the current project"
                      data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
                     <i class="fa fa-minus"></i>
                   </a>
