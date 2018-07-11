@@ -11,6 +11,7 @@ describe "Granule list", reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search
+    login
   end
 
   context "for all collections with granules" do
@@ -87,21 +88,6 @@ describe "Granule list", reset: false do
 
       it "displays back navigation with the appropriate text" do
         expect(collection_details).to have_link('Back to Granules')
-      end
-    end
-
-    context "clicking on the download button" do
-      before :all do
-        granule_list.click_button('Download')
-      end
-
-      after :all do
-        page.execute_script('window.history.back()')
-        wait_for_xhr
-      end
-
-      it "triggers the download workflow" do
-        expect(page).to have_content('EOSDIS Earthdata Login')
       end
     end
 

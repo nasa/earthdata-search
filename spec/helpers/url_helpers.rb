@@ -90,8 +90,9 @@ module Helpers
       close_banner = options.delete :close_banner
 
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
-        options.each do |key, value|
-          page.set_rack_session(cmr_env: value) if key == 'cmr_env'
+        # Set supported session variables
+        options.select { |option| ['cmr_env'].include?(option) }.each do |key, value|
+          page.set_rack_session(key => value)
         end
 
         url = QueryBuilder.new.add_to(url, options)

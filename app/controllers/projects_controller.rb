@@ -1,4 +1,14 @@
 class ProjectsController < ApplicationController
+  # We need user tokens to retrieve data for the data customization forms
+  before_filter :require_login, only: [:new, :show], unless: :json_request?
+
+  # Tokens are not necessary for creating/updating EDSC objects which is all that
+  # happens via JSON so we're not going to require the user to be authenticated here
+  # (This would also require the user be authenticated on the search page, which is undesireable)
+  def json_request?
+    request.format.json?
+  end
+
   def index
     if current_user.present?
       # TODO: PQ EDSC-1038: Include portal information here
@@ -44,12 +54,6 @@ class ProjectsController < ApplicationController
         end
       end
     end
-
-  # rescue ActiveRecord::RecordNotFound => e
-  #   respond_to do |format|
-  #     format.html { render file: "#{Rails.root}/public/404.html", status: :not_found }
-  #     format.json { render json: '{}' }
-  #   end
   end
 
   def create

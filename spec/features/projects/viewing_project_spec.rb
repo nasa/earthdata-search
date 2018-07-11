@@ -64,7 +64,10 @@ describe 'Viewing Single Project', reset: false do
       before :all do
         Capybara.reset_sessions!
         load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z', '2014-02-01T00:00:01Z']
+        login
+        wait_for_xhr
         click_link 'My Project'
+        wait_for_xhr
       end
       it 'shows the start and end dates of that range within the temporal label' do
         expect(find('#temporal-label')).to have_content('Jan 01, 2010 - Feb 01, 2014')
@@ -75,6 +78,8 @@ describe 'Viewing Single Project', reset: false do
       before :all do
         Capybara.reset_sessions!
         load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z']
+        login
+        wait_for_xhr
         click_link 'My Project'
       end
       it 'shows only the start of that range within the temporal label' do
@@ -86,6 +91,8 @@ describe 'Viewing Single Project', reset: false do
       before :all do
         Capybara.reset_sessions!
         load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['', '2014-02-01T00:00:01Z']
+        login
+        wait_for_xhr
         click_link 'My Project'
       end
       it 'shows only the end of that range within the temporal label' do
