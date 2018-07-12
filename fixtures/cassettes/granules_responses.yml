@@ -11387,6 +11387,47 @@ afff6a1a3d1e2e204b9f8273f4a161640e7e7a1b:
         -149.4308922 10.0131469 -151.7233297 10 -162.4682579 -0.0150191 -160.0161464
         0.0008577 -149.4308922"]],"collection_concept_id":"C92711294-NSIDC_ECS","online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","type":"application/x-hdfeos","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2017.01.01/MOD10A1.A2017001.h02v08.005.2017003055948.hdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/jpeg","title":"(BROWSE)","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP0/BRWS/Browse.001/2017.01.03/BROWSE.MOD10A1.A2017001.h02v08.005.2017003055948.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","type":"text/xml","title":"(METADATA)","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2017.01.01/MOD10A1.A2017001.h02v08.005.2017003055948.hdf.xml"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C5"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/MOD10A1/versions/5"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}]}}'
     http_version: 
+b4598fc74ef55262d3cb8abdc0701ea67c7ed4bb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '2'
+      cmr-request-id:
+      - 6de3d039-ca55-4a15-bf71-f42289518cee
+      cmr-took:
+      - '71'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 12 Jul 2018 11:43:32 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1275'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feed":{"updated":"2018-07-12T11:44:04.340Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C92711294-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"producer_granule_id":"MOD10A1.A2016001.h31v13.005.2016006204744.hdf","time_start":"2016-01-01T22:05:00.000Z","cloud_cover":"100.0","updated":"2016-04-28T16:41:25.024Z","orbit_calculated_spatial_domains":[{"equator_crossing_date_time":"2016-01-01T21:55:01.992Z","equator_crossing_longitude":"-171.14315602662","orbit_number":"85315"}],"dataset_id":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005","data_center":"NSIDC_ECS","title":"SC:MOD10A1.005:71368355","coordinate_system":"GEODETIC","day_night_flag":"DAY","time_end":"2016-01-01T22:10:00.000Z","id":"G1011912800-NSIDC_ECS","original_format":"ECHO10","granule_size":"0.10883","browse_flag":true,"polygons":[["-43.7443701
+        -179.6951115 -39.8852057 179.9905341 -39.8875576 169.7115821 -43.7384107 169.3982563
+        -43.7443701 -179.6951115"]],"collection_concept_id":"C92711294-NSIDC_ECS","online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","type":"application/x-hdfeos","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2016.01.01/MOD10A1.A2016001.h31v13.005.2016006204744.hdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/jpeg","title":"(BROWSE)","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP0/BRWS/Browse.001/2016.01.06/BROWSE.MOD10A1.A2016001.h31v13.005.2016006204744.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","type":"text/xml","title":"(METADATA)","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2016.01.01/MOD10A1.A2016001.h31v13.005.2016006204744.hdf.xml"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C5"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/MOD10A1/versions/5"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]},{"producer_granule_id":"MOD10A1.A2016001.h31v12.005.2016006204741.hdf","time_start":"2016-01-01T00:35:00.000Z","cloud_cover":"94.0","updated":"2016-04-28T16:42:09.005Z","orbit_calculated_spatial_domains":[{"equator_crossing_date_time":"2016-01-01T00:29:31.766Z","equator_crossing_longitude":"150.233078295303","orbit_number":"85302"},{"equator_crossing_date_time":"2016-01-01T21:55:01.992Z","equator_crossing_longitude":"-171.14315602662","orbit_number":"85315"},{"equator_crossing_date_time":"2016-01-01T23:33:54.975Z","equator_crossing_longitude":"164.136371703263","orbit_number":"85316"}],"dataset_id":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005","data_center":"NSIDC_ECS","title":"SC:MOD10A1.005:71367991","coordinate_system":"GEODETIC","day_night_flag":"DAY","time_end":"2016-01-01T23:45:00.000Z","id":"G1011913603-NSIDC_ECS","original_format":"ECHO10","granule_size":"0.134351","browse_flag":true,"polygons":[["-39.9342677
+        -179.6857897 -28.0874459 177.015856 -29.9245142 150.11617 -42.0463277 149.1679015
+        -39.9342677 -179.6857897"]],"collection_concept_id":"C92711294-NSIDC_ECS","online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","type":"application/x-hdfeos","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2016.01.01/MOD10A1.A2016001.h31v12.005.2016006204741.hdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/jpeg","title":"(BROWSE)","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP0/BRWS/Browse.001/2016.01.06/BROWSE.MOD10A1.A2016001.h31v12.005.2016006204741.1.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","type":"text/xml","title":"(METADATA)","hreflang":"en-US","href":"https://n5eil01u.ecs.nsidc.org/DP5/MOST/MOD10A1.005/2016.01.01/MOD10A1.A2016001.h31v12.005.2016006204741.hdf.xml"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C5"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/MOD10A1/versions/5"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}]}}'
+    http_version: 
 41aea5052374391dbaeb6b3ba2269e5c2599cc79:
   response:
     status:
@@ -11978,6 +12019,61 @@ b1f805f321884133e6a813a2d3463a9f661131be:
     body:
       encoding: ASCII-8BIT
       string: '{"feed":{"updated":"2018-06-11T20:42:37.841Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1000000029-EDF_OPS&page_num=1&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"producer_granule_id":"ACRL2DM040323_083_8849.hdf","time_start":"2004-03-23T11:55:22.000Z","updated":"2010-02-25T10:10:12.160Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297446","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-23T11:55:22.000Z","id":"G1000001479-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040322_082_8848.hdf","time_start":"2004-03-22T12:01:25.000Z","updated":"2010-02-25T10:10:15.523Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297466","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-22T12:01:25.000Z","id":"G1000001489-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040321_081_8847.hdf","time_start":"2004-03-21T11:55:29.000Z","updated":"2010-02-25T10:10:11.523Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297439","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-21T11:55:29.000Z","id":"G1000001526-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040320_080_8846.hdf","time_start":"2004-03-20T12:05:34.000Z","updated":"2010-02-25T10:10:12.563Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297447","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-20T12:05:34.000Z","id":"G1000001495-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040319_079_8845.hdf","time_start":"2004-03-19T11:56:44.000Z","updated":"2010-02-25T10:10:11.630Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297445","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-19T11:56:44.000Z","id":"G1000001496-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040318_078_8844.hdf","time_start":"2004-03-18T11:58:49.000Z","updated":"2010-02-25T10:10:10.206Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297437","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-18T11:58:49.000Z","id":"G1000001527-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040317_077_8843.hdf","time_start":"2004-03-17T12:00:13.000Z","updated":"2010-02-25T10:10:12.356Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297451","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-17T12:00:13.000Z","id":"G1000001493-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040316_076_8842.hdf","time_start":"2004-03-16T11:55:23.000Z","updated":"2010-02-25T10:10:10.800Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297435","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-16T11:55:23.000Z","id":"G1000001505-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040315_075_8841.hdf","time_start":"2004-03-15T12:04:26.000Z","updated":"2010-02-25T10:10:12.930Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297449","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-15T12:04:26.000Z","id":"G1000001480-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040314_074_8840.hdf","time_start":"2004-03-14T12:00:36.000Z","updated":"2010-02-25T10:10:13.686Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297454","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-14T12:00:36.000Z","id":"G1000001520-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040313_073_8839.hdf","time_start":"2004-03-13T12:02:57.000Z","updated":"2010-02-25T09:11:38.143Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296661","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-13T12:02:57.000Z","id":"G1000001483-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040312_072_8838.hdf","time_start":"2004-03-12T11:59:05.000Z","updated":"2010-02-25T09:12:35.570Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296723","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-12T11:59:05.000Z","id":"G1000001511-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040311_071_8837.hdf","time_start":"2004-03-11T11:55:31.000Z","updated":"2010-02-25T09:12:51.723Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296746","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-11T11:55:31.000Z","id":"G1000001512-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040310_070_8836.hdf","time_start":"2004-03-10T12:04:18.000Z","updated":"2010-02-25T09:11:53.650Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296680","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-10T12:04:18.000Z","id":"G1000001507-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040309_069_8835.hdf","time_start":"2004-03-09T11:58:35.000Z","updated":"2010-02-25T09:11:22.330Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296644","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-09T11:58:35.000Z","id":"G1000001524-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040308_068_8834.hdf","time_start":"2004-03-08T12:04:43.000Z","updated":"2010-02-25T09:12:27.380Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296716","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-08T12:04:43.000Z","id":"G1000001519-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040307_067_8833.hdf","time_start":"2004-03-07T11:58:48.000Z","updated":"2010-02-25T09:12:51.840Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296751","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-07T11:58:48.000Z","id":"G1000001492-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040306_066_8832.hdf","time_start":"2004-03-06T11:52:49.000Z","updated":"2010-02-25T09:11:55.983Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296658","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-06T11:52:49.000Z","id":"G1000001497-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040305_065_8831.hdf","time_start":"2004-03-05T12:03:08.000Z","updated":"2010-02-25T09:11:18.366Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296641","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-05T12:03:08.000Z","id":"G1000001482-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040304_064_8830.hdf","time_start":"2004-03-04T11:55:52.000Z","updated":"2010-02-25T09:12:35.720Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:296711","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-04T11:55:52.000Z","id":"G1000001481-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false}]}}'
+    http_version: 
+b8c181d41e191e2720951fe472fb121b8a9da0d9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '52'
+      cmr-request-id:
+      - 5f5f2185-f94d-4db5-9f3a-ab7e7c6b4474
+      cmr-took:
+      - '436'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 12 Jul 2018 14:53:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1173'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feed":{"updated":"2018-07-12T14:53:55.103Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1000000029-EDF_OPS&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
         granule metadata","entry":[{"producer_granule_id":"ACRL2DM040323_083_8849.hdf","time_start":"2004-03-23T11:55:22.000Z","updated":"2010-02-25T10:10:12.160Z","dataset_id":"ACRIM
         III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297446","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-23T11:55:22.000Z","id":"G1000001479-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040322_082_8848.hdf","time_start":"2004-03-22T12:01:25.000Z","updated":"2010-02-25T10:10:15.523Z","dataset_id":"ACRIM
         III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","title":"SC:ACR3L2DM.001:297466","coordinate_system":"NO_SPATIAL","day_night_flag":"UNSPECIFIED","time_end":"2004-03-22T12:01:25.000Z","id":"G1000001489-EDF_OPS","original_format":"ECHO10","granule_size":"6.33E-4","browse_flag":false,"collection_concept_id":"C1000000029-EDF_OPS","online_access_flag":false},{"producer_granule_id":"ACRL2DM040321_081_8847.hdf","time_start":"2004-03-21T11:55:29.000Z","updated":"2010-02-25T10:10:11.523Z","dataset_id":"ACRIM

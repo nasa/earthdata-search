@@ -9,7 +9,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:17:59 GMT
+  recorded_at: Thu, 12 Jul 2018 11:25:08 GMT
   digest: e4857e156068cc0fde1e347913fac474dd37a606
 - request:
     method: get
@@ -20,7 +20,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:38:28 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:00 GMT
   digest: 005cfe972384eba1d969e42f68099e24615769d2
 - request:
     method: get
@@ -31,7 +31,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:33:28 GMT
+  recorded_at: Thu, 12 Jul 2018 11:25:25 GMT
   digest: e568a5404cb9ba8cc8ff0b89f467c99298df9cc2
 - request:
     method: get
@@ -42,7 +42,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:25:29 GMT
+  recorded_at: Thu, 12 Jul 2018 11:47:57 GMT
   digest: 61b380e471b6349a8d438dadb41524f29b6a50d2
 - request:
     method: get
@@ -53,7 +53,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:25:22 GMT
+  recorded_at: Thu, 12 Jul 2018 11:47:52 GMT
   digest: 5e051b2ead4279fdb26e2ec05c33f96806997842
 - request:
     method: get
@@ -64,7 +64,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:25:34 GMT
+  recorded_at: Thu, 12 Jul 2018 11:48:05 GMT
   digest: a3769588b891f9de44c42f2e67c91d25f9f40e3a
 - request:
     method: get
@@ -75,7 +75,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:36:40 GMT
+  recorded_at: Thu, 12 Jul 2018 11:28:21 GMT
   digest: d2c21fa1f0c269e8b901e52a87dc189c9927c4e7
 - request:
     method: get
@@ -86,7 +86,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:18:07 GMT
+  recorded_at: Thu, 12 Jul 2018 11:29:15 GMT
   digest: 7b5d2841fafdf643a2ae48257dafcc6c4e7c262a
 - request:
     method: get
@@ -97,7 +97,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:35:20 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:40 GMT
   digest: 93f864a0bcb2d9c03f3f134f3e077bd7cfabe03b
 - request:
     method: get
@@ -108,7 +108,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:35:15 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:47 GMT
   digest: b94d60951a754a07b70fc95907696446764bc706
 - request:
     method: get
@@ -119,7 +119,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:42:15 GMT
+  recorded_at: Thu, 12 Jul 2018 11:33:32 GMT
   digest: d71d940d3803ace92ca83ecc2301d6a542ba5ddc
 - request:
     method: get
@@ -130,7 +130,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:42:21 GMT
+  recorded_at: Thu, 12 Jul 2018 11:33:28 GMT
   digest: 660ad6bc7439f2c30ca6437b17c14406ce03164a
 - request:
     method: get
@@ -141,7 +141,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:33:12 GMT
+  recorded_at: Thu, 12 Jul 2018 11:25:11 GMT
   digest: aa27f6608118a31e10450b5b93d61ba7a43ee6cd
 - request:
     method: get
@@ -152,7 +152,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:18:03 GMT
+  recorded_at: Thu, 12 Jul 2018 11:29:02 GMT
   digest: d5e2d6d0d7b757dad95e272f70ee1544c23264d9
 - request:
     method: get
@@ -163,7 +163,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:38:30 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:09 GMT
   digest: 431ad305509521a6b7960e7ed3d0ebfa63417e7f
 - request:
     method: get
@@ -174,7 +174,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:33:19 GMT
+  recorded_at: Thu, 12 Jul 2018 11:25:19 GMT
   digest: 6883c95043569823dea1a7450123835218a9bdb1
 - request:
     method: get
@@ -185,7 +185,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:42:44 GMT
+  recorded_at: Thu, 12 Jul 2018 11:29:46 GMT
   digest: 74e6b08ac41f7484f5a30df1ade39fdad7f542fc
 - request:
     method: get
@@ -196,7 +196,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:38:20 GMT
+  recorded_at: Thu, 12 Jul 2018 11:30:14 GMT
   digest: a3c67c46886a10f55957a8abd1ff34d4c66514be
 - request:
     method: get
@@ -211,7 +211,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 11 Jun 2018 20:38:19 GMT
+  recorded_at: Thu, 12 Jul 2018 11:30:14 GMT
   digest: d01537ac1b980a4377b21fabd637822e936f33b7
 - request:
     method: get
@@ -226,7 +226,7 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc-access
-  recorded_at: Fri, 06 Jul 2018 20:29:28 GMT
+  recorded_at: Thu, 12 Jul 2018 14:32:42 GMT
   digest: 2235b3c577b06a8cd281f03f2d9ff30fcbcad3e0
 - request:
     method: get
@@ -243,7 +243,9 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc-access
-  recorded_at: Mon, 11 Jun 2018 20:29:54 GMT
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.1
+  recorded_at: Thu, 12 Jul 2018 11:45:50 GMT
   digest: cf9feed68ce94fe32d1d3f6b3e8728447ca6ed72
 - request:
     method: get
@@ -260,7 +262,9 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc-access
-  recorded_at: Mon, 11 Jun 2018 20:27:49 GMT
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.1
+  recorded_at: Thu, 12 Jul 2018 11:45:50 GMT
   digest: 341c42e07bd697844af51259392125f9192c3556
 - request:
     method: get
@@ -277,7 +281,9 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc-access
-  recorded_at: Wed, 27 Jun 2018 21:15:56 GMT
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.1
+  recorded_at: Thu, 12 Jul 2018 11:28:38 GMT
   digest: 0b7087e0e2544a52028ecc33e826a134aede753f
 - request:
     method: get
@@ -288,7 +294,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:36:20 GMT
+  recorded_at: Thu, 12 Jul 2018 11:41:59 GMT
   digest: 7b57cba41ae355a09a1cacded832660d3983b107
 - request:
     method: get
@@ -299,7 +305,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:43:59 GMT
+  recorded_at: Thu, 12 Jul 2018 11:34:55 GMT
   digest: 9eb6b283b46542aab0d2b2fff648eecfaa6d2982
 - request:
     method: get
@@ -310,7 +316,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:36:00 GMT
+  recorded_at: Thu, 12 Jul 2018 11:46:06 GMT
   digest: a23f9507b9b9de2044a55848487003b238b15bc8
 - request:
     method: get
@@ -321,7 +327,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:15:06 GMT
+  recorded_at: Thu, 12 Jul 2018 11:25:55 GMT
   digest: 71b1f9a9c4a7f57e8bbccb00f0b4d83be72afd29
 - request:
     method: get
@@ -332,7 +338,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:32:49 GMT
+  recorded_at: Thu, 12 Jul 2018 11:34:52 GMT
   digest: 4975c69ef3d4115e276ba2236bef09472e4b7179
 - request:
     method: get
@@ -343,7 +349,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:10:49 GMT
+  recorded_at: Thu, 12 Jul 2018 11:40:03 GMT
   digest: 71d1a49980789341ae8b5751ddaf021fb4fc82a3
 - request:
     method: get
@@ -354,7 +360,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:36:04 GMT
+  recorded_at: Thu, 12 Jul 2018 11:46:03 GMT
   digest: c932062b79abba67137561b12b1c852fad9cb4df
 - request:
     method: get
@@ -365,7 +371,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:43:54 GMT
+  recorded_at: Thu, 12 Jul 2018 11:35:01 GMT
   digest: cf841069680040a624281e20239ca7d125562c60
 - request:
     method: get
@@ -376,7 +382,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:11:17 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:33 GMT
   digest: 6e401f9c470e894983efdfcdbedac81425c288d0
 - request:
     method: get
@@ -387,7 +393,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:37:30 GMT
+  recorded_at: Thu, 12 Jul 2018 11:34:04 GMT
   digest: 88ab09eb00ad433d405b20f156ce3e193fe6a4de
 - request:
     method: get
@@ -398,7 +404,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:44:03 GMT
+  recorded_at: Thu, 12 Jul 2018 11:34:57 GMT
   digest: 5cbcb5ecd0a79e186d228bcb2aa61724a6583010
 - request:
     method: get
@@ -409,7 +415,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:11:57 GMT
+  recorded_at: Thu, 12 Jul 2018 11:33:58 GMT
   digest: 52448e8005db07d4ad8cc03ff3eee107f26a804c
 - request:
     method: get
@@ -420,7 +426,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:45:00 GMT
+  recorded_at: Thu, 12 Jul 2018 11:40:22 GMT
   digest: 99a6b557e4f777329cc3f8ec755f90306e76eb3b
 - request:
     method: get
@@ -431,7 +437,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:11:26 GMT
+  recorded_at: Thu, 12 Jul 2018 11:32:12 GMT
   digest: 6077c4c6a948b8b7fe3474401278debcb2852f72
 - request:
     method: get
@@ -442,7 +448,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:24:00 GMT
+  recorded_at: Thu, 12 Jul 2018 11:50:16 GMT
   digest: 3b6810736dd521cecf677e4953dff326e1f41e28
 - request:
     method: get
@@ -453,7 +459,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:17:58 GMT
+  recorded_at: Thu, 12 Jul 2018 11:28:58 GMT
   digest: 6566b10004dd1d934e23c0aec9a98e5c1a057da6
 - request:
     method: get
@@ -464,7 +470,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:22:49 GMT
+  recorded_at: Thu, 12 Jul 2018 11:49:09 GMT
   digest: 9477075771e5ecc174273b36c43392b05e8e46b5
 - request:
     method: get
@@ -475,7 +481,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:44:28 GMT
+  recorded_at: Thu, 12 Jul 2018 11:40:29 GMT
   digest: 9c3d5473de42e990c5f8f50f660da597dcd62863
 - request:
     method: get
@@ -486,7 +492,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:36:07 GMT
+  recorded_at: Thu, 12 Jul 2018 11:46:11 GMT
   digest: c31197d228063f0ab2328ff0a4cfc5f5b6b7b8fa
 - request:
     method: get
@@ -497,7 +503,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:40:14 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:56 GMT
   digest: 6fbc7da5322639df9cb7eae133d4229918e2444f
 - request:
     method: get
@@ -508,7 +514,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:39:18 GMT
+  recorded_at: Thu, 12 Jul 2018 11:51:56 GMT
   digest: a5f85679d37d49af1787ab573faff91dd93ef0f0
 - request:
     method: get
@@ -519,7 +525,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:13:46 GMT
+  recorded_at: Thu, 12 Jul 2018 11:30:31 GMT
   digest: 3cb2dfeb7022664db27a918d06a272fe818fcac1
 - request:
     method: get
@@ -530,7 +536,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:10:59 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:23 GMT
   digest: c8eb1788f2e5cde2c1b3a9acf8d196c32b5f6c60
 - request:
     method: get
@@ -541,7 +547,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:15:28 GMT
+  recorded_at: Thu, 12 Jul 2018 11:31:35 GMT
   digest: 9f58e36b46ca054de8acdc4302ecf85457a459cf
 - request:
     method: get
@@ -552,7 +558,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:44:54 GMT
+  recorded_at: Thu, 12 Jul 2018 11:39:59 GMT
   digest: 825d59d798eabac551876fa51b957a20077307aa
 - request:
     method: get
@@ -563,7 +569,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Tue, 12 Jun 2018 01:19:15 GMT
+  recorded_at: Thu, 12 Jul 2018 15:03:49 GMT
   digest: 7409dc160f676b0dcdedd838199c764f67e4097b
 - request:
     method: get
@@ -574,7 +580,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:12:11 GMT
+  recorded_at: Thu, 12 Jul 2018 11:26:02 GMT
   digest: 96756634d05781b8824c7f324462bc6f4a386597
 - request:
     method: get
@@ -585,7 +591,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:15:24 GMT
+  recorded_at: Thu, 12 Jul 2018 11:31:32 GMT
   digest: f85034a1b85aba95a56845fe4e3ced74b346c672
 - request:
     method: get
@@ -596,7 +602,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:37:07 GMT
+  recorded_at: Thu, 12 Jul 2018 11:34:21 GMT
   digest: 9509e00d2afb04dba4cc20b6ef65f4a12f5d029e
 - request:
     method: get
@@ -607,7 +613,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:39:15 GMT
+  recorded_at: Thu, 12 Jul 2018 11:51:58 GMT
   digest: 937985488058b4b1e0eef90741b14dbdb1f5bea2
 - request:
     method: get
@@ -618,7 +624,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:11:05 GMT
+  recorded_at: Thu, 12 Jul 2018 11:42:16 GMT
   digest: 62631125012f017df24899d210ce58ccbd1aa107
 - request:
     method: get
@@ -629,7 +635,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:28:11 GMT
+  recorded_at: Thu, 12 Jul 2018 11:35:19 GMT
   digest: 7057600b4e9c0849e27acf2ed121852259fb80cb
 - request:
     method: get
@@ -640,7 +646,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:41:15 GMT
+  recorded_at: Thu, 12 Jul 2018 11:43:52 GMT
   digest: 0a121acd9714018241ed3dbd272e9a90df54f903
 - request:
     method: get
@@ -651,7 +657,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:31:37 GMT
+  recorded_at: Thu, 12 Jul 2018 11:25:58 GMT
   digest: 37be17343d50e3708b5852b2d71f2db8acd4dcc7
 - request:
     method: get
@@ -662,7 +668,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:19:21 GMT
+  recorded_at: Thu, 12 Jul 2018 11:41:27 GMT
   digest: da15b45a7adf3c6ac6915307a25d3ab1854ec9b5
 - request:
     method: get
@@ -673,7 +679,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:44:12 GMT
+  recorded_at: Thu, 12 Jul 2018 11:52:05 GMT
   digest: 87471c07b2f6a0d4e81556f64ba5299430a6f0ac
 - request:
     method: get
@@ -684,7 +690,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:19:14 GMT
+  recorded_at: Thu, 12 Jul 2018 11:41:16 GMT
   digest: cb47424fc7f34ca5d9ec5245c71685f8954a75f1
 - request:
     method: get
@@ -695,7 +701,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:19:09 GMT
+  recorded_at: Thu, 12 Jul 2018 11:41:22 GMT
   digest: d63cb049375aff72da5b367d65d787ce978ec49f
 - request:
     method: get
@@ -706,7 +712,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:34:16 GMT
+  recorded_at: Thu, 12 Jul 2018 11:39:30 GMT
   digest: 58bcfb50b046948a9711f246c5ff72b04fcf7af7
 - request:
     method: get
@@ -717,30 +723,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:42:32 GMT
+  recorded_at: Thu, 12 Jul 2018 11:44:46 GMT
   digest: 186ad8f8d0bf8d82cb805125293cbf363e157bfc
-- request:
-    method: get
-    uri: https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:25:44 GMT
-  digest: 6bf87a5fa2776e3a7b6c7a5302456300f112e8b3
-- request:
-    method: get
-    uri: https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc.ddx
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:25:56 GMT
-  digest: f8ab9ae82d5d59d6a12f1477ebf18a37868e8f98
 - request:
     method: get
     uri: https://urs.earthdata.nasa.gov/
@@ -752,7 +736,7 @@ http_interactions:
       - Basic ZWFydGhkYXRhX3NlYXJjaF9kZXY6RWRzYzEyMyFAIw==
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:38:21 GMT
+  recorded_at: Thu, 12 Jul 2018 11:30:15 GMT
   digest: 9ce0bd1566373b313dc9b29dc08f3b5a3c9ff8c4
 - request:
     method: get
@@ -763,6 +747,6 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Mon, 11 Jun 2018 20:38:32 GMT
+  recorded_at: Thu, 12 Jul 2018 11:35:52 GMT
   digest: c4bdaee98ebbd8ac715deaafd3b1275eb475566c
 recorded_with: VCR 2.6.0

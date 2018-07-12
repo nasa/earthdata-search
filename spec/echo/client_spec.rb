@@ -45,7 +45,7 @@ describe Echo::Client do
   end
 
   context 'collection details' do
-    let(:collection_url) { "/search/concepts/C14758250-LPDAAC_ECS.umm_json_v1_9" }
+    let(:collection_url) { "/search/concepts/C14758250-LPDAAC_ECS.umm_json" }
     let(:resp) { Faraday::Response.new }
     let(:body) { Object.new }
     let(:granule_url) { "http://example.com/search/granules.json" }
@@ -53,7 +53,7 @@ describe Echo::Client do
     it 'with valid collection ID' do
       expect(connection).to receive(:get).with(collection_url, {}).and_return(resp)
 
-      response = cmr_client.get_collection('C14758250-LPDAAC_ECS', nil, 'umm_json_v1_9')
+      response = cmr_client.get_collection('C14758250-LPDAAC_ECS', nil, 'umm_json')
       expect(response.faraday_response).to eq(resp)
     end
 
