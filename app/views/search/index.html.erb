@@ -111,6 +111,8 @@
         </header>
         <div class="master-overlay-info master-overlay-when-max">
           <p class="collection-filters">
+            <p class="collection-sort">Sort by: <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select></p>
+
             <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
             <label for="has-granules">Only include collections with granules</label>
             <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
