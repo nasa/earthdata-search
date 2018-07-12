@@ -317,6 +317,11 @@ ns.query = do (ko,
 
       @sortKey = @queryComponent(new QueryParam('sort_key'), '', ephemeral: true)
 
+      # Subscribe to the sortKey for the purpose of sending changes to Google Analytics
+      @sortKey.subscribe (sortKey) =>
+        if ga?
+          ga('send', 'event', 'button', 'click', sortKey) if sortKey?
+
       super(parentQuery)
 
     clearFilters: =>
