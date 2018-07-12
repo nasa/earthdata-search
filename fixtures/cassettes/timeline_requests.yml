@@ -347,6 +347,25 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C119124186-NSIDC_ECS&end_date=2012-10-03T23%3A59%3A59.000Z&interval=day&start_date=2009-10-01T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Thu, 12 Jul 2018 11:34:00 GMT
+  digest: 392f6529f49f6b64ca6b0df39137f122210068be
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C119124186-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
@@ -1444,6 +1463,23 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Tue, 12 Jun 2018 04:18:03 GMT
   digest: e4dfa97070c4b322697917b61416d4c856a474e1
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 12 Jul 2018 11:44:05 GMT
+  digest: c95e719b96d6b41bdc80e42a00f785a8bb9dfd36
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json

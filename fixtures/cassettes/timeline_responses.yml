@@ -489,6 +489,30 @@ bcee2d69e84a8832b7245978b2403cce6add2ec6:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000445-NSIDC_ECS","intervals":[[1203206400,1206144000,1977],[1223078400,1224460800,864],[1227571200,1229558400,1309],[1236556800,1239494400,1969],[1254268800,1255305600,636]]}]'
     http_version: 
+392f6529f49f6b64ca6b0df39137f122210068be:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9ba2a5c7-7ddc-4eee-b3d3-7e563fffa476
+      date:
+      - Thu, 12 Jul 2018 11:33:27 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '112'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C119124186-NSIDC_ECS","intervals":[[1254441599,1265155200,3592],[1265328000,1317686400,17633]]}]'
+    http_version: 
 6e79c15cbb08c0150ca8f1b5ffb8de028f5a5d31:
   response:
     status:
@@ -2026,6 +2050,30 @@ e4dfa97070c4b322697917b61416d4c856a474e1:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C4543622-LARC_ASDC","intervals":[[1425167999,1455840000,8430],[1456617600,1488412800,8804]]}]'
+    http_version: 
+c95e719b96d6b41bdc80e42a00f785a8bb9dfd36:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 486fc5e8-f259-41a4-805a-b5d00ef18ca2
+      date:
+      - Thu, 12 Jul 2018 11:44:05 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
     http_version: 
 279755864deffb2711918cc792d1569a0283eff4:
   response:

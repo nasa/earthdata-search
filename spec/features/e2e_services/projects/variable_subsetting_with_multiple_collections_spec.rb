@@ -79,7 +79,7 @@ describe 'When viewing the project page with an OPeNDAP supported collection', r
 
         context 'When selecting a keyword and saving' do
           before :all do
-            first('.collection-variable-list input[type="checkbox"]').set(true)
+            first('.collection-variable-list-item input[type="checkbox"]').set(true)
 
             within '.modal-footer' do
               click_button 'Save'

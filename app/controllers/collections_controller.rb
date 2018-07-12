@@ -34,8 +34,7 @@ class CollectionsController < ApplicationController
   def show
     metrics_event('details', collections: [params[:id]])
 
-    # TODO: make 1_9 configurable (yml + ENV)
-    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_9')
+    response = echo_client.get_collection(params[:id], token, 'umm_json')
 
     if response.success?
       respond_with(CollectionDetailsPresenterUmmJson.new(response.body, params[:id], token, cmr_env), status: response.status)

@@ -17,17 +17,18 @@ module Echo
     ##
     def get_collections(options = {}, token = nil)
       stringified_options = options.stringify_keys
+      query = options_to_collection_query(stringified_options).merge(include_has_granules: true, include_granule_counts: true)
 
       format = stringified_options.delete('format') || 'json'
-      query = options_to_collection_query(stringified_options).merge(include_has_granules: true, include_granule_counts: true)
-      get("/search/collections.#{format}", query, token_header(token))
+      headers = token_header(token).merge('Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_c_version}")
+      get("/search/collections.#{format}", query, headers)
     end
 
     def get_variables(options = {}, token = nil)
       stringified_options = options.stringify_keys
 
       format = stringified_options.delete('cmr_format') || 'json'
-      headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
+      headers = token_header(token).merge('Content-Type': 'application/x-www-form-urlencoded', 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_v_version}")
       post("search/variables.#{format}", stringified_options.to_query, headers)
     end
 
@@ -35,27 +36,30 @@ module Echo
       stringified_options = options.stringify_keys
 
       format = stringified_options.delete('cmr_format') || 'umm_json'
-      get("/search/services.#{format}", stringified_options, token_header(token))
+      headers = token_header(token).merge('Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_s_version}")
+      get("/search/services.#{format}", stringified_options, headers)
     end
 
     ##
     # Single concept methods
     ##
-    def get_collection(id, token = nil, format = 'echo10')
-      get_concept(id, token: token, format: format)
+    def get_collection(id, token = nil, format = 'umm_json')
+      get_concept(id, token: token, format: format, headers: { 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_c_version}" })
     end
 
     def get_variable(id, token = nil, format = 'umm_json')
-      get_concept(id, token: token, format: format)
+      get_concept(id, token: token, format: format, headers: { 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_v_version}" })
     end
 
     def get_service(id, token = nil, format = 'umm_json')
-      get_concept(id, token: token, format: format)
+      get_concept(id, token: token, format: format, headers: { 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_s_version}" })
     end
 
     # Get a single concept by concept id
-    def get_concept(id, token: nil, format: 'umm_json')
-      get("/search/concepts/#{id}.#{format}", {}, token_header(token))
+    def get_concept(id, token: nil, format: 'umm_json', headers: {})
+      headers = token_header(token).merge(headers)
+
+      get("/search/concepts/#{id}.#{format}", {}, headers)
     end
 
     def json_query_collections(query, token = nil, options = {})
