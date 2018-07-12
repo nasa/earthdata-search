@@ -313,7 +313,10 @@ ns.query = do (ko,
 
       @hasGranules = @queryComponent(new NegatedBooleanParam('all_collections'), true)
       @hasNonEOSDIS = @queryComponent(new NegatedBooleanParam('tag_key'), true)
-      
+      @sortOptions = [{name: "Usage", value: ["usage_score"]}]
+
+      @sortKey = @queryComponent(new QueryParam('sort_key'), '', ephemeral: true)
+
       super(parentQuery)
 
     clearFilters: =>

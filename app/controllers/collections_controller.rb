@@ -129,14 +129,21 @@ class CollectionsController < ApplicationController
   #   data_center
   #   archive_center
   # We should sort collection results by: sort_key[]=has_granules_or_cwic&sort_key[]=score
-  # Otherwise, we should sort collection results by: sort_key[]=has_granules_or_cwic&sort_key[]=entry_title
+  # Otherwise, we should sort collection results by: sort_key[]=has_granules_or_cwic
   def relevancy_param(params)
-    params[:sort_key] = ['has_granules_or_cwic']
+    # Default the sort key to an empty array in case nothing has been requested yet
+    params[:sort_key] ||= []
+
+    # Regardless of the sort_key provided by the user, we always want to sort by `has_granules_or_cwic` first
+    params[:sort_key].unshift('has_granules_or_cwic')
+
     # sensor, archive_center and two_d_coordinate_system_name were removed from the available facets but it doesn't
     # hurt to list them here though.
-    relevancy_capable_fields = [:keyword, :free_text, :platform, :instrument, :sensor, :two_d_coordinate_system_name,
-                                :science_keywords, :project, :processing_level_id, :data_center, :archive_center]
-    params[:sort_key].push 'score' unless (params.keys & relevancy_capable_fields.map(&:to_s)).empty?
+    relevancy_capable_fields = %w(keyword free_text platform instrument sensor two_d_coordinate_system_name
+                                  science_keywords project processing_level_id data_center archive_center)
+
+    # If any of the params provided are relevancy params sort the results by the relevancy score
+    params[:sort_key].push('score') unless (params.keys & relevancy_capable_fields).empty?
   end
 
   # These are facets that do no come back from CMR
