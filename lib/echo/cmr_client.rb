@@ -28,7 +28,7 @@ module Echo
       stringified_options = options.stringify_keys
 
       format = stringified_options.delete('cmr_format') || 'json'
-      headers = token_header(token).merge('Content-Type': 'application/x-www-form-urlencoded', 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_v_version}")
+      headers = token_header(token).merge('Content-Type': 'application/x-www-form-urlencoded', 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_var_version}")
       post("search/variables.#{format}", stringified_options.to_query, headers)
     end
 
@@ -48,7 +48,7 @@ module Echo
     end
 
     def get_variable(id, token = nil, format = 'umm_json')
-      get_concept(id, token: token, format: format, headers: { 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_v_version}" })
+      get_concept(id, token: token, format: format, headers: { 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_var_version}" })
     end
 
     def get_service(id, token = nil, format = 'umm_json')
