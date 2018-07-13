@@ -320,7 +320,7 @@ ns.query = do (ko,
       # Subscribe to the sortKey for the purpose of sending changes to Google Analytics
       @sortKey.subscribe (sortKey) =>
         if ga?
-          ga('send', 'event', 'button', 'click', sortKey) if sortKey?
+          ga('send', 'event', 'button', 'click', sortKey)
 
       super(parentQuery)
 
