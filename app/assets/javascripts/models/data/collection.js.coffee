@@ -116,6 +116,37 @@ ns.Collection = do (ko
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
       @hasEchoFormLoaded = ko.observable(false)
+      
+      # This simulates getting UMM-S records of a specific type (one's that can be handed off too) for the collection we are detailing.
+      # The part of the S record that will allow us to construct the URL is inlined below. It is based on the schema.org action concept.
+      ho_clients = [
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "name": "Giovanni",
+          "collections": ["C1200187767-EDF_OPS"],
+          "url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp&starttime={start?}&endtime={end?}&bbox={box?}&dataKeyword={searchTerms?}&data={var_names?}"
+          }
+        },
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "name": "State Of The Ocean",
+          "collections": ["C1200268801-EDF_DEV01"],
+          "url": "https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://podaac-tools.jpl.nasa.gov/soto/#b=BlueMarble_ShadedRelief_Bathymetry&l={soto:layers?}&ve={geo:box?}&d={soto:date?}"
+          }
+        }
+        ]
+      
+      # What collection is this? Remove entries that don't match it
+      applicable_ho_clients = (client for client in ho_clients when @id in client.collections)
+      @hand_off_clients = ko.observable(applicable_ho_clients)
 
     _computeMaxOrderSize: ->
       hits = 0
@@ -311,7 +342,81 @@ ns.Collection = do (ko
     metadata_url: (collection, e) ->
       win = window.open(@details()["#{e.target.attributes['data-metadata-type'].value.toLowerCase()}_url"], '_blank')
       win.focus()
-
+      
+    hand_off_url: (collection, hand_off_info, e) ->
+      # In the real world, we would use the template and parameter rules to construct the handoff url.
+      # For now we use the url element and tag stuff on in a hard-coded fashion for the two collections we support
+      
+      url = hand_off_info.url
+      
+      if hand_off_info.name == 'Giovanni'
+        coll = collection.short_name._latestValue
+        url = url + '&dataKeyword=' + coll
+      else if hand_off_info.name == 'State Of The Ocean'
+        # SOTO doesn't accept any CMR-known collection descriptor as a layer parameter. Hard-coding for now...
+        url = url + '&l=GHRSST_L4_MUR_Sea_Surface_Temperature(la=true)'
+      
+      if collection.query && collection.query.spatial && collection.query.spatial._latestValue && collection.query.spatial._latestValue.slice(0, 'bounding_box:'.length) == 'bounding_box:'
+        # TODO polygons etc.
+        spatial = collection.query.spatial._latestValue.split(':')[1] + ',' + collection.query.spatial._latestValue.split(':')[2].replace(':', ',')
+        if hand_off_info.name == 'Giovanni'
+          url = url + '&bbox=' + spatial
+        else if hand_off_info.name == 'State Of The Ocean'
+          url = url + '&ve=' + spatial
+          
+      if collection.query && collection.query.temporalComponent && collection.query.temporalComponent._latestValue
+        startTime = collection.query.temporalComponent._latestValue.split(',')[0]
+        endTime = collection.query.temporalComponent._latestValue.split(',')[1]
+        
+        if hand_off_info.name == 'Giovanni'
+          if startTime
+            url = url + '&starttime=' + startTime
+          if endTime
+            url = url + '&endtime=' + endTime
+        else if hand_off_info.name == 'State Of The Ocean'
+          if startTime
+            # SOTO only takes the 'date' component of the temporal start constraint
+            url = url + '&d=' + startTime.split('T')[0]
+      
+      win = window.open(url, '_blank')
+      win.focus()
+    
+    # Yes, this is a nasty, hacky piece of code.
+    hand_off_url_var: (hand_off_info, project_collection, e) ->
+          
+          collection = project_collection.collection
+          url = hand_off_info.url
+          
+          if hand_off_info.name == 'Giovanni'
+            coll = collection.short_name._latestValue
+            url = url + '&dataKeyword=' + coll
+          
+          if collection.query && collection.query.spatial && collection.query.spatial._latestValue && collection.query.spatial._latestValue.slice(0, 'bounding_box:'.length) == 'bounding_box:'
+            # TODO polygons etc.
+            spatial = collection.query.spatial._latestValue.split(':')[1] + ',' + collection.query.spatial._latestValue.split(':')[2].replace(':', ',')
+            if hand_off_info.name == 'Giovanni'
+              url = url + '&bbox=' + spatial
+           
+          if collection.query && collection.query.temporalComponent && collection.query.temporalComponent._latestValue
+            startTime = collection.query.temporalComponent._latestValue.split(',')[0]
+            endTime = collection.query.temporalComponent._latestValue.split(',')[1]
+            
+            if hand_off_info.name == 'Giovanni'
+              if startTime
+                url = url + '&starttime=' + startTime
+              if endTime
+                url = url + '&endtime=' + endTime
+                
+          if project_collection.selectedVariables != null
+            url = url + '&data='
+            for variable in project_collection.selectedVariables._latestValue
+              do ->
+                url = url + collection.short_name._latestValue + '_' + collection.version_id + '_' + variable.umm._latestValue.Name + ','
+            # Remove the last comma
+            url = url.substring(0, url.length - 1)
+          win = window.open(url, '_blank')
+          win.focus()
+      
     fromJson: (jsonObj) ->
       @json = jsonObj
 
