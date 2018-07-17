@@ -2,42 +2,44 @@ this.edsc.util.metrics = do ->
 
   createPageView: (path, state) ->
     if ga?
-      # set custom dimensions to track other stuff
-      # Dimension 1, keyword search
-      ga('set', 'dimension1', if state.free_text? then state.free_text.toLowerCase() else null)
+      # Set custom dimensions to track other stuff
+      # Dimensions 1-10 are reserved for dimensions designated by the global ESDIS Google Tag Manager container
 
-      # Dimension 2, spatial type
+      # Dimension 11, keyword search
+      ga('set', 'dimension11', if state.free_text? then state.free_text.toLowerCase() else null)
+
+      # Dimension 12, spatial type
       spatial = null
       spatial = 'Bounding Box' if state.bounding_box?
       spatial = 'Polygon' if state.polygon?
       spatial = 'Point' if state.point?
-      ga('set', 'dimension2', spatial)
+      ga('set', 'dimension12', spatial)
 
-      # Dimension 3, temporal type
+      # Dimension 13, temporal type
       temporal = null
       if state.temporal?
         if state.temporal.split(',').length > 2
           temporal = 'Recurring Temporal'
         else
           temporal = 'Standard Temporal'
-      ga('set', 'dimension3', temporal)
+      ga('set', 'dimension13', temporal)
 
-      # Dimension 4, collections viewed
-      # Dimension 5, collections added to project
-      d4 = null
-      d5 = null
+      # Dimension 14, collections viewed
+      # Dimension 15, collections added to project
+      d14 = null
+      d15 = null
       if state.p?
         collectionIds = state.p.split('!')
         for id, index in collectionIds
           if id.length > 0
             if index == 0
-              d4 = id
+              d14 = id
             else
-              d5 = id
-      ga('set', 'dimension4', d4)
-      ga('set', 'dimension5', d5)
+              d15 = id
+      ga('set', 'dimension14', d14)
+      ga('set', 'dimension15', d15)
 
-      # Dimension 6, Search facets
+      # Dimension 16, Search facets
       facet_names = ['category', 'features', 'data_center', 'project', 'platform', 'instrument', 'processing_level_id']
       facets = []
       for name in facet_names when state[name]?
@@ -48,7 +50,7 @@ this.edsc.util.metrics = do ->
         for name in keyword_names when state.science_keywords[0][name]?
           facets.push("#{name}/#{value}") for value in state.science_keywords[0][name]
 
-      ga('set', 'dimension6', if facets.length > 0 then facets.join(' ') + ' ' else null)
+      ga('set', 'dimension16', if facets.length > 0 then facets.join(' ') + ' ' else null)
 
 
       # Send the page view
@@ -56,26 +58,26 @@ this.edsc.util.metrics = do ->
 
   createDataAccessEvent: (collection, options) ->
     if ga?
-      # Dimension 7, Collection Accessed
-      ga('set', 'dimension7', collection)
+      # Dimension 17, Collection Accessed
+      ga('set', 'dimension17', collection)
 
       if options? # If options exist, it is completing data access
-        # Dimension 8, Access Options (Download, FTP_Pull, etc.)
+        # Dimension 18, Access Options (Download, FTP_Pull, etc.)
         for accessMethod in options.accessMethod
-          ga('set', 'dimension8', accessMethod.method)
+          ga('set', 'dimension18', accessMethod.method)
           opts = accessMethod.options
           subtype = accessMethod.type
           subtype = 'opendap' if accessMethod.subset?.parameters
           subtype = 'esi' if subtype == 'service'
-          ga('set', 'dimension9', subtype)
+          ga('set', 'dimension19', subtype)
 
           ga('send', 'event', 'Data Access', 'Completion', 'Data Access Completion', 1)
       else
         ga('send', 'event', 'Data Access', 'Initiation', 'Data Access Initiation', 1)
 
       # Ensure dimensions don't get set for any other tracking
-      ga('set', 'dimension7', null)
-      ga('set', 'dimension8', null)
+      ga('set', 'dimension17', null)
+      ga('set', 'dimension18', null)
 
   createEvent: (e) ->
     if ga?
