@@ -111,12 +111,17 @@
         </header>
         <div class="master-overlay-info master-overlay-when-max">
           <p class="collection-filters">
-            <p class="collection-sort">Sort by: <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select></p>
-
-            <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
-            <label for="has-granules">Only include collections with granules</label>
-            <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
-            <label for="hasNonEOSDIS">Include non-EOSDIS collections</label>
+            <label class="collection-sort">Sort by:
+              <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
+            </label>
+            <label for="has-granules">
+                <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
+                Only include collections with granules
+            </label>
+            <label for="hasNonEOSDIS">
+              <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
+              Include non-EOSDIS collections
+            </label>
           </p>
           <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
