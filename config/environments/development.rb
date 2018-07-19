@@ -29,6 +29,10 @@ EarthdataSearchClient::Application.configure do
     VCR.configure { |c| VCR::EDSCConfigurer.configure(c, record: :none) }
   end
 
+  # Analytics
+  # Uncomment the config.analytics_id to enable the development Google Analytics tracking
+  # config.analytics_id = 'UA-50960810-4'
+
   config.logo_name = "DEV"
   config.env_name = "[DEV]"
   # UAT Tophat
