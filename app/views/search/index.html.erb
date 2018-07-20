@@ -111,14 +111,14 @@
         </header>
         <div class="master-overlay-info master-overlay-when-max">
           <p class="collection-filters">
-            <label class="collection-sort">Sort by:
+            <label class="collection-filter-item collection-sort">Sort by:
               <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
             </label>
-            <label for="has-granules">
+            <label class="collection-filter-item" for="has-granules">
                 <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
                 Only include collections with granules
             </label>
-            <label for="hasNonEOSDIS">
+            <label class="collection-filter-item" for="hasNonEOSDIS">
               <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
               Include non-EOSDIS collections
             </label>
