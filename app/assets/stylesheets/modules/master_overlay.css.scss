@@ -296,13 +296,13 @@
     margin-left: 5px;
   }
 
-  p.collection-filters {
+  .collection-filters {
     display: block;
     margin-bottom: 5px;
+  }
 
-    label {
-      margin-right: 5px;
-    }
+  .collection-filter-item {
+    margin-right: 15px;
   }
 
   p.button-details {
