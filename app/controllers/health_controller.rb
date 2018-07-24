@@ -9,7 +9,9 @@ class HealthController < ApplicationController
     opensearch_status = health.opensearch_status(echo_client)
     browse_scaler_status = health.browse_scaler_status(echo_client)
     urs_status = health.urs_status(echo_client)
+    ous_status = health.ous_status(ous_client)
     service_unavailable = false
+
     if !cmr_status[:ok?] && cmr_status[:status] > 499
       Rails.logger.error "Health failure: CMR '/search/health' returns #{cmr_status[:status]}. Return 503 from Earthdata Search."
       service_unavailable = true
@@ -28,27 +30,32 @@ class HealthController < ApplicationController
     elsif !urs_status[:ok?] && urs_status[:status] > 499
       Rails.logger.error "Health failure: URS '/' returns #{urs_status[:status]}. Return 503 from Earthdata Search."
       service_unavailable = true
+    elsif !ous_status[:ok?] && ous_status[:status] > 499
+      Rails.logger.error "Health failure: OUS '/health' returns #{ous_status[:status]}. Return 503 from Earthdata Search."
+      service_unavailable = true
     end
 
     if service_unavailable
       head :service_unavailable
     else
       response = {
-          edsc: nil,
-          background_jobs: {
-              delayed_job: health.delayed_job_status,
-              data_load_tags: health.data_load_tags_status,
-              data_load_echo10: health.data_load_echo10_status,
-              data_load_granules: health.data_load_granules_status,
-              colormaps_load: health.colormap_load_status,
-          },
-          dependencies: {
-              echo: echo_status,
-              cmr: cmr_status,
-              cmr_search: cmr_search_status,
-              opensearch: opensearch_status,
-              browse_scaler: browse_scaler_status,
-              urs: urs_status}
+        edsc: nil,
+        background_jobs: {
+          delayed_job: health.delayed_job_status,
+          data_load_tags: health.data_load_tags_status,
+          data_load_echo10: health.data_load_echo10_status,
+          data_load_granules: health.data_load_granules_status,
+          colormaps_load: health.colormap_load_status
+        },
+        dependencies: {
+          echo: echo_status,
+          cmr: cmr_status,
+          cmr_search: cmr_search_status,
+          opensearch: opensearch_status,
+          browse_scaler: browse_scaler_status,
+          urs: urs_status,
+          ous: ous_status
+        }
       }
       response[:edsc] = health.edsc_status
       respond_with(response, status: :ok)
