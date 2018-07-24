@@ -37,11 +37,12 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
 
       query = $nlpInput.val()
       currentPage.query.originalKeywords(query)
-      ajax
-        dataType: 'json'
-        url: "/extract_filters?q=#{query}&rerun=#{immediateReenter}&previous_q=#{previousKeyword}"
-        success: (data) =>
-          _applyParsedText(data)
+      unless query == ''
+        ajax
+          dataType: 'json'
+          url: "/extract_filters?q=#{query}&rerun=#{immediateReenter}&previous_q=#{previousKeyword}"
+          success: (data) =>
+            _applyParsedText(data)
       immediateReenter = true
       doneTyping = false
 
