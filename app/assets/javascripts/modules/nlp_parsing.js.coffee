@@ -35,7 +35,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
 
       previousKeyword = currentPage.query.originalKeywords()
 
-      query = $nlpInput.val()
+      query = $nlpInput.val().trim()
       currentPage.query.originalKeywords(query)
       unless query == ''
         ajax
