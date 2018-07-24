@@ -713,4 +713,17 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Thu, 27 Oct 2016 17:37:05 GMT
   digest: boundingbox1_2
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/opendap/health
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+  recorded_at: Tue, 24 Jul 2018 00:59:32 GMT
+  digest: ous_healthcheck
 recorded_with: "VCR 2.6.0"

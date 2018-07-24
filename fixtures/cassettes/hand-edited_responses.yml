@@ -2068,3 +2068,29 @@ boundingbox1_2:
             </requestStatus>
         </eesi:agentResponse>
     http_version:
+ous_healthcheck:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-media-type:
+      - cmr-opendap.v2; format=*
+      content-type:
+      - application/json
+      date:
+      - Tue, 24 Jul 2018 00:58:32 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '67'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"config":{"ok?":true},"httpd":{"ok?":true},"logging":{"ok?":true}}'
+    http_version: 
