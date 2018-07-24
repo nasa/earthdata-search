@@ -313,7 +313,7 @@ ns.query = do (ko,
 
       @hasGranules = @queryComponent(new NegatedBooleanParam('all_collections'), true)
       @hasNonEOSDIS = @queryComponent(new NegatedBooleanParam('tag_key'), true)
-      @sortOptions = [{name: "Usage", value: ["usage_score"]}]
+      @sortOptions = [{name: "Usage", value: ["-usage_score"]}, {name: "End Date", value: ["-end_date"]}]
 
       @sortKey = @queryComponent(new QueryParam('sort_key'), '', ephemeral: true)
 
