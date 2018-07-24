@@ -71,6 +71,7 @@ EarthdataSearchClient::Application.configure do
 
   config.gather_metrics = true
   config.analytics_id = 'UA-50960810-3'
+  config.tag_manager_id = 'GTM-WNP7MLF'
   config.logo_name = "Scan"
   config.env_name = "[Scan]"
   config.tophat_url = "https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
