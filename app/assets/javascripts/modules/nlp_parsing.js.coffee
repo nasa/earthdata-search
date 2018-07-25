@@ -37,7 +37,9 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
 
       query = $nlpInput.val().trim()
       currentPage.query.originalKeywords(query)
-      unless query == ''
+      if query == ''
+        currentPage.query.keywords('')
+      else
         ajax
           dataType: 'json'
           url: "/extract_filters?q=#{query}&rerun=#{immediateReenter}&previous_q=#{previousKeyword}"
