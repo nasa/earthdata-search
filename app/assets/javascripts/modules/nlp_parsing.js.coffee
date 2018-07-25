@@ -38,7 +38,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
       query = $nlpInput.val().trim()
       currentPage.query.originalKeywords(query)
       if query == ''
-        currentPage.query.keywords('')
+        _applyParsedText({'keyword': ''})
       else
         ajax
           dataType: 'json'
