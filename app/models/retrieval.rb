@@ -314,7 +314,7 @@ class Retrieval < ActiveRecord::Base
   # Return a list of all collection level order statues for the object
   def order_statuses
     collections.map do |collection|
-      collection.fetch('serviceOptions', {}).fetch('accessMethod', []).map { |method| method['order_status'] }
+      collection.fetch('serviceOptions', {}).fetch('accessMethod', []).map { |method| method['order_status'].downcase }
     end.flatten.compact
   end
 
@@ -323,7 +323,7 @@ class Retrieval < ActiveRecord::Base
     collections.map do |d|
       d.fetch('serviceOptions', {}).fetch('accessMethod', []).map do |m|
         m.fetch('service_options', {}).fetch('orders', []).map do |o|
-          o['order_status']
+          o['order_status'].downcase
         end
       end
     end.flatten.compact
@@ -331,7 +331,7 @@ class Retrieval < ActiveRecord::Base
 
   # Returns whether or not the retrieval is still processing any of it's orders
   def in_progress
-    (all_order_statuses & ['creating', 'pending', 'processing', 'submitting']).any?
+    (order_statuses & ['creating', 'in progress', 'not_validated', 'validated', 'quoting', 'quoted', 'quoted_with_exceptions', 'submitting', 'submitted_with_exceptions', 'processing', 'processing_with_exceptions', 'cancelling']).any?
   end
 
   class << self
@@ -406,15 +406,22 @@ class Retrieval < ActiveRecord::Base
         echo_orders = order_response.body.map { |o| o['order'] }.index_by { |o| o['id'] }
 
         orders.each do |order|
+          order['order_status'] ||= 'creating'
+
+          order['service_options'] = {
+            'orders': []
+          }
+
           Array.wrap(order['order_id']).each do |order_id|
             echo_order = echo_orders[order_id]
 
-            if echo_order
-              order['order_status'] = echo_order['state']
-            else
-              # echo order_id doesn't exist yet
-              order['order_status'] ||= 'creating'
-            end
+            next unless echo_order
+
+            # If there is an order provide its status instead of the default `creating`
+            order['order_status'] = echo_order['state']
+
+            # Write the order details to the json
+            order['service_options']['orders'] << echo_order
           end
         end
       else
@@ -453,6 +460,7 @@ class Retrieval < ActiveRecord::Base
         # Make individual calls for those that dont support the multi order endpoint
         order_ids.map do |order_id|
           response = esi_client.get_esi_request(collection_id, order_id, echo_client, token, header_value, service_url)
+
           if response.status == 201
             MultiXml.parse(response.body)
           else
