@@ -363,7 +363,7 @@ class Retrieval < ActiveRecord::Base
           retrieval.save
 
           # If any of the orders are in creating or pending state we need to continue asking for updates
-          if retrieval.in_progress
+          if retrieval.in_progress && !Rails.env.test?
             # The order isn't done processing, continue pinging for updated statuses
             Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, cmr_env)
           end
