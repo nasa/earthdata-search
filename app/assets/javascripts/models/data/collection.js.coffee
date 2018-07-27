@@ -48,7 +48,7 @@ ns.Collection = do (ko
     @visible: ko.computed
       read: -> collection for collection in collections() when collection.visible()
 
-    showDetails: (conceptId) ->
+    showAssociatedCollectionDetails: (conceptId) ->
       currUrl = window.location.href
       regEx = new RegExp("[\\?&]p=([^&#]*)")
       delimeter = regEx.exec(currUrl)[0].charAt(0)
