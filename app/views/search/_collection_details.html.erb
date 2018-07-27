@@ -109,7 +109,7 @@
                 <span data-bind="text: gibsLayers()"></span>
                 <!-- /ko -->
               </dd>
-              <dt>View related collections:</dt>
+              <dt>View Related Collections:</dt>
               <!--ko foreach: $root.ui.collectionsList.selected().associations-->
               <dd id="details-wrapper">
                 <a data-bind="attr: { title: 'Click to view collection: ' + $data.title + '\nRelevance score: ' + $data.score + '%' }, text: $data.shortTitle,  click: function() {$root.ui.collectionsList.selected().showAssociatedCollectionDetails($data.id)}"
