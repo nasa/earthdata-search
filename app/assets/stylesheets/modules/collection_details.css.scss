@@ -59,6 +59,18 @@ $midnight-blue: rgb(44,   62,  80);
   margin-left: 5px;
 }
 
+.relevance-score-label {
+  display: inline-block;
+  vertical-align: middle;
+  background: #ecf0f1;
+  border-radius: 30px;
+  font-size: 0.8em;
+  font-weight: normal;
+  padding: 3px 10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
 .cwic-label {
   display: inline-block;
   vertical-align: middle;
@@ -300,4 +312,17 @@ a.endpoint-label {
 .display-url {
   word-wrap: break-word;
   overflow-x: scroll;
+}
+
+.progressbar-inline{
+  display: inline-block;
+  width: 70px;
+  margin: 0;
+  position: relative;
+  top: 5px;
+}
+
+#details-wrapper {
+  white-space: nowrap;
+  max-width: 99%;
 }

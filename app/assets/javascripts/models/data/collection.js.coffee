@@ -48,6 +48,13 @@ ns.Collection = do (ko
     @visible: ko.computed
       read: -> collection for collection in collections() when collection.visible()
 
+    showAssociatedCollectionDetails: (conceptId) ->
+      currUrl = window.location.href
+      regEx = new RegExp("[\\?&]p=([^&#]*)")
+      delimeter = regEx.exec(currUrl)[0].charAt(0)
+      newUrl = currUrl.replace(regEx, delimeter + "p=" + conceptId)
+      window.location.replace(newUrl)
+
     constructor: (jsonData, @query, inKey) ->
       throw "Collections should not be constructed directly" unless inKey == randomKey
       @granuleCount = ko.observable(0)
@@ -58,6 +65,8 @@ ns.Collection = do (ko
 
       @detailsLoaded = ko.observable(false)
       @gibs = ko.observable(null)
+
+      @associations = ko.observable(null)
 
       @gibsLayers = ko.computed( (->
         available = []
@@ -287,16 +296,17 @@ ns.Collection = do (ko
         @_datasourceListeners ?= []
         @_datasourceListeners.push(callback)
 
-    getValueForTag: (key) ->
+    getValueForTag: (key, customNameSpace) ->
+      nameSpace = if customNameSpace then customNameSpace else config.cmrTagNamespace
       tags = @tags()
       if tags && tags.constructor is Array
-        prefix = "#{config.cmrTagNamespace}.#{key}."
+        prefix = "#{nameSpace}.#{key}."
         len = prefix.length
         for tag in tags
           tag = tag.join('.') if tag.constructor is Array
           return tag.substr(len) if tag.substr(0, len) == prefix
       else
-        key = "#{config.cmrTagNamespace}.#{key}"
+        key = "#{nameSpace}.#{key}"
         tags?[key]?.data
 
     canFocus: ->
@@ -311,6 +321,19 @@ ns.Collection = do (ko
     metadata_url: (collection, e) ->
       win = window.open(@details()["#{e.target.attributes['data-metadata-type'].value.toLowerCase()}_url"], '_blank')
       win.focus()
+
+    populateAssociations: (key, nameSpace) ->
+      associatedCollections = []
+      associationsData = @getValueForTag('has_associations', 'org.market_basket')?.associated_concepts
+      if associationsData
+        maxUrlsToShow = 3
+        for association in associationsData[..(maxUrlsToShow-1)]
+          desiredLen = 45
+          title = association.title
+          trimmedTitle = if title.length > desiredLen then title.substring(0, desiredLen - 3) + "..." else title
+          association.shortTitle = trimmedTitle
+          associatedCollections.push(association)
+        @associations(associatedCollections)
 
     fromJson: (jsonObj) ->
       @json = jsonObj
@@ -336,6 +359,8 @@ ns.Collection = do (ko
       @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
 
       @gibs(@getValueForTag('extra.gibs'))
+
+      @populateAssociations('has_associations', 'org.market_basket')
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)

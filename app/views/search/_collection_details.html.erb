@@ -109,6 +109,17 @@
                 <span data-bind="text: gibsLayers()"></span>
                 <!-- /ko -->
               </dd>
+              <dt>View Related Collections:</dt>
+              <!--ko foreach: $root.ui.collectionsList.selected().associations-->
+              <dd id="details-wrapper">
+                <a data-bind="attr: { title: 'Click to view collection: ' + $data.title + '\nRelevance score: ' + $data.score + '%' }, text: $data.shortTitle,  click: function() {$root.ui.collectionsList.selected().showAssociatedCollectionDetails($data.id)}"
+                   data-tooltip="true" data-placement="right" style="cursor: pointer;"></a>
+                <div class="relevance-score-label" data-bind="text: $data.score + '%'"></div>
+              </dd>
+              <!--/ko-->
+              <dd>
+                <span data-bind="ifnot: $root.ui.collectionsList.selected().associations">None</span>
+              </dd>
             </dl>
           </div>
           <div class="flex-column-sk">
