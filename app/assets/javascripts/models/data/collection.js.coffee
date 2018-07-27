@@ -323,14 +323,17 @@ ns.Collection = do (ko
       win.focus()
 
     populateAssociations: (key, nameSpace) ->
+      associatedCollections = []
       associationsData = @getValueForTag('has_associations', 'org.market_basket')?.associated_concepts
       if associationsData
-        for concept in associationsData
+        maxUrlsToShow = 3
+        for association in associationsData[..(maxUrlsToShow-1)]
           desiredLen = 45
-          title = concept.title
-          trimmedString = if title.length > desiredLen then title.substring(0, desiredLen - 3) + "..." else title
-          concept.shortTitle = trimmedString
-        @associations(associationsData[..4])
+          title = association.title
+          trimmedTitle = if title.length > desiredLen then title.substring(0, desiredLen - 3) + "..." else title
+          association.shortTitle = trimmedTitle
+          associatedCollections.push(association)
+        @associations(associatedCollections)
 
     fromJson: (jsonObj) ->
       @json = jsonObj
