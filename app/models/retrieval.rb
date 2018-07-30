@@ -336,9 +336,12 @@ class Retrieval < ActiveRecord::Base
 
   class << self
     # Called when orders are created to populate the project jsondata with up to date status information
-    def hydrate_jsondata(id, token, cmr_env, force = false)
+    def hydrate_jsondata(id, token, cmr_env)
       logger.tagged("delayed_job version: #{Rails.configuration.version}") do
         logger.tagged("Getting Status for Retrieval Object #{id}") do
+          # Time the operation to determine how long to stall the next job
+          started_at = Time.now
+
           retrieval = Retrieval.find_by_id(id)
 
           # Retrieve a status of each order in this request
@@ -346,15 +349,11 @@ class Retrieval < ActiveRecord::Base
 
           orders = retrieval.get_orders_by_type('order')
 
-          Rails.logger.info "Retrieval Object ##{id} has #{orders.count} Order(s)"
-
           # Retrieve status information about each order within this
           # request and hydrate the objects with necessary data
           Retrieval.hydrate_orders(orders, echo_client, token)
 
           service_orders = retrieval.get_orders_by_type('service')
-
-          Rails.logger.info "Retrieval Object ##{id} has #{service_orders.count} Service Order(s)"
 
           # Retrieve status information about each order within this
           # request and hydrate the objects with necessary data
@@ -362,10 +361,21 @@ class Retrieval < ActiveRecord::Base
 
           retrieval.save
 
+          # End the timer to determine the period of time to stall before our next attempt
+          ended_at = Time.now
+
+          # Duration of the execution in seconds
+          elapsed_seconds = (ended_at - started_at).to_i
+
+          # Normalize the refresh time between fast and slow jobs by having fast jobs wait.
+          # If the job only takes 2 seconds, we'll stall for 28 seconds so were not asking
+          # for an update too often.
+          stall_time = 30 - [30, elapsed_seconds].min
+
           # If any of the orders are in creating or pending state we need to continue asking for updates
           if retrieval.in_progress && !Rails.env.test?
             # The order isn't done processing, continue pinging for updated statuses
-            Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, cmr_env)
+            Retrieval.delay(queue: retrieval.determine_queue, run_at: (Time.now + stall_time)).hydrate_jsondata(id, token, cmr_env)
           end
         end
       end
@@ -454,9 +464,6 @@ class Retrieval < ActiveRecord::Base
           }
         }]
       elsif multi_response.status == 303
-        # If the DAAC doesnt support this endpoint yet a 303 is returned for backward compatibility
-        Rails.logger.info "Bulk Order Processing is not supported by #{service_url}"
-
         # Make individual calls for those that dont support the multi order endpoint
         order_ids.map do |order_id|
           response = esi_client.get_esi_request(collection_id, order_id, echo_client, token, header_value, service_url)
