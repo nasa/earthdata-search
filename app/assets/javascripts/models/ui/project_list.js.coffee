@@ -254,7 +254,7 @@ ns.ProjectList = do (ko
             @project.fromJson(data)
           complete: =>
             shouldPoll = false
-        )), 10000)
+        )), 20000)
         @pollingIntervalId(intervalId)
 
     _computeSubmittedServiceOrders: ->
