@@ -36,19 +36,23 @@
 /* Unordered List with Icons For Map Tools Tour Section
 /* ================================================================== */
 
-ul.bullet-list {
+.bullet-list {
   list-style-type: disc;
 }
 
-div.tour-list {
+.tour-list {
   margin-left: 15px;
 }
 
-ul.icon-list li {
+.tour-list-title {
+	font-weight: 700;
+}
+
+.icon-list li {
   padding-left:20px;
 }
 
-li.leaflet-draw-list i {
+.leaflet-draw-list i {
   background-image: image-url("leaflet.draw-0.2.2/spritesheet-2x.png");
   background-size: 270px 30px;
   content: '';
@@ -60,31 +64,31 @@ li.leaflet-draw-list i {
 
 }
 
-i.leaflet-draw-edit-remove {
+.icon-leaflet-draw-edit-remove {
   background-position: -182px -2px;
 }
 
-i.leaflet-draw-edit-edit {
+.icon-leaflet-draw-edit-edit {
   background-position: -152px -2px;
 }
 
-i.leaflet-draw-draw-marker {
+.icon-leaflet-draw-draw-marker {
   background-position: -122px -2px;
 }
 
-i.leaflet-draw-draw-polygon {
+.icon-leaflet-draw-draw-polygon {
   background-position: -31px -2px;
 }
 
-i.leaflet-draw-draw-rectangle {
+.icon-leaflet-draw-draw-rectangle {
   background-position: -62px -2px;
 }
 
-i.leaflet-draw-draw-circle {
+.icon-leaflet-draw-draw-circle {
   background-position: -92px -2px;
 }
 
-li.projection-draw-list i {
+.projection-draw-list i {
   background-image: image-url("projection-sprite@2x.png");
   background-size: 90px 30px;
   content: '';
@@ -95,25 +99,25 @@ li.projection-draw-list i {
   margin-left: -25px;
 }
 
-i.projection-draw-arctic {
+.icon-projection-draw-arctic {
   background-position: 32px -2px;
 }
 
-i.projection-draw-geographic {
+.icon-projection-draw-geographic {
   background-position: -30px -2px;
 }
 
-i.projection-draw-antarctic {
+.icon-projection-draw-antarctic {
   background-position: -92px -2px;
 }
 
-li.zoom-draw-list i {
+.zoom-draw-list i {
   position: absolute;
   margin-top: 3px;
   margin-left: -20px;
 }
 
-i.map-layers {
+.icon-map-layers {
   background-image: image_url("leaflet-0.7/layers-2x.png");
   background-size: 15px 15px;
   content: '';
@@ -124,7 +128,7 @@ i.map-layers {
   margin-left: -19px;
 }
 
-li.toolbar-draw-list i {
+.toolbar-draw-list i {
   position: absolute;
   margin-top: 3px;
   margin-left: -18px;
