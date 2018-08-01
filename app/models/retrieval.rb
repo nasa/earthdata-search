@@ -11,14 +11,12 @@ class Retrieval < ActiveRecord::Base
 
   obfuscate_id spin: 53465485
 
-  before_validation :default_order_status
+  before_validation :default_order_status, on: :create
 
   def default_order_status
-    project.fetch('collections', []).each do |collection|
-      collection.fetch('serviceOptions', {}).fetch('accessMethod', []).each do |method|
-        # Default to order status to `creating` unless it's already set
-        method['order_status'] = 'creating' unless method.key?('order_status')
-      end
+    get_orders_by_types(%w(order service)).each do |method|
+      # Default to order status to `creating` unless it's already set
+      method['order_status'] = 'creating' unless method.key?('order_status')
     end
   end
 
@@ -125,6 +123,9 @@ class Retrieval < ActiveRecord::Base
         user_id = retrieval.user.echo_id
         client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
+        # Keep track of all access methods so that we can determine if we need order status jobs below
+        all_access_methods = []
+
         retrieval.collections.each do |collection_hash|
           params = Rack::Utils.parse_nested_query(collection_hash['params'])
           params.reject! { |p| ['datasource', 'short_name'].include? p }
@@ -147,6 +148,9 @@ class Retrieval < ActiveRecord::Base
 
           access_methods = collection_hash.fetch('serviceOptions', {}).fetch('accessMethod', [])
           access_methods.each do |method|
+            # Appends the order type to our running list
+            all_access_methods << method['type']
+
             page_num = 0
             page_size = 2000
 
@@ -250,7 +254,10 @@ class Retrieval < ActiveRecord::Base
         retrieval.jsondata = project
         retrieval.save!
 
-        Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, env)
+        if (all_access_methods & %w(order service)).any?
+          # Ensure that there are collections within the order that require status hydration
+          Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, env)
+        end
       end # Ends Logging Tag
     end # Ends Logging Tag
   rescue StandardError => e
@@ -288,20 +295,15 @@ class Retrieval < ActiveRecord::Base
   # examining the collections within the order. If any of the collection are for one of the
   # specified DAACs then the order is placed in the respective queue
   def determine_queue
-    queue = 'Default'
-    daacs = %w[NSIDC LPDAAC]
+    daacs = %w(NSIDC LPDAAC)
 
     daacs.each do |daac|
       collections.each do |collection|
-        if collection['id'].include?(daac)
-          Rails.logger.info "Collection #{collection['id']} should be worked within the #{daac} queue."
-          
-          return daac
-        end
+        return daac if collection['id'].include?(daac)
       end
     end
 
-    queue
+    'Default'
   end
 
   # Pull out the order data from the objects jsondata by the provided type
@@ -311,10 +313,17 @@ class Retrieval < ActiveRecord::Base
     end.flatten.compact
   end
 
+  # Pull out the order data from the objects jsondata by the provided types
+  def get_orders_by_types(order_types)
+    collections.map do |collection|
+      collection.fetch('serviceOptions', {}).fetch('accessMethod', []).select { |m| order_types.include?(m['type']) }
+    end.flatten.compact
+  end
+
   # Return a list of all collection level order statues for the object
   def order_statuses
     collections.map do |collection|
-      collection.fetch('serviceOptions', {}).fetch('accessMethod', []).map { |method| method['order_status'].downcase }
+      collection.fetch('serviceOptions', {}).fetch('accessMethod', []).map { |method| method['order_status'] }
     end.flatten.compact
   end
 
@@ -323,7 +332,7 @@ class Retrieval < ActiveRecord::Base
     collections.map do |d|
       d.fetch('serviceOptions', {}).fetch('accessMethod', []).map do |m|
         m.fetch('service_options', {}).fetch('orders', []).map do |o|
-          o['order_status'].downcase
+          o['order_status']
         end
       end
     end.flatten.compact
@@ -331,7 +340,7 @@ class Retrieval < ActiveRecord::Base
 
   # Returns whether or not the retrieval is still processing any of it's orders
   def in_progress
-    (order_statuses & ['creating', 'in progress', 'not_validated', 'validated', 'quoting', 'quoted', 'quoted_with_exceptions', 'submitting', 'submitted_with_exceptions', 'processing', 'processing_with_exceptions', 'cancelling']).any?
+    order_statuses.any? && (order_statuses.map(&:downcase) & ['creating', 'in progress', 'not_validated', 'validated', 'quoting', 'quoted', 'quoted_with_exceptions', 'submitting', 'submitted_with_exceptions', 'processing', 'processing_with_exceptions', 'cancelling']).any?
   end
 
   class << self
@@ -359,23 +368,28 @@ class Retrieval < ActiveRecord::Base
           # request and hydrate the objects with necessary data
           Retrieval.hydrate_service_orders(service_orders, echo_client, token)
 
-          retrieval.save
+          # If there were orders that have status values
+          if (orders + service_orders).any?
+            # Save the Retrieval object after the status information has been retrieved
+            retrieval.save
 
-          # End the timer to determine the period of time to stall before our next attempt
-          ended_at = Time.now
+            # End the timer to determine the period of time to stall before our next attempt
+            ended_at = Time.now
 
-          # Duration of the execution in seconds
-          elapsed_seconds = (ended_at - started_at).to_i
+            # Duration of the execution in seconds
+            elapsed_seconds = (ended_at - started_at).to_i
 
-          # Normalize the refresh time between fast and slow jobs by having fast jobs wait.
-          # If the job only takes 2 seconds, we'll stall for 28 seconds so were not asking
-          # for an update too often.
-          stall_time = 30 - [30, elapsed_seconds].min
+            # Normalize the refresh time between fast and slow jobs by having fast jobs wait.
+            # If the job only takes 2 seconds, we'll stall for 28 seconds so were not asking
+            # for an update too often.
+            stall_time = 30 - [30, elapsed_seconds].min
 
-          # If any of the orders are in creating or pending state we need to continue asking for updates
-          if retrieval.in_progress && !Rails.env.test?
-            # The order isn't done processing, continue pinging for updated statuses
-            Retrieval.delay(queue: retrieval.determine_queue, run_at: (Time.now + stall_time)).hydrate_jsondata(id, token, cmr_env)
+            # If there are any orders that provide status values any of the orders
+            # are in creating or pending state we need to continue asking for updates
+            if retrieval.in_progress && !Rails.env.test?
+              # The order isn't done processing, continue pinging for updated statuses
+              Retrieval.delay(queue: retrieval.determine_queue, run_at: (Time.now + stall_time)).hydrate_jsondata(id, token, cmr_env)
+            end
           end
         end
       end
@@ -436,6 +450,9 @@ class Retrieval < ActiveRecord::Base
         end
       else
         Rails.logger.info "Error retrieving orders: #{order_response.errors.join('\n')}"
+
+        # Ensure that the delayed job fails
+        raise order_response.errors.join('\n')
       end
     end
 
