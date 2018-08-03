@@ -70,6 +70,7 @@ ns.Project = do (ko,
       @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
       @selectedVariables = ko.observableArray([])
       @loadingServiceType = ko.observable(false)
+      @isCustomizable = ko.observable(false)
       @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
       @expectedUmmService = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
 
@@ -131,6 +132,11 @@ ns.Project = do (ko,
       expectedMethod = null
       if @granuleAccessOptions()
         $.each @granuleAccessOptions().methods, (index, accessMethod) =>
+          # Download is our default method so if it's found we'll set it here which
+          # is fine because if a supported UMM Service records is found below it will
+          # override it and return, preventing that value from being overridden
+          expectedMethod = accessMethod if accessMethod.type == 'download'
+
           # For now we're using the first valid/supported UMM Service record found
           if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
             expectedMethod = accessMethod
@@ -141,6 +147,15 @@ ns.Project = do (ko,
             # when the conditional is true, and return false which will exit
             # the loop
             return false
+
+        # For `download` we will automatically set the method but for any other
+        # access method we dont do this until the user clicks `Customize` to ensure
+        # they've considered filtering their data down
+        if expectedMethod?.type == 'download' && @serviceOptions.accessMethod().length > 0
+          @serviceOptions.accessMethod()[0].method(expectedMethod.name)
+
+        # Determines if we should show or hide the `Customize` button on the collection card
+        @isCustomizable(expectedMethod?.type in ['opendap', 'service', 'order'])
 
       expectedMethod
 

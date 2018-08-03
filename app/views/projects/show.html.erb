@@ -131,7 +131,7 @@
             </div>
           </div>
           <div class="action-container">
-            <a class="action-button customize" data-toggle="modal" data-bind="click: launchCustomizationModal, css: {enabled: !loadingServiceType()}"><i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: loadingServiceType()"></i><span data-bind="text: customizeButtonText(), visible: !loadingServiceType()"></span></a>
+            <a class="action-button customize" data-toggle="modal" data-bind="visible: isCustomizable(), click: launchCustomizationModal, css: {enabled: !loadingServiceType()}"><i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: loadingServiceType()"></i><span data-bind="text: customizeButtonText(), visible: !loadingServiceType()"></span></a>
             <a class="action-button remove" title="Remove collection from the current project" data-bind="click: $root.removeProjectCollection"><i class="fa fa-minus"></i></a>
           </div>
           <%= render partial: 'collection_customization_modal' %>

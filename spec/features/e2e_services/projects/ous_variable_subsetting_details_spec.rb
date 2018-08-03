@@ -34,7 +34,6 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
     end
 
     context 'When clicking the "View Details" link' do
-
       it 'displays a "Back to Variables" link' do
         expect(page).to have_css('.variable-details .button-back', count: 1)
       end

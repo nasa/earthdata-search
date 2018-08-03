@@ -2871,6 +2871,39 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
         main st","line 2","line 3"],"City":"third city","StateProvince":"Alabama","Country":"United
         States","PostalCode":"67890"}]}}]}'
     http_version: 
+7e8000dc95ecbad4c16df6dd0144c3711114b5ad:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 925d59bd-fe9c-4fc9-8053-ad420bfeb225
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 03 Aug 2018 13:12:01 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '591'
+      connection:
+      - Close
+    body:
+      encoding: ASCII-8BIT
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"006","updated":"2017-11-09T13:36:16.474Z","dataset_id":"MODIS/Terra
+        Vegetation Indices 16-Day L3 Global 250m SIN Grid V006","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"DEV08","short_name":"MOD13Q1","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Terra
+        Vegetation Indices 16-Day L3 Global 250m SIN Grid V006","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Vegetation Indices 16-Day L3 Global 250m SIN Grid","orbit_parameters":{},"id":"C1200240776-DEV08","has_formats":false,"original_format":"UMM_JSON","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://dx.doi.org/10.5067/MODIS/MOD13Q1.006"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/"}]}'
+    http_version: 
 490926cf2d696f1eadf74beb0f30054ce8a2bedd:
   response:
     status:
