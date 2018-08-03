@@ -139,7 +139,7 @@ class CollectionExtra < ActiveRecord::Base
 
     response = echo_client.get_provider_holdings
     results = response.body
-    hits = response.headers['echo-collection-hits'].to_i
+    hits = response.headers['echo-dataset-hits'].to_i
 
     processed_count = 0
 
@@ -188,7 +188,7 @@ class CollectionExtra < ActiveRecord::Base
 
       processed_count += 1
 
-      puts "[#{Time.now}] #{processed_count} / #{hits}"
+      # puts "[#{Time.now}] #{processed_count} / #{hits}"
     end
   end
 
