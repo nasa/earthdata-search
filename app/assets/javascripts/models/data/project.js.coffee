@@ -73,6 +73,7 @@ ns.Project = do (ko,
       @isCustomizable = ko.observable(false)
       @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
       @expectedUmmService = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
+      @isLoadingComplete = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
 
       # When the loadingServiceType is updated re-calculate the subsetting flags
       @loadingServiceType.subscribe(@_computeSubsettingFlags)
@@ -100,6 +101,10 @@ ns.Project = do (ko,
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
       @collection.dispose()
       @serviceOptions.dispose()
+
+    _computeIsLoadingComplete: ->
+      return true if !@loadingServiceType() && @granuleAccessOptions() && @collection.total_size() && @collection.unit()
+      false
 
     _loadGranuleAccessOptions: ->
       dataSource = @collection.granuleDatasource()
@@ -162,7 +167,7 @@ ns.Project = do (ko,
     # Retrieve the user selected UMM Service from the access method. In the
     # future this will be set by the user, but for now were just going to
     # use the first supported UMM Service record as we'll only be assigning
-    # one UMM Service record to each collection. 
+    # one UMM Service record to each collection.
     _computeExpectedUmmService: =>
       # If we've already determined the expectedAccessMethod we'll just use the
       # associated UMM Service record, the logic in this method is the same as determining
@@ -232,7 +237,7 @@ ns.Project = do (ko,
     fromJson: (jsonObj) ->
       @serviceOptions.fromJson(jsonObj.serviceOptions)
 
-    setSelectedVariablesById: (variables) => 
+    setSelectedVariablesById: (variables) =>
       # Retrieve the stored selected variables by concept id and assign
       # them to the project collection
       VariablesModel.forIds variables, {}, (variables) =>
@@ -282,7 +287,7 @@ ns.Project = do (ko,
 
     _computeVariableSubsettingEnabled: =>
       if @expectedAccessMethod()?.type == 'opendap'
-        # OPeNDAP collections use a different means of calculating this value 
+        # OPeNDAP collections use a different means of calculating this value
       else if @expectedAccessMethod()?.type == 'service'
         formXml = @_accessMethodModelXml()
 
@@ -300,7 +305,7 @@ ns.Project = do (ko,
 
     _computeTransformationSubsettingEnabled: =>
       if @expectedAccessMethod()?.type == 'opendap'
-        # OPeNDAP collections use a different means of calculating this value 
+        # OPeNDAP collections use a different means of calculating this value
       else if @expectedAccessMethod()?.type == 'service'
           has_transformation_subsets = $.trim(@_findWithinAccessMethodModel('ecs-PROJECTION'))
 
@@ -311,7 +316,7 @@ ns.Project = do (ko,
 
     _computeReformattingSubsettingEnabled: =>
       if @expectedAccessMethod()?.type == 'opendap'
-        # OPeNDAP collections use a different means of calculating this value 
+        # OPeNDAP collections use a different means of calculating this value
       else if @expectedAccessMethod()?.type == 'service'
           has_reformatting_subsets = $.trim(@_findWithinAccessMethodModel('ecs-FORMAT'))
 
@@ -356,6 +361,7 @@ ns.Project = do (ko,
       @accessCollections = ko.computed(read: @_computeAccessCollections, owner: this, deferEvaluation: true)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
       @visibleCollections = ko.computed(read: @_computeVisibleCollections, owner: this, deferEvaluation: true)
+      @isLoadingComplete = ko.computed(read: @_computeIsLoadingComplete, this, deferEvaluation: true)
 
       @serialized = ko.computed
         read: @_toQuery
@@ -363,6 +369,13 @@ ns.Project = do (ko,
         owner: this
         deferEvaluation: true
       @_pending = ko.observable(null)
+
+    _computeIsLoadingComplete: ->
+      if @collections?().length > 0
+        for collection in @collections()
+          if !collection.isLoadingComplete()
+            return false
+        true
 
     _computeAllReadyToDownload: ->
       return false if !@accessCollections().length
