@@ -20,6 +20,16 @@
     </script>
     <%# Google Tag Manager %>
     <script>
+      var dataLayer = window.dataLayer = window.dataLayer || [];
+
+      <% if Rails.env.development? && Rails.configuration.respond_to?(:analytics_id) %>
+        dataLayer.push({
+          'event': 'localIdentifier',
+          'localGAProperty': '<%= Rails.configuration.analytics_id %>'
+        });
+      <% end %>
+    </script>
+    <script>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
