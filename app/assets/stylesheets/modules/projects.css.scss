@@ -210,6 +210,27 @@ $card-background: rgba(235,235,235,1);
               color: #359ad9
             }
           }
+
+          .collection-capability-loading-granules {
+            margin-top: 1.65em;
+            margin-bottom: 0.75em;
+            height: 1.35em;
+            width: 10em;
+
+            .loading-content-inner {
+              width: 20em
+            }
+          }
+
+          .collection-capability-loading-details {
+            width: 70%;
+            height: 0.75em;
+            margin-bottom: 0;
+
+            .loading-content-inner {
+              width: 20em
+            }
+          }
         }
       }
     }
