@@ -382,6 +382,732 @@ b9ba3747086bddf1506c8cde20a1c6df0d3cd42f:
         type=\"xsd:string\" value=\"''File''\"/>        \n    </group>\n   </ui>\n</form>","id":"EC7AA66E-00D6-ED42-3043-B2F1534AA85A","name":"Delivery
         Option","scope":"PROVIDER"}}'
     http_version: 
+0c8f5497ef6f92d07ca556dd12f58ce1f76f0c81:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 03 Aug 2018 01:10:02 GMT
+      etag:
+      - '"3d661c7bcc4de3725edb2048814eb82c"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.147000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      transfer-encoding:
+      - chunked
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":" ECHO Service/Order
+        form for DataSet \"MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN
+        Grid V006\" (MOD13Q1.6) Updated: 2017/11/14: 11:58:34","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:forms=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://ecs.nasa.gov/options\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\"><!--\nECHO Service/Order
+        form for DataSet \"MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN
+        Grid V006\" (MOD13Q1.6):\n--><model><instance><ecs:options xmlns:ecs=\"http://ecs.nasa.gov/options\"><ecs:distribution
+        xmlns=\"http://ecs.nasa.gov/options\"><ecs:mediatype><ecs:value>HTTPS</ecs:value></ecs:mediatype><ecs:mediaformat><ecs:ftppull-format><ecs:value>FILEFORMAT</ecs:value></ecs:ftppull-format><ecs:ftppush-format><ecs:value>FILEFORMAT</ecs:value></ecs:ftppush-format></ecs:mediaformat><ecs:ftppush><ecs:user/><ecs:password/><ecs:host/><ecs:directory/><ecs:user-string/></ecs:ftppush></ecs:distribution><ecs:ancillary
+        xmlns=\"http://ecs.nasa.gov/options\"><ecs:orderPH>false</ecs:orderPH><ecs:orderQA>false</ecs:orderQA><ecs:orderHDF_MAP>false</ecs:orderHDF_MAP><ecs:orderBrowse>false</ecs:orderBrowse></ecs:ancillary><ecs:esi-xml><!--NOTE:
+        elements in caps losely match the ESI API, those in lowercase are helper elements
+        --><ecs:requestInfo><ecs:email/></ecs:requestInfo><!--Dataset ID will be injected
+        by Reverb--><ecs:CLIENT>ESI</ecs:CLIENT><!--First SubsetAgent in the input
+        capabilities XML is used as the default.--><ecs:SUBAGENT_ID><ecs:value>&amp;</ecs:value></ecs:SUBAGENT_ID><!--
+        hardcode to async for Reverb services --><ecs:REQUEST_MODE>async</ecs:REQUEST_MODE><ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG><ecs:NO_PROJ_MSG>No
+        projection options available with current selection.</ecs:NO_PROJ_MSG><ecs:ADVANCED_OPT_MSG>No
+        resampling or interpolation options available with current selection.</ecs:ADVANCED_OPT_MSG><ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1><ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2><ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1><ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1><ecs:NULL_MSG/><ecs:HEG-request><!--Need to populate
+        BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"--><ecs:BBOX/><ecs:spatial_subsetting><ecs:boundingbox><ecs:ullat>90</ecs:ullat><ecs:ullon>-180</ecs:ullon><ecs:lrlat>-90</ecs:lrlat><ecs:lrlon>180</ecs:lrlon></ecs:boundingbox></ecs:spatial_subsetting><!--First
+        Format in the input XML is used as the default.--><ecs:FORMAT><ecs:value/></ecs:FORMAT><!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)--><!-- FILE_IDS
+        must be injected by Reverb --><!-- FILE_URLS is not used in requests from
+        ECHO, Use FILE_IDS instead --><ecs:projection_options><ecs:PROJECTION><ecs:value>&amp;</ecs:value></ecs:PROJECTION><!--In
+        final ESI request, projection parameters should be included as follows: \"&PROJECTION_PARAMETERS=param1:value1,param2:value2,...paramn:valuen\"--><ecs:PROJECTION_PARAMETERS><ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection><ecs:LonZ/><ecs:LatZ/><ecs:NZone/></ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection><ecs:STATE_PLANE_projection><ecs:NZone/></ecs:STATE_PLANE_projection><ecs:ALBERS_projection><ecs:FE/><ecs:FN/><ecs:SMajor/><ecs:SMinor/><ecs:STDPR1/><ecs:STDPR2/><ecs:OriginLat/><ecs:CentMer/></ecs:ALBERS_projection><ecs:LAMBERT_CONFORMAL_CONIC_projection><ecs:OriginLat/><ecs:CentMer/><ecs:STDPR1/><ecs:STDPR2/><ecs:FE/><ecs:FN/><ecs:SMajor/><ecs:SMinor/></ecs:LAMBERT_CONFORMAL_CONIC_projection><ecs:MERCATOR_projection><ecs:CentMer/><ecs:TrueScale/><ecs:FE/><ecs:FN/><ecs:SMajor/><ecs:SMinor/></ecs:MERCATOR_projection><ecs:POLAR_STEREOGRAPHIC_projection><ecs:OriginLat/><ecs:LongPol/><ecs:FE/><ecs:FN/><ecs:SMajor/><ecs:SMinor/></ecs:POLAR_STEREOGRAPHIC_projection><ecs:TRANSVERSE_MERCATOR_projection><ecs:Factor/><ecs:OriginLat/><ecs:CentMer/><ecs:FE/><ecs:FN/><ecs:SMajor/><ecs:SMinor/></ecs:TRANSVERSE_MERCATOR_projection><ecs:LAMBERT_AZIMUTHAL_projection><ecs:Sphere/><ecs:CenterLat/><ecs:CentLon/><ecs:FE/><ecs:FN/></ecs:LAMBERT_AZIMUTHAL_projection><ecs:SINUSOIDAL_projection><ecs:CentMer/><ecs:FE/><ecs:FN/></ecs:SINUSOIDAL_projection><ecs:CYLINDRICAL_EQUAL_AREA_projection><ecs:SMajor/><ecs:SMinor/><ecs:CentMer/><ecs:FE/><ecs:FN/><ecs:TrueScale/></ecs:CYLINDRICAL_EQUAL_AREA_projection><ecs:UTM_NORTHERN_HEMISPHERE_projection><ecs:NZone>30</ecs:NZone></ecs:UTM_NORTHERN_HEMISPHERE_projection><ecs:UTM_SOUTHERN_HEMISPHERE_projection><ecs:NZone>30</ecs:NZone></ecs:UTM_SOUTHERN_HEMISPHERE_projection></ecs:PROJECTION_PARAMETERS></ecs:projection_options><ecs:advanced_file_option_flag/><ecs:advanced_file_options><!--In
+        final ESI request, resample options should be formatted like: \"&RESAMPLE=dimension:value\"--><ecs:RESAMPLE><ecs:GEOGRAPHIC-dimension><ecs:value>&amp;</ecs:value></ecs:GEOGRAPHIC-dimension><ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension><ecs:value>&amp;</ecs:value></ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension><ecs:STATE_PLANE-dimension><ecs:value>&amp;</ecs:value></ecs:STATE_PLANE-dimension><ecs:ALBERS-dimension><ecs:value>&amp;</ecs:value></ecs:ALBERS-dimension><ecs:LAMBERT_CONFORMAL_CONIC-dimension><ecs:value>&amp;</ecs:value></ecs:LAMBERT_CONFORMAL_CONIC-dimension><ecs:MERCATOR-dimension><ecs:value>&amp;</ecs:value></ecs:MERCATOR-dimension><ecs:POLAR_STEREOGRAPHIC-dimension><ecs:value>&amp;</ecs:value></ecs:POLAR_STEREOGRAPHIC-dimension><ecs:TRANSVERSE_MERCATOR-dimension><ecs:value>&amp;</ecs:value></ecs:TRANSVERSE_MERCATOR-dimension><ecs:LAMBERT_AZIMUTHAL-dimension><ecs:value>&amp;</ecs:value></ecs:LAMBERT_AZIMUTHAL-dimension><ecs:SINUSOIDAL-dimension><ecs:value>&amp;</ecs:value></ecs:SINUSOIDAL-dimension><ecs:CYLINDRICAL_EQUAL_AREA-dimension><ecs:value>&amp;</ecs:value></ecs:CYLINDRICAL_EQUAL_AREA-dimension><ecs:NO_CHANGE-dimension><ecs:value>&amp;</ecs:value></ecs:NO_CHANGE-dimension><ecs:NORTH_POLAR_STEREOGRAPHIC-dimension><ecs:value>&amp;</ecs:value></ecs:NORTH_POLAR_STEREOGRAPHIC-dimension><ecs:SOUTH_POLAR_STEREOGRAPHIC-dimension><ecs:value>&amp;</ecs:value></ecs:SOUTH_POLAR_STEREOGRAPHIC-dimension><ecs:UTM_NORTHERN_HEMISPHERE-dimension><ecs:value>&amp;</ecs:value></ecs:UTM_NORTHERN_HEMISPHERE-dimension><ecs:UTM_SOUTHERN_HEMISPHERE-dimension><ecs:value>&amp;</ecs:value></ecs:UTM_SOUTHERN_HEMISPHERE-dimension><ecs:GEOGRAPHIC-PERCENT-value>100</ecs:GEOGRAPHIC-PERCENT-value><ecs:UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-value>100</ecs:UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-value><ecs:STATE_PLANE-PERCENT-value>100</ecs:STATE_PLANE-PERCENT-value><ecs:ALBERS-PERCENT-value>100</ecs:ALBERS-PERCENT-value><ecs:LAMBERT_CONFORMAL_CONIC-PERCENT-value>100</ecs:LAMBERT_CONFORMAL_CONIC-PERCENT-value><ecs:MERCATOR-PERCENT-value>100</ecs:MERCATOR-PERCENT-value><ecs:POLAR_STEREOGRAPHIC-PERCENT-value>100</ecs:POLAR_STEREOGRAPHIC-PERCENT-value><ecs:TRANSVERSE_MERCATOR-PERCENT-value>100</ecs:TRANSVERSE_MERCATOR-PERCENT-value><ecs:LAMBERT_AZIMUTHAL-PERCENT-value>100</ecs:LAMBERT_AZIMUTHAL-PERCENT-value><ecs:SINUSOIDAL-PERCENT-value>100</ecs:SINUSOIDAL-PERCENT-value><ecs:CYLINDRICAL_EQUAL_AREA-PERCENT-value>100</ecs:CYLINDRICAL_EQUAL_AREA-PERCENT-value><ecs:NO_CHANGE-PERCENT-value>100</ecs:NO_CHANGE-PERCENT-value><ecs:NORTH_POLAR_STEREOGRAPHIC-PERCENT-value>100</ecs:NORTH_POLAR_STEREOGRAPHIC-PERCENT-value><ecs:SOUTH_POLAR_STEREOGRAPHIC-PERCENT-value>100</ecs:SOUTH_POLAR_STEREOGRAPHIC-PERCENT-value><ecs:UTM_NORTHERN_HEMISPHERE-PERCENT-value>100</ecs:UTM_NORTHERN_HEMISPHERE-PERCENT-value><ecs:UTM_SOUTHERN_HEMISPHERE-PERCENT-value>100</ecs:UTM_SOUTHERN_HEMISPHERE-PERCENT-value></ecs:RESAMPLE><ecs:INTERPOLATION><ecs:value>NN</ecs:value></ecs:INTERPOLATION><!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.--><ecs:INCLUDE_META>false</ecs:INCLUDE_META></ecs:advanced_file_options><ecs:spatial_subset_flag>false</ecs:spatial_subset_flag><ecs:band_subset_flag/><ecs:temporal_subset_flag>false</ecs:temporal_subset_flag></ecs:HEG-request></ecs:esi-xml></ecs:options></instance><extension
+        xmlns:pre=\"http://echo.nasa.gov/v9/echoforms/prepopulate\" name=\"pre:prepopulate\"><pre:expressions><pre:expression
+        ref=\"//ecs:requestInfo/ecs:dataset_ids\" source=\"ALL_DATASET_IDS_FROM_CART\"/><pre:expression
+        ref=\"//ecs:requestInfo/ecs:email\" source=\"EMAIL\"/><pre:expression ref=\"//ecs:requestInfo/ecs:keywords\"
+        source=\"KEYWORDS\"/><pre:expression ref=\"//ecs:requestInfo/ecs:spatial\"
+        source=\"SPATIAL\"/><pre:expression ref=\"//ecs:requestInfo/ecs:shp_file\"
+        source=\"SHP_FILE\"/><pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon\"
+        source=\"BBOX_WEST\"/><pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlat\"
+        source=\"BBOX_SOUTH\"/><pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon\"
+        source=\"BBOX_EAST\"/><pre:expression ref=\"//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullat\"
+        source=\"BBOX_NORTH\"/></pre:expressions></extension></model><ui><group id=\"mediaOptionsGroup\"
+        label=\"Order Distribution Options\" ref=\"ecs:distribution\"><select id=\"mediaTypeSelect\"
+        label=\"Distribution Type\" multiple=\"false\" open=\"false\" ref=\"ecs:mediatype\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"value\"><item label=\"HTTPS\"
+        value=\"HTTPS\"/><item label=\"FTP Push\" value=\"FtpPush\"/></select><group
+        id=\"ftpPushGroup\" label=\"FTP Push Options\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value=''FtpPush''\"><input
+        label=\"Username\" ref=\"ecs:user\" required=\"true()\" type=\"xsd:string\"/><secret
+        label=\"Password\" ref=\"ecs:password\" required=\"true()\" type=\"xsd:string\"/><input
+        label=\"Hostname\" ref=\"ecs:host\" required=\"true()\" type=\"xsd:string\"/><input
+        label=\"Destination directory\" ref=\"ecs:directory\" required=\"true()\"
+        type=\"xsd:string\"/><input label=\"User string\" ref=\"ecs:user-string\"
+        required=\"false()\" type=\"xsd:string\"/></group></group><select id=\"agentSelect\"
+        label=\"Select Processor\" multiple=\"false\" open=\"false\" ref=\"ecs:esi-xml/ecs:SUBAGENT_ID\"
+        required=\"false()\" type=\"xsd:string\" valueElementName=\"value\"><item
+        label=\"No Processing\" value=\"&amp;\"/><item label=\"HEG\" value=\"HEG\"/></select><group
+        id=\"processingOptions\" label=\"ESI Processing Options\" ref=\"ecs:esi-xml\"
+        relevant=\"not(//ecs:SUBAGENT_ID/ecs:value=''&amp;'')\"><input label=\"Include
+        Metadata and Processing History\" ref=\"ecs:HEG-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG'' &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''PQF''
+        &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''GLAS'' &#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \" type=\"xsd:boolean\"/><group
+        id=\"HEG-reformatOptions\" label=\"Reformat Output (Optional)\" ref=\"ecs:HEG-request\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG''\"><select id=\"HEG-formatselect\"
+        label=\"Output File Format\" multiple=\"false\" open=\"false\" ref=\"ecs:FORMAT\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG''\" type=\"xsd:string\" valueElementName=\"value\"><item
+        label=\"HDF-EOS\" value=\"HDF-EOS\"/><item label=\"HDF-EOS5\" value=\"HDF-EOS5\"/><item
+        label=\"NetCDF: Network Common Data Format\" value=\"netCDF\"/><item label=\"NetCDF-Alt
+        (GDAL)\" value=\"GdalNetCDF\"/><item label=\"ASCII (ncdump)\" value=\"NC_ASCII\"/><item
+        label=\"NetCDF4-CF\" value=\"NetCDF4-CF\"/><item label=\"ASCII\" value=\"ASCII\"/><item
+        label=\"KML\" value=\"KML\"/><item label=\"No Reformatting\" value=\"\"/><item
+        label=\"NetCDF-3\" value=\"NetCDF-3\"/><item label=\"GeoTIFF\" value=\"GeoTIFF\"/></select></group><group
+        id=\"HEG-spatial\" label=\"Spatial Subsetting (Optional)\" ref=\"ecs:HEG-request/ecs:spatial_subsetting\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG''\"><input label=\"Enter bounding
+        box\" ref=\"../ecs:spatial_subset_flag\" type=\"xsd:boolean\"/><group id=\"HEG-NWESBoundingBox\"
+        label=\"\" ref=\"ecs:boundingbox\"><input label=\"North\" ref=\"ecs:ullat\"
+        relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ../../ecs:spatial_subset_flag=''true''
+        &#10;            \" required=\"true()\" type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)
+        &gt;= -90</xpath><alert>North must be greater than -90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)
+        &lt;= 90</xpath><alert>North must be less than 90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)  &gt;=  number(ecs:lrlat)</xpath><alert>North
+        must be greater than South</alert></constraint><constraint><xpath>not(../../ecs:projection_options/ecs:PROJECTION/ecs:value=''NORTH
+        POLAR STEREOGRAPHIC'') or\n(number(ecs:ullat) &lt;= 90 and number(ecs:ullat)
+        &gt;= 0)</xpath><alert>Invalid spatial subset specified; North Polar Stereographic
+        only allows subsetting above the equator.</alert></constraint><constraint><xpath>not(../../ecs:projection_options/ecs:PROJECTION/ecs:value=''SOUTH
+        POLAR STEREOGRAPHIC'') or\n(number(ecs:ullat) &lt;= 0 and number(ecs:ullat)
+        &gt;= -90)</xpath><alert>Invalid spatial subset specified; South Polar Stereographic
+        only allows subsetting below the equator.</alert></constraint></constraints></input><input
+        label=\"West\" ref=\"ecs:ullon\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)
+        &gt;= -180</xpath><alert>West must be greater than -180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)
+        &lt;= 180</xpath><alert>West must be less than 180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)  &lt;=  number(ecs:lrlon)</xpath><alert>West
+        must be less than East</alert></constraint></constraints></input><input label=\"East\"
+        ref=\"ecs:lrlon\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''HEG'' and
+        ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)
+        &gt;= -180</xpath><alert>East must be greater than -180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)
+        &lt;= 180</xpath><alert>East must be less than 180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)  &gt;=  number(ecs:ullon)</xpath><alert>East
+        must be greater than West</alert></constraint></constraints></input><input
+        label=\"South\" ref=\"ecs:lrlat\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)
+        &gt;= -90</xpath><alert>South must be greater than -90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)
+        &lt;= 90</xpath><alert>South must be less than 90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)  &lt;=  number(ecs:ullat)</xpath><alert>South
+        must be less than North</alert></constraint><constraint><xpath>not(../../ecs:projection_options/ecs:PROJECTION/ecs:value=''NORTH
+        POLAR STEREOGRAPHIC'') or\n(number(ecs:lrlat) &lt;= 90 and number(ecs:lrlat)
+        &gt;= 0)</xpath><alert>Invalid spatial subset specified; North Polar Stereographic
+        only allows subsetting above the equator.</alert></constraint><constraint><xpath>not(../../ecs:projection_options/ecs:PROJECTION/ecs:value=''SOUTH
+        POLAR STEREOGRAPHIC'') or\n(number(ecs:lrlat) &lt;= 0 and number(ecs:lrlat)
+        &gt;= -90)</xpath><alert>Invalid spatial subset specified; South Polar Stereographic
+        only allows subsetting below the equator.</alert></constraint></constraints></input></group></group><group
+        id=\"HEG-projectionSettings\" label=\"Projection Options\" ref=\"ecs:HEG-request/ecs:projection_options\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG'' and (not(contains('',,'',concat('','',ecs:HEG-request/ecs:FORMAT/ecs:value/text(),'','')))
+        or string-length(ecs:HEG-request/ecs:FORMAT/ecs:value/text()) = 0)\"><output
+        label=\"\" ref=\"../../ecs:NO_PROJ_MSG\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and&#10;                  not(contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'','')))\"
+        type=\"xsd:string\"/><select id=\"HEG-projectselect-0\" label=\"Re-projection
+        Options\" multiple=\"false\" open=\"false\" ref=\"ecs:PROJECTION\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and&#10;               contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><!--Place holder if we dont
+        know the default projection (same as empty string)--><item label=\"No Change\"
+        value=\"&amp;\"/><item label=\"Geographic\" value=\"GEOGRAPHIC\"/><item label=\"Universal
+        Transverse Mercator\" value=\"UNIVERSAL TRANSVERSE MERCATOR\"/><item label=\"State
+        Plane Coordinates\" value=\"STATE PLANE\"/><item label=\"Albers Equal-Area
+        Conic\" value=\"ALBERS\"/><item label=\"Lambert Conic Conformal\" value=\"LAMBERT
+        CONFORMAL CONIC\"/><item label=\"Mercator\" value=\"MERCATOR\"/><item label=\"Polar
+        Stereographic\" value=\"POLAR STEREOGRAPHIC\"/><item label=\"Transverse Mercator\"
+        value=\"TRANSVERSE MERCATOR\"/><item label=\"Lambert Azimuthal Equal Area\"
+        value=\"LAMBERT AZIMUTHAL\"/><item label=\"Sinusoidal\" value=\"SINUSOIDAL\"/><item
+        label=\"Cylindrical Equal Area\" value=\"CYLINDRICAL EQUAL AREA\"/><item label=\"North
+        Polar Stereographic\" value=\"NORTH POLAR STEREOGRAPHIC\"/><item label=\"South
+        Polar Stereographic\" value=\"SOUTH POLAR STEREOGRAPHIC\"/><item label=\"UTM
+        Northern Hemisphere\" value=\"UTM NORTHERN HEMISPHERE\"/><item label=\"UTM
+        Southern Hemisphere\" value=\"UTM SOUTHERN HEMISPHERE\"/></select><group id=\"HEG-UNIVERSAL_TRANSVERSE_MERCATOR-paramgroup-\"
+        label=\"Set Parameters for Universal Transverse Mercator (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''UNIVERSAL TRANSVERSE MERCATOR'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     &#10;                        and
+        not(ecs:PROJECTION/ecs:value=''UNIVERSAL TRANSVERSE MERCATOR'' and ../ecs:spatial_subset_flag=''true'')&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Longitude of any point in UTM Zone\" ref=\"ecs:LonZ\"
+        relevant=\"../../../ecs:spatial_subset_flag=''false''\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>(string-length(ecs:LonZ)
+        = 0) or\n(number(translate(ecs:LonZ,''-'','''')) &gt;= -180.0 and number(translate(ecs:LonZ,''-'',''''))
+        &lt;= 180.0) and\nnot(contains(ecs:LonZ, ''.''))</xpath><alert>Longitude must
+        be specified with values +/-(-180.0..180.0).</alert></constraint><constraint><xpath>(string-length(ecs:LatZ)
+        = 0 and string-length(ecs:LonZ) = 0) or\n(string-length(ecs:LonZ) &gt; 0)</xpath><alert>Latitude
+        and Longitude must be specified together.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Latitude of any point in UTM Zone\" ref=\"ecs:LatZ\" relevant=\"../../../ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>(string-length(ecs:LatZ)
+        = 0) or\n(number(translate(ecs:LatZ,''-'','''')) &gt;= 0.0 and number(translate(ecs:LatZ,''-'',''''))
+        &lt;= 90.0) and\nnot(contains(ecs:LatZ, ''.''))</xpath><alert>Latitude must
+        be specified with values +/-(0.0..90.0).</alert></constraint><constraint><xpath>(string-length(ecs:LatZ)
+        = 0 and string-length(ecs:LonZ) = 0) or\n(string-length(ecs:LatZ) &gt; 0)</xpath><alert>Latitude
+        and Longitude must be specified together.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"UTM Zone\" ref=\"ecs:NZone\" relevant=\"../../../ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\n((number(translate(ecs:NZone,''-'','''')) &gt; -60.0 and number(translate(ecs:NZone,''-'',''''))
+        &lt;= 60.0) and\nnot(contains(ecs:NZone, ''.'')))</xpath><alert>Zone parameter
+        (Zone) must be specified as an integer with a value +/-(1..60)</alert></constraint><constraint><xpath>(string-length(ecs:LatZ)
+        = 0 and string-length(ecs:LonZ) = 0) or string-length(ecs:NZone) = 0</xpath><alert>The
+        zone parameter takes precedence over the latitude and longitude specifications.</alert></constraint></constraints><help>-60..60,&lt;0:SouthHem</help></input><output
+        label=\"\" ref=\"../../../../ecs:UTM_MSG_1\" relevant=\"../../ecs:spatial_subset_flag=''true''
+        &#10;                         &#10;                        or ( string-length(ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LatZ)
+        &gt; 0 &#10;                        and string-length(ecs:PROJECTION_PARAMETERS/ecs:UNIVERSAL_TRANSVERSE_MERCATOR_projection/ecs:LonZ)
+        &gt; 0)\" type=\"xsd:string\"/></group><group id=\"HEG-STATE_PLANE-paramgroup-\"
+        label=\"Set Parameters for State Plane Coordinates (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:STATE_PLANE_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''STATE PLANE'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"State Plane Zone\" ref=\"ecs:NZone\" relevant=\"../../../ecs:spatial_subset_flag=''false''\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:NZone)
+        = 0 or (number(ecs:NZone) &gt;= 0.0 and number(ecs:NZone) &lt;= 180.0)</xpath><alert>State
+        Plane Zone must be greater than or equal to 0.0 and less than or equal to
+        180.0.</alert></constraint></constraints><help>Unitless</help></input><output
+        label=\"\" ref=\"../../../../ecs:UTM_MSG_1\" relevant=\"../../ecs:spatial_subset_flag=''true''
+        &#10;                         &#10;                        or ( string-length(ecs:PROJECTION_PARAMETERS/ecs:STATE_PLANE_projection/ecs:LatZ)
+        &gt; 0 &#10;                        and string-length(ecs:PROJECTION_PARAMETERS/ecs:STATE_PLANE_projection/ecs:LonZ)
+        &gt; 0)\" type=\"xsd:string\"/></group><group id=\"HEG-ALBERS-paramgroup-\"
+        label=\"Set Parameters for Albers Equal-Area Conic (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:ALBERS_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''ALBERS'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMajor)
+        = 0 or (number(ecs:SMajor) &gt;= 0.0 and number(ecs:SMajor) &lt;= 180.0)</xpath><alert>Semimajor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMinor)
+        = 0 or (number(ecs:SMinor) &gt;= 0.0 and number(ecs:SMinor) &lt;= 180.0)</xpath><alert>Semiminor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Latitude of first standard parallel\" ref=\"ecs:STDPR1\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:STDPR1)
+        = 0 or (number(ecs:STDPR1) &gt;= 0.0 and number(ecs:STDPR1) &lt;= 180.0)</xpath><alert>Latitude
+        of first standard parallel must be greater than or equal to 0.0 and less than
+        or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Latitude of second standard parallel\" ref=\"ecs:STDPR2\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:STDPR2)
+        = 0 or (number(ecs:STDPR2) &gt;= 0.0 and number(ecs:STDPR2) &lt;= 180.0)</xpath><alert>Latitude
+        of second standard parallel must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Latitude of false origin\" ref=\"ecs:OriginLat\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:OriginLat)
+        = 0 or (number(ecs:OriginLat) &gt;= 0.0 and number(ecs:OriginLat) &lt;= 180.0)</xpath><alert>Latitude
+        of false origin must be greater than or equal to 0.0 and less than or equal
+        to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Longitude of false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentMer)
+        = 0 or (number(ecs:CentMer) &gt;= 0.0 and number(ecs:CentMer) &lt;= 180.0)</xpath><alert>Longitude
+        of false origin must be greater than or equal to 0.0 and less than or equal
+        to 180.0.</alert></constraint></constraints><help>Angular</help></input></group><group
+        id=\"HEG-LAMBERT_CONFORMAL_CONIC-paramgroup-\" label=\"Set Parameters for
+        Lambert Conic Conformal (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:LAMBERT_CONFORMAL_CONIC_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''LAMBERT CONFORMAL CONIC'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Latitude of false origin\" ref=\"ecs:OriginLat\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:OriginLat)
+        = 0 or (number(ecs:OriginLat) &gt;= 0.0 and number(ecs:OriginLat) &lt;= 180.0)</xpath><alert>Latitude
+        of false origin must be greater than or equal to 0.0 and less than or equal
+        to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Longitude of false origin / central meridian\" ref=\"ecs:CentMer\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentMer)
+        = 0 or (number(ecs:CentMer) &gt;= 0.0 and number(ecs:CentMer) &lt;= 180.0)</xpath><alert>Longitude
+        of false origin / central meridian must be greater than or equal to 0.0 and
+        less than or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Latitude of first standard parallel\" ref=\"ecs:STDPR1\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:STDPR1)
+        = 0 or (number(ecs:STDPR1) &gt;= 0.0 and number(ecs:STDPR1) &lt;= 180.0)</xpath><alert>Latitude
+        of first standard parallel must be greater than or equal to 0.0 and less than
+        or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Latitude of second standard parallel\" ref=\"ecs:STDPR2\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:STDPR2)
+        = 0 or (number(ecs:STDPR2) &gt;= 0.0 and number(ecs:STDPR2) &lt;= 180.0)</xpath><alert>Latitude
+        of second standard parallel must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMajor)
+        = 0 or (number(ecs:SMajor) &gt;= 0.0 and number(ecs:SMajor) &lt;= 180.0)</xpath><alert>Semimajor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMinor)
+        = 0 or (number(ecs:SMinor) &gt;= 0.0 and number(ecs:SMinor) &lt;= 180.0)</xpath><alert>Semiminor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input></group><group
+        id=\"HEG-MERCATOR-paramgroup-\" label=\"Set Parameters for Mercator (Optional)\"
+        ref=\"ecs:PROJECTION_PARAMETERS/ecs:MERCATOR_projection\" relevant=\"ecs:PROJECTION/ecs:value=''MERCATOR''
+        and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Longitude of natural/false origin\" ref=\"ecs:CentMer\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentMer)
+        = 0 or (number(ecs:CentMer) &gt;= 0.0 and number(ecs:CentMer) &lt;= 180.0)</xpath><alert>Longitude
+        of natural/false origin must be greater than or equal to 0.0 and less than
+        or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Latitude of TrueScale\" ref=\"ecs:TrueScale\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:TrueScale)
+        = 0 or (number(ecs:TrueScale) &gt;= 0.0 and number(ecs:TrueScale) &lt;= 180.0)</xpath><alert>Latitude
+        of TrueScale must be greater than or equal to 0.0 and less than or equal to
+        180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMajor)
+        = 0 or (number(ecs:SMajor) &gt;= 0.0 and number(ecs:SMajor) &lt;= 180.0)</xpath><alert>Semimajor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMinor)
+        = 0 or (number(ecs:SMinor) &gt;= 0.0 and number(ecs:SMinor) &lt;= 180.0)</xpath><alert>Semiminor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input></group><group
+        id=\"HEG-POLAR_STEREOGRAPHIC-paramgroup-\" label=\"Set Parameters for Polar
+        Stereographic (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:POLAR_STEREOGRAPHIC_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''POLAR STEREOGRAPHIC'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Latitude of natural origin\" ref=\"ecs:OriginLat\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:OriginLat)
+        = 0 or (number(ecs:OriginLat) &gt;= 0.0 and number(ecs:OriginLat) &lt;= 180.0)</xpath><alert>Latitude
+        of natural origin must be greater than or equal to 0.0 and less than or equal
+        to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Longitude of natural origin\" ref=\"ecs:LongPol\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:LongPol)
+        = 0 or (number(ecs:LongPol) &gt;= 0.0 and number(ecs:LongPol) &lt;= 180.0)</xpath><alert>Longitude
+        of natural origin must be greater than or equal to 0.0 and less than or equal
+        to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMajor)
+        = 0 or (number(ecs:SMajor) &gt;= 0.0 and number(ecs:SMajor) &lt;= 180.0)</xpath><alert>Semimajor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMinor)
+        = 0 or (number(ecs:SMinor) &gt;= 0.0 and number(ecs:SMinor) &lt;= 180.0)</xpath><alert>Semiminor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input></group><group
+        id=\"HEG-TRANSVERSE_MERCATOR-paramgroup-\" label=\"Set Parameters for Transverse
+        Mercator (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:TRANSVERSE_MERCATOR_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''TRANSVERSE MERCATOR'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Scale factor at natural origin\" ref=\"ecs:Factor\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:Factor)
+        = 0 or (number(ecs:Factor) &gt;= 0.0 and number(ecs:Factor) &lt;= 180.0)</xpath><alert>Scale
+        factor at natural origin must be greater than or equal to 0.0 and less than
+        or equal to 180.0.</alert></constraint></constraints><help>Unitless</help></input><input
+        label=\"Latitude of false/natural origin\" ref=\"ecs:OriginLat\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:OriginLat)
+        = 0 or (number(ecs:OriginLat) &gt;= 0.0 and number(ecs:OriginLat) &lt;= 180.0)</xpath><alert>Latitude
+        of false/natural origin must be greater than or equal to 0.0 and less than
+        or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Longitude of natural/false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentMer)
+        = 0 or (number(ecs:CentMer) &gt;= 0.0 and number(ecs:CentMer) &lt;= 180.0)</xpath><alert>Longitude
+        of natural/false origin must be greater than or equal to 0.0 and less than
+        or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semimajor radius of the ellipsoid axis\" ref=\"ecs:SMajor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMajor)
+        = 0 or (number(ecs:SMajor) &gt;= 0.0 and number(ecs:SMajor) &lt;= 180.0)</xpath><alert>Semimajor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMinor)
+        = 0 or (number(ecs:SMinor) &gt;= 0.0 and number(ecs:SMinor) &lt;= 180.0)</xpath><alert>Semiminor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input></group><group
+        id=\"HEG-LAMBERT_AZIMUTHAL-paramgroup-\" label=\"Set Parameters for Lambert
+        Azimuthal Equal Area (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:LAMBERT_AZIMUTHAL_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''LAMBERT AZIMUTHAL'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Radius of reference Sphere\" ref=\"ecs:Sphere\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:Sphere)
+        = 0 or (number(ecs:Sphere) &gt;= 0.0 and number(ecs:Sphere) &lt;= 180.0)</xpath><alert>Radius
+        of reference Sphere must be greater than or equal to 0.0 and less than or
+        equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Latitude of projection center / origin\" ref=\"ecs:CenterLat\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CenterLat)
+        = 0 or (number(ecs:CenterLat) &gt;= 0.0 and number(ecs:CenterLat) &lt;= 180.0)</xpath><alert>Latitude
+        of projection center / origin must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"Longitude of projection center\" ref=\"ecs:CentLon\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentLon)
+        = 0 or (number(ecs:CentLon) &gt;= 0.0 and number(ecs:CentLon) &lt;= 180.0)</xpath><alert>Longitude
+        of projection center must be greater than or equal to 0.0 and less than or
+        equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input></group><group
+        id=\"HEG-SINUSOIDAL-paramgroup-\" label=\"Set Parameters for Sinusoidal (Optional)\"
+        ref=\"ecs:PROJECTION_PARAMETERS/ecs:SINUSOIDAL_projection\" relevant=\"ecs:PROJECTION/ecs:value=''SINUSOIDAL''
+        and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Longitude of projection center\" ref=\"ecs:CentMer\"
+        required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentMer)
+        = 0 or (number(ecs:CentMer) &gt;= 0.0 and number(ecs:CentMer) &lt;= 180.0)</xpath><alert>Longitude
+        of projection center must be greater than or equal to 0.0 and less than or
+        equal to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input></group><group
+        id=\"HEG-CYLINDRICAL_EQUAL_AREA-paramgroup-\" label=\"Set Parameters for Cylindrical
+        Equal Area (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:CYLINDRICAL_EQUAL_AREA_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''CYLINDRICAL EQUAL AREA'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"Semimajor radius of the ellipsoid axis\"
+        ref=\"ecs:SMajor\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMajor)
+        = 0 or (number(ecs:SMajor) &gt;= 0.0 and number(ecs:SMajor) &lt;= 180.0)</xpath><alert>Semimajor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Semiminor radius of the ellipsoid axis\" ref=\"ecs:SMinor\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:SMinor)
+        = 0 or (number(ecs:SMinor) &gt;= 0.0 and number(ecs:SMinor) &lt;= 180.0)</xpath><alert>Semiminor
+        radius of the ellipsoid axis must be greater than or equal to 0.0 and less
+        than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Longitude of false origin\" ref=\"ecs:CentMer\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:CentMer)
+        = 0 or (number(ecs:CentMer) &gt;= 0.0 and number(ecs:CentMer) &lt;= 180.0)</xpath><alert>Longitude
+        of false origin must be greater than or equal to 0.0 and less than or equal
+        to 180.0.</alert></constraint></constraints><help>Angular</help></input><input
+        label=\"False Easting\" ref=\"ecs:FE\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FE)
+        = 0 or (number(ecs:FE) &gt;= 0.0 and number(ecs:FE) &lt;= 180.0)</xpath><alert>False
+        Easting must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"False Northing\" ref=\"ecs:FN\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:FN)
+        = 0 or (number(ecs:FN) &gt;= 0.0 and number(ecs:FN) &lt;= 180.0)</xpath><alert>False
+        Northing must be greater than or equal to 0.0 and less than or equal to 180.0.</alert></constraint></constraints><help>Linear</help></input><input
+        label=\"Latitude of TrueScale\" ref=\"ecs:TrueScale\" required=\"false()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(ecs:TrueScale)
+        = 0 or (number(ecs:TrueScale) &gt;= 0.0 and number(ecs:TrueScale) &lt;= 180.0)</xpath><alert>Latitude
+        of TrueScale must be greater than or equal to 0.0 and less than or equal to
+        180.0.</alert></constraint></constraints><help>Angular</help></input></group><group
+        id=\"HEG-UTM_NORTHERN_HEMISPHERE-paramgroup-\" label=\"Set Parameters for
+        UTM Northern Hemisphere (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:UTM_NORTHERN_HEMISPHERE_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''UTM NORTHERN HEMISPHERE'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"UTM Zone\" ref=\"ecs:NZone\" required=\"true()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(translate(ecs:NZone,
+        ''0123456789'', '''')) = 0</xpath><alert>Only numeric characters are allowed
+        in this field.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\n((number(translate(ecs:NZone,''-'','''')) &gt;= 1.0 and number(translate(ecs:NZone,''-'',''''))
+        &lt;= 60.0) and\nnot(contains(ecs:NZone, ''.'')))</xpath><alert>Zone parameter
+        (Zone) must be specified as an integer with a value between 1.0 and 60.0,
+        inclusive.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\nnot(../../../ecs:spatial_subset_flag=''true'') or\n(\n((number(ecs:NZone)
+        &gt;= 16 and number(ecs:NZone) &lt;= 60) and\n((((number(ecs:NZone) * 6) -
+        183) - 45) &lt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))
+        or\n((number(ecs:NZone) &gt;= 1 and number(ecs:NZone) &lt;= 15) and\n(number(-180)
+        &lt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))\n)</xpath><alert>Invalid
+        spatial subset specified; the western boundary must be less than 45 degrees
+        west of the zone meridian.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\nnot(../../../ecs:spatial_subset_flag=''true'') or\n(\n((number(ecs:NZone)
+        &gt;= 1 and number(ecs:NZone) &lt;= 45) and\n((((number(ecs:NZone) * 6) -
+        183) + 45) &gt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))
+        or\n((number(ecs:NZone) &gt;= 46 and number(ecs:NZone) &lt;= 60) and\n(number(180)
+        &gt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))\n)</xpath><alert>Invalid
+        spatial subset specified; the eastern boundary must be less than 45 degrees
+        east of the zone meridian.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\nnot(../../../ecs:spatial_subset_flag=''true'') or\n(not(number(ecs:NZone)
+        &gt;= 15 and number(ecs:NZone) &lt;= 44) or ((number(ecs:NZone) &gt;= 15 and
+        number(ecs:NZone) &lt;= 44) and\n(number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)
+        &lt;\nnumber(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon))))</xpath><alert>Invalid
+        spatial subset specified; the zone must encompass the specified bounding box.</alert></constraint></constraints><help>Unitless</help></input><output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 16 and ecs:NZone
+        &lt;= 60\" type=\"xsd:string\" value=\"((number(ecs:NZone) * 6) - 183) - 45\"/><output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone
+        &lt;= 15\" type=\"xsd:string\" value=\"-180\"/><output label=\"Maximum supported
+        longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone &lt;= 45\" type=\"xsd:string\"
+        value=\"((number(ecs:NZone) * 6) - 183) + 45\"/><output label=\"Maximum supported
+        longitude\" relevant=\"ecs:NZone &gt;= 46 and ecs:NZone &lt;= 60\" type=\"xsd:string\"
+        value=\"180\"/></group><group id=\"HEG-UTM_SOUTHERN_HEMISPHERE-paramgroup-\"
+        label=\"Set Parameters for UTM Southern Hemisphere (Optional)\" ref=\"ecs:PROJECTION_PARAMETERS/ecs:UTM_SOUTHERN_HEMISPHERE_projection\"
+        relevant=\"ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'' and&#10;                     contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))&#10;                     \"><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_1\" type=\"xsd:string\"/><output
+        label=\"\" ref=\"../../../../ecs:PROJ_MSG_2\" relevant=\"not(../../ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' or ../../ecs:PROJECTION/ecs:value=''UTM SOUTHERN HEMISPHERE'')\"
+        type=\"xsd:string\"/><input label=\"UTM Zone\" ref=\"ecs:NZone\" required=\"true()\"
+        type=\"xsd:string\"><constraints><constraint><xpath>string-length(translate(ecs:NZone,
+        ''0123456789'', '''')) = 0</xpath><alert>Only numeric characters are allowed
+        in this field.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\n((number(translate(ecs:NZone,''-'','''')) &gt;= 1.0 and number(translate(ecs:NZone,''-'',''''))
+        &lt;= 60.0) and\nnot(contains(ecs:NZone, ''.'')))</xpath><alert>Zone parameter
+        (Zone) must be specified as an integer with a value between 1.0 and 60.0,
+        inclusive.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\nnot(../../../ecs:spatial_subset_flag=''true'') or\n(\n((number(ecs:NZone)
+        &gt;= 16 and number(ecs:NZone) &lt;= 60) and\n((((number(ecs:NZone) * 6) -
+        183) - 45) &lt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))
+        or\n((number(ecs:NZone) &gt;= 1 and number(ecs:NZone) &lt;= 15) and\n(number(-180)
+        &lt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)))\n)</xpath><alert>Invalid
+        spatial subset specified; the western boundary must be less than 45 degrees
+        west of the zone meridian.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\nnot(../../../ecs:spatial_subset_flag=''true'') or\n(\n((number(ecs:NZone)
+        &gt;= 1 and number(ecs:NZone) &lt;= 45) and\n((((number(ecs:NZone) * 6) -
+        183) + 45) &gt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))
+        or\n((number(ecs:NZone) &gt;= 46 and number(ecs:NZone) &lt;= 60) and\n(number(180)
+        &gt;= number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon)))\n)</xpath><alert>Invalid
+        spatial subset specified; the eastern boundary must be less than 45 degrees
+        east of the zone meridian.</alert></constraint><constraint><xpath>string-length(ecs:NZone)
+        = 0 or\nnot(../../../ecs:spatial_subset_flag=''true'') or\n(not(number(ecs:NZone)
+        &gt;= 15 and number(ecs:NZone) &lt;= 44) or ((number(ecs:NZone) &gt;= 15 and
+        number(ecs:NZone) &lt;= 44) and\n(number(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon)
+        &lt;\nnumber(//ecs:HEG-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon))))</xpath><alert>Invalid
+        spatial subset specified; the zone must encompass the specified bounding box.</alert></constraint></constraints><help>Unitless</help></input><output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 16 and ecs:NZone
+        &lt;= 60\" type=\"xsd:string\" value=\"((number(ecs:NZone) * 6) - 183) - 45\"/><output
+        label=\"Minimum supported longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone
+        &lt;= 15\" type=\"xsd:string\" value=\"-180\"/><output label=\"Maximum supported
+        longitude\" relevant=\"ecs:NZone &gt;= 1 and ecs:NZone &lt;= 45\" type=\"xsd:string\"
+        value=\"((number(ecs:NZone) * 6) - 183) + 45\"/><output label=\"Maximum supported
+        longitude\" relevant=\"ecs:NZone &gt;= 46 and ecs:NZone &lt;= 60\" type=\"xsd:string\"
+        value=\"180\"/></group></group><group id=\"HEG-optionalSettings\" label=\"Advanced
+        Settings (Optional)\" ref=\"ecs:HEG-request\" relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG''
+        \"><output label=\"\" ref=\"../ecs:ADVANCED_OPT_MSG\" relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and (not(&#10;                  contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',ecs:FORMAT/ecs:value/text(),'',''))))\"
+        type=\"xsd:string\"/><select id=\"HEG-GEOGRAPHIC-resampleselect\" label=\"Resample
+        Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC''
+        and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-GEOGRAPHIC-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''GEOGRAPHIC''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:GEOGRAPHIC-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-UNIVERSAL_TRANSVERSE_MERCATOR-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UNIVERSAL
+        TRANSVERSE MERCATOR'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:UNIVERSAL_TRANSVERSE_MERCATOR-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-STATE_PLANE-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:STATE_PLANE-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''STATE
+        PLANE'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-STATE_PLANE-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:STATE_PLANE-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''STATE
+        PLANE'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:STATE_PLANE-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-ALBERS-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS''
+        and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-ALBERS-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''ALBERS''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:ALBERS-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-LAMBERT_CONFORMAL_CONIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_CONFORMAL_CONIC-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        CONFORMAL CONIC'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-LAMBERT_CONFORMAL_CONIC-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_CONFORMAL_CONIC-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        CONFORMAL CONIC'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_CONFORMAL_CONIC-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-MERCATOR-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:MERCATOR-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''MERCATOR''
+        and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-MERCATOR-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:MERCATOR-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''MERCATOR''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:MERCATOR-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-POLAR_STEREOGRAPHIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-POLAR_STEREOGRAPHIC-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''POLAR
+        STEREOGRAPHIC'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:POLAR_STEREOGRAPHIC-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-TRANSVERSE_MERCATOR-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:TRANSVERSE_MERCATOR-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''TRANSVERSE
+        MERCATOR'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-TRANSVERSE_MERCATOR-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:TRANSVERSE_MERCATOR-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''TRANSVERSE
+        MERCATOR'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:TRANSVERSE_MERCATOR-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-LAMBERT_AZIMUTHAL-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-LAMBERT_AZIMUTHAL-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''LAMBERT
+        AZIMUTHAL'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:LAMBERT_AZIMUTHAL-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-SINUSOIDAL-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL''
+        and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-SINUSOIDAL-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SINUSOIDAL''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:SINUSOIDAL-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-CYLINDRICAL_EQUAL_AREA-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:CYLINDRICAL_EQUAL_AREA-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''CYLINDRICAL
+        EQUAL AREA'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-CYLINDRICAL_EQUAL_AREA-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:CYLINDRICAL_EQUAL_AREA-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''CYLINDRICAL
+        EQUAL AREA'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:CYLINDRICAL_EQUAL_AREA-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-NO_CHANGE-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:NO_CHANGE-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''&amp;''
+        and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-NO_CHANGE-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:NO_CHANGE-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''&amp;''
+        and ecs:advanced_file_options/ecs:RESAMPLE/ecs:NO_CHANGE-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-NORTH_POLAR_STEREOGRAPHIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:NORTH_POLAR_STEREOGRAPHIC-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''NORTH
+        POLAR STEREOGRAPHIC'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-NORTH_POLAR_STEREOGRAPHIC-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:NORTH_POLAR_STEREOGRAPHIC-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''NORTH
+        POLAR STEREOGRAPHIC'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:NORTH_POLAR_STEREOGRAPHIC-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-SOUTH_POLAR_STEREOGRAPHIC-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SOUTH_POLAR_STEREOGRAPHIC-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SOUTH
+        POLAR STEREOGRAPHIC'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-SOUTH_POLAR_STEREOGRAPHIC-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:SOUTH_POLAR_STEREOGRAPHIC-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''SOUTH
+        POLAR STEREOGRAPHIC'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:SOUTH_POLAR_STEREOGRAPHIC-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-UTM_NORTHERN_HEMISPHERE-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UTM_NORTHERN_HEMISPHERE-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-UTM_NORTHERN_HEMISPHERE-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UTM_NORTHERN_HEMISPHERE-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UTM
+        NORTHERN HEMISPHERE'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:UTM_NORTHERN_HEMISPHERE-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-UTM_SOUTHERN_HEMISPHERE-resampleselect\"
+        label=\"Resample Dimension\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UTM_SOUTHERN_HEMISPHERE-dimension\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UTM
+        SOUTHERN HEMISPHERE'' and&#10;                                       contains('',HDF-EOS,HDF-EOS5,netCDF,GdalNetCDF,NC_ASCII,NetCDF4-CF,ASCII,KML,,NetCDF-3,GeoTIFF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'',''))\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"Percent\" value=\"PERCENT\"/><item
+        label=\"No Resampling\" value=\"&amp;\"/></select><range end=\"200.0\" id=\"HEG-UTM_SOUTHERN_HEMISPHERE-PERCENT-range\"
+        label=\"Percent\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE/ecs:UTM_SOUTHERN_HEMISPHERE-PERCENT-value\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:projection_options/ecs:PROJECTION/ecs:value=''UTM
+        SOUTHERN HEMISPHERE'' and ecs:advanced_file_options/ecs:RESAMPLE/ecs:UTM_SOUTHERN_HEMISPHERE-dimension/ecs:value=''PERCENT''
+        \" start=\"25.0\" step=\"1\" type=\"xs:double\"/><select id=\"HEG-interpolselect\"
+        label=\"Interpolation Method\" multiple=\"false\" open=\"false\" ref=\"ecs:advanced_file_options/ecs:INTERPOLATION\"
+        relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG'' and (ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;''
+        or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\" type=\"xsd:string\"
+        valueElementName=\"value\"><item label=\"Nearest Neighbor\" value=\"NN\"/><item
+        label=\"Cubic Convolution\" value=\"CC\"/><item label=\"Bilinear\" value=\"BI\"/></select><output
+        label=\"\" ref=\"../ecs:INTRPL_MSG_1\" relevant=\"../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ((ecs:projection_options/ecs:PROJECTION/ecs:value!=''&amp;'' and not(contains('',,'',concat('','',ecs:FORMAT/ecs:value/text(),'',''))))
+        or ecs:advanced_file_options/ecs:RESAMPLE//ecs:value!=''&amp;'')\" type=\"xsd:string\"/></group><group
+        label=\"\" ref=\"ecs:HEG-request\" relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG''\"><group
+        label=\"\" ref=\"ecs:advanced_file_options/ecs:RESAMPLE\" relevant=\"(ecs:advanced_file_options/ecs:RESAMPLE/*[name()=''ecs:NO_CHANGE-dimension''
+        or name()=''ecs:DEFAULT-dimension'']/ecs:value[text()!=''&amp;''] and //ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value/text()=''&amp;'')
+        or&#10;                  ecs:advanced_file_options/ecs:RESAMPLE/*[name()=concat(''ecs:'',translate(//ecs:HEG-request/ecs:projection_options/ecs:PROJECTION/ecs:value/text(),''
+        :/()#+-'',''________''),''-dimension'')]/ecs:value[text()!=''&amp;'']\"><output
+        label=\"\" ref=\"../../../ecs:NULL_MSG\" type=\"xsd:string\"/></group></group></group></ui></form>","id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","last_update":"2017-11-14T16:58:35Z","name":"MOD13Q1.6
+        Order","scope":"PROVIDER"}}'
+    http_version: 
 de4ffe8281fb8e51954b2cf9771e0e903f5bb460:
   response:
     status:

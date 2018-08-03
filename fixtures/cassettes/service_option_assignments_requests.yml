@@ -260,4 +260,17 @@ http_interactions:
       - edsc
   recorded_at: Tue, 24 Apr 2018 17:27:05 GMT
   digest: d2c7dcc695b9fef7365f62b6d82cb49d24b1c5de
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1200240776-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 03 Aug 2018 01:10:06 GMT
+  digest: 7c33771c45504b408cbdbecc519e2e8e9596a992
 recorded_with: VCR 2.6.0

@@ -2931,6 +2931,23 @@ http_interactions:
   digest: c6e40c1208277762bc6de643175c346ab4cfdd35
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200240776-DEV08&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Fri, 03 Aug 2018 13:12:05 GMT
+  digest: 265273fc8e746363f0f78063b965b277c727f3e5
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C24931-LAADS&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
     body:
       encoding: US-ASCII
@@ -2965,6 +2982,25 @@ http_interactions:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Thu, 12 Jul 2018 14:32:32 GMT
   digest: 0635550223ffc2541fa3ddbfd23618215278e3ab
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id=C1200240776-DEV08&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Fri, 03 Aug 2018 13:12:12 GMT
+  digest: 916250c8f710e0432ba06668a675352001c58b83
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=AST_L1A%2A&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score
