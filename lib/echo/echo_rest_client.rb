@@ -1,31 +1,31 @@
 module Echo
   class EchoRestClient < BaseClient
     def get_echo_availability
-      get("availability.json")
+      get('availability.json')
     end
 
     def create_token(username, password)
       auth = {
-          username: username,
-          password: password,
-          client_id: client_id,
-          user_ip_address: '127.0.0.1'
+        username: username,
+        password: password,
+        client_id: client_id,
+        user_ip_address: '127.0.0.1'
       }
-      post("tokens.json", {token: auth}.to_json)
+      post('tokens.json', { token: auth }.to_json)
     end
 
     def get_services(token)
-      #tags = get('rest/tags', {token: token, :tag_group_id => 'DATASET'})
-      #tags = get('rest/tag_groups')
-      #tags = get('rest/tags/', {token: token, :tag_group_id => 'SERVICE-INTERFACE'})
-      #tags = get('rest/tags')
-      #tags = get('rest/service_entries', {tag_group: 'SERVICE-INTERFACE'})
-      #tags = get('rest/service_entries/EA74C60A-CB9F-2659-E558-72F76E1EB236/service_entry_tags')
+      # tags = get('rest/tags', {token: token, :tag_group_id => 'DATASET'})
+      # tags = get('rest/tag_groups')
+      # tags = get('rest/tags/', {token: token, :tag_group_id => 'SERVICE-INTERFACE'})
+      # tags = get('rest/tags')
+      # tags = get('rest/service_entries', {tag_group: 'SERVICE-INTERFACE'})
+      # tags = get('rest/service_entries/EA74C60A-CB9F-2659-E558-72F76E1EB236/service_entry_tags')
 
-      #puts JSON.pretty_generate(tags.body)
+      # puts JSON.pretty_generate(tags.body)
 
-      #service_entries = Array.wrap(ServiceEntry.all(:params => {:tag_group => "DATASET"}))
-      puts "TODO: EchoClient#get_services(token)"
+      # service_entries = Array.wrap(ServiceEntry.all(:params => {:tag_group => "DATASET"}))
+      puts 'TODO: EchoClient#get_services(token)'
     end
 
     def get_data_quality_summary(catalog_item_id, token = nil)
@@ -60,8 +60,8 @@ module Echo
       if response.status == 404
         response = update_preferences(user_id, { preferences: {} }, token)
       end
-      
-      if response.success? && !general_contact_valid?(response.body['preferences']['general_contact'])
+
+      if response.success?
         user_response = get_echo_user(user_id, token)
         echo_user = user_response.body['user']
 
@@ -71,24 +71,22 @@ module Echo
         # URS doesn't have fields like phones and address. However, these are required when submitting orders in ECHO.
         # Hence the place holders.
         contact = {
-          id: echo_user['id'],
-          role: 'Order Contact',
           first_name: urs_user['first_name'],
           last_name: urs_user['last_name'],
           email: urs_user['email_address'],
           organization: urs_user['organization'],
           address: {
-            us_format: urs_user['country'] == 'United States',
             country: urs_user['country']
           },
-          phones: [{ number: '0000000000', phone_number_type: 'BUSINESS' }]
+          phones: { '0': { number: '0000000000', phone_number_type: 'BUSINESS' } },
+          role: 'Order Contact'
         }
 
         updated_user_preferences = {
           preferences: {
-            general_contact: contact
-          },
-          order_notification_level: response.body['preferences']['order_notification_level']
+            general_contact: contact,
+            order_notification_level: response.body['preferences']['order_notification_level']
+          }
         }
         response = update_preferences(user_id, updated_user_preferences, token)
       end
