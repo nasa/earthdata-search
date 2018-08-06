@@ -103,6 +103,7 @@ ns.Project = do (ko,
       @serviceOptions.dispose()
 
     _computeIsLoadingComplete: ->
+      # Determine whether we have recieved granule data, computed size, and access method for the collection
       return true if !@loadingServiceType() && @granuleAccessOptions() && @collection.total_size() && @collection.unit()
       false
 
@@ -125,6 +126,7 @@ ns.Project = do (ko,
 
         # Done loading
         @loadingServiceType(false)
+
       retry = => @_loadGranuleAccessOptions
 
       dataSource.loadAccessOptions(success, retry)
@@ -371,6 +373,7 @@ ns.Project = do (ko,
       @_pending = ko.observable(null)
 
     _computeIsLoadingComplete: ->
+      # Determines whether we have recieved granule data, computed size, and access methods for each collection in the project
       if @collections?().length > 0
         for collection in @collections()
           if !collection.isLoadingComplete()

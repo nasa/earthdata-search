@@ -213,7 +213,7 @@ $card-background: rgba(235,235,235,1);
 
           .collection-capability-loading-granules {
             margin-top: 1.65em;
-            margin-bottom: 0.75em;
+            margin-bottom: 0.7em;
             height: 1.35em;
             width: 10em;
 
@@ -224,7 +224,7 @@ $card-background: rgba(235,235,235,1);
 
           .collection-capability-loading-details {
             width: 70%;
-            height: 0.75em;
+            height: 0.65em;
             margin-bottom: 0;
 
             .loading-content-inner {
@@ -300,6 +300,22 @@ $card-background: rgba(235,235,235,1);
     ul {
       padding: 0;
     }
+  }
+
+  .save-dropdown-input-container {
+    width: 257px;
+    padding: 5px;
+    top: 30px;
+    right: -3px;
+  }
+
+  .save-dropdown-form {
+    display: flex;
+  }
+
+  .save-dropdown-input {
+    flex-grow: 1;
+    margin-right: 5px;
   }
 
   .save-icon {

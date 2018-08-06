@@ -15,7 +15,7 @@ $color_loading_dark: #eff1f1;
   height: inherit;
   @include linear-gradient(90deg, $color_loading_dark 30%, $color_loading_light 50%, $color_loading_dark 70%);
   background-size: 400%;
-  animation: loading 1.2s ease-in-out infinite;
+  animation: loading 1.6s ease-in-out infinite;
 }
 
 @keyframes loading {
