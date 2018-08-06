@@ -160,6 +160,7 @@ do (ko, $=jQuery) ->
           ruler.remove()
           input.width newWidth + 1
 
+        # Some helper functions
         element.isClickOutside = (event) ->
           !input.is(event.target) && input.has(event.target).length == 0
 
@@ -169,6 +170,7 @@ do (ko, $=jQuery) ->
           else
             formControls.addClass 'visually-hidden'
 
+        # This is the main function to kick everything off and render based on the editing state
         element.on 'edit', (e, editing) ->
           textElement.text value.initialValue()
           input.val value.initialValue()
@@ -181,17 +183,21 @@ do (ko, $=jQuery) ->
             textWrapper.addClass 'is-active'
             editWrapper.removeClass 'is-active'
 
+        # A custom event that fires when the form has been submitted
         element.on 'submit', () ->
           editButton.hide()
 
+        # Custom event to be triggered on successful submit
         element.on 'success', () ->
           element.trigger 'edit', [false, value.initialValue()]
           setTimeout ->
             editButton.fadeIn()
           , 2500
 
+        # Register all of the events immediately
         element.registerEvents()
 
+        # Kills all of the events when knockout disposes of the bound element
         ko.utils.domNodeDisposal.addDisposeCallback element, ->
           element.unbindEvents()
 
@@ -200,4 +206,6 @@ do (ko, $=jQuery) ->
         element = $(element)
         value = valueAccessor()
 
+        # Trigger the edit event based on the current state, defaulting to false if
+        # no state is set on the bound element
         element.trigger 'edit', [ value.editing = false, value.initialValue() ]
