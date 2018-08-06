@@ -1615,7 +1615,7 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
   recorded_at: Thu, 01 Mar 2018 16:43:50 GMT
-  digest: 0816bed2cb148947e49ec33e48331d22a5532930
+  digest: '0816bed2cb148947e49ec33e48331d22a5532930'
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere&science_keywords_h%5B1%5D%5Btopic%5D=Cryosphere&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1675,7 +1675,7 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
   recorded_at: Thu, 01 Mar 2018 16:53:54 GMT
-  digest: 071038787f48d64a34cfaad88791e29423d3c986
+  digest: '071038787f48d64a34cfaad88791e29423d3c986'
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Earth+Observation+Satellites&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&include_has_granules=true&include_granule_counts=true
@@ -2880,6 +2880,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 01 Mar 2018 16:49:30 GMT
   digest: 0d1d3cda481bfdc5316c3577c762862e822ff248
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?polygon=102%2C0%2C103%2C1%2C104%2C0%2C105%2C1%2C102%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 01 Jun 2018 02:20:53 GMT
+  digest: d0bee4a502ac431d21b239fde0de317ad170defe
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=%2C2014-02-20T16%3A30%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true

@@ -6,7 +6,7 @@ describe "Granule search filters by additional attributes", reset: false do
   xit "searching AST_L1T by CorrectionAchieved - additional attributes are no longer available"
   <<-eos
   before :all do
-    page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
+    page.current_window.resize_to(2000, 3000) # Avoid having to scroll to click
 
     # No labs param here. The additional attributes should show up by default for AST_L1T.
     load_page :search, project: ['C1000000320-LPDAAC_ECS'], view: :project

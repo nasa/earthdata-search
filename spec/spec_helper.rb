@@ -151,7 +151,7 @@ RSpec.configure do |config|
   config.before :all do
     file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
-    Capybara.current_session.driver.resize_window(1280, 1024)
+    Capybara.current_session.current_window.resize_to(1280, 1024)
   end
 
   config.after :all do

@@ -191,20 +191,20 @@ describe 'OPeNDAP Retrieval', reset: false do
   #   end
 
   #   it 'provides a URL describing metadata about the collection\'s parameters' do
-  #     within_window('Earthdata Search - Download Granule Links') do
+  #     within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
   #       expect(page).to have_css('a[href*=".nc.info"]')
   #     end
   #   end
 
   #   it 'provides links the data in the selected file format' do
-  #     within_window('Earthdata Search - Download Granule Links') do
+  #     within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
   #       expect(page).to have_css('a[href*=".nc.ascii?"]')
   #       expect(page).to have_css('a[href*="http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo"]')
   #     end
   #   end
 
   #   it 'subsets the data to the selected parameters' do
-  #     within_window('Earthdata Search - Download Granule Links') do
+  #     within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
   #       expect(page).to have_css('a[href*="lat_bnds"]')
   #       expect(page).to have_css('a[href*="time_bnds"]')
   #       expect(page).to have_css('a[href*="tos"]')
@@ -213,7 +213,7 @@ describe 'OPeNDAP Retrieval', reset: false do
   #   end
 
   #   it 'applies spatial subsetting' do
-  #     within_window('Earthdata Search - Download Granule Links') do
+  #     within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
   #       expect(page).to have_css('a[href*="tos[0:102][90:92][180:182]"]')
   #     end
   #   end
@@ -239,13 +239,13 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'provides a URL describing metadata about the collection\'s parameters' do
-      within_window('Earthdata Search - Download Granule Links') do
+      within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
         expect(page).to have_css('a[href*=".he5.info"]')
       end
     end
 
     it 'provides links the data in the selected file format' do
-      within_window('Earthdata Search - Download Granule Links') do
+      within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
         expect(page).to have_css('a[href*=".he5.ascii?"]')
         expect(page).to have_css('a[href*="https://opendap.larc.nasa.gov/opendap"]')
         expect(page).to have_no_content('a[href*="ftp://l5eil01.larc.nasa.gov/MOPITT/MOP03J.006"]')
@@ -253,14 +253,14 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'subsets the data to the selected parameters' do
-      within_window('Earthdata Search - Download Granule Links') do
+      within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
         expect(page).to have_css('a[href*="SurfacePressureNight"]')
         expect(page).to have_no_css('a[href*="APrioriCOMixingRatioProfileDay"]')
       end
     end
 
     it 'applies spatial subsetting' do
-      within_window('Earthdata Search - Download Granule Links') do
+      within_window(->{ page.title == 'Earthdata Search - Download Granule Links'}) do
         expect(page).to have_css('a[href*="SurfacePressureNight[180:182][90:92]"]')
         expect(page).to have_css('a[href*="Latitude[90:92],Longitude[180:182]"]')
       end
