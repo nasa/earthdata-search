@@ -26,9 +26,15 @@ do (document
 
   # flash the green save icon
   $(document).on 'edsc.saved', ->
-    check = $('.save-success')
-    check.show()
-    setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
+    success = $('.save-success')
+    pending = $('.save-pending')
+    pending.hide()
+    success.show()
+    setTimeout () ->
+      setTimeout () ->
+        success.fadeOut()
+      , config.defaultAnimationDurationMs
+    , 1000
 
   $(document).on 'focusin.focushack', '*[tabIndex]', ->
     $(this).addClass('has-focus')

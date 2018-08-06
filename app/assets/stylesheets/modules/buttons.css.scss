@@ -134,6 +134,11 @@
   outline: none;
   color: #fff;
 
+  &:focus {
+    outline: 1px solid rgba(#bbb, 0.8);
+    outline-offset: 2px;
+  }
+
   &:hover, &:focus {
     text-decoration: none;
   }

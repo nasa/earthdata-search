@@ -1,0 +1,26 @@
+.editable-text-text-wrapper,
+.editable-text-edit-wrapper {
+  display: none;
+
+  &.is-active {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.editable-text-form-controls {
+  display: flex;
+  align-items: center;
+}
+
+.editable-text-content {
+  display: inline-block;
+}
+
+.editable-text-input {
+  margin-right: 0.5em;
+}
+
+.editable-text-button {
+  margin-right: 0.5em;
+}

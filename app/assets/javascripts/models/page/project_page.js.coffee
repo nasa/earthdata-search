@@ -45,7 +45,7 @@ ns.ProjectPage = do (ko,
       @bindingsLoaded = ko.observable(false)
 
       @preferences = new PreferencesModel()
-      @workspaceName = ko.observable(null)
+      @workspaceName = ko.observable()
       @workspaceNameField = ko.observable(null)
       @projectSummary = ko.computed(@_computeProjectSummary, this, deferEvaluation: true)
       @isLoaded = ko.observable(false)
@@ -63,15 +63,25 @@ ns.ProjectPage = do (ko,
       @spatialError = ko.computed(@_computeSpatialError)
       
       $(window).on 'edsc.save_workspace', (e) =>
+        pending = $('.save-pending')
+        pending.show()
+        $('.project-title').trigger 'submit'
         currentParams = @project.serialized()
         urlUtil.saveState('/search/collections', currentParams, true, @workspaceNameField())
         @workspaceName(@workspaceNameField())
-        $('.save-dropdown').removeClass('open')
+
+      $(window).on 'edsc.saved', ->
+        $('.project-title').trigger 'success'
 
       setTimeout((=>
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
-   
+
+      @workspaceName.subscribe((value) =>
+        if !value
+          @workspaceName('Untitled Project')
+      )
+
     showType: =>
       if @query.serialize().bounding_box
         return "Rectangle"

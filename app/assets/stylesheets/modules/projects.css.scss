@@ -135,7 +135,6 @@ $card-background: rgba(235,235,235,1);
     h2 {
       font-size: 1.8em;
       font-weight: 200;
-      max-width: calc(100% - 380px);
       display: inline-block;
       vertical-align: middle;
     }
@@ -282,8 +281,21 @@ $card-background: rgba(235,235,235,1);
     height: 65px;
   }
 
-  i.save-success, i.after-save {
+  .save-pending,
+  .save-success,
+  .after-save {
     display: none;
+  }
+
+  .save-pending {
+    color: #b3b3b3;
+
+    .fa-spinner {
+      @include animation(spinner 2s linear infinite);
+    }
+  }
+
+  .save-success {
     color: #2ecc71;
   }
 
@@ -327,6 +339,64 @@ $card-background: rgba(235,235,235,1);
     background: #fff;
     border-bottom: 1px solid #ccc;
     vertical-align: top;
+  }
+
+  .project-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .project-title {
+
+    .editable-text-wrapper {
+      margin-right: 1em;
+    }
+
+    .editable-text-content {
+      margin-bottom: 0;
+      margin-right: 0.25em;
+      border-bottom: 2px solid transparent;
+
+      &:hover {
+        border-bottom: 2px solid #ededed;
+      }
+    }
+
+    .editable-text-input {
+      min-width: 1em;
+      max-width: 10em;
+      padding: 0;
+      font-size: 1.8em;
+      font-weight: 200;
+      border: none;
+      border-bottom: 2px solid $ocean-blue;
+    }
+
+    .editable-text-button-edit {
+      width: 2em;
+      height: 2em;
+      background-color: #fff;
+      border-radius: 50%;
+      color: #ababab;
+      background-image: none;
+      text-shadow: none;
+      text-align: center;
+
+      &:hover {
+        background-color: #ececec;
+        color: #949393;
+      }
+
+      .fa-pencil {
+        position: relative;
+        top: -3px;
+        left: -2px;
+      }
+    }
+
+    .editable-text-button-cancel {
+      font-weight: normal;
+    }
   }
 
   /* Project Modals */
@@ -565,5 +635,14 @@ $card-background: rgba(235,235,235,1);
     color: darken($light-grey, 20%);
     margin: 0 auto;
     padding-top: 3em;
+  }
+}
+
+@include keyframes(spinner) {
+  0% {
+    @include transform(rotate(0deg));
+  }
+  100% {
+    @include transform(rotate(360deg));
   }
 }

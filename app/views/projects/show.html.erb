@@ -57,8 +57,33 @@
   </section>
   <section class="project-collections">
     <div class="project-title-container">
-      <h2 class="project-panel"><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
-      <%= render partial: 'shared/workspace_name' %>
+      <div class="project-header project-panel">
+        <div class="project-title" data-bind="editableTextField: { initialValue: workspaceName, submitCallback: function(){$(window).trigger('edsc.save_workspace')}}">
+          <div class="editable-text-wrapper">
+            <div class="editable-text-text-wrapper">
+              <h2 class="editable-text-content"></h2>
+              <button type="button" class="editable-text-button editable-text-button-edit" title="Edit Project Title">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </div>
+            <form class="editable-text-edit-wrapper">
+              <input type="text" class="editable-text-input" data-bind='value: workspaceNameField'>
+              <div class="editable-text-form-controls visually-hidden">
+                <button type="submit" class="button button-small editable-text-button editable-text-button-submit" title="Submit">Submit</button>
+                <button type="button" class="button-outline button-small editable-text-button editable-text-button-cancel" title="Cancel">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="project-status">
+          <div class="save-pending">
+            <i class="fa fa-spinner"></i> Saving project...
+          </div>
+          <div class="save-success">
+            <i class="fa fa-check-circle"></i> Success!
+          </div>
+        </div>
+      </div>
     </div>
     <div class="project-stats">
       <ul class="project-panel" data-bind="fadeVisible: isLoaded">
