@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Timeline tooltip", reset: false, pending_updates: true do
   before :all do
     Capybara.reset_sessions!
-    page.driver.resize_window(1280, 1024)
+    page.current_window.resize_to(1280, 1024)
     load_page :search, project: ['C179003030-ORNL_DAAC'], view: :project
     pan_timeline(-16.days)
     wait_for_xhr

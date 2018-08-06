@@ -3,13 +3,13 @@ require 'spec_helper'
 describe 'Map Zooming', reset: false, ci_only: true do
   it 'is currently skipped due to zoom issues on os x'
   before :all do
-    page.driver.resize_window(1680, 1050) # Default capybara window size
+    page.current_window.resize_to(1680, 1050) # Default capybara window size
     Capybara.reset_sessions!
     load_page :search
   end
 
   after :all do
-    page.driver.resize_window(1280, 1024)
+    page.current_window.resize_to(1280, 1024)
   end
 
   context 'when zooming with the zoom buttons' do
