@@ -5,7 +5,7 @@ describe "Granule search filters", reset: false do
     before_granule_count = 0
 
     before :all do
-      page.driver.resize_window(2000, 3000)
+      page.current_window.resize_to(2000, 3000)
     end
 
     before(:each) do
