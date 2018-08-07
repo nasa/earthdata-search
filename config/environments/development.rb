@@ -32,7 +32,7 @@ EarthdataSearchClient::Application.configure do
   # Analytics
   # Uncomment the config.analytics_id to enable the development Google Analytics tracking
   # config.analytics_id = 'UA-50960810-4'
-  config.tag_manager_id = 'GTM-WNP7MLF'
+  # config.tag_manager_id = 'GTM-WNP7MLF'
 
   config.logo_name = "DEV"
   config.env_name = "[DEV]"
