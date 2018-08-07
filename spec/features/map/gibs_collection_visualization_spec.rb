@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "Collection GIBS visualizations", reset: false do
+describe "Collection GIBS visualizations", reset: false, pending_updates: true do
   extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
