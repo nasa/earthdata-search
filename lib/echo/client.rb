@@ -1,5 +1,7 @@
 module Echo
   class Client
+    attr_reader :config
+
     def self.client_for_environment(env, service_configs)
       service_config = service_configs['earthdata'][env]
       urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
@@ -10,15 +12,15 @@ module Echo
       @config = service_config
       clients = []
       clients << CmrClient.new(@config['cmr_root'], urs_client_id)
-      clients << EchoRestClient.new(ENV["echo_rest_url_#{Rails.env.to_s}"] || @config['echo_rest_root'], urs_client_id)
-      clients << EchoCatalogRestClient.new(ENV["echo_catalog_rest_url_#{Rails.env.to_s}"] || @config['echo_catalog_rest_root'], urs_client_id)
+      clients << EchoRestClient.new(ENV["echo_rest_url_#{Rails.env}"] || @config['echo_rest_root'], urs_client_id)
+      clients << EchoCatalogRestClient.new(ENV["echo_catalog_rest_url_#{Rails.env}"] || @config['echo_catalog_rest_root'], urs_client_id)
       clients << UrsClient.new(@config['urs_root'], urs_client_id)
-      clients << BrowseScalerClient.new(ENV["browse_scaler_url_#{Rails.env.to_s}"] || @config['browse_scaler_root'], urs_client_id)
+      clients << BrowseScalerClient.new(ENV["browse_scaler_url_#{Rails.env}"] || @config['browse_scaler_root'], urs_client_id)
       @clients = clients
     end
 
     def method_missing(method_name, *arguments, &block)
-      client = @clients.find {|c| c.respond_to?(method_name)}
+      client = @clients.find { |c| c.respond_to?(method_name) }
       if client
         client.send(method_name, *arguments, &block)
       else
@@ -27,7 +29,7 @@ module Echo
     end
 
     def respond_to?(method_name, include_private = false)
-      @clients.any? {|c| c.respond_to?(method_name, include_private)} || super
+      @clients.any? { |c| c.respond_to?(method_name, include_private) } || super
     end
   end
 end
