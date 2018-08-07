@@ -404,7 +404,7 @@ http_interactions:
       Echo-Token:
       - edsc
   recorded_at: Fri, 23 Feb 2018 18:08:21 GMT
-  digest: 09f61ac07cf398a2daf5651a3d01e0bcee4e980b
+  digest: '09f61ac07cf398a2daf5651a3d01e0bcee4e980b'
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -450,4 +450,34 @@ http_interactions:
       - edsc
   recorded_at: Fri, 23 Feb 2018 17:57:42 GMT
   digest: c7488a3a5684cbdced5151e9837454f08d0e6a7c
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G35404-LAADS&catalog_item_id%5B%5D=G35401-LAADS&catalog_item_id%5B%5D=G35503-LAADS&catalog_item_id%5B%5D=G35479-LAADS&catalog_item_id%5B%5D=G35498-LAADS&catalog_item_id%5B%5D=G35476-LAADS&catalog_item_id%5B%5D=G35458-LAADS&catalog_item_id%5B%5D=G35485-LAADS&catalog_item_id%5B%5D=G35468-LAADS&catalog_item_id%5B%5D=G34839-LAADS&catalog_item_id%5B%5D=G35091-LAADS&catalog_item_id%5B%5D=G35099-LAADS&catalog_item_id%5B%5D=G34978-LAADS&catalog_item_id%5B%5D=G34896-LAADS&catalog_item_id%5B%5D=G34981-LAADS&catalog_item_id%5B%5D=G34871-LAADS&catalog_item_id%5B%5D=G34883-LAADS&catalog_item_id%5B%5D=G34888-LAADS&catalog_item_id%5B%5D=G35086-LAADS&catalog_item_id%5B%5D=G34994-LAADS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - 98ada9ef038031f48a251b359ac6835f990e128a80549f4790909fd6c3dc529c:arNJRV0WQXEuU_ZdSHGp3Q
+  recorded_at: Tue, 07 Aug 2018 18:53:18 GMT
+  digest: 0f8a020dc1e84cb63b23ebdba0c11a643f972e82
+- request:
+    method: post
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1220957487-ORNL_DAAC&catalog_item_id%5B%5D=G1220957488-ORNL_DAAC&catalog_item_id%5B%5D=G1220957489-ORNL_DAAC&catalog_item_id%5B%5D=G1220957490-ORNL_DAAC&catalog_item_id%5B%5D=G1220957491-ORNL_DAAC&catalog_item_id%5B%5D=G1220957492-ORNL_DAAC&catalog_item_id%5B%5D=G1220957493-ORNL_DAAC&catalog_item_id%5B%5D=G1220957494-ORNL_DAAC&catalog_item_id%5B%5D=G1220957495-ORNL_DAAC&catalog_item_id%5B%5D=G1220957496-ORNL_DAAC&catalog_item_id%5B%5D=G1220957497-ORNL_DAAC&catalog_item_id%5B%5D=G1220957498-ORNL_DAAC&catalog_item_id%5B%5D=G1220957499-ORNL_DAAC&catalog_item_id%5B%5D=G1220957500-ORNL_DAAC&catalog_item_id%5B%5D=G1220957501-ORNL_DAAC&catalog_item_id%5B%5D=G1220957502-ORNL_DAAC&catalog_item_id%5B%5D=G1220957503-ORNL_DAAC&catalog_item_id%5B%5D=G1220957504-ORNL_DAAC&catalog_item_id%5B%5D=G1220957505-ORNL_DAAC&catalog_item_id%5B%5D=G1220957506-ORNL_DAAC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - a3fdbf251cc63cbf71dd985d487cd4afe3c90f2ba70b6d0bfdd1043d8ab0900c:iGoL4SxnweOcSyBxA5eeUA
+  recorded_at: Tue, 07 Aug 2018 18:52:39 GMT
+  digest: c462e8866ff7371fbe3a1642741f6a59570b31e6
 recorded_with: VCR 2.6.0

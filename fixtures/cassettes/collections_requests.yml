@@ -3336,6 +3336,40 @@ http_interactions:
   digest: 1fd35d32bf7df6fbef9f124bcb2ad8afd5d51e45
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C24933-LAADS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - 98ada9ef038031f48a251b359ac6835f990e128a80549f4790909fd6c3dc529c:arNJRV0WQXEuU_ZdSHGp3Q
+  recorded_at: Tue, 07 Aug 2018 18:53:14 GMT
+  digest: b825991b53a3200724b84f36e3398afb755ba7b2
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id=C24933-LAADS&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - 98ada9ef038031f48a251b359ac6835f990e128a80549f4790909fd6c3dc529c:arNJRV0WQXEuU_ZdSHGp3Q
+  recorded_at: Tue, 07 Aug 2018 18:53:20 GMT
+  digest: 90098a9d60ef8ca13eae362319d5cc588849d917
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=v2&bounding_box=-118.453949%2C14.532866%2C-86.703392%2C32.716759&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3664,6 +3698,40 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 01 Mar 2018 16:46:32 GMT
   digest: a3e7eb61b4ac24758ca81a66fed0cb3f70347fea
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C447308-ORNL_DAAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - a3fdbf251cc63cbf71dd985d487cd4afe3c90f2ba70b6d0bfdd1043d8ab0900c:iGoL4SxnweOcSyBxA5eeUA
+  recorded_at: Tue, 07 Aug 2018 18:52:33 GMT
+  digest: 2d55618932ab37efe8e6d2a87883afec599f57cb
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?echo_collection_id=C447308-ORNL_DAAC&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - a3fdbf251cc63cbf71dd985d487cd4afe3c90f2ba70b6d0bfdd1043d8ab0900c:iGoL4SxnweOcSyBxA5eeUA
+  recorded_at: Tue, 07 Aug 2018 18:52:41 GMT
+  digest: e8a5a111d37f08decf2f9d998085223e44171730
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?facets_size%5Bplatform%5D=10000&include_facets=v2&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true

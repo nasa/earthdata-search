@@ -260,4 +260,30 @@ http_interactions:
       - edsc
   recorded_at: Fri, 23 Feb 2018 18:02:33 GMT
   digest: 653bc2ad6b69c3a9effca03833fad1d30538016b
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C24933-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - 98ada9ef038031f48a251b359ac6835f990e128a80549f4790909fd6c3dc529c:arNJRV0WQXEuU_ZdSHGp3Q
+  recorded_at: Tue, 07 Aug 2018 18:53:19 GMT
+  digest: c56e17f51be988afc1d0e053c9d0e5c593ba7b49
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C447308-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - a3fdbf251cc63cbf71dd985d487cd4afe3c90f2ba70b6d0bfdd1043d8ab0900c:iGoL4SxnweOcSyBxA5eeUA
+  recorded_at: Tue, 07 Aug 2018 18:52:41 GMT
+  digest: db54a0604ebc7bf4c99be44ff23c818fa1d9586c
 recorded_with: VCR 2.6.0
