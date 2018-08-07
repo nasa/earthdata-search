@@ -61,8 +61,10 @@
 </head>
 <body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page">
     <%# Google Tag Manager (noscript) %>
+    <% if Rails.configuration.respond_to?(:tag_manager_id) %>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNP7MLF"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <% end %>
     <%# End Google Tag Manager (noscript) %>
     <div id="earthdata-tophat2"></div>
     <div class="wrap">
