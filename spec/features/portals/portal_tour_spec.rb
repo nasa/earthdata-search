@@ -14,7 +14,7 @@ require "spec_helper"
 
 #      it "opens the full Earthdata Search app in a new tab with the tour started", acceptance: true do
 #        expect(page).to have_no_popover('Welcome to Earthdata Search')
-#        within_window "Earthdata Search" do
+#        within_window(-> { page.title == 'Earthdata Search' }) do
 #          expect(page).to have_popover('Welcome to Earthdata Search')
 #        end
 #      end

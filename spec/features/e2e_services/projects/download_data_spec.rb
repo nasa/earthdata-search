@@ -42,13 +42,13 @@ describe 'When viewing the project page', reset: false do
       end
 
       it 'displays granule urls returned from CMR' do
-        within_window('Earthdata Search - Download Granule Links') do
+        within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
           expect(page).to have_content('Collection granule links have been retrieved')
         end
       end
 
       it 'displays the correct number of links from CMR' do
-        within_window('Earthdata Search - Download Granule Links') do
+        within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
           expect(page).to have_css('#links li', count: @granule_count)
         end
       end
