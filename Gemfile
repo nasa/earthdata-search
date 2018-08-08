@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.5.1'
 
-gem 'rails', '~> 4.2.7.1'
+gem 'rails', '~> 4.2.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -25,7 +25,7 @@ group :test do
   gem 'capybara'
   # This is a revision which disables screenshots, one behind the disable-screenshots
   #  branch, which also tries (and fails) to avoid problems with concurrent test runs.
-  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
+  gem 'capybara-webkit'#, git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
   gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'

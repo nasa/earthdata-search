@@ -48,7 +48,7 @@ module Helpers
     end
 
     def within_last_window
-      within_window(page.driver.browser.get_window_handles.last) do
+      within_window(windows.last) do
         yield
       end
     end

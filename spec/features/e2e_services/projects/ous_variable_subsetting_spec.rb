@@ -59,33 +59,33 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
         end
 
         it 'displays OPeNDAP urls returned from OUS' do
-          within_window('Earthdata Search - Download Granule Links') do
+          within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             expect(page).to have_content('Collection granule links have been retrieved')
           end
         end
 
         it 'displays the correct number of links from OUS' do
-          within_window('Earthdata Search - Download Granule Links') do
+          within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             expect(page).to have_css('#links li', count: 6)
           end
         end
 
         it 'displays the selected variables correctly in the query params of each link' do
-          within_window('Earthdata Search - Download Granule Links') do
+          within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             first_link = find('#links li:nth-child(1)')
             expect(first_link).to have_content('EmisIR_A_max[0:1:3][79:1:90][209:1:220]')
           end
         end
 
         it 'displays the selected spatial subsetting data within the link' do
-          within_window('Earthdata Search - Download Granule Links') do
+          within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             first_link = find('#links li:nth-child(1)')
             expect(first_link).to have_content('Latitude[79:1:90],Longitude[209:1:220]')
           end
         end
 
         it 'returns the links with the correct format' do
-          within_window('Earthdata Search - Download Granule Links') do
+          within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             first_link = find('#links li:nth-child(1)')
             expect(first_link).to have_content('.hdf.nc?')
           end
