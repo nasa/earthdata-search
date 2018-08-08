@@ -743,6 +743,39 @@ d68c86e14d01c6a96a24f95614e28b1b2f22ed60:
       encoding: UTF-8
       string: '[{"order_information":{"catalog_item_ref":{"id":"G1406777796-LARC_ASDC","location":"http://cmr-search-prod.ngap.earthdata.nasa.gov:8080/search/concepts/G1406777796-LARC_ASDC","name":"G1406777796-LARC_ASDC"},"option_definition_refs":[{"id":"2D86BA00-9709-8CB9-CB0B-6A430894417A","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/option_definitions/2D86BA00-9709-8CB9-CB0B-6A430894417A","name":"ASDC_FTPPULL"}],"orderable":true,"price":0.0}}]'
     http_version: 
+82ef11035ca89ef3517ee16ff58ba9f4fa6648b6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 08 Aug 2018 14:36:20 GMT
+      etag:
+      - '"c48affc7b6de243baa22ecd0894c6773"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNDEzYTRmZTFlZTQ5NDYzNDFkMmQyOTAyMmI1MzhlOWY%3D--9e0b718b1207f728676a8c796eecd3b024d3646e;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '3.424000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '274'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"order_information":{"catalog_item_ref":{"id":["G1415641545-SEDAC","G1415644635-SEDAC"],"location":"http://cmr-search-prod.ngap.earthdata.nasa.gov:8080/search/concepts/G1415641545-SEDACG1415644635-SEDAC","name":["G1415641545-SEDAC","G1415644635-SEDAC"]},"orderable":false}}'
+    http_version: 
 f596aadabf86cbcbf29fa1b99ba292a81d78a206:
   response:
     status:

@@ -747,6 +747,6 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.9.2
-  recorded_at: Thu, 12 Jul 2018 11:35:52 GMT
+  recorded_at: Wed, 08 Aug 2018 15:55:40 GMT
   digest: c4bdaee98ebbd8ac715deaafd3b1275eb475566c
 recorded_with: VCR 2.6.0
