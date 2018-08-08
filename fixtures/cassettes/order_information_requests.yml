@@ -12,9 +12,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:36:57 GMT
-  digest: 4225ef44baf9df5101b8c58b906485481b8a666f
+  digest: 88d72c362f18ebadd0665452ca6791545cf91b46
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -27,9 +27,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:36:49 GMT
-  digest: a3333d331921f68c996d5aa811296391260b484d
+  digest: e0b15b4f761f50d1f21d5dca4f15268a27092c08
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -42,9 +42,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:02:10 GMT
-  digest: 97ca436c3aca59cbf1dc47e8f3baf87302fcb2eb
+  digest: 76d7e3bdddbc1c8d936e49bd52b1053a69377357
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -57,9 +57,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:36:19 GMT
-  digest: a361575a5ac22053a168769dadca96f5db7903ff
+  digest: d437d1f8624ee2e1b630b616a39a7d9f36137a34
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -72,9 +72,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:42:21 GMT
-  digest: 99cf7f84e37f0d8cee1f368fd67984dd6a626657
+  digest: 47ccb9335f06f6124da7d585b05d356520150abf
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -87,9 +87,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:08:44 GMT
-  digest: 83b15afaa0224484b23af7c15f6bee7183f669ce
+  digest: 41109ebb939d8001ee2d907fc5416fe365f8c0f2
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -102,9 +102,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:09:29 GMT
-  digest: 4c1db839a20720bad5880c7558026deb582a33bb
+  digest: 405d029e1259031cd72d84b74a26d29ea3ddc04c
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -117,9 +117,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:09:08 GMT
-  digest: 710afcdb1e488df89e950834204f181cefb21511
+  digest: 28676b99994477dcc86bc4930840e060e6f2b78f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -132,9 +132,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:03:57 GMT
-  digest: 2a508a75f34cc6cc0b421cdc72eb248dbc3cc459
+  digest: 771c722684e942d78c139a6200c16de3c9a8adfb
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -147,9 +147,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:52:47 GMT
-  digest: d66f1421e12cd2fab5417db52b5f64353be6d9e1
+  digest: ad9ccbd8d0922c53bece766e2c1b12a3c4a64355
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -162,9 +162,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:56:18 GMT
-  digest: 1133b49c6b3d3f594f06400e9cc4d42753ac428d
+  digest: 983990df8c5f131df86d34ab51d69fb384510d62
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -177,9 +177,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:02:31 GMT
-  digest: 05c4dc6c0d30aed3234135005761e862c3fcedf9
+  digest: d68c86e14d01c6a96a24f95614e28b1b2f22ed60
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -192,9 +192,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:49:49 GMT
-  digest: d842f05d46ba098478f6878fd579e7caddd54d39
+  digest: 82ef11035ca89ef3517ee16ff58ba9f4fa6648b6
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -207,9 +207,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:51:58 GMT
-  digest: 89b81503a5f74d25567c5ef48cd4c15c7d02f05d
+  digest: f596aadabf86cbcbf29fa1b99ba292a81d78a206
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -222,9 +222,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:09:01 GMT
-  digest: 2bc08095b0181106cf768033755dddb04b403221
+  digest: d06ceb00e22fcfb4e96491d072277247860e883e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -237,9 +237,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:49:45 GMT
-  digest: 015416ea64cb5e8a7930a01a9ee3c8c893184d12
+  digest: 7212908e6d7d4635e9f7870bfd17e9726ccf6033
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -252,9 +252,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:52:09 GMT
-  digest: 1b3a85bbb2c66bd9ae88ceda0c750cc9d43dc787
+  digest: 2c8d6ecf240b1d31be763a34dc3b5d48db75dd44
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -267,9 +267,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:36:32 GMT
-  digest: 4b9472350af1eb53dc30e0fef606abd8d8428398
+  digest: abe4e4efd06fefae79394400976e29c73305ab41
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -282,9 +282,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:03:15 GMT
-  digest: 6c70859bc17fbe38aa88a47ff21a8fe28e314e22
+  digest: 4bd894f7ecf8baabb061b75a5c80621f63d05496
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -297,9 +297,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:58:06 GMT
-  digest: 770baf8f819765ec8ee1bd70f86ecfb628d04b7f
+  digest: a4b554e047dd4b9c560b11ab8ef51a34a8105998
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -312,9 +312,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Mon, 26 Feb 2018 15:45:27 GMT
-  digest: f9ef37d7df0515c08e407d24e2c62a94d83ed259
+  digest: fa89bb743ca4c3977dc9c6a0308bb4b3a7d21d4e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -327,9 +327,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:58:33 GMT
-  digest: 874c7883ed22373431944d32363eb932f9690bb6
+  digest: 43fbde5600c252ac17edeb01c6ad46ae54c4d9f5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -342,9 +342,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:02:53 GMT
-  digest: ca83f6ae10d2d2ef0b4f628d58ae5e539f612f8a
+  digest: 9d13670f2399861146c0842b87e0e838dd2106d4
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -357,9 +357,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:58:46 GMT
-  digest: a84fd919bca8c584d1f3e96550afd31fd0d974a4
+  digest: fe348c72a542c4243c48596ac6c25514bcf5240f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -372,9 +372,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:58:24 GMT
-  digest: 68205992a67fd350442cf485363f0d204f4e16ff
+  digest: 0ebeb196d5106ecf9479dd3074f760873d33bb9b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -387,9 +387,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:04:10 GMT
-  digest: 7c99e7a51cd0844dcf8a2146c17c67cf1f54dcfc
+  digest: bec16561d72d7c03678d8577a0392bbc951e0422
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -402,9 +402,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 18:08:21 GMT
-  digest: 09f61ac07cf398a2daf5651a3d01e0bcee4e980b
+  digest: 16d222fceca914ea97621d6422a675cacb783974
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -417,9 +417,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Mon, 02 Jul 2018 17:56:01 GMT
-  digest: 5e2f780d6ac74745afc9f230c55c2908e507c322
+  digest: 654e25062bb8198b84a83591a2e03d25fe48a743
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -432,9 +432,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:38:06 GMT
-  digest: d9c547adc070e7e046cc92f26dafd0d5c8b4a014
+  digest: 958460820d0149a04100c3bc4cc45b0eda2e71c3
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
@@ -447,7 +447,37 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Fri, 23 Feb 2018 17:57:42 GMT
-  digest: c7488a3a5684cbdced5151e9837454f08d0e6a7c
+  digest: 4824ddf6ad65774232ea3d70ba2a03c54d10f277
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G35404-LAADS&catalog_item_id%5B%5D=G35401-LAADS&catalog_item_id%5B%5D=G35503-LAADS&catalog_item_id%5B%5D=G35479-LAADS&catalog_item_id%5B%5D=G35498-LAADS&catalog_item_id%5B%5D=G35476-LAADS&catalog_item_id%5B%5D=G35458-LAADS&catalog_item_id%5B%5D=G35485-LAADS&catalog_item_id%5B%5D=G35468-LAADS&catalog_item_id%5B%5D=G34839-LAADS&catalog_item_id%5B%5D=G35091-LAADS&catalog_item_id%5B%5D=G35099-LAADS&catalog_item_id%5B%5D=G34978-LAADS&catalog_item_id%5B%5D=G34896-LAADS&catalog_item_id%5B%5D=G34981-LAADS&catalog_item_id%5B%5D=G34871-LAADS&catalog_item_id%5B%5D=G34883-LAADS&catalog_item_id%5B%5D=G34888-LAADS&catalog_item_id%5B%5D=G35086-LAADS&catalog_item_id%5B%5D=G34994-LAADS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 08 Aug 2018 16:56:25 GMT
+  digest: 1cc2cc512f00948b184bd67f11370722a6db6ff1
+- request:
+    method: post
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1220957487-ORNL_DAAC&catalog_item_id%5B%5D=G1220957488-ORNL_DAAC&catalog_item_id%5B%5D=G1220957489-ORNL_DAAC&catalog_item_id%5B%5D=G1220957490-ORNL_DAAC&catalog_item_id%5B%5D=G1220957491-ORNL_DAAC&catalog_item_id%5B%5D=G1220957492-ORNL_DAAC&catalog_item_id%5B%5D=G1220957493-ORNL_DAAC&catalog_item_id%5B%5D=G1220957494-ORNL_DAAC&catalog_item_id%5B%5D=G1220957495-ORNL_DAAC&catalog_item_id%5B%5D=G1220957496-ORNL_DAAC&catalog_item_id%5B%5D=G1220957497-ORNL_DAAC&catalog_item_id%5B%5D=G1220957498-ORNL_DAAC&catalog_item_id%5B%5D=G1220957499-ORNL_DAAC&catalog_item_id%5B%5D=G1220957500-ORNL_DAAC&catalog_item_id%5B%5D=G1220957501-ORNL_DAAC&catalog_item_id%5B%5D=G1220957502-ORNL_DAAC&catalog_item_id%5B%5D=G1220957503-ORNL_DAAC&catalog_item_id%5B%5D=G1220957504-ORNL_DAAC&catalog_item_id%5B%5D=G1220957505-ORNL_DAAC&catalog_item_id%5B%5D=G1220957506-ORNL_DAAC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 08 Aug 2018 16:58:10 GMT
+  digest: d962b177592f53f1b1febaea05941144845cb6a9
 recorded_with: VCR 2.6.0
