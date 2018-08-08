@@ -45,10 +45,10 @@
 <div id="loading">Preparing download script. Fetching downloadable granule links...</div>
 <div id="download-description" style="display: none;">
   <h2>How to use this script</h2>
-  <p>Linux: You must first make the script an executable by running the line 'chmod 777 download.sh' from the command line.  After that is complete, the file can be executed by typing './download.sh'.</p> 
+  <p>Linux: You must first make the script an executable by running the line 'chmod 777 download.sh' from the command line.  After that is complete, the file can be executed by typing './download.sh'.</p>
   <p>For a detailed walk through of this process, please reference this <a target="_blank" href='https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script'>How To guide</a>.</p>
   <p>Windows: The file can be executed within Windows by first installing a Unix-like command line utility such as <a href='https://www.cygwin.com/'>Cygwin</a>. After installing Cygwin (or a similar utility), run the line 'chmod 777 download.sh' from the utility's command line, and then execute by typing './download.sh'.</p>
-  
+
   Script preparation completed. Please click the button to download the script. <a href="#" id="download-button">Download Script File</a>
 </div>
 <div class="pre-container">
@@ -81,7 +81,7 @@ prompt_credentials() {
     read -p "Username (<%= @user %>): " username
     username=${username:-<%= @user %>}
     read -s -p "Password: " password
-    echo "machine urs.earthdata.nasa.gov login $username password $password" >> $netrc
+    echo "machine <%= @echo_client.urs_root %> login $username password $password" >> $netrc
     <% if @first_link && @first_link.start_with?('ftp') %>
     echo "machine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %> login $username password $password" >> $netrc
     <% end %>

@@ -484,6 +484,32 @@ http_interactions:
   digest: 14a0ec30b17ac928b6678e04f531f842e2a96520
 - request:
     method: get
+    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=arNJRV0WQXEuU_ZdSHGp3Q
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer edsc-access
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Aug 2018 19:01:28 GMT
+  digest: dd3ed9357a523d37b9a487775a65f4abfcdfdd33
+- request:
+    method: get
+    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=iGoL4SxnweOcSyBxA5eeUA
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer edsc-access
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Aug 2018 19:01:28 GMT
+  digest: 41a0ec30b17ac928b6678e04f531f842e2a96520
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
     body:
       encoding: US-ASCII
@@ -499,6 +525,32 @@ http_interactions:
       - edsc-access
   recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
   digest: 5465c54b75a62eac4512160fe28a6627c96aea19
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 07 Aug 2018 19:01:27 GMT
+  digest: edsc_sit_prefs
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 07 Aug 2018 19:01:27 GMT
+  digest: edsc_uat_prefs
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
@@ -571,6 +623,44 @@ http_interactions:
       - edsc
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: edsc_access_update_preferences_none
+- request:
+    method: put
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_none_sit
+- request:
+    method: put
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_none_uat
 - request:
     method: put
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
