@@ -1,5 +1,5 @@
 ---
-6330dfc1e7b230fae615d0164833bc592748ee80:
+61b151ace894f0b4fe7fbc3f371a941cb824c3d9:
   response:
     status:
       code: 200
@@ -29,7 +29,7 @@
       encoding: UTF-8
       string: "[]"
     http_version: 
-6755129108e23656f73763927ffb8dc97ece82df:
+43dad56b4e7a0993bb94bcf5014e47a8701e12da:
   response:
     status:
       code: 200
@@ -59,7 +59,7 @@
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000445-NSIDC_ECS","id":"CA590D5A-4F8D-79FC-15B6-291C3F74DDA5","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"D9CA10BC-7CDE-25CA-C156-B14DE405A63C"}}]'
     http_version: 
-fb29d23bb76d3e3913b0d10b385802a0b203e6cd:
+adce9c1d8859ca5f84840f0d57a74c2532a04ef2:
   response:
     status:
       code: 200
@@ -89,7 +89,7 @@ fb29d23bb76d3e3913b0d10b385802a0b203e6cd:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000561-NSIDC_ECS","id":"EB876F7C-2D4A-8796-1A69-D52B9FEA7F3A","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"C604C289-A17A-B604-FFA6-0801A3EAA903"}}]'
     http_version: 
-71fcc9ce974fdf56c9b54c37102c73ec2c7f48c9:
+ef7065a35e05dea14c6e9ede1b2ddd768621bb88:
   response:
     status:
       code: 200
@@ -119,7 +119,7 @@ fb29d23bb76d3e3913b0d10b385802a0b203e6cd:
       encoding: UTF-8
       string: "[]"
     http_version: 
-550025d3819696c2d6d7925b4072d2c0f278d7eb:
+8890ec36ffc6c11d0c5083d9715cda0d93fe07f5:
   response:
     status:
       code: 200
@@ -149,7 +149,7 @@ fb29d23bb76d3e3913b0d10b385802a0b203e6cd:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C115003855-NSIDC_ECS","id":"1373E99B-2768-2B5A-56BD-439B7770E7E7","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"B81B0530-370A-3621-DF13-D77256610DB4"}}]'
     http_version: 
-698f17d31f17a2268a3329e207722fb290d6a5f8:
+2eae16259337249b058f6d38c7858cbbd3041387:
   response:
     status:
       code: 200
@@ -179,7 +179,7 @@ fb29d23bb76d3e3913b0d10b385802a0b203e6cd:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C115003857-NSIDC_ECS","id":"C63B353B-B80F-C78B-3426-7BB1863320FA","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"2630CB27-C5A7-D6C8-96EA-988D50FF934F"}}]'
     http_version: 
-ec5b52f76ddc4e2470f3b7ac8be3a8754880c33b:
+03eff630154eaa108ef06069361c2fd928bd946c:
   response:
     status:
       code: 200
@@ -209,7 +209,7 @@ ec5b52f76ddc4e2470f3b7ac8be3a8754880c33b:
       encoding: UTF-8
       string: "[]"
     http_version: 
-dc89b2894f561b5b93e5d4f27000731ed86ca2d0:
+713a11c987eac4eced4d86149f7c4c391e14a497:
   response:
     status:
       code: 200
@@ -239,7 +239,7 @@ dc89b2894f561b5b93e5d4f27000731ed86ca2d0:
       encoding: UTF-8
       string: "[]"
     http_version: 
-7cf12b4f4ac937fca219dffe5bcd2d4600a994f3:
+5467fc685a1ecc3451b4699fb4694fc77533d3f5:
   response:
     status:
       code: 200
@@ -269,7 +269,7 @@ dc89b2894f561b5b93e5d4f27000731ed86ca2d0:
       encoding: UTF-8
       string: "[]"
     http_version: 
-21c5392dc98d020f1e876d685fb5ed4f5ce62a16:
+1b0ccade04a1dee1095e8042f8fff490d4867304:
   response:
     status:
       code: 200
@@ -299,7 +299,7 @@ dc89b2894f561b5b93e5d4f27000731ed86ca2d0:
       encoding: UTF-8
       string: "[]"
     http_version: 
-81ba0c3fb20efea01e1316f2e1c76cc6be4ad72a:
+822ad0a4497410cd1c5834a7e8f87cc6df322718:
   response:
     status:
       code: 200
@@ -329,7 +329,7 @@ dc89b2894f561b5b93e5d4f27000731ed86ca2d0:
       encoding: UTF-8
       string: "[]"
     http_version: 
-c597d5927a8856135a8e0c9a261755f9e804d126:
+5c0a5a298e6fc55213c05b95404c5cc328d8fa2c:
   response:
     status:
       code: 200
@@ -359,7 +359,7 @@ c597d5927a8856135a8e0c9a261755f9e804d126:
       encoding: UTF-8
       string: "[]"
     http_version: 
-0f266b868ce76c33778e57735deeb48fc08d6032:
+263c196e4afc4e1372e388c7eb1a0b383377489b:
   response:
     status:
       code: 200
@@ -389,7 +389,7 @@ c597d5927a8856135a8e0c9a261755f9e804d126:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C190757121-NSIDC_ECS","id":"8EBE3BA4-C577-A3A2-69A2-149C5099B6EB","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"0E02452A-BFD2-5E12-3348-C6E95251D3FD"}}]'
     http_version: 
-7d233e90ada10d6bf830e6e1d590abfe51a8a592:
+48895dc4c78ef4d4fdcebc72b5caf76bf363a237:
   response:
     status:
       code: 200
@@ -419,7 +419,7 @@ c597d5927a8856135a8e0c9a261755f9e804d126:
       encoding: UTF-8
       string: "[]"
     http_version: 
-ee18b47f911af5be689c80b70241354f1be32269:
+8fe7bcb0f16dc621cf30845d7995a5cc1aff2541:
   response:
     status:
       code: 200
@@ -449,7 +449,7 @@ ee18b47f911af5be689c80b70241354f1be32269:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C194001241-LPDAAC_ECS","id":"5BC5DB71-D3C6-FC98-5101-A3B173DA254E","service_entry_id":"37B94EF1-C9EF-35A0-F732-78D93414967E","service_option_definition_id":"8F560632-D134-7F90-8AA7-67E7C37C8951"}}]'
     http_version: 
-44a9359875375358f85c3525140832ebf78ffef4:
+4649e550948ad4c9dd97b4db59997f86bc203410:
   response:
     status:
       code: 200
@@ -479,7 +479,7 @@ ee18b47f911af5be689c80b70241354f1be32269:
       encoding: UTF-8
       string: "[]"
     http_version: 
-c6021ef25e571be15041bfc1f69d4a9b82ccce30:
+c8acc9a17b55b4ad5ae9bed002e6e9a4339a1169:
   response:
     status:
       code: 200
@@ -509,7 +509,7 @@ c6021ef25e571be15041bfc1f69d4a9b82ccce30:
       encoding: UTF-8
       string: "[]"
     http_version: 
-a182708a499785870aa3e14513d67f34d425d966:
+76072b34b98d8825b42d9579932e3256e52243c9:
   response:
     status:
       code: 200
@@ -539,7 +539,7 @@ a182708a499785870aa3e14513d67f34d425d966:
       encoding: UTF-8
       string: "[]"
     http_version: 
-0575e1cd0e6ea859c001a5b6d0a575fb34353c72:
+'08ba21cd4531102012595f5903c30525fdd4b071':
   response:
     status:
       code: 200
@@ -569,7 +569,7 @@ a182708a499785870aa3e14513d67f34d425d966:
       encoding: UTF-8
       string: "[]"
     http_version: 
-653bc2ad6b69c3a9effca03833fad1d30538016b:
+af1d80d761813b1d524a33c06b4c1e26999630d9:
   response:
     status:
       code: 200
@@ -593,6 +593,66 @@ a182708a499785870aa3e14513d67f34d425d966:
       - IE=Edge,chrome=1
       transfer-encoding:
       - chunked
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+34d4b5ffce9ccd2cf3bf993a9afae177ac334de7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 08 Aug 2018 16:56:14 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.739000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+37642eb3395f08e8fbbe829caae4418556d70ae2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 08 Aug 2018 16:57:58 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.949000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
       connection:
       - Close
     body:

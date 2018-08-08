@@ -119,16 +119,35 @@ RSpec.configure do |config|
 
   config.before :suite do
     normalizers = []
+
+    config_services = Rails.configuration.services
+
     # Avoid recording tokens
-    ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
-      ['prod', 'uat', 'sit', 'dev'].each do |env_key|
-        token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key][env_key]['access_token']
-        token = "#{token}:#{Rails.configuration.urs_client_id}" unless token.include? '-'
-        normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
+    ['prod', 'uat', 'sit'].each do |urs_env|
+      # The client_ids are stored in services.yml and keyed by the
+      # URL of the respective environment
+      urs_root_url = config_services['earthdata'][urs_env]['urs_root']
+
+      ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
+        # Read from services.yml and is set to either the token provided in a designated
+        # ENV variable or a default value
+        configured_token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key][urs_env]['access_token']
+
+        # Because this is only for running rspec, we're only concerned
+        # with the `test` rails environment
+        ['test'].each do |rails_env|
+          client_id = config_services['urs'][rails_env][urs_root_url]
+
+          token = (configured_token.include? '-') ? configured_token : "#{configured_token}:#{client_id}"
+          substitute = token_key
+          substitute += "-access" unless configured_token.include? '-'
+          normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, substitute)
+        end
       end
     end
 
     normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')
+
     # Avoid recording ogre and places urls
     normalizers << VCR::UriNormalizer.new(ENV['ogre_url'], 'http://ogre.example.com')
     normalizers << VCR::UriNormalizer.new(ENV['places_url'], 'http://places.example.com/')

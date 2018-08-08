@@ -34,7 +34,7 @@ setup_auth_wget() {
         echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> ~/.netrc
     fi
     <% end %>
-    credentials=$(grep 'machine urs.earthdata.nasa.gov' ~/.netrc)
+    credentials=$(grep 'machine <%= @echo_client.urs_root %>' ~/.netrc)
     if [ -z "$credentials" ]; then
         cat "$netrc" >> ~/.netrc
     fi
