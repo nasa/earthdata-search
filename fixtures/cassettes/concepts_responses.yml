@@ -26,7 +26,7 @@
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"2","boxes":["-89.3 -180 89.2 180"],"time_start":"2018-02-27T00:00:00.000Z","version_id":"0","updated":"2017-10-03T13:14:00.000Z","dataset_id":"NRT
         AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION,
         WIND SPEED OVER OCEAN, WATER VAPOR OVER OCEAN AND CLOUD LIQUID WATER OVER
@@ -86,7 +86,7 @@
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2003-01-13T00:00:00.000Z","version_id":"034","updated":"2015-11-02T09:10:52.715Z","dataset_id":"GLAS/ICESat
         L1B Global Elevation Data (HDF5) V034","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"NSIDC_ECS","short_name":"GLAH06","organizations":["NSIDC","NASA
         DAAC at the National Snow and Ice Data Center","GSFC I-SIPS","ICESat Science
@@ -124,7 +124,7 @@
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"SeriesName":"CAASM Metadata","Creator":"Snape,
         I., Riddle, M.J., Gore, D., Stark, J.S., Scouller, R. and Stark, S.C.","Title":"0.5
         hour 1 M HCl extraction data for the Windmill Islands marine sediments","OnlineResource":{"Linkage":"https://data.aad.gov.au/aadc/metadata/metadata_redirect.cfm?md=/AMD/AU/ASAC_2201_HCL_0.5"},"Publisher":"Australian
@@ -260,7 +260,7 @@
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"SeriesName":"GRFM CD-ROM","Creator":"Taylor,
         V., L. Dutra, B. Chapman, L. Hess, A. Rosenqvist","ReleasePlace":"Japan","Title":"Global
         Rain Forest Mapping Project","OnlineResource":{"Linkage":"http://www.eorc.jaxa.jp/JERS-1/en/GFMP/index.html"},"Publisher":"NASDA","ReleaseDate":"1998-01-01T00:00:00.000Z"}],"LocationKeywords":[{"Category":"CONTINENT","Type":"AUSTRALIA/NEW
@@ -370,7 +370,7 @@
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"SeriesName":"Tropical Cyclones database","ReleasePlace":"JAXA/EORC","Title":"Tropical
         Cyclones database","Publisher":"JAXA/EORC","ReleaseDate":"2005-06-08T00:00:00.000Z","DataPresentationForm":"image","Version":"1.0"}],"LocationKeywords":[{"Category":"OCEAN","Type":"ATLANTIC
         OCEAN"},{"Category":"OCEAN","Type":"INDIAN OCEAN"},{"Category":"OCEAN","Type":"PACIFIC
@@ -464,7 +464,7 @@
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"Creator":"JAXA","Title":"Aqua AMSR-E Level
         3 23.8GHz-H Mean for Brightness Temperature product","OnlineResource":{"Linkage":"Not%20provided"},"ReleaseDate":"2002-06-01T00:00:00.000Z","Version":"Latest
         Version"}],"LocationKeywords":[{"Category":"GEOGRAPHIC REGION","Type":"GLOBAL"}],"MetadataDates":[{"Date":"2012-08-21T00:00:00.000Z","Type":"CREATE"},{"Date":"2017-12-28T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Not
@@ -523,7 +523,7 @@ c5e699fc5ac488a6dfe43a9597cf4c1d3a0b4b47:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"ReleasePlace":"MODAPS at NASA/GSFC","Title":"MODIS/Aqua
         Aerosol 5-Min L2 Swath 10km","OnlineResource":{"Linkage":"http://modis-atmos.gsfc.nasa.gov/MOD04_L2/"},"Publisher":"The
         Land, Atmosphere Near real-time Capability for EOS (LANCE)","ReleaseDate":"2015-09-10T00:00:00.000Z","Version":"6NRT"}],"LocationKeywords":[{"Category":"OCEAN","Type":"SOUTHERN
@@ -692,7 +692,7 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"Creator":"NASA, USGS","Title":"EO-1 (Earth
         Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level
         1Gst Data","OnlineResource":{"Linkage":"http://eros.usgs.gov/#/Find_Data/Products_and_Data_Available/ALI"},"DataPresentationForm":"Digital
@@ -793,7 +793,7 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"ShortName":"SI_M12_CSV","Abstract":"Eulerian sea ice motion data
         set","RelatedUrls":[{"Description":"The ASF Search and Ordering Interface","URLContentType":"DistributionURL","Type":"GET
         DATA","URL":"https://vertex.daac.asf.alaska.edu/"}],"DataDates":[{"Date":"2016-05-27T00:44:52.000Z","Type":"CREATE"},{"Date":"2016-05-27T00:44:52.000Z","Type":"UPDATE"}],"SpatialExtent":{"HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"GEODETIC","GPolygons":[{"Boundary":{"Points":[{"Longitude":-179.999999,"Latitude":89.99},{"Longitude":-179.999999,"Latitude":65.0},{"Longitude":-90.0,"Latitude":65.0},{"Longitude":0.0,"Latitude":65.0},{"Longitude":90.0,"Latitude":65.0},{"Longitude":179.999999,"Latitude":65.0},{"Longitude":179.999999,"Latitude":89.99},{"Longitude":90.0,"Latitude":89.99},{"Longitude":0.0,"Latitude":89.99},{"Longitude":-90.0,"Latitude":89.99},{"Longitude":-179.999999,"Latitude":89.99}]}}]}},"GranuleSpatialRepresentation":"GEODETIC"},"AdditionalAttributes":[{"Name":"FLIGHT_LINE","Description":"Flight
@@ -907,7 +907,7 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"MetadataDates":[{"Date":"2016-06-03T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Gridded
         joint TIR/NIR-based CO retrievals based on MERRA 2 meteorological fields,
         time-varying N2O and updated HITRAN data","ShortName":"MOP03J","Abstract":"The
@@ -968,7 +968,7 @@ b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"1A","boxes":["-90 -180 90 180"],"time_start":"2000-03-04T20:34:04.000Z","version_id":"003","updated":"2015-09-30T10:40:23.489Z","dataset_id":"ASTER
         L1A Reconstructed Unprocessed Instrument Data V003","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LPDAAC_ECS","short_name":"AST_L1A","organizations":["LP
         DAAC","JP/METI/AIST/JSS/GDS"],"title":"ASTER L1A Reconstructed Unprocessed
@@ -1002,6 +1002,51 @@ b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
         Fields: 15","orbit_parameters":{},"id":"C14758250-LPDAAC_ECS","has_formats":false,"original_format":"UMM_JSON","archive_center":"LP
         DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.5067/ASTER/AST_L1A.003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://asterweb.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=AST_L1A+V003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://eospso.nasa.gov/sites/default/files/atbd/atbd-ast-01.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://unit.aist.go.jp/igg/rs-rg/ASTERSciWeb_AIST/en/documnts/users_guide/part1/pdf/Part2_5.1E.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTER_L1_Product_Spec_Ver_1.3_July01.pdf"}]}'
     http_version: 
+33f993fcdb5b51172408fba807b345c435235671:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 9cc57c8b-e9ff-4bca-973c-eb70ac5a812e
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 08 Aug 2018 14:38:15 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1052'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"4","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000_2000.00"],"version_id":"2000.00","updated":"2000-01-01T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an index that measures the ability of a nation''s economy to
+        achieve sustainable development, with the long term goal of finding a single
+        indicator for environmental sustainability analogous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is a composite measure
+        of the current status of a nation''s environmental systems, pressures on those
+        systems, human vulnerability to environmental change, national capacity to
+        respond, and contributions to global environmental stewardship. The index
+        was unveiled at the World Economic Forum''s annual meeting, January 2000,
+        Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration among
+        the World Economic Forum (WEF), Yale Center for Environmental Law and Policy
+        (YCELP), and the Columbia University Center for International Earth Science
+        Information Network (CIESIN).","time_end":"1999-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179001887-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/esi/esi-pilot-environmental-sustainability-index-2000/sedac-logo.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.7927/H4NK3BZJ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-2000/data-download"}]}'
+    http_version: 
 e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
   response:
     status:
@@ -1029,7 +1074,7 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"Creator":"World Economic Forum - WEF - Global
         Leaders for Tomorrow Environment Task   Force, Yale Center for Environmental
         Law and Policy - YCELP - Yale University, and Center for International Earth
@@ -1230,7 +1275,7 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"3","boxes":["39.08 -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
         Minute Rainfall Data (FIFE)","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"FIFE_RAIN_30M_2","organizations":["ORNL_DAAC"],"title":"30
         Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
@@ -1263,7 +1308,7 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"OtherCitationDetails":"Wood, E.F. 1994. 30
         Minute Rainfall Data (FIFE). ORNL DAAC, Oak Ridge, Tennessee, USA. http://dx.doi.org/10.3334/ORNLDAAC/2"}],"MetadataDates":[{"Date":"1994-07-24T00:00:00.000Z","Type":"UPDATE"}],"ShortName":"FIFE_RAIN_30M_2","Abstract":"30
         minute rainfall data for the Konza Prairie","DOI":{"Authority":"https://doi.org","DOI":"10.3334/ORNLDAAC/2"},"RelatedUrls":[{"Description":"This
@@ -1317,7 +1362,7 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
         Minute Stream Flow Data: USGS (FIFE)","has_spatial_subsetting":false,"points":["39.1
         -96.6"],"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"FIFE_STRM_15M_1","organizations":["ORNL_DAAC"],"title":"15
@@ -1351,7 +1396,7 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"OtherCitationDetails":"Wood, E.F. 1994. 15
         Minute Stream Flow Data: USGS (FIFE). ORNL DAAC, Oak Ridge, Tennessee, USA.
         http://dx.doi.org/10.3334/ORNLDAAC/1"}],"MetadataDates":[{"Date":"2008-12-02T00:00:00.000Z","Type":"UPDATE"}],"ShortName":"FIFE_STRM_15M_1","Abstract":"USGS
@@ -1410,7 +1455,7 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"OtherCitationDetails":"Dentener, F.J. 2006.
         Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050. ORNL
         DAAC, Oak Ridge, Tennessee, USA. http://dx.doi.org/10.3334/ORNLDAAC/830"}],"MetadataDates":[{"Date":"2006-04-14T00:00:00.000Z","Type":"UPDATE"}],"ShortName":"1860_1993_2050_NITROGEN_830","Abstract":"This
@@ -1460,11 +1505,11 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - 98e910b3-b781-4415-873b-424c614af38d
+      - 13328655-a4c2-41c8-9c74-df353556fccf
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Thu, 12 Jul 2018 11:39:32 GMT
+      - Wed, 08 Aug 2018 18:11:25 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1472,313 +1517,132 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       vary:
       - Accept-Encoding, User-Agent
       content-length:
-      - '4342'
+      - '4384'
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJMb2NhdGlvbktleXdvcmRzIjpbeyJDYXRlZ29yeSI6IkdFT0dSQVBISUMg
-        UkVHSU9OIiwiVHlwZSI6IkdMT0JBTCJ9XSwiTWV0YWRhdGFEYXRlcyI6W3si
-        VHlwZSI6IkNSRUFURSIsIkRhdGUiOiIyMDE3LTA0LTI3VDIwOjQzOjAwLjAw
-        MFoifSx7IlR5cGUiOiJVUERBVEUiLCJEYXRlIjoiMjAxOC0wNy0wOVQxOToz
-        MzowMC4wMDBaIn1dLCJWZXJzaW9uRGVzY3JpcHRpb24iOiJBZGRlZCBBc3Nv
-        Y2lhdGVkIERMTCBuYW1lIGF0dHJpYnV0ZS4iLCJTaG9ydE5hbWUiOiJBU1Rf
-        TDFBRSIsIkFic3RyYWN0IjoiVGhlIEFTVEVSIEV4cGVkaXRlZCBMMUEgUmVj
-        b25zdHJ1Y3RlZCBVbnByb2Nlc3NlZCBJbnN0cnVtZW50IERhdGEgaXMgcHJv
-        ZHVjZWQgd2l0aCB0aGUgZXhwcmVzcyBwdXJwb3NlIG9mIHByb3ZpZGluZyB0
-        aGUgQVNURVIgU2NpZW5jZSBUZWFtIG1lbWJlcnMgYW5kIG90aGVycywgZGF0
-        YSBvZiB0aGVpciBwYXJ0aWN1bGFyIGludGVyZXN0IGluIHF1aWNrIHR1cm4t
-        YXJvdW5kIHRpbWUgZnJvbSB0aGUgbW9tZW50IHRoZSBkYXRhIGFyZSBhY3F1
-        aXJlZC4gVGhpcyBpcyB1c3VhbGx5IGRvbmUgdG8gc3VwcG9ydCBvbi1nb2lu
-        ZyBmaWVsZCBjYWxpYnJhdGlvbiBhbmQgdmFsaWRhdGlvbiBlZmZvcnRzIG9y
-        IHRvIHN1cHBvcnQgZW1lcmdlbmN5IHJlc3BvbnNlIHRvIG5hdHVyYWwgZGlz
-        YXN0ZXJzIHdoZW4gcHJvY2Vzc2VkIExldmVsLTEgZGF0YSB3aXRoIG1pbmlt
-        dW0gdHVybi1hcm91bmQgdGltZSB3b3VsZCBwcm92ZSBiZW5lZmljaWFsIGlu
-        IGluaXRpYWwgZGFtYWdlIG9yIGltcGFjdCBhc3Nlc3NtZW50cy4gVGhpcyBk
-        YXRhIHNldCBpcyBleHBlY3RlZCB0byBiZSBwdWJsaWNseSBhdmFpbGFibGUg
-        Zm9yIGEgcGVyaW9kIG9mIDMwIGRheXMgYWZ0ZXIgd2hpY2ggdGltZSBpdCB3
-        aWxsIGJlIHJlbW92ZWQgZnJvbSB0aGUgYXJjaGl2ZS4gVGhpcyBpcyBkb25l
-        IGJlY2F1c2UgdGhlIHJvdXRpbmVseSBwcm9jZXNzZWQgKFByb2R1Y3Rpb24g
-        RGF0YSBTZXQgb3IgUERTKSB2ZXJzaW9uIG9mIHRoaXMgZGF0YSBzZXQgd2ls
-        bCBiZSBhdmFpbGFibGUgZnJvbSBKYXBhbiBpbiBkdWUgY291cnNlIGFuZCBh
-        dmFpbGFibGUgZm9yIHNlYXJjaCBhbmQgb3JkZXIgZnJvbSB0aGUgTFAgREFB
-        QyBhcmNoaXZlcy4gQVNURVIgRXhwZWRpdGVkIERhdGEgU2V0cyAoRURTKSBz
-        ZXJ2ZSB0aGUgc2hvcnQtdGVybSByZXF1aXJlbWVudHMgb2YgYSBzbWFsbCBn
-        cm91cCBvZiBzY2llbnRpc3RzIGFuZCBmdWxmaWxsIGltbWVkaWF0ZSBpbWFn
-        ZXJ5IG5lZWRzIGR1cmluZyB0aW1lcyBvZiBuYXR1cmFsIGRpc2FzdGVycy5c
-        clxuXHJcblVzZXJzIGFyZSBhZHZpc2VkIHRoYXQgQVNURVIgU1dJUiBkYXRh
-        IGFjcXVpcmVkIGZyb20gbGF0ZSBBcHJpbCAyMDA4IHRvIHRoZSBwcmVzZW50
-        IGV4aGliaXQgYW5vbWFsb3VzIHNhdHVyYXRpb24gb2YgdmFsdWVzIGFuZCBh
-        bm9tYWxvdXMgc3RyaXBpbmcuIFRoaXMgZWZmZWN0IGlzIGFsc28gcHJlc2Vu
-        dCBmb3Igc29tZSBwcmlvciBhY3F1aXNpdGlvbiBwZXJpb2RzLiBQbGVhc2Ug
-        cmVmZXIgdG8gdGhlIEFTVEVSIFNXSVIgVXNlciBBZHZpc29yeSBEb2N1bWVu
-        dCAoaHR0cHM6Ly9scGRhYWMudXNncy5nb3Yvc2l0ZXMvZGVmYXVsdC9maWxl
-        cy9wdWJsaWMvYXN0ZXIvZG9jcy9BU1RFUl9TV0lSX1VzZXJfQWR2aXNvcnlf
-        SnVseSUyMDE4XzA4LnBkZikgZm9yIG1vcmUgZGV0YWlscy5cclxuXHJcblRo
-        ZSBnZW5lcmFsIHByb2R1Y3QgZGVzY3JpcHRpb24gZGV0YWlscyBhcyBkZXNj
-        cmliZWQgZm9yIHRoZSBBU1RFUiBMZXZlbCAxQSBEYXRhIFNldCAtIFJlY29u
-        c3RydWN0ZWQsIHVucHJvY2Vzc2VkIEluc3RydW1lbnQgRGF0YSBhcHBseSB0
-        byB0aGUgZXhwZWRpdGVkIGRhdGEgc2V0IHdpdGggYSBmZXcgbm90YWJsZSBl
-        eGNlcHRpb25zLiBUaGVzZSBpbmNsdWRlOlxyXG5cclxu4oCiICAgICAgIFRo
-        ZSBFeHBlZGl0ZWQgTGV2ZWwtMUEgZGF0YSBzZXQgZG9lcyBub3QgY29udGFp
-        biB0aGUgVk5JUiAzQiAgKGFmdC12aWV3aW5nKSBiYW5kXHJcbuKAoiAgICAg
-        ICBUaGlzIGRhdGEgc2V0IGRvZXMgbm90IGhhdmUgc2hvcnQtdGVybSBjYWxp
-        YnJhdGlvbiBmb3IgdGhlIFRoZXJtYWwgSW5mcmFyZWQgKFRJUikgc2Vuc29y
-        XHJcbuKAoiAgICAgICBUaGUgcmVnaXN0cmF0aW9uIHF1YWxpdHkgb2YgdGhp
-        cyBkYXRhIHNldCBpcyBsaWtlbHkgdG8gYmUgbG93ZXIsIGFuZCBhbHNvIHZh
-        cnkgZnJvbSBzY2VuZSB0byBzY2VuZSBcclxuXHJcblRoZSBMZXZlbC0wIGRh
-        dGEgZG93bmxpbmsgZnJvbSB0aGUgVHJhY2tpbmcgRGF0YSBSZWxheSBTYXRl
-        bGxpdGUgU3lzdGVtIChURFJTUykgYXQgV2hpdGUgU2FuZHMsIE5NIGlzIHJl
-        Y2VpdmVkIGF0IHRoZSBFT1MgRGF0YSBPcGVyYXRpb25zIFN5c3RlbSAoRURP
-        UykgZmFjaWxpdHkgYXQgdGhlIEdvZGRhcmQgU3BhY2UgRmxpZ2h0IENlbnRl
-        ciAoR1NGQykuIEZvbGxvd2luZyBzb21lIHByZS1wcm9jZXNzaW5nLCBFRE9T
-        IGRpcmVjdGx5IHRyYW5zbWl0cyB0aGF0IGRhdGEgKHZpYSB0aGUgR1NGQyBE
-        QUFDKSB0byBMUCBEQUFDIHdoZXJlIHRoZSBkYXRhIGFyZSBwcm9jZXNzZWQg
-        YW5kIHRoZSBsZXZlbC0xIEVEUyBpcyBwcm9kdWNlZC4gVGhlIEFTVEVSIExl
-        dmVsLTFBRSBwcm9kdWN0IGNvbnRhaW5zIHJlY29uc3RydWN0ZWQsIHVucHJv
-        Y2Vzc2VkIGluc3RydW1lbnQgZGlnaXRhbCBkYXRhIGRlcml2ZWQgZnJvbSB0
-        aGUgdGVsZW1ldHJ5IHN0cmVhbXMgb2YgdGhlIDMgdGVsZXNjb3BlcyBhdCB0
-        aGVpciByZXNwZWN0aXZlIGdyb3VuZCByZXNvbHV0aW9uczogVmlzaWJsZSBO
-        ZWFyIEluZnJhcmVkIChWTklSKSwgMTUgbSwgU2hvcnR3YXZlIEluZnJhcmVk
-        IChTV0lSKSwgMzAgbSwgYW5kIFRoZXJtYWwgSW5mcmFyZWQgKFRJUiksIDkw
-        IG0uIFRoZXJlIGlzIG5vIGJyb3dzZSBwcm9kdWN0IHByb3ZpZGVkIGZvciB0
-        aGUgZXhwZWRpdGVkIEwxQSBkYXRhIHNldC5cclxuXHJcblYwMDMgZGF0YSBz
-        ZXQgcmVsZWFzZSBkYXRlOiAyMDAyLTA1LTAzXHJcblxyXG5EYXRhIFNldCBD
-        aGFyYWN0ZXJpc3RpY3M6IFxyXG5BcmVhOiB+NjBrbSB4IDYwa20gXHJcbklt
-        YWdlIERpbWVuc2lvbnM6IFxyXG4gIFZOSVI6IDQyMDAgcm93cyB4IDQxMDAg
-        Y29sdW1ucyBcclxuICBTV0lSOiAyMTAwIHJvd3MgeCAyMDQ4IGNvbHVtbnMg
-        XHJcbiAgVElSOiA3MDAgcm93cyB4IDcwMCBjb2x1bW5zIFxyXG5GaWxlIFNp
-        emU6IFxyXG4gIFZOSVIgKDEsIDIsIDNOKTogfjQ5LjMgTUIgXHJcbiAgU1dJ
-        UiAoNCB0aHJvdWdoIDkpOiB+MjUgTUIgXHJcbiAgVElSICgxMCB0aHJvdWdo
-        IDE0KTogfjQuNyBNQiBcclxuICBUb3RhbDogODUgTWVnYWJ5dGVzIFxyXG5T
-        cGF0aWFsIFJlc29sdXRpb246XHJcbiAgVk5JUjogMTVtXHJcbiAgU1dJUjog
-        MzBtXHJcbiAgVElSOiA5MG1cclxuVW5pdHM6IERpZ2l0YWwgY291bnRcclxu
-        UHJvamVjdGlvbjogVW5pdmVyc2FsIFRyYW5zdmVyc2UgTWVyY2F0b3IgKFVU
-        TSlcclxuRGF0YSBGb3JtYXQ6IEhERi1FT1Mgb3IgR2VvVElGRiBcclxuRGF0
-        YSBGaWVsZHM6IDE0XHJcbiIsIkRPSSI6eyJBdXRob3JpdHkiOiJodHRwczov
-        L2RvaS5vcmciLCJET0kiOiIxMC41MDY3L0FTVEVSL0FTVF9MMUFFLjAwMyJ9
-        LCJSZWxhdGVkVXJscyI6W3siRGVzY3JpcHRpb24iOiJUaGUgTFAgREFBQyBw
-        cm9kdWN0IHBhZ2UgcHJvdmlkZXMgaW5mb3JtYXRpb24gb24gU2NpZW5jZSBE
-        YXRhIFNldCBsYXllcnMgYW5kIGxpbmtzIGZvciB1c2VyIGd1aWRlcywgQVRC
-        RHMsIGRhdGEgYWNjZXNzLCB0b29scywgY3VzdG9tZXIgc3VwcG9ydCwgZXRj
-        LiIsIlVSTENvbnRlbnRUeXBlIjoiQ29sbGVjdGlvblVSTCIsIlR5cGUiOiJE
-        QVRBIFNFVCBMQU5ESU5HIFBBR0UiLCJVUkwiOiJodHRwczovL2RvaS5vcmcv
-        MTAuNTA2Ny9BU1RFUi9BU1RfTDFBRS4wMDMifSx7IkRlc2NyaXB0aW9uIjoi
-        TFAgREFBQyBEYXRhIFBvb2wgcHJvdmlkZXMgZGlyZWN0IGFjY2VzcyB0byBh
-        dmFpbGFibGUgcHJvZHVjdHMgdmlhIEhUVFBTLiIsIlVSTENvbnRlbnRUeXBl
-        IjoiRGlzdHJpYnV0aW9uVVJMIiwiVHlwZSI6IkdFVCBEQVRBIiwiU3VidHlw
-        ZSI6Ik9OLUxJTkUgQVJDSElWRSIsIlVSTCI6Imh0dHBzOi8vZTRmdGwwMS5j
-        ci51c2dzLmdvdi9BU1RUL0FTVF9MMUFFLjAwMy8ifSx7IkRlc2NyaXB0aW9u
-        IjoiVGhlIExQIERBQUMgd2Vic2l0ZSBwcm92aWRlcyBkZXRhaWxlZCBpbmZv
-        cm1hdGlvbiBvbiBkaXNjb3ZlcnksIGRpc3RyaWJ1dGlvbiwgYWNjZXNzLCBh
-        bmQgc3VwcG9ydCBvZiBsYW5kIGRhdGEgcHJvZHVjdHMuIiwiVVJMQ29udGVu
-        dFR5cGUiOiJDb2xsZWN0aW9uVVJMIiwiVHlwZSI6IlBST0pFQ1QgSE9NRSBQ
-        QUdFIiwiVVJMIjoiaHR0cHM6Ly9scGRhYWMudXNncy5nb3YvIn0seyJEZXNj
-        cmlwdGlvbiI6IkVhcnRoZGF0YSBTZWFyY2ggYWxsb3dzIHVzZXJzIHRvIHNl
-        YXJjaCwgZGlzY292ZXIsIHZpc3VhbGl6ZSwgcmVmaW5lLCBhbmQgYWNjZXNz
-        IE5BU0EgRWFydGggT2JzZXJ2YXRpb24gZGF0YS4iLCJVUkxDb250ZW50VHlw
-        ZSI6IkRpc3RyaWJ1dGlvblVSTCIsIlR5cGUiOiJHRVQgREFUQSIsIlN1YnR5
-        cGUiOiJFQVJUSERBVEEgU0VBUkNIIiwiVVJMIjoiaHR0cHM6Ly9zZWFyY2gu
-        ZWFydGhkYXRhLm5hc2EuZ292L3NlYXJjaD9xPUFTVF9MMUFFK1YwMDMifSx7
-        IkRlc2NyaXB0aW9uIjoiVGhlIEFTVEVSIGhvbWUgcGFnZSBpcyBtYWludGFp
-        bmVkIHRocm91Z2ggTkFTQSdzIEpldCBQcm9wdWxzaW9uIExhYm9yYXRvcnkg
-        YW5kIGRvY3VtZW50cyB2YXJpb3VzIGFzcGVjdHMgb2YgdGhlIEFTVEVSIG1p
-        c3Npb24uIGh0dHA6Ly9hc3RlcndlYi5qcGwubmFzYS5nb3YvICIsIlVSTENv
-        bnRlbnRUeXBlIjoiQ29sbGVjdGlvblVSTCIsIlR5cGUiOiJQUk9KRUNUIEhP
-        TUUgUEFHRSIsIlVSTCI6Imh0dHA6Ly9hc3RlcndlYi5qcGwubmFzYS5nb3Yv
-        ZGF0YV9wcm9kdWN0cy5hc3AifSx7IkRlc2NyaXB0aW9uIjoiVGhlIEFUQkQg
-        cHJvdmlkZXMgcGh5c2ljYWwgdGhlb3J5IGFuZCBtYXRoZW1hdGljYWwgcHJv
-        Y2VkdXJlcyBmb3IgdGhlIGNhbGN1bGF0aW9ucyB1c2VkIHRvIHByb2R1Y2Ug
-        dGhlIGRhdGEgcHJvZHVjdHMuIiwiVVJMQ29udGVudFR5cGUiOiJQdWJsaWNh
-        dGlvblVSTCIsIlR5cGUiOiJWSUVXIFJFTEFURUQgSU5GT1JNQVRJT04iLCJT
-        dWJ0eXBlIjoiQUxHT1JJVEhNIFRIRU9SRVRJQ0FMIEJBU0lTIERPQ1VNRU5U
-        IiwiVVJMIjoiaHR0cHM6Ly9lb3Nwc28ubmFzYS5nb3Yvc2l0ZXMvZGVmYXVs
-        dC9maWxlcy9hdGJkL2F0YmQtYXN0LTAxLnBkZiJ9LHsiRGVzY3JpcHRpb24i
-        OiJBU1RFUiBIaWdoZXItTGV2ZWwgUHJvZHVjdCBVc2VyIEd1aWRlIiwiVVJM
-        Q29udGVudFR5cGUiOiJQdWJsaWNhdGlvblVSTCIsIlR5cGUiOiJWSUVXIFJF
-        TEFURUQgSU5GT1JNQVRJT04iLCJTdWJ0eXBlIjoiVVNFUidTIEdVSURFIiwi
-        VVJMIjoiaHR0cDovL2FzdGVyd2ViLmpwbC5uYXNhLmdvdi9jb250ZW50LzAz
-        X2RhdGEvMDRfRG9jdW1lbnRzL0FTVEVSSGlnaGVyTGV2ZWxVc2VyR3VpZGVW
-        ZXIyTWF5MDEucGRmIn0seyJEZXNjcmlwdGlvbiI6IlRoZSBBU1RFUiBMZXZl
-        bC0xVCBQcm9kdWN0IFNwZWNpZmljYXRpb24gcHJvdmlkZXMgYSBkZXNjcmlw
-        dGlvbiBvZiB0aGUgZGF0YSBmaWxlLiIsIlVSTENvbnRlbnRUeXBlIjoiUHVi
-        bGljYXRpb25VUkwiLCJUeXBlIjoiVklFVyBSRUxBVEVEIElORk9STUFUSU9O
-        IiwiU3VidHlwZSI6IkRBVEEgVVNBR0UiLCJVUkwiOiJodHRwOi8vYXN0ZXJ3
-        ZWIuanBsLm5hc2EuZ292L2NvbnRlbnQvMDNfZGF0YS8wNF9Eb2N1bWVudHMv
-        QVNURVJfTDFfUHJvZHVjdF9TcGVjX1Zlcl8xLjNfSnVseTAxLnBkZiJ9XSwi
-        RGF0YURhdGVzIjpbeyJEYXRlIjoiMjAwMi0wMy0xNFQxMjo0OToyNy42NDBa
-        IiwiVHlwZSI6IkNSRUFURSJ9LHsiRGF0ZSI6IjIwMTUtMDktMTRUMDk6NTA6
-        MjMuMDI2WiIsIlR5cGUiOiJVUERBVEUifV0sIlNwYXRpYWxFeHRlbnQiOnsi
-        U3BhdGlhbENvdmVyYWdlVHlwZSI6IkhPUklaT05UQUwiLCJIb3Jpem9udGFs
-        U3BhdGlhbERvbWFpbiI6eyJHZW9tZXRyeSI6eyJDb29yZGluYXRlU3lzdGVt
-        IjoiQ0FSVEVTSUFOIiwiQm91bmRpbmdSZWN0YW5nbGVzIjpbeyJXZXN0Qm91
-        bmRpbmdDb29yZGluYXRlIjotMTgwLjAsIk5vcnRoQm91bmRpbmdDb29yZGlu
-        YXRlIjo5MC4wLCJFYXN0Qm91bmRpbmdDb29yZGluYXRlIjoxODAuMCwiU291
-        dGhCb3VuZGluZ0Nvb3JkaW5hdGUiOi05MC4wfV19fSwiR3JhbnVsZVNwYXRp
-        YWxSZXByZXNlbnRhdGlvbiI6IkdFT0RFVElDIn0sIkFkZGl0aW9uYWxBdHRy
-        aWJ1dGVzIjpbeyJOYW1lIjoiQVNURVJNYXBQcm9qZWN0aW9uIiwiRGVzY3Jp
-        cHRpb24iOiJUaGUgbWFwIHByb2plY3Rpb24gb2YgdGhlIGdyYW51bGUiLCJE
-        YXRhVHlwZSI6IlNUUklORyJ9LHsiTmFtZSI6IkdlbmVyYXRpb25EYXRlYW5k
-        VGltZSIsIkRlc2NyaXB0aW9uIjoiRGF0ZSBhbmQgVGltZSBncmFudWxlIHBy
-        b2R1Y2VkIiwiRGF0YVR5cGUiOiJEQVRFVElNRV9TVFJJTkcifSx7Ik5hbWUi
-        OiJMb3dlckxlZnRRdWFkQ2xvdWRDb3ZlcmFnZSIsIkRlc2NyaXB0aW9uIjoi
-        VGhlIHBlcmNlbnRhZ2Ugb2YgY2xvdWQgY292ZXJhZ2UgZm9yIHRoZSBsb3dl
-        ciBsZWZ0IHF1YWRyYW50IiwiRGF0YVR5cGUiOiJJTlQifSx7Ik5hbWUiOiJM
-        b3dlclJpZ2h0UXVhZENsb3VkQ292ZXJhZ2UiLCJEZXNjcmlwdGlvbiI6IlRo
-        ZSBwZXJjZW50YWdlIG9mIGNsb3VkIGNvdmVyYWdlIGZvciB0aGUgbG93ZXIg
-        cmlnaHQgcXVhZHJhbnQiLCJEYXRhVHlwZSI6IklOVCJ9LHsiTmFtZSI6IlNj
-        ZW5lQ2xvdWRDb3ZlcmFnZSIsIkRlc2NyaXB0aW9uIjoiUGVyY2VudGFnZSBv
-        ZiBjbG91ZCBjb3ZlcmFnZSBmb3IgdGhlIHdob2xlIHNjZW5lIiwiRGF0YVR5
-        cGUiOiJJTlQifSx7Ik5hbWUiOiJTb2xhcl9BemltdXRoX0FuZ2xlIiwiRGVz
-        Y3JpcHRpb24iOiJBbmdsZSBvZiB0aGUgc3VuIGNsb2Nrd2lzZSBmcm9tIHRy
-        dWUgTm9ydGgiLCJEYXRhVHlwZSI6IkZMT0FUIn0seyJOYW1lIjoiU29sYXJf
-        RWxldmF0aW9uX0FuZ2xlIiwiRGVzY3JpcHRpb24iOiJBbmdsZSBvZiB0aGUg
-        c3VuIGFib3ZlIHRoZSBob3Jpem9uIiwiRGF0YVR5cGUiOiJGTE9BVCJ9LHsi
-        TmFtZSI6IlNXSVJfT2JzZXJ2YXRpb25Nb2RlIiwiRGVzY3JpcHRpb24iOiJJ
-        bmRpY2F0ZXMgd2hldGhlciB0aGUgU1dJUiBzZW5zb3IgZ3JvdXAgaXMgT04g
-        b3IgT0ZGIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUiOiJUSVJfT2Jz
-        ZXJ2YXRpb25Nb2RlIiwiRGVzY3JpcHRpb24iOiJJbmRpY2F0ZXMgd2hldGhl
-        ciB0aGUgVElSIHNlbnNvciBncm91cCBpcyBPTiBvciBPRkYiLCJEYXRhVHlw
-        ZSI6IlNUUklORyJ9LHsiTmFtZSI6IlVwcGVyTGVmdFF1YWRDbG91ZENvdmVy
-        YWdlIiwiRGVzY3JpcHRpb24iOiJUaGUgcGVyY2VudGFnZSBvZiBjbG91ZCBj
-        b3ZlcmFnZSBmb3IgdGhlIHVwcGVyIGxlZnQgcXVhZHJhbnQiLCJEYXRhVHlw
-        ZSI6IklOVCJ9LHsiTmFtZSI6IlVwcGVyUmlnaHRRdWFkQ2xvdWRDb3ZlcmFn
-        ZSIsIkRlc2NyaXB0aW9uIjoiVGhlIHBlcmNlbnRhZ2Ugb2YgY2xvdWQgY292
-        ZXJhZ2UgZm9yIHRoZSB1cHBlciByaWdodCBxdWFkcmFudCIsIkRhdGFUeXBl
-        IjoiSU5UIn0seyJOYW1lIjoiVk5JUjFfT2JzZXJ2YXRpb25Nb2RlIiwiRGVz
-        Y3JpcHRpb24iOiJJbmRpY2F0ZXMgd2hldGhlciB0aGUgVk5JUjEgc2Vuc29y
-        IGdyb3VwIGlzIE9OIG9yIE9GRiIsIkRhdGFUeXBlIjoiU1RSSU5HIn0seyJO
-        YW1lIjoiVk5JUjJfT2JzZXJ2YXRpb25Nb2RlIiwiRGVzY3JpcHRpb24iOiJJ
-        bmRpY2F0ZXMgd2hldGhlciB0aGUgVk5JUjIgc2Vuc29yIGdyb3VwIGlzIE9O
-        IG9yIE9GRiIsIkRhdGFUeXBlIjoiU1RSSU5HIn0seyJOYW1lIjoiQmFuZDFf
-        QXZhaWxhYmxlIiwiRGVzY3JpcHRpb24iOiJJZGVudGlmaWVzIHRoZSBzdGF0
-        dXMgb2YgQmFuZCAxIC0gW1llcywgYmFuZCBpcyBhY3F1aXJlZF0gb3IgW05v
-        LCBiYW5kIHdhcyBub3QgYWNxdWlyZWRdIiwiRGF0YVR5cGUiOiJTVFJJTkci
-        fSx7Ik5hbWUiOiJCYW5kMl9BdmFpbGFibGUiLCJEZXNjcmlwdGlvbiI6Iklk
-        ZW50aWZpZXMgdGhlIHN0YXR1cyBvZiBCYW5kIDIgLSBbWWVzLCBiYW5kIGlz
-        IGFjcXVpcmVkXSBvciBbTm8sIGJhbmQgd2FzIG5vdCBhY3F1aXJlZF0iLCJE
-        YXRhVHlwZSI6IlNUUklORyJ9LHsiTmFtZSI6IkJhbmQzQl9BdmFpbGFibGUi
-        LCJEZXNjcmlwdGlvbiI6IklkZW50aWZpZXMgdGhlIHN0YXR1cyBvZiBCYW5k
-        IDNCIC0gW1llcywgYmFuZCBpcyBhY3F1aXJlZF0gb3IgW05vLCBiYW5kIHdh
-        cyBub3QgYWNxdWlyZWRdIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUi
-        OiJCYW5kM05fQXZhaWxhYmxlIiwiRGVzY3JpcHRpb24iOiJJZGVudGlmaWVz
-        IHRoZSBzdGF0dXMgb2YgQmFuZCAzTiAtIFtZZXMsIGJhbmQgaXMgYWNxdWly
-        ZWRdIG9yIFtObywgYmFuZCB3YXMgbm90IGFjcXVpcmVkXSIsIkRhdGFUeXBl
-        IjoiU1RSSU5HIn0seyJOYW1lIjoiQmFuZDRfQXZhaWxhYmxlIiwiRGVzY3Jp
-        cHRpb24iOiJJZGVudGlmaWVzIHRoZSBzdGF0dXMgb2YgQmFuZCA0IC0gW1ll
-        cywgYmFuZCBpcyBhY3F1aXJlZF0gb3IgW05vLCBiYW5kIHdhcyBub3QgYWNx
-        dWlyZWRdIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUiOiJCYW5kNV9B
-        dmFpbGFibGUiLCJEZXNjcmlwdGlvbiI6IklkZW50aWZpZXMgdGhlIHN0YXR1
-        cyBvZiBCYW5kIDUgLSBbWWVzLCBiYW5kIGlzIGFjcXVpcmVkXSBvciBbTm8s
-        IGJhbmQgd2FzIG5vdCBhY3F1aXJlZF0iLCJEYXRhVHlwZSI6IlNUUklORyJ9
-        LHsiTmFtZSI6IkJhbmQ2X0F2YWlsYWJsZSIsIkRlc2NyaXB0aW9uIjoiSWRl
-        bnRpZmllcyB0aGUgc3RhdHVzIG9mIEJhbmQgNiAtIFtZZXMsIGJhbmQgaXMg
-        YWNxdWlyZWRdIG9yIFtObywgYmFuZCB3YXMgbm90IGFjcXVpcmVkXSIsIkRh
-        dGFUeXBlIjoiU1RSSU5HIn0seyJOYW1lIjoiQmFuZDdfQXZhaWxhYmxlIiwi
-        RGVzY3JpcHRpb24iOiJJZGVudGlmaWVzIHRoZSBzdGF0dXMgb2YgQmFuZCA3
-        IC0gW1llcywgYmFuZCBpcyBhY3F1aXJlZF0gb3IgW05vLCBiYW5kIHdhcyBu
-        b3QgYWNxdWlyZWRdIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUiOiJC
-        YW5kOF9BdmFpbGFibGUiLCJEZXNjcmlwdGlvbiI6IklkZW50aWZpZXMgdGhl
-        IHN0YXR1cyBvZiBCYW5kIDggLSBbWWVzLCBiYW5kIGlzIGFjcXVpcmVkXSBv
-        ciBbTm8sIGJhbmQgd2FzIG5vdCBhY3F1aXJlZF0iLCJEYXRhVHlwZSI6IlNU
-        UklORyJ9LHsiTmFtZSI6IkJhbmQ5X0F2YWlsYWJsZSIsIkRlc2NyaXB0aW9u
-        IjoiSWRlbnRpZmllcyB0aGUgc3RhdHVzIG9mIEJhbmQgOSAtIFtZZXMsIGJh
-        bmQgaXMgYWNxdWlyZWRdIG9yIFtObywgYmFuZCB3YXMgbm90IGFjcXVpcmVk
-        XSIsIkRhdGFUeXBlIjoiU1RSSU5HIn0seyJOYW1lIjoiQmFuZDEwX0F2YWls
-        YWJsZSIsIkRlc2NyaXB0aW9uIjoiSWRlbnRpZmllcyB0aGUgc3RhdHVzIG9m
-        IEJhbmQgMTAgLSBbWWVzLCBiYW5kIGlzIGFjcXVpcmVkXSBvciBbTm8sIGJh
-        bmQgd2FzIG5vdCBhY3F1aXJlZF0iLCJEYXRhVHlwZSI6IlNUUklORyJ9LHsi
-        TmFtZSI6IkJhbmQxMV9BdmFpbGFibGUiLCJEZXNjcmlwdGlvbiI6IklkZW50
-        aWZpZXMgdGhlIHN0YXR1cyBvZiBCYW5kIDExIC0gW1llcywgYmFuZCBpcyBh
-        Y3F1aXJlZF0gb3IgW05vLCBiYW5kIHdhcyBub3QgYWNxdWlyZWRdIiwiRGF0
-        YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUiOiJCYW5kMTJfQXZhaWxhYmxlIiwi
-        RGVzY3JpcHRpb24iOiJJZGVudGlmaWVzIHRoZSBzdGF0dXMgb2YgQmFuZCAx
-        MiAtIFtZZXMsIGJhbmQgaXMgYWNxdWlyZWRdIG9yIFtObywgYmFuZCB3YXMg
-        bm90IGFjcXVpcmVkXSIsIkRhdGFUeXBlIjoiU1RSSU5HIn0seyJOYW1lIjoi
-        QmFuZDEzX0F2YWlsYWJsZSIsIkRlc2NyaXB0aW9uIjoiSWRlbnRpZmllcyB0
-        aGUgc3RhdHVzIG9mIEJhbmQgMTMgLSBbWWVzLCBiYW5kIGlzIGFjcXVpcmVk
-        XSBvciBbTm8sIGJhbmQgd2FzIG5vdCBhY3F1aXJlZF0iLCJEYXRhVHlwZSI6
-        IlNUUklORyJ9LHsiTmFtZSI6IkJhbmQxNF9BdmFpbGFibGUiLCJEZXNjcmlw
-        dGlvbiI6IklkZW50aWZpZXMgdGhlIHN0YXR1cyBvZiBCYW5kIDE0IC0gW1ll
-        cywgYmFuZCBpcyBhY3F1aXJlZF0gb3IgW05vLCBiYW5kIHdhcyBub3QgYWNx
-        dWlyZWRdIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUiOiJSYWRpb21l
-        dHJpY0RCVmVyc2lvbiIsIkRlc2NyaXB0aW9uIjoiVGhlIHZlcnNpb24gbnVt
-        YmVyIG9mIHRoZSBSYWRpb21ldHJpYyBEYXRhYmFzZSB1c2VkIGluIExldmVs
-        IDEgcHJvY2Vzc2luZy4iLCJEYXRhVHlwZSI6IlNUUklORyJ9LHsiTmFtZSI6
-        Ikdlb21ldHJpY0RCVmVyc2lvbiIsIkRlc2NyaXB0aW9uIjoiVGhlIHZlcnNp
-        b24gbnVtYmVyIG9mIHRoZSBHZW9tZXRyaWMgRGF0YWJhc2UgdXNlZCBpbiBM
-        ZXZlbCAxIHByb2Nlc3NpbmcuIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5h
-        bWUiOiJBU1RFUkdhaW5zIiwiRGVzY3JpcHRpb24iOiJJZGVudGlmaWVzIHRo
-        ZSBHYWluIHNldHRpbmcgZm9yIHRoZSBCYW5kczogSEdILCBOT1IsIExPMSwg
-        TE8yLCBMT1csIE9GRiIsIkRhdGFUeXBlIjoiU1RSSU5HIn0seyJOYW1lIjoi
-        aWRlbnRpZmllcl9wcm9kdWN0X2RvaSIsIkRlc2NyaXB0aW9uIjoiRGlnaXRh
-        bCBvYmplY3QgaWRlbnRpZmllciB0aGF0IHVuaXF1ZWx5IGlkZW50aWZpZXMg
-        dGhpcyBkYXRhIHByb2R1Y3QiLCJWYWx1ZSI6IjEwLjUwNjcvQVNURVIvQVNU
-        X0wxQUUuMDAzIiwiRGF0YVR5cGUiOiJTVFJJTkcifSx7Ik5hbWUiOiJpZGVu
-        dGlmaWVyX3Byb2R1Y3RfZG9pX2F1dGhvcml0eSIsIkRlc2NyaXB0aW9uIjoi
-        VVJMIG9mIHRoZSBkaWdpdGFsIG9iamVjdCBpZGVudGlmaWVyIHJlc29sdmlu
-        ZyBhdXRob3JpdHkiLCJWYWx1ZSI6Imh0dHBzOi8vZG9pLm9yZyIsIkRhdGFU
-        eXBlIjoiU1RSSU5HIn1dLCJTY2llbmNlS2V5d29yZHMiOlt7IkNhdGVnb3J5
-        IjoiRUFSVEggU0NJRU5DRSIsIlRvcGljIjoiU1BFQ1RSQUwvRU5HSU5FRVJJ
-        TkciLCJUZXJtIjoiSU5GUkFSRUQgV0FWRUxFTkdUSFMiLCJWYXJpYWJsZUxl
-        dmVsMSI6IlJFRkxFQ1RFRCBJTkZSQVJFRCJ9LHsiQ2F0ZWdvcnkiOiJFQVJU
-        SCBTQ0lFTkNFIiwiVG9waWMiOiJTUEVDVFJBTC9FTkdJTkVFUklORyIsIlRl
-        cm0iOiJJTkZSQVJFRCBXQVZFTEVOR1RIUyIsIlZhcmlhYmxlTGV2ZWwxIjoi
-        VEhFUk1BTCBJTkZSQVJFRCJ9LHsiQ2F0ZWdvcnkiOiJFQVJUSCBTQ0lFTkNF
-        IiwiVG9waWMiOiJTUEVDVFJBTC9FTkdJTkVFUklORyIsIlRlcm0iOiJWSVNJ
-        QkxFIFdBVkVMRU5HVEhTIiwiVmFyaWFibGVMZXZlbDEiOiJWSVNJQkxFIElN
-        QUdFUlkifV0sIkVudHJ5VGl0bGUiOiJBU1RFUiBFeHBlZGl0ZWQgTDFBIFJl
-        Y29uc3RydWN0ZWQgVW5wcm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIFYwMDMi
-        LCJDb2xsZWN0aW9uUHJvZ3Jlc3MiOiJBQ1RJVkUiLCJQcm9jZXNzaW5nTGV2
-        ZWwiOnsiUHJvY2Vzc2luZ0xldmVsRGVzY3JpcHRpb24iOiJSYWRpb21ldHJp
-        YyBDb3VudHMiLCJJZCI6IjFBIn0sIlBsYXRmb3JtcyI6W3siVHlwZSI6IkVh
-        cnRoIE9ic2VydmF0aW9uIFNhdGVsbGl0ZXMiLCJTaG9ydE5hbWUiOiJUZXJy
-        YSIsIkxvbmdOYW1lIjoiRWFydGggT2JzZXJ2aW5nIFN5c3RlbSwgVGVycmEg
-        KEFNLTEpIiwiSW5zdHJ1bWVudHMiOlt7IlNob3J0TmFtZSI6IkFTVEVSIiwi
-        TG9uZ05hbWUiOiJBZHZhbmNlZCBTcGFjZWJvcm5lIFRoZXJtYWwgRW1pc3Np
-        b24gYW5kIFJlZmxlY3Rpb24gUmFkaW9tZXRlciIsIlRlY2huaXF1ZSI6Iklt
-        YWdpbmcgU3BlY3Ryb21ldGVycy9SYWRpb21ldGVycyIsIkNvbXBvc2VkT2Yi
-        Olt7IlNob3J0TmFtZSI6IlNXSVIiLCJMb25nTmFtZSI6IlNob3J0IFdhdmVs
-        ZW5ndGggSW5mcmFyZWQgUmFkaW9tZXRlciIsIlRlY2huaXF1ZSI6IkltYWdp
-        bmcgUmFkaW9tZXRlcnMifSx7IlNob3J0TmFtZSI6IlRJUiIsIkxvbmdOYW1l
-        IjoiVGhlcm1hbCBJbmZyYXJlZCBSYWRpb21ldGVyIiwiVGVjaG5pcXVlIjoi
-        SW1hZ2luZyBSYWRpb21ldGVycyJ9LHsiU2hvcnROYW1lIjoiVk5JUiIsIkxv
-        bmdOYW1lIjoiVmlzaWJsZSBhbmQgTmVhciBJbmZyYXJlZCBSYWRpb21ldGVy
-        IiwiVGVjaG5pcXVlIjoiSW1hZ2luZyBSYWRpb21ldGVycyJ9XX1dfV0sIlBy
-        b2plY3RzIjpbeyJTaG9ydE5hbWUiOiJUZXJyYSIsIkxvbmdOYW1lIjoiRWFy
-        dGggT2JzZXJ2aW5nIFN5c3RlbSAoRU9TKSwgVGVycmEiLCJDYW1wYWlnbnMi
-        OlsiVGVycmEiXX1dLCJWZXJzaW9uIjoiMDAzIiwiVGVtcG9yYWxFeHRlbnRz
-        IjpbeyJQcmVjaXNpb25PZlNlY29uZHMiOjcsIkVuZHNBdFByZXNlbnRGbGFn
-        Ijp0cnVlLCJSYW5nZURhdGVUaW1lcyI6W3siQmVnaW5uaW5nRGF0ZVRpbWUi
-        OiIyMDAwLTAzLTA0VDIwOjM0OjA0LjAwMFoifV19XSwiRGF0YUNlbnRlcnMi
-        Olt7IlJvbGVzIjpbIlBST0NFU1NPUiJdLCJTaG9ydE5hbWUiOiJKUC9NRVRJ
-        L0FJU1QvSlNTL0dEUyIsIkxvbmdOYW1lIjoiR3JvdW5kIERhdGEgU3lzdGVt
-        LCBKYXBhbiBTcGFjZSBTeXN0ZW1zLCBOYXRpb25hbCBJbnN0aXR1dGUgb2Yg
-        QWR2YW5jZWQgSW5kdXN0cmlhbCBTY2llbmNlIGFuZCBUZWNobm9sb2d5LCBN
-        aW5pc3RyeSBvZiBFY29ub215LCBUcmFkZSwgYW5kIEluZHVzdHJ5LCBKYXBh
-        biIsIkNvbnRhY3RJbmZvcm1hdGlvbiI6eyJSZWxhdGVkVXJscyI6W3siVVJM
-        Q29udGVudFR5cGUiOiJEYXRhQ2VudGVyVVJMIiwiVHlwZSI6IkhPTUUgUEFH
-        RSIsIlVSTCI6Imh0dHA6Ly93d3cuanNwYWNlc3lzdGVtcy5vci5qcC9lbl8i
-        fV0sIkFkZHJlc3NlcyI6W3siQ291bnRyeSI6IkphcGFuIn1dfX0seyJSb2xl
-        cyI6WyJBUkNISVZFUiJdLCJTaG9ydE5hbWUiOiJMUCBEQUFDIiwiTG9uZ05h
-        bWUiOiJMYW5kIFByb2Nlc3NlcyBEaXN0cmlidXRlZCBBY3RpdmUgQXJjaGl2
-        ZSBDZW50ZXIiLCJDb250YWN0SW5mb3JtYXRpb24iOnsiUmVsYXRlZFVybHMi
-        Olt7IlVSTENvbnRlbnRUeXBlIjoiRGF0YUNlbnRlclVSTCIsIlR5cGUiOiJI
-        T01FIFBBR0UiLCJVUkwiOiJodHRwczovL2xwZGFhYy51c2dzLmdvdi8ifV0s
-        IlNlcnZpY2VIb3VycyI6Ik0tRiwgOCBhLm0uIHRvIDQgcC5tLiBDZW50cmFs
-        IFRpbWUiLCJDb250YWN0SW5zdHJ1Y3Rpb24iOiJOb25lIiwiQ29udGFjdE1l
-        Y2hhbmlzbXMiOlt7IlR5cGUiOiJUZWxlcGhvbmUiLCJWYWx1ZSI6IjYwNS01
-        OTQtNjExNiJ9LHsiVHlwZSI6IkZheCIsIlZhbHVlIjoiNjA1LTU5NC02OTYz
-        In0seyJUeXBlIjoiRW1haWwiLCJWYWx1ZSI6ImxwZGFhY0B1c2dzLmdvdiJ9
-        XSwiQWRkcmVzc2VzIjpbeyJTdHJlZXRBZGRyZXNzZXMiOlsiVS5TLiBHZW9s
-        b2dpY2FsIFN1cnZleSwgRWFydGggUmVzb3VyY2VzIE9ic2VydmF0aW9uIGFu
-        ZCBTY2llbmNlIChFUk9TKSBDZW50ZXIiXSwiQ2l0eSI6IlNpb3V4IEZhbGxz
-        IiwiQ291bnRyeSI6IlVuaXRlZCBTdGF0ZXMiLCJQb3N0YWxDb2RlIjoiNTcx
-        OTgifV19fV0sIk1ldGFkYXRhQXNzb2NpYXRpb25zIjpbeyJUeXBlIjoiREVQ
-        RU5ERU5UIiwiRGVzY3JpcHRpb24iOiJSYWRpb21ldHJpYyB2YWx1ZXMgY29t
-        cHV0ZWQgZnJvbSB0aGUgcmF3IGluc3RydW1lbnQgY291bnRzIiwiRW50cnlJ
-        ZCI6IkFTVF9MMUIifV19
+      encoding: UTF-8
+      string: '{"LocationKeywords":[{"Category":"GEOGRAPHIC REGION","Type":"GLOBAL"}],"MetadataDates":[{"Type":"CREATE","Date":"2017-04-27T20:43:00.000Z"},{"Type":"UPDATE","Date":"2018-08-03T16:32:00.000Z"}],"VersionDescription":"Added
+        Associated DLL name attribute.","ShortName":"AST_L1AE","Abstract":"The ASTER
+        Expedited L1A Reconstructed Unprocessed Instrument Data is produced with the
+        express purpose of providing the ASTER Science Team members and others, data
+        of their particular interest in quick turn-around time from the moment the
+        data are acquired. This is usually done to support on-going field calibration
+        and validation efforts or to support emergency response to natural disasters
+        when processed Level-1 data with minimum turn-around time would prove beneficial
+        in initial damage or impact assessments. This data set is expected to be publicly
+        available for a period of 30 days after which time it will be removed from
+        the archive. This is done because the routinely processed (Production Data
+        Set or PDS) version of this data set will be available from Japan in due course
+        and available for search and order from the LP DAAC archives. ASTER Expedited
+        Data Sets (EDS) serve the short-term requirements of a small group of scientists
+        and fulfill immediate imagery needs during times of natural disasters.\r\n\r\nUsers
+        are advised that ASTER SWIR data acquired from late April 2008 to the present
+        exhibit anomalous saturation of values and anomalous striping. This effect
+        is also present for some prior acquisition periods. Please refer to the ASTER
+        SWIR User Advisory Document (https://lpdaac.usgs.gov/sites/default/files/public/aster/docs/ASTER_SWIR_User_Advisory_July%2018_08.pdf)
+        for more details.\r\n\r\nThe general product description details as described
+        for the ASTER Level 1A Data Set - Reconstructed, unprocessed Instrument Data
+        apply to the expedited data set with a few notable exceptions. These include:\r\n\r\n•       The
+        Expedited Level-1A data set does not contain the VNIR 3B  (aft-viewing) band\r\n•       This
+        data set does not have short-term calibration for the Thermal Infrared (TIR)
+        sensor\r\n•       The registration quality of this data set is likely to be
+        lower, and also vary from scene to scene \r\n\r\nThe Level-0 data downlink
+        from the Tracking Data Relay Satellite System (TDRSS) at White Sands, NM is
+        received at the EOS Data Operations System (EDOS) facility at the Goddard
+        Space Flight Center (GSFC). Following some pre-processing, EDOS directly transmits
+        that data (via the GSFC DAAC) to LP DAAC where the data are processed and
+        the level-1 EDS is produced. The ASTER Level-1AE product contains reconstructed,
+        unprocessed instrument digital data derived from the telemetry streams of
+        the 3 telescopes at their respective ground resolutions: Visible Near Infrared
+        (VNIR), 15 m, Shortwave Infrared (SWIR), 30 m, and Thermal Infrared (TIR),
+        90 m. There is no browse product provided for the expedited L1A data set.\r\n\r\nV003
+        data set release date: 2002-05-03\r\n\r\nData Set Characteristics: \r\nArea:
+        ~60km x 60km \r\nImage Dimensions: \r\n  VNIR: 4200 rows x 4100 columns \r\n  SWIR:
+        2100 rows x 2048 columns \r\n  TIR: 700 rows x 700 columns \r\nFile Size:
+        \r\n  VNIR (1, 2, 3N): ~49.3 MB \r\n  SWIR (4 through 9): ~25 MB \r\n  TIR
+        (10 through 14): ~4.7 MB \r\n  Total: 85 Megabytes \r\nSpatial Resolution:\r\n  VNIR:
+        15m\r\n  SWIR: 30m\r\n  TIR: 90m\r\nUnits: Digital count\r\nProjection: Universal
+        Transverse Mercator (UTM)\r\nData Format: HDF-EOS or GeoTIFF \r\nData Fields:
+        14\r\n","DOI":{"Authority":"https://doi.org","DOI":"10.5067/ASTER/AST_L1AE.003"},"RelatedUrls":[{"Description":"The
+        LP DAAC product page provides information on Science Data Set layers and links
+        for user guides, ATBDs, data access, tools, customer support, etc.","URLContentType":"CollectionURL","Type":"DATA
+        SET LANDING PAGE","URL":"https://doi.org/10.5067/ASTER/AST_L1AE.003"},{"Description":"LP
+        DAAC Data Pool provides direct access to available products via HTTPS.","URLContentType":"DistributionURL","Type":"GET
+        DATA","Subtype":"ON-LINE ARCHIVE","URL":"https://e4ftl01.cr.usgs.gov/ASTT/AST_L1AE.003/"},{"Description":"The
+        LP DAAC website provides detailed information on discovery, distribution,
+        access, and support of land data products.","URLContentType":"CollectionURL","Type":"PROJECT
+        HOME PAGE","URL":"https://lpdaac.usgs.gov/"},{"Description":"Earthdata Search
+        allows users to search, discover, visualize, refine, and access NASA Earth
+        Observation data.","URLContentType":"DistributionURL","Type":"GET DATA","Subtype":"EARTHDATA
+        SEARCH","URL":"https://search.earthdata.nasa.gov/search?q=AST_L1AE+V003"},{"Description":"The
+        ASTER home page is maintained through NASA''s Jet Propulsion Laboratory and
+        documents various aspects of the ASTER mission. http://asterweb.jpl.nasa.gov/
+        ","URLContentType":"CollectionURL","Type":"PROJECT HOME PAGE","URL":"http://asterweb.jpl.nasa.gov/data_products.asp"},{"Description":"The
+        ATBD provides physical theory and mathematical procedures for the calculations
+        used to produce the data products.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"ALGORITHM THEORETICAL BASIS DOCUMENT","URL":"https://eospso.nasa.gov/sites/default/files/atbd/atbd-ast-01.pdf"},{"Description":"ASTER
+        Higher-Level Product User Guide","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"USER''S GUIDE","URL":"http://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTERHigherLevelUserGuideVer2May01.pdf"},{"Description":"The
+        ASTER Level-1T Product Specification provides a description of the data file.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"DATA USAGE","URL":"http://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTER_L1_Product_Spec_Ver_1.3_July01.pdf"},{"Description":"The
+        Digital Object Identifier provides a permanent link for product information
+        and data citation.","URLContentType":"CollectionURL","Type":"DOI","URL":"https://doi.org/10.5067/ASTER/AST_L1AE.003"}],"DataDates":[{"Date":"2002-03-14T12:49:27.640Z","Type":"CREATE"},{"Date":"2015-09-14T09:50:23.026Z","Type":"UPDATE"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"GEODETIC"},"AdditionalAttributes":[{"Name":"ASTERMapProjection","Description":"The
+        map projection of the granule","DataType":"STRING"},{"Name":"GenerationDateandTime","Description":"Date
+        and Time granule produced","DataType":"DATETIME_STRING"},{"Name":"LowerLeftQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the lower left quadrant","DataType":"INT"},{"Name":"LowerRightQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the lower right quadrant","DataType":"INT"},{"Name":"SceneCloudCoverage","Description":"Percentage
+        of cloud coverage for the whole scene","DataType":"INT"},{"Name":"Solar_Azimuth_Angle","Description":"Angle
+        of the sun clockwise from true North","DataType":"FLOAT"},{"Name":"Solar_Elevation_Angle","Description":"Angle
+        of the sun above the horizon","DataType":"FLOAT"},{"Name":"SWIR_ObservationMode","Description":"Indicates
+        whether the SWIR sensor group is ON or OFF","DataType":"STRING"},{"Name":"TIR_ObservationMode","Description":"Indicates
+        whether the TIR sensor group is ON or OFF","DataType":"STRING"},{"Name":"UpperLeftQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the upper left quadrant","DataType":"INT"},{"Name":"UpperRightQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the upper right quadrant","DataType":"INT"},{"Name":"VNIR1_ObservationMode","Description":"Indicates
+        whether the VNIR1 sensor group is ON or OFF","DataType":"STRING"},{"Name":"VNIR2_ObservationMode","Description":"Indicates
+        whether the VNIR2 sensor group is ON or OFF","DataType":"STRING"},{"Name":"Band1_Available","Description":"Identifies
+        the status of Band 1 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band2_Available","Description":"Identifies
+        the status of Band 2 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band3B_Available","Description":"Identifies
+        the status of Band 3B - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band3N_Available","Description":"Identifies
+        the status of Band 3N - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band4_Available","Description":"Identifies
+        the status of Band 4 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band5_Available","Description":"Identifies
+        the status of Band 5 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band6_Available","Description":"Identifies
+        the status of Band 6 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band7_Available","Description":"Identifies
+        the status of Band 7 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band8_Available","Description":"Identifies
+        the status of Band 8 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band9_Available","Description":"Identifies
+        the status of Band 9 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band10_Available","Description":"Identifies
+        the status of Band 10 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band11_Available","Description":"Identifies
+        the status of Band 11 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band12_Available","Description":"Identifies
+        the status of Band 12 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band13_Available","Description":"Identifies
+        the status of Band 13 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band14_Available","Description":"Identifies
+        the status of Band 14 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"RadiometricDBVersion","Description":"The
+        version number of the Radiometric Database used in Level 1 processing.","DataType":"STRING"},{"Name":"GeometricDBVersion","Description":"The
+        version number of the Geometric Database used in Level 1 processing.","DataType":"STRING"},{"Name":"ASTERGains","Description":"Identifies
+        the Gain setting for the Bands: HGH, NOR, LO1, LO2, LOW, OFF","DataType":"STRING"},{"Name":"identifier_product_doi","Description":"Digital
+        object identifier that uniquely identifies this data product","Value":"10.5067/ASTER/AST_L1AE.003","DataType":"STRING"},{"Name":"identifier_product_doi_authority","Description":"URL
+        of the digital object identifier resolving authority","Value":"https://doi.org","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"INFRARED WAVELENGTHS","VariableLevel1":"REFLECTED
+        INFRARED"},{"Category":"EARTH SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"INFRARED
+        WAVELENGTHS","VariableLevel1":"THERMAL INFRARED"},{"Category":"EARTH SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"VISIBLE
+        WAVELENGTHS","VariableLevel1":"VISIBLE IMAGERY"}],"EntryTitle":"ASTER Expedited
+        L1A Reconstructed Unprocessed Instrument Data V003","CollectionProgress":"ACTIVE","ProcessingLevel":{"ProcessingLevelDescription":"Radiometric
+        Counts","Id":"1A"},"Platforms":[{"Type":"Earth Observation Satellites","ShortName":"Terra","LongName":"Earth
+        Observing System, Terra (AM-1)","Instruments":[{"ShortName":"ASTER","LongName":"Advanced
+        Spaceborne Thermal Emission and Reflection Radiometer","Technique":"Imaging
+        Spectrometers/Radiometers","ComposedOf":[{"ShortName":"SWIR","LongName":"Short
+        Wavelength Infrared Radiometer","Technique":"Imaging Radiometers"},{"ShortName":"TIR","LongName":"Thermal
+        Infrared Radiometer","Technique":"Imaging Radiometers"},{"ShortName":"VNIR","LongName":"Visible
+        and Near Infrared Radiometer","Technique":"Imaging Radiometers"}]}]}],"Projects":[{"ShortName":"Terra","LongName":"Earth
+        Observing System (EOS), Terra","Campaigns":["Terra"]}],"Version":"003","TemporalExtents":[{"PrecisionOfSeconds":7,"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2000-03-04T20:34:04.000Z"}]}],"DataCenters":[{"Roles":["PROCESSOR"],"ShortName":"JP/METI/AIST/JSS/GDS","LongName":"Ground
+        Data System, Japan Space Systems, National Institute of Advanced Industrial
+        Science and Technology, Ministry of Economy, Trade, and Industry, Japan","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://www.jspacesystems.or.jp/en_"}],"Addresses":[{"Country":"Japan"}]}},{"Roles":["ARCHIVER"],"ShortName":"LP
+        DAAC","LongName":"Land Processes Distributed Active Archive Center","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://lpdaac.usgs.gov/"}],"ServiceHours":"M-F, 8 a.m. to 4
+        p.m. Central Time","ContactInstruction":"None","ContactMechanisms":[{"Type":"Telephone","Value":"605-594-6116"},{"Type":"Fax","Value":"605-594-6963"},{"Type":"Email","Value":"lpdaac@usgs.gov"}],"Addresses":[{"StreetAddresses":["U.S.
+        Geological Survey, Earth Resources Observation and Science (EROS) Center"],"City":"Sioux
+        Falls","Country":"United States","PostalCode":"57198"}]}}],"MetadataAssociations":[{"Type":"DEPENDENT","Description":"Radiometric
+        values computed from the raw instrument counts","EntryId":"AST_L1B"}]}'
     http_version: 
 9c2cee2ee77d164b06dea319e8214682d822aa55:
   response:
@@ -1791,11 +1655,11 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - e6497248-8395-45e8-83cb-cac048047303
+      - 9dc37126-0246-4e3a-92d1-65099d90d2c5
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Thu, 12 Jul 2018 11:40:29 GMT
+      - Wed, 08 Aug 2018 18:11:27 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1803,196 +1667,91 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       vary:
       - Accept-Encoding, User-Agent
       content-length:
-      - '3513'
+      - '3558'
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJMb2NhdGlvbktleXdvcmRzIjpbeyJDYXRlZ29yeSI6IkdFT0dSQVBISUMg
-        UkVHSU9OIiwiVHlwZSI6IkdMT0JBTCJ9XSwiTWV0YWRhdGFEYXRlcyI6W3si
-        VHlwZSI6IkNSRUFURSIsIkRhdGUiOiIyMDE3LTA1LTAyVDE0OjA4OjAwLjAw
-        MFoifSx7IlR5cGUiOiJVUERBVEUiLCJEYXRlIjoiMjAxOC0wNy0wOVQyMDo0
-        ODowMC4wMDBaIn1dLCJWZXJzaW9uRGVzY3JpcHRpb24iOiJSZXByb2Nlc3Nl
-        ZCBnbG9iYWwgcHJvZHVjdGlvbiIsIlNob3J0TmFtZSI6IkFTVEdUTSIsIkFi
-        c3RyYWN0IjoiVGhlIEFkdmFuY2VkIFNwYWNlYm9ybmUgVGhlcm1hbCBFbWlz
-        c2lvbiBhbmQgUmVmbGVjdGlvbiBSYWRpb21ldGVyIChBU1RFUikgR2xvYmFs
-        IERpZ2l0YWwgRWxldmF0aW9uIE1vZGVsIChHREVNKSB3YXMgZGV2ZWxvcGVk
-        IGpvaW50bHkgYnkgdGhlIFUuUy4gTmF0aW9uYWwgQWVyb25hdXRpY3MgYW5k
-        IFNwYWNlIEFkbWluaXN0cmF0aW9uIChOQVNBKSBhbmQgSmFwYW7igJlzIE1p
-        bmlzdHJ5IG9mIEVjb25vbXksIFRyYWRlLCBhbmQgSW5kdXN0cnkgKE1FVEkp
-        LlxyXG5cclxuQVNURVIgaXMgY2FwYWJsZSBvZiBjb2xsZWN0aW5nIGluLXRy
-        YWNrIHN0ZXJlbyB1c2luZyBuYWRpci0gYW5kIGFmdC1sb29raW5nIG5lYXIg
-        aW5mcmFyZWQgY2FtZXJhcy4gIFNpbmNlIDIwMDEsIHRoZXNlIHN0ZXJlbyBw
-        YWlycyBoYXZlIGJlZW4gdXNlZCB0byBwcm9kdWNlIHNpbmdsZS1zY2VuZSAo
-        NjAtIHggNjAta2lsb21lbnRlciAoa20pKSBkaWdpdGFsIGVsZXZhdGlvbiBt
-        b2RlbHMgKERFTSkgaGF2aW5nIHZlcnRpY2FsIChyb290LW1lYW4tc3F1YXJl
-        ZC1lcnJvcikgYWNjdXJhY2llcyBnZW5lcmFsbHkgYmV0d2VlbiAxMC0gYW5k
-        IDI1LW1ldGVycyAobSkuIFxyXG5cclxuVGhlIG1ldGhvZG9sb2d5IHVzZWQg
-        YnkgSmFwYW4ncyBTZW5zb3IgSW5mb3JtYXRpb24gTGFib3JhdG9yeSBDb3Jw
-        b3JhdGlvbiAoU0lMQykgdG8gcHJvZHVjZSB0aGUgQVNURVIgR0RFTSBpbnZv
-        bHZlcyBhdXRvbWF0ZWQgcHJvY2Vzc2luZyBvZiB0aGUgZW50aXJlIEFTVEVS
-        IExldmVsLTFBIGFyY2hpdmUuICBTdGVyZW8tY29ycmVsYXRpb24gaXMgdXNl
-        ZCB0byBwcm9kdWNlIG92ZXIgb25lIG1pbGxpb24gaW5kaXZpZHVhbCBzY2Vu
-        ZS1iYXNlZCBBU1RFUiBERU1zLCB0byB3aGljaCBjbG91ZCBtYXNraW5nIGlz
-        IGFwcGxpZWQgdG8gcmVtb3ZlIGNsb3VkeSBwaXhlbHMuICBBbGwgY2xvdWQt
-        c2NyZWVuZWQgREVNUyBhcmUgc3RhY2tlZCBhbmQgcmVzaWR1YWwgYmFkIHZh
-        bHVlcyBhbmQgb3V0bGllcnMgYXJlIHJlbW92ZWQuICBTZWxlY3RlZCBkYXRh
-        IGFyZSBhdmVyYWdlZCB0byBjcmVhdGUgZmluYWwgcGl4ZWwgdmFsdWVzLCBh
-        bmQgcmVzaWR1YWwgYW5vbWFsaWVzIGFyZSBjb3JyZWN0ZWQgYmVmb3JlIHBh
-        cnRpdGlvbmluZyB0aGUgZGF0YSBpbnRvIDEgwrAgeCAxIMKwIHRpbGVzLlxy
-        XG5cclxuVGhlIEFTVEVSIEdERU0gY292ZXJzIGxhbmQgc3VyZmFjZXMgYmV0
-        d2VlbiA4M8KwTiBhbmQgODPCsFMgYW5kIGlzIGNvbXByaXNlZCBvZiAyMiw3
-        MDIgdGlsZXMuICBUaWxlcyB0aGF0IGNvbnRhaW4gYXQgbGVhc3QgMC4wMSUg
-        bGFuZCBhcmVhIGFyZSBpbmNsdWRlZC4gIFRoZSBBU1RFUiBHREVNIGlzIGRp
-        c3RyaWJ1dGVkIGFzIEdlb2dyYXBoaWMgVGFnZ2VkIEltYWdlIEZpbGUgRm9y
-        bWF0IChHZW9USUZGKSBmaWxlcyB3aXRoIGdlb2dyYXBoaWMgY29vcmRpbmF0
-        ZXMgKGxhdGl0dWRlLCBsb25naXR1ZGUpLiAgVGhlIGRhdGEgYXJlIHBvc3Rl
-        ZCBvbiBhIDEgYXJjLXNlY29uZCAoYXBwcm94aW1hdGVseSAzMOKAk20gYXQg
-        dGhlIGVxdWF0b3IpIGdyaWQgYW5kIHJlZmVyZW5jZWQgdG8gdGhlIDE5ODQg
-        V29ybGQgR2VvZGV0aWMgU3lzdGVtIChXR1M4NCkvIDE5OTYgRWFydGggR3Jh
-        dml0YXRpb25hbCBNb2RlbCAoRUdNOTYpIGdlb2lkLiAgXHJcblxyXG5XaGls
-        ZSB0aGUgQVNURVIgR0RFTSAyIGJlbmVmaXRzIGZyb20gc3Vic3RhbnRpYWwg
-        aW1wcm92ZW1lbnRzIG92ZXIgR0RFTSAxLCB1c2VycyBhcmUgbm9uZXRoZWxl
-        c3MgYWR2aXNlZCB0aGF0IHRoZSBwcm9kdWN0cyBzdGlsbCBtYXkgY29udGFp
-        biBhbm9tYWxpZXMgYW5kIGFydGlmYWN0cyB0aGF0IHdpbGwgcmVkdWNlIGl0
-        cyB1c2FiaWxpdHkgZm9yIGNlcnRhaW4gYXBwbGljYXRpb25zLCBiZWNhdXNl
-        IHRoZXkgY2FuIGludHJvZHVjZSBsYXJnZSBlbGV2YXRpb24gZXJyb3JzIG9u
-        IGxvY2FsIHNjYWxlcy4gVGhlIGRhdGEgYXJlIHByb3ZpZGVkIOKAnGFzIGlz
-        4oCdIGFuZCBuZWl0aGVyIE5BU0Egbm9yIE1FVEkvRVJTREFDIHdpbGwgYmUg
-        cmVzcG9uc2libGUgZm9yIGFueSBkYW1hZ2VzIHJlc3VsdGluZyBmcm9tIHVz
-        ZSBvZiB0aGUgZGF0YS5cclxuXHJcblYwMDIgZGF0YSBzZXQgcmVsZWFzZSBk
-        YXRlOiAyMDA5LTA2LTI4XHJcblxyXG5EYXRhIFNldCBDaGFyYWN0ZXJpc3Rp
-        Y3M6IFxyXG5HZW9ncmFwaGljIEV4dGVudDogR2xvYmFsIGJldHdlZW4gODPC
-        uiBsYXRpdHVkZSBcclxuU2NlbmUgQ292ZXJhZ2U6IDHCuiB4IDHCuiB0aWxl
-        cyBcclxuSW1hZ2UgRGltZW5zaW9uczogMzYwMSB4IDM2MDEgXHJcblRvdGFs
-        IE51bWJlciBUaWxlczogVjAwMTogMjIsNjA0OyBWMDAyOiAyMiw3MDIgXHJc
-        blRpbGUgVm9sdW1lOiB+MjVNQiwgNi40IE1CIGNvbXByZXNzZWQgXHJcbkNv
-        bXByZXNzaW9uIFR5cGU6IHppcCBcclxuRmlsZSBGb3JtYXQ6IEdFT1RJRkYg
-        XHJcbk1hcCBQcm9qZWN0aW9uOiBHZW9ncmFwaGljIExhdC9Mb24gXHJcbkRh
-        dHVtOiBXR1M4NC9FR005NiBcclxuUmVzb2x1dGlvbjogMSBhcmNzZWNvbmQg
-        KDMwLW0gaG9yaXpvbnRhbCBwb3N0aW5nIGF0IGVxdWF0b3IpIiwiUHVycG9z
-        ZSI6IlNjaWVuY2UgUmVzZWFyY2giLCJET0kiOnsiQXV0aG9yaXR5IjoiaHR0
-        cHM6Ly9kb2kub3JnIiwiRE9JIjoiMTAuNTA2Ny9BU1RFUi9BU1RHVE0uMDAy
-        In0sIlJlbGF0ZWRVcmxzIjpbeyJEZXNjcmlwdGlvbiI6IlRoZSBMUCBEQUFD
-        IHByb2R1Y3QgcGFnZSBwcm92aWRlcyBpbmZvcm1hdGlvbiBvbiBTY2llbmNl
-        IERhdGEgU2V0IGxheWVycyBhbmQgbGlua3MgZm9yIHVzZXIgZ3VpZGVzLCBB
-        VEJEcywgZGF0YSBhY2Nlc3MsIHRvb2xzLCBjdXN0b21lciBzdXBwb3J0LCBl
-        dGMuICIsIlVSTENvbnRlbnRUeXBlIjoiQ29sbGVjdGlvblVSTCIsIlR5cGUi
-        OiJEQVRBIFNFVCBMQU5ESU5HIFBBR0UiLCJVUkwiOiJodHRwczovL2RvaS5v
-        cmcvMTAuNTA2Ny9BU1RFUi9BU1RHVE0uMDAyIn0seyJEZXNjcmlwdGlvbiI6
-        IlVTR1MgRWFydGhFeHBsb3JlciBwcm92aWRlcyB1c2VycyB0aGUgYWJpbGl0
-        eSB0byBxdWVyeSwgc2VhcmNoLCBhbmQgb3JkZXIgcHJvZHVjdHMgYXZhaWxh
-        YmxlIGZyb20gdGhlIExQIERBQUMuICAiLCJVUkxDb250ZW50VHlwZSI6IkRp
-        c3RyaWJ1dGlvblVSTCIsIlR5cGUiOiJHRVQgREFUQSIsIlVSTCI6Imh0dHA6
-        Ly9lYXJ0aGV4cGxvcmVyLnVzZ3MuZ292LyJ9LHsiRGVzY3JpcHRpb24iOiJU
-        aGUgTFAgREFBQyB3ZWJzaXRlIHByb3ZpZGVzIGRldGFpbGVkIGluZm9ybWF0
-        aW9uIG9uIGRpc2NvdmVyeSwgZGlzdHJpYnV0aW9uLCBhY2Nlc3MsIGFuZCBz
-        dXBwb3J0IG9mIGxhbmQgZGF0YSBwcm9kdWN0cy4iLCJVUkxDb250ZW50VHlw
-        ZSI6IkNvbGxlY3Rpb25VUkwiLCJUeXBlIjoiUFJPSkVDVCBIT01FIFBBR0Ui
-        LCJVUkwiOiJodHRwczovL2xwZGFhYy51c2dzLmdvdiJ9LHsiRGVzY3JpcHRp
-        b24iOiJUaGUgQVNURVIgaG9tZSBwYWdlIGlzIG1haW50YWluZWQgdGhyb3Vn
-        aCBOQVNBJ3MgSmV0IFByb3B1bHNpb24gTGFib3JhdG9yeSBhbmQgZG9jdW1l
-        bnRzIHZhcmlvdXMgYXNwZWN0cyBvZiB0aGUgQVNURVIgbWlzc2lvbi4gICAg
-        ICAiLCJVUkxDb250ZW50VHlwZSI6IkNvbGxlY3Rpb25VUkwiLCJUeXBlIjoi
-        UFJPSkVDVCBIT01FIFBBR0UiLCJVUkwiOiJodHRwOi8vYXN0ZXJ3ZWIuanBs
-        Lm5hc2EuZ292LyJ9LHsiRGVzY3JpcHRpb24iOiJFYXJ0aGRhdGEgU2VhcmNo
-        IGFsbG93cyB1c2VycyB0byBzZWFyY2gsIGRpc2NvdmVyLCB2aXN1YWxpemUs
-        IHJlZmluZSwgYW5kIGFjY2VzcyBOQVNBIEVhcnRoIE9ic2VydmF0aW9uIGRh
-        dGEuIiwiVVJMQ29udGVudFR5cGUiOiJEaXN0cmlidXRpb25VUkwiLCJUeXBl
-        IjoiR0VUIERBVEEiLCJTdWJ0eXBlIjoiRUFSVEhEQVRBIFNFQVJDSCIsIlVS
-        TCI6Imh0dHBzOi8vc2VhcmNoLmVhcnRoZGF0YS5uYXNhLmdvdi9zZWFyY2g/
-        cT1BU1RHVE0rVjAwMiJ9LHsiRGVzY3JpcHRpb24iOiJUaGUgQVNURVIgR0RF
-        TSBWZXJzaW9uIDIgVmFsaWRhdGlvbiBTdW1tYXJ5IHByb3ZpZGVzIGFkZGl0
-        aW9uYWwgaW5mb3JtYXRpb24gb24gcHJvZHVjdCBxdWFsaXR5LiIsIlVSTENv
-        bnRlbnRUeXBlIjoiUHVibGljYXRpb25VUkwiLCJUeXBlIjoiVklFVyBSRUxB
-        VEVEIElORk9STUFUSU9OIiwiU3VidHlwZSI6IlBST0RVQ1QgUVVBTElUWSBB
-        U1NFU1NNRU5UIiwiVVJMIjoiaHR0cHM6Ly9scGRhYWMudXNncy5nb3YvZGF0
-        YXNldF9kaXNjb3ZlcnkvYXN0ZXIvYXN0ZXJfcHJvZHVjdHNfdGFibGUvYXN0
-        ZXJfZ2RlbV92ZXJzaW9uXzJfdmFsaWRhdGlvbiJ9LHsiRGVzY3JpcHRpb24i
-        OiJUaGUgQVNURVIgTGV2ZWwtMSBQcm9kdWN0cyBTcGVjaWZpY2F0aW9uIHBy
-        b3ZpZGVzIGEgZGVzY3JpcHRpb24gb2YgdGhlIGRhdGEgZmlsZS4iLCJVUkxD
-        b250ZW50VHlwZSI6IlB1YmxpY2F0aW9uVVJMIiwiVHlwZSI6IlZJRVcgUkVM
-        QVRFRCBJTkZPUk1BVElPTiIsIlN1YnR5cGUiOiJEQVRBIFVTQUdFIiwiVVJM
-        IjoiaHR0cHM6Ly9hc3RlcndlYi5qcGwubmFzYS5nb3YvY29udGVudC8wM19k
-        YXRhLzA0X0RvY3VtZW50cy9BU1RFUl9MMV9Qcm9kdWN0X1NwZWNfVmVyXzEu
-        M19KdWx5MDEucGRmIn1dLCJEYXRhRGF0ZXMiOlt7IkRhdGUiOiIyMDExLTA4
-        LTI0VDA4OjM1OjMyLjU3NloiLCJUeXBlIjoiQ1JFQVRFIn0seyJEYXRlIjoi
-        MjAxNS0wOS0zMFQxMDo0MjozNS40MThaIiwiVHlwZSI6IlVQREFURSJ9XSwi
-        QWNjZXNzQ29uc3RyYWludHMiOnsiRGVzY3JpcHRpb24iOiJOb25lIn0sIlNw
-        YXRpYWxFeHRlbnQiOnsiU3BhdGlhbENvdmVyYWdlVHlwZSI6IkhPUklaT05U
-        QUwiLCJIb3Jpem9udGFsU3BhdGlhbERvbWFpbiI6eyJHZW9tZXRyeSI6eyJD
-        b29yZGluYXRlU3lzdGVtIjoiQ0FSVEVTSUFOIiwiQm91bmRpbmdSZWN0YW5n
-        bGVzIjpbeyJXZXN0Qm91bmRpbmdDb29yZGluYXRlIjotMTgwLjAsIk5vcnRo
-        Qm91bmRpbmdDb29yZGluYXRlIjo4Mi4wLCJFYXN0Qm91bmRpbmdDb29yZGlu
-        YXRlIjoxODAuMCwiU291dGhCb3VuZGluZ0Nvb3JkaW5hdGUiOi04My4wfV19
-        fSwiR3JhbnVsZVNwYXRpYWxSZXByZXNlbnRhdGlvbiI6IkdFT0RFVElDIn0s
-        IkFkZGl0aW9uYWxBdHRyaWJ1dGVzIjpbeyJOYW1lIjoiaWRlbnRpZmllcl9w
-        cm9kdWN0X2RvaSIsIkRlc2NyaXB0aW9uIjoiRGlnaXRhbCBvYmplY3QgaWRl
-        bnRpZmllciB0aGF0IHVuaXF1ZWx5IGlkZW50aWZpZXMgdGhpcyBkYXRhIHBy
-        b2R1Y3QiLCJWYWx1ZSI6IjEwLjUwNjcvQVNURVIvQVNUR1RNLjAwMiIsIkRh
-        dGFUeXBlIjoiU1RSSU5HIn0seyJOYW1lIjoiaWRlbnRpZmllcl9wcm9kdWN0
-        X2RvaV9hdXRob3JpdHkiLCJEZXNjcmlwdGlvbiI6IlVSTCBvZiB0aGUgZGln
-        aXRhbCBvYmplY3QgaWRlbnRpZmllciByZXNvbHZpbmcgYXV0aG9yaXR5Iiwi
-        VmFsdWUiOiJodHRwczovL2RvaS5vcmciLCJEYXRhVHlwZSI6IlNUUklORyJ9
-        XSwiU2NpZW5jZUtleXdvcmRzIjpbeyJDYXRlZ29yeSI6IkVBUlRIIFNDSUVO
-        Q0UiLCJUb3BpYyI6IkxBTkQgU1VSRkFDRSIsIlRlcm0iOiJUT1BPR1JBUEhZ
-        IiwiVmFyaWFibGVMZXZlbDEiOiJURVJSQUlOIEVMRVZBVElPTiJ9LHsiQ2F0
-        ZWdvcnkiOiJFQVJUSCBTQ0lFTkNFIiwiVG9waWMiOiJMQU5EIFNVUkZBQ0Ui
-        LCJUZXJtIjoiVE9QT0dSQVBIWSIsIlZhcmlhYmxlTGV2ZWwxIjoiVEVSUkFJ
-        TiBFTEVWQVRJT04iLCJWYXJpYWJsZUxldmVsMiI6IkRJR0lUQUwgRUxFVkFU
-        SU9OL1RFUlJBSU4gTU9ERUwgKERFTSkifSx7IkNhdGVnb3J5IjoiRUFSVEgg
-        U0NJRU5DRSIsIlRvcGljIjoiTEFORCBTVVJGQUNFIiwiVGVybSI6IlRPUE9H
-        UkFQSFkiLCJWYXJpYWJsZUxldmVsMSI6IlRFUlJBSU4gRUxFVkFUSU9OIiwi
-        VmFyaWFibGVMZXZlbDIiOiJUT1BPR1JBUEhJQ0FMIFJFTElFRiBNQVBTIn1d
-        LCJFbnRyeVRpdGxlIjoiQVNURVIgR2xvYmFsIERpZ2l0YWwgRWxldmF0aW9u
-        IE1vZGVsIFYwMDIiLCJDb2xsZWN0aW9uUHJvZ3Jlc3MiOiJDT01QTEVURSIs
-        IlByb2Nlc3NpbmdMZXZlbCI6eyJQcm9jZXNzaW5nTGV2ZWxEZXNjcmlwdGlv
-        biI6IkdSSUQiLCJJZCI6IjMifSwiUGxhdGZvcm1zIjpbeyJUeXBlIjoiRWFy
-        dGggT2JzZXJ2YXRpb24gU2F0ZWxsaXRlcyIsIlNob3J0TmFtZSI6IlRlcnJh
-        IiwiTG9uZ05hbWUiOiJFYXJ0aCBPYnNlcnZpbmcgU3lzdGVtLCBUZXJyYSAo
-        QU0tMSkiLCJJbnN0cnVtZW50cyI6W3siU2hvcnROYW1lIjoiQVNURVIiLCJM
-        b25nTmFtZSI6IkFkdmFuY2VkIFNwYWNlYm9ybmUgVGhlcm1hbCBFbWlzc2lv
-        biBhbmQgUmVmbGVjdGlvbiBSYWRpb21ldGVyIiwiVGVjaG5pcXVlIjoiSW1h
-        Z2luZyBTcGVjdHJvbWV0ZXJzL1JhZGlvbWV0ZXJzIiwiQ29tcG9zZWRPZiI6
-        W3siU2hvcnROYW1lIjoiVElSIiwiTG9uZ05hbWUiOiJUaGVybWFsIEluZnJh
-        cmVkIFJhZGlvbWV0ZXIiLCJUZWNobmlxdWUiOiJJbWFnaW5nIFJhZGlvbWV0
-        ZXJzIn0seyJTaG9ydE5hbWUiOiJWTklSIiwiTG9uZ05hbWUiOiJWaXNpYmxl
-        IGFuZCBOZWFyIEluZnJhcmVkIFJhZGlvbWV0ZXIiLCJUZWNobmlxdWUiOiJJ
-        bWFnaW5nIFJhZGlvbWV0ZXJzIn0seyJTaG9ydE5hbWUiOiJTV0lSIiwiTG9u
-        Z05hbWUiOiJTaG9ydCBXYXZlbGVuZ3RoIEluZnJhcmVkIFJhZGlvbWV0ZXIi
-        LCJUZWNobmlxdWUiOiJJbWFnaW5nIFJhZGlvbWV0ZXJzIn1dLCJPcGVyYXRp
-        b25hbE1vZGVzIjpbIkNhbGlicmF0aW9uIiwiTm9ybWFsIl19XX1dLCJQcm9q
-        ZWN0cyI6W3siU2hvcnROYW1lIjoiVGVycmEiLCJMb25nTmFtZSI6IkVhcnRo
-        IE9ic2VydmluZyBTeXN0ZW0gKEVPUyksIFRlcnJhIiwiQ2FtcGFpZ25zIjpb
-        IlRlcnJhIl19XSwiVmVyc2lvbiI6IjAwMiIsIlRlbXBvcmFsRXh0ZW50cyI6
-        W3siUHJlY2lzaW9uT2ZTZWNvbmRzIjowLCJFbmRzQXRQcmVzZW50RmxhZyI6
-        ZmFsc2UsIlJhbmdlRGF0ZVRpbWVzIjpbeyJCZWdpbm5pbmdEYXRlVGltZSI6
-        IjE5OTktMTItMThUMDA6MDA6MDAuMDAwWiIsIkVuZGluZ0RhdGVUaW1lIjoi
-        MjAxMS0wMi0yOFQyMzo1OTo1OS45OTlaIn1dfV0sIkRhdGFDZW50ZXJzIjpb
-        eyJSb2xlcyI6WyJQUk9DRVNTT1IiXSwiU2hvcnROYW1lIjoiTkFTQS9KUEwv
-        QVNURVIiLCJMb25nTmFtZSI6IkFTVEVSLCBKRVQgUFJPUFVMU0lPTiBMQUJP
-        UkFUT1JZLCBOQVNBIiwiQ29udGFjdEluZm9ybWF0aW9uIjp7IlJlbGF0ZWRV
-        cmxzIjpbeyJVUkxDb250ZW50VHlwZSI6IkRhdGFDZW50ZXJVUkwiLCJUeXBl
-        IjoiSE9NRSBQQUdFIiwiVVJMIjoiaHR0cDovL2FzdGVyd2ViLmpwbC5uYXNh
-        Lmdvdi8ifV0sIkFkZHJlc3NlcyI6W3siQ2l0eSI6IlBhc2FkZW5hIiwiU3Rh
-        dGVQcm92aW5jZSI6IkNhbGlmb3JuaWEiLCJDb3VudHJ5IjoiVW5pdGVkIFN0
-        YXRlcyJ9XX19LHsiUm9sZXMiOlsiQVJDSElWRVIiXSwiU2hvcnROYW1lIjoi
-        TFAgREFBQyIsIkxvbmdOYW1lIjoiTGFuZCBQcm9jZXNzZXMgRGlzdHJpYnV0
-        ZWQgQWN0aXZlIEFyY2hpdmUgQ2VudGVyIiwiQ29udGFjdEluZm9ybWF0aW9u
-        Ijp7IlJlbGF0ZWRVcmxzIjpbeyJVUkxDb250ZW50VHlwZSI6IkRhdGFDZW50
-        ZXJVUkwiLCJUeXBlIjoiSE9NRSBQQUdFIiwiVVJMIjoiaHR0cHM6Ly9scGRh
-        YWMudXNncy5nb3YvIn1dLCJTZXJ2aWNlSG91cnMiOiJNLUYsIDggYS5tLiB0
-        byA0IHAubS4gQ2VudHJhbCBUaW1lIiwiQ29udGFjdEluc3RydWN0aW9uIjoi
-        Tm9uZSIsIkNvbnRhY3RNZWNoYW5pc21zIjpbeyJUeXBlIjoiVGVsZXBob25l
-        IiwiVmFsdWUiOiI2MDUtNTk0LTYxMTYifSx7IlR5cGUiOiJGYXgiLCJWYWx1
-        ZSI6IjYwNS01OTQtNjk2MyJ9LHsiVHlwZSI6IkVtYWlsIiwiVmFsdWUiOiJs
-        cGRhYWNAdXNncy5nb3YifV0sIkFkZHJlc3NlcyI6W3siU3RyZWV0QWRkcmVz
-        c2VzIjpbIlUuUy4gR2VvbG9naWNhbCBTdXJ2ZXksIEVhcnRoIFJlc291cmNl
-        cyBPYnNlcnZhdGlvbiBhbmQgU2NpZW5jZSAoRVJPUykgQ2VudGVyIl0sIkNp
-        dHkiOiJTaW91eCBGYWxscyIsIlN0YXRlUHJvdmluY2UiOiJTb3V0aCBEYWtv
-        dGEiLCJDb3VudHJ5IjoiVW5pdGVkIFN0YXRlcyIsIlBvc3RhbENvZGUiOiI1
-        NzE5OCJ9XX19XX0=
+      encoding: UTF-8
+      string: '{"LocationKeywords":[{"Category":"GEOGRAPHIC REGION","Type":"GLOBAL"}],"MetadataDates":[{"Type":"CREATE","Date":"2017-05-02T14:08:00.000Z"},{"Type":"UPDATE","Date":"2018-08-03T16:27:00.000Z"}],"VersionDescription":"Reprocessed
+        global production","ShortName":"ASTGTM","Abstract":"The Advanced Spaceborne
+        Thermal Emission and Reflection Radiometer (ASTER) Global Digital Elevation
+        Model (GDEM) was developed jointly by the U.S. National Aeronautics and Space
+        Administration (NASA) and Japan’s Ministry of Economy, Trade, and Industry
+        (METI).\r\n\r\nASTER is capable of collecting in-track stereo using nadir-
+        and aft-looking near infrared cameras.  Since 2001, these stereo pairs have
+        been used to produce single-scene (60- x 60-kilomenter (km)) digital elevation
+        models (DEM) having vertical (root-mean-squared-error) accuracies generally
+        between 10- and 25-meters (m). \r\n\r\nThe methodology used by Japan''s Sensor
+        Information Laboratory Corporation (SILC) to produce the ASTER GDEM involves
+        automated processing of the entire ASTER Level-1A archive.  Stereo-correlation
+        is used to produce over one million individual scene-based ASTER DEMs, to
+        which cloud masking is applied to remove cloudy pixels.  All cloud-screened
+        DEMS are stacked and residual bad values and outliers are removed.  Selected
+        data are averaged to create final pixel values, and residual anomalies are
+        corrected before partitioning the data into 1° x 1° tiles.\r\n\r\nThe ASTER
+        GDEM covers land surfaces between 83°N and 83°S and is comprised of 22,702
+        tiles.  Tiles that contain at least 0.01% land area are included.  The ASTER
+        GDEM is distributed as Geographic Tagged Image File Format (GeoTIFF) files
+        with geographic coordinates (latitude, longitude).  The data are posted on
+        a 1 arc-second (approximately 30–m at the equator) grid and referenced to
+        the 1984 World Geodetic System (WGS84)/ 1996 Earth Gravitational Model (EGM96)
+        geoid.  \r\n\r\nWhile the ASTER GDEM 2 benefits from substantial improvements
+        over GDEM 1, users are nonetheless advised that the products still may contain
+        anomalies and artifacts that will reduce its usability for certain applications,
+        because they can introduce large elevation errors on local scales. The data
+        are provided “as is” and neither NASA nor METI/ERSDAC will be responsible
+        for any damages resulting from use of the data.\r\n\r\nV002 data set release
+        date: 2009-06-28\r\n\r\nData Set Characteristics: \r\nGeographic Extent: Global
+        between 83º latitude \r\nScene Coverage: 1º x 1º tiles \r\nImage Dimensions:
+        3601 x 3601 \r\nTotal Number Tiles: V001: 22,604; V002: 22,702 \r\nTile Volume:
+        ~25MB, 6.4 MB compressed \r\nCompression Type: zip \r\nFile Format: GEOTIFF
+        \r\nMap Projection: Geographic Lat/Lon \r\nDatum: WGS84/EGM96 \r\nResolution:
+        1 arcsecond (30-m horizontal posting at equator)","Purpose":"Science Research","DOI":{"DOI":"10.5067/ASTER/ASTGTM.002","Authority":"https://doi.org"},"RelatedUrls":[{"Description":"The
+        LP DAAC product page provides information on Science Data Set layers and links
+        for user guides, ATBDs, data access, tools, customer support, etc. ","URLContentType":"CollectionURL","Type":"DATA
+        SET LANDING PAGE","URL":"https://doi.org/10.5067/ASTER/ASTGTM.002"},{"Description":"USGS
+        EarthExplorer provides users the ability to query, search, and order products
+        available from the LP DAAC.  ","URLContentType":"DistributionURL","Type":"GET
+        DATA","URL":"http://earthexplorer.usgs.gov/"},{"Description":"The LP DAAC
+        website provides detailed information on discovery, distribution, access,
+        and support of land data products.","URLContentType":"CollectionURL","Type":"PROJECT
+        HOME PAGE","URL":"https://lpdaac.usgs.gov"},{"Description":"The ASTER home
+        page is maintained through NASA''s Jet Propulsion Laboratory and documents
+        various aspects of the ASTER mission.      ","URLContentType":"CollectionURL","Type":"PROJECT
+        HOME PAGE","URL":"http://asterweb.jpl.nasa.gov/"},{"Description":"Earthdata
+        Search allows users to search, discover, visualize, refine, and access NASA
+        Earth Observation data.","URLContentType":"DistributionURL","Type":"GET DATA","Subtype":"EARTHDATA
+        SEARCH","URL":"https://search.earthdata.nasa.gov/search?q=ASTGTM+V002"},{"Description":"The
+        ASTER GDEM Version 2 Validation Summary provides additional information on
+        product quality.","URLContentType":"PublicationURL","Type":"VIEW RELATED INFORMATION","Subtype":"PRODUCT
+        QUALITY ASSESSMENT","URL":"https://lpdaac.usgs.gov/dataset_discovery/aster/aster_products_table/aster_gdem_version_2_validation"},{"Description":"The
+        ASTER Level-1 Products Specification provides a description of the data file.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"DATA USAGE","URL":"https://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTER_L1_Product_Spec_Ver_1.3_July01.pdf"},{"Description":"The
+        Digital Object Identifier provides a permanent link for product information
+        and data citation.","URLContentType":"CollectionURL","Type":"DOI","URL":"https://doi.org/10.5067/ASTER/ASTGTM.002"}],"DataDates":[{"Date":"2011-08-24T08:35:32.576Z","Type":"CREATE"},{"Date":"2015-09-30T10:42:35.418Z","Type":"UPDATE"}],"AccessConstraints":{"Description":"None"},"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":82.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-83.0}]}},"GranuleSpatialRepresentation":"GEODETIC"},"AdditionalAttributes":[{"Name":"identifier_product_doi","Description":"Digital
+        object identifier that uniquely identifies this data product","Value":"10.5067/ASTER/ASTGTM.002","DataType":"STRING"},{"Name":"identifier_product_doi_authority","Description":"URL
+        of the digital object identifier resolving authority","Value":"https://doi.org","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"TOPOGRAPHY","VariableLevel1":"TERRAIN
+        ELEVATION"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"TOPOGRAPHY","VariableLevel1":"TERRAIN
+        ELEVATION","VariableLevel2":"DIGITAL ELEVATION/TERRAIN MODEL (DEM)"},{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"TOPOGRAPHY","VariableLevel1":"TERRAIN
+        ELEVATION","VariableLevel2":"TOPOGRAPHICAL RELIEF MAPS"}],"EntryTitle":"ASTER
+        Global Digital Elevation Model V002","CollectionProgress":"COMPLETE","ProcessingLevel":{"ProcessingLevelDescription":"GRID","Id":"3"},"Platforms":[{"Type":"Earth
+        Observation Satellites","ShortName":"Terra","LongName":"Earth Observing System,
+        Terra (AM-1)","Instruments":[{"ShortName":"ASTER","LongName":"Advanced Spaceborne
+        Thermal Emission and Reflection Radiometer","Technique":"Imaging Spectrometers/Radiometers","ComposedOf":[{"ShortName":"TIR","LongName":"Thermal
+        Infrared Radiometer","Technique":"Imaging Radiometers"},{"ShortName":"VNIR","LongName":"Visible
+        and Near Infrared Radiometer","Technique":"Imaging Radiometers"},{"ShortName":"SWIR","LongName":"Short
+        Wavelength Infrared Radiometer","Technique":"Imaging Radiometers"}],"OperationalModes":["Calibration","Normal"]}]}],"Projects":[{"ShortName":"Terra","LongName":"Earth
+        Observing System (EOS), Terra","Campaigns":["Terra"]}],"Version":"002","TemporalExtents":[{"PrecisionOfSeconds":0,"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"1999-12-18T00:00:00.000Z","EndingDateTime":"2011-02-28T23:59:59.999Z"}]}],"DataCenters":[{"Roles":["PROCESSOR"],"ShortName":"NASA/JPL/ASTER","LongName":"ASTER,
+        JET PROPULSION LABORATORY, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://asterweb.jpl.nasa.gov/"}],"Addresses":[{"City":"Pasadena","StateProvince":"California","Country":"United
+        States"}]}},{"Roles":["ARCHIVER"],"ShortName":"LP DAAC","LongName":"Land Processes
+        Distributed Active Archive Center","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://lpdaac.usgs.gov/"}],"ServiceHours":"M-F, 8 a.m. to 4
+        p.m. Central Time","ContactInstruction":"None","ContactMechanisms":[{"Type":"Telephone","Value":"605-594-6116"},{"Type":"Fax","Value":"605-594-6963"},{"Type":"Email","Value":"lpdaac@usgs.gov"}],"Addresses":[{"StreetAddresses":["U.S.
+        Geological Survey, Earth Resources Observation and Science (EROS) Center"],"City":"Sioux
+        Falls","StateProvince":"South Dakota","Country":"United States","PostalCode":"57198"}]}}]}'
     http_version: 
 f998b7344f0c69140057aadaa24ffacf2d96ed7c:
   response:
@@ -2021,7 +1780,7 @@ f998b7344f0c69140057aadaa24ffacf2d96ed7c:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"Creator":"MODIS Science Team","ReleasePlace":"MODAPS
         at NASA/GSFC","Title":"MODIS/Terra Aerosol 5-Min L2 Swath 10km V006","OnlineResource":{"Linkage":"https://dx.doi.org/10.5067/MODIS/MOD04_L2.006"},"Publisher":"L1
         and Atmosphere Archive and Distribution System (LAADS)","ReleaseDate":"2012-07-02T00:00:00.000Z","Version":"6"}],"LocationKeywords":[{"Category":"GEOGRAPHIC
@@ -2156,7 +1915,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2002-07-04T00:00:00.000Z","dif_ids":["MYD021KM_6"],"version_id":"6","dataset_id":"MODIS/Aqua
         Calibrated Radiances 5-Min L1B Swath 1km V006","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LAADS","short_name":"MYD021KM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
         Calibrated Radiances 5-Min L1B Swath 1km V006","coordinate_system":"CARTESIAN","summary":"The
@@ -2191,7 +1950,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id
       cmr-request-id:
-      - 04912753-36eb-4338-b0b4-8cb804d2851c
+      - '04912753-36eb-4338-b0b4-8cb804d2851c'
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
@@ -2207,7 +1966,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"OtherCitationDetails":"This data set was
         provided by the NASA EOS Project."}],"MetadataDates":[{"Date":"2014-06-13T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Collection
         Version 5 Processing and Reprocessing","ShortName":"MOD10A1","Abstract":"MODIS/Terra
@@ -2276,7 +2035,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: |-
         <Granule>
             <GranuleUR>FIFE_STRM_15M.43601715.s15</GranuleUR>
@@ -2398,7 +2157,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: |-
         <Granule>
             <GranuleUR>FIFE_STRM_15M.80611715.s15</GranuleUR>
@@ -2552,7 +2311,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"OtherCitationDetails":"The research producing
         this EOS/ACRIM III experiment collection was supervised by Dr. Richard C.
         Willson, Principal Investigator, sponsored by Columbia University and funded
@@ -2611,7 +2370,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2013-11-07T14:08:47.384Z","dataset_id":"MODIS/Terra
         Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V005","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1200269651-DEV08"]},"has_variables":false,"data_center":"DEV08","short_name":"MOD11A1","organizations":["EDF_DEV08","LP
         DAAC User Services","MODAPS","MODIS Science Data Support Team"],"title":"MODIS/Terra
@@ -2645,7 +2404,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","version_id":"2","updated":"2015-02-10T17:20:34.449Z","dataset_id":"AMSR-E/Aqua
         L2A Global Swath Spatially-Resampled Brightness Temperatures (Tb) V002","has_spatial_subsetting":true,"has_transforms":true,"associations":{"variables":["V1200262331-DEV08","V1200262226-DEV08","V1200262312-DEV08","V1200262308-DEV08","V1200262224-DEV08","V1200262298-DEV08","V1200262242-DEV08","V1200262290-DEV08","V1200262310-DEV08","V1200262282-DEV08","V1200262192-DEV08","V1200262230-DEV08","V1200262184-DEV08","V1200262341-DEV08","V1200262234-DEV08","V1200262206-DEV08","V1200262276-DEV08","V1200262180-DEV08","V1200262300-DEV08","V1200262266-DEV08","V1200262347-DEV08","V1200269640-DEV08","V1200262186-DEV08","V1200262188-DEV08","V1200262286-DEV08","V1200262339-DEV08","V1200262200-DEV08","V1200262332-DEV08","V1200262256-DEV08","V1200262258-DEV08","V1200262252-DEV08","V1200262210-DEV08","V1200262196-DEV08","V1200262343-DEV08","V1200262334-DEV08","V1200262238-DEV08","V1200262306-DEV08","V1200262272-DEV08","V1200262284-DEV08","V1200262246-DEV08","V1200262337-DEV08","V1200262335-DEV08","V1200262194-DEV08","V1200262323-DEV08","V1200262260-DEV08","V1200262262-DEV08","V1200269642-DEV08","V1200262264-DEV08","V1200262268-DEV08","V1200262204-DEV08","V1200262216-DEV08","V1200262218-DEV08","V1200262316-DEV08","V1200262250-DEV08","V1200262244-DEV08","V1200262292-DEV08","V1200262212-DEV08","V1200262274-DEV08","V1200262278-DEV08","V1200262328-DEV08","V1200262222-DEV08","V1200262296-DEV08","V1200262324-DEV08","V1200262214-DEV08","V1200262228-DEV08","V1200262198-DEV08","V1200262333-DEV08","V1200262270-DEV08","V1200262294-DEV08","V1200262182-DEV08","V1200262202-DEV08","V1200262326-DEV08","V1200262248-DEV08","V1200262345-DEV08","V1200262325-DEV08","V1200262288-DEV08","V1200262321-DEV08","V1200262280-DEV08","V1200262190-DEV08","V1200262319-DEV08","V1200262318-DEV08","V1200262330-DEV08","V1200269644-DEV08","V1200262220-DEV08","V1200262302-DEV08","V1200262232-DEV08","V1200262240-DEV08","V1200262351-DEV08","V1200262314-DEV08","V1200262254-DEV08","V1200262349-DEV08","V1200262304-DEV08","V1200262208-DEV08","V1200262327-DEV08","V1200262236-DEV08"],"services":["S1200252658-DEV08"]},"has_variables":true,"data_center":"DEV08","short_name":"AE_L2A","organizations":["DEV08","National
         Snow and Ice Data Center","AMSR-E SIPS-RSS"],"title":"AMSR-E/Aqua L2A Global
@@ -2681,7 +2440,7 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"boxes":["-90 -180 90 180"],"time_start":"2002-08-30T00:00:00.000Z","version_id":"006","updated":"2014-12-18T00:00:00.000Z","dataset_id":"Aqua
         AIRS Level 3 Daily Standard Physical Retrieval (AIRS+AMSU) V006 (AIRX3STD)
         at GES DISC","has_spatial_subsetting":true,"has_transforms":true,"associations":{"variables":["V1200265916-EDF_OPS","V1200266510-EDF_OPS","V1200266604-EDF_OPS","V1200265914-EDF_OPS","V1200266514-EDF_OPS","V1200265908-EDF_OPS","V1200266602-EDF_OPS","V1200266554-EDF_OPS","V1200266550-EDF_OPS","V1200266512-EDF_OPS","V1200266594-EDF_OPS","V1200266664-EDF_OPS","V1200266508-EDF_OPS","V1200266596-EDF_OPS","V1200265910-EDF_OPS","V1200266556-EDF_OPS","V1200265912-EDF_OPS","V1200265918-EDF_OPS","V1200266546-EDF_OPS","V1200266552-EDF_OPS","V1200266506-EDF_OPS","V1200266548-EDF_OPS"],"services":["S1200245793-EDF_OPS"]},"has_variables":true,"data_center":"EDF_OPS","short_name":"AIRX3STD","organizations":["GESDISC","GES
@@ -2746,7 +2505,7 @@ d310609ffc896f5e046bb27739bcca14b58d48a1:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"MetadataDates":[{"Date":"2017-02-27T15:04:00.000Z","Type":"CREATE"},{"Date":"2018-02-06T14:07:00.000Z","Type":"UPDATE"}],"ShortName":"Mark
         II","Abstract":"This collection contains observations from the ASTER instrument.  ASTER
         (Advanced Spaceborne Thermal Emission and Reflection Radiometer) is a high
@@ -2827,7 +2586,7 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"MetadataDates":[{"Date":"2017-07-31T17:40:00.000Z","Type":"CREATE"},{"Date":"2017-08-09T17:04:00.000Z","Type":"UPDATE"}],"ShortName":"EDSC-1140_dev6","Abstract":"Collection
         created to test EDSC-1140","DOI":{"Authority":"The authority who created the
         DOI.","DOI":"The Digitial Object Identifier."},"RelatedUrls":[{"Description":"Related
@@ -2898,7 +2657,7 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"006","updated":"2017-11-09T13:36:16.474Z","dataset_id":"MODIS/Terra
         Vegetation Indices 16-Day L3 Global 250m SIN Grid V006","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"DEV08","short_name":"MOD13Q1","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Terra
         Vegetation Indices 16-Day L3 Global 250m SIN Grid V006","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
@@ -2931,7 +2690,7 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"OtherCitationDetails":"This data set was
         provided by the NASA EOS Project."}],"MetadataDates":[{"Date":"2006-03-17T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Terra
         MODIS Version 5 Data Collection, Fourth Atmosphere Reprocessing Campaign","ShortName":"MOD04_L2","Abstract":"MODIS/Terra
@@ -2986,7 +2745,7 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"CollectionCitations":[{"Title":"SMAP Enhanced L3 Radiometer Global
         Daily 9 km EASE-Grid Soil Moisture","DataPresentationForm":"documentDigital","Version":"R14","OtherCitationDetails":"The
         Calibration and Validation Version 2 Release of the SMAP Level 3 Daily Global

@@ -29,7 +29,7 @@ describe 'Collection results scrolling', reset: false do
         end
 
         it 'does not load additional results' do
-          expect(page).to have_css('#collection-results-list .panel-list-item', count: 68)
+          expect(page).to have_css('#collection-results-list .panel-list-item', count: 69)
         end
 
         it 'does not show the loading message' do

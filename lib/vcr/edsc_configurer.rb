@@ -110,6 +110,10 @@ module VCR
 
       lock = Mutex.new
 
+      c.before_record do |request|
+        request.response.body.force_encoding('UTF-8')
+      end
+
       c.ignore_request do |request|
         request.uri.include?('/rest/tokens.json')
       end

@@ -274,6 +274,21 @@ http_interactions:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1415641545-SEDAC&catalog_item_id%5B%5D=G1415644635-SEDAC
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 08 Aug 2018 14:38:33 GMT
+  digest: 82ef11035ca89ef3517ee16ff58ba9f4fa6648b6
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
       encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1422671865-ORNL_DAAC&catalog_item_id%5B%5D=G1422671681-ORNL_DAAC&catalog_item_id%5B%5D=G1422671795-ORNL_DAAC&catalog_item_id%5B%5D=G1422671733-ORNL_DAAC&catalog_item_id%5B%5D=G1422671915-ORNL_DAAC&catalog_item_id%5B%5D=G1422671892-ORNL_DAAC&catalog_item_id%5B%5D=G1422671872-ORNL_DAAC&catalog_item_id%5B%5D=G1422671834-ORNL_DAAC&catalog_item_id%5B%5D=G1422671827-ORNL_DAAC&catalog_item_id%5B%5D=G1422671878-ORNL_DAAC&catalog_item_id%5B%5D=G1422671706-ORNL_DAAC&catalog_item_id%5B%5D=G1422671780-ORNL_DAAC
     headers:
