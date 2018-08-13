@@ -15,7 +15,7 @@ module Ous
     protected
 
     def default_headers
-      { 'cmr-media-type' => "cmr-opendap.#{Rails.configuration.ous_version}; format=json" }
+      { 'Accept' => "application/vnd.cmr-opendap.#{Rails.configuration.ous_version}+json" }
     end
   end
 end
