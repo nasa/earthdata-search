@@ -83,6 +83,7 @@ module Echo
         query_params = { include_tags: key, include_has_granules: true }
         response = json_query_collections(condition, token, query_params)
         return response unless response.success? && response.body['feed']['entry'].present?
+        return response if collection_has_tag?(response, value)
 
         entries = response.body['feed']['entry']
         entries = entries.select { |entry| entry['has_granules'] } if only_granules
@@ -150,6 +151,16 @@ module Echo
 
     def default_headers
       { 'Client-Id' => client_id, 'Echo-ClientId' => client_id }
+    end
+
+    # Check if a collection search response includes tag_data
+    def collection_has_tag?(collection_response, tag_data)
+      collection_response.body['feed']['entry'].each do |collection|
+        collection.fetch('tags', {}).fetch('edsc.extra.gibs', {}).fetch('data', []).each do |collection_tag_data|
+          return true if collection_tag_data == JSON.parse(tag_data.to_json)
+        end
+      end
+      false
     end
   end
 end
