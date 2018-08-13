@@ -128,5 +128,7 @@ module EarthdataSearchClient
     config.umm_c_version   = '1.10'
     config.umm_s_version   = '1.1'
     config.umm_var_version = '1.1'
+
+    config.ous_version = 'v2'
   end
 end
