@@ -19,7 +19,7 @@ do (document
       $('.data-access-content').html('<p>No saved projects</p>')
 
   $(document).on 'click', 'a, button', (e) ->
-    metrics.createEvent(e)
+    metrics.createDefaultClickEvent(e)
 
   $(document).on 'click', 'a[href="#"]', (e) ->
     e.preventDefault()
