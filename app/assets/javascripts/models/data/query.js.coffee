@@ -319,12 +319,18 @@ ns.query = do (ko,
 
       # Subscribe to the sortKey for the purpose of sending changes to Google Analytics
       @sortKey.subscribe (sortKey) =>
-        if ga?
+        if dataLayer?
           if !sortKey?
             eventValue = 'relevance'
           else
             eventValue = sortKey[0]
-          ga('send', 'event', 'select', 'change', eventValue)
+
+          dataLayer.push({
+            'event': 'collectionSortChange',
+            'collectionSortChangeCategory': 'search result sort',
+            'collectionSortChangeAction': 'change'
+            'collectionSortChangeLabel': eventValue
+          })
 
       super(parentQuery)
 
