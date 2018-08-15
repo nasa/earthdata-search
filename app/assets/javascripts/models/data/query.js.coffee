@@ -172,7 +172,7 @@ ns.query = do (ko,
   class NegatedBooleanParam extends QueryParam
     canWrite: ->
       @value() is false || @value() is 'false' || @value() is 'gov.nasa.eosdis'
-    
+
     readFrom: (query) ->
       for name in @names()
         value = query[name]
@@ -313,7 +313,7 @@ ns.query = do (ko,
 
       @hasGranules = @queryComponent(new NegatedBooleanParam('all_collections'), true)
       @hasNonEOSDIS = @queryComponent(new NegatedBooleanParam('tag_key'), true)
-      @sortOptions = [{name: "Usage", value: ["-usage_score"]}, {name: "End Date", value: ["-end_date"]}]
+      @sortOptions = [{name: 'Usage', value: ['-usage_score']}, {name: 'End Date', value: ['-ongoing']}]
 
       @sortKey = @queryComponent(new QueryParam('sort_key'), '', ephemeral: true)
 
@@ -372,7 +372,7 @@ ns.query = do (ko,
       @isValid = @computed(read: @_computeIsValid, deferEvaluation: true)
       @attributes = new GranuleAttributes(attributes)
 
-   
+
 
       @temporal = new Temporal()
       @cloudCover = new Range()
@@ -430,19 +430,19 @@ ns.query = do (ko,
       isNaN(value) || value >= 0
 
     validateOrbitNumberRange: (min, max) =>
-      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)  
+      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
 
     validateEquatorialCrossingLongitudeValue: (equatorial_value) =>
       value = parseFloat(equatorial_value)
       isNaN(value) || (value >= -180.0 && value <= 180.0)
 
     validateEquatorialCrossingLongitudeRange: (min, max) =>
-      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max) 
+      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
 
     validateEquatorialCrossingDateValue: (date_value) =>
       regEx = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/
       if date_value
-        date_value.match(regEx) != null 
+        date_value.match(regEx) != null
       else if date_value != null
         true
       else
@@ -452,7 +452,7 @@ ns.query = do (ko,
       if Date.parse(min) && Date.parse(max)
         Date.parse(min) <= Date.parse(max)
       else
-        true        
+        true
 
     _computeProject: (facets) =>
       project = ''
