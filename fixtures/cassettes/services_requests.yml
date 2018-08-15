@@ -225,10 +225,10 @@ http_interactions:
       Content-Type:
       - application/json
       Accept:
-      - application/vnd.cmr-opendap.v2+json
+      - application/vnd.cmr-opendap.v2.1+json
       Echo-Token:
       - edsc-access
-  recorded_at: Mon, 13 Aug 2018 20:17:46 GMT
+  recorded_at: Wed, 15 Aug 2018 17:41:56 GMT
   digest: 2235b3c577b06a8cd281f03f2d9ff30fcbcad3e0
 - request:
     method: get
