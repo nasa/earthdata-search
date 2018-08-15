@@ -1,5 +1,5 @@
 ---
-a716c7ff3ba79149af7fa7799f4fbb9766490e52:
+d6315fa9be6239f1618c17121166e3a38c245693:
   response:
     status:
       code: 200
@@ -30,7 +30,7 @@ a716c7ff3ba79149af7fa7799f4fbb9766490e52:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"hits":2,"took":38,"items":[{"meta":{"revision-id":12,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"brownm09","native-id":"uvg_EmisIR_A_max","concept-id":"V1200265914-EDF_OPS","revision-date":"2018-05-23T20:21:42Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
         SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Characteristics":{"Structure":"float32
         : EmisIR_A_ct, EmisIR_A_sdev, EmisIR_A_min, EmisIR_A_max, EmisIR_A_err : 5
@@ -43,7 +43,7 @@ a716c7ff3ba79149af7fa7799f4fbb9766490e52:
         180.0 E; Lat: -90.0, 90.0 N"},"FillValues":[{"Value":-9999.0,"Type":"Ancillary"}],"Sets":[{"Name":"EmisIR_A","Type":"Ascending","Size":5,"Index":3}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"EmisIR_A_min
         in units of m^-1","Name":"EmisIR_A_min","Units":"m^-1","LongName":"EmisIR_A_min"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}}]}'
     http_version: 
-7279973c4a8aa3d271bb4e1ebeee93cb037dd824:
+0b07b8c7a822c4b9e5a0de0302ff85446040e4e3:
   response:
     status:
       code: 200
@@ -74,7 +74,7 @@ a716c7ff3ba79149af7fa7799f4fbb9766490e52:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"hits":22,"took":138,"items":[{"meta":{"revision-id":12,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"brownm09","native-id":"uvg_EmisIR_A","concept-id":"V1200265908-EDF_OPS","revision-date":"2018-06-13T14:51:59Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
         SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Characteristics":{"Structure":"float32
         : TotalCounts_A, SurfPres_Forecast_A, SurfSkinTemp_A, EmisIR_A, Temperature_A,
@@ -378,4 +378,207 @@ a716c7ff3ba79149af7fa7799f4fbb9766490e52:
         : 146 variables","Reference":"10.5067/AQUA/AIRS/DATA301","Bounds":"Lon: -180.0,
         180.0 E; Lat: -90.0, 90.0 N"},"FillValues":[{"Value":0.0,"Type":"Ancillary"}],"Sets":[{"Name":"Data_Fields","Type":"Ascending","Size":146,"Index":1}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"TotalCounts_A
         in units of None","Name":"TotalCounts_A","ValidRanges":[],"Units":"None","LongName":"TotalCounts_A"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}}]}'
+    http_version: 
+f922c228adb243e2727fe114359aad0429239716:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '22'
+      cmr-request-id:
+      - 43025f32-c9ec-4c94-8204-33f17ab03e6f
+      cmr-took:
+      - '1509'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Wed, 15 Aug 2018 17:41:35 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1843'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":22,"took":1499,"items":[{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_EmisIR_A","concept-id":"V1200265908-EDF_OPS","revision-date":"2018-08-14T17:30:00Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Data_Fields","Type":"Ascending","Size":146,"Index":4}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"
+        32-bit floating EmisFreqIR (4) IR surface emissivity at point frequencies
+        {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft is
+        in the ascending part of its orbit. (Daytime data except near the poles.)
+        Each field and level is individually quality controlled.","Name":"EmisIR_A","Units":"cm^-1","LongName":"EmisIR_A"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_EmisIR_A_ct","concept-id":"V1200265910-EDF_OPS","revision-date":"2018-08-14T17:29:48Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"int16","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":0.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"EmisIR_A","Type":"Ascending","Size":5,"Index":1}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Input
+        count of 32-bit floating EmisFreqIR (4) IR surface emissivity at point frequencies
+        {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft is
+        in the ascending part of its orbit. (Daytime data except near the poles.)
+        Each field and level is individually quality controlled.","Name":"EmisIR_A_ct","Units":"cm^-1","LongName":"EmisIR_A_ct"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":20,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_EmisIR_A_err","concept-id":"V1200265912-EDF_OPS","revision-date":"2018-08-14T17:29:40Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"EmisIR_A","Type":"Ascending","Size":5,"Index":5}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Standard
+        error of 32-bit floating EmisFreqIR (4) IR surface emissivity at point frequencies
+        {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft is
+        in the ascending part of its orbit. (Daytime data except near the poles.)
+        Each field and level is individually quality controlled.","Name":"EmisIR_A_err","Units":"cm^-1","LongName":"EmisIR_A_err"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_EmisIR_A_max","concept-id":"V1200265914-EDF_OPS","revision-date":"2018-08-14T17:30:04Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"EmisIR_A","Type":"Ascending","Size":5,"Index":4}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Maximum
+        value of 32-bit floating EmisFreqIR (4) IR surface emissivity at point frequencies
+        {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft is
+        in the ascending part of its orbit. (Daytime data except near the poles.)
+        Each field and level is individually quality controlled.","Name":"EmisIR_A_max","Units":"cm^-1","LongName":"EmisIR_A_max"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":22,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_EmisIR_A_min","concept-id":"V1200265916-EDF_OPS","revision-date":"2018-08-14T17:29:55Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"EmisIR_A","Type":"Ascending","Size":5,"Index":3}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Minimum
+        value of 32-bit floating EmisFreqIR (4) IR surface emissivity at point frequencies
+        {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft is
+        in the ascending part of its orbit. (Daytime data except near the poles.)
+        Each field and level is individually quality controlled.","Name":"EmisIR_A_min","Units":"cm^-1","LongName":"EmisIR_A_min"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":23,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_EmisIR_A_sdev","concept-id":"V1200265918-EDF_OPS","revision-date":"2018-08-14T17:29:44Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        RADIATIVE PROPERTIES","VariableLevel1":"EMISSIVITY"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"EmisIR_A","Type":"Ascending","Size":5,"Index":2}],"Dimensions":[{"Name":"EmisFreqIR","Size":4},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Standard
+        deviation of 32-bit floating EmisFreqIR (4) IR surface emissivity at point
+        frequencies {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft
+        is in the ascending part of its orbit. (Daytime data except near the poles.)
+        Each field and level is individually quality controlled.","Name":"EmisIR_A_sdev","Units":"cm^-1","LongName":"EmisIR_A_sdev"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfPres_Forecast_A","concept-id":"V1200266506-EDF_OPS","revision-date":"2018-08-14T17:30:04Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        TEMPERATURE","VariableLevel1":"SURFACE TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Data_Fields","Type":"Ascending","Size":146,"Index":2}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"  Information
+        collected while the spacecraft is in the ascending part of its orbit. (Daytime
+        data except near the poles.) Each field and level is individually quality
+        controlled.","Name":"SurfPres_Forecast_A","Units":"","LongName":"SurfPres_Forecast_A"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfPres_Forecast_A_ct","concept-id":"V1200266508-EDF_OPS","revision-date":"2018-08-14T17:29:45Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"int16","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        TEMPERATURE","VariableLevel1":"SURFACE TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":0.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfPres_Forecast_A","Type":"Ascending","Size":4,"Index":1}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Input
+        count of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfPres_Forecast_A_ct","Units":"","LongName":"SurfPres_Forecast_A_ct"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfPres_Forecast_A_max","concept-id":"V1200266510-EDF_OPS","revision-date":"2018-08-14T17:29:55Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        TEMPERATURE","VariableLevel1":"SURFACE TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfPres_Forecast_A","Type":"Ascending","Size":4,"Index":4}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Maximum
+        value of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfPres_Forecast_A_max","Units":"","LongName":"SurfPres_Forecast_A_max"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfPres_Forecast_A_min","concept-id":"V1200266512-EDF_OPS","revision-date":"2018-08-14T17:30:00Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        TEMPERATURE","VariableLevel1":"SURFACE TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfPres_Forecast_A","Type":"Ascending","Size":4,"Index":3}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Minimum
+        value of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfPres_Forecast_A_min","Units":"","LongName":"SurfPres_Forecast_A_min"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfPres_Forecast_A_sdev","concept-id":"V1200266514-EDF_OPS","revision-date":"2018-08-14T17:29:43Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        TEMPERATURE","VariableLevel1":"SURFACE TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfPres_Forecast_A","Type":"Ascending","Size":4,"Index":2}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Standard
+        deviation of  Information collected while the spacecraft is in the ascending
+        part of its orbit. (Daytime data except near the poles.) Each field and level
+        is individually quality controlled.","Name":"SurfPres_Forecast_A_sdev","Units":"","LongName":"SurfPres_Forecast_A_sdev"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfSkinTemp_A","concept-id":"V1200266546-EDF_OPS","revision-date":"2018-08-14T17:29:57Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        THERMAL PROPERTIES","VariableLevel1":"SKIN TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Data_Fields","Type":"Ascending","Size":146,"Index":3}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"  Information
+        collected while the spacecraft is in the ascending part of its orbit. (Daytime
+        data except near the poles.) Each field and level is individually quality
+        controlled.","Name":"SurfSkinTemp_A","Units":"","LongName":"SurfSkinTemp_A"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfSkinTemp_A_ct","concept-id":"V1200266548-EDF_OPS","revision-date":"2018-08-14T17:29:52Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"int16","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        THERMAL PROPERTIES","VariableLevel1":"SKIN TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":0.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfSkinTemp_A","Type":"Ascending","Size":5,"Index":1}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Input
+        count of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfSkinTemp_A_ct","Units":"","LongName":"SurfSkinTemp_A_ct"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfSkinTemp_A_err","concept-id":"V1200266550-EDF_OPS","revision-date":"2018-08-14T17:29:52Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        THERMAL PROPERTIES","VariableLevel1":"SKIN TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfSkinTemp_A","Type":"Ascending","Size":5,"Index":5}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Standard
+        error of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfSkinTemp_A_err","Units":"","LongName":"SurfSkinTemp_A_err"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfSkinTemp_A_max","concept-id":"V1200266552-EDF_OPS","revision-date":"2018-08-14T17:29:45Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        THERMAL PROPERTIES","VariableLevel1":"SKIN TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfSkinTemp_A","Type":"Ascending","Size":5,"Index":4}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Maximum
+        value of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfSkinTemp_A_max","Units":"","LongName":"SurfSkinTemp_A_max"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":23,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfSkinTemp_A_min","concept-id":"V1200266554-EDF_OPS","revision-date":"2018-08-14T17:29:46Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        THERMAL PROPERTIES","VariableLevel1":"SKIN TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfSkinTemp_A","Type":"Ascending","Size":5,"Index":3}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Minimum
+        value of  Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"SurfSkinTemp_A_min","Units":"","LongName":"SurfSkinTemp_A_min"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_SurfSkinTemp_A_sdev","concept-id":"V1200266556-EDF_OPS","revision-date":"2018-08-14T17:29:50Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC PRESSURE","VariableLevel1":"SURFACE
+        PRESSURE"},{"Category":"EARTH SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE
+        THERMAL PROPERTIES","VariableLevel1":"SKIN TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"SurfSkinTemp_A","Type":"Ascending","Size":5,"Index":2}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Standard
+        deviation of  Information collected while the spacecraft is in the ascending
+        part of its orbit. (Daytime data except near the poles.) Each field and level
+        is individually quality controlled.","Name":"SurfSkinTemp_A_sdev","Units":"","LongName":"SurfSkinTemp_A_sdev"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":20,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_Temperature_A","concept-id":"V1200266594-EDF_OPS","revision-date":"2018-08-14T17:29:46Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE THERMAL PROPERTIES","VariableLevel1":"SKIN
+        TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Data_Fields","Type":"Ascending","Size":146,"Index":5}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"
+        32-bit floating StdPressureLev Atmospheric temperature point (24) (Kelvin)
+        Information collected while the spacecraft is in the ascending part of its
+        orbit. (Daytime data except near the poles.) Each field and level is individually
+        quality controlled.","Name":"Temperature_A","Units":"hPa","LongName":"Temperature_A"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":20,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_Temperature_A_ct","concept-id":"V1200266596-EDF_OPS","revision-date":"2018-08-14T17:29:57Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"int16","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE THERMAL PROPERTIES","VariableLevel1":"SKIN
+        TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":0.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Temperature_A","Type":"Ascending","Size":5,"Index":1}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Input
+        count of 32-bit floating StdPressureLev Atmospheric temperature point (24)
+        (Kelvin) Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"Temperature_A_ct","Units":"hPa","LongName":"Temperature_A_ct"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":21,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_Temperature_A_min","concept-id":"V1200266602-EDF_OPS","revision-date":"2018-08-14T17:29:40Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE THERMAL PROPERTIES","VariableLevel1":"SKIN
+        TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Temperature_A","Type":"Ascending","Size":5,"Index":3}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Minimum
+        value of 32-bit floating StdPressureLev Atmospheric temperature point (24)
+        (Kelvin) Information collected while the spacecraft is in the ascending part
+        of its orbit. (Daytime data except near the poles.) Each field and level is
+        individually quality controlled.","Name":"Temperature_A_min","Units":"hPa","LongName":"Temperature_A_min"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":20,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_Temperature_A_sdev","concept-id":"V1200266604-EDF_OPS","revision-date":"2018-08-14T17:29:48Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"float32","Offset":0.0,"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"LAND SURFACE","Term":"SURFACE THERMAL PROPERTIES","VariableLevel1":"SKIN
+        TEMPERATURE"}],"Scale":1.0,"Measurements":[],"FillValues":[{"Value":-9999.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Temperature_A","Type":"Ascending","Size":5,"Index":2}],"Dimensions":[{"Name":"StdPressureLev","Size":24},{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"Standard
+        deviation of 32-bit floating StdPressureLev Atmospheric temperature point
+        (24) (Kelvin) Information collected while the spacecraft is in the ascending
+        part of its orbit. (Daytime data except near the poles.) Each field and level
+        is individually quality controlled.","Name":"Temperature_A_sdev","Units":"hPa","LongName":"Temperature_A_sdev"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}},{"meta":{"revision-id":20,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"lgilliam","native-id":"uvg_TotalCounts_A","concept-id":"V1200266664-EDF_OPS","revision-date":"2018-08-14T17:29:50Z","concept-type":"variable"},"umm":{"VariableType":"SCIENCE_VARIABLE","DataType":"int16","Offset":0.0,"Scale":1.0,"Measurements":[],"FillValues":[{"Value":0.0,"Type":"ANCILLARY_FILLVALUE"}],"Sets":[{"Name":"Data_Fields","Type":"Ascending","Size":146,"Index":1}],"Dimensions":[{"Name":"Latitude","Size":180},{"Name":"Longitude","Size":360}],"Definition":"
+        16-bit None Total counts of all points integer that fell within a 1°x1° grid
+        cell whether they were included in the final L3 product or not. Used for yield
+        calculations. Information collected while the spacecraft is in the ascending
+        part of its orbit. (Daytime data except near the poles.) Each field and level
+        is individually quality controlled.","Name":"TotalCounts_A","Units":"","LongName":"TotalCounts_A"},"associations":{"collections":[{"concept-id":"C1200187767-EDF_OPS"}]}}]}'
+    http_version: 
+2d9ecaa449a3e02a830f01767c9113ed409e0b79:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-hits:
+      - '0'
+      cmr-request-id:
+      - 20c5f0ac-c08c-4992-88c5-19fb7a0aff00
+      cmr-took:
+      - '20'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.1; charset=utf-8
+      date:
+      - Wed, 15 Aug 2018 17:39:39 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '31'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":0,"took":13,"items":[]}'
     http_version: 

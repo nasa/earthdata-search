@@ -30,7 +30,7 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
       find('#associated-variables a', text: 'EMISSIVITY', match: :prefer_exact).click
 
       # Select the first UMM Variable listed
-      find('.variable-list label[id="V1200266664-EDF_OPS"] .collection-variable-details-link').click
+      find('.variable-list label[id="V1200265916-EDF_OPS"] .collection-variable-details-link').click
     end
 
     context 'When clicking the "View Details" link' do
@@ -40,17 +40,17 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
 
       it 'displays the variable name' do
         el = find('.variable-details .collection-variable-name')
-        expect(el).to have_content('TotalCounts_A')
+        expect(el).to have_content('EmisIR_A_min')
       end
 
       it 'displays the variable longname' do
         el = find('.variable-details .collection-variable-longname')
-        expect(el).to have_content('TotalCounts_A')
+        expect(el).to have_content('EmisIR_A_min')
       end
 
       it 'displays the variable definition' do
         el = find('.variable-details .collection-variable-description')
-        expect(el).to have_content('TotalCounts_A in units of None')
+        expect(el).to have_content('Minimum value of 32-bit floating EmisFreqIR (4) IR surface emissivity at point frequencies {832, 961, 1203, 2616} cm-1 Information collected while the spacecraft is in the ascending part of its orbit. (Daytime data except near the poles.) Each field and level is individually quality controlled.')
       end
 
       it 'displays a back button' do
