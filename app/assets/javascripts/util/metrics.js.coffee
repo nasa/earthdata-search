@@ -126,8 +126,6 @@ this.edsc.util.metrics = do ->
         'defaultClickAction': 'click',
         'defaultClickLabel': title
       })
-    # return true to continue executing other click events
-    true
 
   createTimelineEvent: (label) ->
     if dataLayer?

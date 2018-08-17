@@ -20,6 +20,8 @@ do (document
 
   $(document).on 'click', 'a, button', (e) ->
     metrics.createDefaultClickEvent(e)
+    # return true to continue executing other click events
+    true
 
   $(document).on 'click', 'a[href="#"]', (e) ->
     e.preventDefault()
