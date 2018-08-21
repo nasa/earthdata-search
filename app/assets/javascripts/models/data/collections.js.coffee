@@ -20,7 +20,7 @@ ns.Collections = do (ko
         Collection.awaitDatasources collections, callback
 
       if needsLoad.length > 0
-        params = {echo_collection_id: needsLoad}
+        params = {echo_collection_id: needsLoad, page_size: 100}
         params.all_collections = query.params().all_collections if query.params().all_collections?
         new CollectionsModel(query).search params, (results) =>
           result.dispose() for result in results
