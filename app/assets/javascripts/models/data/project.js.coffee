@@ -58,7 +58,7 @@ ns.Project = do (ko,
   ])
 
   # Currently supported UMM-S Record Types
-  supportedServiceTypes = ['OPeNDAP', 'WEB SERVICES', 'NOT PROVIDED']
+  supportedServiceTypes = ['OPeNDAP', 'ESI', 'ECHO ORDERS']
 
   class ProjectCollection
     constructor: (@project, @collection, @meta={}) ->
@@ -193,8 +193,8 @@ ns.Project = do (ko,
     launchCustomizationModal: =>
       modalSuffixesByType = {
         'OPeNDAP': '-customization-modal',
-        'WEB SERVICES': '-echo-forms-modal',
-        'NOT PROVIDED': '-echo-forms-modal'
+        'ESI': '-echo-forms-modal',
+        'ECHO ORDERS': '-echo-forms-modal'
       }
 
       serviceType = @expectedUmmService()?.umm?.Type
@@ -214,6 +214,9 @@ ns.Project = do (ko,
       # We're not rendering the form again so if the use had scrolled before
       # closing the modal we want to reset the modal the next time it's shown
       $('.echo-forms .modal-body').animate({ scrollTop: (0) }, 0);
+
+    launchEditModal: =>
+      $('#' + @collection.id + '-edit-modal').modal()
 
     findSelectedVariable: (variable) =>
       selectedVariablePosition = @indexOfSelectedVariable(variable)
@@ -247,6 +250,10 @@ ns.Project = do (ko,
       return 'Edit Customizations' if @spatialSubsettingEnabled() || @variableSubsettingEnabled() || @transformationSubsettingEnabled() || @reformattingSubsettingEnabled()
 
       'Customize'
+
+    selectedAccessMethod: =>
+      if @serviceOptions.accessMethod().length > 0
+        return @serviceOptions.accessMethod()[0].method()
 
     # When a user makes a changes to an ECHO form the accessMethods model
     # is updated so we'll need to parse the updated model to check for the
