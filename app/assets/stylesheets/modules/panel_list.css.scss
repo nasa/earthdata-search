@@ -83,7 +83,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     background: #fff;
   }
 
-  .button {
+  .granule-items .button {
     @include list-panel-button;
     float: left;
     border-left: 0;

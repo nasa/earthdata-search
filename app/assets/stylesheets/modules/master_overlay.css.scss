@@ -373,23 +373,11 @@
   }
 
   .button {
-    @include list-panel-button;
     margin-top: 8px;
     display: inline-block;
     width: 100%;
     vertical-align: middle;
     padding: 8px 10px;
-
-    .pill {
-      background: rgba(0,0,0,0.4);
-      border-radius: 15px;
-      text-shadow: none;
-      font-size: 0.8em;
-      padding: 2px 10px;
-      margin-left: 5px;
-      vertical-align: bottom;
-      display: inline-block;
-    }
   }
 
   .retrieve {
