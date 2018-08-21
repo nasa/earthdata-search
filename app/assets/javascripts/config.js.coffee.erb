@@ -9,9 +9,17 @@
   plugin.register("<%= name.gsub(/\.min$/, '') %>", "<%= javascript_path(File.basename(path)) %>")
   <% end %>
   <% end %>
+  host_location = window.location.hostname
+  host_cmr_env = switch host_location
+    when 'localhost' then 'sit'
+    when 'edsc.dev' then 'sit'
+    when 'search.sit.earthdata.nasa.gov' then 'sit'
+    when 'search.uat.earthdata.nasa.gov' then 'uat'
+    when 'searchlab.earthdata.nasa.gov' then 'prod'
+    else 'prod'
   query = window.location.search
   match = /cmr_env=(\w+)/.exec(query)
-  cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
+  cmr_env = if match then match[1] else host_cmr_env
 
   if cmr_env == 'uat'
     browse_scaler_url = "<%= ENV['browse_scaler_url_uat'] ||  Rails.configuration.services['earthdata']['uat']['browse_scaler_root'] %>"
