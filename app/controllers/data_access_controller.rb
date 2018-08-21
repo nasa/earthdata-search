@@ -158,6 +158,9 @@ class DataAccessController < ApplicationController
       Rails.logger.info "Selected Service Type for #{collection_id}: #{service.fetch('umm', {})['Type']}"
       return service if service.fetch('umm', {})['Type'] == service_type
     end
+
+    # If nothing was found return nil
+    nil
   end
 
   # This rolls up getting information on data access into an API that approximates
@@ -250,6 +253,9 @@ class DataAccessController < ApplicationController
 
     # TODO: We may want to pull in details from the UMM Service record to populate this
     # accessMethod, though we currently need to ping the CMR services endpoint later anyway
+    s_record = get_service_for_collection_with_type(collection_id, 'OPeNDAP')
+
+    return [] unless s_record
 
     [{
       collection_id: collection_id,
@@ -260,7 +266,7 @@ class DataAccessController < ApplicationController
       formats: [],
       spatial: granule_params['bounding_box'],
       all: true,
-      umm_service: get_service_for_collection_with_type(collection_id, 'OPeNDAP'),
+      umm_service: s_record,
       count: hits
     }]
   end
@@ -277,6 +283,7 @@ class DataAccessController < ApplicationController
     else
       downloadable = granules.select {|granule| granule['online_access_flag'] == 'true' || granule['online_access_flag'] == true}
     end
+
     if downloadable.size > 0
       spatial = granule_params['bounding_box'] || granule_params['polygon'] || granule_params['point'] || granule_params['line']
 
@@ -305,6 +312,10 @@ class DataAccessController < ApplicationController
   end
 
   def get_order_access_methods(collection_id, granules, hits)
+    s_record = get_service_for_collection_with_type(collection_id, 'ECHO ORDERS')
+
+    return [] unless s_record
+
     # Pull out the granule ids from the granule objects
     granule_ids = granules.map { |granule| granule['id'] }
 
@@ -334,7 +345,7 @@ class DataAccessController < ApplicationController
         access_methods[option_id] ||= {
           name: option_name,
           count: 0,
-          umm_service: get_service_for_collection_with_type(collection_id, 'NOT PROVIDED')
+          umm_service: s_record
         }
         access_methods[option_id][:count] += 1
       end
@@ -389,6 +400,10 @@ class DataAccessController < ApplicationController
   end
 
   def get_service_access_methods(collection_id, granules, hits)
+    s_record = get_service_for_collection_with_type(collection_id, 'ESI')
+
+    return [] unless s_record
+
     service_order_info = echo_client.get_service_order_information(collection_id, token).body
 
     service_order_info.map do |info|
@@ -407,7 +422,7 @@ class DataAccessController < ApplicationController
       config[:name] = name
       config[:count] = granules.size
       config[:all] = true
-      config[:umm_service] = get_service_for_collection_with_type(collection_id, 'WEB SERVICES')
+      config[:umm_service] = s_record
       config
     end
   end

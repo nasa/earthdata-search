@@ -1,0 +1,110 @@
+<div class="modal fade collection-customization" data-bind="attr: {id: collection.id + '-edit-modal'}" role="dialog" tabindex="-1" aria-labelledby="collection-customization-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></a>
+        <h1 class="modal-title" id="collection-customization-modal-title"><i class="fa fa-cog"></i> Select Customization Options</h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="access-item-data-quality" data-bind="if: granuleAccessOptions().dqs && granuleAccessOptions().dqs.length > 0">
+          <h4>Quality Information</h4>
+          <!-- ko foreach: granuleAccessOptions().dqs -->
+          <p data-bind="html: data_quality_summary_definition.summary"></p>
+          <!-- /ko -->
+        </div>
+
+        <div class="access-item-options">
+          <!-- ko if: serviceOptions.isLoaded() -->
+            <!-- ko foreach: serviceOptions.accessMethod -->
+              <div data-bind="attr: { value: name, id: 'access-method-' + $parents[0].collection.id, form: 'access-form-' + $parents[0].collection.id, name: $parents[0].collection.id + '-access-method' }"></div>
+              <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[0].collection.id}"></div>
+              <p class="access-item-selection">
+                <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
+                <!-- ko foreach: availableMethods -->
+                <label data-bind="click: $parent.showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
+
+                  <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[1].collection.id + '-' + $parentContext.$index(), form: 'access-form-' + $parents[1].collection.id + '-' + $parentContext.$index(), name: $parents[1].collection.id + '-' + $parentContext.$index() +  '-access-method' }" type="radio" />
+                  <strong>
+                    <!-- ko if: type == 'opendap' -->
+                    <span>OPeNDAP</span>
+                    <!-- /ko -->
+                    <!-- ko if: type == 'download' -->
+                    <span>Direct Download</span>
+                    <!-- /ko -->
+                    <!-- ko if: type == 'order' -->
+                    <span>Stage for Delivery</span>
+                    <!-- /ko -->
+                    <!-- ko if: type == 'service' -->
+                    <span>Customize Product</span>
+                    <!-- /ko -->
+                  </strong>
+                  <!-- ko if: type == 'opendap' -->
+                  <span class="access-item-description">Download data from CRM's OPeNDAP URL Service now from your browser or access script.</span>
+                  <!-- /ko -->
+                  <!-- ko if: type == 'download' -->
+                  <span class="access-item-description">Download data <strong>as-is</strong> now from your browser or access script.</span>
+                  <!-- /ko -->
+                  <!-- ko if: type == 'order' -->
+                  <span class="access-item-description">Submit a request for data to be staged for delivery. You will get an email when they are ready.</span>
+                  <!-- /ko -->
+                  <!-- ko if: type == 'service' -->
+                  <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
+                  <span class="access-item-description">Select custom service options to be performed. (e.g. subsetting, etc.)</span>
+                  <!-- /ko -->
+                </label>
+                <!-- /ko -->
+              </p>
+              <div class="access-form" data-bind="attr: {id: 'access-form-' + $parent.collection.id + '-' + $parentContext.$index()}"></div>
+
+              <div class="access-subset-options" data-bind="if: subsetOptions">
+                <div class="access-subset-options-section">
+                  <h5>File format</h5>
+                  <!-- ko foreach: subsetOptions().formats -->
+                    <label class="radio-label">
+                      <input data-bind="checked: $parent.subsetOptions().formatName, attr: { value: name, name: $parentContext.$index() + '-file-type' }" type="radio" />
+                      <span data-bind="text: name"></span>
+                    </label>
+                  <!-- /ko -->
+                </div>
+                <!-- ko if: subsetOptions().format().canSubset -->
+                  <!-- ko if: subsetOptions().config.spatial -->
+                    <div class="access-subset-options-section">
+                      <h5>Spatial subsetting</h5>
+                      <label>
+                        <input data-bind="checked: subsetOptions().subsetToSpatial" type="checkbox" />
+                        <span>Subset to my spatial search area's bounding box</span>
+                      </label>
+                      <div class="access-subset-map" data-bind="mapdisplay: subsetOptions().config.spatial"></div>
+                    </div>
+                  <!-- /ko -->
+                  <div class="access-subset-options-section">
+                    <h5>Parameters</h5>
+                    <!-- ko foreach: subsetOptions().parameters -->
+                      <div class="access-parameter">
+                        <label>
+                          <input data-bind="checked: selected" type="checkbox" />
+                          <span data-bind="text: id"></span>
+                        </label>
+                        <span class="description" data-bind="text: title"></span>
+                      </div>
+                    <!-- /ko -->
+                  </div>
+                <!-- /ko -->
+              </div>
+              <!-- /ko -->
+
+              <!-- ko if: selectedAccessMethod() == 'OPeNDAP' -->
+              <%= render partial: 'collection_customization_modal' %>
+              <%= render partial: 'variable_selection_modal' %>
+              <!-- /ko -->
+
+              <!-- ko if: serviceOptions.accessMethod().length == 0 -->
+                <p>Data access is not available for this collection.</p>
+              <!-- /ko -->
+            <!-- /ko -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

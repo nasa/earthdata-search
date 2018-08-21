@@ -172,9 +172,9 @@ ns.VariableSelector = do (ko
       @selectedProjectCollection(projectCollection)
 
       # Scroll to the top of the div when its opened
-      $('#variable-subsetting-modal .modal-body').animate({ scrollTop: (0) }, 0);
+      # $('#variable-subsetting-modal .modal-body').animate({ scrollTop: (0) }, 0);
 
-      $('#variable-subsetting-modal').modal('show')
+      # $('#variable-subsetting-modal').modal('show')
 
     ###*
      * Cleanup obversables
