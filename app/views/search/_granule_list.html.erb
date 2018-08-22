@@ -52,7 +52,7 @@
             <!-- /ko -->
           </div>
         </header>
-        <div id="granules-scroll" class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
+        <div id="granules-scroll" class="master-overlay-content panel-list granule-items" data-bind="event: {scroll: scrolled}">
           <p class="granule-match-stats">
             Showing <span data-bind="text: granules().results().length"></span> of
             <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
