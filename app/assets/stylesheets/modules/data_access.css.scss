@@ -105,13 +105,13 @@
   }
 
   button.low-priority {
-    @include linear-gradient(#888, #666);
+    background-color: #737273;
     box-shadow: none;
-    border: 1px solid #666;
     padding: 7px 13px;
+    color: #fff;
 
     &:hover {
-      @include linear-gradient(#828282, #626262);
+      background-color: #626262;
     }
   }
 }

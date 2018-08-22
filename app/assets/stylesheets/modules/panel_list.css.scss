@@ -30,12 +30,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     margin-top: 0;
   }
 
-  &:nth-child(odd) {
-    background: #f4f7fa;
-  }
-
   &.master-overlay-forward:hover {
-    background-color: #eee;
+    background-color: #f8f8f8;
   }
 
   h3 {
