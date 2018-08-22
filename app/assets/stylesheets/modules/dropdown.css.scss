@@ -48,7 +48,7 @@
 }
 
 ul.dropdown-menu {
-  @include linear-gradient($button-dark-bottom-gradient, $dropdown-highlight);
+  @include linear-gradient($button-dark, $dropdown-highlight);
 
   a.dropdown-link:hover {
     background: $dropdown-highlight;

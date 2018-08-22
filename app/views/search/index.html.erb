@@ -51,8 +51,8 @@
           <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid" title="Select Grid Coordinates"><i class="edsc-icon-globe-grid"></i> Grid Coordinates</a></li>
         </ul>
       </div>
-      <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
-      <a href="#" class="button toggle-filter-stack" data-bind="event: {click: toggleFilterStack}" title="Toggle Filter Stack"><i class="fa fa-bars"></i></a>
+      <a href="#" class="button toolbar-button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear Filters"><i class="fa fa-eraser"></i></a>
+      <a href="#" class="button toolbar-button toggle-filter-stack" data-bind="event: {click: toggleFilterStack}" title="Toggle Filter Stack"><i class="fa fa-bars"></i></a>
       <div class="filter-stack" data-bind="visible: totalFilters() > 0">
         <div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.isGrid() || query.grid.selected(), css: { 'knockout-template': !bindingsLoaded }">
           <p>
