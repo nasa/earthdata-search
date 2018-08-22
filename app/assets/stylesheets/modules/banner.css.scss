@@ -35,9 +35,12 @@
 
   a.banner-close {
     color: #fff;
+    color: rgba(255,255,255,0.7);
+    transition: color 0.15s ease-in-out;
 
     &:hover {
-      color: #aaa;
+      color: #fff;
+      color: rgba(255,255,255,1);
     }
   }
 }
