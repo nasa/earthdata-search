@@ -3,18 +3,6 @@
   padding-bottom: 70px;
   padding-top: 35px;
 
-  // TL: Temporarily flattening buttons only on this page.
-  a.text-button,
-  button {
-    background-image: none;
-    text-shadow: none;
-
-    &:hover {
-      background-image: none;
-      text-shadow: none;
-    }
-  }
-
   h1 {
     border-bottom: 1px solid #333;
     padding: 0 0 .2em 0;
@@ -117,13 +105,13 @@
   }
 
   button.low-priority {
-    @include linear-gradient(#888, #666);
+    background-color: #737273;
     box-shadow: none;
-    border: 1px solid #666;
     padding: 7px 13px;
+    color: #fff;
 
     &:hover {
-      @include linear-gradient(#828282, #626262);
+      background-color: #626262;
     }
   }
 }

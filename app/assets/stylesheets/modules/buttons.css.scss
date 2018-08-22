@@ -68,26 +68,27 @@
 }
 
 @mixin dark-button {
-  @include linear-gradient($button-dark-top-gradient, $button-dark-bottom-gradient);
+  background: $button-dark;
   color: #fff;
   border: none;
-  text-shadow: 1px 1px 1px $button-dark-text-shadow;
 
   &:hover {
     color: #fff;
-    @include linear-gradient($button-dark-hover-gradient, $button-dark-bottom-gradient);
+    background: $button-dark-hover;
   }
 
   &.low-priority {
     background: none;
     border-color: $button-dark-lp-border;
+    text-shadow: none;
+    color: #828282;
   }
 }
 
 @mixin dark-outline-button {
-  border: 2px solid $button-dark-top-gradient;
+  border: 2px solid $button-dark-hover;
   background: transparent;
-  color: $button-dark-top-gradient;
+  color: $button-dark-hover;
   text-shadow: none;
   font-weight: bold;
 
@@ -108,7 +109,7 @@
 }
 
 @mixin list-panel-button {
-  @include linear-gradient(#fff, #eee);
+  background: #f3f3f3;
   border: 1px solid #e3e3e3;
   color: #7f8c8d;
 
@@ -170,6 +171,17 @@
       padding-top: 2px;
     }
   }
+
+  .pill {
+    background: rgba(0,0,0,0.4);
+    border-radius: 15px;
+    text-shadow: none;
+    font-size: 0.8em;
+    padding: 2px 10px;
+    margin-left: 5px;
+    vertical-align: bottom;
+    display: inline-block;
+  }
 }
 
 .icon-button {
@@ -183,7 +195,7 @@
 }
 
 .toolbar {
-  .button, input[type="button"], input[type="reset"], input[type="submit"] {
+  .toolbar-button, input[type="button"], input[type="reset"], input[type="submit"] {
     border-left: 1px solid #e3e3e3;
     padding: 15px 14px;
     border-radius: 0;
@@ -365,7 +377,24 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
 }
 
 .button-disabled {
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+  background: #f3f3f3;
+  border: 1px solid #e3e3e3;
+  color: #7f8c8d;
+  text-shadow: none;
+  cursor: not-allowed;
+
+  &:hover {
+    background: #f3f3f3;
+    border: 1px solid #e3e3e3;
+    color: #7f8c8d;
+    text-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .pill {
+    color: #757471;
+    background: #d0d0d0;
+  }
 }
 
 .button-back {
