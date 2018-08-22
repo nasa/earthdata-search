@@ -24,7 +24,7 @@
                 <!-- ko foreach: availableMethods -->
                 <label data-bind="click: $parent.showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
 
-                  <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[1].collection.id + '-' + $parentContext.$index(), form: 'access-form-' + $parents[1].collection.id + '-' + $parentContext.$index(), name: $parents[1].collection.id + '-' + $parentContext.$index() +  '-access-method' }" type="radio" />
+                  <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[1].collection.id + '-' + $parentContext.$index() + $index(), form: 'access-form-' + $parents[1].collection.id + '-' + $parentContext.$index(), name: $parents[1].collection.id + '-' + $parentContext.$index() +  '-access-method' }" type="radio" />
                   <strong>
                     <!-- ko if: type == 'opendap' -->
                     <span>OPeNDAP</span>
@@ -55,14 +55,14 @@
                 </label>
                 <!-- /ko -->
               </p>
-              <div class="access-form" data-bind="attr: {id: 'access-form-' + $parent.collection.id + '-' + $parentContext.$index()}"></div>
+              <div class="access-form" data-bind="attr: {id: 'access-form-' + $parent.collection.id + '-' + $index()}"></div>
 
               <div class="access-subset-options" data-bind="if: subsetOptions">
                 <div class="access-subset-options-section">
                   <h5>File format</h5>
                   <!-- ko foreach: subsetOptions().formats -->
                     <label class="radio-label">
-                      <input data-bind="checked: $parent.subsetOptions().formatName, attr: { value: name, name: $parentContext.$index() + '-file-type' }" type="radio" />
+                      <input data-bind="checked: $parent.subsetOptions().formatName, attr: { value: name, name: $index() + '-file-type' }" type="radio" />
                       <span data-bind="text: name"></span>
                     </label>
                   <!-- /ko -->
