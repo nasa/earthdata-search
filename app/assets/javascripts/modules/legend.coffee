@@ -58,7 +58,7 @@
     @minLabel = create(labels, 'span', 'legend-label legend-label-min')
     @maxLabel = create(labels, 'span', 'legend-label legend-label-max')
 
-    @focus = focus = create(labels, 'div', 'legend-focus')
+    @focus = focus = create(container, 'div', 'legend-focus')
     @focusColor = create(focus, 'span', 'legend-focus-color')
     @focusLabel = create(focus, 'span', 'legend-label legend-focus-label')
     @focus.style.display = 'none'

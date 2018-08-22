@@ -1,6 +1,8 @@
 // Leaflet override
 .leaflet-left .leaflet-control {
-	margin-left: 15px;
+	margin: $search-container-clearance 0 0 15px;
+	padding: 3px;
+	background: rgba(0,0,0,0.4);
 }
 
 // Leaflet override
@@ -8,15 +10,11 @@
 	clear: none;
 }
 
-.legend {
-  text-shadow: 1px 1px 1px #fff;
-}
-
 .legend-bar {
   display: block;
   height: 1.5em;
   width: 20em;
-  margin-top: $search-container-clearance;
+	border: 1px solid rgba(0,0,0,0.5);
 }
 
 .legend-name {
@@ -24,22 +22,36 @@
 }
 
 .legend-labels {
+	display: flex;
+	justify-content: space-between;
   text-align: center;
+	color: #fff;
+	text-shadow: 0 0 5px black;
 }
 
 .legend-label-min {
-  float: left;
+	position: relative;
+	left: 2px;
 }
 
 .legend-label-max {
-  float: right;
+	position: relative;
+	right: 2px;
+}
+
+.legend-focus {
+	display: flex;
+  justify-content: center;
+	color: #fff;
+	text-shadow: 0 0 5px black;
 }
 
 .legend-focus-color {
+	margin-right: 3px;
   width: 1.3em;
   height: 1.3em;
   vertical-align: middle;
-  border: 1px solid #000;
+  border: 1px solid rgba(0,0,0,0.5);
   background: #f00;
   display: inline-block;
 }
