@@ -444,6 +444,23 @@ http_interactions:
   digest: 653273d4d12cbf2f116f6b52420d7eb3a8aa810c
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C14758250-LPDAAC_ECS&echo_collection_id%5B%5D=C1000000000-LANCEAMSR2&echo_collection_id%5B%5D=C179003030-ORNL_DAAC&echo_collection_id%5B%5D=C179001887-SEDAC&echo_collection_id%5B%5D=C1000000220-SEDAC&echo_collection_id%5B%5D=C179001967-SEDAC&echo_collection_id%5B%5D=C179001889-SEDAC&echo_collection_id%5B%5D=C179001707-SEDAC&echo_collection_id%5B%5D=C179002107-SEDAC&echo_collection_id%5B%5D=C179002147-SEDAC&echo_collection_id%5B%5D=C1000000000-SEDAC&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=11&sort_key%5B%5D=has_granules_or_cwic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Thu, 23 Aug 2018 13:54:36 GMT
+  digest: f6adffcf1470b4772d07c4fa8ea5d63c883706ec
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C14758250-LPDAAC_ECS&echo_collection_id%5B%5D=C1000000000-LANCEAMSR2&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
     body:
       encoding: US-ASCII
@@ -2930,11 +2947,11 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 15 Aug 2018 17:41:46 GMT
-  digest: 0635550223ffc2541fa3ddbfd23618215278e3ab
+  digest: c94b4ab9fd91a850566b76df13f07de390533656
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id=C1200240776-DEV08&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A
