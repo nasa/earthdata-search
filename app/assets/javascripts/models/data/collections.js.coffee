@@ -20,9 +20,10 @@ ns.Collections = do (ko
         Collection.awaitDatasources collections, callback
 
       if needsLoad.length > 0
-        params = {echo_collection_id: needsLoad, page_size: 100}
+        params = {echo_collection_id: needsLoad}
+        params = extend(params, {page_size: ids.length}) if ids.length > 10
         params.all_collections = query.params().all_collections if query.params().all_collections?
-        new CollectionsModel(query).search params, (results) =>
+        new CollectionsModel(query).search params, (results) ->
           result.dispose() for result in results
           awaitDatasources()
       else
@@ -56,7 +57,7 @@ ns.Collections = do (ko
         @facets.update(data.feed.facets.children || [])
         newItems
 
-    toggleVisibleCollection: (collection) =>
+    toggleVisibleCollection: (collection) ->
       collection.visible(!collection.visible())
 
   exports = CollectionsModel

@@ -572,4 +572,41 @@ describe 'Viewing Single Project', reset: false do
       # end
     end
   end
+
+  context 'when the project has more than 10 collections' do
+    # If you are re-recording cassettes, this test will probably need multiple runs
+    # due to the number of requests for 11 collections on the project page
+    # `could not obtain a database connection within 5.000 seconds` shows up until
+    # all cassettes are recorded
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2', 'C179003030-ORNL_DAAC', 'C179001887-SEDAC', 'C1000000220-SEDAC', 'C179001967-SEDAC', 'C179001889-SEDAC', 'C179001707-SEDAC', 'C179002107-SEDAC', 'C179002147-SEDAC', 'C1000000000-SEDAC']
+      login
+      wait_for_xhr
+      click_link 'My Project'
+      wait_for_xhr
+    end
+
+    it 'displays the project summary information' do
+      within '.project-panel .collection-count' do
+        expect(page).to have_content('11 Collections')
+      end
+    end
+
+    it 'displays collection information for all collections' do
+      within '.project-collection-cards' do
+        expect(page).to have_content('2000 Pilot Environmental Sustainability Index (ESI)')
+        expect(page).to have_content('2001 Environmental Sustainability Index (ESI)')
+        expect(page).to have_content('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
+        expect(page).to have_content('NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN')
+        expect(page).to have_content('2002 Environmental Sustainability Index (ESI)')
+        expect(page).to have_content('2005 Environmental Sustainability Index (ESI)')
+        expect(page).to have_content('2008 Environmental Performance Index (EPI)')
+        expect(page).to have_content('Anthropogenic Biomes of the World, Version 1')
+        expect(page).to have_content('2010 Environmental Performance Index (EPI)')
+        expect(page).to have_content('2012 Environmental Performance Index and Pilot Trend Environmental Performance Index')
+        expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
+      end
+    end
+  end
 end
