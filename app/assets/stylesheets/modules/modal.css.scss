@@ -142,6 +142,21 @@
   margin-top: 120px;
 }
 
+.modal-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 15px;
+
+  &.is-active {
+    display: block;
+  }
+}
+
 .modal-footer {
   padding: 15px;
 

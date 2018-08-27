@@ -16,45 +16,63 @@
 
         <div class="access-item-options">
           <!-- ko if: serviceOptions.isLoaded() -->
+            <!-- ko if: selectedAccessMethodType() -->
+              <h3>Delivery Method</h3>
+              <!-- <p data-bind="text: selectedAccessMethod()"></p> -->
+              <div class="customization-item">
+              <!-- ko if: selectedAccessMethodType() == 'opendap' -->
+                <h4 class="customization-title">Customize &amp; Download</h4>
+                <span class="customization-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
+              <!-- /ko -->
+              <!-- ko if: selectedAccessMethodType() == 'service' -->
+                <h4 class="customization-title">Customize &amp; Download</h4>
+                <span class="customization-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
+              <!-- /ko -->
+              <!-- ko if: selectedAccessMethodType() == 'download' -->
+                <h4 class="customization-title">Direct Download</h4>
+                <span class="customization-description">Direct download of <strong>all</strong> data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script.</span>
+              <!-- /ko -->
+              <!-- ko if: selectedAccessMethodType() == 'order' -->
+                <h4 class="customization-title">Stage for Delivery</h4>
+                <span class="customization-description">Submit a request for data to be staged for delivery. Data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.</span>
+              <!-- /ko -->
+              <div class="customization-item-footer">
+                <a href="#" data-bind="click: triggerEditAccessMethod">Edit Delivery Method</a>
+              </div>
+            </div>
+            <!-- /ko-->
+          <!-- /ko-->
+        </div>
+
+        <div class=" access-item-options">
             <!-- ko foreach: serviceOptions.accessMethod -->
-              <div data-bind="attr: { value: name, id: 'access-method-' + $parents[0].collection.id, form: 'access-form-' + $parents[0].collection.id, name: $parents[0].collection.id + '-access-method' }"></div>
-              <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[0].collection.id}"></div>
-              <p class="access-item-selection">
-                <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
+              <div class="modal-overlay access-item-selection" data-bind="css: {'is-active' : $parent.editingAccessMethod}">
+                <h3>Select Delivery Method</h3>
                 <!-- ko foreach: availableMethods -->
-                <label data-bind="click: $parent.showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
+                <label data-bind="click: $parents[1].showSpinner, css: {'active-tab': $parent.method() == $data.name}" class="input-tab">
 
                   <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[1].collection.id + '-' + $parentContext.$index() + $index(), form: 'access-form-' + $parents[1].collection.id + '-' + $parentContext.$index(), name: $parents[1].collection.id + '-' + $parentContext.$index() +  '-access-method' }" type="radio" />
-                  <strong>
-                    <!-- ko if: type == 'opendap' -->
-                    <span>OPeNDAP</span>
-                    <!-- /ko -->
-                    <!-- ko if: type == 'download' -->
-                    <span>Direct Download</span>
-                    <!-- /ko -->
-                    <!-- ko if: type == 'order' -->
-                    <span>Stage for Delivery</span>
-                    <!-- /ko -->
-                    <!-- ko if: type == 'service' -->
-                    <span>Customize Product</span>
-                    <!-- /ko -->
-                  </strong>
                   <!-- ko if: type == 'opendap' -->
-                  <span class="access-item-description">Download data from CRM's OPeNDAP URL Service now from your browser or access script.</span>
-                  <!-- /ko -->
-                  <!-- ko if: type == 'download' -->
-                  <span class="access-item-description">Download data <strong>as-is</strong> now from your browser or access script.</span>
-                  <!-- /ko -->
-                  <!-- ko if: type == 'order' -->
-                  <span class="access-item-description">Submit a request for data to be staged for delivery. You will get an email when they are ready.</span>
+                  <strong><span>Customize &amp; Download</span></strong>
+                  <span class="access-item-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
                   <!-- /ko -->
                   <!-- ko if: type == 'service' -->
+                  <strong><span>Customize &amp; Download</span></strong>
                   <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
-                  <span class="access-item-description">Select custom service options to be performed. (e.g. subsetting, etc.)</span>
+                  <span class="access-item-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
+                  <!-- /ko -->
+                  <!-- ko if: type == 'download' -->
+                  <strong><span>Direct Download</span></strong>
+                  <span class="access-item-description">Direct download of <strong>all</strong> data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script. </span>
+                  <!-- /ko -->
+                  <!-- ko if: type == 'order' -->
+                  <strong><span>Stage for Delivery</span></strong>
+                  <span class="access-item-description">Submit a request for data to be staged for delivery. Data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.</span>
                   <!-- /ko -->
                 </label>
                 <!-- /ko -->
-              </p>
+              </div>
+
               <div class="access-form" data-bind="attr: {id: 'access-form-' + $parent.collection.id + '-' + $index()}"></div>
 
               <div class="access-subset-options" data-bind="if: subsetOptions">
@@ -95,8 +113,7 @@
               <!-- /ko -->
 
               <!-- ko if: selectedAccessMethod() == 'OPeNDAP' -->
-              <%= render partial: 'collection_customization_modal' %>
-              <%= render partial: 'variable_selection_modal' %>
+              <%= render partial: 'customization' %>
               <!-- /ko -->
 
               <!-- ko if: serviceOptions.accessMethod().length == 0 -->
@@ -104,6 +121,9 @@
               <!-- /ko -->
             <!-- /ko -->
         </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button" data-dismiss="modal">Close</Button>
       </div>
     </div>
   </div>
