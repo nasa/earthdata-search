@@ -71,6 +71,8 @@ ns.Project = do (ko,
       @selectedVariables = ko.observableArray([])
       @loadingServiceType = ko.observable(false)
       @isCustomizable = ko.observable(false)
+      @editingAccessMethod = ko.observable(false)
+      @editingVariables = ko.observable(false)
       @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
       @expectedUmmService = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
       @isLoadingComplete = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
@@ -119,7 +121,6 @@ ns.Project = do (ko,
       $(document).trigger('dataaccessevent', [@collection.id])
       success = (data) =>
         console.log "Finished loading access options for #{@collection.id}"
-        console.log data
 
         @granuleAccessOptions(data)
 
@@ -153,10 +154,8 @@ ns.Project = do (ko,
             # the loop
             return false
 
-        # For `download` we will automatically set the method but for any other
-        # access method we dont do this until the user clicks `Customize` to ensure
-        # they've considered filtering their data down
-        if expectedMethod?.type == 'download' && @serviceOptions.accessMethod().length > 0
+        # Select the expected method
+        if @serviceOptions.accessMethod().length > 0
           @serviceOptions.accessMethod()[0].method(expectedMethod.name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
@@ -198,7 +197,7 @@ ns.Project = do (ko,
       }
 
       serviceType = @expectedUmmService()?.umm?.Type
-      
+
       # Sets the accessMethod for the serviceOptionModel
       if @serviceOptions.accessMethod().length > 0
         console.log('Selected ' + @expectedAccessMethod().name + ' for ' + @collection.id)
@@ -217,6 +216,23 @@ ns.Project = do (ko,
 
     launchEditModal: =>
       $('#' + @collection.id + '-edit-modal').modal()
+      $('#' + @collection.id + '-edit-modal').on 'hidden.bs.modal', @onModalClose
+
+    onModalClose: =>
+      @editingAccessMethod(false)
+      @editingVariables(false)
+
+    triggerEditAccessMethod: =>
+      @editingAccessMethod(true)
+
+    triggerEditVariables: =>
+      @editingVariables(true)
+
+    showSpinner: (item, e) =>
+      # This will likely need to change if we opt to support multiple access methods
+      @serviceOptions?.accessMethod?()[0].showSpinner item, e
+      @editingAccessMethod(false)
+      true
 
     findSelectedVariable: (variable) =>
       selectedVariablePosition = @indexOfSelectedVariable(variable)
@@ -255,6 +271,10 @@ ns.Project = do (ko,
       if @serviceOptions.accessMethod().length > 0
         return @serviceOptions.accessMethod()[0].method()
 
+    selectedAccessMethodType: =>
+      if @serviceOptions.accessMethod().length > 0
+        return @serviceOptions.accessMethod()[0].methodType()
+
     # When a user makes a changes to an ECHO form the accessMethods model
     # is updated so we'll need to parse the updated model to check for the
     # new values
@@ -274,7 +294,7 @@ ns.Project = do (ko,
       @_computeVariableSubsettingEnabled()
       @_computeTransformationSubsettingEnabled()
       @_computeReformattingSubsettingEnabled()
-        
+
     _computeSpatialSubsettingEnabled: =>
       if @expectedAccessMethod()?.type == 'opendap'
         # For OPeNDAP collections we just pass along the spatial search params

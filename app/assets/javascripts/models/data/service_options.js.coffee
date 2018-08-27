@@ -31,6 +31,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
   class ServiceOptions
     constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
+      @methodType = ko.observable('')
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
 
@@ -63,6 +64,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @subsetOptions(null)
         result
 
+      @method.subscribe =>
+        if @availableMethods
+          for available in @availableMethods when available.name == @method()
+            @methodType(available.type)
+
     # Renders the echo form associated with the expectedAccessMethod
     # for a provided collection
     renderServiceForm: (collection) =>
@@ -80,9 +86,9 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     showSpinner: (item, e) =>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
+
         clickedMethod = m
         break
-
       if e.target.id
         echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
         echoformContainer.empty?() if echoformContainer?
@@ -197,7 +203,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       # Return true if no accessMethods are present
       if @granuleAccessOptions().methods?.length == 0
         return true
-      
+
       result = false
       for m in @accessMethod()
         # If only one accessMethod exists, select it for the user

@@ -398,58 +398,6 @@ $card-background: rgba(235,235,235,1);
     }
   }
 
-  .collection-customization {
-    .modal-body {
-      background: #f2f2f2;
-      padding: 30px;
-      padding-bottom: 20px;
-    }
-
-    p.content {
-      padding: 15px 25px 0;
-      text-align: center;
-      color: darken($light-grey, 30%);
-    }
-
-    p.content .fa {
-      padding-right: 3px;
-    }
-
-    .customization-options {
-      display: flex;
-
-      .fa {
-        color: #e1e1e1;
-        font-size: 4em;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-
-      .customization-column {
-        padding: 0 25px;
-        flex-direction: column;
-        flex: 1;
-        display: flex;
-        margin-bottom: 20px;
-
-        p {
-          margin: 1em 0;
-        }
-
-        .action-container {
-          margin-top: auto;
-
-          .action-button {
-            margin: 0;
-            display: block;
-            text-align: center;
-            font-weight: bold;
-          }
-        }
-      }
-    }
-  }
-
   .keyword-list {
     margin: 0;
     padding: 0;
@@ -519,13 +467,6 @@ $card-background: rgba(235,235,235,1);
   }
 
   .variable-details {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #fff;
-    padding: 15px;
 
     .collection-variable-heading {
       display: block;

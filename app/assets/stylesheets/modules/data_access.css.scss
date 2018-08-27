@@ -419,20 +419,14 @@ section.data-access-next {
 .access-item-selection {
   padding: 0;
   margin: 0;
-  border-top: 1px solid #ccc;
+  color: #555;
 
   &:first-child {
     border-top: 0px;
   }
 
   .input-tab {
-    border: 1px solid #e3e3e3;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     padding: 10px;
-    width: 230px;
-    min-height: 110px;
-    display: inline-block;
     vertical-align: top;
 
     &:hover {
@@ -441,10 +435,7 @@ section.data-access-next {
     }
 
     &.active-tab {
-      background: #2ecc71;
-      border-color: #27ae60;
-      border-bottom: none;
-      color: #fff;
+      color: #111;
     }
   }
 
@@ -457,7 +448,7 @@ section.data-access-next {
   }
 
   .active-tab .access-item-description {
-    color: #fff;
+    color: #555;
   }
 }
 
@@ -480,6 +471,10 @@ section.data-access-next {
   width: 5em;
   text-align: right;
   padding-right: .25em;
+}
+
+.access-item-options-method {
+  margin-bottom: 0.25em;
 }
 
 .access-item-options-header {
@@ -623,4 +618,17 @@ section.data-access-next {
     margin-left: 240px;
     margin-bottom: 15px;
   }
+}
+
+.customization-item {
+  margin-bottom: 0.25em;
+}
+
+.customization-title {
+  margin-bottom: 0.25em;
+}
+
+.customization-description {
+  display: block;
+  margin-bottom: 0.25em;
 }
