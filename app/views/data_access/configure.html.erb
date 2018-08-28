@@ -39,7 +39,7 @@
             </p>
             <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
-              <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit + ' *'"></span>
+              <span class="summary-label" data-bind="text: granuleAccessOptions().hits != null && collection.has_granules ? granuleAccessOptions().sizeUnit + '*' : granuleAccessOptions().sizeUnit"></span>
             </p>
           </div>
 
@@ -156,6 +156,7 @@
                 <button data-bind="click: serviceOptions.addAccessMethod" class="button-small"> <i class="fa fa-plus-circle"></i> Add access method</button>
                 <span class="instructions"> <i class="fa fa-arrow-circle-left"></i> Access these granules again with different options</span>
               </p>
+              <p class="access-item-extra-info instructions" data-bind="if: granuleAccessOptions().hits != null && collection.has_granules">*Size is an estimate and does not reflect any changes due to customization options.</p>
             </div>
           </div>
           <!-- /ko -->
@@ -177,7 +178,6 @@
         </div>
 
         <div class="access-item-actions">
-          <span data-bind="if: granuleAccessOptions().hits != null && collection.has_granules" class="pull-left">* Size is an estimate and does not reflect any changes due to customization options.</span>
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
           <button data-tooltip="true" title="Reset all customization options to their default values." data-bind="visible: !$root.ui.serviceOptionsList.isLastOption() && isResetable, enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.resetForm, attr: {id: 'reset-form-' + collection.id}" class="button-next">Reset</button>
           <button data-tooltip="true" title="Revert all customization options back to the saved values." data-bind="click: $root.ui.serviceOptionsList.reloadPrevious, attr: {id: 'reload-previous-' + collection.id}" style="display: none;" class="button-next">Revert</button>
