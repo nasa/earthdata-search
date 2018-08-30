@@ -620,15 +620,37 @@ section.data-access-next {
   }
 }
 
-.customization-item {
-  margin-bottom: 0.25em;
+.customization-list {
+  margin-top: 1em;
 }
 
-.customization-title {
-  margin-bottom: 0.25em;
+.customization-item {
+  margin-bottom: 1em;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 3px;
+  border: 1px solid #d2d2d2;
+}
+
+.customization-item-heading {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.customization-item-body {
+  margin-bottom: 0.75em;
 }
 
 .customization-description {
   display: block;
-  margin-bottom: 0.25em;
+  margin-bottom: 0.5em;
+}
+
+.customization-status-text {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 0.925em;
+  font-weight: 700;
+  font-style: italic;
+  color: #666;
 }

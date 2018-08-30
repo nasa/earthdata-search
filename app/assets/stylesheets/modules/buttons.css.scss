@@ -145,6 +145,17 @@
     float: none;
   }
 
+  &.secondary {
+    @include list-panel-button;
+    border: 1px solid #e3e3e3;
+    padding: 7px 10px;
+    text-shadow: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   &.group-secondary {
     padding-left: 0.5em;
     padding-right: 0.5em;

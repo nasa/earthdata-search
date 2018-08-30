@@ -141,6 +141,8 @@
             </div>
           </div>
           <div class="action-container">
+            <!-- <a class="action-button customize" data-toggle="modal" data-bind="visible: isCustomizable(), click: launchCustomizationModal, css: {enabled: isLoadingComplete()}">Customize</a> -->
+
             <a class="action-button edit" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}"><i class="fa fa-cog"></i> Edit Options</a>
 
             <a class="action-button remove" title="Remove collection from the current project" data-bind="click: $root.removeProjectCollection"><i class="fa fa-minus"></i></a>
@@ -148,6 +150,8 @@
 
           <%= render partial: 'access_method_selection' %>
           <%= render partial: 'granule_list_modal' %>
+          <%# render partial: 'collection_customization_modal' %>
+          <%# render partial: 'echo_forms_modal' %>
         </div>
       <!-- /ko -->
     </div>

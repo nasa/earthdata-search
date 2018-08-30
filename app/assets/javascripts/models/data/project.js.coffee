@@ -198,10 +198,15 @@ ns.Project = do (ko,
       @editingVariables(false)
 
     triggerEditAccessMethod: =>
+      @_resetModalScrollPosition()
       @editingAccessMethod(true)
 
     triggerEditVariables: =>
+      @_resetModalScrollPosition()
       @editingVariables(true)
+
+    _resetModalScrollPosition: =>
+      $('#' + @collection.id + '-edit-modal .modal-body')[0]?.scrollTo(0,0)
 
     showSpinner: (item, e) =>
       # This will likely need to change if we opt to support multiple access methods
