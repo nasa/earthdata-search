@@ -189,31 +189,6 @@ ns.Project = do (ko,
 
       expectedUmmService
 
-    launchCustomizationModal: =>
-      modalSuffixesByType = {
-        'OPeNDAP': '-customization-modal',
-        'ESI': '-echo-forms-modal',
-        'ECHO ORDERS': '-echo-forms-modal'
-      }
-
-      serviceType = @expectedUmmService()?.umm?.Type
-
-      # Sets the accessMethod for the serviceOptionModel
-      if @serviceOptions.accessMethod().length > 0
-        console.log('Selected ' + @expectedAccessMethod().name + ' for ' + @collection.id)
-
-        # Prevent re-rendering the form if it has previously been selected
-        unless @collection.hasEchoFormLoaded()
-          @serviceOptions.accessMethod()[0].method(@expectedAccessMethod().name)
-          @serviceOptions.accessMethod()[0].renderServiceForm(@collection)
-
-      # Show the modal
-      $('#' + @collection.id + modalSuffixesByType[serviceType]).modal()
-
-      # We're not rendering the form again so if the use had scrolled before
-      # closing the modal we want to reset the modal the next time it's shown
-      $('.echo-forms .modal-body').animate({ scrollTop: (0) }, 0);
-
     launchEditModal: =>
       $('#' + @collection.id + '-edit-modal').modal()
       $('#' + @collection.id + '-edit-modal').on 'hidden.bs.modal', @onModalClose
@@ -230,7 +205,7 @@ ns.Project = do (ko,
 
     showSpinner: (item, e) =>
       # This will likely need to change if we opt to support multiple access methods
-      @serviceOptions?.accessMethod?()[0].showSpinner item, e
+      @serviceOptions?.accessMethod?()[0].showSpinner(item, e)
       @editingAccessMethod(false)
       true
 

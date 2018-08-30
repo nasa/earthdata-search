@@ -69,20 +69,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           for available in @availableMethods when available.name == @method()
             @methodType(available.type)
 
-    # Renders the echo form associated with the expectedAccessMethod
-    # for a provided collection
-    renderServiceForm: (collection) =>
-      echoformContainer = $('#' + $('#' + 'access-method-' + collection.id).attr('form'))
-      echoformContainer.empty?() if echoformContainer?
-
-      @loadForm(true)
-      setTimeout (=>
-        ko.applyBindingsToNode(echoformContainer, {echoform: this})
-
-        # Prevents the UI from re-rendering the form and wiping user selections
-        collection.hasEchoFormLoaded(true)
-        @loadForm(false)), 0
-
     showSpinner: (item, e) =>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
@@ -139,7 +125,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
             setTimeout (=>
               accessMethodMatched = false
               for echoformContainer in echoformContainers
-                matches = echoformContainer.id.match(/access-form-(.*)/)
+                matches = echoformContainer.id.match(/access-form-(.*)-(\d+)/)
                 if !accessMethodMatched && matches[1] == jsonObj.collection_id && parseInt(matches[2], 10) == index
                   accessMethodMatched = true
                   @loadForm(true) if jsonObj.type == 'service'
@@ -206,11 +192,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
       result = false
       for m in @accessMethod()
-        # If only one accessMethod exists, select it for the user
-        # TODO: This is no longer desireable in E2E Services land
-        if @granuleAccessOptions().methods?.length == 1
-          m.method(m.availableMethods[0].name)
-
         result = true if (m.isValid() || !m.loadForm()) && m.method()?
 
       if result

@@ -1,17 +1,19 @@
-
 <section>
   <div>
-    <h4>Variable Selection</h4> <a href="#" data-bind="click: function(data){$root.ui.variableSelector.displayModal(data); triggerEditVariables()}">Edit</a>
+    <h4>Variable Selection</h4>
+    <a href="#" class="edit-variables" data-bind="click: function(data){$root.ui.variableSelector.displayModal(data); triggerEditVariables()}">Edit</a>
     <p>Use science keywords to subset your collection granules by measurements and variables.</p>
     <p>No variables selected. All variables will be included in download.</p>
   </div>
   <div>
-    <h4>Transformations</h4> <a>Edit</a>
+    <h4>Transformations</h4>
+    <a class="edit-transformations">Edit</a>
     <p>Further subset your granules by a geographic area and adjust the default projections.</p>
     <p>No transformations selected. No data will be transformed.</p>
   </div>
   <div>
-    <h4>Transformations</h4> <a>Edit</a>
+    <h4>Output Format</h4>
+    <a class="edit-format">Edit</a>
     <p>GeoTIFF and other file output format options.</p>
     <p>No output format selected. The default for this collection will be used.</p>
   </div>
@@ -98,7 +100,7 @@
     </div>
   </div>
   <div>
-    <div>
+    <div class="action-container">
       <button class="button secondary" data-bind="visible: !selectedKeyword()" data-dismiss="modal">Done</button>
       <button class="button secondary" data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword">Back</button>
       <button class="button secondary" data-bind="visible: selectedKeyword() && selectedVariable(), click: clearVariable">Back</button>
