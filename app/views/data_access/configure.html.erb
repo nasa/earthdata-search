@@ -39,7 +39,7 @@
             </p>
             <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
-              <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit"></span>
+              <span class="summary-label" data-bind="text: granuleAccessOptions().hits != null && collection.has_granules ? granuleAccessOptions().sizeUnit + '*' : granuleAccessOptions().sizeUnit"></span>
             </p>
           </div>
 
@@ -156,6 +156,7 @@
                 <button data-bind="click: serviceOptions.addAccessMethod" class="button-small"> <i class="fa fa-plus-circle"></i> Add access method</button>
                 <span class="instructions"> <i class="fa fa-arrow-circle-left"></i> Access these granules again with different options</span>
               </p>
+              <p class="access-item-extra-info instructions" data-bind="if: granuleAccessOptions().hits != null && collection.has_granules">*Size is an estimate and does not reflect any changes due to customization options.</p>
             </div>
           </div>
           <!-- /ko -->
