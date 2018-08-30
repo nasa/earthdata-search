@@ -40,7 +40,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context 'when loading a url containing a search keyword' do
+  context 'when loading a url containing a search keyword', pending_updates: true do
     before(:all) do
       visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS&ac=true'
       wait_for_xhr
@@ -185,7 +185,7 @@ describe 'Address bar', reset: false do
 
     it 'filters collections using the condition' do
       # TODO: RDA // Need to test something other than the fact that a specific collection is present
-      expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
+      expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km")
     end
   end
 

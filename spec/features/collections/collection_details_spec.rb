@@ -14,11 +14,11 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LP DAACARCHIVER')
+        expect(page).to have_content('LP DAACDISTRIBUTOR')
         expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
-        expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116 Fax: 605-594-6963')
+        expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116')
         expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 2000-03-04 ongoing')
         expect(page).to have_content('Science Keywords: EARTH SCIENCESPECTRAL/ENGINEERINGINFRARED WAVELENGTHS EARTH SCIENCESPECTRAL/ENGINEERINGVISIBLE WAVELENGTHS')
@@ -249,13 +249,14 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays all data center content' do
-      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR LP DAACARCHIVER')
+      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
+      expect(page).to have_content('LP DAACDISTRIBUTOR')
     end
   end
 
   context "when selecting a collection with temporal that doesn't have an end date or 'ends at present' flag" do
     before :all do
-      load_page '/search/collection-details', focus: 'C203234517-LAADS'
+      load_page '/search/collection-details', focus: 'C1443533440-LAADS'
     end
 
     it 'displays the temporal correctly' do
@@ -327,7 +328,8 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the spatial' do
-      expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
+      # expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
+      expect(page).to have_content('Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
     end
   end
 

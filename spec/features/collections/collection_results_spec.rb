@@ -38,7 +38,9 @@ describe 'Collection results', reset: false do
       expect(page).to have_content('1979-01-01 to 2016-12-31')
     end
   end
-  context 'When collections have ongoing data collection' do
+
+  # collection is gone
+  context 'When collections have ongoing data collection', pending_updates: true do
     before :all do
       fill_in 'keywords', with: 'C204690560-LAADS'
       wait_for_xhr
@@ -79,7 +81,8 @@ describe 'Collection results', reset: false do
     end
   end
 
-  context 'When collections have no thumbnail images' do
+  # collection is gone
+  context 'When collections have no thumbnail images', pending_updates: true do
     before :all do
       fill_in 'keywords', with: 'C204690560-LAADS'
       wait_for_xhr

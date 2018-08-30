@@ -55,7 +55,8 @@ describe 'Collection API Endpoints', reset: false do
     end
   end
 
-  context 'when viewing the collection details for a collection with MODAPS WCS' do
+  # collection is gone
+  context 'when viewing the collection details for a collection with MODAPS WCS', pending_updates: true do
     before :all do
       load_page :search, ac: true
       fill_in 'keywords', with: 'C1219032686-LANCEMODIS'

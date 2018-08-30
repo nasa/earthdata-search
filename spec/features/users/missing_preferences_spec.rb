@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'User missing ordering preferences', reset: false do
+describe 'User missing ordering preferences', reset: false, pending_updates: true do
   collection_id = 'C203234523-LAADS'
   collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
 

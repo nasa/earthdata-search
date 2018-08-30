@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DataAccessController do
+describe DataAccessController, pending_updates: true do
   describe "GET options" do
     let(:hits) { 0 }
     let(:downloadable) { 0 }
