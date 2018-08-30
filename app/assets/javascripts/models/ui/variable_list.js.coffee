@@ -177,14 +177,11 @@ ns.VariableSelector = do (ko
      * @param {object} Collection object assigned to the card this modal was initiated from
      ###
     displayModal: (projectCollection) =>
+      projectCollection.triggerEditVariables()
+
       @selectedCollection(projectCollection.collection)
 
       @selectedProjectCollection(projectCollection)
-
-      # Scroll to the top of the div when its opened
-      $('#' + @selectedCollection().id + '-edit-modal .modal-body')[0]?.scrollTo(0,0)
-
-      # $('#variable-subsetting-modal').modal('show')
 
     ###*
      * Cleanup obversables

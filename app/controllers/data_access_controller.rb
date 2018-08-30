@@ -216,7 +216,6 @@ class DataAccessController < ApplicationController
               }]
             }
           elsif methods.length > 1
-            puts granule_params[:echo_collection_id]
             methods_with_service = methods.select { |m| m[:umm_service] }
 
             if methods_with_service.length == 1
