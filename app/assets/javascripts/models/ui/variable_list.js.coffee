@@ -39,7 +39,7 @@ ns.VariableSelector = do (ko
           $('.collection-variables input[type="checkbox"]').prop('checked', isSelected)
 
       # Save the currently selected variables
-      $(document).on 'click', '#variable-subsetting-modal button.save', (e) =>
+      $(document).on 'click', '.collection-customization button.save', (e) =>
         @_saveSelectedVariableState()
 
         $(window).trigger('edsc.save_workspace')
@@ -62,6 +62,16 @@ ns.VariableSelector = do (ko
       for variable in listToCheck
           if @selectedProjectCollection().indexOfSelectedVariable(variable) != -1
             count++
+      count
+
+    ###*
+     * Determine the number of variables that are selected in total.
+     ###
+    _countAllSelectedVariables: (listsToCheck) ->
+      count = 0
+      console.log 'listsToCheck', listsToCheck
+      count += @_countSelectedVariables(listsToCheck)
+      console.log 'count', count
       count
 
     ###*
@@ -172,7 +182,7 @@ ns.VariableSelector = do (ko
       @selectedProjectCollection(projectCollection)
 
       # Scroll to the top of the div when its opened
-      # $('#variable-subsetting-modal .modal-body').animate({ scrollTop: (0) }, 0);
+      $('#' + @selectedCollection().id + '-edit-modal .modal-body')[0]?.scrollTo(0,0)
 
       # $('#variable-subsetting-modal').modal('show')
 

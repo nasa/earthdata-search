@@ -75,6 +75,10 @@
   .modal-has-content-header .modal-content-full & {
     height: calc(100% - 175px);
   }
+
+  .modal-overlay-is-active & {
+    overflow: hidden;
+  }
 }
 
 .modal-body-overlay {
@@ -151,10 +155,26 @@
   bottom: 0;
   background: #fff;
   padding: 15px;
+  overflow-y: scroll;
 
   &.is-active {
     display: block;
   }
+}
+
+.modal-overlay-header {
+  position: relative;
+  padding-top: 3em;
+}
+
+.modal-overlay-back-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal-overlay-content-full {
+  margin: 0 -15px;
 }
 
 .modal-footer {
@@ -166,17 +186,6 @@
 
   .button {
     text-shadow: none;
-
-    &.secondary {
-      @include list-panel-button;
-      border: 1px solid #e3e3e3;
-      padding: 7px 10px;
-      text-shadow: none;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
   }
 }
 
