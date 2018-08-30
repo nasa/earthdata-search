@@ -5,7 +5,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'Service options order with boundingbox1 field', reset: false do
+describe 'Service options order with boundingbox1 field', reset: false, pending_updates: true do
   collection_id = 'C1000000445-NSIDC_ECS'
 
   context 'when filling in spatial subsetting coordinates on data configure page' do

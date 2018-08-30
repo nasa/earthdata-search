@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false, pending_updates: true do
+describe 'When viewing the project page', reset: false do
   before :all do
     # This collection is specifically configured for this test on SIT. Any changes can
     # and should be made to this test file if needed
@@ -20,10 +20,10 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
       collection_card = find('.collection-card', match: :first)
 
       # Click the customize link
-      collection_card.find('.action-button.customize').click
+      collection_card.find('.action-button.edit').click
 
       # Choose to subset based on variables
-      click_link('Variable Selection')
+      find('.edit-variables').click
       wait_for_xhr
 
       # Select the first Science Keyword listed
@@ -39,6 +39,7 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
         wait_for_xhr
 
         click_button 'Done'
+        click_button 'Close'
       end
     end
 
@@ -73,14 +74,14 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
         it 'displays the selected variables correctly in the query params of each link' do
           within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             first_link = find('#links li:nth-child(1)')
-            expect(first_link).to have_content('EmisIR_A_max[0:1:3][89:1:100][209:1:220]')
+            expect(first_link).to have_content('EmisIR_A_max[0:1:3][79:1:90][209:1:220]')
           end
         end
 
         it 'displays the selected spatial subsetting data within the link' do
           within_window(-> { page.title == 'Earthdata Search - Download Granule Links' }) do
             first_link = find('#links li:nth-child(1)')
-            expect(first_link).to have_content('Latitude[89:1:100],Longitude[209:1:220]')
+            expect(first_link).to have_content('Latitude[79:1:90],Longitude[209:1:220]')
           end
         end
 

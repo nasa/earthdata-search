@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page with an OPeNDAP supported collection', reset: false, pending_updates: true do
+describe 'When viewing the project page with an OPeNDAP supported collection', reset: false do
   before :all do
     load_page :search, project: ['C1200187767-EDF_OPS', 'C1000000029-EDF_OPS'], env: :sit
 
@@ -16,36 +16,36 @@ describe 'When viewing the project page with an OPeNDAP supported collection', r
     expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
   end
 
-  context 'When choosing to customize the collection' do
+  context 'When choosing to edit the collection' do
     before :all do
       collection_card = find('.collection-card', match: :first)
 
-      collection_card.find('.customize').click
+      collection_card.find('.edit').click
     end
 
     it 'displays the customization modal' do
       within '.collection-customization .modal-header' do
-        expect(page).to have_content('Select Customization Options')
+        expect(page).to have_content('Edit Options')
       end
     end
 
-    it 'displays the variable selection option within the modal' do
+    it 'displays the variable selection button within the modal' do
       within '.collection-customization .modal-body' do
-        expect(page).to have_link('Variable Selection')
+        expect(page).to have_button('Edit Variables')
       end
     end
 
     context 'When choosing to select variables' do
       before :all do
-        click_link('Variable Selection')
+        find('.edit-variables').click
         wait_for_xhr
       end
 
       it 'displays the variable selection modal' do
-        within '.variable-selection .modal-header' do
+        within '.variable-selection' do
           expect(page).to have_content('Variable Selection')
         end
-        wait_for_xhr
+        # wait_for_xhr
       end
 
       it 'displays a list of science keywords to choose from' do

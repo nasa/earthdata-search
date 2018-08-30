@@ -1,7 +1,8 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'Background jobs ordering', reset: false do
+# This collection needs an S Record for this to work
+describe 'Background jobs ordering', reset: false, pending_updates: true do
   orderable_collection_id = 'C203234523-LAADS'
   orderable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V006'
   aster_collection_id = 'C14758250-LPDAAC_ECS'

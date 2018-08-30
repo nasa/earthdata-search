@@ -81,7 +81,8 @@ describe "Collection GIBS visualizations", reset: false do
     end
 
     it 'displays the correct geo resolution' do
-      expect(page).to have_gibs_resolution('1km')
+      # expect(page).to have_gibs_resolution('1km')
+      expect(page).to have_gibs_resolution('2km')
     end
 
     context 'when selecting the arctic resolution' do

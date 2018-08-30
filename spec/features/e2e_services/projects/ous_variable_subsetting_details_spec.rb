@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false, pending_updates: true do
+describe 'When viewing the project page', reset: false do
   before :all do
     # This collection is specifically configured for this test on SIT. Any changes can
     # and should be made to this test file if needed
@@ -19,11 +19,11 @@ describe 'When viewing the project page', reset: false, pending_updates: true do
       # Find the collection card to work with
       collection_card = find('.collection-card', match: :first)
 
-      # Click the customize link
-      collection_card.find('.action-button.customize').click
+      # Click the edit link
+      collection_card.find('.action-button.edit').click
 
       # Choose to subset based on variables
-      click_link('Variable Selection')
+      find('.edit-variables').click
       wait_for_xhr
 
       # Select the first Science Keyword listed

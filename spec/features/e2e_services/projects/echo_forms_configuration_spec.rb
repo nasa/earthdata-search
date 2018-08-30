@@ -15,17 +15,23 @@ describe 'When viewing the project page with an EGI supported collection', reset
     before :all do
       collection_card = find('.collection-card', match: :first)
 
-      collection_card.find('.customize').click
+      collection_card.find('.edit').click
     end
 
     it 'displays the customization modal' do
-      within '.echo-forms .modal-header' do
-        expect(page).to have_content('Customization Options')
+      within '.collection-customization .modal-header' do
+        expect(page).to have_content('Edit Options')
+      end
+    end
+
+    it 'displays the correct delivery method header' do
+      within 'h4.customization-item-heading' do
+        expect(page).to have_content('Customize & Download')
       end
     end
 
     it 'displays the variable selection option within the modal' do
-      within '.echo-forms .modal-body' do
+      within '.collection-customization .modal-body' do
         expect(page).to have_css('.access-form')
       end
     end

@@ -11,28 +11,28 @@ describe 'When viewing the project page with an EGI supported collection', reset
     wait_for_xhr
   end
 
-  context 'When choosing to customize the collection' do
+  context 'When choosing to edit the collection' do
     before :all do
       collection_card = find('.collection-card', match: :first)
 
-      collection_card.find('.customize').click
+      collection_card.find('.edit').click
     end
 
     it 'displays the customization modal' do
-      within '.echo-forms .modal-header' do
-        expect(page).to have_content('Customization Options')
+      within '.collection-customization .modal-header' do
+        expect(page).to have_content('Edit Options')
+      end
+    end
+
+    it 'displays the correct delivery method header' do
+      within 'h4.customization-item-heading' do
+        expect(page).to have_content('Stage for Delivery')
       end
     end
 
     it 'displays the variable selection option within the modal' do
-      within '.echo-forms .modal-body' do
+      within '.collection-customization .modal-body' do
         expect(page).to have_css('.access-form')
-      end
-    end
-
-    it 'displays the Order Distribution Options form' do
-      within '.echo-forms .modal-body' do
-        expect(page).to have_css(:h1, text: 'Order Distribution Options')
       end
     end
   end
