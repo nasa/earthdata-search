@@ -186,7 +186,7 @@ class DataAccessController < ApplicationController
         sizeMB = granules.reduce(0) { |size, granule| size + granule['granule_size'].to_f }
         size = (1024 * 1024 * sizeMB / granules.size) * hits
 
-        units = %w[Bytes Kilobytes Megabytes Gigabytes Terabytes Petabytes Exabytes]
+        units = %w(Bytes Kilobytes Megabytes Gigabytes Terabytes Petabytes Exabytes)
         while size > 1024 && units.size > 1
           size = size.to_f / 1024
           units.shift
@@ -195,6 +195,43 @@ class DataAccessController < ApplicationController
         methods = get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits) + get_opendap_access_methods(collection, granules, granule_params, hits)
 
         defaults = { service_options: nil } if echo_form_outdated?(defaults, methods)
+
+        # If there are no defaults (no AccessConfigurations) and only 1 accessMethod,
+        # then set the default to that access method. NOTE: If there defaults then the
+        # `defaults` variable will be an AccessConfigration, if there are no defaults
+        # it is a Hash.
+        if defaults.is_a?(Hash) && defaults.compact.blank?
+          if methods.length == 1
+            only_method = methods[0]
+
+            # When a collection as been previously ordered we store the information the
+            # user selected in an AccessConfiguration object, since we don't have all of
+            # that information at this point we'll just set the necessary values for the
+            # UI to load correctly and select the only option avaialble.
+            defaults[:service_options] = {
+              accessMethod: [{
+                method: only_method[:name],
+                type: only_method[:type],
+                id: only_method[:id]
+              }]
+            }
+          elsif methods.length > 1
+            puts granule_params[:echo_collection_id]
+            methods_with_service = methods.select { |m| m[:umm_service] }
+
+            if methods_with_service.length == 1
+              only_method = methods_with_service[0]
+
+              defaults[:service_options] = {
+                accessMethod: [{
+                  method: only_method[:name],
+                  type: only_method[:type],
+                  id: only_method[:id]
+                }]
+              }
+            end
+          end
+        end
 
         result = {
           hits: hits,

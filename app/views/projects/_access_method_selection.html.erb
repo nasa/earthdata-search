@@ -21,16 +21,16 @@
               <!-- <p data-bind="text: selectedAccessMethod()"></p> -->
               <div class="customization-item">
               <!-- ko if: selectedAccessMethodType() == 'opendap' -->
-                <h4 class="customization-title">Customize &amp; Download</h4>
-                <span class="customization-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
-              <!-- /ko -->
-              <!-- ko if: selectedAccessMethodType() == 'service' -->
-                <h4 class="customization-title">Customize &amp; Download</h4>
+                <h4 class="customization-title">Customize &amp; Download (OPeNDAP)</h4>
                 <span class="customization-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
               <!-- /ko -->
               <!-- ko if: selectedAccessMethodType() == 'download' -->
                 <h4 class="customization-title">Direct Download</h4>
                 <span class="customization-description">Direct download of <strong>all</strong> data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script.</span>
+              <!-- /ko -->
+              <!-- ko if: selectedAccessMethodType() == 'service' -->
+                <h4 class="customization-title">Customize &amp; Download</h4>
+                <span class="customization-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
               <!-- /ko -->
               <!-- ko if: selectedAccessMethodType() == 'order' -->
                 <h4 class="customization-title">Stage for Delivery</h4>
@@ -53,17 +53,17 @@
 
                   <input data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[1].collection.id + '-' + $parentContext.$index() + $index(), form: 'access-form-' + $parents[1].collection.id + '-' + $parentContext.$index(), name: $parents[1].collection.id + '-' + $parentContext.$index() +  '-access-method' }" type="radio" />
                   <!-- ko if: type == 'opendap' -->
-                  <strong><span>Customize &amp; Download</span></strong>
-                  <span class="access-item-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
-                  <!-- /ko -->
-                  <!-- ko if: type == 'service' -->
-                  <strong><span>Customize &amp; Download</span></strong>
-                  <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
+                  <strong><span>Customize &amp; Download (OPeNDAP)</span></strong>
                   <span class="access-item-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
                   <!-- /ko -->
                   <!-- ko if: type == 'download' -->
                   <strong><span>Direct Download</span></strong>
                   <span class="access-item-description">Direct download of <strong>all</strong> data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script. </span>
+                  <!-- /ko -->
+                  <!-- ko if: type == 'service' -->
+                  <strong><span>Customize &amp; Download</span></strong>
+                  <i class="fa fa-spinner fa-spin fa-fw" data-bind="visible: $parent.loadForm()"></i>
+                  <span class="access-item-description">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
                   <!-- /ko -->
                   <!-- ko if: type == 'order' -->
                   <strong><span>Stage for Delivery</span></strong>
