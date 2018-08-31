@@ -122,7 +122,7 @@ describe "Collection GIBS visualizations", reset: false do
     end
   end
 
-  context 'when accessing GIBS-enabled collection "C181655997-NSIDC_ECS"' do
+  context 'when accessing GIBS-enabled collection "C181655997-NSIDC_ECS"', pending_updates: true do
     before :all do
       load_page :search, q: 'C181655997-NSIDC_ECS'
       view_granule_results('AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V002')

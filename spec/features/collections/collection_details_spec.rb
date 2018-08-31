@@ -14,7 +14,7 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LP DAACDISTRIBUTOR')
+        expect(page).to have_content('LP DAACARCHIVER')
         expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
@@ -249,8 +249,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays all data center content' do
-      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
-      expect(page).to have_content('LP DAACDISTRIBUTOR')
+      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR LP DAACARCHIVER')
     end
   end
 
@@ -328,8 +327,7 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the spatial' do
-      # expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
-      expect(page).to have_content('Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+      expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
     end
   end
 

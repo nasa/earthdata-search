@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page with an OPeNDAP supported collection', reset: false do
+describe 'When viewing the project page with an OPeNDAP supported collection', reset: false, pending_updates: true do
   before :all do
     load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
 
