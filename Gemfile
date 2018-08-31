@@ -36,7 +36,7 @@ end
 
 group :development do
   gem 'byebug'
-  
+  gem 'guard-livereload', require: false
   gem 'quiet_assets'
 
   # For dumping additional metadata stored in DatasetExtras and similar
