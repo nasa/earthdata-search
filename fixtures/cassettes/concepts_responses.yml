@@ -1038,6 +1038,122 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
         to 4:30 P.M., U.S. Eastern Time, Monday through Friday, excluding U.S. holidays.","ContactInstruction":"None","ContactMechanisms":[{"Type":"Telephone","Value":"757-864-8656"},{"Type":"Fax","Value":"757-864-8807"},{"Type":"Email","Value":"support-asdc@earthdata.nasa.gov"}],"Addresses":[{"StreetAddresses":["NASA
         Langley Research Center, Mail Stop 157D"],"City":"Hampton","StateProvince":"Virginia","Country":"USA","PostalCode":"23681-2199"}]}}]}'
     http_version: 
+67c661514f3932c45143fc702a22ff03d8c8101b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - 58871757-5613-4125-8488-40f99290fd0e
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
+      date:
+      - Fri, 31 Aug 2018 13:38:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '2888'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"CollectionCitations":[{"Creator":"MODIS Science Team","ReleasePlace":"MODAPS
+        at NASA/GSFC","Title":"MODIS/Terra Aerosol 5-Min L2 Swath 10km","OnlineResource":{"Linkage":"https://dx.doi.org/10.5067/MODIS/MOD04_L2.061"},"Publisher":"L1
+        and Atmosphere Archive and Distribution System (LAADS)","ReleaseDate":"2017-10-01T00:00:00.000Z","Version":"6.1"}],"LocationKeywords":[{"Category":"GEOGRAPHIC
+        REGION","Type":"GLOBAL"}],"MetadataDates":[{"Date":"2017-12-13T00:00:00.000Z","Type":"CREATE"},{"Date":"2017-12-13T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Terra
+        MODIS Version 6.1 Data Collection Processing and  Reprocessing","ISOTopicCategories":["CLIMATOLOGY/METEOROLOGY/ATMOSPHERE"],"ShortName":"MOD04_L2","Abstract":"The
+        MODIS/Terra Aerosol 5-Min L2 Swath 10km (MOD04_L2) product provides full global
+        coverage of aerosol properties from the Dark Target (DT) and Deep Blue (DB)
+        algorithms. The DT algorithm is applied over ocean and dark land (e.g., vegetation),
+        while the DB algorithm now covers the entire land areas including both dark
+        and bright surfaces. Both results are provided on a 10x10 pixel scale (10
+        km at nadir). Each MOD04_L2 product file covers a five-minute time interval.
+        The output grid is 135 pixels in width by 203 pixels in length. Every tenth
+        file has an output grid size of 135 by 204 pixels. MOD04_L2 product files
+        are stored in Hierarchical Data Format (HDF-EOS).\n\nThe new Collection 6.1
+        (C61) MOD04_L2 product is an improved version based on algorithm changes in
+        Dark Target (DT) Aerosol retrieval over urban areas and uncertainty estimates
+        for Deep Blue (DB) Aerosol retrievals.\n\nThe MODIS level-2 atmospheric aerosol
+        product provides retrieved ambient aerosol optical properties, quality assurance,
+        and other parameters, globally over ocean and land. In Collection 5 and in
+        earlier collections, there was only one aerosol product (MOD04_L2) at 10km
+        (at nadir) spatial resolution. Starting from C6, the Dark Target (DT) Aerosol
+        algorithm team provided a new 3 km spatial resolution product (MOD04_3k) intended
+        for the air quality community.\n\n\nFor more information visit the MODIS Atmosphere
+        website at:\nhttps://modis-atmos.gsfc.nasa.gov/products/aerosol\n\nAnd, for
+        C6.1 changes and updates, visit:\nhttps://modis-atmosphere.gsfc.nasa.gov/documentation/collection-61","Purpose":"Science
+        Research","DOI":{"DOI":"10.5067/MODIS/MOD04_L2.061"},"RelatedUrls":[{"Description":"Overview
+        of MODIS Aerosol products.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://modis-atmos.gsfc.nasa.gov/products/aerosol"},{"Description":"Search
+        and order products from LAADS website.","URLContentType":"DistributionURL","Type":"GET
+        DATA","Subtype":"LAADS","URL":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"Description":"Direct
+        access to MOD04_L2 C6.1 data set.","URLContentType":"DistributionURL","Type":"GET
+        DATA","Subtype":"ON-LINE ARCHIVE","URL":"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD04_L2/"}],"DataDates":[{"Date":"2017-10-01T00:00:00.000Z","Type":"CREATE"}],"ContactPersons":[{"Roles":["Metadata
+        Author"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"}]},"FirstName":"ASAD","LastName":"ULLAH"}],"AccessConstraints":{"Description":"None"},"SpatialExtent":{"HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"GEODETIC"},"ContactGroups":[{"Roles":["Technical
+        Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
+        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
+        USER SUPPORT TEAM"}],"AdditionalAttributes":[{"ParameterRangeBegin":"-1e-06","Name":"SuccessfulRetrievalPct_Land","Description":"None","ParameterRangeEnd":"100.000001","DataType":"FLOAT"},{"ParameterRangeBegin":"-1e-06","Name":"SuccessfulRetrievalPct_Ocean","Description":"None","ParameterRangeEnd":"100.000001","DataType":"FLOAT"},{"Group":"gov.nasa.gsfc.gcmd","Value":"2017-12-13:docbuilder","Name":"metadata.tool","Description":"Not
+        provided","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
+        BACKSCATTER"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
+        EXTINCTION"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
+        OPTICAL DEPTH/THICKNESS"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
+        OPTICAL DEPTH/THICKNESS","VariableLevel2":"ANGSTROM EXPONENT"},{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
+        PARTICLE PROPERTIES"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
+        RADIANCE"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"CARBONACEOUS
+        AEROSOLS"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"DUST/ASH/SMOKE"},{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"NITRATE
+        PARTICLES"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"ORGANIC
+        PARTICLES"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"PARTICULATE
+        MATTER"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"SULFATE
+        PARTICLES"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        RADIATION","VariableLevel1":"OPTICAL DEPTH/THICKNESS"},{"Category":"EARTH
+        SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC RADIATION","VariableLevel1":"RADIATIVE
+        FLUX"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        RADIATION","VariableLevel1":"REFLECTANCE"}],"Quality":"See https://modaps.nascom.nasa.gov/services/qa/","EntryTitle":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km","Distributions":[{"DistributionMedia":"Online
+        (HTTPS)","DistributionFormat":"HDF-EOS","Fees":"No Fee"}],"CollectionProgress":"ACTIVE","CollectionDataType":"SCIENCE_QUALITY","UseConstraints":{"Description":{"Description":"None"}},"ProcessingLevel":{"Id":"2"},"Platforms":[{"Type":"Earth
+        Observation Satellites","ShortName":"TERRA","LongName":"Earth Observing System,
+        TERRA (AM-1)","Characteristics":[{"Name":"EquatorCrossingTime","Description":"Local
+        time of the equator crossing and direction (ascending or descending)","Value":"10:30,
+        descending","Unit":"Local Mean Time","DataType":"STRING"}],"Instruments":[{"ShortName":"MODIS","LongName":"Moderate-Resolution
+        Imaging Spectroradiometer","Technique":"Imaging Spectroradiometry"}]}],"Projects":[{"ShortName":"TERRA","LongName":"Earth
+        Observing System (EOS), TERRA"}],"Version":"6.1","TemporalExtents":[{"PrecisionOfSeconds":1,"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2000-02-24T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ORIGINATOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS","LongName":"MODIS
+        Adaptive Processing System, Biospheric Information Systems Branch, Hydrospheric
+        and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration
+        Directorate, Goddard Space Flight Center, NASA","ContactGroups":[{"Roles":["Data
+        Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
+        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
+        USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://modaps.nascom.nasa.gov/"}]}},{"Roles":["PROCESSOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS","LongName":"MODIS
+        Adaptive Processing System, Biospheric Information Systems Branch, Hydrospheric
+        and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration
+        Directorate, Goddard Space Flight Center, NASA","ContactGroups":[{"Roles":["Data
+        Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
+        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
+        USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://modaps.nascom.nasa.gov/"}]}},{"Roles":["DISTRIBUTOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","LongName":"L1
+        and Atmosphere Archive and Distribution System,Biospheric Information Systems
+        Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division,
+        Science and Exploration Directorate, Goddard Space Flight Center, NASA","ContactGroups":[{"Roles":["Data
+        Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
+        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
+        USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://ladsweb.modaps.eosdis.nasa.gov/"}]}}],"DataLanguage":"eng"}'
+    http_version: 
 9a55a8509703b3845b6925105f7cee3d5f6abd1f:
   response:
     status:

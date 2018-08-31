@@ -214,6 +214,23 @@ http_interactions:
   digest: 607632862ad57d3d28f5a7b543b00090bab4a6e5
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1443533440-LAADS.umm_json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Fri, 31 Aug 2018 13:38:57 GMT
+  digest: 67c661514f3932c45143fc702a22ff03d8c8101b
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C14758250-LPDAAC_ECS.json
     body:
       encoding: US-ASCII
