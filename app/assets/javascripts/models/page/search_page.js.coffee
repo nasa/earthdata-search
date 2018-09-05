@@ -12,7 +12,6 @@
 #= require models/ui/state_manager
 #= require models/ui/feedback
 #= require models/ui/sitetour
-#= require models/ui/reverb_retirement
 #= require models/ui/full_facets_list
 
 models = @edsc.models
@@ -33,7 +32,6 @@ ns.SearchPage = do (ko
                     PreferencesModel = data.Preferences
                     FeedbackModel = ui.Feedback
                     SiteTourModel = ui.SiteTour
-                    ReverbRetirementModel = ui.ReverbRetirement
                     FullFacetsListModel = ui.FullFacetsList
                     url = @edsc.util.url
                     StateManager = ui.StateManager) ->
@@ -41,7 +39,7 @@ ns.SearchPage = do (ko
 
   preferences = new PreferencesModel()
   sitetour = new SiteTourModel()
-  
+
   initModal = () ->
     $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1)
 
@@ -53,10 +51,6 @@ ns.SearchPage = do (ko
       $('#variablesModal').modal('show')
     $('.launch-customize-modal').click ->
       $('#customizeDataModal').modal('show')
-
-    reverbRetirement = new ReverbRetirementModel()
-    if reverbRetirement.referrerIsReverb() && Cookies.get('ReadyForReverbRetirement') != 'true'
-      $('#reverbRetirementModal').modal('show')
 
     preferences.ready.done(-> initModal()) if !window.edscportal
 
@@ -74,7 +68,6 @@ ns.SearchPage = do (ko
         projectList: new ProjectListModel(@project, @collections)
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
-        reverbRetirement: new ReverbRetirementModel()
         fullFacetsList: new FullFacetsListModel(@query)
 
       @bindingsLoaded = ko.observable(false)
@@ -147,7 +140,7 @@ ns.SearchPage = do (ko
 
     setFocusedFacetCategory: (focusedFacet) =>
       @ui.fullFacetsList.selectedFacetCategory(focusedFacet)
-  
+
   loc = window.location.pathname
   if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
     window.location.replace(loc + '/search' + window.location.search);

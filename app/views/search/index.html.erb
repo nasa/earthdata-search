@@ -8,7 +8,6 @@
 
 <% content_for :toolbar_secondary do %>
   <div class="landing-secondary-toolbar-container" style="display: none;">
-    <%= render partial: 'shared/back_to_reverb' %>
     <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
     <%= render partial: 'shared/feedback' %>
     <%= render partial: 'workspace_name' %>
@@ -351,7 +350,6 @@
   <%= render partial: 'variables_modal' %>
   <%= render partial: 'sitetour_modal' %>
   <%= render partial: 'delay_modal' %>
-  <%= render partial: 'reverb_retirement_modal' %>
   <%= render partial: 'customize_data_modal' %>
   <%= render partial: 'related_urls_modal' %>
   <%= render partial: 'full_facets_modal' %>
