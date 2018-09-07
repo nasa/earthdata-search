@@ -321,6 +321,9 @@ $card-background: rgba(235,235,235,1);
   }
 
   .modal-body {
+    ul > li {
+      padding: 10px 15px;
+    }
 
     .panel-list-thumbnail-container {
       border: 0;
