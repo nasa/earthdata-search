@@ -107,7 +107,8 @@
 }
 
 .leaflet-top.leaflet-right {
-  top: 49%;
+  top: auto;
+  bottom: 50%;
   z-index: 130;
 }
 
