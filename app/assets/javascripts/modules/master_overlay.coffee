@@ -3,6 +3,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
   class MasterOverlay extends plugin.Base
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
+      $(window).on 'load', ->
+        $("#map .leaflet-top.leaflet-right").css('bottom': $('.master-overlay-main').height() - 35)
       $(window).on 'load resize', @contentHeightChanged
       @_minimized = false
       @_manualShowParent = true
@@ -34,8 +36,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       tmp = @_minimized
       @_minimized = false
       @_triggerStateChange() if tmp
-      maptools = $("#map .leaflet-top.leaflet-right")
-      maptools[0].style.top = "49%"
 
     manualShowParent: ->
       @_manualShowParent = true
@@ -188,9 +188,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
           $(section).height(scrollContentHeight)
 
         # map toolbars
-        target = $(".master-overlay-main");
-        maptools = $("#map .leaflet-top.leaflet-right")
-        maptools[0].style.top = 96 - (((($("#map").height() - target.position().top) / $("#map").height())) * 100) + '%';
+        toolbar = $("#map .leaflet-top.leaflet-right")
+        overlay = $(".master-overlay-main")
+        toolbar.css('bottom': overlay.height() - 35)
 
         # collection details
         collectionDetail = $('#collection-details')
