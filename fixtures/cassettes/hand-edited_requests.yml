@@ -467,7 +467,7 @@ http_interactions:
   digest: edscbasic_from_urs
 - request:
     method: get
-    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=iGoL4SxnweOcSyBxA5eeUA
+    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=K34r-9lYcLrog2soFrljlw
     body:
       encoding: US-ASCII
       string: ''
@@ -728,7 +728,7 @@ http_interactions:
   digest: ous_healthcheck
 - request:
     method: get
-    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=arNJRV0WQXEuU_ZdSHGp3Q
+    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=kzAY1v0kVjQ7QVpwBw-kLQ
     body:
       encoding: US-ASCII
       string: ''
@@ -741,7 +741,7 @@ http_interactions:
   digest: dd3ed9357a523d37b9a487775a65f4abfcdfdd33
 - request:
     method: get
-    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=iGoL4SxnweOcSyBxA5eeUA
+    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=K34r-9lYcLrog2soFrljlw
     body:
       encoding: US-ASCII
       string: ''
