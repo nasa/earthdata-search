@@ -192,7 +192,7 @@ b4310e45ba3e6e99cbbea5b2f8d977b95e9c5cba:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"zNWlGtitQNj8NXTd71CyUQ","created_at":"2018-03-13T04:07:36Z","id":"0D82D8DB-761E-682D-8BFD-CFACF4C8A53F","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LARC_ASDC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F/provider_orders/LARC_ASDC","name":"LARC_ASDC"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T04:07:50Z","updated_at":"2018-03-13T04:07:50Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T04:07:36Z","id":"0D82D8DB-761E-682D-8BFD-CFACF4C8A53F","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LARC_ASDC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F/provider_orders/LARC_ASDC","name":"LARC_ASDC"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T04:07:50Z","updated_at":"2018-03-13T04:07:50Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
 54bb53102b64933af972ee7a785ee4e2321cfdcd:
   response:
@@ -222,7 +222,7 @@ b4310e45ba3e6e99cbbea5b2f8d977b95e9c5cba:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"zNWlGtitQNj8NXTd71CyUQ","created_at":"2018-03-13T03:48:52Z","id":"3723402E-9298-5BC4-FCCD-D2F33AC8D9BE","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:49:05Z","updated_at":"2018-03-13T03:49:05Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:52Z","id":"3723402E-9298-5BC4-FCCD-D2F33AC8D9BE","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:49:05Z","updated_at":"2018-03-13T03:49:05Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
 c9a01ee49840e39e2e36b97d35d62e51d29e6a84:
   response:
@@ -252,7 +252,7 @@ c9a01ee49840e39e2e36b97d35d62e51d29e6a84:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"zNWlGtitQNj8NXTd71CyUQ","created_at":"2018-03-13T03:48:20Z","id":"44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LAADS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F/provider_orders/LAADS","name":"LAADS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:31Z","updated_at":"2018-03-13T03:48:31Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:20Z","id":"44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LAADS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F/provider_orders/LAADS","name":"LAADS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:31Z","updated_at":"2018-03-13T03:48:31Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
 c5466dbbf24a26abf81bfe485bd8549fa22ffec1:
   response:
@@ -282,7 +282,7 @@ c5466dbbf24a26abf81bfe485bd8549fa22ffec1:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"zNWlGtitQNj8NXTd71CyUQ","created_at":"2018-03-13T03:48:05Z","id":"55579096-3561-10B0-3409-4F8BE3F20316","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:17Z","updated_at":"2018-03-13T03:48:17Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:05Z","id":"55579096-3561-10B0-3409-4F8BE3F20316","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:17Z","updated_at":"2018-03-13T03:48:17Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
 a7ca1790472510d0f47a6c71079f69866ad6a54b:
   response:
@@ -312,7 +312,7 @@ a7ca1790472510d0f47a6c71079f69866ad6a54b:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"zNWlGtitQNj8NXTd71CyUQ","created_at":"2018-03-13T03:48:38Z","id":"71223EB0-62A2-5ADB-FE26-4653CCABE706","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:49Z","updated_at":"2018-03-13T03:48:49Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:38Z","id":"71223EB0-62A2-5ADB-FE26-4653CCABE706","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:49Z","updated_at":"2018-03-13T03:48:49Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
 c7473cd14330eebed39d80925587fa38debd769e:
   response:
