@@ -586,6 +586,17 @@ http_interactions:
   digest: 9509e00d2afb04dba4cc20b6ef65f4a12f5d029e
 - request:
     method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C197265171-LPDAAC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+  recorded_at: Tue, 18 Sep 2018 16:02:26 GMT
+  digest: 8a14ed1747f0bcdb5a901e458073edd75e994a6a
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C204690560-LAADS
     body:
       encoding: US-ASCII

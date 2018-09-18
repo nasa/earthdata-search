@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "Collection GIBS visualizations", reset: false do
+describe "Collection GIBS visualizations", reset: false, pending_updates: true do
   extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
@@ -116,7 +116,7 @@ describe "Collection GIBS visualizations", reset: false do
       view_granule_results('NRT AMSR2 DAILY L3 GLOBAL SNOW WATER EQUIVALENT EASE-GRIDS V0')
       wait_for_xhr
     end
-    
+
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000020-LANCEAMSR2')
     end

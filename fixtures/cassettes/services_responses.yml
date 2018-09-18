@@ -1539,6 +1539,30 @@ f85034a1b85aba95a56845fe4e3ced74b346c672:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179014699-NSIDC_ECS"}'
     http_version: 
+8a14ed1747f0bcdb5a901e458073edd75e994a6a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Tue, 18 Sep 2018 15:59:14 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '74'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C197265171-LPDAAC_ECS"}'
+    http_version: 
 937985488058b4b1e0eef90741b14dbdb1f5bea2:
   response:
     status:
