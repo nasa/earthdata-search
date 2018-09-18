@@ -65,7 +65,6 @@ describe "Viewing Projects", reset: false do
       it "shows the project url to be copied" do
         script = "$('#share-url').val();"
         url = page.evaluate_script script
-        page.save_screenshot '1.png'
         expect(url).to match(/p=!C179003030-ORNL_DAAC$/)
       end
 

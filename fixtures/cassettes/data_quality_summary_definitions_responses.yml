@@ -1,5 +1,5 @@
 ---
-15526988c45d5f8afeb6bf9bf00d09c87917f129:
+f3e5b5ae968030c4d6c5d41d40dd679173e0dd8d:
   response:
     status:
       code: 200
@@ -10,7 +10,7 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 24 Apr 2018 17:26:55 GMT
+      - Tue, 18 Sep 2018 15:59:24 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -18,7 +18,7 @@
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.094000'
+      - '0.100000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -29,7 +29,7 @@
       encoding: UTF-8
       string: "[]"
     http_version: 
-422d9f52256b5f3aff8c9ce5c74fa47e67700f66:
+e41231718518e38b7441a424b364f550674d78d5:
   response:
     status:
       code: 200
@@ -40,7 +40,7 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 23 Aug 2018 13:54:56 GMT
+      - Tue, 18 Sep 2018 16:00:55 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -48,7 +48,37 @@
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.050000'
+      - '0.043000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+b52052e50b10a7fa0e3e640899122bd5fbe122cc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 18 Sep 2018 15:58:55 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.043000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       transfer-encoding:
@@ -59,7 +89,7 @@
       encoding: UTF-8
       string: "[]"
     http_version: 
-b833e326840ab0e8913763cdde8d7f4fc96c6bb4:
+521c8814cf4d91c08c4b51c4ffbd265330432872:
   response:
     status:
       code: 200
@@ -70,7 +100,98 @@ b833e326840ab0e8913763cdde8d7f4fc96c6bb4:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 23 Aug 2018 13:54:38 GMT
+      - Tue, 18 Sep 2018 15:58:58 GMT
+      etag:
+      - '"f2880b005d691e51e570a803bf1f1c08"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.204000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '254'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","name":"ASTER
+        Level 1 and 2 Additional Processing Times"}}]'
+    http_version: 
+ce236fad1fef592dd0f3fcc4f3e6e244554e897e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 18 Sep 2018 16:00:50 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.034000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+811a49119fb9472f4646b1db8db24f8e77c069f2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 18 Sep 2018 15:59:39 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.104000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+9a0fb231efc092afc8c9a6f28d1c067a419e4a6c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 18 Sep 2018 16:00:49 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -89,7 +210,7 @@ b833e326840ab0e8913763cdde8d7f4fc96c6bb4:
       encoding: UTF-8
       string: "[]"
     http_version: 
-7a117c6a8679d6df3b41c3b0baecf9ceaed089e5:
+1190286c5e756d7b8e639cf77e3f7d525afb1513:
   response:
     status:
       code: 200
@@ -100,7 +221,7 @@ b833e326840ab0e8913763cdde8d7f4fc96c6bb4:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 16:39:34 GMT
+      - Tue, 18 Sep 2018 16:00:22 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -108,7 +229,7 @@ b833e326840ab0e8913763cdde8d7f4fc96c6bb4:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.077000'
+      - '0.046000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -119,7 +240,7 @@ b833e326840ab0e8913763cdde8d7f4fc96c6bb4:
       encoding: UTF-8
       string: "[]"
     http_version: 
-b9c9a723ae33ccc75c63c2d608e43542c37cf086:
+63399d670533fb4b2d5e01896a70aae1e10e0fff:
   response:
     status:
       code: 200
@@ -130,37 +251,7 @@ b9c9a723ae33ccc75c63c2d608e43542c37cf086:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 16:50:44 GMT
-      etag:
-      - '"9f40aa334584fe130aec2010b42c962a"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.422000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '213'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
-    http_version: 
-9fa3e77f31feacafa7f34bce37796d2c91e02fd2:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:54:33 GMT
+      - Tue, 18 Sep 2018 16:00:26 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -168,7 +259,7 @@ b9c9a723ae33ccc75c63c2d608e43542c37cf086:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.079000'
+      - '0.081000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -179,7 +270,7 @@ b9c9a723ae33ccc75c63c2d608e43542c37cf086:
       encoding: UTF-8
       string: "[]"
     http_version: 
-e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
+c0b1d3afd3b228454cb7e7e890ebfcfcfdfecd39:
   response:
     status:
       code: 200
@@ -190,98 +281,7 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 16:05:39 GMT
-      etag:
-      - '"bc9f1d750712360ba1f9bfb66e2bc81c"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.485000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '212'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
-    http_version: 
-21679697b96f14fdb24729cdee9022e7dc3faaea:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:54:00 GMT
-      etag:
-      - '"bc9f1d750712360ba1f9bfb66e2bc81c"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.361000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '212'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
-    http_version: 
-560b44dfa1bce52eae7cb3a2840cf14ea30fa304:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 15:59:16 GMT
-      etag:
-      - '"f2880b005d691e51e570a803bf1f1c08"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.493000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","name":"ASTER
-        Level 1 and 2 Additional Processing Times"}}]'
-    http_version: 
-05de0beb5e7051e5986e813d152d3a111947150e:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Thu, 23 Aug 2018 13:54:34 GMT
+      - Tue, 18 Sep 2018 15:59:05 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -289,7 +289,7 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.095000'
+      - '0.039000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -300,7 +300,7 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       encoding: UTF-8
       string: "[]"
     http_version: 
-93ef7a3bd3c6f5c1c365d5999801f9ff24510c46:
+cdf7aaa5be50495f0f1bf892401e69ca19cd0fdf:
   response:
     status:
       code: 200
@@ -311,7 +311,7 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 16:54:50 GMT
+      - Tue, 18 Sep 2018 15:57:40 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -319,7 +319,7 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.062000'
+      - '0.103000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -330,7 +330,7 @@ e5601c8b6ed08a52c7465ef54d7d39d0060f95a5:
       encoding: UTF-8
       string: "[]"
     http_version: 
-bb8ff1419277d1e75c83b7db96e6ea666b2f5f10:
+0426dceb8358bac4f74dc1a6bcb835b1f5b4a45d:
   response:
     status:
       code: 200
@@ -341,7 +341,7 @@ bb8ff1419277d1e75c83b7db96e6ea666b2f5f10:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 23 Aug 2018 13:54:24 GMT
+      - Tue, 18 Sep 2018 16:00:41 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -349,7 +349,7 @@ bb8ff1419277d1e75c83b7db96e6ea666b2f5f10:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.065000'
+      - '0.039000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -360,7 +360,7 @@ bb8ff1419277d1e75c83b7db96e6ea666b2f5f10:
       encoding: UTF-8
       string: "[]"
     http_version: 
-fdaa847c981472f017867b1b7d8d0d862954efa7:
+37e6ab4fc80e9e10844aa20392108a4e52bbf170:
   response:
     status:
       code: 200
@@ -371,7 +371,7 @@ fdaa847c981472f017867b1b7d8d0d862954efa7:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 23 Aug 2018 13:54:28 GMT
+      - Tue, 18 Sep 2018 15:59:02 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -379,7 +379,7 @@ fdaa847c981472f017867b1b7d8d0d862954efa7:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.063000'
+      - '0.090000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -390,337 +390,7 @@ fdaa847c981472f017867b1b7d8d0d862954efa7:
       encoding: UTF-8
       string: "[]"
     http_version: 
-3403ff51d6381f2d1d828e78661a949770a55d58:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Thu, 23 Aug 2018 13:57:12 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.089000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-210942c62160814ca03bdd657d99f53578211faf:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Thu, 23 Aug 2018 13:54:58 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.041000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-81fe7d448067205366475e1fbc9470c0ada96071:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:41:49 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.115000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-9d8e0c4d4210370564d68085c648c2a89677d8c8:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:31:57 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.078000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-9de3c88b5b848bf3509d8b2a2ff3cebe2890dda8:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:32:21 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.102000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-55a690fa88992761a4b6daa2cf61f2b5525c7121:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:34:43 GMT
-      etag:
-      - '"238be64d28433463e4ed5b10dde71ef0"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.480000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '213'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"71558EF5-C220-D8DA-29A1-A4A17D2F29CA","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/71558EF5-C220-D8DA-29A1-A4A17D2F29CA","name":"MOPITT"}}]'
-    http_version: 
-b93714f36b992af24eb8e6e28bf95b8f080f14cd:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:31:11 GMT
-      etag:
-      - '"e221d0c1b61dd1093e5b18cf8d987b03"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.461000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '212'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"67F585F8-EA34-471F-A57E-BE10AC32A594","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594","name":"MODIS"}}]'
-    http_version: 
-a426fa47ee11645530212fdc26da1489fdfb3ffe:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 15:51:32 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.124000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-35b36d3bf82cece227ea2541fb6b2a628cba0ad2:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:55:04 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.293000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-e5d32985213ec3843724214f16eb67b62ce42808:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 15:55:57 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.105000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-31b66fd9f8a3ceaac4d6de58aef947697fa0eb95:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:34:13 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.072000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-4daab4905e8625c9b7524d09fb96d22919b39e0f:
+cd9a6d5281aaa36517179d5bd0562e89010f8f6a:
   response:
     status:
       code: 200
@@ -731,164 +401,7 @@ e5d32985213ec3843724214f16eb67b62ce42808:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 16:30:13 GMT
-      etag:
-      - '"10a6490e45180bcaee32f7909f01bb16"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.272000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1293'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <data_quality_summary_definition>
-          <id>67F585F8-EA34-471F-A57E-BE10AC32A594</id>
-          <summary>&lt;p&gt;-------------------------------------------------------------------------------------------------------- &lt;br /&gt; MODIS LEVEL-2 AND HIGHER PRODUCTS AT THE Land Processes DAAC:  &lt;br /&gt; -------------------------------------------------------------------------------------------------------- &lt;br /&gt;&lt;br /&gt; Product quality assessment QA and validation are integral parts of the MODIS Land product generation process. The MODIS Land products have different data versions and levels of maturity reflecting algorithm refinement and the input data used in their production.&amp;nbsp; Please view technical information regarding product maturity and QA at:  &lt;a href="http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi" target="_modisqa"&gt;http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi&lt;/a&gt; and product validation status at:  &lt;a href="http://landval.gsfc.nasa.gov/" target="_modisvalid"&gt;http://landval.gsfc.nasa.gov/&lt;/a&gt;&lt;/p&gt;</summary>
-          <name>MODIS</name>
-          <updated_at type="datetime">2011-01-31T20:42:08Z</updated_at>
-          <provider_id>LPDAAC_ECS</provider_id>
-        </data_quality_summary_definition>
-    http_version: 
-a717d7c9bb2d93e2aac08c2889f68bd4de481110:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:34:36 GMT
-      etag:
-      - '"bdf08bd021fbcffac14e86a5c579a154"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.202000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '569'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <data_quality_summary_definition>
-          <id>71558EF5-C220-D8DA-29A1-A4A17D2F29CA</id>
-          <summary>&lt;p&gt;Please read the latest Product Quality Statement associated with the MOPITT data you have selected.&amp;nbsp; &lt;br /&gt;&lt;a href="https://eosweb.larc.nasa.gov/project/mopitt/mopitt-quality-statements" target="_mopitt"&gt;Quality Summaries&lt;/a&gt;&lt;/p&gt;</summary>
-          <name>MOPITT</name>
-          <updated_at type="datetime">2013-06-17T19:22:36Z</updated_at>
-          <provider_id>LARC</provider_id>
-        </data_quality_summary_definition>
-    http_version: 
-7a16596d8fda24c46eac15b0c43c010aa539d0cf:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:05:40 GMT
-      etag:
-      - '"35bee4758cac370f4dbf73dd9deb7b52"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.269000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2310'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <data_quality_summary_definition>
-          <id>77EDC43F-3BBC-2E39-BFBA-16DDE3540447</id>
-          <summary>&lt;p&gt;-------------------------------------------------------------------------------------------------------- &lt;br /&gt; MODIS Snow and Sea Ice Quality Assessment and Validation: &lt;br /&gt; -------------------------------------------------------------------------------------------------------- &lt;br /&gt;Product QA:&lt;br /&gt; Product quality assessment QA and validation are integral parts of the MODIS Land product generation process. The MODIS Land products have different data versions and levels of maturity reflecting algorithm refinement and the input data used in their production.&amp;nbsp; Please view technical information regarding product maturity and QA at:  &lt;a href="http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi" target="_modisqa"&gt;http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi&lt;/a&gt;&lt;/p&gt;
-        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
-        &lt;p&gt;Data Validation:&lt;/p&gt;
-        &lt;p&gt;Versions 5 MODIS/Terra and MODIS/Aqua snow and sea ice products are currently at a 'Validated Stage 2' status. Validated products are high-quality products with well-defined uncertainties, which are suitable for longer term or systematic scientific studies and publication.  While the products as a whole are at &amp;lsquo;Validated Stage 2' status, this is not necessarily true for each parameter within a product.  For example, the validation status of the albedo and fractional snow parameters is provisional. Users are encouraged to review product quality summaries before publication of results.  Please refer to the MODIS Validation Web site &lt;a href="http://landval.gsfc.nasa.gov/" target="_modisvalid"&gt;http://landval.gsfc.nasa.gov/&lt;/a&gt;&lt;/p&gt;
-        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
-        &lt;p&gt;For answers to questions concerning MODIS Snow or Sea Ice data products please refer to data documentation at &lt;a href="http://nsidc.org/data/modis/data_summaries/index.html" target="_modisnsidc"&gt;http://nsidc.org/data/modis/data_summaries/index.html&lt;/a&gt;&lt;/p&gt;</summary>
-          <name>MODIS</name>
-          <updated_at type="datetime">2011-01-31T20:35:12Z</updated_at>
-          <provider_id>NSIDC_ECS</provider_id>
-        </data_quality_summary_definition>
-    http_version: 
-425fe9a2c5c727eecc8749ec88df9989f3af9bfa:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:49:42 GMT
-      etag:
-      - '"7cd8d34f81260d66e45fe59c44390187"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.273000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1630'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <data_quality_summary_definition>
-          <id>7F7F0445-FDFB-5D08-E982-9242C48FC0FB</id>
-          <summary>&lt;p&gt;AMSR-E Quality Assessment&lt;br /&gt;&lt;br /&gt;QA Summaries:&lt;br /&gt;Quality Assessment summaries are produced for each AMSR-E standard product file.  For information on the QA summaries, please refer to the MSFC AMSR-E Quality Assessment Web site: &lt;a href="http://wwwghcc.msfc.nasa.gov/AMSR/qa.html" target="_msfc"&gt;http://wwwghcc.msfc.nasa.gov/AMSR/qa.html&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; Quality flags:&lt;br /&gt; The quality flags found in individual products are detailed in each product's guide document. Please refer to the NSIDC AMSR-E/Aqua Data Summaries Web site: &lt;a href="http://nsidc.org/data/amsre/data_summaries.html" target="_amsredata"&gt;http://nsidc.org/data/amsre/data_summaries.html&lt;/a&gt; for access to product documentation. &lt;br /&gt;&lt;br /&gt;Version information:&lt;br /&gt; AMSR-E product versions are designated by a Product Maturity  code indicating the level of validation and algorithm refinement.  Validated products are also assigned an associated Validation Stage.  For information on the Product Maturity codes as well as changes included in algorithm versions, please refer to the NSIDC  AMSR-E/Aqua Data Versions Web site:  &lt;a href="http://nsidc.org/data/amsre/versions.html" target="_amsre"&gt;http://nsidc.org/data/amsre/versions.html&lt;/a&gt;&lt;/p&gt;</summary>
-          <name>AMSR-E</name>
-          <updated_at type="datetime">2011-12-14T14:29:49Z</updated_at>
-          <provider_id>NSIDC_ECS</provider_id>
-        </data_quality_summary_definition>
-    http_version: 
-580669ef94207c2708c75791d743cb364ec7d340:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Mon, 12 Mar 2018 16:00:19 GMT
+      - Tue, 18 Sep 2018 15:57:34 GMT
       etag:
       - '"d609f976663ebc6f11a73b42c7ac2cda"'
       server:
@@ -896,7 +409,7 @@ a717d7c9bb2d93e2aac08c2889f68bd4de481110:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.273000'
+      - '0.091000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -916,7 +429,7 @@ a717d7c9bb2d93e2aac08c2889f68bd4de481110:
           <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 
-e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
+6e5040c202c1f5b63f2c7a76f03365d71a3f62d9:
   response:
     status:
       code: 200
@@ -927,7 +440,7 @@ e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 24 Apr 2018 18:21:08 GMT
+      - Tue, 18 Sep 2018 16:02:36 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -935,7 +448,7 @@ e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.112000'
+      - '0.325000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -946,7 +459,7 @@ e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
       encoding: UTF-8
       string: "[]"
     http_version: 
-5297bcef977b9ca3c49bc76fdb80f74634e67b76:
+d91a9edbd1341ec8a94ad7bc6249f106aa2ab3ee:
   response:
     status:
       code: 200
@@ -957,7 +470,7 @@ e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 27 Jun 2018 21:12:40 GMT
+      - Tue, 18 Sep 2018 15:58:14 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -965,7 +478,7 @@ e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.052000'
+      - '0.228000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -976,7 +489,7 @@ e343fd5a5ebed42b4a8f17ee4678c33b1d5aad63:
       encoding: UTF-8
       string: "[]"
     http_version: 
-f3f2869419cb51d555013da0d5c0137ce0f856ba:
+feaefd00ab60db5f037cca0fd462d0f6fe7b2010:
   response:
     status:
       code: 200
@@ -987,7 +500,7 @@ f3f2869419cb51d555013da0d5c0137ce0f856ba:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 24 Apr 2018 18:22:44 GMT
+      - Tue, 18 Sep 2018 15:59:47 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -995,7 +508,7 @@ f3f2869419cb51d555013da0d5c0137ce0f856ba:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.103000'
+      - '0.124000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -1006,7 +519,7 @@ f3f2869419cb51d555013da0d5c0137ce0f856ba:
       encoding: UTF-8
       string: "[]"
     http_version: 
-f990e7f9fe5e4f34a8dcf80df7931a9fe487b66b:
+eede3fe17d8472964dcd01b1ea2db3c12dba89d7:
   response:
     status:
       code: 200
@@ -1017,7 +530,7 @@ f990e7f9fe5e4f34a8dcf80df7931a9fe487b66b:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 24 Apr 2018 17:26:07 GMT
+      - Tue, 18 Sep 2018 16:18:34 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -1025,7 +538,7 @@ f990e7f9fe5e4f34a8dcf80df7931a9fe487b66b:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.107000'
+      - '0.150000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -1036,7 +549,7 @@ f990e7f9fe5e4f34a8dcf80df7931a9fe487b66b:
       encoding: UTF-8
       string: "[]"
     http_version: 
-c894bd437662fb8ea90ccc431e228703d08d9712:
+f253363fc090668ed281e44ff060b788f1ca798d:
   response:
     status:
       code: 200
@@ -1047,7 +560,7 @@ c894bd437662fb8ea90ccc431e228703d08d9712:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 03 Aug 2018 01:09:47 GMT
+      - Tue, 18 Sep 2018 16:02:58 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -1055,7 +568,37 @@ c894bd437662fb8ea90ccc431e228703d08d9712:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.550000'
+      - '0.034000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+c4aec73f61006f93de91905a2cf15caf4d251d55:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 18 Sep 2018 16:13:23 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.123000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:

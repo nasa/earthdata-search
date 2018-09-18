@@ -484,7 +484,7 @@ http_interactions:
   digest: 14a0ec30b17ac928b6678e04f531f842e2a96520
 - request:
     method: get
-    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=arNJRV0WQXEuU_ZdSHGp3Q
+    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=kzAY1v0kVjQ7QVpwBw-kLQ
     body:
       encoding: US-ASCII
       string: ''
@@ -497,7 +497,7 @@ http_interactions:
   digest: dd3ed9357a523d37b9a487775a65f4abfcdfdd33
 - request:
     method: get
-    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=iGoL4SxnweOcSyBxA5eeUA
+    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=K34r-9lYcLrog2soFrljlw
     body:
       encoding: US-ASCII
       string: ''
@@ -620,7 +620,7 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: edsc_access_update_preferences_none
 - request:
