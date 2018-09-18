@@ -179,6 +179,15 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         height = windowHeight - main.position().top - $('body > footer').outerHeight()
         main.height(height)
 
+        # If the timeline is open, let's check to see if the main overlay panel is within 70 px
+        # of the top of its container. We do this to make sure it sits below the search input as
+        # the timeline is enabled or disabled.
+
+        if $('#timeline').height()
+          if @root.find('.master-overlay-main')[0].offsetTop < 70
+            difference = 70 - @root.find('.master-overlay-main')[0].offsetTop
+            @root.find('.master-overlay-main').height(@root.find('.master-overlay-main').height() - difference)
+
         for div in @root.find(@scope('.content'))
           $div = $(div)
           $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 20, 13))
@@ -197,7 +206,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         if collectionDetail.is(':visible')
           newHeight = collectionDetail.height() - collectionDetail.find('.master-overlay-nav').outerHeight() - collectionDetail.find('header').outerHeight()
           collectionDetail.find(@scope('.content')).height(newHeight)
-
 
         # project
         project = $('#project-overview')
