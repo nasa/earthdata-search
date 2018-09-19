@@ -2585,25 +2585,6 @@ http_interactions:
   digest: 265273fc8e746363f0f78063b965b277c727f3e5
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C24931-LAADS&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - 7f65b562d0589191e7f9d2906b3916229874e75b73ae241369ef817443e944fc:kzAY1v0kVjQ7QVpwBw-kLQ
-      Accept:
-      - application/vnd.nasa.cmr.umm_results+json; version=1.10
-  recorded_at: Tue, 18 Sep 2018 16:26:15 GMT
-  digest: 9c7564dd9322212f94d7d2caa019e730f128c41a
-- request:
-    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C24933-LAADS&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
     body:
       encoding: US-ASCII
@@ -2812,25 +2793,6 @@ http_interactions:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Tue, 18 Sep 2018 16:02:03 GMT
   digest: 6164d2cdf8841c0e8b577eb895257e891a3d80cc
-- request:
-    method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C24931-LAADS%2A&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - 7f65b562d0589191e7f9d2906b3916229874e75b73ae241369ef817443e944fc:kzAY1v0kVjQ7QVpwBw-kLQ
-      Accept:
-      - application/vnd.nasa.cmr.umm_results+json; version=1.10
-  recorded_at: Tue, 18 Sep 2018 16:26:16 GMT
-  digest: '080ef0ad1de1f734c03762404a8a11ce69549976'
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C24936-LAADS%2A&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=score
