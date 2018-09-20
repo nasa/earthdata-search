@@ -169,9 +169,7 @@ class CollectionExtra < ActiveRecord::Base
     ]
 
     # Creates the tags that we'll assocaite with collections, unless they already exist
-    tags.each do |tag|
-      client.create_tag_if_needed(tag_key(tag), token)
-    end
+    client.create_tags_if_needed(tags.map { |tag| tag_key(tag) }, token)
 
     collections = get_collections_with_service_details(client, token, has_granules: true, include_tags: tag_key('subset_service'))
 
