@@ -24,6 +24,11 @@ class CollectionExtra < ActiveRecord::Base
 
   # Query CMRs collection search endpoint and insert umm-s details into `associations.service_objects`
   # for any ids present in the `associations.services`
+  #
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
+  # @param cmr_options [Hash] the parameters to provide to CMR
+  # @return [Array] a list of collections with umm details inserted for services associated with each collection
   def self.get_collections_with_service_details(client, token, cmr_options = {})
     # Create two empty arrays that we'll populate below that will allow us to make
     # one large call to CMR to retrieve and insert full service responses into each collection
@@ -78,83 +83,80 @@ class CollectionExtra < ActiveRecord::Base
     end
   end
 
-  # Add tags to collections that support opendap subsetting
-  def self.sync_opendap(client, token, collection)
-    opendap_services = collection.fetch('associations', {}).fetch('service_objects', []).select { |service_object| service_object['umm']['Type'] == 'OPeNDAP' }
-
-    add_extra_tag(collection, 'subset_service.opendap', opendap_services.map { |umm_service| umm_service['meta']['concept-id'] }, client, token) if opendap_services.any?
-  end
-
-  # Remove tags from collections that no longer support opendap subsetting
-  def self.remove_stale_opendap_tags(opendap_collections, client, token)
+  # Remove tags from collections that no longer support the provided subsetting
+  #
+  # @param tag_name [String] the tag to remove from collections without the `edsc.extra` prefix
+  # @param collections [Array] the list of collections that are known to support the provided subsetting
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
+  def self.remove_stale_tags(tag_name, collections, client, token)
     page_size = 2000
     page_num  = 1
-    opendap_tagged_collections = []
+    tagged_collections = []
 
+    # Retrieve all collections on CMR that are tagged with the provided tag
     loop do
-      opendap_response = client.get_collections({ page_size: page_size, page_num: page_num, tag_key: tag_key('subset_service.opendap') }, token)
+      response = client.get_collections({ page_size: page_size, page_num: page_num, tag_key: tag_key(tag_name) }, token)
 
-      opendap_tagged_collections += opendap_response.body.fetch('feed', {}).fetch('entry', [])
+      tagged_collections += response.body.fetch('feed', {}).fetch('entry', [])
 
-      Rails.logger.error "Error retrieving services within `CollectionExtra.remove_stale_opendap_tags`: #{opendap_response.body}" unless opendap_response.success?
+      Rails.logger.error "Error retrieving collections within `CollectionExtra.remove_stale_tags`: #{response.body}" unless response.success?
 
-      break if !opendap_response.success? || opendap_response.body.fetch('items', []).length < page_size
+      break if !response.success? || response.body.fetch('items', []).length < page_size
 
       page_num += 1
     end
 
-    ids_no_longer_opendap_capable = opendap_tagged_collections.map { |collection| collection['id'] } - opendap_collections.map { |collection| collection['id'] }
+    ids_no_longer_capable = tagged_collections.map { |collection| collection['id'] } - collections.map { |collection| collection['id'] }
 
-    if ids_no_longer_opendap_capable.empty?
-      Rails.logger.debug 'No stale OPeNDAP tags found'
+    if ids_no_longer_capable.empty?
+      Rails.logger.debug "No stale `#{tag_name}` tags found"
     else
-      Rails.logger.debug "Attempting to remove #{ids_no_longer_opendap_capable.count} stale OPeNDAP tags"
-      client.bulk_remove_tag(tag_key('subset_service.opendap'), ids_no_longer_opendap_capable.map { |elem| { 'concept-id' => elem } }, token)
+      ids_no_longer_capable.each_slice(500) do |slice_of_collections|
+        Rails.logger.debug "Attempting to remove #{slice_of_collections.count} stale `#{tag_name}` tags"
+        client.bulk_remove_tag(tag_key(tag_name), slice_of_collections.map { |elem| { 'concept-id' => elem } }, token)
+      end
     end
   end
 
-  # Add tags to collections that support esi subsetting
-  def self.sync_esi(client, token, collection)
-    esi_services = collection.fetch('associations', {}).fetch('service_objects', []).select { |service_object| ['ESI', 'ECHO ORDERS'].include?(service_object['umm']['Type']) }
+  # Sync the subsetting tags for the provided tag and umm-s abilities
+  #
+  # @param tag_name [String] the tag to add to collections that support the provided subsetting abilities without the `edsc.extra` prefix
+  # @param subsetting_abilities [Array] the list of types (defined in the UMM-S schema) that a collection would need to support to be deemed capable
+  # @param collections [Array] the list of all collections being considered for the provided tag
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
+  def self.sync_subsetting_tags(tag_name, subsetting_abilities, collections, client, token)
+    Rails.logger.debug "[#{Time.now}] Starting sync of `#{tag_name}`"
 
-    add_extra_tag(collection, 'subset_service.esi', esi_services.map { |umm_service| umm_service['meta']['concept-id'] }, client, token) if esi_services.any?
-  end
-
-  # Remove tags from collections that no longer support esi subsetting
-  def self.remove_stale_esi_tags(esi_collections, client, token)
-    page_size = 2000
-    page_num  = 1
-    esi_tagged_collections = []
-
-    loop do
-      # Loop through paged cmr results until we've received all collections or an error occurs
-      esi_response = client.get_collections({ page_size: page_size, page_num: page_num, tag_key: tag_key('subset_service.esi') }, token)
-
-      esi_tagged_collections += esi_response.body.fetch('feed', {}).fetch('entry', [])
-
-      Rails.logger.error "Error retrieving services within `CollectionExtra.remove_stale_esi_tags`: #{esi_response.body}" unless esi_response.success?
-
-      break if !esi_response.success? || esi_response.body.fetch('items', []).length < page_size
-
-      page_num += 1
+    collections_with_subsetting_abilities = collections.select do |collection|
+      collection.fetch('associations', {}).fetch('service_objects', []).any? { |service_object| Array.wrap(subsetting_abilities).flatten.include?(service_object['umm']['Type']) }
     end
 
-    ids_no_longer_esi_capable = esi_tagged_collections.map { |collection| collection['id'] } - esi_collections.map { |collection| collection['id'] }
+    remove_stale_tags(tag_name, collections_with_subsetting_abilities, client, token)
 
-    if ids_no_longer_esi_capable.empty?
-      Rails.logger.debug 'No stale ESI tags found'
-    else
-      Rails.logger.debug "Attempting to remove #{ids_no_longer_esi_capable.count} stale ESI tags"
-      client.bulk_remove_tag(tag_key('subset_service.esi'), ids_no_longer_esi_capable.map { |elem| { 'concept-id' => elem } }, token)
+    Rails.logger.debug "There are #{collections_with_subsetting_abilities.size} collections that should be tagged with `#{tag_name}`"
+
+    collections_with_subsetting_abilities.each do |collection|
+      services = collection.fetch('associations', {}).fetch('service_objects', []).select { |service_object| Array.wrap(subsetting_abilities).flatten.include?(service_object['umm']['Type']) }
+
+      add_extra_tag(collection, tag_name, services.map { |umm_service| umm_service['meta']['concept-id'] }, client, token) if services.any?
     end
+
+    Rails.logger.debug "[#{Time.now}] Finished syncing of `#{tag_name}`"
   end
 
+  # Sync the gibs tags on collections that support gibs imagery
+  #
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
   def self.sync_gibs(client, token)
     Rails.logger.debug "[#{Time.now}] Starting sync GIBS"
     GibsConfiguration.new.sync_tags!(tag_key('gibs'), client, token)
     Rails.logger.debug "[#{Time.now}] Finished adding GIBS tags"
   end
 
+  # Sync the tags that are used within search
   def self.sync_tags
     client = build_echo_client
 
@@ -173,56 +175,25 @@ class CollectionExtra < ActiveRecord::Base
 
     collections = get_collections_with_service_details(client, token, has_granules: true, include_tags: tag_key('subset_service'))
 
-    # #
     # OPeNDAP Tagging
-    # #
-    Rails.logger.debug "[#{Time.now}] Starting sync OPeNDAP"
+    sync_subsetting_tags('subset_service.opendap', ['OPeNDAP'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_OPENDAP_TAGS', 'true'))
 
-    opendap_collections = collections.select do |collection|
-      collection.fetch('associations', {}).fetch('service_objects', []).any? { |service_object| service_object['umm']['Type'] == 'OPeNDAP' }
-    end
-
-    remove_stale_opendap_tags(opendap_collections, client, token)
-
-    Rails.logger.debug "There are #{opendap_collections.size} OPeNDAP collections"
-
-    opendap_collections.each do |collection|
-      sync_opendap(client, token, collection)
-    end
-
-    Rails.logger.debug "[#{Time.now}] Finished adding OPeNDAP tags"
-
-    # #
     # ESI Tagging
-    # #
-    Rails.logger.debug "[#{Time.now}] Starting sync ESI"
+    sync_subsetting_tags('subset_service.esi', ['ESI', 'ECHO ORDERS'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_EGI_TAGS', 'true'))
 
-    esi_collections = collections.select do |collection|
-      collection.fetch('associations', {}).fetch('service_objects', []).any? { |service_object| ['ESI', 'ECHO ORDERS'].include?(service_object['umm']['Type']) }
-    end
-
-    remove_stale_esi_tags(esi_collections, client, token)
-
-    esi_collections.each do |collection|
-      sync_esi(client, token, collection)
-    end
-
-    Rails.logger.debug "[#{Time.now}] Finished adding ESI tags"
-
-    # #
     # GIBS Tagging
-    # #
-    sync_gibs(client, token)
+    sync_gibs(client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_GIBS_TAGS', 'true'))
   end
 
   def self.add_extra_tag(collection, key, value, client, token)
     key = tag_key(key)
+    Rails.logger.debug "Adding `#{key}` to #{collection['id']}"
     client.add_tag(key, value, { condition: { concept_id: collection['id'] } }, token) unless has_tag(collection, key, value)
   end
 
   def self.remove_extra_tag(collection, key, value, client, token)
     key = tag_key(key)
-    client.remove_tag(key, { condition: { concept_id: collection['id'] } }, token) if has_tag(collection, key, nil)
+    client.remove_tag(key, { condition: { concept_id: collection['id'] } }, token) if has_tag(collection, key, value)
   end
 
   def self.tag_key(tag)
