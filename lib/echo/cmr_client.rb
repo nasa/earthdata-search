@@ -167,12 +167,19 @@ module Echo
       post('/search/tags', { 'tag-key' => key }.to_json, token_header(token))
     end
 
-    def create_tag_if_needed(key, token)
-      response = get_tag(key, token)
+    def create_tags_if_needed(keys, token)
+      response = get_tag(keys, token)
+
       unless response.success? && response.body['items'].present?
-        create_tag(key, token)
+        existing_keys = response.body['items'].map { |tag| tag[:tag_key] }
+
+        keys.each do |new_tag|
+          if existing_keys.include?(new_tag)
+            puts "#{new_tag} is already a thing"
+          end
+          create_tag(new_tag, token) unless existing_keys.include?(new_tag)
+        end
       end
-      nil
     end
 
     protected
