@@ -41,7 +41,6 @@ See public/licenses.txt
 ## Installation
 
 ### Prerequisites
-* [Ruby](https://www.ruby-lang.org)
 * [Docker](https://docs.docker.com/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
@@ -77,7 +76,3 @@ Run
     docker-compose up
 
 Then visit http://localhost:3000/
-
-### Running tests
-
-    docker-compose run web bundle exec rspec
