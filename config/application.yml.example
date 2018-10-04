@@ -1,10 +1,13 @@
 defaults: &defaults
 #### Change these values ####
   # Username and password of the application configured in URS
+  # urs_username is the Earthdata Login application's UID
+  # urs_password is the Earthdata Login application's password
   urs_username: "<urs_username>"
   urs_password: "<urs_password>"
 
   # Domain as configured in the URS application.  The configured application must be in the ECHO group.
+  # This value must be saved in the "Redirect URL's" in the Earthdata Login application
   urs_callback_url: "http://<urs_domain>/urs_callback"
 
   # Earthdata Login Client IDs. Refer this page on how to create an application:
@@ -17,12 +20,8 @@ defaults: &defaults
   ogre_url: "<ogre_url>"
 
   # Root URL for CLAVIN-based spatial and temporal extractor.
-  nlp_parser_url: "<edsc_nlp_url>"
-
-  # URL and API user id for a placename search service.  The URL should stay the same, but you will need
-  # to register an API user.
-  places_url: http://api.geonames.org/
-  places_user_id: "<places_user_id>"
+  # Optional -- uncomment next line to enable
+  # nlp_parser_url: "<edsc_nlp_url>"
 
   # A random key used to sign cookies, at least 30 characters.  Generate with the following command:
   # $ hexdump -n 128 -v -e '/1 "%02X"' -e '/128 "\n"' /dev/urandom  | tr '[:upper:]' '[:lower:]'
