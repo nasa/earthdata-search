@@ -24,7 +24,7 @@ before_install:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - qmake -version
 script:
-  - bundle exec bin/setup
+  - bundle exec bin/setup_travis
   - bundle exec rake travis:ci
 env:
   global:

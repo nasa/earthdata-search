@@ -18,6 +18,8 @@ gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89
 gem 'atomic'
 gem 'rack-rewrite'
 
+gem 'pg'
+
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl'
@@ -45,7 +47,6 @@ group :development do
 end
 
 group :sit, :uat, :production, :lab do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
@@ -55,7 +56,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'colored'
   gem 'vcr'
-  gem 'sqlite3'
   gem 'knapsack'
 
   gem 'jasmine'
