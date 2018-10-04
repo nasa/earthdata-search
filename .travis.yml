@@ -23,7 +23,7 @@ before_install:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 script:
-  - bundle exec bin/setup
+  - bundle exec bin/setup_travis
   - bundle exec rake travis:ci
 env:
   global:
