@@ -34,6 +34,7 @@ group :test do
   gem 'fuubar'
   gem 'rack_session_access'
   gem 'headless'
+  gem 'sqlite3'
 end
 
 group :development do

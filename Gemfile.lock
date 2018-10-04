@@ -302,6 +302,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    sqlite3 (1.3.9)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -378,6 +379,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 4.0.0)
   seed_dump
+  sqlite3
   therubyracer
   thin
   toastr-rails
