@@ -77,3 +77,7 @@ Run
     docker-compose up
 
 Then visit http://localhost:3000/
+
+### Running tests
+
+    docker-compose run web bundle exec rspec
