@@ -31,6 +31,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
   gem 'rack_session_access'
+  gem 'sqlite3'
 end
 
 group :development do
