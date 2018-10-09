@@ -6,7 +6,7 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-<div class="data-access">
+<div class="data-access main-content-scrollable">
   <nav class="data-access-nav">
     <a href="javascript:history.back()"><i class="fa fa-arrow-circle-o-left"></i> Back <%= request.referer && URI(request.referer).path.include?('search') ? 'to Search Session' : '' %></a>
   </nav>

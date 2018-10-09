@@ -107,9 +107,9 @@
 }
 
 .leaflet-top.leaflet-right {
+  position: absolute;
   top: auto;
-  bottom: 50%;
-  z-index: 130;
+  bottom: 10px;
 }
 
 .is-master-overlay-minimized {
@@ -127,6 +127,13 @@
   height: 26px;
   border-radius: 4px;
   background-size: 16px 16px;
+}
+
+.leaflet-control-layers-expanded {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .leaflet-control-scale {
