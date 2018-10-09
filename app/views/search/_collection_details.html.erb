@@ -1,12 +1,14 @@
 <!-- ko if: $root.ui.collectionsList.selected() -->
-<section id="collection-details" class="details master-overlay-no-min">
-  <nav class="master-overlay-nav">
-    <a href="#" class="master-overlay-back" data-bind="click: ui.collectionsList.hideCollectionDetails">
-      <i class="fa fa-chevron-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Collections</span>
-    </a>
-  </nav>
+<section id="collection-details" class="master-overlay-content-wrapper details master-overlay-no-min">
+  <header class="master-overlay-header">
+    <nav class="master-overlay-nav">
+      <div class="master-overlay-tab">
+        <a href="#" class="master-overlay-back" data-bind="click: ui.collectionsList.hideCollectionDetails">
+          <i class="fa fa-chevron-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Collections</span>
+        </a>
+      </div>
+    </nav>
   <!-- ko if: $root.ui.collectionsList.selected() -->
-  <header >
     <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
     <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
       <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
@@ -60,9 +62,8 @@
         </ul>
       </div>
     </div>
-  </header>
-
   <!-- /ko -->
+  </header>
   <!-- ko if: $root.ui.collectionsList.selected() && $root.ui.collectionsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.collectionsList.selected().details -->
 

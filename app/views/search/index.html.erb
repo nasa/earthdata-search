@@ -94,21 +94,27 @@
   <%= render partial: 'overlay_parent' %>
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
-      <section id="collection-results" class="master-overlay-has-min" data-master-overlay-title="Collections">
-        <nav class="master-overlay-nav master-overlay-when-parent-hidden">
-          <a href="#" class="master-overlay-show-parent" data-bind="click: showParent" title="Browse Collections">
-            <i class="fa fa-columns"></i>
-            <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
-               (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
-            </span>
-          </a>
-        </nav>
-        <header class="tab">
-          <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
-          <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-chevron-circle-down"></i></a>
-          <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
+      <section id="collection-results" class="master-overlay-content-wrapper master-overlay-has-min" data-master-overlay-title="Collections">
+        <header class="master-overlay-header">
+          <nav class="master-overlay-nav">
+            <div class="master-overlay-tab master-overlay-when-parent-hidden">
+              <span class="master-overlay-tab-handle"></span>
+              <a href="#" class="master-overlay-tab-title master-overlay-show-parent" data-bind="click: showParent" title="Browse Collections">
+                <i class="fa fa-columns"></i>
+                <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
+                   (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
+                </span>
+              </a>
+            </div>
+            <div class="master-overlay-tab">
+              <span class="master-overlay-tab-handle"></span>
+              <h2 class="master-overlay-tab-title"><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
+              <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-chevron-circle-down"></i></a>
+              <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
+            </div>
+          </nav>
         </header>
-        <div class="master-overlay-info master-overlay-when-max">
+        <div class="master-overlay-info">
           <p class="collection-filters">
             <label class="collection-filter-item collection-sort">Sort by:
               <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
@@ -154,10 +160,10 @@
   <div class="master-overlay-secondary">
     <div class="master-overlay-secondary-content" data-level="0">
       <section id="granule-search" >
-          <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <nav class="master-overlay-nav">
+        <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <div>
           <i class="fa fa-filter"></i> Granule Filters
-        </nav>
+        </div>
         <!-- ko if: project.searchGranulesCollection() -->
         <header>
           <h2 data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
@@ -172,44 +178,43 @@
       <i class="fa fa-th-list"></i> Results List
     </a>
   </div>
-</div>
+  <div id="map" class="map">
+    <div id="map-center"></div>
+    <!-- ko if: ui.collectionsList.focused() -->
+    <!-- ko with: ui.collectionsList.focused() -->
+    <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) && !stickied().browseError() -->
+    <div class="toggle-image-browse">
+      <a href="#" class="pull-right" id="toggleBrowseImageButton" data-bind="click: function() { $root.ui.collectionsList.toggleBrowseImage()};" data-toggle="collapse" data-target="#browseImageDiv" title="Toggle browse image display">
+        <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>
+      </a>
+    </div>
+    <div class="granule-browse collapse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">
+      <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
+        <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
+      </a>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- /ko -->
 
-<div id="map" class="map" style="height:100%">
-  <div id="map-center"></div>
-  <!-- ko if: ui.collectionsList.focused() -->
-  <!-- ko with: ui.collectionsList.focused() -->
-  <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) && !stickied().browseError() -->
-  <div class="toggle-image-browse">
-    <a href="#" class="pull-right" id="toggleBrowseImageButton" data-bind="click: function() { $root.ui.collectionsList.toggleBrowseImage()};" data-toggle="collapse" data-target="#browseImageDiv" title="Toggle browse image display">
-      <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>
-    </a>
-  </div>
-  <div class="granule-browse collapse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">
-    <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
-      <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
-    </a>
-  </div>
-  <!-- /ko -->
-  <!-- /ko -->
-  <!-- /ko -->
-
-  <div class="geojson-help">
-    <div class="geojson-help-dropzone">
-      <h2>Search by Shape File</h2>
-      <p>
-        <strong><a class="geojson-dropzone-link" href="#">Click here</a></strong> to select a shape file. You may also
-        simply drag and drop shape files onto the map at any time.
-      </p>
-      <p>
-        Valid formats include:
-      </p>
-      <ul>
-        <li>ESRI Shapefile (.zip including .shp, .dbf, and .shx file)</li>
-        <li>Keyhole Markup Language (.kml or .kmz)</li>
-        <li>GeoJSON (.json or .geojson)</li>
-        <li>GeoRSS (.rss, .georss, or .xml)</li>
-      </ul>
-      <button data-bind="click: ui.spatialType.selectNone" class="button text-button" type="button">Cancel</button>
+    <div class="geojson-help">
+      <div class="geojson-help-dropzone">
+        <h2>Search by Shape File</h2>
+        <p>
+          <strong><a class="geojson-dropzone-link" href="#">Click here</a></strong> to select a shape file. You may also
+          simply drag and drop shape files onto the map at any time.
+        </p>
+        <p>
+          Valid formats include:
+        </p>
+        <ul>
+          <li>ESRI Shapefile (.zip including .shp, .dbf, and .shx file)</li>
+          <li>Keyhole Markup Language (.kml or .kmz)</li>
+          <li>GeoJSON (.json or .geojson)</li>
+          <li>GeoRSS (.rss, .georss, or .xml)</li>
+        </ul>
+        <button data-bind="click: ui.spatialType.selectNone" class="button text-button" type="button">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
