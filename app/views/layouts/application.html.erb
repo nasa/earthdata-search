@@ -94,6 +94,7 @@
       </div>
     </footer>
     <%= yield :global %>
+    <%= render partial: 'shared/components/index' %>
 
     <% if Rails.configuration.gather_metrics %>
       <%= javascript_include_tag "ntpagetag" %>

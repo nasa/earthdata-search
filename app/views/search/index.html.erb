@@ -132,7 +132,7 @@
             <ul id="collection-results-list"
                 class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.results, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
+              <li class="panel-list-item" data-bind="component: {name: 'collection-list-item', params: {model: $data}}, click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}" title="View granules"></li>
             </ul>
             <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
               Loading collections...
@@ -342,7 +342,6 @@
   </div>
 </form>
 <% end %>
-
 
 <% content_for :footer do %>
   <%= render partial: 'timeline' %>
