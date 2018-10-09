@@ -1,25 +1,34 @@
-interact(".master-overlay-main")
-  .resizable({
-    restrict: {
-      restriction: function() {
-        var toolbarOffset = $("#main-toolbar").position().top + $("#main-toolbar").outerHeight() + 15;
-        return {
-          x: 0,
-          y: toolbarOffset,
-          height: $(window).height() - toolbarOffset - $("footer").outerHeight() - 50};
+$(function(){
+  var toolbar = $(".master-overlay-main");
+  var tab = $(".master-overlay-tab");
+
+  interact(".master-overlay-tab")
+    .resizable({
+      restrict: {
+        restriction: function() {
+          var toolbarOffset = $("#main-toolbar").position().top + $("#main-toolbar").outerHeight();
+          return {
+            x: 0,
+            y: toolbarOffset,
+            height: $(window).height() - toolbarOffset - $("footer").outerHeight() - 50
+          };
         },
-      endOnly: false
-    },
-    preserveAspectRatio: false,
-    edges: { left: false, right: false, bottom: false, top: true },
-  })
-  .on("resizemove", function (event) {
+        endOnly: false
+      },
+      preserveAspectRatio: false,
+      edges: { left: false, right: false, bottom: false, top: true },
+    })
+    .on("resizemove", function (event) {
 
-    // Set the map tools location here so we can use the delta measurement to make sure things stay in sync
-    $("#map .leaflet-top.leaflet-right").css({'bottom': ($(event.target).height() - 35 ) - event.dy + 'px'})
+      var newContentHeight = (toolbar.height() - event.dy);
 
-    // Set the height by adding the amount scrolled to the height of the container
-    $(event.target).height($(event.target).height() - event.dy + 'px');
+      $(".master-overlay").masterOverlay("updateControlContainer", $('.master-overlay').height() - newContentHeight);
 
-    $(".master-overlay").masterOverlay("contentHeightChanged");
-  });
+      toolbar.css({'height': newContentHeight + 'px'});
+
+      $(".master-overlay").masterOverlay("contentHeightChanged");
+    })
+
+  tab.addClass('is-interactive')
+
+})

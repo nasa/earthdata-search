@@ -1,51 +1,54 @@
 <!-- ko if: $root.ui.collectionsList.focused() -->
 <!-- ko if: $root.ui.collectionsList.focused().selected() -->
-<section id="granule-details" class="details master-overlay-no-min">
-  <nav class="master-overlay-nav">
-    <a href="#" class="master-overlay-back" data-bind="click: ui.collectionsList.focused().hideGranuleDetails">
-      <i class="fa fa-chevron-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Granules</span>
-    </a>
-  </nav>
-  <!-- ko if: $root.ui.collectionsList.focused() -->
-  <!-- ko with: $root.ui.collectionsList.focused() -->
-  <!-- ko if: selected() -->
-  <header >
-    <h2 data-bind="ifnot: selected().detailsLoaded" class="loading">Details Loading...</h2>
-    <!-- ko if: selected().detailsLoaded -->
-    <h2 data-bind="text: selected().title"></h2>
+<!-- ko with: $root.ui.collectionsList.focused() -->
+<section id="granule-details" class="master-overlay-content-wrapper details master-overlay-no-min">
+  <header class="master-overlay-header">
+    <nav class="master-overlay-nav">
+      <div class="master-overlay-tab">
+        <span class="master-overlay-tab-handle"></span>
+        <a class="master-overlay-tab-title master-overlay-back master-overlay-hide-secondary" data-bind="click: hideGranuleDetails">
+          <i class="fa fa-chevron-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Granules</span>
+        </a>
+      </div>
+    </nav>
+    <!-- ko if: selected() -->
+    <div class="master-overlay-info">
+      <!-- ko if: selected().detailsLoaded -->
+        <h2 class="master-overlay-header-title" data-bind="text: selected().title"></h2>
+      <!-- /ko -->
+      <!-- ko ifnot: selected().detailsLoaded -->
+        <h2 class="master-overlay-header-title" data-bind="text: selected().title">Details Loading...</h2>
+      <!-- /ko -->
+    </div>
     <!-- /ko -->
   </header>
-  <div class="master-overlay-info">
-  </div>
-  <!-- /ko -->
+  <div class="master-overlay-content">
+    <ul id="granule-details-nav" class="nav nav-tabs">
+      <li class="active" title="Granule information"><a href="#granule-information" data-toggle="tab">Information</a></li>
+      <li><a href="#granule-metadata" data-toggle="tab" title="Granule metadata">Metadata</a></li>
+    </ul>
+    <!-- ko if: selected() -->
+    <!-- ko with: selected().details() -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="granule-information">
+        <div data-bind="text: $data.xml" class="details-content"></div>
 
-  <ul id="granule-details-nav" class="nav nav-tabs">
-    <li class="active" title="Granule information"><a href="#granule-information" data-toggle="tab">Information</a></li>
-    <li><a href="#granule-metadata" data-toggle="tab" title="Granule metadata">Metadata</a></li>
-  </ul>
-  <!-- ko if: selected() -->
-  <!-- ko with: selected().details() -->
-  <div class="tab-content">
-    <div class="tab-pane active" id="granule-information">
-      <div data-bind="text: $data.xml" class="master-overlay-content details-content"></div>
+      </div>
 
+      <div class="tab-pane" id="granule-metadata">
+        <dl>
+          <dt>Download Metadata:</dt>
+          <dd><a data-bind="attr: { href: $data.native_url }, visible: $data.native_url">Native</a></dd>
+          <dd><a data-bind="attr: { href: $data.atom_url }, visible: $data.atom_url">ATOM</a></dd>
+          <dd><a data-bind="attr: { href: $data.echo10_url }, visible: $data.echo10_url">ECHO 10</a></dd>
+          <dd><a data-bind="attr: { href: $data.iso19115_url }, visible: $data.iso19115_url">ISO 19115</a></dd>
+        </dl>
+      </div>
     </div>
-
-    <div class="tab-pane" id="granule-metadata">
-      <dl class="master-overlay-content">
-        <dt>Download Metadata:</dt>
-        <dd><a data-bind="attr: { href: $data.native_url }, visible: $data.native_url">Native</a></dd>
-        <dd><a data-bind="attr: { href: $data.atom_url }, visible: $data.atom_url">ATOM</a></dd>
-        <dd><a data-bind="attr: { href: $data.echo10_url }, visible: $data.echo10_url">ECHO 10</a></dd>
-        <dd><a data-bind="attr: { href: $data.iso19115_url }, visible: $data.iso19115_url">ISO 19115</a></dd>
-      </dl>
-    </div>
+    <!-- /ko -->
+    <!-- /ko -->
   </div>
-  <!-- /ko -->
-  <!-- /ko -->
-
-  <!-- /ko -->
-  <!-- /ko -->
 </section>
+<!-- /ko -->
 <!-- /ko -->
 <!-- /ko -->
