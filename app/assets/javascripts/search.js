@@ -23,3 +23,4 @@
 //= require models/page/search_page
 //= require modules/index
 //= require bootstrap/bootstrap
+//= require components
