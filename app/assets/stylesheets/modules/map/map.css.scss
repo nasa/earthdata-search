@@ -1,8 +1,24 @@
 @import "leaflet-0.7/leaflet.css.scss";
 @import "leaflet.draw-0.2.2/leaflet.draw.css.scss";
 
+.map {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .leaflet-container {
   background-color: #000;
+}
+
+.leaflet-control-container {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {

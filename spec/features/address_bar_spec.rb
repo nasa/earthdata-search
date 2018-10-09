@@ -219,7 +219,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'displays the selected facet condition' do
-      within(:css, '.panel.features .panel-body.facets') do
+      within(:css, '.master-overlay-content-panel.features .panel-body.facets') do
         expect(page).to have_content("Map Imagery")
         expect(page).to have_css(".facets-item.selected")
       end

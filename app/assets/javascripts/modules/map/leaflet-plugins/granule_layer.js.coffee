@@ -199,7 +199,7 @@ ns.GranuleLayer = do (L
       else
         this._url = this._originalUrl || this._url;
         gibsUrl = L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
-        # Test configuration will not have the '//' substring 
+        # Test configuration will not have the '//' substring
         return gibsUrl if gibsUrl.lastIndexOf('//') == -1
         pos = gibsUrl.lastIndexOf('//');
         gibsUrl.substring(0,pos) + '/' + date + gibsUrl.substring(pos+1)
@@ -504,6 +504,7 @@ ns.GranuleLayer = do (L
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
           if bounds?.isValid() && !@_map.getBounds().contains(bounds)
+            console.warn 'bounds', bounds
             @_map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
 
       @_loadResults(@_results)

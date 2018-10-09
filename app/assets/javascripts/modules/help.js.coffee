@@ -270,6 +270,15 @@ ns = @edsc.models.page
   $(document).on 'ready', ->
     $('[id^="show-tour-"]').toggle(urlUtil.cleanPath()?.split('?')[0] in ["/search", "/", ""])
 
+  # TL: We can probably find a nicer way to handle this. Currently, just hiding the menu based on
+  # scroll position. Until we look at scrolling behavior on non-full-page pages, this should work fine
+  $ ()->
+    $('.main-content-scrollable').on 'scroll', (e) ->
+      if ($(e.target).scrollTop() > 20)
+        $('.toolbar-secondary').hide()
+        return
+      $('.toolbar-secondary').show()
+
   add = (key, options={}) ->
     unless tourRunning
       options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)

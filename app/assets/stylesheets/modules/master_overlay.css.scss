@@ -3,13 +3,17 @@
 
 // The container for the entire overlay
 .master-overlay {
-  color: #fff;
-
-  a {
-  }
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 
   // Non-scrollable header area
-  header {
+  .master-overlay-header {
     background: $master-overlay-info-bg-color;
     margin: 0;
     color: $overlay-heading-font-color;
@@ -27,15 +31,6 @@
     }
 
     h2 {
-      font-size: 1.2em;
-      margin: 0;
-      padding: 10px 20px;
-      font-weight: bold;
-
-      &.loading {
-        padding: 0;
-      }
-
       .collection-title-link {
         font-size: 0.8em;
         font-weight: normal;
@@ -68,46 +63,75 @@
         padding: 10px;
       }
     }
+  }
+}
 
-    &.tab {
-      background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
-      display: inline-block;
-      margin: 0;
-      padding: 10px 20px;
+.master-overlay-header-info {
+  display: -ms-flexbox;
+  display: flex;
+}
 
-      &:hover {
-        cursor: row-resize;
-      }
+.master-overlay-header-title {
+  font-size: 19px;
+  margin-bottom: 15px;
+}
 
-      h2 {
-        display: inline-block;
-        padding: 0;
-      }
+.master-overlay-header-row-item {
+  display: inline-block;
+}
+
+.master-overlay-nav {
+  position: absolute;
+  top: -48px;
+  left: 0;
+}
+
+.master-overlay-tab {
+  background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
+  display: block;
+  top: 0;
+  float: left;
+  margin-right: 3px;
+  padding: 10px 20px;
+  height: 48px;
+
+  &.is-interactive {
+    .master-overlay-tab-handle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 10px;
+      width: 100%;
+      cursor: row-resize;
     }
   }
+
+  .is-master-overlay-parent-hidden & {
+    left: 62px;
+  }
+}
+
+.master-overlay-tab-title {
+  display: inline-block;
+  padding: 0;
+  font-size: 19px;
 }
 
 .master-overlay-hide-self {
   display: none;
 }
 
-.master-overlay-nav {
-  padding: 12px 20px 10px 20px;
-  background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
-  display: inline-block;
-  font-size: 1.2em;
-
-  &:hover {
-    cursor: row-resize;
-  }
-}
-
 // A parent panel for the overlday.  For instance, collection facets are a parent
 // panel to collection search results
 .master-overlay-parent {
-  background-color: $master-overlay-parent-bg-color;
+  position: relative;
+  -ms-flex: 0 0 auto;
+  flex-grow: 0;
+  flex-shrink: 0;
   width: $facet-overlay-width;
-  left: 0;
+  height: 100%;
+  background-color: $master-overlay-parent-bg-color;
+  overflow: hidden;
 
   a {
     color: #fff;
@@ -131,15 +155,23 @@
 
 }
 
+.master-overlay-sidebar {
+  width: $facet-overlay-width;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
-  background-color: $master-overlay-main-bg-color;
-  width: 100%;
-  overflow: hidden;
-  bottom: 0;
+  flex-grow: 1;
   height: 50%;
+  width: 400%;
+  background-color: $master-overlay-main-bg-color;
   z-index: 60;
-  position: absolute;
   transition-property: left, width;
   transition-duration: 0.3s;
 
@@ -159,7 +191,7 @@
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
   background-color: $master-overlay-parent-bg-color;
-  left: 40%;
+  right: 0;
   /* JS: Temporary, ugly fix to prevent overlap */
   top: 100px;
   overflow: hidden;
@@ -193,21 +225,25 @@
   }
 }
 
+.master-overlay-secondary-nav {
+
+}
+
 .master-overlay-main-content {
+  position: relative;
+  height: 100%;
   width: 400%;
-  left: 0;
+  background-color: #fff;
+  transition-property: left;
+  transition-duration: 0.3s;
 
   section {
     height: 100%;
     width: 25%;
     float: left;
     position: relative;
-    padding-left: $facet-overlay-width;
 
     &.master-overlay-no-min {
-      background-image: asset-url('ecf0f1.png');
-      background-repeat: repeat-x;
-      background-position: 0 60px;
       padding-left: 0;
 
       h4 {
@@ -243,14 +279,11 @@
 
 .master-overlay-parent {
   z-index: 60;
-  position: absolute;
-  height: 100%;
   transition-property: left, width;
   transition-duration: 0.3s;
 }
 
 .master-overlay-main-content {
-  position: absolute;
   transition-property: left, width;
   transition-duration: 0.3s;
 }
@@ -261,6 +294,13 @@
 
 .master-overlay-parent {
   z-index: 130;
+}
+
+.master-overlay-content-wrapper {
+  display: -ms-flex;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .master-overlay-main {
@@ -284,11 +324,8 @@
   background: $master-overlay-info-bg-color;
   margin: 0;
   padding: 0px 20px 0 20px;
+  padding: 20px;
   color: $overlay-heading-font-color;
-
-  > * {
-    display: inline-block;
-  }
 
   .granule-filter-link {
     text-decoration: underline;
@@ -349,14 +386,10 @@
   }
 }
 
-.is-master-overlay-maximized #collection-results .master-overlay-info {
-  padding: 20px;
-}
-
 .master-overlay-global-actions {
   display: inline-block;
   vertical-align: top;
-  width: 26%;
+  width: 28%;
 
   .add-to-project, .remove-from-project {
     font-size: 0.8em;
@@ -404,8 +437,9 @@
 
 // Scrollable content area
 .master-overlay-content {
+  -ms-flex: 1 1 auto;
+  flex-grow: 1;
   padding: 0;
-  height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 
@@ -490,7 +524,7 @@ a.master-overlay-show-parent {
   .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
     // JS: I know, I know... This needs to override any interact.js actions
-    top: 92% !important;
+    height: auto !important;
   }
 }
 
@@ -499,7 +533,7 @@ a.master-overlay-show-parent {
 }
 
 .is-master-overlay-parent-hidden {
-  .master-overlay-parent                { left:-$facet-overlay-width; }
+  .master-overlay-parent                { width: 0; }
   .master-overlay-main                  { left:0%; }
   .master-overlay-main-content section  { padding-left: 0; }
 }
