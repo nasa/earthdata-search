@@ -50,6 +50,20 @@ portals: &portals
     scripts:
       - edsc-portal.ornl.min.js
 
+  podaacdaac:
+    org: PO.DAAC
+    title: Search
+    params:
+      data_center:
+        - PODAAC
+    logos:
+      - id: podaac-logo
+        image: /images/portals/podaac/podaac-logo-mono.png
+        link: https://podaac.jpl.nasa.gov
+        title: PO.DAAC Home
+    scripts:
+      - edsc-portal.podaac.js
+
   cwic:
     org: CWIC
     title: Search
