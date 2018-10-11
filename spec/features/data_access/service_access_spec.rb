@@ -8,7 +8,7 @@ describe 'Services Access', reset: false, pending_updates: true do
   serviceable_collection_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
   disabled_serviceable_collection_id = 'C128599377-NSIDC_ECS'
 
-  context 'when viewing data access with a collection that is not configured for ESI processing' do
+  context 'when viewing data access with a collection that is not configured for ESI processing', single_granule: true do
     before :all do
       Capybara.reset_sessions!
       load_page :search, focus: disabled_serviceable_collection_id
@@ -48,7 +48,7 @@ describe 'Services Access', reset: false, pending_updates: true do
     end
   end
 
-  context 'when viewing data access with a SMAP collection that is capable of zone subsetting' do
+  context 'when viewing data access with a SMAP collection that is capable of zone subsetting', single_granule: true do
     before :all do
       Capybara.reset_sessions!
       load_page :search, focus: smap_collection_id

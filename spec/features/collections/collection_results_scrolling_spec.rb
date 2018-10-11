@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection results scrolling', reset: false do
+describe 'Collection results scrolling', reset: false, data_specific: true do
   before :all do
     load_page :search, q: 'AQUARIUS_SAC-D AS'
     Capybara::Screenshot.screenshot_and_open_image

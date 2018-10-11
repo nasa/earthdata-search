@@ -24,5 +24,4 @@ describe 'Invalid user token', reset: false do
       expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)'
     end
   end
-
 end

@@ -348,7 +348,6 @@ describe 'Address bar', reset: false do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
       wait_for_xhr
 
-
       first_collection_result.click
       wait_for_xhr
 
@@ -380,34 +379,6 @@ describe 'Address bar', reset: false do
     end
   end
 
-  pending "setting granule query conditions within the project" do
-    before(:all) do
-      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
-      wait_for_xhr
-
-      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
-      check "Find only granules that have browse images."
-
-      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
-      select 'Day only', from: "day-night-select"
-
-      find_by_id('granule-search').click_on 'close'
-      first_project_collection.click_link 'View collection details'
-      wait_for_xhr
-
-      expect(page).to have_visible_collection_details
-    end
-
-    it "saves the query conditions in the URL" do
-      expect(page).to have_path('/search/project/collection-details')
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS&pg[1][bo]=true&pg[2][dnf]=DAY')
-    end
-
-    it "does not duplicate the query conditions for the focused collection" do
-      expect(page.current_url).not_to include('pg[0][bo]')
-    end
-  end
-
   context "setting granule query conditions when the focused collection is not the project" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
@@ -425,21 +396,6 @@ describe 'Address bar', reset: false do
     it "includes query conditions for the focused collection" do
       expect(page.current_url).to include('pg[0][bo]')
     end
-  end
-
-  pending "loading a URL with saved query conditions" do
-    before :all do
-      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS!C179002883-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
-      wait_for_xhr
-    end
-
-    it "restores the granule query conditions" do
-      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
-      expect(page).to have_checked_field 'Find only granules that have browse images.'
-      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
-      expect(page).to have_select 'day-night-select', selected: 'Day only'
-    end
-
   end
 
   # TODO: RDA // Map Zooming fails for unknown reasons potentially related to QT

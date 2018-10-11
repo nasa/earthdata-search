@@ -16,6 +16,7 @@ describe 'When viewing the project page with an EGI supported collection', reset
       collection_card = find('.collection-card', match: :first)
 
       collection_card.find('.edit').click
+      wait_for_xhr
     end
 
     it 'displays the customization modal' do

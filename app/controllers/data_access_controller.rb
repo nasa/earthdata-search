@@ -24,21 +24,6 @@ class DataAccessController < ApplicationController
     end
   end
 
-  def configure
-    metrics_event('retrieve', {step: 'configure'})
-    @back_path = request.query_parameters['back']
-    if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
-      @back_path = '/search/collections'
-    end
-
-    #This block removes the granule filter per EDSC-1214
-    @paramsWithoutGranuleFilter = request.query_string
-    params = CGI.parse(@paramsWithoutGranuleFilter)
-    params.delete('sgd')
-    @paramsWithoutGranuleFilter = URI.encode_www_form(params).to_s
-    @paramsWithoutGranuleFilter = URI.unescape(@paramsWithoutGranuleFilter)
-  end
-
   def retrieve
     # TODO PQ EDSC-1039: Store portal information here
     user = current_user
