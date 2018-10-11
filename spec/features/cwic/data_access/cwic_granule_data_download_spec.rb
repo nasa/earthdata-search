@@ -10,7 +10,7 @@ describe "CWIC-enabled data access", reset: false do
     ac: true
   }
 
-  context "When configuring data access for a CWIC-tagged collection" do
+  context "When configuring data access for a CWIC-tagged collection", pending_updates: true do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
@@ -27,7 +27,7 @@ describe "CWIC-enabled data access", reset: false do
     end
   end
 
-  context "When choosing to download data for a CWIC-tagged collection" do
+  context "When choosing to download data for a CWIC-tagged collection", edit_options: true  do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
@@ -64,7 +64,7 @@ describe "CWIC-enabled data access", reset: false do
     end
   end
 
-  context "choosing to download data for single CWIC-tagged granule" do
+  context "choosing to download data for single CWIC-tagged granule", single_granule: true  do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all

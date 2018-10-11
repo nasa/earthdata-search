@@ -1,4 +1,3 @@
-Cmep::Engine.load_seed if defined?(Cmep)
 load_extra = CollectionExtra.maximum('updated_at').to_i < 1410364487
 !load_extra && puts('CollectionExtra seeds are already up-to-date')
 load_extra && puts('Loading CollectionExtra seeds')

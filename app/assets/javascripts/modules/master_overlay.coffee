@@ -241,8 +241,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         #   newHeight = granuleDetails.height() - granuleDetails.find('.master-overlay-nav').outerHeight() - granuleDetails.find('.master-overlay-info').outerHeight() - granuleDetails.find('header').outerHeight() - $('#granule-details-nav').outerHeight()
         #   granuleDetails.find(@scope('.content')).height(newHeight)
 
-
-
         null), 0)
 
   $document = $(document)

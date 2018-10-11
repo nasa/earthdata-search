@@ -8,11 +8,11 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Echo-Token:
-      - edsc
-  recorded_at: Tue, 13 Mar 2018 03:48:11 GMT
-  digest: e1ca5c2e3205294c55a5d1e1651cf481b2b054b0
+      - edsc-access
+  recorded_at: Tue, 02 Oct 2018 03:07:29 GMT
+  digest: b1d37047688fe9871e25fcda472f73fcc1280300
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc
@@ -21,11 +21,11 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 08 Aug 2018 17:10:48 GMT
-  digest: 14a770065262b6ba3494b63e42c1ce3ffff682ab
+      - edsc-access
+  recorded_at: Tue, 02 Oct 2018 03:06:19 GMT
+  digest: 80347fab88d9bd8bd181e77810a8361fdabbb038
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/users/edsc
@@ -34,9 +34,9 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 08 Aug 2018 17:40:57 GMT
-  digest: b0b6fd35372f773c5827d098850d22117f845a74
+      - edsc-access
+  recorded_at: Tue, 02 Oct 2018 03:11:18 GMT
+  digest: 92a7ee2396a331c4e81c37a3f56d935215aa2c22
 recorded_with: VCR 2.6.0

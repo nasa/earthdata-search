@@ -20,39 +20,6 @@ describe "Project collection color coding", reset: false do
     leave_granule_results
   end
 
-  pending 'in the project view' do
-    before :all do
-      first_collection_result.click_link "Add collection to the current project"
-      second_collection_result.click_link "Add collection to the current project"
-      find("#view-project").click
-    end
-
-    after :all do
-      reset_overlay
-      reset_project
-    end
-
-    it 'shows a color indicator on each collection in the project list' do
-      expect(first_project_collection).to have_css("*[style*=\"#{first_color_rgb}\"]")
-      expect(second_project_collection).to have_css("*[style*=\"#{second_color_rgb}\"]")
-    end
-
-    it 'draws timeline data with the color corresponding to each collection' do
-      expect(page.find('#timeline .C179003030-ORNL_DAAC')).to have_css("rect[style*=\"#{first_color_hex}\"]")
-      expect(page.find('#timeline .C179002914-ORNL_DAAC')).to have_css("rect[style*=\"#{second_color_hex}\"]")
-    end
-
-    context 'viewing granules for a collection' do
-      before(:all) { view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview') }
-      after(:all) { leave_granule_results('project-overview') }
-
-      it 'draws granule footprints with the color corresponding the collection' do
-        map_mousemove('#map', 39.1, -96.6)
-        expect(page).to have_selector(".leaflet-overlay-pane path[stroke=\"#{first_color_hex}\"]")
-      end
-    end
-  end
-
   context 'viewing collection results' do
     it 'shows no color indicator' do
       expect(first_collection_result).to have_no_css("*[style*=\"#{first_color_rgb}\"]")

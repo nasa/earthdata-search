@@ -96,17 +96,6 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
     _reloadFromSaved: (echoformContainer, checkedAccessMethod) =>
       ko.applyBindingsToNode(echoformContainer, {echoform: checkedAccessMethod})
 
-
-    submitRequest: =>
-      $('.access-submit').prop('disabled', true)
-      if @needsContactInfo() && @accountForm.isEditingNotificationPreference()
-        @accountForm.saveAccountEdit =>
-          @downloadProject()
-        # re-enable button if saveAccountEdit fails
-        $('.access-submit').prop('disabled', false)
-      else
-        @downloadProject()
-
     showGranuleList: =>
       @showGranules(true)
       @currentCollection().notifyRenderers('startAccessPreview')
@@ -120,11 +109,6 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         collection = @project.accessCollections()[@activeIndex()].collection
         collection.granuleDatasource().data().loadNextPage()
-
-    downloadProject: ->
-      $project = $('#data-access-project')
-      $project.val(JSON.stringify(@project.serialize()))
-      $('#data-access').submit()
 
     currentCollection: ->
       @project.accessCollections()[@activeIndex()].collection

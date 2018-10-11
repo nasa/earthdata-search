@@ -465,7 +465,6 @@ class Retrieval < ActiveRecord::Base
       # service_url = nil
 
       # Sets the `X-EDSC-REQUEST` header
-      # header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
       header_value = '1'
 
       # First attempt to retrieve all the orders at once

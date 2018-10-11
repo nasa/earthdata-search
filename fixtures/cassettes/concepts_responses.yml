@@ -10,11 +10,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - fcd57bee-8525-44c5-bbaf-1cd614fdc7b3
+      - a0742227-5868-4429-a63f-eaf6482b305a
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:59:24 GMT
+      - Tue, 02 Oct 2018 03:20:15 GMT
       server:
       - nginx
       strict-transport-security:
@@ -70,11 +70,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 0e424c94-8c71-4448-97b5-e612447a5e57
+      - c5f5aa31-72d8-4029-b0ef-0f515b5edecb
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:59:53 GMT
+      - Tue, 02 Oct 2018 03:22:29 GMT
       server:
       - nginx
       strict-transport-security:
@@ -122,11 +122,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - a69276c3-0342-46f2-8593-c35a97456a87
+      - 63141c4e-b692-4ddd-bf5e-d18e27dc025c
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:58:58 GMT
+      - Tue, 02 Oct 2018 03:22:39 GMT
       server:
       - nginx
       strict-transport-security:
@@ -167,11 +167,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 354452b2-5134-4606-9ae8-d7e2fbf9be89
+      - af2b3162-ee81-412f-a2d2-8226203842cd
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:03:00 GMT
+      - Tue, 02 Oct 2018 03:00:45 GMT
       server:
       - nginx
       strict-transport-security:
@@ -303,11 +303,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 113fd09e-8e81-40b9-b460-d039d298d031
+      - 2c51a198-8b50-4a11-8120-1ec9d0a1754c
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:53 GMT
+      - Tue, 02 Oct 2018 03:04:40 GMT
       server:
       - nginx
       strict-transport-security:
@@ -413,11 +413,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - fc721299-6ad0-42a3-8ef4-1660fef0bf05
+      - 7edf19af-43e5-494d-ab19-7f9ef3fbc2ac
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:45 GMT
+      - Tue, 02 Oct 2018 03:03:16 GMT
       server:
       - nginx
       strict-transport-security:
@@ -507,11 +507,11 @@
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 75004e23-1797-4295-9207-c4fb5dda8813
+      - fbcab114-8ae5-4755-aae9-ce4199a18679
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:59 GMT
+      - Tue, 02 Oct 2018 03:04:56 GMT
       server:
       - nginx
       strict-transport-security:
@@ -566,11 +566,11 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 0be47fcc-e9be-4b71-8477-ca35d85659f6
+      - f1a33c55-f706-4fe7-96b0-dc2b7f7b0d4a
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:02:29 GMT
+      - Tue, 02 Oct 2018 03:11:22 GMT
       server:
       - nginx
       strict-transport-security:
@@ -667,11 +667,11 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - c42fab23-eaf0-461e-8fe7-0f0590286166
+      - d4cce725-f2f7-4253-bc0c-402d119e83d8
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:46 GMT
+      - Tue, 02 Oct 2018 03:04:19 GMT
       server:
       - nginx
       strict-transport-security:
@@ -728,11 +728,11 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 7f9fded9-3c84-4692-a334-8d5a264a27dd
+      - b4c9d863-7a0b-41e5-883e-77b611463596
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:27 GMT
+      - Tue, 02 Oct 2018 03:03:54 GMT
       server:
       - nginx
       strict-transport-security:
@@ -740,7 +740,7 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       vary:
       - Accept-Encoding, User-Agent
       content-length:
-      - '2888'
+      - '2901'
       connection:
       - Close
     body:
@@ -748,7 +748,7 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
       string: '{"CollectionCitations":[{"Creator":"MODIS Science Team","ReleasePlace":"MODAPS
         at NASA/GSFC","Title":"MODIS/Terra Aerosol 5-Min L2 Swath 10km","OnlineResource":{"Linkage":"https://dx.doi.org/10.5067/MODIS/MOD04_L2.061"},"Publisher":"L1
         and Atmosphere Archive and Distribution System (LAADS)","ReleaseDate":"2017-10-01T00:00:00.000Z","Version":"6.1"}],"LocationKeywords":[{"Category":"GEOGRAPHIC
-        REGION","Type":"GLOBAL"}],"MetadataDates":[{"Date":"2017-12-13T00:00:00.000Z","Type":"CREATE"},{"Date":"2017-12-13T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Terra
+        REGION","Type":"GLOBAL"}],"MetadataDates":[{"Date":"2017-12-13T00:00:00.000Z","Type":"CREATE"},{"Date":"2018-09-26T00:00:00.000Z","Type":"UPDATE"}],"VersionDescription":"Terra
         MODIS Version 6.1 Data Collection Processing and  Reprocessing","ISOTopicCategories":["CLIMATOLOGY/METEOROLOGY/ATMOSPHERE"],"ShortName":"MOD04_L2","Abstract":"The
         MODIS/Terra Aerosol 5-Min L2 Swath 10km (MOD04_L2) product provides full global
         coverage of aerosol properties from the Dark Target (DT) and Deep Blue (DB)
@@ -775,13 +775,13 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
         RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://modis-atmos.gsfc.nasa.gov/products/aerosol"},{"Description":"Search
         and order products from LAADS website.","URLContentType":"DistributionURL","Type":"GET
         DATA","Subtype":"LAADS","URL":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"Description":"Direct
-        access to MOD04_L2 C6.1 data set.","URLContentType":"DistributionURL","Type":"GET
-        DATA","Subtype":"ON-LINE ARCHIVE","URL":"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD04_L2/"}],"DataDates":[{"Date":"2017-10-01T00:00:00.000Z","Type":"CREATE"}],"ContactPersons":[{"Roles":["Metadata
+        access to MOD04_L2 C6.1 data set.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD04_L2/"}],"DataDates":[{"Date":"2017-10-01T00:00:00.000Z","Type":"CREATE"}],"ContactPersons":[{"Roles":["Metadata
         Author"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"}]},"FirstName":"ASAD","LastName":"ULLAH"}],"AccessConstraints":{"Description":"None"},"SpatialExtent":{"HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"GEODETIC"},"ContactGroups":[{"Roles":["Technical
         Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
         toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
         User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
-        USER SUPPORT TEAM"}],"AdditionalAttributes":[{"ParameterRangeBegin":"-1e-06","Name":"SuccessfulRetrievalPct_Land","Description":"None","ParameterRangeEnd":"100.000001","DataType":"FLOAT"},{"ParameterRangeBegin":"-1e-06","Name":"SuccessfulRetrievalPct_Ocean","Description":"None","ParameterRangeEnd":"100.000001","DataType":"FLOAT"},{"Group":"gov.nasa.gsfc.gcmd","Value":"2017-12-13:docbuilder","Name":"metadata.tool","Description":"Not
+        USER SUPPORT TEAM"}],"AdditionalAttributes":[{"ParameterRangeBegin":"-1e-06","Name":"SuccessfulRetrievalPct_Land","Description":"None","ParameterRangeEnd":"100.000001","DataType":"FLOAT"},{"ParameterRangeBegin":"-1e-06","Name":"SuccessfulRetrievalPct_Ocean","Description":"None","ParameterRangeEnd":"100.000001","DataType":"FLOAT"},{"Group":"gov.nasa.gsfc.gcmd","Value":"2017-12-13:docbuilder;2018-09-26:docbuilder","Name":"metadata.tool","Description":"Not
         provided","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
         BACKSCATTER"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
         EXTINCTION"},{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"AEROSOLS","VariableLevel1":"AEROSOL
@@ -802,35 +802,35 @@ dcf4934db376f601d6711b1d6215ecd1c25ce8a4:
         RADIATION","VariableLevel1":"REFLECTANCE"}],"Quality":"See https://modaps.nascom.nasa.gov/services/qa/","EntryTitle":"MODIS/Terra
         Aerosol 5-Min L2 Swath 10km","Distributions":[{"DistributionMedia":"Online
         (HTTPS)","DistributionFormat":"HDF-EOS","Fees":"No Fee"}],"CollectionProgress":"ACTIVE","CollectionDataType":"SCIENCE_QUALITY","UseConstraints":{"Description":{"Description":"None"}},"ProcessingLevel":{"Id":"2"},"Platforms":[{"Type":"Earth
-        Observation Satellites","ShortName":"TERRA","LongName":"Earth Observing System,
-        TERRA (AM-1)","Characteristics":[{"Name":"EquatorCrossingTime","Description":"Local
+        Observation Satellites","ShortName":"Terra","LongName":"Earth Observing System,
+        Terra (AM-1)","Characteristics":[{"Name":"EquatorCrossingTime","Description":"Local
         time of the equator crossing and direction (ascending or descending)","Value":"10:30,
         descending","Unit":"Local Mean Time","DataType":"STRING"}],"Instruments":[{"ShortName":"MODIS","LongName":"Moderate-Resolution
-        Imaging Spectroradiometer","Technique":"Imaging Spectroradiometry"}]}],"Projects":[{"ShortName":"TERRA","LongName":"Earth
-        Observing System (EOS), TERRA"}],"Version":"6.1","TemporalExtents":[{"PrecisionOfSeconds":1,"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2000-02-24T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ORIGINATOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS","LongName":"MODIS
+        Imaging Spectroradiometer","Technique":"Imaging Spectroradiometry"}]}],"Projects":[{"ShortName":"Terra","LongName":"Earth
+        Observing System (EOS), Terra"}],"Version":"6.1","TemporalExtents":[{"PrecisionOfSeconds":1,"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2000-02-24T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ORIGINATOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS","LongName":"MODIS
         Adaptive Processing System, Biospheric Information Systems Branch, Hydrospheric
         and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration
         Directorate, Goddard Space Flight Center, NASA","ContactGroups":[{"Roles":["Data
         Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
-        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
-        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
-        USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        toll free","Value":"800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"United
+        States","PostalCode":"20771"}]},"GroupName":"MODAPS USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
         PAGE","URL":"https://modaps.nascom.nasa.gov/"}]}},{"Roles":["PROCESSOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS","LongName":"MODIS
         Adaptive Processing System, Biospheric Information Systems Branch, Hydrospheric
         and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration
         Directorate, Goddard Space Flight Center, NASA","ContactGroups":[{"Roles":["Data
         Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
-        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
-        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
-        USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        toll free","Value":"800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"United
+        States","PostalCode":"20771"}]},"GroupName":"MODAPS USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
         PAGE","URL":"https://modaps.nascom.nasa.gov/"}]}},{"Roles":["DISTRIBUTOR"],"ShortName":"NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","LongName":"L1
         and Atmosphere Archive and Distribution System,Biospheric Information Systems
         Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division,
         Science and Exploration Directorate, Goddard Space Flight Center, NASA","ContactGroups":[{"Roles":["Data
         Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"MODAPSUSO@lists.nasa.gov"},{"Type":"U.S.
-        toll free","Value":"1-800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
-        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"GroupName":"MODAPS
-        USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        toll free","Value":"800-596-8132"},{"Type":"Fax","Value":"301-794-7035"}],"Addresses":[{"StreetAddresses":["MODAPS
+        User Support Team","NASA/GSFC","Mail Code: 619"],"City":"Greenbelt","StateProvince":"MD","Country":"United
+        States","PostalCode":"20771"}]},"GroupName":"MODAPS USER SUPPORT TEAM"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
         PAGE","URL":"https://ladsweb.modaps.eosdis.nasa.gov/"}]}}],"DataLanguage":"eng"}'
     http_version: 
 b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
@@ -844,11 +844,11 @@ b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 07a1b86e-f28f-4532-8be7-f2e097ce9fcc
+      - dd97145a-2bbf-4263-a43b-2232d5741470
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:59:23 GMT
+      - Tue, 02 Oct 2018 03:19:06 GMT
       server:
       - nginx
       strict-transport-security:
@@ -905,11 +905,11 @@ b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - f1f544b6-7988-4d2b-81ad-09c62386f553
+      - 14af995c-ded1-4472-a883-2130e7302a99
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:00:37 GMT
+      - Tue, 02 Oct 2018 03:22:07 GMT
       server:
       - nginx
       strict-transport-security:
@@ -956,11 +956,11 @@ b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 4082803b-abe6-4722-83d2-8cc98076fa70
+      - 34169fea-878f-4702-aa32-bf4680afce93
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:00:45 GMT
+      - Tue, 02 Oct 2018 03:21:57 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1001,11 +1001,11 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 6c2cee8f-5c1f-42c7-9fe0-af588798d7f1
+      - 2d2280f0-83f4-4b72-a87d-e938c493a300
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:03:16 GMT
+      - Tue, 02 Oct 2018 03:02:45 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1205,11 +1205,11 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - a0191429-1690-424f-9d1d-a11400657ad5
+      - 9e60e955-30dd-4d1a-9e51-7225cf0b7cbf
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:59:48 GMT
+      - Tue, 02 Oct 2018 03:20:14 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1250,11 +1250,11 @@ dcd4943d49f65312dc70e2c1a641c786ee8224c1:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 1aacfdc6-c38b-4083-a159-10b9e6263e18
+      - 21342407-de67-4d45-b86b-c4c8578a8911
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:58:59 GMT
+      - Tue, 02 Oct 2018 03:22:42 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1292,11 +1292,11 @@ dcd4943d49f65312dc70e2c1a641c786ee8224c1:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 31908e47-4494-45e1-8f30-738e8686fe80
+      - dc4b49fc-9b66-4444-8aa1-c8de0201cabf
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:59:05 GMT
+      - Tue, 02 Oct 2018 03:21:21 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1334,11 +1334,11 @@ dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 5538df5d-0139-4cfd-a94f-d0edcefb11c2
+      - 264b1c50-85c0-437c-9e6b-347e9822ae0e
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:00:39 GMT
+      - Tue, 02 Oct 2018 03:22:28 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1366,39 +1366,6 @@ dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5:
         Yale Center for Environmental Law and Policy (YCELP) and the Columbia University
         Center for International Earth Science Information Network (CIESIN).","time_end":"2009-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179002147-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/epi/epi-environmental-performance-index-2010/sedac-logo.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.7927/H4D21VHT"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/maps/services"}]}'
     http_version: 
-646ffaf1187db328f7f13ee0b27e85a6e31a2846:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      access-control-expose-headers:
-      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
-      cmr-request-id:
-      - fda8299f-c5e8-48a4-99d9-cd8a76acdb13
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Tue, 18 Sep 2018 15:55:52 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      vary:
-      - Accept-Encoding, User-Agent
-      content-length:
-      - '632'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"processing_level_id":"3","boxes":["39.08 -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
-        Minute Rainfall Data (FIFE)","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"FIFE_RAIN_30M_2","organizations":["ORNL_DAAC"],"title":"30
-        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
-        minute rainfall data for the Konza Prairie","time_end":"1987-10-26T23:59:59.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/document/sur_met/30_Min_Rain_Data.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/document/sur_met/rain_30m.doc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/data/sur_met/rain_30m/rain_30m.tdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://daac.ornl.gov/graphics/browse/project/FIFE_logo.gif"}]}'
-    http_version: 
 2ff448391cfe53b4e5fe0b03a38050d7adfd7227:
   response:
     status:
@@ -1410,11 +1377,11 @@ dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - ea2b768e-a2ac-4074-8f25-69910a58c487
+      - 78a53fcf-a85f-486b-9eb9-008afab19508
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:33 GMT
+      - Tue, 02 Oct 2018 03:25:17 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1464,11 +1431,11 @@ dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 89d17347-9180-400a-b8b0-3cd67d5e09d6
+      - 9e38a976-4fab-408d-bd11-3731988e053f
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:58:55 GMT
+      - Tue, 02 Oct 2018 03:17:20 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1498,11 +1465,11 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 856fd0ec-2e21-49c2-adf0-5999efa51108
+      - d5da066f-8d9e-4149-a6cc-c121e3647b9d
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:07:28 GMT
+      - Tue, 02 Oct 2018 03:13:56 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1557,11 +1524,11 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 81b05336-c62c-453f-9761-78b1ec3036ea
+      - f0b9e43e-e4bf-4422-9665-c8e4f52dae2a
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:06:38 GMT
+      - Tue, 02 Oct 2018 03:05:16 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1623,11 +1590,11 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - d1834c31-fe7d-4049-b888-4605ea838971
+      - 0b252b61-7ef1-46ce-9c0e-8113e0c8c445
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:02:14 GMT
+      - Tue, 02 Oct 2018 02:55:28 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1788,11 +1755,11 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 48293973-74b2-45df-8123-b26232159a8f
+      - c3ac71c5-d802-4468-92f3-b0ed427fd0d7
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:20:02 GMT
+      - Tue, 02 Oct 2018 03:04:29 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1901,7 +1868,7 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
         States","City":"Pasadena","StateProvince":"California"}],"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
         PAGE","URL":"https://asterweb.jpl.nasa.gov/"}]}}]}'
     http_version: 
-da6ab5963541d4440a731a75644d7764d654ec50:
+f004fe268be1e6f148f3c6086b446aea2ce52b33:
   response:
     status:
       code: 200
@@ -1912,62 +1879,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 4a64ae1b-ed5a-40b1-be35-5f5ee8b345b6
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Tue, 18 Sep 2018 15:59:02 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      vary:
-      - Accept-Encoding, User-Agent
-      content-length:
-      - '1373'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2002-07-04T00:00:00.000Z","dif_ids":["MYD021KM_6"],"version_id":"6","dataset_id":"MODIS/Aqua
-        Calibrated Radiances 5-Min L1B Swath 1km V006","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LAADS","short_name":"MYD021KM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
-        Calibrated Radiances 5-Min L1B Swath 1km V006","coordinate_system":"CARTESIAN","summary":"The
-        MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km (MYD021KM) product contains
-        calibrated and geolocated at-aperture radiances for 36 discrete bands located
-        in the 0.4 to 14.4 micron region of electromagnetic spectrum. These data are
-        generated from the MODIS Level 1A scans of raw radiance which during processing
-        converted to geophysical units of W/(m^2 um sr). In addition, the Earth Bi-directional
-        Reflectance Distribution Function (BRDF) may be determined for the solar reflective
-        bands (1-19, 26) through knowledge of the solar irradiance (e.g., determined
-        from MODIS solar diffuser data, and from the target illumination geometry).  Additional
-        data are provided including quality flags, error estimates and calibration
-        data.\n\nVisible, shortwave infrared, and near infrared measurements are only
-        made during the daytime, while radiances for the thermal infrared region (bands
-        20-25, 27-36) are measured continuously.\n\nThe Shortname for this product
-        is MYD021KM and is stored in the Earth Observing System Hierarchical Data
-        Format (HDF-EOS).\n\nEnvironmental information derived from MODIS L1B measurements
-        will offer a comprehensive and unprecedented look at terrestrial, atmospheric,
-        and ocean phenomenology for a wide and diverse community of users throughout
-        the world.\n\nSee the MODIS Characterization Support Team webpage for more
-        C6 product information at:\n\nhttps://mcst.gsfc.nasa.gov/l1b/product-information\n\n\nor
-        visit Science Team homepage at:\nhttps://modis.gsfc.nasa.gov/data/dataprod/","orbit_parameters":{},"id":"C203234523-LAADS","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ladsweb.modaps.eosdis.nasa.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/6/MYD021KM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://mcst.gsfc.nasa.gov/l1b/product-information"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://mcst.gsfc.nasa.gov/content/l1b-documents"}]}'
-    http_version: 
-692c88b531c4aff38c334bf523a6ba38a71c4c1f:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      access-control-expose-headers:
-      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
-      cmr-request-id:
-      - 0071ba58-acf7-42fc-9d73-78812f96802f
+      - 6fa0a098-bc69-4aa6-a764-1c93b2d40e64
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:28:37 GMT
+      - Tue, 02 Oct 2018 03:01:39 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2032,11 +1948,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 25d6f7f4-af58-4bac-838d-bea0782d7d69
+      - 69b997ec-3e93-4530-a082-f6ae879d94b7
       content-type:
       - application/echo10+xml; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:09:21 GMT
+      - Tue, 02 Oct 2018 03:12:55 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2154,11 +2070,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 01d28393-102a-44e8-b3aa-519b6a80be9a
+      - f21eda52-40ec-41cf-a238-c03f2239b95c
       content-type:
       - application/echo10+xml; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:02:51 GMT
+      - Tue, 02 Oct 2018 03:12:13 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2265,6 +2181,40 @@ da6ab5963541d4440a731a75644d7764d654ec50:
             <DataFormat>ascii</DataFormat>
         </Granule>
     http_version: 
+17b6efbd3ef4bcaeaa6544b36e59c46e3b9f38ff:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 162e68d2-b4b7-43c8-923b-5b8539185dd9
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 03 Oct 2018 00:39:37 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '608'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"005","updated":"2015-09-18T12:01:43.887Z","dataset_id":"MODIS/Terra+Aqua
+        Nadir BRDF-Adjusted Reflectance 16-Day L3 Global 500m SIN Grid V005","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"EDF_OPS","short_name":"MCD43A4","organizations":["EDF_OPS","LP
+        DAAC User Services","MODAPS","MODIS Science Data Support Team"],"title":"MODIS/Terra+Aqua
+        Nadir BRDF-Adjusted Reflectance 16-Day L3 Global 500m SIN Grid V005","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        plus Aqua Nadir BRDF-Adjusted Reflectance 16-Day L3 Global 500m SIN Grid","orbit_parameters":{},"id":"C1000000082-EDF_OPS","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/node/291"}]}'
+    http_version: 
 9b61b2cfbb56db28f1077948718b975326fc34b4:
   response:
     status:
@@ -2276,11 +2226,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - b9370a4d-8544-409d-ab36-7e5ad97d0407
+      - b1e4cfde-1214-49a9-a8d6-1d0f1ed405ae
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:03:29 GMT
+      - Tue, 02 Oct 2018 03:02:34 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2335,11 +2285,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - c1900d8c-3cb8-4ae6-8c5d-fa59be962ce5
+      - 9f219558-4cd7-4338-969d-1eb8e30c153e
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:02:29 GMT
+      - Tue, 02 Oct 2018 03:17:32 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2369,11 +2319,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 7a52d28d-4817-4208-a49c-c3f5e2ba71f5
+      - 54628115-efa5-42ea-bf48-e3c8df05fef4
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:57:51 GMT
+      - Tue, 02 Oct 2018 03:04:51 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2405,11 +2355,11 @@ da6ab5963541d4440a731a75644d7764d654ec50:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 4fe4d5be-ce39-453b-b6e4-8c4ac491ea1c
+      - c0669e88-b7a6-417f-bc98-15263be1d093
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 15:58:45 GMT
+      - Tue, 02 Oct 2018 03:17:16 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2470,11 +2420,11 @@ d310609ffc896f5e046bb27739bcca14b58d48a1:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 56f33b48-0144-4e66-9c8e-cb89e7dafbbe
+      - 618db402-d072-49e3-9a47-f7e5e7c8dfd7
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:18:07 GMT
+      - Tue, 02 Oct 2018 03:04:23 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2551,11 +2501,11 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 646e4508-c8e8-4fb1-b113-9b1708d760ce
+      - 99a81fdb-eb97-4c97-b55c-57e15250724a
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:56 GMT
+      - Tue, 02 Oct 2018 03:03:58 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2622,11 +2572,11 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - b9794a09-dc7f-47c8-a190-377547aa5d61
+      - 803fccc8-18ad-48ed-8f7c-63a9b5bc11d6
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:17:50 GMT
+      - Tue, 02 Oct 2018 03:18:41 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2644,41 +2594,6 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
         Vegetation Indices 16-Day L3 Global 250m SIN Grid V006","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
         Vegetation Indices 16-Day L3 Global 250m SIN Grid","orbit_parameters":{},"id":"C1200240776-DEV08","has_formats":false,"original_format":"UMM_JSON","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://dx.doi.org/10.5067/MODIS/MOD13Q1.006"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/"}]}'
     http_version: 
-4adefddee1dba155da691483d8d84ecbe7f03299:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      access-control-expose-headers:
-      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
-      cmr-request-id:
-      - b5923b90-c8e3-468a-b4fe-c27bf7f38a2d
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Tue, 18 Sep 2018 16:02:42 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      vary:
-      - Accept-Encoding, User-Agent
-      content-length:
-      - '554'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"processing_level_id":"1B","time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
-        Calibrated Radiances 5-Min L1B Swath 250m V005","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LAADS","short_name":"MOD02QKM","organizations":["LAADS","MODIS
-        Science Data Support Team","MODAPS"],"title":"MODIS/Terra Calibrated Radiances
-        5-Min L1B Swath 250m V005","summary":"This Level 1B collection contains calibrated
-        and geolocated radiances at-aperture for MODIS spectral bands 1 and 2 at 250m
-        resolution.","orbit_parameters":{},"id":"C24933-LAADS","has_formats":false,"original_format":"ECHO10","archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://www.mcst.ssai.biz/mcstweb/L1B/product.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://www.mcst.ssai.biz/mcstweb/L1B/product.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://www.mcst.ssai.biz/mcstweb/performance/terra_instrument.html"}]}'
-    http_version: 
 490926cf2d696f1eadf74beb0f30054ce8a2bedd:
   response:
     status:
@@ -2690,11 +2605,11 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 5d25de64-426d-4c03-b207-b8d808e82342
+      - e571acd5-176b-477b-bc1e-f0d0eff87234
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:02:57 GMT
+      - Tue, 02 Oct 2018 03:00:50 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2734,6 +2649,42 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
         for format/distribution issues.","ContactMechanisms":[{"Type":"Telephone","Value":"301-352-2144"},{"Type":"Email","Value":"laadshelp@listserv.gsfc.nasa.gov"}],"Addresses":[{"StreetAddresses":["7501
         Forbes Blvd, Suite 103"],"City":"Seabrook","StateProvince":"MD","Country":"USA","PostalCode":"20706"}]}}]}'
     http_version: 
+254b5987b40324f51db960f7b732ebf3e27bbfd5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 5a1ff42a-4acb-4fa7-8563-03dcef1e1d26
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 02 Oct 2018 20:45:34 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '707'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","version_id":"002","updated":"2014-05-14T14:47:05.109Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"EDF_OPS","short_name":"AE_5DSno","organizations":["EDF_OPS","NASA
+        DAAC at the National Snow and Ice Data Center","AMSR-E SIPS-GHCC"],"title":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","coordinate_system":"CARTESIAN","summary":"The
+        AMSR-E/Aqua Level-3 5-day snow water equivalent (SWE) product includes global
+        5-day maximum SWE on Northern and Southern Hemisphere 25 km EASE-Grids, generated
+        by the GSFC algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1216127793-EDF_OPS","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+    http_version: 
 020fee1d7a7c4d91cee00e6fdbfafd19a33ce183:
   response:
     status:
@@ -2745,11 +2696,11 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
       access-control-expose-headers:
       - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
       cmr-request-id:
-      - 4998e4cf-b476-4ffa-9a25-f5ac56e382d6
+      - c6c54aae-c301-4219-89ae-8c87eb833b69
       content-type:
       - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
       date:
-      - Tue, 18 Sep 2018 16:19:52 GMT
+      - Tue, 02 Oct 2018 03:04:27 GMT
       server:
       - nginx
       strict-transport-security:
@@ -2787,44 +2738,4 @@ e4ff01a1c2f2cff9169bb57b7ea1e6eea232d097:
         Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001","CollectionProgress":"ACTIVE","ProcessingLevel":{"Id":"Not
         provided"},"Platforms":[{"ShortName":"Not provided"}],"Version":"001","TemporalExtents":[{"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"2015-03-31T00:00:00.000Z","EndingDateTime":"2020-12-31T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["DISTRIBUTOR","ARCHIVER"],"ShortName":"EDF_OPS"},{"Roles":["PROCESSOR"],"ShortName":"Jet
         Propulsion Laboratory"}],"DataLanguage":"eng"}'
-    http_version: 
-caadecaf98c2f568436955dafb6fd5633a4c0982:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      access-control-expose-headers:
-      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
-      cmr-request-id:
-      - 6fcc4ecb-72af-4682-bb94-4c2e88611f31
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Tue, 18 Sep 2018 16:13:39 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      vary:
-      - Accept-Encoding, User-Agent
-      content-length:
-      - '986'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1860-01-01T00:00:00.000Z","version_id":"1","updated":"2006-04-14T00:00:00.000Z","dataset_id":"Global
-        Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"1860_1993_2050_NITROGEN_830","organizations":["ORNL_DAAC"],"title":"Global
-        Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050","coordinate_system":"CARTESIAN","summary":"This
-        data set provides global gridded estimates of atmospheric deposition of total
-        inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of
-        nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and
-        projections for the year 2050. The data set was generated using a global three-dimensional
-        chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude
-        by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000).
-        Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario
-        data (IPCC, 1996; 2000) were used as input to the model.","time_end":"2050-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C447308-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/830"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://webmap.ornl.gov/sdat/pimg/830_1_fit.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830"}]}'
     http_version: 
