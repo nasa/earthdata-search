@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Collection results scrolling', reset: false do
   before :all do
     load_page :search, q: 'AQUARIUS_SAC-D AS'
+    Capybara::Screenshot.screenshot_and_open_image
   end
 
   context 'when scrolling to load a new page' do
@@ -23,7 +24,7 @@ describe 'Collection results scrolling', reset: false do
 
           page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 30000"
           wait_for_xhr
-          
+
           page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 40000"
           wait_for_xhr
         end
