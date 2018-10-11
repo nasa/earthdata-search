@@ -19,9 +19,15 @@ if ENV['driver'] == 'poltergeist'
   Capybara.javascript_driver = :poltergeist
   Capybara.default_driver = :poltergeist
 else
-  require 'capybara-webkit'
-  Capybara.javascript_driver = :webkit
-  Capybara.default_driver = :webkit
+  require 'selenium-webdriver'
+  Capybara.register_driver :selenium do |app|
+    options = Selenium::WebDriver::Chrome::Options.new(
+      args: %w[headless disable-gpu no-sandbox remote-debugging-port=9222]
+    )
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
+  Capybara.javascript_driver = :selenium
+  Capybara.default_driver = :selenium
 end
 
 # Avoid appending screenshot paths in CI environments, since it messes with repeat failure detection
