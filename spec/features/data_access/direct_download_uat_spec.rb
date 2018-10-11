@@ -5,12 +5,13 @@ describe 'Direct download script UAT', reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false, env: :uat
+      
       login
-      load_page 'data/configure', env: :uat, project: ['C447308-ORNL_DAAC']
+
+      load_page 'projects/new', env: :uat, project: ['C1216127793-EDF_OPS']
       wait_for_xhr
 
-      choose 'Direct Download'
-      click_on 'Submit'
+      page.find('.button-download-data').click
       wait_for_xhr
 
       click_link 'Download Access Script'

@@ -25,7 +25,7 @@ describe "Portal access", reset: false do
     Retrieval.destroy_all
   end
 
-  context "Visiting an Earthdata Search portal, accessing data" do
+  context "Visiting an Earthdata Search portal, accessing data", single_granule: true, edit_options: true do
     before :all do
       Capybara.reset_sessions!
       visit_and_download(portal: 'simple')
@@ -57,7 +57,7 @@ describe "Portal access", reset: false do
     end
   end
 
-  context "Visiting Earthdata Search, accessing data" do
+  context "Visiting Earthdata Search, accessing data", single_granule: true, edit_options: true do
     before :all do
       Capybara.reset_sessions!
       visit_and_download()

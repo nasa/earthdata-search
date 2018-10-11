@@ -1,16 +1,16 @@
 ---
-e1ca5c2e3205294c55a5d1e1651cf481b2b054b0:
+b1d37047688fe9871e25fcda472f73fcc1280300:
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       cache-control:
       - max-age=0, private, must-revalidate
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Tue, 13 Mar 2018 03:47:21 GMT
+      - Tue, 02 Oct 2018 03:07:33 GMT
       etag:
       - '"4bddfd7c495724a3cb1f0c77995a0e81"'
       server:
@@ -18,7 +18,7 @@ e1ca5c2e3205294c55a5d1e1651cf481b2b054b0:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.295000'
+      - '0.217000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -50,108 +50,60 @@ e1ca5c2e3205294c55a5d1e1651cf481b2b054b0:
             </address>
           </addresses>
         </user>
-    http_version:
-14a770065262b6ba3494b63e42c1ce3ffff682ab:
+    http_version: 
+80347fab88d9bd8bd181e77810a8361fdabbb038:
   response:
     status:
-      code: 200
-      message:
+      code: 404
+      message: 
     headers:
       cache-control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 01:19:40 GMT
-      etag:
-      - '"4bddfd7c495724a3cb1f0c77995a0e81"'
+      - Tue, 02 Oct 2018 03:06:01 GMT
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.218000'
+      - '0.192000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '769'
+      - '70'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user>
-          <id>4C0390AF-BEE1-32C0-4606-66CAFDD4131D</id>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-          <primary_study_area>OTHER</primary_study_area>
-          <user_type>PRODUCTION_USER</user_type>
-          <username>edsc</username>
-          <first_name>Earthdata</first_name>
-          <last_name>Search</last_name>
-          <email>patrick+edsc@element84.com</email>
-          <opt_in type="boolean">false</opt_in>
-          <organization_name>EDSC</organization_name>
-          <creation_date type="datetime">2014-02-04T20:55:34Z</creation_date>
-          <addresses type="array">
-            <address>
-              <id>4029FD6E-AA1A-87A3-209F-C012B8DD9A51</id>
-              <us_format type="boolean">false</us_format>
-              <country>United States</country>
-            </address>
-          </addresses>
-        </user>
-    http_version:
-b0b6fd35372f773c5827d098850d22117f845a74:
+      string: "<errors><error>Could not find user with guid :[edsc].</error></errors>"
+    http_version: 
+92a7ee2396a331c4e81c37a3f56d935215aa2c22:
   response:
     status:
-      code: 200
-      message:
+      code: 401
+      message: 
     headers:
       cache-control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 01:19:40 GMT
-      etag:
-      - '"4bddfd7c495724a3cb1f0c77995a0e81"'
+      - Tue, 02 Oct 2018 03:09:54 GMT
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.218000'
+      - '0.344000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '769'
+      - '78'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user>
-          <id>4C0390AF-BEE1-32C0-4606-66CAFDD4131D</id>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-          <primary_study_area>OTHER</primary_study_area>
-          <user_type>PRODUCTION_USER</user_type>
-          <username>edsc</username>
-          <first_name>Earthdata</first_name>
-          <last_name>Search</last_name>
-          <email>patrick+edsc@element84.com</email>
-          <opt_in type="boolean">false</opt_in>
-          <organization_name>EDSC</organization_name>
-          <creation_date type="datetime">2014-02-04T20:55:34Z</creation_date>
-          <addresses type="array">
-            <address>
-              <id>4029FD6E-AA1A-87A3-209F-C012B8DD9A51</id>
-              <us_format type="boolean">false</us_format>
-              <country>United States</country>
-            </address>
-          </addresses>
-        </user>
-    http_version:
+      string: "<errors><error>User does not have requested access to [USER].</error></errors>"
+    http_version: 

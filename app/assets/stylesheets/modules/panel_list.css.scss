@@ -16,7 +16,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   background: $master-overlay-info-bg-color;
 }
 
-.panel-list-item, .panel-list-list > .sortable-placeholder {
+.panel-list-item {
   color: #424242;
   background-color: #fff;
   border-top: 1px solid #e3e3e3;
@@ -149,21 +149,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 // Drag handles instead of borders
 .panel-list-item[draggable=true] {
   border-left: 0;
-}
-
-.panel-list-drag-handle {
-  float: left;
-  border: 2px solid #424242;
-  border-top: 0;
-  border-bottom: 0;
-  cursor: move;
-  height: $panel-list-item-height + 12px;
-  width: 8px;
-  margin: -6px 12px -6px -8px;
-}
-
-.panel-list-list > .sortable-placeholder {
-  border: 3px dashed #424242;
 }
 
 .empty-button {

@@ -32,7 +32,7 @@ describe "'Clear Filters' button", reset: false do
     expect(collections_without_point).to be > collections_within_point
   end
 
-  context "clears temporal" do
+  context "clears temporal", data_specific: true do
     after :each do
       # close temporal dropdown
       click_link "Temporal"

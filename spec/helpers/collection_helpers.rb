@@ -15,11 +15,6 @@ module Helpers
       end
     end
 
-    def view_granule_filters(col_name='15 Minute Stream Flow Data: USGS (FIFE)')
-      find_by_id("project-collections-list").find("h3", :text => col_name, :exact => true).find(:xpath, '../..').find_link('Show granule filters').trigger("click")
-      wait_for_xhr
-    end
-
     def view_granule_results(col_name='15 Minute Stream Flow Data: USGS (FIFE)', from='collection-results')
       wait_for_xhr
       overlay = from
