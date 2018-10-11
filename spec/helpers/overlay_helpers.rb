@@ -89,22 +89,6 @@ module Helpers
       page.find('#granule-details')
     end
 
-    def project_overview
-      page.find('#project-overview')
-    end
-
-    def first_project_collection
-      nth_panel(project_overview, 1)
-    end
-
-    def second_project_collection
-      nth_panel(project_overview, 2)
-    end
-
-    def nth_project_collection(n)
-      nth_panel(project_overview, n)
-    end
-
     def granule_list
       page.find('#granule-list')
     end

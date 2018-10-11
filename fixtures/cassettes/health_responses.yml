@@ -5,12 +5,14 @@
       code: 200
       message: 
     headers:
+      access-control-allow-origin:
+      - "*"
       cmr-request-id:
-      - 837cfb00-0ac0-4d12-a45e-df4e0667e986
+      - 11a9525d-112e-4a61-b9f9-375b7ca0812f
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 12 Mar 2018 16:04:43 GMT
+      - Tue, 02 Oct 2018 03:23:24 GMT
       server:
       - nginx
       strict-transport-security:

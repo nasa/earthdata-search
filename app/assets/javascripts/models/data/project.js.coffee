@@ -66,16 +66,16 @@ ns.Project = do (ko,
       @meta.color ?= colorPool.next()
 
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
-      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
-      @isResetable = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
-      @selectedVariables = ko.observableArray([])
-      @loadingServiceType = ko.observable(false)
-      @isCustomizable = ko.observable(false)
-      @editingAccessMethod = ko.observable(false)
-      @editingVariables = ko.observable(false)
+      @serviceOptions       = new ServiceOptionsModel(@granuleAccessOptions)
+      @isResetable          = ko.computed(@_computeIsResetable, this, deferEvaluation: true)
+      @selectedVariables    = ko.observableArray([])
+      @loadingServiceType   = ko.observable(false)
+      @isCustomizable       = ko.observable(false)
+      @editingAccessMethod  = ko.observable(false)
+      @editingVariables     = ko.observable(false)
       @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
-      @expectedUmmService = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
-      @isLoadingComplete = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
+      @expectedUmmService   = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
+      @isLoadingComplete    = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
 
       # When the loadingServiceType is updated re-calculate the subsetting flags
       @loadingServiceType.subscribe(@_computeSubsettingFlags)
@@ -85,10 +85,10 @@ ns.Project = do (ko,
         @variableSubsettingEnabled(@selectedVariables().length > 0)
 
       # Subsetting flags for the collection cards
-      @spatialSubsettingEnabled = ko.observable(false)
-      @variableSubsettingEnabled = ko.observable(false)
+      @spatialSubsettingEnabled        = ko.observable(false)
+      @variableSubsettingEnabled       = ko.observable(false)
       @transformationSubsettingEnabled = ko.observable(false)
-      @reformattingSubsettingEnabled = ko.observable(false)
+      @reformattingSubsettingEnabled   = ko.observable(false)
 
       # Re-calculate the subsetting flags when changes are made to an ECHO form
       $(document).on 'echoforms:modelchange', @_computeSubsettingFlags
@@ -460,23 +460,22 @@ ns.Project = do (ko,
     isEmpty: () ->
       @_collectionIds.isEmpty()
 
-    addCollection: (collection) =>
+    addCollection: (collection, callback) =>
       id = collection.id
 
       # If a collection already exists with this id, no need to proceed
-      return if @_collectionsById[id]
+      if !@_collectionsById[id]
+        # If the focused collection is the collection being added, don't
+        # instantiate a new object
+        if @focus()?.collection?.id == id
+          @_collectionsById[id] = @focus()
+        else
+          @_collectionsById[id] = new ProjectCollection(this, collection)
 
-      # If the focused collection is the collection being added, don't
-      # instantiate a new object
-      if @focus()?.collection?.id == id
-        @_collectionsById[id] = @focus()
-      else
-        @_collectionsById[id] = new ProjectCollection(this, collection)
+        @_collectionIds.remove(id)
+        @_collectionIds.push(id)
 
-      @_collectionIds.remove(id)
-      @_collectionIds.push(id)
-
-      null
+      callback() if callback
 
     removeCollection: (collection) =>
       id = collection.id
@@ -503,9 +502,7 @@ ns.Project = do (ko,
       collections = (ds.serialize() for ds in @accessCollections())
       {query: param(@serialized()), collections: collections, source: urlUtil.realQuery()}
 
-    ###*
-     * Retreive a ProjectCollection object for the collection matching the provided concept-id
-     ###
+    # Retreive a ProjectCollection object for the collection matching the provided concept-id
     getProjectCollection: (id) ->
       focus = @focusedProjectCollection()
       if focus?.collection.id == id
@@ -553,7 +550,6 @@ ns.Project = do (ko,
 
       collectionIdStr = value.p
       if collectionIdStr
-        singleGranuleId = value.sgd
         if collectionIdStr != @_collectionIds().join('!')
           collectionIds = collectionIdStr.split('!')
           focused = !!collectionIds[0]
