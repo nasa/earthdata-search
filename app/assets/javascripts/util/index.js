@@ -11,3 +11,4 @@
 //= require util/plugin
 //= require util/metrics
 //= require util/visibility
+//= require util/browser_detect

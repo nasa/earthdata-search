@@ -239,3 +239,8 @@
     color: #1d6492;
   }
 }
+
+.lt-ie11 .modal,
+.lt-ie11 .modal-backdrop {
+  display: none !important;
+}

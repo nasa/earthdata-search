@@ -77,27 +77,27 @@
   }
 }
 
-.lt-ie9 .landing-dialog {
+.lt-ie11 .landing-dialog {
   background-color: #111;
 }
 
-.lt-ie9 .old-ie {
+.lt-ie11 .old-ie {
   height: 290px;
   padding: 20px;
   font-size: 12px;
 }
 
- .lt-ie9 .landing-dialog-header,
- .lt-ie9 .landing-dialog-toolbar,
- .lt-ie9 .landing-dialog-actions {
+.lt-ie11 .landing-dialog-header,
+.lt-ie11 .landing-dialog-toolbar,
+.lt-ie11 .landing-dialog-actions {
   display: none;
 }
 
- .no-js .landing-dialog-header,
- .no-js .landing-dialog-toolbar,
- .no-js .landing-toolbar-content,
- .no-js .landing-dialog-actions,
- .no-js .landing-dialog-loading {
+.no-js .landing-dialog-header,
+.no-js .landing-dialog-toolbar,
+.no-js .landing-toolbar-content,
+.no-js .landing-dialog-actions,
+.no-js .landing-dialog-loading {
   display: none;
 }
 
@@ -115,7 +115,7 @@
   }
 }
 
-.lt-ie9 .old-ie {
+.lt-ie11 .old-ie {
   display: block;
 }
 
