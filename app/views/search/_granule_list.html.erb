@@ -11,31 +11,29 @@
     <!-- ko if: ui.collectionsList.focused() && ui.collectionsList.focused().granules()  -->
     <!-- ko with: ui.collectionsList.focused() -->
     <div class="master-overlay-header-info">
-      <div class="collection-title-filters">
-        <div class="master-overlay-info">
-          <h2 class="master-overlay-header-title"><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a><!-- /ko --></h2>
-          <div id="datasource-caveats"></div>
-          <div class="master-overlay-header-row">
-            <!--ko ifnot: $data.collection.cwic()-->
-              <p class="master-overlay-header-row-item granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
+      <div class="master-overlay-info master-overlay-info-granule-panel">
+        <h2 class="master-overlay-header-title"><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a><!-- /ko --></h2>
+        <div id="datasource-caveats"></div>
+        <div class="master-overlay-header-row">
+          <!--ko ifnot: $data.collection.cwic()-->
+            <p class="master-overlay-header-row-item granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
 
-              <p class="master-overlay-header-row-item granule-id-search">
-                Granule Search: <input id="granule-ids" type="text" placeholder="Search Single or Multiple Granule IDs..." data-bind="value: $data.collection.granuleIds, valueUpdate: 'keyup'" data-tooltip="true" title="Wildcards: * (asterisk) matches any number of characters, and ? (question mark) matches exactly one character.
-  Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
-              </p>
-            <!--/ko-->
+            <p class="master-overlay-header-row-item granule-id-search">
+              Granule Search: <input id="granule-ids" type="text" placeholder="Search Single or Multiple Granule IDs..." data-bind="value: $data.collection.granuleIds, valueUpdate: 'keyup'" data-tooltip="true" title="Wildcards: * (asterisk) matches any number of characters, and ? (question mark) matches exactly one character.
+Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
+            </p>
+          <!--/ko-->
 
-            <!-- ko with: collection -->
-              <!-- ko if: has_granules -->
-              <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-show-secondary granule-filter-link" title="Filter granules"><i class="fa fa-filter"></i> Granule filters</a>
-              <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-hide-secondary granule-filter-link" title="Hide granule filters">Granule filters</a>
-              <!-- /ko-->
+          <!-- ko with: collection -->
+            <!-- ko if: has_granules -->
+            <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-show-secondary granule-filter-link" title="Filter granules"><i class="fa fa-filter"></i> Granule filters</a>
+            <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="master-overlay-hide-parent master-overlay-hide-secondary granule-filter-link" title="Hide granule filters">Granule filters</a>
             <!-- /ko-->
+          <!-- /ko-->
 
-            <!-- ko if: granules().excludedGranulesList().length > 0 -->
-            <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
-            <!-- /ko -->
-          </div>
+          <!-- ko if: granules().excludedGranulesList().length > 0 -->
+          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
+          <!-- /ko -->
         </div>
       </div>
       <div class="master-overlay-info master-overlay-global-actions actions">
@@ -108,10 +106,10 @@
               </li>
             </ul>
           <!--/ko-->
-<!--           <a href="#" class="button icon-button" title="Configure and download single granule data"  data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
+          <!-- <a href="#" class="button icon-button" title="Configure and download single granule data"  data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
             <i class="fa fa-gear"></i>
-          </a>
- -->          <!--<a href="#" class="button icon-button" title="Add granule to project">-->
+          </a> -->
+          <!--<a href="#" class="button icon-button" title="Add granule to project">-->
             <!--<i class="fa fa-plus"></i>-->
           <!--</a>-->
           <!-- ko if: $parent.canRemoveGranules() -->

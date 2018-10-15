@@ -42,6 +42,10 @@
   background: #222;
 }
 
+.leaflet-map-pane {
+  z-index: 1;
+}
+
 .projection-geo .projection-only-arctic,
 .projection-geo .projection-only-antarctic,
 .projection-arctic .projection-only-geo,
