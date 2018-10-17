@@ -7,7 +7,7 @@
 
 require "spec_helper"
 
-describe "Granule footprint visualizations", reset: false, wait: 60 do
+describe "Granule footprint visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do

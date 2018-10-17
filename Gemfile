@@ -23,16 +23,15 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'capybara'
-  # This is a revision which disables screenshots, one behind the disable-screenshots
-  #  branch, which also tries (and fails) to avoid problems with concurrent test runs.
-  gem 'capybara-webkit'#, git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
+  gem 'capybara-webkit'
   gem 'selenium-webdriver'
-  gem 'poltergeist'
+  gem 'chromedriver-helper'
+  # gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
-  gem 'fuubar'
+  # gem 'fuubar'
   gem 'rack_session_access'
-  gem 'headless'
+  # gem 'headless'
 end
 
 group :development do
