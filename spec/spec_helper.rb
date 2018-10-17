@@ -1,47 +1,42 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
-ENV["PRECOMPILE_NODE_ASSETS"] ||= 'true'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+ENV['PRECOMPILE_NODE_ASSETS'] ||= 'true'
+
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
-
-require 'headless'
 require 'helpers/instrumentation'
-
-# Un-comment to truncate the test log to only the most recent execution
-#File.truncate(Rails.root.join("log/test.log"), 0)
-
 require 'capybara-screenshot/rspec'
 require 'rack_session_access/capybara'
+require 'selenium-webdriver'
 
-if ENV['driver'] == 'poltergeist'
-  require 'capybara/poltergeist'
-  Capybara.javascript_driver = :poltergeist
-  Capybara.default_driver = :poltergeist
-else
-  require 'selenium-webdriver'
-  Capybara.register_driver :selenium do |app|
-    options = Selenium::WebDriver::Chrome::Options.new(
-      args: %w[headless disable-gpu no-sandbox remote-debugging-port=9222]
-    )
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-  end
-  Capybara.javascript_driver = :selenium
-  Capybara.default_driver = :selenium
+Capybara.register_driver :selenium do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w(headless disable-gpu no-sandbox remote-debugging-port=9222 --window-size=1280,1024)
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
+Capybara.javascript_driver = :selenium
+Capybara.default_driver = :selenium
 
 # Avoid appending screenshot paths in CI environments, since it messes with repeat failure detection
-Capybara::Screenshot.append_screenshot_path = false if ENV["CAPYBARA_APPEND_SCREENSHOT_PATH"] == 'false'
+Capybara::Screenshot.append_screenshot_path = false if ENV['CAPYBARA_APPEND_SCREENSHOT_PATH'] == 'false'
+
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+  "#{File.basename(example.metadata[:file_path])}-#{example.metadata[:line_number]}"
+end
+
+# Un-comment to truncate the test log to only the most recent execution
+# File.truncate(Rails.root.join("log/test.log"), 0)
 
 require 'fileutils'
 
 # Out-of-date assets hose specs and lead to confusing errors
-FileUtils.rm_rf(Rails.root.join("public/assets"))
-FileUtils.mkdir_p(Rails.root.join("tmp/screenshots"))
+FileUtils.rm_rf(Rails.root.join('public/assets'))
+FileUtils.mkdir_p(Rails.root.join('tmp/screenshots'))
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/helpers/ and its subdirectories.
-Dir[Rails.root.join("spec/helpers/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/helpers/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -49,17 +44,17 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
-load "#{::Rails.root}/db/seeds.rb" if ENV["seed"] == "true"
+load "#{::Rails.root}/db/seeds.rb" if ENV['seed'] == 'true'
 
 # http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
 module JSON
   class << self
     def parse(source, opts = {})
-      opts = ({:max_nesting => 350}).merge(opts)
+      opts = { max_nesting: 350 }.merge(opts)
       result = nil
       begin
         result = Parser.new(source, opts).parse
-      rescue => e
+      rescue
         puts "Bad json: #{source}"
       end
       result
@@ -67,26 +62,7 @@ module JSON
   end
 end
 
-Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-  meta = example.metadata
-  "#{File.basename(meta[:file_path])}-#{meta[:line_number]}"
-end
-
 RSpec.configure do |config|
-  # config.before(:each) do
-  #     if Capybara.current_driver == :webkit
-  #       # Need to manually specify ignoring of SSL errors
-  #       page.driver.browser.ignore_ssl_errors
-  #     end
-  # end
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.global_fixtures = :all
@@ -96,20 +72,18 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
-  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 15).to_i
-  wait_time = Capybara.default_wait_time
+  Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 15).to_i
 
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
 
     if Capybara.page.respond_to?(:save_page) && Capybara.page.current_url
       # Attempt to detect before :all block failures
-      examples = self.class.descendant_filtered_examples
       exceptions = self.class.descendant_filtered_examples.map(&:exception)
       if !exceptions.any?(&:nil?) && exceptions.uniq.size == 1
         # Failure only code goes here
         if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
-          puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+          puts "Console messages:" + page.driver.console_messages.map { |m| m[:message] }.join('\n')
         end
         paths = Capybara::Screenshot.screenshot_and_save_page
         puts "     Screenshot: #{paths[:image]}"
@@ -129,12 +103,12 @@ RSpec.configure do |config|
     config_services = Rails.configuration.services
 
     # Avoid recording tokens
-    ['prod', 'uat', 'sit'].each do |urs_env|
+    %w(prod uat sit).each do |urs_env|
       # The client_ids are stored in services.yml and keyed by the
       # URL of the respective environment
       urs_root_url = config_services['earthdata'][urs_env]['urs_root']
 
-      ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
+      %w(edsc edscbasic expired_token).each do |token_key|
         # Read from services.yml and is set to either the token provided in a designated
         # ENV variable or a default value
         configured_token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key][urs_env]['access_token']
@@ -146,7 +120,7 @@ RSpec.configure do |config|
 
           token = (configured_token.include? '-') ? configured_token : "#{configured_token}:#{client_id}"
           substitute = token_key
-          substitute += "-access" unless configured_token.include? '-'
+          substitute += '-access' unless configured_token.include? '-'
           normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, substitute)
         end
       end
@@ -164,52 +138,43 @@ RSpec.configure do |config|
     end
   end
 
-  config.before :suite do
-    count = self.class.children.size
-    Headless.new(:destroy_on_exit => false).start
-  end
-
-  config.before :each do
-    Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
-  end
-
-  config.before :all do
-    file_time = Time.now
-    Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
-    Capybara.current_session.current_window.resize_to(1280, 1024)
-  end
-
   config.after :all do
-    Capybara.default_wait_time = wait_time
     Delayed::Worker.delay_jobs = false
     timings[self.class.display_name] = Time.now - file_time
     index += 1
+
     puts " (Suite #{index} of #{count})"
 
-    # include deprecated 'DatasetExtra' here to prevent an error on model.destroy_all. For more info, see comments in
-    # dataset_extra.rb
+    # Include deprecated 'DatasetExtra' here to prevent an error on model.destroy_all.
+    # For more info, see comments in dataset_extra.rb
     models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration, DatasetExtra]
     ActiveRecord::Base.descendants.each do |model|
       model.destroy_all unless models_to_preserve.include?(model)
     end
   end
 
-  config.after :suite do
-    puts
-    puts "Slowest specs"
-    puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
-    puts
+  config.before :suite do
+    count = self.class.children.size
   end
 
   config.after :suite do
     Helpers::Instrumentation.report_performance
+
+    puts
+    puts 'Slowest specs'
+    puts (timings.sort_by(&:reverse).reverse.map { |k, v| "%7.3fs - #{k}" % v }.join('\n'))
+    puts
+  end
+
+  config.before :each do
+    Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
   end
 
   config.after :each do
-    if example.exception != nil
+    unless example.exception.nil?
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
-        puts "Console messages:\n" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+        puts "Console messages:\n" + page.driver.console_messages.map { |m| m[:message] }.join("\n")
       end
     end
   end
@@ -223,7 +188,7 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+  config.order = 'random'
 
   config.include RSpec::Rails::FixtureSupport
   config.include FactoryGirl::Syntax::Methods

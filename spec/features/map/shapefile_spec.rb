@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Shapefile search", reset: false, wait: 30 do
+describe "Shapefile search", reset: false do
   before :all do
     load_page :search
   end
