@@ -21,7 +21,7 @@ module Helpers
       end
     end
 
-    def synchronize(seconds=Capybara.default_wait_time)
+    def synchronize(seconds=Capybara.default_max_wait_time)
       start_time = Time.now
 
       count = 0
