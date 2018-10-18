@@ -142,7 +142,7 @@ module VCR
                 uri.include?('C179002986-ORNL') && !uri.include?('/nlp?') ||
                 (request.uri.include?('trigger500') && !request.uri.include?('/nlp?')) ||
                 request.uri.include?('urs.earthdata.nasa.gov/api') ||
-                request.uri.include?('opendap/health')
+                request.uri.include?('service-bridge/health')
             cassette = 'hand-edited'
             record = :none
           elsif request.uri.include? '/search/granules/timeline.json'
