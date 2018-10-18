@@ -805,7 +805,7 @@ http_interactions:
   digest: boundingbox1_2
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/opendap/health
+    uri: https://cmr.earthdata.nasa.gov/service-bridge/health
     body:
       encoding: US-ASCII
       string: ''
