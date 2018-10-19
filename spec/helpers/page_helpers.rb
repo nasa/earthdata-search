@@ -116,9 +116,10 @@ module Helpers
       wait_for_xhr
       # Let's get the tour modal while we're at it...
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
-      # Now the banner...
-      while page.has_css?('.banner-close') do
-        find('a[class="banner-close"]').click
+
+      # Now the banner
+      if page.has_css?('.banner-close')
+        page.find('a[class="banner-close"]').click
         wait_for_xhr
       end
     end
@@ -160,6 +161,13 @@ module Helpers
                 edsc.page.project.accessCollections()[0].serviceOptions.accessMethod.removeAll();
                 edsc.page.project.accessCollections()[0].serviceOptions.addAccessMethod();"
       page.execute_script script
+    end
+
+    def page_status_code
+      # Selenium does not support page.status_code. This is a workaround. In env 'test', we add an attribute 'code' to the <html> element.
+      # Here we are checking that element to grab the response code.
+
+      page.first('html')[:code].to_i
     end
 
     private

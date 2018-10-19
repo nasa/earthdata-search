@@ -18,17 +18,11 @@ describe "'Clear Filters' button", reset: false do
 
   it 'clears spatial' do
     create_point(0, 0)
-
     wait_for_xhr
-
-    collections_within_point = find('header.tab h2 strong').text
-
+    collections_within_point = find('.master-overlay-tab-title strong').text
     click_link 'Clear Filters'
-
     wait_for_xhr
-
-    collections_without_point = find('header.tab h2 strong').text
-
+    collections_without_point = find('.master-overlay-tab-title strong').text
     expect(collections_without_point).to be > collections_within_point
   end
 
@@ -87,7 +81,7 @@ describe "'Clear Filters' button", reset: false do
   it 'clears facets' do
     # 'Features' facet is already expanded, no need to click it
     find('.facets-item', text: 'Map Imagery').click
-    
+
     within(:css, '.features') do
       expect(page).to have_content('Map Imagery')
       expect(page).to have_css('.facets-item.selected')
