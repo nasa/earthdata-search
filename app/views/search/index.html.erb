@@ -159,14 +159,14 @@
   </div>
   <div class="master-overlay-secondary">
     <div class="master-overlay-secondary-content" data-level="0">
-      <section id="granule-search" >
-        <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <div>
-          <i class="fa fa-filter"></i> Granule Filters
-        </div>
+      <section id="granule-search" class="master-overlay-secondary-granule-search">
         <!-- ko if: project.searchGranulesCollection() -->
-        <header>
-          <h2 data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
+        <header class="master-overlay-secondary-header">
+          <div class="master-overlay-secondary-heading">
+            <i class="fa fa-filter"></i> Granule Filters
+          </div>
+          <h2 class="master-overlay-secondary-title" data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
+          <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         </header>
         <%= render partial: 'granule_search' %>
         <!-- /ko -->

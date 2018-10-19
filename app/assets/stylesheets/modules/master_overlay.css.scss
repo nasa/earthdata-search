@@ -183,14 +183,13 @@
 
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
+  width: 700px;
   background-color: $master-overlay-parent-bg-color;
   right: 0;
-  /* JS: Temporary, ugly fix to prevent overlap */
-  top: 100px;
   overflow: hidden;
   z-index: 180;
   position: absolute;
-  height: 90%;
+  height: 100%;
   transition-property: right, left;
   transition-duration: 0.3s;
 
@@ -209,6 +208,9 @@
   }
 
   a.master-overlay-close {
+    position: absolute;
+    top: 0;
+    right: 0;
     font-size: 1.4em;
     padding: 10px;
 
@@ -218,8 +220,29 @@
   }
 }
 
-.master-overlay-secondary-nav {
+.master-overlay-secondary-content {
+  height: 100%;
+}
 
+.master-overlay-secondary-granule-search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.master-overlay-secondary-header {
+  position: relative;
+  padding: 12px 20px 10px 20px;
+}
+
+.master-overlay-secondary-heading {
+  font-weight: 700;
+}
+
+.master-overlay-secondary-title {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 1.2em;
 }
 
 .master-overlay-main-content {
@@ -560,10 +583,6 @@ a.master-overlay-show-parent {
   white-space: pre;
   font-family: monospace;
   font-size: smaller;
-}
-
-#granule-search {
-  width: 700px;
 }
 
 .master-overlay-info .panel-list-meta, .panel-list-meta {
