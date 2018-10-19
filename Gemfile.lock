@@ -51,6 +51,8 @@ GEM
     arel (6.0.4)
     ast (2.4.0)
     atomic (1.1.16)
+    autoprefixer-rails (8.6.5)
+      execjs
     bourbon (3.2.1)
       sass (~> 3.2)
       thor
@@ -338,6 +340,7 @@ PLATFORMS
 
 DEPENDENCIES
   atomic
+  autoprefixer-rails (= 8.6.5)
   bourbon
   byebug
   capybara

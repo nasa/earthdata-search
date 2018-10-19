@@ -81,6 +81,7 @@ end
 
 gem 'jquery-rails'
 gem 'bourbon'
+gem 'autoprefixer-rails', '8.6.5' # Need to run an older version due to issues with ExecJS runtime
 gem 'knockoutjs-rails'
 gem 'figaro'
 
