@@ -12,7 +12,7 @@ describe "Portal parameters", reset: true do
 
   it "Visiting Earthdata Search with /portal/<portal-id> parameter preserves the portal filter across page and query transitions", acceptance: true do
     load_page :search, portal: 'simple', close_banner: true, facets: true
-    expect(page.status_code).to eq(200)
+    expect(page_status_code).to eq(200)
     expect(page).to have_text("1 Matching Collection")
 
     fill_in "keywords", with: 'AST'

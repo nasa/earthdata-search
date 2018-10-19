@@ -543,7 +543,7 @@ a.master-overlay-show-parent {
   .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
     // JS: I know, I know... This needs to override any interact.js actions
-    height: auto !important;
+    height: 10px !important;
   }
 }
 
