@@ -6,6 +6,7 @@ describe "Portal assets", reset: false do
   it "Visiting an Earthdata Search portal loads the assets configured for that portal, updating scripts and styles accordingly", acceptance: true do
     load_page :search, portal: 'complex'
 
+    Capybara::Screenshot.screenshot_and_open_image
     expect(page).to have_text("Example Portal")
     expect(page).to have_link("Complex")
     expect(page).to have_link("Example Link")

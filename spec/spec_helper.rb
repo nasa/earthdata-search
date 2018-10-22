@@ -11,9 +11,11 @@ require 'selenium-webdriver'
 
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w(headless disable-gpu no-sandbox remote-debugging-port=9222 --window-size=1280,1024)
+    args: %w(headless disable-gpu no-sandbox remote-debugging-port=9222 --window-size=1152,2048 --disable-notifications)
   )
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+
+  # app.native_events = true
 end
 Capybara.javascript_driver = :selenium
 Capybara.default_driver = :selenium
@@ -24,6 +26,9 @@ Capybara::Screenshot.append_screenshot_path = false if ENV['CAPYBARA_APPEND_SCRE
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   "#{File.basename(example.metadata[:file_path])}-#{example.metadata[:line_number]}"
 end
+
+# Capybara.current_session.current_window.resize_to(1640, 2048)
+# Capybara.current_session.driver.browser.manage.window.resize_to(2048, 1152)
 
 # Un-comment to truncate the test log to only the most recent execution
 # File.truncate(Rails.root.join("log/test.log"), 0)

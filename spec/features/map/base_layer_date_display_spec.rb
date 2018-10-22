@@ -1,8 +1,8 @@
 # EDSC-308: Corrected Reflectance Base Layer doesn't track temporal search bounds
 
-require "spec_helper"
+require 'spec_helper'
 
-describe "Base layer date display", reset: false do
+describe 'Base layer date display' do
   extend Helpers::CollectionHelpers
 
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
@@ -11,7 +11,7 @@ describe "Base layer date display", reset: false do
   stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
 
   before :all do
-    load_page :search, focus: 'C179003030-ORNL_DAAC'
+    load_page :search, focus: 'C179003030-ORNL_DAAC', env: :prod
   end
 
   before :all do
@@ -23,7 +23,8 @@ describe "Base layer date display", reset: false do
 
   context 'when viewing a time-independent base layer' do
     before(:all) do
-      page.find('.leaflet-control-layers').trigger(:mouseover)
+      page.find('.leaflet-control-layers').hover
+      # Capybara::Screenshot.screenshot_and_open_image
       choose 'Land / Water Map'
     end
 
@@ -39,11 +40,12 @@ describe "Base layer date display", reset: false do
 
   context 'when viewing a time-dependent base layer' do
     before(:all) do
-      page.find('.leaflet-control-layers').trigger(:mouseover)
+      page.find('.leaflet-control-layers').hover
       choose 'Corrected Reflectance (True Color)'
+      wait_for_xhr
     end
 
-    it "shows yesterday's imagery by default" do
+    it 'shows yesterday\'s imagery by default' do
       expect('#map').to have_tiles_with_date('2014-02-28')
     end
 
@@ -69,7 +71,7 @@ describe "Base layer date display", reset: false do
       before(:all) { set_temporal(start_date) }
       after(:all) { unset_temporal }
 
-      it "shows yesterday's imagery" do
+      it 'shows yesterday\'s imagery' do
         expect('#map').to have_tiles_with_date('2014-02-28')
       end
     end
@@ -77,11 +79,13 @@ describe "Base layer date display", reset: false do
     context 'selecting both a temporal range and a date on the timeline' do
       before(:all) do
         set_temporal(start_date, stop_date)
+        Capybara::Screenshot.screenshot_and_open_image
         click_timeline_date('15', 'Feb')
       end
 
       after(:all) do
         click_timeline_date('15', 'Feb')
+        Capybara::Screenshot.screenshot_and_open_image
         unset_temporal
       end
 
@@ -90,5 +94,4 @@ describe "Base layer date display", reset: false do
       end
     end
   end
-
 end
