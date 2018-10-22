@@ -59,10 +59,12 @@ describe "Data access status page", reset: false do
       expect(page).to have_css("a[href=\"/data/retrieve/#{Retrieval.first.to_param}\"]")
     end
 
-    context "clicking the remove button" do
+    context 'clicking the remove button' do
       before :all do
         within('tbody tr:first-child') do
-          click_link "Remove Retrieval"
+          page.accept_alert 'Are you sure you want to remove this download from your history? This action cannot be undone.' do
+            click_link 'Remove Retrieval'
+          end
         end
       end
 
@@ -75,10 +77,12 @@ describe "Data access status page", reset: false do
         expect(page).to have_selector('tbody tr', count: 1)
       end
 
-      context "to remove the last retrieval" do
+      context 'to remove the last retrieval' do
         before :all do
           within('tbody tr:first-child') do
-            click_link "Remove Retrieval"
+            page.accept_alert 'Are you sure you want to remove this download from your history? This action cannot be undone.' do
+              click_link 'Remove Retrieval'
+            end
           end
         end
 
