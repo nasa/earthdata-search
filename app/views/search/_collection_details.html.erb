@@ -68,10 +68,10 @@
   <!-- ko if: $root.ui.collectionsList.selected() && $root.ui.collectionsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.collectionsList.selected().details -->
 
-  <div class="master-overlay-info">
+  <div class="master-overlay-content">
     <div class="tab-pane" id="collection-information">
 
-      <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
+      <div class="master-overlay-info" data-bind="ifnot: $parent.detailsLoaded">
         <!-- first row: mini map | spatial/temporal -->
         <div class="row">
           <div class="flex-column-aside">
