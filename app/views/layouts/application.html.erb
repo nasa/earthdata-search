@@ -57,6 +57,9 @@
     <% end %>
     <%# End Google Tag Manager (noscript) %>
     <div id="earthdata-tophat2"></div>
+    <% if portal_nav? %>
+    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
+    <% end %>
     <div class="main-wrapper">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
@@ -67,9 +70,6 @@
     <div class="toolbar-secondary">
       <%= yield :toolbar_secondary %>
     </div>
-    <% if portal_nav? %>
-    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
-    <% end %>
     <section class="main-content">
       <%= yield %>
     </section>
