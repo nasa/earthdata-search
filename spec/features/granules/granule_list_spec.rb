@@ -1,20 +1,15 @@
-# EDSC-56: As a user, I want to see a list of top granules matching my search so
-#          that I may preview my results before retrieving data
-# EDSC-58: As a user, I want to load more granules as I scroll so that I may see
-#          granules that are not among my top results
+require 'spec_helper'
 
-require "spec_helper"
-
-describe "Granule list", reset: false do
+describe 'Granule list', reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do
     Capybara.reset_sessions!
     load_page :search
-    login
+    # login
   end
 
-  context "for all collections with granules" do
+  context 'for all collections with granules' do
     before :all do
       visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
       wait_for_xhr
@@ -23,15 +18,15 @@ describe "Granule list", reset: false do
       expect(page).to have_selector('#granule-ids')
     end
 
-    it "provides a button to get collection details" do
+    it 'provides a button to get collection details' do
       expect(granule_list).to have_link('View collection details')
     end
 
-    it "provides a button to get download the collection" do
+    it 'provides a button to get download the collection' do
       expect(granule_list).to have_button('Download')
     end
 
-    it "provides a button to edit granule filters" do
+    it 'provides a button to edit granule filters' do
       expect(granule_list).to have_link('Filter granules')
     end
 
@@ -51,13 +46,15 @@ describe "Granule list", reset: false do
 
     context 'entering multiple granule IDs' do
       before :all do
-        fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf, MOD10A1.A2016001.h31v12*\t"
+        fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf,MOD10A1.A2016001.h31v12*\t"
         wait_for_xhr
       end
 
       after :all do
         click_link "Filter granules"
+        wait_for_xhr
         click_button "granule-filters-clear"
+        wait_for_xhr
         find('#granule-search').click_link('close')
       end
 
@@ -73,7 +70,11 @@ describe "Granule list", reset: false do
 
     context "clicking on the collection details button" do
       before :all do
+        Capybara::Screenshot.screenshot_and_open_image
         granule_list.click_link('View collection details')
+        # page.find('.collection-title-link').click
+        wait_for_xhr
+        Capybara::Screenshot.screenshot_and_open_image
       end
 
       after :all do
@@ -93,8 +94,10 @@ describe "Granule list", reset: false do
 
     context "clicking on the edit filters button" do
       before :all do
-        dismiss_banner
+        # dismiss_banner
+        Capybara::Screenshot.screenshot_and_open_image
         granule_list.click_link('Filter granules')
+        wait_for_xhr
       end
 
       after :all do
@@ -115,6 +118,7 @@ describe "Granule list", reset: false do
         end
 
         it "shows the filters in an applied state" do
+          Capybara::Screenshot.screenshot_and_open_image
           expect(granule_list).to have_selector('.button-highlighted[title="Hide granule filters"]')
         end
       end
@@ -122,7 +126,8 @@ describe "Granule list", reset: false do
 
     context "clicking the exclude granule button" do
       before :all do
-        dismiss_banner
+        # dismiss_banner
+        # Capybara::Screenshot.screenshot_and_open_image
         first_granule_list_item.click
         first_granule_list_item.click_link "Remove granule"
         wait_for_xhr
@@ -130,6 +135,7 @@ describe "Granule list", reset: false do
 
       after :all do
         click_link "Filter granules"
+        wait_for_xhr
         click_button "granule-filters-clear"
         find('#granule-search').click_link('close')
       end
@@ -192,6 +198,7 @@ describe "Granule list", reset: false do
       context "and changing granule query" do
         before :all do
           click_link "Filter granules"
+          wait_for_xhr
           check "Find only granules that have browse images."
           wait_for_xhr
         end
@@ -258,8 +265,8 @@ describe "Granule list", reset: false do
       before :all do
         visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
         wait_for_xhr
-        dismiss_banner
-        expect(page).to have_visible_collection_results
+        # dismiss_banner
+        # expect(page).to have_visible_collection_results
         first_collection_result.click
         wait_for_xhr
       end
@@ -299,7 +306,7 @@ describe "Granule list", reset: false do
       end
     end
 
-    context 'clicking on the single granule download button when the links do not have titles', pending_updates: true do
+    context 'clicking on the single granule download button when the links do not have titles', data_specific: true do
       before :all do
         visit('/search/granules?p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
         wait_for_xhr
@@ -314,7 +321,6 @@ describe "Granule list", reset: false do
         end
       end
 
-      # FIXME Data specific result failing
       it 'shows a dropdown with all the downloadable granules' do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ex_v1.2.tif')
@@ -345,10 +351,7 @@ describe "Granule list", reset: false do
     end
   end
 
-  # FIXME session is already logged into PROD but this test wants to use SIT. is trying to record with
-  # PROD token and SIT client id.
-  # Why are these tests even logged in?
-  context "for collections that are known to cause download delays", pending_updates: true do
+  context "for collections that are known to cause download delays" do
     before :all do
       visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
       wait_for_xhr
@@ -360,15 +363,15 @@ describe "Granule list", reset: false do
     end
   end
 
-  context "for collections that have granules without end times", pending_updates: true do
+  context 'for collections that have granules without end times', data_specific: true do
     before :all do
       visit('/search/granules?cmr_env=uat&p=C1000-LPDAAC_TS2')
     end
-    it "displays correct start and end temporal labels" do
+
+    it 'displays correct start and end temporal labels' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
-        # FIXME Data specific result failing
-        expect(page).to have_content('START2018-05-02 15:02:29')
-        expect(page).to have_content('ENDNot Provided')
+        expect(page).to have_content('START 2018-08-04 23:28:02')
+        expect(page).to have_content('END Not Provided')
       end
     end
   end

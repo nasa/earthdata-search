@@ -10,15 +10,15 @@ b97abc4e0d107605e008cb8d17f96667f8123aa5:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Tue, 02 Oct 2018 03:03:01 GMT
+      - Mon, 22 Oct 2018 16:48:29 GMT
       etag:
-      - '"0cc5800b7cf82f168eb985c45beda706"'
+      - '"82ba3a95a699f68113943ffcd7f325ce"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.085000'
+      - '0.343000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       transfer-encoding:
@@ -39,7 +39,7 @@ b97abc4e0d107605e008cb8d17f96667f8123aa5:
         xmlns:ecs=\"http://ecs.nasa.gov/options\">\n                <!--NOTE: elements
         in caps losely match the ESI API, those in lowercase are helper elements -->\n                <ecs:requestInfo>\n                    <ecs:email/>\n                </ecs:requestInfo>\n                <!--Dataset
         ID will be injected by Reverb-->\n                <ecs:CLIENT>ESI</ecs:CLIENT>\n                <!--First
-        SubsetAgent in the input capabilities XML is used as the default.-->\n                <ecs:SUBAGENT_ID>\n                    <ecs:value>HEG</ecs:value>\n                </ecs:SUBAGENT_ID>\n                <!--
+        SubsetAgent in the input capabilities XML is used as the default.-->\n                <ecs:SUBAGENT_ID>\n                    <ecs:value>HEG</ecs:value>\n                </ecs:SUBAGENT_ID>Ftree\n                <!--
         hardcode to async for Reverb services -->\n                <ecs:REQUEST_MODE>async</ecs:REQUEST_MODE>\n                <ecs:SPATIAL_MSG>Click
         the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG>\n                <ecs:PROJ_MSG_1>CAUTION:
         Re-projection parameters may alter results.</ecs:PROJ_MSG_1>\n                <ecs:PROJ_MSG_2>Leave
@@ -744,9 +744,10 @@ b97abc4e0d107605e008cb8d17f96667f8123aa5:
         type=\"xsd:string\"/>\n        </group>\n        <group id=\"HEG-bandSubsetOptions\"
         label=\"Band Subsetting (Optional)\" ref=\"ecs:HEG-request/ecs:band_subsetting\"
         relevant=\"ecs:SUBAGENT_ID/ecs:value=''HEG'' and ecs:HEG-request/ecs:band_subset_flag=''true''\">\n            <tree
-        cascade=\"true\" id=\"HEG-bandSubsetOptions\" label=\"Choose Bands\" ref=\"ecs:SUBSET_DATA_LAYERS/ecs:AE_L2A\"
-        relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''HEG'' and ../ecs:band_subset_flag=''true''\"
-        required=\"false()\" separator=\"/\" type=\"xsd:string\" valueElementName=\"dataset\">\n                <item
+        cascade=\"true\" id=\"HEG-bandSubsetOptions\" label=\"Choose Bands\" maxParameters=\"5\"
+        ref=\"ecs:SUBSET_DATA_LAYERS/ecs:AE_L2A\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''HEG''
+        and ../ecs:band_subset_flag=''true''\" required=\"false()\" separator=\"/\"
+        simplifyOutput=\"false\" type=\"xsd:string\" valueElementName=\"dataset\">\n                <item
         value=\"AE_L2A\">\n                    <item value=\"High_Res_A_Swath\">\n                        <item
         value=\"89.0H_Res.5A_TB_(not-resampled)\"/>\n                        <item
         value=\"89.0V_Res.5A_TB_(not-resampled)\"/>\n                        <item

@@ -86,7 +86,7 @@ module Helpers
       end
     end
 
-    def load_page(url, options={})
+    def load_page(url, options = {})
       close_banner = options.delete :close_banner
 
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
@@ -98,19 +98,20 @@ module Helpers
         url = QueryBuilder.new.add_to(url, options)
 
         # Leave for debugging, comment out when not in use
-        # puts url
+        puts url
 
         visit url
-      end
-      wait_for_xhr
+      
+        wait_for_xhr
 
-      # Close tour modal
-      page.execute_script("$('#closeInitialTourModal').trigger('click')")
+        # Close tour modal
+        page.execute_script("$('#closeInitialTourModal').trigger('click')")
 
-      # Close banner
-      if close_banner.present? && close_banner || close_banner.nil?
-        while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
-          page.execute_script("$('.banner-close').click()")
+        # Close banner
+        if close_banner.present? && close_banner || close_banner.nil?
+          while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0')
+            page.execute_script("$('.banner-close').click()")
+          end
         end
       end
     end
