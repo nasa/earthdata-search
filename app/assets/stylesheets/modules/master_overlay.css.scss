@@ -19,7 +19,7 @@
     color: $overlay-heading-font-color;
 
     #datasource-caveats {
-      padding: 0 20px;
+      margin-bottom: 5px;
       color: #aaa;
     }
 
@@ -66,7 +66,7 @@
 
 .master-overlay-header-title {
   font-size: 19px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .master-overlay-header-row-item {
@@ -340,7 +340,6 @@
   background: $master-overlay-info-bg-color;
   margin: 0;
   padding: 0px 20px 0 20px;
-  padding: 20px;
   color: $overlay-heading-font-color;
 
   .granule-filter-link {
@@ -404,6 +403,7 @@
 
 .master-overlay-info-granule-panel {
   flex-grow: 1;
+  width: 72%;
   border-right: 1px solid #e3e3e3;
   box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
   min-height: 95px;
@@ -441,6 +441,7 @@
     border: none;
     color: #fff;
     @include transition(background 0.2s ease-in-out);
+    line-height: normal; // Temporary override of master-overlay-info-granule-panel value
 
     &:hover {
       background: #219853;
@@ -465,10 +466,6 @@
   dl {
     margin: 0;
     padding: 0;
-  }
-
-  .card-row {
-    padding-bottom: 130px;
   }
 
   .card {
