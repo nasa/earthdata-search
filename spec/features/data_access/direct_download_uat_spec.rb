@@ -14,11 +14,13 @@ describe 'Direct download script UAT', reset: false do
       page.find('.button-download-data').click
       wait_for_xhr
 
-      click_link 'Download Access Script'
+      @uat_script_window = window_opened_by do
+        click_link 'Download Access Script'
+      end
     end
 
     it 'displays the correct URS path' do
-      within_last_window do
+      within_window(@uat_script_window) do
         expect(page.source).to have_content('machine uat.urs.earthdata.nasa.gov')
       end
     end

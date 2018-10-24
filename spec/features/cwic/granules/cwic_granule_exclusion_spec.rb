@@ -70,7 +70,9 @@ describe 'CWIC-enabled granule results', reset: false do
             click_on 'Submit'
             wait_for_xhr
 
-            click_on('View Download Links')
+            @cwic_links = window_opened_by do
+              click_on('View Download Links')
+            end
           end
 
           after :all do
@@ -83,7 +85,7 @@ describe 'CWIC-enabled granule results', reset: false do
           end
 
           it 'provides a list of download links for the remaining granules' do
-            within_last_window do
+            within_window(@cwic_links) do
               expect(page).to have_no_text('Loading more...')
               expect(page).to have_link('Granule download URL', count: 99)
             end

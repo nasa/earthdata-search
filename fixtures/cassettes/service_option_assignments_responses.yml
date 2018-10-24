@@ -10,7 +10,7 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 16:47:55 GMT
+      - Wed, 24 Oct 2018 17:59:06 GMT
       etag:
       - '"f0038fa38513c127df3205a97c505a59"'
       server:
@@ -18,7 +18,7 @@
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.792000'
+      - '0.601000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:

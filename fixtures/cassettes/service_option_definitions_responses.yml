@@ -10,7 +10,7 @@ b97abc4e0d107605e008cb8d17f96667f8123aa5:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 16:48:29 GMT
+      - Wed, 24 Oct 2018 17:59:42 GMT
       etag:
       - '"82ba3a95a699f68113943ffcd7f325ce"'
       server:
@@ -18,7 +18,7 @@ b97abc4e0d107605e008cb8d17f96667f8123aa5:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.343000'
+      - '0.098000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       transfer-encoding:
