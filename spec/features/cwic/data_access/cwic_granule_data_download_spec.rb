@@ -52,10 +52,13 @@ describe "CWIC-enabled data access", reset: false do
 
     context "and clicking the view download links button" do
       before(:all) do
-        click_on('View Download Links')
+        @cwic_links = window_opened_by do
+          click_on('View Download Links')
+        end
       end
       it 'presents a list of download links with associated link titles' do
-        within_last_window do
+        within_window(@cwic_links) do
+          Capybara::Screenshot.screenshot_and_open_image
           expect(page).to have_no_text('Loading more...')
           expect(page).to have_link('Granule download URL', count: 21)
           expect(page).to have_link('Browse image URL', count: 21)
@@ -79,11 +82,13 @@ describe "CWIC-enabled data access", reset: false do
       choose 'Direct Download'
       click_on 'Submit'
       wait_for_xhr
-      click_on('View Download Links')
+      @cwic_links = window_opened_by do
+        click_on('View Download Links')
+      end
     end
 
     it 'provides a list of download links for the single granule' do
-      within_last_window do
+      within_window(@cwic_links) do
         expect(page).to have_no_text('Loading more...')
         expect(page).to have_link('Granule download URL', count: 1)
         expect(page).to have_link('Browse image URL', count: 1)

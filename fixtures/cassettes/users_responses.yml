@@ -10,7 +10,7 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 16:50:13 GMT
+      - Wed, 24 Oct 2018 18:03:18 GMT
       etag:
       - '"4bddfd7c495724a3cb1f0c77995a0e81"'
       server:
@@ -18,7 +18,7 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.203000'
+      - '0.320000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -62,13 +62,13 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 16:49:45 GMT
+      - Wed, 24 Oct 2018 17:57:06 GMT
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.487000'
+      - '0.164000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -90,13 +90,13 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:09:51 GMT
+      - Wed, 24 Oct 2018 18:22:50 GMT
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.362000'
+      - '0.224000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:

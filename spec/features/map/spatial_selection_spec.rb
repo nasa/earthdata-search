@@ -275,40 +275,39 @@ describe "Spatial" do
     end
   end
 
-  context "polygon selection" do
-
-    it "doesn't show manual input text box" do
+  context 'polygon selection' do
+    it 'doesn\'t show manual input text box' do
       expect(page).not_to have_field('manual-coord-entry-container')
     end
 
-    it "filters collections using the selected polygon", intermittent: 1 do
+    it 'filters collections using the selected polygon' do
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km")
+      expect(page).to have_no_content('15 Minute Stream Flow Data: USGS')
+      expect(page).to have_content('MODIS/Aqua Aerosol 5-Min L2 Swath 3km')
     end
 
-    it "displays errors for invalid polygons", intermittent: 1 do
+    it 'displays errors for invalid polygons' do
       create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
       wait_for_xhr
-      expect(page).to have_content("The polygon boundary intersected itself at the following points:")
+      expect(page).to have_content('The polygon boundary intersected itself at the following points:')
     end
 
-    context "changing the polygon selection" do
+    context 'changing the polygon selection' do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
-        # expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km")
+        expect(page).to have_content('MODIS/Aqua Aerosol 5-Min L2 Swath 3km')
         create_polygon([77, -165], [72, -173], [67, -168], [69, -159])
         wait_for_xhr
       end
 
-      it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_no_content("Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050")
+      it 'updates the collection filters using the new bounding box selection' do
+        expect(page).to have_no_content('Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
       end
     end
 
-    context "removing the bounding box selection" do
+    context 'removing the bounding box selection' do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
@@ -317,8 +316,8 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050")
+      it 'removes the spatial bounding box collection filter' do
+        expect(page).to have_content('Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
       end
     end
   end

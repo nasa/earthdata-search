@@ -22,7 +22,13 @@ module Helpers
       # expect(page).to have_visible_overlay(overlay)
       root = from
       root = 'collection-results-list' if root == 'collection-results'
-      page.execute_script("$('##{root} .panel-list-item:contains(\"#{col_name}\")').click()")
+
+      # Execute with JS
+      # page.execute_script("$('##{root} .panel-list-item:contains(\"#{col_name}\")').click()")
+
+      # Execute with Ruby
+      page.find("##{root} .panel-list-item", text: col_name).click
+
       #item.click # This causes intermittent failures based on timing
       wait_for_xhr
       wait_for_visualization_load
@@ -36,7 +42,7 @@ module Helpers
     def leave_granule_results(to='collection-results')
       wait_for_xhr
       # expect(page).to have_visible_granule_list
-      page.execute_script("$('#granule-list a.master-overlay-back').click()")
+      page.find("#granule-list a.master-overlay-back").click
       #find('#granule-list').click_link('Back to Collections')
       wait_for_xhr
       wait_for_visualization_unload
@@ -45,12 +51,6 @@ module Helpers
       Capybara::Screenshot.screenshot_and_save_page
       puts "Visible overlay: #{OverlayUtil::current_overlay_id(page)}"
       raise e
-    end
-
-    def add_to_project(col_name)
-      wait_for_xhr
-      page.execute_script("$('#collection-results-list .panel-list-item:contains(\"#{col_name}\") a.add-to-project').click()")
-      wait_for_xhr
     end
 
     def hook_granule_results(col_name='15 Minute Stream Flow Data: USGS (FIFE)', scope=:all, from='collection-results')

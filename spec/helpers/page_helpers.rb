@@ -88,10 +88,10 @@ module Helpers
     def cmr_env
       query_params = Rack::Utils.parse_nested_query(URI.parse(page.current_url).query)
       
-      if page.get_rack_session.key?('cmr_env')
-        page.get_rack_session_key('cmr_env')
-      elsif %w(sit uat prod ops).include? query_params['cmr_env']
+      if %w(sit uat prod ops).include? query_params['cmr_env']
         query_params['cmr_env']
+      elsif page.get_rack_session.key?('cmr_env')
+        page.get_rack_session_key('cmr_env')
       elsif Rails.application.config.respond_to?(:cmr_env)
         Rails.configuration.cmr_env
       else

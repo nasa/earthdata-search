@@ -14,19 +14,17 @@ describe "CWIC-enabled granule visualizations", reset: false do
       wait_for_xhr
     end
 
-    it "displays a clear indication that fine-grained timeline information is unavailable on the timeline", acceptance: true do
+    it "displays a clear indication that fine-grained timeline information is unavailable on the timeline" do
       page.execute_script('$(".timeline-indeterminate").children().trigger("mouseover");')
       expect(page).to have_content('Specific Ranges Unavailable')
       page.execute_script('$(".timeline-indeterminate").children().trigger("mouseout");')
       expect(page).to have_selector('.timeline-data.timeline-indeterminate')
     end
 
-    it "shades the temporal extent of the parent collection on the timeline to indicate the general range of data", acceptance: true do
+    it "shades the temporal extent of the parent collection on the timeline to indicate the general range of data" do
       page.execute_script('$(".timeline-indeterminate").children().trigger("mouseover");')
       expect(page).to have_content('16 Mar 2001 to 01 Mar 2014')
       page.execute_script('$(".timeline-indeterminate").children().trigger("mouseout");')
-
     end
-
   end
 end
