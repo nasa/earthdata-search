@@ -131,9 +131,16 @@ class ApplicationController < ActionController::Base
                 session[:expires_in].present? &&
                 session[:logged_in_at].present?
 
+    if Rails.env.test?
+      config = YAML.load(ERB.new(File.read(Rails.root.join('spec/config.yml'))).result)
+      urs_tokens = config['urs_tokens']
+      logged_in = session[:access_token].present? && (session[:access_token] == urs_tokens['edsc'][cmr_env]['access_token'])
+    end
+
     if Rails.env.development?
-      Rails.logger.info "Access: #{session[:access_token]}"
+      Rails.logger.info "Access:  #{session[:access_token]}"
       Rails.logger.info "Refresh: #{session[:refresh_token]}"
+      Rails.logger.info "Expires: #{(Time.now + session[:expires_in]).strftime('%I:%M %p')}" if logged_in
     end
 
     store_oauth_token() unless logged_in

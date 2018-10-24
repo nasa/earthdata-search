@@ -87,7 +87,7 @@ module Helpers
     end
 
     def load_page(url, options = {})
-      close_banner = options.delete :close_banner
+      close_banner = options.delete(:close_banner)
 
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
         # Set supported session variables
@@ -98,7 +98,7 @@ module Helpers
         url = QueryBuilder.new.add_to(url, options)
 
         # Leave for debugging, comment out when not in use
-        puts url
+        # puts url
 
         visit url
       

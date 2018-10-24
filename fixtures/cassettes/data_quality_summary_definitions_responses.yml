@@ -10,7 +10,7 @@ f3e5b5ae968030c4d6c5d41d40dd679173e0dd8d:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:10 GMT
+      - Wed, 24 Oct 2018 17:59:53 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -18,7 +18,7 @@ f3e5b5ae968030c4d6c5d41d40dd679173e0dd8d:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.086000'
+      - '0.037000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -40,7 +40,7 @@ e41231718518e38b7441a424b364f550674d78d5:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:15:02 GMT
+      - Wed, 24 Oct 2018 18:00:37 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -48,7 +48,7 @@ e41231718518e38b7441a424b364f550674d78d5:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.055000'
+      - '0.069000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -70,7 +70,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:54 GMT
+      - Wed, 24 Oct 2018 18:00:51 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -78,7 +78,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.038000'
+      - '0.044000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -100,7 +100,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:37 GMT
+      - Wed, 24 Oct 2018 17:59:26 GMT
       etag:
       - '"f2880b005d691e51e570a803bf1f1c08"'
       server:
@@ -108,7 +108,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.237000'
+      - '0.184000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -119,6 +119,36 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       encoding: UTF-8
       string: '[{"reference":{"id":"FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/data_quality_summary_definitions/FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6","name":"ASTER
         Level 1 and 2 Additional Processing Times"}}]'
+    http_version: 
+ce236fad1fef592dd0f3fcc4f3e6e244554e897e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 24 Oct 2018 18:00:55 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.035000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
     http_version: 
 811a49119fb9472f4646b1db8db24f8e77c069f2:
   response:
@@ -131,7 +161,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:10:11 GMT
+      - Wed, 24 Oct 2018 18:00:50 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -139,7 +169,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.091000'
+      - '0.079000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -161,7 +191,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:55 GMT
+      - Wed, 24 Oct 2018 18:01:30 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -169,11 +199,11 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.062000'
+      - '0.054000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '2'
       connection:
       - Close
     body:
@@ -191,7 +221,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:50 GMT
+      - Wed, 24 Oct 2018 18:01:28 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -199,11 +229,11 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.168000'
+      - '0.038000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      content-length:
-      - '2'
+      transfer-encoding:
+      - chunked
       connection:
       - Close
     body:
@@ -221,7 +251,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:57 GMT
+      - Wed, 24 Oct 2018 18:00:58 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -229,7 +259,7 @@ b52052e50b10a7fa0e3e640899122bd5fbe122cc:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.043000'
+      - '0.044000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -251,7 +281,7 @@ c0b1d3afd3b228454cb7e7e890ebfcfcfdfecd39:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:15:30 GMT
+      - Wed, 24 Oct 2018 18:00:57 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -259,11 +289,11 @@ c0b1d3afd3b228454cb7e7e890ebfcfcfdfecd39:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.054000'
+      - '0.071000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '2'
       connection:
       - Close
     body:
@@ -281,7 +311,7 @@ c0b1d3afd3b228454cb7e7e890ebfcfcfdfecd39:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:08:42 GMT
+      - Wed, 24 Oct 2018 17:58:41 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -289,7 +319,7 @@ c0b1d3afd3b228454cb7e7e890ebfcfcfdfecd39:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.089000'
+      - '0.074000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -311,7 +341,7 @@ cd9a6d5281aaa36517179d5bd0562e89010f8f6a:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:14:08 GMT
+      - Wed, 24 Oct 2018 17:59:49 GMT
       etag:
       - '"d609f976663ebc6f11a73b42c7ac2cda"'
       server:
@@ -319,7 +349,7 @@ cd9a6d5281aaa36517179d5bd0562e89010f8f6a:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.124000'
+      - '0.172000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -339,6 +369,36 @@ cd9a6d5281aaa36517179d5bd0562e89010f8f6a:
           <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 
+496e91b48de3485e886a3d9b8fb8b7cf418d275f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 24 Oct 2018 17:56:05 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.068000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 6e5040c202c1f5b63f2c7a76f03365d71a3f62d9:
   response:
     status:
@@ -350,7 +410,7 @@ cd9a6d5281aaa36517179d5bd0562e89010f8f6a:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:06:36 GMT
+      - Wed, 24 Oct 2018 17:57:12 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -358,7 +418,7 @@ cd9a6d5281aaa36517179d5bd0562e89010f8f6a:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.154000'
+      - '0.036000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -380,7 +440,7 @@ d91a9edbd1341ec8a94ad7bc6249f106aa2ab3ee:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 16:47:54 GMT
+      - Wed, 24 Oct 2018 17:59:40 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -388,7 +448,7 @@ d91a9edbd1341ec8a94ad7bc6249f106aa2ab3ee:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.323000'
+      - '0.069000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -410,7 +470,7 @@ feaefd00ab60db5f037cca0fd462d0f6fe7b2010:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 16:48:43 GMT
+      - Wed, 24 Oct 2018 17:58:04 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -418,7 +478,37 @@ feaefd00ab60db5f037cca0fd462d0f6fe7b2010:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.043000'
+      - '0.059000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+eede3fe17d8472964dcd01b1ea2db3c12dba89d7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 24 Oct 2018 18:19:28 GMT
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.137000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -440,7 +530,7 @@ feaefd00ab60db5f037cca0fd462d0f6fe7b2010:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:09:47 GMT
+      - Wed, 24 Oct 2018 18:22:09 GMT
       etag:
       - '"d751713988987e9331980363e24189ce"'
       server:
@@ -448,7 +538,7 @@ feaefd00ab60db5f037cca0fd462d0f6fe7b2010:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.074000'
+      - '0.067000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:

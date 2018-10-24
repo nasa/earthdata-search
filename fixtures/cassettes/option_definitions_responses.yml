@@ -10,7 +10,7 @@ de4ffe8281fb8e51954b2cf9771e0e903f5bb460:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:07:31 GMT
+      - Wed, 24 Oct 2018 17:57:15 GMT
       etag:
       - '"15024e820fe40aebc67c8f26974c81c8"'
       server:
@@ -18,7 +18,7 @@ de4ffe8281fb8e51954b2cf9771e0e903f5bb460:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.116000'
+      - '0.045000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       transfer-encoding:

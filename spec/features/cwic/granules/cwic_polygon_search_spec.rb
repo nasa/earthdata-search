@@ -16,11 +16,11 @@ describe "CWIC-enabled polygon searches", reset: false do
     context "viewing CWIC granule results" do
       hook_granule_results(cwic_collection_name)
 
-      it "displays an indication that the search has been reduced to its minimum bounding rectangle", acceptance: true do
+      it "displays an indication that the search has been reduced to its minimum bounding rectangle" do
         expect(page).to have_selector('path[stroke-dasharray="2, 10"][stroke="#ff0000"]')
       end
 
-      it "filters the result list based on the minimum bounding rectangle", acceptance: true do
+      it "filters the result list based on the minimum bounding rectangle" do
         expect(page).to have_content("Showing 20")
         params = page.evaluate_script('edsc.page.project.focus().collection.granuleDatasource().toQueryParams()')
         expect(params).to have_key('mbr')
@@ -59,7 +59,7 @@ describe "CWIC-enabled polygon searches", reset: false do
         leave_granule_results
       end
 
-      it "presents no message explaining that the search has been reduced", acceptance: true do
+      it "presents no message explaining that the search has been reduced" do
         expect(page).not_to have_popover('Polygon Searches Unavailable')
       end
     end
@@ -70,16 +70,16 @@ describe "CWIC-enabled polygon searches", reset: false do
         leave_granule_results
       end
 
-      it "restores the original polygon search condition display", acceptance: true do
+      it "restores the original polygon search condition display" do
         expect(page).not_to have_selector('path[stroke-dasharray="2, 10"][stroke="#ff0000"]')
       end
 
-      it "restores the original polygon search condition", acceptance: true do
+      it "restores the original polygon search condition" do
         spatial = page.evaluate_script('edsc.page.query.spatial()')
         expect(spatial).to start_with('polygon')
       end
 
-      it "removes messages explaining that the search has been reduced", acceptance: true do
+      it "removes messages explaining that the search has been reduced" do
         expect(page).not_to have_popover('Polygon Searches Unavailable')
       end
     end
@@ -95,15 +95,15 @@ describe "CWIC-enabled polygon searches", reset: false do
 
     hook_granule_results("ASTER L1A Reconstructed Unprocessed Instrument Data V003")
 
-    it "does not display an indication that the search has been reduced to its minimum bounding rectangle", acceptance: true do
+    it "does not display an indication that the search has been reduced to its minimum bounding rectangle" do
       expect(page).not_to have_selector('path[stroke-dasharray="2, 10"][stroke="#ff0000"]')
     end
 
-    it "does not present a message explaining that the search has been reduced", acceptance: true do
+    it "does not present a message explaining that the search has been reduced" do
       expect(page).not_to have_popover('Polygon Searches Unavailable')
     end
 
-    it "filters the result list based on the polygon constraint", acceptance: true do
+    it "filters the result list based on the polygon constraint" do
       params = page.evaluate_script('edsc.page.project.focus().collection.granuleDatasource().toQueryParams()')
       expect(params).not_to have_key('mbr')
       expect(params).to have_key('polygon')

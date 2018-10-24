@@ -10,22 +10,22 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 22 Oct 2018 17:06:59 GMT
+      - Wed, 24 Oct 2018 17:57:17 GMT
       etag:
       - '"3b1aec694d253feccf23d150d093fccc"'
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZjM3YjJlYWM2ZTNhMzY3MTkzNWNlNmQyNzNjZmIwMWY%3D--31e857d0c8a4f15254c406ddfcb796e1b8006862;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlM2E5ZDExNTgzNGUzZTcxNzYxYzg0YzY0NDEyZjRiZTM%3D--08121bac5b4c84adb4b2dcfe423c70326d43663e;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '2.489000'
+      - '0.681000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '8961'
       connection:
       - Close
     body:
