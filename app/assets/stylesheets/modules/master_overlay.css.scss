@@ -172,6 +172,14 @@
     background: rgba(236, 240, 241,1.0);
   }
 
+  .master-overlay-content-light {
+    background: #fff;
+  }
+
+  .master-overlay-content-padding {
+    padding: 0 20px 20px;
+  }
+
   .tab-pane {
 
     width: 100%;
@@ -339,7 +347,7 @@
 .master-overlay-info {
   background: $master-overlay-info-bg-color;
   margin: 0;
-  padding: 0px 20px 0 20px;
+  padding: 20px;
   color: $overlay-heading-font-color;
 
   .granule-filter-link {
