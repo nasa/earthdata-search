@@ -59,14 +59,13 @@
   }
 }
 
-.master-overlay-header-info {
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .master-overlay-header-title {
   font-size: 19px;
   margin-bottom: 5px;
+}
+
+.master-overlay-header-row {
+  margin-top: 15px;
 }
 
 .master-overlay-header-row-item {
@@ -345,9 +344,10 @@
 }
 
 .master-overlay-info {
+  display: flex;
+  flex-shrink: 0;
   background: $master-overlay-info-bg-color;
   margin: 0;
-  padding: 20px;
   color: $overlay-heading-font-color;
 
   .granule-filter-link {
@@ -406,6 +406,14 @@
 
   em {
     font-weight: bold;
+  }
+}
+
+.master-overlay-info-panel {
+  padding: 20px;
+
+  #granule-list & {
+    padding: 15px 20px 10px;
   }
 }
 
