@@ -18,7 +18,8 @@ module Helpers
     def manually_create_point(lat=0, lon=0)
       page.find('a[title="Spatial"]').click
       page.find('a[title="Select Point"]').click
-      fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}\t"
+      fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}"
+      page.find('body').click
     end
 
     def create_point(lat=0, lon=0)
@@ -28,8 +29,10 @@ module Helpers
     def manually_create_bounding_box(swlat=0, swlon=0, nelat=0, nelon=0)
       page.find('a[title="Spatial"]').click
       page.find('a[title="Select Rectangle"]').click
-      fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}\t"
-      fill_in 'manual-coord-entry-nepoint', with: "#{nelat},#{nelon}\t"
+      fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}"
+      fill_in 'manual-coord-entry-nepoint', with: "#{nelat},#{nelon}"
+      page.find('body').click
+      wait_for_xhr
     end
 
     def create_bounding_box(lat0=0, lon0=0, lat1=10, lon1=10)
@@ -49,11 +52,8 @@ module Helpers
     end
 
     def clear_spatial
-      script = """
-        edsc.models.page.current.query.spatial(null);
-        edsc.models.page.current.ui.spatialType.selectNone();
-      """
-      page.execute_script(script)
+      page.find('a[title="Clear spatial constraint"]').click
+      wait_for_xhr
     end
 
     def upload_shapefile(path)
