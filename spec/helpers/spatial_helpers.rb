@@ -5,8 +5,18 @@ module Helpers
       # CSS mouseovers in capybara are screwy, so this is a bit of a hack
       # And selenium freaks out if we try to use jQuery to do this
       # We resort to dealing directly with the click handler
-      script = "edsc.models.page.current.ui.spatialType.select#{name}()"
-      page.execute_script(script)
+      # script = "edsc.models.page.current.ui.spatialType.select#{name}()"
+      # page.execute_script(script)
+
+      # page.find('a[title="Spatial"]').click
+      # page.find('a[title="Select Point"]').click
+
+      page.find('.spatial-dropdown-button').click
+      # TODO: This has to go
+      Capybara::Screenshot.screenshot_and_open_image
+      within('ul.spatial-selection') do
+        page.find('a', class: "select-#{name.downcase}").click
+      end
     end
 
     def choose_tool_from_map_toolbar(name)
@@ -16,8 +26,9 @@ module Helpers
     end
 
     def manually_create_point(lat=0, lon=0)
-      page.find('a[title="Spatial"]').click
-      page.find('a[title="Select Point"]').click
+      # page.find('a[title="Spatial"]').click
+      # page.find('a[title="Select Point"]').click
+      choose_tool_from_site_toolbar('Point')
       fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}"
       page.find('body').click
     end
@@ -27,8 +38,7 @@ module Helpers
     end
 
     def manually_create_bounding_box(swlat=0, swlon=0, nelat=0, nelon=0)
-      page.find('a[title="Spatial"]').click
-      page.find('a[title="Select Rectangle"]').click
+      choose_tool_from_site_toolbar('Rectangle')
       fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}"
       fill_in 'manual-coord-entry-nepoint', with: "#{nelat},#{nelon}"
       page.find('body').click
@@ -49,6 +59,20 @@ module Helpers
 
     def create_antarctic_rectangle(*points)
       create_spatial('antarctic-rectangle', *points)
+    end
+
+    def manually_create_arctic_rectangle(*points)
+      find('.projection-switcher-arctic').click
+      wait_for_xhr
+
+      manually_create_bounding_box(*points)
+    end
+
+    def manually_create_antarctic_rectangle(*points)
+      find('.projection-switcher-antarctic').click
+      wait_for_xhr
+
+      manually_create_bounding_box(*points)
     end
 
     def clear_spatial
