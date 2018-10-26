@@ -5,7 +5,7 @@ module MapUtil
   end
 
   def self.spatial(page)
-    page.evaluate_script('edsc.models.page.current.query.spatial()')
+    page.execute_script('edsc.models.page.current.query.spatial()')
   end
 end
 
@@ -88,10 +88,10 @@ end
 
 RSpec::Matchers.define :match_map_center do |expected_lat, expected_lng|
   def map_params(page)
-    page.evaluate_script("(function() {
+    page.execute_script("
        var center = $('#map').data('map').map.getCenter();
        return [center.lat, center.lng];
-    })();")
+    ")
   end
 
   match do |page|
@@ -116,11 +116,11 @@ RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected
     #query = URI.parse(page.current_url).query
     #param_str = query[/(?:&|^)m=([\d.!]+)/, 1]
     #param_str.split('!').map(&:to_f) if param_str.present?
-    page.evaluate_script("(function() {
+    page.execute_script("
        var map = $('#map').data('map').map;
        var center = map.getCenter();
        return [center.lat, center.lng, map.getZoom()];
-    })();")
+    ")
   end
 
   match do |page|
@@ -142,7 +142,7 @@ end
 RSpec::Matchers.define :have_gibs_resolution do |expected|
   def page_resolution(page)
     script = "var resolution = null; var layers = $('#map').data('map').map._layers; for (var k in layers) { var layer = layers[k]; if (layer.multiOptions && layer.getTileUrl && layer._map) resolution = layer.options.resolution } resolution"
-    page.evaluate_script(script)
+    page.execute_script(script)
   end
 
   match do |page|

@@ -24,7 +24,6 @@ describe 'Base layer date display' do
   context 'when viewing a time-independent base layer' do
     before(:all) do
       page.find('.leaflet-control-layers').hover
-      # Capybara::Screenshot.screenshot_and_open_image
       choose 'Land / Water Map'
     end
 

@@ -15,14 +15,14 @@ describe 'Collection details', reset: false do
     it 'those details provide the expected collection data', pending_updates: true do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LP DAACARCHIVER')
-        expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR')
+        expect(page).to have_content('LP DAAC ARCHIVER')
+        expect(page).to have_content('JP/METI/AIST/JSS/GDS PROCESSOR')
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 003')
         expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116')
         expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 2000-03-04 ongoing')
-        expect(page).to have_content('Science Keywords: EARTH SCIENCESPECTRAL/ENGINEERINGINFRARED WAVELENGTHS EARTH SCIENCESPECTRAL/ENGINEERINGVISIBLE WAVELENGTHS')
+        expect(page).to have_content('Science Keywords: EARTH SCIENCE SPECTRAL/ENGINEERING INFRARED WAVELENGTHS EARTH SCIENCE SPECTRAL/ENGINEERING VISIBLE WAVELENGTHS')
       end
     end
 
@@ -71,12 +71,12 @@ describe 'Collection details', reset: false do
     it 'displays the collection details' do
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
-        expect(page).to have_content('EDF_OPSDISTRIBUTOR ARCHIVER')
+        expect(page).to have_content('EDF_OPS DISTRIBUTOR ARCHIVER')
         expect(page).to have_content('SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
         expect(page).to have_content('Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
         expect(page).to have_content('Temporal Extent: 2015-03-31 to 2020-12-31')
-        expect(page).to have_content('Science Keywords: EARTH SCIENCELAND SURFACESOILS')
+        expect(page).to have_content('Science Keywords: EARTH SCIENCE LAND SURFACE SOILS')
       end
     end
 
@@ -112,7 +112,7 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection's detail page with no errors" do
-      expect(page).to have_content('JP/JAXA/SAOCARCHIVER')
+      expect(page).to have_content('JP/JAXA/SAOC ARCHIVER')
     end
   end
 
@@ -244,13 +244,13 @@ describe 'Collection details', reset: false do
     end
   end
 
-  context 'when selecting a collection with multiple data centers', pending_updates: true do
+  context 'when selecting a collection with multiple data centers', data_specific: true do
     before :all do
       load_page '/search/collection-details', focus: 'C179460405-LPDAAC_ECS'
     end
-    # FIXME Data specific result failing
+    
     it 'displays all data center content' do
-      expect(page).to have_content('JP/METI/AIST/JSS/GDSPROCESSOR LP DAACARCHIVER')
+      expect(page).to have_content('JP/METI/AIST/JSS/GDS PROCESSOR LP DAAC ARCHIVER')
     end
   end
 
@@ -292,20 +292,20 @@ describe 'Collection details', reset: false do
 
       it 'displays types and subtypes of related urls' do
         within '#related-urls-modal' do
-          expect(page).to have_content 'GET DATALANCE'
+          expect(page).to have_content 'GET DATA LANCE'
         end
       end
 
       it 'displays urls in alphabetical order' do
         within '#related-urls-modal' do
-          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATIONALGORITHM THEORETICAL BASIS DOCUMENT https://www.example.com VIEW RELATED INFORMATIONGENERAL DOCUMENTATION www.lpdaac.org'
+          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATION ALGORITHM THEORETICAL BASIS DOCUMENT https://www.example.com VIEW RELATED INFORMATION GENERAL DOCUMENTATION www.lpdaac.org'
         end
       end
 
       it "doesn't display EDSC or Reverb URLs" do
         within '#related-urls-modal' do
-          expect(page).not_to have_content 'GET DATAEARTHDATA SEARCH'
-          expect(page).not_to have_content 'GET DATAREVERB'
+          expect(page).not_to have_content 'GET DATA EARTHDATA SEARCH'
+          expect(page).not_to have_content 'GET DATA REVERB'
         end
       end
     end

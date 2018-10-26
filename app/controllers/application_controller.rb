@@ -134,7 +134,15 @@ class ApplicationController < ActionController::Base
     if Rails.env.test?
       config = YAML.load(ERB.new(File.read(Rails.root.join('spec/config.yml'))).result)
       urs_tokens = config['urs_tokens']
-      logged_in = session[:access_token].present? && (session[:access_token] == urs_tokens['edsc'][cmr_env]['access_token'])
+      begin
+        logged_in = session[:access_token].present? && (session[:access_token] == urs_tokens['edsc'][cmr_env]['access_token'])
+      rescue Exception => e
+        puts e
+        puts "CMR Env: #{cmr_env}"
+        puts "Session: #{session}"
+        puts "URS Tokens: #{urs_tokens}"
+        puts "URS ENV Token: #{urs_tokens['edsc'][cmr_env]}"
+      end
     end
 
     if Rails.env.development?
