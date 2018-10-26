@@ -635,7 +635,7 @@ describe 'Address bar', reset: false do
   context 'when changing the base layer' do
     before :all do
       load_page :search
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
       within '#map' do
         choose 'Land / Water Map'
       end
@@ -664,7 +664,7 @@ describe 'Address bar', reset: false do
     before :all do
       load_page :search
       wait_for_xhr
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
       within '#map' do
         check 'Borders and Roads'
         check 'Coastlines'

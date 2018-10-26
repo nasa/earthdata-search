@@ -1,19 +1,7 @@
 module Helpers
   module SpatialHelpers
-
     def choose_tool_from_site_toolbar(name)
-      # CSS mouseovers in capybara are screwy, so this is a bit of a hack
-      # And selenium freaks out if we try to use jQuery to do this
-      # We resort to dealing directly with the click handler
-      # script = "edsc.models.page.current.ui.spatialType.select#{name}()"
-      # page.execute_script(script)
-
-      # page.find('a[title="Spatial"]').click
-      # page.find('a[title="Select Point"]').click
-
       page.find('.spatial-dropdown-button').click
-      # TODO: This has to go
-      Capybara::Screenshot.screenshot_and_open_image
       within('ul.spatial-selection') do
         page.find('a', class: "select-#{name.downcase}").click
       end
@@ -26,9 +14,8 @@ module Helpers
     end
 
     def manually_create_point(lat=0, lon=0)
-      # page.find('a[title="Spatial"]').click
-      # page.find('a[title="Select Point"]').click
       choose_tool_from_site_toolbar('Point')
+
       fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}"
       page.find('body').click
     end
@@ -39,8 +26,10 @@ module Helpers
 
     def manually_create_bounding_box(swlat=0, swlon=0, nelat=0, nelon=0)
       choose_tool_from_site_toolbar('Rectangle')
+
       fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}"
       fill_in 'manual-coord-entry-nepoint', with: "#{nelat},#{nelon}"
+
       page.find('body').click
       wait_for_xhr
     end
@@ -76,8 +65,11 @@ module Helpers
     end
 
     def clear_spatial
-      page.find('a[title="Clear spatial constraint"]').click
-      wait_for_xhr
+      if page.has_link?('Clear spatial constraint')
+        page.find('a[title="Clear spatial constraint"]').click
+
+        wait_for_xhr
+      end
     end
 
     def upload_shapefile(path)
@@ -121,15 +113,17 @@ module Helpers
 
     def map_position_event(event, selector='#map', lat=10, lng=10, x=10, y=10)
       script = """
-               var target = $('#{selector}')[0];
-               var map = window.edsc.page.map.map;
-               var latLng = L.latLng(#{lat}, #{lng});
-               var e = {containerPoint: map.latLngToContainerPoint(latLng),
-                        originalEvent: {target: target},
-                        layerPoint: map.latLngToLayerPoint(latLng),
-                        latlng: latLng};
-               map.fire('#{event}', e);
-               null;
+        var target = $('#{selector}')[0];
+        var map = window.edsc.page.map.map;
+        var latLng = L.latLng(#{lat}, #{lng});
+        var e = {
+          containerPoint: map.latLngToContainerPoint(latLng),
+          originalEvent: {
+            target: target
+          },
+          layerPoint: map.latLngToLayerPoint(latLng),
+          latlng: latLng};
+        map.fire('#{event}', e);
       """
       page.execute_script(script)
     end
