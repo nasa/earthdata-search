@@ -990,6 +990,158 @@ b11fd2353ff2f4f5ae3c02897aa38976f2bf744f:
         (YCELP), and the Columbia University Center for International Earth Science
         Information Network (CIESIN).","time_end":"1999-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179001887-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/esi/esi-pilot-environmental-sustainability-index-2000/sedac-logo.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.7927/H4NK3BZJ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-2000/data-download"}]}'
     http_version: 
+e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 75ea1eef-8ac9-49f7-8167-ee09b5757df0
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
+      date:
+      - Fri, 26 Oct 2018 14:07:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '3462'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"CollectionCitations":[{"Creator":"World Economic Forum - WEF - Global
+        Leaders for Tomorrow Environment Task Force, Yale Center for Environmental
+        Law and Policy - YCELP - Yale University, and Center for International Earth
+        Science Information   Network - CIESIN - Columbia University","ReleasePlace":"Palisades,
+        NY","Title":"2000 Pilot Environmental Sustainability Index (ESI)","OnlineResource":{"Linkage":"https://doi.org/10.7927/H4NK3BZJ"},"Publisher":"NASA
+        Socioeconomic Data and Applications Center (SEDAC)","ReleaseDate":"2000-01-01T00:00:00.000Z"}],"LocationKeywords":[{"Category":"CONTINENT","Type":"AFRICA"},{"Category":"CONTINENT","Type":"SOUTH
+        AMERICA","Subregion1":"ARGENTINA"},{"Category":"CONTINENT","Type":"ASIA"},{"Category":"CONTINENT","Type":"AUSTRALIA/NEW
+        ZEALAND","Subregion1":"AUSTRALIA"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"AUSTRIA"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"BELGIUM"},{"Category":"CONTINENT","Type":"SOUTH AMERICA","Subregion1":"BOLIVIA"},{"Category":"CONTINENT","Type":"SOUTH
+        AMERICA","Subregion1":"BRAZIL"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"EASTERN
+        EUROPE","Subregion2":"BULGARIA"},{"Category":"CONTINENT","Type":"NORTH AMERICA","Subregion1":"CANADA"},{"Category":"CONTINENT","Type":"NORTH
+        AMERICA","Subregion1":"CENTRAL AMERICA"},{"Category":"CONTINENT","Type":"SOUTH
+        AMERICA","Subregion1":"CHILE"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"EASTERN
+        ASIA","Subregion2":"CHINA"},{"Category":"CONTINENT","Type":"SOUTH AMERICA","Subregion1":"COLOMBIA"},{"Category":"CONTINENT","Type":"NORTH
+        AMERICA","Subregion1":"CENTRAL AMERICA","Subregion2":"COSTA RICA"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"EASTERN
+        EUROPE","Subregion2":"CZECH REPUBLIC"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN
+        EUROPE","Subregion2":"SCANDINAVIA","Subregion3":"DENMARK"},{"Category":"CONTINENT","Type":"SOUTH
+        AMERICA","Subregion1":"ECUADOR"},{"Category":"CONTINENT","Type":"AFRICA","Subregion1":"NORTHERN
+        AFRICA","Subregion2":"EGYPT"},{"Category":"CONTINENT","Type":"NORTH AMERICA","Subregion1":"CENTRAL
+        AMERICA","Subregion2":"EL SALVADOR"},{"Category":"CONTINENT","Type":"EUROPE"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN
+        EUROPE","Subregion2":"SCANDINAVIA","Subregion3":"FINLAND"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"FRANCE"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"GERMANY"},{"Category":"GEOGRAPHIC REGION","Type":"GLOBAL"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"SOUTHERN
+        EUROPE","Subregion2":"GREECE"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"EASTERN
+        EUROPE","Subregion2":"HUNGARY"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN
+        EUROPE","Subregion2":"ICELAND"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"SOUTHCENTRAL
+        ASIA","Subregion2":"INDIA"},{"Category":"OCEAN","Type":"INDIAN OCEAN","Subregion1":"INDONESIA"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN
+        EUROPE","Subregion2":"BRITISH ISLES","Subregion3":"IRELAND"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"WESTERN
+        ASIA","Subregion2":"MIDDLE EAST","Subregion3":"ISRAEL"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"SOUTHERN
+        EUROPE","Subregion2":"ITALY"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"EASTERN
+        ASIA","Subregion2":"JAPAN"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"WESTERN
+        ASIA","Subregion2":"MIDDLE EAST","Subregion3":"JORDAN"},{"Category":"OCEAN","Type":"INDIAN
+        OCEAN","Subregion1":"MALAYSIA"},{"Category":"OCEAN","Type":"INDIAN OCEAN","Subregion1":"MAURITIUS"},{"Category":"CONTINENT","Type":"NORTH
+        AMERICA","Subregion1":"MEXICO"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"WESTERN
+        ASIA","Subregion2":"MIDDLE EAST"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"NETHERLANDS"},{"Category":"CONTINENT","Type":"AUSTRALIA/NEW
+        ZEALAND","Subregion1":"NEW ZEALAND"},{"Category":"CONTINENT","Type":"NORTH
+        AMERICA"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"EASTERN ASIA","Subregion2":"NORTH
+        KOREA"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN EUROPE","Subregion2":"SCANDINAVIA","Subregion3":"NORWAY"},{"Category":"GEOGRAPHIC
+        REGION","Type":"OCEANIA"},{"Category":"CONTINENT","Type":"SOUTH AMERICA","Subregion1":"PERU"},{"Category":"OCEAN","Type":"PACIFIC
+        OCEAN","Subregion1":"WESTERN PACIFIC OCEAN","Subregion2":"PHILIPPINES"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"EASTERN
+        EUROPE","Subregion2":"POLAND"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"PORTUGAL"},{"Category":"OCEAN","Type":"INDIAN OCEAN","Subregion1":"SINGAPORE"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"EASTERN
+        EUROPE","Subregion2":"SLOVAKIA"},{"Category":"CONTINENT","Type":"AFRICA","Subregion1":"SOUTHERN
+        AFRICA","Subregion2":"SOUTH AFRICA"},{"Category":"CONTINENT","Type":"SOUTH
+        AMERICA"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"EASTERN ASIA","Subregion2":"SOUTH
+        KOREA"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"SOUTHERN EUROPE","Subregion2":"SPAIN"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN
+        EUROPE","Subregion2":"SCANDINAVIA","Subregion3":"SWEDEN"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"WESTERN
+        EUROPE","Subregion2":"SWITZERLAND"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"SOUTHEASTERN
+        ASIA","Subregion2":"THAILAND"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"WESTERN
+        ASIA","Subregion2":"TURKEY"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"EASTERN
+        EUROPE","Subregion2":"UKRAINE"},{"Category":"CONTINENT","Type":"EUROPE","Subregion1":"NORTHERN
+        EUROPE","Subregion2":"BRITISH ISLES","Subregion3":"UNITED KINGDOM"},{"Category":"CONTINENT","Type":"SOUTH
+        AMERICA","Subregion1":"VENEZUELA"},{"Category":"CONTINENT","Type":"ASIA","Subregion1":"SOUTHEASTERN
+        ASIA","Subregion2":"VIETNAM"},{"Category":"CONTINENT","Type":"AFRICA","Subregion1":"EASTERN
+        AFRICA","Subregion2":"ZIMBABWE"}],"MetadataDates":[{"Date":"2012-12-12T00:00:00.000Z","Type":"CREATE"},{"Date":"2018-10-03T00:00:00.000Z","Type":"UPDATE"}],"ISOTopicCategories":["ENVIRONMENT","HEALTH","SOCIETY"],"ShortName":"CIESIN_SEDAC_ESI_2000","Abstract":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an index that measures the ability of a nation''s economy to
+        achieve sustainable development, with the long term goal of finding a single
+        indicator for environmental sustainability analogous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is a composite measure
+        of the current status of a nation''s environmental systems, pressures on those
+        systems, human vulnerability to environmental change, national capacity to
+        respond, and contributions to global environmental stewardship. The index
+        was unveiled at the World Economic Forum''s annual meeting, January 2000,
+        Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration among
+        the World Economic Forum (WEF), Yale Center for Environmental Law and Policy
+        (YCELP), and the Columbia University Center for International Earth Science
+        Information Network (CIESIN).","DirectoryNames":[{"ShortName":"USA/CIESIN"}],"Purpose":"To
+        test the feasibility of creating a comparative index of national-level environmental
+        sustainability.","PublicationReferences":[{"PublicationDate":"2001-01-01T00:00:00.000Z","Title":"2001
+        Environmental Sustainability Index (ESI)","DOI":{"DOI":"10.7927/H4X34VDM"},"OnlineResource":{"Linkage":"https://doi.org/10.7927/H4X34VDM"},"Publisher":"NASA
+        Socioeconomic Data and Applications Center (SEDAC)","Author":"World Economic
+        Forum - WEF - Global Leaders for Tomorrow Environment Task Force, Yale Center
+        for Environmental Law and Policy -   YCELP - Yale University, and Center for
+        International Earth Science Information Network - CIESIN - Columbia University","PublicationPlace":"Palisades,
+        NY"},{"PublicationDate":"2002-01-01T00:00:00.000Z","Title":"2002 Environmental
+        Sustainability Index (ESI)","DOI":{"DOI":"10.7927/H4SB43P8"},"OnlineResource":{"Linkage":"https://doi.org/10.7927/H4SB43P8"},"Publisher":"NASA
+        Socioeconomic Data and Applications Center (SEDAC)","Author":"World Economic
+        Forum - WEF - Global Leaders for Tomorrow Environment Task Force, Yale Center
+        for Environmental Law and Policy -   YCELP - Yale University, and Center for
+        International Earth Science Information Network - CIESIN - Columbia University","PublicationPlace":"Palisades,
+        NY"},{"PublicationDate":"2005-01-01T00:00:00.000Z","Title":"2005 Environmental
+        Sustainability Index (ESI)","DOI":{"DOI":"10.7927/H40V89R6"},"OnlineResource":{"Linkage":"https://doi.org/10.7927/H40V89R6"},"Publisher":"NASA
+        Socioeconomic Data and Applications Center (SEDAC)","Author":"Yale Center
+        for Environmental Law and Policy - YCELP - Yale University, Center for International
+        Earth Science Information Network - CIESIN - Columbia University, World Economic
+        Forum - WEF, and Joint Research Centre - JRC - European Commission","PublicationPlace":"Palisades,
+        NY"}],"DOI":{"DOI":"10.7927/H4NK3BZJ"},"RelatedUrls":[{"URLContentType":"VisualizationURL","Type":"GET
+        RELATED VISUALIZATION","URL":"http://sedac.ciesin.columbia.edu/downloads/maps/esi/esi-pilot-environmental-sustainability-index-2000/sedac-logo.jpg"},{"Description":"Data
+        Set DOI URL and Homepage","URLContentType":"PublicationURL","Type":"VIEW RELATED
+        INFORMATION","Subtype":"GENERAL DOCUMENTATION","URL":"https://doi.org/10.7927/H4NK3BZJ"},{"Description":"Data
+        Download Page","URLContentType":"DistributionURL","Type":"GET DATA","URL":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-2000/data-download"}],"DataDates":[{"Date":"2000-01-01T00:00:00.000Z","Type":"CREATE"},{"Date":"2000-01-01T00:00:00.000Z","Type":"UPDATE"}],"AccessConstraints":{"Description":"None"},"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-55.0}]}},"GranuleSpatialRepresentation":"CARTESIAN"},"ContactGroups":[{"Roles":["Metadata
+        Author"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"metadata@ciesin.columbia.edu"},{"Type":"Telephone","Value":"+1
+        845-365-8988"},{"Type":"Fax","Value":"+1 845-365-8922"}],"Addresses":[{"StreetAddresses":["61
+        Route 9W, P.O. Box 1000"],"City":"Palisades","StateProvince":"New York","Country":"USA","PostalCode":"10964"}]},"GroupName":"CIESIN
+        METADATA ADMINISTRATION"},{"Roles":["Technical Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"ciesin.info@ciesin.columbia.edu"},{"Type":"Telephone","Value":"+1
+        845-365-8920"},{"Type":"Fax","Value":"+1 845-365-8922"}],"Addresses":[{"StreetAddresses":["61
+        Route 9W, P.O. Box 1000"],"City":"Palisades","StateProvince":"New York","Country":"USA","PostalCode":"10964"}]},"GroupName":"SEDAC
+        USER SERVICES"}],"AdditionalAttributes":[{"Group":"gov.nasa.gsfc.gcmd","Value":"2017-08-29:docbuilder;2017-08-31:docbuilder;2017-09-28:docbuilder;2017-10-16:docbuilder;2017-10-16:docbuilder;2018-04-17:docbuilder;2018-07-10:docbuilder;2018-07-12:docbuilder;2018-07-26:docbuilder;2018-07-27:docbuilder;2018-10-02:docbuilder;2018-10-02:docbuilder;2018-10-02:docbuilder;2018-10-03:docbuilder","Name":"metadata.tool","Description":"Not
+        provided","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH SCIENCE","Topic":"HUMAN
+        DIMENSIONS","Term":"SUSTAINABILITY","VariableLevel1":"ENVIRONMENTAL SUSTAINABILITY"}],"EntryTitle":"2000
+        Pilot Environmental Sustainability Index (ESI)","Distributions":[{"DistributionFormat":"PDF","Fees":"0"},{"DistributionFormat":"PowerPoint","Fees":"0"}],"CollectionProgress":"COMPLETE","CollectionDataType":"SCIENCE_QUALITY","UseConstraints":{"Description":{"Description":"Users
+        are free to use, copy, distribute, transmit, and adapt the work for commercial
+        and non-commercial purposes, without restriction, as long as clear attribution
+        of the source is provided."}},"AncillaryKeywords":["Administrative Regions","Basic
+        Human Sustenance","Biodiversity Loss","Disasters Exposure","Eco-Efficiency","Ecosystem
+        Stress","Environmental Change","Environmental Condition Tracking","Environmental
+        Management","Environmental Regulations","Environmental Stresses","Environmental
+        Sustainability Index","Environmental Systems","ESI","GDP","Global Commons
+        Impact","Global Environmental Stewardship","Global Stewardship","Human Vulnerability","Institutional
+        Capacity","International Environmental Cooperation","Policy Debate Capacity","Population
+        Growth Rate","Population Stress","Pressure State Response Framework","Public
+        Choice Failures","Science Capacity","Social Capacity","Technical Capacity","Urban
+        Air Quality","Waste Consumption Pressure","Waste Production","Waste Production
+        Pressure","Sustainability Indicators","Governance","Sustainability"],"ProcessingLevel":{"Id":"4"},"Platforms":[{"Type":"Models/Analyses","ShortName":"MODELS","Instruments":[{"ShortName":"Computer","LongName":"Computer"}]}],"Projects":[{"ShortName":"ESI","LongName":"Environmental
+        Sustainability Index"}],"Version":"2000.00","TemporalExtents":[{"EndsAtPresentFlag":false,"RangeDateTimes":[{"BeginningDateTime":"1978-01-01T00:00:00.000Z","EndingDateTime":"1999-12-31T00:00:00.000Z"}]}],"DataCenters":[{"Roles":["ARCHIVER","DISTRIBUTOR"],"ShortName":"SEDAC","LongName":"Socioeconomic
+        Data and Applications Center","ContactGroups":[{"Roles":["Data Center Contact"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"ciesin.info@ciesin.columbia.edu"},{"Type":"Telephone","Value":"+1
+        845-365-8920"},{"Type":"Fax","Value":"+1 845-365-8922"}],"Addresses":[{"StreetAddresses":["61
+        Route 9W, P.O. Box 1000"],"City":"Palisades","StateProvince":"NY","Country":"USA","PostalCode":"10964"}]},"GroupName":"SEDAC
+        USER SERVICES"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://sedac.ciesin.columbia.edu"}]}}],"DataLanguage":"eng"}'
+    http_version: 
 23f7dd4583c54926941e03d41615b0bfe6566895:
   response:
     status:
@@ -1162,6 +1314,39 @@ dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5:
         Yale Center for Environmental Law and Policy (YCELP) and the Columbia University
         Center for International Earth Science Information Network (CIESIN).","time_end":"2009-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179002147-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/epi/epi-environmental-performance-index-2010/sedac-logo.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.7927/H4D21VHT"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/maps/services"}]}'
     http_version: 
+646ffaf1187db328f7f13ee0b27e85a6e31a2846:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 703ac13f-74e2-477d-9518-9c0f3652a26d
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 26 Oct 2018 14:15:52 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '632'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["39.08 -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"FIFE_RAIN_30M_2","organizations":["ORNL_DAAC"],"title":"30
+        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
+        minute rainfall data for the Konza Prairie","time_end":"1987-10-26T23:59:59.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/document/sur_met/30_Min_Rain_Data.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/document/sur_met/rain_30m.doc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/fife/data/sur_met/rain_30m/rain_30m.tdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://daac.ornl.gov/graphics/browse/project/FIFE_logo.gif"}]}'
+    http_version: 
 f35dd2759d63395b158d11318101d00924e54699:
   response:
     status:
@@ -1309,6 +1494,46 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
         DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory"],"City":"Oak
         Ridge","StateProvince":"Tennessee","Country":"USA","PostalCode":"37831-6407"}]}}]}'
     http_version: 
+6a61e997b48516fa0a67679e8503aa67a5e53ad6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 88c4b9f5-11a2-4104-a5aa-cbdc9e82ef56
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 26 Oct 2018 14:14:18 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '992'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1860-01-01T00:00:00.000Z","version_id":"1","updated":"2006-04-14T00:00:00.000Z","dataset_id":"Global
+        Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"1860_1993_2050_NITROGEN_830","organizations":["ORNL_DAAC"],"title":"Global
+        Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050","coordinate_system":"CARTESIAN","summary":"This
+        data set provides global gridded estimates of atmospheric deposition of total
+        inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of
+        nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and
+        projections for the year 2050. The data set was generated using a global three-dimensional
+        chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude
+        by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000).
+        Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario
+        data (IPCC, 1996; 2000) were used as input to the model.","time_end":"2050-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C179003620-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/830"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://daac.ornl.gov/graphics/browse/sdat-tds/830_1_fit.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830"}]}'
+    http_version: 
 dfbf2c4881dbb7e7a81a48e3995ab0b9618ad3d8:
   response:
     status:
@@ -1374,6 +1599,171 @@ dfbf2c4881dbb7e7a81a48e3995ab0b9618ad3d8:
         Line","Value":"(865) 241-3952"},{"Type":"Email","Value":"uso@daac.ornl.gov"}],"Addresses":[{"StreetAddresses":["ORNL
         DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory"],"City":"Oak
         Ridge","StateProvince":"Tennessee","Country":"USA","PostalCode":"37831-6407"}]}}]}'
+    http_version: 
+22637a5aa9db9c27aabd592f8307bc3c455187d6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 6e72c7ef-8780-4a0d-be75-30fc51da057e
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.10; charset=utf-8
+      date:
+      - Fri, 26 Oct 2018 14:26:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '4519'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"LocationKeywords":[{"Category":"GEOGRAPHIC REGION","Type":"GLOBAL"}],"MetadataDates":[{"Type":"CREATE","Date":"2017-04-27T20:43:00.000Z"},{"Type":"UPDATE","Date":"2018-08-22T12:11:00.000Z"}],"VersionDescription":"Added
+        Associated DLL name attribute.","ShortName":"AST_L1AE","Abstract":"The ASTER
+        Expedited L1A Reconstructed Unprocessed Instrument Data is produced with the
+        express purpose of providing the ASTER Science Team members and others, data
+        of their particular interest in quick turn-around time from the moment the
+        data are acquired. This is usually done to support on-going field calibration
+        and validation efforts or to support emergency response to natural disasters
+        when processed Level-1 data with minimum turn-around time would prove beneficial
+        in initial damage or impact assessments. This data set is expected to be publicly
+        available for a period of 30 days after which time it will be removed from
+        the archive. This is done because the routinely processed (Production Data
+        Set or PDS) version of this data set will be available from Japan in due course
+        and available for search and order from the LP DAAC archives. ASTER Expedited
+        Data Sets (EDS) serve the short-term requirements of a small group of scientists
+        and fulfill immediate imagery needs during times of natural disasters.\r\n\r\nUsers
+        are advised that ASTER SWIR data acquired from late April 2008 to the present
+        exhibit anomalous saturation of values and anomalous striping. This effect
+        is also present for some prior acquisition periods. Please refer to the ASTER
+        SWIR User Advisory Document (https://lpdaac.usgs.gov/sites/default/files/public/aster/docs/ASTER_SWIR_User_Advisory_July%2018_08.pdf)
+        for more details.\r\n\r\nThe general product description details as described
+        for the ASTER Level 1A Data Set - Reconstructed, unprocessed Instrument Data
+        apply to the expedited data set with a few notable exceptions. These include:\r\n\r\n•       The
+        Expedited Level-1A data set does not contain the VNIR 3B  (aft-viewing) band\r\n•       This
+        data set does not have short-term calibration for the Thermal Infrared (TIR)
+        sensor\r\n•       The registration quality of this data set is likely to be
+        lower, and also vary from scene to scene \r\n\r\nThe Level-0 data downlink
+        from the Tracking Data Relay Satellite System (TDRSS) at White Sands, NM is
+        received at the EOS Data Operations System (EDOS) facility at the Goddard
+        Space Flight Center (GSFC). Following some pre-processing, EDOS directly transmits
+        that data (via the GSFC DAAC) to LP DAAC where the data are processed and
+        the level-1 EDS is produced. The ASTER Level-1AE product contains reconstructed,
+        unprocessed instrument digital data derived from the telemetry streams of
+        the 3 telescopes at their respective ground resolutions: Visible Near Infrared
+        (VNIR), 15 m, Shortwave Infrared (SWIR), 30 m, and Thermal Infrared (TIR),
+        90 m. There is no browse product provided for the expedited L1A data set.\r\n\r\nV003
+        data set release date: 2002-05-03\r\n\r\nData Set Characteristics: \r\nArea:
+        ~60km x 60km \r\nImage Dimensions: \r\n  VNIR: 4200 rows x 4100 columns \r\n  SWIR:
+        2100 rows x 2048 columns \r\n  TIR: 700 rows x 700 columns \r\nFile Size:
+        \r\n  VNIR (1, 2, 3N): ~49.3 MB \r\n  SWIR (4 through 9): ~25 MB \r\n  TIR
+        (10 through 14): ~4.7 MB \r\n  Total: 85 Megabytes \r\nSpatial Resolution:\r\n  VNIR:
+        15m\r\n  SWIR: 30m\r\n  TIR: 90m\r\nUnits: Digital count\r\nProjection: Universal
+        Transverse Mercator (UTM)\r\nData Format: HDF-EOS or GeoTIFF \r\nData Fields:
+        14\r\n","DOI":{"Authority":"https://doi.org","DOI":"10.5067/ASTER/AST_L1AE.003"},"RelatedUrls":[{"Description":"The
+        LP DAAC product page provides information on Science Data Set layers and links
+        for user guides, ATBDs, data access, tools, customer support, etc.","URLContentType":"CollectionURL","Type":"DATA
+        SET LANDING PAGE","URL":"https://doi.org/10.5067/ASTER/AST_L1AE.003"},{"Description":"LP
+        DAAC Data Pool provides direct access to available products via HTTPS.","URLContentType":"DistributionURL","Type":"GET
+        DATA","Subtype":"ON-LINE ARCHIVE","URL":"https://e4ftl01.cr.usgs.gov/ASTT/AST_L1AE.003/"},{"Description":"The
+        LP DAAC website provides detailed information on discovery, distribution,
+        access, and support of land data products.","URLContentType":"CollectionURL","Type":"PROJECT
+        HOME PAGE","URL":"https://lpdaac.usgs.gov/"},{"Description":"Earthdata Search
+        allows users to search, discover, visualize, refine, and access NASA Earth
+        Observation data.","URLContentType":"DistributionURL","Type":"GET DATA","Subtype":"EARTHDATA
+        SEARCH","URL":"https://search.earthdata.nasa.gov/search?q=AST_L1AE+V003"},{"Description":"The
+        ASTER home page is maintained through NASA''s Jet Propulsion Laboratory and
+        documents various aspects of the ASTER mission. http://asterweb.jpl.nasa.gov/
+        ","URLContentType":"CollectionURL","Type":"PROJECT HOME PAGE","URL":"http://asterweb.jpl.nasa.gov/data_products.asp"},{"Description":"The
+        ATBD provides physical theory and mathematical procedures for the calculations
+        used to produce the data products.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"ALGORITHM THEORETICAL BASIS DOCUMENT","URL":"https://eospso.nasa.gov/sites/default/files/atbd/atbd-ast-01.pdf"},{"Description":"ASTER
+        Higher-Level Product User Guide","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"USER''S GUIDE","URL":"http://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTERHigherLevelUserGuideVer2May01.pdf"},{"Description":"The
+        ASTER Level-1T Product Specification provides a description of the data file.","URLContentType":"PublicationURL","Type":"VIEW
+        RELATED INFORMATION","Subtype":"DATA USAGE","URL":"http://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTER_L1_Product_Spec_Ver_1.3_July01.pdf"},{"Description":"The
+        Digital Object Identifier provides a permanent link for product information
+        and data citation.","URLContentType":"CollectionURL","Type":"DOI","URL":"https://doi.org/10.5067/ASTER/AST_L1AE.003"}],"DataDates":[{"Date":"2002-03-14T12:49:27.640Z","Type":"CREATE"},{"Date":"2015-09-14T09:50:23.026Z","Type":"UPDATE"}],"SpatialExtent":{"SpatialCoverageType":"HORIZONTAL","HorizontalSpatialDomain":{"Geometry":{"CoordinateSystem":"CARTESIAN","BoundingRectangles":[{"WestBoundingCoordinate":-180.0,"NorthBoundingCoordinate":90.0,"EastBoundingCoordinate":180.0,"SouthBoundingCoordinate":-90.0}]}},"GranuleSpatialRepresentation":"GEODETIC"},"AdditionalAttributes":[{"Name":"ASTERMapProjection","Description":"The
+        map projection of the granule","DataType":"STRING"},{"Name":"GenerationDateandTime","Description":"Date
+        and Time granule produced","DataType":"DATETIME_STRING"},{"Name":"LowerLeftQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the lower left quadrant","DataType":"INT"},{"Name":"LowerRightQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the lower right quadrant","DataType":"INT"},{"Name":"SceneCloudCoverage","Description":"Percentage
+        of cloud coverage for the whole scene","DataType":"INT"},{"Name":"Solar_Azimuth_Angle","Description":"Angle
+        of the sun clockwise from true North","DataType":"FLOAT"},{"Name":"Solar_Elevation_Angle","Description":"Angle
+        of the sun above the horizon","DataType":"FLOAT"},{"Name":"SWIR_ObservationMode","Description":"Indicates
+        whether the SWIR sensor group is ON or OFF","DataType":"STRING"},{"Name":"TIR_ObservationMode","Description":"Indicates
+        whether the TIR sensor group is ON or OFF","DataType":"STRING"},{"Name":"UpperLeftQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the upper left quadrant","DataType":"INT"},{"Name":"UpperRightQuadCloudCoverage","Description":"The
+        percentage of cloud coverage for the upper right quadrant","DataType":"INT"},{"Name":"VNIR1_ObservationMode","Description":"Indicates
+        whether the VNIR1 sensor group is ON or OFF","DataType":"STRING"},{"Name":"VNIR2_ObservationMode","Description":"Indicates
+        whether the VNIR2 sensor group is ON or OFF","DataType":"STRING"},{"Name":"Band1_Available","Description":"Identifies
+        the status of Band 1 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band2_Available","Description":"Identifies
+        the status of Band 2 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band3B_Available","Description":"Identifies
+        the status of Band 3B - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band3N_Available","Description":"Identifies
+        the status of Band 3N - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band4_Available","Description":"Identifies
+        the status of Band 4 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band5_Available","Description":"Identifies
+        the status of Band 5 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band6_Available","Description":"Identifies
+        the status of Band 6 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band7_Available","Description":"Identifies
+        the status of Band 7 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band8_Available","Description":"Identifies
+        the status of Band 8 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band9_Available","Description":"Identifies
+        the status of Band 9 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band10_Available","Description":"Identifies
+        the status of Band 10 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band11_Available","Description":"Identifies
+        the status of Band 11 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band12_Available","Description":"Identifies
+        the status of Band 12 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band13_Available","Description":"Identifies
+        the status of Band 13 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"Band14_Available","Description":"Identifies
+        the status of Band 14 - [Yes, band is acquired] or [No, band was not acquired]","DataType":"STRING"},{"Name":"RadiometricDBVersion","Description":"The
+        version number of the Radiometric Database used in Level 1 processing.","DataType":"STRING"},{"Name":"GeometricDBVersion","Description":"The
+        version number of the Geometric Database used in Level 1 processing.","DataType":"STRING"},{"Name":"ASTERGains","Description":"Identifies
+        the Gain setting for the Bands: HGH, NOR, LO1, LO2, LOW, OFF","DataType":"STRING"},{"Name":"identifier_product_doi","Description":"Digital
+        object identifier that uniquely identifies this data product","Value":"10.5067/ASTER/AST_L1AE.003","DataType":"STRING"},{"Name":"identifier_product_doi_authority","Description":"URL
+        of the digital object identifier resolving authority","Value":"https://doi.org","DataType":"STRING"}],"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"INFRARED WAVELENGTHS","VariableLevel1":"REFLECTED
+        INFRARED"},{"Category":"EARTH SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"INFRARED
+        WAVELENGTHS","VariableLevel1":"THERMAL INFRARED"},{"Category":"EARTH SCIENCE","Topic":"SPECTRAL/ENGINEERING","Term":"VISIBLE
+        WAVELENGTHS","VariableLevel1":"VISIBLE IMAGERY"}],"EntryTitle":"ASTER Expedited
+        L1A Reconstructed Unprocessed Instrument Data V003","CollectionProgress":"ACTIVE","ProcessingLevel":{"ProcessingLevelDescription":"Radiometric
+        Counts","Id":"1A"},"Platforms":[{"Type":"Earth Observation Satellites","ShortName":"Terra","LongName":"Earth
+        Observing System, Terra (AM-1)","Instruments":[{"ShortName":"ASTER","LongName":"Advanced
+        Spaceborne Thermal Emission and Reflection Radiometer","Technique":"Imaging
+        Spectrometers/Radiometers","ComposedOf":[{"ShortName":"SWIR","LongName":"Short
+        Wavelength Infrared Radiometer","Technique":"Imaging Radiometers"},{"ShortName":"TIR","LongName":"Thermal
+        Infrared Radiometer","Technique":"Imaging Radiometers"},{"ShortName":"VNIR","LongName":"Visible
+        and Near Infrared Radiometer","Technique":"Imaging Radiometers"}]}]}],"Projects":[{"ShortName":"Terra","LongName":"Earth
+        Observing System (EOS), Terra","Campaigns":["Terra"]}],"Version":"003","TemporalExtents":[{"PrecisionOfSeconds":7,"EndsAtPresentFlag":true,"RangeDateTimes":[{"BeginningDateTime":"2000-03-04T20:34:04.000Z"}]}],"DataCenters":[{"Roles":["DISTRIBUTOR"],"ShortName":"LP
+        DAAC","LongName":"Land Processes Distributed Active Archive Center","ContactInformation":{"ServiceHours":"M-F,
+        8 a.m. to 4 p.m. Central Time","ContactInstruction":"LP DAAC User Services
+        is the point of contact for answering questions concerning data products,
+        data access, and online applications.","ContactMechanisms":[{"Type":"Telephone","Value":"605-594-6116"},{"Type":"U.S.
+        toll free","Value":"866-573-3222"},{"Type":"Email","Value":"lpdaac@usgs.gov"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["U.S. Geological Survey, Earth Resources Observation
+        and Science (EROS) Center"],"City":"Sioux Falls","StateProvince":"South Dakota","PostalCode":"57198"}],"RelatedUrls":[{"Description":"The
+        LP DAAC website provides detailed information on discovery, distribution,
+        access, and support of land data products.","URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"https://lpdaac.usgs.gov/"}]},"ContactGroups":[{"Roles":["User
+        Services"],"GroupName":"LP DAAC User Services","ContactInformation":{"ServiceHours":"M-F,
+        8 a.m. to 4 p.m. Central Time","ContactInstruction":"LP DAAC User Services
+        is the point of contact for answering questions concerning data products,
+        data access, and online applications.","ContactMechanisms":[{"Type":"Telephone","Value":"605-594-6116"},{"Type":"U.S.
+        toll free","Value":"866-573-3222"},{"Type":"Email","Value":"lpdaac@usgs.gov"}],"Addresses":[{"Country":"United
+        States","StreetAddresses":["U.S. Geological Survey, Earth Resources Observation
+        and Science (EROS) Center"],"City":"Sioux Falls","StateProvince":"South Dakota","PostalCode":"57198"}],"RelatedUrls":[{"Description":"The
+        LP DAAC website provides detailed information on discovery, distribution,
+        access, and support of land data products.","URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"https://lpdaac.usgs.gov/"}]}}]},{"Roles":["PROCESSOR"],"ShortName":"JP/METI/AIST/JSS/GDS","LongName":"Ground
+        Data System, Japan Space Systems, National Institute of Advanced Industrial
+        Science and Technology, Ministry of Economy, Trade, and Industry, Japan","ContactInformation":{"Addresses":[{"Country":"Japan"}],"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://www.jspacesystems.or.jp/en_"}]}}],"MetadataAssociations":[{"Type":"DEPENDENT","Description":"Radiometric
+        values computed from the raw instrument counts","EntryId":"AST_L1B"}]}'
     http_version: 
 9c2cee2ee77d164b06dea319e8214682d822aa55:
   response:
@@ -1567,6 +1957,128 @@ dfbf2c4881dbb7e7a81a48e3995ab0b9618ad3d8:
         Science Data Support Team","ContactInformation":{"ContactInstruction":"Contact
         for data content concerns","ContactMechanisms":[{"Type":"Telephone","Value":"301-614-5515"},{"Type":"Email","Value":"Edward.J.Masuoka@nasa.gov"}],"Addresses":[{"StreetAddresses":["NASA/GSFC
         Code 922"],"City":"GREENBELT","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}}]}'
+    http_version: 
+d8d8a6d89db8ea1631d9e8e577e17575e82fc2d9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - aab09121-d31c-4add-a4c2-b39a56497fec
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      date:
+      - Fri, 26 Oct 2018 14:14:46 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '950'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |-
+        <Granule>
+            <GranuleUR>FIFE_STRM_15M.43601715.s15</GranuleUR>
+            <InsertTime>2008-12-02T00:00:00Z</InsertTime>
+            <LastUpdate>2008-12-02T00:00:00Z</LastUpdate>
+            <Collection>
+                <ShortName>FIFE_STRM_15M_1</ShortName>
+                <VersionId>1</VersionId>
+            </Collection>
+            <DataGranule>
+                <SizeMBDataGranule>0.000889</SizeMBDataGranule>
+                <DayNightFlag>BOTH</DayNightFlag>
+                <ProductionDateTime>2008-12-02T00:00:00Z</ProductionDateTime>
+            </DataGranule>
+            <Temporal>
+                <RangeDateTime>
+                    <BeginningDateTime>1984-12-25T00:00:00Z</BeginningDateTime>
+                    <EndingDateTime>1985-01-01T00:00:00Z</EndingDateTime>
+                </RangeDateTime>
+            </Temporal>
+            <Spatial>
+                <HorizontalSpatialDomain>
+                    <Geometry>
+                        <Point>
+                            <PointLongitude>-96.595</PointLongitude>
+                            <PointLatitude>39.1019</PointLatitude>
+                        </Point>
+                    </Geometry>
+                </HorizontalSpatialDomain>
+            </Spatial>
+            <MeasuredParameters>
+                <MeasuredParameter>
+                    <ParameterName>STAGE HEIGHT</ParameterName>
+                </MeasuredParameter>
+                <MeasuredParameter>
+                    <ParameterName>DISCHARGE/FLOW</ParameterName>
+                </MeasuredParameter>
+                <MeasuredParameter>
+                    <ParameterName>HYDROPATTERN</ParameterName>
+                </MeasuredParameter>
+            </MeasuredParameters>
+            <Platforms>
+                <Platform>
+                    <ShortName>SURFACE WATER WEIR</ShortName>
+                    <Instruments>
+                        <Instrument>
+                            <ShortName>STILLING WELL</ShortName>
+                        </Instrument>
+                    </Instruments>
+                </Platform>
+            </Platforms>
+            <Campaigns>
+                <Campaign>
+                    <ShortName>FIFE</ShortName>
+                </Campaign>
+            </Campaigns>
+            <Price>0</Price>
+            <OnlineAccessURLs>
+                <OnlineAccessURL>
+                    <URL>https://daac.ornl.gov/daacdata/fife/data/hydrolgy/strm_15m/y1984/43601715.s15</URL>
+                    <URLDescription>This link provides direct download access to the granule.</URLDescription>
+                </OnlineAccessURL>
+            </OnlineAccessURLs>
+            <OnlineResources>
+                <OnlineResource>
+                    <URL>https://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html</URL>
+                    <Description>ORNL DAAC Data Set Documentation</Description>
+                    <Type>USERS GUIDE</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https://dx.doi.org/doi:10.3334/ORNLDAAC/1</URL>
+                    <Description>Data set Landing Page DOI URL</Description>
+                    <Type>DATA SET LANDING PAGE</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https:/daac.ornl.gov/daacdata/fife/document/hydrolgy/15_min_strm_flow.pdf</URL>
+                    <Description>Data Set Documentation</Description>
+                    <Type>GENERAL DOCUMENTATION</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https:/daac.ornl.gov/daacdata/fife/document/hydrolgy/strm_15m.doc</URL>
+                    <Description>Data Set Documentation</Description>
+                    <Type>GENERAL DOCUMENTATION</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https:/daac.ornl.gov/daacdata/fife/data/hydrolgy/strm_15m/strm_15m.tdf</URL>
+                    <Description>Data Set Documentation</Description>
+                    <Type>GENERAL DOCUMENTATION</Type>
+                </OnlineResource>
+            </OnlineResources>
+            <Orderable>false</Orderable>
+            <DataFormat>ascii</DataFormat>
+        </Granule>
     http_version: 
 1c5f6e248a5d239e63f6925e1d022cdfc37edab2:
   response:
