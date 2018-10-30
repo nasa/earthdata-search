@@ -113,30 +113,30 @@
               <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
             </div>
           </nav>
-        </header>
-        <div class="master-overlay-info">
-          <div class="master-overlay-info-panel">
-            <div class="">
-              <p class="collection-filters">
-                <label class="collection-filter-item collection-sort">Sort by:
-                  <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
-                </label>
-                <label class="collection-filter-item" for="has-granules">
-                    <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
-                    Only include collections with granules
-                </label>
-                <label class="collection-filter-item" for="hasNonEOSDIS">
-                  <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
-                  Include non-EOSDIS collections
-                </label>
-              </p>
-              <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
-              <p data-bind="visible: !project.isEmpty()" class="button-details">
-                You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" data-bind="click: $root.ui.projectList.showProjectPage" href="#">Project</a>
-              </p>
+          <div class="master-overlay-info">
+            <div class="master-overlay-info-panel">
+              <div class="">
+                <p class="collection-filters">
+                  <label class="collection-filter-item collection-sort">Sort by:
+                    <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
+                  </label>
+                  <label class="collection-filter-item" for="has-granules">
+                      <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
+                      Only include collections with granules
+                  </label>
+                  <label class="collection-filter-item" for="hasNonEOSDIS">
+                    <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
+                    Include non-EOSDIS collections
+                  </label>
+                </p>
+                <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
+                <p data-bind="visible: !project.isEmpty()" class="button-details">
+                  You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" data-bind="click: $root.ui.projectList.showProjectPage" href="#">Project</a>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </header>
         <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
           <div class="panel-list">
             <ul id="collection-results-list"
