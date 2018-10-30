@@ -1,5 +1,5 @@
 <section id="granule-list" class="master-overlay-content-wrapper master-overlay-no-min granule-list" data-bind="visible: ui.collectionsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
-  <header class="master-overlay-header">
+  <header class="master-overlay-header master-overlay-header-granule-panel">
     <nav class="master-overlay-nav">
       <div class="master-overlay-tab">
         <span class="master-overlay-tab-handle"></span>
@@ -13,7 +13,7 @@
     <div class="master-overlay-header-info">
       <div class="master-overlay-info">
         <div class="master-overlay-info-panel master-overlay-info-granule-panel">
-          <h2 class="master-overlay-header-title"><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a><!-- /ko --></h2>
+          <h2 class="master-overlay-header-heading master-overlay-header-title"><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a><!-- /ko --></h2>
           <div id="datasource-caveats"></div>
           <div class="master-overlay-header-row">
             <!--ko ifnot: $data.collection.cwic()-->

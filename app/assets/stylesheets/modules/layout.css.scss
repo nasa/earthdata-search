@@ -7,21 +7,18 @@ html {
 }
 
 body {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
   flex-direction: column;
   font-size: 16px;
   background-color: #222;
 }
 
 .th-wrapper {
-  -ms-flex: 0 0 auto;
-  flex-basis: auto;
+  // TL: Flex basis here is used to avoid a flicker when tophat finally loads
+  flex-basis: 34px;
 }
 
 .main-wrapper {
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 100%;
