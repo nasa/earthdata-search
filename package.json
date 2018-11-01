@@ -41,7 +41,7 @@
     "karma-webpack": "1.7.0",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
-    "phantomjs": "^1.9.18",
+    "phantomjs-prebuilt": "^2.1.16",
     "script-loader": "^0.6.1",
     "style-loader": "^0.12.3",
     "url-loader": "0.5.6",
