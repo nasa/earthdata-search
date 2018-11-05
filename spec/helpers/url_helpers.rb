@@ -92,13 +92,11 @@ module Helpers
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
         options[:env] = 'prod' unless options.key?(:env)
 
-        # options[:env] ||= cmr_env.to_sym unless cmr_env.blank?
-        puts options
+        options[:env] ||= cmr_env.to_sym
 
-        Capybara.reset_sessions! if options[:env].to_s == "prod"
+        Capybara.reset_sessions! if options[:env].to_s == 'prod'
         
         options.select { |option| [:env].include?(option) }.each do |key, value|
-          puts "#{key} => #{value}"
           page.set_rack_session(key => value)
         end
 
@@ -109,13 +107,11 @@ module Helpers
         url = QueryBuilder.new.add_to(url, options)
 
         # Leave for debugging, comment out when not in use
-        puts "URL: #{url}"
+        # puts "URL: #{url}"
 
         visit url
       
-        should_wait = options.fetch(:wait_for_xhr, true)
-        # puts "Should Wait: #{should_wait}"
-        wait_for_xhr if should_wait
+        wait_for_xhr
 
         # Close tour modal
         page.execute_script("$('#closeInitialTourModal').trigger('click')")

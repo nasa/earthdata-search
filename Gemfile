@@ -29,11 +29,9 @@ group :test do
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
   gem 'rack_session_access'
-  gem 'byebug'
 end
 
 group :development do
-  gem 'byebug'
   gem 'guard-livereload', require: false
   gem 'quiet_assets'
 
@@ -60,6 +58,8 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
+
+  gem 'byebug'
 end
 
 group :assets, :development, :test do
@@ -70,8 +70,8 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets, :test do
-  gem 'sass-rails',   '~> 4.0.0'
-  gem 'coffee-script', :require => 'coffee_script'
+  gem 'sass-rails', '~> 4.0.0'
+  gem 'coffee-script', require: 'coffee_script'
   gem 'coffee-rails', '~> 4.0.0'
 
   gem 'uglifier', '>= 1.3.0'
