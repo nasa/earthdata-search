@@ -40,6 +40,7 @@ FileUtils.mkdir_p(Rails.root.join('tmp/screenshots'))
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/helpers/ and its subdirectories.
 Dir[Rails.root.join('spec/helpers/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -208,4 +209,6 @@ RSpec.configure do |config|
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
   config.include Helpers::UrlHelpers
+  # config.include ::CapybaraExtension
+  # config.include ::CapybaraSeleniumExtension
 end
