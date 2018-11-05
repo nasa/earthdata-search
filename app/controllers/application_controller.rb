@@ -131,24 +131,9 @@ class ApplicationController < ActionController::Base
                 session[:expires_in].present? &&
                 session[:logged_in_at].present?
 
-    if Rails.env.test?
-      config = YAML.load(ERB.new(File.read(Rails.root.join('spec/config.yml'))).result)
-      urs_tokens = config['urs_tokens']
-      begin
-        logged_in = session[:access_token].present? && (session[:access_token] == urs_tokens['edsc'][cmr_env]['access_token'])
-      rescue Exception => e
-        puts e
-        puts "CMR Env: #{cmr_env}"
-        puts "Session: #{session}"
-        puts "URS Tokens: #{urs_tokens}"
-        puts "URS ENV Token: #{urs_tokens['edsc'][cmr_env]}"
-      end
-    end
-
     if Rails.env.development?
-      Rails.logger.info "Access:  #{session[:access_token]}"
+      Rails.logger.info "Access: #{session[:access_token]}"
       Rails.logger.info "Refresh: #{session[:refresh_token]}"
-      Rails.logger.info "Expires: #{(Time.now + session[:expires_in]).strftime('%I:%M %p')}" if logged_in
     end
 
     store_oauth_token() unless logged_in
@@ -156,6 +141,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :logged_in?
 
+  # Tokens are not necessary for creating/updating EDSC objects which is all that
+  # happens via JSON so we're not going to require the user to be authenticated here
+  # (This would also require the user be authenticated on the search page, which is undesireable)
+  def json_request?
+    request.format.json?
+  end
+  
   def server_session_expires_in
     logged_in? ? (expires_in - SERVER_EXPIRATION_OFFSET_S).to_i : 0
   end

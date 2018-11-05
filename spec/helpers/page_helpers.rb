@@ -3,7 +3,7 @@ module Helpers
     def wait_for_xhr
       ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
         synchronize(60) do
-          expect(page.execute_script('return window.edsc.util.xhr.hasPending()')).to be_false
+          expect(page.execute_script('try { return window.edsc.util.xhr.hasPending(); } catch { return false; }')).to be_false
         end
       end
     end
@@ -65,6 +65,7 @@ module Helpers
     end
 
     def logout
+      page.set_rack_session(nil)
       visit '/logout'
     end
 
@@ -99,11 +100,12 @@ module Helpers
       end
     end
 
-    def be_logged_in_as(key)
+    def be_logged_in_as(key, env = nil)
       token_key = urs_tokens[key]
 
       # Get environment specific keys for creating cassettes
-      json = token_key[cmr_env]
+      en = (env.to_s unless env.nil?) || cmr_env
+      json = token_key[en]
 
       page.set_rack_session(expires_in: json['expires_in'])
       page.set_rack_session(access_token: json['access_token'])
@@ -166,7 +168,6 @@ module Helpers
     def page_status_code
       # Selenium does not support page.status_code. This is a workaround. In env 'test', we add an attribute 'code' to the <html> element.
       # Here we are checking that element to grab the response code.
-
       page.first('html')[:code].to_i
     end
 

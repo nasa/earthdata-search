@@ -32,8 +32,7 @@ class DataAccessController < ApplicationController
       return
     end
 
-    metrics_event('retrieve', {step: 'complete'})
-
+    metrics_event('retrieve', step: 'complete')
     project = JSON.parse(params[:project])
 
     retrieval = Retrieval.new
@@ -41,8 +40,9 @@ class DataAccessController < ApplicationController
     retrieval.project = project
     retrieval.save!
 
-    new_job = Retrieval.delay(:queue => retrieval.determine_queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
-    Rails.logger.info("Delayed Job " + new_job.id.to_s + " has been sent into queue " + new_job.queue.to_s + " with:" + params[:project])
+    new_job = Retrieval.delay(queue: retrieval.determine_queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
+    Rails.logger.info("Delayed Job #{new_job.id} has been sent into queue #{new_job.queue} with: #{params[:project]}")
+
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
 
@@ -89,11 +89,7 @@ class DataAccessController < ApplicationController
 
   def status
     # TODO PQ EDSC-1039: Include portal information here
-    if current_user
-      @retrievals = current_user.retrievals
-    else
-      render file: "#{Rails.root}/public/401.html"
-    end
+    @retrievals = current_user.retrievals
   end
 
   def remove
@@ -282,7 +278,7 @@ class DataAccessController < ApplicationController
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []
     opendap_config = OpendapConfiguration.find(collection_id, echo_client, token) if collection_id.present?
-    Rails.logger.info("opendap_config.inspect: #{opendap_config.inspect}")
+
     unless opendap_config
       opendap_config = OpendapConfiguration.new(collection_id)
     end

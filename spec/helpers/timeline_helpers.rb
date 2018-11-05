@@ -6,7 +6,7 @@ module Helpers
     end
 
     def pan_to_time(time)
-      page.execute_script("$('#timeline').timeline('panToTime', #{time.to_i * 1000})")
+      page.execute_script("$('#timeline').timeline('panToTime', #{time.to_i * 1000});")
     end
 
     def click_timeline_zoom_in
@@ -20,12 +20,15 @@ module Helpers
     end
 
     def click_timeline_date(text, subtext=nil)
-      if subtext.nil?
-        page.find('.timeline-date-label text', text: text).click
-      else
-        # Click the second timeline element with matching text
-        page.all('.timeline-date-label text', text: text)[1].click
-      end
+      timeline_dates = page.find('.timeline-date-label text', text: text)
+
+      element = if timeline_dates.is_a?(Array) && !subtext.nil?
+                  timeline_dates[1]
+                else
+                  timeline_dates
+                end
+
+      element.click
       wait_for_xhr
     end
 
@@ -61,14 +64,12 @@ module Helpers
       end
 
       script = """
-        (function() {
-          var $timeline = $('#timeline');
-          var dx = -$timeline.timeline('timeSpanToPx', #{dt_ms});
-          var $svg = $timeline.find('#{selector}');
-          $svg.simulate('drag', { dx: dx, dy: 0#{x_opts}});
-        })();
+        var $timeline = $('#timeline');
+        var dx = -$timeline.timeline('timeSpanToPx', #{dt_ms});
+        var $svg = $timeline.find('#{selector}');
+        $svg.simulate('drag', { dx: dx, dy: 0#{x_opts}});
       """
-      page.execute_script script
+      page.execute_script(script)
       wait_for_xhr
     end
   end

@@ -10,7 +10,7 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Wed, 24 Oct 2018 18:03:18 GMT
+      - Sun, 28 Oct 2018 20:25:48 GMT
       etag:
       - '"4bddfd7c495724a3cb1f0c77995a0e81"'
       server:
@@ -18,7 +18,7 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.320000'
+      - '0.214000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -50,60 +50,4 @@ b1d37047688fe9871e25fcda472f73fcc1280300:
             </address>
           </addresses>
         </user>
-    http_version: 
-80347fab88d9bd8bd181e77810a8361fdabbb038:
-  response:
-    status:
-      code: 404
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 24 Oct 2018 17:57:06 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.164000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '70'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Could not find user with guid :[edsc].</error></errors>"
-    http_version: 
-92a7ee2396a331c4e81c37a3f56d935215aa2c22:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 24 Oct 2018 18:22:50 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.224000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '78'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "<errors><error>User does not have requested access to [USER].</error></errors>"
     http_version: 

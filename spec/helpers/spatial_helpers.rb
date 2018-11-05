@@ -84,9 +84,10 @@ module Helpers
 
     def clear_shapefile
       begin
-        click_link "Remove file"
-        page.should have_no_css(".dz-file-preview")
-      rescue Capybara::ElementNotFound
+        click_link 'Remove file'
+        page.should have_no_css('.dz-file-preview')
+      rescue Capybara::ElementNotFound => e
+        puts e
       end
     end
 
@@ -122,9 +123,11 @@ module Helpers
             target: target
           },
           layerPoint: map.latLngToLayerPoint(latLng),
-          latlng: latLng};
+          latlng: latLng
+        };
         map.fire('#{event}', e);
       """
+      puts script
       page.execute_script(script)
     end
 

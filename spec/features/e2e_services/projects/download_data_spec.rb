@@ -2,12 +2,7 @@ require 'spec_helper'
 
 describe 'When viewing the project page', reset: false do
   before :all do
-    # This collection is specifically configured for this test on SIT. Any changes can
-    # and should be made to this test file if needed
-    load_page :search, project: ['C1200240776-DEV08'], env: :sit
-
-    login
-    wait_for_xhr
+    load_page :search, project: ['C1200240776-DEV08'], env: :sit, authenticate: 'edsc'
 
     # View the project
     click_link('My Project')
@@ -20,14 +15,14 @@ describe 'When viewing the project page', reset: false do
     expect(collection_card.find('.action-container')).not_to have_css('.action-button.customize')
   end
 
-  context 'When choosing to download a collection' do
+  context 'When choosing to download a collection', pending_updates: true do
     before :all do
       # Get the collection count here to use below when checking the number of links. As the data changes
       # so will this count and we don't want tests failing on simple data changes.
       collection_card = find('.collection-card', match: :first)
       @granule_count = collection_card.find('.collection-card-content .collection-extra .label-primary').text.to_i
 
-      page.find('.button-download-data').click
+      page.find_button('Download Data', disabled: false).click
       wait_for_xhr
     end
 

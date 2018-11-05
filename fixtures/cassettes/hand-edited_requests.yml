@@ -906,4 +906,30 @@ http_interactions:
       - edsc-access
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: edsc_access_update_preferences_none_uat
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Sun, 28 Oct 2018 20:26:47 GMT
+  digest: edsc_user
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Sun, 28 Oct 2018 20:26:47 GMT
+  digest: edsc_user
 recorded_with: "VCR 2.6.0"

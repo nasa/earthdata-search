@@ -1,13 +1,7 @@
 class ProjectsController < ApplicationController
   # We need user tokens to retrieve data for the data customization forms
   before_filter :require_login, only: [:new, :show], unless: :json_request?
-
-  # Tokens are not necessary for creating/updating EDSC objects which is all that
-  # happens via JSON so we're not going to require the user to be authenticated here
-  # (This would also require the user be authenticated on the search page, which is undesireable)
-  def json_request?
-    request.format.json?
-  end
+  before_filter :set_env_session, only: [:new, :show], unless: :json_request?
 
   def index
     if current_user.present?

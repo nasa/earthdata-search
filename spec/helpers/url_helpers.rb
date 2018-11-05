@@ -32,7 +32,7 @@ module Helpers
         end
 
         envs = {sit: 'sit', uat: 'uat', prod: 'prod'}
-        params['cmr_env'] = envs[options[:env]] if options[:env]
+        params['cmr_env'] = envs[options[:env].to_sym] if options[:env]
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
         params['sgd'] = options[:granule_id] if options[:granule_id]
@@ -90,19 +90,32 @@ module Helpers
       close_banner = options.delete(:close_banner)
 
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
-        # Set supported session variables
-        options.select { |option| ['cmr_env'].include?(option) }.each do |key, value|
+        options[:env] = 'prod' unless options.key?(:env)
+
+        # options[:env] ||= cmr_env.to_sym unless cmr_env.blank?
+        puts options
+
+        Capybara.reset_sessions! if options[:env].to_s == "prod"
+        
+        options.select { |option| [:env].include?(option) }.each do |key, value|
+          puts "#{key} => #{value}"
           page.set_rack_session(key => value)
         end
+
+        authenticate = options.delete(:authenticate)
+
+        be_logged_in_as(authenticate, options[:env]) if authenticate
 
         url = QueryBuilder.new.add_to(url, options)
 
         # Leave for debugging, comment out when not in use
-        # puts url
+        puts "URL: #{url}"
 
         visit url
       
-        wait_for_xhr
+        should_wait = options.fetch(:wait_for_xhr, true)
+        # puts "Should Wait: #{should_wait}"
+        wait_for_xhr if should_wait
 
         # Close tour modal
         page.execute_script("$('#closeInitialTourModal').trigger('click')")

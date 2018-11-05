@@ -30,9 +30,8 @@ describe 'CWIC-enabled granule results view', reset: false do
       context 'and clicking on the metadata link' do
         before :all do
           click_link 'Metadata'
-          @popup = window_opened_by do
-            click_on 'Native'
-          end
+          click_on 'Native'
+          wait_for_xhr
         end
 
         after :all do
@@ -43,13 +42,10 @@ describe 'CWIC-enabled granule results view', reset: false do
         end
 
         it 'downloads the original OpenSearch metadata in a new window' do
-          within_window(popup) do
-            expect(page).not_to have_link('Back to Granules')
-            # expect(page.response_headers['Content-Type']).to eq('application/atom+xml;charset=UTF-8')
-            metadata = page.source
-            expect(metadata.include? '<?xml').to be_true
-            expect(metadata.include? '<feed').to be_true
-          end
+          expect(page).not_to have_link('Back to Granules')
+          metadata = CGI.unescapeHTML(page.source)
+          expect(metadata.include? '<?xml').to be_true
+          expect(metadata.include? '<feed').to be_true
         end
       end
     end

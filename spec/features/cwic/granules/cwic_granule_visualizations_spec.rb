@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe "CWIC-enabled granule visualizations", reset: false do
+describe "CWIC-enabled granule visualizations" do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
+    load_page :search, q: 'C1220566654-USGS_LTA'
   end
 
   context do

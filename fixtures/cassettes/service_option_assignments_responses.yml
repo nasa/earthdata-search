@@ -1,4 +1,64 @@
 ---
+952925db8bb99ccc5606ad898d1a11c51aa9a070:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 28 Oct 2018 20:15:27 GMT
+      etag:
+      - '"2a2babfe0bf70cbb0497dda73a36a102"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.771000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '277'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000082-EDF_OPS","id":"71E53AB9-7DA2-ABD8-75DA-C51DCE0E5C94","service_entry_id":"2582B150-BA08-A767-3128-F6C66C0362C6","service_option_definition_id":"A4DD2432-77AB-5C80-DF00-2D9534852219"}}]'
+    http_version: 
+74221f972dd918d85276eaea9c0ffd1f19ff6691:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 28 Oct 2018 20:16:42 GMT
+      etag:
+      - '"4dd039becc6c96dd1a38dc8314a5a459"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.788000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '275'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000739-DEV08","id":"6C07EF9B-E6D0-9394-18AA-5B1490E777F8","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"52B52D7D-58BC-1A07-EA8A-E68AE489C304"}}]'
+    http_version: 
 7193b157ad9b86cdadf0e13dc195a744a68ac5ae:
   response:
     status:
@@ -10,7 +70,7 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 24 Oct 2018 17:59:06 GMT
+      - Sun, 28 Oct 2018 20:20:45 GMT
       etag:
       - '"f0038fa38513c127df3205a97c505a59"'
       server:
@@ -18,7 +78,7 @@
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.601000'
+      - '0.761000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -28,4 +88,34 @@
     body:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000969-DEV08","id":"E80371F5-E91F-0C1A-ABF5-384D0E7A9908","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"F431F03F-48FC-3DB3-59C8-9EBA698EBBDF"}}]'
+    http_version: 
+7c33771c45504b408cbdbecc519e2e8e9596a992:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 28 Oct 2018 20:40:42 GMT
+      etag:
+      - '"56dc4a1fd342ed7c05541a36db68f615"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.715000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '275'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1200240776-DEV08","id":"FDFC9DF8-3807-0275-DA53-AE9E3E83144D","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"D7004637-C676-DAE3-E4EA-34535078758E"}}]'
     http_version: 
