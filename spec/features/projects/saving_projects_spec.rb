@@ -1,12 +1,8 @@
 require 'spec_helper'
 
-describe 'Viewing an un-saved Project', reset: false do
+describe 'Viewing an un-saved Project' do
   before :all do
-    Capybara.reset_sessions!
-
-    be_logged_in_as('edsc')
-
-    load_page 'projects/new', project: ['C1200187767-EDF_OPS'], env: :sit
+    load_page 'projects/new', project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
   end
 
   it 'displays the default project name' do

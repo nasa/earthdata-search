@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe 'When viewing the project page with an EGI supported collection', reset: false do
   before :all do
-    load_page :search, project: ['C1000000969-DEV08'], env: :sit
-
-    login
-    wait_for_xhr
+    load_page :search, project: ['C1000000969-DEV08'], env: :sit, authenticate: 'edsc'
 
     click_link('My Project')
     wait_for_xhr
@@ -25,7 +22,7 @@ describe 'When viewing the project page with an EGI supported collection', reset
       end
     end
 
-    it 'displays the correct delivery method header' do
+    it 'displays the correct delivery method header', pending_updates: true do
       within 'h4.customization-item-heading' do
         expect(page).to have_content('Customize & Download')
       end

@@ -1,18 +1,16 @@
-# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe 'Collection details', reset: false do
   context 'when displaying the collection details' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'AST_L1AE'
-      wait_for_xhr
-      # expect(page).to have_content('ASTER Expedited L1A')
+      Capybara.reset_sessions!
+      load_page :search, q: 'AST_L1AE'
+
       first_collection_result.click_link('View collection details')
       wait_for_xhr
     end
-    # FIXME Data specific result failing
-    it 'those details provide the expected collection data', pending_updates: true do
+
+    it 'those details provide the expected collection data', data_specific: true do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
         expect(page).to have_content('LP DAAC ARCHIVER')
@@ -30,6 +28,7 @@ describe 'Collection details', reset: false do
       before :all do
         click_link 'View More Metadata'
       end
+
       it 'provides the metadata formats links' do
         expect(page).to have_link('Web View')
         expect(page).to have_link('Native')
@@ -45,6 +44,7 @@ describe 'Collection details', reset: false do
         click_link 'API Endpoints'
         wait_for_xhr
       end
+
       it 'provides the API Endpoints links' do
         expect(page).to have_link('CMR')
         expect(page).to have_link('OSDD')
@@ -55,17 +55,7 @@ describe 'Collection details', reset: false do
   context 'when selecting a collection that is only viewable after logging in' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat
-      login
-      wait_for_xhr
-      fill_in 'keywords', with: 'C1216393716-EDF_OPS'
-      wait_for_xhr
-      click_link('View collection details')
-      wait_for_xhr
-    end
-
-    after :all do
-      Capybara.reset_sessions!
+      load_page '/search/collection-details', focus: 'C1216393716-EDF_OPS', env: :uat, ac: true, authenticate: 'edsc'
     end
 
     it 'displays the collection details' do
@@ -84,6 +74,7 @@ describe 'Collection details', reset: false do
       before :all do
         click_link 'View More Metadata'
       end
+
       it 'provides the metadata formats links' do
         expect(page).to have_link('Web View')
         expect(page).to have_link('Native')
@@ -107,53 +98,50 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection without contacts in the xml' do
     before :all do
+      Capybara.reset_sessions!
       load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H', ac: true
       first_collection_result.click_link('View collection details')
     end
 
-    it "displays the collection's detail page with no errors" do
+    it 'displays the collection\'s detail page with no errors' do
       expect(page).to have_content('JP/JAXA/SAOC ARCHIVER')
     end
   end
 
   context 'when selecting a collection with point spatial' do
     before :all do
-      load_page :search, q: 'C179003030-ORNL_DAAC'
-      first_collection_result.click_link('View collection details')
+      Capybara.reset_sessions!
+      load_page '/search/collection-details', focus: 'C179003030-ORNL_DAAC'
     end
 
     it 'dislpays the collection searched for in the results list' do
       expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
     end
 
-    it "does not display the collection's spatial bounds on the map" do
+    it 'does not display the collection\'s spatial bounds on the map' do
       expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
   end
 
   context 'when selecting a collection with bounding box spatial' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'C179002945-ORNL_DAAC'
-      wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      Capybara.reset_sessions!
+      load_page '/search/collection-details', focus: 'C179002945-ORNL_DAAC'
+
     end
 
-    it "does not display the collection's spatial bounds on the map" do
+    it 'does not display the collection\'s spatial bounds on the map' do
       expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
   end
 
   context 'when selecting a collection with polygon spatial' do
     before :all do
-      load_page :search, ac: true
-      fill_in 'keywords', with: 'C1386246913-NSIDCV0'
-      wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      Capybara.reset_sessions!
+      load_page '/search/collection-details', focus: 'C1386246913-NSIDCV0', ac: true
     end
 
-
-    it "does not display the collection's spatial bounds on the map" do
+    it 'does not display the collection\'s spatial bounds on the map' do
       expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
   end
@@ -167,7 +155,7 @@ describe 'Collection details', reset: false do
   #     first_collection_result.click_link('View collection details')
   #   end
   #
-  #   it "displays the collection's spatial bounds on the map" do
+  #   it 'displays the collection\'s spatial bounds on the map' do
   #     expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
   #   end
   # end
@@ -175,6 +163,7 @@ describe 'Collection details', reset: false do
   # TODO: RDA // This collection doesn't exist anymore, it needs to be replaced.
   context 'when selecting a collection with multiple temporal', pending_updates: true do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', env: :uat, focus: 'C1204482909-GCMDTEST'
     end
 
@@ -190,6 +179,7 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with multiple temporal fields but some of which have only BeginningDateTime' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1214560374-JAXA', ac: true
     end
 
@@ -205,6 +195,7 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with multiple lines of description' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C197265171-LPDAAC_ECS'
     end
 
@@ -215,26 +206,27 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with a description with links' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'only displays one link total' do
-      expect(page.find(:css, "div.long-paragraph.collapsed")).to have_selector("a", count:1)
+      expect(page.find(:css, 'div.long-paragraph.collapsed')).to have_selector('a', count:1)
     end
 
     it 'displays the external link' do
-      expect(page).to have_link("Greenland Ice Mapping Project (GIMP)", href: "http://nsidc.org/data/measures/gimp")
-      find_link("Greenland Ice Mapping Project (GIMP)")[:target].should == '_blank'
-
+      expect(page).to have_link('Greenland Ice Mapping Project (GIMP)', href: 'http://nsidc.org/data/measures/gimp')
+      find_link('Greenland Ice Mapping Project (GIMP)')[:target].should == '_blank'
     end
 
     it 'does not display a link for relative paths' do
-      expect(page).not_to have_link("Bad Link", href:"/data/measures/gimp")
+      expect(page).not_to have_link('Bad Link', href:'/data/measures/gimp')
     end
   end
 
   context 'when selecting a collection with multiple spatial values' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1214560151-JAXA', ac: true
       wait_for_xhr
     end
@@ -246,6 +238,7 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with multiple data centers', data_specific: true do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C179460405-LPDAAC_ECS'
     end
     
@@ -254,8 +247,9 @@ describe 'Collection details', reset: false do
     end
   end
 
-  context "when selecting a collection with temporal that doesn't have an end date or 'ends at present' flag" do
+  context 'when selecting a collection with temporal that doesn\'t have an end date or `ends at present` flag' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1443533440-LAADS'
     end
 
@@ -266,19 +260,17 @@ describe 'Collection details', reset: false do
 
   context 'when selecting a collection with related urls' do
     before do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'displays highlighted urls' do
-      expect(collection_details).to have_content "Data Set Landing Page"
-      expect(collection_details).to have_content "ATBD"
+      expect(collection_details).to have_content 'Data Set Landing Page'
+      expect(collection_details).to have_content 'ATBD'
     end
 
     context 'when clicking View All Related URLs' do
       before do
-        # This 'execute' is causing this test to fail on Travis - and it still passes locally
-        # with it removed.  So - suppressing for now!
-        # page.execute_script "$('#collection-details .master-overlay-content')[0].scrollTop = 400"
         click_on 'View All Related URLs'
       end
 
@@ -302,7 +294,7 @@ describe 'Collection details', reset: false do
         end
       end
 
-      it "doesn't display EDSC or Reverb URLs" do
+      it 'doesn\'t display EDSC or Reverb URLs' do
         within '#related-urls-modal' do
           expect(page).not_to have_content 'GET DATA EARTHDATA SEARCH'
           expect(page).not_to have_content 'GET DATA REVERB'
@@ -322,12 +314,11 @@ describe 'Collection details', reset: false do
     end
   end
 
-  context 'when selecting a collection with polygon spatial', pending_updates: true do
+  context 'when selecting a collection with polygon spatial', data_specific: true do
     before :all do
       load_page '/search/collection-details', focus: 'C1267337984-ASF'
     end
 
-    # FIXME Data specific result failing
     it 'displays the spatial' do
       expect(page).to have_content('Polygon: ((89.99°, -179.999999°), (65.0°, -179.999999°), (65.0°, -90.0°), (65.0°, 0.0°), (65.0°, 90.0°), (65.0°, 179.999999°), (89.99°, 179.999999°), (89.99°, 90.0°), (89.99°, 0.0°), (89.99°, -90.0°), (89.99°, -179.999999°))')
     end
@@ -345,7 +336,7 @@ describe 'Collection details', reset: false do
     end
   end
 
-  context 'when selecting a collection with a DOI field which contains "http://"' do
+  context 'when selecting a collection with a DOI field which contains `http://`' do
     before :all do
       load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
@@ -355,9 +346,9 @@ describe 'Collection details', reset: false do
     end
   end
 
-
   context 'when selecting a collection with valid DOI field' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C179003620-ORNL_DAAC'
     end
 

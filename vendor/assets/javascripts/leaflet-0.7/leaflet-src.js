@@ -186,7 +186,7 @@ L.Util = {
 	var requestFn = window.requestAnimationFrame ||
 	        getPrefixed('RequestAnimationFrame') || timeoutDefer;
 
-	var cancelFn = window.cancelAnimationFrame ||
+	var cancelAnimationFrame = window.cancelAnimationFrame ||
 	        getPrefixed('CancelAnimationFrame') ||
 	        getPrefixed('CancelRequestAnimationFrame') ||
 	        function (id) { window.clearTimeout(id); };
@@ -204,7 +204,7 @@ L.Util = {
 
 	L.Util.cancelAnimFrame = function (id) {
 		if (id) {
-			cancelFn.call(window, id);
+			cancelAnimationFrame.call(window, id);
 		}
 	};
 
@@ -2509,10 +2509,10 @@ L.TileLayer = L.Class.extend({
 			}, this);
 		}
 
-		if (!this.options.updateWhenIdle) {
-			this._limitedUpdate = L.Util.limitExecByInterval(this._update, 150, this);
-			map.on('move', this._limitedUpdate, this);
-		}
+		// if (!this.options.updateWhenIdle) {
+		// 	this._limitedUpdate = L.Util.limitExecByInterval(this._update, 150, this);
+		// 	map.on('move', this._limitedUpdate, this);
+		// }
 
 		this._reset();
 		this._update();

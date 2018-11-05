@@ -71,8 +71,8 @@ RSpec.configure do |config|
       driver = example.metadata[:driver] if example.metadata[:driver]
 
       if example.metadata[:reset] || driver != Capybara.current_driver
-        Capybara.reset_sessions!
-        Capybara.current_driver = driver
+        # Capybara.reset_sessions!
+        # Capybara.current_driver = driver
       end
     end
   end
@@ -80,7 +80,7 @@ RSpec.configure do |config|
   # Reset sessions between each top-level describe
   config.after(:all) do
     if Capybara.page
-      Snappybara.wait_for_requests_complete
+      # Snappybara.wait_for_requests_complete
       Capybara.reset_sessions!
     end
   end

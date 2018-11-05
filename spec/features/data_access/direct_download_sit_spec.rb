@@ -1,14 +1,9 @@
 require 'spec_helper'
 
-describe 'Direct download script SIT', reset: false do
-  context 'when viewing the direct download script in SIT' do
+describe 'Direct download script SIT' do
+  context 'when viewing the direct download script in SIT', pending_updates: true do
     before :all do
-      Capybara.reset_sessions!
-      load_page :search, overlay: false, env: :sit
-      
-      login
-
-      load_page 'projects/new', env: :sit, project: ['C1000000082-EDF_OPS']
+      load_page 'projects/new', env: :sit, project: ['C1000000082-EDF_OPS'], authenticate: 'edsc'
       wait_for_xhr
 
       page.find('.button-download-data').click

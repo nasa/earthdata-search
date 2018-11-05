@@ -22,17 +22,19 @@ describe 'Address bar', reset: false do
 
   context 'when searching by keywords' do
     before(:all) do
-      visit '/search/map'
+      visit '/search'
+      dismiss_banner
       wait_for_xhr
       fill_in "keywords", with: 'C1219032686-LANCEMODIS'
+      wait_for_xhr
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS')
+      expect(page.current_url).to match(/q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS/)
     end
 
     context 'clearing filters' do
-      before(:all) { click_link "Clear Filters" }
+      before(:all) { click_link 'Clear Filters' }
 
       it 'removes the keyword condition from the address bar' do
         expect(page).to have_query_string(nil)
@@ -153,7 +155,7 @@ describe 'Address bar', reset: false do
         wait_for_xhr
       end
 
-      it 'saves the granule filters in the address bar' do
+      it 'saves the granule filters in the address bar', pending_updates: true do
         project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
         expect(Project.find(project_id).path).to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
       end
@@ -250,7 +252,7 @@ describe 'Address bar', reset: false do
       click_button 'Apply'
     end
 
-    it 'saves the granule filters in the address bar' do
+    it 'saves the granule filters in the address bar', pending_updates: true do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
       expect(Project.find(project_id).path).to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
     end
@@ -360,7 +362,7 @@ describe 'Address bar', reset: false do
       wait_for_xhr
     end
 
-    it 'saves the selected granule in the address bar' do
+    it 'saves the selected granule in the address bar', pending_updates: true do
       query = URI.parse(page.current_url).query
       project_id = query[/^projectId=(\d+)$/, 1].to_i
       expect(Project.find(project_id).path).to match(/&g=G1422671719-ORNL_DAAC&/)
@@ -452,14 +454,17 @@ describe 'Address bar', reset: false do
 
   context "when selecting a timeline date" do
     before(:all) do
-      visit '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
+      # visit '/search/granules?p=C179003030-ORNL_DAAC'
+      load_page :search, focus: 'C179003030-ORNL_DAAC'
+      # wait_for_xhr
       click_timeline_date('Nov', '1987')
       wait_for_xhr
     end
 
     it 'saves the timeline date selection in the URL' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199')
+      # expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199')
+      expect(page.current_url).to match(/p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199/)
+
     end
   end
 
@@ -513,7 +518,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page.current_url).to match(/&g=G1422671857-ORNL_DAAC&/)
+      expect(page.current_url).to match(/g=G1422671857-ORNL_DAAC/)
     end
   end
 
@@ -643,7 +648,8 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the base layer in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!2!0%2C2')
+      # expect(page).to have_query_string('m=0!0!2!1!2!0%2C2')
+      expect(page.current_url).to match(/m=0!0!2!1!2!0%2C2/)
     end
 
     context 'when refreshing the page' do
@@ -673,7 +679,8 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the applied overlays in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2%2C1')
+      # expect(page).to have_query_string('m=0!0!2!1!0!0%2C2%2C1')
+      expect(page.current_url).to match(/m=0!0!2!1!0!0%2C2%2C1/)
     end
 
     context 'when refreshing the page' do
@@ -689,5 +696,4 @@ describe 'Address bar', reset: false do
       end
     end
   end
-
 end

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe "Expired user token", reset: true do
+describe 'Expired user token' do
   after :each do
     page.set_rack_session(expires_in: nil)
     page.set_rack_session(access_token: nil)
     page.set_rack_session(refresh_token: nil)
   end
 
-  context "Successful refreshing" do
+  context 'Successful refreshing' do
     let(:return_json) {urs_tokens['edsc']['prod']}
     let(:access_token) {return_json['access_token']}
 
@@ -19,28 +19,22 @@ describe "Expired user token", reset: true do
 
     context 'when loading the page with an expired token' do
       before :each do
-        #login without loading a page first
-        be_logged_in_as 'expired_token'
-
-        load_page :root
+        load_page :root, authenticate: 'expired_token'
       end
 
-      it "refreshes the token" do
+      it 'refreshes the token' do
         expect(page.get_rack_session_key('access_token')).to eql(access_token)
       end
     end
 
     context 'when calling an ajax request with an expired token' do
       before :each do
-        #login without loading a page first
-        be_logged_in_as 'expired_token'
         page.set_rack_session(expires_in: 500)
 
-        load_page :root
-        wait_for_xhr
+        load_page :search, authenticate: 'expired_token'
 
-        script = "window.tokenExpiresIn = -1;"
-        page.execute_script script
+        script = 'window.tokenExpiresIn = -1;'
+        page.execute_script(script)
 
         fill_in 'keywords', with: 'AST_L1AE'
         wait_for_xhr
@@ -54,7 +48,7 @@ describe "Expired user token", reset: true do
     end
   end
 
-  context "Unsuccessful refreshing" do
+  context 'Unsuccessful refreshing' do
     let(:return_json) {nil}
 
     before :each do
@@ -65,29 +59,24 @@ describe "Expired user token", reset: true do
 
     context 'when loading the page with an expired token' do
       before :each do
-        #login without loading a page first
-        be_logged_in_as 'expired_token'
         page.set_rack_session(refresh_token: 'invalid')
 
-        load_page :root
+        load_page :search, authenticate: 'expired_token', wait_for_xhr: false
       end
 
-      it "sends the user to login" do
-        expect(page).to have_content "EOSDIS Earthdata Login"
+      it 'sends the user to login' do
+        expect(page).to have_content 'EOSDIS Earthdata Login'
       end
     end
 
-    context 'when calling an ajax request with an expired token' do
+    context 'when calling an ajax request with an expired token', pending_updates: true do
       before :each do
-        #login without loading a page first
-        be_logged_in_as 'expired_token'
         page.set_rack_session(expires_in: 500)
         page.set_rack_session(refresh_token: 'invalid')
 
-        load_page :root
-        wait_for_xhr
+        load_page :search, authenticate: 'expired_token'
 
-        script = "window.tokenExpiresIn = -1;"
+        script = 'window.tokenExpiresIn = -1;'
         page.execute_script script
 
         fill_in 'keywords', with: 'AST_L1AE'
@@ -95,7 +84,7 @@ describe "Expired user token", reset: true do
       end
 
       it 'refreshes the token' do
-        expect(page).to have_content "EOSDIS Earthdata Login"
+        expect(page).to have_content 'EOSDIS Earthdata Login'
       end
     end
   end

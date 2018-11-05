@@ -15,4 +15,49 @@ http_interactions:
       - edsc-access
   recorded_at: Wed, 24 Oct 2018 17:57:24 GMT
   digest: 3b4ed164e20c1f60c00502833edbb6664b2b3d5a
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1000007017-DEV08&catalog_item_id%5B%5D=G1000007024-DEV08&catalog_item_id%5B%5D=G1000007019-DEV08&catalog_item_id%5B%5D=G1000007018-DEV08&catalog_item_id%5B%5D=G1000007020-DEV08&catalog_item_id%5B%5D=G1000007022-DEV08&catalog_item_id%5B%5D=G1000007016-DEV08&catalog_item_id%5B%5D=G1000007021-DEV08&catalog_item_id%5B%5D=G1000007023-DEV08
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 19:40:49 GMT
+  digest: 2f5358b882368cc0008c0ed3b2e219cd57af81c0
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1200240794-DEV08&catalog_item_id%5B%5D=G1200240797-DEV08&catalog_item_id%5B%5D=G1200240807-DEV08&catalog_item_id%5B%5D=G1200240808-DEV08&catalog_item_id%5B%5D=G1200240784-DEV08&catalog_item_id%5B%5D=G1200240793-DEV08&catalog_item_id%5B%5D=G1200240795-DEV08&catalog_item_id%5B%5D=G1200240819-DEV08&catalog_item_id%5B%5D=G1200240781-DEV08&catalog_item_id%5B%5D=G1200240785-DEV08&catalog_item_id%5B%5D=G1200240792-DEV08&catalog_item_id%5B%5D=G1200240800-DEV08&catalog_item_id%5B%5D=G1200240782-DEV08&catalog_item_id%5B%5D=G1200240787-DEV08&catalog_item_id%5B%5D=G1200240791-DEV08&catalog_item_id%5B%5D=G1200240777-DEV08&catalog_item_id%5B%5D=G1200240779-DEV08&catalog_item_id%5B%5D=G1200240788-DEV08&catalog_item_id%5B%5D=G1200240796-DEV08&catalog_item_id%5B%5D=G1200240798-DEV08&catalog_item_id%5B%5D=G1200240799-DEV08&catalog_item_id%5B%5D=G1200240801-DEV08&catalog_item_id%5B%5D=G1200240802-DEV08&catalog_item_id%5B%5D=G1200240803-DEV08&catalog_item_id%5B%5D=G1200240804-DEV08&catalog_item_id%5B%5D=G1200240805-DEV08&catalog_item_id%5B%5D=G1200240806-DEV08&catalog_item_id%5B%5D=G1200240809-DEV08&catalog_item_id%5B%5D=G1200240810-DEV08&catalog_item_id%5B%5D=G1200240811-DEV08&catalog_item_id%5B%5D=G1200240812-DEV08&catalog_item_id%5B%5D=G1200240813-DEV08&catalog_item_id%5B%5D=G1200240815-DEV08&catalog_item_id%5B%5D=G1200240820-DEV08&catalog_item_id%5B%5D=G1200240821-DEV08&catalog_item_id%5B%5D=G1200240816-DEV08&catalog_item_id%5B%5D=G1200240789-DEV08&catalog_item_id%5B%5D=G1200240786-DEV08&catalog_item_id%5B%5D=G1200240783-DEV08&catalog_item_id%5B%5D=G1200240817-DEV08&catalog_item_id%5B%5D=G1200240814-DEV08&catalog_item_id%5B%5D=G1200240790-DEV08&catalog_item_id%5B%5D=G1200240778-DEV08&catalog_item_id%5B%5D=G1200240780-DEV08&catalog_item_id%5B%5D=G1200240818-DEV08
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Thu, 01 Nov 2018 22:13:50 GMT
+  digest: fb25541c023c6963c41e04025175b81f0dfe1115
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1200240794-DEV08&catalog_item_id%5B%5D=G1200240797-DEV08&catalog_item_id%5B%5D=G1200240807-DEV08&catalog_item_id%5B%5D=G1200240808-DEV08&catalog_item_id%5B%5D=G1200240784-DEV08&catalog_item_id%5B%5D=G1200240793-DEV08&catalog_item_id%5B%5D=G1200240795-DEV08&catalog_item_id%5B%5D=G1200240819-DEV08&catalog_item_id%5B%5D=G1200240781-DEV08&catalog_item_id%5B%5D=G1200240785-DEV08&catalog_item_id%5B%5D=G1200240792-DEV08&catalog_item_id%5B%5D=G1200240800-DEV08&catalog_item_id%5B%5D=G1200240782-DEV08&catalog_item_id%5B%5D=G1200240787-DEV08&catalog_item_id%5B%5D=G1200240791-DEV08&catalog_item_id%5B%5D=G1200240777-DEV08&catalog_item_id%5B%5D=G1200240779-DEV08&catalog_item_id%5B%5D=G1200240788-DEV08&catalog_item_id%5B%5D=G1200240796-DEV08&catalog_item_id%5B%5D=G1200240798-DEV08
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Echo-Token:
+      - edsc-access
+  recorded_at: Thu, 01 Nov 2018 22:13:40 GMT
+  digest: f05a5e673f3dcc82c55c98d13fa7b5a574aa035d
 recorded_with: VCR 2.6.0

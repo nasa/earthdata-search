@@ -147,6 +147,7 @@ class Retrieval < ActiveRecord::Base
                        end
 
           access_methods = collection_hash.fetch('serviceOptions', {}).fetch('accessMethod', [])
+
           access_methods.each do |method|
             # Appends the order type to our running list
             all_access_methods << method['type']

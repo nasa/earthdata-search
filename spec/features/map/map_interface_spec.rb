@@ -101,7 +101,7 @@ describe "Map interface", reset: false do
     it "presents base and overlay layers on mouse hover" do
       expect(page).to_not have_field("Corrected Reflectance (True Color)")
 
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
       expect(page).to have_field("Blue Marble")
       expect(page).to have_field("Corrected Reflectance (True Color)")
       expect(page).to have_field("Land / Water Map")
@@ -111,7 +111,7 @@ describe "Map interface", reset: false do
     end
 
     it "allows switching base layers" do
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
 
       within '#map' do
         choose 'Land / Water Map'
@@ -122,7 +122,7 @@ describe "Map interface", reset: false do
     end
 
     it "draws overlay layers on top of the base layer" do
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
 
       within '#map' do
         check 'Coastlines'

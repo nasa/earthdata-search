@@ -5,12 +5,10 @@ describe 'Sharing Projects', reset: false do
     before :all do
       Capybara.reset_sessions!
 
-      page.set_rack_session(cmr_env: 'sit')
-
       # Create a randome user that we'll set as the creator of the project to be shared
       user = User.create(echo_id: SecureRandom.uuid.upcase, site_preferences: {})
 
-      @path = '/search/collections?p=!C1200187767-EDF_OPS'
+      @path = '/search/collections?cmr_env=sit&p=!C1200187767-EDF_OPS'
       project = Project.new
       project.path = @path
       project.name = 'Project for sharing'
@@ -47,18 +45,14 @@ describe 'Sharing Projects', reset: false do
     before :all do
       Capybara.reset_sessions!
       
-      # page.set_rack_session(cmr_env: 'sit')
-
       # Create a randome user that we'll set as the creator of the project to be shared
       user = User.create(echo_id: SecureRandom.uuid.upcase, site_preferences: {})
 
       project = Project.new
-      project.path = '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC!C179002147-SEDAC!C1000000000-SEDAC'
+      project.path = '/search/collections?cmr_env=sit&p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC!C179002147-SEDAC!C1000000000-SEDAC'
       project.name = '[LONG] Project for sharing'
       project.user_id = user.id
       project.save!
-
-      puts project.to_param
 
       # Login as our test user so that we can load the page to test actual functionality
       be_logged_in_as('edsc')

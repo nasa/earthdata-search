@@ -114,7 +114,6 @@ describe 'Spatial' do
       before(:each) do
         manually_create_point(0, 0)
         wait_for_xhr
-        # Capybara::Screenshot.screenshot_and_open_image
 
         # expect(page).to have_field('manual-coord-entry-point', with: '0,0')
 

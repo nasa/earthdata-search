@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facets With No Results', reset: false do
+describe 'Collection Facets With No Results' do
   before :all do
     Capybara.reset_sessions!
 

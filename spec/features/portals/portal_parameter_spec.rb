@@ -3,14 +3,14 @@ require "spec_helper"
 describe "Portal parameters", reset: true do
   include Helpers::CollectionHelpers
 
-  it "Visiting Earthdata Search with /portal/<portal-id> displays an error if no portal is configured", acceptance: true do
+  it "Visiting Earthdata Search with /portal/<portal-id> displays an error if no portal is configured" do
     expect{
       visit "/?portal=does-not-exist"
       Capybara.reset_sessions! # Ensures the errors are raised
     }.to raise_error( ActionController::RoutingError)
   end
 
-  it "Visiting Earthdata Search with /portal/<portal-id> parameter preserves the portal filter across page and query transitions", acceptance: true do
+  it "Visiting Earthdata Search with /portal/<portal-id> parameter preserves the portal filter across page and query transitions" do
     load_page :search, portal: 'simple', close_banner: true, facets: true
     expect(page_status_code).to eq(200)
     expect(page).to have_text("1 Matching Collection")
@@ -25,8 +25,7 @@ describe "Portal parameters", reset: true do
     expect(page).to have_path_prefix("/portal/simple/")
 
     find('a[class="site-logo"]').click
-    expect(page).to have_path('/portal/simple/')
-
+    expect(page).to have_path('/portal/simple/search')
   end
 
   context "visiting a portal as a logged in user" do

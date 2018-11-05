@@ -16,13 +16,18 @@ addons:
     working_dir: tmp/
     bucket: $ARTIFACTS_BUCKET
     s3_region: us-east-1
+  chrome: stable
 
 # https://blog.travis-ci.com/2017-08-29-trusty-image-updates
 # group: deprecated-2017Q3
+# before_install:
+#   - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+#   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+#   - qmake -version
 before_install:
-  - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-  - qmake -version
+  - # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
 script:
   - bundle exec bin/setup_travis
   - bundle exec rake travis:ci
@@ -44,6 +49,7 @@ branches:
   only: # Only build master and e2e-services. All pull requests also get built
     - master
     - e2e-services
+    - EDSC-1983
 deploy:
   provider: script
   script: bin/ecc-sync

@@ -43,7 +43,7 @@ describe 'Viewing Single Project', reset: false do
     end
 
     it 'shows total number of granules included in the project' do
-      first('.collection-card') do
+      find('.collection-card', match: :first) do
         within '.granule-count' do
           expect(page.text).to match(/\d{1,8} Granules/)
         end
@@ -51,9 +51,9 @@ describe 'Viewing Single Project', reset: false do
     end
 
     it 'shows estimated total granule size' do
-      first('.collection-card') do
+      find('.collection-card', match: :first) do
         within '.project-size' do
-          expect(page.text).to match(/Estimated Size: \d{1,3}\.\d{1,2} TB/)
+          expect(page.text).to match(/\d{1,3}\.\d{1,2} TB/)
         end
       end
     end
@@ -491,9 +491,7 @@ describe 'Viewing Single Project', reset: false do
 
     it 'shows estimated total granule size' do
       first('.collection-card') do
-        within '.project-size' do
-          expect(page.text).to match(/Estimated Size: \d{1,3}\.\d{1,2} TB/)
-        end
+        expect(page.text).to match(/Estimated Size: \d{1,3}\.\d{1,2} TB/)
       end
     end
 
@@ -534,13 +532,13 @@ describe 'Viewing Single Project', reset: false do
       end
 
       it 'shows granule title' do
-        first('#C14758250-LPDAAC_ECS-modal ul li') do
-          expect(page).to have_content('AST_L1A#[\d_]*.hdf')
+        find('#C14758250-LPDAAC_ECS-modal ul li', match: :first) do
+          expect(page).to have_content(/AST_L1A#[\d_]*\.hdf/)
         end
       end
 
       it 'shows granule temporal' do
-        first('#C14758250-LPDAAC_ECS-modal ul li') do
+        find('#C14758250-LPDAAC_ECS-modal ul li', match: :first) do
           expect(page.text).to match(/Start: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
         end
       end
@@ -593,7 +591,7 @@ describe 'Viewing Single Project', reset: false do
       end
     end
 
-    it 'displays collection information for all collections' do
+    it 'displays collection information for all collections', data_specific: true do
       within '.project-collection-cards' do
         expect(page).to have_content('2000 Pilot Environmental Sustainability Index (ESI)')
         expect(page).to have_content('2001 Environmental Sustainability Index (ESI)')

@@ -28,7 +28,7 @@ describe "Project collection color coding", reset: false do
 
   context 'in the granule view for collections not in a project' do
     before(:all) { view_granule_results }
-    after(:all) { leave_granule_results }
+    # after(:all) { leave_granule_results }
 
     it 'uses the default color for granule footprints' do
       map_mousemove('#map', 39.1, -96.6)
