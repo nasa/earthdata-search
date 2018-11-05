@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Site misc', reset: false do
+describe 'Site misc' do
   before :all do
     load_page :search
   end

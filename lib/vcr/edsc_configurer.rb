@@ -135,7 +135,7 @@ module VCR
             record = :none
           elsif request.method == :delete ||
                 uri.include?('users/current.json') ||
-                uri.include?('/rest/users.json') ||
+                uri.include?('/rest/users') ||
                 uri.include?('/preferences.json') ||
                 (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                 (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||

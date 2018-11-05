@@ -4,7 +4,7 @@ describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with granules' do
     before :all do
       load_page '/search', env: :sit
-      # wait_for_xhr
+
       click_link "Temporal"
       fill_in "Start", with: "1985-12-01 00:00:00\t\t"
       js_click_apply ".temporal-dropdown"
@@ -44,6 +44,7 @@ describe 'Collection API Endpoints', reset: false do
 
   context 'when viewing the collection details for a collection with OPeNDAP' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1214305813-AU_AADC', ac: true
       click_on 'View All Related URLs'
     end
@@ -73,11 +74,8 @@ describe 'Collection API Endpoints', reset: false do
 
   context 'when viewing the collection details for a collection without granules, GIBS, or OPeNDAP' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'C179001887-SEDAC'
-      wait_for_xhr
-      click_link "View collection details"
-      wait_for_xhr
+      Capybara.reset_sessions!
+      load_page '/search/collection-details', focus: 'C179001887-SEDAC'
     end
 
     it 'does not provide a link to the CMR API for granules' do

@@ -26,12 +26,10 @@ group :test do
   gem 'capybara-webkit'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  # gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
-  # gem 'fuubar'
   gem 'rack_session_access'
-  # gem 'headless'
+  gem 'byebug'
 end
 
 group :development do
@@ -90,22 +88,3 @@ gem 'daemons'
 
 gem 'nokogiri'
 gem 'responders', '~> 2.0'
-
-# Eventually we'll need these, but there's version conflict when installing
-#gem 'crossroadsjs-rails'
-#gem 'jssignals-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'

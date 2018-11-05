@@ -6,7 +6,7 @@ module ClientUtils
   end
 
   def echo_client
-    if @echo_client.nil?# || Rails.env.test?
+    if @echo_client.nil?
       @echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
     end
 
@@ -14,7 +14,7 @@ module ClientUtils
   end
 
   def ous_client
-    if @ous_client.nil?# || Rails.env.test?
+    if @ous_client.nil?
       @ous_client = Ous::Client.client_for_environment(cmr_env, Rails.configuration.services)
     end
 
@@ -22,19 +22,23 @@ module ClientUtils
   end
 
   def cmr_env
-    # Next, and higher priority, check for a parameter sent in a hearer or within query params
-    cmr_env = request.headers['edsc-echo-env'] || request.query_parameters['cmr_env']
+    supported_envs = %w(sit uat prod ops)
+
+    # Highest priority, check for a parameter sent in a header or within query params
+    cmr_environment = request.headers['edsc-echo-env']
+    cmr_environment ||= request.query_parameters['cmr_env']
 
     # Check to see if an environment was specified in a session variable
-    cmr_env ||= session[:cmr_env] unless session[:cmr_env].nil? 
+    cmr_environment ||= session[:cmr_env] unless session[:cmr_env].nil?
 
-    if request.query_parameters['cmr_env'] && !(['sit', 'uat', 'prod', 'ops'].include?(request.query_parameters['cmr_env']))
-      cmr_env = Rails.configuration.cmr_env
+    if request.query_parameters['cmr_env'] && !(supported_envs.include?(request.query_parameters['cmr_env']))
+      cmr_environment = Rails.configuration.cmr_env
     else
-      cmr_env ||= Rails.configuration.cmr_env || 'prod'
+      cmr_environment ||= Rails.configuration.cmr_env || 'prod'
     end
 
-    cmr_env = 'prod' if cmr_env == 'ops'
-    cmr_env
+    cmr_environment = 'prod' if cmr_environment == 'ops'
+
+    cmr_environment
   end
 end

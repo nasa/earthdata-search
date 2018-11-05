@@ -2286,3 +2286,55 @@ ous_healthcheck:
       encoding: UTF-8
       string: '{"config":{"ok?":true},"httpd":{"ok?":true},"logging":{"ok?":true}}'
     http_version: 
+edsc_user:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Sun, 28 Oct 2018 20:25:48 GMT
+      etag:
+      - '"4bddfd7c495724a3cb1f0c77995a0e81"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.214000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '769'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user>
+          <id>4C0390AF-BEE1-32C0-4606-66CAFDD4131D</id>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+          <primary_study_area>OTHER</primary_study_area>
+          <user_type>PRODUCTION_USER</user_type>
+          <username>edsc</username>
+          <first_name>Earthdata</first_name>
+          <last_name>Search</last_name>
+          <email>patrick+edsc@element84.com</email>
+          <opt_in type="boolean">false</opt_in>
+          <organization_name>EDSC</organization_name>
+          <creation_date type="datetime">2014-02-04T20:55:34Z</creation_date>
+          <addresses type="array">
+            <address>
+              <id>4029FD6E-AA1A-87A3-209F-C012B8DD9A51</id>
+              <us_format type="boolean">false</us_format>
+              <country>United States</country>
+            </address>
+          </addresses>
+        </user>
+    http_version: 

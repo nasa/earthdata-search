@@ -58,7 +58,6 @@ describe "CWIC-enabled data access", reset: false do
       end
       it 'presents a list of download links with associated link titles' do
         within_window(@cwic_links) do
-          Capybara::Screenshot.screenshot_and_open_image
           expect(page).to have_no_text('Loading more...')
           expect(page).to have_link('Granule download URL', count: 21)
           expect(page).to have_link('Browse image URL', count: 21)

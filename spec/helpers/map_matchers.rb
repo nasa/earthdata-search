@@ -5,7 +5,7 @@ module MapUtil
   end
 
   def self.spatial(page)
-    page.execute_script('edsc.models.page.current.query.spatial()')
+    page.execute_script('return edsc.models.page.current.query.spatial()')
   end
 end
 

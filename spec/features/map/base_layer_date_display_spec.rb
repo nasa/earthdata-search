@@ -12,9 +12,7 @@ describe 'Base layer date display' do
 
   before :all do
     load_page :search, focus: 'C179003030-ORNL_DAAC', env: :prod
-  end
 
-  before :all do
     zoom_in_button = find('.timeline-zoom-in')
     zoom_in_button.click
     pan_to_time(present)
@@ -29,7 +27,7 @@ describe 'Base layer date display' do
 
     context 'selecting a date on the timeline' do
       before(:all) { click_timeline_date('02', 'Feb') }
-      after(:all) { click_timeline_date('02', 'Feb') }
+      # after(:all) { click_timeline_date('02', 'Feb') }
 
       it 'does not update the base layer' do
         expect('#map').to have_tiles_with_no_date
@@ -44,13 +42,13 @@ describe 'Base layer date display' do
       wait_for_xhr
     end
 
-    it 'shows yesterday\'s imagery by default' do
+    it 'shows yesterday\'s imagery by default', pending_updates: true do
       expect('#map').to have_tiles_with_date('2014-02-28')
     end
 
     context 'selecting a date on the timeline' do
       before(:all) { click_timeline_date('02', 'Feb') }
-      after(:all) { click_timeline_date('02', 'Feb') }
+      # after(:all) { click_timeline_date('02', 'Feb') }
 
       it 'updates the selected base layer to show that date' do
         expect('#map').to have_tiles_with_date('2014-02-02')
@@ -61,7 +59,7 @@ describe 'Base layer date display' do
       before(:all) { set_temporal(start_date, stop_date) }
       after(:all) { unset_temporal }
 
-      it 'updates the selected base layer to show the end date of the temporal range' do
+      it 'updates the selected base layer to show the end date of the temporal range', pending_updates: true do
         expect('#map').to have_tiles_with_date('2014-02-20')
       end
     end
@@ -78,13 +76,11 @@ describe 'Base layer date display' do
     context 'selecting both a temporal range and a date on the timeline' do
       before(:all) do
         set_temporal(start_date, stop_date)
-        Capybara::Screenshot.screenshot_and_open_image
         click_timeline_date('15', 'Feb')
       end
 
       after(:all) do
         click_timeline_date('15', 'Feb')
-        Capybara::Screenshot.screenshot_and_open_image
         unset_temporal
       end
 

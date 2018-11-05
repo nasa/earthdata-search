@@ -331,7 +331,7 @@ describe "Granule search filters", reset: false do
     before :all do
       load_page :search, facets: true, q: 'C1000000062-NSIDC_ECS'
       find("h3.panel-title", text: 'Projects').click
-      within '.panel.projects' do
+      within '.projects' do
         first(".facets-item").click
       end
       wait_for_xhr
@@ -340,13 +340,11 @@ describe "Granule search filters", reset: false do
     end
 
     it "the param is carried over to the granule search" do
-      project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
-      expect(Project.find(project_id).path).to include('pg[0][project]=')
+      expect(page.current_url).to include('pg[0][project]=')
     end
   end
 
   pending "for granules that cannot be filtered by orbit spatial parameters" do
-
     before(:all) do
       # Labs parameter enables additional attribute searching
       load_page :search, focus: ['C14758250-LPDAAC_ECS'], labs: true

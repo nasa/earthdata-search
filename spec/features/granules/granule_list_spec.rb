@@ -5,7 +5,7 @@ describe 'Granule list', reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search
+    # load_page :search
     # login
   end
 
@@ -14,6 +14,7 @@ describe 'Granule list', reset: false do
       visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
       wait_for_xhr
     end
+    
     it 'provides a text field to search for single or multiple granules by granule IDs' do
       expect(page).to have_selector('#granule-ids')
     end
@@ -70,11 +71,9 @@ describe 'Granule list', reset: false do
 
     context "clicking on the collection details button" do
       before :all do
-        Capybara::Screenshot.screenshot_and_open_image
         granule_list.click_link('View collection details')
         # page.find('.collection-title-link').click
         wait_for_xhr
-        Capybara::Screenshot.screenshot_and_open_image
       end
 
       after :all do
@@ -94,8 +93,7 @@ describe 'Granule list', reset: false do
 
     context "clicking on the edit filters button" do
       before :all do
-        # dismiss_banner
-        Capybara::Screenshot.screenshot_and_open_image
+        dismiss_banner
         granule_list.click_link('Filter granules')
         wait_for_xhr
       end
@@ -118,7 +116,6 @@ describe 'Granule list', reset: false do
         end
 
         it "shows the filters in an applied state" do
-          Capybara::Screenshot.screenshot_and_open_image
           expect(granule_list).to have_selector('.button-highlighted[title="Hide granule filters"]')
         end
       end
@@ -126,8 +123,7 @@ describe 'Granule list', reset: false do
 
     context "clicking the exclude granule button" do
       before :all do
-        # dismiss_banner
-        # Capybara::Screenshot.screenshot_and_open_image
+        dismiss_banner
         first_granule_list_item.click
         first_granule_list_item.click_link "Remove granule"
         wait_for_xhr
@@ -265,8 +261,8 @@ describe 'Granule list', reset: false do
       before :all do
         visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
         wait_for_xhr
-        # dismiss_banner
-        # expect(page).to have_visible_collection_results
+        dismiss_banner
+        expect(page).to have_visible_collection_results
         first_collection_result.click
         wait_for_xhr
       end

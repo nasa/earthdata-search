@@ -11,11 +11,9 @@ require 'selenium-webdriver'
 
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w(headless disable-gpu no-sandbox --window-size=1024,768 --disable-notifications)
+    args: %w(headless disable-gpu no-sandbox --window-size=1440,900 --disable-notifications)
   )
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-
-  # app.native_events = true
 end
 Capybara.javascript_driver = :selenium
 Capybara.default_driver = :selenium

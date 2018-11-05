@@ -417,4 +417,128 @@ http_interactions:
       - edsc
   recorded_at: Tue, 13 Mar 2018 03:48:44 GMT
   digest: a3c4e54a924f38eccbf3ed4af573e0fce679905e
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders.json
+    body:
+      encoding: UTF-8
+      string: '{"order":{},"digest":"0ec74ea5b073ba6f6a27b2b2ac70718759eb4637"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:00 GMT
+  digest: 18785b8d6a9e229639a156e4817feec01e68110f
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=0FF0DD45-A9A8-84E4-8592-416536818979
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:03 GMT
+  digest: f8061c921970a6271680ddc5908d44c149207378
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979/order_items/bulk_action
+    body:
+      encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G1200240794-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240797-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240807-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240808-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240784-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240793-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240795-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240819-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240781-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240785-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240792-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240800-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240782-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240787-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240791-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240777-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240779-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240788-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240796-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240798-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240799-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240801-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240802-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240803-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240804-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240805-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240806-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240809-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240810-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240811-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240812-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240813-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240815-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240820-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240821-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240816-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240789-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240786-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240783-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240817-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240814-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240790-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240778-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240780-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240818-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:01 GMT
+  digest: f999e5b7b3ce9ea3ff4f8a10f5fe01cb9dcbbf01
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979/submit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:02 GMT
+  digest: 5d6bd3cbfdd24b3f96731e136ff28c314aa4476f
+- request:
+    method: put
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:02 GMT
+  digest: c8192c2f16fdffbd0e77e24e29b2c8f7cd2c976d
 recorded_with: VCR 2.6.0
