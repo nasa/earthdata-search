@@ -127,7 +127,6 @@ module Helpers
         };
         map.fire('#{event}', e);
       """
-      puts script
       page.execute_script(script)
     end
 

@@ -64,7 +64,7 @@ describe 'Base layer date display' do
       end
     end
 
-    context 'selecting a temporal start date only' do
+    context 'selecting a temporal start date only', pending_updates: true do
       before(:all) { set_temporal(start_date) }
       after(:all) { unset_temporal }
 
