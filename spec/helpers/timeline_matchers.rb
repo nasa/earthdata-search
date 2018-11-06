@@ -47,9 +47,6 @@ RSpec::Matchers.define :have_timeline_range do |start, stop|
       actual_start_time = page.evaluate_script "$('#timeline').timeline('startTime')"
       actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
 
-
-      puts actual_start_time
-      puts actual_end_time
       # Allow 1% variance for rounding errors
       delta = 1000 * (start.to_i - stop.to_i).abs / 100
 
