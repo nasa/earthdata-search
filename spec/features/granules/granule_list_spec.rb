@@ -234,7 +234,7 @@ describe 'Granule list', reset: false do
 
   context "for collections with few granule results" do
     before :all do
-      visit('/search/granules?p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
+      visit('/search/granules?cmr_env=prod&p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
       wait_for_xhr
     end
 
@@ -259,7 +259,7 @@ describe 'Granule list', reset: false do
 
     context "clicking on a collection result" do
       before :all do
-        visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
+        visit('/search?&cmr_env=prod&q=C179002107-SEDAC&ok=C179002107-SEDAC')
         wait_for_xhr
         dismiss_banner
         expect(page).to have_visible_collection_results
@@ -278,10 +278,9 @@ describe 'Granule list', reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-
     context 'clicking on the single granule download button when the links have titles' do
       before :all do
-        visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
+        visit('/search/granules?cmr_env=prod&p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
         wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
@@ -304,7 +303,7 @@ describe 'Granule list', reset: false do
 
     context 'clicking on the single granule download button when the links do not have titles', data_specific: true do
       before :all do
-        visit('/search/granules?p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
+        visit('/search/granules?cmr_env=prod&p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
         wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
@@ -332,7 +331,7 @@ describe 'Granule list', reset: false do
   context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
     before :all do
       # A collection known to have duplicate downloadable links
-      visit('/search/granules?p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
+      visit('/search/granules?cmr_env=prod&p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
       wait_for_xhr
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         # If the test works, this dropdown won't even exist...
@@ -353,6 +352,11 @@ describe 'Granule list', reset: false do
       wait_for_xhr
       click_button('Download')
     end
+
+    after :all do
+      find('.modal-dialog .modal-close').click
+    end
+
     it "shows a modal warning of the delay" do
       expect(page).to have_css('#delayWarningModalLabel')
       expect(page).to have_text('Message from data provider: This is an optional message.')
