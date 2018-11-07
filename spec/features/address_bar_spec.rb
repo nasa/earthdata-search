@@ -454,17 +454,13 @@ describe 'Address bar' do
 
   context "when selecting a timeline date" do
     before(:all) do
-      # visit '/search/granules?p=C179003030-ORNL_DAAC'
       load_page :search, focus: 'C179003030-ORNL_DAAC'
-      # wait_for_xhr
       click_timeline_date('Nov', '1987')
       wait_for_xhr
     end
 
     it 'saves the timeline date selection in the URL' do
-      # expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199')
       expect(page.current_url).to match(/p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199/)
-
     end
   end
 
@@ -601,7 +597,6 @@ describe 'Address bar' do
     end
   end
 
-
   context 'when the labs parameter is set to true' do
     context 'the granule filters panel' do
       before(:all) do
@@ -648,7 +643,6 @@ describe 'Address bar' do
     end
 
     it 'saves the base layer in the url' do
-      # expect(page).to have_query_string('m=0!0!2!1!2!0%2C2')
       expect(page.current_url).to match(/m=0!0!2!1!2!0%2C2/)
     end
 
@@ -679,7 +673,6 @@ describe 'Address bar' do
     end
 
     it 'saves the applied overlays in the url' do
-      # expect(page).to have_query_string('m=0!0!2!1!0!0%2C2%2C1')
       expect(page.current_url).to match(/m=0!0!2!1!0!0%2C2%2C1/)
     end
 

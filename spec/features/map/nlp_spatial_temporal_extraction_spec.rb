@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'Spatial and temporal extraction' do
   context 'extracted spatial information' do
     before :all do
-      # Capybara.reset_sessions!
       load_page :search
       fill_in 'keywords', with: 'Texas'
       wait_for_xhr
