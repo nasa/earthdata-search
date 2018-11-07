@@ -3,7 +3,7 @@
 
 require 'spec_helper'
 
-describe 'Timeline date selection', reset: false do
+describe 'Timeline date selection' do
   extend Helpers::CollectionHelpers
 
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')

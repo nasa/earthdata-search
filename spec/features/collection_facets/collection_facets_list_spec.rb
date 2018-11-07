@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facet Display', reset: false do
+describe 'Collection Facet Display' do
   context 'When viewing facets on before taking any actions' do
     before :all do
       Capybara.reset_sessions!

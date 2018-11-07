@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Collection visualizations", reset: false do
+describe "Collection visualizations" do
   extend Helpers::CollectionHelpers
 
   collection_id = 'C179002914-ORNL_DAAC'

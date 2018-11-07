@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection NRT Filtering', reset: false do
+describe 'Collection NRT Filtering' do
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true

@@ -1,11 +1,10 @@
 require 'spec_helper'
 
-describe 'Viewing Single Project', reset: false do
+describe 'Viewing Single Project' do
   context 'for a saved project' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search
-      login
+      load_page :search, authenticate: 'edsc'
       visit_project
       wait_for_xhr
     end
@@ -19,8 +18,7 @@ describe 'Viewing Single Project', reset: false do
   context 'for an un-saved project' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS']
-      login
+      load_page :search, project: ['C14758250-LPDAAC_ECS'], authenticate: 'edsc'
       wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
@@ -35,9 +33,7 @@ describe 'Viewing Single Project', reset: false do
   context 'project summary' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS']
-      login
-      wait_for_xhr
+      load_page :search, project: ['C14758250-LPDAAC_ECS'], authenticate: 'edsc'
       click_link 'My Project'
       wait_for_xhr
     end
@@ -63,8 +59,7 @@ describe 'Viewing Single Project', reset: false do
     context 'when a date range has been selected' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z', '2014-02-01T00:00:01Z']
-        login
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z', '2014-02-01T00:00:01Z'], authenticate: 'edsc'
         wait_for_xhr
         click_link 'My Project'
         wait_for_xhr
@@ -77,8 +72,7 @@ describe 'Viewing Single Project', reset: false do
     context 'when a start date has been selected without an end date' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z']
-        login
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['2010-01-01T00:00:00Z'], authenticate: 'edsc'
         wait_for_xhr
         click_link 'My Project'
       end
@@ -90,8 +84,7 @@ describe 'Viewing Single Project', reset: false do
     context 'when an end date has been selected without a start date' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['', '2014-02-01T00:00:01Z']
-        login
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], temporal: ['', '2014-02-01T00:00:01Z'], authenticate: 'edsc'
         wait_for_xhr
         click_link 'My Project'
       end
@@ -105,10 +98,9 @@ describe 'Viewing Single Project', reset: false do
     context 'when a polygon has been selected' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
-        login
         click_link 'My Project'
         wait_for_xhr
       end
@@ -129,10 +121,9 @@ describe 'Viewing Single Project', reset: false do
     context 'when a rectangle has been selected' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
         create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
-        login
         click_link 'My Project'
         wait_for_xhr
       end
@@ -153,10 +144,9 @@ describe 'Viewing Single Project', reset: false do
     context 'when a point has been selected' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
+        load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
         create_point(0, 0)
         wait_for_xhr
-        login
         click_link 'My Project'
         wait_for_xhr
       end
@@ -179,9 +169,7 @@ describe 'Viewing Single Project', reset: false do
     context 'for an EGI collection', pending_updates: true do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C1000000969-DEV08'], env: :sit
-        login
-        wait_for_xhr
+        load_page :search, project: ['C1000000969-DEV08'], env: :sit, authenticate: 'edsc'
         click_link 'My Project'
         wait_for_xhr
       end
@@ -392,8 +380,7 @@ describe 'Viewing Single Project', reset: false do
     context 'for an OPeNDAP collection' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
-        login
+        load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
         wait_for_xhr
         click_link 'My Project'
         wait_for_xhr
@@ -414,10 +401,8 @@ describe 'Viewing Single Project', reset: false do
       context 'project configurations with spatial subsetting enabled via bounding box' do
         before :all do
           Capybara.reset_sessions!
-          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
+          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
           create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
-          wait_for_xhr
-          login
           wait_for_xhr
           click_link 'My Project'
           wait_for_xhr
@@ -440,10 +425,8 @@ describe 'Viewing Single Project', reset: false do
       context 'project configurations with spatial subsetting enabled via polygon' do
         before :all do
           Capybara.reset_sessions!
-          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit
+          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
           create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
-          wait_for_xhr
-          login
           wait_for_xhr
           click_link 'My Project'
           wait_for_xhr
@@ -468,8 +451,7 @@ describe 'Viewing Single Project', reset: false do
   context 'project card' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2']
-      login
+      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
       wait_for_xhr
       click_link 'My Project'
       wait_for_xhr
@@ -578,9 +560,7 @@ describe 'Viewing Single Project', reset: false do
     # all cassettes are recorded
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2', 'C179003030-ORNL_DAAC', 'C179001887-SEDAC', 'C1000000220-SEDAC', 'C179001967-SEDAC', 'C179001889-SEDAC', 'C179001707-SEDAC', 'C179002107-SEDAC', 'C179002147-SEDAC', 'C1000000000-SEDAC']
-      login
-      wait_for_xhr
+      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2', 'C179003030-ORNL_DAAC', 'C179001887-SEDAC', 'C1000000220-SEDAC', 'C179001967-SEDAC', 'C179001889-SEDAC', 'C179001707-SEDAC', 'C179002107-SEDAC', 'C179002147-SEDAC', 'C1000000000-SEDAC'], authenticate: 'edsc'
       click_link 'My Project'
       wait_for_xhr
     end

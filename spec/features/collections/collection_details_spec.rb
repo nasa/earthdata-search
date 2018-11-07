@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection details', reset: false do
+describe 'Collection details' do
   context 'when displaying the collection details' do
     before :all do
       Capybara.reset_sessions!

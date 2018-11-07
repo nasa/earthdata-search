@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Single Granule Data Access', reset: false do
+describe 'Single Granule Data Access' do
   downloadable_collection_id = 'C179002914-ORNL_DAAC'
 
   context 'when the user is not logged in', single_granule: true do
@@ -20,9 +20,7 @@ describe 'Single Granule Data Access', reset: false do
 
   context 'when the user is logged in', single_granule: true do
     before :all do
-      load_page :search, focus: downloadable_collection_id
-      login
-      wait_for_xhr
+      load_page :search, focus: downloadable_collection_id, authenticate: 'edsc'
       dismiss_banner
       first_granule_list_item.click_link "Configure and download single granule data"
       wait_for_xhr
@@ -56,9 +54,7 @@ describe 'Single Granule Data Access', reset: false do
   context 'within a saved project', single_granule: true do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: downloadable_collection_id
-      login
-      wait_for_xhr
+      load_page :search, focus: downloadable_collection_id, authenticate: 'edsc'
       dismiss_banner
 
       click_link "Save your project"

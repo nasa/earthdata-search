@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Grid coordinate search", reset: false do
+describe "Grid coordinate search" do
   extend Helpers::CollectionHelpers
 
   before :all do

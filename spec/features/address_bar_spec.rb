@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Address bar', reset: false do
+describe 'Address bar' do
   def query_string
     URI.parse(current_url).query
   end

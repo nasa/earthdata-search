@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "CWIC-enabled polygon searches", reset: false do
+describe "CWIC-enabled polygon searches" do
   extend Helpers::CollectionHelpers
 
   cwic_collection_name = "EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data"

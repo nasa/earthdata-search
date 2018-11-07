@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facets With Nesting', reset: false do
+describe 'Collection Facets With Nesting' do
   before :all do
     Capybara.reset_sessions!
 

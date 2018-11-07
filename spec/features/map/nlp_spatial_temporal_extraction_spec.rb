@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Spatial and temporal extraction', reset: false do
+describe 'Spatial and temporal extraction' do
   context 'extracted spatial information' do
     before :all do
       # Capybara.reset_sessions!

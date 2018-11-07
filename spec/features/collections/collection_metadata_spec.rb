@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'Collection metadata', reset: false do
+describe 'Collection metadata' do
   before do
     Capybara.reset_sessions!
-    load_page :search, q: 'AST_L1AE'
+    load_page :search, q: 'AST_L1AE', authenticate: 'edsc'
 
     first_collection_result.click_link('View collection details')
     wait_for_xhr
@@ -23,8 +23,6 @@ describe 'Collection metadata', reset: false do
 
   context 'when a logged in user views collection metadata' do
     before do
-      login
-      wait_for_xhr
       click_link 'View More Metadata'
     end
 

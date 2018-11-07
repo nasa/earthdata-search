@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Displaying system errors', reset: false do
+describe 'Displaying system errors' do
   context 'when a system error occurs' do
     before :all do
       Capybara.reset_sessions!

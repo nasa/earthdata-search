@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Collection relevancy search", reset: false do
+describe "Collection relevancy search" do
 
   # TODO: RDA // EDSC-1117 notes a bug in CMR that will cause this test to fail.
   xit "doesn't return collections that don't have granules falling in the set time range" do

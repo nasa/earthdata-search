@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'CWIC-enabled collection details', reset: false do
+describe 'CWIC-enabled collection details' do
   before :all do
     Capybara.reset_sessions!
 

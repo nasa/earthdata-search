@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Limited Collections", reset: false do
+describe "Limited Collections" do
   extend Helpers::CollectionHelpers
 
 

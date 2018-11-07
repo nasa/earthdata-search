@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facet Selection', reset: false, pending_updates: true do
+describe 'Collection Facet Selection', pending_updates: true do
   before :all do
     Capybara.reset_sessions!
 

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule selection", reset: false do
+describe "Granule selection" do
   extend Helpers::CollectionHelpers
   Capybara.ignore_hidden_elements = true
 

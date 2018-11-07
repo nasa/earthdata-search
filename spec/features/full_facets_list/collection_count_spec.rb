@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Viewing Full Facets Modal', reset: false do
+describe 'Viewing Full Facets Modal' do
   before :all do
     Capybara.reset_sessions!
 

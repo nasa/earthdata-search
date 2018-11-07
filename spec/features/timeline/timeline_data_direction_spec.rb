@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Timeline data direction", reset: false do
+describe "Timeline data direction" do
   before :all do
     load_page :search, focus: 'C179003030-ORNL_DAAC'
 

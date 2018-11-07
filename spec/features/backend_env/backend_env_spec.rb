@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Backend environments', reset: false do
+describe 'Backend environments' do
 
   context 'Setting cmr_env to `prod`' do
     before :all do

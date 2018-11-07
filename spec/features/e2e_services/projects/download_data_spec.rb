@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false do
+describe 'When viewing the project page' do
   before :all do
     load_page :search, project: ['C1200240776-DEV08'], env: :sit, authenticate: 'edsc'
 

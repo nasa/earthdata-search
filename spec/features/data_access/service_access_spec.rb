@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # EDSC-1778 Adding pending_updates tag until ticket is completed. 
-describe 'Services Access', reset: false, pending_updates: true do
+describe 'Services Access', pending_updates: true do
   serviceable_collection_id = 'C179014698-NSIDC_ECS'
   smap_collection_id = 'C1236303848-NSIDC_ECS'
   smap_collection_title = "SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid Brightness Temperatures V003"
@@ -11,9 +11,7 @@ describe 'Services Access', reset: false, pending_updates: true do
   context 'when viewing data access with a collection that is not configured for ESI processing', single_granule: true do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: disabled_serviceable_collection_id
-      login
-      wait_for_xhr
+      load_page :search, focus: disabled_serviceable_collection_id, authenticate: 'edsc'
       first_granule_list_item.click_link "Configure and download single granule data"
       wait_for_xhr
     end
@@ -51,8 +49,7 @@ describe 'Services Access', reset: false, pending_updates: true do
   context 'when viewing data access with a SMAP collection that is capable of zone subsetting', single_granule: true do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: smap_collection_id
-      login
+      load_page :search, focus: smap_collection_id, authenticate: 'edsc'
       first_granule_list_item.click_link "Configure and download single granule data"
     end
 
@@ -95,8 +92,7 @@ describe 'Services Access', reset: false, pending_updates: true do
   context 'when viewing data access with a serviceable collection' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: serviceable_collection_id
-      login
+      load_page :search, focus: serviceable_collection_id, authenticate: 'edsc'
       fill_in "granule-ids", with: "AMSR_E_L3_5DaySnow_V10_20110928.hdf, AMSR_E_L3_5DaySnow_V10_20110923.hdf, AMSR_E_L3_5DaySnow_V10_20110918.hdf, AMSR_E_L3_5DaySnow_V10_20110913.hdf, AMSR_E_L3_5DaySnow_V10_20110908.hdf, AMSR_E_L3_5DaySnow_V10_20110903.hdf, AMSR_E_L3_5DaySnow_V10_20110829.hdf, AMSR_E_L3_5DaySnow_V10_20110824.hdf, AMSR_E_L3_5DaySnow_V10_20110819.hdf, AMSR_E_L3_5DaySnow_V10_20110814.hdf, AMSR_E_L3_5DaySnow_V10_20110809.hdf, AMSR_E_L3_5DaySnow_V10_20110804.hdf\t"
       wait_for_xhr
 

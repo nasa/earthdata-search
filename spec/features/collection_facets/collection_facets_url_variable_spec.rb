@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facet URL Query Params', reset: false, pending_updates: true do
+describe 'Collection Facet URL Query Params', pending_updates: true do
   before :all do
     Capybara.reset_sessions!
 

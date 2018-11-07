@@ -1,12 +1,11 @@
 require 'spec_helper'
 
-describe 'Granule list', reset: false do
+describe 'Granule list' do
   extend Helpers::CollectionHelpers
 
   before :all do
     Capybara.reset_sessions!
-    # load_page :search
-    # login
+    load_page :search, authenticate: 'edsc'
   end
 
   context 'for all collections with granules' do

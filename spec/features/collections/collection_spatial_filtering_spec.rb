@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Spatial manual entry", reset: false do
+describe "Spatial manual entry" do
   before :all do
     load_page :search
   end
