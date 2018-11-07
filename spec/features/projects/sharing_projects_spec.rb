@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Sharing Projects', reset: false do
+describe 'Sharing Projects' do
   context 'the stored path has less characters than the `url_limit` configuration' do
     before :all do
       Capybara.reset_sessions!

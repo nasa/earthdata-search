@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collections Collapsed View', reset: false do
+describe 'Collections Collapsed View' do
   context 'on the search results screen' do
     before :all do
       Capybara.reset_sessions!

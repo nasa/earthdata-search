@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Spatial tool', reset: false do
+describe 'Spatial tool' do
   before :all do
     load_page :search
 

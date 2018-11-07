@@ -1,16 +1,13 @@
 require 'spec_helper'
 
-describe 'User missing ordering preferences', reset: false, pending_updates: true do
+describe 'User missing ordering preferences', pending_updates: true do
   collection_id = 'C203234523-LAADS'
   collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
 
   context 'when configuring a data access request' do
     before :all do
-      load_page :search, focus: [collection_id]
+      load_page :search, focus: [collection_id], authenticate: 'edscbasic'
       
-      login 'edscbasic'
-      wait_for_xhr
-
       click_button 'Download All'
       wait_for_xhr
 
@@ -27,11 +24,8 @@ describe 'User missing ordering preferences', reset: false, pending_updates: tru
 
   context 'when accessing downloadable data' do
     before :all do
-      load_page :search, focus: [collection_id]
+      load_page :search, focus: [collection_id], authenticate: 'edscbasic'
       
-      login 'edscbasic'
-      wait_for_xhr
-
       click_button 'Download All'
       wait_for_xhr
 

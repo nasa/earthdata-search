@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'CWIC-enabled collection search results', reset: false, pending_updates: true do
+describe 'CWIC-enabled collection search results', pending_updates: true do
   context 'When viewing the collection results list' do
     context 'When viewing a CWIC collection' do
       before :all do

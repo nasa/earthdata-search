@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe 'Collection include EOSDIS filtering', reset: false do
+describe 'Collection include EOSDIS filtering' do
   context "When searching collections with 'Include non-EOSDIS collections' filter unchecked" do
     before :all do
       load_page :search, ac: true

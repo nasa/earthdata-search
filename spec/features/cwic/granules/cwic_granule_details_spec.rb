@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'CWIC-enabled granule results view', reset: false do
+describe 'CWIC-enabled granule results view' do
   extend Helpers::CollectionHelpers
 
   before :all do

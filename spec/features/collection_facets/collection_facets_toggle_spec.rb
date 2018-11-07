@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facets Show/Hide', reset: false do
+describe 'Collection Facets Show/Hide' do
   before :all do
     Capybara.reset_sessions!
 

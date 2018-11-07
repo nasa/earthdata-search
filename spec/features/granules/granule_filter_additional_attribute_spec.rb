@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule search filters by additional attributes", reset: false do
+describe "Granule search filters by additional attributes" do
   before_granule_count = 0
 
   xit "searching AST_L1T by CorrectionAchieved - additional attributes are no longer available"

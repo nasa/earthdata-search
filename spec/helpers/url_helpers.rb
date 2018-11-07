@@ -94,6 +94,7 @@ module Helpers
 
         options[:env] ||= cmr_env.to_sym
 
+        # If the cmr_env is production, we reset the session values because it wont be provided to this method
         Capybara.reset_sessions! if options[:env].to_s == 'prod'
         
         options.select { |option| [:env].include?(option) }.each do |key, value|

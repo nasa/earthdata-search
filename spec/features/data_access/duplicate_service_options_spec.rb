@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Duplicate Service Options', reset: false do
+describe 'Duplicate Service Options' do
   downloadable_collection_id = 'C179003030-ORNL_DAAC'
   downloadable_collection_title = '15 Minute Stream Flow Data: USGS (FIFE)'
 
@@ -9,8 +9,7 @@ describe 'Duplicate Service Options', reset: false do
 
   pending "Refactor project panel to e2e services project page" do
     before :all do
-      load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
-      login
+      load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project, authenticate: 'edsc'
       click_button "Download All"
       wait_for_xhr
     end

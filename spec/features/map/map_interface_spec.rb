@@ -7,7 +7,7 @@
 
 require "spec_helper"
 
-describe "Map interface", reset: false do
+describe "Map interface" do
   before do
     load_page :search, overlay: false
   end

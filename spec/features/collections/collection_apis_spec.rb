@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection API Endpoints', reset: false do
+describe 'Collection API Endpoints' do
   context 'when viewing the collection details for a collection with granules' do
     before :all do
       load_page '/search', env: :sit

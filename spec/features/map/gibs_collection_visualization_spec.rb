@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "Collection GIBS visualizations", reset: false, pending_updates: true do
+describe "Collection GIBS visualizations", pending_updates: true do
   extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
@@ -14,9 +14,7 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
 
   context "when viewing a GIBS-enabled collection in the results list" do
     before :all do
-      login
-      wait_for_xhr
-      load_page :search
+      load_page :search, authenticate: 'edsc'
       fill_in "keywords", with: gibs_collection_id
       wait_for_xhr
       expect(page).to have_content('AE_Rain')
@@ -32,9 +30,7 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
 
   context "when visualizing a GIBS-enabled collection" do
     before :all do
-      login
-      wait_for_xhr
-      load_page :search
+      load_page :search, authenticate: 'edsc'
       fill_in "keywords", with: gibs_collection_id
       wait_for_xhr
       expect(page).to have_content('AE_Rain')
@@ -97,9 +93,7 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
   end
   context 'when accessing GIBS-enabled collection "C179014699-NSIDC_ECS"' do
     before :all do
-      load_page :search, q: 'C179014699-NSIDC_ECS'
-      login
-      wait_for_xhr
+      load_page :search, q: 'C179014699-NSIDC_ECS', authenticate: 'edsc'
       fill_in 'keywords', with: 'C179014699-NSIDC_ECS'
       view_granule_results('AMSR-E/Aqua Daily L3 6.25 km 89 GHz Brightness Temperature (Tb) Polar Grids V002')
       wait_for_xhr

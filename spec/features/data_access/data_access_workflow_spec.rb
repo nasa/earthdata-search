@@ -1,7 +1,7 @@
 require "spec_helper"
 require 'base64'
 
-describe "Data Access workflow", reset: false do
+describe "Data Access workflow" do
   downloadable_collection_id = 'C90762182-LAADS'
   downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
@@ -17,8 +17,7 @@ describe "Data Access workflow", reset: false do
   pending "when a user has three or more collections within a project" do
     before(:all) do
       Capybara.reset_sessions!
-      load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project
-                login
+      load_page :search, project: [test_collection_1, test_collection_2, test_collection_3], view: :project, authenticate: 'edsc'
       click_button "Download All"
       wait_for_xhr
     end
@@ -78,23 +77,6 @@ describe "Data Access workflow", reset: false do
       end
     end
   end
-  
-  # context "when a malicious user attempts an XSS attack using the data access back link" do
-  #   before(:all) do
-  #     load_page :root
-  #     login
-  #     visit "/data/configure?p=!#{downloadable_collection_id}&back=javascript:alert(%27ohai%27)//"
-  #   end
-
-  #   after :all do
-  #     Capybara.reset_sessions!
-  #   end
-
-  #   it "uses a safe back link" do
-  #     expect(page).to have_link("Back to Search Session")
-  #     expect(page).to have_css("a[href^=\"/search/collections?p=!#{downloadable_collection_id}\"]")
-  #   end
-  # end
 
   pending "when the user is not logged in" do
     before(:all) do
@@ -119,8 +101,7 @@ describe "Data Access workflow", reset: false do
 
   pending "when the user is logged in" do
     before(:all) do
-      load_page :search, {project: [downloadable_collection_id, non_downloadable_collection_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
-      login
+      load_page :search, {project: [downloadable_collection_id, non_downloadable_collection_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}, authenticate: 'edsc'
       click_button "Download All"
       wait_for_xhr
     end

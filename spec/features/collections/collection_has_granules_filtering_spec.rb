@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection has-granules filtering', reset: false do
+describe 'Collection has-granules filtering' do
   context 'When disabling the \'show collections without granules\' filter' do
     before :all do
       load_page :search

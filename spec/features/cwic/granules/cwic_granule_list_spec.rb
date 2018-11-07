@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'CWIC Granule list', reset: false do
+describe 'CWIC Granule list' do
   extend Helpers::CollectionHelpers
 
   before :all do

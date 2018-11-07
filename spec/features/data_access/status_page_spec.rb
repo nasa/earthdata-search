@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Data access status page", reset: false, pending_updates: true do
+describe "Data access status page", pending_updates: true do
   context "when the current user has download history" do
     before :all do
       Capybara.reset_sessions!

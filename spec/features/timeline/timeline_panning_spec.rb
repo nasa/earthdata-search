@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Timeline panning", reset: false do
+describe "Timeline panning" do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
   start = present - 365.days
 

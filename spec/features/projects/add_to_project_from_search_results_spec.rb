@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Searching for a collection', reset: false do
+describe 'Searching for a collection' do
   context 'that is not in the users project' do
     before :all do
       load_page :search, q: 'C1200187767-EDF_OPS', env: :sit

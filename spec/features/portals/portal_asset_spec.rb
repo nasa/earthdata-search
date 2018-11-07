@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Visiting an Earthdata Search portal', reset: false do
+describe 'Visiting an Earthdata Search portal' do
   include Helpers::CollectionHelpers
 
   context 'on the home page of a portal with minimal configuration' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Applying facets from Full Facets List Modal', reset: false do
+describe 'Applying facets from Full Facets List Modal' do
   before :all do
     Capybara.reset_sessions!
 
