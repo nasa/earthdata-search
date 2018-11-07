@@ -1,13 +1,14 @@
 require "spec_helper"
 
-describe "CWIC-enabled data access", reset: false do
+describe "CWIC-enabled data access" do
   extend Helpers::CollectionHelpers
 
   dataset_id = "EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data"
   search_params = {
     focus: 'C1220566654-USGS_LTA',
     temporal: ['2016-01-21T00:00:00Z', '2016-01-21T23:59:59Z'],
-    ac: true
+    ac: true,
+    authenticate: 'edsc'
   }
 
   context "When configuring data access for a CWIC-tagged collection", pending_updates: true do
@@ -15,8 +16,6 @@ describe "CWIC-enabled data access", reset: false do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
       load_page :search, search_params
-      login
-      wait_for_xhr
       view_granule_results(dataset_id)
       click_button 'Download'
       wait_for_xhr
@@ -32,8 +31,6 @@ describe "CWIC-enabled data access", reset: false do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
       load_page :search, search_params
-      login
-      wait_for_xhr
       view_granule_results(dataset_id)
       click_button 'Download'
       wait_for_xhr
@@ -71,8 +68,6 @@ describe "CWIC-enabled data access", reset: false do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
       load_page :search, search_params
-      login
-      wait_for_xhr
       view_granule_results(dataset_id)
       within(first_granule_list_item) do
         click_link 'Configure and download single granule data'

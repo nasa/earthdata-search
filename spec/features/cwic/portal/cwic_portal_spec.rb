@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "CWIC portal", reset: false do
+describe "CWIC portal" do
   extend Helpers::CollectionHelpers
 
   before :all do

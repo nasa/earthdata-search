@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "CWIC-enabled granule visualizations", reset: false do
+describe "CWIC-enabled granule visualizations" do
   extend Helpers::CollectionHelpers
 
   before :all do

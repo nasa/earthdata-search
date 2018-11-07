@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Collection results", reset: false, pending_updates: true do
+describe "Collection results", pending_updates: true do
   before :all do
     load_page :search, ac: true
   end

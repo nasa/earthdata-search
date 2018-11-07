@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule search overlay", reset: false do
+describe "Granule search overlay" do
   pending "Refactor project panel to e2e services project page" do
     
     before(:all) do

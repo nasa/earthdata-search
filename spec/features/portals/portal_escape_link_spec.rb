@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Portal escape link", reset: false do
+describe "Portal escape link" do
   context "Visiting an Earthdata Search portal" do
     before :all do
       load_page :search, portal: 'simple', q: 'modis'

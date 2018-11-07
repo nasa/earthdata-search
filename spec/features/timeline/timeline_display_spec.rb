@@ -4,7 +4,7 @@
 
 require "spec_helper"
 
-describe "Timeline display", reset: false do
+describe "Timeline display" do
   extend Helpers::CollectionHelpers
 
   before :all do

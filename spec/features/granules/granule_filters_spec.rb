@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule search filters", reset: false do
+describe "Granule search filters" do
   pending "for granules that can be filtered by day/night flag or cloud cover" do
     before_granule_count = 0
 

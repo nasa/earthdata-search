@@ -6,7 +6,7 @@
 
 require "spec_helper"
 
-describe 'Project help', reset: false do
+describe 'Project help' do
 
   before :all do
     load_page :search

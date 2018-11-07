@@ -1,13 +1,10 @@
 require 'spec_helper'
 
-describe 'When viewing the project page', reset: false, pending_updates: true do
+describe 'When viewing the project page' do
   before :all do
     # This collection is specifically configured for this test on SIT. Any changes can
     # and should be made to this test file if needed
-    load_page :search, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit
-
-    login
-    wait_for_xhr
+    load_page :search, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
 
     # View the project
     click_link('My Project')

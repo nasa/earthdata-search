@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Granule details', reset: false do
+describe 'Granule details' do
   it 'displays the granule details' do
     load_page :search
     fill_in 'keywords', with: 'C179003030-ORNL_DAAC'

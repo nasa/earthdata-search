@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Shapefile search', reset: false do
+describe 'Shapefile search' do
   before :all do
     load_page :search
   end

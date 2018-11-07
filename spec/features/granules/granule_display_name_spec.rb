@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Granule Display Name', reset: false do
+describe 'Granule Display Name' do
   before :all do
     Capybara.reset_sessions!
 

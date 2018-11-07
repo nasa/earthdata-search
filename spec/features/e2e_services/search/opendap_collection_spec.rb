@@ -1,11 +1,9 @@
 require 'spec_helper'
 
-describe 'When displaying an OPeNDAP collection in the results', reset: false do
+describe 'When displaying an OPeNDAP collection in the results' do
   before :all do
     Capybara.reset_sessions!
-    load_page :search, q: ['C1200187767-EDF_OPS'], env: :sit
-    login
-    wait_for_xhr
+    load_page :search, q: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
   end
 
   it 'customizable badge is visible' do

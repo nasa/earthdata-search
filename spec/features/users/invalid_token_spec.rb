@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Invalid user token', reset: false do
+describe 'Invalid user token' do
   before :all do
     Capybara.reset_session!
   end

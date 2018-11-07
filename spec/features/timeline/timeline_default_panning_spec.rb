@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Timeline default panning", reset: false do
+describe "Timeline default panning" do
   collection_end = DateTime.new(1988, 3, 4, 0, 0, 0, '+0')
 
   context "when the timeline range is before the time span of all currently visible collections" do

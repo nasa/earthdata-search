@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Timeline zooming", pending: 'Refactor project panel to 2e2 services project page.', reset: false do
+describe "Timeline zooming", pending: 'Refactor project panel to 2e2 services project page.' do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
   month_start = DateTime.new(2014, 1, 31, 2, 30, 0, '+0')

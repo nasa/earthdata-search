@@ -3,13 +3,12 @@
 
 require "spec_helper"
 
-describe "Granule browse display", reset: false do
+describe "Granule browse display" do
   extend Helpers::CollectionHelpers
 
   before :all do
     Capybara.reset_sessions!
-    login
-    load_page :search
+    load_page :search, authenticate: 'edsc'
   end
 
   context "for granules with browse" do

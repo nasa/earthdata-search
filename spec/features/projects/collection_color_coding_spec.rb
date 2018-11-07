@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Project collection color coding", reset: false do
+describe "Project collection color coding" do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
   first_color_hex = '#3498DB'

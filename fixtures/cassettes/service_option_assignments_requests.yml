@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000082-EDF_OPS
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000029-EDF_OPS
     body:
       encoding: US-ASCII
       string: ''
@@ -11,8 +11,8 @@ http_interactions:
       - Faraday v0.9.2
       Echo-Token:
       - edsc-access
-  recorded_at: Sun, 28 Oct 2018 20:16:27 GMT
-  digest: 952925db8bb99ccc5606ad898d1a11c51aa9a070
+  recorded_at: Wed, 07 Nov 2018 15:38:16 GMT
+  digest: 744942b03af638b79163d3405f2c14370449edb4
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_assignments.json?catalog_item_id=C1000000739-DEV08
@@ -24,7 +24,7 @@ http_interactions:
       - Faraday v0.9.2
       Echo-Token:
       - edsc-access
-  recorded_at: Sun, 28 Oct 2018 20:17:42 GMT
+  recorded_at: Tue, 06 Nov 2018 19:49:14 GMT
   digest: 74221f972dd918d85276eaea9c0ffd1f19ff6691
 - request:
     method: get
@@ -37,7 +37,7 @@ http_interactions:
       - Faraday v0.9.2
       Echo-Token:
       - edsc-access
-  recorded_at: Sun, 28 Oct 2018 20:21:44 GMT
+  recorded_at: Tue, 06 Nov 2018 17:26:59 GMT
   digest: 7193b157ad9b86cdadf0e13dc195a744a68ac5ae
 - request:
     method: get
@@ -50,6 +50,6 @@ http_interactions:
       - Faraday v0.9.2
       Echo-Token:
       - edsc-access
-  recorded_at: Sun, 28 Oct 2018 20:41:42 GMT
+  recorded_at: Tue, 06 Nov 2018 17:47:37 GMT
   digest: 7c33771c45504b408cbdbecc519e2e8e9596a992
 recorded_with: VCR 2.6.0

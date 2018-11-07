@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "'Clear Filters' button", reset: false do
+describe "'Clear Filters' button" do
   before :all do
     load_page :search, facets: true, env: :sit
   end
@@ -23,7 +23,7 @@ describe "'Clear Filters' button", reset: false do
     click_link 'Clear Filters'
     wait_for_xhr
     collections_without_point = find('.master-overlay-tab-title strong').text
-    expect(collections_without_point).to be > collections_within_point
+    expect(collections_without_point.to_i).to be > collections_within_point.to_i
   end
 
   context "clears temporal", data_specific: true do

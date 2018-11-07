@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Timeline temporal display", reset: false do
+describe "Timeline temporal display" do
   max_date = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
   min_date = DateTime.new(1970, 1, 1, 0, 0, 0, '+0')
   start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')

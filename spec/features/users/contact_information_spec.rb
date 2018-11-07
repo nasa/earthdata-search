@@ -3,11 +3,10 @@
 
 require 'spec_helper'
 
-describe 'Contact Information', reset: false, pending_updates: true do
+describe 'Contact Information', pending_updates: true do
   before :all do
-    load_page :search, overlay: false
-    login
-    wait_for_xhr
+    load_page :search, overlay: false, authenticate: 'edsc'
+
     dismiss_banner
     click_link 'Manage user account'
     # TODO: Both of these fail to get me to the contact info page

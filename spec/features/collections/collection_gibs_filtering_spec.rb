@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection GIBS Filtering', reset: false do
+describe 'Collection GIBS Filtering' do
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true

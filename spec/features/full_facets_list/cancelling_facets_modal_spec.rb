@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Ignoring selections from the Full Facets List Modal', reset: false do
+describe 'Ignoring selections from the Full Facets List Modal' do
   before :all do
     Capybara.reset_sessions!
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection results scrolling', reset: false, data_specific: true do
+describe 'Collection results scrolling', data_specific: true do
   before :all do
     load_page :search, q: 'AQUARIUS_SAC-D AS'
   end

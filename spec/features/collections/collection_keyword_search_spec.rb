@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Collection keyword searches", reset: false do
+describe "Collection keyword searches" do
   extend Helpers::CollectionHelpers
 
   before(:all) do

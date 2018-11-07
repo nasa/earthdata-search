@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Viewing the granules panel', reset: false do
+describe 'Viewing the granules panel' do
   context 'that is not in the users project' do
     before :all do
       load_page 'search/granules', focus: 'C1200187767-EDF_OPS', env: :sit

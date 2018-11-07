@@ -1,12 +1,10 @@
 require 'spec_helper'
 
-describe 'Viewing Projects', reset: false do
+describe 'Viewing Projects' do
   context 'when viewing list of saved projects' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search
-
-      login
+      load_page :search, authenticate: 'edsc'
 
       create_project
 

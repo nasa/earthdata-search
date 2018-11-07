@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Granule filter tracking", reset: false do
+describe "Granule filter tracking" do
   has_reference_script = """
     var ds = window.edsc.models.data.Collection.findOrCreate({id: 'C179003030-ORNL_DAAC'}, null);
     ds.dispose();

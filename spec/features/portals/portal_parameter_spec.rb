@@ -30,8 +30,7 @@ describe "Portal parameters", reset: true do
 
   context "visiting a portal as a logged in user" do
     before :each do
-      load_page :search, overlay: false, portal: 'simple'
-      login
+      load_page :search, overlay: false, portal: 'simple', authenticate: 'edsc'
     end
 
     context "and selecting the contact info page" do

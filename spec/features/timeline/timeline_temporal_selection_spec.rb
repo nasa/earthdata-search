@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Timeline temporal selection", reset: false do
+describe "Timeline temporal selection" do
   extend Helpers::CollectionHelpers
 
   def date_display(date)

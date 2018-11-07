@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection "Customizable" Filtering', reset: false do
+describe 'Collection "Customizable" Filtering' do
   before :all do
     Capybara.reset_sessions!
   end

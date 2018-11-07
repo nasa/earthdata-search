@@ -7,8 +7,7 @@ describe "Temporal constraint disambiguation", reset: true do
   temporal_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
 
   before :each do
-    load_page :search, focus: 'C179003030-ORNL_DAAC'
-    login
+    load_page :search, focus: 'C179003030-ORNL_DAAC', authenticate: 'edsc'
 
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
