@@ -5,6 +5,7 @@ cache:
   directories:
     - node_modules
 sudo: required
+
 # Uncomment to have screenshots dumped to S3
 # You will need to provide S3 information to travis as we do not have one for EDSC
 addons:
@@ -18,12 +19,6 @@ addons:
     s3_region: us-east-1
   chrome: stable
 
-# https://blog.travis-ci.com/2017-08-29-trusty-image-updates
-# group: deprecated-2017Q3
-# before_install:
-#   - sudo apt-get install qt5-default libqt5webkit5-dev qtdeclarative5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-#   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#   - qmake -version
 before_install:
   - # start your web application and listen on `localhost`
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &

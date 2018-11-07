@@ -188,59 +188,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
         @updateControlContainer()
 
-        # main = $('.main-content')
-        # windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-        # height = windowHeight - main.position().top - $('body > footer').outerHeight()
-        # main.height(height)
-        #
-        # for div in @root.find(@scope('.content'))
-        #   $div = $(div)
-        #   $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 20, 13))
-        #
-        # scrollContentHeight = @root.find('.master-overlay-main').height()
-        # for section in $('.master-overlay-main').find('section')
-        #   $(section).height(scrollContentHeight)
-        #
-        # # map toolbars
-        # target = $(".master-overlay-main");
-        # maptools = $("#map .leaflet-top.leaflet-right")
-        # maptools[0].style.top = 96 - (((($("#map").height() - target.position().top) / $("#map").height())) * 100) + '%';
-        #
-        # collection details
-        # collectionDetail = $('#collection-details')
-        # if collectionDetail.is(':visible')
-        #   newHeight = collectionDetail.height() - collectionDetail.find('.master-overlay-nav').outerHeight() - collectionDetail.find('header').outerHeight()
-        #   collectionDetail.find(@scope('.content')).height(newHeight)
-        #
-        #
-        # # project
-        # project = $('#project-overview')
-        # newHeight = project.height() - project.find('.master-overlay-nav').outerHeight() - project.find('header').outerHeight()
-        # project.find(@scope('.content')).height(newHeight)
-        #
-        # collection results
-        # collectionResults = $('#collection-results')
-        # newHeight = collectionResults.height() - collectionResults.find('header').outerHeight() - collectionResults.find('.master-overlay-info').outerHeight()
-        # collectionResults.find(@scope('.content')).height(newHeight)
-        #
-        # # granule list
-        # granuleList = $('#granule-list')
-        # if granuleList.is(':visible')
-        #   newHeight = granuleList.height() - granuleList.find('.master-overlay-nav').outerHeight() - granuleList.find('.master-overlay-info').outerHeight() - granuleList.find('.collection-title-filters h2').outerHeight()
-        #   granuleList.find(@scope('.content')).height(newHeight)
-        #
-        # # granule filter
-        # granuleFilter = $('#granule-search')
-        # if granuleFilter.offset().left <= window.innerWidth
-        #   newLeft = window.innerWidth - granuleFilter.width()
-        #   granuleFilter.parents(@scope('.secondary')).offset({top: granuleFilter.parents(@scope('.secondary-content')).offset().top, left: newLeft})
-        #
-        # # granule details
-        # granuleDetails = $('#granule-details')
-        # if granuleDetails.is(':visible')
-        #   newHeight = granuleDetails.height() - granuleDetails.find('.master-overlay-nav').outerHeight() - granuleDetails.find('.master-overlay-info').outerHeight() - granuleDetails.find('header').outerHeight() - $('#granule-details-nav').outerHeight()
-        #   granuleDetails.find(@scope('.content')).height(newHeight)
-
         null), 0)
 
   $document = $(document)
