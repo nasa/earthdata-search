@@ -47,6 +47,7 @@ ns.SpatialSelection = do (window,
             drawError: errorOptions
             shapeOptions: colorOptions
           polyline: false
+          circlemarker: false
           circle: false
         edit:
           selectedPathOptions:
@@ -59,7 +60,7 @@ ns.SpatialSelection = do (window,
       drawControl.addTo(map) if !@isMinimap
 
       spatialModel = currentPage.query.spatial
-      
+
       @_querySubscription = spatialModel.subscribe(@_onSpatialChange)
       @_spatialErrorSubscription = currentPage.spatialError.subscribe(@_onSpatialErrorChange)
       @_onSpatialChange(spatialModel())
@@ -271,7 +272,7 @@ ns.SpatialSelection = do (window,
 
       shape = switch type
         when 'point'     then [layer.getLatLng()]
-        when 'bounding_box' then [layer.getLatLngs()[0], layer.getLatLngs()[2]]
+        when 'bounding_box' then [layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]]
         when 'polygon'   then layer.getLatLngs()
         when 'arctic-rectangle'   then layer.getLatLngs()
         when 'antarctic-rectangle'   then layer.getLatLngs()

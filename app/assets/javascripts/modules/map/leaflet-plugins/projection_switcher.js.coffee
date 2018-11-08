@@ -28,7 +28,7 @@ ns.ProjectionSwitcher = do (L) ->
         e.preventDefault()
         e.stopPropagation()
         newProjection = this.href.split('#')[1]
-        edscMap.setProjection(newProjection)
+        edscMap.setProjection(newProjection, true)
 
       map.on 'projectionchange', (e) ->
         self.setProjection e.projection

@@ -1,10 +1,10 @@
 ns = @edsc.map
 
 # Meta-layer for managing granule visualizations
-ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.extend, GranuleLayer=ns.L.GranuleLayer, project = if @edsc.page? then @edsc.page.project else false) ->
+ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.extend, GranuleGridLayer = ns.L.GranuleGridLayer, project = if @edsc.page? then @edsc.page.project else false) ->
   #MIN_PAGE_SIZE = 100
 
-  class GranuleVisualizationsLayer
+  class GranuleVisualizationsLayer extends L.Layer
     constructor: ->
       @_collectionIdsToLayers = {}
 
@@ -41,7 +41,7 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
         else
           color = project.colorForCollection(collection)
           # Note: our algorithms rely on sort order being [-start_date]
-          layer = new GranuleLayer(collection, color, options)
+          layer = new GranuleGridLayer(collection, color, options)
           map.addLayer(layer)
 
           if collection.boxes?.length > 0

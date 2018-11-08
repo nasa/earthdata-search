@@ -4,8 +4,8 @@
 do (L) ->
 
   # Append coordinate information to tooltips
-  originalUpdateContent = L.Tooltip.prototype.updateContent
-  L.Tooltip.prototype.updateContent = (content) ->
+  originalUpdateContent = L.Draw.Tooltip.prototype.updateContent
+  L.Draw.Tooltip.prototype.updateContent = (content) ->
     @_content = content
     if @_point
       content =
@@ -13,9 +13,9 @@ do (L) ->
         subtext: content.subtext
     originalUpdateContent.call(this, content)
 
-  originalUpdatePosition = L.Tooltip.prototype.updatePosition
+  originalUpdatePosition = L.Draw.Tooltip.prototype.updatePosition
 
-  L.Tooltip.prototype.updatePosition = (latlng) ->
+  L.Draw.Tooltip.prototype.updatePosition = (latlng) ->
     @_point = "(#{latlng.lat.toFixed(5)}, #{latlng.lng.toFixed(5)})"
     if @_content?
       @updateContent(@_content)
