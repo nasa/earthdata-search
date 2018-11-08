@@ -11,7 +11,7 @@ ns.MouseEventsLayer = do (L
   # without canceling the hover
   HOVER_SENSITIVITY_PX = 10
 
-  class MouseEventsLayer
+  class MouseEventsLayer extends L.Layer
     constructor: ->
       @_hoverTimer = null
       @_hoverPoint = null

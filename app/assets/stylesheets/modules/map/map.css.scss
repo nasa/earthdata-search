@@ -1,5 +1,16 @@
-@import "leaflet-0.7/leaflet.css.scss";
-@import "leaflet.draw-0.2.2/leaflet.draw.css.scss";
+@import "leaflet-1.3.4/leaflet.css.scss";
+@import "leaflet.draw-0.4.14/leaflet.draw-src.css.scss";
+
+.map {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // z-index: 0;
+}
 
 .map {
   position: absolute;
@@ -16,9 +27,14 @@
 }
 
 .leaflet-control-container {
-  position: absolute;
-  top: 0;
-  right: 0;
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  z-index: 1;
+}
+
+.leaflet-pane {
+  z-index: 1;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {

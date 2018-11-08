@@ -72,7 +72,7 @@ L.DrawToolbar = do (L, Proj = LExt.Proj) ->
   if L.Browser.touch
     # Make touch targets bigger when drawing and editing shapes
     touchSize = new L.Point(30, 30)
-    L.setOptions(L.Edit.Poly.prototype.options.icon, iconSize: touchSize)
+    L.setOptions(L.Edit.PolyVerticesEdit.prototype.options.icon, iconSize: touchSize)
     L.setOptions(L.Edit.SimpleShape.prototype.options.moveIcon, iconSize: touchSize)
     L.setOptions(L.Edit.SimpleShape.prototype.options.resizeIcon, iconSize: touchSize)
     L.setOptions(L.Draw.Polyline.prototype.options.icon, iconSize: touchSize)

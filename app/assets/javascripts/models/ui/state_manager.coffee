@@ -91,8 +91,12 @@
         @load(urlUtil.currentParams())
 
     _onReady: =>
+      console.log '_onReady'
       $overlay = $('.master-overlay')
+      console.log "$overlay: #{$overlay}"
       @overlay = $overlay.data('master-overlay')
+      console.log "@overlay: #{@overlay}"
+      console.log "@overlay.state(): #{@overlay.state()}"
       @overlayState(@overlay.state()) unless @overlayState()?
       $overlay.on 'edsc.olstatechange', => @overlayState(@overlay.state())
       ko.computed => @overlay.state(@overlayState())
