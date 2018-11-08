@@ -12,8 +12,8 @@
 //= require modules/map/leaflet-plugins/polar_rectangle
 //= require modules/map/leaflet-plugins/draw_toolbar
 //= require modules/map/leaflet-plugins/shapefile_layer
-//= require modules/map/leaflet-plugins/granule_layer
 //= require modules/map/leaflet-plugins/zoom_home
+//= require modules/map/leaflet-plugins/granule_grid_layer
 //= require modules/map/layer_builder
 //= require modules/map/spatial_selection
 //= require modules/map/granule_visualizations_layer

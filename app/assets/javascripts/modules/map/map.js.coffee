@@ -45,13 +45,13 @@ ns.Map = do (window,
 
       currentZoom = @getZoom()
       return this if currentZoom == zoom
-      targetPoint = @project(@getCenter(), zoom)  
+      targetPoint = @project(@getCenter(), zoom)
       targetLatLng = @unproject(targetPoint, zoom)
 
       @setView(targetLatLng, zoom, {zoom: options})
 
   # Fix leaflet default image path
-  L.Icon.Default.imagePath = '/images/leaflet-0.7'
+  L.Icon.Default.imagePath = '/images/leaflet-1.3.4/'
 
   LegendControl = L.Control.extend
     setData: (name, data) ->
@@ -73,11 +73,26 @@ ns.Map = do (window,
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
-    constructor: (el, projection='geo', isMinimap = false) ->
+    constructor: (el, projection = 'geo', isMinimap = false) ->
       @isMinimap = isMinimap
       $(el).data('map', this)
       @layers = []
-      map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+
+      map = @map = new L.Map(
+        el,
+        zoomControl: false,
+        attributionControl: false,
+        # maxZoom: 8
+        # zoom: 2
+        # center: [0, 0]
+        # crs: ProjExt.epsg4326
+      )
+      map.projection = projection
+
+      @_buildLayerSwitcher()
+      @setProjection(projection)
+      @setBaseMap("Blue Marble")
+      @setOverlays([OVERLAYS[0], OVERLAYS[2]])
 
       map.loadingLayers = 0
       if !@isMinimap
@@ -89,11 +104,6 @@ ns.Map = do (window,
         map.addControl(new SpatialSelection())
         @legendControl = new LegendControl(position: 'topleft')
         map.addControl(@legendControl)
-      
-      @_buildLayerSwitcher()
-      @setProjection(projection)
-      @setBaseMap("Blue Marble")
-      @setOverlays([OVERLAYS[0], OVERLAYS[2]])
 
       if !@isMinimap
         @time = ko.computed(@_computeTime, this)
@@ -206,13 +216,21 @@ ns.Map = do (window,
       layerForProduct = LayerBuilder.layerForProduct
       result = {}
       for productId in productIds
-        layer = layerForProduct(productId)
+        layer = layerForProduct(productId, @map.projection)
         result[layer.options.name] = layer
       result
 
+    _buildLayers: ->
+      baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
+      overlayMaps = @_createLayerMap('borders', 'coastlines', 'labels')
+      [baseMaps, overlayMaps]
+
     _buildLayerSwitcher: ->
-      baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
-      overlayMaps = @_overlayMaps = @_createLayerMap('borders', 'coastlines', 'labels')
+      # baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
+      # overlayMaps = @_overlayMaps = @_createLayerMap('borders', 'coastlines', 'labels')
+      [baseMaps, overlayMaps] = @_buildLayers()
+      @_baseMaps = baseMaps
+      @_overlayMaps = overlayMaps
 
       # Show the first layer
       for own k, layer of baseMaps
@@ -223,40 +241,57 @@ ns.Map = do (window,
       if !@isMinimap
         @map.addControl(@_layerControl)
 
+    _hasLayer: (layers, newLayer) ->
+      for layer in layers
+        return true if layer.layer.options.name == newLayer.options.name && layer.layer.options.projection == newLayer.options.projection
+      false
+
     _rebuildLayers: ->
       layerControl = @_layerControl
       needsNewBaseLayer = true
       projection = @projection
 
-      for own k, layer of @_baseMaps
+      # TODO this is removing all incorrect projection layers from the map, but not adding new layers to the map and layer control
+      [newBaseMaps, newOverlayMaps] = @_buildLayers()
+      for own layerName, layer of @_baseMaps
         valid = layer.validForProjection(projection)
-        hasLayer = layerControl._layers[L.stamp(layer)]?
-        needsNewBaseLayer &&= (!valid || !layer.layer?._map)
+        hasLayer = @_hasLayer(layerControl._layers, layer)
+        needsNewBaseLayer &&= (!valid || !layer?._map)
 
         if valid && !hasLayer
-          layerControl.addBaseLayer(layer, k)
+          layerControl.addBaseLayer(layer, layerName)
           layer.setZIndex(0) # Keep baselayers below overlays
         if !valid && hasLayer
           layerControl.removeLayer(layer)
-          needsNewBaseLayer = true if layer.layer?._map?
+          needsNewBaseLayer = layer?._map?
           @map.removeLayer(layer)
+          newLayer = newBaseMaps[layerName]
+          layerControl.addBaseLayer(newLayer, layerName)
+          @map.addLayer(newLayer) if needsNewBaseLayer
 
-      if needsNewBaseLayer
-        # Show the first layer
-        for own k, layer of @_baseMaps
-          if layer.validForProjection(projection)
-            @map.addLayer(layer)
-            break
+      # if needsNewBaseLayer
+      #   # Show the first layer
+      #   for own k, layer of @_baseMaps
+      #     if layer.validForProjection(projection)
+      #       @map.addLayer(layer)
+      #       break
+      @_baseMaps = newBaseMaps
 
-      for own k, layer of @_overlayMaps
+      for own layerName, layer of @_overlayMaps
         valid = layer.validForProjection(projection)
-        hasLayer = layerControl._layers[L.stamp(layer)]?
+        hasLayer = @_hasLayer(layerControl._layers, layer)
+
         if valid && !hasLayer
-          layerControl.addOverlay(layer, k)
+          layerControl.addOverlay(layer, layerName)
           layer.setZIndex(10) # Keep baselayers below overlays
         if !valid && hasLayer
           layerControl.removeLayer(layer)
-
+          needsOverlay = layer?._map?
+          @map.removeLayer(layer)
+          newOverlay = newOverlayMaps[layerName]
+          layerControl.addOverlay(newOverlay, layerName)
+          @map.addLayer(newOverlay) if needsOverlay
+      @_overlayMaps = newOverlayMaps
 
     # Adds the given layer to the map
     addLayer: (layer) -> @map.addLayer(layer)
@@ -270,30 +305,30 @@ ns.Map = do (window,
         minZoom: 0
         maxZoom: 4
         zoom: 0
-        continuousWorld: true
-        noWrap: true
-        worldCopyJump: false
+        # continuousWorld: false
+        # noWrap: true
+        # # worldCopyJump: false
         center: [90, 0]
       antarctic:
         crs: ProjExt.epsg3031
         minZoom: 0
         maxZoom: 4
         zoom: 0
-        continuousWorld: true
-        noWrap: true
-        worldCopyJump: false
+        # continuousWorld: false
+        # noWrap: true
+        # # worldCopyJump: false
         center: [-90, 0]
       geo:
         crs: ProjExt.epsg4326
         minZoom: 0
-        maxZoom: 7 # This should probably go to 11 when we have higher resolution imagery
+        maxZoom: 8 # This should probably go to 11 when we have higher resolution imagery
         zoom: 2
-        continuousWorld: false
-        noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
-        worldCopyJump: true
+        # continuousWorld: false
+        # noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
+        # # worldCopyJump: true
         center: [0, 0]
 
-    setProjection: (name) ->
+    setProjection: (name, rebuild) ->
       map = @map
       return if @projection == name
 
@@ -302,12 +337,12 @@ ns.Map = do (window,
 
       @projection = map.projection = name
 
-      opts = @projectionOptions[name]
-      L.setOptions(map, opts)
-
+      opts = L.setOptions(map, @projectionOptions[name])
+      map.options.crs = opts.crs
+      # map._resetView(L.latLng(opts.center), opts.zoom, true)
+      map.setView(L.latLng(opts.center), opts.zoom)
       map.fire('projectionchange', projection: name, map: map)
-      map.setView(L.latLng(opts.center), opts.zoom, reset: true)
-      @_rebuildLayers()
+      @_rebuildLayers() if rebuild
 
     setBaseMap: (name) ->
       map = @map
@@ -321,7 +356,7 @@ ns.Map = do (window,
       map.fire('basemapchange', name: name)
       map.addLayer(baseLayers[name])
       map._baseMap = name
-      @_rebuildLayers()
+      # @_rebuildLayers()
 
     setOverlays: (overlays) ->
       # remove any undefined from overlays
@@ -342,7 +377,7 @@ ns.Map = do (window,
       map.fire('overlayschange', overlays: overlays)
 
       map._overlays = overlays
-      @_rebuildLayers()
+      # @_rebuildLayers()
 
   # For tests to be able to click
   $.fn.mapClick = ->

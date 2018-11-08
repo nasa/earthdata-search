@@ -59,7 +59,7 @@
 
   # Development config
   exports =
-    allowTouch: true
+    allowTouch: false
     urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
@@ -80,7 +80,7 @@
   <% else %>
   # Production config
   exports =
-    allowTouch: true
+    allowTouch: false
     urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
