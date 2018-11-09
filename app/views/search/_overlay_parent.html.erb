@@ -1,6 +1,6 @@
 <div id="master-overlay-parent" class="master-overlay-parent">
   <section class="master-overlay-sidebar">
-    <header class="master-overay-header">
+    <header class="master-overlay-sidebar-header">
       <h1>
         <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
         <%= portal_logo %>
@@ -12,8 +12,8 @@
           <span class="version-badge"><%= Rails.configuration.logo_name %></span>
         <% end %>
       </h1>
-      <a class="master-overlay-close master-overlay-hide-parent" data-bind="click: hideParent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-      <h2 class="facet-title">Browse Collections</h2>
+      <a class="master-overlay-parent-close master-overlay-hide-parent" data-bind="click: hideParent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <h2 class="master-overlay-sidebar-title">Browse Collections</h2>
     </header>
     <div class="master-overlay-content-panel-group panel-group master-overlay-content">
       <!-- ko if: collections.facets.isRelevant() -->
@@ -68,4 +68,16 @@
       <!-- /ko -->
     </div>
   </section>
+  <master-overlay-panel>
+    <master-overlay-panel-group params="activeItem: 'panel-one'">
+      <master-overlay-panel-item params="itemName: 'panel-one', primaryTitle: 'Some Random Collection Name v.234', secondaryTitle: 'Panel One'">
+        <div class="master-overlay-panel-item-content">
+        </div>
+      </master-overlay-panel-item>
+      <master-overlay-panel-item params="itemName: 'panel-two', backToButton: { dest: 'panel-one', text: 'Panel One'}, primaryTitle: 'Some Random Collection Name v.3423', secondaryTitle: 'Panel Two'">
+        <div class="master-overlay-panel-item-content">
+        </div>
+      </master-overlay-panel-item>
+    </master-overlay-panel-group>
+  </master-overlay-panel>
 </div>
