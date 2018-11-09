@@ -124,8 +124,8 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
     # http://blog.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
 
     # Add second point to the end per the algorithm
-    latlngs.push latlngs[1]
     latlngs = (latLng(latlng) for latlng in latlngs)
+    latlngs.push latlngs[1]
 
     delta = 0
     len = latlngs.length
