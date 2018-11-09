@@ -116,50 +116,6 @@
   display: none;
 }
 
-// A parent panel for the overlday.  For instance, collection facets are a parent
-// panel to collection search results
-.master-overlay-parent {
-  position: relative;
-  -ms-flex: 0 0 auto;
-  flex-grow: 0;
-  flex-shrink: 0;
-  width: $facet-overlay-width;
-  height: 100%;
-  background-color: $master-overlay-parent-bg-color;
-  overflow: hidden;
-
-  a {
-    color: #fff;
-  }
-
-  header {
-    margin: 0 1em 0 .5em;
-    background: inherit;
-
-    h2 {
-      color: #FFFFFF;
-      margin: 0;
-      font-size: 1em;
-      font-weight: bold;
-    }
-
-    h2.facet-title {
-      padding: 0 0 10px 10px;
-    }
-  }
-
-}
-
-.master-overlay-sidebar {
-  width: $facet-overlay-width;
-  height: 100%;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  margin-bottom: 0;
-}
-
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
   flex-grow: 1;
@@ -303,23 +259,11 @@
   }
 }
 
-.master-overlay-parent {
-  z-index: 60;
-  transition: width 0.3s ease-in-out;
-  will-change: width;
-}
+
 
 .master-overlay-main-content {
   transition-property: left, width;
   transition-duration: 0.3s;
-}
-
-.master-overlay-parent {
-  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.2);
-}
-
-.master-overlay-parent {
-  z-index: 130;
 }
 
 .master-overlay-content-wrapper {
@@ -540,15 +484,6 @@
   &:hover {
     color: #aaa;
   }
-}
-
-.master-overlay-close {
-  float: right;
-}
-
-a.master-overlay-close {
-  color: rgba(255, 255, 255, .3);
-  @include transition (color 0.15s ease-in-out);
 }
 
 a.master-overlay-back {
