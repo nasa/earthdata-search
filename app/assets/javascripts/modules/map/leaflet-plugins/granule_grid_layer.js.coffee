@@ -433,7 +433,7 @@ ns.GranuleGridLayer = do (
         shapeBounds = L.latLngBounds(path)
         if shapeBounds.intersects(bounds)
           intersection = {}
-          intersection[type] = projectPath(@_map, path, [], interpolation, 2, 5).boundary
+          intersection[type] = projectPath(@_map, path, interpolation, 2, 5)
           result.push(intersection)
       null
 
