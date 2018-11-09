@@ -1,0 +1,60 @@
+// A parent panel for the overlay.  For instance, collection facets are a parent
+// panel to collection search results
+.master-overlay-parent {
+  z-index: 130;
+  position: relative;
+  -ms-flex: 0 0 auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: $facet-overlay-width;
+  height: 100%;
+  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.2);
+  transition: width 0.3s ease-in-out;
+  will-change: width;
+
+  a {
+    color: #fff;
+
+    &.master-overlay-parent-close {
+      color: rgba(255, 255, 255, .3);
+      transition: color 0.15s ease-in-out;
+    }
+  }
+
+  .is-master-overlay-parent-hidden & {
+    overflow: hidden;
+    width: 0;
+  }
+}
+
+.master-overlay-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: $facet-overlay-width;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-bottom: 0;
+  background-color: $master-overlay-parent-bg-color;
+  transition: transform 0.3s ease-in-out;
+}
+
+.master-overlay-sidebar-header {
+  margin: 0 1em 0 .5em;
+  background: inherit;
+}
+
+.master-overlay-sidebar-title {
+  padding: 0 0 10px 10px;
+  color: #FFFFFF;
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.master-overlay-parent-close {
+  float: right;
+}

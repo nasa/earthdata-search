@@ -116,7 +116,7 @@ do (ko, $=jQuery) ->
 
             options.model = $(this).echoforms('serialize')
             options.rawModel = $(this).echoforms('serialize', prune: false)
-     
+
             null
           $el.on 'echoforms:modelchange', syncModel
           syncModel.call($el)
@@ -154,7 +154,7 @@ do (ko, $=jQuery) ->
             shortName = shortNameRegex.exec(model)?[1]
 
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
-              
+
           # Handle problems if the underlying form has a breaking change
           try
             $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
@@ -170,7 +170,7 @@ do (ko, $=jQuery) ->
 
             options.model = if options.hasBeenReset then options.modelInitialValue else $(this).echoforms('serialize')
             options.rawModel = if options.hasBeenReset then options.rawModelInitialValue else $(this).echoforms('serialize', prune: false)
-            
+
             null
           $el.on 'echoforms:modelchange', syncModel
           syncModel.call($el)
