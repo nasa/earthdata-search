@@ -46,13 +46,15 @@ do ($=jQuery, ko) ->
       bindingContext.$data.onBackButtonClick = (event) ->
         element.trigger 'open-item', bindingContext.$data.backToButton().dest
 
-      bindingContext.$data.onMasterOverlayParentClick = (event) ->
-        if ($(event.target).parents($(event.target)) && $(event.target).is($(event.target)))
-          event.stopPropagation()
-
+      # Detect clicks on the body in order to close the panel when a user clicks outside of the master overlay parent
       bindingContext.$data.onBodyClick = (event) ->
         element.trigger 'close-panel'
         event.stopPropagation()
+
+      # If a click is within the master overlay parent, stop propogation to prevent the click from reaching the body and closing the panel
+      bindingContext.$data.onMasterOverlayParentClick = (event) ->
+        if ($(event.target).parents($(event.target)) && $(event.target).is($(event.target)))
+          event.stopPropagation()
 
       # Trigger the pannel close when the close button is clicked
       ko.utils.registerEventHandler element.closeButton, 'click', (event) ->
