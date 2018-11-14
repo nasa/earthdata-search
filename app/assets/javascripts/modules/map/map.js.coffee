@@ -28,37 +28,6 @@ ns.Map = do (window,
 
       target = @_getBoundsCenterZoom(bounds, options)
       @setView target.center, target.zoom, options
-      # bounds = bounds.getBounds?() ? L.latLngBounds(bounds)
-      #
-      # paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
-      # paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0])
-      #
-      # zoom = @getBoundsZoom(bounds, false, paddingTL.add(paddingBR))
-      #
-      # swPoint = this.project(bounds.getSouthWest(), zoom)
-      # nePoint = this.project(bounds.getNorthEast(), zoom)
-      #
-      # center = this.unproject(swPoint.add(nePoint).divideBy(2), zoom)
-      #
-      # zoom = Math.min(options.maxZoom ? Infinity, zoom)
-      # # @_zoom = zoom
-      #
-      # @setView(center, zoom, options)
-
-    # was added to zoom on the center of map when buttons were used, but doesn't seem to be needed now
-    # setZoom: (zoom, options) ->
-    #   zoom = @_limitZoom(zoom)
-    #
-    #   if !@_loaded
-    #     @_zoom = @_limitZoom(zoom)
-    #     return this
-    #
-    #   currentZoom = @getZoom()
-    #   return this if currentZoom == zoom
-    #   targetPoint = @project(@getCenter(), zoom)
-    #   targetLatLng = @unproject(targetPoint, zoom)
-    #
-    #   @setView(targetLatLng, zoom, {zoom: options})
 
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-1.3.4/'
@@ -94,11 +63,6 @@ ns.Map = do (window,
         attributionControl: false,
         # turning off zoom animations fixes the fitBounds issue on sticky granules, but looks bad
         zoomAnimation: false
-
-        # maxZoom: 8
-        # zoom: 2
-        # center: [0, 0]
-        # crs: ProjExt.epsg4326
       )
       map.projection = projection
 
@@ -239,8 +203,6 @@ ns.Map = do (window,
       [baseMaps, overlayMaps]
 
     _buildLayerSwitcher: ->
-      # baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
-      # overlayMaps = @_overlayMaps = @_createLayerMap('borders', 'coastlines', 'labels')
       [baseMaps, overlayMaps] = @_buildLayers()
       @_baseMaps = baseMaps
       @_overlayMaps = overlayMaps
@@ -282,12 +244,6 @@ ns.Map = do (window,
           layerControl.addBaseLayer(newLayer, layerName)
           @map.addLayer(newLayer) if needsNewBaseLayer
 
-      # if needsNewBaseLayer
-      #   # Show the first layer
-      #   for own k, layer of @_baseMaps
-      #     if layer.validForProjection(projection)
-      #       @map.addLayer(layer)
-      #       break
       @_baseMaps = newBaseMaps
 
       for own layerName, layer of @_overlayMaps
@@ -319,27 +275,18 @@ ns.Map = do (window,
         minZoom: 0
         maxZoom: 4
         zoom: 0
-        # continuousWorld: false
-        # noWrap: true
-        # # worldCopyJump: false
         center: [90, 0]
       antarctic:
         crs: ProjExt.epsg3031
         minZoom: 0
         maxZoom: 4
         zoom: 0
-        # continuousWorld: false
-        # noWrap: true
-        # # worldCopyJump: false
         center: [-90, 0]
       geo:
         crs: ProjExt.epsg4326
         minZoom: 0
         maxZoom: 8 # This should probably go to 11 when we have higher resolution imagery
         zoom: 2
-        # continuousWorld: false
-        # noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
-        # # worldCopyJump: true
         center: [0, 0]
 
     setProjection: (name, rebuild) ->
@@ -353,7 +300,6 @@ ns.Map = do (window,
 
       opts = L.setOptions(map, @projectionOptions[name])
       map.options.crs = opts.crs
-      # map._resetView(L.latLng(opts.center), opts.zoom, true)
       map.setView(L.latLng(opts.center), opts.zoom)
       map.fire('projectionchange', projection: name, map: map)
       @_rebuildLayers() if rebuild
@@ -370,7 +316,6 @@ ns.Map = do (window,
       map.fire('basemapchange', name: name)
       map.addLayer(baseLayers[name])
       map._baseMap = name
-      # @_rebuildLayers()
 
     setOverlays: (overlays) ->
       # remove any undefined from overlays
@@ -391,7 +336,6 @@ ns.Map = do (window,
       map.fire('overlayschange', overlays: overlays)
 
       map._overlays = overlays
-      # @_rebuildLayers()
 
   # For tests to be able to click
   $.fn.mapClick = ->
