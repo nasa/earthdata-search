@@ -12,13 +12,13 @@ describe "Map interface" do
     load_page :search, overlay: false
   end
 
-  let (:switcher_selector) { '#map .projection-switcher' }
-  let (:north_text) { 'North Polar Stereographic' }
-  let (:north_link) { within(switcher_selector) {find_link(north_text)} }
-  let (:geo_text) { 'Geographic (Equirectangular)' }
-  let (:geo_link) { within(switcher_selector) {find_link(geo_text)} }
-  let (:south_text) { 'South Polar Stereographic' }
-  let (:south_link) { within(switcher_selector) {find_link(south_text)} }
+  let(:switcher_selector) { '#map .projection-switcher' }
+  let(:north_text) { 'North Polar Stereographic' }
+  let(:north_link) { within(switcher_selector) {find_link(north_text)} }
+  let(:geo_text) { 'Geographic (Equirectangular)' }
+  let(:geo_link) { within(switcher_selector) {find_link(geo_text)} }
+  let(:south_text) { 'South Polar Stereographic' }
+  let(:south_link) { within(switcher_selector) {find_link(south_text)} }
 
   shared_browser_session do
     it "displays the whole Earth centered in plate carree projection on the main page" do
@@ -26,7 +26,7 @@ describe "Map interface" do
 
       MapUtil.tiles(page, '#map').each do |img|
         src = img['src']
-        expect(src).to match(/TILEMATRIXSET=EPSG4326/) # Plate Carree
+        expect(src).to match(/TILEMATRIXSET=epsg4326/) # Plate Carree
         expect(src).to match(/TILEMATRIX=2&/) # Zoomed to show whole Earth
       end
     end
@@ -55,38 +55,38 @@ describe "Map interface" do
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('epsg4326')
 
       click_link north_text
       expect(north_link).to have_class('leaflet-disabled')
       expect(geo_link).to_not have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG3413')
+      expect('#map').to have_tiles_with_projection('epsg3413')
 
       click_link geo_text
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('epsg4326')
     end
 
     it "allows switching to south polar stereographic projection and back" do
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('epsg4326')
 
       click_link south_text
       expect(south_link).to have_class('leaflet-disabled')
       expect(geo_link).to_not have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG3031')
+      expect('#map').to have_tiles_with_projection('epsg3031')
 
       click_link geo_text
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
-      expect('#map').to have_tiles_with_projection('EPSG4326')
+      expect('#map').to have_tiles_with_projection('epsg4326')
     end
 
     it "disables the current projection" do

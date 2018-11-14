@@ -41,7 +41,7 @@ describe "Spatial search by collection location" do
         script = "$('#map').data('map').map.getZoom()"
         result = page.evaluate_script script
 
-        expect(result).to eq(7)
+        expect(result).to eq(8)
       end
     end
 

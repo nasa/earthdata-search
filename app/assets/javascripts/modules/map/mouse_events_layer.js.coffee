@@ -47,7 +47,7 @@ ns.MouseEventsLayer = do (L
       abs = Math.abs
 
       $target = $(e.originalEvent.target)
-      if $target.closest('.leaflet-control-container, .geojson-help, .leaflet-popup-pane').length > 0
+      if $target.closest('.geojson-help, .leaflet-popup-pane').length > 0
         @_clearHoverTimeout()
         @_map.fire('edsc.mouseout', e)
       else
