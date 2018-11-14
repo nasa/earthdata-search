@@ -1,0 +1,163 @@
+<div id="master-overlay-parent" class="master-overlay-parent">
+  <section class="master-overlay-sidebar">
+    <header class="master-overlay-sidebar-header">
+      <h1>
+        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
+        <%= portal_logo %>
+        <a class="site-logo" href="<%=edsc_path root_path %>">
+          <span class="site-logo-org"><%= site_logo_org %></span>
+          <%= site_logo_title %>
+        </a>
+        <% unless Rails.configuration.logo_name.blank? %>
+          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
+        <% end %>
+      </h1>
+    </header>
+    <div class="master-overlay-content" data-bind="css: {'master-overlay-content-light': page() == 'project'}">
+      <!-- ko if: page() == 'search' -->
+        <header class="master-overlay-content-header">
+          <a class="master-overlay-parent-close master-overlay-hide-parent" data-bind="click: hideParent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+          <h2 class="master-overlay-content-title">Browse Collections</h2>
+        </header>
+        <div class="master-overlay-content-panel-group panel-group hide" data-bind="css: {'hide': !page() }">
+          <!-- ko if: collections.facets.isRelevant() -->
+          <!-- ko foreach: collections.facets.results -->
+          <!-- ko if: children().length > 0 -->
+          <div data-bind="css: class_name" class="master-overlay-content-panel panel-default">
+            <div class="panel-heading">
+              <h3 data-bind="click: toggleList" class="panel-title facet-group-title">
+                <i data-bind="css: {'fa-chevron-left': closed(), 'fa-chevron-down': opened()}" class="fa pull-right panel-header-toggle"></i>
+                <a data-bind="text: title, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
+              </h3>
+            </div>
+            <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
+              <div class="panel-body facets">
+                <!-- ko if: title != 'Features' && ( children().length > 49 || selectedValues().length > 0 ) -->
+                <div class="panel-body-header">
+                  <!-- ko if: children().length > 49 && selectedValues().length == 0 -->
+                  <span>Showing Top <span data-bind="text: children().length"></span> <span data-bind="text: title"></span></span>
+                  <!-- /ko -->
+                  <!-- ko if: selectedValues().length > 0 -->
+                  <span><span data-bind="text: selectedValues().length"></span> Selected</span>
+                  <!-- /ko -->
+                  <!-- ko if: children().length > 49 -->
+                  <a href="#" class="panel-body-view-all all-facets" data-bind="click: $root.setFocusedFacetCategory">View All</a>
+                  <!-- /ko -->
+                </div>
+                <!-- /ko -->
+                <!-- ko foreach: children() -->
+                <label class="facets-item" data-bind="css: {selected: isSelected(), 'facets-term': isTerm(), 'facets-var1': isVar1(), 'facets-var2': isVar2(), 'facets-var3': isVar3()}, attr: {title: title}">
+                  <input type="checkbox" data-bind="checked: isChecked(), click: $root.collections.facets.toggleFacet">
+
+                  <span data-bind="text: title" class="facet-title"></span>
+                  <!-- ko ifnot: $parent.title == 'Features' || isAncestor() -->
+                  <span class="facet-item-collection-count" data-bind="text: count"></span>
+                  <!-- /ko -->
+                  <!-- ko if: title == 'Customizable' -->
+                  <span class="facet-circle-icon circle-badge-customizable"></span>
+                  <!-- /ko -->
+                  <!-- ko if: title == 'Map Imagery' -->
+                  <span class="facet-circle-icon circle-badge-gibs"></span>
+                  <!-- /ko -->
+                  <!-- ko if: title == 'Near Real Time' -->
+                  <span class="facet-circle-icon circle-badge-nrt"></span>
+                  <!-- /ko -->
+                </label>
+                <!--/ko-->
+              </div>
+            </div>
+          </div>
+          <!-- /ko -->
+          <!-- /ko -->
+          <!-- /ko -->
+        </div>
+      <!-- /ko -->
+      <!-- ko if: page() == 'project' -->
+        <section>
+          <header class="master-overlay-content-header master-overlay-content-header-project">
+            <editable-text params="{
+              initialValue: workspaceName,
+              defaultValue: 'Untitled Project',
+              inputValue: workspaceNameField,
+              submitCallback: function(){$(window).trigger('edsc.save_workspace')},
+              buttonStyle: 'icon',
+              className: 'project',
+              editButtonText:'Edit Project Title'
+            }"></editable-text>
+            <div class="project-stats">
+              <ul class="master-overlay-content-project-stats project-stats-list" data-bind="fadeVisible: isLoaded">
+                <!-- ko if: project.collections().length > 0 -->
+                <li class="project-stats-item project-stats-granule-count">
+                  <span class="project-stats-value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'">&nbsp;</span>
+                  <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
+                </li>
+                <li class="project-stats-item project-stats-collection-count">
+                  <span class="project-stats-value" data-bind="text: project.collections().length">&nbsp;</span>
+                  <!-- ko text: project.collections().length != 1 ? 'Collections' : 'Collection' --><!-- /ko -->
+                </li>
+                <li class="project-stats-item project-stats-project-size" data-bind="visible: sizeProvided">
+                  <span class="project-stats-value" data-bind="text: projectSummary() ? projectSummary()['projectSize']['size'] : 'Loading'">&nbsp;</span>
+                  <!-- ko text: projectSummary() && projectSummary()['projectSize'] ? projectSummary()['projectSize']['unit'] : 'MB' --><!-- /ko -->
+                  <span id="project-stats-info-container" class="project-stats-info-container">
+                    <a class="project-stats-info" href="#" data-container="#project-stats-info-container" data-tooltip="true" data-placement="right" data-title="This is the estimated overall size of your project. If no size information exists in a granule's metadata, it will not be included in this number. The size is estimated based upon the first 20 granules added to your project from each collection."><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                  </span>
+                </li>
+                <!-- /ko -->
+              </ul>
+            </div>
+          </header>
+          <project-list params="{
+            project: project
+          }"></project-list>
+        </section>
+      <!-- /ko -->
+    </div>
+  </section>
+  <master-overlay-panel>
+    <!-- ko foreach: $parent.project.collections() -->
+    <master-overlay-panel-group>
+      <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_details', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Detials'">
+        <div class="master-overlay-panel-item-content">
+          <!-- ko if: $parents[1].collection.granuleDatasource() -->
+          <!-- ko if: $parents[1].collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
+          <p class="undo">Granule excluded. <a href="#" data-bind="click: $parents[1].collection.granuleDatasource().data().undoExclude">Undo</a></p>
+          <!-- /ko -->
+          <ul data-bind="foreach: $parents[1].collection.granuleDatasource().data().results()">
+            <li>
+              <!-- ko if: browse_flag === 'true' || browse_flag === true -->
+              <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
+                <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
+              </a>
+              <!-- /ko -->
+              <div class="granule-text-container">
+                <span>
+                  <h5 data-bind="text: displayName()"></h5>
+                  <span data-bind="text: humanizeTemporal()"></span>
+                </span>
+
+                <span class="modal-item-actions">
+                  <!--ko if: dataLinks().length == 1 -->
+                    <a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parents[2].collection.cwic() && online_access_flag, attr: {href: dataLinks()[0].href}">
+                      <i class="fa fa-download"></i>
+                    </a>
+                  <!--/ko-->
+                  <!--ko if: dataLinks().length > 1 -->
+                    <a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>
+                    <ul class="dropdown-menu" data-bind="foreach: dataLinks">
+                      <li>
+                        <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
+                      </li>
+                    </ul>
+                  <!--/ko-->
+                </span>
+              </div>
+            </li>
+          </ul>
+          <!-- /ko -->
+          <!-- /ko -->
+        </div>
+      </master-overlay-panel-item>
+    </master-overlay-panel-group>
+    <!-- /ko -->
+  </master-overlay-panel>
+</div>

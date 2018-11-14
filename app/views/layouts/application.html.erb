@@ -60,7 +60,7 @@
     <% if portal_nav? %>
     <nav class="main-nav portal-nav"><%= portal_nav %></nav>
     <% end %>
-    <div class="main-wrapper">
+    <div class="main-wrapper <%= yield (:main_wrapper_class) %>">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
       <div class="toolbar-content">

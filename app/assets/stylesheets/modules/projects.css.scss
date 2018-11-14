@@ -1,17 +1,10 @@
 // Card colors
 $card-background: rgba(235,235,235,1);
 
-
-.projects-page {
-  .main-wrapper {
-    border-top: 5px solid $ocean-blue;
-  }
-}
-
 .project {
-
-  min-height: calc(100vh - 67px);
-  display: flex;
+  .map-placeholder {
+    background: grey;
+  }
 
   .action-container {
     background-color: #ededed;
@@ -234,46 +227,6 @@ $card-background: rgba(235,235,235,1);
         }
       }
     }
-
-    .project-stats {
-      height: 86px;
-      background: #fff;
-      border-bottom: 1px solid #ccc;
-
-      li {
-        display: inline-block;
-        font-size: 2em;
-        padding-right: 40px;
-        color: darken($light-grey, 20%);
-      }
-
-      .value {
-        font-weight: bold;
-        color: $overlay-heading-font-color;
-      }
-
-      .info {
-        text-decoration: none;
-        color: darken($light-grey, 20%);
-        font-size: large;
-        vertical-align: middle;
-        @include transition(color 0.1s linear);
-
-        &:hover {
-          color: darken($light-grey, 40%);
-        }
-      }
-
-      .tooltip {
-        width: 400px;
-      }
-
-      .tooltip-inner {
-        white-space: pre-wrap;
-        text-align: left;
-        max-width: 400px;
-      }
-    }
   }
 
   .project-collection-notes {
@@ -483,14 +436,5 @@ $card-background: rgba(235,235,235,1);
   .selected-collection-variables {
     margin-top: 0;
     margin-bottom: 0;
-  }
-
-  #project-empty-notice {
-    display: none;
-    font-size: 1.3em;
-    font-style: italic;
-    color: darken($light-grey, 20%);
-    margin: 0 auto;
-    padding-top: 3em;
   }
 }

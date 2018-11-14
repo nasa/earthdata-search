@@ -22,7 +22,7 @@ do ($=jQuery, ko) ->
     template: { element: 'tmpl_master-overlay-panel-group' },
   }
 
-  ko.bindingHandlers.masterOverlayPanelGroup = {
+  ko.bindingHandlers.componentMasterOverlayPanelGroup = {
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) =>
       element = $(element)
       element.closeButton = element.find('.master-overlay-panel-group-close')
@@ -72,7 +72,15 @@ do ($=jQuery, ko) ->
         $('body').off 'click', bindingContext.$data.onBodyClick
         bindingContext.$data.isActive false
 
-      # Handle the close event
+      # Handle the toggle event
+      ko.utils.registerEventHandler element, 'toggle-panel', (event) ->
+        console.log 'firing', bindingContext.$data.isActive
+        if (bindingContext.$data.isActive())
+          $(element).trigger('close-panel')
+        else
+          $(element).trigger('open-panel')
+
+      # Handle the open-item event
       ko.utils.registerEventHandler element, 'open-item', (event, itemName) ->
         if itemName?
           bindingContext.$data.activeItem itemName

@@ -1,0 +1,29 @@
+<template id="tmpl_editable-text">
+  <div class="editable-text" data-bind="css: 'editable-text-' + $component.className, componentEditableText: { initialValue: $component.initialValue, defaultValue: $component.defaultValue, submitCallback: $component.submitCallback, buttonStyle: $component.buttonStyle}">
+    <div class="editable-text-wrapper">
+      <div class="editable-text-text-wrapper">
+        <h2 class="editable-text-content" data-bind="attr: { title: $component.initialValue }">&nbsp;</h2>
+        <button type="button" class="editable-text-button editable-text-button-edit" data-bind="attr: { title: $component.editButtonText }">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </div>
+      <form class="editable-text-edit-wrapper">
+        <input type="text" class="editable-text-input" data-bind='value: $component.inputValue' />
+        <div class="editable-text-form-controls visually-hidden">
+          <!-- ko if: $component.buttonStyle == 'icon' -->
+            <button type="submit" class="button-icon editable-text-button editable-text-button-submit" title="Submit">
+              <i class="fa fa-check"></i>
+            </button>
+            <button type="button" class="button-icon editable-text-button editable-text-button-cancel" title="Cancel">
+              <i class="fa fa-times"></i>
+            </button>
+          <!-- /ko -->
+          <!-- ko ifnot: $component.buttonStyle == 'icon' -->
+            <button type="submit hide" class="button button-small editable-text-button editable-text-button-submit" title="Submit">Submit</button>
+            <button type="button" class="button-outline button-small editable-text-button editable-text-button-cancel" title="Cancel">Cancel</button>
+          <!-- /ko -->
+        </div>
+      </form>
+    </div>
+  </div>
+</template>

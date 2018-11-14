@@ -1,0 +1,120 @@
+.project-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.project-list-empty-notice {
+  display: none;
+  font-size: 1.3em;
+  font-style: italic;
+  color: darken($light-grey, 20%);
+  margin: 0 auto;
+}
+
+.project-list-item {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+  @include transition(all 0.15s linear);
+
+  &:hover {
+    background: #aaa;
+  }
+}
+
+.project-list-item-content {
+  background: #fff;
+  padding: 0.675em;
+}
+
+.project-list-item-title {
+  max-height: 51px;
+  margin-right: 1.25em;
+  font-size: 0.875em;
+  color: #525252;
+  line-height: 1.25;
+}
+
+.project-list-item-visibility {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  background: none;
+  color: #7F7F7F;
+}
+
+.project-list-item-stats {
+  margin-top: 0.425em;
+  font-size: 0.875em;
+  color: #7F7F7F;
+}
+
+.project-list-item-stat {
+  margin-right: 0.5em;
+}
+
+.project-list-item-actions {
+  display: flex;
+  margin-top: 0.325em;
+  justify-content: space-between;
+}
+
+a.project-list-item-action {
+  color: #7F7F7F;
+  cursor: pointer;
+}
+
+.collection-extra {
+  margin-top: 15px;
+
+  .label-primary {
+    display: inline;
+    font-size: 1.6em;
+    font-weight: bold;
+  }
+
+  .label-secondary {
+    margin: 0;
+  }
+}
+
+.collection-capability {
+  color: #c9c9c9;
+  display: inline-block;
+  font-size: 1em;
+  padding-left: 5px;
+  cursor: default;
+
+  span {
+    margin: 0 2px;
+  }
+
+  .enabled {
+    color: #359ad9
+  }
+}
+
+.collection-capability-loading-granules {
+  margin-top: 1.65em;
+  margin-bottom: 0.75em;
+  height: 1.35em;
+  width: 10em;
+
+  .loading-content-inner {
+    width: 20em
+  }
+}
+
+.collection-capability-loading-details {
+  width: 70%;
+  height: 0.75em;
+  margin-bottom: 0;
+
+  .loading-content-inner {
+    width: 20em
+  }
+}

@@ -20,6 +20,7 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko
+                    Page = ns.Page
                     setCurrent = ns.setCurrent
                     QueryModel = data.query.CollectionQuery
                     CollectionsModel = data.Collections
@@ -55,8 +56,9 @@ ns.SearchPage = do (ko
 
     preferences.ready.done(-> initModal()) if !window.edscportal
 
-  class SearchPage
+  class SearchPage extends Page
     constructor: ->
+      super
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
@@ -121,12 +123,6 @@ ns.SearchPage = do (ko
                               e.indexOf('point') != -1)
       null
 
-    hideParent: =>
-      $('.master-overlay').masterOverlay('manualHideParent')
-
-    showParent: =>
-      $('.master-overlay').masterOverlay('manualShowParent')
-
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
 
@@ -145,7 +141,7 @@ ns.SearchPage = do (ko
   loc = window.location.pathname
   if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
     window.location.replace(loc + '/search' + window.location.search);
-  current = new SearchPage()
+  current = new SearchPage 'search'
   setCurrent(current)
 
   exports = SearchPage
