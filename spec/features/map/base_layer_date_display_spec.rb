@@ -15,19 +15,22 @@ describe 'Base layer date display' do
 
     zoom_in_button = find('.timeline-zoom-in')
     zoom_in_button.click
+  end
+
+  before :each do
     pan_to_time(present)
     wait_for_xhr
   end
 
   context 'when viewing a time-independent base layer' do
-    before(:all) do
+    before(:each) do
       page.find('.leaflet-control-layers').hover
       choose 'Land / Water Map'
     end
 
     context 'selecting a date on the timeline' do
-      before(:all) { click_timeline_date('02', 'Feb') }
-      # after(:all) { click_timeline_date('02', 'Feb') }
+      before(:each) { click_timeline_date('02', 'Feb') }
+      after(:each) { click_timeline_date('02', 'Feb') }
 
       it 'does not update the base layer' do
         expect('#map').to have_tiles_with_no_date
@@ -36,19 +39,19 @@ describe 'Base layer date display' do
   end
 
   context 'when viewing a time-dependent base layer' do
-    before(:all) do
+    before(:each) do
       page.find('.leaflet-control-layers').hover
       choose 'Corrected Reflectance (True Color)'
       wait_for_xhr
     end
 
-    it 'shows yesterday\'s imagery by default', pending_updates: true do
+    it 'shows yesterday\'s imagery by default' do
       expect('#map').to have_tiles_with_date('2014-02-28')
     end
 
     context 'selecting a date on the timeline' do
-      before(:all) { click_timeline_date('02', 'Feb') }
-      # after(:all) { click_timeline_date('02', 'Feb') }
+      before(:each) { click_timeline_date('02', 'Feb') }
+      after(:each) { click_timeline_date('02', 'Feb') }
 
       it 'updates the selected base layer to show that date' do
         expect('#map').to have_tiles_with_date('2014-02-02')
@@ -56,17 +59,17 @@ describe 'Base layer date display' do
     end
 
     context 'selecting a temporal range' do
-      before(:all) { set_temporal(start_date, stop_date) }
-      after(:all) { unset_temporal }
+      before(:each) { set_temporal(start_date, stop_date) }
+      after(:each) { unset_temporal }
 
-      it 'updates the selected base layer to show the end date of the temporal range', pending_updates: true do
+      it 'updates the selected base layer to show the end date of the temporal range' do
         expect('#map').to have_tiles_with_date('2014-02-20')
       end
     end
 
-    context 'selecting a temporal start date only', pending_updates: true do
-      before(:all) { set_temporal(start_date) }
-      after(:all) { unset_temporal }
+    context 'selecting a temporal start date only' do
+      before(:each) { set_temporal(start_date) }
+      after(:each) { unset_temporal }
 
       it 'shows yesterday\'s imagery' do
         expect('#map').to have_tiles_with_date('2014-02-28')
@@ -74,12 +77,12 @@ describe 'Base layer date display' do
     end
 
     context 'selecting both a temporal range and a date on the timeline' do
-      before(:all) do
+      before(:each) do
         set_temporal(start_date, stop_date)
         click_timeline_date('15', 'Feb')
       end
 
-      after(:all) do
+      after(:each) do
         click_timeline_date('15', 'Feb')
         unset_temporal
       end

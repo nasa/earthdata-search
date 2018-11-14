@@ -68,7 +68,7 @@ ns.LayerBuilder = do (L,
       endpoint: 'geo'
 
   layerForProduct = (id, projection) ->
-    return new GibsTileLayer(gibsUrl, L.extend({}, defaultOptions, gibsParams[id], projectionOptions[projection]))
+    return new GibsTileLayer(gibsUrl, L.extend({}, defaultOptions, gibsParams[id], projectionOptions[projection], time: ''))
     console.error("Unable to find product: #{id}")
 
   exports =

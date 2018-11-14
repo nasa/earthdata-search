@@ -256,7 +256,7 @@ ns.SpatialSelection = do (window,
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
-      poly = @_layer = new L.SphericalPolygon(shape, options)
+      poly = @_layer = new L.sphericalPolygon(shape, options)
       poly.type = 'polygon'
       @_drawnItems.addLayer(poly)
 

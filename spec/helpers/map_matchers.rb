@@ -45,10 +45,10 @@ RSpec::Matchers.define :have_tiles_with_date do |expected|
   end
 end
 
-RSpec::Matchers.define :have_tiles_with_no_date do |expected|
+RSpec::Matchers.define :have_tiles_with_no_date do
   match do |selector|
-    !MapUtil.tiles(Capybara.current_session, selector).any? do |img|
-      img['src'] =~ /TIME=#{expected}/
+    MapUtil.tiles(Capybara.current_session, selector).any? do |img|
+      img['src'] =~ /TIME=$/
     end
   end
 end
