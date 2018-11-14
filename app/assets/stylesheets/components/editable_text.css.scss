@@ -1,0 +1,88 @@
+.editable-text-text-wrapper,
+.editable-text-edit-wrapper {
+  display: none;
+
+  &.is-active {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.editable-text-wrapper {
+  .editable-text-project {
+    margin-right: 1em;
+  }
+}
+
+.editable-text-form-controls {
+  display: flex;
+  align-items: center;
+}
+
+.editable-text-content {
+  display: inline-block;
+
+  .editable-text-project & {
+    margin-bottom: 0;
+    margin-right: 0.25em;
+    border-bottom: 2px solid transparent;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &:hover,
+    &:focus {
+      border-bottom: 2px solid #ededed;
+    }
+  }
+}
+
+.editable-text-input {
+  margin-right: 0.25em;
+
+  .editable-text-project & {
+    min-width: 1em;
+    max-width: 15em;
+    padding: 0;
+    font-size: 1.125em;
+    border: none;
+    border-bottom: 2px solid $ocean-blue;
+  }
+}
+
+.editable-text-button {
+  .editable-text-project & {
+    padding: 0.125em;
+    background-color: #fff;
+    font-size: 0.925em;
+    color: #ababab;
+    background-image: none;
+    text-shadow: none;
+    text-align: center;
+
+    &:hover,
+    &:focus {
+      color: #656363;
+    }
+
+    .fa {
+      transform: translate(-1px, -2px);
+    }
+  }
+}
+
+.editable-text-content {
+  .editable-text-project & {
+    font-size: 1.125em;
+    font-weight: normal;
+  }
+}
+
+.editable-text-button-cancel {
+  .editable-text-project & {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+}

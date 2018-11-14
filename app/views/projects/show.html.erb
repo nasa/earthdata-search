@@ -1,3 +1,5 @@
+<% content_for(:main_wrapper_class, "project")%>
+
 <% content_for :javascript do %>
   <%= javascript_include_tag "projects" %>
 <% end %>
@@ -8,8 +10,10 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-<div class="project">
-  <section class="project-info-sidebar">
+<div class="master-overlay">
+  <%= render partial: 'shared/overlay_parent' %>
+  <div class="map map-placeholder"></div>
+  <section class="project-info-sidebar" style="display: none;">
     <header>
       <h1>
         <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
@@ -24,7 +28,7 @@
       </h1>
     </header>
 
-    <div class="project-info-details">
+    <div class="project-info-details" style="display: none;">
       <div class="bounding-box">
         <div id="bounding-box-map" class="bounding-box-map"></div>
         <div class="collection-constraint-details">
@@ -47,7 +51,7 @@
       <h3>Transformations</h3>
       <h3>Output Formats</h3>
     </div>
-    <footer class="project-info-actions">
+    <footer class="project-info-actions" style="display: none;">
       <div class="project-download-tooltip" data-tooltip="true" data-bind="css: { 'project-download-tooltip-disabled': !$root.project.allReadyToDownload() }, attr: { 'title': $root.project.allReadyToDownload() ? '' : 'At least one of your collections is not configured correctly. Please double check your customization selections.', 'data-original-title': $root.project.allReadyToDownload() ? '' : 'At least one of your collections is not configured correctly. Please double check your customization selections.' }" title="At least one of your collections is not configured correctly. Please double check your customization selections.">
         <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() && !$root.project.isLoadingComplete()}" href="#" class="button button-full button-download-data" disabled>
           <i class="fa fa-download" aria-hidden="true"></i> Download Data
@@ -55,7 +59,7 @@
       </div>
     </footer>
   </section>
-  <section class="project-collections">
+  <section class="project-collections" style="display: none;">
     <div class="project-title-container">
       <h2 class="project-panel"><!-- ko text: workspaceName() ? workspaceName() : 'Untitled Project' --><!-- /ko --></h2>
       <%= render partial: 'shared/workspace_name' %>
@@ -82,7 +86,7 @@
       </ul>
     </div>
 
-    <div class="project-collection-cards">
+    <div class="project-collection-cards" style="display: none">
       <!-- ko if: project.collections().length == 0 -->
       <p id="project-empty-notice">Your project is empty. <a href="#" data-bind="click: project.backToSearch">Click here</a> to return to search and add collections to your project.</p>
       <!-- /ko -->
@@ -140,7 +144,7 @@
               <!-- /ko -->
             </div>
           </div>
-          <div class="action-container">
+          <div class="action-container" style="display: none;">
             <!-- <a class="action-button customize" data-toggle="modal" data-bind="visible: isCustomizable(), click: launchCustomizationModal, css: {enabled: isLoadingComplete()}">Customize</a> -->
 
             <a class="action-button edit" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}"><i class="fa fa-cog"></i> Edit Options</a>
@@ -153,7 +157,7 @@
         </div>
       <!-- /ko -->
     </div>
-    <footer class="project-collection-notes">
+    <footer class="project-collection-notes" style="display: none;">
 
     </footer>
   </section>
@@ -165,5 +169,4 @@
       <input id="data-access-project" name="project" type="hidden">
     </div>
   </form>
-
 </div>

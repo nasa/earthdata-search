@@ -20,7 +20,7 @@ do ($=jQuery, ko) ->
     template: { element: 'tmpl_master-overlay-panel-item' },
   }
 
-  ko.bindingHandlers.masterOverlayPanelItem = {
+  ko.bindingHandlers.componentMasterOverlayPanelItem = {
       init: (element, valueAccessor, allBindings, viewModel, bindingContext) =>
 
         element = $(element)

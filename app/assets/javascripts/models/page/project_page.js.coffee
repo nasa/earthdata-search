@@ -16,6 +16,7 @@ ui = models.ui
 ns = models.page
 
 ns.ProjectPage = do (ko,
+                     Page = ns.Page
                      setCurrent = ns.setCurrent
                      urlUtil = @edsc.util.url
                      QueryModel = data.query.CollectionQuery
@@ -35,9 +36,10 @@ ns.ProjectPage = do (ko,
   $(document).ready ->
     mapContainer = document.getElementById('bounding-box-map')
     current.map = map = new window.edsc.map.Map(mapContainer, 'geo', true) if mapContainer
-    
-  class ProjectPage
+
+  class ProjectPage extends Page
     constructor: ->
+      super
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
@@ -61,7 +63,7 @@ ns.ProjectPage = do (ko,
         variableSelector: new VariableSelector(@project)
 
       @spatialError = ko.computed(@_computeSpatialError)
-      
+
       $(window).on 'edsc.save_workspace', (e) =>
         currentParams = @project.serialized()
         urlUtil.saveState('/search/collections', currentParams, true, @workspaceNameField())
@@ -71,7 +73,7 @@ ns.ProjectPage = do (ko,
       setTimeout((=>
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
-   
+
     showType: =>
       if @query.serialize().bounding_box
         return "Rectangle"
@@ -89,8 +91,8 @@ ns.ProjectPage = do (ko,
       label = ""
       if @query.serialize().temporal
         dates = @query.serialize().temporal.split(",")
-        
-        dateStart = moment.utc(dates[0]) 
+
+        dateStart = moment.utc(dates[0])
         dateEnd = moment.utc(dates[1])
 
         if dateStart.year() == dateEnd.year()
@@ -107,7 +109,7 @@ ns.ProjectPage = do (ko,
         label
       else
         label
-        
+
     _computeSpatialError: =>
       error = @collections.error()
       if error?
@@ -195,7 +197,7 @@ ns.ProjectPage = do (ko,
       if @project.collections?().length == 0
         $('#project-empty-notice').show()
 
-  current = new ProjectPage()
+  current = new ProjectPage 'project'
   setCurrent(current)
 
   exports = ProjectPage

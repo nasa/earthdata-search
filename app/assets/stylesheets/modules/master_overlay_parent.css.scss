@@ -12,19 +12,15 @@
   transition: width 0.3s ease-in-out;
   will-change: width;
 
-  a {
-    color: #fff;
-
-    &.master-overlay-parent-close {
-      color: rgba(255, 255, 255, .3);
-      transition: color 0.15s ease-in-out;
-    }
-  }
-
   .is-master-overlay-parent-hidden & {
     overflow: hidden;
     width: 0;
   }
+}
+
+.master-overlay-parent-close {
+  color: rgba(255, 255, 255, .3);
+  transition: color 0.15s ease-in-out;
 }
 
 .master-overlay-sidebar {
@@ -42,12 +38,19 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.master-overlay-sidebar-header {
-  margin: 0 1em 0 .5em;
+.master-overlay-sidebar-header,
+.master-overlay-content-header {
+  padding: 0 1em 0 0.5em;
   background: inherit;
 }
 
-.master-overlay-sidebar-title {
+.master-overlay-content-header-project {
+  padding: 2em 0.675em 0.675em;
+  box-shadow: inset 0px 5px 5px -3px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid #ddd;
+}
+
+.master-overlay-content-title {
   padding: 0 0 10px 10px;
   color: #FFFFFF;
   margin: 0;

@@ -439,6 +439,10 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 
+  a {
+    color: #fff;
+  }
+
   dl {
     margin: 0;
     padding: 0;
@@ -469,6 +473,15 @@
     p {
       margin: 5px 0;
     }
+  }
+}
+
+.master-overlay-content-light {
+  background: white;
+  border-right: 1px solid #ddd;
+
+  a {
+    color: inherit;
   }
 }
 
