@@ -64,4 +64,48 @@ ns.GibsTileLayer = do (L,
       # console.log 'valid?'
       @options.endpoint == proj
 
+    onAdd: (map) ->
+      if @options.syncTime
+        @options.time = dateUtil.isoUtcDateString(map._time ? yesterday)
+      else
+        @options.time = ''
+      super()
+      map.on 'edsc.timechange', @_onTimeChange
+
+    onRemove: (map) ->
+      super(map)
+      map.off 'edsc.timechange', @_onTimeChange
+
+    _onTimeChange: (e) =>
+      if @options.syncTime
+        date = e.time ? yesterday
+        @updateOptions(time: dateUtil.isoUtcDateString(date))
+
+    updateOptions: (options={}) ->
+      @options = L.extend({}, @options, options)
+      @redraw()
+      # map = @_map
+      #
+      # if @layer?
+      #   @layer.onRemove(map)
+      #   @layer.off 'tileerror'
+      #   @layer = null
+      #
+      # projection = map.projection
+      # return unless @validForProjection(projection)
+      #
+      # options = L.extend({}, this["#{projection}Options"], options)
+      # layer = @layer = @_buildLayerWithOptions(options)
+      # if layer?
+      #   layer.setZIndex(@zIndex ? 0)
+      #   layer.addTo(map)
+      #
+      #   # Retry loading a tile once if it errors
+      #   layer.on 'tileerror', (e) ->
+      #     src = e.tile.src
+      #     retryCount = src.match(/&retry=(\d+)$/)
+      #     if !retryCount
+      #       e.tile.src += '&retry=1'
+
+
   exports = GibsTileLayer

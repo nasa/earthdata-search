@@ -20,35 +20,45 @@ ns.Map = do (window,
   L.Map.include
     fitBounds: (bounds, options={}) ->
       options.animate = config.animateMap
-      bounds = bounds.getBounds?() ? L.latLngBounds(bounds)
 
-      paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
-      paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0])
+      bounds = L.latLngBounds(bounds)
 
-      zoom = @getBoundsZoom(bounds, false, paddingTL.add(paddingBR))
+      if !bounds.isValid()
+        throw new Error('Bounds are not valid.')
 
-      swPoint = this.project(bounds.getSouthWest(), zoom)
-      nePoint = this.project(bounds.getNorthEast(), zoom)
+      target = @_getBoundsCenterZoom(bounds, options)
+      @setView target.center, target.zoom, options
+      # bounds = bounds.getBounds?() ? L.latLngBounds(bounds)
+      #
+      # paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
+      # paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0])
+      #
+      # zoom = @getBoundsZoom(bounds, false, paddingTL.add(paddingBR))
+      #
+      # swPoint = this.project(bounds.getSouthWest(), zoom)
+      # nePoint = this.project(bounds.getNorthEast(), zoom)
+      #
+      # center = this.unproject(swPoint.add(nePoint).divideBy(2), zoom)
+      #
+      # zoom = Math.min(options.maxZoom ? Infinity, zoom)
+      # # @_zoom = zoom
+      #
+      # @setView(center, zoom, options)
 
-      center = this.unproject(swPoint.add(nePoint).divideBy(2), zoom)
-
-      zoom = Math.min(options.maxZoom ? Infinity, zoom)
-
-      @setView(center, zoom, options)
-
-    setZoom: (zoom, options) ->
-      zoom = @_limitZoom(zoom)
-
-      if !@_loaded
-        @_zoom = @_limitZoom(zoom)
-        return this
-
-      currentZoom = @getZoom()
-      return this if currentZoom == zoom
-      targetPoint = @project(@getCenter(), zoom)
-      targetLatLng = @unproject(targetPoint, zoom)
-
-      @setView(targetLatLng, zoom, {zoom: options})
+    # was added to zoom on the center of map when buttons were used, but doesn't seem to be needed now
+    # setZoom: (zoom, options) ->
+    #   zoom = @_limitZoom(zoom)
+    #
+    #   if !@_loaded
+    #     @_zoom = @_limitZoom(zoom)
+    #     return this
+    #
+    #   currentZoom = @getZoom()
+    #   return this if currentZoom == zoom
+    #   targetPoint = @project(@getCenter(), zoom)
+    #   targetLatLng = @unproject(targetPoint, zoom)
+    #
+    #   @setView(targetLatLng, zoom, {zoom: options})
 
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-1.3.4/'
@@ -82,6 +92,9 @@ ns.Map = do (window,
         el,
         zoomControl: false,
         attributionControl: false,
+        # turning off zoom animations fixes the fitBounds issue on sticky granules, but looks bad
+        zoomAnimation: false
+
         # maxZoom: 8
         # zoom: 2
         # center: [0, 0]
@@ -251,7 +264,6 @@ ns.Map = do (window,
       needsNewBaseLayer = true
       projection = @projection
 
-      # TODO this is removing all incorrect projection layers from the map, but not adding new layers to the map and layer control
       [newBaseMaps, newOverlayMaps] = @_buildLayers()
       for own layerName, layer of @_baseMaps
         valid = layer.validForProjection(projection)
@@ -262,9 +274,10 @@ ns.Map = do (window,
           layerControl.addBaseLayer(layer, layerName)
           layer.setZIndex(0) # Keep baselayers below overlays
         if !valid && hasLayer
-          layerControl.removeLayer(layer)
           needsNewBaseLayer = layer?._map?
           @map.removeLayer(layer)
+          layerControl.removeLayer(layer)
+
           newLayer = newBaseMaps[layerName]
           layerControl.addBaseLayer(newLayer, layerName)
           @map.addLayer(newLayer) if needsNewBaseLayer
@@ -285,9 +298,10 @@ ns.Map = do (window,
           layerControl.addOverlay(layer, layerName)
           layer.setZIndex(10) # Keep baselayers below overlays
         if !valid && hasLayer
-          layerControl.removeLayer(layer)
           needsOverlay = layer?._map?
           @map.removeLayer(layer)
+          layerControl.removeLayer(layer)
+
           newOverlay = newOverlayMaps[layerName]
           layerControl.addOverlay(newOverlay, layerName)
           @map.addLayer(newOverlay) if needsOverlay
@@ -367,9 +381,9 @@ ns.Map = do (window,
       # apply overlays
       map = @map
       overlayLayers = @_overlayMaps
-      for layer in overlayLayers
-        if map.hasLayer(overlayLayers[layer])
-          map.removeLayer(overlayLayers[layer])
+      for layerName, _layer in overlayLayers
+        if map.hasLayer(overlayLayers[layerName])
+          map.removeLayer(overlayLayers[layerName])
 
       for name in overlays
         map.addLayer(overlayLayers[name])

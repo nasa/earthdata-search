@@ -43,10 +43,8 @@ ns.GranuleGridLayer = do (
         @_datasourceSubscription = @collection.granuleDatasource.subscribe(@_subscribe)
 
       @color = color ? '#25c85b';
-      console.log "this.maxZoom: #{this.maxZoom}"
       @originalOptions = tileSize: 512
       super(@originalOptions)
-      # super()
 
     onAdd: (map) ->
       super()
@@ -58,7 +56,6 @@ ns.GranuleGridLayer = do (
       @_resultsSubscription = @granules?.results?.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules?.results())
       @_added = true
-      # @redraw()
 
     onRemove: (map) ->
       super(map)
@@ -83,8 +80,8 @@ ns.GranuleGridLayer = do (
     # tilePoint has the correct Z coordinate, but map._zoom is the old number
     # createTile: (tilePoint, done) ->
     createTile: (tilePoint) ->
-      console.log tilePoint
-      console.log @_backTiles?["#{tilePoint.x}:#{tilePoint.y}"]
+      # console.log tilePoint
+      # console.log @_backTiles?["#{tilePoint.x}:#{tilePoint.y}"]
 
       tile = @_createTile()
 
@@ -105,11 +102,6 @@ ns.GranuleGridLayer = do (
       tile.height = size.y
       ctx = tile.getContext('2d')
       tile.onselectstart = tile.onmousemove = L.Util.falseFn
-      # # force the map _zoom to the new value before we calculate
-      # # where things need to be drawn
-      # @_map._zoom = tilePoint.z
-      # @drawTile(tile, tilePoint)
-
       tile
 
     # createTile: (coords) ->
@@ -156,10 +148,6 @@ ns.GranuleGridLayer = do (
         return false if !op && value != granuleValue
       true
 
-    _getSubdomain: (tilePoint) ->
-      index = Math.abs(tilePoint.x + tilePoint.y) % @options.subdomains.length
-      @options.subdomains[index]
-
     _getlprojection: ->
       if @options.geo
         'epsg4326'
@@ -171,12 +159,10 @@ ns.GranuleGridLayer = do (
     _getTileUrl: (coords) ->
       data =
         lprojection: @_getlprojection()
-        # r: if L.Browser.retina then '@2x' else ''
-        # s: @_getSubdomain(coords)
         x: coords.x
         y: coords.y
-        # z: @_getZoomForUrl()
         z: coords.z
+        time: @options.time
       if @_map and !@_map.options.crs.infinite
         invertedY = @_globalTileRange.max.y - (coords.y)
         if @options.tms
@@ -187,6 +173,7 @@ ns.GranuleGridLayer = do (
     getTileUrl: (tilePoint, granule) ->
       return null unless @multiOptions
       date = granule.time_start?.substring(0, 10)
+
       matched = false
       for optionSet in @multiOptions when @_matches(granule, optionSet.match)
         oldResolution = optionSet.resolution
@@ -211,25 +198,19 @@ ns.GranuleGridLayer = do (
 
       return unless matched
 
+      @options.time = date
       if @options.granule
         this._originalUrl = this._originalUrl || this._url;
         this._url = config.gibsGranuleUrl || this._originalUrl;
-        date = granule.time_start
-        @options.time_start = granule.time_start.replace(/\.\d{3}Z$/, 'Z')
-        # L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
-        @_getTileUrl(tilePoint)
+        @options.time = granule.time_start.replace(/\.\d{3}Z$/, 'Z')
       else
         this._url = this._originalUrl || this._url || gibsUrl;
-        # imageryUrl = L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
-        imageryUrl = @_getTileUrl(tilePoint)
-        # Test configuration will not have the '//' substring
-        return imageryUrl if imageryUrl.lastIndexOf('//') == -1
-        pos = imageryUrl.lastIndexOf('//');
-        imageryUrl.substring(0,pos) + '/' + date + imageryUrl.substring(pos+1)
+
+      @_getTileUrl(tilePoint)
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
-      console.log 'drawing tile'
+      # console.log 'drawing tile'
 
       tileSize = @getTileSize()
 
@@ -489,7 +470,7 @@ ns.GranuleGridLayer = do (
       @_results = results
       @redraw()
 
-    _reorderedResults: (results) ->
+    _reorderedResults: (results, defaultResults) ->
       if @_stickied?
         results = results.concat()
         index = results.indexOf(@_stickied)
@@ -501,12 +482,12 @@ ns.GranuleGridLayer = do (
         else
           results.splice(index, 1)
           results.unshift(@_stickied)
-
-      results
+        results
+      else
+        defaultResults
 
     _loadResults: (results) ->
-      @_results = results
-      @setResults(@_reorderedResults(results))
+      @setResults(@_reorderedResults(results, @granules?.results()))
 
     setFocus: (focus, map=@_map) ->
       return if @_isFocused == focus
@@ -602,12 +583,13 @@ ns.GranuleGridLayer = do (
       excludeHtml = ''
       if @collection.granuleDatasource()?.hasCapability('excludeGranules')
         excludeHtml = '<a class="panel-list-remove" href="#" title="Remove granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>'
-      icon = L.divIcon
+      icon = new L.divIcon
         className: 'granule-spatial-label',
         html: "<span class=\"granule-spatial-label-temporal\">#{temporalLabel}</span>#{excludeHtml}"
 
 
       marker = L.marker([0, 0], clickable: false, icon: icon)
+      layer.addLayer(marker)
 
       firstShape = layer.getLayers()[0]
       firstShape = firstShape._interiors if firstShape?._interiors?
@@ -617,13 +599,13 @@ ns.GranuleGridLayer = do (
 
         center = @getLatLng?()
         unless center?
-          latlngs = @getLatLngs()
-          latlngs = latlngs[0] if Array.isArray(latlngs[0])
-          bounds = L.bounds(map.latLngToLayerPoint(latlng) for latlng in latlngs)
-          center = map.layerPointToLatLng(bounds.getCenter())
+          # latlngs = @getLatLngs()
+          # latlngs = latlngs[0] if Array.isArray(latlngs[0])
+          # bounds = L.bounds(map.latLngToLayerPoint(latlng) for latlng in latlngs)
+          # center = map.layerPointToLatLng(bounds.getCenter())
+          center = @getCenter()
 
         marker.setLatLng(center)
-        layer.addLayer(marker)
 
       layer
 

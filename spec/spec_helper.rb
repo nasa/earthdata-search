@@ -12,6 +12,10 @@ require 'selenium-webdriver'
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w(headless disable-gpu no-sandbox --window-size=1440,900 --disable-notifications)
+
+    ### use these args for debugging in chrome.
+    # args: %w(headless disable-gpu no-sandbox --window-size=1440,900 --disable-notifications --remote-debugging-port=9222)
+    ### Open Chrome with `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=remote-profile --remote-debugging-port=9222`
   )
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end

@@ -248,7 +248,7 @@ describe 'Spatial' do
             }
             else {
               latlngs = layer.getLatLngs();
-              result = latlngs[0].lng + ',' + latlngs[2].lng;
+              result = latlngs[0][0].lng + ',' + latlngs[0][2].lng;
             }
             return result;
           """

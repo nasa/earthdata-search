@@ -122,7 +122,7 @@ describe 'Viewing Single Project' do
       before :all do
         Capybara.reset_sessions!
         load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
-        create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
+        create_bounding_box(-10, -10, 10, 10)
         wait_for_xhr
         click_link 'My Project'
         wait_for_xhr
@@ -402,7 +402,7 @@ describe 'Viewing Single Project' do
         before :all do
           Capybara.reset_sessions!
           load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
-          create_bounding_box([10, 10], [10, -10], [-10, -10], [-10, 10])
+          create_bounding_box(-10, -10, 10, 10)
           wait_for_xhr
           click_link 'My Project'
           wait_for_xhr
