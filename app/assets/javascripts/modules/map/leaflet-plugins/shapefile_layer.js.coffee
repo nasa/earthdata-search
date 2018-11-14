@@ -4,12 +4,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
 
   MAX_POLYGON_SIZE = config.maxPolygonSize
 
-  # originalPropagate = L.FeatureGroup.prototype._propagateEvent
-  # L.FeatureGroup.prototype._propagateEvent = (e) ->
-  #   e.chain = e.chain ? []
-  #   e.chain.push e.target
-  #   originalPropagate.call(this, e)
-
   Dropzone.autoDiscover = false
 
   dropzoneOptions =
@@ -198,9 +192,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
     _setConstraint: (sourceLayer) ->
       if sourceLayer.getLatLngs?
         # Polygon
-        originalLatLngs = sourceLayer.getLatLngs()
-        originalLatLngs = originalLatLngs[0] unless L.LineUtil.isFlat(originalLatLngs)
-        latlngs = @_simplifyPoints(originalLatLngs)
+        latlngs = @_simplifyPoints(sourceLayer.getLatLngs())
 
         layer = L.sphericalPolygon(latlngs, @options.selection)
         layerType = 'polygon'

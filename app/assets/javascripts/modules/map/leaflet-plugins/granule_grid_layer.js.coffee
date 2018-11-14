@@ -75,26 +75,19 @@ ns.GranuleGridLayer = do (
         @_loadResults(@granules?.results())
         @_datasourceSubscription?.dispose()
 
-    # TODO This gets called when zoom level changes, but it seems to get called before the
-    # level actually changes, so it doesn't come up with the correct drawing?
-    # tilePoint has the correct Z coordinate, but map._zoom is the old number
-    # createTile: (tilePoint, done) ->
     createTile: (tilePoint) ->
-      # console.log tilePoint
-      # console.log @_backTiles?["#{tilePoint.x}:#{tilePoint.y}"]
-
       tile = @_createTile()
 
       # # force the map _zoom to the new value before we calculate
       # # where things need to be drawn
-      @_map._zoom = tilePoint.z
+      # # This was to fix the granules being drawn incorrectly after a zoom, but
+      # # it isn't needed if we turn zoomAnimation off for the map
+      # @_map._zoom = tilePoint.z
       @drawTile(tile, @_getBackTile(tilePoint), tilePoint)
 
       tile
 
     _createTile: ->
-      # console.log 'createTile'
-      # console.log "getPixelOrigin: #{@_map.getPixelOrigin()}"
       tile = L.DomUtil.create('canvas', 'leaflet-tile')
 
       size = @getTileSize()
@@ -103,27 +96,6 @@ ns.GranuleGridLayer = do (
       ctx = tile.getContext('2d')
       tile.onselectstart = tile.onmousemove = L.Util.falseFn
       tile
-
-    # createTile: (coords) ->
-    # createTile: (coords, done) ->
-    #   tile = document.createElement('div')
-    #
-    #   setTimeout(=>
-    #     @drawStuff(tile, coords, done)
-    #     # done(null, tile)
-    #   , 0)
-    #   tile
-    #
-    # drawStuff: (tile, coords, done) ->
-    #   tile.innerHTML = [coords.x, coords.y, coords.z].join(', ')
-    #   tile.style.outline = '1px solid red'
-    #   done(null, tile)
-    # _removeAllTiles: ->
-    #   for tile in @_backTiles
-    #     DomUtil.remove(tile.el)
-    #     # delete tile
-    #   @_backTiles = {}
-    #   super()
 
     _getBackTile: (tilePoint) ->
       key = "#{tilePoint.x}:#{tilePoint.y}"
@@ -210,7 +182,6 @@ ns.GranuleGridLayer = do (
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
-      # console.log 'drawing tile'
 
       tileSize = @getTileSize()
 
@@ -241,19 +212,8 @@ ns.GranuleGridLayer = do (
           pathsWithHoles.push(overlaps)
           paths = paths.concat(overlaps)
 
-      # Marks the tile as drawn.  As a callback to _drawClippedPaths, the user
-      # gets faster feedback.  As a callback to _drawClippedImagery, the feedback
-      # is slower but the total CPU work and stutter is reduced.  Right now it's
-      # using the former, but if performance is ever a problem, step 1 is to switch
-      # to the latter
-      imageryCallback = =>
-        # @tileDrawn(canvas)
-        # TODO possible remove this callback altogether
-
-      # console.log tilePoint
-      # console.log "paths: #{JSON.stringify(paths)}"
       setTimeout((=> @_drawOutlines(canvas, paths, nwPoint)), 0)
-      setTimeout((=> @_drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint, imageryCallback)), 0)
+      setTimeout((=> @_drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint)), 0)
       setTimeout((=> @_drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
       setTimeout((=> @_drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
 
@@ -275,7 +235,7 @@ ns.GranuleGridLayer = do (
       ctx.restore()
       null
 
-    _drawClippedPaths: (canvas, boundary, pathsWithHoles, nwPoint, callback) ->
+    _drawClippedPaths: (canvas, boundary, pathsWithHoles, nwPoint) ->
       ctx = canvas.getContext('2d')
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -292,7 +252,6 @@ ns.GranuleGridLayer = do (
         addPath(ctx, boundary)
         ctx.clip() unless path.line?.length > 0
       ctx.restore()
-      callback?()
       null
 
     _loadImage: (url, callback, retries=0) ->
@@ -334,11 +293,7 @@ ns.GranuleGridLayer = do (
         ctx.clip()
       null
 
-    _drawClippedImagery: (canvas, boundary, paths, nwPoint, tilePoint, callback) ->
-      if !@_url? || paths.length == 0
-        callback?()
-        return
-
+    _drawClippedImagery: (canvas, boundary, paths, nwPoint, tilePoint) ->
       ctx = canvas.getContext('2d')
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -377,7 +332,6 @@ ns.GranuleGridLayer = do (
               index++
             if index == pathsByUrl.length
               ctx.restore()
-              callback?()
       null
 
 
@@ -401,11 +355,6 @@ ns.GranuleGridLayer = do (
           ctx.fill()
       ctx.restore()
       null
-
-    tileDrawn: (tile) ->
-      # If we do upgrade, this will break, as well as our tile reloading calls.
-      # Tile loading seems to be handled via callbacks now.
-      @_tileDoneCallback.call(tile)
 
     _addIntersections: (result, paths, bounds, type, interpolation) ->
       return null unless paths?
@@ -447,7 +396,6 @@ ns.GranuleGridLayer = do (
       result
 
     granuleAt: (p) ->
-      console.log 'granuleAt'
       origin = @_map.getPixelOrigin()
       tileSize = @getTileSize()
       tilePoint = p.add(origin).divideBy(tileSize.x).floor()
@@ -466,7 +414,6 @@ ns.GranuleGridLayer = do (
       result
 
     setResults: (results) ->
-      console.log 'setResults'
       @_results = results
       @redraw()
 
@@ -521,7 +468,6 @@ ns.GranuleGridLayer = do (
         @_map.fire('edsc.focusgranule', granule: granule)
 
     _onClick: (e) =>
-      console.log '_onClick'
       if $(e.originalEvent.target).closest('a').hasClass('panel-list-remove')
         return @_map.fire('edsc.excludestickygranule')
       return unless $(e.originalEvent.target).closest('a').length == 0
@@ -596,15 +542,7 @@ ns.GranuleGridLayer = do (
 
       firstShape?.on 'add', (e) ->
         map = @_map
-
-        center = @getLatLng?()
-        unless center?
-          # latlngs = @getLatLngs()
-          # latlngs = latlngs[0] if Array.isArray(latlngs[0])
-          # bounds = L.bounds(map.latLngToLayerPoint(latlng) for latlng in latlngs)
-          # center = map.layerPointToLatLng(bounds.getCenter())
-          center = @getCenter()
-
+        center = if @getLatLng? then @getLatLng() else @getCenter()
         marker.setLatLng(center)
 
       layer
