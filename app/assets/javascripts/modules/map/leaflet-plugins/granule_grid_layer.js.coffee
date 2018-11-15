@@ -450,7 +450,6 @@ ns.GranuleGridLayer = do (
         @_granuleStickyLayer = null
 
     _handle: (obj, onOrOff, events...) ->
-      console.log "handle: onOrOff: #{onOrOff}, events: #{events}"
       for event in events
         method = '_on' + event.split('.').map(capitalize).join('')
         obj[onOrOff] event, this[method]

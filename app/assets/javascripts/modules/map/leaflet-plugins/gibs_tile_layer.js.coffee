@@ -11,7 +11,6 @@ ns.GibsTileLayer = do (L,
 
   class GibsTileLayer extends L.TileLayer
     validForProjection: (proj) ->
-      # console.log 'valid?'
       @options.endpoint == proj
 
     onAdd: (map) ->

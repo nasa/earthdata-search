@@ -57,7 +57,6 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
       @redraw()
 
     getLatLngs: ->
-      console.log 'getLatLngs'
       geoutil.makeCounterclockwise(@_latlngs.concat())
 
     newLatLngIntersects: (latlng, skipFirst) ->
