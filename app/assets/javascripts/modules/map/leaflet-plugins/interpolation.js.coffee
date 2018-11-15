@@ -92,6 +92,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
 
   # Overrides the default projectLatLngs in Polyline to project and interpolate the
   # path instead of just projecting it
+  # https://github.com/Leaflet/Leaflet/blob/v1.3.4/src/layer/vector/Polyline.js#L217
   projectLatlngs = (latlngs, result, projectedBounds) ->
     flat = latlngs[0] instanceof L.LatLng
     len = latlngs.length
@@ -99,6 +100,10 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
     ring = undefined
     if flat
       ring = []
+      # Instead of looping through latlngs and finding the layer points,
+      # use projectPath to interpolate the latlngs into the "great circle"
+      # path between the two points. returns layer points so we don't have
+      # to do that conversion like the original method
       for point, index in projectPath(@_map, latlngs, @_interpolationFn)
         ring[index] = point
         projectedBounds.extend(ring[index])

@@ -14,7 +14,6 @@ describe 'Granule hole displays', reset: true do
       end
 
       it 'draws footprints that contain holes' do
-        # expect(page).to have_selector('.leaflet-overlay-pane path', count: 14)
         expect(page).to have_selector('.leaflet-overlay-pane path', count: 4)
       end
     end
@@ -35,7 +34,6 @@ describe 'Granule hole displays', reset: true do
       end
 
       it 'displays a footprint outline' do
-        # expect(page).to have_selector('.leaflet-overlay-pane path', count: 7, visible: false)
         expect(page).to have_selector('.leaflet-overlay-pane path', count: 2, visible: false)
       end
     end
