@@ -50,6 +50,12 @@
   z-index: 1;
 }
 
+.leaflet-touch .leaflet-control-layers-toggle {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+
 .projection-geo .projection-only-arctic,
 .projection-geo .projection-only-antarctic,
 .projection-arctic .projection-only-geo,
