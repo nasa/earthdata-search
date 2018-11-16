@@ -133,7 +133,7 @@ ns.Map = do (window,
           base = '0' if !base? || base == ''
           overlays ?= ""
 
-          @setProjection(['arctic', 'geo', 'antarctic'][proj ? 1])
+          @setProjection(['arctic', 'geo', 'antarctic'][proj ? 1], true)
           @setBaseMap(MAPBASES[parseInt(base) ? 0])
           # get overlay names from indexes
           overlayNames = []
@@ -300,6 +300,7 @@ ns.Map = do (window,
 
       opts = L.setOptions(map, @projectionOptions[name])
       map.options.crs = opts.crs
+      map._resetView(L.latLng(opts.center), opts.zoom)
       map.setView(L.latLng(opts.center), opts.zoom)
       map.fire('projectionchange', projection: name, map: map)
       @_rebuildLayers() if rebuild

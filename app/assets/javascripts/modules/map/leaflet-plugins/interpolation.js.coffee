@@ -95,8 +95,8 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
   # https://github.com/Leaflet/Leaflet/blob/v1.3.4/src/layer/vector/Polyline.js#L217
   projectLatlngs = (latlngs, result, projectedBounds) ->
     flat = latlngs[0] instanceof L.LatLng
-    len = latlngs.length
-    i = undefined
+    latlngs = latlngs.concat()
+    latlngs.push latlngs[0]
     ring = undefined
     if flat
       ring = []
