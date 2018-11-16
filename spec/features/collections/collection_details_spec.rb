@@ -127,7 +127,6 @@ describe 'Collection details' do
     before :all do
       Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C179002945-ORNL_DAAC'
-
     end
 
     it 'does not display the collection\'s spatial bounds on the map' do
@@ -159,23 +158,6 @@ describe 'Collection details' do
   #     expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
   #   end
   # end
-
-  # TODO: RDA // This collection doesn't exist anymore, it needs to be replaced.
-  context 'when selecting a collection with multiple temporal', pending_updates: true do
-    before :all do
-      Capybara.reset_sessions!
-      load_page '/search/collection-details', env: :uat, focus: 'C1204482909-GCMDTEST'
-    end
-
-    xit 'displays the collection searched for in the results list' do
-      expect(page).to have_content('CALIPSO Lidar Level 2 5km aerosol profile data V3-01')
-    end
-
-    xit 'displays all the temporal' do
-      expect(page).to have_content('2006-06-13 to 2009-02-16')
-      expect(page).to have_content('2009-03-17 to 2011-10-31')
-    end
-  end
 
   context 'when selecting a collection with multiple temporal fields but some of which have only BeginningDateTime' do
     before :all do

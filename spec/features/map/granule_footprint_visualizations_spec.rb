@@ -11,6 +11,7 @@ describe "Granule footprint visualizations" do
   extend Helpers::CollectionHelpers
 
   before :all do
+    Capybara.reset_sessions!
     load_page :search
   end
 
