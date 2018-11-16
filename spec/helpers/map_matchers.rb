@@ -107,15 +107,10 @@ RSpec::Matchers.define :match_map_center do |expected_lat, expected_lng|
   failure_message_for_should do |page|
     "expected page to have map query of 'm=#{expected_lat}!#{expected_lng}...', got '#{URI.parse(page.current_url).query.inspect}'"
   end
-
 end
 
 RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected_zoom|
-
   def map_params(page)
-    #query = URI.parse(page.current_url).query
-    #param_str = query[/(?:&|^)m=([\d.!]+)/, 1]
-    #param_str.split('!').map(&:to_f) if param_str.present?
     page.execute_script("
        var map = $('#map').data('map').map;
        var center = map.getCenter();

@@ -1019,6 +1019,30 @@ a84533a4947a665638502d8d98378104a480197a:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
     http_version: 
+2dffcca511448ef123967e72d0176f1adf15c9a1:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 80fffb1b-7d47-48b1-8b4e-2424cb90a84a
+      date:
+      - Fri, 16 Nov 2018 19:22:51 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
 0e4a4d8ee44a1695ab4f9d9c10accf80c2c47549:
   response:
     status:
@@ -1186,33 +1210,6 @@ f4c28a5839bd38d8bc1e35e9a1893254e575660c:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
-    http_version: 
-71be07065d1938227a3b157d8e3818fd7018500d:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      access-control-allow-origin:
-      - "*"
-      cmr-request-id:
-      - ca4387e4-1a03-4893-99b3-80968f28562c
-      content-type:
-      - application/json
-      date:
-      - Wed, 07 Nov 2018 19:22:23 GMT
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      content-length:
-      - '148'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Token [c01b4d46d003471f9fea421ce256b802d3598085bb3b7885474a485de8f4f9c7:0LDz2MRpxLhPK1rDQBf_KA]
-        is not a valid Launchpad or URS token"]}'
     http_version: 
 4e08f3e7e5825535559a2e3fb8089d2383a6f14a:
   response:
@@ -1430,6 +1427,30 @@ eb8096ccd038ee9a43d498fe3b1285ac318ce1b1:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
     http_version: 
+8acb0d2da9a4d60708524f370143df34bce61190:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 180b6b6c-1bf7-48bb-8b65-d6b4809a4323
+      date:
+      - Fri, 16 Nov 2018 19:24:31 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '78'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
+    http_version: 
 e41480ffaf1a19861a77d5e08a9e924c79098082:
   response:
     status:
@@ -1477,6 +1498,30 @@ e41480ffaf1a19861a77d5e08a9e924c79098082:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C197265171-LPDAAC_ECS","intervals":[[1235692799,1298937600,22702]]}]'
+    http_version: 
+1d8017af19b5424ce04ba6eae35bb6a5750b27da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - eea0beee-5d60-4efd-a85d-1521e8e4f5b8
+      date:
+      - Fri, 16 Nov 2018 01:15:24 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '80'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C203234523-LAADS","intervals":[[1330387200,1425254400,315911]]}]'
     http_version: 
 db98a6a491598d5e3bb59cf0881b228613ab6083:
   response:
@@ -2193,6 +2238,30 @@ ef4a818f7f48e160eec387ecc6edfde9d5303d7d:
       - e0c68a6d-4902-42b3-b63a-207b8951f048
       date:
       - Tue, 06 Nov 2018 17:50:06 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '2'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+5ee47df3df9d6419d76b73be15bc3f23eaf5abcf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9ff8cea8-face-4710-9536-42d54d515acf
+      date:
+      - Fri, 16 Nov 2018 16:00:15 GMT
       server:
       - nginx
       strict-transport-security:

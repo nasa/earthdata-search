@@ -145,6 +145,19 @@ http_interactions:
   digest: 0426dceb8358bac4f74dc1a6bcb835b1f5b4a45d
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions.json?catalog_item_id=C203234523-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 16 Nov 2018 01:15:50 GMT
+  digest: 37e6ab4fc80e9e10844aa20392108a4e52bbf170
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/data_quality_summary_definitions/FEC75FB2-A2DF-AB7E-1A0E-22C10DCA8AF6
     body:
       encoding: US-ASCII

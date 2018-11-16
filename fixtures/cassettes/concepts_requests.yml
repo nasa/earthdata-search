@@ -466,6 +466,25 @@ http_interactions:
   digest: 9c2cee2ee77d164b06dea319e8214682d822aa55
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C203234523-LAADS.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Fri, 16 Nov 2018 01:15:50 GMT
+  digest: da6ab5963541d4440a731a75644d7764d654ec50
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C92711294-NSIDC_ECS.umm_json
     body:
       encoding: US-ASCII
@@ -481,6 +500,21 @@ http_interactions:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Tue, 06 Nov 2018 17:30:46 GMT
   digest: 692c88b531c4aff38c334bf523a6ba38a71c4c1f
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/G1422671719-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 16 Nov 2018 01:09:29 GMT
+  digest: 5a697752f5fbcd2c219fb24cb232dc7ae851e1d3
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/G1422671947-ORNL_DAAC.echo10

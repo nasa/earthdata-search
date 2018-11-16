@@ -56,17 +56,6 @@ describe Echo::Client do
       response = cmr_client.get_collection('C14758250-LPDAAC_ECS', nil, 'umm_json')
       expect(response.faraday_response).to eq(resp)
     end
-
-    # No longer applicable. The granule_url is set in the collection presenter.
-    xit "sets the granule_url" do
-      expect(connection).to receive(:get).with(collection_url, {}).and_return(resp)
-      expect(resp).to receive(:body).and_return([body]).at_least(:once)
-      expect(body).to receive(:granule_url=).with(granule_url)
-      expect(body).to receive(:granule_url).and_return(granule_url)
-
-      response = cmr_client.get_collection('C14758250-LPDAAC_ECS')
-      expect(response.body[0].granule_url).to_not be_nil
-    end
   end
 
   context 'granule search' do

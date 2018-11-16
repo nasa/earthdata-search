@@ -40,21 +40,6 @@ describe "Collection keyword searches" do
     expect(page).to have_content('ASTER L1A')
   end
 
-  # TODO: RDA // This won't always be the first collection. It's bgest to just check collection count
-  # which is done elsewhere
-  xit "displays all collections when keywords are cleared" do
-    fill_in "keywords", with: " "
-    wait_for_xhr
-    expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
-  end
-
-  # TODO: RDA // The collection results panel is always shown now, this test seems to be OBE
-  xit "do not match wildcard characters" do
-    fill_in "keywords", with: "AST_L%"
-    wait_for_xhr
-    expect(page).to have_no_css('#collection-results .panel-list-item')
-  end
-
   context "returning to the collection results list" do
     context "after navigating to a granule results sub-page" do
       use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'

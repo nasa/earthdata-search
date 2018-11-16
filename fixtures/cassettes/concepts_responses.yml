@@ -1994,6 +1994,57 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
         States","City":"Pasadena","StateProvince":"California"}],"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
         PAGE","URL":"https://asterweb.jpl.nasa.gov/"}]}}]}'
     http_version: 
+da6ab5963541d4440a731a75644d7764d654ec50:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - fcc4dec0-356d-4e31-a9bf-b9cc8cad4578
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Nov 2018 01:12:46 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1376'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"1B","boxes":["-90 -180 90 180"],"time_start":"2002-07-04T00:00:00.000Z","dif_ids":["MYD021KM_6"],"version_id":"6","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 1km V006","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LAADS","short_name":"MYD021KM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 1km V006","coordinate_system":"CARTESIAN","summary":"The
+        MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km (MYD021KM) product contains
+        calibrated and geolocated at-aperture radiances for 36 discrete bands located
+        in the 0.4 to 14.4 micron region of electromagnetic spectrum. These data are
+        generated from the MODIS Level 1A scans of raw radiance which during processing
+        converted to geophysical units of W/(m^2 um sr). In addition, the Earth Bi-directional
+        Reflectance Distribution Function (BRDF) may be determined for the solar reflective
+        bands (1-19, 26) through knowledge of the solar irradiance (e.g., determined
+        from MODIS solar diffuser data, and from the target illumination geometry).  Additional
+        data are provided including quality flags, error estimates and calibration
+        data.\n\nVisible, shortwave infrared, and near infrared measurements are only
+        made during the daytime, while radiances for the thermal infrared region (bands
+        20-25, 27-36) are measured continuously.\n\nThe Shortname for this product
+        is MYD021KM and is stored in the Earth Observing System Hierarchical Data
+        Format (HDF-EOS).\n\nEnvironmental information derived from MODIS L1B measurements
+        will offer a comprehensive and unprecedented look at terrestrial, atmospheric,
+        and ocean phenomenology for a wide and diverse community of users throughout
+        the world.\n\nSee the MODIS Characterization Support Team webpage for more
+        C6 product information at:\n\nhttps://mcst.gsfc.nasa.gov/l1b/product-information\n\n\nor
+        visit Science Team homepage at:\nhttps://modis.gsfc.nasa.gov/data/dataprod/","orbit_parameters":{},"id":"C203234523-LAADS","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ladsweb.modaps.eosdis.nasa.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/6/MYD021KM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://mcst.gsfc.nasa.gov/l1b/product-information"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://mcst.gsfc.nasa.gov/content/l1b-documents"}]}'
+    http_version: 
 692c88b531c4aff38c334bf523a6ba38a71c4c1f:
   response:
     status:
@@ -2062,6 +2113,128 @@ f984d1e447f2efd2e3b1be8d03491448bda97984:
         Science Data Support Team","ContactInformation":{"ContactInstruction":"Contact
         for data content concerns","ContactMechanisms":[{"Type":"Telephone","Value":"301-614-5515"},{"Type":"Email","Value":"Edward.J.Masuoka@nasa.gov"}],"Addresses":[{"StreetAddresses":["NASA/GSFC
         Code 922"],"City":"GREENBELT","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}}]}'
+    http_version: 
+5a697752f5fbcd2c219fb24cb232dc7ae851e1d3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 55aa263c-59be-4ae5-bc70-e568a53d0ee7
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      date:
+      - Fri, 16 Nov 2018 01:09:12 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '950'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |-
+        <Granule>
+            <GranuleUR>FIFE_STRM_15M.43601715.s15</GranuleUR>
+            <InsertTime>2008-12-02T00:00:00Z</InsertTime>
+            <LastUpdate>2008-12-02T00:00:00Z</LastUpdate>
+            <Collection>
+                <ShortName>FIFE_STRM_15M_1</ShortName>
+                <VersionId>1</VersionId>
+            </Collection>
+            <DataGranule>
+                <SizeMBDataGranule>0.000889</SizeMBDataGranule>
+                <DayNightFlag>BOTH</DayNightFlag>
+                <ProductionDateTime>2008-12-02T00:00:00Z</ProductionDateTime>
+            </DataGranule>
+            <Temporal>
+                <RangeDateTime>
+                    <BeginningDateTime>1984-12-25T00:00:00Z</BeginningDateTime>
+                    <EndingDateTime>1985-01-01T00:00:00Z</EndingDateTime>
+                </RangeDateTime>
+            </Temporal>
+            <Spatial>
+                <HorizontalSpatialDomain>
+                    <Geometry>
+                        <Point>
+                            <PointLongitude>-96.595</PointLongitude>
+                            <PointLatitude>39.1019</PointLatitude>
+                        </Point>
+                    </Geometry>
+                </HorizontalSpatialDomain>
+            </Spatial>
+            <MeasuredParameters>
+                <MeasuredParameter>
+                    <ParameterName>STAGE HEIGHT</ParameterName>
+                </MeasuredParameter>
+                <MeasuredParameter>
+                    <ParameterName>DISCHARGE/FLOW</ParameterName>
+                </MeasuredParameter>
+                <MeasuredParameter>
+                    <ParameterName>HYDROPATTERN</ParameterName>
+                </MeasuredParameter>
+            </MeasuredParameters>
+            <Platforms>
+                <Platform>
+                    <ShortName>SURFACE WATER WEIR</ShortName>
+                    <Instruments>
+                        <Instrument>
+                            <ShortName>STILLING WELL</ShortName>
+                        </Instrument>
+                    </Instruments>
+                </Platform>
+            </Platforms>
+            <Campaigns>
+                <Campaign>
+                    <ShortName>FIFE</ShortName>
+                </Campaign>
+            </Campaigns>
+            <Price>0</Price>
+            <OnlineAccessURLs>
+                <OnlineAccessURL>
+                    <URL>https://daac.ornl.gov/daacdata/fife/data/hydrolgy/strm_15m/y1984/43601715.s15</URL>
+                    <URLDescription>This link provides direct download access to the granule.</URLDescription>
+                </OnlineAccessURL>
+            </OnlineAccessURLs>
+            <OnlineResources>
+                <OnlineResource>
+                    <URL>https://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html</URL>
+                    <Description>ORNL DAAC Data Set Documentation</Description>
+                    <Type>USERS GUIDE</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https://dx.doi.org/doi:10.3334/ORNLDAAC/1</URL>
+                    <Description>Data set Landing Page DOI URL</Description>
+                    <Type>DATA SET LANDING PAGE</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https:/daac.ornl.gov/daacdata/fife/document/hydrolgy/15_min_strm_flow.pdf</URL>
+                    <Description>Data Set Documentation</Description>
+                    <Type>GENERAL DOCUMENTATION</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https:/daac.ornl.gov/daacdata/fife/document/hydrolgy/strm_15m.doc</URL>
+                    <Description>Data Set Documentation</Description>
+                    <Type>GENERAL DOCUMENTATION</Type>
+                </OnlineResource>
+                <OnlineResource>
+                    <URL>https:/daac.ornl.gov/daacdata/fife/data/hydrolgy/strm_15m/strm_15m.tdf</URL>
+                    <Description>Data Set Documentation</Description>
+                    <Type>GENERAL DOCUMENTATION</Type>
+                </OnlineResource>
+            </OnlineResources>
+            <Orderable>false</Orderable>
+            <DataFormat>ascii</DataFormat>
+        </Granule>
     http_version: 
 1c5f6e248a5d239e63f6925e1d022cdfc37edab2:
   response:
