@@ -1,6 +1,6 @@
 ns = edsc.map
 
-ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate, config=@edsc.config) ->
+ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, config=@edsc.config) ->
 
   # This is a bit tricky.  We need to be an instanceof L.Polygon for L.Draw methods
   # to work, but in reality we're an L.FeatureGroup, hence the "includes"
@@ -92,7 +92,7 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
     addHooks: ->
       L.Draw.Polyline.prototype.addHooks.call(this)
       if @_map
-        this._poly = new L.SphericalPolygon([], @options.shapeOptions)
+        this._poly = new L.sphericalPolygon([], @options.shapeOptions)
         this._poly.drawing = true
     removeHooks: ->
       this._poly.drawing = false
