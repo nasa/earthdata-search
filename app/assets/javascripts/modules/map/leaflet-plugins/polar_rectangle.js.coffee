@@ -50,7 +50,7 @@ do (L) ->
       @setLatLngs(@_bounds.getLatLngs())
 
     getBounds: ->
-      if @_bounds
+      if @_bounds and @_bounds instanceof PolarLatLngBounds
         @_bounds
       else if @_latlngs?.length == 4
         @_bounds = new PolarLatLngBounds(@_latlngs[0], @_latlngs[2], @proj)
