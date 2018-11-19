@@ -66,7 +66,6 @@ module Helpers
     end
 
     def logout
-      page.set_rack_session(nil)
       visit '/logout'
     end
 
