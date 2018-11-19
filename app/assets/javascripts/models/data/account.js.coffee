@@ -20,8 +20,8 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
 
-      if window.tokenExpiresIn?
-        @_from_user()
+      # if window.tokenExpiresIn?
+      #   @_from_user()
 
     _from_user: =>
       xhr = ajax

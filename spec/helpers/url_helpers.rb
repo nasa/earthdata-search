@@ -86,6 +86,14 @@ module Helpers
       end
     end
 
+    def clear_rack_session
+      page.set_rack_session(expires_in: 0)
+      page.set_rack_session(access_token: nil)
+      page.set_rack_session(refresh_token: nil)
+      page.set_rack_session(user_name: nil)
+      page.set_rack_session(logged_in_at: nil)
+    end
+
     def load_page(url, options = {})
       close_banner = options.delete(:close_banner)
 
@@ -95,15 +103,19 @@ module Helpers
         options[:env] ||= cmr_env.to_sym
 
         # If the cmr_env is production, we reset the session values because it wont be provided to this method
-        Capybara.reset_sessions! if options[:env].to_s == 'prod'
+        if options[:env].to_s == 'prod'
+          Capybara.reset_sessions!
+
+          clear_rack_session
+        end
         
         options.select { |option| [:env].include?(option) }.each do |key, value|
           page.set_rack_session(key => value)
         end
 
-        authenticate = options.delete(:authenticate)
+        authenticate_as = options.delete(:authenticate)
 
-        be_logged_in_as(authenticate, options[:env]) if authenticate
+        be_logged_in_as(authenticate_as, options[:env]) if authenticate_as
 
         url = QueryBuilder.new.add_to(url, options)
 

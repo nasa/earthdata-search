@@ -1,16 +1,9 @@
 require 'spec_helper'
 
 describe 'Granule Display Name' do
-  before :all do
-    Capybara.reset_sessions!
-
-    page.set_rack_session(cmr_env: :prod)
-  end
-
   context 'when granule has producer_granule_id' do
     before :all do
-      visit '/search/granules?p=C4543622-LARC_ASDC'
-      wait_for_xhr
+      load_page :search, focus: 'C4543622-LARC_ASDC'
     end
 
     it 'displays the producer_granule_id as the name' do
@@ -20,8 +13,7 @@ describe 'Granule Display Name' do
 
   context 'when granule doesn\'t have producer_granule_id' do
     before :all do
-      visit '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
+      load_page :search, focus: 'C179003030-ORNL_DAAC'
     end
 
     it 'displays the title as the name' do

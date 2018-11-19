@@ -33,6 +33,7 @@ end
 
 group :development do
   gem 'guard-livereload', require: false
+  gem 'guard-coffeescript'
   gem 'quiet_assets'
 
   # For dumping additional metadata stored in DatasetExtras and similar
@@ -47,19 +48,16 @@ end
 
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
-  gem 'thin'
-  gem 'rspec-rails'
+  gem 'byebug'
   gem 'colored'
-  gem 'vcr'
-  gem 'sqlite3'
-  gem 'knapsack'
-
   gem 'jasmine'
   gem 'jasmine_junitxml_formatter'
-
+  gem 'knapsack'
+  gem 'rspec-rails'
+  gem 'sqlite3'
   gem 'therubyracer', :require => 'v8'
-
-  gem 'byebug'
+  gem 'thin'
+  gem 'vcr'
 end
 
 group :assets, :development, :test do

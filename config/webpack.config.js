@@ -1,6 +1,7 @@
 var webpack = require("webpack"),
     fs = require('fs'),
-    pkg = JSON.parse(fs.readFileSync('./package.json')),
+    path = require('path'),
+    UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
     license;
 
 license = fs.readFileSync('./LICENSE')
@@ -8,7 +9,8 @@ license = fs.readFileSync('./LICENSE')
   .split(/\s+---\s+/, 1)[0];
 
 module.exports = {
-  context: __dirname + '/..',
+  mode: 'production',
+  context: path.resolve(__dirname, '..'),
   entry: {
     "edsc-search": "./edsc/search.js",
     "edsc-access": "./edsc/access.js",
@@ -20,18 +22,19 @@ module.exports = {
     "edsc-portal.ornl": "./edsc/portals/ornl/src/js/edsc-portal.ornl.jsx"
   },
   output: {
-    path: "./edsc/dist",
+    path: path.resolve(__dirname, '../edsc/dist'),
     filename: "[name].min.js"
   },
   module: {
-    loaders: [
-      { test: /\.useable\.css$/, loader: "style/useable!css" },
-      { test: /\.useable\.less$/, loader: "style/useable!css!less" },
-      { test: /\.css$/, exclude: /\.useable\.css$/, loader: "style!css" },
-      { test: /\.less$/, exclude: /\.useable\.less$/, loader: "style!css!less" },
-      { test: /\.coffee$/, loader: "coffee" },
-      { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee?literate" },
-      { test: /\.jsx$/, exclude: /(node_modules|bower_components)/, loader: 'babel?presets[]=es2015' },
+    rules: [
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.useable\.css$/, loader: "style-loader/useable!css-loader" },
+      { test: /\.less$/, loader: "style-loader!css-loader!less-loader", exclude: /\.useable\.less$/, },
+      { test: /\.useable\.less$/, loader: "style-loader/useable!css-loader!less-loader" },
+      { test: /\.coffee$/, loader: "coffee-loader" },
+      { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" },
+      { test: /\.(gif|png)$/, loader: "url-loader?limit=100000" },
+      { test: /\.jsx$/, exclude: /(node_modules|bower_components)/, loader: 'babel-loader?presets[]=es2015' },
       { test: /\.(gif|png)$/, loader: "url-loader?limit=100000" },
       { test: /\.hbs$/, loader: "handlebars-loader" },
       { test: /\.jpg$/, loader: "file-loader" },
@@ -45,11 +48,17 @@ module.exports = {
     "ko": "ko"
   },
   resolve: {
-    extensions: ['', '.js', '.json', '.coffee'],
-    modulesDirectories: ['edsc', 'node_modules']
+    extensions: ['.js', '.json', '.coffee'],
+    modules: ['edsc', 'node_modules']
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin({ uglifyOptions: { compress: { warnings: false } } } )]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+    // https://github.com/webpack/webpack/issues/6556
+    new webpack.LoaderOptionsPlugin({ options: {} }),
+
+    // Copy the license file into each entry above
     new webpack.BannerPlugin(license),
     new webpack.ProvidePlugin({
       $: "jquery",

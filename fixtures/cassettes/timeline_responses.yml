@@ -755,6 +755,30 @@ d6a53df4a6547b9b4de2343eefaa4aa2e25cbef5:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[472780800,556070400,33]]}]'
     http_version: 
+3a0af411fddb86ccccfa88eaf148b472aa46c597:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 87b2f58d-6616-4021-95f0-1aea97ad15c7
+      date:
+      - Mon, 19 Nov 2018 16:58:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '108'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.02372799997E8,556070400,21],[560044800,573523200,6]]}]'
+    http_version: 
 '09bb74c211fddad71a1a998f2bcde36b89f2d99c':
   response:
     status:
@@ -874,6 +898,30 @@ d6a53df4a6547b9b4de2343eefaa4aa2e25cbef5:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.07470399996E8,556070400,20],[560044800,573523200,6]]}]'
+    http_version: 
+a28429422aad680915185ee894695bb11600cb17:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 67799825-d6e5-4f29-b49f-360ca6cb4e2d
+      date:
+      - Mon, 19 Nov 2018 16:55:52 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '108'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.07470399997E8,556070400,20],[560044800,573523200,6]]}]'
     http_version: 
 2cfd1e7eef1344622b4a7e7f96de424cf9f3d87a:
   response:
@@ -1055,6 +1103,54 @@ a84533a4947a665638502d8d98378104a480197a:
       - 824e6f90-9fec-49b6-84c9-4b7539f19ea5
       date:
       - Tue, 06 Nov 2018 17:41:00 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
+020b4e05be6be5c39ae14a7c524ac98049b6f738:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e070da6a-50c9-479d-b676-015e6fc67de5
+      date:
+      - Mon, 19 Nov 2018 18:36:14 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '102'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[470707200,557452800,33],[560044800,575856000,6]]}]'
+    http_version: 
+c7b24e08fea6354a3c9e07432b0bc8970528a231:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b0b17cce-07aa-41a5-822e-1966e81c9254
+      date:
+      - Mon, 19 Nov 2018 03:21:59 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1439,6 +1535,30 @@ eb8096ccd038ee9a43d498fe3b1285ac318ce1b1:
       - 180b6b6c-1bf7-48bb-8b65-d6b4809a4323
       date:
       - Fri, 16 Nov 2018 19:24:31 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '78'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
+    http_version: 
+cd91552451e8f8c4853b7973c71bdf9728a95708:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 98a4c3d1-07a7-4a68-9777-6212069b7186
+      date:
+      - Mon, 19 Nov 2018 03:21:53 GMT
       server:
       - nginx
       strict-transport-security:
