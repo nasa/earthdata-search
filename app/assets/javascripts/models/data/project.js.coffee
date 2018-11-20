@@ -105,7 +105,7 @@ ns.Project = do (ko,
       @serviceOptions.dispose()
 
     _computeIsLoadingComplete: ->
-      return true if !@loadingServiceType() && @granuleAccessOptions() && @collection.total_size() && @collection.unit()
+      return true if !@loadingServiceType() && @collection.total_size() && @collection.unit()
       false
 
     _loadGranuleAccessOptions: ->
