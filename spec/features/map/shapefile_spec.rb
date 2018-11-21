@@ -122,8 +122,8 @@ describe 'Shapefile search' do
     end
 
     it 'centers the map over the spatial constraint' do
-      script = "$('#map').data('map').map.getCenter().toString()"
-      result = page.evaluate_script script
+      script = "return $('#map').data('map').map.getCenter().toString();"
+      result = page.execute_script(script)
 
       lat = result.split('(')[1].split(',')[0].to_f
       lng = result.split(', ')[1].split(')')[0].to_f
@@ -132,8 +132,8 @@ describe 'Shapefile search' do
     end
 
     it 'zooms the map to the spatial constraint', pending_updates: true do
-      script = "$('#map').data('map').map.getZoom()"
-      result = page.evaluate_script script
+      script = "return $('#map').data('map').map.getZoom();"
+      result = page.execute_script(script)
 
       expect(result).to eq(7)
     end
