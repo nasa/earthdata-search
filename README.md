@@ -53,6 +53,8 @@ Run
 
     bin/setup
 
+Note: This command will take a long time to run
+
 ### Application configuration
 
 Review `config/application.yml` and update values as necessary
@@ -81,3 +83,9 @@ Then visit http://localhost:3000/
 ### Running tests
 
     docker-compose run web bundle exec rspec
+
+### Terminal Access
+
+If you want terminal access to inside the container, run
+
+    docker-compose run web bash
