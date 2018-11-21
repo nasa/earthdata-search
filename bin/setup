@@ -49,8 +49,9 @@ Dir.chdir APP_ROOT do
     end
   end
 
-  section 'Preparing database' do
+  section 'Preparing database (development and test environments)' do
     run_cmd 'docker-compose run web bundle exec rake db:setup'
+    run_cmd 'docker-compose run web bundle exec rake db:setup RAILS_ENV=test'
   end
 
   section 'Building docker container' do
