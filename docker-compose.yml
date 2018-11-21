@@ -12,6 +12,7 @@ services:
     volumes:
       - .:/earthdata-search
       - /earthdata-search/node_modules
+      - /dev/shm:/dev/shm
     ports:
       - "3000:3000"
     depends_on:
