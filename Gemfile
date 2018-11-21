@@ -55,7 +55,6 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
   gem 'knapsack'
   gem 'rspec-rails'
-  gem 'sqlite3'
   gem 'therubyracer', :require => 'v8'
   gem 'thin'
   gem 'vcr'
