@@ -25,7 +25,6 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'capybara-webkit'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'capybara-screenshot'
