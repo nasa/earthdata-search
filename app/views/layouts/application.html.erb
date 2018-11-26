@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie11 lt-ie10 lt-ie9"> <![endif]-->
 <!--[if lte IE 9]>     <html class="no-js lt-ie11 lt-ie10"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html class="no-js" <% if Rails.env.test? %>code="<%= response_body.try(:code) if defined?(response_body) %><% end %>>
+<html class="no-js" <% if Rails.env.test? %>code="<%= response.try(:code) if defined?(response) %><% end %>>
 <!--<![endif]-->
 <head>
     <meta charset="utf-8">
