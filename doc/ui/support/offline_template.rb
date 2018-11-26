@@ -83,4 +83,9 @@ class OfflineTemplate < AbstractController::Base
   def portal_scripts
     []
   end
+
+  # AbstractController expects response_body, but application.html.erb uses response instead
+  def response
+    response_body
+  end
 end
