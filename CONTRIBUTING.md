@@ -23,8 +23,8 @@ do not break existing conventions without compelling reasons.
 For CSS, we follow [SMACSS](http://smacss.com/book) and the
 [CSS Lint rules](https://github.com/stubbornella/csslint/wiki/Rules).
 
-For Coffeescript, we follow
-[polarmobile's Coffeescript style guide](https://github.com/polarmobile/coffeescript-style-guide)
+For CoffeeScript, we follow
+[polarmobile's CoffeeScript style guide](https://github.com/polarmobile/coffeescript-style-guide)
 
 ## Test, and Don't Break Tests
 
@@ -63,7 +63,7 @@ readable to non-developers.
 
 ## Keep Tests Fast
 
-Our full test suite runs in about 15 minutes, which if anything is higher than ideal.
+Our full test suite runs in about 30 minutes, which if anything is higher than ideal.
 We prefer testing at the integration level and ensure the test suite remains fast by
 mocking external service calls and avoiding unnececessary page loads in our specs.
 
@@ -79,8 +79,8 @@ important pieces of code and do not attempt to describe every directory.
   * `app/`
     * `assets/`
       * `javascripts/`
-        * `config.js.coffee.erb` The only place we keep per-environment configuration in Javascript
-        * `util/` Domain-agnostic utility methods which may be generally useful for any Javascript application
+        * `config.js.coffee.erb` The only place we keep per-environment configuration in JavaScript
+        * `util/` Domain-agnostic utility methods which may be generally useful for any JavaScript application
         * `modules/` Non-knockout components or customizations developed for Earthdata Search
           * `maps/` Leaflet.js customizations
           * `timeline/` Granule timeline implementation
@@ -107,15 +107,14 @@ database.
 
 Earthdata Search is primarily a client to numerous web-facing services:
 
-  * ECHO and the CMR: Metadata search, browse imagery, and data ordering
+  * CMR: Metadata search, browse imagery, and data ordering
   * DAAC-hosted OPeNDAP: Data acquisition and subsetting
   * GIBS: Tiled imagery for granule visualizations
-  * URS: User authentication
-  * geonames.org: Placename completion
+  * Earthdata Login: User authentication
   * ogre.adc4gis.com: Shapefile to GeoJSON conversion (to be replaced by self-hosted instance once we can stand up a node.js server)
 
-Client-side code is written in Coffeescript, and uses jQuery or plain
-Javascript for DOM interaction.
+Client-side code is written in CoffeeScript, and uses jQuery or plain
+JavaScript for DOM interaction.
 
 We use [knockout.js](http://knockoutjs.com/) for handling data models and
 keeping the interface in sync with changing data.
@@ -136,7 +135,7 @@ See public/licenses.txt for a comprehensive list of dependencies.
 
 # Testing
 
-Fast and consistent tests are critical. The full suite should run in under 15
+Fast and consistent tests are critical. The full suite should run in under 30
 minutes and faster is better. Please ensure tests run quickly and pass
 consistently regardless of execution order.
 
@@ -144,7 +143,7 @@ The entire suite of Earthdata Search tests, including unit, functional, and
 integration tests, may be run using the `rake test` command. Earthdata Search
 uses RSpec and Jasmine for its tests.
 
-Integration specs use Capybara and CapybaraWebkit to simulate browser
+Integration specs use Capybara and Selenium to simulate browser
 interactions. We include the capybara-screenshot gem and publish screenshots
 produced by failing builds to aid debugging.
 
@@ -163,18 +162,18 @@ In order to allow us to describe the application behavior using RSpec,
 developers must read and follow the guidelines in the "Testing" section of
 this document's style guide.
 
-For testing Javascript, we use Jasmine, which has an RSpec-like syntax.
-Developers should exercise their Javascript in the same way they exercise Ruby
+For testing JavaScript, we use Jasmine, which has an RSpec-like syntax.
+Developers should exercise their JavaScript in the same way they exercise Ruby
 code. Jasmine tests are located under spec/javascripts. They can be run
 continuously using `rake jasmine` or once using `rake jasmine:ci`.
 
-## The Pattern Portfolio for HTML, CSS, and Javascript testing
+## The Pattern Portfolio for HTML, CSS, and JavaScript testing
 
 In addition to the RSpec and Jasmine tests documented in the previous section,
 we perform additional tests to ensure that our UI looks and functions as
 intended.
 
-Reusable CSS rules and Javascript components should be displayed in the
+Reusable CSS rules and JavaScript components should be displayed in the
 project's pattern portfolio document found at docs/ui/index.html. Developers
 may add to the portfolio by editing docs/ui/templates/index.html.erb. We
 generate the portfolio by running `rake doc:ui` in the project root (or `rake
