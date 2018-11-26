@@ -1,6 +1,6 @@
 namespace :doc do
-  desc "Generate the UI documentation and tests"
-  task :ui => ['environment', 'assets:clobber', 'assets:precompile'] do
+  desc 'Generate the UI documentation and tests'
+  task ui: ['environment', 'assets:clobber', 'assets:precompile'] do
     require 'fileutils'
     require Rails.root.join('doc', 'ui', 'support', 'offline_template')
     doc_portfolio = Rails.root.join('doc', 'ui', 'portfolio')
@@ -12,7 +12,7 @@ namespace :doc do
       FileUtils.mkdir_p(File.dirname(output_path))
       File.delete(output_path) if File.exist?(output_path) # clean up previous versions
       f = File.new(output_path, 'w')
-      f.puts(OfflineTemplate.new.render_to_string(:layout => 'layouts/application', :file => template))
+      f.puts(OfflineTemplate.new.render_to_string(layout: 'layouts/application', file: template))
       f.flush
       f.close
     end
@@ -24,9 +24,8 @@ namespace :doc do
     css_files.each do |file|
       text = File.read(file)
       replacement = text.gsub('url(/assets/', 'url(./')
-      File.open(file, "w") { |file| file.puts replacement }
+      File.open(file, 'w') { |file| file.puts replacement }
     end
-
   end
 end
 

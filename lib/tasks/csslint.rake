@@ -26,6 +26,6 @@ unless Rails.env.production? || Rails.env.uat? || Rails.env.sit?
     CSSLint::TestTask.new do |t|
       t.file_list = CssLintFiles.new
     end
-    task :csslint => 'doc:ui'
+    task csslint: 'doc:ui'
   end
 end
