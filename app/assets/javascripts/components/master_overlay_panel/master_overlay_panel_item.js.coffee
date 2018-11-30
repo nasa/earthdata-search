@@ -4,6 +4,7 @@ do ($=jQuery, ko) ->
       createViewModel: (params, componentInfo) =>
 
         isActive = ko.observable(params.isActive)
+        isHeightConstrained = ko.observable(params.isHeightConstrained)
         itemName = ko.observable(params.itemName)
         backToButton = ko.observable(params.backToButton)
         primaryTitle = ko.observable(params.primaryTitle)
@@ -11,6 +12,7 @@ do ($=jQuery, ko) ->
 
         return {
           isActive,
+          isHeightConstrained,
           itemName,
           backToButton,
           primaryTitle,
@@ -41,5 +43,7 @@ do ($=jQuery, ko) ->
           bindingContext.$parent.updateActiveItem(element.itemName())
 
       update: (element, valueAccessor, allBindings, viewModel, bindingContext) =>
-
+        # The element starts hidden to prevent the content from being seen. Once update is called, we know the dom is
+        # in good shape and we can show the panels
+        $(element).parent().show()
     }

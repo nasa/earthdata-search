@@ -1,0 +1,20 @@
+.fancy-dropdown {
+  position: relative;
+}
+
+.fancy-dropdown-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+
+  .fancy-dropdown-is-active & {
+    display: flex;
+  }
+}
+
+.fancy-dropdown-list {
+  margin: 0;
+  padding: 0;
+}

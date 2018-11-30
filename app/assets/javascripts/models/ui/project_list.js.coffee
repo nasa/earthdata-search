@@ -215,7 +215,7 @@ ns.ProjectList = do (ko
         collection = projectCollection.collection
         collectionId = collection.id
         has_browse = collection.browseable_granule?
-        
+
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
           if m.serviceOptions
             total_processed = m.serviceOptions.total_processed
@@ -324,7 +324,7 @@ ns.ProjectList = do (ko
 
     showProjectPage: ->
       $(window).trigger('edsc.save_workspace')
-      
+
       projectId = deparam(urlUtil.realQuery()).projectId
       if projectId
         path = "/projects/#{projectId}"

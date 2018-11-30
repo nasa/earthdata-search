@@ -11,8 +11,6 @@ do (ko, $=jQuery) ->
           editButtonText = params.editButtonText
           className = params.className
 
-          console.warn params
-
           return {
             initialValue,
             defaultValue,
@@ -232,8 +230,6 @@ do (ko, $=jQuery) ->
         textElement = element.find('.editable-text-content')
 
         # Set the inital value of the text element
-        console.warn 'value', value
-        console.warn 'value.defaultValue', value.defaultValue
         if !value.initialValue() && value.defaultValue
           value.initialValue(value.defaultValue)
 

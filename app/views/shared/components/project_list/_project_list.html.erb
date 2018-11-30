@@ -1,51 +1,80 @@
 <template id="tmpl_project-list">
-  <ul class="project-list" data-bind="componentProjectList: true">
+  <ul class="project-list-list" data-bind="componentProjectList: true">
     <!-- ko if: $component.project.collections().length == 0 -->
     <li class="project-list-empty-notice">Your project is empty. <a href="#" data-bind="click: $component.project.backToSearch">Click here</a> to return to search and add collections to your project.</li>
     <!-- /ko -->
     <!-- ko foreach: $component.project.collections() -->
-      <li class="project-list-item">
+      <li class="project-list-item" data-bind="css: collection.id + '_project-list-item'">
         <div class="project-list-item-content">
-          <h3 class="project-list-item-title" data-bind="text: collection.truncatedTitle, attr: {title: collection.title}, click: function() {
-            $('#' + collection.id + '_details').trigger('toggle-panel')
-          }"></h3>
-          <button class="button project-list-item-visibility" type="button" name="Show/Hide" title="Show/Hide"><i class="fa fa-eye"></i></button>
+          <h3 class="project-list-item-title" data-bind="text: collection.truncatedTitle, attr: {title: collection.title}, click: function(){$('#' + collection.id + '_details').trigger('toggle-panel')}"></h3>
+          <div class="dropdown project-list-item-action-list">
+            <button class="button-naked dropdown-toggle project-list-item-action-button" type="button" title="View additional actions">
+              <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right download-dropdown">
+              <li>
+                <div class="download-dropdown-content">
+                  <ul>
+                    <li>
+                      <button class="button-naked project-list-item-toggle" type="button" name="button"><i class="fa fa-eye"></i> Toggle visibility</button>
+                    </li>
+                    <li>
+                      <button class="button-naked project-list-item-remove" type="button" name="button" data-bind="click: $root.removeProjectCollection"><i class="fa fa-times"></i> Remove</button>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
           <div class="project-list-item-stats">
+            <!-- ko if: !isLoadingComplete() -->
+            <div class="project-list-item-loading">
+              <div class="project-list-item-loading-row">
+                <div class="loading-content project-list-item-loading-granules"><span class="loading-content-inner"></span></div>
+                <div class="loading-content project-list-item-loading-details"><span class="loading-content-inner"></span></div>
+              </div>
+              <div class="project-list-item-loading-row">
+                <div class="loading-content project-list-item-loading-capabilities"><span class="loading-content-inner"></span></div>
+                <div class="loading-content project-list-item-loading-options"><span class="loading-content-inner"></span></div>
+              </div>
+            </div>
+            <!-- /ko -->
             <!-- ko if: isLoadingComplete() -->
-              <span class="project-list-item-stat">
+              <span class="project-list-item-stat project-list-item-stat-granules">
                 <span data-bind="text: collection.granule_hits, fadeVisible: isLoadingComplete"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></span>
               </span>
-              <span class="project-list-item-stat">
+              <span class="project-list-item-stat project-list-item-stat-size">
                 <span>Est. Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko-->
               </span>
-              <div class="collection-capability" data-bind="fadeVisible: isLoadingComplete">
-                <!-- ko if: collection.has_spatial_subsetting() -->
-                <span data-bind="css: {enabled: spatialSubsettingEnabled()}">
-                  <i class="fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Spatial subsetting options available"></i>
-                </span>
-                <!-- /ko -->
-                <!-- ko if: collection.has_variables -->
-                <span data-bind="css: {enabled: variableSubsettingEnabled()}">
-                  <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
-                </span>
-                <!-- /ko -->
-                <!-- ko if: collection.has_transforms -->
-                <span data-bind="css: {enabled: transformationSubsettingEnabled()}">
-                  <i class="fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Data transformation options available"></i>
-                </span>
-                <!-- /ko -->
-                <!-- ko if: collection.has_formats -->
-                <span data-bind="css: {enabled: reformattingSubsettingEnabled()}">
-                  <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
-                </span>
-                <!-- /ko -->
-                <!-- <span data-bind="css: {enabled: serviceOptions.readyToDownload}">
-                  <i class="fa fa-check" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Collection is ready to download"></i>
-                </span> -->
-              </div>
               <div class="project-list-item-actions">
-                <a class="project-list-item-action" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}"><i class="fa fa-cog"></i> Edit Options</a>
-                <a class="project-list-item-action" title="Remove collection from the current project" data-bind="click: $root.removeProjectCollection"><i class="fa fa-times"></i> Remove</a>
+                <div class="project-list-item-action">
+                  <div class="collection-capability" data-bind="fadeVisible: isLoadingComplete">
+                    <!-- ko if: collection.has_spatial_subsetting() -->
+                    <span data-bind="css: {enabled: spatialSubsettingEnabled()}">
+                      <i class="fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Spatial subsetting options available"></i>
+                    </span>
+                    <!-- /ko -->
+                    <!-- ko if: collection.has_variables -->
+                    <span data-bind="css: {enabled: variableSubsettingEnabled()}">
+                      <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
+                    </span>
+                    <!-- /ko -->
+                    <!-- ko if: collection.has_transforms -->
+                    <span data-bind="css: {enabled: transformationSubsettingEnabled()}">
+                      <i class="fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Data transformation options available"></i>
+                    </span>
+                    <!-- /ko -->
+                    <!-- ko if: collection.has_formats -->
+                    <span data-bind="css: {enabled: reformattingSubsettingEnabled()}">
+                      <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
+                    </span>
+                    <!-- /ko -->
+                    <!-- <span data-bind="css: {enabled: serviceOptions.readyToDownload}">
+                      <i class="fa fa-check" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Collection is ready to download"></i>
+                    </span> -->
+                  </div>
+                </div>
+                <a class="project-list-item-action project-list-item-action-edit-options" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}, click: function(){$('#' + collection.id + '_edit-options').trigger('toggle-panel')}"><i class="fa fa-cog"></i> Edit Options</a>
               </div>
             <!--/ko-->
           </div>

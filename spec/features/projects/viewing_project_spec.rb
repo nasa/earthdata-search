@@ -39,16 +39,16 @@ describe 'Viewing Single Project' do
     end
 
     it 'shows total number of granules included in the project' do
-      find('.collection-card', match: :first) do
-        within '.granule-count' do
+      find('.project-list-item', match: :first) do
+        within '.project-list-item-stat-granules' do
           expect(page.text).to match(/\d{1,8} Granules/)
         end
       end
     end
 
     it 'shows estimated total granule size' do
-      find('.collection-card', match: :first) do
-        within '.project-size' do
+      find('.project-list-item', match: :first) do
+        within '.project-list-item-stat-size' do
           expect(page.text).to match(/\d{1,3}\.\d{1,2} TB/)
         end
       end
@@ -190,9 +190,9 @@ describe 'Viewing Single Project' do
       # subsetting being enabled when any of the other subsetting values are enabled.
       context 'project configurations with spatial subsetting enabled via bounding box' do
         before :all do
-          collection_card = find('.collection-card', match: :first)
+          project_list_item = find('.project-list-item', match: :first)
 
-          collection_card.find('.customize').click
+          project_list_item.find('.customize').click
 
           check 'Enter bounding box'
 
@@ -219,9 +219,9 @@ describe 'Viewing Single Project' do
 
         context 'when spatial subsetting is disabled' do
           before :all do
-            collection_card = find('.collection-card', match: :first)
+            project_list_item = find('.project-list-item', match: :first)
 
-            collection_card.find('.customize').click
+            project_list_item.find('.customize').click
 
             uncheck 'Enter bounding box'
 
@@ -250,9 +250,9 @@ describe 'Viewing Single Project' do
 
       context 'project configurations with reformatting enabled' do
         before :all do
-          collection_card = find('.collection-card', match: :first)
+          project_list_item = find('.project-list-item', match: :first)
 
-          collection_card.find('.customize').click
+          project_list_item.find('.customize').click
 
           within '#HEG-formatselect-element' do
             find("option[value='GeoTIFF']").select_option
@@ -281,9 +281,9 @@ describe 'Viewing Single Project' do
 
         context 'when reformatting is disabled' do
           before :all do
-            collection_card = find('.collection-card', match: :first)
+            project_list_item = find('.project-list-item', match: :first)
 
-            collection_card.find('.customize').click
+            project_list_item.find('.customize').click
 
             within '#HEG-formatselect-element' do
               find("option[value='']").select_option
@@ -314,9 +314,9 @@ describe 'Viewing Single Project' do
 
       context 'project configurations with transformations enabled' do
         before :all do
-          collection_card = find('.collection-card', match: :first)
+          project_list_item = find('.project-list-item', match: :first)
 
-          collection_card.find('.customize').click
+          project_list_item.find('.customize').click
 
           within '#HEG-projectselect-element' do
             find("option[value='LAMBERT AZIMUTHAL']").select_option
@@ -345,9 +345,9 @@ describe 'Viewing Single Project' do
 
         context 'when transofmrations is disabled' do
           before :all do
-            collection_card = find('.collection-card', match: :first)
+            project_list_item = find('.project-list-item', match: :first)
 
-            collection_card.find('.customize').click
+            project_list_item.find('.customize').click
 
             within '#HEG-projectselect-element' do
               find("option[value='&']").select_option
@@ -448,7 +448,7 @@ describe 'Viewing Single Project' do
     end
   end
 
-  context 'project card' do
+  context 'project list item' do
     before :all do
       Capybara.reset_sessions!
       load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
@@ -458,13 +458,13 @@ describe 'Viewing Single Project' do
     end
 
     it 'shows project title' do
-      first('.collection-card') do
+      first('.project-list-item') do
         expect(page).to have_content('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
       end
     end
 
     it 'shows total number of granules included in the project' do
-      first('.collection-card') do
+      first('.project-list-item') do
         within '.granule-count' do
           expect(page.text).to match(/\d{1,8} Granules/)
         end
@@ -472,13 +472,14 @@ describe 'Viewing Single Project' do
     end
 
     it 'shows estimated total granule size' do
-      first('.collection-card') do
+      first('.project-list-item') do
         expect(page.text).to match(/Estimated Size: \d{1,3}\.\d{1,2} TB/)
       end
     end
 
     it 'truncates long project title' do
       within '.collection-card:nth-child(2)' do
+        Capybara::Screenshot.screenshot_and_open_image
         expect(page).to have_content('NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN...')
         expect(page).to have_css("h3[title='NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN, WATER VAPOR OVER OCEAN AND CLOUD LIQUID WATER OVER OCEAN V0']")
       end

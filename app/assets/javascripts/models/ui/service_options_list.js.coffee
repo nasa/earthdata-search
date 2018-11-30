@@ -24,7 +24,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery, config=@edsc.models.data.config) ->
             for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
               checkedAccessMethodName = checkedAccessMethod.method()
               for method in accessCollection.serviceOptions.granuleAccessOptions().methods
-                
+
                 limitedCollection = if accessCollection.collection.tags() then accessCollection.collection.tags()['edsc.limited_collections'] else false
 
                 # method.type == 'download': continue without chunking

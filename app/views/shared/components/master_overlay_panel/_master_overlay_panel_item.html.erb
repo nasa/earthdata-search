@@ -1,5 +1,5 @@
 <template id="tmpl_master-overlay-panel-item">
-  <div class="master-overlay-panel-item" data-bind="componentMasterOverlayPanelItem: true, css: { 'master-overlay-panel-item-active': $component.isActive }, attr: {id: $component.itemName()}">
+  <div class="master-overlay-panel-item" data-bind="componentMasterOverlayPanelItem: true, css: { 'master-overlay-panel-item-active': $component.isActive, 'master-overlay-panel-item-full': $component.isHeightConstrained }, attr: {id: $component.itemName()}">
     <!-- ko template: { nodes: $componentTemplateNodes } --><!-- /ko -->
   </div>
 </template>

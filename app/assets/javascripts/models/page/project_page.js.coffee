@@ -36,6 +36,8 @@ ns.ProjectPage = do (ko,
   $(document).ready ->
     mapContainer = document.getElementById('bounding-box-map')
     current.map = map = new window.edsc.map.Map(mapContainer, 'geo', true) if mapContainer
+    $(document).on 'click', '.project-list-item-action-list', (e) ->
+      $(e.target).parents('.project-list-item-action-list').toggleClass('open')
 
   class ProjectPage extends Page
     constructor: ->
