@@ -9,37 +9,39 @@ describe 'When viewing the project page with more than one collection' do
   end
 
   it 'shows multiple collection cards' do
-    expect(page).to have_css('.collection-card', count: 2)
+    expect(page).to have_css('.project-list-item-content', count: 2)
   end
 
   it 'displays 2 collections in the summary' do
-    within '.project-stats .collection-count' do
+    wait_for_xhr
+    within '.project-stats .project-stats-collection-count' do
       expect(page).to have_content('2 Collections')
     end
   end
 
   context 'When removing a collection' do
     before :all do
-      collection_card = find('.collection-card', match: :first)
-
-      collection_card.find('.remove').click
+      project_list_item = find('.project-list-item', match: :first)
+      project_list_item.find('.project-list-item-action-button').click
+      project_list_item.find('.project-list-item-remove').click
     end
 
     it 'shows only one collection card' do
-      expect(page).to have_css('.collection-card', count: 1)
+      expect(page).to have_css('.project-list-item-content', count: 1)
     end
 
     it 'displays 1 collection in the summary' do
-      within '.project-stats .collection-count' do
+      wait_for_xhr
+      within '.project-stats .project-stats-collection-count' do
         expect(page).to have_content('1 Collection')
       end
     end
 
     context 'When removing the last collection' do
       before :all do
-        collection_card = find('.collection-card', match: :first)
-
-        collection_card.find('.remove').click
+        project_list_item = find('.project-list-item', match: :first)
+        project_list_item.find('.project-list-item-action-button').click
+        project_list_item.find('.project-list-item-remove').click
       end
 
       it 'displays an appropriate message to the user' do

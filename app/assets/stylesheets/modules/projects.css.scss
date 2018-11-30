@@ -105,22 +105,6 @@ $card-background: rgba(235,235,235,1);
     }
   }
 
-  .project-info-actions {
-    background: lighten(#000, 10%);
-    color: #fff;
-    height: 65px;
-  }
-
-
-  .project-download-tooltip {
-    display: inline-block;
-    width: 100%;
-  }
-
-  .project-download-tooltip-disabled {
-    cursor: not-allowed;
-  }
-
   .project-collections {
     background: $light-grey;
     flex: 1;
@@ -137,95 +121,6 @@ $card-background: rgba(235,235,235,1);
       margin: 0;
       background: #fff;
       padding: 20px;
-    }
-
-    .project-collection-cards {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      padding: 20px 0 0 20px;
-      min-height: calc(100vh - 300px);
-      background: #f4f4f4;
-    }
-
-    .collection-card {
-      flex: 0 0 350px;
-      height: 210px;
-      border: 1px solid darken($light-grey, 5%);
-      box-shadow: 0 0 15px rgba(0,0,0,0.04);
-      margin: 0 20px 20px 0;
-      background: $card-background;
-      border-radius: 5px;
-      overflow: hidden;
-      @include transition(all 0.15s linear);
-
-      &:hover {
-        border: 1px solid darken($light-grey, 10%);
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      }
-
-      .collection-card-content {
-        height: 155px;
-        background: #fff;
-        padding: 15px;
-        border-bottom: 1px solid #ccc;
-
-        h3 {
-          font-size: 0.9em;
-          min-height: 60px;
-        }
-
-        .collection-extra {
-          margin-top: 15px;
-
-          .label-primary {
-            display: inline;
-            font-size: 1.6em;
-            font-weight: bold;
-          }
-
-          .label-secondary {
-            margin: 0;
-          }
-
-          .collection-capability {
-            color: #c9c9c9;
-            display: inline-block;
-            font-size: 1em;
-            padding-left: 5px;
-            cursor: default;
-
-            span {
-              margin: 0 2px;
-            }
-
-            .enabled {
-              color: #359ad9
-            }
-          }
-
-          .collection-capability-loading-granules {
-            margin-top: 1.65em;
-            margin-bottom: 0.75em;
-            height: 1.35em;
-            width: 10em;
-
-            .loading-content-inner {
-              width: 20em
-            }
-          }
-
-          .collection-capability-loading-details {
-            width: 70%;
-            height: 0.75em;
-            margin-bottom: 0;
-
-            .loading-content-inner {
-              width: 20em
-            }
-          }
-        }
-      }
     }
   }
 
@@ -273,63 +168,61 @@ $card-background: rgba(235,235,235,1);
     padding-right: 25px;
   }
 
-  .modal-body {
-    ul > li {
-      padding: 10px 15px;
+  // ul > li {
+  //   padding: 10px 15px;
+  // }
+
+  .panel-list-thumbnail-container {
+    border: 0;
+    margin: 0 15px 0 0;
+  }
+
+  .granule-text-container {
+    padding: 15px 25px;
+
+    h5 {
+      font-size: 1.1em;
+      margin: 0;
+      color: #424242;
     }
 
-    .panel-list-thumbnail-container {
-      border: 0;
-      margin: 0 15px 0 0;
+    span {
+      font-size: 1em;
+      color: #aaa;
     }
 
-    .granule-text-container {
-      padding: 15px 25px;
+    .modal-item-actions {
+      float: right;
+      margin-top: -25px;
 
-      h5 {
-        font-size: 1.1em;
-        margin: 0;
-        color: #424242;
-      }
+      a {
+        color: #e1e1e1;
+        font-size: 1.8em;
 
-      span {
-        font-size: 1em;
-        color: #aaa;
-      }
-
-      .modal-item-actions {
-        float: right;
-        margin-top: -25px;
-
-        a {
-          color: #e1e1e1;
-          font-size: 1.8em;
-
-          &:hover {
-            color: #9c9c9c;
-          }
+        &:hover {
+          color: #9c9c9c;
         }
       }
     }
+  }
 
-    .access-form {
-      border: 0;
+  .access-form {
+    border: 0;
+    background: inherit;
+    font-size: .9em;
+
+    .echoforms-control {
+      padding: .7em 0 .5em 0;
+    }
+
+    .jstree-node {
+      border: none;
+      height: inherit;
       background: inherit;
-      font-size: .9em;
+    }
 
-      .echoforms-control {
-        padding: .7em 0 .5em 0;
-      }
-
-      .jstree-node {
-        border: none;
-        height: inherit;
-        background: inherit;
-      }
-
-      .jstree-children {
-        border: none;
-      }
+    .jstree-children {
+      border: none;
     }
   }
 
@@ -360,81 +253,21 @@ $card-background: rgba(235,235,235,1);
   }
 
   .keyword-list-item {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
     height: auto;
-    padding: 10px 20px;
+    font-size: 0.875em;
+    border: 0;
   }
 
-  .variable-selection {
-    .message-container p {
-      margin: .75em;
-      font-weight: bold;
+  .keyword-list-item-link {
+    display: block;
+    color: #525252;
+    padding: 10px 15px;
+
+    &:hover {
+      background: #e4e3e3;
     }
-
-    .variable-list {
-      padding: 10px 15px;
-    }
-
-    .variable-detail {
-      position: absolute;
-    }
-
-    .selected-keyword {
-      display: block;
-      font-size: 1em;
-      text-transform: uppercase;
-    }
-
-    .child-spacer {
-      padding: 0 5px;
-      color: darken($light-grey, 10%);
-    }
-
-    .pill {
-      background-color: #2980b9;
-      color: #fff;
-      border-radius: 10px;
-      padding: 2px 10px;
-      font-size: .8em;
-      float: right;
-    }
-  }
-
-  .collection-variable-list-item {
-    padding: 5px 0;
-  }
-
-  .collection-variable-info {
-    display: inline-block;
-    margin-left: 5px;
-    vertical-align: top;
-  }
-
-  .collection-variable-heading {
-    display: inline-block;
-    margin: 0;
-  }
-
-  .collection-variable-longname {
-    font-style: italic;
-  }
-
-  .collection-variable-meta {
-    margin: 0;
-  }
-
-  .variable-details {
-
-    .collection-variable-heading {
-      display: block;
-    }
-
-    .collection-variable-longname {
-      margin-bottom: 0.75em;
-    }
-  }
-
-  .selected-collection-variables {
-    margin-top: 0;
-    margin-bottom: 0;
   }
 }

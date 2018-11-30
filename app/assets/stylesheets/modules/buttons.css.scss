@@ -413,3 +413,31 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
     text-shadow: none;
   }
 }
+
+.button-link {
+  padding: 0;
+  background: none;
+  color: #888;
+  text-shadow: none;
+  text-decoration: underline;
+
+  &:hover {
+    background: none;
+    color: #333;
+    text-shadow: none;
+    text-decoration: underline;
+  }
+}
+
+.button-naked {
+  background: none;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+
+  &:hover {
+    background: none;
+    color: inherit;
+  }
+}

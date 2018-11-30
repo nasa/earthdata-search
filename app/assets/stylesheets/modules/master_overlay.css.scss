@@ -433,7 +433,8 @@
 
 // Scrollable content area
 .master-overlay-content {
-  -ms-flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   padding: 0;
   overflow-y: scroll;
@@ -483,6 +484,34 @@
   a {
     color: inherit;
   }
+}
+
+.master-overlay-footer-actions {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.master-overlay-footer-notes {
+  margin-bottom: 10px;
+}
+
+.master-overlay-footer-note {
+  font-size: 0.875em;
+  line-height: 1.4;
+  color: #7F7F7F;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.master-overlay-download-tooltip {
+  display: inline-block;
+  width: 100%;
+}
+
+.master-overlay-download-tooltip-disabled {
+  cursor: not-allowed;
 }
 
 .master-overlay-minimize, .master-overlay-maximize {

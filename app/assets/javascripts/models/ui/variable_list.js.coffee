@@ -27,10 +27,6 @@ ns.VariableSelector = do (ko
       $(document).ready(@_onReady)
 
     _onReady: =>
-      # Clean up when the modal is closed
-      $('#variable-subsetting-modal').on 'hide.bs.modal', (e) =>
-        @wipeObservables()
-
       # Select All Checkbox
       $(document).on 'click', '.select-all', (e) =>
         if @selectedKeyword()
@@ -38,11 +34,6 @@ ns.VariableSelector = do (ko
 
           $('.collection-variables input[type="checkbox"]').prop('checked', isSelected)
 
-      # Save the currently selected variables
-      $(document).on 'click', '.collection-customization button.save', (e) =>
-        @_saveSelectedVariableState()
-
-        $(window).trigger('edsc.save_workspace')
 
     ###*
      * Determine whether or not the currently selected keyword has all of its variables selected
@@ -51,7 +42,6 @@ ns.VariableSelector = do (ko
       for variable in @selectedKeyword().variables
         # Return false if ANY of the variables are not selected
         return false unless @selectedProjectCollection().hasSelectedVariable(variable)
-
       true
 
     ###*
@@ -69,9 +59,7 @@ ns.VariableSelector = do (ko
      ###
     _countAllSelectedVariables: (listsToCheck) ->
       count = 0
-      console.log 'listsToCheck', listsToCheck
       count += @_countSelectedVariables(listsToCheck)
-      console.log 'count', count
       count
 
     ###*
@@ -92,7 +80,11 @@ ns.VariableSelector = do (ko
 
       # Rather than keeping a delta within each keyword mapping, we'll just delete all
       # selected variables within the currently selected keyword and re-add them below
+      console.warn '@keywordMappings()', @keywordMappings()
+
       for mapping in @keywordMappings()
+        console.warn '@selectedKeyword()', @selectedKeyword()
+        console.warn 'mapping', mapping
         if mapping.keyword == @selectedKeyword().keyword
           @selectedProjectCollection().selectedVariables.remove (variable) =>
             variable in @selectedKeyword().variables
@@ -142,6 +134,13 @@ ns.VariableSelector = do (ko
             @_pending(false)
 
     ###*
+     * Saves the currently selected variables and project
+     ###
+    saveState: (selectedKeyword, e) =>
+      @_saveSelectedVariableState()
+      $(window).trigger('edsc.save_workspace')
+
+    ###*
      * Sets the currently selected keyword
      ###
     selectKeyword: (selectedKeyword, e) =>
@@ -176,11 +175,9 @@ ns.VariableSelector = do (ko
      * Assign a variable to a nested navigation structure
      * @param {object} Collection object assigned to the card this modal was initiated from
      ###
-    displayModal: (projectCollection) =>
+    displayVariableSelector: (projectCollection) =>
       projectCollection.triggerEditVariables()
-
       @selectedCollection(projectCollection.collection)
-
       @selectedProjectCollection(projectCollection)
 
     ###*
