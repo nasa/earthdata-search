@@ -1,7 +1,10 @@
 #= require models/data/granules
 #= require models/data/service_options
+#= require models/handoff/giovanni
+
 
 ns = @edsc.models.data
+# handoff = @edsc.models.handoff
 
 ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
@@ -14,12 +17,13 @@ ns.Collection = do (ko
                  extend=jQuery.extend
                  ajax = @edsc.util.xhr.ajax
                  dateUtil = @edsc.util.date
+                 stringUtil = @edsc.util.string
                  config = @edsc.config
+                 GiovanniHandoffModel = @edsc.models.handoff.GiovanniHandoff
                  ) ->
 
   openSearchKeyToEndpoint =
     cwic: (collection) ->
-
 
   collections = ko.observableArray()
 
@@ -39,7 +43,6 @@ ns.Collection = do (ko
 
       for collection in collections
         collection.granuleDatasourceAsync(aggregation)
-
 
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
@@ -74,7 +77,6 @@ ns.Collection = do (ko
           available.push("None")
         return available.join(", ")),
         this)
-
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
 
@@ -121,6 +123,21 @@ ns.Collection = do (ko
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
+    handoffUrls: (query) =>
+      urls = []
+      for tag, details of @tags() when tag.indexOf('edsc.extra.handoff') != -1
+        # Strip off just 
+        handoffProvider = tag.split('.')[3]
+
+        # TODO: There has to be a pattern that allows for dynamic instantation of these objects
+        if handoffProvider == 'giovanni'
+          urls.push(new GiovanniHandoffModel(@query, this))
+
+      urls
+
+    handoffTags: ->
+      tag for tag, details of @tags() when tag.indexOf('edsc.extra.handoff') != -1
+
     _computeMaxOrderSize: ->
       hits = 0
       hits = @granuleDatasource().data().hits() if @granuleDatasource()
@@ -148,7 +165,6 @@ ns.Collection = do (ko
         @orbitFriendly(true) if _granule.orbit_calculated_spatial_domains?
         break if _capabilities['day_night_flag'] && _capabilities['cloud_cover'] && _capabilities['orbit_calculated_spatial_domains']
       _capabilities
-
 
     _computeTimeRange: ->
       if @hasAtomData()
@@ -339,7 +355,6 @@ ns.Collection = do (ko
 
       @_loadDatasource()
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)
-
 
       if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
         @has_granules = @canFocus()
