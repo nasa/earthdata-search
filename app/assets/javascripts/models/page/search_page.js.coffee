@@ -13,9 +13,11 @@
 #= require models/ui/feedback
 #= require models/ui/sitetour
 #= require models/ui/full_facets_list
+#= require models/handoff/giovanni
 
 models = @edsc.models
 data = models.data
+handoff = models.handoff
 ui = models.ui
 ns = models.page
 
@@ -34,7 +36,8 @@ ns.SearchPage = do (ko
                     SiteTourModel = ui.SiteTour
                     FullFacetsListModel = ui.FullFacetsList
                     url = @edsc.util.url
-                    StateManager = ui.StateManager) ->
+                    StateManager = ui.StateManager
+                    GiovanniHandoff = handoff.GiovanniHandoff) ->
   current = null
 
   preferences = new PreferencesModel()
