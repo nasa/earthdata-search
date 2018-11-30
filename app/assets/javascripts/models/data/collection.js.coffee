@@ -1,7 +1,10 @@
 #= require models/data/granules
 #= require models/data/service_options
+#= require models/handoff/giovanni
+
 
 ns = @edsc.models.data
+# handoff = @edsc.models.handoff
 
 ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
@@ -14,8 +17,13 @@ ns.Collection = do (ko
                  extend=jQuery.extend
                  ajax = @edsc.util.xhr.ajax
                  dateUtil = @edsc.util.date
+                 stringUtil = @edsc.util.string
                  config = @edsc.config
+                 GiovanniHandoffModel = @edsc.models.handoff.GiovanniHandoff
                  ) ->
+
+  openSearchKeyToEndpoint =
+    cwic: (collection) ->
 
   collections = ko.observableArray()
 
@@ -115,7 +123,20 @@ ns.Collection = do (ko
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
-      @hasEchoFormLoaded = ko.observable(false)
+    handoffUrls: (query) =>
+      urls = []
+      for tag, details of @tags() when tag.indexOf('edsc.extra.handoff') != -1
+        # Strip off just
+        handoffProvider = tag.split('.')[3]
+
+        # TODO: There has to be a pattern that allows for dynamic instantation of these objects
+        if handoffProvider == 'giovanni'
+          urls.push(new GiovanniHandoffModel(@query, this))
+
+      urls
+
+    handoffTags: ->
+      tag for tag, details of @tags() when tag.indexOf('edsc.extra.handoff') != -1
 
     _computeMaxOrderSize: ->
       hits = 0
