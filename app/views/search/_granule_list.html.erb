@@ -13,7 +13,23 @@
     <div class="master-overlay-header-info">
       <div class="master-overlay-info">
         <div class="master-overlay-info-panel master-overlay-info-granule-panel">
-          <h2 class="master-overlay-header-heading master-overlay-header-title"><span data-bind="text: collection.title"></span> <!-- ko with: collection --><a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a><!-- /ko --></h2>
+          <h2 class="master-overlay-header-heading master-overlay-header-title"><span data-bind="text: collection.title"></span>
+            <!-- ko with: collection -->
+              <a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a>
+            <!-- /ko -->
+          </h2>
+          <!-- ko with: collection -->
+          <!-- ko if: $data.handoffTags().length > 0 -->
+          <div class="dropdown detail-dropdown">
+            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Handoffs :) <i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu">
+              <!-- ko foreach: $data.handoffUrls($root.query) -->
+              <li><a target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
+              <!-- /ko -->
+            </ul>
+          </div>
+          <!-- /ko -->
+          <!-- /ko -->
           <div id="datasource-caveats"></div>
           <div class="master-overlay-header-row">
             <!--ko ifnot: $data.collection.cwic()-->
