@@ -13,19 +13,29 @@
               <!-- ko with: collection -->
                 <a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a>
 
-                <!-- ko if: $data.handoffTags().length > 0 -->
-                <div class="dropdown detail-dropdown">
-                  <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Handoffs :) <i class="fa fa-caret-down"></i></a>
-                  <ul class="dropdown-menu">
-                    <!-- ko foreach: $data.handoffUrls($root.query) -->
-                    <li><a target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
-                    <!-- /ko -->
-                  </ul>
-                </div>
-                <!-- /ko -->
-
               <!-- /ko -->
             </h2>
+            <!-- ko with: collection -->
+            <!-- ko if: $data.handoffTags().length > 0 -->
+            <div class="dropdown granule-details-dropdown">
+              <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+              <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
+                <li>
+                  <div class="download-dropdown-header">
+                    Open in:
+                  </div>
+                  <div class="download-dropdown-content">
+                    <ul>
+                      <!-- ko foreach: $data.handoffUrls($root.query) -->
+                      <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
+                      <!-- /ko -->
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- /ko -->
+            <!-- /ko -->
             <div id="datasource-caveats"></div>
             <div class="master-overlay-info">
 

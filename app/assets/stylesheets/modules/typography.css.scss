@@ -19,13 +19,23 @@ a:link, a:visited {
   }
 
   &.ext {
-
     &:after {
       display: inline-block;
       padding-left: 0.3em;
-      font-size: 0.9em;
+      font-size: 0.85em;
       font-family: "EUI-Icon-Library";
       content: "\f111";
+      color: #bdbdbd;
+    }
+  }
+
+  &.separated {
+    &:after {
+      content: '|';
+      margin-left: 0.5em;
+      color: transparent;
+      display: inline-block;
+      border-left: 1px solid #bdbdbd;
     }
   }
 }
