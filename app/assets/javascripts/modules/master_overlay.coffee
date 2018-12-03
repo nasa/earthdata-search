@@ -152,24 +152,25 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         {
           minimized: @_minimized
           visible: !@root.hasClass('is-hidden')
-          parent: if children[@level()] == 'collection-results' then @_manualShowParent else false
+          parent: if children[@level()] == 'collection-results' || @root.hasClass('projects-overlay') then @_manualShowParent else false
           manualShowParent: @_manualShowParent
           secondary: !@root.hasClass(@scope('is-secondary-hidden'))
           children: children
           current: children[@level()]
+          projects: @root.hasClass('projects-overlay')
         }
 
     _content: ->
       @root.find(@scope('.main-content'))
 
-    updateControlContainer: (newHeight) =>
-
+    updateControlContainer: (newHeight) ->
+      console.warn 'firing'
       masterOverlay = $('.master-overlay')
       masterOverlayMain = $('.master-overlay-main')
       leafletControlContainer = $('.leaflet-control-container')
 
       if newHeight
-
+        console.warn 'new height'
         leafletControlContainer.css({
             'height': newHeight
             'width': masterOverlayMain.width()
@@ -182,7 +183,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         })
 
     contentHeightChanged: =>
-
       clearTimeout(@_timeout) if @_timeout
       @_timeout = setTimeout((=>
 

@@ -10,10 +10,10 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-<div class="master-overlay">
+<div class="master-overlay projects-overlay">
   <%= render partial: 'shared/overlay_parent' %>
-  <div class="map map-placeholder"></div>
-  <!-- Hidden form for submitting project data -->
+  <div class="master-overlay-main"></div>
+  <div id="projects-map" class="map map-placeholder"></div>
   <form id="data-access" method="POST" action="<%=edsc_path "/data/retrieve"%>" style="display:none;">
     <div>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
@@ -21,3 +21,7 @@
     </div>
   </form>
 </div>
+
+<% content_for :footer do %>
+  <%= render partial: 'search/timeline' %>
+<% end %>

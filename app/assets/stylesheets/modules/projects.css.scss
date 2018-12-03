@@ -2,8 +2,12 @@
 $card-background: rgba(235,235,235,1);
 
 .project {
-  .map-placeholder {
-    background: grey;
+  .map {
+    background: #000000;
+  }
+
+  .master-overlay-main {
+    display: none;
   }
 
   .action-container {
@@ -254,8 +258,6 @@ $card-background: rgba(235,235,235,1);
 
   .keyword-list-item {
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     height: auto;
     font-size: 0.875em;
     border: 0;

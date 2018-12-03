@@ -3,7 +3,10 @@
 #= require models/data/preferences
 #= require models/ui/spatial_type
 #= require models/ui/temporal
+#= require models/ui/collections_list
 #= require models/ui/project_list
+#= require models/ui/granule_timeline
+#= require models/ui/state_manager
 #= require models/ui/service_options_list
 #= require models/ui/feedback
 #= require models/ui/sitetour
@@ -25,19 +28,26 @@ ns.ProjectPage = do (ko,
                      SpatialTypeModel = ui.SpatialType
                      PreferencesModel = data.Preferences
                      TemporalModel = ui.Temporal
+                     CollectionsListModel = ui.CollectionsList
                      ProjectListModel = ui.ProjectList
+                     GranuleTimelineModel = ui.GranuleTimeline
                      SiteTourModel = ui.SiteTour
                      FeedbackModel = ui.Feedback
                      ajax=@edsc.util.xhr.ajax
                      VariableSelector = ui.VariableSelector
+                     StateManager = ui.StateManager
                    ) ->
   current = null
 
   $(document).ready ->
-    mapContainer = document.getElementById('bounding-box-map')
+    mapContainer = document.getElementById('projects-map')
     current.map = map = new window.edsc.map.Map(mapContainer, 'geo', true) if mapContainer
+
     $(document).on 'click', '.project-list-item-action-list', (e) ->
       $(e.target).parents('.project-list-item-action-list').toggleClass('open')
+
+    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList, current.project)
+    $('.master-overlay').masterOverlay()
 
   class ProjectPage extends Page
     constructor: ->
@@ -59,12 +69,14 @@ ns.ProjectPage = do (ko,
       @ui =
         spatialType: new SpatialTypeModel(@query)
         temporal: new TemporalModel(@query)
+        collectionsList: new CollectionsListModel(@query, @collections, @project)
         projectList: projectList
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
         variableSelector: new VariableSelector(@project)
 
       @spatialError = ko.computed(@_computeSpatialError)
+      @labs = ko.observable(false)
 
       $(window).on 'edsc.save_workspace', (e) =>
         currentParams = @project.serialized()
@@ -75,6 +87,8 @@ ns.ProjectPage = do (ko,
       setTimeout((=>
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
+
+      new StateManager(this).monitor()
 
     showType: =>
       if @query.serialize().bounding_box
