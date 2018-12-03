@@ -43,7 +43,7 @@
       }
 
       h2 {
-        padding: 15px 15px 5px 20px;
+        padding: 15px 45px 5px 20px;
       }
 
       .actions {
@@ -357,6 +357,7 @@
 }
 
 .master-overlay-info-panel {
+  position: relative;
   padding: 20px;
 
   #granule-list & {
@@ -663,4 +664,59 @@ $parent-width: $parent-split * 0.21;
   .master-overlay-info .panel-list-meta {
     float: none;
   }
+}
+
+.collection-title-filters {
+  position: relative;
+}
+
+.granule-details-dropdown {
+  position: absolute !important;
+  top: 14px;
+  right: 1em;
+}
+
+.for-developers-panel {
+  margin-top: 2em;
+}
+
+.for-developers-panel-button {
+  width: 100%;
+  text-align: left;
+  font-weight: 700;
+  color: #717171 !important;
+  font-size: 0.875em;
+
+  i {
+    color: #b3b3b3;
+  }
+}
+
+.for-developers-panel-content {
+  display: none;
+  padding: 1em;
+  margin-top: 1em;
+  background: #ecf0f1;
+  border: 1px solid #dde4e6;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+.for-developers-panel-content-is-active {
+  display: flex;
+  width: 100%;
+}
+
+.for-developers-panel-content-section {
+  margin-right: 1.5em;
+}
+
+.for-developers-panel-content-heading {
+  margin: 0;
+  padding: 0;
+}
+
+.for-developers-panel-content-list{
+  margin: 0;
+  padding: 0;
 }

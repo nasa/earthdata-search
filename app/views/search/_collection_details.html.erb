@@ -14,7 +14,7 @@
         <!-- ko if: $root.ui.collectionsList.selected() -->
         <div class="master-overlay-info-panel master-overlay-info-collection-panel">
           <div class="master-overlay-info-collection-header" >
-            <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
+            <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded() -->
               <h4 class="master-overlay-header-heading master-overlay-info-collection-name" data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
                 <small class="short-name-label" data-bind="text: $data.short_name"></small>
                 <!-- ko if: details().version_id -->
@@ -22,7 +22,7 @@
                 <!-- /ko -->
               </h4>
             <!-- /ko -->
-            <!-- ko ifnot: $root.ui.collectionsList.selected().detailsLoaded -->
+            <!-- ko ifnot: $root.ui.collectionsList.selected().detailsLoaded() -->
               <div>
                 <h2 class="master-overlay-header-heading master-overlay-info-collection-loading">Details Loading...</h2>
               </div>
@@ -31,13 +31,22 @@
         </div>
         <div class="master-overlay-info-panel">
           <div class="cta-buttons">
-            <!-- ko if: $root.ui.collectionsList.selected().handoffTags().length > 0 -->
-            <div class="dropdown detail-dropdown">
-              <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Handoffs :) <i class="fa fa-caret-down"></i></a>
-              <ul class="dropdown-menu">
-                <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
-                <li><a target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
-                <!-- /ko -->
+            <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded() && $root.ui.collectionsList.selected().handoffTags().length > 0 -->
+            <div class="dropdown dropdown-left">
+              <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+              <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
+                <li>
+                  <div class="download-dropdown-header">
+                    Open in:
+                  </div>
+                  <div class="download-dropdown-content">
+                    <ul>
+                      <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
+                      <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
+                      <!-- /ko -->
+                    </ul>
+                  </div>
+                </li>
               </ul>
             </div>
             <!-- /ko -->
@@ -75,11 +84,11 @@
             <dt>Related URLs:</dt>
             <dd>
               <!-- ko foreach: $data.related_urls[4].urls -->
-              <a data-bind="attr: {href: URL}, text: HighlightedType" target="_blank"></a> |
+              <a class="separated" data-bind="attr: {href: URL}, text: HighlightedType" target="_blank"></a>
               <!-- /ko -->
-              <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
+              <a class="separated" href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
               <!-- ko with: $root.ui.collectionsList.selected() -->
-              <a href="#" class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">View More Info</a>
+              <a class="ext" href="#" class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">View More Info <i class="fa fa-external-link-alt link-icon-external"></i></a>
               <!-- /ko -->
             </dd>
             <!-- /ko -->
@@ -210,6 +219,7 @@
       <!-- end of sixth row -->
     </div>
   </div>
+
   <!-- /ko -->
 
   <!-- /ko -->

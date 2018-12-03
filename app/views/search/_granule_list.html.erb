@@ -20,12 +20,21 @@
           </h2>
           <!-- ko with: collection -->
           <!-- ko if: $data.handoffTags().length > 0 -->
-          <div class="dropdown detail-dropdown">
-            <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Handoffs :) <i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <!-- ko foreach: $data.handoffUrls($root.query) -->
-              <li><a target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
-              <!-- /ko -->
+          <div class="dropdown granule-details-dropdown">
+            <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
+              <li>
+                <div class="download-dropdown-header">
+                  Open in:
+                </div>
+                <div class="download-dropdown-content">
+                  <ul>
+                    <!-- ko foreach: $data.handoffUrls($root.query) -->
+                    <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
+                    <!-- /ko -->
+                  </ul>
+                </div>
+              </li>
             </ul>
           </div>
           <!-- /ko -->

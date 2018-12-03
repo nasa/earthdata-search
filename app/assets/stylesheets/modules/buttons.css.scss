@@ -430,7 +430,7 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
 }
 
 .button-naked {
-  background: none;
+  background: none !important;
   margin: 0;
   padding: 0;
   font-size: inherit;
