@@ -8,7 +8,7 @@
   <!-- ko if: $root.ui.collectionsList.selected() -->
   <header >
     <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
-    <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
+    <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded() -->
       <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
         <small class="short-name-label" data-bind="text: $data.short_name"></small>
         <!-- ko if: details().version_id -->
@@ -18,13 +18,22 @@
     <!-- /ko -->
 
     <div class="cta-buttons">
-      <!-- ko if: $root.ui.collectionsList.selected().handoffTags().length > 0 -->
-      <div class="dropdown detail-dropdown">
-        <a href="#" data-toggle="dropdown" class="button dropdown-button" aria-expanded="false">Handoffs :) <i class="fa fa-caret-down"></i></a>
-        <ul class="dropdown-menu">
-          <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
-          <li><a target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
-          <!-- /ko -->
+      <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded() && $root.ui.collectionsList.selected().handoffTags().length > 0 -->
+      <div class="dropdown dropdown-left">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+        <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
+          <li>
+            <div class="download-dropdown-header">
+              Open in:
+            </div>
+            <div class="download-dropdown-content">
+              <ul>
+                <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
+                <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
+                <!-- /ko -->
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
       <!-- /ko -->
@@ -61,11 +70,11 @@
               <dt>Related URLs:</dt>
               <dd>
                 <!-- ko foreach: $data.related_urls[4].urls -->
-                <a data-bind="attr: {href: URL}, text: HighlightedType" target="_blank"></a> |
+                <a class="separated" data-bind="attr: {href: URL}, text: HighlightedType" target="_blank"></a>
                 <!-- /ko -->
-                <a href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a> |
+                <a class="separated" href="#" data-bind="click: $root.ui.projectList.showRelatedUrls">View All Related URLs</a>
                 <!-- ko with: $root.ui.collectionsList.selected() -->
-                <a href="#"" class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">View More Info</a>
+                <a class="ext" href="#" class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="HTML">View More Info <i class="fa fa-external-link-alt link-icon-external"></i></a>
                 <!-- /ko -->
               </dd>
               <!-- /ko -->
@@ -133,7 +142,7 @@
         <!-- end of fourth row -->
 
         <!-- fifth row: science keywords -->
-        <div class="row card-row">
+        <div class="row">
           <!--ko foreach: data_centers-->
           <div class="card">
             <h5><!--ko text: shortname--><!--/ko--></h5>
@@ -153,51 +162,66 @@
         <!-- end of fifth row -->
 
         <!-- sixth row: for developers -->
-        <div class="row card-row">
-          <h5>More Metadata</h5>
-          <ul>
-            <!-- ko with: $root.ui.collectionsList.selected() -->
-            <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
-            <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
-            <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
-            <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ISO19115">ISO19115</a></li>
-            <!-- ko if: $data.smap_iso_url -->
-            <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="SMAP ISO">SMAP ISO</a></li>
+        <div class="row card-row for-developers-panel">
+          <button class="button button-naked for-developers-panel-button" type="button" data-bind="click: function(){$parent.forDevelopersPanelVisible(!$parent.forDevelopersPanelVisible())}">
+            For developers
+            <!-- ko if: $parent.forDevelopersPanelVisible() -->
+            <i class="fa fa-chevron-up"></i>
             <!-- /ko -->
-            <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="DIF">DIF</a></li>
-            <!--/ko-->
-          </ul>
+            <!-- ko if: !$parent.forDevelopersPanelVisible() -->
+            <i class="fa fa-chevron-down"></i>
+            <!-- /ko -->
+          </button>
+          <div class="for-developers-panel-content" data-bind="css: {'for-developers-panel-content-is-active': $parent.forDevelopersPanelVisible()}">
+            <div class="for-developers-panel-content-section">
+              <h5 class="for-developers-panel-content-heading">More Metadata</h5>
+              <ul class="for-developers-panel-content-list">
+                <!-- ko with: $root.ui.collectionsList.selected() -->
+                <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
+                <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
+                <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
+                <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ISO19115">ISO19115</a></li>
+                <!-- ko if: $data.smap_iso_url -->
+                <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="SMAP ISO">SMAP ISO</a></li>
+                <!-- /ko -->
+                <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="DIF">DIF</a></li>
+                <!--/ko-->
+              </ul>
+            </div>
+            <div class="for-developers-panel-content-section">
+              <h5 class="for-developers-panel-content-heading">API Endpoints</h5>
+              <ul class="for-developers-panel-content-list">
+                <!-- ko with: $root.ui.collectionsList.selected() -->
+                <!-- ko if: granuleDatasourceName() == "cmr" -->
+                <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
+                <!-- /ko -->
 
-          <h5>API Endpoints</h5>
-          <ul>
-            <!-- ko with: $root.ui.collectionsList.selected() -->
-            <!-- ko if: granuleDatasourceName() == "cmr" -->
-            <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
-            <!-- /ko -->
+                <!-- ko foreach: gibs() -->
+                <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
+                <!-- /ko -->
 
-            <!-- ko foreach: gibs() -->
-            <li><a data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a></li>
-            <!-- /ko -->
+                <!-- ko if: opendap_url() -->
+                <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
+                <!-- /ko -->
 
-            <!-- ko if: opendap_url() -->
-            <li><a data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a></li>
-            <!-- /ko -->
+                <!-- ko if: modaps() -->
+                <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
+                <!-- /ko -->
 
-            <!-- ko if: modaps() -->
-            <li><a data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a></li>
-            <!-- /ko -->
-
-            <!-- ko if: osddUrl() -->
-            <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
-            <!-- /ko -->
-            <!-- /ko -->
-          </ul>
+                <!-- ko if: osddUrl() -->
+                <li><a data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a></li>
+                <!-- /ko -->
+                <!-- /ko -->
+              </ul>
+            </div>
+          </div>
         </div>
         <!-- end of sixth row -->
 
       </div>
     </div>
   </div>
+
   <!-- /ko -->
 
   <!-- /ko -->

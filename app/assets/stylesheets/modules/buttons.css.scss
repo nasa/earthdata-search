@@ -326,3 +326,36 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
     background: #d0d0d0;
   }
 }
+
+// TL: I plan on cleaning up these "!important"'s once we move e2e to master. Things will change so much at that point, I think it is worth
+// it to use this temporary workaround.
+
+.button-naked {
+  background: none !important;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit !important;
+
+  &:hover {
+    background: none;
+    color: inherit;
+  }
+}
+
+.button-icon {
+  padding: 0.25em 0.5em;
+  color: #969696 !important;
+
+  &:link {
+    color: #969696 !important;
+  }
+
+  &:hover {
+    color: #585858 !important;
+  }
+}
+
+.button-icon-ellipsis {
+  font-size: 1.2em;
+}
