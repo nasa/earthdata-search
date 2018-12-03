@@ -357,6 +357,9 @@ ns.Project = do (ko,
       selectedService: @expectedUmmService(),
       form_hashes: form_hashes
 
+    toggleVisibility: =>
+      @collection.visible(!@collection.visible())
+
   class Project
     constructor: (@query) ->
       @_collectionIds = ko.observableArray()

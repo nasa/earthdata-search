@@ -72,29 +72,32 @@ ns.Map = do (window,
       @setOverlays([OVERLAYS[0], OVERLAYS[2]])
 
       map.loadingLayers = 0
-      if !@isMinimap
-        map.addControl(L.control.scale(position: 'topright'))
-        map.addLayer(new GranuleVisualizationsLayer())
-        map.addLayer(new MouseEventsLayer())
-        map.addControl(new ZoomHome())
-        map.addControl(new ProjectionSwitcher())
-        map.addControl(new SpatialSelection())
-        @legendControl = new LegendControl(position: 'topleft')
-        map.addControl(@legendControl)
+
+      map.addControl(L.control.scale(position: 'topright'))
+      map.addLayer(new GranuleVisualizationsLayer())
+      map.addLayer(new MouseEventsLayer())
+      map.addControl(new ZoomHome())
 
       if !@isMinimap
-        @time = ko.computed(@_computeTime, this)
-        map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
-        @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
-          map.fire('edsc.visiblecollectionschange', collections: collections)
+        map.addControl(new ProjectionSwitcher())
+        map.addControl(new SpatialSelection())
+
+      @legendControl = new LegendControl(position: 'topleft')
+      map.addControl(@legendControl)
+
+      # if !@isMinimap
+      @time = ko.computed(@_computeTime, this)
+      map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
+      @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
+        map.fire('edsc.visiblecollectionschange', collections: collections)
       if @isMinimap
         map.addControl(new SpatialSelection(@isMinimap))
-        map.dragging.disable()
-        map.touchZoom.disable()
-        map.doubleClickZoom.disable()
-        map.scrollWheelZoom.disable()
-        # Disable tap handler, if present.
-        map.tap.disable() if (map.tap)
+        # map.dragging.disable()
+        # map.touchZoom.disable()
+        # map.doubleClickZoom.disable()
+        # map.scrollWheelZoom.disable()
+        # # Disable tap handler, if present.
+        # map.tap.disable() if (map.tap)
       @_setupStatePersistence()
 
     # Removes the map from the page
@@ -213,8 +216,8 @@ ns.Map = do (window,
         break
 
       @_layerControl = L.control.layers(baseMaps, overlayMaps)
-      if !@isMinimap
-        @map.addControl(@_layerControl)
+      # if !@isMinimap
+      @map.addControl(@_layerControl)
 
     _hasLayer: (layers, newLayer) ->
       for layer in layers

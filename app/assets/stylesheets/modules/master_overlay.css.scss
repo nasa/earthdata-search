@@ -127,6 +127,10 @@
   transition-duration: 0.3s;
   will-change: left, width;
 
+  .project & {
+    height: 0%;
+  }
+
   .master-overlay-content {
     background: rgba(236, 240, 241,1.0);
   }

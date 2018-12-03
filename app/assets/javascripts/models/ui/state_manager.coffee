@@ -138,6 +138,7 @@
 
       root = '/search'
 
+      return '/projects/new' if state.projects
       return root if state.parent && state.current != 'collection-details'
 
       return "#{root}/map" unless state.visible
