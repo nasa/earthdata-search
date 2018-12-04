@@ -424,6 +424,28 @@ http_interactions:
   digest: 52448e8005db07d4ad8cc03ff3eee107f26a804c
 - request:
     method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1200187767-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 04 Dec 2018 17:48:20 GMT
+  digest: 424bbf7afa677f105c16af5ac6e64ba2e2a2416c
+- request:
+    method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1200269572-E2E_18_3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 04 Dec 2018 17:48:25 GMT
+  digest: 94de21865ca0d94201d83efe60ec343a56f9e461
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1216393716-EDF_OPS
     body:
       encoding: US-ASCII

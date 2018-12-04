@@ -1582,7 +1582,7 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
   recorded_at: Fri, 23 Feb 2018 17:40:33 GMT
-  digest: 09bb74c211fddad71a1a998f2bcde36b89f2d99c
+  digest: '09bb74c211fddad71a1a998f2bcde36b89f2d99c'
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1599,7 +1599,7 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
   recorded_at: Fri, 23 Feb 2018 17:40:38 GMT
-  digest: 094387527a6501268cba3dd8e844d2751d6d992b
+  digest: '094387527a6501268cba3dd8e844d2751d6d992b'
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -3168,6 +3168,40 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 23 Feb 2018 18:00:22 GMT
   digest: 7cf20186fa682de16f0e8de0fbf440a4a67aba29
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=-10%2C-10%2C10%2C10&concept_id=C1200187767-EDF_OPS&end_date=2018-01-01T23%3A59%3A59.500Z&interval=day&start_date=2014-12-30T23%3A59%3A59.500Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 04 Dec 2018 17:48:32 GMT
+  digest: 45fd7dd527eb3ba5cd50ff798eb4d2ae2ce065f7
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=-10%2C-10%2C10%2C10&concept_id=C1200269572-E2E_18_3&end_date=2018-01-01T23%3A59%3A59.500Z&interval=day&start_date=2014-12-30T23%3A59%3A59.500Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 04 Dec 2018 17:48:35 GMT
+  digest: a5610885cd77b40bdd9de39d0bc4f9605c582d42
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
