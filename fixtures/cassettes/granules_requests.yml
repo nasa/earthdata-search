@@ -3238,6 +3238,40 @@ http_interactions:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
     body:
+      encoding: UTF-8
+      string: bounding_box=-10%2C-10%2C10%2C10&echo_collection_id=C1200187767-EDF_OPS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2016-01-01T00%3A00%3A00.000Z%2C2016-12-31T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 04 Dec 2018 17:48:31 GMT
+  digest: 43dce1ce9aed4a8832530b90e478c9b582ae8e11
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=-10%2C-10%2C10%2C10&echo_collection_id=C1200269572-E2E_18_3&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2016-01-01T00%3A00%3A00.000Z%2C2016-12-31T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 04 Dec 2018 17:48:36 GMT
+  digest: b736e4d0fd9fa216b0997bcd1f6b393024302bd2
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
       encoding: US-ASCII
       string: echo_collection_id=C1000000029-EDF_OPS&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=%2Afoo&readable_granule_name%5B%5D=%2Afoo2&readable_granule_name%5B%5D=%2Afoo3&sort_key%5B%5D=-start_date
     headers:
@@ -3411,9 +3445,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
   recorded_at: Wed, 08 Aug 2018 16:58:13 GMT
-  digest: c57d64a001d1b7d9c6374de1dfda522a49b0e5f2
+  digest: 8451c1a4fbdd37bd5504dd88c0bfd0bcd0544f99
 - request:
     method: post
     uri: https://cmr.uat.earthdata.nasa.gov/search/granules.json
