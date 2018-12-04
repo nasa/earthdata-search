@@ -12,7 +12,7 @@ describe 'CWIC-enabled collection details', reset: false do
       first_collection_result.click_link('View collection details')
       wait_for_xhr
 
-      click_link 'API Endpoints'
+      click_on 'For developers'
     end
 
     it 'displays links with the correct text to the collection\'s CWIC OpenSearch API endpoint' do
