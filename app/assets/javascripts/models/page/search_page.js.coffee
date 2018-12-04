@@ -88,8 +88,6 @@ ns.SearchPage = do (ko
 
       @project.focus.subscribe(@_updateFocusRenderState)
 
-      @forDevelopersPanelVisible = ko.observable(false)
-
       new StateManager(this).monitor()
 
     _updateFocusRenderState: (newFocus) =>
