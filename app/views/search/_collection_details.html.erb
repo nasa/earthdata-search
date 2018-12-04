@@ -32,7 +32,7 @@
         <div class="master-overlay-info-panel">
           <div class="cta-buttons">
             <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded() && $root.ui.collectionsList.selected().handoffTags().length > 0 -->
-            <div class="dropdown dropdown-left">
+            <div class="dropdown dropdown-left handoff-dropdown">
               <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
               <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
                 <li>
@@ -40,7 +40,7 @@
                     Open collection in:
                   </div>
                   <div class="dropdown-fancy-content">
-                    <ul>
+                    <ul class="handoff-links">
                       <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
                       <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
                       <!-- /ko -->
