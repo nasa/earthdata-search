@@ -37,7 +37,12 @@ ns.CollectionsList = do ($ = jQuery
         owner: this
         deferEvaluation: true
 
+      @forDevelopersPanelVisible = ko.observable(false)
+
       @resetScrollOnUpdate()
+
+    toggleForDevelopersPanel: =>
+      @forDevelopersPanelVisible(!@forDevelopersPanelVisible())
 
     resetScrollOnUpdate: ->
       id = -1

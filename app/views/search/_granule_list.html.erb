@@ -29,7 +29,7 @@
                 </div>
                 <div class="dropdown-fancy-content">
                   <ul class="handoff-links">
-                    <!-- ko foreach: $data.handoffUrls($root.query) -->
+                    <!-- ko foreach: $data.handoffUrls() -->
                     <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
                     <!-- /ko -->
                   </ul>

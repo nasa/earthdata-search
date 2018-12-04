@@ -4,7 +4,6 @@
 
 
 ns = @edsc.models.data
-# handoff = @edsc.models.handoff
 
 ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
@@ -123,7 +122,7 @@ ns.Collection = do (ko
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
 
-    handoffUrls: (query) =>
+    handoffUrls: =>
       urls = []
       for tag, details of @tags() when tag.indexOf('edsc.extra.handoff') != -1
         # Strip off just
