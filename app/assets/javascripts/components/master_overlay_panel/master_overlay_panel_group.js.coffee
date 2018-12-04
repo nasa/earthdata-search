@@ -67,7 +67,14 @@ do ($=jQuery, ko) ->
 
       # Fire the open-item event to switch to the previous panel
       bindingContext.$data.onBackButtonClick = (event) ->
-        element.trigger 'open-item', $('#' + bindingContext.$data.backToButton().dest)
+        context = bindingContext.$data.backToButton()
+
+        if context.dest?
+          element.trigger 'open-item', $('#' + bindingContext.$data.backToButton().dest)
+
+        if context.callback?
+          context.callback()
+          return
 
       bindingContext.$data.setActivePanelGroup = () ->
         bindingContext.$parentContext.$component.updateActivePanelGroup bindingContext.$data.panelGroupName()

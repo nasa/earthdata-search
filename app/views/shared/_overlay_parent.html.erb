@@ -287,7 +287,7 @@
             </div>
           </div>
         </master-overlay-panel-item>
-        <master-overlay-panel-item style="display: none;" params="itemName: $parents[0].collection.id + '_variable-selection', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Customizations', backToButton: { dest: $parents[0].collection.id + '_edit-options', text: 'Edit Options'}, isHeightConstrained: true">
+        <master-overlay-panel-item style="display: none;" params="itemName: $parents[0].collection.id + '_variable-selection', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Customizations', backToButton: { dest: $parents[0].collection.id + '_edit-options', callback: function() { $root.ui.variableSelector.clearSelections() }, text: 'Edit Options'}, isHeightConstrained: true">
           <!-- ko if: $parents[1].editingVariables() -->
           <div class="master-overlay-panel-item-content panel-item">
             <div class="variable-selection variable-selection-full" data-bind="css: {'is-active' : $parents[1].editingVariables}, with: $root.ui.variableSelector">
@@ -371,7 +371,7 @@
           </div>
           <footer class="master-overlay-panel-item-fixed-footer" data-bind="visible: $root.ui.variableSelector.selectedKeyword(), with: $root.ui.variableSelector">
             <button class="button secondary master-overlay-panel-item-footer-action" data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword">Back</button>
-            <button class="button secondary master-overlay-panel-item-footer-action" data-bind="visible: selectedKeyword() && selectedVariable(), click: clearVariable">Back</button>
+            <button class="button master-overlay-panel-item-footer-action" data-bind="visible: selectedKeyword() && selectedVariable(), click: clearVariable">Back</button>
             <button class="collection-customization-save master-overlay-panel-item-footer-action" data-bind="visible: selectedKeyword() && !selectedVariable(), click: saveState">Save</button>
           </footer>
           <!-- /ko -->

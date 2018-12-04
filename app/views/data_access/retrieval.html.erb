@@ -155,13 +155,13 @@
               </button>
               <ul class="dropdown-menu download-dropdown" data-bind="foreach: orders">
                 <li>
-                  <div class="download-dropdown-header">
+                  <div class="dropdown-fancy-header">
                     <p>
                       Order <span data-bind="text: ($index() + 1)"></span>/<span data-bind="text: $parent.total_orders"></span>
-                      <span class="download-dropdown-header-secondary">- Order ID: <span data-bind="text: order_id"></span></span>
+                      <span class="dropdown-fancy-header-secondary">- Order ID: <span data-bind="text: order_id"></span></span>
                     </p>
                   </div>
-                  <div class="download-dropdown-content">
+                  <div class="dropdown-fancy-content">
                   <!-- ko if: download_urls.length -->
                     <ul data-bind="foreach: download_urls">
                       <li>
