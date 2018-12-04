@@ -55,7 +55,7 @@ ns.SpatialSelection = do (window,
             dashArray: '10, 10'
 
           featureGroup: drawnItems
-        position: 'topright'
+        position: 'bottomright'
 
       drawControl.addTo(map) if !@isMinimap
 

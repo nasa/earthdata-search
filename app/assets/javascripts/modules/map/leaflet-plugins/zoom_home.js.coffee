@@ -5,12 +5,12 @@ ns.ZoomHome = do (L, currentPage = window.edsc.models.page.current) ->
 
   ZoomHome = L.Control.Zoom.extend
     options:
-      position: 'topright'
-      zoomInText: '+'
+      position: 'bottomright'
+      zoomInText: '<i class="fa fa-plus"></i>'
       zoomInTitle: 'Zoom in'
-      zoomOutText: '-'
+      zoomOutText: '<i class="fa fa-minus"></i>'
       zoomOutTitle: 'Zoom out'
-      zoomHomeText: '<i class="fa fa-home" style="line-height:1.65;"></i>'
+      zoomHomeText: '<i class="fa fa-home"></i>'
       zoomHomeTitle: 'Zoom home'
 
     onAdd: (map) ->

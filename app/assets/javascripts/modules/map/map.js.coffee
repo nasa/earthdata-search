@@ -73,7 +73,7 @@ ns.Map = do (window,
 
       map.loadingLayers = 0
 
-      map.addControl(L.control.scale(position: 'topright'))
+      map.addControl(L.control.scale(position: 'bottomright'))
       map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new MouseEventsLayer())
       map.addControl(new ZoomHome())
