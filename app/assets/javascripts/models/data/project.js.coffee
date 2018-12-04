@@ -189,30 +189,16 @@ ns.Project = do (ko,
 
       expectedUmmService
 
-    launchEditModal: =>
-      $('#' + @collection.id + '-edit-modal').modal()
-      $('#' + @collection.id + '-edit-modal').on 'hidden.bs.modal', @onModalClose
-
-    onModalClose: =>
-      @editingAccessMethod(false)
-      @editingVariables(false)
-
     triggerEditAccessMethod: =>
-      @_resetModalScrollPosition()
       @editingAccessMethod(true)
 
     triggerEditVariables: =>
-      @_resetModalScrollPosition()
       @editingVariables(true)
-
-    _resetModalScrollPosition: =>
-      $('#' + @collection.id + '-edit-modal .modal-body').animate({
-        scrollTop: 0
-      }, 0)
 
     showSpinner: (item, e) =>
       # This will likely need to change if we opt to support multiple access methods
       @serviceOptions?.accessMethod?()[0].showSpinner(item, e)
+      $('.master-overlay-panel-back').click()
       @editingAccessMethod(false)
       true
 

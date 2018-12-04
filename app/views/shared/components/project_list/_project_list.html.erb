@@ -8,12 +8,10 @@
         <div class="project-list-item-content">
           <h3 class="project-list-item-title" data-bind="text: collection.truncatedTitle, attr: {title: collection.title}, click: function(){$('#' + collection.id + '_details').trigger('toggle-panel')}"></h3>
           <div class="dropdown project-list-item-action-list">
-            <button class="button-naked dropdown-toggle project-list-item-action-button" type="button" title="View additional actions">
-              <i class="fa fa-ellipsis-v"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right download-dropdown">
+            <button class="button dropdown-button button-naked button-icon button-icon-ellipsis" type="button" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
               <li>
-                <div class="download-dropdown-content">
+                <div class="dropdown-fancy-content">
                   <ul>
                     <li>
                       <button class="button-naked project-list-item-toggle" type="button" name="button" data-bind="click: toggleVisibility">
