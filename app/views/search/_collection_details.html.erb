@@ -23,10 +23,10 @@
         <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
         <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
           <li>
-            <div class="download-dropdown-header">
-              Open in:
+            <div class="dropdown-fancy-header">
+              Open collection in:
             </div>
-            <div class="download-dropdown-content">
+            <div class="dropdown-fancy-content">
               <ul>
                 <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
                 <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
