@@ -28,7 +28,7 @@
             </div>
             <div class="dropdown-fancy-content">
               <ul class="handoff-links">
-                <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls($root.query) -->
+                <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls() -->
                 <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
                 <!-- /ko -->
               </ul>
@@ -162,21 +162,22 @@
         <!-- end of fifth row -->
 
         <!-- sixth row: for developers -->
+        <!-- ko with: $root.ui.collectionsList -->
         <div class="row card-row for-developers-panel">
-          <button class="button button-naked for-developers-panel-button" type="button" data-bind="click: function(){$parent.forDevelopersPanelVisible(!$parent.forDevelopersPanelVisible())}">
+          <button class="button button-naked for-developers-panel-button" type="button" data-bind="click: toggleForDevelopersPanel">
             For developers
-            <!-- ko if: $parent.forDevelopersPanelVisible() -->
+            <!-- ko if: forDevelopersPanelVisible() -->
             <i class="fa fa-chevron-up"></i>
             <!-- /ko -->
-            <!-- ko if: !$parent.forDevelopersPanelVisible() -->
+            <!-- ko if: !forDevelopersPanelVisible() -->
             <i class="fa fa-chevron-down"></i>
             <!-- /ko -->
           </button>
-          <div class="for-developers-panel-content" data-bind="css: {'for-developers-panel-content-is-active': $parent.forDevelopersPanelVisible()}">
+          <div class="for-developers-panel-content" data-bind="css: {'for-developers-panel-content-is-active': forDevelopersPanelVisible()}">
             <div class="for-developers-panel-content-section">
               <h5 class="for-developers-panel-content-heading">More Metadata</h5>
               <ul class="for-developers-panel-content-list">
-                <!-- ko with: $root.ui.collectionsList.selected() -->
+                <!-- ko with: selected() -->
                 <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="Native">Native</a></li>
                 <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ATOM">ATOM</a></li>
                 <li><a href='#' class="dropdown-link" data-bind="click: metadata_url" data-metadata-type="ECHO10">ECHO10</a></li>
@@ -191,9 +192,9 @@
             <div class="for-developers-panel-content-section">
               <h5 class="for-developers-panel-content-heading">API Endpoints</h5>
               <ul class="for-developers-panel-content-list">
-                <!-- ko with: $root.ui.collectionsList.selected() -->
+                <!-- ko with: selected() -->
                 <!-- ko if: granuleDatasourceName() == "cmr" -->
-                <li><a data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
+                <li><a class="cmr-link" href="#" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a></li>
                 <!-- /ko -->
 
                 <!-- ko foreach: gibs() -->
@@ -216,6 +217,7 @@
             </div>
           </div>
         </div>
+        <!-- /ko -->
         <!-- end of sixth row -->
 
       </div>

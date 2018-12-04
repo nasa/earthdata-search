@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe 'Collection details', reset: false do
@@ -7,10 +6,10 @@ describe 'Collection details', reset: false do
       load_page :search
       fill_in 'keywords', with: 'AST_L1AE'
       wait_for_xhr
-      # expect(page).to have_content('ASTER Expedited L1A')
       first_collection_result.click_link('View collection details')
       wait_for_xhr
     end
+
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
@@ -25,25 +24,19 @@ describe 'Collection details', reset: false do
       end
     end
 
-    context 'and when the metadata formats toggle is clicked' do
+    context 'when the For developers toggle is clicked' do
       before :all do
-        click_link 'View More Metadata'
+        click_on 'For developers'
       end
+
       it 'provides the metadata formats links' do
-        expect(page).to have_link('Web View')
         expect(page).to have_link('Native')
         expect(page).to have_link('ATOM')
         expect(page).to have_link('ECHO10')
         expect(page).to have_link('ISO19115')
         expect(page).to have_link('DIF')
       end
-    end
 
-    context 'and when the API Endpoints toggle is clicked' do
-      before :all do
-        click_link 'API Endpoints'
-        wait_for_xhr
-      end
       it 'provides the API Endpoints links' do
         expect(page).to have_link('CMR')
         expect(page).to have_link('OSDD')
@@ -79,24 +72,19 @@ describe 'Collection details', reset: false do
       end
     end
 
-    context 'and when the metadata formats toggle is clicked' do
+    context 'when the For developers toggle is clicked' do
       before :all do
-        click_link 'View More Metadata'
+        click_on 'For developers'
       end
+
       it 'provides the metadata formats links' do
-        expect(page).to have_link('Web View')
         expect(page).to have_link('Native')
         expect(page).to have_link('ATOM')
         expect(page).to have_link('ECHO10')
         expect(page).to have_link('ISO19115')
         expect(page).to have_link('DIF')
       end
-    end
 
-    context 'and when the API Endpoints toggle is clicked' do
-      before :all do
-        click_link 'API Endpoints'
-      end
       it 'provides the API Endpoints links' do
         expect(page).to have_link('CMR')
         expect(page).to have_link('OSDD')
@@ -150,7 +138,6 @@ describe 'Collection details', reset: false do
       wait_for_xhr
       first_collection_result.click_link('View collection details')
     end
-
 
     it "does not display the collection's spatial bounds on the map" do
       expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
@@ -218,17 +205,16 @@ describe 'Collection details', reset: false do
     end
 
     it 'only displays one link total' do
-      expect(page.find(:css, "div.long-paragraph.collapsed")).to have_selector("a", count:1)
+      expect(page.find(:css, 'div.long-paragraph.collapsed')).to have_selector('a', count: 1)
     end
 
     it 'displays the external link' do
-      expect(page).to have_link("Greenland Ice Mapping Project (GIMP)", href: "http://nsidc.org/data/measures/gimp")
-      find_link("Greenland Ice Mapping Project (GIMP)")[:target].should == '_blank'
-
+      expect(page).to have_link('Greenland Ice Mapping Project (GIMP)', href: 'http://nsidc.org/data/measures/gimp')
+      find_link('Greenland Ice Mapping Project (GIMP)')[:target].should == '_blank'
     end
 
     it 'does not display a link for relative paths' do
-      expect(page).not_to have_link("Bad Link", href:"/data/measures/gimp")
+      expect(page).not_to have_link('Bad Link', href: '/data/measures/gimp')
     end
   end
 
@@ -269,8 +255,8 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays highlighted urls' do
-      expect(collection_details).to have_content "Data Set Landing Page"
-      expect(collection_details).to have_content "ATBD"
+      expect(collection_details).to have_content 'Data Set Landing Page'
+      expect(collection_details).to have_content 'ATBD'
     end
 
     context 'when clicking View All Related URLs' do
@@ -342,7 +328,7 @@ describe 'Collection details', reset: false do
       expect(page).not_to have_link('THE DIGITIAL OBJECT IDENTIFIER.')
     end
   end
-  
+
   context 'when selecting a collection with a DOI field which contains "http://"' do
     before :all do
       load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
@@ -353,7 +339,6 @@ describe 'Collection details', reset: false do
     end
   end
 
-  
   context 'when selecting a collection with valid DOI field' do
     before :all do
       load_page '/search/collection-details', focus: 'C179003620-ORNL_DAAC'

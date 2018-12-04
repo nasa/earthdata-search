@@ -4,17 +4,17 @@ describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with granules' do
     before :all do
       load_page '/search', env: :sit
-      # wait_for_xhr
-      click_link "Temporal"
-      fill_in "Start", with: "1985-12-01 00:00:00\t\t"
-      js_click_apply ".temporal-dropdown"
+
+      click_link 'Temporal'
+      fill_in 'Start', with: "1985-12-01 00:00:00\t\t"
+      js_click_apply '.temporal-dropdown'
       wait_for_xhr
 
       fill_in 'keywords', with: 'C1000000257-DEV07'
       wait_for_xhr
-      click_link "View collection details"
+      click_link 'View collection details'
       wait_for_xhr
-      click_link 'API Endpoints'
+      click_on 'For developers'
     end
 
     it 'provides a link to the CMR API for the collections granules' do
@@ -27,9 +27,9 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search, env: :sit
       fill_in 'keywords', with: 'C24936-LAADS'
       wait_for_xhr
-      click_link "View collection details"
+      click_link 'View collection details'
       wait_for_xhr
-      click_link 'API Endpoints'
+      click_on 'For developers'
     end
 
     it 'provides the path to the GIBS endpoint' do
@@ -60,9 +60,9 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search, ac: true
       fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
       wait_for_xhr
-      click_link "View collection details"
+      click_link 'View collection details'
       wait_for_xhr
-      click_link 'API Endpoints'
+      click_on 'For developers'
     end
 
     it 'provides the path to the MODAPS WCS endpoint' do
@@ -75,7 +75,7 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C179001887-SEDAC'
       wait_for_xhr
-      click_link "View collection details"
+      click_link 'View collection details'
       wait_for_xhr
     end
 
