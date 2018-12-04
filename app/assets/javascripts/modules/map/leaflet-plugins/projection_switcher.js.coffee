@@ -5,7 +5,7 @@ ns.ProjectionSwitcher = do (L) ->
 
   ProjectionSwitcher = L.Control.extend
     options:
-      position: 'topright'
+      position: 'bottomright'
 
     initialize: (options={}) ->
       L.Control.prototype.initialize.call(this, options);

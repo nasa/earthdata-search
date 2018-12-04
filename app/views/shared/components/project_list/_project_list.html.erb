@@ -4,7 +4,7 @@
     <li class="project-list-empty-notice">Your project is empty. <a href="#" data-bind="click: $component.project.backToSearch">Click here</a> to return to search and add collections to your project.</li>
     <!-- /ko -->
     <!-- ko foreach: $component.project.collections() -->
-      <li class="project-list-item" data-bind="css: collection.id + '_project-list-item', style: {borderColor: 'none'}">
+      <li class="project-list-item" data-bind="css: collection.id + '_project-list-item', style: {borderLeft: '5px solid' + $data.meta.color}">
         <div class="project-list-item-content">
           <h3 class="project-list-item-title" data-bind="text: collection.truncatedTitle, attr: {title: collection.title}, click: function(){$('#' + collection.id + '_details').trigger('toggle-panel')}"></h3>
           <div class="dropdown project-list-item-action-list">

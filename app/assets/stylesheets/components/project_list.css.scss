@@ -28,7 +28,7 @@
 
 .project-list-item-content {
   background: #fff;
-  padding: 0.675em;
+  padding: 0.675em 0.675em 0.55em;
 }
 
 .project-list-item-title {
@@ -75,6 +75,7 @@
 }
 
 .project-list-item-loading-row {
+  position: relative;
   display: flex;
   height: 1em;
   margin-top: 0.75em;
@@ -94,24 +95,24 @@
 }
 
 .project-list-item-loading-granules {
-  height: 1em;
-  width: 5em;
+  height: 14px;
+  width: 80px;
 }
 
 .project-list-item-loading-details {
-  height: 1em;
-  width: 7em;
+  height: 14px;
+  width: 100px;
   margin: 0 0 0 1.5em;
 }
 
 .project-list-item-loading-capabilities {
-  height: 1em;
-  width: 4em;
+  height: 14px;
+  width: 30px;
 }
 
 .project-list-item-loading-options {
-  height: 1em;
-  width: 7em;
+  height: 14px;
+  width: 100px;
   margin: 0 0 0 1.5em;
 }
 

@@ -52,7 +52,6 @@
   }
 
   &.leaflet-draw-edit-edit {
-    float: right;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-top-right-radius: 4px;
@@ -80,6 +79,10 @@
   float: right;
   margin: 0 0 0 10px;
   padding: 0;
+
+  &:last-child {
+    margin: 0;
+  }
 }
 
 .leaflet-draw-actions-top {
@@ -110,15 +113,23 @@
   position: absolute;
   top: auto;
   bottom: 10px;
+  z-index: 60;
+}
+
+.leaflet-bottom.leaflet-right {
+  right: 43px;
 }
 
 .leaflet-control-layers {
   border-radius: 4px;
 }
 
+.leaflet-control-layers-list {
+  position: relative;
+  z-index: 1;
+}
+
 .leaflet-retina .leaflet-control-layers-toggle, .leaflet-control-layers-toggle {
-  width: 26px;
-  height: 26px;
   border-radius: 4px;
   background-size: 16px 16px;
 }
@@ -132,8 +143,8 @@
 
 .leaflet-control-scale {
   position: absolute;
-  top: -50px;
-  right: 0;
+  bottom: 50px;
+  right: -40px;
 }
 
 .leaflet-bar.projection-switcher a {
@@ -150,4 +161,24 @@
   &.projection-switcher-antarctic {
     background-position: -3px -2px;
   }
+}
+
+.leaflet-control-container .fa {
+  font-size: 12px;
+  line-height: 1.65;
+  vertical-align: middle;
+}
+
+.leaflet-touch .leaflet-bar a:first-child {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 0px;
+}
+
+.leaflet-touch .leaflet-bar a:last-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 2px;
 }
