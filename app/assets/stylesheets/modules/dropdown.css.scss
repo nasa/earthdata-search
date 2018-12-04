@@ -226,9 +226,9 @@ input.day-of-year-input {
   */
 }
 
-.download-dropdown-header {
-  padding: 0.5em 1.125em 0;
-  font-size: 0.85em;
+.dropdown-fancy-header {
+  padding: 0.5em 1em 0;
+  font-size: 0.875em;
   font-weight: 700;
 
   p {
@@ -236,14 +236,15 @@ input.day-of-year-input {
   }
 }
 
-.download-dropdown-header-secondary {
+.dropdown-fancy-header-secondary {
   font-weight: 400;
   font-style: italic;
 }
 
-.download-dropdown-content {
+.dropdown-fancy-content {
   padding: 0.5em 1em 0.5em;
   color: #888;
+  font-size: 0.875em;
 
   ul > li {
     color: #424242;
@@ -252,6 +253,4 @@ input.day-of-year-input {
       color: #888;
     }
   }
-
-
 }
