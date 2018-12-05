@@ -277,7 +277,6 @@ ns.GranuleTimeline = do (ko
         @_lastDate = lastDate
         $timeline.timeline('panToTime', lastDate)
 
-      project = @projectList.project
       for collection in result
         id = collection.id
         if currentTimelines[id]
@@ -285,9 +284,9 @@ ns.GranuleTimeline = do (ko
           delete currentTimelines[id]
         else
           if collection.granuleDatasource()?.hasCapability('timeline')
-            data = new GranuleTimelineData(collection, range, project.colorForCollection(collection))
+            data = new GranuleTimelineData(collection, range, @project.colorForCollection(collection))
           else
-            data = new IndeterminateGranuleTimelineData(collection, range, project.colorForCollection(collection))
+            data = new IndeterminateGranuleTimelineData(collection, range, @project.colorForCollection(collection))
           newTimelines[id] = data
 
       for own k, v of currentTimelines

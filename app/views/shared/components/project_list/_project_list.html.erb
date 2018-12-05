@@ -1,5 +1,5 @@
 <template id="tmpl_project-list">
-  <ul class="project-list-list" data-bind="componentProjectList: true">
+  <ul class="project-list-list">
     <!-- ko if: $component.project.collections().length == 0 -->
     <li class="project-list-empty-notice">Your project is empty. <a href="#" data-bind="click: $component.project.backToSearch">Click here</a> to return to search and add collections to your project.</li>
     <!-- /ko -->
@@ -47,7 +47,7 @@
             <!-- /ko -->
             <!-- ko if: isLoadingComplete() -->
               <span class="project-list-item-stat project-list-item-stat-granules">
-                <span data-bind="text: collection.granule_hits, fadeVisible: isLoadingComplete"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko --></span>
+                <span data-bind="text: collection.granule_hits, fadeVisible: isLoadingComplete"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko -->
               </span>
               <span class="project-list-item-stat project-list-item-stat-size">
                 <span>Est. Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko-->

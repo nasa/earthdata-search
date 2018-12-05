@@ -52,8 +52,8 @@ ns.Map = do (window,
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
-    constructor: (el, projection = 'geo', isMinimap = false) ->
-      @isMinimap = isMinimap
+    constructor: (el, projection = 'geo', isProjectMap = false) ->
+      @isProjectMap = isProjectMap
       $(el).data('map', this)
       @layers = []
 
@@ -78,32 +78,25 @@ ns.Map = do (window,
       map.addLayer(new MouseEventsLayer())
       map.addControl(new ZoomHome())
 
-      if !@isMinimap
+      if !@isProjectMap
         map.addControl(new ProjectionSwitcher())
         map.addControl(new SpatialSelection())
 
       @legendControl = new LegendControl(position: 'topleft')
       map.addControl(@legendControl)
 
-      # if !@isMinimap
       @time = ko.computed(@_computeTime, this)
       map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
       @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
         map.fire('edsc.visiblecollectionschange', collections: collections)
-      if @isMinimap
-        map.addControl(new SpatialSelection(@isMinimap))
-        # map.dragging.disable()
-        # map.touchZoom.disable()
-        # map.doubleClickZoom.disable()
-        # map.scrollWheelZoom.disable()
-        # # Disable tap handler, if present.
-        # map.tap.disable() if (map.tap)
+      if @isProjectMap
+        map.addControl(new SpatialSelection(@isProjectMap))
       @_setupStatePersistence()
 
     # Removes the map from the page
     destroy: ->
       @map.remove()
-      if !@isMiniMap
+      if !@isProjectMap
         @time.dispose()
         @_granuleVisualizationSubscription.dispose()
 
@@ -216,7 +209,6 @@ ns.Map = do (window,
         break
 
       @_layerControl = L.control.layers(baseMaps, overlayMaps)
-      # if !@isMinimap
       @map.addControl(@_layerControl)
 
     _hasLayer: (layers, newLayer) ->
