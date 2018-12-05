@@ -14,13 +14,13 @@ describe 'When viewing the project page' do
   context 'When selecting variables for subsetting' do
     before :all do
       # Find the collection card to work with
-      collection_card = find('.collection-card', match: :first)
+      collection_card = find('.project-list-item', match: :first)
 
       # Click the customize link
-      collection_card.find('.action-button.edit').click
+      collection_card.find('.project-list-item-action-edit-options').click
 
       # Choose to subset based on variables
-      find('.edit-variables').click
+      find_button('Edit Variables').click
       wait_for_xhr
 
       # Select the first Science Keyword listed
@@ -31,12 +31,9 @@ describe 'When viewing the project page' do
       find('.variable-list input[value="V1200265914-EDF_OPS"]').set(true)
 
       # Save the selections and return to the project page
-      within '.modal-footer' do
+      within '.master-overlay-panel-item-fixed-footer' do
         click_button 'Save'
         wait_for_xhr
-
-        click_button 'Done'
-        click_button 'Close'
       end
     end
 

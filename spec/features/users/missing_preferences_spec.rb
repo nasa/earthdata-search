@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'User missing ordering preferences' do
-  context 'when configuring a data access request', pending_updates: true do
+describe 'User missing ordering preferences', pending_updates: true do
+  context 'when configuring a data access request' do
     before :all do
       load_page :search, focus: ['C1000000739-DEV08'], env: :sit, authenticate: 'edscbasic'
       

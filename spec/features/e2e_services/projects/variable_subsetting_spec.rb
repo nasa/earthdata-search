@@ -15,26 +15,22 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
 
   context 'When choosing to edit the collection' do
     before :all do
-      collection_card = find('.collection-card', match: :first)
+      collection_card = find('.project-list-item', match: :first)
 
-      collection_card.find('.edit').click
+      collection_card.find('.project-list-item-action-edit-options').click
     end
 
     it 'displays the customization modal' do
-      within '.collection-customization .modal-header' do
-        expect(page).to have_content('Edit Options')
-      end
+      expect(page).to have_content('Edit Options')
     end
 
     it 'displays the variable selection button within the modal' do
-      within '.collection-customization .modal-body' do
-        expect(page).to have_button('Edit Variables')
-      end
+      expect(page).to have_button('Edit Variables')
     end
 
     context 'When choosing to select variables' do
       before :all do
-        find('.edit-variables').click
+        find_button('Edit Variables').click
         wait_for_xhr
       end
 
@@ -42,7 +38,6 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
         within '.variable-selection' do
           expect(page).to have_content('Variable Selection')
         end
-        # wait_for_xhr
       end
 
       it 'displays a list of science keywords to choose from' do
@@ -69,7 +64,7 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
         end
 
         it 'displays a button to save selected keywords' do
-          within '.modal-footer .action-container' do
+          within '.master-overlay-panel-item-fixed-footer' do
             expect(page).to have_button('Save')
           end
         end
@@ -78,7 +73,7 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
           before :all do
             find('.collection-variable-list-item input[type="checkbox"]', match: :first).set(true)
 
-            within '.modal-footer' do
+            within '.master-overlay-panel-item-fixed-footer' do
               click_button 'Save'
               wait_for_xhr
             end
@@ -90,26 +85,10 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
             end
           end
 
-          context 'When dismissing the variable selection modal' do
-            before :all do
-              within '.modal-footer' do
-                click_button 'Done'
-              end
+          it 'displays that collection has variable subsetting' do
+            within '.collection-capability' do
+              expect(page).to have_css('span.enabled i.fa.fa-tags')
             end
-
-            it 'displays the selected variable in the project sidebar' do
-              expect(page).to have_css('.selected-collection-variables > li', count: 1)
-            end
-
-            it 'displays that collection has variable subsetting' do
-              within '.collection-capability' do
-                expect(page).to have_css('span.enabled i.fa.fa-tags')
-              end
-            end
-
-            # it 'updates the Customize button text' do
-            #   expect(page).to have_css('.action-button.edit', text: 'Edit Customizations')
-            # end
           end
         end
       end
