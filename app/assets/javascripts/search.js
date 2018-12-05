@@ -25,8 +25,3 @@
 //= require modules/index
 //= require bootstrap/bootstrap
 //= require components
-
-$(function(){
-  $('#spatial_dropdown').on('click mousedown mouseup focus blur keydown change mouseup click dblclick mousemove mouseover mouseout mousewheel keydown keyup keypress textInput touchstart touchmove touchend touchcancel resize scroll zoom focus blur select change submit reset', function(e) {
-  })
-})
