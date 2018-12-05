@@ -15,9 +15,10 @@ describe 'Viewing Projects' do
       expect(page).to have_content 'Test Project 1 collection'
     end
 
-    context 'when clicking on a project' do
+    context 'when clicking on a project', pending_updates: true do
       before :all do
         click_link 'Test Project'
+        wait_for_xhr
       end
 
       after :all do
