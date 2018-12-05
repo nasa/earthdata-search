@@ -46,7 +46,7 @@ ns.ProjectPage = do (ko,
     $(document).on 'click', '.project-list-item-action-list', (e) ->
       $(e.target).parents('.project-list-item-action-list').toggleClass('open')
 
-    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList, current.project)
+    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList, true)
     $('.master-overlay').masterOverlay()
 
   class ProjectPage extends Page
