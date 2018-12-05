@@ -225,7 +225,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 14:34:39 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:15 GMT
   digest: 67098fdec6f60cd10ef7783cbfe0828b63eaec8e
 - request:
     method: get
@@ -458,7 +458,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 01 Mar 2018 16:46:19 GMT
+  recorded_at: Wed, 05 Dec 2018 16:07:30 GMT
   digest: d29901c8991dc6ce82c464b73ae60d259ae88950
 - request:
     method: get
@@ -1404,7 +1404,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 14:35:51 GMT
+  recorded_at: Thu, 01 Mar 2018 16:29:50 GMT
   digest: df24f40837de41f67751e3853084afcd34fcd90c
 - request:
     method: get
@@ -1813,7 +1813,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 14:31:53 GMT
+  recorded_at: Thu, 01 Mar 2018 16:27:56 GMT
   digest: 5a7cd198d360ea1221fd0e511bfc7012da0525eb
 - request:
     method: get
@@ -1948,7 +1948,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 14:34:40 GMT
+  recorded_at: Thu, 01 Mar 2018 16:46:16 GMT
   digest: 1da85554fbd47602bcd789e684a3bc786087769e
 - request:
     method: get
@@ -2655,6 +2655,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 01 Mar 2018 16:37:50 GMT
   digest: 0161ff8373640a10cc27cb6f372c90b1e594e981
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&tag_key=gov.nasa.eosdis&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 01 Mar 2018 16:43:46 GMT
+  digest: 71a0dc841847c301163c140fba5adea8f3a18c83
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=-155%2C67&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules_or_cwic&has_granules_or_cwic=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&include_has_granules=true&include_granule_counts=true
