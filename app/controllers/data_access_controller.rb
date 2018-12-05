@@ -186,14 +186,16 @@ class DataAccessController < ApplicationController
           elsif methods.length > 1
             methods_with_service = methods.select { |m| m[:umm_service] }
 
-            if methods_with_service.length == 1
-              only_method = methods_with_service[0]
+            Rails.logger.debug "#{collection} has #{methods_with_service.count} access method(s)"
+
+            if methods_with_service.length >= 1
+              first_method = methods_with_service[0]
 
               defaults[:service_options] = {
                 accessMethod: [{
-                  method: only_method[:name],
-                  type: only_method[:type],
-                  id: only_method[:id]
+                  method: first_method[:name],
+                  type: first_method[:type],
+                  id: first_method[:id]
                 }]
               }
             end
