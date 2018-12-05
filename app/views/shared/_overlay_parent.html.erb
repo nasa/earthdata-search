@@ -226,7 +226,7 @@
             <!-- /ko-->
             <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
               <div class="panel-item-section">
-                <p class="content"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: project.backToSearch">Click here</a> to modify.</p>
+                <p class="content"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
               </div>
             <!-- /ko -->
             <!-- ko if: $parents[1].selectedAccessMethod() == 'OPeNDAP' -->
