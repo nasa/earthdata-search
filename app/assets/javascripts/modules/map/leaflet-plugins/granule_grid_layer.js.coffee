@@ -67,7 +67,6 @@ ns.GranuleGridLayer = do (
       @_results = null
 
     _subscribe: ->
-      console.warn 'sub', @collection.granuleDatasource()
       if @collection.granuleDatasource() && @_added && !@_resultsSubscription
         granuleDatasource = @collection.granuleDatasource()
         @granules = granuleDatasource.data()

@@ -164,13 +164,11 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @root.find(@scope('.main-content'))
 
     updateControlContainer: (newHeight) ->
-      console.warn 'firing'
       masterOverlay = $('.master-overlay')
       masterOverlayMain = $('.master-overlay-main')
       leafletControlContainer = $('.leaflet-control-container')
 
       if newHeight
-        console.warn 'new height'
         leafletControlContainer.css({
             'height': newHeight
             'width': masterOverlayMain.width()

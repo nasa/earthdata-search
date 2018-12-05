@@ -80,11 +80,7 @@ ns.VariableSelector = do (ko
 
       # Rather than keeping a delta within each keyword mapping, we'll just delete all
       # selected variables within the currently selected keyword and re-add them below
-      console.warn '@keywordMappings()', @keywordMappings()
-
       for mapping in @keywordMappings()
-        console.warn '@selectedKeyword()', @selectedKeyword()
-        console.warn 'mapping', mapping
         if mapping.keyword == @selectedKeyword().keyword
           @selectedProjectCollection().selectedVariables.remove (variable) =>
             variable in @selectedKeyword().variables
