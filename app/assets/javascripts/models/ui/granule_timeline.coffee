@@ -216,12 +216,13 @@ ns.GranuleTimeline = do (ko
       range = @range
       focused = @collectionsList.focused()
       result = []
+      project = @projectList.project
       if focused?
         result = [focused.collection]
       else if  @projectList.visible()
-        result = @projectList.project.collections()
-      else if @project?.collections().length > 0
-        result = (projectCollection.collection for projectCollection in @project.collections())
+        result = project.collections()
+      else if @project && project?.collections().length > 0
+        result = (projectCollection.collection for projectCollection in project.collections())
 
       # Pick only the first 3 collections with granules
       result = (collection for collection in result when collection.has_granules)
@@ -284,9 +285,9 @@ ns.GranuleTimeline = do (ko
           delete currentTimelines[id]
         else
           if collection.granuleDatasource()?.hasCapability('timeline')
-            data = new GranuleTimelineData(collection, range, @project.colorForCollection(collection))
+            data = new GranuleTimelineData(collection, range, project.colorForCollection(collection))
           else
-            data = new IndeterminateGranuleTimelineData(collection, range, @project.colorForCollection(collection))
+            data = new IndeterminateGranuleTimelineData(collection, range, project.colorForCollection(collection))
           newTimelines[id] = data
 
       for own k, v of currentTimelines
