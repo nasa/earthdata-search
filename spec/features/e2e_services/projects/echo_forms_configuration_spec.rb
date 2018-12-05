@@ -8,30 +8,26 @@ describe 'When viewing the project page with an EGI supported collection' do
     wait_for_xhr
   end
 
-  context 'When choosing to customize the collection' do
+  context 'When choosing to edit the collection' do
     before :all do
-      collection_card = find('.collection-card', match: :first)
+      collection_card = find('.project-list-item', match: :first)
 
-      collection_card.find('.edit').click
+      collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
     end
 
     it 'displays the customization modal' do
-      within '.collection-customization .modal-header' do
-        expect(page).to have_content('Edit Options')
-      end
+      expect(page).to have_content('Edit Options')
     end
 
-    it 'displays the correct delivery method header', pending_updates: true do
-      within 'h4.customization-item-heading' do
-        expect(page).to have_content('Customize & Download')
+    it 'displays the correct delivery method header' do
+      within '.panel-item-heading' do
+        expect(page).to have_content('Stage for Delivery')
       end
     end
 
     it 'displays the variable selection option within the modal' do
-      within '.collection-customization .modal-body' do
-        expect(page).to have_css('.access-form')
-      end
+      expect(page).to have_css('.access-form')
     end
   end
 end

@@ -14,13 +14,13 @@ describe 'When viewing the project page' do
   context 'When viewing variables for subsetting' do
     before :all do
       # Find the collection card to work with
-      collection_card = find('.collection-card', match: :first)
+      collection_card = find('.project-list-item', match: :first)
 
       # Click the edit link
-      collection_card.find('.action-button.edit').click
+      collection_card.find('.project-list-item-action-edit-options').click
 
       # Choose to subset based on variables
-      find('.edit-variables').click
+      find_button('Edit Variables').click
       wait_for_xhr
 
       # Select the first Science Keyword listed
@@ -31,10 +31,6 @@ describe 'When viewing the project page' do
     end
 
     context 'When clicking the "View Details" link' do
-      it 'displays a "Back to Variables" link' do
-        expect(page).to have_css('.variable-details .button-back', count: 1)
-      end
-
       it 'displays the variable name' do
         el = find('.variable-details .collection-variable-name')
         expect(el).to have_content('EmisIR_A_min')
@@ -51,7 +47,7 @@ describe 'When viewing the project page' do
       end
 
       it 'displays a back button' do
-        el = find('.action-container .button.secondary')
+        el = find('.master-overlay-panel-item-fixed-footer')
         expect(el).to have_content('Back')
       end
     end

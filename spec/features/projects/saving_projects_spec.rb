@@ -6,39 +6,41 @@ describe 'Viewing an un-saved Project' do
   end
 
   it 'displays the default project name' do
-    within '.project-title-container' do
+    within '.master-overlay-content-header-project' do
       expect(page).to have_content('Untitled Project')
     end
   end
 
-  it 'displays a save project button' do
-    within '.project-title-container' do
-      expect(page).to have_css('.toolbar-button.save')
+  it 'displays a edit project button' do
+    within '.master-overlay-content-header-project' do
+      expect(page).to have_css('.editable-text-button-edit')
     end
   end
 
-  context 'clicking the save project button' do
+  context 'clicking the edit project button' do
     before :all do
-      within '.project-title-container' do
-        page.find('.toolbar-button.save').click
+      within '.master-overlay-content-header-project' do
+        page.find('.editable-text-button-edit').click
       end
     end
 
     it 'displays the project name form' do
-      expect(page).to have_field('workspace-name')
+      expect(page).to have_css('input.editable-text-input')
     end
 
     context 'providing a name and clicking `Save`' do
       before :all do
-        fill_in 'workspace-name', with: 'EDSC NASA'
+        within '.master-overlay-content-header-project' do
+          find('.editable-text-input').set('EDSC NASA')
 
-        click_button 'Save'
+          page.find('.editable-text-button-submit').click
+        end
 
         wait_for_xhr
       end
 
       it 'displays the updated project name' do
-        within '.project-title-container' do
+        within '.master-overlay-content-header-project' do
           expect(page).to have_content('EDSC NASA')
         end
       end
