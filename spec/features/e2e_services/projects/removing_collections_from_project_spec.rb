@@ -22,7 +22,7 @@ describe 'When viewing the project page with more than one collection' do
   context 'When removing a collection' do
     before :all do
       project_list_item = find('.project-list-item', match: :first)
-      project_list_item.find('.project-list-item-action-button').click
+      project_list_item.find('.button-icon-ellipsis').click
       project_list_item.find('.project-list-item-remove').click
     end
 
@@ -40,7 +40,7 @@ describe 'When viewing the project page with more than one collection' do
     context 'When removing the last collection' do
       before :all do
         project_list_item = find('.project-list-item', match: :first)
-        project_list_item.find('.project-list-item-action-button').click
+        project_list_item.find('.button-icon-ellipsis').click
         project_list_item.find('.project-list-item-remove').click
       end
 
