@@ -3,23 +3,20 @@ require 'spec_helper'
 describe 'Collection details' do
   context 'when displaying the collection details' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'AST_L1AE'
-      wait_for_xhr
-      first_collection_result.click_link('View collection details')
-      wait_for_xhr
+      Capybara.reset_sessions!
+      load_page 'search/collection-details', focus: 'C1000000004-EDF_DEV09', env: :sit, authenticate: 'edsc'
     end
 
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LP DAAC ARCHIVER')
-        expect(page).to have_content('JP/METI/AIST/JSS/GDS PROCESSOR')
+        expect(page).to have_content('LP DAAC User Services ARCHIVER')
+        expect(page).to have_content('EDC PROCESSOR')
         expect(page).to have_content('AST_L1AE')
-        expect(page).to have_content('VERSION 003')
-        expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116')
+        expect(page).to have_content('VERSION 3')
+        # expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116')
         expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
-        expect(page).to have_content('Temporal Extent: 2000-03-04 ongoing')
+        expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
         expect(page).to have_content('Science Keywords: EARTH SCIENCE SPECTRAL/ENGINEERING INFRARED WAVELENGTHS EARTH SCIENCE SPECTRAL/ENGINEERING VISIBLE WAVELENGTHS')
       end
     end
