@@ -370,7 +370,7 @@ describe "Granule search filters" do
       number_granules = project_overview.text.match /\d+ Granules/
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
     end
-    # Capybara::Screenshot.screenshot_and_save_page
+
     it 'shows the orbit spatial parameters in the granule filter list' do
       expect(page).to have_content('Orbit Spatial Parameters')
     end

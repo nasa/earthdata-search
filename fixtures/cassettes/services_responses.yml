@@ -580,9 +580,10 @@ a694fc934ae2c7c76bae650117b25206bc043d7a:
       via:
       - 1.1 epxo32-02a.eno.ecs.nasa.gov
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPGZlZWQgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDUvQXRvbSIgeG1sbnM6b3BlbnNlYXJjaD0iaHR0cDovL2E5LmNvbS8tL3NwZWMvb3BlbnNlYXJjaC8xLjEvIiB4bWxuczpnZW89Imh0dHA6Ly9hOS5jb20vLS9vcGVuc2VhcmNoL2V4dGVuc2lvbnMvZ2VvLzEuMC8iIHhtbG5zOmdlb3Jzcz0iaHR0cDovL3d3dy5nZW9yc3Mub3JnL2dlb3JzcyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy90ZXJtcy8iIHhtbG5zOnRpbWU9Imh0dHA6Ly9hOS5jb20vLS9vcGVuc2VhcmNoL2V4dGVuc2lvbnMvdGltZS8xLjAvIiB4bWxuczpjd2ljPSJodHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2V4dGVuc2lvbnMvMS4wLyIgeG1sbnM6ZXNpcGRpc2NvdmVyPSJodHRwOi8vY29tbW9ucy5lc2lwZmVkLm9yZy9ucy9kaXNjb3ZlcnkvMS4yLyI+PHRpdGxlPkNXSUMgT3BlblNlYXJjaCBSZXNwb25zZTwvdGl0bGU+PHVwZGF0ZWQ+MjAxOC0wMy0wMVQxMDozNjozMVo8L3VwZGF0ZWQ+PGF1dGhvcj48bmFtZT5DRU9TIFdHSVNTIEludGVncmF0ZWQgQ2F0YWxvZyAoQ1dJQykgLSBDV0lDIENvbnRhY3QgLSBFbWFpbDogY3dpYy1oZWxwQHdnaXNzLmNlb3Mub3JnIC0gV2ViOiBodHRwOi8vd2dpc3MuY2Vvcy5vcmcvY3dpYzwvbmFtZT48ZW1haWw+Y3dpYy1oZWxwQHdnaXNzLmNlb3Mub3JnPC9lbWFpbD48L2F1dGhvcj48aWQ+aHR0cDovL2N3aWMud2dpc3MuY2Vvcy5vcmcvb3BlbnNlYXJjaC9ncmFudWxlcy5hdG9tLz91aWQ9QzEyMjA1NjY2NTQtVVNHU19MVEElM0FFTzFfQUxJX1BVQiUzQUVPMUEwMTQwMzQyMDE2MDIxMTEwUDBfU0cxXzAxPC9pZD48ZGM6aWRlbnRpZmllcj5odHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20vP3VpZD1DMTIyMDU2NjY1NC1VU0dTX0xUQSUzQUVPMV9BTElfUFVCJTNBRU8xQTAxNDAzNDIwMTYwMjExMTBQMF9TRzFfMDE8L2RjOmlkZW50aWZpZXI+PG9wZW5zZWFyY2g6dG90YWxSZXN1bHRzPjE8L29wZW5zZWFyY2g6dG90YWxSZXN1bHRzPjxvcGVuc2VhcmNoOnN0YXJ0SW5kZXg+MTwvb3BlbnNlYXJjaDpzdGFydEluZGV4PjxvcGVuc2VhcmNoOml0ZW1zUGVyUGFnZT4xPC9vcGVuc2VhcmNoOml0ZW1zUGVyUGFnZT48bGluayByZWw9InNlbGYiIHR5cGU9ImFwcGxpY2F0aW9uL2F0b20reG1sIiBocmVmPSJodHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20/dWlkPUMxMjIwNTY2NjU0LVVTR1NfTFRBJTNBRU8xX0FMSV9QVUIlM0FFTzFBMDE0MDM0MjAxNjAyMTExMFAwX1NHMV8wMSIgdGl0bGU9IlRoaXMgUmVxdWVzdCIvPjxsaW5rIHJlbD0ic2VhcmNoIiB0eXBlPSJhcHBsaWNhdGlvbi9vcGVuc2VhcmNoZGVzY3JpcHRpb24reG1sIiBocmVmPSJodHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2RhdGFzZXRzL0MxMjIwNTY2NjU0LVVTR1NfTFRBL29zZGQueG1sIiB0aXRsZT0iU2VhcmNoIHRoaXMgcmVzb3VyY2UiLz48bGluayByZWw9ImZpcnN0IiB0eXBlPSJhcHBsaWNhdGlvbi9hdG9tK3htbCIgaHJlZj0iaHR0cDovL2N3aWMud2dpc3MuY2Vvcy5vcmcvb3BlbnNlYXJjaC9ncmFudWxlcy5hdG9tP2RhdGFzZXRJZD1DMTIyMDU2NjY1NC1VU0dTX0xUQSZhbXA7Y291bnQ9bnVsbCZhbXA7c3RhcnRJbmRleD0xIiB0aXRsZT0iRmlyc3QgcmVzdWx0Ii8+PGxpbmsgcmVsPSJsYXN0IiB0eXBlPSJhcHBsaWNhdGlvbi9hdG9tK3htbCIgaHJlZj0iaHR0cDovL2N3aWMud2dpc3MuY2Vvcy5vcmcvb3BlbnNlYXJjaC9ncmFudWxlcy5hdG9tP2RhdGFzZXRJZD1DMTIyMDU2NjY1NC1VU0dTX0xUQSZhbXA7Y291bnQ9bnVsbCZhbXA7c3RhcnRJbmRleD0xIiB0aXRsZT0iTGFzdCByZXN1bHQiLz48b3BlbnNlYXJjaDpRdWVyeSByb2xlPSJyZXF1ZXN0IiBjd2ljOmRhdGFzZXRJZD0iQzEyMjA1NjY2NTQtVVNHU19MVEEiIHVpZD0iQzEyMjA1NjY2NTQtVVNHU19MVEE6RU8xX0FMSV9QVUI6RU8xQTAxNDAzNDIwMTYwMjExMTBQMF9TRzFfMDEiLz48IS0tIFJlbW90ZSBzZWFyY2ggY29tcGxldGVkIGluIDEuMzY0IHNlY29uZHMuIC0tPjxlbnRyeT48dGl0bGU+RU8xQTAxNDAzNDIwMTYwMjExMTBQMF9TRzFfMDE8L3RpdGxlPjxpZD5odHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20/dWlkPUMxMjIwNTY2NjU0LVVTR1NfTFRBOkVPMV9BTElfUFVCOkVPMUEwMTQwMzQyMDE2MDIxMTEwUDBfU0cxXzAxPC9pZD48ZGM6aWRlbnRpZmllcj5odHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20/dWlkPUMxMjIwNTY2NjU0LVVTR1NfTFRBOkVPMV9BTElfUFVCOkVPMUEwMTQwMzQyMDE2MDIxMTEwUDBfU0cxXzAxPC9kYzppZGVudGlmaWVyPjx1cGRhdGVkPjIwMTctMDMtMjI8L3VwZGF0ZWQ+PGF1dGhvcj48bmFtZT5FUk9TIERBVEEgQ0VOVEVSIC0gVEVDSE5JQ0FMIENPTlRBQ1QgLSBDdXN0b21lciBTZXJ2aWNlczsgVS5TLiBHZW9sb2dpY2FsIFN1cnZleTsgRVJPUyBEYXRhIENlbnRlcjsgNDc5MTQgMjUybmQgU3RyZWV0OyAgU2lvdXggRmFsbHMsIFNEIDU3MTk4LTAwMDE7IFVTQSAtIEVtYWlsOiBjdXN0c2VydkB1c2dzLmdvdiAtIFBob25lOiA2MDUtNTk0LTYxNTEgLSBGQVg6IDYwNS01OTQtNjU4OTwvbmFtZT48ZW1haWw+Y3VzdHNlcnZAdXNncy5nb3Y8L2VtYWlsPjwvYXV0aG9yPjxnZW9yc3M6Ym94PjM2Ljg4NjM4NyAtNzUuODU0OTMzIDM3LjkxMTAyOCAtNzUuMTg4NTk0PC9nZW9yc3M6Ym94PjxnZW9yc3M6Ym94IHhtbG5zOmdlb3Jzcz0iaHR0cDovL3d3dy5nZW9yc3Mub3JnL2dlb3Jzcy8xMCI+MzYuODg2Mzg3IC03NS44NTQ5MzMgMzcuOTExMDI4IC03NS4xODg1OTQ8L2dlb3Jzczpib3g+PGdlb3Jzczpwb2x5Z29uIHhtbG5zOmdlb3Jzcz0iaHR0cDovL3d3dy5nZW9yc3Mub3JnL2dlb3Jzcy8xMCI+MzYuOTk0NDU2IC03NS44NTQ5MzMgMzYuODg2Mzg3IC03NS40NjYwMjYgMzcuODAyMTg1IC03NS4xODg1OTQgMzcuOTExMDI4IC03NS41ODIwNjcgMzYuOTk0NDU2IC03NS44NTQ5MzM8L2dlb3Jzczpwb2x5Z29uPjxkYzpkYXRlPjIwMTYtMDEtMjEvMjAxNi0wMS0yMTwvZGM6ZGF0ZT48bGluayB0aXRsZT0iQnJvd3NlIGltYWdlIFVSTCIgcmVsPSJpY29uIiB0eXBlPSJpbWFnZS9qcGVnIiBocmVmPSJodHRwczovL2VhcnRoZXhwbG9yZXIudXNncy5nb3YvYnJvd3NlL2VvLTEvYWxpLzE0LzM0LzIwMTYvRU8xMDE0MDM0MjAxNjAyMTExMFAwX1NHMV8wMS5qcGVnIi8+PGxpbmsgdGl0bGU9IkdyYW51bGUgZG93bmxvYWQgVVJMIiByZWw9ImVuY2xvc3VyZSIgdHlwZT0idGV4dC9odG1sIiBocmVmPSJodHRwczovL2VhcnRoZXhwbG9yZXIudXNncy5nb3Yvb3JkZXIvcHJvY2Vzcz9kYXRhc2V0X25hbWU9RU8xX0FMSV9QVUImYW1wO29yZGVyZWQ9RU8xQTAxNDAzNDIwMTYwMjExMTBQMF9TRzFfMDEmYW1wO25vZGU9SU5WU1ZDIi8+PGxpbmsgdGl0bGU9Ik9yaWdpbmFsIHNvdXJjZSBtZXRhZGF0YSIgcmVsPSJ2aWEiIHR5cGU9InRleHQveG1sIiBocmVmPSJodHRwczovL2VhcnRoZXhwbG9yZXIudXNncy5nb3YvbWV0YWRhdGEveG1sLzE4NTIvRU8xQTAxNDAzNDIwMTYwMjExMTBQMF9TRzFfMDEvIi8+PHN1bW1hcnkgdHlwZT0idGV4dC9odG1sIj5FbnRpdHkgSUQ6IEVPMUEwMTQwMzQyMDE2MDIxMTEwUDBfU0cxXzAxQWNxdWlzaXRpb24gRGF0ZTogMjAxNi8wMS8yMUNsb3VkIENvdmVyOiAxMCUgdG8gMTklIENsb3VkIENvdmVyT3JiaXQgUGF0aDogME9yYml0IFJvdzogMFRhcmdldCBQYXRoOiAxNFRhcmdldCBSb3c6IDM0IFN0YXRpb246IFNHMVByb2Nlc3NpbmcgTGV2ZWw6IEwxVCBQcm9kdWN0IEF2YWlsYWJsZVNjZW5lIFN0YXJ0IFRpbWU6IDIwMTY6MDIxOjEzOjU3OjE5Ljc3OVNjZW5lIFN0b3AgVGltZTogMjAxNjowMjE6MTM6NTc6MzUuMDI3U3VuIEF6aW11dGg6IDEzMi4zMDUxNDRTdW4gRWxldmF0aW9uOiAxNi40MzExNVNhdGVsbGl0ZSBJbmNsaW5hdGlvbjogOTcuOThMb29rIEFuZ2xlOiA1LjY5NDFEYXRlIEVudGVyZWQ6IDIwMTYvMDEvMjFDZW50ZXIgTGF0aXR1ZGUgOiAzN8KwMjMnNTQuNjUiTkNlbnRlciBMb25naXR1ZGU6IDc1wrAzMScyMi40NiJXTlcgQ29ybmVyIExhdDogMzfCsDU0JzM5LjcwIk5OVyBDb3JuZXIgTG9uZzogNzXCsDM0JzU1LjQ0IldORSBDb3JuZXIgTGF0OiAzN8KwNDgnMDcuODciTk5FIENvcm5lciBMb25nOiA3NcKwMTEnMTguOTQiV1NFIENvcm5lciBMYXQ6IDM2wrA1MycxMC45OSJOU0UgQ29ybmVyIExvbmc6IDc1wrAyNyc1Ny42OSJXU1cgQ29ybmVyIExhdDogMzbCsDU5JzQwLjA0Ik5TVyBDb3JuZXIgTG9uZzogNzXCsDUxJzE3Ljc2IldDZW50ZXIgTGF0aXR1ZGUgZGVjOiAzNy4zOTg1MTRDZW50ZXIgTG9uZ2l0dWRlIGRlYzogLTc1LjUyMjkwNU5XIENvcm5lciBMYXQgZGVjOiAzNy45MTEwMjhOVyBDb3JuZXIgTG9uZyBkZWM6IC03NS41ODIwNjdORSBDb3JuZXIgTGF0IGRlYzogMzcuODAyMTg1TkUgQ29ybmVyIExvbmcgZGVjOiAtNzUuMTg4NTk0U0UgQ29ybmVyIExhdCBkZWM6IDM2Ljg4NjM4N1NFIENvcm5lciBMb25nIGRlYzogLTc1LjQ2NjAyNlNXIENvcm5lciBMYXQgZGVjOiAzNi45OTQ0NTZTVyBDb3JuZXIgTG9uZyBkZWM6IC03NS44NTQ5MzM8L3N1bW1hcnk+PC9lbnRyeT48IS0tIEF0b20gcmVzcG9uc2UgZ2VuZXJhdGlvbiBjb21wbGV0ZWQgaW4gMG1zLiAtLT48L2ZlZWQ+PCEtLSBPcGVuU2VhcmNoIHJlc3BvbnNlIGNvbXBsZXRlZCBpbiAxMzY1bXMuIC0tPgo=
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:georss="http://www.georss.org/georss" xmlns:dc="http://purl.org/dc/terms/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:cwic="http://cwic.wgiss.ceos.org/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/"><title>CWIC OpenSearch Response</title><updated>2018-03-01T10:36:31Z</updated><author><name>CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic</name><email>cwic-help@wgiss.ceos.org</email></author><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0140342016021110P0_SG1_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0140342016021110P0_SG1_01</dc:identifier><opensearch:totalResults>1</opensearch:totalResults><opensearch:startIndex>1</opensearch:startIndex><opensearch:itemsPerPage>1</opensearch:itemsPerPage><link rel="self" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0140342016021110P0_SG1_01" title="This Request"/><link rel="search" type="application/opensearchdescription+xml" href="http://cwic.wgiss.ceos.org/opensearch/datasets/C1220566654-USGS_LTA/osdd.xml" title="Search this resource"/><link rel="first" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&amp;count=null&amp;startIndex=1" title="First result"/><link rel="last" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&amp;count=null&amp;startIndex=1" title="Last result"/><opensearch:Query role="request" cwic:datasetId="C1220566654-USGS_LTA" uid="C1220566654-USGS_LTA:EO1_ALI_PUB:EO1A0140342016021110P0_SG1_01"/><!-- Remote search completed in 1.364 seconds. --><entry><title>EO1A0140342016021110P0_SG1_01</title><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA:EO1_ALI_PUB:EO1A0140342016021110P0_SG1_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA:EO1_ALI_PUB:EO1A0140342016021110P0_SG1_01</dc:identifier><updated>2017-03-22</updated><author><name>EROS DATA CENTER - TECHNICAL CONTACT - Customer Services; U.S. Geological Survey; EROS Data Center; 47914 252nd Street;  Sioux Falls, SD 57198-0001; USA - Email: custserv@usgs.gov - Phone: 605-594-6151 - FAX: 605-594-6589</name><email>custserv@usgs.gov</email></author><georss:box>36.886387 -75.854933 37.911028 -75.188594</georss:box><georss:box xmlns:georss="http://www.georss.org/georss/10">36.886387 -75.854933 37.911028 -75.188594</georss:box><georss:polygon xmlns:georss="http://www.georss.org/georss/10">36.994456 -75.854933 36.886387 -75.466026 37.802185 -75.188594 37.911028 -75.582067 36.994456 -75.854933</georss:polygon><dc:date>2016-01-21/2016-01-21</dc:date><link title="Browse image URL" rel="icon" type="image/jpeg" href="https://earthexplorer.usgs.gov/browse/eo-1/ali/14/34/2016/EO10140342016021110P0_SG1_01.jpeg"/><link title="Granule download URL" rel="enclosure" type="text/html" href="https://earthexplorer.usgs.gov/order/process?dataset_name=EO1_ALI_PUB&amp;ordered=EO1A0140342016021110P0_SG1_01&amp;node=INVSVC"/><link title="Original source metadata" rel="via" type="text/xml" href="https://earthexplorer.usgs.gov/metadata/xml/1852/EO1A0140342016021110P0_SG1_01/"/><summary type="text/html">Entity ID: EO1A0140342016021110P0_SG1_01Acquisition Date: 2016/01/21Cloud Cover: 10% to 19% Cloud CoverOrbit Path: 0Orbit Row: 0Target Path: 14Target Row: 34 Station: SG1Processing Level: L1T Product AvailableScene Start Time: 2016:021:13:57:19.779Scene Stop Time: 2016:021:13:57:35.027Sun Azimuth: 132.305144Sun Elevation: 16.43115Satellite Inclination: 97.98Look Angle: 5.6941Date Entered: 2016/01/21Center Latitude : 37°23'54.65"NCenter Longitude: 75°31'22.46"WNW Corner Lat: 37°54'39.70"NNW Corner Long: 75°34'55.44"WNE Corner Lat: 37°48'07.87"NNE Corner Long: 75°11'18.94"WSE Corner Lat: 36°53'10.99"NSE Corner Long: 75°27'57.69"WSW Corner Lat: 36°59'40.04"NSW Corner Long: 75°51'17.76"WCenter Latitude dec: 37.398514Center Longitude dec: -75.522905NW Corner Lat dec: 37.911028NW Corner Long dec: -75.582067NE Corner Lat dec: 37.802185NE Corner Long dec: -75.188594SE Corner Lat dec: 36.886387SE Corner Long dec: -75.466026SW Corner Lat dec: 36.994456SW Corner Long dec: -75.854933</summary></entry><!-- Atom response generation completed in 0ms. --></feed><!-- OpenSearch response completed in 1365ms. -->
     http_version: 
 74e6b08ac41f7484f5a30df1ade39fdad7f542fc:
   response:
@@ -605,9 +606,10 @@ a694fc934ae2c7c76bae650117b25206bc043d7a:
       via:
       - 1.1 epxo32-02a.eno.ecs.nasa.gov
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPGZlZWQgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDUvQXRvbSIgeG1sbnM6b3BlbnNlYXJjaD0iaHR0cDovL2E5LmNvbS8tL3NwZWMvb3BlbnNlYXJjaC8xLjEvIiB4bWxuczpnZW89Imh0dHA6Ly9hOS5jb20vLS9vcGVuc2VhcmNoL2V4dGVuc2lvbnMvZ2VvLzEuMC8iIHhtbG5zOmdlb3Jzcz0iaHR0cDovL3d3dy5nZW9yc3Mub3JnL2dlb3JzcyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy90ZXJtcy8iIHhtbG5zOnRpbWU9Imh0dHA6Ly9hOS5jb20vLS9vcGVuc2VhcmNoL2V4dGVuc2lvbnMvdGltZS8xLjAvIiB4bWxuczpjd2ljPSJodHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2V4dGVuc2lvbnMvMS4wLyIgeG1sbnM6ZXNpcGRpc2NvdmVyPSJodHRwOi8vY29tbW9ucy5lc2lwZmVkLm9yZy9ucy9kaXNjb3ZlcnkvMS4yLyI+PHRpdGxlPkNXSUMgT3BlblNlYXJjaCBSZXNwb25zZTwvdGl0bGU+PHVwZGF0ZWQ+MjAxOC0wMy0wMVQxMDozNTo1NVo8L3VwZGF0ZWQ+PGF1dGhvcj48bmFtZT5DRU9TIFdHSVNTIEludGVncmF0ZWQgQ2F0YWxvZyAoQ1dJQykgLSBDV0lDIENvbnRhY3QgLSBFbWFpbDogY3dpYy1oZWxwQHdnaXNzLmNlb3Mub3JnIC0gV2ViOiBodHRwOi8vd2dpc3MuY2Vvcy5vcmcvY3dpYzwvbmFtZT48ZW1haWw+Y3dpYy1oZWxwQHdnaXNzLmNlb3Mub3JnPC9lbWFpbD48L2F1dGhvcj48aWQ+aHR0cDovL2N3aWMud2dpc3MuY2Vvcy5vcmcvb3BlbnNlYXJjaC9ncmFudWxlcy5hdG9tLz91aWQ9QzEyMjA1NjY2NTQtVVNHU19MVEElM0FFTzFfQUxJX1BVQiUzQUVPMUEwMzYwMzgyMDAxMTIxMTExUFBfUEYxXzAxPC9pZD48ZGM6aWRlbnRpZmllcj5odHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20vP3VpZD1DMTIyMDU2NjY1NC1VU0dTX0xUQSUzQUVPMV9BTElfUFVCJTNBRU8xQTAzNjAzODIwMDExMjExMTFQUF9QRjFfMDE8L2RjOmlkZW50aWZpZXI+PG9wZW5zZWFyY2g6dG90YWxSZXN1bHRzPjE8L29wZW5zZWFyY2g6dG90YWxSZXN1bHRzPjxvcGVuc2VhcmNoOnN0YXJ0SW5kZXg+MTwvb3BlbnNlYXJjaDpzdGFydEluZGV4PjxvcGVuc2VhcmNoOml0ZW1zUGVyUGFnZT4xPC9vcGVuc2VhcmNoOml0ZW1zUGVyUGFnZT48bGluayByZWw9InNlbGYiIHR5cGU9ImFwcGxpY2F0aW9uL2F0b20reG1sIiBocmVmPSJodHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20/dWlkPUMxMjIwNTY2NjU0LVVTR1NfTFRBJTNBRU8xX0FMSV9QVUIlM0FFTzFBMDM2MDM4MjAwMTEyMTExMVBQX1BGMV8wMSIgdGl0bGU9IlRoaXMgUmVxdWVzdCIvPjxsaW5rIHJlbD0ic2VhcmNoIiB0eXBlPSJhcHBsaWNhdGlvbi9vcGVuc2VhcmNoZGVzY3JpcHRpb24reG1sIiBocmVmPSJodHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2RhdGFzZXRzL0MxMjIwNTY2NjU0LVVTR1NfTFRBL29zZGQueG1sIiB0aXRsZT0iU2VhcmNoIHRoaXMgcmVzb3VyY2UiLz48bGluayByZWw9ImZpcnN0IiB0eXBlPSJhcHBsaWNhdGlvbi9hdG9tK3htbCIgaHJlZj0iaHR0cDovL2N3aWMud2dpc3MuY2Vvcy5vcmcvb3BlbnNlYXJjaC9ncmFudWxlcy5hdG9tP2RhdGFzZXRJZD1DMTIyMDU2NjY1NC1VU0dTX0xUQSZhbXA7Y291bnQ9bnVsbCZhbXA7c3RhcnRJbmRleD0xIiB0aXRsZT0iRmlyc3QgcmVzdWx0Ii8+PGxpbmsgcmVsPSJsYXN0IiB0eXBlPSJhcHBsaWNhdGlvbi9hdG9tK3htbCIgaHJlZj0iaHR0cDovL2N3aWMud2dpc3MuY2Vvcy5vcmcvb3BlbnNlYXJjaC9ncmFudWxlcy5hdG9tP2RhdGFzZXRJZD1DMTIyMDU2NjY1NC1VU0dTX0xUQSZhbXA7Y291bnQ9bnVsbCZhbXA7c3RhcnRJbmRleD0xIiB0aXRsZT0iTGFzdCByZXN1bHQiLz48b3BlbnNlYXJjaDpRdWVyeSByb2xlPSJyZXF1ZXN0IiBjd2ljOmRhdGFzZXRJZD0iQzEyMjA1NjY2NTQtVVNHU19MVEEiIHVpZD0iQzEyMjA1NjY2NTQtVVNHU19MVEE6RU8xX0FMSV9QVUI6RU8xQTAzNjAzODIwMDExMjExMTFQUF9QRjFfMDEiLz48IS0tIFJlbW90ZSBzZWFyY2ggY29tcGxldGVkIGluIDEuNDE2IHNlY29uZHMuIC0tPjxlbnRyeT48dGl0bGU+RU8xQTAzNjAzODIwMDExMjExMTFQUF9QRjFfMDE8L3RpdGxlPjxpZD5odHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20/dWlkPUMxMjIwNTY2NjU0LVVTR1NfTFRBOkVPMV9BTElfUFVCOkVPMUEwMzYwMzgyMDAxMTIxMTExUFBfUEYxXzAxPC9pZD48ZGM6aWRlbnRpZmllcj5odHRwOi8vY3dpYy53Z2lzcy5jZW9zLm9yZy9vcGVuc2VhcmNoL2dyYW51bGVzLmF0b20/dWlkPUMxMjIwNTY2NjU0LVVTR1NfTFRBOkVPMV9BTElfUFVCOkVPMUEwMzYwMzgyMDAxMTIxMTExUFBfUEYxXzAxPC9kYzppZGVudGlmaWVyPjx1cGRhdGVkPjIwMTctMDMtMjI8L3VwZGF0ZWQ+PGF1dGhvcj48bmFtZT5FUk9TIERBVEEgQ0VOVEVSIC0gVEVDSE5JQ0FMIENPTlRBQ1QgLSBDdXN0b21lciBTZXJ2aWNlczsgVS5TLiBHZW9sb2dpY2FsIFN1cnZleTsgRVJPUyBEYXRhIENlbnRlcjsgNDc5MTQgMjUybmQgU3RyZWV0OyAgU2lvdXggRmFsbHMsIFNEIDU3MTk4LTAwMDE7IFVTQSAtIEVtYWlsOiBjdXN0c2VydkB1c2dzLmdvdiAtIFBob25lOiA2MDUtNTk0LTYxNTEgLSBGQVg6IDYwNS01OTQtNjU4OTwvbmFtZT48ZW1haWw+Y3VzdHNlcnZAdXNncy5nb3Y8L2VtYWlsPjwvYXV0aG9yPjxnZW9yc3M6Ym94PjMwLjgwNTY2MSAtMTExLjMyMzU4NCAzMi41OTUzMDEgLTExMC40OTAyODE8L2dlb3Jzczpib3g+PGdlb3Jzczpib3ggeG1sbnM6Z2VvcnNzPSJodHRwOi8vd3d3Lmdlb3Jzcy5vcmcvZ2VvcnNzLzEwIj4zMC44MDU2NjEgLTExMS4zMjM1ODQgMzIuNTk1MzAxIC0xMTAuNDkwMjgxPC9nZW9yc3M6Ym94PjxnZW9yc3M6cG9seWdvbiB4bWxuczpnZW9yc3M9Imh0dHA6Ly93d3cuZ2VvcnNzLm9yZy9nZW9yc3MvMTAiPjMwLjkxNDE3MiAtMTExLjMyMzU4NCAzMC44MDU2NjEgLTExMC45NTQwMjggMzIuNDg1Njk2IC0xMTAuNDkwMjgxIDMyLjU5NTMwMSAtMTEwLjg2NjI2OSAzMC45MTQxNzIgLTExMS4zMjM1ODQ8L2dlb3Jzczpwb2x5Z29uPjxkYzpkYXRlPjIwMDEtMDUtMDEvMjAwMS0wNS0wMTwvZGM6ZGF0ZT48bGluayB0aXRsZT0iQnJvd3NlIGltYWdlIFVSTCIgcmVsPSJpY29uIiB0eXBlPSJpbWFnZS9qcGVnIiBocmVmPSJodHRwczovL2VhcnRoZXhwbG9yZXIudXNncy5nb3YvYnJvd3NlL2VvLTEvYWxpLzM2LzM4LzIwMDEvRU8xMDM2MDM4MjAwMTEyMTExMVBQX1BGMV8wMS5qcGVnIi8+PGxpbmsgdGl0bGU9IkdyYW51bGUgZG93bmxvYWQgVVJMIiByZWw9ImVuY2xvc3VyZSIgdHlwZT0idGV4dC9odG1sIiBocmVmPSJodHRwczovL2VhcnRoZXhwbG9yZXIudXNncy5nb3Yvb3JkZXIvcHJvY2Vzcz9kYXRhc2V0X25hbWU9RU8xX0FMSV9QVUImYW1wO29yZGVyZWQ9RU8xQTAzNjAzODIwMDExMjExMTFQUF9QRjFfMDEmYW1wO25vZGU9SU5WU1ZDIi8+PGxpbmsgdGl0bGU9Ik9yaWdpbmFsIHNvdXJjZSBtZXRhZGF0YSIgcmVsPSJ2aWEiIHR5cGU9InRleHQveG1sIiBocmVmPSJodHRwczovL2VhcnRoZXhwbG9yZXIudXNncy5nb3YvbWV0YWRhdGEveG1sLzE4NTIvRU8xQTAzNjAzODIwMDExMjExMTFQUF9QRjFfMDEvIi8+PHN1bW1hcnkgdHlwZT0idGV4dC9odG1sIj5FbnRpdHkgSUQ6IEVPMUEwMzYwMzgyMDAxMTIxMTExUFBfUEYxXzAxQWNxdWlzaXRpb24gRGF0ZTogMjAwMS8wNS8wMUNsb3VkIENvdmVyOiAwIHRvIDklIENsb3VkIENvdmVyT3JiaXQgUGF0aDogMzZPcmJpdCBSb3c6IDM4VGFyZ2V0IFBhdGg6IDM2VGFyZ2V0IFJvdzogMzggU3RhdGlvbjogUEYxUHJvY2Vzc2luZyBMZXZlbDogTDFUIFByb2R1Y3QgQXZhaWxhYmxlU2NlbmUgU3RhcnQgVGltZTogMjAwMToxMjE6MTc6NDk6MDYuOTQ5U2NlbmUgU3RvcCBUaW1lOiAyMDAxOjEyMToxNzo0OTozNC45NDlTdW4gQXppbXV0aDogMTIyLjkzNzQ0OVN1biBFbGV2YXRpb246IDYzLjQzODE3NFNhdGVsbGl0ZSBJbmNsaW5hdGlvbjogOTguMTlMb29rIEFuZ2xlOiA0LjMyNTREYXRlIEVudGVyZWQ6IDIwMDIvMDUvMDdDZW50ZXIgTGF0aXR1ZGUgOiAzMcKwNDInMDAuNzUiTkNlbnRlciBMb25naXR1ZGU6IDExMMKwNTQnMzAuNzUiV05XIENvcm5lciBMYXQ6IDMywrAzNSc0My4wOCJOTlcgQ29ybmVyIExvbmc6IDExMMKwNTEnNTguNTciV05FIENvcm5lciBMYXQ6IDMywrAyOScwOC41MSJOTkUgQ29ybmVyIExvbmc6IDExMMKwMjknMjUuMDEiV1NFIENvcm5lciBMYXQ6IDMwwrA0OCcyMC4zOCJOU0UgQ29ybmVyIExvbmc6IDExMMKwNTcnMTQuNTAiV1NXIENvcm5lciBMYXQ6IDMwwrA1NCc1MS4wMiJOU1cgQ29ybmVyIExvbmc6IDExMcKwMTknMjQuOTAiV0NlbnRlciBMYXRpdHVkZSBkZWM6IDMxLjcwMDIwOENlbnRlciBMb25naXR1ZGUgZGVjOiAtMTEwLjkwODU0MU5XIENvcm5lciBMYXQgZGVjOiAzMi41OTUzMDFOVyBDb3JuZXIgTG9uZyBkZWM6IC0xMTAuODY2MjY5TkUgQ29ybmVyIExhdCBkZWM6IDMyLjQ4NTY5Nk5FIENvcm5lciBMb25nIGRlYzogLTExMC40OTAyODFTRSBDb3JuZXIgTGF0IGRlYzogMzAuODA1NjYxU0UgQ29ybmVyIExvbmcgZGVjOiAtMTEwLjk1NDAyOFNXIENvcm5lciBMYXQgZGVjOiAzMC45MTQxNzJTVyBDb3JuZXIgTG9uZyBkZWM6IC0xMTEuMzIzNTg0PC9zdW1tYXJ5PjwvZW50cnk+PCEtLSBBdG9tIHJlc3BvbnNlIGdlbmVyYXRpb24gY29tcGxldGVkIGluIDBtcy4gLS0+PC9mZWVkPjwhLS0gT3BlblNlYXJjaCByZXNwb25zZSBjb21wbGV0ZWQgaW4gMTQxOG1zLiAtLT4K
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:georss="http://www.georss.org/georss" xmlns:dc="http://purl.org/dc/terms/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:cwic="http://cwic.wgiss.ceos.org/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/"><title>CWIC OpenSearch Response</title><updated>2018-03-01T10:35:55Z</updated><author><name>CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic</name><email>cwic-help@wgiss.ceos.org</email></author><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0360382001121111PP_PF1_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0360382001121111PP_PF1_01</dc:identifier><opensearch:totalResults>1</opensearch:totalResults><opensearch:startIndex>1</opensearch:startIndex><opensearch:itemsPerPage>1</opensearch:itemsPerPage><link rel="self" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0360382001121111PP_PF1_01" title="This Request"/><link rel="search" type="application/opensearchdescription+xml" href="http://cwic.wgiss.ceos.org/opensearch/datasets/C1220566654-USGS_LTA/osdd.xml" title="Search this resource"/><link rel="first" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&amp;count=null&amp;startIndex=1" title="First result"/><link rel="last" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&amp;count=null&amp;startIndex=1" title="Last result"/><opensearch:Query role="request" cwic:datasetId="C1220566654-USGS_LTA" uid="C1220566654-USGS_LTA:EO1_ALI_PUB:EO1A0360382001121111PP_PF1_01"/><!-- Remote search completed in 1.416 seconds. --><entry><title>EO1A0360382001121111PP_PF1_01</title><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA:EO1_ALI_PUB:EO1A0360382001121111PP_PF1_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA:EO1_ALI_PUB:EO1A0360382001121111PP_PF1_01</dc:identifier><updated>2017-03-22</updated><author><name>EROS DATA CENTER - TECHNICAL CONTACT - Customer Services; U.S. Geological Survey; EROS Data Center; 47914 252nd Street;  Sioux Falls, SD 57198-0001; USA - Email: custserv@usgs.gov - Phone: 605-594-6151 - FAX: 605-594-6589</name><email>custserv@usgs.gov</email></author><georss:box>30.805661 -111.323584 32.595301 -110.490281</georss:box><georss:box xmlns:georss="http://www.georss.org/georss/10">30.805661 -111.323584 32.595301 -110.490281</georss:box><georss:polygon xmlns:georss="http://www.georss.org/georss/10">30.914172 -111.323584 30.805661 -110.954028 32.485696 -110.490281 32.595301 -110.866269 30.914172 -111.323584</georss:polygon><dc:date>2001-05-01/2001-05-01</dc:date><link title="Browse image URL" rel="icon" type="image/jpeg" href="https://earthexplorer.usgs.gov/browse/eo-1/ali/36/38/2001/EO10360382001121111PP_PF1_01.jpeg"/><link title="Granule download URL" rel="enclosure" type="text/html" href="https://earthexplorer.usgs.gov/order/process?dataset_name=EO1_ALI_PUB&amp;ordered=EO1A0360382001121111PP_PF1_01&amp;node=INVSVC"/><link title="Original source metadata" rel="via" type="text/xml" href="https://earthexplorer.usgs.gov/metadata/xml/1852/EO1A0360382001121111PP_PF1_01/"/><summary type="text/html">Entity ID: EO1A0360382001121111PP_PF1_01Acquisition Date: 2001/05/01Cloud Cover: 0 to 9% Cloud CoverOrbit Path: 36Orbit Row: 38Target Path: 36Target Row: 38 Station: PF1Processing Level: L1T Product AvailableScene Start Time: 2001:121:17:49:06.949Scene Stop Time: 2001:121:17:49:34.949Sun Azimuth: 122.937449Sun Elevation: 63.438174Satellite Inclination: 98.19Look Angle: 4.3254Date Entered: 2002/05/07Center Latitude : 31°42'00.75"NCenter Longitude: 110°54'30.75"WNW Corner Lat: 32°35'43.08"NNW Corner Long: 110°51'58.57"WNE Corner Lat: 32°29'08.51"NNE Corner Long: 110°29'25.01"WSE Corner Lat: 30°48'20.38"NSE Corner Long: 110°57'14.50"WSW Corner Lat: 30°54'51.02"NSW Corner Long: 111°19'24.90"WCenter Latitude dec: 31.700208Center Longitude dec: -110.908541NW Corner Lat dec: 32.595301NW Corner Long dec: -110.866269NE Corner Lat dec: 32.485696NE Corner Long dec: -110.490281SE Corner Lat dec: 30.805661SE Corner Long dec: -110.954028SW Corner Lat dec: 30.914172SW Corner Long dec: -111.323584</summary></entry><!-- Atom response generation completed in 0ms. --></feed><!-- OpenSearch response completed in 1418ms. -->
     http_version: 
 ca3d7345f2c73b6b210b399ad385d7c40837679d:
   response:
@@ -898,6 +900,381 @@ d01537ac1b980a4377b21fabd637822e936f33b7:
         </body>
         </html>
     http_version: 
+1187f3ca8aafa841aa49a84837acd68897870ab9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - 5d9ad1e6-b55a-4ed2-9544-7f850dcfff4a
+      cmr-took:
+      - '156'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Wed, 05 Dec 2018 23:27:39 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '907'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":1,"took":155,"items":[{"meta":{"revision-id":1,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"LANCEAMSR2","user-id":"scantrell8277","native-id":"LANCEAMSR2_PROD_ECHO_ORDERS_service","concept-id":"S1571647120-LANCEAMSR2","revision-date":"2018-11-14T13:45:40Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ECHO
+        ORDERS Service for LANCEAMSR2 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://ghrc.nsstc.nasa.gov/ECHOOrderServices/OrderFulfillmentService.cgi","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ECHO
+        ORDERS","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA INTEROPERABILITY","ServiceSpecificTerm":"DATA
+        REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GHRC/LANCEAMSR2","LongName":"GHRC
+        User Services Office, National Space Science and Technology Center, 320 Sparkman
+        Drive, Huntsville, AL 35805","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"https://lance.nsstc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"support-ghrc@earthdata.nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"LANCEAMSR2
+        EOSDIS ECHO ORDERS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"LANCEAMSR2_ECHO_ORDERS","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"LongName":"LANCEAMSR2 EOSDIS ECHO ORDERS
+        Service Implementation"}}]}'
+    http_version: 
+cf9feed68ce94fe32d1d3f6b3e8728447ca6ed72:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - a13f1b8e-9b0e-4430-b5b1-712f4521425f
+      cmr-took:
+      - '17'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Wed, 05 Dec 2018 23:25:02 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1077'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":1,"took":17,"items":[{"meta":{"revision-id":4,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"brownm09","native-id":"AIRX3STD-OPeNDAP","concept-id":"S1200245793-EDF_OPS","revision-date":"2018-05-18T18:17:05Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"OPeNDAP
+        Service for AIRX3STD.006","URLContentType":"DistributionURL","Type":"GET SERVICE","Subtype":"OPENDAP
+        DATA","URL":"https://acdisc.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3STD.006/"}],"Type":"OPeNDAP","ServiceKeywords":[{"ServiceCategory":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTopic":"TRANSFORMATION/REPROJECTION"}],"ServiceOrganizations":[{"Roles":["SERVICE
+        PROVIDER"],"ShortName":"NASA/GESDISC","LongName":"GES DISC SERVICE HELP DESK
+        SUPPORT GROUP","ContactPersons":[{"Roles":["SERVICE PROVIDER"],"ContactInformation":{"ContactMechanisms":[{"Type":"Email","Value":"gsfc-help-disc
+        at lists.nasa.gov"},{"Type":"Telephone","Value":"301-614-5224"}],"Addresses":[{"StreetAddresses":["Goddard
+        Earth Sciences Data and Information Systems, Attn: User , NASA Goddard Space
+        Flight Center, Code 610.2"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]},"FirstName":"Mahabaleshwara","MiddleName":"
+        ","LastName":"Hegde"}]}],"ScienceKeywords":[{"Category":"EARTH SCIENCE","Topic":"ATMOSPHERE","Term":"ATMOSPHERIC
+        CHEMISTRY","VariableLevel1":"CARBON and HYDROCARBON COMPOUNDS","VariableLevel2":"Methane"}],"Description":"Access
+        the AIRS/Aqua Level 3 daily standard physical retrieval product (Without HSB)
+        through OPeNDAP","Version":"1.9","Name":"AIRX3STD.006","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"SupportedInputProjections":[{"ProjectionName":"Geographic"}],"SupportedOutputProjections":[{"ProjectionName":"Geographic"}],"SupportedInputFormats":["HDF4","NETCDF-3","NETCDF-4","BINARY","ASCII"],"SupportedOutputFormats":["HDF4","NETCDF-3","NETCDF-4","BINARY","ASCII"]},"LongName":"AIRS/Aqua
+        L3 Daily Standard Physical Retrieval (AIRS+AMSU) 1 degree x 1 degree V006."}}]}'
+    http_version: 
+b354acdaf5e4060134c42ff37c2c88d74cde2d3d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '3'
+      cmr-request-id:
+      - e28824f5-6751-4ccf-968d-a0bf7bc9fbe9
+      cmr-took:
+      - '16'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Wed, 05 Dec 2018 23:25:18 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1261'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":3,"took":14,"items":[{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"DEV08_ECHO_ORDERS_service","concept-id":"S1200299157-DEV08","revision-date":"2018-11-09T13:59:48Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for DEV08 ECHO-ORDERS EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/EWOC_DEV08/services/OrderFulfillmentPort","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ECHO
+        ORDERS","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA INTEROPERABILITY","ServiceSpecificTerm":"DATA
+        REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"DEV08
+        ECHO-ORDERS EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"DEV08_ECHO-ORDERS","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"DEV08 ECHO-ORDERS EOSDIS
+        Service Implementation"}},{"meta":{"revision-id":13,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"rabbott","native-id":"mmt_service_807","concept-id":"S1200252658-DEV08","revision-date":"2018-08-21T15:33:18Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_DEV08 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi_DEV08","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ESI","ServiceKeywords":[{"ServiceCategory":"EARTH
+        SCIENCE SERVICES","ServiceTopic":"DATA MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA
+        INTEROPERABILITY","ServiceSpecificTerm":"DATA REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_DEV08
+        EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_DEV08","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"SupportedInputProjections":[{"ProjectionName":"Geographic"},{"ProjectionName":"Lambert
+        Azimuthal Equal Area"},{"ProjectionName":"Polar Stereographic"}],"SupportedOutputProjections":[{"ProjectionName":"Geographic"},{"ProjectionName":"Lambert
+        Azimuthal Equal Area"},{"ProjectionName":"Polar Stereographic"}],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"],"SupportedInputFormats":["ASCII","GEOTIFF","NETCDF-3"],"SupportedOutputFormats":["ASCII","GEOTIFF","NETCDF-3"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV08 EOSDIS Service
+        Implementation"}},{"meta":{"revision-id":1,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"DEV08_ESI_service","concept-id":"S1200299153-DEV08","revision-date":"2018-10-24T18:03:00Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_DEV08 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi_DEV08/request","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ESI","ServiceKeywords":[{"ServiceCategory":"EARTH
+        SCIENCE SERVICES","ServiceTopic":"DATA MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA
+        INTEROPERABILITY","ServiceSpecificTerm":"DATA REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_DEV08
+        ESI EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_DEV08_ESI","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV01 ESI EOSDIS Service
+        Implementation"}}]}'
+    http_version: 
+4a7333bd483c5cb16de70780915a1913533149ef:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '3'
+      cmr-request-id:
+      - 5276d9d8-7cea-4b57-801b-9cda62a187a8
+      cmr-took:
+      - '18'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Wed, 05 Dec 2018 23:30:26 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1601'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":3,"took":17,"items":[{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"DEV08_ECHO_ORDERS_service","concept-id":"S1200299157-DEV08","revision-date":"2018-11-09T13:59:48Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for DEV08 ECHO-ORDERS EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/EWOC_DEV08/services/OrderFulfillmentPort","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ECHO
+        ORDERS","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA INTEROPERABILITY","ServiceSpecificTerm":"DATA
+        REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"DEV08
+        ECHO-ORDERS EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"DEV08_ECHO-ORDERS","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"DEV08 ECHO-ORDERS EOSDIS
+        Service Implementation"}},{"meta":{"revision-id":1,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"DEV08_ESI_service","concept-id":"S1200299153-DEV08","revision-date":"2018-10-24T18:03:00Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_DEV08 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi_DEV08/request","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ESI","ServiceKeywords":[{"ServiceCategory":"EARTH
+        SCIENCE SERVICES","ServiceTopic":"DATA MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA
+        INTEROPERABILITY","ServiceSpecificTerm":"DATA REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_DEV08
+        ESI EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_DEV08_ESI","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV01 ESI EOSDIS Service
+        Implementation"}},{"meta":{"revision-id":4,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"rabbott","native-id":"mmt_service_990","concept-id":"S1200269651-DEV08","revision-date":"2018-08-20T19:43:05Z","concept-type":"service"},"umm":{"RelatedURLs":[{"URLContentType":"DistributionURL","Type":"GET
+        DATA","Subtype":"EARTHDATA SEARCH","URL":"http://search.sit.earthdata.nasa.gov"}],"Type":"ECHO
+        ORDERS","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"WEB
+        SERVICES","ServiceTerm":"INFORMATION MANAGEMENT SERVICES","ServiceSpecificTerm":"WEB
+        FEATURE SERVICE"}],"ServiceOrganizations":[{"Roles":["AUTHOR"],"ShortName":"973
+        DATA CENTER","LongName":"Data Archive, Sharing Network for Resource and Environment
+        Project of 973 Program","ContactInformation":{"RelatedUrls":[{"URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"MAP SERVICE","URL":"http://www.973geodata.cn"}]}}],"Description":"Cum
+        sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus,
+        tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+        justo sit amet risus.","Version":"1","Name":"SFD Service","ServiceOptions":{"SubsetTypes":["Spatial","Temporal","Variable"],"SupportedInputProjections":[{"ProjectionName":"Geographic"}],"SupportedOutputProjections":[{"ProjectionName":"Geographic"}],"InterpolationTypes":["Bicubic
+        Interpolation"],"SupportedInputFormats":["NETCDF-4"],"SupportedOutputFormats":["NETCDF-4"]},"LongName":"Mollis
+        Etiam Magna Fermentum Fringilla"}}]}'
+    http_version: 
+3ab9aea14db6bb14eefea41751866d67defcbc6b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '2'
+      cmr-request-id:
+      - 3c643a9a-0118-4ef2-9b51-092f730f4433
+      cmr-took:
+      - '35'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Wed, 05 Dec 2018 23:24:58 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1071'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":2,"took":34,"items":[{"meta":{"revision-id":2,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"DEV08_ECHO_ORDERS_service","concept-id":"S1200299157-DEV08","revision-date":"2018-11-09T13:59:48Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for DEV08 ECHO-ORDERS EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/EWOC_DEV08/services/OrderFulfillmentPort","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ECHO
+        ORDERS","ServiceKeywords":[{"ServiceCategory":"EARTH SCIENCE SERVICES","ServiceTopic":"DATA
+        MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA INTEROPERABILITY","ServiceSpecificTerm":"DATA
+        REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"DEV08
+        ECHO-ORDERS EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"DEV08_ECHO-ORDERS","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"DEV08 ECHO-ORDERS EOSDIS
+        Service Implementation"}},{"meta":{"revision-id":1,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"DEV08","user-id":"scantrell8277","native-id":"DEV08_ESI_service","concept-id":"S1200299153-DEV08","revision-date":"2018-10-24T18:03:00Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_DEV08 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi_DEV08/request","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ESI","ServiceKeywords":[{"ServiceCategory":"EARTH
+        SCIENCE SERVICES","ServiceTopic":"DATA MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA
+        INTEROPERABILITY","ServiceSpecificTerm":"DATA REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_DEV08
+        ESI EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_DEV08_ESI","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV01 ESI EOSDIS Service
+        Implementation"}}]}'
+    http_version: 
+d856706f77e244473b7262c30c3a6786f74d2337:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - 4aa57e7f-abc4-487f-8a50-527455695414
+      cmr-took:
+      - '36'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Wed, 05 Dec 2018 23:38:03 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '945'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":1,"took":36,"items":[{"meta":{"revision-id":1,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_OPS","user-id":"scantrell8277","native-id":"EDF_OPS_ESI_service","concept-id":"S1200299155-EDF_OPS","revision-date":"2018-10-24T18:07:26Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_OPS EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi/request","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ESI","ServiceKeywords":[{"ServiceCategory":"EARTH
+        SCIENCE SERVICES","ServiceTopic":"DATA MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA
+        INTEROPERABILITY","ServiceSpecificTerm":"DATA REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_OPS
+        ESI EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_OPS_ESI","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_OPS ESI EOSDIS Service
+        Implementation"}}]}'
+    http_version: 
+3fc3ca227ed7748ab9300ba8c2ab56e867f66366:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '6'
+      cmr-media-type:
+      - cmr-opendap.v2.1; format=json
+      cmr-request-id:
+      - 75fb3302-270d-f213-ccac-124344098791
+      cmr-took:
+      - '0.281'
+      content-type:
+      - application/json
+      date:
+      - Wed, 05 Dec 2018 23:28:48 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '1664'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":6,"took":0.281,"items":["https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2009.01.08/AIRS.2009.01.08.L3.RetStd001.v6.0.9.0.G13091205040.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.01.20/AIRS.2016.01.20.L3.RetStd001.v6.0.31.0.G16027144006.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.02.03/AIRS.2016.02.03.L3.RetStd001.v6.0.31.0.G16035170541.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.04.03/AIRS.2016.04.03.L3.RetStd001.v6.0.31.0.G16095182314.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2004.12.11/AIRS.2004.12.11.L3.RetStd001.v6.0.9.0.G13189111444.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]"],"request-id":"75fb3302-270d-f213-ccac-124344098791","warnings":null}'
+    http_version: 
 7b57cba41ae355a09a1cacded832660d3983b107:
   response:
     status:
@@ -1089,6 +1466,30 @@ c932062b79abba67137561b12b1c852fad9cb4df:
     body:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000000-ORNL_DAAC"}'
+    http_version: 
+3153ede1fc2525a64bcb947661d5de1bdf4a561d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Thu, 06 Dec 2018 00:06:31 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '74'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000004-EDF_DEV09"}'
     http_version: 
 cf841069680040a624281e20239ca7d125562c60:
   response:
@@ -1738,6 +2139,30 @@ f85034a1b85aba95a56845fe4e3ced74b346c672:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179003620-ORNL_DAAC"}'
     http_version: 
+8a14ed1747f0bcdb5a901e458073edd75e994a6a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Wed, 05 Dec 2018 23:36:33 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '74'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C197265171-LPDAAC_ECS"}'
+    http_version: 
 3ab13e12edeac7bcbb6855b2f491b8683cf73fb9:
   response:
     status:
@@ -1891,7 +2316,7 @@ da15b45a7adf3c6ac6915307a25d3ab1854ec9b5:
       content-type:
       - application/json
       date:
-      - Thu, 01 Mar 2018 16:32:25 GMT
+      - Thu, 06 Dec 2018 01:24:36 GMT
       server:
       - nginx
       strict-transport-security:
@@ -1899,13 +2324,13 @@ da15b45a7adf3c6ac6915307a25d3ab1854ec9b5:
       vary:
       - Accept-Encoding
       content-length:
-      - '218'
+      - '210'
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"edscSpatial":{"textAfterExtraction":"texas","geonames":"Texas,United
-        States","bbox":{"swPoint":{"latitude":25.837163999999998,"longitude":-106.645646},"nePoint":{"latitude":36.500704,"longitude":-93.508039}},"query":"bounding_box:-106.645646,25.837163999999998:-93.508039,36.500704"},"edscTemporal":null,"keyword":"texas"}'
+        States","bbox":{"swPoint":{"latitude":25.837164,"longitude":-106.645646},"nePoint":{"latitude":36.500704,"longitude":-93.508039}},"query":"bounding_box:-106.645646,25.837164:-93.508039,36.500704"},"edscTemporal":null,"keyword":"texas"}'
     http_version: 
 87471c07b2f6a0d4e81556f64ba5299430a6f0ac:
   response:
@@ -1977,7 +2402,7 @@ d63cb049375aff72da5b367d65d787ce978ec49f:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"edscSpatial":{"textAfterExtraction":"snow cover last winter","geonames":"Boston,United
         States","bbox":{"swPoint":{"latitude":42.22788,"longitude":-71.191155},"nePoint":{"latitude":42.40082,"longitude":-70.748802}},"query":"bounding_box:-71.191155,42.22788:-70.748802,42.40082"},"edscTemporal":{"textAfterExtraction":"snow
         cover","temporal":"null, 2017-WI","timex":"null, 2017-WI","query":"2017-12-01T00:00:00Z,2018-03-31T23:59:59Z","start":"2017-12-01T00:00:00Z","end":"2018-03-31T23:59:59Z","recurring":true},"keyword":"snow
@@ -2076,7 +2501,7 @@ d63cb049375aff72da5b367d65d787ce978ec49f:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"edscSpatial":{"textAfterExtraction":"","geonames":"Mesico,Mexico","bbox":{"swPoint":{"latitude":14.532866,"longitude":-118.453949},"nePoint":{"latitude":32.716759,"longitude":-86.703392}},"query":"bounding_box:-118.453949,14.532866:-86.703392,32.716759"},"edscTemporal":null,"keyword":""}'
     http_version: 
 12fb3c3bd23cf8da10cc48c4d483045050b3a9ea:
@@ -2940,7 +3365,7 @@ e5932c734c9e0acb576de82fe0407508918923d0:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"edscSpatial":{"textAfterExtraction":"modis","geonames":"Modis,Indonesia","bbox":{"swPoint":{"latitude":-7.024587297502198,"longitude":108.5466780628693},"nePoint":{"latitude":-6.988612702497801,"longitude":108.5829219371307}},"query":"bounding_box:108.5466780628693,-7.024587297502198:108.5829219371307,-6.988612702497801"},"edscTemporal":null,"keyword":"modis"}'
     http_version: 
 e768a6eb26766a27b0aa0c1a722b041f8864430f:
@@ -2964,7 +3389,7 @@ e768a6eb26766a27b0aa0c1a722b041f8864430f:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"edscSpatial":{"textAfterExtraction":"texas","geonames":"El Paso,Texas,United
         States","bbox":{"swPoint":{"latitude":31.621356,"longitude":-106.635922},"nePoint":{"latitude":32.001630999999996,"longitude":-106.199979}},"query":"bounding_box:-106.635922,31.621356:-106.199979,32.001630999999996"},"edscTemporal":null,"keyword":"texas"}'
     http_version: 
@@ -3038,7 +3463,7 @@ e768a6eb26766a27b0aa0c1a722b041f8864430f:
       connection:
       - Close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"edscSpatial":{"textAfterExtraction":"snow cover last winter","geonames":"Boston,United
         States","bbox":{"swPoint":{"latitude":42.22788,"longitude":-71.191155},"nePoint":{"latitude":42.40082,"longitude":-70.748802}},"query":"bounding_box:-71.191155,42.22788:-70.748802,42.40082"},"edscTemporal":{"textAfterExtraction":"snow
         cover","temporal":"null, 2017-WI","timex":"null, 2017-WI","query":"2017-12-01T00:00:00Z,2018-03-31T23:59:59Z","start":"2017-12-01T00:00:00Z","end":"2018-03-31T23:59:59Z","recurring":true},"keyword":"snow
@@ -5086,7 +5511,7 @@ f8ab9ae82d5d59d6a12f1477ebf18a37868e8f98:
       strict-transport-security:
       - max-age=31536000
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: "<!DOCTYPE html>\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8
         lt-ie7\"> <![endif]-->\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\">
         <![endif]-->\n<!--[if IE 8]><html class=\"no-js lt-ie9\"> <![endif]-->\n<!--[if
