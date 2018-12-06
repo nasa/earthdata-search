@@ -140,7 +140,7 @@ minutes and faster is better. Please ensure tests run quickly and pass
 consistently regardless of execution order.
 
 The entire suite of Earthdata Search tests, including unit, functional, and
-integration tests, may be run using the `rake test` command. Earthdata Search
+integration tests, may be run using the `docker-compose run web rake test` command. Earthdata Search
 uses RSpec and Jasmine for its tests.
 
 Integration specs use Capybara and Selenium to simulate browser
@@ -165,7 +165,7 @@ this document's style guide.
 For testing JavaScript, we use Jasmine, which has an RSpec-like syntax.
 Developers should exercise their JavaScript in the same way they exercise Ruby
 code. Jasmine tests are located under spec/javascripts. They can be run
-continuously using `rake jasmine` or once using `rake jasmine:ci`.
+continuously using `docker-compose run web rake jasmine` or once using `docker-compose run web rake jasmine:ci`.
 
 ## The Pattern Portfolio for HTML, CSS, and JavaScript testing
 
@@ -176,13 +176,13 @@ intended.
 Reusable CSS rules and JavaScript components should be displayed in the
 project's pattern portfolio document found at docs/ui/index.html. Developers
 may add to the portfolio by editing docs/ui/templates/index.html.erb. We
-generate the portfolio by running `rake doc:ui` in the project root (or `rake
+generate the portfolio by running `docker-compose run web rake doc:ui` in the project root (or `docker-compose run web rake
 doc` to generate all project documentation).
 
 To see which rules are demonstrated, we run Deadweight on the pattern
-portfolio to scan for unused rules using `rake test:deadweight`.
+portfolio to scan for unused rules using `docker-compose run web rake test:deadweight`.
 
-To ensure the quality of our CSS, we run CSS lint using `rake test:csslint`.
+To ensure the quality of our CSS, we run CSS lint using `docker-compose run web rake test:csslint`.
 Developers are encouraged to read the CSS Lint wiki
 (<https://github.com/stubbornella/csslint/wiki/Rules>) to learn about the
 reasoning behind the rules.
