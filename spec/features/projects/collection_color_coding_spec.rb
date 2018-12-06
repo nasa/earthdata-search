@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Project collection color coding" do
+describe 'Project collection color coding' do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
   first_color_hex = '#3498DB'
@@ -28,16 +28,16 @@ describe "Project collection color coding" do
 
   context 'in the granule view for collections not in a project' do
     before(:all) { view_granule_results }
-    # after(:all) { leave_granule_results }
+    after(:all) { leave_granule_results }
 
     it 'uses the default color for granule footprints' do
       map_mousemove('#map', 39.1, -96.6)
-      expect(page).to have_selector(".leaflet-overlay-pane path")
+      expect(page).to have_selector('.leaflet-overlay-pane path')
       expect(page).to have_no_selector(".leaflet-overlay-pane path[stroke=\"#{first_color_hex}\"]")
     end
 
     it 'uses the default color in the timeline' do
-      expect(page.find('#timeline .C179003030-ORNL_DAAC')).to have_css("rect")
+      expect(page.find('#timeline .C179003030-ORNL_DAAC')).to have_css('rect')
       expect(page.find('#timeline .C179003030-ORNL_DAAC')).to have_no_css("rect[style*=\"#{first_color_hex}\"]")
     end
   end
