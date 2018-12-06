@@ -4,7 +4,7 @@
 
 require "spec_helper"
 
-describe "Timeline display", reset: false do
+describe "Timeline display" do
   extend Helpers::CollectionHelpers
 
   before :all do
@@ -21,7 +21,7 @@ describe "Timeline display", reset: false do
     end
   end
 
-  context 'in the project list' do
+  pending 'in the project list' do
     before :all do
       wait_for_xhr
       # 4 collections with granules
@@ -93,50 +93,5 @@ describe "Timeline display", reset: false do
         expect(page).to have_no_selector('#timeline')
       end
     end
-
   end
-
-  context 'in the granule result list, coming from the project' do
-    before :all do
-      add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
-
-      find("#view-project").click
-      view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview')
-    end
-
-    after :all do
-      leave_granule_results('project-overview')
-      click_link('Back to Collection Search')
-      reset_project
-    end
-
-    it 'displays a timeline for the single focused collection' do
-      timeline = page.find('#timeline svg')
-      expect(timeline).to have_selector('.C179003030-ORNL_DAAC')
-    end
-  end
-
-  context 'with a temporal condition' do
-    start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')
-    stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
-
-    before :all do
-      add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
-
-      set_temporal(start_date, stop_date)
-
-      find("#view-project").click
-    end
-
-    after :all do
-      click_link 'Back to Collection Search'
-      unset_temporal
-      reset_project
-    end
-
-    it 'pans the timeline to the applied temporal timeframe' do
-      expect(page).to have_highlighted_selection(start_date, stop_date)
-    end
-  end
-
 end

@@ -3,13 +3,12 @@
 
 require 'spec_helper'
 
-describe 'Contact Information', reset: false do
+describe 'Contact Information', pending_updates: true do
   before :all do
-    load_page :search, overlay: false
-    login
-    wait_for_xhr
+    load_page :search, overlay: false, authenticate: 'edsc'
+
     dismiss_banner
-    click_link 'Manage user account' 
+    click_link 'Manage user account'
     # TODO: Both of these fail to get me to the contact info page
     # click_link 'Contact Information'
     # click_contact_information
@@ -51,7 +50,7 @@ describe 'Contact Information', reset: false do
     # It is however not the case. The test has been passing because of a real issue in updating the preference which is
     # fixed in this commit.
     # Skip it for the moment.
-    xit "updates the order notification preference" do
+    it "updates the order notification preference" do
       expect(page).to have_select("notificationLevel", selected: "Always")
     end
 

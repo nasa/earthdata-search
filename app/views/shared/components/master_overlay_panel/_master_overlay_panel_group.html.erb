@@ -1,0 +1,33 @@
+<template id="tmpl_master-overlay-panel-group">
+  <div class="master-overlay-panel-group" data-bind="
+    componentMasterOverlayPanelGroup: true,
+    css: {
+      'master-overlay-panel-group-open': $component.isOpen,
+      'master-overlay-panel-group-active': $component.panelGroupName() === $parentContext.$component.activePanelGroup(),
+      'master-overlay-panel-group-no-animate': !$component.shouldAnimate
+    }">
+    <header class="master-overlay-panel-group-header">
+      <h2 class="master-overlay-panel-group-heading">
+        <!-- ko if: $data.secondaryTitle() -->
+          <span class="master-overlay-panel-group-heading-secondary" data-bind="text: $data.secondaryTitle()"></span>
+        <!-- /ko -->
+        <!-- ko if: $data.primaryTitle() -->
+          <span class="master-overlay-panel-group-heading-primary" data-bind="text: $data.primaryTitle()"></span>
+        <!-- /ko -->
+      </h2>
+      <button class="master-overlay-panel-group-close" title="Close panel" type="button" name="panel-group-close">
+          <i class="fa fa-times"></i>
+      </button>
+    </header>
+    <div class="master-overlay-panel-panels">
+      <!-- ko if: $data.backToButton() -->
+      <div class="master-overlay-panel-content-header">
+          <button class="button button-back master-overlay-panel-back" type="button" data-bind="attr: { title: 'Back to ' + $data.backToButton().text}, click: $data.onBackButtonClick">
+            <i class="fa fa-chevron-left"></i> Back to <span data-bind="text: $data.backToButton().text"></span>
+          </button>
+      </div>
+      <!-- /ko -->
+      <!-- ko template: { nodes: $componentTemplateNodes } --><!-- /ko -->
+    </div>
+  </div>
+</template>

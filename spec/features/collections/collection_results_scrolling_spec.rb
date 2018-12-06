@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection results scrolling', reset: false do
+describe 'Collection results scrolling', data_specific: true do
   before :all do
     load_page :search, q: 'AQUARIUS_SAC-D AS'
   end
@@ -23,13 +23,13 @@ describe 'Collection results scrolling', reset: false do
 
           page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 30000"
           wait_for_xhr
-          
+
           page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 40000"
           wait_for_xhr
         end
 
         it 'does not load additional results' do
-          expect(page).to have_css('#collection-results-list .panel-list-item', count: 67)
+          expect(page).to have_css('#collection-results-list .panel-list-item', count: 69)
         end
 
         it 'does not show the loading message' do

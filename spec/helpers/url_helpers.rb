@@ -32,7 +32,7 @@ module Helpers
         end
 
         envs = {sit: 'sit', uat: 'uat', prod: 'prod'}
-        params['cmr_env'] = envs[options[:env]] if options[:env]
+        params['cmr_env'] = envs[options[:env].to_sym] if options[:env]
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
         params['sgd'] = options[:granule_id] if options[:granule_id]
@@ -86,31 +86,54 @@ module Helpers
       end
     end
 
-    def load_page(url, options={})
-      close_banner = options.delete :close_banner
+    def clear_rack_session
+      page.set_rack_session(expires_in: 0)
+      page.set_rack_session(access_token: nil)
+      page.set_rack_session(refresh_token: nil)
+      page.set_rack_session(user_name: nil)
+      page.set_rack_session(logged_in_at: nil)
+    end
+
+    def load_page(url, options = {})
+      close_banner = options.delete(:close_banner)
 
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
-        # Set supported session variables
-        options.select { |option| ['cmr_env'].include?(option) }.each do |key, value|
+        options[:env] = 'prod' unless options.key?(:env)
+
+        options[:env] ||= cmr_env.to_sym
+
+        # If the cmr_env is production, we reset the session values because it wont be provided to this method
+        if options[:env].to_s == 'prod'
+          Capybara.reset_sessions!
+
+          clear_rack_session
+        end
+        
+        options.select { |option| [:env].include?(option) }.each do |key, value|
           page.set_rack_session(key => value)
         end
+
+        authenticate_as = options.delete(:authenticate)
+
+        be_logged_in_as(authenticate_as, options[:env]) if authenticate_as
 
         url = QueryBuilder.new.add_to(url, options)
 
         # Leave for debugging, comment out when not in use
-        # puts url
+        # puts "URL: #{url}"
 
         visit url
-      end
-      wait_for_xhr
+      
+        wait_for_xhr
 
-      # Close tour modal
-      page.execute_script("$('#closeInitialTourModal').trigger('click')")
+        # Close tour modal
+        page.execute_script("$('#closeInitialTourModal').trigger('click')")
 
-      # Close banner
-      if close_banner.present? && close_banner || close_banner.nil?
-        while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
-          page.execute_script("$('.banner-close').click()")
+        # Close banner
+        if close_banner.present? && close_banner || close_banner.nil?
+          while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0')
+            page.execute_script("$('.banner-close').click()")
+          end
         end
       end
     end

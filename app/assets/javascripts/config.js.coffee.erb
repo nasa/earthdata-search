@@ -46,7 +46,7 @@
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 0
-    gibsUrl: "/assets/gibs-example.jpeg?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}&time=2011-01-11"
+    gibsUrl: "/assets/gibs-example.jpeg?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={lprojection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}&TIME={time}"
     browseScalerUrl: "/assets/gibs-example.jpeg#"
     present: -> Date.UTC(2014, 2, 1)
     animateMap: false
@@ -59,7 +59,7 @@
 
   # Development config
   exports =
-    allowTouch: true
+    allowTouch: false
     urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
@@ -67,8 +67,8 @@
     csrfToken: csrfToken
     hoverTimeoutMs: 500
     debug: true
-    gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time_start}/{resolution}/{z}/{y}/{x}.{format}'
-    gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default//{resolution}/{z}/{y}/{x}.{format}'
+    gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
+    gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
     browseScalerUrl: browse_scaler_url
     present: -> new Date() - 0
     animateMap: true
@@ -80,15 +80,15 @@
   <% else %>
   # Production config
   exports =
-    allowTouch: true
+    allowTouch: false
     urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 500
-    gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time_start}/{resolution}/{z}/{y}/{x}.{format}'
-    gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default//{resolution}/{z}/{y}/{x}.{format}'
+    gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
+    gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
     browseScalerUrl: browse_scaler_url
     present: -> new Date() - 0
     animateMap: true

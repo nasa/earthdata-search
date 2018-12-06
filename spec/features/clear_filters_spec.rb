@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "'Clear Filters' button", reset: false do
+describe "'Clear Filters' button" do
   before :all do
     load_page :search, facets: true, env: :sit
   end
@@ -18,21 +18,15 @@ describe "'Clear Filters' button", reset: false do
 
   it 'clears spatial' do
     create_point(0, 0)
-
     wait_for_xhr
-
-    collections_within_point = find('header.tab h2 strong').text
-
+    collections_within_point = find('.master-overlay-tab-title strong').text
     click_link 'Clear Filters'
-
     wait_for_xhr
-
-    collections_without_point = find('header.tab h2 strong').text
-
-    expect(collections_without_point).to be > collections_within_point
+    collections_without_point = find('.master-overlay-tab-title strong').text
+    expect(collections_without_point.to_i).to be > collections_within_point.to_i
   end
 
-  context "clears temporal" do
+  context "clears temporal", data_specific: true do
     after :each do
       # close temporal dropdown
       click_link "Temporal"
@@ -87,7 +81,7 @@ describe "'Clear Filters' button", reset: false do
   it 'clears facets' do
     # 'Features' facet is already expanded, no need to click it
     find('.facets-item', text: 'Map Imagery').click
-    
+
     within(:css, '.features') do
       expect(page).to have_content('Map Imagery')
       expect(page).to have_css('.facets-item.selected')

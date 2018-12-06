@@ -1,36 +1,32 @@
-# EDSC-56: As a user, I want to see a list of top granules matching my search so
-#          that I may preview my results before retrieving data
-# EDSC-58: As a user, I want to load more granules as I scroll so that I may see
-#          granules that are not among my top results
+require 'spec_helper'
 
-require "spec_helper"
-
-describe "Granule list", reset: false do
+describe 'Granule list' do
   extend Helpers::CollectionHelpers
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, authenticate: 'edsc'
   end
 
-  context "for all collections with granules" do
+  context 'for all collections with granules' do
     before :all do
       visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
       wait_for_xhr
     end
+    
     it 'provides a text field to search for single or multiple granules by granule IDs' do
       expect(page).to have_selector('#granule-ids')
     end
 
-    it "provides a button to get collection details" do
+    it 'provides a button to get collection details' do
       expect(granule_list).to have_link('View collection details')
     end
 
-    it "provides a button to get download the collection" do
+    it 'provides a button to get download the collection' do
       expect(granule_list).to have_button('Download')
     end
 
-    it "provides a button to edit granule filters" do
+    it 'provides a button to edit granule filters' do
       expect(granule_list).to have_link('Filter granules')
     end
 
@@ -43,20 +39,22 @@ describe "Granule list", reset: false do
 
     it 'displays start and end temporal labels' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
-        expect(page).to have_content('START2017-01-01 23:45:00')
-        expect(page).to have_content('END2017-01-01 23:50:00')
+        expect(page).to have_content('START 2017-01-01 23:45:00')
+        expect(page).to have_content('END 2017-01-01 23:50:00')
       end
     end
 
     context 'entering multiple granule IDs' do
       before :all do
-        fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf, MOD10A1.A2016001.h31v12*\t"
+        fill_in 'granule-ids', with: "MOD10A1.A2016001.h31v13.005.2016006204744.hdf,MOD10A1.A2016001.h31v12*\t"
         wait_for_xhr
       end
 
       after :all do
         click_link "Filter granules"
+        wait_for_xhr
         click_button "granule-filters-clear"
+        wait_for_xhr
         find('#granule-search').click_link('close')
       end
 
@@ -73,6 +71,8 @@ describe "Granule list", reset: false do
     context "clicking on the collection details button" do
       before :all do
         granule_list.click_link('View collection details')
+        # page.find('.collection-title-link').click
+        wait_for_xhr
       end
 
       after :all do
@@ -90,25 +90,11 @@ describe "Granule list", reset: false do
       end
     end
 
-    context "clicking on the download button" do
-      before :all do
-        granule_list.click_button('Download')
-      end
-
-      after :all do
-        page.execute_script('window.history.back()')
-        wait_for_xhr
-      end
-
-      it "triggers the download workflow" do
-        expect(page).to have_content('EOSDIS Earthdata Login')
-      end
-    end
-
     context "clicking on the edit filters button" do
       before :all do
         dismiss_banner
         granule_list.click_link('Filter granules')
+        wait_for_xhr
       end
 
       after :all do
@@ -144,6 +130,7 @@ describe "Granule list", reset: false do
 
       after :all do
         click_link "Filter granules"
+        wait_for_xhr
         click_button "granule-filters-clear"
         find('#granule-search').click_link('close')
       end
@@ -206,6 +193,7 @@ describe "Granule list", reset: false do
       context "and changing granule query" do
         before :all do
           click_link "Filter granules"
+          wait_for_xhr
           check "Find only granules that have browse images."
           wait_for_xhr
         end
@@ -245,7 +233,7 @@ describe "Granule list", reset: false do
 
   context "for collections with few granule results" do
     before :all do
-      visit('/search/granules?p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
+      visit('/search/granules?cmr_env=prod&p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
       wait_for_xhr
     end
 
@@ -270,7 +258,7 @@ describe "Granule list", reset: false do
 
     context "clicking on a collection result" do
       before :all do
-        visit('/search?q=C179002107-SEDAC&ok=C179002107-SEDAC')
+        visit('/search?&cmr_env=prod&q=C179002107-SEDAC&ok=C179002107-SEDAC')
         wait_for_xhr
         dismiss_banner
         expect(page).to have_visible_collection_results
@@ -289,10 +277,9 @@ describe "Granule list", reset: false do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-
     context 'clicking on the single granule download button when the links have titles' do
       before :all do
-        visit('/search/granules?p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
+        visit('/search/granules?cmr_env=prod&p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
         wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
@@ -313,9 +300,9 @@ describe "Granule list", reset: false do
       end
     end
 
-    context 'clicking on the single granule download button when the links do not have titles' do
+    context 'clicking on the single granule download button when the links do not have titles', data_specific: true do
       before :all do
-        visit('/search/granules?p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
+        visit('/search/granules?cmr_env=prod&p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
         wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
@@ -343,7 +330,7 @@ describe "Granule list", reset: false do
   context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
     before :all do
       # A collection known to have duplicate downloadable links
-      visit('/search/granules?p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
+      visit('/search/granules?cmr_env=prod&p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
       wait_for_xhr
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         # If the test works, this dropdown won't even exist...
@@ -364,20 +351,26 @@ describe "Granule list", reset: false do
       wait_for_xhr
       click_button('Download')
     end
+
+    after :all do
+      find('.modal-dialog .modal-close').click
+    end
+
     it "shows a modal warning of the delay" do
       expect(page).to have_css('#delayWarningModalLabel')
       expect(page).to have_text('Message from data provider: This is an optional message.')
     end
   end
 
-  context "for collections that have granules without end times" do
+  context 'for collections that have granules without end times', data_specific: true do
     before :all do
       visit('/search/granules?cmr_env=uat&p=C1000-LPDAAC_TS2')
     end
-    it "displays correct start and end temporal labels" do
+
+    it 'displays correct start and end temporal labels' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
-        expect(page).to have_content('START2018-01-31 02:53:21')
-        expect(page).to have_content('ENDNot Provided')
+        expect(page).to have_content('START 2018-08-04 23:28:02')
+        expect(page).to have_content('END Not Provided')
       end
     end
   end

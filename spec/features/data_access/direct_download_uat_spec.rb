@@ -1,23 +1,21 @@
 require 'spec_helper'
 
-describe 'Direct download script UAT', reset: false do
-  context 'when viewing the direct download script in UAT' do
+describe 'Direct download script UAT' do
+  context 'when viewing the direct download script in UAT', pending_updates: true do
     before :all do
-      Capybara.reset_sessions!
-      load_page :search, overlay: false, env: :uat
-      login
-      load_page 'data/configure', env: :uat, project: ['C447308-ORNL_DAAC']
+      load_page 'projects/new', env: :uat, project: ['C1216127793-EDF_OPS'], authenticate: 'edsc'
       wait_for_xhr
 
-      choose 'Direct Download'
-      click_on 'Submit'
+      page.find('.button-download-data').click
       wait_for_xhr
 
-      click_link 'Download Access Script'
+      @uat_script_window = window_opened_by do
+        click_link 'Download Access Script'
+      end
     end
 
     it 'displays the correct URS path' do
-      within_last_window do
+      within_window(@uat_script_window) do
         expect(page.source).to have_content('machine uat.urs.earthdata.nasa.gov')
       end
     end

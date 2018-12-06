@@ -8,9 +8,9 @@
 
 <% content_for :toolbar_secondary do %>
   <div class="landing-secondary-toolbar-container" style="display: none;">
-    <span data-bind="visible: !$root.ui.collectionsList.focused()  && !$root.ui.projectList.visible() && !project.isEmpty()"><a data-bind="click: showProject" class="toolbar-button" href="#">My Project</a></span>
+    <span><a data-bind="visible: !$root.ui.projectList.visible() && !project.isEmpty(), click: $root.ui.projectList.showProjectPage" href="#" class="toolbar-button">My Project</a></span>
     <%= render partial: 'shared/feedback' %>
-    <%= render partial: 'workspace_name' %>
+    <%= render partial: 'shared/workspace_name' %>
     <%= render partial: 'shared/login' %>
   </div>
 <% end %>
@@ -91,48 +91,58 @@
 <% end %>
 
 <div class="master-overlay homepage-search is-master-overlay-secondary-hidden is-master-overlay-maximized" id="collections-overlay">
-  <%= render partial: 'overlay_parent' %>
+  <%= render partial: 'shared/overlay_parent' %>
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
-      <section id="collection-results" class="master-overlay-has-min" data-master-overlay-title="Collections">
-        <nav class="master-overlay-nav master-overlay-when-parent-hidden">
-          <a href="#" class="master-overlay-show-parent" data-bind="click: showParent" title="Browse Collections">
-            <i class="fa fa-columns"></i>
-            <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
-               (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
-            </span>
-          </a>
-        </nav>
-        <header class="tab">
-          <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
-          <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-chevron-circle-down"></i></a>
-          <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
+      <section id="collection-results" class="master-overlay-content-wrapper master-overlay-has-min" data-master-overlay-title="Collections">
+        <header class="master-overlay-header">
+          <nav class="master-overlay-nav">
+            <div class="master-overlay-tab master-overlay-when-parent-hidden">
+              <span class="master-overlay-tab-handle"></span>
+              <a href="#" class="master-overlay-tab-title master-overlay-show-parent" data-bind="click: showParent" title="Browse Collections">
+                <i class="fa fa-columns"></i>
+                <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
+                   (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
+                </span>
+              </a>
+            </div>
+            <div class="master-overlay-tab">
+              <span class="master-overlay-tab-handle"></span>
+              <h2 class="master-overlay-tab-title"><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
+              <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-chevron-circle-down"></i></a>
+              <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-chevron-circle-up"></i></a>
+            </div>
+          </nav>
+          <div class="master-overlay-info">
+            <div class="master-overlay-info-panel">
+              <div class="">
+                <p class="collection-filters">
+                  <label class="collection-filter-item collection-sort">Sort by:
+                    <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
+                  </label>
+                  <label class="collection-filter-item" for="has-granules">
+                      <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
+                      Only include collections with granules
+                  </label>
+                  <label class="collection-filter-item" for="hasNonEOSDIS">
+                    <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
+                    Include non-EOSDIS collections
+                  </label>
+                </p>
+                <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
+                <p data-bind="visible: !project.isEmpty()" class="button-details">
+                  You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" data-bind="click: $root.ui.projectList.showProjectPage" href="#">Project</a>
+                </p>
+              </div>
+            </div>
+          </div>
         </header>
-        <div class="master-overlay-info master-overlay-when-max">
-          <p class="collection-filters">
-            <label class="collection-filter-item collection-sort">Sort by:
-              <select id="collection-sort" data-bind="options: query.sortOptions, optionsText: 'name', optionsValue: 'value', value: query.sortKey, optionsCaption: 'Relevance'"></select>
-            </label>
-            <label class="collection-filter-item" for="has-granules">
-                <input type="checkbox" id='has-granules' data-bind="checked: query.hasGranules"/>
-                Only include collections with granules
-            </label>
-            <label class="collection-filter-item" for="hasNonEOSDIS">
-              <input type="checkbox" id='hasNonEOSDIS' data-bind="checked: query.hasNonEOSDIS"/>
-              Include non-EOSDIS collections
-            </label>
-          </p>
-          <p data-bind="visible: project.isEmpty()" class="button-details"><strong>Tip:</strong> Add <i class="fa fa-plus add-project-example"></i> collections to your project to compare and download their data. <a class=" master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i> Learn More</a></p>
-          <p data-bind="visible: !project.isEmpty()" class="button-details">
-            You have <strong data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></strong> in your current <a id="view-project" class="master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">Project</a>
-          </p>
-        </div>
         <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
           <div class="panel-list">
             <ul id="collection-results-list"
                 class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.results, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
+              <li class="panel-list-item" data-bind="component: {name: 'collection-list-item', params: {model: $data}}, click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}" title="View granules"></li>
             </ul>
             <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
               Loading collections...
@@ -146,51 +156,6 @@
           </div>
         </div>
       </section>
-      <section id="project-overview" class="master-overlay-hide-self master-overlay-no-min">
-        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
-            <i class="fa fa-chevron-circle-left"></i> Back to Collection Search
-          </a>
-        </nav>
-        <header class="with-options">
-          <div class="collection-title-filters">
-            <h2>Project Collections</h2>
-          </div>
-          <div class="master-overlay-global-actions actions">
-            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="global-action-link">
-              <i class="fa fa-eye"></i> Visualize all Collections
-            </a>
-            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="global-action-link global-action-link-active" >
-              <i class="fa fa-eye"></i> Hide Visualization
-            </a>
-            <button class="button retrieve" data-bind="click: project.exceedCollectionLimit() ? function(){} : $root.ui.projectList.loginAndDownloadProject, css: {'button-disabled': project.exceedCollectionLimit(), retrieve: !project.exceedCollectionLimit()}, attr: {'data-placement': 'bottom', 'data-tooltip': project.exceedCollectionLimit().toString(), 'title': project.exceedCollectionLimit() ? 'Due to significant processing times, orders for this collection are limited to 2000 granules (100 for ASTER Level 3 products). Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download project data'}">
-              <i class="fa fa-download"></i> Download Project Data
-            </button>
-          </div>
-        </header>
-        <div class="master-overlay-content panel-list">
-          <ul id="project-collections-list"
-              class="panel-list-list knockout-template"
-              data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
-            <%= render partial: 'collection_list_item', locals: {is_project: true} %>
-          </ul>
-          <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
-            <p>
-              Use this space to collect collections of interest as you adjust your search parameters.
-            </p>
-            <p>
-              To add a collection to your project, click the <i class="fa fa-plus"></i> icon on the desired collection.
-              Once collected, you can use the tools available in this view to compare collections on the map or on a timeline
-              and choose granules you want from each.
-            </p>
-            <p>
-              When you are satisfied with your selections, click the <i class="fa fa-download"></i> button to
-              access your data.
-            </p>
-          </div>
-        </div>
-      </section>
       <%= render partial: 'granule_list' %>
       <%= render partial: 'granule_details' %>
       <%= render partial: 'collection_details' %>
@@ -198,14 +163,14 @@
   </div>
   <div class="master-overlay-secondary">
     <div class="master-overlay-secondary-content" data-level="0">
-      <section id="granule-search" >
-          <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-        <nav class="master-overlay-nav">
-          <i class="fa fa-filter"></i> Granule Filters
-        </nav>
+      <section id="granule-search" class="master-overlay-secondary-granule-search">
         <!-- ko if: project.searchGranulesCollection() -->
-        <header>
-          <h2 data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
+        <header class="master-overlay-secondary-header">
+          <div class="master-overlay-secondary-heading">
+            <i class="fa fa-filter"></i> Granule Filters
+          </div>
+          <h2 class="master-overlay-secondary-title" data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
+          <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         </header>
         <%= render partial: 'granule_search' %>
         <!-- /ko -->
@@ -217,44 +182,43 @@
       <i class="fa fa-th-list"></i> Results List
     </a>
   </div>
-</div>
+  <div id="map" class="map">
+    <div id="map-center"></div>
+    <!-- ko if: ui.collectionsList.focused() -->
+    <!-- ko with: ui.collectionsList.focused() -->
+    <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) && !stickied().browseError() -->
+    <div class="toggle-image-browse">
+      <a href="#" class="pull-right" id="toggleBrowseImageButton" data-bind="click: function() { $root.ui.collectionsList.toggleBrowseImage()};" data-toggle="collapse" data-target="#browseImageDiv" title="Toggle browse image display">
+        <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>
+      </a>
+    </div>
+    <div class="granule-browse collapse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">
+      <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
+        <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
+      </a>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- /ko -->
 
-<div id="map" class="map" style="height:100%">
-  <div id="map-center"></div>
-  <!-- ko if: ui.collectionsList.focused() -->
-  <!-- ko with: ui.collectionsList.focused() -->
-  <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) && !stickied().browseError() -->
-  <div class="toggle-image-browse">
-    <a href="#" class="pull-right" id="toggleBrowseImageButton" data-bind="click: function() { $root.ui.collectionsList.toggleBrowseImage()};" data-toggle="collapse" data-target="#browseImageDiv" title="Toggle browse image display">
-      <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>
-    </a>
-  </div>
-  <div class="granule-browse collapse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">
-    <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
-      <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
-    </a>
-  </div>
-  <!-- /ko -->
-  <!-- /ko -->
-  <!-- /ko -->
-
-  <div class="geojson-help">
-    <div class="geojson-help-dropzone">
-      <h2>Search by Shape File</h2>
-      <p>
-        <strong><a class="geojson-dropzone-link" href="#">Click here</a></strong> to select a shape file. You may also
-        simply drag and drop shape files onto the map at any time.
-      </p>
-      <p>
-        Valid formats include:
-      </p>
-      <ul>
-        <li>ESRI Shapefile (.zip including .shp, .dbf, and .shx file)</li>
-        <li>Keyhole Markup Language (.kml or .kmz)</li>
-        <li>GeoJSON (.json or .geojson)</li>
-        <li>GeoRSS (.rss, .georss, or .xml)</li>
-      </ul>
-      <button data-bind="click: ui.spatialType.selectNone" class="button text-button" type="button">Cancel</button>
+    <div class="geojson-help">
+      <div class="geojson-help-dropzone">
+        <h2>Search by Shape File</h2>
+        <p>
+          <strong><a class="geojson-dropzone-link" href="#">Click here</a></strong> to select a shape file. You may also
+          simply drag and drop shape files onto the map at any time.
+        </p>
+        <p>
+          Valid formats include:
+        </p>
+        <ul>
+          <li>ESRI Shapefile (.zip including .shp, .dbf, and .shx file)</li>
+          <li>Keyhole Markup Language (.kml or .kmz)</li>
+          <li>GeoJSON (.json or .geojson)</li>
+          <li>GeoRSS (.rss, .georss, or .xml)</li>
+        </ul>
+        <button data-bind="click: ui.spatialType.selectNone" class="button text-button" type="button">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
@@ -340,7 +304,6 @@
   </div>
 </form>
 <% end %>
-
 
 <% content_for :footer do %>
   <%= render partial: 'timeline' %>

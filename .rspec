@@ -1,3 +1,6 @@
 --color
 --format documentation
 --tag ~pending_updates
+--tag ~single_granule
+--tag ~data_specific
+--tag ~edit_options

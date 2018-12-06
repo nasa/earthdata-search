@@ -1,8 +1,18 @@
 ns = @edsc.map
 
-ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer) ->
+ns.LayerBuilder = do (L,
+                      gibsUrl = @edsc.config.gibsUrl,
+                      GibsTileLayer = ns.L.GibsTileLayer
+                     ) ->
 
   osmAttribution = '<span class="map-attribution">* &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</span>'
+
+  defaultOptions =
+    tileSize: 512
+    bounds: [
+      [-89.9999, -179.9999],
+      [89.9999, 179.9999]
+    ]
 
   gibsParams =
     blue_marble:
@@ -43,8 +53,22 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer) ->
       format: 'png'
       maxNativeZoom: 7
 
-  layerForProduct = (id) ->
-    return new GibsTileLayer(gibsParams[id]) if gibsParams[id]?
+  projectionOptions =
+    arctic:
+      projection: 'EPSG3413'
+      lprojection: 'epsg3413'
+      endpoint: 'arctic'
+    antarctic:
+      projection: 'EPSG3031'
+      lprojection: 'epsg3031'
+      endpoint: 'antarctic'
+    geo:
+      projection: 'EPSG4326'
+      lprojection: 'epsg4326'
+      endpoint: 'geo'
+
+  layerForProduct = (id, projection) ->
+    return new GibsTileLayer(gibsUrl, L.extend({}, defaultOptions, gibsParams[id], projectionOptions[projection], time: ''))
     console.error("Unable to find product: #{id}")
 
   exports =

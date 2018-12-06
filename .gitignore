@@ -33,7 +33,6 @@ test_results
 
 /doc/ui/portfolio
 
-/vendor/cmep
 /vendor/bundle
 /vendor/cache
 
@@ -53,5 +52,5 @@ node_modules
 npm-debug.log*
 /edsc/dist
 /mkmf.log
-
 .byebug_history
+remote-profile/

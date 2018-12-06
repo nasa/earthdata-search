@@ -138,7 +138,7 @@ ns.CollectionsList = do ($ = jQuery
 
     _readFocused: ->
       current = @_focusedList
-      collection = @project.focus()
+      collection = @project.focus()?.collection
       if !@_hasFocus() || !collection?
         current?.dispose()
         @_focusedList = null
@@ -161,7 +161,7 @@ ns.CollectionsList = do ($ = jQuery
     _readSelected: ->
       if @_hasSelected()
         clearTimeout(@_unselectTimeout)
-        selected = @project.focus()
+        selected = @project.focus()?.collection
         selected?.details()
         selected
 

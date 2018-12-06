@@ -1,30 +1,39 @@
-do ($=jQuery) ->
+do ($=jQuery, ajax=@edsc.util.xhr.ajax) ->
   $(document).on 'click', '.share-project', ->
-    path = $(this).parents("tr").find("a.project-url").attr("href")
-    url = location.protocol + '//' + location.host + path
-    input = '<input readonly="readonly" type="text" id="share-url" value=' + url + ' />'
-    content = "<p>Share your project by copying the URL below and sending it to others.</p>
-                <p>" + input + "</p>"
+    project_id = $(this).parents("tr").find("a.project-url").attr("href").match(/\/projects\/(\d+)/)[1]
+    url = ''
+    ajax
+      dataType: 'json'
+      url: "/projects/#{project_id}.json"
+      success: (data) =>
+        console.log '_------------------------------'
+        console.log data
+        console.log '_------------------------------'
+        url = location.protocol + '//' + location.host + data.path
 
-    template = "<div class='popover share-popover'>
-                  <div class='arrow'></div>
-                  <div class='popover-title'>Share Project</div>
-                  <div class='popover-content'></div>
-                  <div class='popover-navigation'>
-                    <button class='button-small button-outline' data-role='end'>Close</button>
-                  </div>
-                </div>"
+        input = '<input readonly="readonly" type="text" id="share-url" value=' + url + ' />'
+        content = "<p>Share your project by copying the URL below and sending it to others.</p>
+                    <p>" + input + "</p>"
 
-    options = {
-                placement: "top"
-                template: template
-                html: true
-                content: content
-              }
+        template = "<div class='popover share-popover'>
+                      <div class='arrow'></div>
+                      <div class='popover-title'>Share Project</div>
+                      <div class='popover-content'></div>
+                      <div class='popover-navigation'>
+                        <button class='button-small button-outline' data-role='end'>Close</button>
+                      </div>
+                    </div>"
 
-    $(this).popover(options)
-    $(this).popover("show")
-    $('#share-url').select()
+        options = {
+                    placement: "top"
+                    template: template
+                    html: true
+                    content: content
+                  }
+
+        $(this).popover(options)
+        $(this).popover("show")
+        $('#share-url').select()
 
   $(document).on 'click', '.share-popover [data-role=end]', ->
     $(this).closest(".share-popover").siblings('.share-project').popover('destroy')

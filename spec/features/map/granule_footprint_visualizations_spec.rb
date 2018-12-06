@@ -7,10 +7,11 @@
 
 require "spec_helper"
 
-describe "Granule footprint visualizations", reset: false, wait: 60 do
+describe "Granule footprint visualizations" do
   extend Helpers::CollectionHelpers
 
   before :all do
+    Capybara.reset_sessions!
     load_page :search
   end
 
@@ -25,7 +26,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
         expect(page).to have_granule_visualizations('C179003030-ORNL_DAAC')
       end
 
-      context "and mousing over a visualized granule" do
+      context "and mousing over a visualized granule", pending_updates: true do
         before :all do
           map_mousemove('#map', 39.1, -96.6)
         end

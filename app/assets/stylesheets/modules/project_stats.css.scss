@@ -1,0 +1,52 @@
+.project-stats {
+  min-height: 20px;
+}
+
+.project-stats-list {
+  display: flex;
+  margin: 0;
+  color: darken($light-grey, 45%);
+
+  a {
+    color: darken($light-grey, 20%);
+  }
+}
+
+.project-stats-item {
+  font-size: 0.875em;
+  padding-right: 0.5em;
+}
+
+.project-stats-value {
+  font-weight: bold;
+}
+
+.project-stats-info-container {
+  line-height: 1;
+
+  .tooltip {
+    width: 400px;
+  }
+
+  .tooltip-inner {
+    white-space: pre-wrap;
+    text-align: left;
+    max-width: 400px;
+  }
+}
+
+.project-stats-info {
+  text-decoration: none;
+  color: darken($light-grey, 20%);
+  font-size: 1em;
+  vertical-align: middle;
+  @include transition(color 0.1s linear);
+
+  &:hover {
+    color: darken($light-grey, 40%);
+  }
+
+  .fa-info-circle {
+    transform: translateY(-1px);
+  }
+}

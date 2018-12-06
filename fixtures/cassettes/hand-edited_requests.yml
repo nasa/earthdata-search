@@ -105,21 +105,8 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edscbasic-access
-  recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
-  digest: edscbasic_current
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/current.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
+      - edsc-access
+  recorded_at: Wed, 06 Aug 2014 13:01:33 GMT
   digest: edsc_current
 - request:
     method: get
@@ -131,8 +118,21 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edsc-access
-  recorded_at: Wed, 06 Aug 2014 13:01:33 GMT
+      - edscbasic-access
+  recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
+  digest: edscbasic_current
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/current.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
   digest: edsc_current
 - request:
     method: get
@@ -620,7 +620,7 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: edsc_access_update_preferences_none
 - request:
@@ -803,4 +803,133 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Thu, 27 Oct 2016 17:37:05 GMT
   digest: boundingbox1_2
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/service-bridge/health
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+  recorded_at: Tue, 24 Jul 2018 00:59:32 GMT
+  digest: ous_healthcheck
+- request:
+    method: get
+    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=kzAY1v0kVjQ7QVpwBw-kLQ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer edsc-access
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Aug 2018 19:01:28 GMT
+  digest: dd3ed9357a523d37b9a487775a65f4abfcdfdd33
+- request:
+    method: get
+    uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=K34r-9lYcLrog2soFrljlw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer edsc-access
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Aug 2018 19:01:28 GMT
+  digest: 41a0ec30b17ac928b6678e04f531f842e2a96520
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 07 Aug 2018 19:01:27 GMT
+  digest: edsc_sit_prefs
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 07 Aug 2018 19:01:27 GMT
+  digest: edsc_uat_prefs
+- request:
+    method: put
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_none_sit
+- request:
+    method: put
+    uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/users/edsc/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_none_uat
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/users/edsc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Sun, 28 Oct 2018 20:26:47 GMT
+  digest: edsc_user
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Sun, 28 Oct 2018 20:26:47 GMT
+  digest: edsc_user
 recorded_with: "VCR 2.6.0"

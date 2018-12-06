@@ -70,7 +70,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
 
     interpolatedPoints
 
-  projectPath = (map, latlngs, holes=[], fn='geodetic', tolerance=1, maxDepth=10) ->
+  projectPath = (map, latlngs, fn='geodetic', tolerance=1, maxDepth=10) ->
     fn = interpolateGeodetic if fn == 'geodetic'
     fn = interpolateCartesian if fn == 'cartesian'
 
@@ -87,21 +87,33 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
       result.y = Math.max(Math.min(result.y, MAX_RES), -MAX_RES)
       result
 
-    result =
-      boundary: projectLatLngPath(latlngs, proj, fn, tolerance, maxDepth)
-      holes: (projectLatLngPath(hole, proj, fn, tolerance, maxDepth) for hole in holes ? [])
+    projectLatLngPath(latlngs, proj, fn, tolerance, maxDepth)
 
 
-  # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
+  # Overrides the default projectLatLngs in Polyline to project and interpolate the
   # path instead of just projecting it
-  projectLatlngs = ->
-    interpolated = projectPath(@_map, @_latlngs, @_holes, @_interpolationFn)
-    @_originalPoints = interpolated.boundary
-    @_holePoints = interpolated.holes
+  # https://github.com/Leaflet/Leaflet/blob/v1.3.4/src/layer/vector/Polyline.js#L217
+  projectLatlngs = (latlngs, result, projectedBounds) ->
+    flat = latlngs[0] instanceof L.LatLng
+    latlngs = latlngs.concat()
+    latlngs.push latlngs[0]
+    ring = undefined
+    if flat
+      ring = []
+      # Instead of looping through latlngs and finding the layer points,
+      # use projectPath to interpolate the latlngs into the "great circle"
+      # path between the two points. returns layer points so we don't have
+      # to do that conversion like the original method
+      for point, index in projectPath(@_map, latlngs, @_interpolationFn)
+        ring[index] = point
+        projectedBounds.extend(ring[index])
+      result.push ring
+    else
+      for latlng in latlngs
+        @_projectLatlngs latlng, result, projectedBounds
 
   # Override methods
-  L.Polyline.prototype.projectLatlngs = projectLatlngs
-  L.Polygon.prototype.projectLatlngs = projectLatlngs
+  L.Polyline.prototype._projectLatlngs = projectLatlngs
 
   # Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
   L.Polyline.prototype._interpolationFn = interpolateGeodetic

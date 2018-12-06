@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'Collection Colormaps', reset: false do
-  gibs_collection_id = 'C119124186-NSIDC_ECS'
+describe 'Collection Colormaps' do
+  gibs_collection_id = 'C197265171-LPDAAC_ECS'
   non_gibs_collection_id = 'C179003030-ORNL_DAAC'
 
   before :all do
-    load_page :search
+    load_page :search, authenticate: 'edsc'
   end
-  
+
   context 'when viewing a GIBS-enabled collection' do
     before :all do
       fill_in 'keywords', with: gibs_collection_id

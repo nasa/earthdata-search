@@ -18,6 +18,21 @@ a:link, a:visited {
     color: #444;
   }
 
+  &.clean {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &.underline {
+    text-decoration: underline;
+  }
+
+  &.subtle {
+    &:hover {
+      color: #333
+    }
+  }
+
   &.ext {
     &:after {
       display: inline-block;
@@ -82,6 +97,7 @@ header {
   }
 
   .site-logo {
+    color: #fff;
     height: 40px;
     float: left;
     line-height: 1.1em;
@@ -142,6 +158,35 @@ ul {
   // Expect many more lists without bullets than lists with
   list-style: none;
   padding: 0;
+}
+
+.list-inline {
+  & > li {
+   display: inline-block;
+  }
+}
+
+.list-divided {
+  padding: 0.2em 0;
+  line-height: 1.2em;
+
+  & > li:not(:first-child) {
+    margin-left: 0.425em;
+    padding-left: 0.85em;
+    border-left: 1px solid #c7c7c7;
+  }
+}
+
+.list-alternating {
+  padding: 0;
+
+  & > li {
+    border-bottom: 1px solid #ddd;
+
+    &:nth-child(odd) {
+      background: #f3f3f3;
+    }
+  }
 }
 
 // Image replacement
@@ -215,4 +260,8 @@ ul {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.text-info {
+  color: #a1a1a1;
 }

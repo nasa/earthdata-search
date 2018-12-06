@@ -3,16 +3,16 @@ require "spec_helper"
 describe "Portal parameters", reset: true do
   include Helpers::CollectionHelpers
 
-  it "Visiting Earthdata Search with /portal/<portal-id> displays an error if no portal is configured", acceptance: true do
+  it "Visiting Earthdata Search with /portal/<portal-id> displays an error if no portal is configured" do
     expect{
       visit "/?portal=does-not-exist"
       Capybara.reset_sessions! # Ensures the errors are raised
     }.to raise_error( ActionController::RoutingError)
   end
 
-  it "Visiting Earthdata Search with /portal/<portal-id> parameter preserves the portal filter across page and query transitions", acceptance: true do
+  it "Visiting Earthdata Search with /portal/<portal-id> parameter preserves the portal filter across page and query transitions" do
     load_page :search, portal: 'simple', close_banner: true, facets: true
-    expect(page.status_code).to eq(200)
+    expect(page_status_code).to eq(200)
     expect(page).to have_text("1 Matching Collection")
 
     fill_in "keywords", with: 'AST'
@@ -25,14 +25,12 @@ describe "Portal parameters", reset: true do
     expect(page).to have_path_prefix("/portal/simple/")
 
     find('a[class="site-logo"]').click
-    expect(page).to have_path('/portal/simple/')
-
+    expect(page).to have_path('/portal/simple/search')
   end
 
   context "visiting a portal as a logged in user" do
     before :each do
-      load_page :search, overlay: false, portal: 'simple'
-      login
+      load_page :search, overlay: false, portal: 'simple', authenticate: 'edsc'
     end
 
     context "and selecting the contact info page" do
@@ -75,7 +73,7 @@ describe "Portal parameters", reset: true do
       end
     end
 
-    context "and choosing to access data" do
+    context "and choosing to access data", pending_updates: true do
       before :each do
         downloadable_collection_id = 'C203234523-LAADS'
         load_page :search, project: [downloadable_collection_id], view: :project, portal: 'simple'

@@ -3,39 +3,27 @@
 
 // The container for the entire overlay
 .master-overlay {
-  color: #fff;
-
-  a {
-  }
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 
   // Non-scrollable header area
-  header {
+  .master-overlay-header {
     background: $master-overlay-info-bg-color;
     margin: 0;
     color: $overlay-heading-font-color;
 
-    .collection-title-filters {
-      border-right: 1px solid #e3e3e3;
-      width: 72%;
-      box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
-      min-height: 95px;
-    }
-
     #datasource-caveats {
-      padding: 0 20px;
+      margin-bottom: 5px;
       color: #aaa;
     }
 
     h2 {
-      font-size: 1.2em;
-      margin: 0;
-      padding: 10px 20px;
-      font-weight: bold;
-
-      &.loading {
-        padding: 0;
-      }
-
       .collection-title-link {
         font-size: 0.8em;
         font-weight: normal;
@@ -44,11 +32,6 @@
         vertical-align: text-top;
         text-decoration: underline;
       }
-    }
-
-    h4 {
-      margin: 0;
-      padding: 1em 0.5em;
     }
 
     &.with-options {
@@ -68,83 +51,96 @@
         padding: 10px;
       }
     }
+  }
+}
 
-    &.tab {
-      background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
-      display: inline-block;
-      margin: 0;
-      padding: 10px 20px;
+.master-overlay-header-heading {
+  margin: 0;
+}
 
-      &:hover {
-        cursor: row-resize;
-      }
+.master-overlay-header-granule-panel {
+  border-bottom: 1px solid #e3e3e3;
+}
 
-      h2 {
-        display: inline-block;
-        padding: 0;
-      }
+.master-overlay-header-title {
+  font-size: 19px;
+  margin-bottom: 5px;
+}
+
+.master-overlay-header-row {
+  margin-top: 15px;
+}
+
+.master-overlay-header-row-item {
+  display: inline-block;
+}
+
+.master-overlay-nav {
+  position: absolute;
+  top: -48px;
+  left: 0;
+}
+
+.master-overlay-tab {
+  background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
+  display: block;
+  top: 0;
+  float: left;
+  margin-right: 3px;
+  padding: 10px 20px;
+  height: 48px;
+
+  &.is-interactive {
+    .master-overlay-tab-handle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 10px;
+      width: 100%;
+      cursor: row-resize;
     }
   }
+
+  .is-master-overlay-parent-hidden & {
+    left: 62px;
+  }
+}
+
+.master-overlay-tab-title {
+  display: inline-block;
+  padding: 0;
+  font-size: 19px;
 }
 
 .master-overlay-hide-self {
   display: none;
 }
 
-.master-overlay-nav {
-  padding: 12px 20px 10px 20px;
-  background: $master-overlay-tab-color asset-url('drag.png') no-repeat center 5px;
-  display: inline-block;
-  font-size: 1.2em;
-
-  &:hover {
-    cursor: row-resize;
-  }
-}
-
-// A parent panel for the overlday.  For instance, collection facets are a parent
-// panel to collection search results
-.master-overlay-parent {
-  background-color: $master-overlay-parent-bg-color;
-  width: $facet-overlay-width;
-  left: 0;
-
-  a {
-    color: #fff;
-  }
-
-  header {
-    margin: 0 1em 0 .5em;
-    background: inherit;
-
-    h2 {
-      color: #FFFFFF;
-      margin: 0;
-      font-size: 1em;
-      font-weight: bold;
-    }
-
-    h2.facet-title {
-      padding: 0 0 10px 10px;
-    }
-  }
-
-}
-
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
-  background-color: $master-overlay-main-bg-color;
-  width: 100%;
-  overflow: hidden;
-  bottom: 0;
+  flex-grow: 1;
   height: 50%;
+  width: 400%;
+  background-color: $master-overlay-main-bg-color;
   z-index: 60;
-  position: absolute;
   transition-property: left, width;
   transition-duration: 0.3s;
+  will-change: left, width;
+
+  .project & {
+    height: 0%;
+  }
 
   .master-overlay-content {
     background: rgba(236, 240, 241,1.0);
+  }
+
+  .master-overlay-content-light {
+    background: #fff;
+  }
+
+  .master-overlay-content-padding {
+    padding: 0 20px 20px;
   }
 
   .tab-pane {
@@ -158,14 +154,13 @@
 
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
+  width: 700px;
   background-color: $master-overlay-parent-bg-color;
-  left: 40%;
-  /* JS: Temporary, ugly fix to prevent overlap */
-  top: 100px;
+  right: 0;
   overflow: hidden;
   z-index: 180;
   position: absolute;
-  height: 90%;
+  height: 100%;
   transition-property: right, left;
   transition-duration: 0.3s;
 
@@ -184,6 +179,9 @@
   }
 
   a.master-overlay-close {
+    position: absolute;
+    top: 0;
+    right: 0;
     font-size: 1.4em;
     padding: 10px;
 
@@ -193,25 +191,49 @@
   }
 }
 
+.master-overlay-secondary-content {
+  height: 100%;
+}
+
+.master-overlay-secondary-granule-search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.master-overlay-secondary-header {
+  position: relative;
+  padding: 12px 20px 10px 20px;
+}
+
+.master-overlay-secondary-heading {
+  font-weight: 700;
+}
+
+.master-overlay-secondary-title {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 1.2em;
+}
+
 .master-overlay-main-content {
+  position: relative;
+  height: 100%;
   width: 400%;
-  left: 0;
+  background-color: #fff;
+  transition-property: left;
+  transition-duration: 0.3s;
 
   section {
     height: 100%;
     width: 25%;
     float: left;
     position: relative;
-    padding-left: $facet-overlay-width;
 
     &.master-overlay-no-min {
-      background-image: asset-url('ecf0f1.png');
-      background-repeat: repeat-x;
-      background-position: 0 60px;
       padding-left: 0;
 
       h4 {
-        padding-left: 25px;
         font-size: 1.2em;
         font-weight: normal;
       }
@@ -241,26 +263,14 @@
   }
 }
 
-.master-overlay-parent {
-  z-index: 60;
-  position: absolute;
-  height: 100%;
-  transition-property: left, width;
-  transition-duration: 0.3s;
-}
-
 .master-overlay-main-content {
-  position: absolute;
   transition-property: left, width;
   transition-duration: 0.3s;
 }
 
-.master-overlay-parent {
-  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.2);
-}
-
-.master-overlay-parent {
-  z-index: 130;
+.master-overlay-content-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .master-overlay-main {
@@ -281,14 +291,11 @@
 }
 
 .master-overlay-info {
+  display: flex;
+  flex-shrink: 0;
   background: $master-overlay-info-bg-color;
   margin: 0;
-  padding: 0px 20px 0 20px;
   color: $overlay-heading-font-color;
-
-  > * {
-    display: inline-block;
-  }
 
   .granule-filter-link {
     text-decoration: underline;
@@ -349,14 +356,44 @@
   }
 }
 
-.is-master-overlay-maximized #collection-results .master-overlay-info {
+.master-overlay-info-panel {
+  position: relative;
   padding: 20px;
+
+  #granule-list & {
+    padding: 15px 20px 10px;
+  }
+}
+
+.master-overlay-info-granule-panel {
+  flex-grow: 1;
+  width: 72%;
+  border-right: 1px solid #e3e3e3;
+  box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
+  min-height: 95px;
+}
+
+.master-overlay-info-collection-panel {
+  flex-grow: 1;
+}
+
+.master-overlay-info-collection-header {
+  display: flex;
+  align-items: center;
+}
+
+.master-overlay-info-collection-name {
+  margin-top: 7px;
+}
+
+.master-overlay-info-collection-loading {
+  font-size: 1.2em;
 }
 
 .master-overlay-global-actions {
   display: inline-block;
   vertical-align: top;
-  width: 26%;
+  width: 28%;
 
   .add-to-project, .remove-from-project {
     font-size: 0.8em;
@@ -385,6 +422,7 @@
     border: none;
     color: #fff;
     @include transition(background 0.2s ease-in-out);
+    line-height: normal; // Temporary override of master-overlay-info-granule-panel value
 
     &:hover {
       background: #219853;
@@ -398,24 +436,22 @@
   cursor: pointer;
 }
 
-#project-collections-list {
-  margin-top: 0;
-}
-
 // Scrollable content area
 .master-overlay-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 0;
-  height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+
+  a {
+    color: #fff;
+  }
 
   dl {
     margin: 0;
     padding: 0;
-  }
-
-  .card-row {
-    padding-bottom: 130px;
   }
 
   .card {
@@ -446,6 +482,43 @@
   }
 }
 
+.master-overlay-content-light {
+  background: white;
+  border-right: 1px solid #ddd;
+
+  a {
+    color: inherit;
+  }
+}
+
+.master-overlay-footer-actions {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.master-overlay-footer-notes {
+  margin-bottom: 10px;
+}
+
+.master-overlay-footer-note {
+  font-size: 0.875em;
+  line-height: 1.4;
+  color: #7F7F7F;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.master-overlay-download-tooltip {
+  display: inline-block;
+  width: 100%;
+}
+
+.master-overlay-download-tooltip-disabled {
+  cursor: not-allowed;
+}
+
 .master-overlay-minimize, .master-overlay-maximize {
   font-size: 1.3em;
   display: inline-block;
@@ -456,15 +529,6 @@
   &:hover {
     color: #aaa;
   }
-}
-
-.master-overlay-close {
-  float: right;
-}
-
-a.master-overlay-close {
-  color: rgba(255, 255, 255, .3);
-  @include transition (color 0.15s ease-in-out);
 }
 
 a.master-overlay-back {
@@ -490,7 +554,7 @@ a.master-overlay-show-parent {
   .master-overlay-when-min { display: inline-block; }
   .master-overlay-main {
     // JS: I know, I know... This needs to override any interact.js actions
-    top: 92% !important;
+    height: 10px !important;
   }
 }
 
@@ -499,7 +563,7 @@ a.master-overlay-show-parent {
 }
 
 .is-master-overlay-parent-hidden {
-  .master-overlay-parent                { left:-$facet-overlay-width; }
+  .master-overlay-parent                { width: 0; }
   .master-overlay-main                  { left:0%; }
   .master-overlay-main-content section  { padding-left: 0; }
 }
@@ -509,10 +573,13 @@ a.master-overlay-show-parent {
 }
 
 .master-overlay-main-content {
-  &[data-level="1"] { left:-100%; }
-  &[data-level="2"] { left:-200%; }
-  &[data-level="3"] { left:-300%; }
-  &[data-level="4"] { left:-400%; }
+  will-change: transform;
+  transition: transform .3s ease-in-out;
+
+  &[data-level="1"] { transform: translateX(-25%); }
+  &[data-level="2"] { transform: translateX(-50%); }
+  &[data-level="3"] { transform: translateX(-75%); }
+  &[data-level="4"] { transform: translateX(-100%); }
 }
 
 .is-hidden {
@@ -530,10 +597,6 @@ a.master-overlay-show-parent {
   white-space: pre;
   font-family: monospace;
   font-size: smaller;
-}
-
-#granule-search {
-  width: 700px;
 }
 
 .master-overlay-info .panel-list-meta, .panel-list-meta {
@@ -591,19 +654,6 @@ $parent-split: 1200px;
 
 $main-width: $browser-split * 0.4;
 $parent-width: $parent-split * 0.21;
-
-@media (min-width: $browser-split) {
-  .master-overlay-main {
-  }
-
-  .master-overlay-secondary {
-    left: $main-width + $parent-width;
-  }
-
-  .is-master-overlay-parent-hidden .master-overlay-secondary {
-    left: $main-width;
-  }
-}
 
 @media (max-width: $parent-split) {
   .button-details {

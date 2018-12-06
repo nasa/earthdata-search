@@ -6,47 +6,10 @@ ns.ProjectList = do (ko
                     urlUtil=@edsc.util.url
                     xhrUtil=@edsc.util.xhr
                     dateUtil=@edsc.util.date
+                    deparam = @edsc.util.deparam
                     $ = jQuery
                     wait=@edsc.util.xhr.wait
                     ajax = @edsc.util.xhr.ajax) ->
-
-  sortable = (root) ->
-    $root = $(root)
-    $placeholder = $("<li class=\"sortable-placeholder\"/>")
-
-    index = null
-    $dragging = null
-
-    $root.on 'dragstart.sortable', '> *', (e) ->
-      dt = e.originalEvent.dataTransfer;
-      dt.effectAllowed = 'move';
-      dt.setData('Text', 'dummy');
-      $dragging = $(this)
-      index = $dragging.index();
-
-    $root.on 'dragend.sortable', '> *', (e) ->
-      $dragging.show()
-      $placeholder.detach()
-      startIndex = index
-      endIndex = $dragging.index()
-      if startIndex != endIndex
-        $root.trigger('sortupdate', startIndex: startIndex, endIndex: endIndex)
-      $dragging = null
-
-    $root.on 'drop.sortable', '> *', (e) ->
-      e.stopPropagation()
-      $placeholder.after($dragging)
-      false
-
-    $root.on 'dragover.sortable dragenter.sortable', '> *', (e) ->
-      e.preventDefault()
-      e.originalEvent.dataTransfer.dropEffect = 'move';
-      $dragging.hide().appendTo($root) # appendTo to ensure top margins are ok
-      if $placeholder.index() < $(this).index()
-        $(this).after($placeholder)
-      else
-        $(this).before($placeholder)
-      false
 
   class ProjectList
     constructor: (@project, @collectionResults) ->
@@ -66,34 +29,29 @@ ns.ProjectList = do (ko
 
       @allCollectionsVisible = ko.computed(@_computeAllCollectionsVisible, this, deferEvaluation: true)
 
-      # Ensure
       ko.computed(@_syncHitsCounts, this)
 
       $(document).ready(@_onReady)
 
     _syncHitsCounts: =>
       return unless @collectionResults? && @collectionResults.loadTime()?
-      for collection in @project.collections()
+      for projectCollection in @project.collections()
         found = false
-        for result in @collectionResults.results() when result.id == collection.id
+        for result in @collectionResults.results() when result.id == projectCollection.collection.id
           found = true
           break
-        collection.granuleDatasource()?.data() unless found
+        projectCollection.collection.granuleDatasource()?.data() unless found
 
     _onReady: =>
-      sortable('#project-collections-list')
-      $('#project-collections-list').on 'sortupdate', (e, {item, startIndex, endIndex}) =>
-        collections = @project.collections().concat()
-        [collection] = collections.splice(startIndex, 1)
-        collections.splice(endIndex, 0, collection)
-        @project.collections(collections)
-
       if window.location.href.indexOf('/data/retrieve') != -1
         @pollProjectUpdates()
 
     _launchDownload: (collection) =>
-      @project.focus(collection)
-      @configureProject()
+      # Ensure that the colletion is in the project
+      if !@project.hasCollection(collection)
+        @project.addCollection(collection, @configureProject)
+      else
+        @configureProject()
 
     awaitingStatus: =>
       @collectionsToDownload().length == 0 && @collectionOnly().length == 0 && @submittedOrders().length == 0 && @submittedServiceOrders().length == 0 && @collectionLinks().length == 0
@@ -101,6 +59,7 @@ ns.ProjectList = do (ko
     loginAndDownloadCollection: (collection) =>
       $('#delayOk').on 'click', =>
         @_launchDownload(collection)
+
       limit = false
       if collection.tags()
         if collection.tags()['edsc.collection_alerts']
@@ -115,19 +74,12 @@ ns.ProjectList = do (ko
       else
         @_launchDownload(collection)
 
-    loginAndDownloadGranule: (collection, granule) =>
-      @project.focus(collection)
-      @configureProject(granule.id)
-
     loginAndDownloadProject: =>
       @configureProject()
 
-    configureProject: (singleGranuleId=null) ->
-      @_sortOutTemporalMalarkey (optionStr) ->
-        singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
-        backParam = "&back=#{encodeURIComponent(urlUtil.fullPath(urlUtil.cleanPath().split('?')[0]))}"
-        path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr + backParam
-        window.location.href = urlUtil.fullPath(path)
+    configureProject: (singleGranuleId=null) =>
+      @_sortOutTemporalMalarkey (optionStr) =>
+        @showProjectPage()
 
     _sortOutTemporalMalarkey: (callback) ->
       querystr = urlUtil.currentQuery()
@@ -186,6 +138,8 @@ ns.ProjectList = do (ko
         has_browse = collection.browseable_granule?
         collectionId = collection.id
         title = collection.dataset_id
+
+        # Download links from the DAAC
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'download'
           collections.push
             title: title,
@@ -193,6 +147,15 @@ ns.ProjectList = do (ko
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             error_code: m.errorCode
             error_message: m.errorMessage
+
+        # OPeNDAP links
+        for m in projectCollection.serviceOptions.accessMethod() when m.type == 'opendap'
+          collections.push
+            title: title,
+            links: collection.granuleDatasource()?.opendapLinks(id)
+            order_status: null
+            error_code: null
+            error_message: null
 
       collections
 
@@ -252,7 +215,7 @@ ns.ProjectList = do (ko
         collection = projectCollection.collection
         collectionId = collection.id
         has_browse = collection.browseable_granule?
-        
+
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
           if m.serviceOptions
             total_processed = m.serviceOptions.total_processed
@@ -344,13 +307,13 @@ ns.ProjectList = do (ko
 
     toggleViewAllCollections: =>
       visible = !@allCollectionsVisible()
-      for collection in @project.collections()
-        collection.visible(visible)
+      for projectCollection in @project.collections()
+        projectCollection.collection.visible(visible)
 
     _computeAllCollectionsVisible: =>
       all_visible = true
-      for collection in @project.collections()
-        all_visible = false if !collection.visible()
+      for projectCollection in @project.collections()
+        all_visible = false if !projectCollection.collection.visible()
       all_visible
 
     showRelatedUrls: ->
@@ -358,6 +321,17 @@ ns.ProjectList = do (ko
 
     hideRelatedUrls: ->
       $('#related-urls-modal').modal('hide')
+
+    showProjectPage: ->
+      $(window).trigger('edsc.save_workspace')
+
+      projectId = deparam(urlUtil.realQuery()).projectId
+      if projectId
+        path = "/projects/#{projectId}"
+      else
+        path = '/projects/new?' + urlUtil.currentQuery()
+
+      window.location.href = urlUtil.fullPath(path)
 
     toggleMoreDetails: (collection_data) =>
       if collection_data.collection_id not in @moreDetailsActive()

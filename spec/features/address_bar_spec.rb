@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Address bar', reset: false do
+describe 'Address bar' do
   def query_string
     URI.parse(current_url).query
   end
@@ -22,17 +22,19 @@ describe 'Address bar', reset: false do
 
   context 'when searching by keywords' do
     before(:all) do
-      visit '/search/map'
+      visit '/search'
+      dismiss_banner
       wait_for_xhr
       fill_in "keywords", with: 'C1219032686-LANCEMODIS'
+      wait_for_xhr
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS')
+      expect(page.current_url).to match(/q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS/)
     end
 
     context 'clearing filters' do
-      before(:all) { click_link "Clear Filters" }
+      before(:all) { click_link 'Clear Filters' }
 
       it 'removes the keyword condition from the address bar' do
         expect(page).to have_query_string(nil)
@@ -40,7 +42,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context 'when loading a url containing a search keyword' do
+  context 'when loading a url containing a search keyword', pending_updates: true do
     before(:all) do
       visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS&ac=true'
       wait_for_xhr
@@ -153,7 +155,7 @@ describe 'Address bar', reset: false do
         wait_for_xhr
       end
 
-      it 'saves the granule filters in the address bar' do
+      it 'saves the granule filters in the address bar', pending_updates: true do
         project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
         expect(Project.find(project_id).path).to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
       end
@@ -185,7 +187,7 @@ describe 'Address bar', reset: false do
 
     it 'filters collections using the condition' do
       # TODO: RDA // Need to test something other than the fact that a specific collection is present
-      expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
+      expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km")
     end
   end
 
@@ -219,7 +221,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'displays the selected facet condition' do
-      within(:css, '.panel.features .panel-body.facets') do
+      within(:css, '.master-overlay-content-panel.features .panel-body.facets') do
         expect(page).to have_content("Map Imagery")
         expect(page).to have_css(".facets-item.selected")
       end
@@ -250,7 +252,7 @@ describe 'Address bar', reset: false do
       click_button 'Apply'
     end
 
-    it 'saves the granule filters in the address bar' do
+    it 'saves the granule filters in the address bar', pending_updates: true do
       project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
       expect(Project.find(project_id).path).to include("pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0")
     end
@@ -282,7 +284,8 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context 'when loading a url containing project collections' do
+  pending 'when loading a url containing project collections' do
+  # context 'when loading a url containing project collections' do
     before(:all) do
       visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC'
       wait_for_xhr
@@ -347,7 +350,6 @@ describe 'Address bar', reset: false do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
       wait_for_xhr
 
-
       first_collection_result.click
       wait_for_xhr
 
@@ -360,7 +362,7 @@ describe 'Address bar', reset: false do
       wait_for_xhr
     end
 
-    it 'saves the selected granule in the address bar' do
+    it 'saves the selected granule in the address bar', pending_updates: true do
       query = URI.parse(page.current_url).query
       project_id = query[/^projectId=(\d+)$/, 1].to_i
       expect(Project.find(project_id).path).to match(/&g=G1422671719-ORNL_DAAC&/)
@@ -376,34 +378,6 @@ describe 'Address bar', reset: false do
     it "restores the granule details view" do
       expect(page).to have_visible_granule_details
       expect(granule_details).to have_text('FIFE_STRM_15M.80611715.s15')
-    end
-  end
-
-  context "setting granule query conditions within the project" do
-    before(:all) do
-      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
-      wait_for_xhr
-
-      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
-      check "Find only granules that have browse images."
-
-      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
-      select 'Day only', from: "day-night-select"
-
-      find_by_id('granule-search').click_on 'close'
-      first_project_collection.click_link 'View collection details'
-      wait_for_xhr
-
-      expect(page).to have_visible_collection_details
-    end
-
-    it "saves the query conditions in the URL" do
-      expect(page).to have_path('/search/project/collection-details')
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS&pg[1][bo]=true&pg[2][dnf]=DAY')
-    end
-
-    it "does not duplicate the query conditions for the focused collection" do
-      expect(page.current_url).not_to include('pg[0][bo]')
     end
   end
 
@@ -424,21 +398,6 @@ describe 'Address bar', reset: false do
     it "includes query conditions for the focused collection" do
       expect(page.current_url).to include('pg[0][bo]')
     end
-  end
-
-  context "loading a URL with saved query conditions" do
-    before :all do
-      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS!C179002883-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
-      wait_for_xhr
-    end
-
-    it "restores the granule query conditions" do
-      view_granule_filters("15 Minute Stream Flow Data: USGS (FIFE)")
-      expect(page).to have_checked_field 'Find only granules that have browse images.'
-      view_granule_filters("MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005")
-      expect(page).to have_select 'day-night-select', selected: 'Day only'
-    end
-
   end
 
   # TODO: RDA // Map Zooming fails for unknown reasons potentially related to QT
@@ -495,14 +454,13 @@ describe 'Address bar', reset: false do
 
   context "when selecting a timeline date" do
     before(:all) do
-      visit '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
+      load_page :search, focus: 'C179003030-ORNL_DAAC'
       click_timeline_date('Nov', '1987')
       wait_for_xhr
     end
 
     it 'saves the timeline date selection in the URL' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199')
+      expect(page.current_url).to match(/p=C179003030-ORNL_DAAC&tl=557711999!4!562723200!565315199/)
     end
   end
 
@@ -556,7 +514,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page.current_url).to match(/&g=G1422671857-ORNL_DAAC&/)
+      expect(page.current_url).to match(/g=G1422671857-ORNL_DAAC/)
     end
   end
 
@@ -639,7 +597,6 @@ describe 'Address bar', reset: false do
     end
   end
 
-
   context 'when the labs parameter is set to true' do
     context 'the granule filters panel' do
       before(:all) do
@@ -678,7 +635,7 @@ describe 'Address bar', reset: false do
   context 'when changing the base layer' do
     before :all do
       load_page :search
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
       within '#map' do
         choose 'Land / Water Map'
       end
@@ -686,7 +643,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the base layer in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!2!0%2C2')
+      expect(page.current_url).to match(/m=0!0!2!1!2!0%2C2/)
     end
 
     context 'when refreshing the page' do
@@ -707,7 +664,7 @@ describe 'Address bar', reset: false do
     before :all do
       load_page :search
       wait_for_xhr
-      page.find_link('Layers').trigger(:mouseover)
+      page.find_link('Layers').hover
       within '#map' do
         check 'Borders and Roads'
         check 'Coastlines'
@@ -716,7 +673,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the applied overlays in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2%2C1')
+      expect(page.current_url).to match(/m=0!0!2!1!0!0%2C2%2C1/)
     end
 
     context 'when refreshing the page' do
@@ -732,5 +689,4 @@ describe 'Address bar', reset: false do
       end
     end
   end
-
 end

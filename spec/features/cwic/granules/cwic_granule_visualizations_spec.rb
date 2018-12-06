@@ -1,17 +1,17 @@
 require "spec_helper"
 
-describe "CWIC-enabled granule visualizations", reset: false do
+describe "CWIC-enabled granule visualizations" do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
+    load_page :search, q: 'C1220566654-USGS_LTA'
   end
 
   context do
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "viewing CWIC granule results with available browse imagery" do
-      it "displays browse thumbnails for each granule with browse", acceptance: true do
+      it "displays browse thumbnails for each granule with browse" do
         expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src*="/browse/eo-1/ali/"]')
       end
     end
@@ -25,12 +25,12 @@ describe "CWIC-enabled granule visualizations", reset: false do
         first_granule_list_item.click
       end
 
-      it "displays a larger preview of the browse data", acceptance: true do
+      it "displays a larger preview of the browse data" do
         expect(page).to have_css('#map .granule-browse a img[src*="/browse/eo-1/ali/"]', visible: false)
       end
 
       context "clicking on the browse preview" do
-        it "opens the full-size browse in a new tab", acceptance: true do
+        it "opens the full-size browse in a new tab" do
           link = find('#map .granule-browse a', visible: false)
           expect(link['target']).to eq("_blank")
         end
@@ -41,7 +41,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
   context "when viewing CWIC granule results" do
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
-    it "displays spatial footprints for the granules", acceptance: true do
+    it "displays spatial footprints for the granules" do
       expect(page).to have_granule_visualizations('C1220566654-USGS_LTA')
     end
 

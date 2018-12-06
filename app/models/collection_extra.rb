@@ -1,6 +1,5 @@
 class CollectionExtra < ActiveRecord::Base
-
-  self.table_name = "dataset_extras"
+  self.table_name = 'dataset_extras'
 
   validates_presence_of :echo_id
   validates_uniqueness_of :echo_id
@@ -8,8 +7,8 @@ class CollectionExtra < ActiveRecord::Base
   store :searchable_attributes, coder: JSON
   store :orbit, coder: JSON
 
-  def self.build_echo_client(env=(@cmr_env || Rails.configuration.cmr_env))
-    puts "[#{Time.now}] Building echo client for env: #{env || 'env not working'}"
+  def self.build_echo_client(env = (@cmr_env || Rails.configuration.cmr_env))
+    Rails.logger.debug "[#{Time.now}] Building echo client for env: #{env || 'env not working'}"
     Echo::Client.client_for_environment(env, Rails.configuration.services)
   end
 
@@ -18,56 +17,150 @@ class CollectionExtra < ActiveRecord::Base
     if response.success? && response.body['token']
       response.body['token']['id']
     else
-      puts '[#{Time.now}] System token not created successfully'
+      Rails.logger.debug '[#{Time.now}] System token not created successfully'
       nil
     end
   end
 
-  def self.sync_opendap(client, token, collection)
-    config = OpendapConfiguration.find(collection, client, token)
-    # TODO: Once CMR supports it, we want the subset_service to be a string data value
-    if config.has_opendap_subsetting?
-      add_extra_tag(collection, 'subset_service.opendap', nil, client, token)
-    elsif !config.has_opendap_subsetting?
-      remove_extra_tag(collection, 'subset_service.opendap', nil, client, token)
+  # Query CMRs collection search endpoint and insert umm-s details into `associations.service_objects`
+  # for any ids present in the `associations.services`
+  #
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
+  # @param cmr_options [Hash] the parameters to provide to CMR
+  # @return [Array] a list of collections with umm details inserted for services associated with each collection
+  def self.get_collections_with_service_details(client, token, cmr_options = {})
+    # Create two empty arrays that we'll populate below that will allow us to make
+    # one large call to CMR to retrieve and insert full service responses into each collection
+    services    = []
+    collections = []
+
+    # Search CMR for any collection with granules and include any tag that contains `subset_service` so that when
+    # `add_extra_tag` is called it can check to see if the tag is already on the collection before attemtping to add it
+    each_collection(client, cmr_options, token) do |collection|
+      # Add the services associated with each collection
+      services << collection.fetch('associations', {}).fetch('services', [])
+
+      # Append to our array to prevent having to ping CMR again
+      collections << collection
     end
-  end
 
-  def self.sync_esi(client, token)
-    puts "[#{Time.now}] Starting sync ESI"
-    option_response = client.get_all_service_order_information(token)
+    # Flatten the array and remove duplicates
+    services.flatten!.compact!
 
-    if option_response.success?
-      esi_capable_ids = option_response.body.map {|option| option['service_option_assignment']['catalog_item_id']}
-      esi_tagged_ids = []
+    # Retreive details about each of the services associated with collections we care about
+    page_size       = 2000
+    page_num        = 1
+    service_objects = []
 
-      each_collection(client, {tag_key: tag_key('subset_service.esi')}, token) do |collection|
-        esi_tagged_ids.push collection['id']
+    # Loop through paged cmr results until we've received all collections or an error occurs
+    loop do
+      service_response = client.get_services(page_size: page_size, page_num: page_num, concept_id: services)
+
+      service_objects += service_response.body.fetch('items', [])
+
+      Rails.logger.error "Error retrieving services within `CollectionExtra.get_collections_with_service_details`: #{service_response.body}" unless service_response.success?
+
+      break if !service_response.success? || service_response.body.fetch('items', []).length < page_size
+
+      page_num += 1
+    end
+
+    collections.each do |collection|
+      # Look for any of the services associated with this collection in the list of all services
+      # returned from our larger lookup
+      collection.fetch('associations', {}).fetch('services', []).each do |collection_service_id|
+        service_objects.each do |service_object|
+          # Initialize an array to hold the service details
+          collection['associations']['service_objects'] ||= []
+
+          next unless collection_service_id == service_object['meta']['concept-id']
+
+          # Add the full service object details into the collection metadeta
+          collection['associations']['service_objects'] << service_object
+        end
       end
-
-      ids_no_longer_esi_capable = esi_tagged_ids - esi_capable_ids
-      ids_become_esi_capable = esi_capable_ids - esi_tagged_ids
-      puts "[#{Time.now}] Number of collections that should no longer bear ESI tag: #{ids_no_longer_esi_capable.size}."
-      puts "[#{Time.now}] Number of collections that should be tagged ESI capable: #{ids_become_esi_capable.size}."
-
-      # collections that no longer ESI capable:
-      client.bulk_remove_tag(tag_key('subset_service.esi'), ids_no_longer_esi_capable.map{|elem| {'concept-id' => elem}}, token) if ids_no_longer_esi_capable.size > 0
-
-      # collections that just get the ESI configs
-      client.add_tag(tag_key('subset_service.esi'), nil, ids_become_esi_capable, token, false, false) if ids_become_esi_capable.size > 0
     end
-    puts "[#{Time.now}] Finished adding ESI tags"
-    nil
   end
 
+  # Remove tags from collections that no longer support the provided subsetting
+  #
+  # @param tag_name [String] the tag to remove from collections without the `edsc.extra` prefix
+  # @param collections [Array] the list of collections that are known to support the provided subsetting
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
+  def self.remove_stale_tags(tag_name, collections, client, token)
+    page_size = 2000
+    page_num  = 1
+    tagged_collections = []
+
+    # Retrieve all collections on CMR that are tagged with the provided tag
+    loop do
+      response = client.get_collections({ page_size: page_size, page_num: page_num, tag_key: tag_key(tag_name) }, token)
+
+      tagged_collections += response.body.fetch('feed', {}).fetch('entry', [])
+
+      Rails.logger.error "Error retrieving collections within `CollectionExtra.remove_stale_tags`: #{response.body}" unless response.success?
+
+      break if !response.success? || response.body.fetch('items', []).length < page_size
+
+      page_num += 1
+    end
+
+    ids_no_longer_capable = tagged_collections.map { |collection| collection['id'] } - collections.map { |collection| collection['id'] }
+
+    if ids_no_longer_capable.empty?
+      Rails.logger.debug "No stale `#{tag_name}` tags found"
+    else
+      ids_no_longer_capable.each_slice(500) do |slice_of_collections|
+        Rails.logger.debug "Attempting to remove #{slice_of_collections.count} stale `#{tag_name}` tags"
+        client.bulk_remove_tag(tag_key(tag_name), slice_of_collections.map { |elem| { 'concept-id' => elem } }, token)
+      end
+    end
+  end
+
+  # Sync the subsetting tags for the provided tag and umm-s abilities
+  #
+  # @param tag_name [String] the tag to add to collections that support the provided subsetting abilities without the `edsc.extra` prefix
+  # @param subsetting_abilities [Array] the list of types (defined in the UMM-S schema) that a collection would need to support to be deemed capable
+  # @param collections [Array] the list of all collections being considered for the provided tag
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
+  def self.sync_subsetting_tags(tag_name, subsetting_abilities, collections, client, token)
+    Rails.logger.debug "[#{Time.now}] Starting sync of `#{tag_name}`"
+
+    collections_with_subsetting_abilities = collections.select do |collection|
+      collection.fetch('associations', {}).fetch('service_objects', []).any? { |service_object| Array.wrap(subsetting_abilities).flatten.include?(service_object['umm']['Type']) }
+    end
+
+    remove_stale_tags(tag_name, collections_with_subsetting_abilities, client, token)
+
+    Rails.logger.debug "There are #{collections_with_subsetting_abilities.size} collections that should be tagged with `#{tag_name}`"
+
+    collections_with_subsetting_abilities.each do |collection|
+      services = collection.fetch('associations', {}).fetch('service_objects', []).select { |service_object| Array.wrap(subsetting_abilities).flatten.include?(service_object['umm']['Type']) }
+
+      add_extra_tag(collection, tag_name, services.map { |umm_service| umm_service['meta']['concept-id'] }, client, token) if services.any?
+    end
+
+    Rails.logger.debug "[#{Time.now}] Finished syncing of `#{tag_name}`"
+  end
+
+  # Sync the gibs tags on collections that support gibs imagery
+  #
+  # @param client [EchoClient] the client used to communicate with CMR
+  # @param token [String] the token to supply to CMR
   def self.sync_gibs(client, token)
-    puts "[#{Time.now}] Starting sync GIBS"
+    Rails.logger.debug "[#{Time.now}] Starting sync GIBS"
     GibsConfiguration.new.sync_tags!(tag_key('gibs'), client, token)
-    puts "[#{Time.now}] Finished adding GIBS tags"
+    Rails.logger.debug "[#{Time.now}] Finished adding GIBS tags"
   end
 
+  # Sync the tags that are used within search
   def self.sync_tags
     client = build_echo_client
+
+    # Creates a token that will be used to create/remove the tags when necessary
     token = create_system_token(client)
     tags = [
       'subset_service.opendap',
@@ -75,36 +168,35 @@ class CollectionExtra < ActiveRecord::Base
       'gibs'
     ]
 
-    # Remove stale tags
-    stale_tags = {}
-    tags.each do |tag|
-      stale_tags[tag] = []
-      client.create_tag_if_needed(tag_key(tag), token)
-    end
+    # Creates the tags that we'll assocaite with collections, unless they already exist
+    client.create_tags_if_needed(tags.map { |tag| tag_key(tag) }, token)
 
-    puts "[#{Time.now}] Starting sync OPENDAP"
-    each_collection(client, {has_granules: true}, token) do |collection|
-      sync_opendap(client, token, collection)
-    end
-    puts "[#{Time.now}] Finished adding OPENDAP tags"
+    collections = get_collections_with_service_details(client, token, has_granules: true, include_tags: tag_key('subset_service'))
 
-    sync_esi(client, token)
-    sync_gibs(client, token)
+    # OPeNDAP Tagging
+    sync_subsetting_tags('subset_service.opendap', ['OPeNDAP'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_OPENDAP_TAGS', 'true'))
+
+    # ESI Tagging
+    sync_subsetting_tags('subset_service.esi', ['ESI', 'ECHO ORDERS'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_EGI_TAGS', 'true'))
+
+    # GIBS Tagging
+    sync_gibs(client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_GIBS_TAGS', 'true'))
   end
 
   def self.add_extra_tag(collection, key, value, client, token)
     key = tag_key(key)
-    client.add_tag(key, value, collection['id'], token) unless has_tag(collection, key, value)
+    Rails.logger.debug "Adding `#{key}` to #{collection['id']}"
+    client.add_tag(key, value, { condition: { concept_id: collection['id'] } }, token) unless has_tag(collection, key, value)
   end
 
   def self.remove_extra_tag(collection, key, value, client, token)
     key = tag_key(key)
-    client.remove_tag(key, collection['id'], token) if has_tag(collection, key, value)
+    client.remove_tag(key, { condition: { concept_id: collection['id'] } }, token) if has_tag(collection, key, value)
   end
 
   def self.tag_key(tag)
     ns = Rails.configuration.cmr_tag_namespace
-    namespaced = ['org.', 'gov.', ns].any? {|prefix| tag.start_with?(prefix)}
+    namespaced = ['org.', 'gov.', ns].any? { |prefix| tag.start_with?(prefix) }
     namespaced ? tag : [ns, tag].join('.extra.')
   end
 
@@ -116,7 +208,7 @@ class CollectionExtra < ActiveRecord::Base
       result = tags[tag] && tags[tag]['data']
     elsif tags.is_a?(Array)
       tagdot = "#{tag}."
-      match = tags.find {|t| t.start_with?(tagdot)}
+      match = tags.find { |t| t.start_with?(tagdot) }
       result = match.gsub(/^#{tagdot}/, '') if match.present?
       result = true if !result.present? && tags.include?(tag)
     end
@@ -139,7 +231,7 @@ class CollectionExtra < ActiveRecord::Base
 
     response = echo_client.get_provider_holdings
     results = response.body
-    hits = response.headers['echo-collection-hits'].to_i
+    hits = response.headers['echo-dataset-hits'].to_i
 
     processed_count = 0
 
@@ -147,15 +239,15 @@ class CollectionExtra < ActiveRecord::Base
       id = result['echo_collection_id']
       extra = CollectionExtra.find_or_create_by(echo_id: id)
 
-      extra.has_granules = result["granule_count"].to_i > 0
+      extra.has_granules = result['granule_count'].to_i > 0
       extra.has_browseable_granules = false unless extra.has_granules
 
       if extra.has_granules
         # Edited the condition to update browseable_granule ID if it hasn't been updated for a week.
         if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.updated_at < 1.week.ago)
           response = echo_client.get_granules(format: 'json',
-                                                 echo_collection_id: [id],
-                                                 page_size: 1, browse_only: true, sort_key: ['-start_date'])
+                                              echo_collection_id: [id],
+                                              page_size: 1, browse_only: true, sort_key: ['-start_date'])
           if response.success?
             browseable = response.body['feed']['entry']
             extra.has_browseable_granules = browseable.size > 0
@@ -163,32 +255,32 @@ class CollectionExtra < ActiveRecord::Base
               extra.granule = extra.browseable_granule = browseable.first['id']
             end
           else
-            puts response.body.to_json
+            Rails.logger.debug response.body.to_json
           end
         end
         if extra.granule.nil?
           response = echo_client.get_granules(format: 'json',
-                                               echo_collection_id: [id],
-                                               page_size: 1)
+                                              echo_collection_id: [id],
+                                              page_size: 1)
           if response.success?
             granules = response.body['feed']['entry']
             extra.granule = granules.first['id'] if granules.first
           else
-            puts response.body.to_json
+            Rails.logger.debug response.body.to_json
           end
         end
-        puts "[#{Time.now}] Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
+        Rails.logger.debug "[#{Time.now}] Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
       end
 
       begin
         extra.save! if extra.changed?
       rescue ActiveRecord::RecordNotUnique => e
-        puts "[#{Time.now}] #{e.message}"
+        Rails.logger.debug "[#{Time.now}] #{e.message}"
       end
 
       processed_count += 1
 
-      puts "[#{Time.now}] #{processed_count} / #{hits}"
+      Rails.logger.debug "[#{Time.now}] #{processed_count} / #{hits}"
     end
   end
 
@@ -199,21 +291,21 @@ class CollectionExtra < ActiveRecord::Base
 
       # Additional attribute definitions
       attribute_defs = collection['AdditionalAttributes'] || {}
-      attributes = Array.wrap(attribute_defs['AdditionalAttribute']).reject {|a| a['Value']}
+      attributes = Array.wrap(attribute_defs['AdditionalAttribute']).reject { |a| a['Value'] }
       if attributes.present?
         attributes = attributes.map do |attr|
-          attr.map { |k, v| {k.underscore => v} }.reduce(&:merge)
+          attr.map { |k, v| { k.underscore => v } }.reduce(&:merge)
         end
-        extra.searchable_attributes = {attributes: attributes}
+        extra.searchable_attributes = { attributes: attributes }
       else
-        extra.searchable_attributes = {attributes: []}
+        extra.searchable_attributes = { attributes: [] }
       end
 
       # Orbit parameters
       spatial = collection['Spatial'] || {}
       orbit = spatial['OrbitParameters']
       if orbit
-        orbit = orbit.map { |k, v| {k.underscore => v} }.reduce(&:merge)
+        orbit = orbit.map { |k, v| { k.underscore => v } }.reduce(&:merge)
         extra.orbit = orbit
       else
         extra.orbit = {}
@@ -225,44 +317,24 @@ class CollectionExtra < ActiveRecord::Base
     nil
   end
 
-  def self.load_option_defs
-    echo_client = build_echo_client
-
-    each_collection(echo_client) do |collection|
-      # Skip collections that we've seen before which have no browseable granules.  Saves tons of time
-      granules = echo_client.get_granules(format: 'json', echo_collection_id: [collection['id']], page_size: 1).body
-
-      granule = granules['feed']['entry'].first
-      if granule
-        order_info = echo_client.get_order_information([granule['id']], nil).body
-        refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
-        if refs
-          opts = refs.map {|r| [r['id'], r['name']]}
-        end
-      end
-    end
-
-    nil
-  end
-
-  def self.each_collection(echo_client, extra_params={}, token=nil)
-    params = {page_num: 0, page_size: 2000}
+  def self.each_collection(echo_client, extra_params = {}, token = nil)
+    params = { page_num: 0, page_size: 2000 }
     processed_count = 0
 
     start = Time.now
-    begin
+    loop do
       params[:page_num] += 1
       response = echo_client.get_collections(params.merge(extra_params), token)
       body = response.body
-      if body['results']
-        # ECHO10
-        collections = Array.wrap(body['results']['result'])
-      elsif body['feed']
-        # Atom
-        collections = body['feed']['entry']
-      else
-        collections = []
-      end
+      collections = if body['results']
+                      # ECHO10
+                      rray.wrap(body['results']['result'])
+                    elsif body['feed']
+                      # Atom
+                      body['feed']['entry']
+                    else
+                      []
+                    end
 
       hits = response.headers['cmr-hits'].to_i
 
@@ -270,15 +342,18 @@ class CollectionExtra < ActiveRecord::Base
         yield collection
         processed_count += 1
       end
-      puts "[#{Time.now}] #{processed_count} / #{hits} Collections Processed"
-    end while processed_count < hits && collections.size > 0
-    puts "[#{Time.now}] #{processed_count} Collections Processed in #{Time.now - start}s"
+      Rails.logger.debug "[#{Time.now}] #{processed_count} / #{hits} Collections Processed"
+
+      break unless processed_count < hits && !collections.empty?
+    end
+
+    Rails.logger.debug "[#{Time.now}] #{processed_count} Collections Processed in #{Time.now - start}s"
 
     nil
   end
 
   def self.decorate_all(collections)
-    ids = collections.map {|r| r['id']}
+    ids = collections.map { |r| r['id'] }
     extras = CollectionExtra.where(echo_id: ids).index_by(&:echo_id)
 
     collections.map! do |result|
@@ -405,5 +480,4 @@ class CollectionExtra < ActiveRecord::Base
       collection[:modaps][:get_capabilities] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{collection[:short_name]}/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"
     end
   end
-
 end

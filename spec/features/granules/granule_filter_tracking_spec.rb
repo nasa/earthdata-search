@@ -3,14 +3,11 @@
 
 require "spec_helper"
 
-describe "Granule filter tracking", reset: false do
-
+describe "Granule filter tracking" do
   has_reference_script = """
-    (function(id) {
-      var ds = window.edsc.models.data.Collection.findOrCreate({id: id}, null);
-      ds.dispose();
-      return ds.links != null;
-    })('C179003030-ORNL_DAAC');
+    var ds = window.edsc.models.data.Collection.findOrCreate({id: 'C179003030-ORNL_DAAC'}, null);
+    ds.dispose();
+    return ds.links != null;
   """
 
   context 'when granule filters have been set for a collection' do
@@ -28,7 +25,7 @@ describe "Granule filter tracking", reset: false do
 
       it 'maintains information on the collection' do
         synchronize do
-          has_reference = page.evaluate_script(has_reference_script)
+          has_reference = page.execute_script(has_reference_script)
           expect(has_reference).to be_true
         end
       end
@@ -41,7 +38,7 @@ describe "Granule filter tracking", reset: false do
 
         it 'restores the original granule filters that had been set' do
           synchronize do
-            has_reference = page.evaluate_script(has_reference_script)
+            has_reference = page.execute_script(has_reference_script)
             expect(has_reference).to be_true
           end
         end
@@ -69,7 +66,7 @@ describe "Granule filter tracking", reset: false do
 
       it 'forgets the collection' do
         synchronize do
-          has_reference = page.evaluate_script(has_reference_script)
+          has_reference = page.execute_script(has_reference_script)
           expect(has_reference).to be_false
         end
       end

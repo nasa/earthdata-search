@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Granule result removal", reset: false do
-  second_granule_temporal = 'START1988-02-01 00:00:00 END1988-03-01 00:00:00'
+describe 'Granule result removal' do
+  second_granule_temporal = 'START 1988-02-01 00:00:00 END 1988-03-01 00:00:00'
   second_granule_temporal_map = '1988-02-01 00:00:00 1988-03-01 00:00:00'
 
   context 'pressing the delete key while focused on a granule' do
@@ -16,15 +16,15 @@ describe "Granule result removal", reset: false do
       expect(page).to have_css('#granule-list .panel-list-item', count: 19)
     end
 
-    it "updates the page's hits count" do
-      expect(granule_list).to have_content("Showing 19 of 38 matching granules")
+    it 'updates the page\'s hits count' do
+      expect(granule_list).to have_content('Showing 19 of 38 matching granules')
     end
 
-    it "focuses the next granule in the list" do
+    it 'focuses the next granule in the list' do
       expect(granule_list).to have_selector('.panel-list-selected', count: 1, text: second_granule_temporal)
     end
 
-    it "focuses the next granule on the map" do
+    it 'focuses the next granule on the map' do
       expect(page).to have_selector('.granule-spatial-label-temporal', count: 1, text: second_granule_temporal_map)
     end
   end

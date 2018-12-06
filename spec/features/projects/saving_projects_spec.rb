@@ -1,60 +1,52 @@
 require 'spec_helper'
 
-describe 'Saving Projects', reset: false do
-  context 'when adding a name to a project' do
-    let(:path) { '/search/collections?p=!C179002914-ORNL_DAAC!C179003030-ORNL_DAAC' }
-    let(:query_re) { /^projectId=(\d+)$/ }
+describe 'Viewing an un-saved Project' do
+  before :all do
+    load_page 'projects/new', project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
+  end
 
+  it 'displays the default project name' do
+    within '.master-overlay-content-header-project' do
+      expect(page).to have_content('Untitled Project')
+    end
+  end
+
+  it 'displays a edit project button' do
+    within '.master-overlay-content-header-project' do
+      expect(page).to have_css('.editable-text-button-edit')
+    end
+  end
+
+  context 'clicking the edit project button' do
     before :all do
-      Capybara.reset_sessions!
-
-      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
-
-      # Need to login so that we can save our project
-      login
-
-      click_link 'Save your project'
-      
-      fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
-      click_save_project_name
+      within '.master-overlay-content-header-project' do
+        page.find('.editable-text-button-edit').click
+      end
     end
 
-    it "shortens the url" do
-      expect(query).to match(query_re)
-      expect(Project.find(project_id).path).to eql(path)
+    it 'displays the project name form' do
+      expect(page).to have_css('input.editable-text-input')
     end
 
-    it "shows the project name" do
-      expect(page).to have_content('Test Project')
-    end
-
-    context "when renaming the project" do
+    context 'providing a name and clicking `Save`' do
       before :all do
-        click_link 'Test Project'
-        fill_in "workspace-name", with: "Test Project 2\t"
-        click_save_project_name
-      end
+        within '.master-overlay-content-header-project' do
+          find('.editable-text-input').set('EDSC NASA')
 
-      it "keeps the same short url" do
-        expect(query).to match(query_re)
-        expect(Project.find(project_id).path).to eql(path)
-      end
+          page.find('.editable-text-button-submit').click
+        end
 
-      it "shows the new project name" do
-        expect(page).to have_content('Test Project 2')
-      end
-    end
-
-    context "when loading the named project" do
-      before :each do
-        project = create_project(path)
-
-        visit "/search/collections?projectId=#{project.to_param}"
         wait_for_xhr
       end
 
-      it "shows the project name" do
-        expect(page).to have_content('Test Project')
+      it 'displays the updated project name' do
+        within '.master-overlay-content-header-project' do
+          expect(page).to have_content('EDSC NASA')
+        end
+      end
+
+      it 'shortens the url' do
+        expect(query).to match(/^projectId=(\d+)$/)
       end
     end
   end

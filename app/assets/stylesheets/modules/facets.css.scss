@@ -163,12 +163,14 @@
   }
 }
 
-.master-overlay-content.panel-group {
-  padding: .5em 0 1em 0;
-  .panel {
-    background-color: $master-overlay-parent-bg-color;
-    margin-top: 0;
-  }
+.master-overlay-content-panel-group {
+  margin-bottom: 0;
+  padding-top: 0.5em;
+}
+
+.master-overlay-content-panel {
+  background-color: $master-overlay-parent-bg-color;
+  margin-top: 0;
 }
 
 .facet-group-title {

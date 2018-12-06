@@ -3,15 +3,16 @@ module Helpers
     def wait_for_xhr
       ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
         synchronize(60) do
-          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+          expect(page.execute_script('try { return window.edsc.util.xhr.hasPending(); } catch { return false; }')).to be_false
         end
       end
     end
 
     def wait_for_zoom_animation(zoom_to)
-      script = "(function() {var map = $('#map').data('map').map; return map.getZoom();})();"
+      script = "return $('#map').data('map').map.getZoom();"
+
       synchronize do
-        expect(page.evaluate_script(script).to_i).to eql(zoom_to)
+        expect(page.execute_script(script).to_i).to eql(zoom_to)
       end
     end
 
@@ -21,7 +22,7 @@ module Helpers
       end
     end
 
-    def synchronize(seconds=Capybara.default_wait_time)
+    def synchronize(seconds=Capybara.default_max_wait_time)
       start_time = Time.now
 
       count = 0
@@ -86,14 +87,25 @@ module Helpers
     end
 
     def cmr_env
-      page.get_rack_session_key('cmr_env') rescue Rails.configuration.cmr_env
+      query_params = Rack::Utils.parse_nested_query(URI.parse(page.current_url).query)
+      
+      if %w(sit uat prod ops).include? query_params['cmr_env']
+        query_params['cmr_env']
+      elsif page.get_rack_session.key?('cmr_env')
+        page.get_rack_session_key('cmr_env')
+      elsif Rails.application.config.respond_to?(:cmr_env)
+        Rails.configuration.cmr_env
+      else
+        'prod'
+      end
     end
 
-    def be_logged_in_as(key)
+    def be_logged_in_as(key, env = nil)
       token_key = urs_tokens[key]
 
       # Get environment specific keys for creating cassettes
-      json = token_key[cmr_env]
+      en = (env.to_s unless env.nil?) || cmr_env
+      json = token_key[en]
 
       page.set_rack_session(expires_in: json['expires_in'])
       page.set_rack_session(access_token: json['access_token'])
@@ -106,9 +118,10 @@ module Helpers
       wait_for_xhr
       # Let's get the tour modal while we're at it...
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
-      # Now the banner...
-      while page.has_css?('.banner-close') do
-        find('a[class="banner-close"]').click
+
+      # Now the banner
+      if page.has_css?('.banner-close')
+        page.find('a[class="banner-close"]').click
         wait_for_xhr
       end
     end
@@ -150,6 +163,12 @@ module Helpers
                 edsc.page.project.accessCollections()[0].serviceOptions.accessMethod.removeAll();
                 edsc.page.project.accessCollections()[0].serviceOptions.addAccessMethod();"
       page.execute_script script
+    end
+
+    def page_status_code
+      # Selenium does not support page.status_code. This is a workaround. In env 'test', we add an attribute 'code' to the <html> element.
+      # Here we are checking that element to grab the response code.
+      page.first('html')[:code].to_i
     end
 
     private

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie11 lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie11 lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie11 lt-ie10 lt-ie9"> <![endif]-->
+<!--[if lte IE 9]>     <html class="no-js lt-ie11 lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" <% if Rails.env.test? %>code="<%= response.try(:code) if defined?(response) %><% end %>>
+<!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><%= site_page_title %></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=1280,user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -53,8 +56,11 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <% end %>
     <%# End Google Tag Manager (noscript) %>
-    <div id="earthdata-tophat2"></div>
-    <div class="wrap">
+    <div id="earthdata-tophat2" class="th-wrapper"></div>
+    <% if portal_nav? %>
+    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
+    <% end %>
+    <div class="main-wrapper <%= yield (:main_wrapper_class) %>">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
       <div class="toolbar-content">
@@ -64,14 +70,11 @@
     <div class="toolbar-secondary">
       <%= yield :toolbar_secondary %>
     </div>
-    <% if portal_nav? %>
-    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
-    <% end %>
     <section class="main-content">
       <%= yield %>
     </section>
     </div>
-    <footer>
+    <footer class="main-footer">
       <%= yield :footer %>
       <div class="footer-content">
         <p>
@@ -94,6 +97,7 @@
       </div>
     </footer>
     <%= yield :global %>
+    <%= render partial: 'shared/components/index' %>
 
     <% if Rails.configuration.gather_metrics %>
       <%= javascript_include_tag "ntpagetag" %>

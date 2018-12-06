@@ -6,13 +6,13 @@
 
 require "spec_helper"
 
-describe 'Project help', reset: false do
+describe 'Project help' do
 
   before :all do
     load_page :search
   end
 
-  context 'viewing collection results with no items in the project' do
+  pending 'viewing collection results with no items in the project' do
     it 'shows a "Learn More" button for learning more about projects' do
       expect(page).to have_link('Learn More')
     end
@@ -33,7 +33,7 @@ describe 'Project help', reset: false do
     end
   end
 
-  context 'viewing collection results with items in the project' do
+  pending 'viewing collection results with items in the project' do
     before :all do
       first_collection_result.click_link "Add collection to the current project"
     end
@@ -47,7 +47,7 @@ describe 'Project help', reset: false do
     end
   end
 
-  context 'viewing the project list with collections in the project' do
+  pending 'viewing the project list with collections in the project' do
     before :each do
       first_collection_result.click_link "Add collection to the current project"
       find("#view-project").click

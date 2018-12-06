@@ -4,7 +4,6 @@
 //= require modules/map/geoutil
 //= require modules/map/leaflet-plugins/proj
 //= require modules/map/leaflet-plugins/interpolation
-//= require modules/map/leaflet-plugins/projection_switching_layer
 //= require modules/map/leaflet-plugins/gibs_tile_layer
 //= require modules/map/leaflet-plugins/projection_switcher
 //= require modules/map/leaflet-plugins/draw_errors
@@ -12,8 +11,8 @@
 //= require modules/map/leaflet-plugins/polar_rectangle
 //= require modules/map/leaflet-plugins/draw_toolbar
 //= require modules/map/leaflet-plugins/shapefile_layer
-//= require modules/map/leaflet-plugins/granule_layer
 //= require modules/map/leaflet-plugins/zoom_home
+//= require modules/map/leaflet-plugins/granule_grid_layer
 //= require modules/map/layer_builder
 //= require modules/map/spatial_selection
 //= require modules/map/granule_visualizations_layer

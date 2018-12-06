@@ -58,30 +58,4 @@ RSpec.configure do |config|
   # RSpec 2 and RSpec 3.
   fetch_current_example = RSpec.respond_to?(:current_example) ?
     proc { RSpec.current_example } : proc { |context| context.example }
-
-  # Combines the work done in before and after hooks in lib/capybara/rspec.rb.
-  # When we encounter a spec that uses Capybara, we reset the sessions if
-  # the spec has a "reset" tag or the spec defines a different driver than
-  # the current session.
-  config.before do |parent|
-    if self.class.include?(Snappybara::DSL)
-      example = fetch_current_example.call(self)
-      driver = Capybara.default_driver
-      driver = Capybara.javascript_driver if example.metadata[:js]
-      driver = example.metadata[:driver] if example.metadata[:driver]
-
-      if example.metadata[:reset] || driver != Capybara.current_driver
-        Capybara.reset_sessions!
-        Capybara.current_driver = driver
-      end
-    end
-  end
-
-  # Reset sessions between each top-level describe
-  config.after(:all) do
-    if Capybara.page
-      Snappybara.wait_for_requests_complete
-      Capybara.reset_sessions!
-    end
-  end
 end

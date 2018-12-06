@@ -23,10 +23,9 @@
       @lastKeywords = null
 
       $(window).on 'edsc.save_workspace', =>
-          urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
-          @page.workspaceName(@page.workspaceNameField())
-          $('.save-dropdown').removeClass('open')
-
+        urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
+        @page.workspaceName(@page.workspaceNameField())
+        $('.save-dropdown').removeClass('open')
 
     monitor: ->
       setTimeout((=>
@@ -139,13 +138,14 @@
 
       root = '/search'
 
+      return '/projects/new' if state.projects
       return root if state.parent && state.current != 'collection-details'
 
       return "#{root}/map" unless state.visible
 
       return "#{root}/collections" if state.current == 'collection-results'
 
-      root += '/project' if state.children.indexOf('project-overview') != -1
+      root += '/projects' if state.children.indexOf('project-overview') != -1
       return root if state.current == 'project-overview'
 
       root += "/granules" if state.children.indexOf('granule-list') != -1

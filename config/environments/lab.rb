@@ -50,7 +50,7 @@ EarthdataSearchClient::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += ['search.js', 'data_access.js', 'account.js', 'cwic_granule.js']
+  config.assets.precompile += ['search.js', 'data_access.js', 'account.js', 'cwic_granule.js', 'projects.js']
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -78,7 +78,7 @@ EarthdataSearchClient::Application.configure do
   config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/SearchLab/feedback.js'
 
   config.url_limit = 2000
-  config.cmr_env = 'prod'
+  config.cmr_env = 'sit'
   services = config.services
   config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
 

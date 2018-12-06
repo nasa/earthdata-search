@@ -1,5 +1,5 @@
 ---
-61b151ace894f0b4fe7fbc3f371a941cb824c3d9:
+744942b03af638b79163d3405f2c14370449edb4:
   response:
     status:
       code: 200
@@ -10,26 +10,26 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 23 Feb 2018 17:58:46 GMT
+      - Wed, 07 Nov 2018 15:37:57 GMT
       etag:
-      - '"d751713988987e9331980363e24189ce"'
+      - '"8847f2e0fbddfaec642b01180d7b162c"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.216000'
+      - '0.730000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '2'
+      - '554'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: "[]"
+      string: '[{"service_option_assignment":{"applies_only_to_granules":false,"catalog_item_id":"C1000000029-EDF_OPS","id":"FBDE87A8-5935-36BA-D706-9A06D1947887","service_entry_id":"A6B2D5B4-3A58-3A10-AFF3-BDE67700CCA0","service_option_definition_id":"2882537F-E7FD-3F8B-64E6-57CAF36A9A0D"}},{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000029-EDF_OPS","id":"6DBC6485-51F1-C425-496C-E1AB1648B897","service_entry_id":"2582B150-BA08-A767-3128-F6C66C0362C6","service_option_definition_id":"E96C488E-B713-023E-8CCA-22B45AB0FFEE"}}]'
     http_version: 
-43dad56b4e7a0993bb94bcf5014e47a8701e12da:
+74221f972dd918d85276eaea9c0ffd1f19ff6691:
   response:
     status:
       code: 200
@@ -40,26 +40,26 @@
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 23 Feb 2018 17:42:22 GMT
+      - Tue, 06 Nov 2018 19:46:58 GMT
       etag:
-      - '"232cd354ff86576261780352801f0a71"'
+      - '"4dd039becc6c96dd1a38dc8314a5a459"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.426000'
+      - '0.654000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '279'
+      - '275'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000445-NSIDC_ECS","id":"CA590D5A-4F8D-79FC-15B6-291C3F74DDA5","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"D9CA10BC-7CDE-25CA-C156-B14DE405A63C"}}]'
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000739-DEV08","id":"6C07EF9B-E6D0-9394-18AA-5B1490E777F8","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"52B52D7D-58BC-1A07-EA8A-E68AE489C304"}}]'
     http_version: 
-adce9c1d8859ca5f84840f0d57a74c2532a04ef2:
+7193b157ad9b86cdadf0e13dc195a744a68ac5ae:
   response:
     status:
       code: 200
@@ -70,26 +70,26 @@ adce9c1d8859ca5f84840f0d57a74c2532a04ef2:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 23 Feb 2018 17:36:21 GMT
+      - Tue, 06 Nov 2018 17:26:45 GMT
       etag:
-      - '"17fabb10b28fcb1d44a17755e7ff06b2"'
+      - '"f0038fa38513c127df3205a97c505a59"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.173000'
+      - '0.759000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '279'
+      - '275'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000561-NSIDC_ECS","id":"EB876F7C-2D4A-8796-1A69-D52B9FEA7F3A","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"C604C289-A17A-B604-FFA6-0801A3EAA903"}}]'
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000969-DEV08","id":"E80371F5-E91F-0C1A-ABF5-384D0E7A9908","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"F431F03F-48FC-3DB3-59C8-9EBA698EBBDF"}}]'
     http_version: 
-ef7065a35e05dea14c6e9ede1b2ddd768621bb88:
+7c33771c45504b408cbdbecc519e2e8e9596a992:
   response:
     status:
       code: 200
@@ -100,562 +100,22 @@ ef7065a35e05dea14c6e9ede1b2ddd768621bb88:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 23 Feb 2018 18:09:29 GMT
+      - Tue, 06 Nov 2018 17:47:19 GMT
       etag:
-      - '"d751713988987e9331980363e24189ce"'
+      - '"56dc4a1fd342ed7c05541a36db68f615"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.202000'
+      - '0.714000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '2'
+      - '275'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: "[]"
-    http_version: 
-8890ec36ffc6c11d0c5083d9715cda0d93fe07f5:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:56:19 GMT
-      etag:
-      - '"a4e58b51e9d35e5f59842882f479ff4f"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.232000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '278'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C115003855-NSIDC_ECS","id":"1373E99B-2768-2B5A-56BD-439B7770E7E7","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"B81B0530-370A-3621-DF13-D77256610DB4"}}]'
-    http_version: 
-2eae16259337249b058f6d38c7858cbbd3041387:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 18:08:46 GMT
-      etag:
-      - '"f724f008fbef2a3ae0657b394d0f20d7"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.192000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '278'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C115003857-NSIDC_ECS","id":"C63B353B-B80F-C78B-3426-7BB1863320FA","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"2630CB27-C5A7-D6C8-96EA-988D50FF934F"}}]'
-    http_version: 
-03eff630154eaa108ef06069361c2fd928bd946c:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 26 Feb 2018 15:45:29 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.201000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-713a11c987eac4eced4d86149f7c4c391e14a497:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 18:03:58 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.352000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-5467fc685a1ecc3451b4699fb4694fc77533d3f5:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:49:50 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.237000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-1b0ccade04a1dee1095e8042f8fff490d4867304:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:36:32 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.196000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-822ad0a4497410cd1c5834a7e8f87cc6df322718:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:49:50 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.168000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-5c0a5a298e6fc55213c05b95404c5cc328d8fa2c:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:58:06 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.173000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-263c196e4afc4e1372e388c7eb1a0b383377489b:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:38:06 GMT
-      etag:
-      - '"1597370be31635b91432dc5fe5c0835f"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.177000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '278'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C190757121-NSIDC_ECS","id":"8EBE3BA4-C577-A3A2-69A2-149C5099B6EB","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"0E02452A-BFD2-5E12-3348-C6E95251D3FD"}}]'
-    http_version: 
-48895dc4c78ef4d4fdcebc72b5caf76bf363a237:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 18:02:11 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.254000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-8fe7bcb0f16dc621cf30845d7995a5cc1aff2541:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:58:34 GMT
-      etag:
-      - '"5f54f931f685dda7642b879619488d53"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.183000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '279'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C194001241-LPDAAC_ECS","id":"5BC5DB71-D3C6-FC98-5101-A3B173DA254E","service_entry_id":"37B94EF1-C9EF-35A0-F732-78D93414967E","service_option_definition_id":"8F560632-D134-7F90-8AA7-67E7C37C8951"}}]'
-    http_version: 
-4649e550948ad4c9dd97b4db59997f86bc203410:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:52:48 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.383000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-c8acc9a17b55b4ad5ae9bed002e6e9a4339a1169:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 18:08:22 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.443000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-76072b34b98d8825b42d9579932e3256e52243c9:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Mon, 02 Jul 2018 17:52:40 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.445000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-'08ba21cd4531102012595f5903c30525fdd4b071':
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 17:36:50 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.251000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-af1d80d761813b1d524a33c06b4c1e26999630d9:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 23 Feb 2018 18:02:32 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.186000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-34d4b5ffce9ccd2cf3bf993a9afae177ac334de7:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Wed, 08 Aug 2018 16:56:14 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.739000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
-    http_version: 
-37642eb3395f08e8fbbe829caae4418556d70ae2:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Wed, 08 Aug 2018 16:57:58 GMT
-      etag:
-      - '"d751713988987e9331980363e24189ce"'
-      server:
-      - nginx
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.949000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '2'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: "[]"
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1200240776-DEV08","id":"FDFC9DF8-3807-0275-DA53-AE9E3E83144D","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"D7004637-C676-DAE3-E4EA-34535078758E"}}]'
     http_version: 

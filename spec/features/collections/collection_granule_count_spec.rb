@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe "Collection Granule Count", reset: false do
+# no longer returns results
+describe "Collection Granule Count", pending_updates: true do
   before :all do
     Capybara.reset_sessions!
     load_page :search, q: 'C1002-LPDAAC_TBD', env: :sit

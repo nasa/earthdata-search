@@ -9,7 +9,7 @@ ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
                  thumbnailWidth = @edsc.config.thumbnailWidth
-                 Granules=ns.Granules
+                 Granules = ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
@@ -344,6 +344,17 @@ ns.Collection = do (ko
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)
+      @_setObservable('granule_hits', jsonObj)
+      @_setObservable('total_size', jsonObj)
+      @_setObservable('unit', jsonObj)
+      @_setObservable('has_spatial_subsetting', jsonObj)
+      @_setObservable('has_transforms', jsonObj)
+      @_setObservable('has_formats', jsonObj)
+      @_setObservable('has_variables', jsonObj)
+      @_setObservable('associations', jsonObj)
+
+      @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
+
       @gibs(@getValueForTag('extra.gibs'))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"

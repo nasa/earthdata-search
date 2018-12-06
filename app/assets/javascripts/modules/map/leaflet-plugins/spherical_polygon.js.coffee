@@ -1,6 +1,6 @@
 ns = edsc.map
 
-ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate, config=@edsc.config) ->
+ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, config=@edsc.config) ->
 
   # This is a bit tricky.  We need to be an instanceof L.Polygon for L.Draw methods
   # to work, but in reality we're an L.FeatureGroup, hence the "includes"
@@ -15,6 +15,8 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
       @setLatLngs(latlngs)
 
     setLatLngs: (latlngs) ->
+      @_bounds = new L.LatLngBounds()
+
       holes = []
       if latlngs[0] && Array.isArray(latlngs[0]) && latlngs[0].length > 2
         holes = latlngs[1...]
@@ -44,9 +46,15 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
         @_boundaries.setLatLngs(boundaries)
       else
         @_interiors = L.polygon(interiors, L.extend({}, @_options, stroke: false))
-        @_boundaries = L.multiPolyline(boundaries, L.extend({}, @_options, fill: false))
+        @_boundaries = L.polygon(boundaries, L.extend({}, @_options, fill: false))
         @addLayer(@_interiors)
         @addLayer(@_boundaries)
+
+    addLatLng: (latlng) ->
+      latlng = L.latLng(latlng)
+      @_latlngs.push(latlng)
+      @_bounds.extend(latlng)
+      @redraw()
 
     getLatLngs: ->
       geoutil.makeCounterclockwise(@_latlngs.concat())
@@ -84,7 +92,7 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
     addHooks: ->
       L.Draw.Polyline.prototype.addHooks.call(this)
       if @_map
-        this._poly = new L.SphericalPolygon([], @options.shapeOptions)
+        this._poly = new L.sphericalPolygon([], @options.shapeOptions)
         this._poly.drawing = true
     removeHooks: ->
       this._poly.drawing = false

@@ -1,6 +1,4 @@
 class TextSearchClient
-  Faraday.register_middleware(:response, :logging => Echo::ClientMiddleware::LoggingMiddleware)
-
   NLP_PARSER_URL = ENV['nlp_parser_url']
 
   def self.parse_text(text)
@@ -19,7 +17,7 @@ class TextSearchClient
 
   def self.build_connection
     Faraday.new(:url => NLP_PARSER_URL) do |conn|
-      conn.response :logging
+      conn.use Echo::ClientMiddleware::LoggingMiddleware
       conn.response :json, :content_type => /\bjson$/
       conn.adapter  Faraday.default_adapter
     end

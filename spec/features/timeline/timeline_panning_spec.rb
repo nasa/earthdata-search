@@ -3,12 +3,12 @@
 
 require "spec_helper"
 
-describe "Timeline panning", reset: false do
+describe "Timeline panning" do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
   start = present - 365.days
 
   before :all do
-    load_page :search, project: ['C179003030-ORNL_DAAC'], view: :project, temporal: [DateTime.new(2014, 2, 10, 12, 30, 0, '+0')]
+    load_page :search, focus: ['C179003030-ORNL_DAAC'], temporal: [DateTime.new(2014, 2, 10, 12, 30, 0, '+0')]
     #load_page :search
 
     #add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')

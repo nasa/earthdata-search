@@ -41,52 +41,11 @@ See public/licenses.txt
 ## Installation
 
 ### Prerequisites
-
-* Ruby 2.5.1
-* [Pow](http://pow.cx/) is recommended for local testing with Earthdata Login
-* A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) is strongly recommended.
+* [Ruby](https://www.ruby-lang.org)
+* [Docker](https://docs.docker.com/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
-* (For placename completion) a [GeoNames](http://www.geonames.org) account
-* For automatic spatial and temporal extraction from the search text, clone and set up an [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) server
-
-Additionally, you will need the following, which will be installed automatically by `bin/setup` on most UNIX-like systems:
-
----
-* Postgres development headers
-
-Operating systems | Command
----- | ---- |
-  Mac(homebrew)| `$ brew install postgresql`|
-  Ubuntu| `$ sudo apt-get install -y libpq-dev`|
-  RHEL| `$ sudo yum install -y postgresql-devel`|
----
-* Node.js (with npm)
-
-Operating systems | Command
----- | ---- |
-   Mac(homebrew)| `$ brew install node`|
-   Ubuntu| `$ sudo apt-get install -y nodejs`|
-   RHEL| `$ sudo curl -sL https://rpm.nodesource.com/setup | bash - && sudo yum install -y nodejs`|
-
-### Earthdata Login (URS) Configuration
-
-If you would like to set up Earthdata Login login, you will need to perform the following steps:
-
-Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/home)
-
-Create an application in the Earthdata Login console.  Its callback URL should be `http://<domain>/urs_callback`.  If you are using Pow, this will be something
-like `http://earthdata-search.dev/urs_callback`
-
-Click the "Feedback" icon on the Earthdata Login page and request that your new application be placed in the ECHO application group
-(required for ECHO/CMR to recognize your tokens).
-
-Modify line 37 of `config/services.yml` to contain your Earthdata Login application's client ID
-
-### Application configuration
-
-If using Pow, create a symlink to your application directory, for instance `ln -s $(pwd) ~/.pow/earthdata-search`
-(making your app available at `http://earthdata-search.dev`).  If you set up Earthdata Login, ensure that the domain matches
-the callback URL specified in Earthdata Login.
+* (Optional) For automatic spatial and temporal extraction from the search text, clone and set up an [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) server
 
 ### Initial setup
 
@@ -94,12 +53,49 @@ Run
 
     bin/setup
 
-Open `config/application.yml` and edit configuration values as described in that file to set up Earthdata Login, shapefile support,
-and placename completion as appropriate.
+Note: This command will take a long time to run
 
-### Running
+### Application configuration
 
-Set up EDSC-NLP REST service. (Follow the README on [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) page)
+Review `config/application.yml` and update values as necessary
 
-If you set up Pow, simply visit `http://earthdata-search.dev`,
-otherwise run `rails s` in the project directory and visit `http://localhost:3000`.
+#### (Optional) Earthdata Login (URS) Configuration
+
+Without the Earthdata Login Configuration, Earthdata Search's functionality will be limited. If you would like to set up Earthdata Login login, you will need to perform the following steps:
+
+Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/home).
+
+Create an application in the Earthdata Login console.  Its callback URL should be `http://<domain>/urs_callback`.  Standard Rails development would be `http://localhost:3000/urs_callback`.
+
+Click the "Feedback" icon on the Earthdata Login page and request that your new application be placed in the ECHO application group
+(required for ECHO/CMR to recognize your tokens).
+
+Your Earthdata Login application's client ID will need to be saved in `config/application.yml`.
+
+```### Running
+
+Run
+
+    docker-compose up
+
+### Stopping
+
+To stop docker but keep the containers
+
+    docker-compose stop
+
+To stop and remove all containers
+
+    docker-compose down
+
+Then visit http://localhost:3000/
+
+### Running tests
+
+    docker-compose run web bundle exec rspec
+
+### Terminal Access
+
+If you want terminal access to inside the container, run
+
+    docker-compose run web bash```

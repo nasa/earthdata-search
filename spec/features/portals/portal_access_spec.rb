@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Portal access", reset: false do
+describe "Portal access" do
   include Helpers::CollectionHelpers
 
   collection_name = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
@@ -8,8 +8,7 @@ describe "Portal access", reset: false do
   def visit_and_download(filters={})
     collection_id = 'C203234523-LAADS'
     collection_name = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006'
-    load_page :search, {q: collection_id}.merge(filters)
-    login
+    load_page :search, { q: collection_id, authenticate: 'edsc' }.merge(filters)
     view_granule_results(collection_name)
     within(first_granule_list_item) do
       click_on('Configure and download single granule data')
@@ -25,7 +24,7 @@ describe "Portal access", reset: false do
     Retrieval.destroy_all
   end
 
-  context "Visiting an Earthdata Search portal, accessing data" do
+  context "Visiting an Earthdata Search portal, accessing data", single_granule: true, edit_options: true do
     before :all do
       Capybara.reset_sessions!
       visit_and_download(portal: 'simple')
@@ -57,7 +56,7 @@ describe "Portal access", reset: false do
     end
   end
 
-  context "Visiting Earthdata Search, accessing data" do
+  context "Visiting Earthdata Search, accessing data", single_granule: true, edit_options: true do
     before :all do
       Capybara.reset_sessions!
       visit_and_download()

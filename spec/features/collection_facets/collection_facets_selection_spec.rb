@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facet Selection', reset: false do
+describe 'Collection Facet Selection', pending_updates: true do
   before :all do
     Capybara.reset_sessions!
 
@@ -39,10 +39,10 @@ describe 'Collection Facet Selection', reset: false do
     before :all do
       find('h3.panel-title', text: 'Organizations').click
 
-      within(:css, '.organizations') do
-        @first_organization = first('.facets-item .facet-title')
+      within('.organizations') do
+        @first_organization = find('.facets-item .facet-title', match: :first)
         @first_organization_title = @first_organization.text
-        @first_organization_collection_count = first('.facets-item .facet-item-collection-count').text
+        @first_organization_collection_count = find('.facets-item .facet-item-collection-count', match: :first).text
 
         @first_organization.click
 
@@ -62,20 +62,20 @@ describe 'Collection Facet Selection', reset: false do
     before :all do
       find('h3.panel-title', text: 'Organizations').click
 
-      within(:css, '.organizations') do
-        @first_organization = first('.facets-item')
-        @first_organization_title = first('.facets-item .facet-title').text
-        @first_organization_collection_count = first('.facets-item .facet-item-collection-count').text
+      within('.organizations') do
+        @first_organization = find('.facets-item', match: :first)
+        @first_organization_title = find('.facets-item .facet-title', match: :first).text
+        @first_organization_collection_count = find('.facets-item .facet-item-collection-count', match: :first).text
       end
       @first_organization.click
 
       wait_for_xhr
 
       find('h3.panel-title', text: 'Platforms').click
-      within(:css, '.platforms') do
-        @first_platform = first('.facets-item .facet-title')
+      within('.platforms') do
+        @first_platform = find('.facets-item .facet-title', match: :first)
         @first_platform_title = @first_platform.text
-        @first_platform_collection_count = first('.facets-item .facet-item-collection-count').text
+        @first_platform_collection_count = find('.facets-item .facet-item-collection-count', match: :first).text
       end
       @first_platform.click
 

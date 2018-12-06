@@ -11,3 +11,5 @@
 //= require util/plugin
 //= require util/metrics
 //= require util/visibility
+//= require util/browser_detect
+//= require util/which_transition_event

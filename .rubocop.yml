@@ -9,6 +9,9 @@ AllCops:
   Rails:
     Enabled: true
 
+Documentation:
+    Enabled: false
+
 Metrics/LineLength:
   Enabled: false
 
@@ -25,4 +28,13 @@ Metrics/BlockLength:
   Enabled: false
 
 Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/CyclomaticComplexity:
+  Enabled: false
+
+Naming/AccessorMethodName:
   Enabled: false

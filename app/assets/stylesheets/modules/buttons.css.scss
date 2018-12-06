@@ -1,3 +1,29 @@
+// gradient-animation mixin allows for the transition of gradient backgrounds, which is not supported by the css transition effect.
+// Simply include the gradient-animation mixin in your button (or whatever) CSS rules, specify the start and end values for your first and second gradients, and the transition time to fade between the two, and you're all set.
+@mixin gradient-animation( $grad-one-start, $grad-one-end, $grad-two-start, $grad-two-end, $transTime ){
+  background-size: 100%;
+  @include linear-gradient($grad-one-start, $grad-one-end);
+  position: relative;
+  z-index: 100;
+  &:before {
+    @include linear-gradient($grad-two-start, $grad-two-end);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime;
+  }
+  &:hover {
+     &:before {
+       opacity: 1;
+     }
+  }
+}
+
 @mixin light-button {
   background: #1c1c1c;
   color: #bdc3c7;
@@ -120,6 +146,17 @@
     float: none;
   }
 
+  &.secondary {
+    @include list-panel-button;
+    border: 1px solid #e3e3e3;
+    padding: 7px 10px;
+    text-shadow: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   &.group-secondary {
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -193,12 +230,18 @@ button {
   @include dark-button;
 }
 
-button:disabled {
+button:disabled,
+button:disabled:hover {
   @include linear-gradient(#cbcbcb, #cbcbcb);
   box-shadow: none;
   text-shadow: none;
   color: #888;
   border-color: #888;
+  cursor: not-allowed;
+
+  .fa {
+    color: #888;
+  }
 }
 
 .btn-group {
@@ -222,6 +265,33 @@ button:disabled {
   &.button-outline-light {
     @include light-button;
     font-weight: bold;
+  }
+}
+
+.button-full {
+  width: 100%;
+}
+
+.button-download-data {
+  overflow: hidden;
+  color: #fff;
+  background-color: #289152;
+  background-image: -webkit-linear-gradient(#289152, #217a46);
+  background-image: linear-gradient(#289152, #217a46);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: .9em;
+
+  .fa {
+    color: #0D2D1A;
+    text-shadow: none;
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background-color: #289152;
+    background-image: -webkit-linear-gradient(#289152, #289152);
+    background-image: linear-gradient(#289152, #289152);
   }
 }
 
@@ -327,8 +397,37 @@ $feedback-button-hover-color: lighten($feedback-button-color, 10%);
   }
 }
 
-// TL: I plan on cleaning up these "!important"'s once we move e2e to master. Things will change so much at that point, I think it is worth
-// it to use this temporary workaround.
+.button-back {
+  padding: 0;
+  background: none;
+  color: #888;
+  text-shadow: none;
+
+  i {
+    margin-right: 0.25em;
+  }
+
+  &:hover {
+    background: none;
+    color: #333;
+    text-shadow: none;
+  }
+}
+
+.button-link {
+  padding: 0;
+  background: none;
+  color: #888;
+  text-shadow: none;
+  text-decoration: underline;
+
+  &:hover {
+    background: none;
+    color: #333;
+    text-shadow: none;
+    text-decoration: underline;
+  }
+}
 
 .button-naked {
   background: none !important;

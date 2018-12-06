@@ -1,12 +1,11 @@
 require "spec_helper"
 
-describe "Data access status page", reset: false do
+describe "Data access status page", pending_updates: true do
   context "when the current user has download history" do
     before :all do
       Capybara.reset_sessions!
       Retrieval.destroy_all
-      load_page :search, overlay: false
-      login
+      load_page :search, overlay: false, authenticate: 'edsc'
 
       user = User.find_or_create_by(echo_id: '4C0390AF-BEE1-32C0-4606-66CAFDD4131D')
 
@@ -59,14 +58,17 @@ describe "Data access status page", reset: false do
       expect(page).to have_css("a[href=\"/data/retrieve/#{Retrieval.first.to_param}\"]")
     end
 
-    context "clicking the remove button" do
+    context 'clicking the remove button' do
       before :all do
         within('tbody tr:first-child') do
-          click_link "Remove Retrieval"
+          page.accept_alert 'Are you sure you want to remove this download from your history? This action cannot be undone.' do
+            click_link 'Remove Retrieval'
+          end
         end
       end
 
       after :all do
+        Capybara.reset_sessions!
         visit '/data/status'
       end
 
@@ -75,10 +77,12 @@ describe "Data access status page", reset: false do
         expect(page).to have_selector('tbody tr', count: 1)
       end
 
-      context "to remove the last retrieval" do
+      context 'to remove the last retrieval' do
         before :all do
           within('tbody tr:first-child') do
-            click_link "Remove Retrieval"
+            page.accept_alert 'Are you sure you want to remove this download from your history? This action cannot be undone.' do
+              click_link 'Remove Retrieval'
+            end
           end
         end
 
@@ -116,19 +120,6 @@ describe "Data access status page", reset: false do
 
     it "displays 404 page" do
       expect(page).to have_content("The page you were looking for does not exist.")
-    end
-  end
-
-  context "when the current user tries to access a page resulting in a 500 server error" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, overlay: false
-      login
-      visit '/500'
-    end
-
-    it "displays 500 page" do
-      expect(page).to have_content("The link you followed appears to be broken.")
     end
   end
 end

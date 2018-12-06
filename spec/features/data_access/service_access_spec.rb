@@ -1,18 +1,17 @@
 require 'spec_helper'
 
 # EDSC-1778 Adding pending_updates tag until ticket is completed. 
-describe 'Services Access', reset: false, pending_updates: true do
+describe 'Services Access', pending_updates: true do
   serviceable_collection_id = 'C179014698-NSIDC_ECS'
   smap_collection_id = 'C1236303848-NSIDC_ECS'
   smap_collection_title = "SMAP L1C Radiometer Half-Orbit 36 km EASE-Grid Brightness Temperatures V003"
   serviceable_collection_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
   disabled_serviceable_collection_id = 'C128599377-NSIDC_ECS'
 
-  context 'when viewing data access with a collection that is not configured for ESI processing' do
+  context 'when viewing data access with a collection that is not configured for ESI processing', single_granule: true do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: disabled_serviceable_collection_id
-      login
+      load_page :search, focus: disabled_serviceable_collection_id, authenticate: 'edsc'
       first_granule_list_item.click_link "Configure and download single granule data"
       wait_for_xhr
     end
@@ -47,11 +46,10 @@ describe 'Services Access', reset: false, pending_updates: true do
     end
   end
 
-  context 'when viewing data access with a SMAP collection that is capable of zone subsetting' do
+  context 'when viewing data access with a SMAP collection that is capable of zone subsetting', single_granule: true do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: smap_collection_id
-      login
+      load_page :search, focus: smap_collection_id, authenticate: 'edsc'
       first_granule_list_item.click_link "Configure and download single granule data"
     end
 
@@ -69,7 +67,7 @@ describe 'Services Access', reset: false, pending_updates: true do
         click_on 'Submit'
 
         # Second time, the ESI form is now prepopulated
-        click_link 'Back to Data Access Options'
+        click_link 'Back to Project'
         wait_for_xhr
         click_on 'Continue'
         click_on 'Submit'
@@ -94,12 +92,11 @@ describe 'Services Access', reset: false, pending_updates: true do
   context 'when viewing data access with a serviceable collection' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: serviceable_collection_id
-      login
+      load_page :search, focus: serviceable_collection_id, authenticate: 'edsc'
       fill_in "granule-ids", with: "AMSR_E_L3_5DaySnow_V10_20110928.hdf, AMSR_E_L3_5DaySnow_V10_20110923.hdf, AMSR_E_L3_5DaySnow_V10_20110918.hdf, AMSR_E_L3_5DaySnow_V10_20110913.hdf, AMSR_E_L3_5DaySnow_V10_20110908.hdf, AMSR_E_L3_5DaySnow_V10_20110903.hdf, AMSR_E_L3_5DaySnow_V10_20110829.hdf, AMSR_E_L3_5DaySnow_V10_20110824.hdf, AMSR_E_L3_5DaySnow_V10_20110819.hdf, AMSR_E_L3_5DaySnow_V10_20110814.hdf, AMSR_E_L3_5DaySnow_V10_20110809.hdf, AMSR_E_L3_5DaySnow_V10_20110804.hdf\t"
       wait_for_xhr
 
-      click_button "Download Data"
+      click_button "Download All"
       wait_for_xhr
     end
 

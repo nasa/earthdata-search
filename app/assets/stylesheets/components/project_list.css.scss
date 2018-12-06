@@ -1,0 +1,152 @@
+.project-list {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.project-list-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.project-list-empty-notice {
+  padding: 10px;
+  font-size: 0.825em;
+  font-style: italic;
+  text-align: center;
+  color: #7d7d7d;
+  margin: 0 auto;
+}
+
+.project-list-item {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  @include transition(all 0.15s linear);
+}
+
+.project-list-item-content {
+  background: #fff;
+  padding: 0.675em 0.675em 0.55em;
+}
+
+.project-list-item-title {
+  max-height: 51px;
+  margin-right: 1.25em;
+  font-size: 0.875em;
+  color: #252525;
+  line-height: 1.25;
+
+  &:hover {
+    color: #7d7d7d;
+    cursor: pointer;
+  }
+}
+
+.project-list-item-action-list {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+  background: none;
+  color: #7F7F7F;
+}
+
+.project-list-item-action-button {
+  padding: 0.5em 0.75em;
+  font-size: 1.25em;
+}
+
+.project-list-item-stats {
+  margin-top: 0.425em;
+  font-size: 0.875em;
+  color: #7F7F7F;
+}
+
+.project-list-item-stat {
+  margin-right: 0.5em;
+}
+
+.project-list-item-actions {
+  display: flex;
+  margin-top: 0.325em;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-list-item-loading-row {
+  position: relative;
+  display: flex;
+  height: 1em;
+  margin-top: 0.75em;
+
+  .loading-content {
+    display: inline-block;
+  }
+
+  .loading-content-inner {
+    width: 10em;
+  }
+
+  &:last-child {
+    justify-content: space-between;
+    margin-bottom: 0.25em;
+  }
+}
+
+.project-list-item-loading-granules {
+  height: 14px;
+  width: 80px;
+}
+
+.project-list-item-loading-details {
+  height: 14px;
+  width: 100px;
+  margin: 0 0 0 1.5em;
+}
+
+.project-list-item-loading-capabilities {
+  height: 14px;
+  width: 30px;
+}
+
+.project-list-item-loading-options {
+  height: 14px;
+  width: 100px;
+  margin: 0 0 0 1.5em;
+}
+
+
+a.project-list-item-action {
+  color: #7F7F7F;
+  cursor: pointer;
+}
+
+.collection-extra {
+  margin-top: 15px;
+
+  .label-primary {
+    display: inline;
+    font-size: 1.6em;
+    font-weight: bold;
+  }
+
+  .label-secondary {
+    margin: 0;
+  }
+}
+
+.collection-capability {
+  color: #c9c9c9;
+  display: inline-block;
+  font-size: 1.125em;
+  cursor: default;
+
+  span {
+    margin: 0 2px;
+  }
+
+  .enabled {
+    color: #359ad9
+  }
+}

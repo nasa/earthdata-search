@@ -1,0 +1,27 @@
+<% content_for(:main_wrapper_class, "project")%>
+
+<% content_for :javascript do %>
+  <%= javascript_include_tag "projects" %>
+<% end %>
+
+<% content_for :toolbar_secondary do %>
+  <a class="back-button back-to-search toolbar-button" href="#" data-bind="click: project.backToSearch"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
+  <%= render partial: 'shared/feedback' %>
+  <%= render partial: 'shared/login' %>
+<% end %>
+
+<div class="master-overlay projects-overlay">
+  <%= render partial: 'shared/overlay_parent' %>
+  <div class="master-overlay-main"></div>
+  <div id="projects-map" class="map map-placeholder"></div>
+  <form id="data-access" method="POST" action="<%=edsc_path "/data/retrieve"%>" style="display:none;">
+    <div>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <input id="data-access-project" name="project" type="hidden">
+    </div>
+  </form>
+</div>
+
+<% content_for :footer do %>
+  <%= render partial: 'search/timeline' %>
+<% end %>

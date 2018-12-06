@@ -8,30 +8,6 @@ describe "Temporal" do
     load_page :search
   end
 
-  # TODO: RDA // These modals don't appear appear in webkit
-  # so testing visibility of the items won't work (Failure 
-  # was being masked by a failed assertion in the before block)
-  # context 'When opening the temporal dropdown' do
-  #   before :all do
-  #     load_page :search
-  #     click_link 'Temporal'
-  #   end
-
-  #   it 'displays the temporal dropdown' do
-  #     expect(page).to have_content('Start')
-  #   end
-
-  #   context 'Then opening the Spatial dropdown' do
-  #     before do
-  #       click_link 'Spatial'
-  #     end
-
-  #     it 'closes the temporal dropdown' do
-  #       expect(page).to have_no_content('Start')
-  #     end
-  #   end
-  # end
-
   context "range selection" do
     it "allows the user to search from a start date time to the present" do
       click_link "Temporal"
@@ -60,7 +36,7 @@ describe "Temporal" do
 
     it "allows the user to clear the date time range" do
       # Determine how many collections are loaded before applying any filters
-      collections_without_temporal = find('header.tab h2 strong').text
+      collections_without_temporal = find('h2.master-overlay-tab-title strong').text
 
       click_link 'Temporal'
       fill_in 'Start', with: "1978-12-01 00:00:00\t"
@@ -71,7 +47,7 @@ describe "Temporal" do
 
       # Determine how many collections appears now that the
       # temporal filter is applied
-      collections_with_temporal = find('header.tab h2 strong').text
+      collections_with_temporal = find('h2.master-overlay-tab-title strong').text
 
       # Ensure that the filter has been applied
       expect(collections_without_temporal).to be > collections_with_temporal
@@ -81,7 +57,7 @@ describe "Temporal" do
 
       wait_for_xhr
 
-      collections_without_temporal_after_clear = find('header.tab h2 strong').text
+      collections_without_temporal_after_clear = find('h2.master-overlay-tab-title strong').text
       expect(collections_without_temporal_after_clear).to eq(collections_without_temporal)
 
       expect(page).to have_no_content('Start: 1978-12-01 00:00:00')
@@ -115,7 +91,7 @@ describe "Temporal" do
 
     it 'allows the user to clear the recurring date time search' do
       # Determine how many collections are loaded before applying any filters
-      collections_without_temporal = find('header.tab h2 strong').text
+      collections_without_temporal = find('h2.master-overlay-tab-title strong').text
 
       # Click the Temporal filter dropdown and apply temporal values
       click_link 'Temporal'
@@ -134,7 +110,7 @@ describe "Temporal" do
 
       # Determine how many collections appears now that the
       # temporal filter is applied
-      collections_with_temporal = find('header.tab h2 strong').text
+      collections_with_temporal = find('h2.master-overlay-tab-title strong').text
 
       # Ensure that the filter has been applied
       expect(collections_without_temporal).to be > collections_with_temporal
@@ -149,7 +125,7 @@ describe "Temporal" do
 
       wait_for_xhr
 
-      collections_without_temporal_after_clear = find('header.tab h2 strong').text
+      collections_without_temporal_after_clear = find('h2.master-overlay-tab-title strong').text
       expect(collections_without_temporal_after_clear).to eq(collections_without_temporal)
 
       expect(page).to have_no_content('Start: 12-01 00:00:00')

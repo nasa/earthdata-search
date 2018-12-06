@@ -5,18 +5,17 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'Service options order with boundingbox1 field', reset: false do
+describe 'Service options order with boundingbox1 field', pending_updates: true, single_granule: true do
   collection_id = 'C1000000445-NSIDC_ECS'
 
   context 'when filling in spatial subsetting coordinates on data configure page' do
     before :all do
       Delayed::Worker.delay_jobs = true
 
-      load_page :search, focus: collection_id
-      login
-      wait_for_xhr
+      load_page :search, focus: collection_id, authenticate: 'edsc'
 
       first_granule_list_item.click_link "Configure and download single granule data"
+      wait_for_xhr
       choose 'Customize Product'
 
       check 'Enter bounding box'
@@ -43,9 +42,9 @@ describe 'Service options order with boundingbox1 field', reset: false do
     context 'placing a service order with a collection with a boundingbox1 field' do
       before :all do
         within '.access-item-actions' do
-          # sleep 2
           click_on 'Continue'
         end
+        
         click_on 'Submit'
         wait_for_xhr
       end

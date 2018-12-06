@@ -29,6 +29,14 @@
   }
 }
 
+.modal-title {
+  font-size: 1em;
+
+  .fa {
+    color: #e1e1e1;
+  }
+}
+
 .modal-header {
   position: relative;
 }
@@ -37,6 +45,7 @@
   position: absolute;
   right: 1em;
   top: 50%;
+  font-size: 1.25em;
   transform: translateY(-50%);
 
   .modal-header & {
@@ -49,11 +58,6 @@
   max-height: calc(100% - 120px);
   overflow-y: scroll;
 
-  ul {
-    list-style: none;
-    padding: 0 30px;
-  }
-
   &.busy {
     background-position: center center;
   }
@@ -62,6 +66,44 @@
     /* 100% = dialog height, 175px = header + footer + content-header */
     max-height: calc(100% - 175px);
     min-height: calc(100% - 175px);
+  }
+
+  .modal-content-full & {
+    height: calc(100% - 120px);
+  }
+
+  .modal-has-content-header .modal-content-full & {
+    height: calc(100% - 175px);
+  }
+
+  .modal-overlay-is-active & {
+    overflow: hidden;
+  }
+}
+
+.modal-body-overlay {
+  position: absolute;
+  top: 53px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* 100% = dialog height, 120px = header + footer */
+  max-height: calc(100% - 120px);
+  overflow-y: scroll;
+
+  .modal-has-content-header & {
+    top: 108px;
+    /* 100% = dialog height, 175px = header + footer + content-header */
+    max-height: calc(100% - 175px);
+    min-height: calc(100% - 175px);
+  }
+
+  .modal-content-full & {
+    height: calc(100% - 120px);
+  }
+
+  .modal-has-content-header .modal-content-full & {
+    height: calc(100% - 175px);
   }
 }
 
@@ -104,6 +146,37 @@
   margin-top: 120px;
 }
 
+.modal-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 15px;
+  overflow-y: scroll;
+
+  &.is-active {
+    display: block;
+  }
+}
+
+.modal-overlay-header {
+  position: relative;
+  padding-top: 3em;
+}
+
+.modal-overlay-back-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal-overlay-content-full {
+  margin: 0 -15px;
+}
+
 .modal-footer {
   padding: 15px;
 
@@ -111,14 +184,8 @@
     padding: 5px;
   }
 
-  .button.secondary {
-    @include list-panel-button;
-    padding: 7px 10px;
+  .button {
     text-shadow: none;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 }
 
@@ -135,6 +202,10 @@
   padding: 1em;
   background: #fff;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-content-header-dark {
+  background: lighten($light-grey, 5%);
 }
 
 .modal-content-header-label {
@@ -167,4 +238,9 @@
   &:active {
     color: #1d6492;
   }
+}
+
+.lt-ie11 .modal,
+.lt-ie11 .modal-backdrop {
+  display: none !important;
 }

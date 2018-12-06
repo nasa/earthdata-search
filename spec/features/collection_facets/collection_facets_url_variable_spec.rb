@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection Facet URL Query Params', reset: false do
+describe 'Collection Facet URL Query Params', pending_updates: true do
   before :all do
     Capybara.reset_sessions!
 
@@ -19,7 +19,7 @@ describe 'Collection Facet URL Query Params', reset: false do
     before :all do
       find('h3.panel-title', text: 'Keywords').click
 
-      within '.panel.keywords' do
+      within '.keywords' do
         find('.facets-item', text: 'Atmosphere', match: :prefer_exact).click
         wait_for_xhr
       end
@@ -36,7 +36,7 @@ describe 'Collection Facet URL Query Params', reset: false do
     #   before :all do
     #     find('h3.panel-title', text: 'Keywords').click
 
-    #     within '.panel.keywords' do
+    #     within '.keywords' do
     #       find('.facets-item', text: 'Atmospheric Temperature', match: :prefer_exact).click
     #       wait_for_xhr
     #     end
@@ -51,7 +51,7 @@ describe 'Collection Facet URL Query Params', reset: false do
     #     before :all do
     #       find('h3.panel-title', text: 'Keywords').click
 
-    #       within '.panel.keywords' do
+    #       within '.keywords' do
     #         find('.facets-item', text: 'Upper Air Temperature', match: :prefer_exact).click
     #         wait_for_xhr
     #       end
@@ -66,7 +66,7 @@ describe 'Collection Facet URL Query Params', reset: false do
     #       before :all do
     #         find('h3.panel-title', text: 'Keywords').click
 
-    #         within '.panel.keywords' do
+    #         within '.keywords' do
     #           find('.facets-item', text: 'Upper Air Temperature', match: :prefer_exact).click
     #           wait_for_xhr
     #         end
@@ -81,7 +81,7 @@ describe 'Collection Facet URL Query Params', reset: false do
     #         before :all do
     #           find('h3.panel-title', text: 'Keywords').click
 
-    #           within '.panel.keywords' do
+    #           within '.keywords' do
     #             find('.facets-item', text: 'Vertical Profiles', match: :prefer_exact).click
     #             wait_for_xhr
     #           end
@@ -96,7 +96,7 @@ describe 'Collection Facet URL Query Params', reset: false do
     #           before :all do
     #             find('h3.panel-title', text: 'Keywords').click
 
-    #             within '.panel.keywords' do
+    #             within '.keywords' do
     #               find('.facets-item', text: 'Inversion Height', match: :prefer_exact).click
     #               wait_for_xhr
     #             end
@@ -117,8 +117,8 @@ describe 'Collection Facet URL Query Params', reset: false do
     before :all do
       find('h3.panel-title', text: 'Platforms').click
 
-      within '.panel.platforms' do
-        first('.facets-item').click
+      within '.platforms' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
     end
@@ -133,8 +133,8 @@ describe 'Collection Facet URL Query Params', reset: false do
     before :all do
       find('h3.panel-title', text: 'Instruments').click
 
-      within '.panel.instruments' do
-        first('.facets-item').click
+      within '.instruments' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
     end
@@ -149,8 +149,8 @@ describe 'Collection Facet URL Query Params', reset: false do
     before :all do
       find('h3.panel-title', text: 'Organizations').click
 
-      within '.panel.organizations' do
-        first('.facets-item').click
+      within '.organizations' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
     end
@@ -165,8 +165,8 @@ describe 'Collection Facet URL Query Params', reset: false do
     before :all do
       find('h3.panel-title', text: 'Projects').click
 
-      within '.panel.projects' do
-        first('.facets-item').click
+      within '.projects' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
     end
@@ -181,8 +181,8 @@ describe 'Collection Facet URL Query Params', reset: false do
     before :all do
       find('h3.panel-title', text: 'Processing levels').click
 
-      within '.panel.processing-levels' do
-        first('.facets-item').click
+      within '.processing-levels' do
+        find('.facets-item', match: :first).click
         wait_for_xhr
       end
     end

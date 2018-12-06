@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "Collection GIBS visualizations", reset: false, pending_updates: true do
+describe "Collection GIBS visualizations", pending_updates: true do
   extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
@@ -14,8 +14,9 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
 
   context "when viewing a GIBS-enabled collection in the results list" do
     before :all do
-      load_page :search
+      load_page :search, authenticate: 'edsc'
       fill_in "keywords", with: gibs_collection_id
+      wait_for_xhr
       expect(page).to have_content('AE_Rain')
     end
     it "indicates that the collection has GIBS visualizations" do
@@ -29,8 +30,9 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
 
   context "when visualizing a GIBS-enabled collection" do
     before :all do
-      load_page :search
+      load_page :search, authenticate: 'edsc'
       fill_in "keywords", with: gibs_collection_id
+      wait_for_xhr
       expect(page).to have_content('AE_Rain')
     end
     hook_granule_results(gibs_collection_name)
@@ -75,6 +77,7 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
     end
 
     it 'displays the correct geo resolution' do
+      # expect(page).to have_gibs_resolution('1km')
       expect(page).to have_gibs_resolution('2km')
     end
 
@@ -88,16 +91,16 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
       end
     end
   end
-  context 'when accessing GIBS-enabled collection "C1000000561-NSIDC_ECS"' do
+  context 'when accessing GIBS-enabled collection "C179014699-NSIDC_ECS"' do
     before :all do
-      load_page :search, q: 'C1000000561-NSIDC_ECS'
-      fill_in 'keywords', with: 'C1000000561-NSIDC_ECS'
-      view_granule_results('AMSR-E/Aqua Daily L3 6.25 km 89 GHz Brightness Temperature (Tb) Polar Grids V003')
+      load_page :search, q: 'C179014699-NSIDC_ECS', authenticate: 'edsc'
+      fill_in 'keywords', with: 'C179014699-NSIDC_ECS'
+      view_granule_results('AMSR-E/Aqua Daily L3 6.25 km 89 GHz Brightness Temperature (Tb) Polar Grids V002')
       wait_for_xhr
     end
 
     it "displays GIBS imagery correctly" do
-      expect(page).to have_granule_visualizations('C1000000561-NSIDC_ECS')
+      expect(page).to have_granule_visualizations('C179014699-NSIDC_ECS')
     end
   end
 
@@ -107,20 +110,20 @@ describe "Collection GIBS visualizations", reset: false, pending_updates: true d
       view_granule_results('NRT AMSR2 DAILY L3 GLOBAL SNOW WATER EQUIVALENT EASE-GRIDS V0')
       wait_for_xhr
     end
-    
+
     it "displays GIBS imagery correctly" do
       expect(page).to have_granule_visualizations('C1000000020-LANCEAMSR2')
     end
   end
 
-  context 'when accessing GIBS-enabled collection "C1000000580-NSIDC_ECS"' do
+  context 'when accessing GIBS-enabled collection "C181655997-NSIDC_ECS"', pending_updates: true do
     before :all do
-      load_page :search, q: 'C1000000580-NSIDC_ECS'
-      view_granule_results('AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003')
+      load_page :search, q: 'C181655997-NSIDC_ECS'
+      view_granule_results('AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V002')
       wait_for_xhr
     end
     it "displays GIBS imagery correctly" do
-      expect(page).to have_granule_visualizations('C1000000580-NSIDC_ECS')
+      expect(page).to have_granule_visualizations('C181655997-NSIDC_ECS')
     end
   end
 

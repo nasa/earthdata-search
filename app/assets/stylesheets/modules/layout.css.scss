@@ -7,49 +7,41 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   font-size: 16px;
   background-color: #222;
 }
 
-#earthdata-tophat2 {
-  height: 32px;
+.th-wrapper {
+  // TL: Flex basis here is used to avoid a flicker when tophat finally loads
+  flex-basis: 34px;
 }
 
-.wrap {
+.main-wrapper {
+  display: flex;
   width: 100%;
-  height: auto !important;
   height: 100%;
-  margin: 0px 0px -10px 0px;
-  // So we don't have to look at a blank map
-  //background: asset-url('ssm.jpg') no-repeat center;
+  -ms-flex: 1 1 auto;
+  flex-basis: auto;
+  overflow: hidden;
 }
 
-.search-page {
-  .main-content {
-    position: fixed;
-  }
-
-  footer {
-    position: absolute;
-    bottom: 0;
-  }
-}
-
-footer {
+.main-footer {
+  -ms-flex: 0 0 auto;
+  flex-basis: auto;
   background: $footer-background;
   color: #fff;
 }
 
 .main-content {
   height: 100%;
-  // 86px = header-height.  35px = footer-height.
-  // Using sass variables breaks this expression
-  height: calc(100% - 86px - 35px);
-  height: -moz-calc(100% - 86px - 35px);
-  height: -webkit-calc(100% - 86px - 35px);
   width: 100%;
-  // So we don't have to look at a blank map
-  //background: asset-url('ssm.jpg') no-repeat center;
+}
+
+.main-content-scrollable {
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .toolbar {
@@ -59,6 +51,7 @@ footer {
   z-index: 110;
   left: $toolbar-logo-container-width;
   width: 630px;
+  transition: left 0.2s ease-in-out;
 
   p {
     margin: 0;
@@ -71,11 +64,8 @@ footer {
   form {
     display: inline-block;
   }
-}
 
-.master-overlay-no-facet {
-
-  .toolbar {
+  .master-overlay-no-facet & {
     left: 0;
   }
 }
@@ -207,4 +197,8 @@ Helper Classes
 
 #timeline {
   display: none;
+}
+
+.timeline-container {
+  box-shadow: 0 -10px 15px 0 rgba(0,0,0,.1);
 }

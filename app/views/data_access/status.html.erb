@@ -6,7 +6,7 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-<div class="data-access">
+<div class="data-access main-content-scrollable">
   <nav class="data-access-nav">
     <a href="javascript:history.back()"><i class="fa fa-arrow-circle-o-left"></i> Back <%= request.referer && URI(request.referer).path.include?('search') ? 'to Search Session' : '' %></a>
   </nav>
@@ -32,7 +32,7 @@
             <a href="<%=edsc_path "/data/remove?retrieval_id=#{retrieval.to_param}" %>" title="Remove Retrieval"
                title="remove"
                data-method="post"
-               data-confirm="Are you sure you want to remove this download from your history?  This action cannot be undone."
+               data-confirm="Are you sure you want to remove this download from your history? This action cannot be undone."
                rel="nofollow"><i class="fa fa-times-circle"></i></a>
           </td>
           <td>

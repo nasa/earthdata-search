@@ -1,41 +1,59 @@
 class ProjectsController < ApplicationController
+  # We need user tokens to retrieve data for the data customization forms
+  before_filter :require_login, only: [:new, :show], unless: :json_request?
+  before_filter :set_env_session, only: [:new, :show], unless: :json_request?
+
   def index
     if current_user.present?
-      # TODO PQ EDSC-1038: Include portal information here
+      # TODO: PQ EDSC-1038: Include portal information here
       user_id = current_user.id
-      @projects = Project.where("user_id = ? AND name != ?", user_id, '')
+      @projects = Project.where('user_id = ? AND name != ?', user_id, '')
     else
       redirect_to edsc_path(root_url)
     end
   end
 
   def show
-    project = Project.find(params[:id])
-    if current_user.present? && current_user.id == project.user_id
-      render :json => project.to_json
+    @project = if params[:id].nil?
+                 Project.find(params[:projectId].to_i)
+               else
+                 Project.find(params[:id])
+               end
+
+    if current_user.present? && current_user.id == @project.user_id
+      respond_to do |format|
+        format.html { @project }
+        format.json { render json: @project, status: :ok }
+      end
     else
       # if path is too long, create new project
-      if project.path.size > Rails.configuration.url_limit
+      if @project.path.size > Rails.configuration.url_limit
         new_project = Project.new
-        new_project.path = project.path
+        new_project.path = @project.path
         new_project.user_id = current_user.id if current_user
         new_project.save!
-        render json: {path: new_project.path, new_id: new_project.to_param}
+        @project = new_project.dup
+
+        respond_to do |format|
+          format.html { @project }
+          format.json { render json: @project, status: :ok }
+        end
       else
-        project.name = nil
+        @project.name = nil
         # project does not belong to the current user, reload the page in JS
-        project.user_id = -1
-        render json: project.to_json
+        @project.user_id = -1
+        respond_to do |format|
+          format.html { render 'projects/show' }
+          format.json { render json: @project, status: :ok }
+        end
       end
     end
-
-  rescue ActiveRecord::RecordNotFound => e
-    render :text => '/'
   end
 
   def create
-    # TODO PQ EDSC-1038: Save portal information here
+    # TODO: PQ EDSC-1038: Save portal information here
     id = params[:id].presence
+
     begin
       project = Project.find(params[:id]) if id
     rescue ActiveRecord::RecordNotFound => e
@@ -45,11 +63,24 @@ class ProjectsController < ApplicationController
     project.name = params[:workspace_name] if params[:workspace_name]
     project.user_id = current_user.id if current_user
     project.save!
-    render :text => project.to_param
+
+    render text: project.to_param
   end
 
   def remove
     project = Project.find(params[:project_id])
+
     render json: project.destroy, status: :ok
+  end
+
+  def new
+    query_string = request.query_string
+    @project = Project.new
+    @project.path = "/search?#{query_string}"
+    @project.name = params[:workspace_name] if params[:workspace_name]
+    @project.user_id = current_user.id if current_user
+    @project.save!
+
+    render 'show'
   end
 end

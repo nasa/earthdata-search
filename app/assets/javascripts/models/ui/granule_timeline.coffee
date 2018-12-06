@@ -131,7 +131,7 @@ ns.GranuleTimeline = do (ko
 
 
   class GranuleTimeline extends KnockoutModel
-    constructor: (@collectionsList, @projectList) ->
+    constructor: (@collectionsList, @projectList, @project) ->
       @_collectionsToTimelines = {}
 
       @_constructed = ko.observable(false)
@@ -216,10 +216,13 @@ ns.GranuleTimeline = do (ko
       range = @range
       focused = @collectionsList.focused()
       result = []
+      project = @projectList.project
       if focused?
         result = [focused.collection]
       else if  @projectList.visible()
-        result = @projectList.project.collections()
+        result = project.collections()
+      else if @project && project?.collections().length > 0
+        result = (projectCollection.collection for projectCollection in project.collections())
 
       # Pick only the first 3 collections with granules
       result = (collection for collection in result when collection.has_granules)
@@ -275,7 +278,6 @@ ns.GranuleTimeline = do (ko
         @_lastDate = lastDate
         $timeline.timeline('panToTime', lastDate)
 
-      project = @projectList.project
       for collection in result
         id = collection.id
         if currentTimelines[id]

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Spatial manual entry", reset: false do
+describe "Spatial manual entry" do
   before :all do
     load_page :search
   end
@@ -11,11 +11,11 @@ describe "Spatial manual entry", reset: false do
     end
 
     context "point manual entry" do
-      it "filters collections using the selected point" do
-        manually_create_point(67, -155)
-        wait_for_xhr
-        expect(page).to have_content("The MODIS/Terra Aerosol 5-Min L2 Swath 10km (MOD04_L2) product continues to provide full global coverage of aerosol properties from the Dark Target (DT) and Deep Blue (DB) algorithms.")
-      end
+      # it "filters collections using the selected point" do
+      #   manually_create_point(67, -155)
+      #   wait_for_xhr
+      #   expect(page).to have_content("The MODIS/Aqua Aerosol 5-Min L2 Swath 3km (MYD04_3K) product provides retrieved ambient aerosol optical properties (e.g., optical thickness and size distribution), mass concentration, look-up table derived reflected and transmitted fluxes, as well as quality assurance and other a...")
+      # end
 
       it "displays point coordinates in the manual entry text box" do
         manually_create_point(67, -155)
@@ -77,7 +77,8 @@ describe "Spatial manual entry", reset: false do
         manually_create_bounding_box(0, 0, 10, 10)
         wait_for_xhr
         # expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-        expect(page).to have_content("MODIS/Terra Aerosol 5-Min L2 Swath 10km V006")
+        # expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
+        expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km")
       end
 
       it "displays bounding box points in the manual entry text boxes" do
@@ -104,7 +105,8 @@ describe "Spatial manual entry", reset: false do
         end
 
         it "updates the collection filters using the new bounding box selection" do
-          expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
+          # expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
+          expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km")
         end
       end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection results sorting', reset: false do
+describe 'Collection results sorting' do
   before :all do
     load_page :search
   end

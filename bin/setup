@@ -2,33 +2,23 @@
 require 'pathname'
 
 # path to your application root.
-APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+APP_ROOT = Pathname.new File.expand_path('..', __dir__)
 @first = true
 
 def run_cmd(command)
-  prefix = "    "
+  prefix = '    '
   puts "#{prefix}$ #{command}"
   result = `#{command} 2>&1`
-  code = $?
   out = result.gsub(/\n\s*\n/, "\n").chomp
-  puts out.gsub(/^/, "#{prefix}  -> ") if out.size > 0
-end
+  puts out.gsub(/^/, "#{prefix}  -> ") unless out.empty?
 
- def command?(command)
-   system("which #{command} > /dev/null 2>&1")
- end
-
-def fatal(message)
-  puts "ERROR: #{message}"
-  exit 1
+  return if $?.success?
+  puts "Exiting: Error executing command #{command}"
+  exit(1)
 end
 
 def warn(message)
   puts "WARNING: #{message}"
-end
-
-def info(message)
-  puts message
 end
 
 def section(title)
@@ -38,85 +28,33 @@ def section(title)
   yield
 end
 
-def install(name, brew_pkg, apt_pkg, yum_pkg)
-  info "Installing #{name}"
-  error = false
-  begin
-    if command?('brew')
-      run_cmd("brew install #{brew_pkg}")
-    elsif command?('apt')
-      run_cmd("sudo apt-get install -y #{apt_pkg}")
-    elsif command?('yum')
-      run_cmd("sudo yum install #{yum_pkg}")
-    else
-      error = true
-    end
-  rescue
-    error = true
-  end
-  fatal "Unable to install #{name} on your system. Please install manually and rerun this command." if error
-end
-
 Dir.chdir APP_ROOT do
-  # This script is a starting point to setup your application.
-  # Add necessary setup steps to this file:
-
-  section "Checking dependencies" do
-    expected_ruby_version = File.read('.ruby-version').chomp.gsub('ruby-', '')
-    unless expected_ruby_version == RUBY_VERSION
-      fatal "Earthdata Search requires Ruby #{expected_ruby_version}. You are using Ruby #{RUBY_VERSION}"
-    end
-
-    begin
-      require "openssl"
-    rescue
-      fatal "Ruby must be compiled with OpenSSL support."
-    end
-  end
-
-  section "Updating submodules" do
+  section 'Updating submodules' do
     run_cmd 'git submodule init'
     run_cmd 'git submodule update'
   end
 
-  section "Installing dependencies" do
-    # Postgres
-    require 'mkmf'
-    pgconfig = ( with_config('pg-config') || with_config('pg_config') || find_executable('pg_config') )
-    install('PostgreSQL development headers', 'postgresql', 'libpq-dev', 'postgresql-devel') unless pgconfig
-    install('Node.js', 'node', 'nodejs', 'nodejs') unless command?('node')
-
-    run_cmd 'gem install bundler --conservative'
-    run_cmd 'bundle check || bundle install'
-    run_cmd 'npm install'
-  end
-
-  section "Copying example configuration" do
-    unless File.exist?("config/database.yml")
-      warn "Using example config/database.yml. Please configure it for your application."
+  section 'Copying example configuration' do
+    if File.exist?('config/database.yml')
+      puts "config/database.yml already exists"
+    else
+      warn 'Using example config/database.yml. Please configure it for your application.'
       run_cmd 'cp config/database.yml.example config/database.yml'
     end
-    unless File.exist?("config/application.yml")
-      warn "Using example config/application.yml. Please configure it for your application."
+    if File.exist?('config/application.yml')
+      puts "config/application.yml already exists"
+    else
+      warn 'Using example config/application.yml. Please configure it for your application.'
       run_cmd 'cp config/application.yml.example config/application.yml'
     end
   end
 
-  section "Preparing database" do
-    run_cmd 'rake db:setup'
-    # for local dev env, it is necessary to populate the test db so that tests that asserts browse download links can pass.
-    if RUBY_PLATFORM =~ /darwin/i
-      run_cmd 'rake db:setup RAILS_ENV=test'
-    end
+  section 'Preparing database (development and test environments)' do
+    run_cmd 'docker-compose run web bundle exec rake db:setup'
+    run_cmd 'docker-compose run web bundle exec rake db:setup RAILS_ENV=test'
   end
 
-  section "Removing old logs and tempfiles" do
-    run_cmd 'rm -rf tmp/cache'
-    run_cmd 'rm -f mkmf.log'
-  end
-
-  section "Restarting application server" do
-    run_cmd 'mkdir -p tmp'
-    run_cmd 'touch tmp/restart.txt'
+  section 'Building docker container' do
+    run_cmd 'docker-compose build'
   end
 end

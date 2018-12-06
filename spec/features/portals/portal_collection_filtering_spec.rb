@@ -1,9 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Portal collection filtering", reset: false do
-  it "Visiting an Earthdata Search portal restricts visible collections to those matching its configured filter", acceptance: true do
+describe 'Portal collection filtering' do
+  it 'Visiting an Earthdata Search portal restricts visible collections to those matching its configured filter' do
+    Capybara.reset_sessions!
     load_page :search, portal: 'simple'
-    expect(page.status_code).to eq(200)
-    expect(page).to have_text("1 Matching Collection")
+
+    expect(page).to have_text('1 Matching Collection')
   end
 end

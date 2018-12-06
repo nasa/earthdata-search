@@ -1,10 +1,9 @@
-# EDSC-247: Allow retrying collection and granule searches after timeout errors
-
 require 'spec_helper'
 
-describe 'Displaying system errors', reset: false do
+describe 'Displaying system errors' do
   context 'when a system error occurs' do
     before :all do
+      Capybara.reset_sessions!
       load_page :search
       fill_in 'keywords', with: 'trigger500'
       wait_for_xhr
@@ -40,6 +39,7 @@ describe 'Displaying system errors', reset: false do
 
   context 'when invalid parameters are entered' do
     before :all do
+      Capybara.reset_sessions!
       load_page :search, focus: 'C1000000029-EDF_OPS', env: :sit, queries: [{ id: '*foo!*foo2!*foo3' }], close_banner: false
     end
 

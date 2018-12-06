@@ -10,18 +10,18 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:20:20 GMT
+      - Tue, 13 Mar 2018 03:47:15 GMT
       location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/932C9D1E-5D79-89AC-9D28-714CB0E278ED?clientId=unknown
+      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316?clientId=unknown
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMWY0MTc5OTIyMjI4MjUzNjdlNDEyZGNiYTdkOTRlZTc%3D--3fefee1f4ccd68541fd5848a0da3edd15948428a;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMmU4NjY3YzI0YzllN2FlYTQzZGI2ODUxZDVhY2Q1NjI%3D--f94ecb7b0b9faff2e541e2e303f3f1eed39c97ee;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.136000'
+      - '0.188000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -30,7 +30,7 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       - Close
     body:
       encoding: UTF-8
-      string: '{"order":{"id":"932C9D1E-5D79-89AC-9D28-714CB0E278ED","provider_orders":[]}}'
+      string: '{"order":{"id":"55579096-3561-10B0-3409-4F8BE3F20316","provider_orders":[]}}'
     http_version: 
 2ae0335b96f9ffb3d254fdebeeaffa267afd7a0f:
   response:
@@ -43,18 +43,18 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 19:58:48 GMT
+      - Tue, 13 Mar 2018 03:47:48 GMT
       location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/5448023A-08F2-25EE-016F-D82BA115624A?clientId=unknown
+      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706?clientId=unknown
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYmQyYjQ2NDcyMGZiNDMwODExNTI3ZTUzNzVkYzIxZjI%3D--248a74d20d5db9578335fe8fce6b47dc6c49bf8d;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTM4ZmUxYjM3YTFmZTJjNzA0MjBkMDkzNjAwYmM4NWQ%3D--26a5d2c0c7dd4c06417e9eeb6f66fe6a360507bc;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.156000'
+      - '0.113000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -63,40 +63,7 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       - Close
     body:
       encoding: UTF-8
-      string: '{"order":{"id":"5448023A-08F2-25EE-016F-D82BA115624A","provider_orders":[]}}'
-    http_version: 
-67df63391c277d4a742ab2c338b6fe156dc4505e:
-  response:
-    status:
-      code: 201
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 22:01:35 GMT
-      location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/2EEA09A2-F0E8-1983-6850-3FFC571B2310?clientId=unknown
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNDQ4OWY1YjgxNjFmYTk5NzdiYzMxZjIwYzgwMmI4YTM%3D--a42156cd2939e924d0a291106c12a360a3377982;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.195000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '76'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: '{"order":{"id":"2EEA09A2-F0E8-1983-6850-3FFC571B2310","provider_orders":[]}}'
+      string: '{"order":{"id":"71223EB0-62A2-5ADB-FE26-4653CCABE706","provider_orders":[]}}'
     http_version: 
 3feff4422181fb8dafe024084d95ef30e64d9375:
   response:
@@ -109,18 +76,18 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 01:21:28 GMT
+      - Tue, 13 Mar 2018 03:47:30 GMT
       location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/36EF5386-6CE9-965D-5B3B-D429F6145CF8?clientId=unknown
+      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F?clientId=unknown
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMGY0ZTcyNzA1MjNjM2Y0MDM4NjNiODkyNmM4Nzg0YTE%3D--963c7525a584db9029580a27a478a6d161172111;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOGZiOTJlMGI1YTVkOWNmZjFiMzA3Nzk1NjVlNjkzNTY%3D--bfe8adc41b4f52091bba9504dbdf95eb61d22dcd;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.218000'
+      - '0.128000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -129,7 +96,7 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       - Close
     body:
       encoding: UTF-8
-      string: '{"order":{"id":"36EF5386-6CE9-965D-5B3B-D429F6145CF8","provider_orders":[]}}'
+      string: '{"order":{"id":"44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F","provider_orders":[]}}'
     http_version: 
 6c3e16ffd228884ccdc4460cd1e31bc3f8c45ec4:
   response:
@@ -142,18 +109,18 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 22 Feb 2018 15:51:21 GMT
+      - Tue, 13 Mar 2018 04:07:45 GMT
       location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/98963F0D-2CE3-E757-5A7A-AA269FB2A7A8?clientId=unknown
+      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F?clientId=unknown
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMzlmYmU3NWUyODZkMThiNmU4M2U4NjJkYzc0Njk4MDE%3D--208b2eaacf6426855802d175dde3d43461162929;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNTk1MjMxYWFjMTY4NzBhYTgyNTYwNTI5YjZkNTJkZDA%3D--7fa22de7cb71efe185cd30d93e0342db42fbe9cd;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.193000'
+      - '0.258000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -162,7 +129,7 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       - Close
     body:
       encoding: UTF-8
-      string: '{"order":{"id":"98963F0D-2CE3-E757-5A7A-AA269FB2A7A8","provider_orders":[]}}'
+      string: '{"order":{"id":"0D82D8DB-761E-682D-8BFD-CFACF4C8A53F","provider_orders":[]}}'
     http_version: 
 559fe229b88769924449be50e2f34415c5f6210e:
   response:
@@ -175,18 +142,18 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:15:54 GMT
+      - Tue, 13 Mar 2018 03:48:02 GMT
       location:
-      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/09EF3C26-E75B-B9B8-30F0-CF64DBD512D9?clientId=unknown
+      - https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE?clientId=unknown
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOGQxOGU5NTQxNzNjYTEzMWY2MzQ4ZjlkZDVhMzYwMjU%3D--1ed4950569e12ec356183f6210e15c0f531106a5;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOWRhOGFlZmE4OTgzMWI3NmJmMGMyY2FiNzY5MzQwZWE%3D--ff73726ae0f830beafa053913c8bcd3027bdde07;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.241000'
+      - '0.131000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -195,9 +162,9 @@ af1908464a76fca0d983f3be1e037514a1c7a468:
       - Close
     body:
       encoding: UTF-8
-      string: '{"order":{"id":"09EF3C26-E75B-B9B8-30F0-CF64DBD512D9","provider_orders":[]}}'
+      string: '{"order":{"id":"3723402E-9298-5BC4-FCCD-D2F33AC8D9BE","provider_orders":[]}}'
     http_version: 
-fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c:
+b4310e45ba3e6e99cbbea5b2f8d977b95e9c5cba:
   response:
     status:
       code: 200
@@ -208,15 +175,15 @@ fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:16:12 GMT
+      - Tue, 13 Mar 2018 04:07:58 GMT
       etag:
-      - '"407e5c12ad7c47fb49dab9079cfb8afa"'
+      - '"273bbaede8f5b0607df5453c291df5a4"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.158000'
+      - '0.149000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -225,9 +192,9 @@ fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-02-21T02:15:30Z","id":"09EF3C26-E75B-B9B8-30F0-CF64DBD512D9","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/09EF3C26-E75B-B9B8-30F0-CF64DBD512D9/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2018-02-21T02:15:44Z","updated_at":"2018-02-21T02:15:44Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T04:07:36Z","id":"0D82D8DB-761E-682D-8BFD-CFACF4C8A53F","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LARC_ASDC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F/provider_orders/LARC_ASDC","name":"LARC_ASDC"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T04:07:50Z","updated_at":"2018-03-13T04:07:50Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-71f5e82200b81420747eb238ad0c35544fd60fd4:
+54bb53102b64933af972ee7a785ee4e2321cfdcd:
   response:
     status:
       code: 200
@@ -238,26 +205,26 @@ fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 22:00:26 GMT
+      - Tue, 13 Mar 2018 03:48:15 GMT
       etag:
-      - '"d4cee05dbe999316d42744f8731f831d"'
+      - '"73db66a928010f994f574e53b48ab831"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.105000'
+      - '0.113000'
       x-ua-compatible:
       - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
+      content-length:
+      - '577'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-02-21T21:59:29Z","id":"2EEA09A2-F0E8-1983-6850-3FFC571B2310","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LPDAAC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/2EEA09A2-F0E8-1983-6850-3FFC571B2310/provider_orders/LPDAAC_ECS","name":"LPDAAC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-02-21T21:59:39Z","updated_at":"2018-02-21T21:59:39Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:52Z","id":"3723402E-9298-5BC4-FCCD-D2F33AC8D9BE","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"ORNL_DAAC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE/provider_orders/ORNL_DAAC","name":"ORNL_DAAC"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:49:05Z","updated_at":"2018-03-13T03:49:05Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-810d69f8c43a5de19c84b783ca685a4d9d69c7b6:
+c9a01ee49840e39e2e36b97d35d62e51d29e6a84:
   response:
     status:
       code: 200
@@ -268,15 +235,15 @@ fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 01:20:01 GMT
+      - Tue, 13 Mar 2018 03:47:42 GMT
       etag:
-      - '"9ae993eb74ab5cfa5a058819c825edb7"'
+      - '"e22606168f4c517d173b2060b915e1e5"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.130000'
+      - '0.091000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -285,9 +252,9 @@ fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-02-21T01:19:33Z","id":"36EF5386-6CE9-965D-5B3B-D429F6145CF8","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LAADS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/36EF5386-6CE9-965D-5B3B-D429F6145CF8/provider_orders/LAADS","name":"LAADS"}}],"state":"SUBMITTING","submitted_at":"2018-02-21T01:19:36Z","updated_at":"2018-02-21T01:19:36Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:20Z","id":"44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LAADS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F/provider_orders/LAADS","name":"LAADS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:31Z","updated_at":"2018-03-13T03:48:31Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-ebf0b0110e93b192f48523b29e9a5327d183a5cc:
+c5466dbbf24a26abf81bfe485bd8549fa22ffec1:
   response:
     status:
       code: 200
@@ -298,15 +265,15 @@ ebf0b0110e93b192f48523b29e9a5327d183a5cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 19:58:44 GMT
+      - Tue, 13 Mar 2018 03:48:24 GMT
       etag:
-      - '"58de43346c706720f5d809cf5606b2a4"'
+      - '"d032046d2cca3902178c37bea68730f6"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.133000'
+      - '0.129000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -315,9 +282,9 @@ ebf0b0110e93b192f48523b29e9a5327d183a5cc:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-02-21T19:58:23Z","id":"5448023A-08F2-25EE-016F-D82BA115624A","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/5448023A-08F2-25EE-016F-D82BA115624A/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-02-21T19:58:32Z","updated_at":"2018-02-21T19:58:32Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:05Z","id":"55579096-3561-10B0-3409-4F8BE3F20316","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:17Z","updated_at":"2018-03-13T03:48:17Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-286b1ebb7b36558de5238319f0732ee252ed191a:
+a7ca1790472510d0f47a6c71079f69866ad6a54b:
   response:
     status:
       code: 200
@@ -328,15 +295,15 @@ ebf0b0110e93b192f48523b29e9a5327d183a5cc:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:20:33 GMT
+      - Tue, 13 Mar 2018 03:48:56 GMT
       etag:
-      - '"086c5823c4cee9ef6191b2f5f2f86f0b"'
+      - '"1b572af5252c5edda4ab260348c9b451"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.142000'
+      - '0.114000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
@@ -345,9 +312,762 @@ ebf0b0110e93b192f48523b29e9a5327d183a5cc:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-02-21T02:18:18Z","id":"932C9D1E-5D79-89AC-9D28-714CB0E278ED","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/932C9D1E-5D79-89AC-9D28-714CB0E278ED/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-02-21T02:18:29Z","updated_at":"2018-02-21T02:18:29Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-03-13T03:48:38Z","id":"71223EB0-62A2-5ADB-FE26-4653CCABE706","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"NSIDC_ECS","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706/provider_orders/NSIDC_ECS","name":"NSIDC_ECS"}}],"state":"SUBMITTING","submitted_at":"2018-03-13T03:48:49Z","updated_at":"2018-03-13T03:48:49Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-d7edc34f166628599e89b3fd5336362882e355e8:
+c7473cd14330eebed39d80925587fa38debd769e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 04:07:53 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNzlmMzcxMWU4OTdhYjAyZDcxNmIzM2I3MmFiMjBhNjk%3D--5ec87c1a827d267f92a14d8cb1d783c383b8dd00;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '7.121000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: " "
+    http_version: 
+4dd4b283fc970c2d468b54aea4f225bd0ee0981e:
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      date:
+      - Tue, 13 Mar 2018 04:08:00 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNGM4ODUwNzI5MTgxNjQwOTkzZWUyN2U0ZDlkZWFmMWE%3D--1192fdbe73cb45e8edcce624801ef82bab505a3b;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '4.380000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+18a256a3f3f060d0f360aeca31c3e3e513a3dab7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 04:07:51 GMT
+      etag:
+      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMzQxZjNlODA5OGZjZWU0YTg0MmY0YWI0NmFjNWM2Mzg%3D--8d2266a3bb7252ae484360f9c366a7b60b42b4ea;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '1.011000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1518'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user_information>
+          <shipping_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </shipping_contact>
+          <billing_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </billing_contact>
+          <order_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </order_contact>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+        </user_information>
+    http_version: 
+11adc4e48eb659d6650e08e40921e484d9270812:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:49:05 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlM2IzYWI3ZDFhMDI0OTczMDY0ZmIxMjVjNmFkY2Y5ODk%3D--f53c971429d6d962c5ef5fd84a271a647b697228;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '6.126000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: " "
+    http_version: 
+106c0a95c8f73e0a4b740c139578497abc8adba6:
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      date:
+      - Tue, 13 Mar 2018 03:49:14 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNDM4YjE5NTA2YTZmOGM5NWU4ODBkZjg1MWJjM2I2MTA%3D--102cd0d575ec62e0924824be900a85d0380da1c3;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '3.730000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+e764323171c92ecbf255f9aafc495eaf3261b195:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:49:14 GMT
+      etag:
+      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTUzYTU1NDEwYWRiMmEwYTg5ZjI4NmIwZDA1YzdhNDI%3D--cd635745e081caa61d7b29f436b06b0e0c6fd7c4;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.595000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1518'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user_information>
+          <shipping_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </shipping_contact>
+          <billing_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </billing_contact>
+          <order_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </order_contact>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+        </user_information>
+    http_version: 
+4b3acfde061707643798eaaa42c444f5b1803b92:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:47:34 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZjUxNjkyMmY1Y2E3ZWVjNDZlZGU2NGZlZjk0Nzc1ZDY%3D--fd6ab9789afe758d75c4c80b81833f9d8225cc13;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '4.081000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: " "
+    http_version: 
+9ead57f382d1bd7841e87e96375a7cfd5b3f63c1:
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      date:
+      - Tue, 13 Mar 2018 03:48:37 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYWU0ZWI3ZTc5ZTczMmI3MGJmYmQyNjU0MmRiZGMzMzg%3D--1f6a3df4c1a12fdb7c6f72311431764a471c7883;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '4.292000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+30fe367e573fa335fd64e0d99e634f2a7c41094c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:48:32 GMT
+      etag:
+      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOTNmMGI2OGMzZDNmODhmODA5NGQ5MDFhNTcxNmI4OTA%3D--8578bea22917d65fb7d8abc5b2152a45e8ab7015;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.625000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1518'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user_information>
+          <shipping_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </shipping_contact>
+          <billing_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </billing_contact>
+          <order_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </order_contact>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+        </user_information>
+    http_version: 
+83df786c2d625a30a1962db0b91d7127e90d44cf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:48:20 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOWVmNDQzMmY4OWI4MTI3OGJjMTFmZGEwZTg5YzcxOGY%3D--79a0a3024e94a34d8cac5cb492296e5435396f12;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '4.789000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: " "
+    http_version: 
+61f3042893aacde5418636e8b80b1d79e8bc5d9f:
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      date:
+      - Tue, 13 Mar 2018 03:47:27 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYWIwOWY1YjE5NzZkYmM3MjNhYWNhMmI5MmE1ZjA0NjI%3D--2ea3c28eee49de8ce42ac0b6a59f8a1e4f8515f9;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '4.851000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+31d16137f686a7b1bb38a0172abc4a09ebe46513:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:48:26 GMT
+      etag:
+      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZjVmZmZjYjdhMzliNTQ1MDQ4NGJkYTM0Yjg0MjY1YmU%3D--9aed31fedefbab31b98b70a4dc15744081a54477;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.682000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1518'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user_information>
+          <shipping_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </shipping_contact>
+          <billing_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </billing_contact>
+          <order_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </order_contact>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+        </user_information>
+    http_version: 
+32475274ce2af45893f1a66f4bc73a6f3e91c1e7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:48:57 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjVkNTliOTA4MGIzYzFkMGUwZTAwZGQxOTFkYzgxYzQ%3D--a838adc854ec912b75cbc8a16c76e3824653f9f0;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '4.114000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: " "
+    http_version: 
+157e6e4fb677cdd07fb4de6fdf02e5ad3d138e2f:
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      date:
+      - Tue, 13 Mar 2018 03:48:55 GMT
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjQ5YjFmMTVlYTc0MDMzNTEyYTMyYTNmOGU4Nzk2OWQ%3D--31bfd2c769ffbdf4c53371c61d55e1be65e2ecdc;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '3.955000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+a3c4e54a924f38eccbf3ed4af573e0fce679905e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/xml; charset=utf-8
+      date:
+      - Tue, 13 Mar 2018 03:48:50 GMT
+      etag:
+      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNDI5OTBiMzQ5M2ZiOThmYTRmNWUyYWI3NGNkNjYwY2I%3D--4ffe25878eb832466aee9d657204de25ac26e8ed;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.610000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1518'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user_information>
+          <shipping_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </shipping_contact>
+          <billing_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </billing_contact>
+          <order_contact>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <number>0000000000</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </order_contact>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+        </user_information>
+    http_version: 
+18785b8d6a9e229639a156e4817feec01e68110f:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      cache-control:
+      - no-cache
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 02 Nov 2018 15:11:46 GMT
+      location:
+      - https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979?clientId=unknown
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjA4ZmRjMWM4ZjRiODdiMjI3N2IzOTUyYzNhNThhZjY%3D--f7e6efcabd2e1642452daff5b7ce47e449c6db9d;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.226000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '76'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"order":{"id":"0FF0DD45-A9A8-84E4-8592-416536818979","provider_orders":[]}}'
+    http_version: 
+f8061c921970a6271680ddc5908d44c149207378:
   response:
     status:
       code: 200
@@ -358,29 +1078,29 @@ d7edc34f166628599e89b3fd5336362882e355e8:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 22 Feb 2018 15:49:57 GMT
+      - Fri, 02 Nov 2018 15:11:46 GMT
       etag:
-      - '"a7add38fb23027685ee932bc30c2d93e"'
+      - '"e9d28ac4408a679a3a30d45ea9e56a9d"'
       server:
       - nginx
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.140000'
+      - '0.074000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '577'
+      - '327'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: '[{"order":{"client_identity":"0LDz2MRpxLhPK1rDQBf_KA","created_at":"2018-02-22T15:51:11Z","id":"98963F0D-2CE3-E757-5A7A-AA269FB2A7A8","notification_level":"INFO","order_price":0.0,"owner_id":"D7717F8B-8D91-49B6-E694-91BA02B957B2","provider_orders":[{"reference":{"id":"LARC_ASDC","location":"https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/98963F0D-2CE3-E757-5A7A-AA269FB2A7A8/provider_orders/LARC_ASDC","name":"LARC_ASDC"}}],"state":"SUBMITTING","submitted_at":"2018-02-22T15:51:23Z","updated_at":"2018-02-22T15:51:23Z","user_domain":"OTHER","user_region":"USA"}}]'
+      string: '[{"order":{"client_identity":"kzAY1v0kVjQ7QVpwBw-kLQ","created_at":"2018-11-02T15:13:00Z","id":"0FF0DD45-A9A8-84E4-8592-416536818979","order_price":0.0,"owner_id":"9C8EBA20-C49C-533E-2C06-4D3C6B11B9BF","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2018-11-02T15:13:00Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version: 
-3df3e4c68fdb60fd60cd15aa79cca5b49700d76e:
+f999e5b7b3ce9ea3ff4f8a10f5fe01cb9dcbbf01:
   response:
     status:
-      code: 200
+      code: 400
       message: 
     headers:
       cache-control:
@@ -388,54 +1108,61 @@ d7edc34f166628599e89b3fd5336362882e355e8:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:14:16 GMT
+      - Fri, 02 Nov 2018 15:11:07 GMT
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNjgwYjQ1ODY2NGI4MThhMWQ1ZTFlZjgzMjRjNzE3OGU%3D--b105353005e0d72c2aec812e119a414c0fcd384f;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNjY1YzQxNGYxMDYxZTJjMjU0Zjg3MjFjYjI4YTc0MjI%3D--e0c58752edf0ae1e2e2da740571f77093b893043;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '5.846000'
+      - '0.121000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:
-      - '1'
+      - '187'
       connection:
       - Close
     body:
       encoding: UTF-8
-      string: " "
+      string: '<errors><error>cvc-complex-type.2.4.b: The content of element ''ns3:OptionSelection''
+        is not complete. One of ''{"http://echo.nasa.gov/echo/v10/types":Content}''
+        is expected.</error></errors>'
     http_version: 
-6cd79e4aca7dc0cad45ecaabf520d430623a0a8f:
+5d6bd3cbfdd24b3f96731e136ff28c314aa4476f:
   response:
     status:
-      code: 204
+      code: 422
       message: 
     headers:
       cache-control:
       - no-cache
+      content-type:
+      - application/xml; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:16:30 GMT
+      - Fri, 02 Nov 2018 15:12:47 GMT
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZTQxYTJmNmI4ZGQ0MzNkODdmZDI0MGQ0MjViNzk5YTQ%3D--91e7888fcc4a04582b737d52a0b42638bb8df594;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZGFjYTczNDNmYjIzNWU2NDkwYWRlODU5YTViNTMyYjY%3D--d8fb076e92b8367bd979214c973e1477d6798324;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '3.413000'
+      - '0.151000'
       x-ua-compatible:
       - IE=Edge,chrome=1
+      content-length:
+      - '136'
       connection:
       - Close
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: "<errors><error>An Order must contain one or more provider orders to
+        be validated [0FF0DD45-A9A8-84E4-8592-416536818979]</error></errors>"
     http_version: 
-ccc11d879c7e5702331babe46b17b3ccf7c74108:
+c8192c2f16fdffbd0e77e24e29b2c8f7cd2c976d:
   response:
     status:
       code: 200
@@ -446,738 +1173,18 @@ ccc11d879c7e5702331babe46b17b3ccf7c74108:
       content-type:
       - application/xml; charset=utf-8
       date:
-      - Wed, 21 Feb 2018 02:15:49 GMT
+      - Fri, 02 Nov 2018 15:12:51 GMT
       etag:
       - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
       server:
       - nginx
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMWI2ZmZmZjJiYjY2MjAzZjliYTVkMDNiNzkxMTk0ZGE%3D--a4837be2d2d2b4819ae77def8b3049ea5560f50d;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZDhhNGIwMmI0ODc1ODM2YmRiNzMxMGEwYmUzMmYzMWM%3D--8a576b262776f6d39e4a51b1051284cfacb87bd2;
         path=/; HttpOnly
       strict-transport-security:
       - max-age=31536000; includeSubDomains;
       x-runtime:
-      - '0.617000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1518'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-076426e6725f2c04a9211b2c878e7d29696e8921:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 21:59:58 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMGIxMzEzZWIzYzBjM2JlMzVlMTU2NzA0MjdkODliMTI%3D--4aa01cdebe6a85a52eae32f9d7dbfe9619e8ac62;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.758000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: " "
-    http_version: 
-e527af0f9ce4f495950754334931f23cf1d1113c:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      date:
-      - Wed, 21 Feb 2018 22:01:45 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYWQ2Y2NmMmYyZGFhZmI0ZmM2ZjdiYTA2NDJhNDFjMTg%3D--b21d69032daa5867680df2ad94b083341ad47c4b;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.419000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      connection:
-      - Close
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-8a2f33359891143b7e0b45a407884ecd1b8d1c56:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 22:00:21 GMT
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTEwZWM4MDI0ZTQ2MTYwNThjZjRiYzE0MjM3ZWU0MTg%3D--c1ca0a033b9a0cf6177dca7d4caa2fb6478acdd2;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.701000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-c777568dcea75568d9ca51c84b2d956e256f5a4e:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 01:18:08 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZGFlM2Y3NjZlZjE1Mjk1OTIyMjY1NTE3MThkOTk5Y2Q%3D--d47ef26d2ecb9566624788796ebff4653f39b029;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.809000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-0931e15b816c6530c501625d1a68be6a59e076a4:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      date:
-      - Wed, 21 Feb 2018 01:18:15 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMmQxZDU5ZWY0ZTM4MDEwY2Q0ZDhiMGI3NmRiNzQwMDc%3D--44c5a64b024f2b77dcd51c2d5c687a5ea1e96ee4;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.656000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      connection:
-      - Close
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-a2d3881a2dd92b1473567ac721f84260752597b9:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 01:21:35 GMT
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMzdkZmQ5ZjI3ZWFiMmY3ZTYyOTNhYTY0OWU2YjJhNDA%3D--4aa8971b0c065714f5790cf34906f12491e39302;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.583000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1518'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |-
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-987e9b68fa6c3959be370ee50898b8a7723c10ca:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 19:57:04 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjFmM2Y2YWY2ZGE2YjU3MWYwNTdkMmExNTI2ZTFlMzE%3D--c977642718a5e5ab5444a36681839d06db038486;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.785000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      transfer-encoding:
-      - chunked
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: " "
-    http_version: 
-b9b2c1cbba29829e645029ddd21cb749cbc8e9f0:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      date:
-      - Wed, 21 Feb 2018 20:00:38 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNzc1NGYwMDY0MTFlODYwNjgzMWI2ZjMyYmEwZGNiNTI%3D--f1fdfd22243cdae92d86ccaf073bca29edde72f6;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.605000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      connection:
-      - Close
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-56bb4cc8c3788852fe9219631481486279c48ea2:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 19:59:15 GMT
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMGFlN2NkYmY4ODAxMmUyNTYyZGYwMzI2YWEwZmRkODc%3D--9a6eed74577886b4da587e95f41a40691eb97fda;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.714000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1518'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-0a295797379db64a6457067c752ea9a08102242a:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 02:19:08 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOWQ5ODc3MGYxZGY5ZGYwNWJiNzExOTYxMDg1N2U3Zjk%3D--5d29633384ddfd83e46ab1f5eda94690e40e8166;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '4.288000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: " "
-    http_version: 
-02469dfce565c14d5feae49cd28f3d545953c798:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      date:
-      - Wed, 21 Feb 2018 02:20:32 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNTEwNmUyMzcwMDI2ZGExOGYxNDEyYjllYTA4MmFhOWQ%3D--459064d388b2e6ad1bedb11c7653df6e525c722a;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.292000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      connection:
-      - Close
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-b712103323d0df26694b12b95559820cc3e6c9a7:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Wed, 21 Feb 2018 02:18:49 GMT
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZmMyYjZhNmJmOWVhYjBjMmYzNzI0MjYwODg4OTEyMDE%3D--fefa7e49cc9742038186664a0bda0e29c8cce157;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.710000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1518'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user_information>
-          <shipping_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </shipping_contact>
-          <billing_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </billing_contact>
-          <order_contact>
-            <role>Order Contact</role>
-            <first_name>Earthdata</first_name>
-            <last_name>Search</last_name>
-            <address>
-              <country>United States</country>
-            </address>
-            <phones type="array">
-              <phone>
-                <number>0000000000</number>
-                <phone_number_type>BUSINESS</phone_number_type>
-              </phone>
-            </phones>
-            <email>patrick+edsc@element84.com</email>
-            <organization>EDSC</organization>
-          </order_contact>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-        </user_information>
-    http_version: 
-ade44d0291c9569950d360b630a4b387c20576e9:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Thu, 22 Feb 2018 15:52:04 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTM0ODc5ZTkyY2UwY2YwZDhlMTM4YWJiNjUzOTJhYzE%3D--003d623ac0c35746d22c8ce3ab8105f52512fb48;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '5.627000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      content-length:
-      - '1'
-      connection:
-      - Close
-    body:
-      encoding: UTF-8
-      string: " "
-    http_version: 
-5b224819628bdc2f6aeb6c6b7a010a4782dd9ecb:
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      cache-control:
-      - no-cache
-      date:
-      - Thu, 22 Feb 2018 15:49:57 GMT
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMWY0NzhkNmVjMWVlMzNhOWY0YTE2ZTQ5MWU1ZmVmMzk%3D--d7cc64c20b2f5a1a8c07875a335560f18defe5f4;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '3.997000'
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      connection:
-      - Close
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version: 
-bdec560cb402dd131f01ee9ae8829277c18c4dd4:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      cache-control:
-      - max-age=0, private, must-revalidate
-      content-type:
-      - application/xml; charset=utf-8
-      date:
-      - Thu, 22 Feb 2018 15:53:27 GMT
-      etag:
-      - '"a40d10d3c6d0d28ea6e5e58fc507daf0"'
-      server:
-      - nginx
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTExYzdkYTRjN2M0ODEzZTU2YTBjYmJlYzUzOWEzZmQ%3D--d6607f17be1ce09e9b560cc6d234fbc1f2843c15;
-        path=/; HttpOnly
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains;
-      x-runtime:
-      - '0.689000'
+      - '0.726000'
       x-ua-compatible:
       - IE=Edge,chrome=1
       content-length:

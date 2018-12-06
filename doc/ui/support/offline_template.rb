@@ -11,11 +11,15 @@ class OfflineTemplate < AbstractController::Base
 
   # this is you normal rails application helper
   helper ApplicationHelper
+  helper PortalHelper
 
   # Define additional helpers
   helper_method :protect_against_forgery?
   helper_method :logged_in?
   helper_method :cmr_env
+  helper_method :portal?
+  helper_method :portal_id
+  helper_method :portal_scripts
 
   # override the layout in your subclass if needed.
   layout 'application'
@@ -66,5 +70,22 @@ class OfflineTemplate < AbstractController::Base
 
   def env
     'development'
+  end
+
+  def portal?
+    false
+  end
+
+  def portal_id
+    false
+  end
+
+  def portal_scripts
+    []
+  end
+
+  # AbstractController expects response_body, but application.html.erb uses response instead
+  def response
+    response_body
   end
 end

@@ -4,12 +4,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
 
   MAX_POLYGON_SIZE = config.maxPolygonSize
 
-  originalPropagate = L.FeatureGroup.prototype._propagateEvent
-  L.FeatureGroup.prototype._propagateEvent = (e) ->
-    e.chain = e.chain ? []
-    e.chain.push e.target
-    originalPropagate.call(this, e)
-
   Dropzone.autoDiscover = false
 
   dropzoneOptions =
@@ -39,7 +33,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
     uploadMultiple: false
     addRemoveLinks: true
 
-  class ShapefileLayer
+  class ShapefileLayer extends L.Layer
     defaultOptions:
       selection: L.Draw.Polygon.prototype.options.shapeOptions
 
@@ -101,10 +95,54 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
       @map.fire 'shapefile:stop'
       @_file = null
 
+    # Leaflet 1.0+ changed the way that MultiPolygons are handled.
+    # Instead of creating a new layer for each polgon in a MultiPolygon
+    # feature (v0.7) it creates a single layer with multiple polygons.
+    # This means when you hover over one island in Hawaii it highlights
+    # all the islands, and passes all the polygons to _setConstraint.
+    # This method takes all the MultiPolygon geometries and separates them
+    # into individual polygons, to mimick the 0.7 functionality.
+    _separateMultiPolygons: (geojson) ->
+      featureIndexesToRemove = []
+      for feature, featureIndex in geojson.features
+        type = feature.geometry.type
+
+        # KML type file
+        if type == 'GeometryCollection'
+          geometries = feature.geometry.geometries
+
+          for geometry, index in geometries
+            if geometry.type == 'MultiPolygon'
+              # If we see a MultiPolygon, separate into Polygons
+              for polygon in geometry.coordinates
+                newPolygon = { 'type': 'Polygon', 'coordinates': polygon }
+                geometries.push newPolygon
+              # remove the MultiPolygon from the list of geometries
+              geometries.splice(index, 1)
+
+        # geojson type file
+        if type == 'MultiPolygon'
+          featureIndexesToRemove.push featureIndex
+          for coordinate in feature.geometry.coordinates
+            newFeature = {
+              'type': 'Feature',
+              'geometry': {
+                'type': 'Polygon',
+                'coordinates': coordinate
+              }
+            }
+            geojson.features.push newFeature
+      # remove MultiPolygon features from geojson files
+      for index in featureIndexesToRemove.reverse()
+        geojson.features.splice(index, 1)
+
     _geoJsonResponse: (file, response) =>
       @activate(false) unless @isActive()
       @hideHelp()
       @remove()
+
+      # look through response and separate all MultiPolygon types into their own polygon
+      @_separateMultiPolygons(response)
 
       icon = new L.Icon.Default()
       icon.options.className = 'geojson-icon'
@@ -138,7 +176,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
       else if children.length == 1
         @_setConstraint(children[0])
 
-    _displayError: (file, response) =>
+    _displayError: (file, response) ->
       if file.name.match('.*shp')
         errorMessage = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         errorDiv = document.createElement('div')
@@ -149,14 +187,12 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
         previewElement.removeChild(previewElement.querySelector('.dz-error-message'))
 
     _clickLayer: (e) =>
-      @_setConstraint(e.chain[0])
+      @_setConstraint(e.layer)
 
     _setConstraint: (sourceLayer) ->
-
       if sourceLayer.getLatLngs?
         # Polygon
-        originalLatLngs = sourceLayer.getLatLngs()
-        latlngs = @_simplifyPoints(originalLatLngs)
+        latlngs = @_simplifyPoints(sourceLayer.getLatLngs())
 
         layer = L.sphericalPolygon(latlngs, @options.selection)
         layerType = 'polygon'
@@ -176,6 +212,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
         map.fire 'draw:drawstop'
 
     _simplifyPoints: (latlngs) ->
+      latlngs = latlngs[0] unless L.LineUtil.isFlat(latlngs)
       if latlngs.length > MAX_POLYGON_SIZE
 
         map = @map

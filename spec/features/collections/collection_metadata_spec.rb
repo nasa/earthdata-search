@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection metadata', reset: false do
+describe 'Collection metadata' do
   before do
     load_page :search, ac: true
     fill_in 'keywords', with: 'AST_L1AE'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Date picker', reset: false do
+describe 'Date picker' do
   before :all do
     Capybara.reset_sessions!
     load_page :search

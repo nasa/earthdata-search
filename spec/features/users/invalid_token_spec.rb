@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Invalid user token', reset: false do
+describe 'Invalid user token' do
   before :all do
     Capybara.reset_session!
   end
@@ -24,5 +24,4 @@ describe 'Invalid user token', reset: false do
       expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)'
     end
   end
-
 end

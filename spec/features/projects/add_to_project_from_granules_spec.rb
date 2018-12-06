@@ -1,85 +1,51 @@
 require 'spec_helper'
 
-describe 'Add to project', reset: false do
-  context "in the granule results tab" do
+describe 'Viewing the granules panel' do
+  context 'that is not in the users project' do
     before :all do
-      Capybara.reset_sessions!
-      load_page :search
-      fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
-      wait_for_xhr
-      first_collection_result.click
-      wait_for_xhr
+      load_page 'search/granules', focus: 'C1200187767-EDF_OPS', env: :sit
     end
 
-    after :all do
-      reset_project
-    end
-
-
-    it 'displays "Add" buttons for collections not in the current project' do
+    it 'displays the `Add to project` button' do
       within '.master-overlay-global-actions' do
-        expect(page).to have_link("Add collection to the current project")
-        expect(page).to have_no_link("Remove collection from the current project")
+        expect(page).to have_css('.add-to-project')
       end
     end
 
-    it 'displays "Remove" buttons for collections not in the current project' do
-      within '.master-overlay-global-actions' do
-        click_link "Add collection to the current project"
-        expect(page).to have_no_link("Add collection to the current project")
-        expect(page).to have_link("Remove collection from the current project")
+    context 'click the `Add to project` button' do
+      before :all do
+        click_link('Add to project')
       end
 
-      reset_project
-    end
-
-    context 'clicking on an "Add" button' do
-      before(:all) do
+      it 'displays the `Remove from project` button' do
         within '.master-overlay-global-actions' do
-          click_link "Add collection to the current project"
-          wait_for_xhr
-        end
-      end
-
-      after(:all) do
-        reset_project
-      end
-
-      it 'adds the collection to the current project' do
-        expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
-      end
-
-
-    end
-
-    context 'clicking on a "Remove" button' do
-      context 'when the removed collection was the last one in the project' do
-        before(:all) do
-          within '.master-overlay-global-actions' do
-            click_link "Add collection to the current project"
-            click_link "Remove collection from the current project"
-          end
-        end
-
-        after(:all) do
-          reset_project
-        end
-
-        it 'removes the summary of the collections in the project' do
-          expect(page).to have_no_text("You have 1 collection in your project.")
-          expect(page).to have_text('Add collections to your project to compare and download their data.')
-        end
-
-        it 'hides the link to view the project' do
-          expect(page).to have_no_link("View Project")
-        end
-
-        it 'removes the collection from the current project' do
-          expect(project_collection_ids).to match_array([])
+          expect(page).to have_css('.remove-from-project')
         end
       end
     end
+  end
 
+  context 'that is in the users project' do
+    before :all do
+      load_page 'search/granules', focus: 'C1200187767-EDF_OPS', project: ['C1200187767-EDF_OPS'], env: :sit
+    end
 
+    it 'displays the `Remove from project` button' do
+      within '.master-overlay-global-actions' do
+        expect(page).to have_css('.remove-from-project')
+      end
+    end
+
+    context 'clicking the `Remove from project` button' do
+      before :all do
+        click_link('Remove from project')
+      end
+
+      it 'displays the `Add to project` button' do
+        within '.master-overlay-global-actions' do
+          expect(page).to have_css('.add-to-project')
+        end
+      end
+    end
   end
 end

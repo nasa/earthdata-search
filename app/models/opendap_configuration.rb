@@ -368,7 +368,6 @@ class OpendapConfiguration
       link['href'].gsub!(/\.html.*$/, '')
     end
 
-
     # Return the first such link found (possibly nil)
     opendap_links.first && opendap_links.first['href']
   end
@@ -401,11 +400,17 @@ class OpendapConfiguration
   end
 
   def self.get_ddx(ddx_url)
-    connection = Faraday.new(nil, timeout: 2, open_timeout: 4) do |conn|
-      conn.response(:logging)
-      conn.adapter(Faraday.default_adapter)
+    connection = Faraday.new do |conn|
+      conn.use Echo::ClientMiddleware::LoggingMiddleware
+      conn.adapter Faraday.default_adapter
     end
-    connection.get(ddx_url)
+
+    connection.get do |request|
+      request.url ddx_url
+
+      request.options.timeout = 2
+      request.options.open_timeout = 4
+    end
   rescue => e
     # Catch problems caused by read timeouts, etc
     Rails.logger.error e.message

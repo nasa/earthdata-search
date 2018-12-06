@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    command: rails server -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/earthdata-search
+      - /earthdata-search/node_modules
+      - /dev/shm:/dev/shm
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db

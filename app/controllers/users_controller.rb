@@ -17,8 +17,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def contact_info
-  end
+  def contact_info; end
 
   def get_preferences
     preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])

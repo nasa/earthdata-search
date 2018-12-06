@@ -11,7 +11,7 @@
 #   - dist/**/*.js
 #
 src_files:
-  - assets/leaflet-0.7/leaflet-src
+  - assets/leaflet-1.3.4/leaflet
   - assets/jquery.js
   - assets/knockout.js
   - assets/history.js-1.8.6/jquery.history.js

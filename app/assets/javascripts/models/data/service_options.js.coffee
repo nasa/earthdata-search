@@ -19,7 +19,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @subsetToSpatial = ko.observable(true)
 
     serialize: ->
-      result = {format: @formatName()}
+      result = { format: @formatName() }
       if @format()?.canSubset
         result.spatial = @config.spatial if @subsetToSpatial()
         result.parameters = (p.id for p in @parameters when p.selected())
@@ -31,8 +31,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
   class ServiceOptions
     constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
+      @methodType = ko.observable('')
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
+
+      # TODO: I don't think this is used
       @loadingForm = ko.computed (item, e) =>
         if @loadForm()
           timer = setTimeout((=>
@@ -61,12 +64,17 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
           @subsetOptions(null)
         result
 
-    showSpinner: (item, e)=>
+      @method.subscribe =>
+        if @availableMethods
+          for available in @availableMethods when available.name == @method()
+            @methodType(available.type)
+
+    showSpinner: (item, e) =>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
+
         clickedMethod = m
         break
-
       if e.target.id
         echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
         echoformContainer.empty?() if echoformContainer?
@@ -175,14 +183,23 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 
     _computeIsReadyToDownload: ->
+      # Return false if the accessMethods have not finished loading
       return false unless @isLoaded()
-      return true if @granuleAccessOptions().methods?.length == 0
-      
+
+      # Return true if no accessMethods are present
+      if @granuleAccessOptions().methods?.length == 0
+        return true
+
       result = false
       for m in @accessMethod()
         result = true if (m.isValid() || !m.loadForm()) && m.method()?
+
       if result
+        # The submit button defaults to having a title that informs the user
+        # that they need to select an accessMethod, this clears that when a
+        # valid accessMethod has been selected
         $('.access-submit').prop('title', "");
+
       result
 
     addAccessMethod: =>

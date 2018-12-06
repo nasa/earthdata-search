@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Collection API Endpoints', reset: false do
+describe 'Collection API Endpoints' do
   context 'when viewing the collection details for a collection with granules' do
     before :all do
       load_page '/search', env: :sit
@@ -44,6 +44,7 @@ describe 'Collection API Endpoints', reset: false do
 
   context 'when viewing the collection details for a collection with OPeNDAP' do
     before :all do
+      Capybara.reset_sessions!
       load_page '/search/collection-details', focus: 'C1214305813-AU_AADC', ac: true
       click_on 'View All Related URLs'
     end
@@ -55,7 +56,8 @@ describe 'Collection API Endpoints', reset: false do
     end
   end
 
-  context 'when viewing the collection details for a collection with MODAPS WCS' do
+  # collection is gone
+  context 'when viewing the collection details for a collection with MODAPS WCS', pending_updates: true do
     before :all do
       load_page :search, ac: true
       fill_in 'keywords', with: 'C1219032686-LANCEMODIS'

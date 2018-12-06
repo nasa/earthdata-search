@@ -22,6 +22,7 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko
+                    Page = ns.Page
                     setCurrent = ns.setCurrent
                     QueryModel = data.query.CollectionQuery
                     CollectionsModel = data.Collections
@@ -49,6 +50,7 @@ ns.SearchPage = do (ko
   $(document).ready ->
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
+
     $('.master-overlay').masterOverlay()
     $('.launch-variable-modal').click ->
       $('#variablesModal').modal('show')
@@ -57,8 +59,9 @@ ns.SearchPage = do (ko
 
     preferences.ready.done(-> initModal()) if !window.edscportal
 
-  class SearchPage
+  class SearchPage extends Page
     constructor: ->
+      super
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
@@ -89,10 +92,10 @@ ns.SearchPage = do (ko
 
     _updateFocusRenderState: (newFocus) =>
       if @_focus
-        @_focus.notifyRenderers('endSearchFocus')
+        @_focus.collection.notifyRenderers('endSearchFocus')
       @_focus = newFocus
       if @_focus
-        @_focus.notifyRenderers('startSearchFocus')
+        @_focus.collection.notifyRenderers('startSearchFocus')
 
     clearFilters: =>
       # EDSC-1448: The temporal dropdown is 'special' and needs to be programmatically closed...
@@ -123,12 +126,6 @@ ns.SearchPage = do (ko
                               e.indexOf('point') != -1)
       null
 
-    hideParent: =>
-      $('.master-overlay').masterOverlay('manualHideParent')
-
-    showParent: =>
-      $('.master-overlay').masterOverlay('manualShowParent')
-
     toggleFilterStack: (data, event) =>
       $('.filter-stack').toggle()
 
@@ -147,7 +144,7 @@ ns.SearchPage = do (ko
   loc = window.location.pathname
   if loc.indexOf("portal") >= 0 && loc.slice(-6) != "search" && loc.slice(-1) != '/'
     window.location.replace(loc + '/search' + window.location.search);
-  current = new SearchPage()
+  current = new SearchPage 'search'
   setCurrent(current)
 
   exports = SearchPage

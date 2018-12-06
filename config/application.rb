@@ -123,5 +123,12 @@ module EarthdataSearchClient
     config.enable_esi_order_chunking = (ENV['enable_esi_order_chunking'] || services['edsc'][Rails.env.to_s]['enable_esi_order_chunking'].to_s) == 'true'
     config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc'
     config.thumbnail_width = 75
+
+    # UMM Versions
+    config.umm_c_version   = '1.10'
+    config.umm_s_version   = '1.2'
+    config.umm_var_version = '1.2'
+
+    config.ous_version = 'v2.1'
   end
 end

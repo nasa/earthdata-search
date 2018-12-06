@@ -13,7 +13,7 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:18:18 GMT
+  recorded_at: Tue, 13 Mar 2018 03:48:05 GMT
   digest: af1908464a76fca0d983f3be1e037514a1c7a468
 - request:
     method: post
@@ -28,23 +28,8 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 19:58:23 GMT
+  recorded_at: Tue, 13 Mar 2018 03:48:38 GMT
   digest: 2ae0335b96f9ffb3d254fdebeeaffa267afd7a0f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json
-    body:
-      encoding: UTF-8
-      string: '{"order":{},"digest":"b50362f6c0461f983b34b86a58e185819bdd881b"}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 21:59:30 GMT
-  digest: 67df63391c277d4a742ab2c338b6fe156dc4505e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json
@@ -58,7 +43,7 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 01:19:25 GMT
+  recorded_at: Tue, 13 Mar 2018 03:48:20 GMT
   digest: 3feff4422181fb8dafe024084d95ef30e64d9375
 - request:
     method: post
@@ -73,7 +58,7 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Thu, 22 Feb 2018 15:51:11 GMT
+  recorded_at: Tue, 13 Mar 2018 04:07:36 GMT
   digest: 6c3e16ffd228884ccdc4460cd1e31bc3f8c45ec4
 - request:
     method: post
@@ -88,11 +73,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:15:31 GMT
+  recorded_at: Tue, 13 Mar 2018 03:48:52 GMT
   digest: 559fe229b88769924449be50e2f34415c5f6210e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=09EF3C26-E75B-B9B8-30F0-CF64DBD512D9
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=0D82D8DB-761E-682D-8BFD-CFACF4C8A53F
     body:
       encoding: US-ASCII
       string: ''
@@ -101,11 +86,11 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:15:49 GMT
-  digest: fc625f6eaeaaa13fcf29583f6ea65d15dd922f9c
+  recorded_at: Tue, 13 Mar 2018 04:07:51 GMT
+  digest: b4310e45ba3e6e99cbbea5b2f8d977b95e9c5cba
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=2EEA09A2-F0E8-1983-6850-3FFC571B2310
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=3723402E-9298-5BC4-FCCD-D2F33AC8D9BE
     body:
       encoding: US-ASCII
       string: ''
@@ -114,11 +99,11 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 21:59:40 GMT
-  digest: 71f5e82200b81420747eb238ad0c35544fd60fd4
+  recorded_at: Tue, 13 Mar 2018 03:49:06 GMT
+  digest: 54bb53102b64933af972ee7a785ee4e2321cfdcd
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=36EF5386-6CE9-965D-5B3B-D429F6145CF8
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F
     body:
       encoding: US-ASCII
       string: ''
@@ -127,11 +112,11 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 01:19:38 GMT
-  digest: 810d69f8c43a5de19c84b783ca685a4d9d69c7b6
+  recorded_at: Tue, 13 Mar 2018 03:48:32 GMT
+  digest: c9a01ee49840e39e2e36b97d35d62e51d29e6a84
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=5448023A-08F2-25EE-016F-D82BA115624A
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=55579096-3561-10B0-3409-4F8BE3F20316
     body:
       encoding: US-ASCII
       string: ''
@@ -140,11 +125,11 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 19:58:34 GMT
-  digest: ebf0b0110e93b192f48523b29e9a5327d183a5cc
+  recorded_at: Tue, 13 Mar 2018 03:48:18 GMT
+  digest: c5466dbbf24a26abf81bfe485bd8549fa22ffec1
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=932C9D1E-5D79-89AC-9D28-714CB0E278ED
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=71223EB0-62A2-5ADB-FE26-4653CCABE706
     body:
       encoding: US-ASCII
       string: ''
@@ -153,24 +138,62 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:18:31 GMT
-  digest: 286b1ebb7b36558de5238319f0732ee252ed191a
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=98963F0D-2CE3-E757-5A7A-AA269FB2A7A8
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 22 Feb 2018 15:51:23 GMT
-  digest: d7edc34f166628599e89b3fd5336362882e355e8
+  recorded_at: Tue, 13 Mar 2018 03:48:50 GMT
+  digest: a7ca1790472510d0f47a6c71079f69866ad6a54b
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/09EF3C26-E75B-B9B8-30F0-CF64DBD512D9/order_items/bulk_action
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F/order_items/bulk_action
+    body:
+      encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G1000005847-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005928-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005952-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005950-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005947-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005946-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005942-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005897-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005920-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005879-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005892-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005889-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005887-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005885-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005871-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005881-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005859-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005867-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005863-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005864-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005861-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005862-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005860-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005819-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000004516-LARC_ASDC","quantity":1}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 13 Mar 2018 04:07:44 GMT
+  digest: c7473cd14330eebed39d80925587fa38debd769e
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F/submit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 13 Mar 2018 04:07:51 GMT
+  digest: 4dd4b283fc970c2d468b54aea4f225bd0ee0981e
+- request:
+    method: put
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/0D82D8DB-761E-682D-8BFD-CFACF4C8A53F/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 13 Mar 2018 04:07:46 GMT
+  digest: 18a256a3f3f060d0f360aeca31c3e3e513a3dab7
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE/order_items/bulk_action
     body:
       encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G1422671947-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671841-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671850-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671865-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671681-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671795-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671733-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671915-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671892-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671872-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671834-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671827-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671878-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671706-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671780-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671885-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671766-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671901-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671712-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671811-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671820-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671750-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671688-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671935-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671758-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671928-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671908-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671773-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671665-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671675-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671802-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671788-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671941-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671920-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671696-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671743-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671727-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671857-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G1422671719-ORNL_DAAC","quantity":1}}]'
@@ -181,11 +204,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:15:38 GMT
-  digest: 3df3e4c68fdb60fd60cd15aa79cca5b49700d76e
+  recorded_at: Tue, 13 Mar 2018 03:48:59 GMT
+  digest: 11adc4e48eb659d6650e08e40921e484d9270812
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/09EF3C26-E75B-B9B8-30F0-CF64DBD512D9/submit
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE/submit
     body:
       encoding: US-ASCII
       string: ''
@@ -196,11 +219,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:15:46 GMT
-  digest: 6cd79e4aca7dc0cad45ecaabf520d430623a0a8f
+  recorded_at: Tue, 13 Mar 2018 03:49:05 GMT
+  digest: 106c0a95c8f73e0a4b740c139578497abc8adba6
 - request:
     method: put
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/09EF3C26-E75B-B9B8-30F0-CF64DBD512D9/user_information
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/3723402E-9298-5BC4-FCCD-D2F33AC8D9BE/user_information
     body:
       encoding: UTF-8
       string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
@@ -217,78 +240,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:15:40 GMT
-  digest: ccc11d879c7e5702331babe46b17b3ccf7c74108
+  recorded_at: Tue, 13 Mar 2018 03:49:01 GMT
+  digest: e764323171c92ecbf255f9aafc495eaf3261b195
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/2EEA09A2-F0E8-1983-6850-3FFC571B2310/order_items/bulk_action
-    body:
-      encoding: UTF-8
-      string: '[{"order_item":{"catalog_item_id":"G1046013597-LPDAAC_ECS","quantity":1,"option_selection":{"id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","option_definition_name":"AST_L1A","content":"\u003cecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_04.xsd\"\u003e\u003c!--Default distribution
-        method is FTP Pull --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:processing\u003e\u003cecs:endpoint\u003ehttp://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway\u003c/ecs:endpoint\u003e\u003cecs:consider-processing-options-in-request-bundling\u003efalse\u003c/ecs:consider-processing-options-in-request-bundling\u003e\u003cecs:max-order-item-size\u003e100\u003c/ecs:max-order-item-size\u003e\u003c/ecs:processing\u003e\u003clpdaac:subsetSpecification\u003e\u003clpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\"\u003eAST_L1A\u003c/lpdaac:productName\u003e\u003clpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\"\u003eASTER L1A Reconstructed
-        Unprocessed Instrument Data\u003c/lpdaac:longName\u003e\u003clpdaac:granuleSize
-        criteriaName=\"Granule_size\" criteriaType=\"FIXED\"\u003e0\u003c/lpdaac:granuleSize\u003e\u003clpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\"\u003e\u003clpdaac:fileFormatValue\u003eHDF\u003c/lpdaac:fileFormatValue\u003e\u003c/lpdaac:fileFormat\u003e\u003c/lpdaac:subsetSpecification\u003e\u003c/ecs:options\u003e"}}},{"order_item":{"catalog_item_id":"G1046013227-LPDAAC_ECS","quantity":1,"option_selection":{"id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","option_definition_name":"AST_L1A","content":"\u003cecs:options
-        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
-        xmlns:lpdaacSchemaLocation=\"/v1/AST_04.xsd\"\u003e\u003c!--Default distribution
-        method is FTP Pull --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:processing\u003e\u003cecs:endpoint\u003ehttp://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway\u003c/ecs:endpoint\u003e\u003cecs:consider-processing-options-in-request-bundling\u003efalse\u003c/ecs:consider-processing-options-in-request-bundling\u003e\u003cecs:max-order-item-size\u003e100\u003c/ecs:max-order-item-size\u003e\u003c/ecs:processing\u003e\u003clpdaac:subsetSpecification\u003e\u003clpdaac:productName
-        criteriaName=\"Product Name\" criteriaType=\"FIXED\"\u003eAST_L1A\u003c/lpdaac:productName\u003e\u003clpdaac:longName
-        criteriaName=\"Long Name\" criteriaType=\"FIXED\"\u003eASTER L1A Reconstructed
-        Unprocessed Instrument Data\u003c/lpdaac:longName\u003e\u003clpdaac:granuleSize
-        criteriaName=\"Granule_size\" criteriaType=\"FIXED\"\u003e0\u003c/lpdaac:granuleSize\u003e\u003clpdaac:fileFormat
-        criteriaName=\"File Format\" criteriaType=\"FIXED\"\u003e\u003clpdaac:fileFormatValue\u003eHDF\u003c/lpdaac:fileFormatValue\u003e\u003c/lpdaac:fileFormat\u003e\u003c/lpdaac:subsetSpecification\u003e\u003c/ecs:options\u003e"}}}]'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 21:59:34 GMT
-  digest: 076426e6725f2c04a9211b2c878e7d29696e8921
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/2EEA09A2-F0E8-1983-6850-3FFC571B2310/submit
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 21:59:39 GMT
-  digest: e527af0f9ce4f495950754334931f23cf1d1113c
-- request:
-    method: put
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/2EEA09A2-F0E8-1983-6850-3FFC571B2310/user_information
-    body:
-      encoding: UTF-8
-      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 21:59:35 GMT
-  digest: 8a2f33359891143b7e0b45a407884ecd1b8d1c56
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/36EF5386-6CE9-965D-5B3B-D429F6145CF8/order_items/bulk_action
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F/order_items/bulk_action
     body:
       encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G1219918622-LAADS","quantity":1,"option_selection":{"id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","option_definition_name":"FtpPushPull","content":"\u003cprov:packageOption
@@ -303,38 +259,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 01:19:30 GMT
-  digest: c777568dcea75568d9ca51c84b2d956e256f5a4e
+  recorded_at: Tue, 13 Mar 2018 03:48:25 GMT
+  digest: 4b3acfde061707643798eaaa42c444f5b1803b92
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/36EF5386-6CE9-965D-5B3B-D429F6145CF8/order_items/bulk_action
-    body:
-      encoding: UTF-8
-      string: '[{"order_item":{"catalog_item_id":"G1219918622-LAADS","quantity":1,"option_selection":{"id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","option_definition_name":"FtpPushPull","content":"\u003cprov:packageOption
-        xmlns:prov=\"http://ecsodl.nasa.gov/orderoptions\"\u003e\u003c!-- Distribution
-        Specification--\u003e\u003cprov:dist\u003e\u003cprov:value\u003eFtpPush\u003c/prov:value\u003e\u003c/prov:dist\u003e\u003cprov:distributionSpecification
-        name=\"FtpPush\"\u003e\u003cprov:odl name=\"HOST_ADDRESS\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl
-        name=\"USERNAME\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl name=\"PASSWORD\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl
-        name=\"FTP_PATH\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl name=\"PROCESSING_OPTIONS\"\u003eNative
-        Granule\u003c/prov:odl\u003e\u003c/prov:distributionSpecification\u003e\u003c/prov:packageOption\u003e"}}},{"order_item":{"catalog_item_id":"G1219918515-LAADS","quantity":1,"option_selection":{"id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","option_definition_name":"FtpPushPull","content":"\u003cprov:packageOption
-        xmlns:prov=\"http://ecsodl.nasa.gov/orderoptions\"\u003e\u003c!-- Distribution
-        Specification--\u003e\u003cprov:dist\u003e\u003cprov:value\u003eFtpPush\u003c/prov:value\u003e\u003c/prov:dist\u003e\u003cprov:distributionSpecification
-        name=\"FtpPush\"\u003e\u003cprov:odl name=\"HOST_ADDRESS\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl
-        name=\"USERNAME\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl name=\"PASSWORD\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl
-        name=\"FTP_PATH\"\u003etest\u003c/prov:odl\u003e\u003cprov:odl name=\"PROCESSING_OPTIONS\"\u003eNative
-        Granule\u003c/prov:odl\u003e\u003c/prov:distributionSpecification\u003e\u003c/prov:packageOption\u003e"}}}]'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 21:30:12 GMT
-  digest: db7b23c64a614ae97d4e6a1ae4f4fe8bc2ab800a
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/36EF5386-6CE9-965D-5B3B-D429F6145CF8/submit
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F/submit
     body:
       encoding: US-ASCII
       string: ''
@@ -345,11 +274,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 01:19:37 GMT
-  digest: 0931e15b816c6530c501625d1a68be6a59e076a4
+  recorded_at: Tue, 13 Mar 2018 03:48:31 GMT
+  digest: 9ead57f382d1bd7841e87e96375a7cfd5b3f63c1
 - request:
     method: put
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/36EF5386-6CE9-965D-5B3B-D429F6145CF8/user_information
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/44B46C2F-40A2-4E1E-C2F1-2B10AECE3C1F/user_information
     body:
       encoding: UTF-8
       string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
@@ -366,66 +295,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 01:19:32 GMT
-  digest: a2d3881a2dd92b1473567ac721f84260752597b9
+  recorded_at: Tue, 13 Mar 2018 03:48:26 GMT
+  digest: 30fe367e573fa335fd64e0d99e634f2a7c41094c
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/5448023A-08F2-25EE-016F-D82BA115624A/order_items/bulk_action
-    body:
-      encoding: UTF-8
-      string: '[{"order_item":{"catalog_item_id":"G1007073454-NSIDC_ECS","quantity":1,"option_selection":{"id":"4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9","option_definition_name":"Without
-        Browse","content":"\u003cecs:options xmlns:ecs=\"http://ecs.nasa.gov/options\"\u003e\u003c!--
-        ECS distribution options example --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:do-ancillaryprocessing\u003efalse\u003c/ecs:do-ancillaryprocessing\u003e\u003c/ecs:options\u003e"}}},{"order_item":{"catalog_item_id":"G1007073474-NSIDC_ECS","quantity":1,"option_selection":{"id":"4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9","option_definition_name":"Without
-        Browse","content":"\u003cecs:options xmlns:ecs=\"http://ecs.nasa.gov/options\"\u003e\u003c!--
-        ECS distribution options example --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:do-ancillaryprocessing\u003efalse\u003c/ecs:do-ancillaryprocessing\u003e\u003c/ecs:options\u003e"}}}]'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 19:58:28 GMT
-  digest: 987e9b68fa6c3959be370ee50898b8a7723c10ca
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/5448023A-08F2-25EE-016F-D82BA115624A/submit
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 19:58:33 GMT
-  digest: b9b2c1cbba29829e645029ddd21cb749cbc8e9f0
-- request:
-    method: put
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/5448023A-08F2-25EE-016F-D82BA115624A/user_information
-    body:
-      encoding: UTF-8
-      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 21 Feb 2018 19:58:29 GMT
-  digest: 56bb4cc8c3788852fe9219631481486279c48ea2
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/932C9D1E-5D79-89AC-9D28-714CB0E278ED/order_items/bulk_action
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316/order_items/bulk_action
     body:
       encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G1003445220-NSIDC_ECS","quantity":1,"option_selection":{"id":"AE90B3EA-46FC-7899-6983-D8A9A60875C6","option_definition_name":"With
@@ -450,11 +324,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:18:23 GMT
-  digest: 0a295797379db64a6457067c752ea9a08102242a
+  recorded_at: Tue, 13 Mar 2018 03:48:10 GMT
+  digest: 83df786c2d625a30a1962db0b91d7127e90d44cf
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/932C9D1E-5D79-89AC-9D28-714CB0E278ED/submit
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316/submit
     body:
       encoding: US-ASCII
       string: ''
@@ -465,11 +339,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:18:30 GMT
-  digest: 02469dfce565c14d5feae49cd28f3d545953c798
+  recorded_at: Tue, 13 Mar 2018 03:48:18 GMT
+  digest: 61f3042893aacde5418636e8b80b1d79e8bc5d9f
 - request:
     method: put
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/932C9D1E-5D79-89AC-9D28-714CB0E278ED/user_information
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/55579096-3561-10B0-3409-4F8BE3F20316/user_information
     body:
       encoding: UTF-8
       string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
@@ -486,14 +360,18 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Wed, 21 Feb 2018 02:18:25 GMT
-  digest: b712103323d0df26694b12b95559820cc3e6c9a7
+  recorded_at: Tue, 13 Mar 2018 03:48:12 GMT
+  digest: 31d16137f686a7b1bb38a0172abc4a09ebe46513
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/98963F0D-2CE3-E757-5A7A-AA269FB2A7A8/order_items/bulk_action
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706/order_items/bulk_action
     body:
       encoding: UTF-8
-      string: '[{"order_item":{"catalog_item_id":"G1000005847-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005928-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005952-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005950-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005947-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005946-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005942-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005897-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005920-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005879-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005892-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005889-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005887-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005885-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005871-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005881-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005859-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005867-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005863-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005864-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005861-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005862-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005860-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005819-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000004516-LARC_ASDC","quantity":1}}]'
+      string: '[{"order_item":{"catalog_item_id":"G1007073454-NSIDC_ECS","quantity":1,"option_selection":{"id":"4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9","option_definition_name":"Without
+        Browse","content":"\u003cecs:options xmlns:ecs=\"http://ecs.nasa.gov/options\"\u003e\u003c!--
+        ECS distribution options example --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:do-ancillaryprocessing\u003efalse\u003c/ecs:do-ancillaryprocessing\u003e\u003c/ecs:options\u003e"}}},{"order_item":{"catalog_item_id":"G1007073474-NSIDC_ECS","quantity":1,"option_selection":{"id":"4C25BD8A-6E35-7071-9B73-CEF5FAE11DE9","option_definition_name":"Without
+        Browse","content":"\u003cecs:options xmlns:ecs=\"http://ecs.nasa.gov/options\"\u003e\u003c!--
+        ECS distribution options example --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:do-ancillaryprocessing\u003efalse\u003c/ecs:do-ancillaryprocessing\u003e\u003c/ecs:options\u003e"}}}]'
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -501,11 +379,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Thu, 22 Feb 2018 15:51:17 GMT
-  digest: ade44d0291c9569950d360b630a4b387c20576e9
+  recorded_at: Tue, 13 Mar 2018 03:48:43 GMT
+  digest: 32475274ce2af45893f1a66f4bc73a6f3e91c1e7
 - request:
     method: post
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/98963F0D-2CE3-E757-5A7A-AA269FB2A7A8/submit
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706/submit
     body:
       encoding: US-ASCII
       string: ''
@@ -516,11 +394,11 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Thu, 22 Feb 2018 15:51:23 GMT
-  digest: 5b224819628bdc2f6aeb6c6b7a010a4782dd9ecb
+  recorded_at: Tue, 13 Mar 2018 03:48:49 GMT
+  digest: 157e6e4fb677cdd07fb4de6fdf02e5ad3d138e2f
 - request:
     method: put
-    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/98963F0D-2CE3-E757-5A7A-AA269FB2A7A8/user_information
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/orders/71223EB0-62A2-5ADB-FE26-4653CCABE706/user_information
     body:
       encoding: UTF-8
       string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
@@ -537,6 +415,130 @@ http_interactions:
       - application/json
       Echo-Token:
       - edsc
-  recorded_at: Thu, 22 Feb 2018 15:51:18 GMT
-  digest: bdec560cb402dd131f01ee9ae8829277c18c4dd4
+  recorded_at: Tue, 13 Mar 2018 03:48:44 GMT
+  digest: a3c4e54a924f38eccbf3ed4af573e0fce679905e
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders.json
+    body:
+      encoding: UTF-8
+      string: '{"order":{},"digest":"0ec74ea5b073ba6f6a27b2b2ac70718759eb4637"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:00 GMT
+  digest: 18785b8d6a9e229639a156e4817feec01e68110f
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders.json?id%5B%5D=0FF0DD45-A9A8-84E4-8592-416536818979
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:03 GMT
+  digest: f8061c921970a6271680ddc5908d44c149207378
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979/order_items/bulk_action
+    body:
+      encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G1200240794-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240797-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240807-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240808-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240784-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240793-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240795-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240819-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240781-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240785-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240792-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240800-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240782-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240787-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240791-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240777-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240779-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240788-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240796-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240798-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240799-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240801-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240802-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240803-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240804-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240805-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240806-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240809-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240810-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240811-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240812-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240813-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240815-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240820-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240821-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240816-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240789-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240786-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240783-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240817-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240814-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240790-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240778-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240780-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}},{"order_item":{"catalog_item_id":"G1200240818-DEV08","quantity":1,"option_selection":{"id":"87996097-E0B0-70DF-DED2-0D9322FB32DE","option_definition_name":"MOD13Q1.6
+        Order","content":null}}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:01 GMT
+  digest: f999e5b7b3ce9ea3ff4f8a10f5fe01cb9dcbbf01
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979/submit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:02 GMT
+  digest: 5d6bd3cbfdd24b3f96731e136ff28c314aa4476f
+- request:
+    method: put
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/orders/0FF0DD45-A9A8-84E4-8592-416536818979/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Fri, 02 Nov 2018 15:13:02 GMT
+  digest: c8192c2f16fdffbd0e77e24e29b2c8f7cd2c976d
 recorded_with: VCR 2.6.0

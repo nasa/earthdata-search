@@ -10,9 +10,9 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-<section class="data-access data-access-retrieve">
+<section class="data-access data-access-retrieve main-content-scrollable">
   <nav class="data-access-nav">
-    <a href="<%=edsc_path "/data/configure?#{@retrieval.source}" %>"><i class="fa fa-chevron-circle-left"></i> Back to Data Access Options</a>
+    <a href="<%=edsc_path "/projects/new?#{@retrieval.source}" %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Project</a>
   </nav>
   <header class="data-access-header" data-bind="visible: ui.projectList.awaitingStatus()">
     <h1>Request in Progress</h1>
@@ -81,7 +81,7 @@
                  class="button button-small text-button"
                  data-remote="true"
                  data-method="post"
-                 data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
+                 data-confirm="Are you sure you want to remove this order? This action cannot be undone."
                  rel="nofollow">Cancel</a>
             <!-- /ko -->
             <!-- ko if: dropped_granules && dropped_granules.length > 0 -->

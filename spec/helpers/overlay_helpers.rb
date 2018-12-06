@@ -54,11 +54,11 @@ module Helpers
     end
 
     def collapsed_collection(col)
-      page.find('.ccol', text: col)
+      page.find('.col', text: col)
     end
 
     def first_collapsed_collection
-      nth_ccol(unfeatured_collapsed_collection_results, 1)
+      nth_col(unfeatured_collapsed_collection_results, 1)
     end
 
     def first_collection_result
@@ -87,22 +87,6 @@ module Helpers
 
     def granule_details
       page.find('#granule-details')
-    end
-
-    def project_overview
-      page.find('#project-overview')
-    end
-
-    def first_project_collection
-      nth_panel(project_overview, 1)
-    end
-
-    def second_project_collection
-      nth_panel(project_overview, 2)
-    end
-
-    def nth_project_collection(n)
-      nth_panel(project_overview, n)
     end
 
     def granule_list
@@ -139,8 +123,8 @@ module Helpers
       root.find(".panel-list-item:nth-child(#{n})")
     end
 
-    def nth_ccol(root, n)
-      root.find(".ccol:nth-child(#{n})")
+    def nth_col(root, n)
+      root.find(".col:nth-child(#{n})")
     end
 
     def manual_close_facet_list

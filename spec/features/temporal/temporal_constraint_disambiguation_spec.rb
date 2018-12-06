@@ -7,8 +7,7 @@ describe "Temporal constraint disambiguation", reset: true do
   temporal_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
 
   before :each do
-    load_page :search, focus: 'C179003030-ORNL_DAAC'
-    login
+    load_page :search, focus: 'C179003030-ORNL_DAAC', authenticate: 'edsc'
 
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
@@ -17,7 +16,7 @@ describe "Temporal constraint disambiguation", reset: true do
     # expect(granule_list).to have_text('Showing 20 of 39 matching granules')
   end
 
-  context 'when a temporal constraint is set and no date is focused' do
+  context 'when a temporal constraint is set and no date is focused', data_specific: true do
     before(:each) do
       set_temporal(temporal_start_date, temporal_stop_date)
       wait_for_xhr
@@ -25,7 +24,7 @@ describe "Temporal constraint disambiguation", reset: true do
 
     context 'clicking the download button' do
       before :each do
-        find('.master-overlay-global-actions').click_on "Download"
+        find('.master-overlay-global-actions').click_on "Download All"
         wait_for_xhr
       end
 
@@ -35,7 +34,7 @@ describe "Temporal constraint disambiguation", reset: true do
     end
   end
 
-  context 'when a date is focused and no temporal constraint is set', pending_updates: true do
+  context 'when a date is focused and no temporal constraint is set', data_specific: true do
     before(:each) do
       click_timeline_date('1987')
       wait_for_xhr
@@ -43,7 +42,7 @@ describe "Temporal constraint disambiguation", reset: true do
 
     context 'clicking the download button' do
       before :each do
-        find('.master-overlay-global-actions').click_on "Download"
+        find('.master-overlay-global-actions').click_on "Download All"
         wait_for_xhr
       end
 
@@ -62,7 +61,7 @@ describe "Temporal constraint disambiguation", reset: true do
 
     context 'clicking the download button' do
       before :each do
-        find('.master-overlay-global-actions').click_on "Download"
+        find('.master-overlay-global-actions').click_on "Download All"
         wait_for_xhr
       end
 
@@ -81,10 +80,10 @@ describe "Temporal constraint disambiguation", reset: true do
           expect(page).not_to have_content("What temporal selection would you like to use?")
         end
 
-        after(:each) { find('.master-overlay-global-actions').click_on "Download" }
+        after(:each) { find('.master-overlay-global-actions').click_on "Download All" }
       end
 
-      context 'choosing to use the temporal constraint' do
+      context 'choosing to use the temporal constraint', data_specific: true do
         before(:each) { click_on "Use Temporal Constraint" }
 
         it 'takes the user to the access configuration page with the temporal constraint applied' do
@@ -92,7 +91,7 @@ describe "Temporal constraint disambiguation", reset: true do
         end
       end
 
-      context 'choosing to use the timeline focus' do
+      context 'choosing to use the timeline focus', data_specific: true do
         before(:each) { click_on "Use Focused Time Span" }
 
         it 'takes the user to the access configuration page for the granules on the selected date' do
