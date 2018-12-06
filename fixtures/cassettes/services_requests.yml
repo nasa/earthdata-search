@@ -270,6 +270,137 @@ http_interactions:
   digest: d01537ac1b980a4377b21fabd637822e936f33b7
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1571647120-LANCEAMSR2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Wed, 05 Dec 2018 23:27:44 GMT
+  digest: 1187f3ca8aafa841aa49a84837acd68897870ab9
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200245793-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Wed, 05 Dec 2018 23:25:22 GMT
+  digest: cf9feed68ce94fe32d1d3f6b3e8728447ca6ed72
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200252658-DEV08&concept_id%5B%5D=S1200299153-DEV08&concept_id%5B%5D=S1200299157-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Wed, 05 Dec 2018 23:25:23 GMT
+  digest: b354acdaf5e4060134c42ff37c2c88d74cde2d3d
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200269651-DEV08&concept_id%5B%5D=S1200299153-DEV08&concept_id%5B%5D=S1200299157-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Wed, 05 Dec 2018 23:30:46 GMT
+  digest: 4a7333bd483c5cb16de70780915a1913533149ef
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200299153-DEV08&concept_id%5B%5D=S1200299157-DEV08
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Wed, 05 Dec 2018 23:25:01 GMT
+  digest: 3ab9aea14db6bb14eefea41751866d67defcbc6b
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200299155-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Wed, 05 Dec 2018 23:38:18 GMT
+  digest: d856706f77e244473b7262c30c3a6786f74d2337
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/service-bridge/ous/collection/C1200187767-EDF_OPS?bounding_box=30%2C0%2C40%2C10&format=nc&variables%5B%5D=V1200265916-EDF_OPS&variables%5B%5D=V1200265914-EDF_OPS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.cmr-opendap.v2.1+json
+      Echo-Token:
+      - edsc-access
+  recorded_at: Wed, 05 Dec 2018 23:29:06 GMT
+  digest: 3fc3ca227ed7748ab9300ba8c2ab56e867f66366
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=+
     body:
       encoding: US-ASCII
@@ -356,6 +487,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Thu, 01 Mar 2018 16:41:20 GMT
   digest: 4349cf726f6bc6c4c023200bc8d8045b13f1fee8
+- request:
+    method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000004-EDF_DEV09
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+  recorded_at: Thu, 06 Dec 2018 00:06:25 GMT
+  digest: 3153ede1fc2525a64bcb947661d5de1bdf4a561d
 - request:
     method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C1000000083-DEMO_PROV
@@ -655,6 +797,17 @@ http_interactions:
   digest: f85034a1b85aba95a56845fe4e3ced74b346c672
 - request:
     method: get
+    uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C197265171-LPDAAC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+  recorded_at: Wed, 05 Dec 2018 23:36:27 GMT
+  digest: 8a14ed1747f0bcdb5a901e458073edd75e994a6a
+- request:
+    method: get
     uri: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov/nlp?text=C203234448-LAADS
     body:
       encoding: US-ASCII
@@ -727,8 +880,8 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.8.8
-  recorded_at: Thu, 01 Mar 2018 16:32:26 GMT
+      - Faraday v0.9.2
+  recorded_at: Thu, 06 Dec 2018 01:24:29 GMT
   digest: da15b45a7adf3c6ac6915307a25d3ab1854ec9b5
 - request:
     method: get
