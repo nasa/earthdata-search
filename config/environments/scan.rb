@@ -78,7 +78,6 @@ EarthdataSearchClient::Application.configure do
   config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/EdSearch/feedback.js'
 
   config.url_limit = 2000
-  config.cmr_env = 'prod'
   services = config.services
   config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
 
