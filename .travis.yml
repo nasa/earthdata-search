@@ -37,7 +37,7 @@ env:
 branches:
   only: # Only build master and e2e-services. All pull requests also get built
     - master
-    - e2e-services
+    - searchlab
 deploy:
   provider: script
   script: bin/ecc-sync
