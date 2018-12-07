@@ -116,7 +116,7 @@ module EarthdataSearchClient
 
     services = ERB.new File.new(Rails.root.join('config/services.yml.erb')).read
     config.services = YAML.load services.result(binding)
-    config.cmr_env = 'prod'
+    config.cmr_env = ENV['cmr_env'] || 'prod'
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
     config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['sit']['urs_root']]
