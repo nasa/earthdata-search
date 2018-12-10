@@ -29,6 +29,9 @@ defaults: &defaults
   secret_key_base: "<secret_key_base>"
 ####
 
+  # use CMR's SIT environment for local development
+  cmr_env: 'sit'
+
 development:
   <<: *defaults
 
