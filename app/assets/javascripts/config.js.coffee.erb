@@ -10,7 +10,7 @@
   <% end %>
   <% end %>
 
-  host_cmr_env = "<%= ENV['cmr_env'] || 'prod' %>"
+  host_cmr_env = "<%= Rails.configuration.cmr_env || 'prod' %>"
   query = window.location.search
   match = /cmr_env=(\w+)/.exec(query)
   cmr_env = if match then match[1] else host_cmr_env
