@@ -15,5 +15,3 @@ namespace :colormaps do
     end
   end
 end
-
-Rake::Task['db:seed'].enhance ['colormaps:load']
