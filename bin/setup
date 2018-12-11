@@ -54,6 +54,11 @@ Dir.chdir APP_ROOT do
     run_cmd 'docker-compose run web bundle exec rake db:setup RAILS_ENV=test'
   end
 
+  section 'Pull down and store colormaps' do
+    run_cmd 'docker-compose run web bundle exec rake colormaps:load'
+    run_cmd 'docker-compose run web bundle exec rake colormaps:load RAILS_ENV=test'
+  end
+
   section 'Building docker container' do
     run_cmd 'docker-compose build'
   end

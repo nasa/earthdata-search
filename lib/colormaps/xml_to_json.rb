@@ -3,7 +3,7 @@ require 'open-uri'
 require 'json'
 
 module Colormaps
-  def self.load
+  def self.load(products = nil)
     puts 'Loading GIBS colormap data...'
     output_dir = "#{Rails.root}/public/colormaps"
     begin
@@ -35,6 +35,8 @@ module Colormaps
       layers = capabilities_file.xpath('/Capabilities/Contents/Layer')
       layers.each do |layer|
         id = layer.xpath('./ows:Identifier').first.content.to_s
+
+        next unless products.nil? || products.include?(id)
 
         # get v1.2 role metadata node
         target = layer.xpath("./ows:Metadata[contains(@xlink:role, '1.2')]")

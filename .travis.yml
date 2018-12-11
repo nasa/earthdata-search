@@ -6,21 +6,18 @@ cache:
     - node_modules
 sudo: required
 
-# Uncomment to have screenshots dumped to S3
-# You will need to provide S3 information to travis as we do not have one for EDSC
 addons:
-  # artifacts:
-  #   debug: true
-  #   paths:
-  #     - capybara
-  #   target_paths: $TRAVIS_BUILD_NUMBER
-  #   working_dir: tmp/
-  #   bucket: $ARTIFACTS_BUCKET
-  #   s3_region: us-east-1
   chrome: stable
 
 before_install:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
+services:
+  - postgresql
+
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
   - bundle exec bin/setup_travis
