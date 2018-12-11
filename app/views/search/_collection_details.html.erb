@@ -42,7 +42,7 @@
                   <div class="dropdown-fancy-content">
                     <ul class="handoff-links">
                       <!-- ko foreach: $root.ui.collectionsList.selected().handoffUrls() -->
-                      <li><a class="ext" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
+                      <li><a class="ext analytics-smart-handoff-link" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
                       <!-- /ko -->
                     </ul>
                   </div>
