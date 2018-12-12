@@ -195,7 +195,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
       result = false
       for m in @accessMethod()
-        result = true if (m.isValid() || !m.loadForm()) && m.method()?
+        result = true if (m.isValid() && !m.loadForm()) && m.method()?
 
       if result
         # The submit button defaults to having a title that informs the user

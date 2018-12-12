@@ -80,7 +80,13 @@
                     </span> -->
                   </div>
                 </div>
-                <a class="project-list-item-action project-list-item-action-edit-options" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}, click: function(){$('#' + collection.id + '_edit-options').trigger('toggle-panel')}"><i class="fa fa-cog"></i> Edit Options</a>
+                <a class="project-list-item-action project-list-item-action-edit-options" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}, click: function(){$('#' + collection.id + '_edit-options').trigger('toggle-panel')}">
+                  <!-- ko if: !serviceOptions.readyToDownload() -->
+                  <i class="fa fa-exclamation-circle echoforms-error"></i>
+                  <!-- /ko -->
+                  <i class="fa fa-cog"></i>
+                  Edit Options
+                </a>
               </div>
             <!--/ko-->
           </div>

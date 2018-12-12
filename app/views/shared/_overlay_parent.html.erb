@@ -108,13 +108,12 @@
         <project-list class="project-list" params="{ project: project }"></project-list>
         <footer class="master-overlay-footer-actions">
           <div class="master-overlay-footer-notes">
-            <p class="master-overlay-footer-note">Click "Edit Options" above to customize the output for each project.</p>
+            <p class="master-overlay-footer-note" data-bind="if: $root.project.allReadyToDownload() || !$root.project.isLoadingComplete()">Click "Edit Options" above to customize the output for each project.</p>
+            <p class="master-overlay-footer-note" data-bind="if: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete()">One of more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
           </div>
-          <div class="master-overlay-download-tooltip" data-tooltip="true" data-bind="css: { 'master-overlay-download-tooltip-disabled': !$root.project.allReadyToDownload() }, attr: { 'title': $root.project.allReadyToDownload() ? '' : 'At least one of your collections is not configured correctly. Please double check your customization selections.', 'data-original-title': $root.project.allReadyToDownload() ? '' : 'At least one of your collections is not configured correctly. Please double check your customization selections.' }" title="At least one of your collections is not configured correctly. Please double check your customization selections.">
-            <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() && !$root.project.isLoadingComplete()}" href="#" class="button button-full button-download-data" disabled>
-              <i class="fa fa-download" aria-hidden="true"></i> Download Data
-            </button>
-          </div>
+          <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() && !$root.project.isLoadingComplete() }, css: { 'button-disabled': !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() }" href="#" class="button button-full button-download-data" disabled>
+            <i class="fa fa-download" aria-hidden="true"></i> Download Data
+          </button>
         </footer>
       <!-- /ko -->
     </div>
