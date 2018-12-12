@@ -35,19 +35,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @isValid = ko.observable(true)
       @loadForm = ko.observable(false)
 
-      # TODO: I don't think this is used
-      @loadingForm = ko.computed (item, e) =>
-        if @loadForm()
-          timer = setTimeout((=>
-            if document.getElementsByClassName('access-form')[0].children.length > 0
-              @loadForm(false)
-              clearTimeout timer
-            else
-              @loadForm(true)
-          ), 0)
-          @loadForm()
-        false
-
       @subsetOptions = ko.observable(null)
       @prepopulatedFields = ko.computed(@_computePrepopulatedFields, this, deferEvaluation: true)
 
@@ -72,9 +59,9 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
     showSpinner: (item, e) =>
       clickedMethod = null
       for m in @availableMethods when m.name == item.name
-
         clickedMethod = m
         break
+
       if e.target.id
         # Clear the existing echoformContainers to ensure only one gets
         # populated
@@ -201,7 +188,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         # The submit button defaults to having a title that informs the user
         # that they need to select an accessMethod, this clears that when a
         # valid accessMethod has been selected
-        $('.access-submit').prop('title', "");
+        $('.access-submit').prop('title', "")
 
       result
 
