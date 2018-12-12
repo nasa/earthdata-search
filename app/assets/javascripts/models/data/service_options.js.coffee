@@ -76,9 +76,12 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         clickedMethod = m
         break
       if e.target.id
-        echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
-        echoformContainer.empty?() if echoformContainer?
+        # Clear the existing echoformContainers to ensure only one gets
+        # populated
+        for echoformContainer in @echoformContainers
+          $(echoformContainer).empty?() if echoformContainer?
 
+        echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
         if clickedMethod.type == 'service' || clickedMethod.type == 'order'
           @loadForm(true) if clickedMethod.type == 'service'
           setTimeout (=>
@@ -119,12 +122,12 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       if jsonObj.type == 'service' || jsonObj.type == 'order'
         echoformContainer = null
         checkExistsTimer = setInterval (=>
-          echoformContainers = document.getElementsByClassName('access-form')
-          if echoformContainers?.length > 0
+          @echoformContainers = document.getElementsByClassName('access-form')
+          if @echoformContainers?.length > 0
             clearTimeout checkExistsTimer
             setTimeout (=>
               accessMethodMatched = false
-              for echoformContainer in echoformContainers
+              for echoformContainer in @echoformContainers
                 matches = echoformContainer.id.match(/access-form-(.*)-(\d+)/)
                 if !accessMethodMatched && matches[1] == jsonObj.collection_id && parseInt(matches[2], 10) == index
                   accessMethodMatched = true
@@ -213,9 +216,10 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
-      for json, i in jsonObj.accessMethod
+      for json in jsonObj.accessMethod
         method = new ServiceOptions(null, @_methods)
-        method.fromJson(json, i)
+        index = @_methods?.findIndex((element) -> element.name == json.method)
+        method.fromJson(json, index)
         @accessMethod.push(method)
       this
 
