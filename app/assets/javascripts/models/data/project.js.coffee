@@ -343,8 +343,15 @@ ns.Project = do (ko,
       selectedService: @expectedUmmService(),
       form_hashes: form_hashes
 
-    toggleVisibility: =>
-      @collection.visible(!@collection.visible())
+    toggleVisibility: (visible) ->
+      # If a state is not explict, toggle the visibility.
+      if typeof(visible) == 'undefined'
+        @collection.visible(!@collection.visible())
+        return
+
+      # Set the visible state.
+      @collection.visible(visible)
+      visible
 
   class Project
     constructor: (@query) ->

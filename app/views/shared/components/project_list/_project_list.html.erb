@@ -14,7 +14,7 @@
                 <div class="dropdown-fancy-content">
                   <ul>
                     <li>
-                      <button class="button-naked project-list-item-toggle" type="button" name="button" data-bind="click: toggleVisibility">
+                      <button class="button-naked project-list-item-toggle" type="button" name="button" data-bind="click: function() { toggleVisibility() }">
                         <!-- ko if: collection.visible() -->
                           <i class="fa fa-eye-slash"></i>
                         <!-- /ko -->
