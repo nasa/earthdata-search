@@ -8,6 +8,7 @@ ns.GranuleGridLayer = do (
   dividePolygon = @edsc.map.geoutil.dividePolygon
   gibsUrl = @edsc.config.gibsUrl
   projectPath=ns.interpolation.projectPath
+  page = @edsc.models.page
 ) ->
 
   MAX_RETRIES = 1 # Maximum number of times to attempt to reload an image
@@ -37,12 +38,22 @@ ns.GranuleGridLayer = do (
 
   class GranuleGridLayer extends L.GridLayer
     initialize: (@collection, color, @multiOptions) ->
+      console.warn 'collection', @collection
       if @collection.granuleDatasource()
         @granules = @collection.granuleDatasource().data()
       else
         @_datasourceSubscription = @collection.granuleDatasource.subscribe(@_subscribe)
 
-      @color = color ? '#25c85b';
+      # If on the search page, the color should always be green.
+      if page.current.page() == 'search'
+        color = '#25c85b'
+
+      # If were on the project page, set it to blue while we finish loading the collection data.
+      if page.current.page() == 'project'
+        color = color ? '#3498DB'
+
+      @color = color
+
       @originalOptions = tileSize: 512
       super(@originalOptions)
 
