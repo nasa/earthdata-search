@@ -81,6 +81,10 @@ ns.ProjectPage = do (ko,
       @spatialError = ko.computed(@_computeSpatialError)
       @labs = ko.observable(false)
 
+      @project.collections.subscribe (projectCollections) =>
+        for projectCollection in projectCollections
+          projectCollection.toggleVisibility(true)
+
       $(window).on 'edsc.save_workspace', (e) =>
         currentParams = @project.serialized()
         urlUtil.saveState('/search/collections', currentParams, true, @workspaceNameField())
@@ -89,7 +93,8 @@ ns.ProjectPage = do (ko,
 
       setTimeout((=>
         @_loadFromUrl()
-        $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
+        $(window).on 'edsc.pagechange', @_loadFromUrl
+      ), 0)
 
       new StateManager(this).monitor()
 
