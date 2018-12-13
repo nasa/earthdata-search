@@ -78,6 +78,7 @@ ns.SearchPage = do (ko
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)
+      @showFocusedCollections = ko.observable(true)
 
       @spatialError = ko.computed(@_computeSpatialError)
 

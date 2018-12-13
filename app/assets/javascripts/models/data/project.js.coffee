@@ -18,7 +18,8 @@ ns.Project = do (ko,
                  VariablesModel = ns.Variables
                  ServiceOptionsModel = ns.ServiceOptions
                  Collection = ns.Collection
-                 QueryParam = ns.QueryParam) ->
+                 QueryParam = ns.QueryParam
+                 page = @edsc.models.page) ->
 
   # Maintains a finite pool of values to be distributed on demand.  Calling
   # next() on the pool returns either an unused value, prioritizing those
@@ -90,6 +91,9 @@ ns.Project = do (ko,
       @transformationSubsettingEnabled = ko.observable(false)
       @reformattingSubsettingEnabled   = ko.observable(false)
 
+      # Designate as a member of the current project
+      @isProjectCollection  = @collection.isProjectCollection(true)
+
       # Re-calculate the subsetting flags when changes are made to an ECHO form
       $(document).on 'echoforms:modelchange', @_computeSubsettingFlags
 
@@ -155,7 +159,7 @@ ns.Project = do (ko,
             return false
 
         # Select the expected method
-        if @serviceOptions.accessMethod().length > 0
+        if expectedMethod? && @serviceOptions.accessMethod().length > 0
           @serviceOptions.accessMethod()[0].method(expectedMethod.name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
@@ -427,7 +431,7 @@ ns.Project = do (ko,
       collections = (projectCollection.collection for projectCollection in @collections() when projectCollection.collection.visible())
 
       focus = @focus()?.collection
-      if focus && focus.visible() && collections.indexOf(focus) == -1
+      if page.current.showFocusedCollections() && focus && focus.visible() && collections.indexOf(focus) == -1
         collections.push(focus)
 
       # Other visible collections not controlled by the project

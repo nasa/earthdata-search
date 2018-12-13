@@ -121,6 +121,7 @@ ns.Collection = do (ko
 
       @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
+      @isProjectCollection = ko.observable(false)
 
     handoffUrls: =>
       urls = []
