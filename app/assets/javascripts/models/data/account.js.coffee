@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
+ns.Account = do (ko, ajax = @edsc.util.xhr.ajax) ->
 
   class Account
     constructor: ->
@@ -25,7 +25,7 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
 
     _from_user: =>
       xhr = ajax
-        url: "/users/get_preferences"
+        url: '/users/get_preferences'
         dataType: 'json'
         method: 'get'
         success: (data) =>
@@ -79,7 +79,7 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
         organization: @organizationName()
         address:
           country: @country()
-        phones: [{number:"0000000000",phone_number_type:"BUSINESS"}]
+        phones: [{ number:"0000000000",phone_number_type:"BUSINESS" }]
 
       prefs =
         general_contact: contact

@@ -189,8 +189,8 @@ do (ko, $=jQuery) ->
         borderWidth = 2
         mbr.style.top = Math.round(-max_lat + 90 - borderWidth) + 'px'
         mbr.style.left = Math.round(min_lng + 180 - borderWidth) + 'px'
-        mbr.style.height = Math.round(max_lat - min_lat + 2*borderWidth) + 'px'
-        mbr.style.width = Math.round(max_lng - min_lng + 2*borderWidth) + 'px'
+        mbr.style.height = Math.round(max_lat - min_lat + 2 * borderWidth) + 'px'
+        mbr.style.width = Math.round(max_lng - min_lng + 2 * borderWidth) + 'px'
         element.appendChild(mbr)
 
   ko.bindingHandlers.fadeVisible =
@@ -226,4 +226,4 @@ do (ko, $=jQuery) ->
         else
           description[i] = $(el).text()
 
-      ko.applyBindingsToNode(element, { 'html': (el for el in description).join('')}, bindingContext)
+      ko.applyBindingsToNode(element, { 'html': (el for el in description).join('') }, bindingContext)
