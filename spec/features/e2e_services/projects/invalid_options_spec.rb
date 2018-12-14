@@ -28,7 +28,7 @@ describe 'Invalid Delivery Options' do
       end
 
       within '.master-overlay-footer-actions' do
-        expect(page).to have_content('One of more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.')
+        expect(page).to have_content('One or more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.')
         expect(page).to have_css('.button-download-data.button-disabled')
       end
     end
