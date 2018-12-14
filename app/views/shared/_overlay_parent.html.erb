@@ -109,7 +109,7 @@
         <footer class="master-overlay-footer-actions">
           <div class="master-overlay-footer-notes">
             <p class="master-overlay-footer-note" data-bind="if: $root.project.allReadyToDownload() || !$root.project.isLoadingComplete()">Click "Edit Options" above to customize the output for each project.</p>
-            <p class="master-overlay-footer-note" data-bind="if: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete()">One of more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
+            <p class="master-overlay-footer-note" data-bind="if: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete()">One or more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
           </div>
           <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() && !$root.project.isLoadingComplete() }, css: { 'button-disabled': !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() }" href="#" class="button button-full button-download-data" disabled>
             <i class="fa fa-download" aria-hidden="true"></i> Download Data
