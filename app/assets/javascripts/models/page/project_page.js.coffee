@@ -1,3 +1,4 @@
+#= require models/data/account
 #= require models/data/query
 #= require models/data/project
 #= require models/data/preferences
@@ -22,6 +23,7 @@ ns.ProjectPage = do (ko,
                      Page = ns.Page
                      setCurrent = ns.setCurrent
                      urlUtil = @edsc.util.url
+                     AccountModel = data.Account
                      QueryModel = data.query.CollectionQuery
                      CollectionsModel = data.Collections
                      ProjectModel = data.Project
@@ -52,6 +54,7 @@ ns.ProjectPage = do (ko,
   class ProjectPage extends Page
     constructor: ->
       super
+      @account = new AccountModel()
       @query = new QueryModel()
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)

@@ -18,7 +18,7 @@ describe 'Invalid Delivery Options' do
       click_on 'Edit Delivery Method'
       choose('Customize & Download')
 
-      fill_in 'Email Address', with: "\t"
+      fill_in 'Email Address', with: ''
     end
 
     it 'does not allow data download' do
