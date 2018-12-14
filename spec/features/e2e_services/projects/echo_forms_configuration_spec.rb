@@ -29,5 +29,16 @@ describe 'When viewing the project page with an EGI supported collection' do
     it 'displays the variable selection option within the modal' do
       expect(page).to have_css('.access-form')
     end
+
+    context 'when selecting the Customize & Download delivery option' do
+      before do
+        click_on 'Edit Delivery Method'
+        choose('Customize & Download')
+      end
+
+      it 'prepopulates the form email address' do
+        expect(page).to have_field('Email Address', with: 'patrick+edsc@element84.com')
+      end
+    end
   end
 end
