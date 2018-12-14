@@ -6,8 +6,8 @@ AllCops:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
     - '**/*.erb'
-  Rails:
-    Enabled: true
+Rails:
+  Enabled: true
 
 Documentation:
     Enabled: false
@@ -33,7 +33,7 @@ Metrics/AbcSize:
 Metrics/PerceivedComplexity:
   Enabled: false
 
-Style/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Enabled: false
 
 Naming/AccessorMethodName:
