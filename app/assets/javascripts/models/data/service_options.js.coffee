@@ -63,11 +63,6 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         break
 
       if e.target.id
-        # Clear the existing echoformContainers to ensure only one gets
-        # populated
-        for echoformContainer in @echoformContainers
-          $(echoformContainer).empty?() if echoformContainer?
-
         echoformContainer = $('#' + $('#' + e.target.id).attr('form'))
         if clickedMethod.type == 'service' || clickedMethod.type == 'order'
           @loadForm(true) if clickedMethod.type == 'service'
@@ -75,7 +70,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
             ko.applyBindingsToNode(echoformContainer, {echoform: this})
             @loadForm(false)), 0
         else
-          ko.cleanNode(echoformContainer);
+          ko.cleanNode(echoformContainer)
           @loadForm(false)
       true
 
