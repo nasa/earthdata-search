@@ -35,7 +35,7 @@ ns.ProjectPage = do (ko,
                      GranuleTimelineModel = ui.GranuleTimeline
                      SiteTourModel = ui.SiteTour
                      FeedbackModel = ui.Feedback
-                     ajax=@edsc.util.xhr.ajax
+                     ajax = @edsc.util.xhr.ajax
                      VariableSelector = ui.VariableSelector
                      StateManager = ui.StateManager
                    ) ->
@@ -138,7 +138,7 @@ ns.ProjectPage = do (ko,
                               e.indexOf('point') != -1)
       null
 
-    _loadFromUrl: (e)=>
+    _loadFromUrl: (e) =>
       @project.serialized(urlUtil.currentParams())
       @workspaceName(urlUtil.getProjectName())
 
@@ -178,7 +178,7 @@ ns.ProjectPage = do (ko,
 
         @isLoaded(true) if loadedCollectionNum == @project.collections?().length
 
-        {projectGranules: projectGranules, projectSize: @_convertSize(projectSize)}
+        { projectGranules: projectGranules, projectSize: @_convertSize(projectSize) }
       else
         null
 
@@ -187,13 +187,15 @@ ns.ProjectPage = do (ko,
       while _size > 1024 && _units.length > 1
         _size = parseFloat(_size) / 1024
         _units.shift()
-      {size: _size.toFixed(1), unit: _units[0]}
+      { size: _size.toFixed(1), unit: _units[0] }
 
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         collectionId = $(elem).closest('.modal').prop('id').split('-modal')[0]
-        projectCollection = @project.collections().filter((collection) -> collection.collection.id == collectionId).pop()
+        projectCollection = @project.collections().filter((collection) ->
+          collection.collection.id == collectionId
+        ).pop()
         projectCollection.collection.granuleDatasource().data().loadNextPage()
 
     downloadProject: =>

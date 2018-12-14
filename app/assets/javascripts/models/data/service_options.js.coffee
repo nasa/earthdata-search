@@ -5,7 +5,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
   class SubsetOptions
     constructor: (@config) ->
       @parameters = for parameter in @config.parameters
-        extend({selected: ko.observable(true)}, parameter)
+        extend({ selected: ko.observable(true) }, parameter)
 
       @formats = @config.formats
 
@@ -67,7 +67,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         if clickedMethod.type == 'service' || clickedMethod.type == 'order'
           @loadForm(true) if clickedMethod.type == 'service'
           setTimeout (=>
-            ko.applyBindingsToNode(echoformContainer, {echoform: this})
+            ko.applyBindingsToNode(echoformContainer, { echoform: this })
             @loadForm(false)), 0
         else
           ko.cleanNode(echoformContainer)
@@ -83,7 +83,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
 
     serialize: ->
       method = @method()
-      result = {method: method, model: @model, rawModel: @rawModel}
+      result = { method: method, model: @model, rawModel: @rawModel }
       for available in @availableMethods
         if available.name == method
           result.type = available.type
@@ -92,7 +92,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       result.subset = @subsetOptions()?.serialize()
       result
 
-    fromJson: (jsonObj, index=0) ->
+    fromJson: (jsonObj, index = 0) ->
       @method(jsonObj.method)
       @model = jsonObj.model
       @modelInitialValue = jsonObj.model
@@ -194,7 +194,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @accessMethod.remove(method)
 
     serialize: ->
-      {accessMethod: (m.serialize() for m in @accessMethod())}
+      { accessMethod: (m.serialize() for m in @accessMethod()) }
 
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
