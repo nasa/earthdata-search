@@ -39,7 +39,7 @@ earthdata:
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
     browse_scaler_root: "https://cmr.earthdata.nasa.gov/browse-scaler"
 
-cwic_root: "http://cwic.wgiss.ceos.org/"
+cwic_root: "https://cwic.wgiss.ceos.org/"
 
 # Earthdata Search Client specific configs
 #     limited_collections:       The collection concept IDs included below will be limited to 100 granules when ordering.

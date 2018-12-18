@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/C1219032680-LANCEMODIS/osdd.xml?clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/datasets/C1219032680-LANCEMODIS/osdd.xml?clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -13,7 +13,7 @@ http_interactions:
   digest: 252ba32bbe0ed5356d3b115918fd1779e50e5ba0
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/C1220566654-USGS_LTA/osdd.xml?clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/datasets/C1220566654-USGS_LTA/osdd.xml?clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -24,7 +24,7 @@ http_interactions:
   digest: e4857e156068cc0fde1e347913fac474dd37a606
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1219032680-LANCEMODIS&count=20&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1219032680-LANCEMODIS&count=20&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -35,7 +35,7 @@ http_interactions:
   digest: 7160906fba49d3daa23dd77b047ffbf7598e45e7
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=100&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=100&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -46,7 +46,7 @@ http_interactions:
   digest: 69fb74f852d5da0e8c29cd8fe4c0b91af7711aca
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=100&timeStart=2016-01-21T00%3A00%3A00Z&timeEnd=2016-01-21T23%3A59%3A59Z&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=100&timeStart=2016-01-21T00%3A00%3A00Z&timeEnd=2016-01-21T23%3A59%3A59Z&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -57,7 +57,7 @@ http_interactions:
   digest: 8845ced89e2af5cf075c459ae99f477e21c8e535
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -68,7 +68,7 @@ http_interactions:
   digest: 32fff6a2907ebbdc4f26b07e0602d0593a3812bc
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-0.001%2C-0.001%2C0.001%2C0.001&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-0.001%2C-0.001%2C0.001%2C0.001&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -79,7 +79,7 @@ http_interactions:
   digest: 5b1a2ca2ef5113f53ff59950950743fa9c699d86
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-75%2C40%2C-74%2C41&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-75%2C40%2C-74%2C41&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -90,7 +90,7 @@ http_interactions:
   digest: 33d6abdd2c68d8ac22c3961f5a628e7a4523f04f
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-75.001%2C39.999%2C-74.999%2C40.001&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-75.001%2C39.999%2C-74.999%2C40.001&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -101,7 +101,7 @@ http_interactions:
   digest: 605361e62eeda62f79d42f6263f34e7b7cc55b4b
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-9.99999999999999%2C-10.151081711048167%2C9.99999999999999%2C10.151081711048167&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&geoBox=-9.99999999999999%2C-10.151081711048167%2C9.99999999999999%2C10.151081711048167&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -112,7 +112,7 @@ http_interactions:
   digest: 3db5e4c96732abb8e447c3019e42b63c33c755b9
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&startIndex=21&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&startIndex=21&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -123,7 +123,7 @@ http_interactions:
   digest: 325ed393df2fa5349737ae01b8075e4a82931a99
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=1960-02-02T00%3A00%3A00Z&timeEnd=1960-02-02T23%3A59%3A59Z&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=1960-02-02T00%3A00%3A00Z&timeEnd=1960-02-02T23%3A59%3A59Z&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -134,7 +134,7 @@ http_interactions:
   digest: a694fc934ae2c7c76bae650117b25206bc043d7a
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2010-02-02T00%3A00%3A00Z&timeEnd=2010-02-02T23%3A59%3A59Z&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2010-02-02T00%3A00%3A00Z&timeEnd=2010-02-02T23%3A59%3A59Z&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -145,7 +145,7 @@ http_interactions:
   digest: 24eb7036f74d70f21e857038d2d489c11fcc0485
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2013-12-01T00%3A00%3A00Z&timeEnd=2013-12-01T23%3A59%3A59Z&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2013-12-01T00%3A00%3A00Z&timeEnd=2013-12-01T23%3A59%3A59Z&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -156,7 +156,7 @@ http_interactions:
   digest: 97b087ecee5d5a9af2aa89fec2c6bd4aea20888a
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2013-12-01T00%3A00%3A00Z&timeEnd=2014-12-01T23%3A59%3A59Z&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2013-12-01T00%3A00%3A00Z&timeEnd=2014-12-01T23%3A59%3A59Z&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -167,7 +167,7 @@ http_interactions:
   digest: 9534822a813906e1aa6b7b47cde17b62cc9738d1
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2016-01-21T00%3A00%3A00Z&timeEnd=2016-01-21T23%3A59%3A59Z&clientId=eed-edsc-dev
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1220566654-USGS_LTA&count=20&timeStart=2016-01-21T00%3A00%3A00Z&timeEnd=2016-01-21T23%3A59%3A59Z&clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
       string: ''
@@ -178,7 +178,7 @@ http_interactions:
   digest: 58aa2b9f26dabb73c1c8750834bd2f66dfce6958
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0140342016021110P0_SG1_01
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0140342016021110P0_SG1_01
     body:
       encoding: US-ASCII
       string: ''
@@ -189,7 +189,7 @@ http_interactions:
   digest: 6883c95043569823dea1a7450123835218a9bdb1
 - request:
     method: get
-    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0360382001121111PP_PF1_01
+    uri: https://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1220566654-USGS_LTA%3AEO1_ALI_PUB%3AEO1A0360382001121111PP_PF1_01
     body:
       encoding: US-ASCII
       string: ''
