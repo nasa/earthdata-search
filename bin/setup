@@ -36,17 +36,21 @@ Dir.chdir APP_ROOT do
 
   section 'Copying example configuration' do
     if File.exist?('config/database.yml')
-      puts "config/database.yml already exists"
+      puts 'config/database.yml already exists'
     else
       warn 'Using example config/database.yml. Please configure it for your application.'
       run_cmd 'cp config/database.yml.example config/database.yml'
     end
     if File.exist?('config/application.yml')
-      puts "config/application.yml already exists"
+      puts 'config/application.yml already exists'
     else
       warn 'Using example config/application.yml. Please configure it for your application.'
       run_cmd 'cp config/application.yml.example config/application.yml'
     end
+  end
+
+  section 'Building docker container' do
+    run_cmd 'docker-compose build'
   end
 
   section 'Preparing database (development and test environments)' do
@@ -57,9 +61,5 @@ Dir.chdir APP_ROOT do
   section 'Pull down and store colormaps' do
     run_cmd 'docker-compose run web bundle exec rake colormaps:load'
     run_cmd 'docker-compose run web bundle exec rake colormaps:load RAILS_ENV=test'
-  end
-
-  section 'Building docker container' do
-    run_cmd 'docker-compose build'
   end
 end
