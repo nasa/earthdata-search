@@ -8,6 +8,7 @@ ui = @edsc.models.ui
 ns = @edsc.models.page
 
 ns.CreateAccountPage = do (ko
+                          Page = ns.Page
                           setCurrent = ns.setCurrent
                           AccountModel = data.Account
                           AccountFormModel = ui.AccountForm
@@ -15,8 +16,9 @@ ns.CreateAccountPage = do (ko
                           SiteTourModel = ui.SiteTour
                           ) ->
 
-  class AccountPage
+  class AccountPage extends Page
     constructor: ->
+      super
       @account = new AccountModel()
       @bindingsLoaded = ko.observable(false)
 
@@ -25,6 +27,7 @@ ns.CreateAccountPage = do (ko
         feedback: new FeedbackModel()
         sitetour: new SiteTourModel()
 
-  setCurrent(new AccountPage())
+  current = new AccountPage 'account'
+  setCurrent(current)
 
-  exports = AccountPage
+  exports = current

@@ -14,6 +14,7 @@ ui = @edsc.models.ui
 ns = @edsc.models.page
 
 ns.AccessPage = do (ko,
+                    Page = ns.Page
                     setCurrent = ns.setCurrent
                     urlUtil = @edsc.util.url
                     pageData = @edscPageData
@@ -28,9 +29,9 @@ ns.AccessPage = do (ko,
                     ServiceOptionsListModel = ui.ServiceOptionsList
                     FeedbackModel = ui.Feedback
                     ) ->
-
-  class AccessPage
+  class AccessPage extends Page
     constructor: ->
+      super
       @query = new QueryModel()
       @project = new ProjectModel(@query, false)
       @bindingsLoaded = ko.observable(false)
@@ -60,6 +61,7 @@ ns.AccessPage = do (ko,
     _loadFromUrl: =>
       @project.serialized(urlUtil.currentParams())
 
-  setCurrent(new AccessPage())
+  current = new AccessPage 'access'
+  setCurrent(current)
 
   exports = AccessPage
