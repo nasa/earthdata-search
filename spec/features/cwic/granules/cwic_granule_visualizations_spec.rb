@@ -58,6 +58,5 @@ describe "CWIC-enabled granule visualizations" do
         expect(page).to have_selector('.granule-spatial-label-temporal', count: 1)
       end
     end
-
   end
 end

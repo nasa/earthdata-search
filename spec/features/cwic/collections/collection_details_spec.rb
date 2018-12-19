@@ -20,7 +20,7 @@ describe 'CWIC-enabled collection details' do
     end
 
     it 'displays links with the correct url to the collection\'s CWIC OpenSearch API endpoint' do
-      url = 'http://cwic.wgiss.ceos.org/opensearch/datasets/C1220566654-USGS_LTA/osdd.xml?clientId='
+      url = 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1220566654-USGS_LTA/osdd.xml?clientId='
       expect(collection_details.find_link('OSDD')['href']).to start_with(url)
     end
 
