@@ -12,24 +12,24 @@ describe 'Contact Information', pending_updates: true do
     # TODO: Both of these fail to get me to the contact info page
     # click_link 'Contact Information'
     # click_contact_information
-    visit '/contact_info'
+    load_page '/contact_info'
     wait_for_xhr
   end
 
-  it "shows the link to edit profile in Earthdata Login" do
-    expect(page).to have_link("Edit Profile in Earthdata Login")
+  it 'shows the link to edit profile in Earthdata Login' do
+    expect(page).to have_link('Edit Profile in Earthdata Login')
   end
 
   it "shows the current user's contact information" do
-    expect(page).to have_content("First Name Earthdata")
-    expect(page).to have_content("Last Name Search")
-    expect(page).to have_content("Email patrick+edsc@element84.com")
-    expect(page).to have_content("Organization Name EDSC")
-    expect(page).to have_content("Country United States")
-    expect(page).to have_select("notificationLevel", selected: "Never")
+    expect(page).to have_content('First Name Earthdata')
+    expect(page).to have_content('Last Name Search')
+    expect(page).to have_content('Email patrick+edsc@element84.com')
+    expect(page).to have_content('Organization Name EDSC')
+    expect(page).to have_content('Country United States')
+    expect(page).to have_select('notificationLevel', selected: 'Never')
   end
 
-  context "clicking Update Notification Preference button" do
+  context 'clicking Update Notification Preference button' do
     before :each do
       expect(page).to have_select('notificationLevel', selected: 'Never')
       find('#notificationLevel').find(:xpath, 'option[1]').select_option
@@ -41,7 +41,7 @@ describe 'Contact Information', pending_updates: true do
       find('#notificationLevel').find(:xpath, 'option[5]').select_option
       click_button 'Update Notification Preference'
       wait_for_xhr
-      visit '/contact_info'
+      load_page '/contact_info'
       wait_for_xhr
     end
 
@@ -50,11 +50,11 @@ describe 'Contact Information', pending_updates: true do
     # It is however not the case. The test has been passing because of a real issue in updating the preference which is
     # fixed in this commit.
     # Skip it for the moment.
-    it "updates the order notification preference" do
-      expect(page).to have_select("notificationLevel", selected: "Always")
+    it 'updates the order notification preference' do
+      expect(page).to have_select('notificationLevel', selected: 'Always')
     end
 
-    it "displays appropriate successful messages" do
+    it 'displays appropriate successful messages' do
       expect(page).to have_text('Successfully updated notification preference')
     end
   end

@@ -91,6 +91,7 @@ module Helpers
       page.set_rack_session(access_token: nil)
       page.set_rack_session(refresh_token: nil)
       page.set_rack_session(user_name: nil)
+      page.set_rack_session(user_id: nil)
       page.set_rack_session(logged_in_at: nil)
     end
 
@@ -108,12 +109,19 @@ module Helpers
 
           clear_rack_session
         end
-        
+
         options.select { |option| [:env].include?(option) }.each do |key, value|
           page.set_rack_session(key => value)
         end
 
         authenticate_as = options.delete(:authenticate)
+
+        User.find_or_create_by(echo_id: authenticate_as || 'edsc') do |user|
+          user.contact_information = {"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
+            "email_address":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+            "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+            Contact"},"order_notification_level":"NONE"}}
+        end
 
         be_logged_in_as(authenticate_as, options[:env]) if authenticate_as
 
@@ -123,7 +131,7 @@ module Helpers
         # puts "URL: #{url}"
 
         visit url
-      
+
         wait_for_xhr
 
         # Close tour modal

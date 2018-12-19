@@ -20,7 +20,7 @@ describe 'Sharing Projects' do
 
       @project_id = project.to_param
 
-      visit "/search/collections?projectId=#{project.to_param}"
+      load_page "/search/collections?projectId=#{project.to_param}"
       wait_for_xhr
     end
 
@@ -44,7 +44,7 @@ describe 'Sharing Projects' do
   context 'the stored path has more characters than the `url_limit` configuration' do
     before :all do
       Capybara.reset_sessions!
-      
+
       # Create a randome user that we'll set as the creator of the project to be shared
       user = User.create(echo_id: SecureRandom.uuid.upcase, site_preferences: {})
 
@@ -54,12 +54,10 @@ describe 'Sharing Projects' do
       project.user_id = user.id
       project.save!
 
-      # Login as our test user so that we can load the page to test actual functionality
-      be_logged_in_as('edsc')
-
       @project_id = project.to_param
 
-      visit "/search/collections?projectId=#{project.to_param}"
+      # Login as our test user so that we can load the page to test actual functionality
+      load_page "/search/collections?projectId=#{@project_id}", authenticate: 'edsc'
       wait_for_xhr
 
       # Default scope sorts Projects by updated_at meaning that the most recently
@@ -79,7 +77,7 @@ describe 'Sharing Projects' do
     end
 
     it 'updates the url to the new project created for the user' do
-      expect(page.current_url).to match(/projectId=(\d+)$/)
+      expect(page.current_url).to have_content("projectId=#{@project_id}")
     end
   end
 end

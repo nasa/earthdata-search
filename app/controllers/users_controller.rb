@@ -20,19 +20,7 @@ class UsersController < ApplicationController
   def contact_info; end
 
   def get_preferences
-    preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])
-
-    urs_response = echo_client.get_urs_user(session[:user_name], session[:access_token])
-    if urs_response.status == 200
-      if preferences_response.body['preferences']
-        preferences_response.body['preferences']['general_contact'] = urs_response.body
-      else
-        preferences_response.body['preferences'] = {'general_contact' => urs_response.body}
-      end
-      render json: preferences_response.body, status: 200
-    else
-      render preferences_response.body, status: preferences_response.status
-    end
+    render json: current_user.contact_information, status: 200
   end
 
   def update_notification_pref
@@ -44,7 +32,7 @@ class UsersController < ApplicationController
 
   def get_site_preferences
     user_id = get_user_id
-    
+
     if user_id
       user = User.where(echo_id: get_user_id).first
       if user

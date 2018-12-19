@@ -19,7 +19,7 @@ describe 'User not logged in' do
 
   context 'when a user views the data status page without being logged in' do
     before :each do
-      visit '/data/status'
+      load_page '/data/status'
     end
 
     it 'sends them to log in first' do
@@ -29,7 +29,7 @@ describe 'User not logged in' do
 
   context 'when a user views the contact information page without being logged in' do
     before :each do
-      visit '/contact_info'
+      load_page '/contact_info'
     end
 
     it 'sends them to log in first' do
