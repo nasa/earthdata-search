@@ -42,8 +42,6 @@ class OauthTokensController < ApplicationController
         preferences_response.body['preferences'] = {'general_contact' => urs_response.body}
       end
 
-      # current_user.contact_information = preferences_response.body
-      # current_user.save
       preferences_response.body
     end
   end
