@@ -6,12 +6,13 @@ end
 
 RSpec::Matchers.define :have_query_string do |string|
   def query(page)
-    URI.parse(page.current_url).query
+    # Remove cmr_env from query params, as it isn't part of what we are testing
+    URI.parse(page.current_url).query.to_s.gsub(/cmr_env=\w*[&]?/, '')
   end
 
   match do |page|
     synchronize do
-      expect(query(page)).to eql(string)
+      expect(query(page)).to eql(string.to_s)
     end
   end
 

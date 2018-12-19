@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Data access status page", pending_updates: true do
-  context "when the current user has download history" do
+describe 'Data access status page', pending_updates: true do
+  context 'when the current user has download history' do
     before :all do
       Capybara.reset_sessions!
       Retrieval.destroy_all
@@ -10,23 +10,24 @@ describe "Data access status page", pending_updates: true do
       user = User.find_or_create_by(echo_id: '4C0390AF-BEE1-32C0-4606-66CAFDD4131D')
 
       retrievals = [
-        {"query" => "p=C179003030-ORNL_DAAC",
-         "collections" => [{
-                          "id"=>"C179003030-ORNL_DAAC",
-                          "params"=>"echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20",
-                          "serviceOptions"=>{"accessMethod"=>[{"method"=>"Download", "type"=>"download"}]}
-                        }],
-         "source" => "p=C179003030-ORNL_DAAC&m=0.0703125!0!2"},
-        {"query" => "p=!C179003030-ORNL_DAAC!C179001887-SEDAC",
-         "collections" => [{
-                          "id"=>"C179003030-ORNL_DAAC",
-                          "params"=>"echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20",
-                          "serviceOptions"=>{"accessMethod"=>[{"method"=>"Download", "type"=>"download"}]}
-                        }, {
-                          "id"=>"C179001887-SEDAC",
-                          "params"=>"echo_collection_id=C179001887-SEDAC&sort_key%5B%5D=-start_date&page_size=20",
-                          "serviceOptions"=>{"accessMethod"=>[]}}],
-         "source"=>"p=!C179003030-ORNL_DAAC!C179001887-SEDAC"}
+        { 'query' => 'p=C179003030-ORNL_DAAC',
+          'collections' => [{
+            'id' => 'C179003030-ORNL_DAAC',
+            'params' => 'echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20',
+            'serviceOptions' => { 'accessMethod' => [{ 'method' => 'Download', 'type' => 'download' }] }
+          }],
+          'source' => 'p=C179003030-ORNL_DAAC&m=0.0703125!0!2' },
+        { 'query' => 'p=!C179003030-ORNL_DAAC!C179001887-SEDAC',
+          'collections' => [{
+            'id' => 'C179003030-ORNL_DAAC',
+            'params' => 'echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20',
+            'serviceOptions' => { 'accessMethod' => [{ 'method' => 'Download', 'type' => 'download' }] }
+          }, {
+            'id' => 'C179001887-SEDAC',
+            'params' => 'echo_collection_id=C179001887-SEDAC&sort_key%5B%5D=-start_date&page_size=20',
+            'serviceOptions' => { 'accessMethod' => [] }
+          }],
+          'source' => 'p=!C179003030-ORNL_DAAC!C179001887-SEDAC' }
       ]
       retrievals.each do |jsondata|
         retrieval = Retrieval.new
@@ -35,26 +36,26 @@ describe "Data access status page", pending_updates: true do
         retrieval.save!
       end
 
-      visit '/data/status'
+      load_page '/data/status'
     end
 
     after :all do
       Retrieval.destroy_all
     end
 
-    it "displays a textual summary of download history" do
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other collection")
+    it 'displays a textual summary of download history' do
+      expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE) and 1 other collection')
     end
 
-    it "displays an indication of how long ago orders were placed" do
-      expect(page).to have_content("ago")
+    it 'displays an indication of how long ago orders were placed' do
+      expect(page).to have_content('ago')
     end
 
-    it "shows remove buttons next to items that can be removed" do
+    it 'shows remove buttons next to items that can be removed' do
       expect(page).to have_selector('a[title="Remove Retrieval"]')
     end
 
-    it "links to the data retrieval page" do
+    it 'links to the data retrieval page' do
       expect(page).to have_css("a[href=\"/data/retrieve/#{Retrieval.first.to_param}\"]")
     end
 
@@ -69,10 +70,10 @@ describe "Data access status page", pending_updates: true do
 
       after :all do
         Capybara.reset_sessions!
-        visit '/data/status'
+        load_page '/data/status'
       end
 
-      it "removes the collection from the list" do
+      it 'removes the collection from the list' do
         expect(page).to have_no_selector('tbody tr:nth-child(2)')
         expect(page).to have_selector('tbody tr', count: 1)
       end
@@ -86,40 +87,40 @@ describe "Data access status page", pending_updates: true do
           end
         end
 
-        it "removes the collection from the list" do
-          expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
+        it 'removes the collection from the list' do
+          expect(page).to have_no_content('15 Minute Stream Flow Data: USGS (FIFE)')
         end
 
-        it "indicates that there is no download history" do
-          expect(page).to have_content("No download history")
+        it 'indicates that there is no download history' do
+          expect(page).to have_content('No download history')
         end
       end
     end
   end
 
-  context "when the current user has no download history" do
+  context 'when the current user has no download history' do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false
       login
-      visit '/data/status'
+      load_page '/data/status'
     end
 
-    it "indicates that there is no download history" do
-      expect(page).to have_content("No download history")
+    it 'indicates that there is no download history' do
+      expect(page).to have_content('No download history')
     end
   end
 
-  context "when the current user tries to access an invalid retrieval ID" do
+  context 'when the current user tries to access an invalid retrieval ID' do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false
       login
-      visit '/data/retrieve/not_a_valid_retrieval_id'
+      load_page '/data/retrieve/not_a_valid_retrieval_id'
     end
 
-    it "displays 404 page" do
-      expect(page).to have_content("The page you were looking for does not exist.")
+    it 'displays 404 page' do
+      expect(page).to have_content('The page you were looking for does not exist.')
     end
   end
 end

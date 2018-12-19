@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :refresh_urs_if_needed, except: [:logout, :refresh_token]
+  before_filter :retrieve_preferences_if_needed, except: [:logout, :refresh_token]
   before_filter :validate_portal
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
@@ -147,7 +148,7 @@ class ApplicationController < ActionController::Base
   def json_request?
     request.format.json?
   end
-  
+
   def server_session_expires_in
     logged_in? ? (expires_in - SERVER_EXPIRATION_OFFSET_S).to_i : 0
   end
@@ -223,4 +224,32 @@ class ApplicationController < ActionController::Base
     Rails.logger.info "#{params[:controller].singularize}##{action} request took #{(time.to_f * 1000).round(0)} ms"
   end
 
+  def retrieve_preferences_if_needed
+    current_user
+    Rails.logger.warn("current_user: #{current_user.inspect}")
+
+    if logged_in? && current_user.contact_information.blank?
+      current_user.contact_information = retrieve_preferences
+      current_user.save
+    end
+  end
+
+  def retrieve_preferences
+    Rails.logger.warn('retrieve_preferences')
+    preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])
+
+    urs_response = echo_client.get_urs_user(session[:user_name], session[:access_token])
+
+    if urs_response.status == 200
+      if preferences_response.body['preferences']
+        preferences_response.body['preferences']['general_contact'] = urs_response.body
+      else
+        preferences_response.body['preferences'] = {'general_contact' => urs_response.body}
+      end
+
+      # current_user.contact_information = preferences_response.body
+      # current_user.save
+      preferences_response.body
+    end
+  end
 end

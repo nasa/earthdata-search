@@ -1,13 +1,12 @@
 module Helpers
   module ProjectHelpers
-
     def add_collection_to_project(id, name)
       wait_for_xhr
-      fill_in "keywords", with: id
+      fill_in 'keywords', with: id
       wait_for_xhr
       expect(page).to have_content(name)
       expect(page).to have_css('#collection-results .panel-list-item', count: 1)
-      first_collection_result.click_link "Add collection to the current project"
+      first_collection_result.click_link 'Add collection to the current project'
     end
 
     def reset_project
@@ -33,7 +32,7 @@ module Helpers
       query[query_re, 1].to_i
     end
 
-    def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC', name='Test Project')
+    def create_project(path = '/search/collections?p=!C179003030-ORNL_DAAC', name = 'Test Project')
       user = User.find_by(echo_id: page.get_rack_session_key('user_id'))
       project = Project.new
       project.path = path
@@ -43,7 +42,7 @@ module Helpers
       project
     end
 
-    def visit_project(name='Test Project')
+    def visit_project(name = 'Test Project')
       create_project(name: name)
       visit '/projects'
       click_link 'Test Project'

@@ -58,7 +58,7 @@ ns.Account = do (ko, ajax = @edsc.util.xhr.ajax) ->
             @errors(errors)
 
     _preferencesFromJson: (json) =>
-      prefs = json.preferences
+      prefs = json.preferences || {}
       @notificationLevel(prefs.order_notification_level)
       contact = prefs.general_contact
       if contact?

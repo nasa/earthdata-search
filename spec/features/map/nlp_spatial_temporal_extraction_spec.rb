@@ -8,10 +8,6 @@ describe 'Spatial and temporal extraction' do
       wait_for_xhr
     end
 
-    after :all do
-      load_page :search
-    end
-
     it 'is set in the query' do
       expect(page.current_url).to have_content('ok=Texas&sb=-106.645646%2C25.837164%2C-93.508039%2C36.500704')
     end
@@ -32,10 +28,6 @@ describe 'Spatial and temporal extraction' do
       @last_winter_collections_count = collection_results_header_value.text.to_i
     end
 
-    after :all do
-      load_page :search
-    end
-
     it 'filters collection results' do
       expect(@all_collections_count).to be > @last_winter_collections_count
     end
@@ -51,10 +43,6 @@ describe 'Spatial and temporal extraction' do
       load_page :search
       fill_in 'keywords', with: 'snow cover in Boston last winter'
       wait_for_xhr
-    end
-
-    after :all do
-      load_page :search
     end
 
     it 'doesn\'t overwrite the search text' do
@@ -74,10 +62,6 @@ describe 'Spatial and temporal extraction' do
   context 'keyword only search' do
     before :all do
       load_page :search, q: 'C179003030-ORNL_DAAC'
-    end
-
-    after :all do
-      load_page :search
     end
 
     it 'doesn\'t apply spatial or temporal filters' do
