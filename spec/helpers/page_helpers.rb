@@ -1,7 +1,7 @@
 module Helpers
   module PageHelpers
     def wait_for_xhr
-      ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
+      ActiveSupport::Notifications.instrument 'edsc.performance.wait_for_xhr' do
         synchronize(60) do
           expect(page.execute_script('try { return window.edsc.util.xhr.hasPending(); } catch { return false; }')).to be_false
         end
@@ -22,7 +22,7 @@ module Helpers
       end
     end
 
-    def synchronize(seconds=Capybara.default_max_wait_time)
+    def synchronize(seconds = Capybara.default_max_wait_time)
       start_time = Time.now
 
       count = 0
@@ -33,7 +33,7 @@ module Helpers
         @synchronized = true
         begin
           yield
-        rescue => e
+        rescue StandardError => e
           count += 1
           if (Time.now - start_time) >= seconds
             puts "ERROR: synchronize() timed out after #{Time.now - start_time} seconds and #{count} tries"
@@ -55,7 +55,7 @@ module Helpers
     end
 
     # Resets the query filters and waits for all the resulting xhr requests to finish.
-    def reset_search(wait=true)
+    def reset_search(wait = true)
       page.execute_script('edsc.page.clearFilters()')
       wait_for_xhr if wait
     end
@@ -66,14 +66,14 @@ module Helpers
     end
 
     def logout
-      visit '/logout'
+      load_page '/logout'
     end
 
     def click_contact_information
       page.execute_script("$('.dropdown-menu .dropdown-link-contact-info').click()")
     end
 
-    def login(key='edsc')
+    def login(key = 'edsc')
       path = URI.parse(page.current_url).path
       query = URI.parse(page.current_url).query
 
@@ -81,15 +81,15 @@ module Helpers
 
       url = query.nil? ? path : path + '?' + query
       visit url
-      
+
       wait_for_xhr
       page.execute_script("$('#closeInitialTourModal').trigger('click')")
     end
 
     def cmr_env
       query_params = Rack::Utils.parse_nested_query(URI.parse(page.current_url).query)
-      
-      if %w(sit uat prod ops).include? query_params['cmr_env']
+
+      if %w[sit uat prod ops].include? query_params['cmr_env']
         query_params['cmr_env']
       elsif page.get_rack_session.key?('cmr_env')
         page.get_rack_session_key('cmr_env')
@@ -111,6 +111,7 @@ module Helpers
       page.set_rack_session(access_token: json['access_token'])
       page.set_rack_session(refresh_token: json['refresh_token'])
       page.set_rack_session(user_name: key)
+      page.set_rack_session(user_id: key)
       page.set_rack_session(logged_in_at: Time.now.to_i)
     end
 
@@ -126,7 +127,7 @@ module Helpers
       end
     end
 
-    def have_popover(title=nil)
+    def have_popover(title = nil)
       if title.nil?
         have_css('.tour')
       else
@@ -134,7 +135,7 @@ module Helpers
       end
     end
 
-    def have_no_popover(title=nil)
+    def have_no_popover(title = nil)
       if title.nil?
         have_no_css('.tour')
       else
@@ -143,18 +144,18 @@ module Helpers
     end
 
     def keypress(selector, key)
-      keyCode = case key
-                when :enter then 13
-                when :left then 37
-                when :up then 38
-                when :right then 39
-                when :down then 40
-                when :delete then 46
-                when :esc then 27
-                else key.to_i
-                end
+      key_code = case key
+                 when :enter then 13
+                 when :left then 37
+                 when :up then 38
+                 when :right then 39
+                 when :down then 40
+                 when :delete then 46
+                 when :esc then 27
+                 else key.to_i
+                 end
 
-      script = "$('#{selector}').trigger($.Event('keydown', { keyCode: #{keyCode} }));"
+      script = "$('#{selector}').trigger($.Event('keydown', { keyCode: #{key_code} }));"
       page.execute_script script
     end
 

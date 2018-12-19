@@ -37,7 +37,7 @@ describe 'CWIC-enabled granule results' do
       # If the above test runs before this test, this test will fail
       context 'and updating the query', pending_updates: true do
         before :all do
-          visit current_url
+          load_page current_url
           wait_for_xhr
         end
 
@@ -79,7 +79,7 @@ describe 'CWIC-enabled granule results' do
             while page.evaluate_script('document.getElementsByClassName("banner-close").length != 0') do
               find('.banner-close').click
             end
-            
+
             click_link 'Back to Project'
             wait_for_xhr
           end

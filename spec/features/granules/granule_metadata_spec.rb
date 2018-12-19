@@ -9,7 +9,7 @@ describe 'Granule metadata' do
     # Select a specific granule
     fill_in 'granule-ids', with: "FIFE_STRM_15M.80611715.s15\t"
     wait_for_xhr
-    
+
     first_granule_list_item.click_link('View granule details')
     wait_for_xhr
     click_link 'Metadata'
@@ -38,5 +38,5 @@ describe 'Granule metadata' do
       expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/G1422671947-ORNL_DAAC.echo10?token=")]')
       expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/G1422671947-ORNL_DAAC.iso19115?token=")]')
     end
-   end
+  end
 end

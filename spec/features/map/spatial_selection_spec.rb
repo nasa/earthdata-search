@@ -71,8 +71,8 @@ describe 'Spatial tool' do
 
       context 'and clicking "Cancel"' do
         before(:each) do
-          within "#map" do
-            click_link "Cancel"
+          within '#map' do
+            click_link 'Cancel'
           end
         end
 
@@ -214,7 +214,6 @@ describe 'Spatial' do
 
       context 'using the manual entry text boxes to enter a new SW point' do
         before :each do
-
           # JS: Get panel out of the way
           click_link 'Minimize'
 
@@ -230,12 +229,12 @@ describe 'Spatial' do
 
     context 'loading a bounding box selection over the antimeridian' do
       before :each do
-        visit '/search?m=-29.25!-199.40625!0!1&sb=160%2C20%2C-170%2C40'
+        load_page '/search?m=-29.25!-199.40625!0!1&sb=160%2C20%2C-170%2C40'
         wait_for_xhr
       end
 
       it 'shows the bounding box crossing the antimeridian' do
-        script = """
+        script = ''"
             var layers = $('#map').data('map').map._layers, key, layer, latlngs, result;
             for (key in layers) {
               if (layers[key].type == 'rectangle') {
@@ -251,9 +250,9 @@ describe 'Spatial' do
               result = latlngs[0][0].lng + ',' + latlngs[0][2].lng;
             }
             return result;
-          """
-          result = page.execute_script(script)
-          expect(result).to eq('160,190')
+          "''
+        result = page.execute_script(script)
+        expect(result).to eq('160,190')
       end
     end
 
