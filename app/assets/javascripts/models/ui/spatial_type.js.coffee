@@ -1,7 +1,6 @@
 ns = @edsc.models.ui
 
-ns.SpatialType = do (ko, $=jQuery) ->
-
+ns.SpatialType = do (ko, $ = jQuery) ->
   # Keeps track of the user's interface selections for the purpose of keeping buttons in sync
   class SpatialType
     constructor: (@query) ->
@@ -52,9 +51,10 @@ ns.SpatialType = do (ko, $=jQuery) ->
     selectGrid: =>
       @isGrid(true)
 
-    _toReadableName: (name)->
+    _toReadableName: (name) ->
       return 'Point' if name == 'point'
       return 'Rectangle' if name == 'bounding_box'
+      return 'Polygon' if name == 'polygon'
       null
 
     _computeDisplaySpatialName: =>
