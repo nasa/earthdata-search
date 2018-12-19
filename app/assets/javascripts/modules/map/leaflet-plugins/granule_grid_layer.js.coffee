@@ -1,4 +1,7 @@
+#= require models/data/colors
+
 ns = @edsc.map.L
+data = @edsc.models.data
 
 ns.GranuleGridLayer = do (
   L
@@ -9,6 +12,7 @@ ns.GranuleGridLayer = do (
   gibsUrl = @edsc.config.gibsUrl
   projectPath=ns.interpolation.projectPath
   page = @edsc.models.page
+  ColorsModel = data.Colors
 ) ->
 
   MAX_RETRIES = 1 # Maximum number of times to attempt to reload an image
@@ -36,9 +40,11 @@ ns.GranuleGridLayer = do (
       ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise ? true);
     null
 
+  colors = new ColorsModel()
+  collectionColors = colors.collections()
+
   class GranuleGridLayer extends L.GridLayer
     initialize: (@collection, color, @multiOptions) ->
-      console.warn 'collection', @collection
       if @collection.granuleDatasource()
         @granules = @collection.granuleDatasource().data()
       else
@@ -46,11 +52,11 @@ ns.GranuleGridLayer = do (
 
       # If on the search page, the color should always be green.
       if page.current.page() == 'search'
-        color = '#25c85b'
+        color = collectionColors[2] # Green
 
       # If were on the project page, set it to blue while we finish loading the collection data.
       if page.current.page() == 'project'
-        color = color ? '#3498DB'
+        color = color ? collectionColors[0] # Blue
 
       @color = color
 

@@ -2,6 +2,7 @@
 #= require models/data/collections
 #= require models/data/collection
 #= require models/data/variables
+#= require models/data/colors
 
 ns = @edsc.models.data
 
@@ -17,6 +18,7 @@ ns.Project = do (ko,
                  CollectionsModel = ns.Collections
                  VariablesModel = ns.Variables
                  ServiceOptionsModel = ns.ServiceOptions
+                 ColorsModel = ns.Colors
                  Collection = ns.Collection
                  QueryParam = ns.QueryParam
                  page = @edsc.models.page) ->
@@ -50,12 +52,15 @@ ns.Project = do (ko,
       index = @_pool.indexOf(value)
       @_pool.splice(index, 1) unless index == -1
 
+  colors = new ColorsModel()
+  collectionColors = colors.collections()
+
   colorPool = new ValuePool([
-    '#3498DB',
-    '#E67E22',
-    '#2ECC71',
-    '#E74C3C',
-    '#9B59B6'
+    collectionColors[0], # Blue
+    collectionColors[1], # Orange
+    collectionColors[2], # Green
+    collectionColors[3], # Red
+    collectionColors[4]  # Purple
   ])
 
   # Currently supported UMM-S Record Types
@@ -159,7 +164,7 @@ ns.Project = do (ko,
             return false
 
         # Select the expected method
-        if expectedMethod? && @serviceOptions.accessMethod().length > 0
+        if @serviceOptions.accessMethod().length > 0
           @serviceOptions.accessMethod()[0].method(expectedMethod.name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
@@ -347,15 +352,15 @@ ns.Project = do (ko,
       selectedService: @expectedUmmService(),
       form_hashes: form_hashes
 
-    toggleVisibility: (visible) ->
-      # If a state is not explict, toggle the visibility.
-      if typeof(visible) == 'undefined'
-        @collection.visible(!@collection.visible())
-        return
+    # Set the visible state for a collection's granules on the map.
+    setVisibility: (visible) ->
+      if typeof(visible) == 'boolean'
+        @collection.visible(visible)
+      return
 
-      # Set the visible state.
-      @collection.visible(visible)
-      visible
+    # Toggle the visible state for a collection's granules on the map.
+    toggleVisibility: () ->
+      @collection.visible(!@collection.visible())
 
   class Project
     constructor: (@query) ->
@@ -431,6 +436,7 @@ ns.Project = do (ko,
       collections = (projectCollection.collection for projectCollection in @collections() when projectCollection.collection.visible())
 
       focus = @focus()?.collection
+
       if page.current.showFocusedCollections() && focus && focus.visible() && collections.indexOf(focus) == -1
         collections.push(focus)
 
@@ -604,7 +610,10 @@ ns.Project = do (ko,
 
                 if collection.granuleDatasource()?
                   collection.granuleDatasource().fromBookmarkParams(query, value)
-                  collection.visible(true) if query.v == 't'
+
+                  # Only look at the params for visibility on the project page
+                  if page.current.page() == 'project'
+                    collection.visible(true) if query.v == 't'
 
               collection.dispose() # forIds ends up incrementing reference count
               @getProjectCollection(collection.id).fromJson(pending[collection.id]) if pending[collection.id]
