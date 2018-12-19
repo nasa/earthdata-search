@@ -83,7 +83,7 @@ ns.ProjectPage = do (ko,
 
       @project.collections.subscribe (projectCollections) =>
         for projectCollection in projectCollections
-          projectCollection.toggleVisibility(true)
+          projectCollection.setVisibility(true)
 
       $(window).on 'edsc.save_workspace', (e) =>
         currentParams = @project.serialized()
@@ -93,8 +93,7 @@ ns.ProjectPage = do (ko,
 
       setTimeout((=>
         @_loadFromUrl()
-        $(window).on 'edsc.pagechange', @_loadFromUrl
-      ), 0)
+        $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
 
       new StateManager(this).monitor()
 
@@ -226,4 +225,4 @@ ns.ProjectPage = do (ko,
   current = new ProjectPage 'project'
   setCurrent(current)
 
-  exports = ProjectPage
+  exports = current
