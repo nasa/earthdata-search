@@ -6,6 +6,8 @@ class OauthTokensController < ApplicationController
 
       if response.success?
         store_oauth_token(response.body)
+        current_user.contact_information = retrieve_preferences
+        current_user.save
       else
         Rails.logger.error("Oauth error: #{response.body}")
       end
@@ -23,6 +25,26 @@ class OauthTokensController < ApplicationController
       render json: { tokenExpiresIn: script_session_expires_in }
     else
       render json: nil, status: 401
+    end
+  end
+
+  protected
+
+  def retrieve_preferences
+    preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])
+
+    urs_response = echo_client.get_urs_user(session[:user_name], session[:access_token])
+
+    if urs_response.status == 200
+      if preferences_response.body['preferences']
+        preferences_response.body['preferences']['general_contact'] = urs_response.body
+      else
+        preferences_response.body['preferences'] = {'general_contact' => urs_response.body}
+      end
+
+      # current_user.contact_information = preferences_response.body
+      # current_user.save
+      preferences_response.body
     end
   end
 end
