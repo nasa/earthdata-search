@@ -225,4 +225,4 @@ ns.ProjectPage = do (ko,
   current = new ProjectPage 'project'
   setCurrent(current)
 
-  exports = current
+  exports = ProjectPage

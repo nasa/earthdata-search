@@ -30,4 +30,4 @@ ns.CreateAccountPage = do (ko
   current = new AccountPage 'account'
   setCurrent(current)
 
-  exports = current
+  exports = AccountPage
