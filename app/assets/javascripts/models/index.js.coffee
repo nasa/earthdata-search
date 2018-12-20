@@ -1,4 +1,14 @@
-#= require models/knockout_extensions
+#= require models/knockout_extensions/async_computed
+#= require models/knockout_extensions/description_links
+#= require models/knockout_extensions/echoform
+#= require models/knockout_extensions/fade_visible
+#= require models/knockout_extensions/load_default_form
+#= require models/knockout_extensions/map_display
+#= require models/knockout_extensions/multiline_ellipsis
+#= require models/knockout_extensions/observable_array
+#= require models/knockout_extensions/show_modal
+#= require models/knockout_extensions/stop_binding
+#= require models/knockout_extensions/truncated_text
 #= require models/knockout_model
 #= require models/details_model
 #= require models/page/page
