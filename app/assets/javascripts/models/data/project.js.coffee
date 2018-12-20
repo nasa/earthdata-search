@@ -23,53 +23,16 @@ ns.Project = do (ko,
                  QueryParam = ns.QueryParam
                  page = @edsc.models.page) ->
 
-  # Maintains a finite pool of values to be distributed on demand.  Calling
-  # next() on the pool returns either an unused value, prioritizing those
-  # which have been returned to the pool most recently or, in the case where
-  # there are no unused values, the value which has been checked out of the
-  # pool the longest.
-  class ValuePool
-    constructor: (values) ->
-      @_pool = values.concat()
-
-    use: (value) ->
-      @_remove(value)
-      @_pool.push(value)
-      value
-
-    next: ->
-      @use(@_pool[0])
-
-    has: (value) ->
-      @_pool.indexOf(value) != -1
-
-    unuse: (value) ->
-      @_remove(value)
-      @_pool.unshift(value)
-      value
-
-    _remove: (value) ->
-      index = @_pool.indexOf(value)
-      @_pool.splice(index, 1) unless index == -1
-
-  colors = new ColorsModel()
-  collectionColors = colors.collections()
-
-  colorPool = new ValuePool([
-    collectionColors[0], # Blue
-    collectionColors[1], # Orange
-    collectionColors[2], # Green
-    collectionColors[3], # Red
-    collectionColors[4]  # Purple
-  ])
-
   # Currently supported UMM-S Record Types
   supportedServiceTypes = ['OPeNDAP', 'ESI', 'ECHO ORDERS']
+
+  colors = new ColorsModel()
+  collectionColorPool = colors.collectionColorPool
 
   class ProjectCollection
     constructor: (@project, @collection, @meta={}) ->
       @collection.reference()
-      @meta.color ?= colorPool.next()
+      @meta.color ?= collectionColorPool.next()
 
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
       @serviceOptions       = new ServiceOptionsModel(@granuleAccessOptions)
@@ -109,7 +72,7 @@ ns.Project = do (ko,
       false
 
     dispose: ->
-      colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
+      collectionColorPool.unuse(@meta.color) if collectionColorPool.has(@meta.color)
       @collection.dispose()
       @serviceOptions.dispose()
 

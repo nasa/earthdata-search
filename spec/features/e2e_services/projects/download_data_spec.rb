@@ -29,7 +29,6 @@ describe 'When viewing the project page' do
 
     it 'displays a link to download the links' do
       wait_for_xhr
-      Capybara::Screenshot.screenshot_and_open_image
       expect(page).to have_link('View/Download Data Links')
     end
 
