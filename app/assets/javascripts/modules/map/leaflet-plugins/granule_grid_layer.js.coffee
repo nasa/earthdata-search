@@ -41,7 +41,7 @@ ns.GranuleGridLayer = do (
     null
 
   colors = new ColorsModel()
-  collectionColors = colors.collectionColorPool
+  collectionColorPool = colors.collectionColorPool
 
   class GranuleGridLayer extends L.GridLayer
     initialize: (@collection, color, @multiOptions) ->
@@ -52,11 +52,11 @@ ns.GranuleGridLayer = do (
 
       # If on the search page, the color should always be green.
       if page.current.page() == 'search'
-        color = collectionColors.first()
+        color = colors.green
 
       # If were on the project page, set it to blue while we finish loading the collection data.
       if page.current.page() == 'project'
-        color = color ? collectionColors.next()
+        color = color ? colors.blue
 
       @color = color
 
