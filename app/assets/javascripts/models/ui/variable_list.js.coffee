@@ -111,7 +111,26 @@ ns.VariableSelector = do (ko
           calculatedMappings[leafNode].push(variable)
 
       # Return an array of objects for easier digest from the view instead of doing it in the view
-      ({keyword: keyword, selected: @_countSelectedVariables(variables), variables: variables} for keyword, variables of calculatedMappings)
+      keywords = []
+      for keyword, variables of calculatedMappings
+        variables = variables.sort (a, b) ->
+          x = a.umm().Name
+          y = b.umm().Name
+          return -1 if x < y
+          return 1 if x > y
+          0
+
+        keywords.push {
+          keyword: keyword,
+          selected: @_countSelectedVariables(variables),
+          variables: variables }
+
+      keywords.sort (a, b) ->
+        x = a.keyword
+        y = b.keyword
+        return -1 if x < y
+        return 1 if x > y
+        0
 
     ###*
      * Pings CMR for full variable metadata for each variable associated with the selectedCollection

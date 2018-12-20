@@ -384,7 +384,7 @@ http_interactions:
   digest: d856706f77e244473b7262c30c3a6786f74d2337
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/service-bridge/ous/collection/C1200187767-EDF_OPS?bounding_box=30%2C0%2C40%2C10&format=nc&variables%5B%5D=V1200265916-EDF_OPS&variables%5B%5D=V1200265914-EDF_OPS
+    uri: https://cmr.sit.earthdata.nasa.gov/service-bridge/ous/collection/C1200187767-EDF_OPS?bounding_box=30%2C0%2C40%2C10&format=nc&variables%5B%5D=V1200265914-EDF_OPS&variables%5B%5D=V1200265916-EDF_OPS
     body:
       encoding: US-ASCII
       string: ''
