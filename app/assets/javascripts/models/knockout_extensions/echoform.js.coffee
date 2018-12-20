@@ -5,9 +5,6 @@ do (ko, $=jQuery) ->
 
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       $el = $(element)
-      if $el.data('echoforms')
-        $el.echoforms('destroy')
-        $el.off('echoforms:modelchange')
 
       options = ko.unwrap(valueAccessor())
       methodName = options.method()
