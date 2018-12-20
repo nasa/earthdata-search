@@ -369,8 +369,7 @@ describe 'Viewing Single Project' do
 
     it 'truncates long project title' do
       within '.project-list-item:nth-child(2)' do
-        expect(page).to have_content('NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN...')
-        expect(page).to have_css("h3[title='NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION, WIND SPEED OVER OCEAN, WATER VAPOR OVER OCEAN AND CLOUD LIQUID WATER OVER OCEAN V0']")
+        expect(page).to have_selector('.project-list-item-title', text: /\.{3}$/)
       end
     end
 

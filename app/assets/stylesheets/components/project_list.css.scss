@@ -31,9 +31,14 @@
   padding: 0.675em 0.675em 0.55em;
 }
 
-.project-list-item-title {
+.project-list-item-title-wrap {
   max-height: 51px;
-  margin-right: 1.25em;
+  margin: 0 1.25em 0.2em 0;
+  overflow: hidden;
+}
+
+.project-list-item-title {
+  margin: 0;
   font-size: 0.875em;
   color: #252525;
   line-height: 1.25;
