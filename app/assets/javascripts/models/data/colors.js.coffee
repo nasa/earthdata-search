@@ -39,13 +39,19 @@ ns.Colors = do () ->
 
   class ColorsModel
     constructor: () ->
+      @green = '#2ECC71'
+      @blue = '#3498DB'
+      @orange = '#E67E22'
+      @red = '#E74C3C'
+      @purple = '#9B59B6'
+
       # Defines the color values for collections
       @collectionColorPool = new ValuePool([
-        '#2ECC71', # Green
-        '#3498DB', # Blue
-        '#E67E22', # Orange
-        '#E74C3C', # Red
-        '#9B59B6'  # Purple
+        @blue,
+        @orange,
+        @green,
+        @red,
+        @purple
       ])
 
   exports = ColorsModel
