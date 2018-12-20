@@ -149,4 +149,4 @@ ns.SearchPage = do (ko
   current = new SearchPage 'search'
   setCurrent(current)
 
-  exports = current
+  exports = SearchPage
