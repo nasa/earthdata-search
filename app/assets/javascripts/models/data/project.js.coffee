@@ -127,7 +127,7 @@ ns.Project = do (ko,
             return false
 
         # Select the expected method
-        if @serviceOptions.accessMethod().length > 0
+        if expectedMethod? && @serviceOptions.accessMethod().length > 0
           @serviceOptions.accessMethod()[0].method(expectedMethod.name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
