@@ -67,7 +67,7 @@ describe "Granule filter tracking" do
       it 'forgets the collection' do
         synchronize do
           has_reference = page.execute_script(has_reference_script)
-          expect(has_reference).to be_false
+          expect(has_reference).to be_falsey
         end
       end
     end

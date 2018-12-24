@@ -71,6 +71,8 @@ module JSON
 end
 
 RSpec.configure do |config|
+  config.infer_spec_type_from_file_location!
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.global_fixtures = :all
@@ -148,7 +150,7 @@ RSpec.configure do |config|
 
   config.after :all do
     Delayed::Worker.delay_jobs = false
-    timings[self.class.display_name] = Time.now - file_time
+    timings[self.class.description] = Time.now - file_time
     index += 1
 
     puts " (Suite #{index} of #{count})"
@@ -175,11 +177,11 @@ RSpec.configure do |config|
   end
 
   config.before :each do
-    Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
+    Rails.logger.info "Executing test: #{RSpec.current_example.metadata[:example_group][:file_path]}:#{RSpec.current_example.metadata[:example_group][:line_number]}"
   end
 
   config.after :each do
-    unless example.exception.nil?
+    unless RSpec.current_example.exception.nil?
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
         puts "Console messages:\n" + page.driver.console_messages.map { |m| m[:message] }.join("\n")
