@@ -125,7 +125,7 @@ describe Echo::ClientMiddleware::Echo10GranuleMiddleware do
   it 'does not operate on requests with no granule body' do
     response = Object.new
     env = { url: URI('http://example.com/catalog-rest/echo_catalog/granules.json'), response: response, body: {'Collection' => {}}}
-    expect(middleware.parse_response?(env)).to be_false
+    expect(middleware.parse_response?(env)).to be_falsey
   end
 
 end

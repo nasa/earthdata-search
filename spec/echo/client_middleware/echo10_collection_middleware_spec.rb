@@ -267,11 +267,11 @@ describe Echo::ClientMiddleware::Echo10CollectionMiddleware do
 
   it 'does not operate on response strings' do
     env = { body: '{"Collection":{"title":"ECHO collection metadata"}}' }
-    expect(middleware.parse_response?(env)).to be_false
+    expect(middleware.parse_response?(env)).to be_falsey
   end
 
   it 'does not operate on hashes containing parsed Atom granule data' do
     env = { body: { 'feed' => { 'title' => 'ECHO granule metadata' } } }
-    expect(middleware.parse_response?(env)).to be_false
+    expect(middleware.parse_response?(env)).to be_falsey
   end
 end
