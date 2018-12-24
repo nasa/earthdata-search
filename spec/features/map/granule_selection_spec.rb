@@ -75,7 +75,7 @@ describe "Granule selection" do
 
     it "displays the granule above all other granules" do
       synchronize do
-        expect(page.execute_script(is_temporal_ordered_script)).to be_false
+        expect(page.execute_script(is_temporal_ordered_script)).to be_falsey
       end
     end
 
@@ -194,7 +194,7 @@ describe "Granule selection" do
 
     it "displays the granule above all other granules" do
       synchronize do
-        expect(page.execute_script(is_temporal_ordered_script)).to be_false
+        expect(page.execute_script(is_temporal_ordered_script)).to be_falsey
       end
     end
 
