@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'CWIC-enabled collection search results', pending_updates: true do
   context 'When viewing the collection results list' do
@@ -31,7 +31,7 @@ describe 'CWIC-enabled collection search results', pending_updates: true do
     context 'When viewing a non CWIC-tagged item' do
       before :all do
         Capybara.reset_sessions!
-        
+
         load_page :search, q: 'C1000001188-LARC_ASDC'
       end
 

@@ -1,24 +1,24 @@
 # EDSC-82: As a user, I want to be warned when changing my granule filters may
 #          cause undesirable behavior with my removed granules
 
-require "spec_helper"
+require 'rails_helper'
 
-describe "Granule filter tracking" do
-  has_reference_script = """
+describe 'Granule filter tracking' do
+  has_reference_script = ''"
     var ds = window.edsc.models.data.Collection.findOrCreate({id: 'C179003030-ORNL_DAAC'}, null);
     ds.dispose();
     return ds.links != null;
-  """
+  "''
 
   context 'when granule filters have been set for a collection' do
     before :all do
-      load_page :search, q: 'C179003030-ORNL_DAAC', project: ['C179003030-ORNL_DAAC'], queries: [nil, {bo: true}]
+      load_page :search, q: 'C179003030-ORNL_DAAC', project: ['C179003030-ORNL_DAAC'], queries: [nil, { bo: true }]
       wait_for_xhr
     end
 
     context 'completely removing the collection from all views' do
       before :all do
-        target_collection_result.click_link "Remove collection from the current project"
+        target_collection_result.click_link 'Remove collection from the current project'
         fill_in :keywords, with: 'asdfasdfasdfasdfasdf'
         wait_for_xhr
       end
@@ -26,7 +26,7 @@ describe "Granule filter tracking" do
       it 'maintains information on the collection' do
         synchronize do
           has_reference = page.execute_script(has_reference_script)
-          expect(has_reference).to be_true
+          expect(has_reference).to be_truthy
         end
       end
 
@@ -39,7 +39,7 @@ describe "Granule filter tracking" do
         it 'restores the original granule filters that had been set' do
           synchronize do
             has_reference = page.execute_script(has_reference_script)
-            expect(has_reference).to be_true
+            expect(has_reference).to be_truthy
           end
         end
       end
@@ -54,7 +54,7 @@ describe "Granule filter tracking" do
 
     context 'completely removing the collection from all views' do
       before :all do
-        target_collection_result.click_link "Remove collection from the current project"
+        target_collection_result.click_link 'Remove collection from the current project'
         fill_in :keywords, with: 'asdfasdfasdfasdfasdf'
         wait_for_xhr
       end

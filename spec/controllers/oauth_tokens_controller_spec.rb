@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe OauthTokensController, type: :controller do
   describe 'GET refresh_token' do

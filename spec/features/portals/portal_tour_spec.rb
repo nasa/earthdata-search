@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 # EDSC-1361 - Tour to be redone at appropriate time
 # describe "Portal site tour", reset: true do

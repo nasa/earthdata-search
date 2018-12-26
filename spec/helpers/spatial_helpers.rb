@@ -85,7 +85,7 @@ module Helpers
     def clear_shapefile
       begin
         click_link 'Remove file'
-        page.should have_no_css('.dz-file-preview')
+        expect(page).to have_no_css('.dz-file-preview')
       rescue Capybara::ElementNotFound => e
         puts e
       end

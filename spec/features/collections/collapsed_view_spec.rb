@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collections Collapsed View' do
   context 'on the search results screen' do

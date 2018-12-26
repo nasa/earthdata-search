@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection API Endpoints' do
   context 'when viewing the collection details for a collection with granules' do

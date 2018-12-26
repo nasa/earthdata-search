@@ -3,7 +3,7 @@
 # EDSC-193 As a user, I want to see information about which collections have GIBS
 #          support so I may understand why some collections render differently
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Collection GIBS visualizations", pending_updates: true do
   extend Helpers::CollectionHelpers

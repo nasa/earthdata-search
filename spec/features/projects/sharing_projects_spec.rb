@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Sharing Projects' do
   context 'the stored path has less characters than the `url_limit` configuration' do

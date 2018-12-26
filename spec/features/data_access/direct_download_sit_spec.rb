@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Direct download script SIT' do
   context 'when viewing the direct download script in SIT', pending_updates: true do

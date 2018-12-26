@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection details' do
   context 'when displaying the collection details' do
@@ -10,14 +10,14 @@ describe 'Collection details' do
     it 'those details provide the expected collection data' do
       within('#collection-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('LP DAAC User Services ARCHIVER')
-        expect(page).to have_content('EDC PROCESSOR')
+        expect(page).to have_content("LP DAAC User Services\nARCHIVER")
+        expect(page).to have_content("EDC\nPROCESSOR")
         expect(page).to have_content('AST_L1AE')
         expect(page).to have_content('VERSION 3')
         # expect(page).to have_content('lpdaac@usgs.gov Telephone: 605-594-6116')
         expect(page).to have_content('Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
-        expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
-        expect(page).to have_content('Science Keywords: EARTH SCIENCE SPECTRAL/ENGINEERING INFRARED WAVELENGTHS EARTH SCIENCE SPECTRAL/ENGINEERING VISIBLE WAVELENGTHS')
+        expect(page).to have_content("Temporal Extent:\n1999-12-18 ongoing")
+        expect(page).to have_content("Science Keywords:\nEARTH SCIENCE\nSPECTRAL/ENGINEERING\nINFRARED WAVELENGTHS\nEARTH SCIENCE\nSPECTRAL/ENGINEERING\nVISIBLE WAVELENGTHS")
       end
     end
 
@@ -50,12 +50,12 @@ describe 'Collection details' do
     it 'displays the collection details' do
       within('#collection-details') do
         expect(page).to have_content('SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001')
-        expect(page).to have_content('EDF_OPS DISTRIBUTOR ARCHIVER')
+        expect(page).to have_content("EDF_OPS\nDISTRIBUTOR ARCHIVER")
         expect(page).to have_content('SPL3SMP_E')
         expect(page).to have_content('VERSION 001')
         expect(page).to have_content('Bounding Rectangle: (85.0445°, -180.0°, -85.0445°, 180.0°)')
-        expect(page).to have_content('Temporal Extent: 2015-03-31 to 2020-12-31')
-        expect(page).to have_content('Science Keywords: EARTH SCIENCE LAND SURFACE SOILS')
+        expect(page).to have_content("Temporal Extent:\n2015-03-31 to 2020-12-31")
+        expect(page).to have_content("Science Keywords:\nEARTH SCIENCE\nLAND SURFACE\nSOILS")
       end
     end
 
@@ -87,7 +87,7 @@ describe 'Collection details' do
     end
 
     it 'displays the collection\'s detail page with no errors' do
-      expect(page).to have_content('JP/JAXA/SAOC ARCHIVER')
+      expect(page).to have_content("JP/JAXA/SAOC\nARCHIVER")
     end
   end
 
@@ -181,7 +181,7 @@ describe 'Collection details' do
 
     it 'displays the external link' do
       expect(page).to have_link('Greenland Ice Mapping Project (GIMP)', href: 'http://nsidc.org/data/measures/gimp')
-      find_link('Greenland Ice Mapping Project (GIMP)')[:target].should == '_blank'
+      expect(find_link('Greenland Ice Mapping Project (GIMP)')[:target]).to eq('_blank')
     end
 
     it 'does not display a link for relative paths' do
@@ -197,7 +197,7 @@ describe 'Collection details' do
     end
 
     it 'displays all spatial content' do
-      expect(page).to have_content('Bounding Rectangle: (22.0°, -96.0°, -20.0°, -48.0°) Bounding Rectangle: (10.0°, -14.0°, -9.0°, 34.0°) Bounding Rectangle: (27.0°, 92.0°, -20.0°, 151.0°)')
+      expect(page).to have_content("Bounding Rectangle: (22.0°, -96.0°, -20.0°, -48.0°)\nBounding Rectangle: (10.0°, -14.0°, -9.0°, 34.0°)\nBounding Rectangle: (27.0°, 92.0°, -20.0°, 151.0°)")
     end
   end
 
@@ -249,13 +249,13 @@ describe 'Collection details' do
 
       it 'displays types and subtypes of related urls' do
         within '#related-urls-modal' do
-          expect(page).to have_content 'GET DATA LANCE'
+          expect(page).to have_content "GET DATA\nLANCE"
         end
       end
 
       it 'displays urls in alphabetical order' do
         within '#related-urls-modal' do
-          expect(page).to have_content 'VIEW RELATED INFORMATION http://www.usersguide.come VIEW RELATED INFORMATION ALGORITHM THEORETICAL BASIS DOCUMENT https://www.example.com VIEW RELATED INFORMATION GENERAL DOCUMENTATION www.lpdaac.org'
+          expect(page).to have_content "IEW RELATED INFORMATION\nhttp://www.usersguide.come\nVIEW RELATED INFORMATION\nALGORITHM THEORETICAL BASIS DOCUMENT\nhttps://www.example.com\nVIEW RELATED INFORMATION\nGENERAL DOCUMENTATION\nwww.lpdaac.org"
         end
       end
 

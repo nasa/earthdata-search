@@ -47,15 +47,16 @@ module Snappybara
   end
 end
 
-RSpec.configure do |config|
-  # Replace Capybara::DSL with Snappybara::DSL in RSpec's included modules
-  config.include_or_extend_modules.each do |mod|
-    mod[1] = Snappybara::DSL if mod[1] == Capybara::DSL
+module RSpec
+  module Core
+    class Configuration
+      def configure_group_with(group, module_list, application_method)
+        module_list.items_for(group.metadata).each do |mod|
+          # puts "configure_group_with: #{mod.inspect}"
+          mod = Snappybara::DSL if mod == Capybara::DSL
+          __send__(application_method, mod, group)
+        end
+      end
+    end
   end
-
-  # (From lib/capybara/rspec.rb)
-  # A work-around to support accessing the current example that works in both
-  # RSpec 2 and RSpec 3.
-  fetch_current_example = RSpec.respond_to?(:current_example) ?
-    proc { RSpec.current_example } : proc { |context| context.example }
 end

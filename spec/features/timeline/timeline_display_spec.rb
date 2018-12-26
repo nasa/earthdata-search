@@ -2,7 +2,7 @@
 #           I can discover periods of time where multiple collections have matching
 #           granules
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Timeline display" do
   extend Helpers::CollectionHelpers

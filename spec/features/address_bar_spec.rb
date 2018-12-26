@@ -1,6 +1,6 @@
 # EDSC-147 - EDSC-153: Persisting sessions and bookmarks
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Address bar' do
   def query_string
@@ -540,14 +540,14 @@ describe 'Address bar' do
   context 'Long URLs' do
     let(:long_path) { '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC&q=C179003030-ORNL_DAAC&ok=C179003030-ORNL_DAAC' }
     let(:longer_path) { long_path.gsub('!C179001707-SEDAC&', '!C179001707-SEDAC!C179003030-ORNL_DAAC&') }
-    let(:query_re) { /^projectId=(\d+)$/ }
+    let(:query_re) { /projectId=(\d+)$/ }
 
-    def query
+    def page_query
       URI.parse(page.current_url).query
     end
 
     def project_id
-      query[query_re, 1].to_i
+      page_query[query_re, 1].to_i
     end
 
     context 'when the site URL grows beyond the allowable limit' do
@@ -560,7 +560,7 @@ describe 'Address bar' do
       end
 
       it 'stores the URL remotely and provides a shortened URL' do
-        expect(query).to match(query_re)
+        expect(page).to have_current_path(query_re)
         expect(Project.find(project_id).path).to eql(longer_path)
       end
 

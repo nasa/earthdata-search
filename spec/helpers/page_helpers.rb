@@ -33,7 +33,7 @@ module Helpers
         @synchronized = true
         begin
           yield
-        rescue StandardError => e
+        rescue StandardError, RSpec::Expectations::ExpectationNotMetError => e
           count += 1
           if (Time.now - start_time) >= seconds
             puts "ERROR: synchronize() timed out after #{Time.now - start_time} seconds and #{count} tries"

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Applying facets from Full Facets List Modal' do
   before :all do

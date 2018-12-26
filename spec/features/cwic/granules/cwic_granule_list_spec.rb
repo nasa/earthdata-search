@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'CWIC Granule list' do
   extend Helpers::CollectionHelpers
@@ -36,7 +36,7 @@ describe 'CWIC Granule list' do
 
       it 'displays the collection details' do
         expect(page).to have_visible_collection_details
-        expect(page).to have_content('DOI/USGS/EROS ARCHIVER DISTRIBUTOR')
+        expect(page).to have_content("DOI/USGS/EROS\nARCHIVER DISTRIBUTOR")
       end
 
       it 'displays back navigation with the appropriate text' do
@@ -70,7 +70,7 @@ describe 'CWIC Granule list' do
       hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
       it 'displays temporal information on the granule list' do
-        expect(granule_list.text).to match(/START \d{4}-\d{2}-\d{2} END \d{4}-\d{2}-\d{2}/)
+        expect(granule_list.text).to match(/START\n\d{4}-\d{2}-\d{2}\nEND\n\d{4}-\d{2}-\d{2}/)
       end
     end
   end

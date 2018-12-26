@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Visiting an Earthdata Search portal' do
   include Helpers::CollectionHelpers

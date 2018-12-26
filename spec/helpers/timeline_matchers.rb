@@ -55,7 +55,7 @@ RSpec::Matchers.define :have_timeline_range do |start, stop|
     end
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     actual_start_time = page.evaluate_script "$('#timeline').timeline('startTime')"
     actual_start_time = Time.at(actual_start_time / 1000).utc.to_datetime if actual_start_time.present?
     actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
@@ -82,7 +82,7 @@ RSpec::Matchers.define :have_end_time do |dt|
     true
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     expected_end_time = Time.now + dt
     actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
     actual_end_time = Time.at(actual_end_time / 1000).utc.to_datetime if actual_end_time.present?
@@ -163,7 +163,7 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=n
     true
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 

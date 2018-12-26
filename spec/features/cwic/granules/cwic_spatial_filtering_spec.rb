@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "CWIC-enabled granule results" do
   extend Helpers::CollectionHelpers
