@@ -4,7 +4,7 @@
 #           the introductory tour so that it does not interfere with
 #           subsequent visits
 
-require 'spec_helper'
+require 'rails_helper'
 
 # EDSC-1361: UI Work to address tour at appropriate time
 

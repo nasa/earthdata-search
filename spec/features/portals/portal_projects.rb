@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Portal projects", reset: false do
   include Helpers::CollectionHelpers

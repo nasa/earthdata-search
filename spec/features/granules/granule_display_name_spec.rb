@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Granule Display Name' do
   context 'when granule has producer_granule_id' do

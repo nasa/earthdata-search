@@ -1,7 +1,7 @@
 # EDSC-198: As a user, I want to pan the granule timeline so I may view time
 #           periods before and after those currently visible
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Timeline panning" do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')

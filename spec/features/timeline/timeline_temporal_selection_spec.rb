@@ -1,7 +1,7 @@
 # EDSC-196: As a user, I want to narrow my results by selecting an area on a
 #           timeline so I may view granules with desirable temporal overlap
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Timeline temporal selection" do
   extend Helpers::CollectionHelpers

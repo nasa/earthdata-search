@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 require 'base64'
 
 describe "Data Access workflow" do

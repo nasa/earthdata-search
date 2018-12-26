@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collections overlay', :reset => false do
   before(:all) do

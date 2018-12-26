@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'CWIC-enabled granule results view' do
   extend Helpers::CollectionHelpers
@@ -15,7 +15,7 @@ describe 'CWIC-enabled granule results view' do
     context 'viewing granule details' do
       it 'displays a textual summary of metadata provided in the OpenSearch result' do
         within('#granule-details') do
-          expect(page).to have_content('Author: name: CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic email: cwic-help@wgiss.ceos.org')
+          expect(page).to have_content("Author:\n  name: CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic\n  email: cwic-help@wgiss.ceos.org")
         end
       end
 
@@ -44,8 +44,8 @@ describe 'CWIC-enabled granule results view' do
         it 'downloads the original OpenSearch metadata in a new window' do
           expect(page).not_to have_link('Back to Granules')
           metadata = CGI.unescapeHTML(page.source)
-          expect(metadata.include? '<?xml').to be_true
-          expect(metadata.include? '<feed').to be_true
+          expect(metadata.include?('<?xml')).to be_truthy
+          expect(metadata.include?('<feed')).to be_truthy
         end
       end
     end

@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Timeline default panning" do
   collection_end = DateTime.new(1988, 3, 4, 0, 0, 0, '+0')

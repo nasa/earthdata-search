@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Expired user token' do
   after :each do
@@ -14,7 +14,7 @@ describe 'Expired user token' do
     before :each do
       Capybara.reset_sessions!
 
-      Echo::Client.any_instance.stub(:refresh_token).and_return(OpenStruct.new(body: return_json))
+      allow_any_instance_of(Echo::Client).to receive(:refresh_token).and_return(OpenStruct.new(body: return_json))
     end
 
     context 'when loading the page with an expired token' do
@@ -54,7 +54,7 @@ describe 'Expired user token' do
     before :each do
       Capybara.reset_sessions!
 
-      Echo::Client.any_instance.stub(:refresh_token).and_return(OpenStruct.new(body: return_json))
+      allow_any_instance_of(Echo::Client).to receive(:refresh_token).and_return(OpenStruct.new(body: return_json))
     end
 
     context 'when loading the page with an expired token' do

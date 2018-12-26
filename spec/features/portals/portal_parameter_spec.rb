@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Portal parameters", reset: true do
   include Helpers::CollectionHelpers

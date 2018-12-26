@@ -1,6 +1,6 @@
 # EDSC-37 As a user, I want to clear my collection filters so that I may start a new search
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe "'Clear Filters' button" do
   before :all do

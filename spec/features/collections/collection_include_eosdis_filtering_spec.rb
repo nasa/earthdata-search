@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe 'Collection include EOSDIS filtering' do
   context "When searching collections with 'Include non-EOSDIS collections' filter unchecked" do
     before :all do
       load_page :search, ac: true
-      
+
       @all_collections_count = collection_results_header_value.text.to_i
 
       find(:css, "#hasNonEOSDIS").set(false)

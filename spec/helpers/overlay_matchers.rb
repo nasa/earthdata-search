@@ -50,11 +50,10 @@ module OverlayUtil
 
   def self.define_visible_overlay_matcher_for_id(id)
     RSpec::Matchers.define "have_visible_#{id.underscore}" do
-      match_for_should     { |page| OverlayUtil::expect_visible_overlay_content!(page, id, true)  }
-      match_for_should_not { |page| OverlayUtil::expect_visible_overlay_content!(page, id, false) }
+      match { |page| OverlayUtil::expect_visible_overlay_content!(page, id, true) }
+      match_when_negated { |page| OverlayUtil::expect_visible_overlay_content!(page, id, false) }
     end
   end
 end
-
 
 OverlayUtil::define_overlay_matchers()

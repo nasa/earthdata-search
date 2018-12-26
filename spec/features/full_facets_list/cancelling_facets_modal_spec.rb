@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Ignoring selections from the Full Facets List Modal' do
   before :all do

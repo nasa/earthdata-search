@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection Facet URL Query Params', pending_updates: true do
   before :all do

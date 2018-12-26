@@ -2,7 +2,7 @@
 # Some forms have boundingbox1 in their echoforms instead of boundingbox
 # This was causing that field to be null in the service requests
 
-require 'spec_helper'
+require 'rails_helper'
 require 'rake'
 
 describe 'Service options order with boundingbox1 field', pending_updates: true, single_granule: true do
@@ -44,7 +44,7 @@ describe 'Service options order with boundingbox1 field', pending_updates: true,
         within '.access-item-actions' do
           click_on 'Continue'
         end
-        
+
         click_on 'Submit'
         wait_for_xhr
       end

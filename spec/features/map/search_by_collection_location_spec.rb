@@ -2,7 +2,7 @@
 #         location of another collection so that I may limit my results to my
 #         area of interest
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Spatial search by collection location" do
   let(:location_link_text) { "Search using this collection's location" }

@@ -1,7 +1,7 @@
 # EDSC-102 As a user, I want to view my contact information
 # so that I may verify it is correct
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Contact Information', pending_updates: true do
   before :all do

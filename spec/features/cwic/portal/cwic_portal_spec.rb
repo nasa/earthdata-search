@@ -1,16 +1,18 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe "CWIC portal" do
+describe 'CWIC portal' do
   extend Helpers::CollectionHelpers
 
   before :all do
     load_page :search, portal: 'cwic', facets: true
   end
+
   it 'displays the CWIC and CEOS livery' do
     expect(page).to have_css("img[src*='ceos-logo.png']")
     expect(page).to have_xpath("//a/img[contains(@src,'ceos-logo.png')]")
-    expect(page).to have_text('CWIC Search')
+    expect(page).to have_text("CWIC\nSearch")
   end
+
   it 'does not display the EOSDIS-specific inputs' do
     expect(page).to have_selector('input#hasNonEOSDIS', visible: false)
     expect(page).to have_selector('input#has-granules', visible: false)

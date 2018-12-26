@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Viewing an un-saved Project' do
   before :all do
@@ -46,7 +46,7 @@ describe 'Viewing an un-saved Project' do
       end
 
       it 'shortens the url' do
-        expect(query).to match(/^projectId=(\d+)$/)
+        expect(page).to have_current_path(/\?projectId=(\d+)$/)
       end
     end
   end

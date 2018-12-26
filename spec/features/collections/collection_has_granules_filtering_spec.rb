@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection has-granules filtering' do
   context 'When disabling the \'show collections without granules\' filter' do

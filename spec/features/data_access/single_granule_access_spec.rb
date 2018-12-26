@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Single Granule Data Access' do
   downloadable_collection_id = 'C179002914-ORNL_DAAC'

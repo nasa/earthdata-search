@@ -5,7 +5,7 @@
 # EDSC-30 As a user, I want to select alternate map projections so that I may
 #         view areas of interest commonly distorted by default projections
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Map interface" do
   before do

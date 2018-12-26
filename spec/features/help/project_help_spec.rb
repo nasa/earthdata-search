@@ -4,7 +4,7 @@
 # Note: We also show popover help in places it is needed, particularly shape files
 #       that help is tested with the corresponding feature that triggers it.
 
-require "spec_helper"
+require 'rails_helper'
 
 describe 'Project help' do
 

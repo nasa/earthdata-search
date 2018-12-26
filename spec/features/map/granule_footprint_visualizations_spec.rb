@@ -5,7 +5,7 @@
 # EDSC-90 As a user, I want to view rectangular spatial extents on a map so that
 #         I may understand the location and shape of my results
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Granule footprint visualizations" do
   extend Helpers::CollectionHelpers

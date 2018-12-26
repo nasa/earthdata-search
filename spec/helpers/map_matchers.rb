@@ -68,7 +68,7 @@ RSpec::Matchers.define :have_spatial_constraint do |expected|
     end
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     "expected page to have spatial constraint #{expected}, got #{MapUtil.spatial(page)}"
   end
 end
@@ -81,7 +81,7 @@ RSpec::Matchers.define :have_no_spatial_constraint do |expected|
     true
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     "expected page to not have spatial constraint #{expected}"
   end
 end
@@ -104,7 +104,7 @@ RSpec::Matchers.define :match_map_center do |expected_lat, expected_lng|
     end
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     "expected page to have map query of 'm=#{expected_lat}!#{expected_lng}...', got '#{URI.parse(page.current_url).query.inspect}'"
   end
 end
@@ -129,7 +129,7 @@ RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected
     end
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     "expected page to have map query of 'm=#{expected_lat}!#{expected_lng}!#{expected_zoom}...', got '#{URI.parse(page.current_url).query.inspect}'"
   end
 end
@@ -146,7 +146,7 @@ RSpec::Matchers.define :have_gibs_resolution do |expected|
     end
   end
 
-  failure_message_for_should do |page|
+  failure_message do |page|
     "expected page to have gibs tile resolution of '#{expected}', got '#{page_resolution(page)}'"
   end
 end

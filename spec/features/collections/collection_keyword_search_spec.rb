@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Collection keyword searches" do
   extend Helpers::CollectionHelpers

@@ -1,6 +1,6 @@
 # EDSC-308: Corrected Reflectance Base Layer doesn't track temporal search bounds
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Base layer date display' do
   extend Helpers::CollectionHelpers

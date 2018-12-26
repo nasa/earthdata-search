@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # no longer returns results
 describe "Collection Granule Count", pending_updates: true do

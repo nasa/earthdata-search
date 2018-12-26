@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Viewing Single Project' do
   context 'for a saved project' do
