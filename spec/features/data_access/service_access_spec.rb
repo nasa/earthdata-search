@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # EDSC-1778 Adding pending_updates tag until ticket is completed.
 describe 'Services Access', pending_updates: true do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Site tour' do
   context 'When loading the initial search page while logged in', pending_updates: true do

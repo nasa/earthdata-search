@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection Facets With No Results' do
   before :all do
@@ -64,7 +64,7 @@ describe 'Collection Facets With No Results' do
 
       it 'displays the selected facet and empty result count' do
         within '.keywords .panel-body.facets' do
-          expect(page).to have_content('Atmosphere 0')
+          expect(page).to have_content("Atmosphere\n0")
         end
       end
     end
@@ -90,7 +90,7 @@ describe 'Collection Facets With No Results' do
 
       it 'displays the selected facets and empty result count' do
         within '.keywords .panel-body.facets' do
-          expect(page).to have_text('Cryosphere 0 Oceans 0 Atmosphere 0')
+          expect(page).to have_text("Cryosphere\n0\nOceans\n0\nAtmosphere\n0")
         end
       end
     end

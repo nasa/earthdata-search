@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Direct download script UAT' do
   context 'when viewing the direct download script in UAT', pending_updates: true do

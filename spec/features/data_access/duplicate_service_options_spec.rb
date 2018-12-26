@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Duplicate Service Options' do
   downloadable_collection_id = 'C179003030-ORNL_DAAC'

@@ -1,7 +1,7 @@
 # EDSC-199: As a user, I want my currently-selected temporal extents visible on
 #           the timeline so I may see the time I have selected
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Timeline temporal display" do
   max_date = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')

@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe Echo::ClientMiddleware::Echo10CollectionMiddleware do
   let(:middleware) { Echo::ClientMiddleware::Echo10CollectionMiddleware.new }

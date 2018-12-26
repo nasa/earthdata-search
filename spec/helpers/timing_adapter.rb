@@ -5,7 +5,7 @@ class TimingAdapter < Knapsack::Adapters::RspecAdapter
   def bind_time_tracker
     ::RSpec.configure do |config|
       config.before(:all) do
-        Knapsack.tracker.test_path = self.class.metadata[:example_group][:file_path]
+        Knapsack.tracker.test_path = self.class.metadata[:file_path]
         Knapsack.tracker.start_timer
       end
 

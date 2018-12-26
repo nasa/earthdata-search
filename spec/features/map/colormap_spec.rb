@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection Colormaps' do
   gibs_collection_id = 'C197265171-LPDAAC_ECS'

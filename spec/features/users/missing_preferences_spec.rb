@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'User missing ordering preferences', pending_updates: true do
   context 'when configuring a data access request' do
     before :all do
       load_page :search, focus: ['C1000000739-DEV08'], env: :sit, authenticate: 'edscbasic'
-      
+
       click_button 'Download All'
       wait_for_xhr
 

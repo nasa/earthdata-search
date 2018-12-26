@@ -1,7 +1,7 @@
 # EDSC-15 As a user, I want to search for collections by simple temporal date
 #         range so that I may limit my results the relevant time span
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Temporal" do
   before :each do

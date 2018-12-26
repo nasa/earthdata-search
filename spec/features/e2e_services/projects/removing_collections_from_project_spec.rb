@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'When viewing the project page with more than one collection' do
   before :all do

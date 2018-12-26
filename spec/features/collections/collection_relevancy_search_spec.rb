@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Collection relevancy search" do
   # TODO: RDA // EDSC-1117 notes a bug in CMR that will cause this test to fail.

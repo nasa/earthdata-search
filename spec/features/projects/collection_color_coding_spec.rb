@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Project collection color coding' do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'When displaying an OPeNDAP collection in the results' do
   before :all do

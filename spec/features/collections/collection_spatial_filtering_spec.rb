@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Spatial manual entry" do
   before :all do
     load_page :search
   end
-  
+
   context "Spatial" do
     before :each do
       load_page :search

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Data Quality Summaries' do
   pending('The paths tested are no longer supported. Restore when new functionality is implemented.')

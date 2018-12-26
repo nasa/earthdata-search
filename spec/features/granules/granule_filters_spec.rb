@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Granule search filters" do
   pending "for granules that can be filtered by day/night flag or cloud cover" do

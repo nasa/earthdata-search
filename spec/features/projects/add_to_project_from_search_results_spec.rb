@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Searching for a collection' do
   context 'that is not in the users project' do

@@ -1,7 +1,7 @@
 # EDSC-189: As a user, I want to choose which day is displayed for my displayed
 #           granules so I may view results across multiple days
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Timeline date selection' do
   extend Helpers::CollectionHelpers

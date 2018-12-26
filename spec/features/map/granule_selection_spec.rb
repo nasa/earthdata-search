@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Granule selection" do
   extend Helpers::CollectionHelpers
@@ -102,7 +102,7 @@ describe "Granule selection" do
       end
 
       it "scrolls to the selected granule" do
-        expect(page.execute_script(is_granule_panel_visible_script)).to be_true
+        expect(page.execute_script(is_granule_panel_visible_script)).to be_truthy
       end
 
       it "centers the map over the selected granule", pending_updates: true do
@@ -129,7 +129,7 @@ describe "Granule selection" do
       end
 
       it "scrolls to the selected granule" do
-        expect(page.execute_script(is_granule_panel_visible_script)).to be_true
+        expect(page.execute_script(is_granule_panel_visible_script)).to be_truthy
       end
     end
 
@@ -155,7 +155,7 @@ describe "Granule selection" do
       end
 
       it "returns the granule ordering to its original state" do
-        expect(page.execute_script(is_temporal_ordered_script)).to be_true
+        expect(page.execute_script(is_temporal_ordered_script)).to be_truthy
       end
     end
   end
@@ -199,7 +199,7 @@ describe "Granule selection" do
     end
 
     it "scrolls to the selected granule" do
-      expect(page.execute_script(is_granule_panel_visible_script)).to be_true
+      expect(page.execute_script(is_granule_panel_visible_script)).to be_truthy
     end
 
     context "and clicking on it again" do
@@ -225,7 +225,7 @@ describe "Granule selection" do
       end
 
       it "returns the granule ordering to its original state" do
-        expect(page.execute_script(is_temporal_ordered_script)).to be_true
+        expect(page.execute_script(is_temporal_ordered_script)).to be_truthy
       end
     end
 

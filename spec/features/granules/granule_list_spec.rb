@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Granule list' do
   extend Helpers::CollectionHelpers
@@ -13,7 +13,7 @@ describe 'Granule list' do
       visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
       wait_for_xhr
     end
-    
+
     it 'provides a text field to search for single or multiple granules by granule IDs' do
       expect(page).to have_selector('#granule-ids')
     end
@@ -39,8 +39,8 @@ describe 'Granule list' do
 
     it 'displays start and end temporal labels' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
-        expect(page).to have_content('START 2017-01-01 23:45:00')
-        expect(page).to have_content('END 2017-01-01 23:50:00')
+        expect(page).to have_content("START\n2017-01-01 23:45:00")
+        expect(page).to have_content("END\n2017-01-01 23:50:00")
       end
     end
 

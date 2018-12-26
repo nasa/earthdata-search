@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Portal escape link" do
   context "Visiting an Earthdata Search portal" do

@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "Granule search overlay" do
   pending "Refactor project panel to e2e services project page" do
-    
+
     before(:all) do
       Capybara.reset_sessions!
       load_page :search, ac: true, ff: 'Near Real Time'

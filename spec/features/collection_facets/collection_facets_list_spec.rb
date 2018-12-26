@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Collection Facet Display' do
   context 'When viewing facets on before taking any actions' do

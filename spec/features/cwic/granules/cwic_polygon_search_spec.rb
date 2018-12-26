@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "CWIC-enabled polygon searches" do
   extend Helpers::CollectionHelpers

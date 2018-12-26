@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe Echo::ClientMiddleware::Echo10GranuleMiddleware do
   let(:middleware) { Echo::ClientMiddleware::Echo10GranuleMiddleware.new }
@@ -119,7 +119,7 @@ describe Echo::ClientMiddleware::Echo10GranuleMiddleware do
   it 'operates on CMR URLS' do
     response = Object.new
     env = { url: URI('http://example.com/concepts/1234.echo10'), response: response, body: {'Granule' => {}}}
-    expect(middleware.parse_response?(env)).to be_true
+    expect(middleware.parse_response?(env)).to be_truthy
   end
 
   it 'does not operate on requests with no granule body' do

@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe "Grid coordinate search" do
+describe 'Grid coordinate search' do
   extend Helpers::CollectionHelpers
 
   before :all do
@@ -26,21 +26,25 @@ describe "Grid coordinate search" do
     end
 
     it 'displays all of the potential coordinate systems' do
-      find("#map-grid-system").should have_content('CALIPSO')
-      find("#map-grid-system").should have_content('MISR')
-      find("#map-grid-system").should have_content('MODIS EASE Grid')
-      find("#map-grid-system").should have_content('MODIS Sinusoidal')
-      find("#map-grid-system").should have_content('WRS-1 (Landsat 1-3)')
-      find("#map-grid-system").should have_content('WRS-2 (Landsat 4+)')
-      # EDSC-1418: Newly added coordinate systems
-      find("#map-grid-system").should have_content('WELD CONUS Tile')
-      find("#map-grid-system").should have_content('WELD ALASKA Tile')
+      within '#map-grid-system' do
+        expect(page).to have_content('CALIPSO')
+        expect(page).to have_content('MISR')
+        expect(page).to have_content('MODIS EASE Grid')
+        expect(page).to have_content('MODIS Sinusoidal')
+        expect(page).to have_content('WRS-1 (Landsat 1-3)')
+        expect(page).to have_content('WRS-2 (Landsat 4+)')
+        # EDSC-1418: Newly added coordinate systems
+        expect(page).to have_content('WELD CONUS Tile')
+        expect(page).to have_content('WELD ALASKA Tile')
+      end
     end
+
     context 'selecting a coordinate system' do
-      before :all  do
+      before :all do
         select 'WRS-1 (Landsat 1-3)', from: 'map-grid-system'
         wait_for_xhr
       end
+
       after :all do
         select 'Coordinate System...', from: 'map-grid-system'
         wait_for_xhr
@@ -64,7 +68,7 @@ describe "Grid coordinate search" do
             wait_for_xhr
           end
 
-          after :all  do
+          after :all do
             choose_tool_from_site_toolbar('Grid')
             select 'WRS-1 (Landsat 1-3)', from: 'map-grid-system'
             choose_tool_from_site_toolbar('Point')
@@ -81,7 +85,7 @@ describe "Grid coordinate search" do
             wait_for_xhr
           end
 
-          after :all  do
+          after :all do
             choose_tool_from_site_toolbar('Grid')
             select 'WRS-1 (Landsat 1-3)', from: 'map-grid-system'
             choose_tool_from_site_toolbar('Point')

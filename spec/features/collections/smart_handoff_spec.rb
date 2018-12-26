@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Smart Handoff' do
   let(:giovanni_link) { 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp&starttime=2016-01-01T00%3A00%3A00.000Z&endtime=2016-12-31T23%3A59%3A59.000Z&bbox=-10%2C-10%2C10%2C10&searchTerms=C1200187767-EDF_OPS&dataKeyword=AIRX3STD' }

@@ -1,7 +1,7 @@
 # EDSC-197 : As a user, I want to zoom in and out of the granule timeline so I
 #            may view data with the appropriate resolution
 
-require "spec_helper"
+require 'rails_helper'
 
 describe "Timeline zooming", pending: 'Refactor project panel to 2e2 services project page.' do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')

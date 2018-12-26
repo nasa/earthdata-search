@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe DataAccessController, pending_updates: true do
   describe "GET options" do

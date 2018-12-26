@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'Spatial and temporal extraction' do
   context 'extracted spatial information' do
