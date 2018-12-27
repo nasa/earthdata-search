@@ -14,7 +14,6 @@ require 'selenium-webdriver'
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w[headless disable-gpu no-sandbox --window-size=1440,900 --disable-notifications]
-
     ### use these args for debugging in chrome.
     # args: %w[headless disable-gpu no-sandbox --window-size=1440,900 --disable-notifications --remote-debugging-port=9222]
     ### Open Chrome with `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=remote-profile --remote-debugging-port=9222 --window-size=1440,900`
@@ -25,7 +24,7 @@ Capybara.javascript_driver = :selenium
 Capybara.default_driver = :selenium
 Capybara.register_server :thin do |app, port, host|
   require 'rack/handler/thin'
-  Rack::Handler::Thin.run(app, :Port => port, :Host => host)
+  Rack::Handler::Thin.run(app, Port: port, Host: host)
 end
 
 Capybara.server = :thin
@@ -170,7 +169,7 @@ RSpec.configure do |config|
         ['test'].each do |rails_env|
           client_id = config_services['urs'][rails_env][urs_root_url]
 
-          token = configured_token.include? '-' ? configured_token : "#{configured_token}:#{client_id}"
+          token = configured_token.include?('-') ? configured_token : "#{configured_token}:#{client_id}"
           substitute = token_key
           substitute += '-access' unless configured_token.include? '-'
           normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, substitute)
@@ -206,7 +205,7 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    count = self.class.children.size
+    count = config.loaded_spec_files.count
   end
 
   config.after :suite do
