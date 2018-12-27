@@ -9,8 +9,8 @@
           <div class="project-list-item-title-wrap" data-bind="multilineEllipsis: {text: collection.title}">
               <h3 class="project-list-item-title" data-bind="click: function(){$('#' + collection.id + '_details').trigger('toggle-panel')}"></h3>
           </div>
-          <div class="dropdown project-list-item-action-list">
-            <button class="button dropdown-button button-naked button-icon button-icon-ellipsis" type="button" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+          <div class="dropdown project-list-item-action-list dropdown-more-actions dropdown-tooltip-left">
+            <button class="button dropdown-button button-naked button-icon button-icon-ellipsis" type="button" data-tooltip="true" data-placement="left" data-toggle="dropdown" aria-expanded="false" title="More actions"><i class="fa fa-ellipsis-v"></i></button>
             <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
               <li>
                 <div class="dropdown-fancy-content">
