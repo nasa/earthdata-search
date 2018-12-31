@@ -50,9 +50,9 @@ See public/licenses.txt
 ### Initial setup
 
 Run
-
+```
     bin/setup
-
+```
 Note: This command will take a long time to run
 
 ### Application configuration
@@ -72,30 +72,31 @@ Click the "Feedback" icon on the Earthdata Login page and request that your new 
 
 Your Earthdata Login application's client ID will need to be saved in `config/application.yml`.
 
-```### Running
+### Running
 
 Run
-
+```
     docker-compose up
-
+```
 ### Stopping
 
 To stop docker but keep the containers
-
+```
     docker-compose stop
-
+```
 To stop and remove all containers
-
+```
     docker-compose down
-
+```
 Then visit http://localhost:3000/
 
 ### Running tests
-
+```
     docker-compose run web bundle exec rspec
-
+```
 ### Terminal Access
 
 If you want terminal access to inside the container, run
-
-    docker-compose run web bash```
+```
+    docker-compose run web bash
+```
