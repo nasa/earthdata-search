@@ -20,8 +20,8 @@
           </h2>
           <!-- ko with: collection -->
           <!-- ko if: $data.handoffTags().length > 0 -->
-          <div class="dropdown granule-details-dropdown handoff-dropdown">
-            <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+          <div class="dropdown granule-details-dropdown handoff-dropdown dropdown-more-actions dropdown-tooltip-bottom">
+            <a class="button dropdown-button button-naked button-icon button-icon-ellipsis" href="#" data-toggle="dropdown" data-tooltip="true" data-placement="bottom" aria-expanded="false" title="More actions"><i class="fa fa-ellipsis-v"></i></a>
             <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
               <li>
                 <div class="dropdown-fancy-header">
@@ -44,7 +44,7 @@
             <!--ko ifnot: $data.collection.cwic()-->
               <p class="master-overlay-header-row-item granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
 
-              <p class="master-overlay-header-row-item granule-id-search">
+              <p class="master-overlay-header-row-item granule-id-search master-overlay-info-tooltip-big">
                 Granule Search: <input id="granule-ids" type="text" placeholder="Search Single or Multiple Granule IDs..." data-bind="value: $data.collection.granuleIds, valueUpdate: 'keyup'" data-tooltip="true" title="Wildcards: * (asterisk) matches any number of characters, and ? (question mark) matches exactly one character.
   Delimiters: Separate multiple granule IDs by space, comma, or new line."/>
               </p>
@@ -74,7 +74,7 @@
               <i class="fa fa-times-circle"></i> Remove from project
             </a>
           <p>
-            <button class="button retrieve" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
+            <button class="button retrieve master-overlay-info-tooltip-big" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
               <i class="fa fa-download"></i> Download All <span class="pill" data-bind="text: $parent.granules().hits() == 1 ? '1 Granule' : $parent.granules().hits() + ' Granules'"></span>
             </button>
           </p>

@@ -278,3 +278,18 @@ input.day-of-year-input {
     width: 1.5em;
   }
 }
+
+.dropdown-more-actions {
+  &.open .tooltip {
+    display: none !important;
+  }
+
+  .tooltip-inner {
+    white-space: nowrap;
+    text-align: left;
+  }
+}
+
+.dropdown-tooltip-bottom .tooltip {
+  top: 30px !important;
+}
