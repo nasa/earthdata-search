@@ -16,12 +16,13 @@ describe 'Invalid user token' do
       wait_for_xhr
     end
 
-    xit 'logs out the user' do
+    it 'logs out the user' do
       expect(page).to have_content 'Earthdata Login'
     end
 
-    xit 'displays search results' do
-      expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)'
+    it 'displays search results' do
+      collection_list = find('#collection-results-list').all('li')
+      expect(collection_list.size).to eq(1)
     end
   end
 end

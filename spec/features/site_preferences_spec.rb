@@ -1,66 +1,59 @@
-# EDSC-105: As a user, I want to save my site-viewing preferences
-#           so that I may customize my experience with the site
-# EDSC-138: As a user, I want the system to remember when I dismiss
-#           the introductory tour so that it does not interfere with
-#           subsequent visits
-
 require 'rails_helper'
 
-# EDSC-1361: UI Work to address tour at appropriate time
+describe 'Site Preferences', reset: true do
+  after :each do
+    wait_for_xhr
+    User.destroy_all if page.server.responsive?
+  end
 
-#describe 'Site Preferences', reset: true do
-#  after :each do
-#    wait_for_xhr
-#    User.destroy_all if page.server.responsive?
-#  end
+  context 'when user is logged in' do
+    before :each do
+      load_page :root, authenticate: 'edsc', keep_tour_open: true
+    end
 
-#  before :each do
-#    load_page :root
-#  end
+    it 'shows the tour' do
+      expect(page).to have_css '.sitetour'
+    end
 
-#  context "when user is logged in" do
-#    before :each do
-#      login
-#    end
+    it 'sets site preferences when closing the tour' do
+      check 'toggleHideTour'
+      click_on 'Close'
+      expect(page).to have_no_css '.sitetour'
+      wait_for_xhr
 
-#    it "shows the tour" do
-#      expect(page).to have_css '.tour'
-#    end
+      visit '/'
+      expect(page).to have_no_css '.sitetour'
+    end
 
-#    it "sets site preferences when closing the tour" do
-#      click_button 'End Tour'
-#      click_button 'Close'
-#      expect(page).to have_no_css '.tour'
-#      wait_for_xhr
+    it 'shows Show Tour link after closing the tour' do
+      click_on 'Close'
+      click_on 'Manage user account'
+      expect(page).to have_content 'Show Tour'
+    end
+  end
 
-#      load_page :root
-#      expect(page).to have_no_css '.tour'
-#    end
+  context 'when user is a guest' do
+    before :each do
+      load_page :root, keep_tour_open: true
+    end
 
-#    it "shows Take a Tour link after closing the tour" do
-#      click_button 'End Tour'
-#      expect(page).to have_content 'Take a Tour'
-#    end
-#  end
+    it 'shows the tour' do
+      expect(page).to have_css '.sitetour'
+    end
 
-#  context "when user is a guest" do
-#    it "shows the tour" do
-#      expect(page).to have_css '.tour'
-#    end
+    it 'sets site preferences when closing the tour' do
+      check 'toggleHideTour'
+      click_on 'Close'
+      expect(page).to have_no_css '.sitetour'
+      wait_for_xhr
 
-#    it "sets site preferences when closing the tour" do
-#      click_button 'End Tour'
-#      click_button 'Close'
-#      expect(page).to have_no_css '.tour'
-#      wait_for_xhr
+      visit '/'
+      expect(page).to have_no_css '.sitetour'
+    end
 
-#      load_page :root
-#      expect(page).to have_no_css '.tour'
-#    end
-
-#    it "shows Take a Tour link after closing the tour" do
-#      click_button 'End Tour'
-#      expect(page).to have_content 'Take a Tour'
-#    end
-#  end
-# end
+    it 'shows Show Tour link after closing the tour' do
+      click_on 'Close'
+      expect(page).to have_content 'Show Tour'
+    end
+  end
+end

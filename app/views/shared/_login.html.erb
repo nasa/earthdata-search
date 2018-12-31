@@ -12,19 +12,19 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-right">
     <li>
-      <a href="<%=edsc_path '/contact_info' %>" class="dropdown-link dropdown-link-contact-info">Contact Information</a>
+      <a href="<%= edsc_path '/contact_info' %>" class="dropdown-link dropdown-link-contact-info">Contact Information</a>
     </li>
     <li>
-      <a href="<%=edsc_path '/data/status' %>" class="dropdown-link dropdown-link-contact-info">Download Status & History</a>
+      <a href="<%= edsc_path '/data/status' %>" class="dropdown-link dropdown-link-contact-info">Download Status & History</a>
     </li>
     <li>
-      <a href="<%= projects_path %>" class="dropdown-link dropdown-link-projects">Saved Projects</a>
+      <a href="<%= edsc_path projects_path %>" class="dropdown-link dropdown-link-projects">Saved Projects</a>
     </li>
     <li id="show-tour-menu-option">
       <a href="#" data-bind="click: $root.ui.sitetour.startTour" class="dropdown-link">Show Tour</a>
     </li>
     <li>
-      <a href="<%=edsc_path '/logout' %>" class="dropdown-link dropdown-link-logout">Logout</a>
+      <a href="<%= edsc_path '/logout' %>" class="dropdown-link dropdown-link-logout">Logout</a>
     </li>
   </ul>
 </div>

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-# no longer returns results
-describe "Collection Granule Count", pending_updates: true do
+describe 'Collection Granule Count', data_specific: true do
   before :all do
     Capybara.reset_sessions!
     load_page :search, q: 'C1002-LPDAAC_TBD', env: :sit
@@ -14,9 +13,9 @@ describe "Collection Granule Count", pending_updates: true do
 
   context 'when applying search constraint' do
     before :all do
-      click_link "Temporal"
-      fill_in "Start", with: "2014-12-01 00:00:00\t"
-      js_click_apply ".temporal-dropdown"
+      click_link 'Temporal'
+      fill_in 'Start', with: "2014-12-01 00:00:00\t"
+      js_click_apply '.temporal-dropdown'
       wait_for_xhr
     end
 

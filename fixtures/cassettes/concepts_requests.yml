@@ -14,11 +14,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:27:43 GMT
-  digest: '0186f196e305739b255aad8ae9b7f2f5695a0df5'
+  digest: 0a7b600b233b0d813493ac2f18a13ae682725aa0
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000000-SEDAC.json
@@ -33,11 +33,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:28:10 GMT
-  digest: 84e891ec21a9beac6c9d1b913c2e2968201d08e8
+  digest: b1f24dc7074a8b0640e31a0bcedafc968e54cdb8
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.json
@@ -69,11 +69,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:28:05 GMT
-  digest: 8fd08843262056ad4eb9c1f438e25ef942834ea1
+  digest: d54b93400742a6f74fa8b1c1507b7edcaf51b997
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000445-NSIDC_ECS.json
@@ -463,11 +463,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Thu, 06 Dec 2018 00:38:06 GMT
-  digest: 0c4604a71a97f0cf75b176249a8483e4bd5ad1c5
+  digest: 32e739f5a0e7dd71c3accabd9e0bf347abbb5e21
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.json
@@ -531,11 +531,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:28:04 GMT
-  digest: 23f7dd4583c54926941e03d41615b0bfe6566895
+  digest: 199af73d57c321613a76a9f1f38b1afb7e429244
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001967-SEDAC.json
@@ -550,11 +550,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:28:05 GMT
-  digest: dcd4943d49f65312dc70e2c1a641c786ee8224c1
+  digest: 77b3e24f6f6b75070151f2e17b96cafd0cbd197c
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002107-SEDAC.json
@@ -569,11 +569,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:28:08 GMT
-  digest: 0c4732831bd7c4253364ef2846565b482c4f8e4a
+  digest: b5d7f10480ee1976b50c05842a84860d240e1e25
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002147-SEDAC.json
@@ -588,11 +588,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:28:08 GMT
-  digest: dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5
+  digest: 1aba2558d5a73db77ecb3f0bd889ef9af406b2c5
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002914-ORNL_DAAC.json
@@ -986,11 +986,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:39:14 GMT
-  digest: f004fe268be1e6f148f3c6086b446aea2ce52b33
+  digest: 9158337b904fddcd967f192bda0ffb49b6f9a978
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C92711294-NSIDC_ECS.umm_json_v1_9
@@ -1050,11 +1050,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Thu, 06 Dec 2018 00:25:11 GMT
-  digest: ab08ed37df2c5ca8f8148129d8791c24cf216e7b
+  digest: c7dd25fa7a5669f7790107776c4464a7b119e667
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000029-EDF_OPS.json
@@ -1069,11 +1069,30 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:38:18 GMT
-  digest: 7ead3b2106647fa7524ce584d009d41681a5718d
+  digest: 8d4f00e5672ef89f18dd10fa854423765bb63b3f
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000082-EDF_OPS.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Mon, 31 Dec 2018 18:13:09 GMT
+  digest: 3542afcbcb3fcdfb6e3a8be24afb89de32a5d4d0
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000257-DEV07.umm_json
@@ -1120,11 +1139,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:30:45 GMT
-  digest: 022ae02d1cb98c7736784372d15fdaf73d5b5d01
+  digest: 232c8deda3f211102a26bd4508657b401ec0d2fe
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000969-DEV08.json
@@ -1139,11 +1158,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:25:22 GMT
-  digest: 1d31084831e778e6bc2cfdf19cd496503faf2d8a
+  digest: 83dbac185244ab53e7cf4c9c4f77d2f26d5c0d03
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200187767-EDF_OPS.json
@@ -1158,11 +1177,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:25:21 GMT
-  digest: 7425e8ad3171c26bb6c3f25ad01eba2c9543308b
+  digest: 9932a1706d449279bb97e8618f684cabff508f06
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200187767-EDF_OPS.umm_json
@@ -1273,11 +1292,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:25:01 GMT
-  digest: 7e8000dc95ecbad4c16df6dd0144c3711114b5ad
+  digest: e47ccd4fd50f3592cdb066166c00a4ee5fa5d3cc
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200269572-E2E_18_3.umm_json
@@ -1361,6 +1380,25 @@ http_interactions:
   digest: 9cdc3d2600617b4e45da2c985f5e22fccc93aaa6
 - request:
     method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1216127793-EDF_OPS.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Mon, 31 Dec 2018 18:14:58 GMT
+  digest: 783d31d069d588b8ceb7c76f8ff8c95d4ebc44cc
+- request:
+    method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1216393716-EDF_OPS.umm_json
     body:
       encoding: US-ASCII
@@ -1373,11 +1411,11 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.10
   recorded_at: Wed, 05 Dec 2018 23:44:11 GMT
-  digest: 020fee1d7a7c4d91cee00e6fdbfafd19a33ce183
+  digest: 49fe83c5f38c581980fc23e679042980053099d7
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1216393716-EDF_OPS.umm_json_v1_9

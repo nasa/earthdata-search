@@ -5,7 +5,7 @@ describe 'Shapefile search' do
     load_page :search
   end
 
-  context 'when uploading a file which format is not supported', pending_updates: true do
+  context 'when uploading a file which format is not supported' do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/invalid_format.mp4')
     end
@@ -131,11 +131,11 @@ describe 'Shapefile search' do
       expect(lng).to be_within(0.15).of(100.5)
     end
 
-    it 'zooms the map to the spatial constraint', pending_updates: true do
+    it 'zooms the map to the spatial constraint' do
       script = "return $('#map').data('map').map.getZoom();"
       result = page.execute_script(script)
 
-      expect(result).to eq(7)
+      expect(result).to eq(8)
     end
   end
 
@@ -156,7 +156,6 @@ describe 'Shapefile search' do
     it 'sets a search constraint containing a reduced number of points' do
       expect(MapUtil.spatial(page).split(':').size).to be <= 51
     end
-
   end
 
   context 'when removing an uploaded shapefile' do

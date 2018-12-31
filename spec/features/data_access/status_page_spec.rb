@@ -1,13 +1,11 @@
 require 'rails_helper'
 
-describe 'Data access status page', pending_updates: true do
+describe 'Data access status page' do
   context 'when the current user has download history' do
     before :all do
       Capybara.reset_sessions!
       Retrieval.destroy_all
       load_page :search, overlay: false, authenticate: 'edsc'
-
-      user = User.find_or_create_by(echo_id: '4C0390AF-BEE1-32C0-4606-66CAFDD4131D')
 
       retrievals = [
         { 'query' => 'p=C179003030-ORNL_DAAC',
@@ -31,12 +29,12 @@ describe 'Data access status page', pending_updates: true do
       ]
       retrievals.each do |jsondata|
         retrieval = Retrieval.new
-        retrieval.user = user
+        retrieval.user = User.first
         retrieval.jsondata = jsondata
         retrieval.save!
       end
 
-      load_page '/data/status'
+      load_page '/data/status', authenticate: 'edsc'
     end
 
     after :all do
@@ -70,7 +68,7 @@ describe 'Data access status page', pending_updates: true do
 
       after :all do
         Capybara.reset_sessions!
-        load_page '/data/status'
+        load_page '/data/status', authenticate: 'edsc'
       end
 
       it 'removes the collection from the list' do
@@ -101,9 +99,7 @@ describe 'Data access status page', pending_updates: true do
   context 'when the current user has no download history' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, overlay: false
-      login
-      load_page '/data/status'
+      load_page '/data/status', authenticate: 'edsc'
     end
 
     it 'indicates that there is no download history' do
@@ -114,9 +110,7 @@ describe 'Data access status page', pending_updates: true do
   context 'when the current user tries to access an invalid retrieval ID' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, overlay: false
-      login
-      load_page '/data/retrieve/not_a_valid_retrieval_id'
+      visit '/data/retrieve/not_a_valid_retrieval_id'
     end
 
     it 'displays 404 page' do

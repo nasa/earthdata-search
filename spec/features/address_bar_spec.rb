@@ -42,7 +42,7 @@ describe 'Address bar' do
     end
   end
 
-  context 'when loading a url containing a search keyword', pending_updates: true do
+  context 'when loading a url containing a search keyword' do
     before(:all) do
       load_page '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS&ac=true'
       wait_for_xhr
@@ -155,9 +155,8 @@ describe 'Address bar' do
         wait_for_xhr
       end
 
-      it 'saves the granule filters in the address bar', pending_updates: true do
-        project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
-        expect(Project.find(project_id).path).to include('pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0')
+      it 'saves the granule filters in the address bar' do
+        expect(page.current_url).to include('pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0')
       end
 
       context 'clearing filters' do
@@ -251,9 +250,8 @@ describe 'Address bar' do
       click_button 'Apply'
     end
 
-    it 'saves the granule filters in the address bar', pending_updates: true do
-      project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
-      expect(Project.find(project_id).path).to include('pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0')
+    it 'saves the granule filters in the address bar' do
+      expect(page.current_url).to include('pg[0][qt]=2013-12-01T00%3A00%3A00.000Z%2C2013-12-31T00%3A00%3A00.000Z&pg[0][dnf]=DAY&pg[0][bo]=true&pg[0][cc][min]=2.5&pg[0][cc][max]=5.0')
     end
 
     context 'clearing filters' do
@@ -361,10 +359,8 @@ describe 'Address bar' do
       wait_for_xhr
     end
 
-    it 'saves the selected granule in the address bar', pending_updates: true do
-      query = URI.parse(page.current_url).query
-      project_id = query[/^projectId=(\d+)$/, 1].to_i
-      expect(Project.find(project_id).path).to match(/&g=G1422671719-ORNL_DAAC&/)
+    it 'saves the selected granule in the address bar' do
+      expect(page.current_url).to match(/&g=G1422671719-ORNL_DAAC&/)
     end
   end
 
@@ -399,42 +395,41 @@ describe 'Address bar' do
     end
   end
 
-  # TODO: RDA // Map Zooming fails for unknown reasons potentially related to QT
-  # context "when panning and zooming the map" do
-  #   before(:all) do
-  #     load_page '/search/map'
-  #     wait_for_xhr
-  #     page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
-  #     wait_for_zoom_animation(5)
-  #     wait_for_xhr
-  #   end
+  context 'when panning and zooming the map' do
+    before(:all) do
+      load_page '/search/map'
+      wait_for_xhr
+      page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
+      wait_for_zoom_animation(5)
+      wait_for_xhr
+    end
 
-  #   it "saves the map state in the query conditions" do
-  #     expect(page).to have_query_string('m=12!-34!5!1!0!0%2C2')
-  #   end
-  # end
+    it 'saves the map state in the query conditions' do
+      expect(page).to have_query_string('m=12!-34!5!1!0!0%2C2')
+    end
+  end
 
-  # context "when loading a url with a saved map state" do
-  #   before(:all) do
-  #     load_page '/search/map?m=12!-34!5!1'
-  #   end
+  context 'when loading a url with a saved map state' do
+    before(:all) do
+      load_page '/search/map?m=12!-34!5!1'
+    end
 
-  #   it "restores the map pan state from the query conditions" do
-  #     synchronize do
-  #       lat = page.evaluate_script("$('#map').data('map').map.getCenter().lat")
-  #       lng = page.evaluate_script("$('#map').data('map').map.getCenter().lng")
-  #       expect(lat).to eql(12)
-  #       expect(lng).to eql(-34)
-  #     end
-  #   end
+    it 'restores the map pan state from the query conditions' do
+      synchronize do
+        lat = page.evaluate_script("$('#map').data('map').map.getCenter().lat")
+        lng = page.evaluate_script("$('#map').data('map').map.getCenter().lng")
+        expect(lat).to eql(12)
+        expect(lng).to eql(-34)
+      end
+    end
 
-  #   it "restores the map zoom state from the query conditions" do
-  #     synchronize do
-  #       zoom = page.evaluate_script("$('#map').data('map').map.getZoom()")
-  #       expect(zoom).to eql(5)
-  #     end
-  #   end
-  # end
+    it 'restores the map zoom state from the query conditions' do
+      synchronize do
+        zoom = page.evaluate_script("$('#map').data('map').map.getZoom()")
+        expect(zoom).to eql(5)
+      end
+    end
+  end
 
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 

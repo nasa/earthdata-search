@@ -97,6 +97,7 @@ module Helpers
 
     def load_page(url, options = {})
       close_banner = options.delete(:close_banner)
+      keep_tour_open = options.delete(:keep_tour_open)
 
       ActiveSupport::Notifications.instrument 'edsc.performance', activity: 'Page load' do
         options[:env] = 'prod' unless options.key?(:env)
@@ -118,7 +119,7 @@ module Helpers
 
         User.find_or_create_by(echo_id: authenticate_as || 'edsc') do |user|
           user.contact_information = {"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
-            "email_address":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+            "email_address":"patrick+edsc@element84.com","organization":"EDSC","country":"United States","address":{"country":"United States"},
             "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
             Contact"},"order_notification_level":"NONE"}}
         end
@@ -135,7 +136,9 @@ module Helpers
         wait_for_xhr
 
         # Close tour modal
-        page.execute_script("$('#closeInitialTourModal').trigger('click')")
+        unless keep_tour_open
+          page.execute_script("$('#closeInitialTourModal').trigger('click')")
+        end
 
         # Close banner
         if close_banner.present? && close_banner || close_banner.nil?
