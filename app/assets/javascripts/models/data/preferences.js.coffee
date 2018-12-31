@@ -1,4 +1,3 @@
-
 ns = @edsc.models.data
 
 ns.Preferences = do (ko
@@ -45,11 +44,11 @@ ns.Preferences = do (ko
     save: ->
       serialized = @serialize()
       console.log "Saving site preferences, #{JSON.stringify(serialized)}"
-      doPost '/users/site_preferences', {site_preferences: serialized}
+      doPost '/users/site_preferences', { site_preferences: serialized }
       null
 
     fromJson: (jsonObj) =>
-      return unless jsonObj?
+      return if !jsonObj? || Object.keys(jsonObj).length == 0
       @showTour(jsonObj.show_tour != 'false')
       @doNotShowTourAgain(jsonObj.doNotShowTourAgain)
 

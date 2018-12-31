@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe "CWIC-enabled data access" do
+describe 'CWIC-enabled data access' do
   extend Helpers::CollectionHelpers
 
-  dataset_id = "EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data"
+  dataset_id = 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
   search_params = {
     focus: 'C1220566654-USGS_LTA',
     temporal: ['2016-01-21T00:00:00Z', '2016-01-21T23:59:59Z'],
@@ -11,7 +11,7 @@ describe "CWIC-enabled data access" do
     authenticate: 'edsc'
   }
 
-  context "When configuring data access for a CWIC-tagged collection", pending_updates: true do
+  context 'When configuring data access for a CWIC-tagged collection', data_specific: true do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
@@ -22,11 +22,11 @@ describe "CWIC-enabled data access" do
     end
 
     it 'provides the "Download" option' do
-      expect(page).to have_field("Download")
+      expect(page).to have_field('Download')
     end
   end
 
-  context "When choosing to download data for a CWIC-tagged collection", edit_options: true  do
+  context 'When choosing to download data for a CWIC-tagged collection', edit_options: true do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all
@@ -39,7 +39,7 @@ describe "CWIC-enabled data access" do
       wait_for_xhr
     end
 
-    it "provides a button to view download links" do
+    it 'provides a button to view download links' do
       expect(page).to have_link('View Download Links')
     end
 
@@ -47,7 +47,7 @@ describe "CWIC-enabled data access" do
       expect(page).to have_link('Download Data Links File')
     end
 
-    context "and clicking the view download links button" do
+    context 'and clicking the view download links button' do
       before(:all) do
         @cwic_links = window_opened_by do
           click_on('View Download Links')
@@ -63,7 +63,7 @@ describe "CWIC-enabled data access" do
     end
   end
 
-  context "choosing to download data for single CWIC-tagged granule", single_granule: true  do
+  context 'choosing to download data for single CWIC-tagged granule', single_granule: true do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all

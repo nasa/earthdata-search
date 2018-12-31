@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Collection Facet Selection', pending_updates: true do
+describe 'Collection Facet Selection' do
   before :all do
     Capybara.reset_sessions!
 
