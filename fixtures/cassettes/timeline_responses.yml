@@ -2297,6 +2297,30 @@ d6a53df4a6547b9b4de2343eefaa4aa2e25cbef5:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[472780800,510278400,16]]}]'
     http_version: 
+03dbe53e91ec37e22c46bd265e77f38d96d6c0ac:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 967307f9-2cd0-4184-9007-ebbbbe756c15
+      date:
+      - Mon, 31 Dec 2018 21:37:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '78'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[472780800,556070400,33]]}]'
+    http_version: 
 598bb3abe9c7201bdcdd70be6ccb2782168e206e:
   response:
     status:
