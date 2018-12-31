@@ -82,8 +82,10 @@ describe 'Viewing Single Project' do
         before :all do
           project_list_item = find('.project-list-item', match: :first)
 
-          project_list_item.find('.customize').click
+          project_list_item.find('.project-list-item-action-edit-options').click
 
+          click_button('Edit Delivery Method')
+          choose('Customize & Download')
           check 'Enter bounding box'
 
           within '.modal-footer' do

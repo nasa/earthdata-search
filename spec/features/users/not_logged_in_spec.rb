@@ -6,8 +6,6 @@ describe 'User not logged in' do
   end
 
   context 'when a user views the data configure page without being logged in' do
-    # pending('The paths tested are no longer supported. Restore when new functionality is implemented.')
-
     before :each do
       load_page 'projects/new', project: ['C179003030-ORNL_DAAC']
     end

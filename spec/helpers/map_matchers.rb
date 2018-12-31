@@ -134,9 +134,36 @@ RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected
   end
 end
 
+RSpec::Matchers.define :map_contains_point do |expected_lat, expected_lng|
+  match do
+    result = page.execute_script("
+      var point = L.latLng(#{expected_lat}, #{expected_lng})
+      var map = $('#map').data('map').map;
+      var bounds = map.getBounds();
+      return bounds.contains(point);
+    ")
+    puts result
+    expect(result).to be_truthy
+  end
+
+  failure_message do
+    "expected map bounds to contain point (#{expected_lat}, #{expected_lng}), but leaflet return false. `$('#map').data('map').map.getBounds().contains(L.latLng(#{expected_lat},#{expected_lng}))`"
+  end
+end
+
 RSpec::Matchers.define :have_gibs_resolution do |expected|
   def page_resolution(page)
-    script = "var resolution = null; var layers = $('#map').data('map').map._layers; for (var k in layers) { var layer = layers[k]; if (layer.multiOptions && layer.getTileUrl && layer._map) resolution = layer.options.resolution } resolution"
+    script = "
+      var resolution = null;
+      var layers = $('#map').data('map').map._layers;
+      for (var k in layers) {
+        var layer = layers[k];
+        if (layer.multiOptions && layer.getTileUrl && layer._map) {
+          resolution = layer.options.resolution
+        }
+      }
+      return resolution;
+    "
     page.execute_script(script)
   end
 

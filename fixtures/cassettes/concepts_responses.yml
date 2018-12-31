@@ -1,5 +1,5 @@
 ---
-'0186f196e305739b255aad8ae9b7f2f5695a0df5':
+0a7b600b233b0d813493ac2f18a13ae682725aa0:
   response:
     status:
       code: 200
@@ -59,7 +59,7 @@
         AMSR-E products has not been performed.  As updates are made to the L1R data
         set, those changes will be reflected in this higher level product.","orbit_parameters":{},"id":"C1000000000-LANCEAMSR2","has_formats":false,"original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/data/level2/rainocean/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_WS.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_D_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_D_SP.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_SP.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_SR.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_WV.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.itsc.uah.edu/amsr2-science/data/level2/rainocean/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level2/rainocean/R00/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_RainOcn_NRT_dataset.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://worldview.earthdata.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"}]}'
     http_version: 
-84e891ec21a9beac6c9d1b913c2e2968201d08e8:
+b1f24dc7074a8b0640e31a0bcedafc968e54cdb8:
   response:
     status:
       code: 200
@@ -168,7 +168,7 @@ cbc3867bd1ae51bd279b77d1c61bac5c64577483:
         set, those changes will be reflected in this higher level product.","orbit_parameters":{},"id":"C1000000020-LANCEAMSR2","has_formats":false,"original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","archive_center":"NASA/MSFC/AMSR
         SIPS/LANCE","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/data/level3/daysnow/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L3_DailySnow_P00_20160705_N_SWE.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L3_DailySnow_P00_20160705_N_SWE.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L3_DailySnow_P00_20160705_S_SWE.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.itsc.uah.edu/amsr2-science/data/level3/daysnow/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level3/daysnow/R00/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_DySno_NRT_dataset.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://worldview.earthdata.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/data-recipes/how-georeference-and-convert-nrt-amsr2-snow-water-equivalent-polar-ease-grid-data"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"}]}'
     http_version: 
-8fd08843262056ad4eb9c1f438e25ef942834ea1:
+d54b93400742a6f74fa8b1c1507b7edcaf51b997:
   response:
     status:
       code: 200
@@ -2135,7 +2135,7 @@ c70201f85e76e29c5e1801760bbd7d0854bb1930:
         Fields: 15","orbit_parameters":{},"id":"C14758250-LPDAAC_ECS","has_formats":false,"original_format":"UMM_JSON","archive_center":"LP
         DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ASTER/AST_L1A.003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://lpdaac.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://asterweb.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=AST_L1A+V003"}]}'
     http_version: 
-0c4604a71a97f0cf75b176249a8483e4bd5ad1c5:
+32e739f5a0e7dd71c3accabd9e0bf347abbb5e21:
   response:
     status:
       code: 200
@@ -2587,7 +2587,7 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
         USER SERVICES"}],"ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
         PAGE","URL":"http://sedac.ciesin.columbia.edu"}]}}],"DataLanguage":"eng"}'
     http_version: 
-23f7dd4583c54926941e03d41615b0bfe6566895:
+199af73d57c321613a76a9f1f38b1afb7e429244:
   response:
     status:
       code: 200
@@ -2632,7 +2632,7 @@ e9cf94d094ac4e141e30ebdcb4a88769ef55a5e7:
         with the World Economic Forum (WEF) and the Joint Research Centre (JRC), European
         Commission.","time_end":"2000-01-01T00:00:00.000Z","orbit_parameters":{},"id":"C179001889-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/esi/esi-environmental-sustainability-index-2005/2005-esi-scores-by-country-thumbnail.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.7927/H40V89R6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/maps"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","type":"application/gml+xml","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/maps/services"}]}'
     http_version: 
-dcd4943d49f65312dc70e2c1a641c786ee8224c1:
+77b3e24f6f6b75070151f2e17b96cafd0cbd197c:
   response:
     status:
       code: 200
@@ -2674,7 +2674,7 @@ dcd4943d49f65312dc70e2c1a641c786ee8224c1:
         Law and Policy (YCELP), and the Columbia University Center for International
         Earth Science Information Network (CIESIN).","time_end":"2000-01-01T00:00:00.000Z","orbit_parameters":{},"id":"C179001967-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/esi/esi-environmental-sustainability-index-2002/2002-esi-scores-by-country-thumbnail.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.7927/H4SB43P8"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/maps"}]}'
     http_version: 
-0c4732831bd7c4253364ef2846565b482c4f8e4a:
+b5d7f10480ee1976b50c05842a84860d240e1e25:
   response:
     status:
       code: 200
@@ -2716,7 +2716,7 @@ dcd4943d49f65312dc70e2c1a641c786ee8224c1:
         may also be termed \"anthromes\" to distinguish them from conventional biome
         systems, or \"human biomes\" (a simpler but less precise term).","time_end":"2006-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C179002107-SEDAC","has_formats":false,"original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/anthromes/anthromes-anthropogenic-biomes-world-v1/anthromes-v1-global-thumbnail.jpg"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://dx.doi.org/10.7927/H4H12ZXD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/maps"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","type":"application/gml+xml","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/maps/services"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/docs"}]}'
     http_version: 
-dbc6ba5bf82e6357fe31ac908623bbbb6afcadd5:
+1aba2558d5a73db77ecb3f0bd889ef9af406b2c5:
   response:
     status:
       code: 200
@@ -4332,7 +4332,7 @@ d0031194e04bbdeb0f531986053442c1864123dc:
       string: '{"processing_level_id":"4","boxes":["-90 -180 90 180"],"time_start":"2000-03-01T00:00:00.000Z","version_id":"2.8","updated":"2017-07-24T00:00:00.000Z","dataset_id":"CERES_EBAF-TOA_Edition2.8","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"LARC_ASDC","short_name":"CERES_EBAF-TOA_Edition2.8","organizations":["NASA/LARC/SD/ASDC"],"title":"CERES_EBAF-TOA_Edition2.8","coordinate_system":"CARTESIAN","summary":"CERES
         Energy Balanced and Filled(EBAF) TOA Monthly means data in netCDF","time_end":"2017-02-28T23:59:59.000Z","orbit_parameters":{},"id":"C7085910-LARC_ASDC","has_formats":false,"original_format":"ECHO10","archive_center":"NASA/LARC/SD/ASDC","browse_flag":false,"online_access_flag":false}'
     http_version: 
-f004fe268be1e6f148f3c6086b446aea2ce52b33:
+9158337b904fddcd967f192bda0ffb49b6f9a978:
   response:
     status:
       code: 200
@@ -4714,7 +4714,7 @@ b9948f8e37013c8d027ba74c28c2be44266302e7:
             <DataFormat>ascii</DataFormat>
         </Granule>
     http_version: 
-ab08ed37df2c5ca8f8148129d8791c24cf216e7b:
+c7dd25fa7a5669f7790107776c4464a7b119e667:
   response:
     status:
       code: 200
@@ -4794,7 +4794,7 @@ ab08ed37df2c5ca8f8148129d8791c24cf216e7b:
         Dakota","Country":"USA","PostalCode":"57198"}]}}],"MetadataAssociations":[{"Type":"DEPENDENT","Description":"Radiometric
         values computed from the raw instrument counts","EntryId":"AST_L1B","Version":"3"}]}'
     http_version: 
-7ead3b2106647fa7524ce584d009d41681a5718d:
+8d4f00e5672ef89f18dd10fa854423765bb63b3f:
   response:
     status:
       code: 200
@@ -4825,6 +4825,40 @@ ab08ed37df2c5ca8f8148129d8791c24cf216e7b:
         DAAC User Services","ACRIM SCF"],"title":"ACRIM III Level 2 Daily Mean Data
         V001","summary":"This file contains Level 2 total solar irradiance in the
         form of daily means gathered by the ACRIM instrument on the ACRIMSAT satellite.","orbit_parameters":{},"id":"C1000000029-EDF_OPS","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false}'
+    http_version: 
+3542afcbcb3fcdfb6e3a8be24afb89de32a5d4d0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 351b26a5-05e5-4414-b834-ccde0e59c87d
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 31 Dec 2018 18:11:39 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '637'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"005","updated":"2015-09-18T12:01:43.887Z","dataset_id":"MODIS/Terra+Aqua
+        Nadir BRDF-Adjusted Reflectance 16-Day L3 Global 500m SIN Grid V005","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1200299155-EDF_OPS"]},"has_variables":false,"data_center":"EDF_OPS","short_name":"MCD43A4","organizations":["EDF_OPS","LP
+        DAAC User Services","MODAPS","MODIS Science Data Support Team"],"title":"MODIS/Terra+Aqua
+        Nadir BRDF-Adjusted Reflectance 16-Day L3 Global 500m SIN Grid V005","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        plus Aqua Nadir BRDF-Adjusted Reflectance 16-Day L3 Global 500m SIN Grid","orbit_parameters":{},"id":"C1000000082-EDF_OPS","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lpdaac.usgs.gov/node/291"}]}'
     http_version: 
 9b61b2cfbb56db28f1077948718b975326fc34b4:
   response:
@@ -4941,7 +4975,7 @@ ab08ed37df2c5ca8f8148129d8791c24cf216e7b:
         Dr. Richard C. Willson","ContactMechanisms":[{"Type":"Telephone","Value":"619-522-2945"},{"Type":"Fax","Value":"619-522-2967"},{"Type":"Email","Value":"acrim@acrim.com"}],"Addresses":[{"StreetAddresses":["1001
         B Ave #200"],"City":"Coronado","StateProvince":"California","Country":"USA","PostalCode":"92118"}]}}]}'
     http_version: 
-022ae02d1cb98c7736784372d15fdaf73d5b5d01:
+232c8deda3f211102a26bd4508657b401ec0d2fe:
   response:
     status:
       code: 200
@@ -4975,7 +5009,7 @@ ab08ed37df2c5ca8f8148129d8791c24cf216e7b:
         Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V005","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
         Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid","orbit_parameters":{},"id":"C1000000739-DEV08","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://lpdaac.usgs.gov/modis/dataprod.html"}]}'
     http_version: 
-1d31084831e778e6bc2cfdf19cd496503faf2d8a:
+83dbac185244ab53e7cf4c9c4f77d2f26d5c0d03:
   response:
     status:
       code: 200
@@ -5011,7 +5045,7 @@ ab08ed37df2c5ca8f8148129d8791c24cf216e7b:
         GHz, 10.7 GHz, 18.7 GHz, 23.8 GHz, 36.5 GHz, and 89.0 GHz resampled at resolutions
         of 56 km, 38 km, 21 km, 12 km, and 5.4 km.","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C1000000969-DEV08","has_formats":true,"original_format":"ECHO10","archive_center":"DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_l2a_tbs.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
     http_version: 
-7425e8ad3171c26bb6c3f25ad01eba2c9543308b:
+9932a1706d449279bb97e8618f684cabff508f06:
   response:
     status:
       code: 200
@@ -5668,7 +5702,7 @@ b254400c8d4ce110ceccdc75a040c6dab2e88e49:
         URL datacenter level 3","URLContentType":"DataCenterURL","Type":"HOME PAGE","URL":"http://www.973geodata.cn"}]}}],"MetadataDates":[{"Type":"CREATE","Date":"2017-07-31T17:40:00.000Z"},{"Type":"UPDATE","Date":"2017-08-09T17:04:00.000Z"}],"DOI":{"DOI":"The
         Digitial Object Identifier.","Authority":"The authority who created the DOI."}}'
     http_version: 
-7e8000dc95ecbad4c16df6dd0144c3711114b5ad:
+e47ccd4fd50f3592cdb066166c00a4ee5fa5d3cc:
   response:
     status:
       code: 200
@@ -6136,7 +6170,43 @@ d3031e8ce4d7fa5a95e712c8620a73da2db1e80a:
         for format/distribution issues.","ContactMechanisms":[{"Type":"Telephone","Value":"301-352-2144"},{"Type":"Email","Value":"laadshelp@listserv.gsfc.nasa.gov"}],"Addresses":[{"StreetAddresses":["7501
         Forbes Blvd, Suite 103"],"City":"Seabrook","StateProvince":"MD","Country":"USA","PostalCode":"20706"}]}}]}'
     http_version: 
-020fee1d7a7c4d91cee00e6fdbfafd19a33ce183:
+783d31d069d588b8ceb7c76f8ff8c95d4ebc44cc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 962928da-fd37-4d5e-b678-ff1c8ba07e8f
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 31 Dec 2018 18:13:29 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '744'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","version_id":"002","updated":"2014-05-14T14:47:05.109Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1224343237-EDF_OPS","S1224343238-EDF_OPS"]},"has_variables":false,"data_center":"EDF_OPS","short_name":"AE_5DSno","organizations":["EDF_OPS","NASA
+        DAAC at the National Snow and Ice Data Center","AMSR-E SIPS-GHCC"],"title":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","coordinate_system":"CARTESIAN","summary":"The
+        AMSR-E/Aqua Level-3 5-day snow water equivalent (SWE) product includes global
+        5-day maximum SWE on Northern and Southern Hemisphere 25 km EASE-Grids, generated
+        by the GSFC algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1216127793-EDF_OPS","has_formats":false,"original_format":"ECHO10","archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+    http_version: 
+49fe83c5f38c581980fc23e679042980053099d7:
   response:
     status:
       code: 200

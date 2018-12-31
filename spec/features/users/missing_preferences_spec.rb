@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User missing ordering preferences', pending_updates: true do
+describe 'User missing ordering preferences' do
   context 'when configuring a data access request' do
     before :all do
       load_page :search, focus: ['C1000000739-DEV08'], env: :sit, authenticate: 'edscbasic'
@@ -8,13 +8,15 @@ describe 'User missing ordering preferences', pending_updates: true do
       click_button 'Download All'
       wait_for_xhr
 
-      find('.action-button.edit').click
-      find('button', text: 'Edit Delivery Method').click
+      collection_card = find('.project-list-item', match: :first)
+      collection_card.find('.project-list-item-action-edit-options').click
+      wait_for_xhr
+
+      click_on 'Edit Delivery Method'
       choose 'Stage for Delivery'
       wait_for_xhr
 
-      select 'FtpPull', from: 'Distribution Type'
-      find('button', text: 'Close').click
+      select 'FTP Pull', from: 'Distribution Type'
     end
 
     it 'does not show an error message' do
@@ -24,20 +26,15 @@ describe 'User missing ordering preferences', pending_updates: true do
 
   context 'when accessing downloadable data' do
     before :all do
-      load_page :search, focus: ['C203234523-LAADS'], authenticate: 'edscbasic'
+      load_page :search, focus: ['C179003620-ORNL_DAAC'], authenticate: 'edscbasic'
 
       click_button 'Download All'
-
-      find('.action-button.edit').click
-      find('button', text: 'Edit Delivery Method').click
-      choose 'Direct Download'
-      find('button', text: 'Close').click
 
       find('.button-download-data').click
     end
 
     it 'shows the data retrieval page' do
-      expect(page).to have_content('MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 1km V006')
+      expect(page).to have_content('Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
       expect(page).to have_link('View/Download Data Links')
     end
   end

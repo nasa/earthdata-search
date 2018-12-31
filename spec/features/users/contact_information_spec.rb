@@ -3,16 +3,9 @@
 
 require 'rails_helper'
 
-describe 'Contact Information', pending_updates: true do
+describe 'Contact Information' do
   before :all do
-    load_page :search, overlay: false, authenticate: 'edsc'
-
-    dismiss_banner
-    click_link 'Manage user account'
-    # TODO: Both of these fail to get me to the contact info page
-    # click_link 'Contact Information'
-    # click_contact_information
-    load_page '/contact_info'
+    load_page '/contact_info', authenticate: 'edsc'
     wait_for_xhr
   end
 
@@ -29,7 +22,10 @@ describe 'Contact Information', pending_updates: true do
     expect(page).to have_select('notificationLevel', selected: 'Never')
   end
 
-  context 'clicking Update Notification Preference button' do
+  # This no longer works because we took the contact information retrieval
+  # calls out of the tests. Since the tests don't get this information
+  # from URS, we can't test updating it.
+  context 'clicking Update Notification Preference button', pending_updates: true do
     before :each do
       expect(page).to have_select('notificationLevel', selected: 'Never')
       find('#notificationLevel').find(:xpath, 'option[1]').select_option
@@ -41,7 +37,7 @@ describe 'Contact Information', pending_updates: true do
       find('#notificationLevel').find(:xpath, 'option[5]').select_option
       click_button 'Update Notification Preference'
       wait_for_xhr
-      load_page '/contact_info'
+      load_page '/contact_info', authenticate: 'edsc'
       wait_for_xhr
     end
 

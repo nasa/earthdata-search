@@ -125,9 +125,9 @@ describe 'Spatial' do
         expect(page).to have_field('manual-coord-entry-point', with: '-75,40')
       end
 
-      # it 'pans map to the point' do
-      #   expect(page).to have_map_center(-92, 39, 2)
-      # end
+      it 'pans map to the point' do
+        expect(page).to map_contains_point(-75, 40)
+      end
     end
 
     context 'removing the point selection' do
@@ -138,14 +138,9 @@ describe 'Spatial' do
         wait_for_xhr
       end
 
-      # it 'removes the spatial point in the manual entry box' do
-      #   expect(page).not_to have_field('manual-coord-entry-point', with: '0,0')
-      # end
-
-      # TODO: RDA // Setting a point at 0,0 does not go to 0,0 (inspecting `m`)
-      # it 'pans map to the point' do
-      #   expect(page).to have_map_center(0, 0, 2)
-      # end
+      it 'removes the spatial point in the manual entry box' do
+        expect(page).not_to have_field('manual-coord-entry-point', with: '0,0')
+      end
     end
   end
 
@@ -275,7 +270,7 @@ describe 'Spatial' do
     end
   end
 
-  context 'polygon selection', pending_updates: true do
+  context 'polygon selection' do
     # We need to figure out a non-js way of creating a polygon
     it 'doesn\'t show manual input text box' do
       expect(page).not_to have_field('manual-coord-entry-container')

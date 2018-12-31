@@ -17,7 +17,7 @@ describe 'Collection results' do
     expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
   end
 
-  context 'When collections do not have a version_id', pending_updates: true do
+  context 'When collections do not have a version_id', data_specific: true do
     before :all do
       fill_in 'keywords', with: 'C1214605943-SCIOPS'
       wait_for_xhr
@@ -40,7 +40,7 @@ describe 'Collection results' do
   end
 
   # collection is gone
-  context 'When collections have ongoing data collection', pending_updates: true do
+  context 'When collections have ongoing data collection', data_specific: true do
     before :all do
       fill_in 'keywords', with: 'C204690560-LAADS'
       wait_for_xhr
@@ -82,7 +82,7 @@ describe 'Collection results' do
   end
 
   # collection is gone
-  context 'When collections have no thumbnail images', pending_updates: true do
+  context 'When collections have no thumbnail images', data_specific: true do
     before :all do
       fill_in 'keywords', with: 'C204690560-LAADS'
       wait_for_xhr
