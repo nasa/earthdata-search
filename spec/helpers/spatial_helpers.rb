@@ -13,18 +13,18 @@ module Helpers
       end
     end
 
-    def manually_create_point(lat=0, lon=0)
+    def manually_create_point(lat = 0, lon = 0)
       choose_tool_from_site_toolbar('Point')
 
       fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}"
       page.find('body').click
     end
 
-    def create_point(lat=0, lon=0)
+    def create_point(lat = 0, lon = 0)
       create_spatial('point', [lat, lon])
     end
 
-    def manually_create_bounding_box(swlat=0, swlon=0, nelat=0, nelon=0)
+    def manually_create_bounding_box(swlat = 0, swlon = 0, nelat = 0, nelon = 0)
       choose_tool_from_site_toolbar('Rectangle')
 
       fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}"
@@ -34,7 +34,7 @@ module Helpers
       wait_for_xhr
     end
 
-    def create_bounding_box(lat0=0, lon0=0, lat1=10, lon1=10)
+    def create_bounding_box(lat0 = 0, lon0 = 0, lat1 = 10, lon1 = 10)
       create_spatial('bounding_box', [lat0, lon0], [lat1, lon1])
     end
 
@@ -83,12 +83,10 @@ module Helpers
     end
 
     def clear_shapefile
-      begin
-        click_link 'Remove file'
-        expect(page).to have_no_css('.dz-file-preview')
-      rescue Capybara::ElementNotFound => e
-        puts e
-      end
+      click_link 'Remove file'
+      expect(page).to have_no_css('.dz-file-preview')
+    rescue Capybara::ElementNotFound => e
+      puts e
     end
 
     def map_mousemove(*args)
@@ -112,8 +110,8 @@ module Helpers
 
     private
 
-    def map_position_event(event, selector='#map', lat=10, lng=10, x=10, y=10)
-      script = """
+    def map_position_event(event, selector = '#map', lat = 10, lng = 10, _x = 10, _y = 10)
+      script = "
         var target = $('#{selector}')[0];
         var map = window.edsc.page.map.map;
         var latLng = L.latLng(#{lat}, #{lng});
@@ -126,12 +124,12 @@ module Helpers
           latlng: latLng
         };
         map.fire('#{event}', e);
-      """
+      "
       page.execute_script(script)
     end
 
     def create_spatial(type, *points)
-      point_strs = points.map {|p| p.reverse.join(',')}
+      point_strs = points.map { |p| p.reverse.join(',') }
       script = "edsc.models.page.current.query.spatial('#{type}:#{point_strs.join(':')}')"
       page.execute_script(script)
     end

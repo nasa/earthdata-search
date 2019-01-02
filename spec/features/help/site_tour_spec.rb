@@ -79,19 +79,6 @@ describe 'Site tour' do
         end
       end
     end
-
-    context 'and when a collection is clicked in order view its granules' do
-      before :each do
-        click_on 'Close'
-        first_collection_result.click_link 'View collection details'
-        wait_for_xhr
-        click_on 'Manage user account'
-      end
-
-      it 'hides the "Show Tour" from the Manage Account drop down' do
-        expect(page).to_not have_link('Show Tour')
-      end
-    end
   end
 
   context "When loading the initial search page without being logged in and clicking the 'Show Tour' button" do
