@@ -20,12 +20,14 @@ describe 'Granule footprint visualizations' do
       end
 
       context 'and mousing over a visualized granule' do
-        before :all do
+        before do
+          MapUtil.set_view(page, 39.1, -96.6)
           map_mousemove('#map', 39.1, -96.6)
         end
 
-        after :all do
+        after do
           map_mouseout
+          MapUtil.set_view(page, 0, 0)
         end
 
         it "draws the granule's footprint" do
@@ -34,7 +36,7 @@ describe 'Granule footprint visualizations' do
       end
 
       context 'and mousing off of a visualized granule' do
-        before :all do
+        before do
           map_mousemove('#map', 39.1, -96.6)
           map_mouseout
         end
