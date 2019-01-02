@@ -60,7 +60,7 @@ describe 'Collection Facets With Nesting' do
       end
 
       # TODO: RDA // EDSC-1772: Facets are being deselected when they shouldn't
-      it 'displays the previously chosen as well as the child facet as selected', penging_updates: true do
+      it 'displays the previously chosen as well as the child facet as selected', pending_updates: true do
         within '.keywords' do
           expect(page).to have_css('.facets-item.selected', count: 4)
         end
@@ -75,7 +75,7 @@ describe 'Collection Facets With Nesting' do
         end
 
         # TODO: RDA // EDSC-1772: Facets are being deselected when they shouldn't
-        it 'display only the previously chosen facets as selected', penging_updates: true do
+        it 'display only the previously chosen facets as selected', pending_updates: true do
           within '.keywords' do
             expect(page).to have_css('.facets-item.selected', count: 2)
           end

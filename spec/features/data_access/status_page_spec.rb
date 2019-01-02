@@ -110,6 +110,7 @@ describe 'Data access status page' do
   context 'when the current user tries to access an invalid retrieval ID' do
     before :all do
       Capybara.reset_sessions!
+      load_page :search, authenticate: 'edsc'
       visit '/data/retrieve/not_a_valid_retrieval_id'
     end
 
