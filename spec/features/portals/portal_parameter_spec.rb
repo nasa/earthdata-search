@@ -4,8 +4,8 @@ describe 'Portal parameters', reset: true do
   include Helpers::CollectionHelpers
 
   it 'Visiting Earthdata Search with /portal/<portal-id> displays an error if no portal is configured' do
-    expect  do
-      'visit /?portal=does-not-exist'
+    expect do
+      visit '/?portal=does-not-exist'
       Capybara.reset_sessions! # Ensures the errors are raised
     end.to raise_error(ActionController::RoutingError)
   end
