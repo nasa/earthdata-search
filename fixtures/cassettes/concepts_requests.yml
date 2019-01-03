@@ -21,6 +21,25 @@ http_interactions:
   digest: 0a7b600b233b0d813493ac2f18a13ae682725aa0
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000000-ORNL_DAAC.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.10
+  recorded_at: Thu, 03 Jan 2019 14:58:16 GMT
+  digest: 5462a9c9a991307543d6fbb83417bd45ba697392
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000000-SEDAC.json
     body:
       encoding: US-ASCII
