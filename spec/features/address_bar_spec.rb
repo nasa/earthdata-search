@@ -281,20 +281,6 @@ describe 'Address bar' do
     end
   end
 
-  pending 'when loading a url containing project collections' do
-    # context 'when loading a url containing project collections' do
-    before(:all) do
-      load_page '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC'
-      wait_for_xhr
-    end
-
-    it 'restores the project' do
-      expect(page).to have_visible_project_overview
-      expect(project_overview).to have_text('2000 Pilot Environmental Sustainability Index (ESI)')
-      expect(project_overview).to have_text('30 Minute Rainfall Data (FIFE)')
-    end
-  end
-
   context "when viewing a collection's granules" do
     before(:all) do
       load_page '/search/collections?q=C179003030-ORNL_DAAC'

@@ -65,6 +65,10 @@ module Helpers
       end
     end
 
+    def granule_count
+      page.find('.master-overlay-info-panel.master-overlay-global-actions.actions')
+    end
+
     private
 
     def wait_for_visualization_unload

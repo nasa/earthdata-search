@@ -1,14 +1,10 @@
-# EDSC-195: As a user, I want to view a timeline showing granule availability so
-#           I can discover periods of time where multiple collections have matching
-#           granules
-
 require 'rails_helper'
 
-describe "Timeline display" do
+describe 'Timeline display' do
   extend Helpers::CollectionHelpers
 
   before :all do
-    load_page :search
+    load_page :search, authenticate: 'edsc'
   end
 
   after :each do
@@ -21,7 +17,7 @@ describe "Timeline display" do
     end
   end
 
-  pending 'in the project list' do
+  context 'in the project list' do
     before :all do
       wait_for_xhr
       # 4 collections with granules
@@ -30,13 +26,13 @@ describe "Timeline display" do
       add_collection_to_project('C1000000000-ORNL_DAAC', 'A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data')
       add_collection_to_project('C1234044620-GES_DISC', 'MLS/Aura Near-Real-Time L2 Nitric Acid (HNO3) Mixing Ratio V003 (ML2HNO3_NRT) at GES DISC')
 
-      find("#view-project").click
+      click_on 'My Project'
 
       wait_for_xhr
     end
 
     after :all do
-      click_link("Back to Collection Search")
+      click_link('Back to Search Session')
       reset_project
     end
 
@@ -58,11 +54,11 @@ describe "Timeline display" do
 
     context 'returning to the collection results list' do
       before :all do
-        click_link("Back to Collection Search")
+        click_link('Back to Search Session')
       end
 
       after :all do
-        find("#view-project").click
+        click_on 'My Project'
       end
 
       it 'hides the timeline' do
