@@ -59,6 +59,67 @@
         AMSR-E products has not been performed.  As updates are made to the L1R data
         set, those changes will be reflected in this higher level product.","orbit_parameters":{},"id":"C1000000000-LANCEAMSR2","has_formats":false,"original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/data/level2/rainocean/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_WS.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_D_LW.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_D_SP.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_SP.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_SR.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_2_L2_RainOcean_R00_20160623_A_WV.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://lance.itsc.uah.edu/amsr2-science/data/level2/rainocean/R00/hdfeos5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/browse_png/level2/rainocean/R00/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://lance.nsstc.nasa.gov/amsr2-science/doc/LANCE_A2_RainOcn_NRT_dataset.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://worldview.earthdata.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"}]}'
     http_version: 
+5462a9c9a991307543d6fbb83417bd45ba697392:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - eb9e3d9f-5354-48d1-9fb2-678ce15b5fbd
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 03 Jan 2019 14:58:00 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '1540'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 79 177.9"],"time_start":"1977-11-16T00:00:00.000Z","version_id":"1","updated":"2018-12-10T12:53:33.000Z","dataset_id":"A
+        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
+        Data","has_spatial_subsetting":false,"has_transforms":false,"has_variables":false,"data_center":"ORNL_DAAC","short_name":"GLOBAL_MICROBIAL_BIOMASS_C_N_P_1264","organizations":["ORNL_DAAC"],"title":"A
+        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
+        Data","coordinate_system":"CARTESIAN","summary":"This data set provides the
+        concentrations of soil microbial biomass carbon (C), nitrogen (N) and phosphorus
+        (P), soil organic carbon, total nitrogen, and total phosphorus at biome and
+        global scales. The data were compiled from a comprehensive survey of publications
+        from the late 1970s to 2012 and include 3,422 data points from 315 papers.
+        These data are from soil samples collected primarily at 0-15 cm depth with
+        some from 0-30 cm. In addition, data were compiled for soil microbial biomass
+        concentrations from soil profile samples to depths of 100 cm. Sampling site
+        latitude and longitude were available for the majority of the samples that
+        enabled assembling additional soil properties, site characteristics, vegetation
+        distributions, biomes, and long-term climate data from several global sources
+        of soil, land-cover, and climate data. These site attributes are included
+        with the microbial biomass data. This data set contains two *.csv files of
+        the soil microbial biomass C, N, P data. The first provides all compiled results
+        emphasizing the full spatial extent of the data, while the second is a subset
+        that provides only data from a series of profile samples emphasizing the vertical
+        distribution of microbial biomass concentrations.There is a companion file,
+        also in .csv format, of the references for the surveyed publications. A reference_number
+        relates the data to the respective publication.The concentrations of soil
+        microbial biomass, in combination with other soil databases, were used to
+        estimate the global storage of soil microbial biomass C and N in 0-30 cm and
+        0-100 cm soil profiles. These storage estimates were combined with a spatial
+        map of 12 major biomes (boreal forest, temperate coniferous forest, temperate
+        broadleaf forest, tropical and subtropical forests, mixed forest, grassland,
+        shrub, tundra, desert, natural wetland, cropland, and pasture) at 0.05-degree
+        by 0.5-degree spatial resolution. The biome map and six estimates of C and
+        N storage and C:N ration in soil microbial biomass are provided in a single
+        netCDF format file. ","time_end":"2012-06-01T23:59:59.000Z","orbit_parameters":{},"id":"C1000000000-ORNL_DAAC","has_formats":false,"original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_soil/Global_Microbial_Biomass_C_N_P//"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/SOILS/guides/Global_Microbial_Biomass_C_N_P.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"https://doi.org/10.3334/ORNLDAAC/1264"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_soil/Global_Microbial_Biomass_C_N_P//comp/Global_Microbial_Biomass_C_N_P.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_soil/Global_Microbial_Biomass_C_N_P//comp/Soil_Microbial_Biomass_C_N_P_references.csv"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/documentation#","hreflang":"en-US","href":"https://daac.ornl.gov/daacdata/global_soil/Global_Microbial_Biomass_C_N_P//comp/XuXF2013_GEB.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"https://daac.ornl.gov/SOILS/guides/fig_1_global_biomass.png"}]}'
+    http_version: 
 b1f24dc7074a8b0640e31a0bcedafc968e54cdb8:
   response:
     status:
