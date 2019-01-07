@@ -22,7 +22,6 @@ describe 'Timeline date selection' do
 
   before :all do
     load_page :search, focus: 'C179003030-ORNL_DAAC'
-    wait_for_xhr
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
     pan_to_time(present - 20.years)
@@ -204,7 +203,6 @@ describe 'Timeline date selection' do
     context 'and zooming in the timeline' do
       before(:all) do
         load_page :search, focus: 'C179003030-ORNL_DAAC'
-        wait_for_xhr
         find('.timeline-zoom-out').click
         pan_to_time(present - 20.years)
         wait_for_xhr

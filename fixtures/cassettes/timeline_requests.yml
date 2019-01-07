@@ -4,365 +4,8 @@ http_interactions:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: attribute%5B%5D=int%2CLowerLeftQuadCloudCoverage%2C50%2C100&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:45 GMT
-  digest: 296fe2b0449739254db7e193d8ac8bdf69f7501f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&browse_only=true&cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:45:36 GMT
-  digest: 630bda85ae99621f8d239dd489b09f637cda2daa
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&browse_only=true&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:45:31 GMT
-  digest: dbed2dd4d20bd7c99bc7a8f44746e14749f5e8c4
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:45:29 GMT
-  digest: a1da501125c76fc28adaa4e0a28fd0373f762ffe
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:45:21 GMT
-  digest: bdd0492ab84012455944895a7bb97ca4ef7d84e6
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C10&concept_id=C1219248591-LANCEMODIS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:39:17 GMT
-  digest: 8b1d7e1658dbfa4715bc2e4dc7dbd67523034c20
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C10&concept_id=C1219248591-LANCEMODIS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:30:48 GMT
-  digest: 7cf877a662914414efe8818584b77490160fd225
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&concept_id=C1236224151-GES_DISC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:40:22 GMT
-  digest: 6322b3bfe3f19ce6983016ac13c59ab336542abf
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&concept_id=C1236224151-GES_DISC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:29:40 GMT
-  digest: 61af3e9bde627965d31a651ea8330219245d60d5
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1456949440-LAADS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:41:39 GMT
-  digest: c8e293c27578344f17d1a6776b3f87ff551b8cf7
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:41:33 GMT
-  digest: a2ea5ffd545c157c8c169368d6bf6bae72ff4b80
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:39 GMT
-  digest: 8fb3494534aead4439dfcc27b871d943ac631ea1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:34 GMT
-  digest: 4bd32ffc910b370a4bde8e99dd0f32eee02b3c27
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&online_only=true&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:08 GMT
-  digest: 5793e20ec00002e96b4362dca0e7d2eaf1fc0e81
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:17 GMT
-  digest: 51fdb3890d96e163993469ccb9bab06382eec1cf
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:43:09 GMT
-  digest: 9cd30eaec4b8a9a913c59401e897253fef8a418e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:44:50 GMT
-  digest: 6d66b8f10d0cf568de7d0d51b9da168ee4aa07d7
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: browse_only=true&concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:51 GMT
-  digest: aae51c774d53af6af38e7827687102eca077eda2
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: cloud_cover=%2C5.0&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:57 GMT
-  digest: e3e45f47bb2285d98a4e45ca07857ecf8b0cb005
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: cloud_cover=2.5%2C&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:08 GMT
-  digest: 98d1fc50def49443569ab6efb4f82ed48817818e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:01 GMT
-  digest: e11cd86b9ba6a814a979bf2f3550f3a228b2bad4
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
       encoding: UTF-8
-      string: cloud_cover=5.0%2C&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+      string: attribute%5B%5D=int%2CLowerLeftQuadCloudCoverage%2C50%2C100&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -372,8 +15,314 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 02 Jan 2019 20:51:14 GMT
-  digest: 672f0534f24a33a7eee8b5bd65ccf94e9df5a754
+  recorded_at: Mon, 07 Jan 2019 20:44:58 GMT
+  digest: 5429a37982ddcfc1b843867e5be92a0907a580b2
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C10%2C10&browse_only=true&cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:11:05 GMT
+  digest: 630bda85ae99621f8d239dd489b09f637cda2daa
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C10%2C10&browse_only=true&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:11:03 GMT
+  digest: dbed2dd4d20bd7c99bc7a8f44746e14749f5e8c4
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C10%2C10&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:11:01 GMT
+  digest: a1da501125c76fc28adaa4e0a28fd0373f762ffe
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C10%2C10&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:10:56 GMT
+  digest: bdd0492ab84012455944895a7bb97ca4ef7d84e6
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C15%2C10&concept_id=C1219248591-LANCEMODIS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:19:02 GMT
+  digest: 8b1d7e1658dbfa4715bc2e4dc7dbd67523034c20
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C15%2C15&concept_id=C1236224151-GES_DISC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:19:25 GMT
+  digest: 6322b3bfe3f19ce6983016ac13c59ab336542abf
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1582484588-LAADS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:22:06 GMT
+  digest: 4e6e49cab28b6bc0cefa583f4c40a7eda7c0a615
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: bounding_box=0%2C0%2C15%2C15&concept_id=C203234448-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:22:03 GMT
+  digest: a2ea5ffd545c157c8c169368d6bf6bae72ff4b80
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: browse_only=true&cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:07:46 GMT
+  digest: 8fb3494534aead4439dfcc27b871d943ac631ea1
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:07:44 GMT
+  digest: 4bd32ffc910b370a4bde8e99dd0f32eee02b3c27
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&online_only=true&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:47:14 GMT
+  digest: 9c6a00a3c22e6a5e3dc135ed5727ada216b67487
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: browse_only=true&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:47:09 GMT
+  digest: 273da42c91a966a7407fade584b6054f8ff5d1da
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: browse_only=true&concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:07:28 GMT
+  digest: 9cd30eaec4b8a9a913c59401e897253fef8a418e
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: browse_only=true&concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:04:07 GMT
+  digest: 6d66b8f10d0cf568de7d0d51b9da168ee4aa07d7
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: cloud_cover=%2C5.0&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:45:40 GMT
+  digest: 26a9ff9426c047b51dda80c607ae17768547b2e4
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: cloud_cover=2.5%2C&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:45:27 GMT
+  digest: f81100dd2fe58036aa4166d7f26a4c2491fa0f95
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: cloud_cover=2.5%2C5.0&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:45:21 GMT
+  digest: 82057b790eddac657d1078215120e0c26ad892bc
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: cloud_cover=5.0%2C&concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:45:52 GMT
+  digest: cd43d5b42e59d8b5a47226b72beca7f8414b10f6
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -390,9 +339,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:27:59 GMT
-  digest: e0f837a10fd439780b8ec2343fb4dc5ae5335871
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:12:54 GMT
+  digest: 641b860b2e4f213195268b9b1c8139cb97addcdc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -409,9 +358,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:27:41 GMT
-  digest: 3cd116a63f84df485f2a8ddcf4e7f997387c6914
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:12:33 GMT
+  digest: a00fab1c7fb9919073176123d1b81bf9a894283b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -428,399 +377,263 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Thu, 03 Jan 2019 14:58:15 GMT
-  digest: ed4b84714acd0ea3984ee0ea52d8992144dd2901
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:53:40 GMT
+  digest: 48327dd8bbe89ff25a9f803873cfdc5d01102f11
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C1000000000-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:47:19 GMT
-  digest: 91922d77ff775c85d17b6f47ba65f4f3e4888584
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000000-ORNL_DAAC&end_date=2013-06-02T23%3A59%3A59.000Z&interval=day&start_date=2010-05-31T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:35:59 GMT
-  digest: a9834154777f823d9a4d363120dbbe3a72e6976a
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000000-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:42:38 GMT
-  digest: a08acca69f95ed3209679bf691c963a42b32711d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000020-LANCEAMSR2&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:32:45 GMT
-  digest: e75293edc236df7a765fc87ad2119b9f0ffb13da
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000042-LANCEAMSR2&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:34 GMT
-  digest: fa5afb45a53c22f594722936316b225edfd58c33
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000000062-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&project=2013_AN_NASA&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:45:57 GMT
+  recorded_at: Mon, 07 Jan 2019 20:44:15 GMT
   digest: edf1446c90c375ed4dd3eeb7a126e4d06341786a
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000000300-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:53:10 GMT
+  recorded_at: Mon, 07 Jan 2019 20:54:21 GMT
   digest: dd211f49231fb53e71690939b1a0e2df6bb4f85f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C1000000445-NSIDC_ECS&end_date=2011-01-14T00%3A00%3A00.000Z&interval=day&start_date=2008-01-12T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:42:11 GMT
-  digest: bcee2d69e84a8832b7245978b2403cce6add2ec6
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000561-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:33:01 GMT
-  digest: 91e9a50ed45d588b2e07acd5d7f5943c4ea91c76
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000580-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:32:55 GMT
-  digest: e0da703e6a8378342160e7854ddd335180013ed5
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:51 GMT
+  recorded_at: Mon, 07 Jan 2019 20:48:14 GMT
   digest: 41a7898c551280834851809b7948af0ede8bcb72
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:53 GMT
+  recorded_at: Mon, 07 Jan 2019 20:48:25 GMT
   digest: aa8e11590d8b469c77596f5bbb0cf5641341745b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:57 GMT
+  recorded_at: Mon, 07 Jan 2019 20:48:20 GMT
   digest: f52a0a9d469006d00aa1e17e0478821fb86d62cc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:48:01 GMT
+  recorded_at: Mon, 07 Jan 2019 20:48:01 GMT
   digest: 2b76fdf93cc33be8b61e9042c8191e238ac7a54c
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_longitude%5Bmax%5D=-40&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:42 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:30 GMT
   digest: ea2d4d5cbdeb708994aaf2ff4d4dda4a62a08551
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&equator_crossing_longitude%5Bmin%5D=-45&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:48:04 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:36 GMT
   digest: c6d01b0207768c4d20bf5bd60519b763e43590d2
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:35 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:24 GMT
   digest: 1f2e0938b6dc703a1b2edc3b480cdcc0d68df142
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&orbit_number%5Bmax%5D=30009&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:24 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:42 GMT
   digest: 5a28b49929a2dad8c6868bf31405996c55c8f213
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&orbit_number%5Bmin%5D=30000&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:48:10 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:22 GMT
   digest: 8168fb7012b2d3e2a0ce4f717a3aaf94c791c452
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:21 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:19 GMT
   digest: 0a0e7cf2ab8013bd619fe35a1026c9825bdc5dce
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&equator_crossing_date%5Bmax%5D=2015-01-25T23%3A59%3A59&equator_crossing_date%5Bmin%5D=2015-01-24T00%3A00%3A00&interval=day&start_date=2015-08-20T20%3A35%3A27.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:40 GMT
+  recorded_at: Mon, 07 Jan 2019 20:48:09 GMT
   digest: 26ae7bf4d0728dbec933f7025ce5348a91d2291d
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&equator_crossing_longitude%5Bmax%5D=-40&equator_crossing_longitude%5Bmin%5D=-45&interval=day&start_date=2015-08-20T20%3A35%3A27.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:29 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:54 GMT
   digest: 30b306ae58e92015d6aefd2cd6de0176108bfcf5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001167-NSIDC_ECS&end_date=2018-08-22T20%3A35%3A27.000Z&interval=day&orbit_number%5Bmax%5D=30009&orbit_number%5Bmin%5D=30000&start_date=2015-08-20T20%3A35%3A27.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:47:48 GMT
+  recorded_at: Mon, 07 Jan 2019 20:48:37 GMT
   digest: 03f9ea6b577d7e0a78bb7b3843bf3cb6de4178f2
 - request:
     method: post
@@ -837,7 +650,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 02 Jan 2019 21:22:02 GMT
+  recorded_at: Mon, 07 Jan 2019 20:47:53 GMT
   digest: 11ca224e3f48e0e44b64f987902a597bb1c6b79e
 - request:
     method: post
@@ -855,111 +668,26 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Thu, 27 Dec 2018 19:18:22 GMT
-  digest: e76bdc6e27163c05ebde506d39629cd23c88b2ab
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:06:22 GMT
+  digest: cfc9d326ef3903bc5b4fa9fad6b54561d721b322
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C119124186-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:32:37 GMT
-  digest: 86d7747ca661c255897278a34677ed42e6bf4aa7
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1236224182-GES_DISC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:48:14 GMT
+  recorded_at: Mon, 07 Jan 2019 20:44:08 GMT
   digest: d9475ed0a54ca4ec85c81909ea80cc4945ecfb10
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1236303849-NSIDC_ECS&end_date=2016-07-07T23%3A59%3A59.000Z&interval=day&start_date=2013-07-05T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:32:41 GMT
-  digest: 00777a61dae299b76e2b6947ef4631672820cb95
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1353062857-NSIDC_ECS&end_date=2019-02-08T16%3A31%3A11.000Z&interval=day&start_date=2016-02-06T16%3A31%3A11.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:39 GMT
-  digest: 732552790020c296758a0ac021a546d46643fc1e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1358859924-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 26 Feb 2018 15:45:18 GMT
-  digest: 166cd1b9367b0844eb883b3e15cfa371f3b660b5
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1408830900-LANCEAMSR2&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:59:33 GMT
-  digest: d70114143ae5a037dfcd52975df35b9c1b40e498
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -975,99 +703,14 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 31 Dec 2018 18:55:26 GMT
+  recorded_at: Mon, 07 Jan 2019 21:20:13 GMT
   digest: 421b19d4064e648bb2d59f6528b6e9542b702c6c
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C1444742099-PODAAC&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:12 GMT
-  digest: c03050d4ab85544fb5ebd2b246e2b05e48cc159d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=BOTH&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:33 GMT
-  digest: cf8b100bff82fcafbe5253fb00ca0c0394c23a8d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:30 GMT
-  digest: 41094fb160cb07e0108ada6124edca622ac64298
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=NIGHT&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:38 GMT
-  digest: 3d04fcdc2210b67c3cb259c0664ab5f35f3f5d9b
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:53:48 GMT
-  digest: 896e6266bff7003ace1ee067bee9375de6b0ba36
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
       encoding: UTF-8
-      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1005442453-LPDAAC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+      string: concept_id=C1444742099-PODAAC&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -1077,34 +720,85 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 02 Jan 2019 21:57:35 GMT
-  digest: 12f0b6b5726ac6684e5edb1d114569ffbd36bfa2
+  recorded_at: Mon, 07 Jan 2019 21:04:39 GMT
+  digest: c03050d4ab85544fb5ebd2b246e2b05e48cc159d
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&online_only=true&start_date=2012-02-28T00%3A00%3A00.000Z
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=BOTH&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:46:12 GMT
-  digest: 82fd851389285825fca1766f9d49f3d2e2c376d9
+  recorded_at: Mon, 07 Jan 2019 20:46:21 GMT
+  digest: 00c5ba9786e69f99da8f9337e0e14140b10b84e9
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=AST_L1A%2300311092015232127_11102015081255.hdf&readable_granule_name%5B%5D=AST_L1A%2300311092015223445_11102015075930.hdf&start_date=2012-02-28T00%3A00%3A00.000Z
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:46:11 GMT
+  digest: b849fb8d7b2bb4c2b647bdc9eac71fac4eb8952d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=DAY&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:07:41 GMT
+  digest: 41094fb160cb07e0108ada6124edca622ac64298
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&day_night_flag=NIGHT&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:46:16 GMT
+  digest: de85a8e1e3fba43465dd2e7d43b5902130dd212d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
@@ -1112,42 +806,93 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Fri, 23 Feb 2018 18:03:46 GMT
-  digest: 8fd61b30abd9ac7160bd659ec239f79c73cfb292
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:12:54 GMT
+  digest: 3c9e99c902f3be705b70f742d64b5963138f342f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&polygon=10%2C10%2C-10%2C10%2C-10%2C-10%2C10%2C-10%2C10%2C10&start_date=2012-02-28T00%3A00%3A00.000Z
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1005442453-LPDAAC_ECS&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:51:30 GMT
-  digest: e8422155ecef952697d062b638a51eac34c38960
+  recorded_at: Mon, 07 Jan 2019 20:46:31 GMT
+  digest: adef8be9aa4e6dad440538a258bfa63754c4ce4d
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&online_only=true&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:47:03 GMT
+  digest: 9552d3b2d610582c687087ab584236dba01138d2
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&end_date=2008-12-17T00%3A00%3A00.000Z&interval=day&start_date=2005-12-15T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:44:20 GMT
+  digest: bfaef6708e756973abfce9555990ebbab5446d97
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&polygon=10%2C-10%2C10%2C10%2C-10%2C10%2C-10%2C-10%2C10%2C-10&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:23:12 GMT
+  digest: 2b94e936c30c1ddb7af102df871906e61388dd09
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
       string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:43:34 GMT
+  recorded_at: Mon, 07 Jan 2019 20:43:53 GMT
   digest: 6e4e6fe98731a011b123ca3ec52f1c7da44e012f
 - request:
     method: post
@@ -1164,7 +909,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:36:04 GMT
+  recorded_at: Mon, 07 Jan 2019 20:53:17 GMT
   digest: 17e34986683e02540d3a97860ddcc257480b5cb0
 - request:
     method: post
@@ -1181,484 +926,42 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:36:02 GMT
+  recorded_at: Mon, 07 Jan 2019 20:53:16 GMT
   digest: 352533394306f3f1f932fd0536cb3a550d2f00c3
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179001887-SEDAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:49:32 GMT
-  digest: 45b000ee4e0a876660883f16c5c6ae69b6cb655f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179001887-SEDAC&end_date=2000-12-31T00%3A00%3A00.000Z&interval=day&start_date=1997-12-29T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:00 GMT
-  digest: 72f17b2ee86daa450bccfbda9fa9ab0ceedfdda5
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760096-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760356-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760530-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396761158-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396761364-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396761726-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:54 GMT
-  digest: b5fd9795e6709eaec2ca8652f96c23036349e63b
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760096-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760356-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760530-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396761158-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396761364-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:53 GMT
-  digest: 328f8e8d2643b7c5699720b5f452c039bbac4fef
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760096-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760356-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760530-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396761158-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:52 GMT
-  digest: bcbb38acc4c8f21c8a111a44a1bc26350b9ba676
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760096-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760356-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760530-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:50 GMT
-  digest: 98714388f0d3b75af4fc85029657f59fd6aeaa06
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760096-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760356-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:49 GMT
-  digest: b06b16f482272787ce8082d1a4b5542b5a870fd0
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396760096-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:47 GMT
-  digest: 7f97fec54700a067e73eceac002daf74a4644b64
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759979-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:45 GMT
-  digest: 26a14efe8020d1abc67458497b53efeeb3c16826
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396759745-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:42 GMT
-  digest: d5d09f03b3b9fe10e43aab7603928c6550c5f0bf
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758625-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:40 GMT
-  digest: 7cf28464d0fc55662e6d3aee086da20ee6e2641f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758489-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:39 GMT
-  digest: 4e44d824d6d8a03914dee3124bc519cf343e306e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758362-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:37 GMT
-  digest: 93319044b6c73b4e7bb3666a43c3718c95a5b6e3
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396758193-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:36 GMT
-  digest: 659bde365ccadf9e3a9973944969e66b74684908
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&exclude%5Becho_granule_id%5D%5B%5D=G1396757836-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:35 GMT
-  digest: 4e5c547c2c50cb68bc806a1bb40494f84b969b1d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1396757211-SEDAC&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 22 Jun 2018 20:48:22 GMT
-  digest: d31b59ace851005c8b2c8fa6d7a7fc1c529949df
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179002107-SEDAC&end_date=2008-01-01T23%3A59%3A59.000Z&interval=day&start_date=2004-12-29T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:59:57 GMT
+  recorded_at: Mon, 07 Jan 2019 21:05:39 GMT
   digest: f41c422e17e4111abe28b7fb6a06acbfac6f348e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179002883-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:20 GMT
-  digest: e18f598d06a6e490c83842357b2d5825171fd2d8
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=1988-10-26T23%3A59%3A58.999Z&interval=day&start_date=1985-10-24T23%3A59%3A58.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:43:51 GMT
-  digest: d7467b498dedd308370aef8900d81f518ab839c2
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179002914-ORNL_DAAC&end_date=1988-10-26T23%3A59%3A59.000Z&interval=day&start_date=1985-10-24T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:12 GMT
+  recorded_at: Mon, 07 Jan 2019 21:04:58 GMT
   digest: 9bd456ab4b3734fec9a269f7c6a5fc00e49ba227
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:41 GMT
-  digest: 60123bf6b9cd1bbed4e0c1c434347b83600d8238
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=1999-03-09T00%3A00%3A00.000Z&interval=month&start_date=1969-02-14T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:47 GMT
-  digest: 9d07fb81be32d79066fd8270b12c4f2c4ae2e2de
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=2000-12-31T00%3A00%3A00.000Z&interval=day&start_date=1997-12-29T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:01 GMT
-  digest: b826110f1a40e0311c37af2cb050573d67bff740
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=2004-03-08T00%3A00%3A00.000Z&interval=month&start_date=1974-02-14T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:54:10 GMT
-  digest: b610fc344ce621186fdeca15e0255b5fb846a12b
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=2013-06-02T23%3A59%3A59.000Z&interval=day&start_date=2010-05-31T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:35:58 GMT
-  digest: 9a0bc4b282cf3722cf57614628d3d92317399fc1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179002914-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:14 GMT
-  digest: 7935a2e8da778a686e025ecf2fdba18053b49cda
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1971-07-01T23%3A59%3A59.999Z&interval=day&start_date=1968-06-29T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:38:06 GMT
-  digest: b693a5ebe5f4d8b4b94ff41f2cf4bb3dd405583c
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1971-07-02T00%3A00%3A00.000Z&interval=day&start_date=1968-06-29T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:36:37 GMT
-  digest: c4f6fb148f239714793a45dd3bb307d2dc8fb1cd
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -1674,31 +977,31 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:26:17 GMT
+  recorded_at: Mon, 07 Jan 2019 21:06:42 GMT
   digest: d6a53df4a6547b9b4de2343eefaa4aa2e25cbef5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1986-03-04T00%3A00%3A00.000Z&interval=day&start_date=1983-03-02T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:45:52 GMT
+  recorded_at: Mon, 07 Jan 2019 20:54:10 GMT
   digest: 569d4ede6e67b2d1c5e6236860e8ea0b19295527
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: UTF-8
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1987-09-02T00%3A00%3A00.000Z&interval=day&start_date=1984-08-29T23%3A59%3A59.999Z
+      string: concept_id=C179003030-ORNL_DAAC&end_date=1987-09-02T00%3A00%3A00.000Z&interval=day&start_date=1984-08-30T00%3A00%3A00.000Z
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -1708,450 +1011,231 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Mon, 31 Dec 2018 21:39:20 GMT
-  digest: 03dbe53e91ec37e22c46bd265e77f38d96d6c0ac
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1987-09-02T00%3A00%3A00.000Z&interval=day&start_date=1984-08-30T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:36:38 GMT
+  recorded_at: Mon, 07 Jan 2019 21:06:41 GMT
   digest: 598bb3abe9c7201bdcdd70be6ccb2782168e206e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1987-10-04T13%3A08%3A40.052Z&interval=hour&start_date=1987-07-03T13%3A08%3A40.052Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:04:25 GMT
-  digest: b5d509e9871b038626542f446f5a532068c6f69f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1988-10-26T23%3A59%3A59.000Z&interval=day&start_date=1985-10-24T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:13 GMT
-  digest: f4d55f6e1adb2fc6ac7ab2fe82aed54ecbe459ef
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:53:38 GMT
+  digest: 00df96293ce1e230df3d3f266236986db6a55c4b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1988-12-04T11%3A59%3A59.997Z&interval=day&start_date=1985-12-02T11%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:54:04 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:52 GMT
   digest: 3a0af411fddb86ccccfa88eaf148b472aa46c597
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1988-12-04T11%3A59%3A59.998Z&interval=day&start_date=1985-12-02T11%3A59%3A59.998Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:33 GMT
-  digest: '09bb74c211fddad71a1a998f2bcde36b89f2d99c'
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-01-01T11%3A59%3A59.996Z&interval=day&start_date=1985-12-30T11%3A59%3A59.996Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:38 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:53 GMT
   digest: '094387527a6501268cba3dd8e844d2751d6d992b'
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-01-01T11%3A59%3A59.997Z&interval=day&start_date=1985-12-30T11%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:34 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:51 GMT
   digest: 2b885a77f7c96ad813755c1404b933bb6f5a0ff8
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-01-01T11%3A59%3A59.998Z&interval=day&start_date=1985-12-30T11%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:29 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:48 GMT
   digest: 76de5e0997e44af1596af5a5d2d0dd4400f50b41
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1989-02-01T11%3A59%3A59.996Z&interval=day&start_date=1986-01-30T11%3A59%3A59.996Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:36 GMT
-  digest: 693fbdb62dda5989c0aa21707d2d859448ff9744
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-02-01T11%3A59%3A59.997Z&interval=day&start_date=1986-01-30T11%3A59%3A59.997Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:54:02 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:50 GMT
   digest: a28429422aad680915185ee894695bb11600cb17
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1989-02-18T01%3A08%3A40.052Z&interval=day&start_date=1986-02-16T01%3A08%3A40.052Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:04:24 GMT
-  digest: b0b5caab0ec92cb6e37e94562e42342f1de59595
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1422671947-ORNL_DAAC&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:42:46 GMT
+  recorded_at: Mon, 07 Jan 2019 21:29:14 GMT
   digest: 2cfd1e7eef1344622b4a7e7f96de424cf9f3d87a
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=FIFE_STRM_15M.80611715.s15&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:37:03 GMT
+  recorded_at: Mon, 07 Jan 2019 20:56:08 GMT
   digest: a84533a4947a665638502d8d98378104a480197a
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A58.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 09 Apr 2018 19:13:45 GMT
-  digest: 7e42a67a83c7c7e3a5fd2e1e7112bda1e5e06e6a
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:31:56 GMT
+  recorded_at: Mon, 07 Jan 2019 20:41:41 GMT
   digest: 384d92cf966131f7300d4ed398f2ffb40ddfa1b5
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1989-07-03T12%3A00%3A00.000Z&interval=day&start_date=1986-07-01T12%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:04 GMT
-  digest: 7d4ab7e7dce3d3d522b430d935cc45cc9add7854
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=1995-03-02T00%3A00%3A00.000Z&interval=day&start_date=1992-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:43:25 GMT
+  recorded_at: Mon, 07 Jan 2019 21:09:27 GMT
   digest: 5fb4f6b15d63a27a2915a7fe5964cbb9e4a878bf
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1999-03-09T00%3A00%3A00.000Z&interval=month&start_date=1969-02-14T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:48 GMT
-  digest: 993dc008667e5159c7d7fe534be7625dd007eb19
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-07-13T11%3A59%3A59.996Z&interval=month&start_date=1972-06-20T11%3A59%3A59.996Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:40 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:55 GMT
   digest: 1ecb1ec5d6ca4e0506ba7fbf2d9a97422ef5ee63
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-07-13T11%3A59%3A59.998Z&interval=month&start_date=1972-06-20T11%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:12 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:33 GMT
   digest: 7a10a4ffc01908a420edc519725c7e6cef9846e1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2002-07-13T11%3A59%3A59.999Z&interval=month&start_date=1972-06-20T11%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:28:35 GMT
-  digest: 2dffcca511448ef123967e72d0176f1adf15c9a1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2002-08-30T01%3A08%3A40.052Z&interval=month&start_date=1972-08-07T01%3A08%3A40.052Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:04:29 GMT
-  digest: 3babf5fec589e2d6d5b7b68d8aa5683d3d0745b6
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2002-09-14T23%3A59%3A59.000Z&interval=month&start_date=1972-08-22T23%3A59%3A59.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:49 GMT
+  recorded_at: Mon, 07 Jan 2019 21:09:23 GMT
   digest: 0e4a4d8ee44a1695ab4f9d9c10accf80c2c47549
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-01-12T12%3A00%3A00.000Z&interval=month&start_date=1972-12-20T12%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:02 GMT
-  digest: dde790418b3d01ef857064c4e1acbd8c6057f848
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: UTF-8
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T12%3A37%3A14.479Z&interval=month&start_date=1973-02-13T12%3A37%3A14.479Z
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Wed, 02 Jan 2019 16:16:30 GMT
-  digest: 1953b2a3c6ba2a51e3370f635712b9b5edc74193
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: UTF-8
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T12%3A37%3A14.480Z&interval=month&start_date=1973-02-13T12%3A37%3A14.480Z
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Thu, 20 Dec 2018 18:53:37 GMT
-  digest: 020b4e05be6be5c39ae14a7c524ac98049b6f738
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -2167,348 +1251,178 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:19:27 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:35 GMT
   digest: b914c2e338427941a1df26ba8da28b24b799fe8e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T23%3A59%3A59.998Z&interval=month&start_date=1973-02-13T23%3A59%3A59.998Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 26 Feb 2018 22:06:21 GMT
-  digest: a908fc1743509e8380f47065fc96c16dff7fcf55
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T23%3A59%3A59.999Z&interval=month&start_date=1973-02-13T23%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:19 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:57 GMT
   digest: 2c642c5dbbfc9e957edf3b78934d57c7ee1068d7
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.575Z&interval=month&start_date=1973-02-14T19%3A20%3A31.575Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 02 Mar 2018 01:35:37 GMT
-  digest: b35f4ef1c976d2bf19c093131d556ae745a93997
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.576Z&interval=month&start_date=1973-02-14T19%3A20%3A31.576Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 26 Feb 2018 21:02:11 GMT
-  digest: 99502cb460f49c258684b7fa25e8235daddcf2b4
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.577Z&interval=month&start_date=1973-02-14T19%3A20%3A31.577Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Sun, 25 Feb 2018 20:38:33 GMT
-  digest: 1a6cfb3d4853c3f2f7ef5596052354d0584663cb
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-09T19%3A20%3A31.578Z&interval=month&start_date=1973-02-14T19%3A20%3A31.578Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:17 GMT
-  digest: 55f308c8fe1c17efe036b3b4ad5fdc99073c034a
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-10T02%3A31%3A27.262Z&interval=month&start_date=1973-02-15T02%3A31%3A27.262Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 09 Apr 2018 19:01:15 GMT
-  digest: f90986486ca9024631f3e14422c79e2a476faf1e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-07T23%3A59%3A59.997Z&interval=month&start_date=1974-02-13T23%3A59%3A59.997Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:24 GMT
-  digest: 27f145d6ea5b5abaf1ff0fde1135b9b7e4124e66
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-07T23%3A59%3A59.998Z&interval=month&start_date=1974-02-13T23%3A59%3A59.998Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:21 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:57 GMT
   digest: 5b230a78a8dff8b3df82399c73770c052e6559bc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-07T23%3A59%3A59.999Z&interval=month&start_date=1974-02-13T23%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:54:10 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:39 GMT
   digest: 707c98124e0dc95609eb4d276931e340941cfd82
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-08T00%3A00%3A00.000Z&interval=month&start_date=1974-02-14T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:39:54 GMT
+  recorded_at: Mon, 07 Jan 2019 20:42:06 GMT
   digest: fe610e70038185be47bcd3b2804a6a760083c2d9
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2004-03-12T00%3A00%3A00.000Z&interval=month&start_date=1974-02-18T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:43:36 GMT
+  recorded_at: Mon, 07 Jan 2019 21:07:32 GMT
   digest: f4c28a5839bd38d8bc1e35e9a1893254e575660c
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2005-03-08T23%3A59%3A59.997Z&interval=month&start_date=1975-02-14T23%3A59%3A59.997Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:23 GMT
-  digest: 92081f361a5c3c18406ecb412686cb8c9ba5850e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2005-03-08T23%3A59%3A59.999Z&interval=month&start_date=1975-02-14T23%3A59%3A59.999Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:54:09 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:38 GMT
   digest: 4e08f3e7e5825535559a2e3fb8089d2383a6f14a
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2013-06-02T23%3A59%3A59.000Z&interval=day&start_date=2010-05-31T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:35:59 GMT
-  digest: 33a508c9bbf1b1432db25303498a0759352098f7
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2014-02-17T02%3A30%3A00.000Z&interval=minute&start_date=2014-02-14T02%3A30%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:05:39 GMT
+  recorded_at: Mon, 07 Jan 2019 21:29:03 GMT
   digest: fe1d84be2c05f02db9addd545112f173b8dde8e1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2014-04-01T00%3A00%3A00.000Z&interval=hour&start_date=2013-12-29T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:10:31 GMT
+  recorded_at: Mon, 07 Jan 2019 20:41:42 GMT
   digest: 3fc0e4b435ec7c890615c260f1923795114d9839
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2014-04-03T02%3A30%3A00.000Z&interval=hour&start_date=2013-12-31T02%3A30%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:05:38 GMT
+  recorded_at: Mon, 07 Jan 2019 21:29:02 GMT
   digest: aaad9d84588c8a60951a68ebccb7c79b896f2abf
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2014-09-02T00%3A00%3A00.000Z&interval=day&start_date=2011-08-31T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:36:36 GMT
+  recorded_at: Mon, 07 Jan 2019 21:06:41 GMT
   digest: c31525470cc691ccd1259728674ab6a9d0557c2c
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2015-02-05T00%3A26%3A03.157Z&interval=day&start_date=2012-02-03T00%3A26%3A03.157Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:37 GMT
-  digest: 3d18e43082abf59784c67870e66fef858fd72c94
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -2524,59 +1438,25 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:34:11 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:26 GMT
   digest: 2fe7b972f413c5e1a9340cb62cf3a819da8a6f26
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2015-02-05T00%3A55%3A36.729Z&interval=day&start_date=2012-02-03T00%3A55%3A36.729Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 09 Apr 2018 18:59:22 GMT
-  digest: 6265d42c2deb381a5f4ecb7c2f9eaa7ce47289bf
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:15 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:25 GMT
   digest: 619191b0ce26e3da83e580484b1c1335a50386f1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2015-03-26T23%3A04%3A23.270Z&interval=day&start_date=2012-03-23T23%3A04%3A23.270Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 09 Apr 2018 18:59:24 GMT
-  digest: 62170f07e8b4c8a67e06609fc9b2747c0acd9cb4
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -2592,51 +1472,119 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:34:12 GMT
+  recorded_at: Mon, 07 Jan 2019 20:55:26 GMT
   digest: d4aa6d68249ca2622ec91c0b5b94279a208530b1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2015-03-26T23%3A33%3A56.842Z&interval=day&start_date=2012-03-23T23%3A33%3A56.842Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:38 GMT
-  digest: bfc767f62779c440aff704d69d197b41155e09d3
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C179003030-ORNL_DAAC&end_date=2015-08-18T14%3A30%3A00.000Z&interval=day&start_date=2012-08-15T14%3A30%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:35:44 GMT
+  recorded_at: Mon, 07 Jan 2019 21:29:01 GMT
   digest: 2e0b05e1dc6fe3a97a3422cd5126d66413d3b4fb
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2016-01-10T01%3A59%3A59.500Z&interval=day&start_date=2013-01-07T01%3A59%3A59.500Z
+      encoding: UTF-8
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2016-02-12T12%3A30%3A00.000Z&interval=day&start_date=2013-02-09T12%3A30%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:55:24 GMT
+  digest: eb8096ccd038ee9a43d498fe3b1285ac318ce1b1
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2029-02-26T14%3A30%3A00.000Z&interval=month&start_date=1999-02-04T14%3A30%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:29:05 GMT
+  digest: b9a36e6aa09b0192e0b382901f12755fd76a187d
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2062-08-27T11%3A59%3A59.998Z&interval=year&start_date=1912-05-06T11%3A59%3A59.999Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 20:55:33 GMT
+  digest: 1863351930c4460df29d20b3149acadf4e1e1534
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2089-04-12T14%3A30%3A00.000Z&interval=year&start_date=1938-12-21T14%3A30%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:29:06 GMT
+  digest: 42d6b9267fe6b0ead68d4151313036650c376b29
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C179003380-ORNL_DAAC&end_date=2011-01-01T23%3A59%3A59.000Z&interval=day&start_date=2007-12-30T23%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:05:04 GMT
+  digest: e41480ffaf1a19861a77d5e08a9e924c79098082
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C179003620-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
@@ -2644,264 +1592,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Fri, 23 Feb 2018 18:02:56 GMT
-  digest: 5c32993ef6061e8fc4a13be732a40b8f00b47e62
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2016-02-12T12%3A30%3A00.000Z&interval=day&start_date=2013-02-09T12%3A30%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:55:35 GMT
-  digest: eb8096ccd038ee9a43d498fe3b1285ac318ce1b1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2029-02-26T14%3A30%3A00.000Z&interval=month&start_date=1999-02-04T14%3A30%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:05:41 GMT
-  digest: b9a36e6aa09b0192e0b382901f12755fd76a187d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2062-08-27T11%3A59%3A59.998Z&interval=year&start_date=1912-05-06T11%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:10 GMT
-  digest: 1863351930c4460df29d20b3149acadf4e1e1534
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2062-08-27T11%3A59%3A59.999Z&interval=year&start_date=1912-05-06T11%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Mon, 09 Apr 2018 19:01:11 GMT
-  digest: 8acb0d2da9a4d60708524f370143df34bce61190
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2062-08-27T11%3A59%3A59.999Z&interval=year&start_date=1912-05-06T12%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:28:33 GMT
-  digest: cd91552451e8f8c4853b7973c71bdf9728a95708
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2062-10-14T01%3A08%3A40.052Z&interval=year&start_date=1912-06-23T01%3A08%3A40.053Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:04:27 GMT
-  digest: d138cdb3f904cf03085dadd0c0e1fc0e1d2685df
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2063-02-26T12%3A00%3A00.000Z&interval=year&start_date=1912-11-05T12%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:40:01 GMT
-  digest: 3ed138e836c0907f25449bfe86dc2de400cdc898
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=2089-04-12T14%3A30%3A00.000Z&interval=year&start_date=1938-12-21T14%3A30%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:05:42 GMT
-  digest: 42d6b9267fe6b0ead68d4151313036650c376b29
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003380-ORNL_DAAC&end_date=2011-01-01T23%3A59%3A59.000Z&interval=day&start_date=2007-12-30T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:07 GMT
-  digest: e41480ffaf1a19861a77d5e08a9e924c79098082
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003620-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=FIFE_STRM_15M.80611715.s15&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 19:58:41 GMT
-  digest: 0a5e9f09156eca16b6551e315c3599c4d9f8c6d8
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003620-ORNL_DAAC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:57:56 GMT
-  digest: 395cb0f9c2e74c9849c6f7af290645103665f76c
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179872798-USGS_EROS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z&two_d_coordinate_system%5Bcoordinates%5D=24-24%3A24-24&two_d_coordinate_system%5Bname%5D=WRS-1
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:06:17 GMT
-  digest: 58cf70bbc9f6d007aeb02edfb87265f24b065154
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179872798-USGS_EROS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z&two_d_coordinate_system%5Bname%5D=WRS-1
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:06:12 GMT
-  digest: 6244f90fc0dea2e7f9ca76e53d84212c508f525d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C194001241-LPDAAC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:58:13 GMT
-  digest: 6ffec0686562050367f9805063fbf4e0d5eb7024
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C194001241-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:58:10 GMT
-  digest: 1abfccc24ac9d4abdab1102da73fdf289594f2b1
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:54:45 GMT
+  digest: 924c284cd9ee672986226b7ff350eb00e8437958
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -2918,35 +1611,18 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:36:30 GMT
-  digest: bdb918a03f28b57a1920edee481fd7d4cb7452c8
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:50:53 GMT
+  digest: 699016550c0d74c8bc67e27efbbbd34634124cf6
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C203234523-LAADS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:58:12 GMT
-  digest: 5bc67e16b659ff1932eeed7b2212a6c7e5308c59
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C203234523-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
@@ -2954,77 +1630,26 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Fri, 23 Feb 2018 17:39:47 GMT
-  digest: a466e22262071aff5821ba53beb975e198f08527
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:24:04 GMT
+  digest: 1d8017af19b5424ce04ba6eae35bb6a5750b27da
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C203234523-LAADS&end_date=2016-01-10T01%3A59%3A59.500Z&interval=day&start_date=2013-01-07T01%3A59%3A59.500Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:57:31 GMT
-  digest: 3a0213a470c39e2356b392421d81f3bcbd479721
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C4543622-LARC_ASDC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:07:51 GMT
+  recorded_at: Mon, 07 Jan 2019 20:57:08 GMT
   digest: db98a6a491598d5e3bb59cf0881b228613ab6083
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C4543622-LARC_ASDC&end_date=2018-03-02T23%3A59%3A59.000Z&interval=day&start_date=2015-02-28T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:51:21 GMT
-  digest: e4dfa97070c4b322697917b61416d4c856a474e1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&day_night_flag=DAY&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:44:20 GMT
-  digest: d12f886531a2aa68684ab6b58e39a1b21b412975
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
@@ -3040,14 +1665,65 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Thu, 06 Dec 2018 01:39:36 GMT
+  recorded_at: Mon, 07 Jan 2019 21:04:31 GMT
   digest: 881bb4e44ef2bdab26426485833114dc4b288c98
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: UTF-8
-      string: concept_id=C92711294-NSIDC_ECS&day_night_flag=DAY&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
+      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:04:04 GMT
+  digest: 279755864deffb2711918cc792d1569a0283eff4
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:04:12 GMT
+  digest: 72f8dffa956029f5f59c2389a68c89c928481428
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 07 Jan 2019 21:04:03 GMT
+  digest: 3d16ca76035b153e58e3a8b9f7bc4a7987e0358e
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: UTF-8
+      string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366892-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366930-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -3058,468 +1734,389 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:39:22 GMT
-  digest: ad7a92c8f7499e786461e726982e08b8321cf22b
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:58 GMT
+  digest: df13296eeb134baa57a229088cb688e425ff2df1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=1989-03-05T23%3A59%3A59.000Z&interval=day&start_date=1986-03-03T23%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:43:06 GMT
-  digest: 99965abbd7b587e5639b82ce1c3853cd5626a086
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 20:50:10 GMT
-  digest: c95e719b96d6b41bdc80e42a00f785a8bb9dfd36
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:26 GMT
-  digest: 279755864deffb2711918cc792d1569a0283eff4
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 22:01:54 GMT
-  digest: 72f8dffa956029f5f59c2389a68c89c928481428
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:23 GMT
-  digest: 3d16ca76035b153e58e3a8b9f7bc4a7987e0358e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366892-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366930-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:19 GMT
-  digest: 1182c03256b397eb26882e5ec2fdbf03f5f7cd93
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366892-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:18 GMT
-  digest: 633e5defc9eded420269f23bb061d21021d63f7a
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:57 GMT
+  digest: 6048442d15632b271316fac349cb7c0789b7609b
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366946-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:16 GMT
-  digest: c5790ad005a532e35b7b09fd8dbbe7ccbe6d536f
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:56 GMT
+  digest: 4019757779c4d380eaf88fce204dc3aeb92f68c1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366867-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:15 GMT
-  digest: 17c5f001347049f432a2206455972b5d2d9cf0b3
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:55 GMT
+  digest: 7684cd6c9f407955e84aac6b3860d941b3ed5d7d
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366863-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:14 GMT
-  digest: 86f573fe0751095adba00f92f2b5b9034285b97e
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:54 GMT
+  digest: a0944365b99fe1f497ad1a119bc0cc517d54fe6a
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367715-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:13 GMT
-  digest: fd609ce960944754d3496b6cd6615fc1775607b9
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:53 GMT
+  digest: c3647ca76837307d28397c0560bbdb26489634fc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367354-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:11 GMT
-  digest: 9dc1924f14897b8ec443ab345405e7600c218bb9
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:52 GMT
+  digest: 1be6d8fe6350e88b59473266f0710651bf31bd79
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366421-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:10 GMT
-  digest: 44d5dbf4c595fc8543433a4a45e3f8a87e28a902
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:51 GMT
+  digest: 110689ea9d4f7b32109053309ae2b0c56f62bfeb
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367431-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:08 GMT
-  digest: fb47ca63120e551478d525d78b5ceb68399c5c1b
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:51 GMT
+  digest: a1d8a5380dd2927640f29fd2305db98d852e31cc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367393-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:06 GMT
-  digest: e0c1d042f05daaf7152c15106ef1e57c339097c5
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:50 GMT
+  digest: 2cb7a4d4ecd93a023954b67440c43bcc9a46be3a
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366879-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:04 GMT
-  digest: 6809ea0c3d8d7b826c7132a6cd9742fa70842626
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:49 GMT
+  digest: 56d35c846ff94e5184388249e99e49b1919e20e3
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366864-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:03 GMT
-  digest: 81b651b8d1eb23df3c6ef53744ff5531dfb69462
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:48 GMT
+  digest: 952c1057760a883af227369c1ba86274cb91e9e3
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367747-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:02 GMT
-  digest: 58d75d8cda674ed6f9662860251e0aa137d0c795
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:47 GMT
+  digest: ecc7a21a5fa438fe9d8de403e28fb85e6985dcf2
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367405-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:00 GMT
-  digest: b2e2ef37198f70a1423736aa1c6b7c164cd9a503
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:46 GMT
+  digest: 8125373899e59ffd3977a404597cb5f70ea21786
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366399-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:59 GMT
-  digest: f3f22b22df3346216cbba5fc3ee9e9dbc00db610
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:45 GMT
+  digest: 95d19999656c23f3695d76da99a6747bdb0d80b1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367468-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:58 GMT
-  digest: 67fff40d280707ba739ab9802a9333189e027f8d
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:45 GMT
+  digest: 488d179b90df34b197f650dac10e02cee66e8673
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367446-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:57 GMT
-  digest: ac8806fc8104cb4f7347b2f293d1db0ddbe57915
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:44 GMT
+  digest: a1fce1ad6e11fb3b5c7e8f31b6585ee382bb9191
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360366932-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:55 GMT
-  digest: dfac9225095f0bdb08439c217a88062dce875aa5
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:43 GMT
+  digest: 1d5bc946350bdb0d9ed3bf5b58baff11b7281637
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&exclude%5Becho_granule_id%5D%5B%5D=G1360367334-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:54 GMT
-  digest: ef4a818f7f48e160eec387ecc6edfde9d5303d7d
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:42 GMT
+  digest: 676dbe2bcf848682938a2e6fd782d4d75fa9089f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1360367376-NSIDC_ECS&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:48 GMT
-  digest: 815c7a7ba5fa4d8fdbbe069969e75ad7a4c5df1e
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:39 GMT
+  digest: 73f6f0d47d9a8463b0e288c773f0a69d06459d21
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
-      string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v13.005.2016006204744.hdf&readable_granule_name%5B%5D=MOD10A1.A2016001.h31v12%2A&start_date=2016-01-31T17%3A31%3A12.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:40 GMT
-  digest: 7de31f7f7cb5966707f84c047636ec732ca7ea39
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C92711294-NSIDC_ECS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:00:22 GMT
-  digest: 7cf20186fa682de16f0e8de0fbf440a4a67aba29
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:03:20 GMT
+  digest: ae462b1a0c934c7bc463dfae5ac931d780a7b3c6
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3536,9 +2133,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Thu, 06 Dec 2018 00:35:06 GMT
-  digest: 9dff95b042d4050d0ab3fc1706ba3223a03f5005
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:13:11 GMT
+  digest: 6e94af972bef14f23108f91592df2525d5d60fc3
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3547,15 +2144,17 @@ http_interactions:
       string: bounding_box=-10%2C-10%2C10%2C10&concept_id=C1200187767-EDF_OPS&end_date=2018-01-01T23%3A59%3A59.500Z&interval=day&start_date=2014-12-30T23%3A59%3A59.500Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 04 Dec 2018 17:48:32 GMT
-  digest: 45fd7dd527eb3ba5cd50ff798eb4d2ae2ce065f7
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:49:03 GMT
+  digest: ac0eb80c92856a4fd84daf444a55724822394d3f
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3564,15 +2163,17 @@ http_interactions:
       string: bounding_box=-10%2C-10%2C10%2C10&concept_id=C1200269572-E2E_18_3&end_date=2018-01-01T23%3A59%3A59.500Z&interval=day&start_date=2014-12-30T23%3A59%3A59.500Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 04 Dec 2018 17:48:35 GMT
-  digest: a5610885cd77b40bdd9de39d0bc4f9605c582d42
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:49:00 GMT
+  digest: '086e88abde003c4cc6577d99bf82f0b5d5c7f573'
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3589,15 +2190,15 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:25:55 GMT
-  digest: f29b2c20ec0983b252df347f722f99a16ea66e99
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:49:20 GMT
+  digest: b1fd4fe517a353d703d8c6dcea5d3467c1208c6c
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: UTF-8
-      string: concept_id=C1000000004-EDF_DEV09&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+      string: concept_id=C1000000029-EDF_OPS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=%2Afoo&readable_granule_name%5B%5D=%2Afoo2&readable_granule_name%5B%5D=%2Afoo3&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -3607,26 +2208,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 06 Dec 2018 00:22:15 GMT
-  digest: e99980b027ef66a511e01f55bc657df5aeb08d4c
-- request:
-    method: post
-    uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000029-EDF_OPS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=%2Afoo&readable_granule_name%5B%5D=%2Afoo2&readable_granule_name%5B%5D=%2Afoo3&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 27 Apr 2018 15:19:33 GMT
+  recorded_at: Mon, 07 Jan 2019 21:32:43 GMT
   digest: 1da38b4dee99d98441d839d3aba9cbafbe84c823
 - request:
     method: post
@@ -3643,7 +2225,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 05 Dec 2018 23:25:32 GMT
+  recorded_at: Mon, 07 Jan 2019 21:32:43 GMT
   digest: 4bee31c6c15b48de1ec7edba8f3c78f063050980
 - request:
     method: post
@@ -3661,26 +2243,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Mon, 31 Dec 2018 18:13:07 GMT
-  digest: 47158b409e33403faf17488e17ee3cbfcab3364c
-- request:
-    method: post
-    uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000000577-DEV07&end_date=2004-10-24T20%3A51%3A00.000Z&interval=day&start_date=2001-10-22T20%3A51%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 20:06:41 GMT
-  digest: 32b25fb94817adc2a3afc29f745c7bc32ffbc48d
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:06:47 GMT
+  digest: 57d6fe0e1b68482827498b49f51845d4ceecb57d
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3697,9 +2262,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:30:43 GMT
-  digest: a6a41a67643a18ddde9364e8d3f72af39b4c7bd4
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:54:34 GMT
+  digest: 5ee47df3df9d6419d76b73be15bc3f23eaf5abcf
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3716,25 +2281,25 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:25:18 GMT
-  digest: 48f39da42f526f0ae8c5c766b063adcf6ae50d81
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:59:39 GMT
+  digest: 798b3b205459ebc74808cf5793e18eaff868ab5c
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C1000001002-EDF_OPS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 17:32:29 GMT
+  recorded_at: Mon, 07 Jan 2019 21:20:20 GMT
   digest: 40aeb9e9068c7af924f875ac30e2b085d2a155ac
 - request:
     method: post
@@ -3752,9 +2317,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Thu, 06 Dec 2018 00:35:15 GMT
-  digest: 0a8170990a9a4ff99df2600e3cc1ff8e50c5be0f
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 21:13:16 GMT
+  digest: c3adfc101247d8e2c336aed37d935dbebade9fec
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3771,9 +2336,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:25:20 GMT
-  digest: f4c0696982e22f40ef9b350614668c95b1fb6d71
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:48:46 GMT
+  digest: 484503e740005bc5c36cf529306bfbe566f3e33c
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
@@ -3790,43 +2355,26 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Wed, 05 Dec 2018 23:24:59 GMT
-  digest: 8d9cf865928f26ac815edeb6b85bd76ea897e6be
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:54:52 GMT
+  digest: df4291bf3b102889a731c458a1aa2b0edc2c806b
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: concept_id=C24931-LAADS&end_date=2019-02-02T17%3A31%3A12.000Z&interval=day&start_date=2016-01-31T17%3A31%3A12.000Z
     headers:
       User-Agent:
-      - Faraday v0.8.8
+      - Faraday v0.9.2
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 23 Feb 2018 18:01:52 GMT
+  recorded_at: Mon, 07 Jan 2019 21:04:35 GMT
   digest: 79a3a79488ba12685b94a83ed49835b584df541a
-- request:
-    method: post
-    uri: https://cmr.uat.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C1000-LPDAAC_TS2&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Tue, 27 Feb 2018 19:00:14 GMT
-  digest: 44a7421576fb3d0dd0fa17e7ead9948ca9bde89a
 - request:
     method: post
     uri: https://cmr.uat.earthdata.nasa.gov/search/granules/timeline.json
@@ -3843,7 +2391,7 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
-  recorded_at: Mon, 31 Dec 2018 18:14:57 GMT
-  digest: b2b241e14ac005710cebcf2620f0dfd400d79fea
+      - edsc-access
+  recorded_at: Mon, 07 Jan 2019 20:54:04 GMT
+  digest: d6e5226bbbdac269ce78facf38cfe7727125618f
 recorded_with: VCR 2.6.0

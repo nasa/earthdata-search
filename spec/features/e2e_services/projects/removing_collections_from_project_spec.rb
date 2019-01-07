@@ -2,10 +2,7 @@ require 'rails_helper'
 
 describe 'When viewing the project page with more than one collection' do
   before :all do
-    load_page :search, project: ['C1000000969-DEV08', 'C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
-
-    click_link('My Project')
-    wait_for_xhr
+    load_page :projects_page, project: ['C1000000969-DEV08', 'C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
   end
 
   it 'shows multiple collection cards' do

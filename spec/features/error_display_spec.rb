@@ -5,8 +5,7 @@ describe 'Displaying system errors' do
     before :all do
       Capybara.reset_sessions!
       load_page :search
-      fill_in 'keywords', with: 'trigger500'
-      wait_for_xhr
+      fill_in 'keywords',	with: 'trigger500'
     end
 
     it 'displays an error message containing the type of request that caused the error' do

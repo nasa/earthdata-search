@@ -79,9 +79,7 @@ describe 'Portal parameters', reset: true do
 
     context 'and choosing to access data' do
       before :each do
-        load_page :search, project: ['C203234523-LAADS'], portal: 'simple', authenticate: 'edsc'
-        click_link('My Project')
-        wait_for_xhr
+        load_page :projects_page, project: ['C203234523-LAADS'], portal: 'simple', authenticate: 'edsc'
 
         page.find_button('Download Data', disabled: false).click
         wait_for_xhr

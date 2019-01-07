@@ -2,10 +2,7 @@ require 'rails_helper'
 
 describe 'Granule metadata' do
   before do
-    load_page :search
-    fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
-    wait_for_xhr
-    first_collection_result.click
+    load_page :search, focus: 'C179003030-ORNL_DAAC'
     # Select a specific granule
     fill_in 'granule-ids', with: "FIFE_STRM_15M.80611715.s15\t"
     wait_for_xhr

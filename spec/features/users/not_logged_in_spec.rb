@@ -7,7 +7,7 @@ describe 'User not logged in' do
 
   context 'when a user views the data configure page without being logged in' do
     before :each do
-      load_page 'projects/new', project: ['C179003030-ORNL_DAAC']
+      load_page :projects_page, project: ['C179003030-ORNL_DAAC']
     end
 
     it 'sends them to log in first' do

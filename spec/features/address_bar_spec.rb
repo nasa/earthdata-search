@@ -10,7 +10,6 @@ describe 'Address bar' do
   context 'when loading collection details page from search page' do
     before :all do
       load_page :search
-      wait_for_xhr
       first_collection_result.click_link 'View collection details'
       wait_for_xhr
     end
@@ -22,7 +21,7 @@ describe 'Address bar' do
 
   context 'when searching by keywords' do
     before(:all) do
-      load_page '/search'
+      load_page :search
       dismiss_banner
       wait_for_xhr
       fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
@@ -42,10 +41,9 @@ describe 'Address bar' do
     end
   end
 
-  context 'when loading a url containing a search keyword' do
+  context 'when loading a url containing a search keyword', data_specific: true do
     before(:all) do
       load_page '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS&ac=true'
-      wait_for_xhr
     end
 
     it 'loads the condition into the keywords field' do
@@ -60,7 +58,6 @@ describe 'Address bar' do
   context 'when searching by temporal' do
     before(:all) do
       load_page '/search/map'
-      wait_for_xhr
       click_link 'Temporal'
       js_check_recurring 'collection'
       fill_in 'Start', with: "12-01 00:00:00\t"
@@ -91,7 +88,6 @@ describe 'Address bar' do
   context 'when loading a url containing a temporal condition' do
     before(:all) do
       load_page '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365'
-      wait_for_xhr
     end
 
     it 'loads the condition into the temporal fields' do
@@ -177,7 +173,6 @@ describe 'Address bar' do
     before(:all) do
       # 0,0,10,10
       load_page '/search/collections?sb=0%2C0%2C10%2C10'
-      wait_for_xhr
     end
 
     it 'draws the condition on the map' do
@@ -193,7 +188,6 @@ describe 'Address bar' do
   context 'when searching by facets' do
     before(:all) do
       load_page '/search?test_facets=true'
-      wait_for_xhr
       dismiss_banner
       find('.facets-item', text: 'Map Imagery').click
       wait_for_xhr
@@ -215,7 +209,6 @@ describe 'Address bar' do
   context 'when loading a url containing a facet condition' do
     before(:all) do
       load_page '/search?test_facets=true&ff=Map%20Imagery'
-      wait_for_xhr
       dismiss_banner
     end
 
@@ -269,7 +262,6 @@ describe 'Address bar' do
   context 'when adding collections to a project' do
     before(:all) do
       load_page '/search/collections'
-      wait_for_xhr
 
       add_collection_to_project('C179003620-ORNL_DAAC', 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
       add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
@@ -295,7 +287,6 @@ describe 'Address bar' do
   context "when loading a url containing a collection's granules" do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
     end
 
     it 'restores the collection granules view' do
@@ -307,7 +298,6 @@ describe 'Address bar' do
   context "when viewing a collection's details" do
     before(:all) do
       load_page '/search/collections?q=C179003030-ORNL_DAAC'
-      wait_for_xhr
       first_collection_result.click_link('View collection details')
     end
 
@@ -319,7 +309,6 @@ describe 'Address bar' do
   context "when loading a url containing a collection's details" do
     before(:all) do
       load_page '/search/collection-details?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
     end
 
     it 'restores the collection details view' do
@@ -331,7 +320,6 @@ describe 'Address bar' do
   context "when viewing a granule's details" do
     before :all do
       load_page '/search/collections?q=C179003030-ORNL_DAAC'
-      wait_for_xhr
 
       first_collection_result.click
       wait_for_xhr
@@ -353,7 +341,6 @@ describe 'Address bar' do
   context "when loading a url containing a granule's details" do
     before :all do
       load_page '/search/granules/granule-details?p=C179003030-ORNL_DAAC&g=G1422671947-ORNL_DAAC'
-      wait_for_xhr
     end
 
     it 'restores the granule details view' do
@@ -365,7 +352,6 @@ describe 'Address bar' do
   context 'setting granule query conditions when the focused collection is not the project' do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
-      wait_for_xhr
 
       find_link('Filter granules').click
       check 'Find only granules that have browse images.'
@@ -384,7 +370,6 @@ describe 'Address bar' do
   context 'when panning and zooming the map' do
     before(:all) do
       load_page '/search/map'
-      wait_for_xhr
       page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
       wait_for_zoom_animation(5)
       wait_for_xhr
@@ -422,7 +407,6 @@ describe 'Address bar' do
   context 'when panning the timeline' do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
       pan_to_time(present - 20.years)
       wait_for_xhr
     end
@@ -447,7 +431,6 @@ describe 'Address bar' do
   context 'when zooming the timeline' do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
       find('.timeline-zoom-out').click
       wait_for_xhr
     end
@@ -460,7 +443,6 @@ describe 'Address bar' do
   context 'when loading a URL with a saved timeline state' do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC&tl=604713600!5!536457600!567993600'
-      wait_for_xhr
     end
 
     it 'restores the timeline pan state' do
@@ -481,7 +463,6 @@ describe 'Address bar' do
   context 'when selecting a granule' do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC'
-      wait_for_xhr
 
       # Sort the granules so that the oldest appears first so that we
       # have a more reliable piece of data in the second granule slot
@@ -501,7 +482,6 @@ describe 'Address bar' do
   context 'when loading a URL with a selected granule' do
     before(:all) do
       load_page '/search/granules?p=C179003030-ORNL_DAAC&g=G1422671857-ORNL_DAAC'
-      wait_for_xhr
 
       # Sort the granules so that the oldest appears first so that we
       # have a more reliable piece of data in the second granule slot
@@ -535,7 +515,6 @@ describe 'Address bar' do
       # Each to avoid database cleanup problems
       before(:each) do
         load_page long_path
-        wait_for_xhr
         target_collection_result.click_link 'Add collection to the current project'
         wait_for_xhr
       end
@@ -568,7 +547,6 @@ describe 'Address bar' do
         project.save!
 
         load_page "/search/collections?projectId=#{project.to_param}"
-        wait_for_xhr
       end
 
       it 'restores the persisted long path' do
@@ -581,7 +559,6 @@ describe 'Address bar' do
     context 'the granule filters panel' do
       before(:all) do
         load_page '/search/granules?labs=true&p=C14758250-LPDAAC_ECS'
-        wait_for_xhr
         click_on 'Filter granules'
       end
 
@@ -629,7 +606,6 @@ describe 'Address bar' do
     context 'when refreshing the page' do
       before :all do
         load_page '/search?m=0!0!2!1!2!'
-        wait_for_xhr
         dismiss_banner
         wait_for_xhr
       end
@@ -643,7 +619,6 @@ describe 'Address bar' do
   context 'when changing the map overlays' do
     before :all do
       load_page :search
-      wait_for_xhr
       page.find_link('Layers').hover
       within '#map' do
         check 'Borders and Roads'
@@ -659,7 +634,6 @@ describe 'Address bar' do
     context 'when refreshing the page' do
       before :all do
         load_page '/search?m=0!0!2!1!0!0%2C1'
-        wait_for_xhr
         dismiss_banner
       end
 

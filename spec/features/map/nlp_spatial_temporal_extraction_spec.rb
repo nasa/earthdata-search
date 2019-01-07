@@ -41,7 +41,7 @@ describe 'Spatial and temporal extraction' do
     before :all do
       Capybara.reset_sessions!
       load_page :search
-      fill_in 'keywords', with: 'snow cover in Boston last winter'
+      fill_in 'keywords',	with: 'snow cover in Boston last winter'
       wait_for_xhr
     end
 
