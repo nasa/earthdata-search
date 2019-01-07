@@ -1,12 +1,8 @@
-# EDSC-102 As a user, I want to view my contact information
-# so that I may verify it is correct
-
 require 'rails_helper'
 
 describe 'Contact Information' do
   before :all do
     load_page '/contact_info', authenticate: 'edsc'
-    wait_for_xhr
   end
 
   it 'shows the link to edit profile in Earthdata Login' do
@@ -38,7 +34,6 @@ describe 'Contact Information' do
       click_button 'Update Notification Preference'
       wait_for_xhr
       load_page '/contact_info', authenticate: 'edsc'
-      wait_for_xhr
     end
 
     # There are multiple identical GET preferences requests in the hand-edited cassette, which VCR doc says that they

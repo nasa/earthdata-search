@@ -142,7 +142,6 @@ RSpec::Matchers.define :map_contains_point do |expected_lat, expected_lng|
       var bounds = map.getBounds();
       return bounds.contains(point);
     ")
-    puts result
     expect(result).to be_truthy
   end
 

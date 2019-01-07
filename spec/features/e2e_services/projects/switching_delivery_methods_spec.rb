@@ -2,10 +2,7 @@ require 'rails_helper'
 
 describe 'Switching Delivery Methods' do
   before do
-    load_page :search, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
-
-    click_link('My Project')
-    wait_for_xhr
+    load_page :projects_page, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
   end
 
   context 'when switching between delivery methods' do

@@ -6,7 +6,6 @@ module Helpers
         wait_for_xhr
         fill_in 'keywords', with: id
         wait_for_xhr
-        # expect(find('#collection-results .panel-list-item:first-child, #collection-results .ccol:first-child')).to have_content(text)
       end
 
       after :all do
@@ -17,22 +16,14 @@ module Helpers
 
     def view_granule_results(col_name = '15 Minute Stream Flow Data: USGS (FIFE)', from = 'collection-results')
       wait_for_xhr
-      # overlay = from
-      # overlay = 'collection-results' if overlay == 'collection-featured-list'
-      # expect(page).to have_visible_overlay(overlay)
       root = from
       root = 'collection-results-list' if root == 'collection-results'
-
-      # Execute with JS
-      # page.execute_script("$('##{root} .panel-list-item:contains(\"#{col_name}\")').click()")
 
       # Execute with Ruby
       page.find("##{root} .panel-list-item", text: col_name).click
 
       # item.click # This causes intermittent failures based on timing
       wait_for_xhr
-      wait_for_visualization_load
-      # expect(page).to have_visible_granule_list
     rescue StandardError => e
       Capybara::Screenshot.screenshot_and_save_page
       puts "Visible overlay: #{OverlayUtil.current_overlay_id(page)}"
@@ -41,12 +32,8 @@ module Helpers
 
     def leave_granule_results(_to = 'collection-results')
       wait_for_xhr
-      # expect(page).to have_visible_granule_list
       page.find('#granule-list a.master-overlay-back').click
-      # find('#granule-list').click_link('Back to Collections')
       wait_for_xhr
-      wait_for_visualization_unload
-      # expect(page).to have_visible_overlay(to)
     rescue StandardError => e
       Capybara::Screenshot.screenshot_and_save_page
       puts "Visible overlay: #{OverlayUtil.current_overlay_id(page)}"
@@ -65,20 +52,8 @@ module Helpers
       end
     end
 
-    def granule_count
+    def search_results_granule_count
       page.find('.master-overlay-info-panel.master-overlay-global-actions.actions')
-    end
-
-    private
-
-    def wait_for_visualization_unload
-      # expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
-    end
-
-    def wait_for_visualization_load
-      # synchronize(120) do
-      #  expect(page.evaluate_script('edsc.page.map.map.loadingLayers')).to eql(0)
-      # end
     end
   end
 end

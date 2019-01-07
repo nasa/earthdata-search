@@ -37,9 +37,7 @@ describe 'Collection "Customizable" Filtering' do
 
   context 'when selecting the "Customizable" filter' do
     before :all do
-      load_page :search, facets: true
-      find('.facets-item', text: 'Customizable').click
-      wait_for_xhr
+      load_page :search, facets: true, ff: 'Customizable'
     end
 
     it 'shows only customizable-enabled collections' do
@@ -57,5 +55,4 @@ describe 'Collection "Customizable" Filtering' do
       end
     end
   end
-
 end

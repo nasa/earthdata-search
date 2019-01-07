@@ -21,7 +21,6 @@ describe 'Sharing Projects' do
       @project_id = project.to_param
 
       load_page "/search/collections?projectId=#{project.to_param}"
-      wait_for_xhr
     end
 
     it 'shows the contents of the project' do
@@ -58,7 +57,6 @@ describe 'Sharing Projects' do
 
       # Login as our test user so that we can load the page to test actual functionality
       load_page "/search/collections?projectId=#{@project_id}", authenticate: 'edsc'
-      wait_for_xhr
 
       # Default scope sorts Projects by updated_at meaning that the most recently
       # updated project will be returned first

@@ -4,7 +4,7 @@ describe 'Collection details' do
   context 'when displaying the collection details' do
     before :all do
       Capybara.reset_sessions!
-      load_page 'search/collection-details', focus: 'C1000000004-EDF_DEV09', env: :sit, authenticate: 'edsc'
+      load_page :collection_details, focus: 'C1000000004-EDF_DEV09', env: :sit, authenticate: 'edsc'
     end
 
     it 'those details provide the expected collection data' do
@@ -44,7 +44,7 @@ describe 'Collection details' do
   context 'when selecting a collection that is only viewable after logging in' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1216393716-EDF_OPS', env: :uat, ac: true, authenticate: 'edsc'
+      load_page :collection_details, focus: 'C1216393716-EDF_OPS', env: :uat, authenticate: 'edsc'
     end
 
     it 'displays the collection details' do
@@ -82,8 +82,7 @@ describe 'Collection details' do
   context 'when selecting a collection without contacts in the xml' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H', ac: true
-      first_collection_result.click_link('View collection details')
+      load_page :collection_details, focus: 'C1214560812-JAXA', ac: true
     end
 
     it 'displays the collection\'s detail page with no errors' do
@@ -94,7 +93,7 @@ describe 'Collection details' do
   context 'when selecting a collection with point spatial' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C179003030-ORNL_DAAC'
+      load_page :collection_details, focus: 'C179003030-ORNL_DAAC'
     end
 
     it 'dislpays the collection searched for in the results list' do
@@ -109,7 +108,7 @@ describe 'Collection details' do
   context 'when selecting a collection with bounding box spatial' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C179002945-ORNL_DAAC'
+      load_page :collection_details, focus: 'C179002945-ORNL_DAAC'
     end
 
     it 'does not display the collection\'s spatial bounds on the map' do
@@ -120,7 +119,7 @@ describe 'Collection details' do
   context 'when selecting a collection with polygon spatial' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1386246913-NSIDCV0', ac: true
+      load_page :collection_details, focus: 'C1386246913-NSIDCV0', ac: true
     end
 
     it "does not display the collection's spatial bounds on the map" do
@@ -131,9 +130,7 @@ describe 'Collection details' do
   # FIXME: This collection no longer has line spatial
   context 'when selecting a collection with line spatial', data_specific: true do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'NSIDC-0239'
-      expect(page).to have_content('SMEX02 Atmospheric Aerosol Optical Properties Data')
+      load_page :search, q: 'NSIDC-0239'
       first_collection_result.click_link('View collection details')
     end
 
@@ -145,7 +142,7 @@ describe 'Collection details' do
   context 'when selecting a collection with multiple temporal fields but some of which have only BeginningDateTime' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1214560374-JAXA', ac: true
+      load_page :collection_details, focus: 'C1214560374-JAXA', ac: true
     end
 
     it 'displays the correct title' do
@@ -161,7 +158,7 @@ describe 'Collection details' do
   context 'when selecting a collection with multiple lines of description' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C197265171-LPDAAC_ECS'
+      load_page :collection_details, focus: 'C197265171-LPDAAC_ECS'
     end
 
     it 'displays carriage returns in the description' do
@@ -172,7 +169,7 @@ describe 'Collection details' do
   context 'when selecting a collection with a description with links' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'only displays one link total' do
@@ -192,8 +189,7 @@ describe 'Collection details' do
   context 'when selecting a collection with multiple spatial values' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1214560151-JAXA', ac: true
-      wait_for_xhr
+      load_page :collection_details, focus: 'C1214560151-JAXA', ac: true
     end
 
     it 'displays all spatial content' do
@@ -204,7 +200,7 @@ describe 'Collection details' do
   context 'when selecting a collection with multiple data centers', data_specific: true do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C179460405-LPDAAC_ECS'
+      load_page :collection_details, focus: 'C179460405-LPDAAC_ECS'
     end
 
     it 'displays all data center content' do
@@ -215,7 +211,7 @@ describe 'Collection details' do
   context 'when selecting a collection with temporal that doesn\'t have an end date or `ends at present` flag' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1443533440-LAADS'
+      load_page :collection_details, focus: 'C1443533440-LAADS'
     end
 
     it 'displays the temporal correctly' do
@@ -226,7 +222,7 @@ describe 'Collection details' do
   context 'when selecting a collection with related urls' do
     before do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'displays highlighted urls' do
@@ -268,9 +264,10 @@ describe 'Collection details' do
     end
   end
 
-  context 'when selecting a collection without related urls' do
+  context 'when selecting a collection without related urls', data_specific: true do
     before do
-      load_page '/search/collection-details', focus: 'C1297504182-LARC'
+      # Collection doesn't exist
+      load_page :collection_details, focus: 'C1297504182-LARC'
     end
 
     it 'does not display option to view all related urls' do
@@ -281,7 +278,7 @@ describe 'Collection details' do
 
   context 'when selecting a collection with polygon spatial', data_specific: true do
     before :all do
-      load_page '/search/collection-details', focus: 'C1267337984-ASF'
+      load_page :collection_details, focus: 'C1267337984-ASF'
     end
 
     it 'displays the spatial' do
@@ -291,7 +288,7 @@ describe 'Collection details' do
 
   context 'when selecting a collection with invalid DOI field' do
     before :all do
-      load_page '/search/collection-details', focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true
     end
 
     it 'displays the DOI and the Authority' do
@@ -303,7 +300,7 @@ describe 'Collection details' do
 
   context 'when selecting a collection with a DOI field which contains "http://"' do
     before :all do
-      load_page '/search/collection-details', focus: 'C1200230663-MMT_1', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200230663-MMT_1', env: :sit, ac: true
     end
 
     it 'updates the URL to contain "https://"" instead' do
@@ -314,7 +311,7 @@ describe 'Collection details' do
   context 'when selecting a collection with valid DOI field' do
     before :all do
       Capybara.reset_sessions!
-      load_page '/search/collection-details', focus: 'C179003620-ORNL_DAAC'
+      load_page :collection_details, focus: 'C179003620-ORNL_DAAC'
     end
 
     it 'displays the DOI and the Authority' do

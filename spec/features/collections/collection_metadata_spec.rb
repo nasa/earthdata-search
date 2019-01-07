@@ -2,10 +2,7 @@ require 'rails_helper'
 
 describe 'Collection metadata' do
   before do
-    load_page :search, ac: true
-    fill_in 'keywords', with: 'AST_L1AE'
-    find('li', text: 'ASTER Expedited L1A').click_link 'View collection details'
-    wait_for_xhr
+    load_page :collection_details, focus: 'C179460405-LPDAAC_ECS'
     click_on 'For developers'
   end
 

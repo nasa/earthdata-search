@@ -5,9 +5,7 @@ describe 'Limited Collections' do
 
   context 'when the number of granules exceeds the collection limit (ASTER for example) in a project' do
     before :all do
-      load_page :search, project: 'C14758250-LPDAAC_ECS', authenticate: 'edsc'
-      find('div[class="toolbar-secondary"]').click_link 'My Project'
-      wait_for_xhr
+      load_page :projects_page, project: 'C14758250-LPDAAC_ECS', authenticate: 'edsc'
 
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click

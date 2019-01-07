@@ -51,9 +51,9 @@ describe 'Granule list' do
       end
 
       after :all do
-        click_link "Filter granules"
+        click_link 'Filter granules'
         wait_for_xhr
-        click_button "granule-filters-clear"
+        click_button 'granule-filters-clear'
         wait_for_xhr
         find('#granule-search').click_link('close')
       end
@@ -68,7 +68,7 @@ describe 'Granule list' do
       end
     end
 
-    context "clicking on the collection details button" do
+    context 'clicking on the collection details button' do
       before :all do
         granule_list.click_link('View collection details')
         # page.find('.collection-title-link').click
@@ -80,17 +80,17 @@ describe 'Granule list' do
         wait_for_xhr
       end
 
-      it "displays the collection details" do
+      it 'displays the collection details' do
         expect(page).to have_visible_collection_details
         expect(page).to have_content('nsidc@nsidc.org')
       end
 
-      it "displays back navigation with the appropriate text" do
+      it 'displays back navigation with the appropriate text' do
         expect(collection_details).to have_link('Back to Granules')
       end
     end
 
-    context "clicking on the edit filters button" do
+    context 'clicking on the edit filters button' do
       before :all do
         dismiss_banner
         granule_list.click_link('Filter granules')
@@ -101,54 +101,54 @@ describe 'Granule list' do
         find('#granule-search').click_link('close')
       end
 
-      it "allows the user to edit granule filters" do
+      it 'allows the user to edit granule filters' do
         expect(page).to have_content('Day / Night Flag')
       end
 
-      context "and editing a filter" do
+      context 'and editing a filter' do
         before :all do
-          select 'Day only', from: "day-night-select"
+          select 'Day only', from: 'day-night-select'
         end
 
         after :all do
-          select 'Anytime', from: "day-night-select"
+          select 'Anytime', from: 'day-night-select'
         end
 
-        it "shows the filters in an applied state" do
+        it 'shows the filters in an applied state' do
           expect(granule_list).to have_selector('.button-highlighted[title="Hide granule filters"]')
         end
       end
     end
 
-    context "clicking the exclude granule button" do
+    context 'clicking the exclude granule button' do
       before :all do
         dismiss_banner
         first_granule_list_item.click
-        first_granule_list_item.click_link "Remove granule"
+        first_granule_list_item.click_link 'Remove granule'
         wait_for_xhr
       end
 
       after :all do
-        click_link "Filter granules"
+        click_link 'Filter granules'
         wait_for_xhr
-        click_button "granule-filters-clear"
+        click_button 'granule-filters-clear'
         find('#granule-search').click_link('close')
       end
 
-      it "removes the selected granule from the list" do
+      it 'removes the selected granule from the list' do
         expect(page).to have_no_content('FIFE_STRM_15M.80611715.s15')
         expect(page).to have_css('#granule-list .panel-list-item', count: 19)
       end
 
-      it "shows undo button to re-add the granule" do
-        expect(page).to have_content("Granule excluded. Undo")
+      it 'shows undo button to re-add the granule' do
+        expect(page).to have_content('Granule excluded. Undo')
       end
 
-      context "until all granules on current page are excluded" do
+      context 'until all granules on current page are excluded' do
         before :all do
           num_of_clicks = 19
           while num_of_clicks > 0
-            first_granule_list_item.click_link "Remove granule"
+            first_granule_list_item.click_link 'Remove granule'
             num_of_clicks -= 1
             wait_for_xhr
           end
@@ -156,73 +156,71 @@ describe 'Granule list' do
 
         after :all do
           Capybara.reset_sessions!
-          load_page :search
-          fill_in 'keywords', with: 'C92711294-NSIDC_ECS'
+          load_page :search, q: 'C92711294-NSIDC_ECS'
           view_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
 
           first_granule_list_item.click
-          first_granule_list_item.click_link "Remove granule"
+          first_granule_list_item.click_link 'Remove granule'
           wait_for_xhr
         end
 
-        it "loads next page" do
+        it 'loads next page' do
           expect(page.text).to match(/Showing [1-9]\d* of 1855868 matching granules/)
-          expect(page).to have_content("Granule excluded. Undo")
+          expect(page).to have_content('Granule excluded. Undo')
         end
       end
 
-      context "and clicking the undo button" do
+      context 'and clicking the undo button' do
         before :all do
-          click_link "Undo"
+          click_link 'Undo'
         end
 
         after :all do
-          first_granule_list_item.click_link "Remove granule"
+          first_granule_list_item.click_link 'Remove granule'
         end
 
-        it "shows the excluded granule in the granule list" do
+        it 'shows the excluded granule in the granule list' do
           expect(page).to have_content('MOD10A1.A2017001.h34v09.005.2017003060855.hdf')
           expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         end
 
-        it "selects the previously excluded granule" do
+        it 'selects the previously excluded granule' do
           expect(page).to have_css('.panel-list-list li:nth-child(1).panel-list-selected')
         end
       end
 
-      context "and changing granule query" do
+      context 'and changing granule query' do
         before :all do
-          click_link "Filter granules"
+          click_link 'Filter granules'
           wait_for_xhr
-          check "Find only granules that have browse images."
+          check 'Find only granules that have browse images.'
           wait_for_xhr
         end
 
         after :all do
-          uncheck "Find only granules that have browse images."
-          click_link "Add it back"
+          uncheck 'Find only granules that have browse images.'
+          click_link 'Add it back'
           wait_for_xhr
           find('#granule-search').click_link('close')
           first_granule_list_item.click
-          first_granule_list_item.click_link "Remove granule"
+          first_granule_list_item.click_link 'Remove granule'
           wait_for_xhr
         end
 
-        it "removes the undo button" do
-          expect(page).to have_no_content("Granule excluded. Undo")
+        it 'removes the undo button' do
+          expect(page).to have_no_content('Granule excluded. Undo')
         end
       end
     end
   end
 
-  context "for collections with many granule results" do
+  context 'for collections with many granule results' do
     before :all do
       visit('/search/granules?p=C179002914-ORNL_DAAC&tl=1501695072!4!!&q=C179002914-ORNL_DAAC&ok=C179002914-ORNL_DAAC')
       wait_for_xhr
     end
-    context "clicking on a collection result" do
-
-      it "displays the first granule results in a list that pages by 20" do
+    context 'clicking on a collection result' do
+      it 'displays the first granule results in a list that pages by 20' do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         page.execute_script "$('#granule-list .master-overlay-content')[0].scrollTop = 10000"
         expect(page).to have_css('#granule-list .panel-list-item', count: 40)
@@ -231,32 +229,31 @@ describe 'Granule list' do
     end
   end
 
-  context "for collections with few granule results" do
+  context 'for collections with few granule results' do
     before :all do
       visit('/search/granules?cmr_env=prod&p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
       wait_for_xhr
     end
 
-    context "clicking on a collection result" do
-
-      it "displays all available granule results" do
+    context 'clicking on a collection result' do
+      it 'displays all available granule results' do
         expect(page).to have_css('#granule-list .panel-list-item', count: 2)
       end
 
-      it "does not attempt to load additional granule results" do
-        expect(page).to have_no_text("Loading granules...")
+      it 'does not attempt to load additional granule results' do
+        expect(page).to have_no_text('Loading granules...')
       end
     end
   end
 
-  context "for collections without granules" do
+  context 'for collections without granules' do
     before do
       set_temporal('2018-01-01 00:00:00', '2018-01-31 23:59:59')
     end
 
     use_collection 'C1426717545-LANCEMODIS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT'
 
-    context "clicking on a collection result" do
+    context 'clicking on a collection result' do
       before :all do
         visit('/search?&cmr_env=prod&q=C179002107-SEDAC&ok=C179002107-SEDAC')
         wait_for_xhr
@@ -266,12 +263,12 @@ describe 'Granule list' do
         wait_for_xhr
       end
 
-      it "shows no granules" do
+      it 'shows no granules' do
         expect(page).to have_no_css('#granule-list .panel-list-item')
       end
 
-      it "does not attempt to load additional granule results" do
-        expect(page).to have_no_text("Loading granules...")
+      it 'does not attempt to load additional granule results' do
+        expect(page).to have_no_text('Loading granules...')
       end
     end
   end
@@ -341,11 +338,11 @@ describe 'Granule list' do
     end
 
     it 'only shows the http link' do
-      expect(page).not_to have_link("The FTP location for the granule.")
+      expect(page).not_to have_link('The FTP location for the granule.')
     end
   end
 
-  context "for collections that are known to cause download delays" do
+  context 'for collections that are known to cause download delays' do
     before :all do
       visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
       wait_for_xhr
@@ -356,7 +353,7 @@ describe 'Granule list' do
       find('.modal-dialog .modal-close').click
     end
 
-    it "shows a modal warning of the delay" do
+    it 'shows a modal warning of the delay' do
       expect(page).to have_css('#delayWarningModalLabel')
       expect(page).to have_text('Message from data provider: This is an optional message.')
     end

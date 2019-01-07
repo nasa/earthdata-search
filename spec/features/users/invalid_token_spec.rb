@@ -10,10 +10,7 @@ describe 'Invalid user token' do
       be_logged_in_as 'edsc'
       page.set_rack_session(access_token: 'invalid')
 
-      load_page :search
-
-      fill_in 'keywords', with: 'C179002986-ORNL_DAAC'
-      wait_for_xhr
+      load_page :search, q: 'C179002986-ORNL_DAAC'
     end
 
     it 'logs out the user' do

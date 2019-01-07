@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Backend environments' do
-
   context 'Setting cmr_env to `prod`' do
     before :all do
       load_page :search, env: :prod, q: 'C179003030-ORNL_DAAC'

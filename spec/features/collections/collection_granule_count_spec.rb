@@ -4,7 +4,6 @@ describe 'Collection Granule Count', data_specific: true do
   before :all do
     Capybara.reset_sessions!
     load_page :search, q: 'C1002-LPDAAC_TBD', env: :sit
-    wait_for_xhr
   end
 
   it 'displays many granules for the given collection' do

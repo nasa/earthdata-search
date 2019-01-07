@@ -3,8 +3,7 @@ require 'rails_helper'
 describe 'Direct download script UAT' do
   context 'when viewing the direct download script in UAT' do
     before :all do
-      load_page 'projects/new', env: :uat, project: ['C1216127793-EDF_OPS'], authenticate: 'edsc'
-      wait_for_xhr
+      load_page :projects_page, env: :uat, project: ['C1216127793-EDF_OPS'], authenticate: 'edsc'
 
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click

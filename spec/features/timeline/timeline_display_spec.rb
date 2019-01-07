@@ -24,7 +24,7 @@ describe 'Timeline display' do
       add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
       add_collection_to_project('C1000000000-ORNL_DAAC', 'A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data')
-      add_collection_to_project('C1234044620-GES_DISC', 'MLS/Aura Near-Real-Time L2 Nitric Acid (HNO3) Mixing Ratio V003 (ML2HNO3_NRT) at GES DISC')
+      add_collection_to_project('C179003620-ORNL_DAAC', 'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050')
 
       click_on 'My Project'
 
@@ -45,7 +45,7 @@ describe 'Timeline display' do
 
     it 'does not display more than three collections' do
       timeline = page.find('#timeline svg')
-      expect(timeline).to have_no_selector('.C191370861-GSFCS4PA')
+      expect(timeline).to have_no_selector('.C179003620-ORNL_DAAC')
     end
 
     it 'displays times when the displayed collections have granules' do

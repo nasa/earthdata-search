@@ -3,8 +3,7 @@ require 'rails_helper'
 describe 'Direct download script SIT' do
   context 'when viewing the direct download script in SIT' do
     before :all do
-      load_page 'projects/new', env: :sit, project: ['C1000000082-EDF_OPS'], authenticate: 'edsc'
-      wait_for_xhr
+      load_page :projects_page, env: :sit, project: ['C1000000082-EDF_OPS'], authenticate: 'edsc'
 
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click
