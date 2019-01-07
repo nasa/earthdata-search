@@ -1,17 +1,9 @@
 require 'rails_helper'
 
 describe 'CWIC-enabled collection details' do
-  before :all do
-    Capybara.reset_sessions!
-
-    load_page :search, q: 'C1220566654-USGS_LTA', ac: true
-  end
-
   context 'When viewing the collection details for a CWIC-enabled collection' do
     before :all do
-      first_collection_result.click_link('View collection details')
-      wait_for_xhr
-
+      load_page :collection_details, focus: 'C1220566654-USGS_LTA', ac: true
       click_on 'For developers'
     end
 

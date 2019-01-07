@@ -5,7 +5,6 @@ describe 'Site tour' do
     before :each do
       Capybara.reset_sessions!
       load_page :root, authenticate: 'edsc', keep_tour_open: true
-      wait_for_xhr
     end
 
     it 'shows a call-to-action modal which introduces the tour' do
@@ -85,7 +84,6 @@ describe 'Site tour' do
     before :each do
       Capybara.reset_sessions!
       load_page :search
-      wait_for_xhr
       dismiss_banner
       find_link('Show Tour').click
       wait_for_xhr
@@ -100,7 +98,6 @@ describe 'Site tour' do
     before :all do
       Capybara.reset_sessions!
       load_page :search
-      wait_for_xhr
       dismiss_banner
       find_link('Show Tour').click
       wait_for_xhr
@@ -119,7 +116,6 @@ describe 'Site tour' do
     before :each do
       Capybara.reset_sessions!
       load_page :search
-      wait_for_xhr
       dismiss_banner
       first(:link, 'View collection details').click
       wait_for_xhr
@@ -134,7 +130,6 @@ describe 'Site tour' do
     before :each do
       Capybara.reset_sessions!
       load_page :search, authenticate: 'edsc'
-      wait_for_xhr
       dismiss_banner
       find_link('Manage user account').click
       find_link('Show Tour').click
@@ -149,7 +144,6 @@ describe 'Site tour' do
     before :each do
       Capybara.reset_sessions!
       load_page '/search/collections?sb=0%2C0%2C10%2C10', authenticate: 'edsc'
-      wait_for_xhr
       dismiss_banner
       find_link('Manage user account').click
     end
@@ -162,7 +156,6 @@ describe 'Site tour' do
   context 'When loading something other than the initial search page while not logged in' do
     before :each do
       load_page '/search/collections?sb=0%2C0%2C10%2C10'
-      wait_for_xhr
       dismiss_banner
     end
 

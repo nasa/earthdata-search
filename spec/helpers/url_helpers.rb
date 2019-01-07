@@ -1,11 +1,12 @@
-require "addressable/uri"
+require 'addressable/uri'
 
 module Helpers
   module UrlHelpers
-
     class QueryBuilder
       def add_to(url, options)
         url = url.to_s
+        url = '/projects/new' if url == 'projects_page'
+        url = '/search/collection-details' if url == 'collection_details'
         url = '' if url == 'root'
         url = '/' + url unless url.start_with?('/')
         [path_from_options(url, options), params_from_options(options)].map(&:presence).compact.join('?')
@@ -18,7 +19,7 @@ module Helpers
           url = '/search/collections' unless options[:facets]
           url = '/search/map' if options[:overlay] == false
           url = '/search/project' if options[:view] == :project
-          url = "/search/granules" if options[:focus]
+          url = '/search/granules' if options[:focus]
         end
         url = "/portal/#{options[:portal]}#{url}" if options[:portal]
         url
@@ -27,11 +28,11 @@ module Helpers
       def params_from_options(options)
         params = {}
 
-        [:bounding_box, :sb, :point, :sp, :polygon].each do |type|
+        %i[bounding_box sb point sp polygon].each do |type|
           params[type.to_s] = spatial(options[type]) if options[type]
         end
 
-        envs = {sit: 'sit', uat: 'uat', prod: 'prod'}
+        envs = { sit: 'sit', uat: 'uat', prod: 'prod' }
         params['cmr_env'] = envs[options[:env].to_sym] if options[:env]
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
@@ -74,7 +75,7 @@ module Helpers
         result.join('&')
       end
 
-      def temporal(start, stop=nil, range=nil)
+      def temporal(start, stop = nil, range = nil)
         start = start.strftime('%Y-%m-%dT%H:%M:%S.000Z') if start && start.is_a?(DateTime)
         stop = stop.strftime('%Y-%m-%dT%H:%M:%S.000Z') if stop && stop.is_a?(DateTime)
         ([start || '', stop || ''] + Array.wrap(range)).join(',')

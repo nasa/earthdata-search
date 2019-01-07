@@ -38,7 +38,6 @@ describe 'CWIC-enabled granule results' do
       context 'and updating the query', pending_updates: true do
         before :all do
           load_page current_url
-          wait_for_xhr
         end
 
         it 'continues to exclude the removed granule from the list' do

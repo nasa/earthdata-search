@@ -10,9 +10,7 @@ describe 'Timeline zooming' do
   decade_end = DateTime.new(2019, 2, 19, 14, 30, 0, '+0')
 
   before :all do
-    load_page :search, focus: 'C179003030-ORNL_DAAC'
-
-    set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
+    load_page :search, focus: 'C179003030-ORNL_DAAC', temporal: ['2014-02-10T12:30:00Z', '2014-02-20T16:30:00Z']
 
     pan_to_time(present)
     wait_for_xhr

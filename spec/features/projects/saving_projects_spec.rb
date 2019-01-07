@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Viewing an un-saved Project' do
   before :all do
-    load_page 'projects/new', project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
+    load_page :projects_page, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
   end
 
   it 'displays the default project name' do

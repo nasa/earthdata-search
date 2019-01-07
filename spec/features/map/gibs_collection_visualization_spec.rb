@@ -7,9 +7,7 @@ describe 'Collection GIBS visualizations' do
 
   context 'when viewing a GIBS-enabled collection in the results list' do
     before do
-      load_page :search
-      fill_in 'keywords', with: gibs_collection_id
-      wait_for_xhr
+      load_page :search, q: gibs_collection_id
     end
 
     it 'indicates that the collection has GIBS visualizations' do
@@ -19,11 +17,7 @@ describe 'Collection GIBS visualizations' do
 
   context 'when visualizing a GIBS-enabled collection' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: gibs_collection_id
-      wait_for_xhr
-      first_collection_result.click
-      wait_for_xhr
+      load_page :search, focus: gibs_collection_id
     end
 
     it 'displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas' do
@@ -43,11 +37,7 @@ describe 'Collection GIBS visualizations' do
 
   context 'when viewing a GIBS-enabled collection with different resolutions for each projection' do
     before :all do
-      load_page :search, env: :sit
-      fill_in 'keywords', with: 'C1000001002-EDF_OPS'
-      wait_for_xhr
-      first_collection_result.click
-      wait_for_xhr
+      load_page :search, env: :sit, focus: 'C1000001002-EDF_OPS'
     end
 
     it 'displays the correct geo resolution' do

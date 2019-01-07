@@ -6,8 +6,6 @@ describe 'Ignoring selections from the Full Facets List Modal' do
 
     load_page :search, facets: true, env: :uat
 
-    reset_search
-
     @search_page_collection_count = collection_results_header_value.text.to_i
   end
 

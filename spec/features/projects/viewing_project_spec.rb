@@ -18,10 +18,7 @@ describe 'Viewing Single Project' do
   context 'for an un-saved project' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS'], authenticate: 'edsc'
-      wait_for_xhr
-      click_link 'My Project'
-      wait_for_xhr
+      load_page :projects_page, project: ['C14758250-LPDAAC_ECS'], authenticate: 'edsc'
     end
 
     it 'shows default project title' do
@@ -33,9 +30,7 @@ describe 'Viewing Single Project' do
   context 'project summary' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS'], authenticate: 'edsc'
-      click_link 'My Project'
-      wait_for_xhr
+      load_page :projects_page, project: ['C14758250-LPDAAC_ECS'], authenticate: 'edsc'
     end
 
     it 'shows total number of granules included in the project' do
@@ -59,9 +54,7 @@ describe 'Viewing Single Project' do
     context 'for an EGI collection', pending_updates: true do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C1000000969-DEV08'], env: :sit, authenticate: 'edsc'
-        click_link 'My Project'
-        wait_for_xhr
+        load_page :projects_page, project: ['C1000000969-DEV08'], env: :sit, authenticate: 'edsc'
       end
 
       it 'shows configuration icons' do
@@ -272,10 +265,7 @@ describe 'Viewing Single Project' do
     context 'for an OPeNDAP collection' do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
-        wait_for_xhr
-        click_link 'My Project'
-        wait_for_xhr
+        load_page :projects_page, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
       end
 
       it 'shows configuration icons' do
@@ -293,11 +283,7 @@ describe 'Viewing Single Project' do
       context 'project configurations with spatial subsetting enabled via bounding box' do
         before :all do
           Capybara.reset_sessions!
-          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
-          create_bounding_box(-10, -10, 10, 10)
-          wait_for_xhr
-          click_link 'My Project'
-          wait_for_xhr
+          load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [-10, -10, 10, 10], env: :sit, authenticate: 'edsc'
         end
 
         it 'shows configuration icons with spatial enabled' do
@@ -317,11 +303,7 @@ describe 'Viewing Single Project' do
       context 'project configurations with spatial subsetting enabled via polygon' do
         before :all do
           Capybara.reset_sessions!
-          load_page :search, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
-          create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
-          wait_for_xhr
-          click_link 'My Project'
-          wait_for_xhr
+          load_page :projects_page, project: ['C1200187767-EDF_OPS'], polygon: [10, 10, 10, -10, -10, -10, -10, 10, 10, 10], env: :sit, authenticate: 'edsc'
         end
 
         it 'shows configuration icons with spatial enabled' do
@@ -343,10 +325,7 @@ describe 'Viewing Single Project' do
   context 'project list item' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
-      wait_for_xhr
-      click_link 'My Project'
-      wait_for_xhr
+      load_page :projects_page, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2'], authenticate: 'edsc'
     end
 
     it 'shows project title' do
@@ -441,9 +420,7 @@ describe 'Viewing Single Project' do
     # all cassettes are recorded
     before :all do
       Capybara.reset_sessions!
-      load_page :search, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2', 'C179003030-ORNL_DAAC', 'C179001887-SEDAC', 'C1000000220-SEDAC', 'C179001967-SEDAC', 'C179001889-SEDAC', 'C179001707-SEDAC', 'C179002107-SEDAC', 'C179002147-SEDAC', 'C1000000000-SEDAC'], authenticate: 'edsc'
-      click_link 'My Project'
-      wait_for_xhr
+      load_page :projects_page, project: ['C14758250-LPDAAC_ECS', 'C1000000000-LANCEAMSR2', 'C179003030-ORNL_DAAC', 'C179001887-SEDAC', 'C1000000220-SEDAC', 'C179001967-SEDAC', 'C179001889-SEDAC', 'C179001707-SEDAC', 'C179002107-SEDAC', 'C179002147-SEDAC', 'C1000000000-SEDAC'], authenticate: 'edsc'
     end
 
     it 'displays the project summary information' do
