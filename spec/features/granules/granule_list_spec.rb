@@ -274,8 +274,9 @@ describe 'Granule list' do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    context 'clicking on the single granule download button when the links have titles' do
+    context 'clicking on the single granule download button when the links have titles', data_specific: true do
       before :all do
+        # this collection doesn't exist
         visit('/search/granules?cmr_env=prod&p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
         wait_for_xhr
         within '#granules-scroll .panel-list-item:nth-child(1)' do
