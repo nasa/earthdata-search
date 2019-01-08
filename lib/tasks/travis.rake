@@ -17,7 +17,7 @@ namespace :travis do
 
   task :colormaps do
     collections_recordings = File.open(File.join(Rails.root, 'fixtures/cassettes', 'collections_responses.yml'), 'r').read
-    required_colormaps = collections_recordings.scan(/\"product\"\: ?\"([\w\s]*)\"/).flatten.uniq
+    required_colormaps = collections_recordings.scan(/\"product\"\: ?\"([\w\s-]*)\"/).flatten.uniq
 
     Colormaps.load(required_colormaps)
   end
