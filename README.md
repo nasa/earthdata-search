@@ -45,7 +45,19 @@ See public/licenses.txt
 * [Docker](https://docs.docker.com/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
-* (Optional) For automatic spatial and temporal extraction from the search text, clone and set up an [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) server
+* (Optional) For automatic spatial and temporal entity extraction from the search text, clone and set up an [EDSC-NLP](https://git.earthdata.nasa.gov/projects/EDSC/repos/edsc-nlp/browse) server
+
+### Application Configuration
+
+Use the templates at `config/application.yml.example` and `config/database.yml.example` to create `config/application.yml` and `config/database.yml` respectively. Update values as necessary. Note that the Earthdata Login (URS) Configuration is optional however without the Earthdata Login configuration, Earthdata Search's functionality will be limited. If you would like to set up Earthdata Login login, you will need to perform the following steps:
+
+Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/home).
+
+Create an application in the Earthdata Login console. Its callback URL should be `http://<domain>/urs_callback`.  Standard Rails development would be `http://localhost:3000/urs_callback`.
+
+Click the "Feedback" icon on the Earthdata Login page and request that your new application be placed in the ECHO application group (required for ECHO/CMR to recognize your tokens).
+
+Your Earthdata Login application's client ID will need to be saved in `config/application.yml`.
 
 ### Initial setup
 
@@ -55,24 +67,7 @@ Run
 
 Note: This command will take a long time to run
 
-### Application configuration
-
-Review `config/application.yml` and update values as necessary
-
-#### (Optional) Earthdata Login (URS) Configuration
-
-Without the Earthdata Login Configuration, Earthdata Search's functionality will be limited. If you would like to set up Earthdata Login login, you will need to perform the following steps:
-
-Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/home).
-
-Create an application in the Earthdata Login console.  Its callback URL should be `http://<domain>/urs_callback`.  Standard Rails development would be `http://localhost:3000/urs_callback`.
-
-Click the "Feedback" icon on the Earthdata Login page and request that your new application be placed in the ECHO application group
-(required for ECHO/CMR to recognize your tokens).
-
-Your Earthdata Login application's client ID will need to be saved in `config/application.yml`.
-
-```### Running
+### Running
 
 Run
 
