@@ -3,15 +3,9 @@ require 'rails_helper'
 describe 'Granule list' do
   extend Helpers::CollectionHelpers
 
-  before :all do
-    Capybara.reset_sessions!
-    load_page :search, authenticate: 'edsc'
-  end
-
   context 'for all collections with granules' do
     before :all do
-      visit('/search/granules?p=C92711294-NSIDC_ECS&tl=1501695072!4!!&q=C92711294-NSIDC_ECS&ok=C92711294-NSIDC_ECS')
-      wait_for_xhr
+      load_page :search, focus: 'C92711294-NSIDC_ECS', timeline: '1501695072'
     end
 
     it 'provides a text field to search for single or multiple granules by granule IDs' do
@@ -202,69 +196,50 @@ describe 'Granule list' do
 
   context 'for collections with many granule results' do
     before :all do
-      visit('/search/granules?p=C179002914-ORNL_DAAC&tl=1501695072!4!!&q=C179002914-ORNL_DAAC&ok=C179002914-ORNL_DAAC')
-      wait_for_xhr
+      load_page :search, focus: 'C179002914-ORNL_DAAC', timeline: '1501695072'
     end
-    context 'clicking on a collection result' do
-      it 'displays the first granule results in a list that pages by 20' do
-        expect(page).to have_css('#granule-list .panel-list-item', count: 20)
-        page.execute_script "$('#granule-list .master-overlay-content')[0].scrollTop = 10000"
-        expect(page).to have_css('#granule-list .panel-list-item', count: 40)
-        expect(page).to have_no_content('Loading granules...')
-      end
+
+    it 'displays the first granule results in a list that pages by 20' do
+      expect(page).to have_css('#granule-list .panel-list-item', count: 20)
+      page.execute_script "$('#granule-list .master-overlay-content')[0].scrollTop = 10000"
+      expect(page).to have_css('#granule-list .panel-list-item', count: 40)
+      expect(page).to have_no_content('Loading granules...')
     end
   end
 
   context 'for collections with few granule results' do
     before :all do
-      visit('/search/granules?cmr_env=prod&p=C179003380-ORNL_DAAC&tl=1501695072!4!!&q=C179003380-ORNL_DAAC&ok=C179003380-ORNL_DAAC')
-      wait_for_xhr
+      load_page :search, focus: 'C179003380-ORNL_DAAC', timeline: '1501695072'
     end
 
-    context 'clicking on a collection result' do
-      it 'displays all available granule results' do
-        expect(page).to have_css('#granule-list .panel-list-item', count: 2)
-      end
+    it 'displays all available granule results' do
+      expect(page).to have_css('#granule-list .panel-list-item', count: 2)
+    end
 
-      it 'does not attempt to load additional granule results' do
-        expect(page).to have_no_text('Loading granules...')
-      end
+    it 'does not attempt to load additional granule results' do
+      expect(page).to have_no_text('Loading granules...')
     end
   end
 
   context 'for collections without granules' do
-    before do
-      set_temporal('2018-01-01 00:00:00', '2018-01-31 23:59:59')
+    before :all do
+      load_page :search, focus: 'C179002107-SEDAC', temporal: ['2018-01-01T00:00:00Z', '2018-01-31T23:59:59Z']
     end
 
-    use_collection 'C1426717545-LANCEMODIS', 'MODIS/Aqua Aerosol 5-Min L2 Swath 3km - NRT'
+    it 'shows no granules' do
+      expect(page).to have_no_css('#granule-list .panel-list-item')
+    end
 
-    context 'clicking on a collection result' do
-      before :all do
-        visit('/search?&cmr_env=prod&q=C179002107-SEDAC&ok=C179002107-SEDAC')
-        wait_for_xhr
-        dismiss_banner
-        expect(page).to have_visible_collection_results
-        first_collection_result.click
-        wait_for_xhr
-      end
-
-      it 'shows no granules' do
-        expect(page).to have_no_css('#granule-list .panel-list-item')
-      end
-
-      it 'does not attempt to load additional granule results' do
-        expect(page).to have_no_text('Loading granules...')
-      end
+    it 'does not attempt to load additional granule results' do
+      expect(page).to have_no_text('Loading granules...')
     end
   end
 
   context 'for collections whose granules have more than one downloadable links' do
     context 'clicking on the single granule download button when the links have titles', data_specific: true do
       before :all do
-        # this collection doesn't exist
-        visit('/search/granules?cmr_env=prod&p=C1000000042-LANCEAMSR2&tl=1501695072!4!!&q=C1000000042-LANCEAMSR2&ok=C1000000042-LANCEAMSR2')
-        wait_for_xhr
+       load_page :search, focus: 'C1000000042-LANCEAMSR2', timeline: '1501695072'
+
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
         end
@@ -286,8 +261,8 @@ describe 'Granule list' do
 
     context 'clicking on the single granule download button when the links do not have titles', data_specific: true do
       before :all do
-        visit('/search/granules?cmr_env=prod&p=C1353062857-NSIDC_ECS&tl=1502209871!4!!&q=NSIDC-0481&ok=NSIDC-0481')
-        wait_for_xhr
+        load_page :search, focus: 'C1353062857-NSIDC_ECS', timeline: '1501695072'
+
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
         end
@@ -313,9 +288,8 @@ describe 'Granule list' do
 
   context 'for collections whose granules have duplicate downloadable links, with one pointing to https and the other ftp' do
     before :all do
-      # A collection known to have duplicate downloadable links
-      visit('/search/granules?cmr_env=prod&p=C1444742099-PODAAC&tl=1501695072!4!!&q=C1444742099-PODAAC&ok=C1444742099-PODAAC')
-      wait_for_xhr
+      load_page :search, focus: 'C1444742099-PODAAC', timeline: '1501695072'
+
       within '#granules-scroll .panel-list-item:nth-child(1)' do
         # If the test works, this dropdown won't even exist...
         if page.has_css?('a[data-toggle="dropdown"]')
@@ -331,8 +305,8 @@ describe 'Granule list' do
 
   context 'for collections that are known to cause download delays' do
     before :all do
-      visit('/search/granules?cmr_env=sit&p=C24931-LAADS&tl=1501695072!4!!&q=C24931-LAADS&ok=C24931-LAADS')
-      wait_for_xhr
+      load_page :search, focus: 'C24931-LAADS', timeline: '1501695072', env: :sit
+
       click_button('Download')
     end
 
@@ -348,7 +322,7 @@ describe 'Granule list' do
 
   context 'for collections that have granules without end times', data_specific: true do
     before :all do
-      visit('/search/granules?cmr_env=uat&p=C1000-LPDAAC_TS2')
+      load_page :search, focus: 'C1000-LPDAAC_TS2', timeline: '1501695072', env: :uat
     end
 
     it 'displays correct start and end temporal labels' do
