@@ -104,20 +104,6 @@ describe 'Granule list' do
       it 'allows the user to edit granule filters' do
         expect(page).to have_content('Day / Night Flag')
       end
-
-      context 'and editing a filter' do
-        before :all do
-          select 'Day only', from: 'day-night-select'
-        end
-
-        after :all do
-          select 'Anytime', from: 'day-night-select'
-        end
-
-        it 'shows the filters in an applied state' do
-          expect(granule_list).to have_selector('.button-highlighted[title="Hide granule filters"]')
-        end
-      end
     end
 
     context 'clicking the exclude granule button' do
