@@ -2,8 +2,7 @@ RSpec::Matchers.define :filter_granules_from do |expected|
   match do |selector|
     wait_for_xhr
     synchronize do
-      number_granules = expect(selector.text).to match_regex(/\d+ Granule/)
-      after_granule_count = number_granules.to_s.split(' ')[0].to_i
+      after_granule_count = selector.text.match(/(\d+) Granule/).captures.first.to_i
 
       expect(expected).to be > after_granule_count
     end
