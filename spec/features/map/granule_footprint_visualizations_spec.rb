@@ -9,7 +9,7 @@ describe 'Granule footprint visualizations' do
   end
 
   context 'for point collections' do
-    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
+    use_collection 'C179003030-ORNL_DAAC'
 
     context "visualizing a collection's granules" do
       hook_granule_results
@@ -57,7 +57,7 @@ describe 'Granule footprint visualizations' do
   end
 
   context 'for polygon collections' do
-    use_collection 'C1219248591-LANCEMODIS', 'MODIS/Terra Near Real Time (NRT) Land Surface Temperature/Emissivity 5-Min L2 Swath 1km'
+    use_collection 'C1219248591-LANCEMODIS'
 
     before :all do
       manually_create_bounding_box(0, 0, 10, 15)
@@ -108,7 +108,7 @@ describe 'Granule footprint visualizations' do
   end
 
   context 'for bounding box collections' do
-    use_collection 'C1236224151-GES_DISC', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V4.0 (AIRS_CPR_IND) at GES_DISC'
+    use_collection 'C1236224151-GES_DISC'
 
     before :all do
       manually_create_bounding_box(0, 0, 15, 15)

@@ -9,7 +9,7 @@ describe 'Granule browse display' do
   end
 
   context 'for granules with browse' do
-    use_collection 'C14758250-LPDAAC_ECS', 'AST_L1A'
+    use_collection 'C14758250-LPDAAC_ECS'
 
     context 'viewing the granule list' do
       hook_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
@@ -45,7 +45,7 @@ describe 'Granule browse display' do
   end
 
   context 'for granules with no browse' do
-    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+    use_collection 'C179003030-ORNL_DAAC'
 
     context 'viewing the granule list' do
       hook_granule_results
