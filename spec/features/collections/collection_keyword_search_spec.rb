@@ -42,7 +42,7 @@ describe 'Collection keyword searches' do
 
   context 'returning to the collection results list' do
     context 'after navigating to a granule results sub-page' do
-      use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+      use_collection 'C179003030-ORNL_DAAC'
 
       before(:all) do
         view_granule_results

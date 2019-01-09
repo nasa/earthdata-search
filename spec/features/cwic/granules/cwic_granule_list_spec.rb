@@ -8,7 +8,8 @@ describe 'CWIC Granule list' do
   end
 
   context 'for all collections with granules' do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+    use_collection 'C1220566654-USGS_LTA'
+
     hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
     it 'provides a button to get collection details' do
@@ -46,7 +47,7 @@ describe 'CWIC Granule list' do
   end
 
   context 'for collections with many granule results' do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+    use_collection 'C1220566654-USGS_LTA'
 
     context 'clicking on a collection result' do
       hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
@@ -64,7 +65,7 @@ describe 'CWIC Granule list' do
   end
 
   context 'for collections that have granules with temporal fields' do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+    use_collection 'C1220566654-USGS_LTA'
 
     context 'clicking on a collection result' do
       hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
@@ -76,7 +77,8 @@ describe 'CWIC Granule list' do
   end
 
   context 'for CWIC tagged collections' do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+    use_collection 'C1220566654-USGS_LTA'
+
     hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
     it 'displays a help button to find out more information about CWIC collections' do
@@ -106,7 +108,8 @@ describe 'CWIC Granule list' do
   end
 
   context 'for non-CWIC collections' do
-    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+    use_collection 'C179003030-ORNL_DAAC'
+
     hook_granule_results
 
     it 'does not display a help button to find out more information about CWIC collections' do
