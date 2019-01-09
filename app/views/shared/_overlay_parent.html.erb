@@ -191,6 +191,24 @@
       <master-overlay-panel-group params="panelGroupName: collection.id + '_collection-options', indicatorElement: collection.id + '_project-list-item'">
         <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_edit-options', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Edit Options'">
           <div class="master-overlay-panel-item-content panel-item">
+            <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length == 0 -->
+            <div class="panel-item-section">
+              <div class="panel-item-content">
+                <p>Data access is not available for this collection.</p>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: $parents[1].granuleAccessOptions().dqs && $parents[1].granuleAccessOptions().dqs.length > 0 -->
+            <div class="panel-item-section">
+              <h3 class="panel-item-section-title">Quality Information</h3>
+              <div class="panel-item-content">
+                <!-- ko foreach: $parents[1].granuleAccessOptions().dqs -->
+                <p data-bind="html: data_quality_summary_definition.summary"></p>
+                <!-- /ko -->
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length -->
             <div class="panel-item-section">
               <h3 class="panel-item-section-title">Delivery Method</h3>
               <!-- ko if: $parents[1].serviceOptions.isLoaded() -->
@@ -215,53 +233,43 @@
               <!-- /ko -->
               <button class="button-link panel-item-action-button" type="button" data-bind="click: function(){$('#' + $parents[1].collection.id + '_delivery-method').trigger('open')}">Edit Delivery Method</button>
             </div>
+            <!-- /ko -->
             <!-- ko foreach: $parents[1].serviceOptions.accessMethod -->
-              <!-- ko if: $parents[2].serviceOptions.isLoaded() -->
-                <!-- ko if: $parents[2].selectedAccessMethodType() && ($parents[2].selectedAccessMethodType() == 'service' || $parents[2].selectedAccessMethodType() == 'order') -->
-                  <div class="panel-item-section">
-                    <h3 class="panel-item-section-title">Additional Options</h3>
-                    <!-- ko foreach: availableMethods -->
-                      <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index()}, visible: $parent.method() == name"></div>
-                    <!-- /ko -->
-                  </div>
+            <!-- ko if: $parents[2].serviceOptions.isLoaded() -->
+            <!-- ko if: $parents[2].selectedAccessMethodType() && ($parents[2].selectedAccessMethodType() == 'service' || $parents[2].selectedAccessMethodType() == 'order') -->
+              <div class="panel-item-section">
+                <h3 class="panel-item-section-title">Additional Options</h3>
+                <!-- ko foreach: availableMethods -->
+                <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index()}, visible: $parent.method() == name"></div>
                 <!-- /ko -->
-              <!-- /ko -->
+              </div>
+            <!-- /ko -->
+            <!-- /ko -->
             <!-- /ko -->
             <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
-              <div class="panel-item-section">
-                <p class="content"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
-              </div>
+            <div class="panel-item-section">
+              <p class="content"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
+            </div>
             <!-- /ko -->
             <!-- ko if: $parents[1].selectedAccessMethod() == 'OPeNDAP' -->
-              <div class="panel-item-section">
-                <h3 class="panel-item-section-title">Customizations</h3>
-                <h4 class="panel-item-heading">Variable Selection</h4>
-                <p class="panel-item-content panel-item-content-light">Use science keywords to subset your collection granules by measurements and variables</p>
-                <!-- ko if: $parents[1].selectedVariables().length > 0 -->
-                  <p class="panel-item-content panel-item-content-emphasis"><span data-bind="text: $parents[1].selectedVariables().length"></span> variables currently selected.</p>
-                <!-- /ko -->
-                <!-- ko if: $parents[1].selectedVariables().length == 0 -->
-                  <p class="panel-item-content panel-item-content-emphasis">No variables selected. All variables will be included in download.</p>
-                <!-- /ko -->
-                <button class="button-link panel-item-action-button" type="button" name="button" data-bind="click: function(){$root.ui.variableSelector.displayVariableSelector($parents[1]); $('#' + $parents[1].collection.id + '_variable-selection').trigger('open')}">Edit Variables</button>
-              </div>
+            <div class="panel-item-section">
+              <h3 class="panel-item-section-title">Customizations</h3>
+              <h4 class="panel-item-heading">Variable Selection</h4>
+              <p class="panel-item-content panel-item-content-light">Use science keywords to subset your collection granules by measurements and variables</p>
+              <!-- ko if: $parents[1].selectedVariables().length > 0 -->
+                <p class="panel-item-content panel-item-content-emphasis"><span data-bind="text: $parents[1].selectedVariables().length"></span> variables currently selected.</p>
+              <!-- /ko -->
+              <!-- ko if: $parents[1].selectedVariables().length == 0 -->
+                <p class="panel-item-content panel-item-content-emphasis">No variables selected. All variables will be included in download.</p>
+              <!-- /ko -->
+              <button class="button-link panel-item-action-button" type="button" name="button" data-bind="click: function(){$root.ui.variableSelector.displayVariableSelector($parents[1]); $('#' + $parents[1].collection.id + '_variable-selection').trigger('open')}">Edit Variables</button>
+            </div>
             <!-- /ko -->
           </div>
         </master-overlay-panel-item>
         <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_delivery-method', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Delivery Method', backToButton: { dest: $parents[0].collection.id + '_edit-options', text: 'Edit Options'}">
           <div class="master-overlay-panel-item-content panel-item access-item-selection">
             <div class="panel-item-section variable-details">
-              <!-- ko if: $parents[1].granuleAccessOptions().dqs && $parents[1].granuleAccessOptions().dqs.length > 0 -->
-                <div class="access-item-data-quality">
-                  <h4>Quality Information</h4>
-                  <!-- ko foreach: $parents[1].granuleAccessOptions().dqs -->
-                  <p data-bind="html: data_quality_summary_definition.summary"></p>
-                  <!-- /ko -->
-                </div>
-              <!-- /ko -->
-              <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length == 0 -->
-              <p>Data access is not available for this collection.</p>
-              <!-- /ko -->
               <h3 class="panel-item-section-title">Select Delivery Method</h3>
               <!-- ko foreach: $parents[1].serviceOptions.accessMethod -->
                 <!-- ko foreach: availableMethods -->
