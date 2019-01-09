@@ -68,7 +68,8 @@ describe 'Timeline display' do
   end
 
   context 'in the granule result list, coming from the collection results list' do
-    use_collection('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+    use_collection 'C179003030-ORNL_DAAC'
+
     hook_granule_results
 
     it 'displays a timeline for the single focused collection' do

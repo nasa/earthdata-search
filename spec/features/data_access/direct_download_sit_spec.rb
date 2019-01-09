@@ -13,7 +13,7 @@ describe 'Direct download script SIT' do
 
       choose('Direct Download')
 
-      page.find_button('Download Data', disabled: false).click
+      page.find_button('Download Data').click
       wait_for_xhr
 
       @sit_script_window = window_opened_by do

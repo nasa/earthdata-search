@@ -1,6 +1,6 @@
 module Helpers
   module CollectionHelpers
-    def use_collection(id, _text)
+    def use_collection(id)
       before :all do
         dismiss_banner
         wait_for_xhr
@@ -30,7 +30,7 @@ module Helpers
       raise e
     end
 
-    def leave_granule_results(_to = 'collection-results')
+    def leave_granule_results
       wait_for_xhr
       page.find('#granule-list a.master-overlay-back').click
       wait_for_xhr
