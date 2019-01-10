@@ -1,15 +1,11 @@
 portals: &portals
-  carve:
-    org: ORNL DAAC
-    title: CARVE
+
+  above:
+    org: ABoVE
+    title: Search
     params:
       project:
-        - CARVE
-    logos:
-      - id: ornl-daac-logo
-        image: /images/portals/ornl/ornl-daac-logo-mono.png
-        link: https://carve.ornl.gov/
-        title: ORNL DAAC CARVE Home
+        - ABoVE
     scripts:
       - edsc-portal.ornl.min.js
 
@@ -26,27 +22,18 @@ portals: &portals
         title: ORNL DAAC AirMOSS Home
     scripts:
       - edsc-portal.ornl.min.js
-      
-  above:
-    org: ABoVE
-    title: Search
+
+  carve:
+    org: ORNL DAAC
+    title: CARVE
     params:
       project:
-        - ABoVE
-    scripts:
-      - edsc-portal.ornl.min.js
-      
-  ornldaac:
-    org: ORNL DAAC
-    title: Search
-    params:
-      data_center:
-        - ORNL_DAAC
+        - CARVE
     logos:
       - id: ornl-daac-logo
         image: /images/portals/ornl/ornl-daac-logo-mono.png
-        link: https://daac.ornl.gov
-        title: ORNL DAAC Home
+        link: https://carve.ornl.gov/
+        title: ORNL DAAC CARVE Home
     scripts:
       - edsc-portal.ornl.min.js
 
@@ -63,6 +50,34 @@ portals: &portals
         title: CEOS Home
     scripts:
       - edsc-portal.cwic.js
+
+  ornldaac:
+    org: ORNL DAAC
+    title: Search
+    params:
+      data_center:
+        - ORNL_DAAC
+    logos:
+      - id: ornl-daac-logo
+        image: /images/portals/ornl/ornl-daac-logo-mono.png
+        link: https://daac.ornl.gov
+        title: ORNL DAAC Home
+    scripts:
+      - edsc-portal.ornl.min.js
+
+  podaac:
+    org: PO.DAAC
+    title: Search
+    params:
+      data_center:
+        - PODAAC
+    logos:
+      - id: podaac-logo
+        image: /images/portals/podaac/podaac-logo-mono.png
+        link: https://podaac.jpl.nasa.gov
+        title: PO.DAAC Home
+    scripts:
+      - edsc-portal.podaac.js
 
 examples: &examples
   example:
