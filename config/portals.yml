@@ -73,7 +73,7 @@ portals: &portals
         - PODAAC
     logos:
       - id: podaac-logo
-        image: /images/portals/podaac/podaac-logo-mono.png
+        image: /images/portals/podaac/podaac_logo-mono.png
         link: https://podaac.jpl.nasa.gov
         title: PO.DAAC Home
     scripts:
