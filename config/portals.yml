@@ -70,7 +70,7 @@ portals: &portals
     title: Search
     params:
       data_center:
-        - PODAAC
+        - PO.DAAC
     logos:
       - id: podaac-logo
         image: /images/portals/podaac/podaac_logo-mono.png
