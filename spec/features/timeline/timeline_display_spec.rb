@@ -55,6 +55,7 @@ describe 'Timeline display' do
     context 'returning to the collection results list' do
       before :all do
         click_link('Back to Search Session')
+        dismiss_banner
       end
 
       after :all do
