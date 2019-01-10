@@ -117,10 +117,10 @@
     #   /search - The search page with browse collections and collection list open
     #   /search/map - The search page with the overlays closed
     #   /search/collections - The search page with browse collections closed
-    #   /search/project - The project page
-    #   /search(/project)?/:id/granules - The granule results page for the given collection id
-    #   /search(/project)?/:id(/granules)?/collection-details - The collection details page for the given collection id
-    #   /search(/project)?/:id(/granules)?/granule-details - The granules details page for the given granule id
+    #   /projects - The project page
+    #   /search/granules - The granule results page for the given collection id
+    #   /search(/granules)?/collection-details - The collection details page for the given collection id
+    #   /search(/granules)?/granule-details - The granules details page for the given granule id
     #
     # Note this is not perfect serialization of the overlay state.  In particular, hiding the overlay and reloading
     # from a bookmark will not save information on the state of the hidden overlay.  This is fixable, but doesn't
@@ -136,17 +136,15 @@
     _pathForState: (state) ->
       return urlUtil.cleanPath()?.split('?')[0] ? '/' if !state?
 
+      return '/projects' if state.projects
+
       root = '/search'
 
-      return '/projects/new' if state.projects
       return root if state.parent && state.current != 'collection-details'
 
       return "#{root}/map" unless state.visible
 
       return "#{root}/collections" if state.current == 'collection-results'
-
-      root += '/projects' if state.children.indexOf('project-overview') != -1
-      return root if state.current == 'project-overview'
 
       root += "/granules" if state.children.indexOf('granule-list') != -1
       return root if state.current == 'granule-list'

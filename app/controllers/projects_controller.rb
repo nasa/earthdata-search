@@ -4,6 +4,9 @@ class ProjectsController < ApplicationController
   before_filter :set_env_session, only: [:new, :show], unless: :json_request?
 
   def index
+    redirect_to url_for(action: 'show', id: params['projectId']) if params['projectId']
+    redirect_to url_for(params.merge(action: :new)) if params['p']
+
     if current_user.present?
       # TODO: PQ EDSC-1038: Include portal information here
       user_id = current_user.id

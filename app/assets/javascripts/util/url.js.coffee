@@ -186,6 +186,11 @@ this.edsc.util.url = do(window
   realQuery = ->
     realPath().split('?')[1] ? ''
 
+  projectId = ->
+    return deparam(realQuery()).projectId if realQuery() != ''
+
+    id = realPath().match(/\/projects\/(\d+)$/)?[1]
+
   savedPath = null
   savedId = null
   savedName = null
@@ -342,6 +347,7 @@ this.edsc.util.url = do(window
     pushPath: pushPath
     saveState: saveState
     realQuery: realQuery
+    projectId: projectId
     cleanPath: cleanPath
     currentParams: currentParams
     currentQuery: currentQuery
