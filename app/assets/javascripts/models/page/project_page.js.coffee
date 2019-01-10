@@ -85,12 +85,6 @@ ns.ProjectPage = do (ko,
         for projectCollection in projectCollections
           projectCollection.setVisibility(true)
 
-      $(window).on 'edsc.save_workspace', (e) =>
-        currentParams = @project.serialized()
-        urlUtil.saveState('/search/collections', currentParams, true, @workspaceNameField())
-        @workspaceName(@workspaceNameField())
-        $('.save-dropdown').removeClass('open')
-
       setTimeout((=>
         @_loadFromUrl()
         $(window).on 'edsc.pagechange', @_loadFromUrl), 0)

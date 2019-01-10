@@ -325,7 +325,7 @@ ns.ProjectList = do (ko
     showProjectPage: ->
       $(window).trigger('edsc.save_workspace')
 
-      projectId = deparam(urlUtil.realQuery()).projectId
+      projectId = urlUtil.projectId()
       if projectId
         path = "/projects/#{projectId}"
       else

@@ -408,8 +408,8 @@ ns.Project = do (ko,
         collections.push(collection) if collections.indexOf(collection) == -1
       collections
 
-    backToSearch: =>
-      projectId = deparam(urlUtil.realQuery()).projectId
+    backToSearch: ->
+      projectId = urlUtil.projectId()
       if projectId
         path = "/search?projectId=#{projectId}"
       else
