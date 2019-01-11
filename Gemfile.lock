@@ -111,10 +111,10 @@ GEM
       execjs
       rake (>= 0.8.7)
     execjs (2.7.0)
-    factory_girl (4.4.0)
+    factory_bot (4.11.1)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.1)
-      factory_girl (~> 4.4.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
@@ -297,6 +297,8 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
     shellany (0.0.1)
+    shoulda-callback-matchers (1.1.4)
+      activesupport (>= 3)
     sprockets (2.12.5)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -354,8 +356,7 @@ DEPENDENCIES
   deadweight
   delayed_job_active_record
   execcsslint
-  factory_girl
-  factory_girl_rails
+  factory_bot_rails
   faraday
   faraday_middleware
   figaro
@@ -382,6 +383,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   seed_dump
   selenium-webdriver
+  shoulda-callback-matchers
   sqlite3
   therubyracer
   thin

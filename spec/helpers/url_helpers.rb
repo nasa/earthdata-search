@@ -119,10 +119,9 @@ module Helpers
         authenticate_as = options.delete(:authenticate)
 
         User.find_or_create_by(echo_id: authenticate_as || 'edsc') do |user|
-          user.contact_information = {"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
-            "email_address":"patrick+edsc@element84.com","organization":"EDSC","country":"United States","address":{"country":"United States"},
-            "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-            Contact"},"order_notification_level":"NONE"}}
+          user.urs_profile = {"uid"=>"edsc", "first_name"=>"Earthdata", "last_name"=>"Search", "registered_date"=>"17 Mar 2016 18:03:52PM", "email_address"=>"patrick+edsc@element84.com", "organization"=>"EDSC", "country"=>"United States", "affiliation"=>"Government", "authorized_date"=>" 8 Jan 2019 20:41:07PM", "allow_auth_app_emails"=>true, "agreed_to_meris_eula"=>false, "agreed_to_sentinel_eula"=>false, "user_groups"=>[], "user_authorized_apps"=>2}
+          user.echo_profile = {"user"=>{"addresses"=>[{"country"=>"United States", "id"=>"9EB3CF47-42B8-3FAA-34FB-65020CF1DABD", "us_format"=>false}], "creation_date"=>"2016-03-17T22:03:52Z", "email"=>"patrick+edsc@element84.com", "first_name"=>"EDSC", "id"=>"BA9DCE89-8B18-478F-2C71-76D31846E351", "last_name"=>"System", "opt_in"=>false, "primary_study_area"=>"UNSPECIFIED", "user_domain"=>"GOVERNMENT", "user_region"=>"USA", "user_type"=>"UNSPECIFIED", "username"=>"edsc"}} 
+          user.echo_preferences = {"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search", "email_address":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"}, "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}
         end
 
         be_logged_in_as(authenticate_as, options[:env]) if authenticate_as

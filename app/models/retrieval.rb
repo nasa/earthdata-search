@@ -3,18 +3,19 @@ require 'securerandom'
 class Retrieval < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   belongs_to :user
+
+  has_many :retrieval_collections, dependent: :destroy
+
   store :jsondata, coder: JSON
-
-  after_save :update_access_configurations
-
-  after_create :log_obfuscation_info
 
   obfuscate_id spin: 53465485
 
   before_validation :default_order_status, on: :create
+  after_save :update_access_configurations
+  after_create :log_obfuscation_info
 
   def default_order_status
-    get_orders_by_types(%w(order service)).each do |method|
+    get_orders_by_types(%w[order service]).each do |method|
       # Default to order status to `creating` unless it's already set
       method['order_status'] = 'creating' unless method.key?('order_status')
     end
@@ -26,29 +27,33 @@ class Retrieval < ActiveRecord::Base
 
   def portal
     return @portal if @portal
+
     if jsondata && jsondata['query']
       query = Rack::Utils.parse_nested_query(jsondata['query'])
+
       @portal = query['portal'] if Rails.configuration.portals.key?(query['portal'])
     end
+
     @portal
   end
 
   def portal_title
-    return nil unless portal.present?
+    return nil if portal.blank?
 
     config = Rails.configuration.portals[portal] || {}
+
     "#{config['title'] || portal.titleize} Portal"
   end
 
   def path
-    prefix = portal ? "/portal/#{portal}" : ""
+    prefix = portal ? "/portal/#{portal}" : ''
     "#{prefix}/data/retrieve/#{to_param}"
   end
 
   def description
     @description ||= jsondata['description']
     unless @description
-      collection = self.collections.first
+      collection = collections.first
       @description = get_collection_id(collection['id']) if collection
 
       if @description
@@ -64,7 +69,7 @@ class Retrieval < ActiveRecord::Base
     @description
   end
 
-  # EDSC-1542 before, enqueue, error, failure, and success are hooks provided by the Delayed_Job gem to allow visibility
+  # EDSC-1542 before, enqueue, error, failure, and success are hooks provided by the DelayedJob gem to allow visibility
   # into its status.
   # Before: Executed just as the work is started
   # Enqueue: Executed right before the job is added to the queue - please note the job does not have an ID at this stage
@@ -75,10 +80,11 @@ class Retrieval < ActiveRecord::Base
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       all_queued_jobs = DelayedJob.where(failed_at: nil)
       same_queue_jobs = DelayedJob.where(failed_at: nil).where('queue = ?', job.queue)
+
       if job.attempts.zero?
         logger.info "Delayed Job #{job.id} from the #{job.queue} queue is beginning its work - there are #{same_queue_jobs.size - 1} orders ahead of it (#{all_queued_jobs.size - 1} total)."
       else
-        logger.info "Delayed Job #{job.id} from the #{job.queue} queue has begun its work after failing #{job.attempts} time - there are #{same_queued_jobs.size - 1} orders waiting in line behind it (#{all_queued_jobs.size - 1} total)."
+        logger.info "Delayed Job #{job.id} from the #{job.queue} queue has begun its work after failing #{job.attempts} time - there are #{same_queue_jobs.size - 1} orders waiting in line behind it (#{all_queued_jobs.size - 1} total)."
       end
     end
   end
@@ -109,8 +115,33 @@ class Retrieval < ActiveRecord::Base
     end
   end
 
+  # Using stored user data construct a contact object expected by echo when placing an order
+  #
+  # @return [Hash] object representing the user provided formatted for echo orders
+  def construct_order_contact
+    edsc_user = User.find_by(echo_id: user.echo_id)
+
+    # TODO: Take into account address and phone values stored for the user
+    # TODO: Try to use appropriate array syntax for phones
+    {
+      email: edsc_user.urs_profile['email_address'],
+      first_name: edsc_user.urs_profile['first_name'],
+      last_name: edsc_user.urs_profile['last_name'],
+      organization: edsc_user.urs_profile['organization'],
+      address: {
+        country: edsc_user.urs_profile['country']
+      },
+      phones: {
+        '0': {
+          number: '0000000000', phone_number_type: 'BUSINESS'
+        }
+      },
+      role: 'Order Contact'
+    }
+  end
+
   # Delayed Jobs calls this method to execute an order creation
-  def self.process(id, token, env, base_url, access_token)
+  def self.process(id, token, env, base_url)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       if Rails.env.test?
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
@@ -118,7 +149,7 @@ class Retrieval < ActiveRecord::Base
       end
 
       logger.tagged("Processing Retrieval Object #{id}") do
-        retrieval = Retrieval.find_by_id(id)
+        retrieval = Retrieval.find_by(id: id)
         project = retrieval.jsondata
         user_id = retrieval.user.echo_id
         client = Echo::Client.client_for_environment(env, Rails.configuration.services)
@@ -127,127 +158,121 @@ class Retrieval < ActiveRecord::Base
         all_access_methods = []
 
         retrieval.collections.each do |collection_hash|
+          # We only allow users to select 1 access method per collection now but the javascript has not been updated
+          method = collection_hash.fetch('serviceOptions', {}).fetch('accessMethod', [])[0]
+
+          # TODO: Rather than just skipping this collection, notify the user of
+          # the error. NOTE that a user should not be able to make this happen
+          next if method.blank?
+
           params = Rack::Utils.parse_nested_query(collection_hash['params'])
           params['temporal'] = params.delete('override_temporal') if params['override_temporal']
-          params.reject! { |p| ['datasource', 'short_name'].include? p }
+          params.reject! { |p| %w[datasource short_name].include?(p) }
 
-          results_count = get_granule_count(client, params, token)
-          results_count = 1_000_000 if results_count > 1_000_000
+          retrieval_collection = retrieval.retrieval_collections.create!(collection_id: collection_hash['id'], granule_params: params, access_method: method)
 
-          Rails.logger.info "Granules Ordered: #{results_count}"
+          granule_count = retrieval_collection.adjusted_granule_count
+          granule_count = 1_000_000 if granule_count > 1_000_000
 
-          response = client.get_collections({ echo_collection_id: collection_hash['id'], include_tags: "#{Rails.configuration.cmr_tag_namespace}.*" }, token)
+          Rails.logger.info "Granules Ordered: #{granule_count}"
 
-          collection = if response.success?
-                         collections = response.body['feed']['entry']
-                         collection = collections.first if collections.present?
-                       else
-                         logger.error "[ERROR] Failed to get collection #{collection_hash['id']} from CMR: #{response.errors.join('\n')}"
+          # Appends the order type to our running list
+          all_access_methods << method['type']
 
-                         nil
-                       end
+          page_num  = 0
+          page_size = 2000
 
-          access_methods = collection_hash.fetch('serviceOptions', {}).fetch('accessMethod', [])
+          begin
+            if method['type'] == 'order'
+              until page_num * page_size > granule_count
+                page_num += 1
+                params[:page_size] = page_size
+                params[:page_num]  = page_num
 
-          access_methods.each do |method|
-            # Appends the order type to our running list
-            all_access_methods << method['type']
+                page_num = granule_count / page_size + 1 if retrieval_collection.limited_collection?
 
-            page_num = 0
-            page_size = 2000
+                order_response = client.create_order(params,
+                                                     retrieval_collection,
+                                                     user_id,
+                                                     token)
+                method[:order_id] ||= []
+                method[:order_id] << order_response[:order_id]
+                method[:dropped_granules] ||= []
+                method[:dropped_granules] += order_response[:dropped_granules]
+                method[:error_code] ||= []
+                method[:error_message] ||= []
 
-            begin
-              if method['type'] == 'order'
-                until page_num * page_size > results_count do
-                  page_num += 1
-                  params.merge!(page_size: page_size, page_num: page_num)
-                  page_num = results_count / page_size + 1 if limited_collection?(collection)
-                  order_response = client.create_order(params,
-                                                       method['id'],
-                                                       method['method'],
-                                                       method['model'],
-                                                       user_id,
-                                                       token,
-                                                       client,
-                                                       access_token)
-                  method[:order_id] ||= []
-                  method[:order_id] << order_response[:order_id]
-                  method[:dropped_granules] ||= []
-                  method[:dropped_granules] += order_response[:dropped_granules]
-                  method[:error_code] ||= []
-                  method[:error_message] ||= []
-
-                  order_response_obj = order_response[:response]
-                  if order_response_obj.status >= 400
-                    method[:error_code] << order_response_obj.status
-                    method[:error_message] << order_response_obj.body
-                  end
-
-                  Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+                order_response_obj = order_response[:response]
+                if order_response_obj.status >= 400
+                  method[:error_code] << order_response_obj.status
+                  method[:error_message] << order_response_obj.body
                 end
-              elsif method['type'] == 'service'
-                request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
-                method[:collection_id] = collection_hash['id']
-                Rails.logger.info "Total ESI service granules: #{results_count}."
 
-                until page_num * page_size > results_count do
-                  page_size = collection['tags']['edsc.limited_collections']['data']['limit'] if limited_collection?(collection)
+                Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+              end
+            elsif method['type'] == 'service'
+              request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
+              method[:collection_id] = collection_hash['id']
+              Rails.logger.info "Total ESI service granules: #{granule_count}."
 
-                  page_num += 1
-                  params.merge!(page_size: page_size, page_num: page_num)
+              until page_num * page_size > granule_count
+                page_size = collection['tags']['edsc.limited_collections']['data']['limit'] if retrieval_collection.limited_collection?
 
-                  service_response = begin
-                                       esi_response = ESIClient.submit_esi_request(collection_hash['id'], params, method, request_url, client, token).body
+                page_num += 1
+                params[:page_size] = page_size
+                params[:page_num]  = page_num
 
-                                       Rails.logger.info "ESI Order Response: #{esi_response}"
+                service_response = begin
+                                     esi_response = ESIClient.submit_esi_request(retrieval_collection, params, request_url, token).body
 
-                                       MultiXml.parse(esi_response)
-                                     rescue StandardError => e
-                                       Rails.logger.error '[ERROR] Parsing response from ESI:'
-                                       Rails.logger.error e.message
+                                     Rails.logger.info "ESI Order Response: #{esi_response}"
 
-                                       e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+                                     MultiXml.parse(esi_response)
+                                   rescue StandardError => e
+                                     Rails.logger.error '[ERROR] Parsing response from ESI:'
+                                     Rails.logger.error e.message
 
-                                       # Return an empty hash after logging the parsing error
-                                       {
-                                         'Exception': {
-                                           'Code': 503,
-                                           'Message': e.message
-                                         }
+                                     e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+
+                                     # Return an empty hash after logging the parsing error
+                                     {
+                                       'Exception': {
+                                         'Code': 503,
+                                         'Message': e.message
                                        }
-                                     end
+                                     }
+                                   end
 
-                  order_id = service_response.fetch('agentResponse', {}).fetch('order', {})['orderId']
-                  method[:order_id] ||= []
-                  method[:order_id] << order_id
+                order_id = service_response.fetch('agentResponse', {}).fetch('order', {})['orderId']
+                method[:order_id] ||= []
+                method[:order_id] << order_id
 
-                  error_code = service_response.fetch('Exception', {})['Code']
-                  method[:error_code] ||= []
-                  method[:error_code] << error_code unless error_code.blank?
+                error_code = service_response.fetch('Exception', {})['Code']
+                method[:error_code] ||= []
+                method[:error_code] << error_code unless error_code.blank?
 
-                  error_message = Array.wrap(service_response.fetch('Exception', {})['Message'])
-                  method[:error_message] ||= []
-                  method[:error_message] << error_message unless error_message.blank?
+                error_message = Array.wrap(service_response.fetch('Exception', {})['Message'])
+                method[:error_message] ||= []
+                method[:error_message] << error_message unless error_message.blank?
 
-                  # break the loop
-                  if !Rails.configuration.enable_esi_order_chunking || limited_collection?(collection)
-                    Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{collection['id']} is #{limited_collection?(method['id']) ? nil : 'not'} a limited collection."
-                    page_num = results_count / page_size + 1
-                  end
+                # break the loop
+                if !Rails.configuration.enable_esi_order_chunking || retrieval_collection.limited_collection?
+                  Rails.logger.info "Stop submitting ESI requests. enable_esi_order_chunking is set to #{Rails.configuration.enable_esi_order_chunking}. #{collection['id']} is #{retrieval_collection.limited_collection? ? nil : 'not'} a limited collection."
+                  page_num = granule_count / page_size + 1
                 end
               end
-            rescue StandardError => e
-              tag = SecureRandom.hex(8)
-              logger.tagged('processing-error') do
-                logger.tagged(tag) do
-                  logger.error "[ERROR] Unable to process access method in retrieval #{id}: #{method.to_json}"
-                  logger.error e.message
-
-                  e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
-                  method[:order_status] = 'failed'
-                  method[:error_code] = tag
-                  method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
-                end
+            end
+          rescue StandardError => e
+            tag = SecureRandom.hex(8)
+            logger.tagged('processing-error') do
+              logger.tagged(tag) do
+                logger.error "[ERROR] Unable to process access method in retrieval #{id}: #{method.to_json}"
+                logger.error e.message
+                
+                e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
+                method[:order_status] = 'failed'
+                method[:error_code] = tag
+                method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
               end
             end
           end
@@ -256,7 +281,7 @@ class Retrieval < ActiveRecord::Base
         retrieval.jsondata = project
         retrieval.save!
 
-        if (all_access_methods & %w(order service)).any?
+        if (all_access_methods & %w[order service]).any?
           # Ensure that there are collections within the order that require status hydration
           Retrieval.delay(queue: retrieval.determine_queue).hydrate_jsondata(id, token, env)
         end
@@ -616,9 +641,9 @@ class Retrieval < ActiveRecord::Base
 
   private
 
-  def self.limited_collection?(collection)
-    collection['tags'] && collection['tags']['edsc.limited_collections'] && collection['tags']['edsc.limited_collections']
-  end
+  # def self.is_limited_collection(collection)
+  #   collection['tags'] && collection['tags']['edsc.limited_collections'] && collection['tags']['edsc.limited_collections']
+  # end
 
   def get_collection_id(id)
     result = nil

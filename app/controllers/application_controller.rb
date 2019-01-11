@@ -24,9 +24,7 @@ class ApplicationController < ActionController::Base
 
   def refresh_urs_if_needed
     current_user
-    if logged_in? && server_session_expires_in < 0
-      refresh_urs_token
-    end
+    refresh_urs_token if logged_in? && server_session_expires_in < 0
   end
 
   def refresh_urs_token
@@ -43,13 +41,11 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_timeout
-    if request.xhr?
-      render json: {errors: {error: 'The server took too long to complete the request'}}, status: 504
-    end
+    render json: { errors: { error: 'The server took too long to complete the request' } }, status: :gateway_timeout if request.xhr?
   end
 
   def handle_connection_failed
-    render json: {errors: {error: 'Faraday::Error::ConnectionFailed: Likely SSL Certificate Failure'}}, status: 500
+    render json: { errors: { error: 'Faraday::Error::ConnectionFailed: Likely SSL Certificate Failure' } }, status: :internal_server_error
   end
 
   def token
@@ -57,19 +53,13 @@ class ApplicationController < ActionController::Base
   end
 
   def get_user_id
-    # Dont make a call to ECHO if user is not logged in
-    return session[:user_id] = nil unless token.present?
-
-    # Dont make a call to ECHO if we already know the user id
-    return session[:user_id] if session[:user_id]
+    return nil if token.blank?
 
     # Work around a problem where logging into sit from the test environment goes haywire
     # because of the way tokens are set up
     return 'edsc' if Rails.env.test? && cmr_env != 'prod'
 
-    response = echo_client.get_current_user(token).body
-    session[:user_id] = response["user"]["id"] if response["user"]
-    session[:user_id]
+    session[:echo_id]
   end
 
   @@user_lock = Mutex.new
@@ -85,23 +75,17 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
-  def earthdata_username
-    session[:user_name]
-  end
-
   def clear_session
-    store_oauth_token()
-    session[:user_id] = nil
-    session[:user_name] = nil
+    store_oauth_token
   end
 
-  def store_oauth_token(json={})
+  def store_oauth_token(json = {})
     json ||= {}
-    session[:access_token] = json["access_token"]
-    session[:refresh_token] = json["refresh_token"]
-    session[:expires_in] = json["expires_in"]
-    session[:user_name] = json['endpoint'].gsub('/api/users/', '') if json['endpoint']
-    session[:logged_in_at] = json.empty? ? nil : Time.now.to_i
+
+    session[:access_token]  = json['access_token']
+    session[:refresh_token] = json['refresh_token']
+    session[:expires_in]    = json['expires_in']
+    session[:logged_in_at]  = json.empty? ? nil : Time.now.to_i
   end
 
   def logged_in_at

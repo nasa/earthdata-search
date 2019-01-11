@@ -11,6 +11,7 @@ module Echo
         client_id: client_id,
         user_ip_address: '127.0.0.1'
       }
+
       post('tokens.json', { token: auth }.to_json)
     end
 
@@ -53,42 +54,12 @@ module Echo
       true
     end
 
-    def get_preferences(user_id, token, client, access_token)
+    def get_preferences(user_id, token)
       response = get("users/#{user_id}/preferences.json", {}, token_header(token))
 
       # If no preferences exist, create them
       if response.status == 404
         response = update_preferences(user_id, { preferences: {} }, token)
-      end
-
-      if response.success?
-        user_response = get_echo_user(user_id, token)
-        echo_user = user_response.body['user']
-
-        urs_response = client.get_urs_user(echo_user['username'], access_token)
-        urs_user = urs_response.body
-
-        # URS doesn't have fields like phones and address. However, these are required when submitting orders in ECHO.
-        # Hence the place holders.
-        contact = {
-          first_name: urs_user['first_name'],
-          last_name: urs_user['last_name'],
-          email: urs_user['email_address'],
-          organization: urs_user['organization'],
-          address: {
-            country: urs_user['country']
-          },
-          phones: { '0': { number: '0000000000', phone_number_type: 'BUSINESS' } },
-          role: 'Order Contact'
-        }
-
-        updated_user_preferences = {
-          preferences: {
-            general_contact: contact,
-            order_notification_level: response.body['preferences']['order_notification_level']
-          }
-        }
-        response = update_preferences(user_id, updated_user_preferences, token)
       end
 
       response
@@ -142,19 +113,55 @@ module Echo
       option_def_refs.map { |ref| ref['name'] }
     end
 
-    def create_order(granule_query, option_id, option_name, option_model, user_id, token, client, access_token)
+    def create_order(granule_query, retrieval_collection, user_id, token)
+      # Creates an empty order
+      order_id = create_empty_order(granule_query, user_id, token)
+
+      # Provides the granules requested to the order
+      order_granules = provide_order_items(order_id, granule_query, retrieval_collection, token)
+
+      # Provides the user and contact information to the order
+      provide_user_information(order_id, retrieval_collection, token)
+
+      # Submits the order
+      submission_response = submit_order(order_id, token)
+
+      # Rails.logger.info "Items response: #{items_response.body.inspect}"
+      # Rails.logger.info "User info response: #{user_info_response.body.inspect}"
+      Rails.logger.info "Submission response: #{submission_response.body.inspect}"
+
+      { order_id: order_id, response: submission_response, count: order_granules[:ordered_granules].size, dropped_granules: order_granules[:dropped_granules] }
+    end
+
+    def create_empty_order(granule_query, user_id, token)
+      digest = Digest::SHA1.hexdigest(granule_query.to_json + user_id)
+      order_response = post('orders.json', { order: {}, digest: digest }.to_json, token_header(token))
+
+      if order_response.success?
+        Rails.logger.info "Response from ECHO Rest creating an empty order: #{order_response.body.inspect}"
+
+        order_response.body.fetch('order', {})['id']
+      else
+        Rails.logger.info "[ERROR] Providing an empty order to ECHO Rest: #{order_response.errors.join('\n')}"
+
+        nil
+      end
+    end
+
+    def provide_order_items(order_id, granule_query, retrieval_collection, token)
+      option_id   = retrieval_collection.access_method['id']
+      option_name = retrieval_collection.access_method['method']
+      
       # Some submissions fail if we don't strip whitespace between tags (MYD29P1N)
+      option_model = retrieval_collection.access_method['model']
       option_model = option_model.gsub(/>\s+</, '><').strip if option_model
 
-      # For testing without submitting a boatload of orders
-      # return {order_id: 1234, count: 2000}
-
-      # Fetch the granule the user is requesting from CRM
-      catalog_response = client.get_granules(granule_query, token)
-      granules = if catalog_response.success?
-                   catalog_response.body['feed']['entry']
+      # Fetch the granules the user is requesting from CRM
+      granule_response = retrieval_collection.client.get_granules(granule_query, token)
+      granules = if granule_response.success?
+                   granule_response.body['feed']['entry']
                  else
-                   Rails.logger.info "[ERROR] Retrieving granules from CMR: #{catalog_response.errors.join('\n')}"
+                   Rails.logger.info "[ERROR] Retrieving granules from CMR: #{granule_response.errors.join('\n')}"
 
                    []
                  end
@@ -163,10 +170,11 @@ module Echo
 
       order_info_response = get_order_information(granules.map { |g| g['id'] }, token)
       order_info = if order_info_response.success?
-                     Rails.logger.info "Response from ECHO Rest retriving order information: #{order_info_response.body.inspect}"
+                     Rails.logger.info "Response from ECHO Rest retrieving order information: #{order_info_response.body.inspect}"
+
                      order_info_response.body
                    else
-                     Rails.logger.info "[ERROR] Retrieving order information from ECHO Rest: #{catalog_response.errors.join('\n')}"
+                     Rails.logger.info "[ERROR] Retrieving order information from ECHO Rest: #{order_info_response.errors.join('\n')}"
 
                      {}
                    end
@@ -182,20 +190,6 @@ module Echo
       granules = granules_by_id.except(*excluded_granule_ids).values
       dropped_granules = granules_by_id.values_at(*excluded_granule_ids).map { |g| { id: g['id'], name: g['producer_granule_id'].nil? ? g['title'] : g['producer_granule_id'] } }
 
-      # Create an empty order
-      digest = Digest::SHA1.hexdigest(granule_query.to_json + user_id)
-      order_response = post('orders.json', { order: {}, digest: digest }.to_json, token_header(token))
-
-      id = if order_response.success?
-             Rails.logger.info "ECHO Order Response: #{order_response.body.inspect}"
-
-             order_response.body.fetch('order', {})['id']
-           else
-             Rails.logger.info "[ERROR] Retrieving order information from ECHO Rest: #{catalog_response.errors.join('\n')}"
-
-             nil
-           end
-
       common_options = {
         quantity: 1
       }
@@ -210,58 +204,46 @@ module Echo
 
       order_items = granules.map { |g| { order_item: { catalog_item_id: g['id'] }.merge(common_options) } }
 
-      items_response = post("orders/#{id}/order_items/bulk_action", order_items.to_json, token_header(token), timeout: 600)
+      items_response = post("orders/#{order_id}/order_items/bulk_action", order_items.to_json, token_header(token), timeout: 600)
 
       unless items_response.success?
         # We don't need the response (its a nil body with 201)
-        Rails.logger.info "[ERROR] Adding order_items to order `#{id}`: #{items_response.errors.join('\n')}"
+        Rails.logger.info "[ERROR] Adding order_items to order `#{order_id}`: #{items_response.errors.join('\n')}"
       end
 
-      prefs_response = get_preferences(user_id, token, client, access_token)
-      contact = if prefs_response.success?
-                  prefs_response.body.fetch('preferences', {})['general_contact']
-                else
-                  Rails.logger.info "[ERROR] Retrieving user preferences: #{prefs_response.errors.join('\n')}"
-
-                  nil
-                end
-
-      # TODO: `get_preferences` makes this same call, consider
-      # merging the necessary params in the `get_preferences` methods
-      user_response = get_echo_user(user_id, token)
-
-      user = user_response.body['user']
-      user_info = {
-        user_information: {
-          shipping_contact: contact,
-          billing_contact: contact,
-          order_contact: contact,
-          user_domain: user['user_domain'],
-          user_region: user['user_region']
-        }
-      }
-
-      user_info_response = put("orders/#{id}/user_information", user_info.to_json, token_header(token))
-      unless user_info_response.success?
-        Rails.logger.info "[ERROR] Adding user information to order `#{id}`: #{user_info_response.errors.join('\n')}"
-      end
-
-      submission_response = post("orders/#{id}/submit", nil, token_header(token))
-      unless submission_response.success?
-        Rails.logger.info "[ERROR] Submitting order `#{id}`: #{submission_response.errors.join('\n')}"
-      end
-
-      Rails.logger.info "Items response: #{items_response.body.inspect}"
-      Rails.logger.info "User info response: #{user_info_response.body.inspect}"
-      Rails.logger.info "Submission response: #{submission_response.body.inspect}"
-
-      { order_id: id, response: submission_response, count: granules.size, dropped_granules: dropped_granules }
+      { ordered_granules: granules, dropped_granules: dropped_granules }
     end
-  end
 
-  protected
+    def provide_user_information(order_id, retrieval_collection, token)
+      user_info = retrieval_collection.order_user_information
 
-  def default_headers
-    { 'Client-Id' => client_id, 'Echo-ClientId' => client_id }
+      user_info_response = put("orders/#{order_id}/user_information", user_info.to_json, token_header(token))
+
+      if user_info_response.success?
+        Rails.logger.info "Response from providing user information to ECHO Rest: #{user_info_response.body.inspect}"
+
+        user_info_response.body.fetch('order', {})['id']
+      else
+        Rails.logger.info "[ERROR] Providing user information to ECHO Rest: #{user_info_response.errors.join('\n')}"
+
+        nil
+      end
+    end
+
+    def submit_order(order_id, token)
+      submission_response = post("orders/#{order_id}/submit", nil, token_header(token))
+
+      unless submission_response.success?
+        Rails.logger.info "[ERROR] Submitting order `#{order_id}`: #{submission_response.errors.join('\n')}"
+      end
+
+      submission_response
+    end
+
+    protected
+
+    def default_headers
+      { 'Client-Id' => client_id, 'Echo-ClientId' => client_id }
+    end
   end
 end

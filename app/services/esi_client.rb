@@ -11,17 +11,17 @@ class ESIClient
     new.get_multi_esi_request(*args)
   end
 
-  def submit_esi_request(collection_id, params, method, request_url, client, token)
-    service_url = get_service_url(collection_id, client, token)
+  def submit_esi_request(retrieval_collection, granule_params, request_url, token)
+    service_url = get_service_url(retrieval_collection.collection_id, retrieval_collection.client, token)
     options = {}
 
     begin
-      granules_response = client.get_granules(params, token)
-
+      # Fetch the granules the user is requesting from CRM
+      granules_response = retrieval_collection.client.get_granules(granule_params, token)
       granules = if granules_response.success?
-                   granules_response.body['feed']['entry'].map{ |g| g['title'] }
+                   granules_response.body['feed']['entry'].map { |g| g['title'] }
                  else
-                   Rails.logger.info "Error retrieving granules from CMR: #{e.errors.join('\n')}"
+                   Rails.logger.info "Error retrieving granules from CMR: #{granules_response.errors.join('\n')}"
 
                    []
                  end
@@ -29,7 +29,7 @@ class ESIClient
       options['FILE_IDS'] = granules.join(',')
       options['CLIENT_STRING'] = "To view the status of your request, please see: #{request_url}"
 
-      @model = Nokogiri::XML(method['model'].gsub(/>\s+</, '><').strip)
+      @model = Nokogiri::XML(retrieval_collection.access_method['model'].gsub(/>\s+</, '><').strip)
     rescue StandardError => e
       Rails.logger.error 'Error preparing payload for ESI Request:'
       Rails.logger.error e.message
@@ -131,20 +131,20 @@ class ESIClient
 
   def add_top_level_fields
     [
-        :INTERPOLATION,
-        :FORMAT,
-        :PROJECTION,
-        :CLIENT,
-        :START,
-        :END,
-        :NATIVE_PROJECTION,
-        :OUTPUT_GRID,
-        :BBOX,
-        :SUBAGENT_ID,
-        :REQUEST_MODE,
-        :META,
-        :INCLUDE_META,
-  ].each do |field|
+      :INTERPOLATION,
+      :FORMAT,
+      :PROJECTION,
+      :CLIENT,
+      :START,
+      :END,
+      :NATIVE_PROJECTION,
+      :OUTPUT_GRID,
+      :BBOX,
+      :SUBAGENT_ID,
+      :REQUEST_MODE,
+      :META,
+      :INCLUDE_META,
+    ].each do |field|
       add_parameter(field, find_field_element(field).text.strip)
     end
   end
@@ -251,5 +251,4 @@ class ESIClient
   def compact_nodes(node_set)
     node_set.select { |sub_field_value| !sub_field_value.blank? }
   end
-
 end
