@@ -5,7 +5,7 @@ describe 'Viewing Single Project' do
     before :all do
       Capybara.reset_sessions!
       load_page :search, authenticate: 'edsc'
-      visit_project
+      visit_project('edsc')
       wait_for_xhr
     end
 

@@ -32,8 +32,8 @@ module Helpers
       query[query_re, 1].to_i
     end
 
-    def create_project(path = '/search/collections?p=!C179003030-ORNL_DAAC', name = 'Test Project')
-      user = User.find_by(echo_id: page.get_rack_session_key('user_id'))
+    def create_project(user_id, path = '/search/collections?p=!C179003030-ORNL_DAAC', name = 'Test Project')
+      user = User.find_or_create_by(echo_id: user_id)
       project = Project.new
       project.path = path
       project.name = name
@@ -42,11 +42,10 @@ module Helpers
       project
     end
 
-    def visit_project(name = 'Test Project')
-      create_project(name: name)
-      visit '/projects'
-      click_link 'Test Project'
-      expect(page).to have_content('Back to Search Session')
+    def visit_project(user_id, name = 'Test Project')
+      project = create_project(user_id, name: name)
+      
+      visit project_path(project)
     end
   end
 end

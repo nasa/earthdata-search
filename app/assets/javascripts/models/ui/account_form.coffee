@@ -32,7 +32,6 @@ ns.AccountForm = do (ko, $=jQuery) ->
         @account.errors(['Please fill in all required fields, highlighted below'])
       isValid
 
-
     saveAccountEdit: (callback) =>
       if @validate()
         @account.updateNotificationPreference(callback)

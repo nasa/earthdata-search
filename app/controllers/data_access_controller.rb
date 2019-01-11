@@ -38,9 +38,11 @@ class DataAccessController < ApplicationController
     retrieval = Retrieval.new
     retrieval.user = user
     retrieval.project = project
+    retrieval.token = token
+    retrieval.environment = cmr_env
     retrieval.save!
 
-    new_job = Retrieval.delay(queue: retrieval.determine_queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
+    new_job = Retrieval.delay(queue: retrieval.determine_queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url))
     Rails.logger.info("Delayed Job #{new_job.id} has been sent into queue #{new_job.queue} with: #{params[:project]}")
 
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")

@@ -49,7 +49,7 @@ class GranulesController < ApplicationController
     ous_response = fetch_ous_response(params)
 
     # Prevent the user from having to type their earthdata username if they use the download script
-    @user = earthdata_username
+    @user = current_user.urs_profile['uid']
 
     set_ous_root
 
@@ -166,7 +166,7 @@ class GranulesController < ApplicationController
 
     @first_link = first_link(Rack::Utils.parse_nested_query(collection['params']), echo_client, token, url_mapper, url_type)
 
-    @user = earthdata_username
+    @user = current_user.urs_profile['uid']
     if request.format == :text || request.format == 'html'
       render 'download_links.html.erb', layout:false
     else

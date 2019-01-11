@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181217205248) do
+ActiveRecord::Schema.define(version: 20190102182416) do
 
   create_table "access_configurations", force: :cascade do |t|
     t.integer  "user_id"
@@ -97,21 +97,38 @@ ActiveRecord::Schema.define(version: 20181217205248) do
     t.string   "name",       limit: 255
   end
 
+  create_table "retrieval_collections", force: :cascade do |t|
+    t.integer  "retrieval_id"
+    t.text     "access_method"
+    t.string   "collection_id"
+    t.text     "collection_metadata"
+    t.text     "granule_params"
+    t.integer  "granule_count"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "retrieval_collections", ["retrieval_id"], name: "index_retrieval_collections_on_retrieval_id"
+
   create_table "retrievals", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "jsondata"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "token"
+    t.string   "environment"
   end
 
   add_index "retrievals", ["user_id"], name: "index_retrievals_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "echo_id",             limit: 255
+    t.string   "echo_id",          limit: 255
     t.text     "site_preferences"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "contact_information"
+    t.text     "echo_preferences"
+    t.text     "urs_profile"
+    t.text     "echo_profile"
   end
 
 end

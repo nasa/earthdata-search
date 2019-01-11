@@ -1,18 +1,18 @@
 class OauthTokensController < ApplicationController
   def urs_callback
     if params[:code]
-      auth_code = params[:code]
-      response = echo_client.get_oauth_tokens(auth_code)
+      oauth_response = echo_client.get_oauth_tokens(params[:code])
 
-      if response.success?
-        store_oauth_token(response.body)
-        current_user.contact_information = retrieve_preferences
-        current_user.save
+      if oauth_response.success?
+        store_oauth_token(oauth_response.body)
+
+        store_user_data(oauth_response.body)
       else
-        Rails.logger.error("Oauth error: #{response.body}")
+        Rails.logger.error("URS OAuth Error: #{oauth_response.body}")
       end
+
       # useful when needing to replace the application.yml tokens
-      # Rails.logger.info "Token: #{response.body.inspect}"
+      # Rails.logger.info "Token: #{oauth_response.body.inspect}"
     end
 
     redirect_to redirect_from_urs
@@ -24,25 +24,53 @@ class OauthTokensController < ApplicationController
     if json
       render json: { tokenExpiresIn: script_session_expires_in }
     else
-      render json: nil, status: 401
+      render json: nil, status: :unauthorized
     end
   end
 
-  protected
+  def store_user_data(oauth_response)
+    # session[:echo_id] is used to lookup the user in the edsc database
+    # so we need to make this call first and set it in the session before calling `current_user`
+    echo_profile = retrieve_echo_profile
+    session[:echo_id] = echo_profile.fetch('user', {})['id']
 
-  def retrieve_preferences
-    preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])
+    current_user.urs_profile      = retrieve_urs_profile(oauth_response)
+    current_user.echo_profile     = echo_profile
+    current_user.echo_preferences = retrieve_echo_preferences
 
-    urs_response = echo_client.get_urs_user(session[:user_name], session[:access_token])
+    current_user.save
+  end
 
-    if urs_response.status == 200
-      if preferences_response.body['preferences']
-        preferences_response.body['preferences']['general_contact'] = urs_response.body
-      else
-        preferences_response.body['preferences'] = {'general_contact' => urs_response.body}
-      end
+  def retrieve_urs_profile(oauth_response)
+    # Once we retrieve this from URS we can use the `uid` value but the oauth
+    # endpoint only returns the path to the user
+    username = oauth_response['endpoint'].gsub('/api/users/', '') if oauth_response['endpoint']
 
-      preferences_response.body
+    response = echo_client.get_urs_user(username, token)
+    if response.success?
+      response.body
+    else
+      {}
     end
   end
+
+  def retrieve_echo_profile
+    response = echo_client.get_current_user(token)
+    if response.success?
+      response.body
+    else
+      {}
+    end
+  end
+
+  def retrieve_echo_preferences
+    # This method requires a valid response be stored in the current users' `echo_profile` column
+    response = echo_client.get_preferences(get_user_id, token)
+    if response.success?
+      response.body
+    else
+      {}
+    end
+  end
+
 end

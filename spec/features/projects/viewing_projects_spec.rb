@@ -6,7 +6,7 @@ describe 'Viewing Projects' do
       Capybara.reset_sessions!
       load_page :search, authenticate: 'edsc'
 
-      create_project
+      create_project('edsc')
 
       visit '/projects'
     end
@@ -39,7 +39,7 @@ describe 'Viewing Projects' do
       end
 
       after :all do
-        create_project
+        create_project('edsc')
         visit '/projects'
       end
 

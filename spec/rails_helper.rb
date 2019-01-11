@@ -75,8 +75,6 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-FactoryGirl.find_definitions
-
 load "#{::Rails.root}/db/seeds.rb" if ENV['seed'] == 'true'
 
 # http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
@@ -232,7 +230,7 @@ RSpec.configure do |config|
   end
 
   config.include RSpec::Rails::FixtureSupport
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.extend SharedBrowserSession
 
