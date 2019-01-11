@@ -146,7 +146,7 @@ RSpec::Matchers.define :map_contains_point do |expected_lat, expected_lng|
   end
 
   failure_message do
-    "expected map bounds to contain point (#{expected_lat}, #{expected_lng}), but leaflet return false. `$('#map').data('map').map.getBounds().contains(L.latLng(#{expected_lat},#{expected_lng}))`"
+    "expected map bounds to contain point (#{expected_lat}, #{expected_lng}), but leaflet returned false. `$('#map').data('map').map.getBounds().contains(L.latLng(#{expected_lat},#{expected_lng}))`"
   end
 end
 
