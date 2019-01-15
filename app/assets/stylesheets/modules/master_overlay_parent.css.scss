@@ -38,6 +38,12 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.master-overlay-sidebar-search {
+  a {
+    color: #fff;
+  }
+}
+
 .master-overlay-sidebar-header,
 .master-overlay-content-header {
   padding: 0 1em 0 0.5em;

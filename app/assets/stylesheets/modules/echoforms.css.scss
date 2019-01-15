@@ -2,8 +2,8 @@
   h1.echoforms-label {
     padding: 0.2em;
     background-color: transparent;
-    font-size: 1.2em;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 1.125em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   }
 
   h1.echoforms-label:empty {
@@ -17,6 +17,10 @@
 
   .echoforms-control-group {
     border-width: 0px;
+
+    .image-map {
+      display: none;
+    }
   }
 
   #bands-filter {
