@@ -1,5 +1,5 @@
 <div id="master-overlay-parent" class="master-overlay-parent">
-  <section class="master-overlay-sidebar">
+  <section class="master-overlay-sidebar" data-bind="css: {'master-overlay-sidebar-search': page() == 'search'}">
     <div class="master-overlay-panel-indicator" style="display: none"></div>
     <header class="master-overlay-sidebar-header">
       <h1>
@@ -198,6 +198,11 @@
               </div>
             </div>
             <!-- /ko -->
+            <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
+            <div class="panel-item-section">
+              <p class="panel-item-content panel-item-content-light"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
+            </div>
+            <!-- /ko -->
             <!-- ko if: $parents[1].granuleAccessOptions().dqs && $parents[1].granuleAccessOptions().dqs.length > 0 -->
             <div class="panel-item-section">
               <h3 class="panel-item-section-title">Quality Information</h3>
@@ -245,11 +250,6 @@
               </div>
             <!-- /ko -->
             <!-- /ko -->
-            <!-- /ko -->
-            <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
-            <div class="panel-item-section">
-              <p class="content"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
-            </div>
             <!-- /ko -->
             <!-- ko if: $parents[1].selectedAccessMethod() == 'OPeNDAP' -->
             <div class="panel-item-section">
