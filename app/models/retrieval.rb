@@ -89,7 +89,7 @@ class Retrieval < ActiveRecord::Base
       same_queue_jobs = DelayedJob.where(failed_at: nil).where('queue = ?', job.queue)
       logger.info "A new Delayed Job is being added to the #{job.queue} queue for processing - there are #{same_queue_jobs.size} orders ahead of it (#{all_queued_jobs.size} total)."
     end
-  end 
+  end
 
   def self.error(job, exception)
     logger.tagged("delayed_job version: #{Rails.configuration.version}") do
@@ -116,7 +116,7 @@ class Retrieval < ActiveRecord::Base
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)
       end
-     
+
       logger.tagged("Processing Retrieval Object #{id}") do
         retrieval = Retrieval.find_by_id(id)
         project = retrieval.jsondata
@@ -128,6 +128,7 @@ class Retrieval < ActiveRecord::Base
 
         retrieval.collections.each do |collection_hash|
           params = Rack::Utils.parse_nested_query(collection_hash['params'])
+          params['temporal'] = params.delete('override_temporal') if params['override_temporal']
           params.reject! { |p| ['datasource', 'short_name'].include? p }
 
           results_count = get_granule_count(client, params, token)
@@ -241,7 +242,7 @@ class Retrieval < ActiveRecord::Base
                 logger.tagged(tag) do
                   logger.error "[ERROR] Unable to process access method in retrieval #{id}: #{method.to_json}"
                   logger.error e.message
-                  
+
                   e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
                   method[:order_status] = 'failed'
                   method[:error_code] = tag
@@ -605,7 +606,7 @@ class Retrieval < ActiveRecord::Base
           service_order['order_status'] = status['status']
           s['service_options']['orders'] << service_order
         end
-        
+
         s['order_status'] = 'in progress' unless s['service_options']['orders'].any? { |o| o['order_status'] == 'creating' }
         s['order_status'] = 'failed' if s['service_options']['orders'].all? { |o| o['order_status'] == 'failed' }
         s['order_status'] = 'complete' if s['service_options']['orders'].all? { |o| o['order_status'] == 'complete' || o['order_status'] == 'complete_with_errors' }
@@ -641,7 +642,7 @@ class Retrieval < ActiveRecord::Base
   def self.get_granule_count(client, params, token)
     result = client.get_granules(params, token)
 
-    if result.success?    
+    if result.success?
       result.headers['cmr-hits'].to_i || 0
     else
       logger.error "Failed to get granules from CMR with params: #{params}\n\n#{result.errors.join('\n')}"

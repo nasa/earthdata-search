@@ -112,6 +112,7 @@ this.edsc.util.url = do(window
   compressors = [
     new ParamNameCompressor('placename', 'qp')
     new ParamNameCompressor('temporal', 'qt')
+    new ParamNameCompressor('override_temporal', 'ot')
     new ParamNameCompressor('free_text', 'q')
     new ParamNameCompressor('original_keyword', 'ok')
     new ParamNameCompressor('point', 'sp')
@@ -305,7 +306,7 @@ this.edsc.util.url = do(window
     path = path + paramStr
     # Avoid shortening urls when cmr_env is set
     isTooLong = path.length > config.urlLimit && path.indexOf('cmr_env=') == -1
-    if workspaceName || isTooLong || path.indexOf('/projects/new') == 0
+    if workspaceName || isTooLong
       if path != savedPath || (workspaceName && savedName != workspaceName)
         # assign a guid
         shortenPath(path, state, workspaceName)

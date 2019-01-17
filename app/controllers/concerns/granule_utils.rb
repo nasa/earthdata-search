@@ -3,7 +3,7 @@ module GranuleUtils
 
   protected
 
-  def granule_params_for_request(request)
+  def granule_params_for_request(request, timeline = false)
     params = request.request_parameters.dup
 
     if params['cloud_cover']
@@ -17,6 +17,9 @@ module GranuleUtils
     params.delete('variables') if params['variables']
     params.delete('datasource') if params['datasource']
     params.delete('short_name') if params['short_name']
+
+    override_temporal = params.delete('override_temporal')
+    params['temporal'] = override_temporal if !timeline && override_temporal
 
     params
   end

@@ -32,7 +32,7 @@
       encoding: UTF-8
       string: '{"order_information":{"catalog_item_ref":{"id":["G1575821651-LANCEAMSR2","G1575819475-LANCEAMSR2","G1575797056-LANCEAMSR2","G1575796174-LANCEAMSR2","G1575785077-LANCEAMSR2","G1575784961-LANCEAMSR2","G1575771321-LANCEAMSR2","G1575768587-LANCEAMSR2","G1575752970-LANCEAMSR2","G1575752531-LANCEAMSR2","G1575719922-LANCEAMSR2","G1575718887-LANCEAMSR2","G1575696517-LANCEAMSR2","G1575695038-LANCEAMSR2","G1575669745-LANCEAMSR2","G1575669449-LANCEAMSR2","G1575657688-LANCEAMSR2","G1575657393-LANCEAMSR2","G1575648807-LANCEAMSR2","G1575648688-LANCEAMSR2"],"location":"http://cmr-search-prod.ngap.earthdata.nasa.gov:8080/search/concepts/G1575821651-LANCEAMSR2G1575819475-LANCEAMSR2G1575797056-LANCEAMSR2G1575796174-LANCEAMSR2G1575785077-LANCEAMSR2G1575784961-LANCEAMSR2G1575771321-LANCEAMSR2G1575768587-LANCEAMSR2G1575752970-LANCEAMSR2G1575752531-LANCEAMSR2G1575719922-LANCEAMSR2G1575718887-LANCEAMSR2G1575696517-LANCEAMSR2G1575695038-LANCEAMSR2G1575669745-LANCEAMSR2G1575669449-LANCEAMSR2G1575657688-LANCEAMSR2G1575657393-LANCEAMSR2G1575648807-LANCEAMSR2G1575648688-LANCEAMSR2","name":["G1575821651-LANCEAMSR2","G1575819475-LANCEAMSR2","G1575797056-LANCEAMSR2","G1575796174-LANCEAMSR2","G1575785077-LANCEAMSR2","G1575784961-LANCEAMSR2","G1575771321-LANCEAMSR2","G1575768587-LANCEAMSR2","G1575752970-LANCEAMSR2","G1575752531-LANCEAMSR2","G1575719922-LANCEAMSR2","G1575718887-LANCEAMSR2","G1575696517-LANCEAMSR2","G1575695038-LANCEAMSR2","G1575669745-LANCEAMSR2","G1575669449-LANCEAMSR2","G1575657688-LANCEAMSR2","G1575657393-LANCEAMSR2","G1575648807-LANCEAMSR2","G1575648688-LANCEAMSR2"]},"orderable":false}}'
     http_version: 
-42f4b4c6aecae59e0269ab532062e223a8eabcb1:
+275ec3ee26eb9f9fe68ff675c87e8e07db2fcbd0:
   response:
     status:
       code: 200
@@ -65,7 +65,7 @@
       encoding: UTF-8
       string: '{"order_information":{"catalog_item_ref":{"id":["G1581435023-LANCEAMSR2","G1581429127-LANCEAMSR2","G1581428959-LANCEAMSR2","G1581421092-LANCEAMSR2","G1581420756-LANCEAMSR2","G1581412461-LANCEAMSR2","G1581412192-LANCEAMSR2","G1581391898-LANCEAMSR2","G1581390805-LANCEAMSR2","G1581368186-LANCEAMSR2","G1581367799-LANCEAMSR2","G1581350282-LANCEAMSR2","G1581350085-LANCEAMSR2","G1581346567-LANCEAMSR2","G1581346373-LANCEAMSR2","G1581340320-LANCEAMSR2","G1581340209-LANCEAMSR2","G1581336449-LANCEAMSR2","G1581336386-LANCEAMSR2","G1581334223-LANCEAMSR2"],"location":"http://cmr-search-prod.ngap.earthdata.nasa.gov:8080/search/concepts/G1581435023-LANCEAMSR2G1581429127-LANCEAMSR2G1581428959-LANCEAMSR2G1581421092-LANCEAMSR2G1581420756-LANCEAMSR2G1581412461-LANCEAMSR2G1581412192-LANCEAMSR2G1581391898-LANCEAMSR2G1581390805-LANCEAMSR2G1581368186-LANCEAMSR2G1581367799-LANCEAMSR2G1581350282-LANCEAMSR2G1581350085-LANCEAMSR2G1581346567-LANCEAMSR2G1581346373-LANCEAMSR2G1581340320-LANCEAMSR2G1581340209-LANCEAMSR2G1581336449-LANCEAMSR2G1581336386-LANCEAMSR2G1581334223-LANCEAMSR2","name":["G1581435023-LANCEAMSR2","G1581429127-LANCEAMSR2","G1581428959-LANCEAMSR2","G1581421092-LANCEAMSR2","G1581420756-LANCEAMSR2","G1581412461-LANCEAMSR2","G1581412192-LANCEAMSR2","G1581391898-LANCEAMSR2","G1581390805-LANCEAMSR2","G1581368186-LANCEAMSR2","G1581367799-LANCEAMSR2","G1581350282-LANCEAMSR2","G1581350085-LANCEAMSR2","G1581346567-LANCEAMSR2","G1581346373-LANCEAMSR2","G1581340320-LANCEAMSR2","G1581340209-LANCEAMSR2","G1581336449-LANCEAMSR2","G1581336386-LANCEAMSR2","G1581334223-LANCEAMSR2"]},"orderable":false}}'
     http_version: 
-c66151cf0654725944a65b2231990d226475097e:
+f8587242eb4ab46895ea50fe7aeef110f1c2ad70:
   response:
     status:
       code: 200
@@ -191,6 +191,81 @@ c66151cf0654725944a65b2231990d226475097e:
         Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007018-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007018-DEV08","name":"G1000007018-DEV08"},"option_definition_refs":[{"id":"E5505FDA-1A76-9E02-9740-2E175C83B005","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/E5505FDA-1A76-9E02-9740-2E175C83B005","name":"AE_L2A.2
         Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007021-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007021-DEV08","name":"G1000007021-DEV08"},"option_definition_refs":[{"id":"E5505FDA-1A76-9E02-9740-2E175C83B005","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/E5505FDA-1A76-9E02-9740-2E175C83B005","name":"AE_L2A.2
         Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007017-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007017-DEV08","name":"G1000007017-DEV08"},"option_definition_refs":[{"id":"E5505FDA-1A76-9E02-9740-2E175C83B005","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/E5505FDA-1A76-9E02-9740-2E175C83B005","name":"AE_L2A.2
+        Order"}],"orderable":true,"price":0.0}}]'
+    http_version: 
+61e5b174f3ec6dd4a621c66be8e67dea50a5279c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Thu, 17 Jan 2019 15:52:57 GMT
+      etag:
+      - '"1a712683a7102eecbea67a553c265ab2"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmQ4OGQ3ZjgyYWE4NTFhNDFjOTAwMTUwY2ZhOTA3ZjM%3D--55c55a4743899e185e050c9537b8463ba1de36d0;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.871000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1793'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"order_information":{"catalog_item_ref":{"id":"G1000007640-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007640-DEV08","name":"G1000007640-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007643-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007643-DEV08","name":"G1000007643-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007641-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007641-DEV08","name":"G1000007641-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007642-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007642-DEV08","name":"G1000007642-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}}]'
+    http_version: 
+18e9b0b942a6601ca40e9828a7871c39b27cbf7e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Thu, 17 Jan 2019 15:53:05 GMT
+      etag:
+      - '"977dabb6628cbb14fe8708a33b12c9e6"'
+      server:
+      - nginx
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlN2ZkMDhmY2NjY2VmZDE5NjcwMjQ0ZGMyMGJmYTI4YmM%3D--3c79346b6f3f1195ecbb1186b7a799c7ffd6a4f9;
+        path=/; HttpOnly
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.881000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '2241'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"order_information":{"catalog_item_ref":{"id":"G1000007644-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007644-DEV08","name":"G1000007644-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007640-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007640-DEV08","name":"G1000007640-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007643-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007643-DEV08","name":"G1000007643-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007641-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007641-DEV08","name":"G1000007641-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
+        Order"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1000007642-DEV08","location":"http://cmr-search-sit.ngap.earthdata.nasa.gov:8080/search/concepts/G1000007642-DEV08","name":"G1000007642-DEV08"},"option_definition_refs":[{"id":"BBE6E6A7-602C-9952-0F28-01035DA4EE27","location":"https://cmr.sit.earthdata.nasa.gov:/legacy-services/rest/option_definitions/BBE6E6A7-602C-9952-0F28-01035DA4EE27","name":"MOD11A1.5
         Order"}],"orderable":true,"price":0.0}}]'
     http_version: 
 f74e3838004590074acb3a56cd5ee669b639c659:

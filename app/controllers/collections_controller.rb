@@ -70,6 +70,8 @@ class CollectionsController < ApplicationController
     params = request.query_parameters.dup
 
     params.delete(:portal)
+    params.delete(:override_temporal) # don't use this for collections
+
     if portal? && portal[:params]
       params.deep_merge!(portal[:params]) do |_key, v1, v2|
         if v1.is_a?(Array) && v2.is_a?(Array)
