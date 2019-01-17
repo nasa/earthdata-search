@@ -32,17 +32,17 @@ ns.ProjectList = do (ko
       ko.computed(@_syncHitsCounts, this)
 
       $(window).on 'edsc.temporalchange', () =>
-        @_sortOutTemporalOverride (optionStr) =>
-          @_setOverride(optionStr)
+        @_determineTemporalOverride (optionStr) =>
+          @_applyTemporalOverride(optionStr)
         true
 
       $(window).on 'edsc.focusset', () =>
-        @_sortOutTemporalOverride (optionStr) =>
-          @_setOverride(optionStr)
+        @_determineTemporalOverride (optionStr) =>
+          @_applyTemporalOverride(optionStr)
         true
 
       $(window).on 'edsc.focusremove', () =>
-        @_setOverride(null)
+        @_applyTemporalOverride(null)
         true
 
       $(document).ready(@_onReady)
@@ -94,7 +94,7 @@ ns.ProjectList = do (ko
     configureProject: =>
       @showProjectPage()
 
-    _sortOutTemporalOverride: (callback) ->
+    _determineTemporalOverride: (callback) ->
       if edsc.page.page() == 'project'
         query = @project.query
         focused = query.focusedTemporal()
@@ -120,7 +120,7 @@ ns.ProjectList = do (ko
       @needsTemporalChoice(false)
       callback(focusedStr)
 
-    _setOverride: (optionStr) ->
+    _applyTemporalOverride: (optionStr) ->
       @project.query.overrideTemporal(optionStr)
 
     toggleCollection: (collection) =>
