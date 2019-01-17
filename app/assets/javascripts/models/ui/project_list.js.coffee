@@ -31,6 +31,20 @@ ns.ProjectList = do (ko
 
       ko.computed(@_syncHitsCounts, this)
 
+      $(window).on 'edsc.temporalchange', () =>
+        @_sortOutTemporalOverride (optionStr) =>
+          @_setOverride(optionStr)
+        true
+
+      $(window).on 'edsc.focusset', () =>
+        @_sortOutTemporalOverride (optionStr) =>
+          @_setOverride(optionStr)
+        true
+
+      $(window).on 'edsc.focusremove', () =>
+        @_setOverride(null)
+        true
+
       $(document).ready(@_onReady)
 
     _syncHitsCounts: =>
@@ -78,33 +92,37 @@ ns.ProjectList = do (ko
       @configureProject()
 
     configureProject: (singleGranuleId=null) =>
-      @_sortOutTemporalMalarkey (optionStr) =>
+      @_sortOutTemporalOverride (optionStr) =>
         @showProjectPage()
 
-    _sortOutTemporalMalarkey: (callback) ->
-      querystr = urlUtil.currentQuery()
-      query = @project.query
-      focused = query.focusedTemporal()
-      # If the query has a timeline selection
-      if focused
-        focusedStr = '&ot=' + encodeURIComponent([dateUtil.toISOString(focused[0]), dateUtil.toISOString(focused[1])].join(','))
-        # If the query has a temporal component
-        if querystr.match(/[\?\&\[]qt\]?=/)
-          @needsTemporalChoice(callback: callback, focusedStr: focusedStr)
+    _sortOutTemporalOverride: (callback) ->
+      if edsc.page.page() == 'project'
+        query = @project.query
+        focused = query.focusedTemporal()
+
+        if focused
+          focusedStr = [dateUtil.toISOString(focused[0]), dateUtil.toISOString(focused[1])].join(',')
+          # If the query has a timeline selection
+          if query.temporalComponent()?
+            temporalStr = query.temporalComponent()
+            @needsTemporalChoice(callback: callback, focusedStr: focusedStr, temporalStr: temporalStr)
+          else
+            callback(focusedStr)
         else
-          callback(focusedStr)
-      else
-        callback('')
+          callback(null)
 
     chooseTemporal: =>
-      {callback} = @needsTemporalChoice()
+      { callback, focusedStr, temporalStr } = @needsTemporalChoice()
       @needsTemporalChoice(false)
-      callback('')
+      callback(temporalStr)
 
     chooseOverride: =>
-      {callback, focusedStr} = @needsTemporalChoice()
+      { callback, focusedStr, temporalStr } = @needsTemporalChoice()
       @needsTemporalChoice(false)
       callback(focusedStr)
+
+    _setOverride: (optionStr) ->
+      @project.query.overrideTemporal(optionStr)
 
     toggleCollection: (collection) =>
       project = @project

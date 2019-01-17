@@ -136,6 +136,7 @@
     _pathForState: (state) ->
       return urlUtil.cleanPath()?.split('?')[0] ? '/' if !state?
 
+      return '/projects/new' if urlUtil.cleanPath()?.indexOf('/projects/new') == 0
       return '/projects' if state.projects
 
       root = '/search'
