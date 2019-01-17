@@ -91,9 +91,8 @@ ns.ProjectList = do (ko
     loginAndDownloadProject: =>
       @configureProject()
 
-    configureProject: (singleGranuleId=null) =>
-      @_sortOutTemporalOverride (optionStr) =>
-        @showProjectPage()
+    configureProject: =>
+      @showProjectPage()
 
     _sortOutTemporalOverride: (callback) ->
       if edsc.page.page() == 'project'
