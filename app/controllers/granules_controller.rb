@@ -31,7 +31,7 @@ class GranulesController < ApplicationController
   end
 
   def timeline
-    catalog_response = echo_client.post_timeline(granule_params_for_request(request), token)
+    catalog_response = echo_client.post_timeline(granule_params_for_request(request, true), token)
 
     render json: catalog_response.body, status: catalog_response.status
   end

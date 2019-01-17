@@ -153,16 +153,19 @@ ns.GranuleTimeline = do (ko
         temporal.isRecurring(false)
         temporal.start.date(start)
         temporal.stop.date(stop)
+        $(window).trigger('edsc.temporalchange')
 
       $timeline.on 'focusset.timeline', (e, t0, t1, interval) =>
         query = @collectionsList.query
         query.focusedInterval(interval)
         query.focusedTemporal((new Date(t) for t in [t0, t1]))
+        $(window).trigger('edsc.focusset')
 
       $timeline.on 'focusremove.timeline', (e) =>
         query = @collectionsList.query
         query.focusedInterval(null)
         query.focusedTemporal(null)
+        $(window).trigger('edsc.focusremove')
 
       @range(null)
       @collections = @computed(@_computeCollections)

@@ -282,8 +282,6 @@ ns.query = do (ko,
       for component in components
         extend(true, params, component.params())
 
-      # Perform the temporal override if appropriate
-      params.temporal = overrideTemporal if overrideTemporal
       params
 
     serialize: -> @_writeComponents(@_serialized, {})
@@ -302,6 +300,7 @@ ns.query = do (ko,
       @portal = @queryComponent(new QueryParam('portal'), '')
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
+      @overrideTemporal = @queryComponent(new QueryParam('override_temporal'), ko.observable(null), propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
       @mbr = @computed(read: @_computeMbr, owner: this, deferEvaluation: true)
       @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
