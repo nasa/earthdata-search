@@ -3,6 +3,7 @@ ruby '2.5.1'
 
 gem 'rails', '~> 4.2.11'
 
+gem 'aasm'
 gem 'atomic'
 gem 'autoprefixer-rails', '8.6.5' # Need to run an older version due to issues with ExecJS runtime
 gem 'bourbon'
@@ -11,6 +12,7 @@ gem 'delayed_job_active_record'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'figaro'
+gem 'jbuilder'
 gem 'jquery-rails'
 gem 'knockoutjs-rails'
 gem 'multi_xml'

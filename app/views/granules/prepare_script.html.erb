@@ -81,7 +81,7 @@ prompt_credentials() {
     read -p "Username (<%= @user %>): " username
     username=${username:-<%= @user %>}
     read -s -p "Password: " password
-    echo "machine <%= @echo_client.urs_root %> login $username password $password" >> $netrc
+    echo "machine <%= echo_client.urs_root %> login $username password $password" >> $netrc
     <% if @first_link && @first_link.start_with?('ftp') %>
     echo "machine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %> login $username password $password" >> $netrc
     <% end %>

@@ -77,6 +77,7 @@ module GranuleUtils
     ous_params['bounding_box'] = project_params['bounding_box'] if project_params.key?('bounding_box')
     ous_params['temporal']     = project_params['temporal'] if project_params.key?('temporal')
 
+    puts ous_params
     excluded_granules = project_params.fetch('pg', {}).fetch(collection_index.to_s, {}).fetch('exclude', {}).fetch('echo_granule_id', [])
 
     if excluded_granules.any?

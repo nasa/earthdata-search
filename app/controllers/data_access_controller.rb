@@ -25,10 +25,11 @@ class DataAccessController < ApplicationController
   end
 
   def retrieve
-    # TODO PQ EDSC-1039: Store portal information here
+    # TODO: PQ EDSC-1039: Store portal information here
     user = current_user
     unless user
       render file: 'public/401.html', status: :unauthorized
+      
       return
     end
 
@@ -42,14 +43,13 @@ class DataAccessController < ApplicationController
     retrieval.environment = cmr_env
     retrieval.save!
 
-    new_job = Retrieval.delay(queue: retrieval.determine_queue).process(retrieval.id, token, cmr_env, edsc_path(request.base_url))
-    Rails.logger.info("Delayed Job #{new_job.id} has been sent into queue #{new_job.queue} with: #{params[:project]}")
+    ProcessRetrievalJob.perform_later(retrieval.id, edsc_path(request.base_url))
 
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
 
   def retrieval
-    # TODO PQ EDSC-1039: Include portal information here
+    # TODO: PQ EDSC-1039: Include portal information here
     Rails.logger.info "Retrieving order status information for Retrieval Object ##{params[:id]}"
 
     id = Retrieval.deobfuscate_id(params[:id].to_i)
@@ -65,21 +65,23 @@ class DataAccessController < ApplicationController
     # check for ownership, we don't want randos causing jobs to be created
     unless params[:format] == 'json' || Rails.env.test?
       # Check the database for any jobs that exist to create this order
-      processing_job = DelayedJob.where("handler LIKE '%method_name: :process%'")
-                                 .where("handler LIKE '%args:\n- #{id.to_i}%'")
+      processing_job = DelayedJob.where("handler LIKE '%job_class: ProcessRetrievalJob%'")
+                                 .where("handler LIKE '%arguments:\n- #{id.to_i}%'")
                                  .where(failed_at: nil)
 
       # Check the database for any jobs that exist to refresh this orders data
-      retrieval_jobs = DelayedJob.where("handler LIKE '%method_name: :hydrate_jsondata%'")
-                                 .where("handler LIKE '%args:\n- #{id.to_i}%'")
+      retrieval_jobs = DelayedJob.where("handler LIKE '%job_class: OrderStatusJob%'")
+                                 .where("handler LIKE '%arguments:\n- #{id.to_i}%'")
                                  .where(failed_at: nil)
 
       # If there are no jobs scheduled for this order and its not
       # already complete create a new one to retrieve new data
       if processing_job.empty? && retrieval_jobs.empty? && @retrieval.in_progress
+        @retrieval.update_attribute('token', token)
+
         Rails.logger.info "Queueing up a new job to retrieve order status information for Retrieval ##{id.to_i}"
 
-        Retrieval.delay(queue: @retrieval.determine_queue).hydrate_jsondata(id.to_i, token, cmr_env)
+        OrderStatusJob.set(queue: @retrieval.determine_queue).perform_now(id.to_i, token, cmr_env)
       end
     end
 
@@ -90,7 +92,7 @@ class DataAccessController < ApplicationController
   end
 
   def status
-    # TODO PQ EDSC-1039: Include portal information here
+    # TODO: PQ EDSC-1039: Include portal information here
     @retrievals = current_user.retrievals
   end
 
