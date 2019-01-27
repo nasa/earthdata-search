@@ -113,9 +113,9 @@ module Echo
       option_def_refs.map { |ref| ref['name'] }
     end
 
-    def create_order(granule_query, retrieval_collection, user_id, token)
+    def create_order(granule_query, retrieval_collection, token)
       # Creates an empty order
-      order_id = create_empty_order(granule_query, user_id, token)
+      order_id = create_empty_order(token)
 
       # Provides the granules requested to the order
       order_granules = provide_order_items(order_id, granule_query, retrieval_collection, token)
@@ -126,16 +126,11 @@ module Echo
       # Submits the order
       submission_response = submit_order(order_id, token)
 
-      # Rails.logger.info "Items response: #{items_response.body.inspect}"
-      # Rails.logger.info "User info response: #{user_info_response.body.inspect}"
-      Rails.logger.info "Submission response: #{submission_response.body.inspect}"
-
       { order_id: order_id, response: submission_response, count: order_granules[:ordered_granules].size, dropped_granules: order_granules[:dropped_granules] }
     end
 
-    def create_empty_order(granule_query, user_id, token)
-      digest = Digest::SHA1.hexdigest(granule_query.to_json + user_id)
-      order_response = post('orders.json', { order: {}, digest: digest }.to_json, token_header(token))
+    def create_empty_order(token)
+      order_response = post('orders.json', { order: {} }.to_json, token_header(token))
 
       if order_response.success?
         Rails.logger.info "Response from ECHO Rest creating an empty order: #{order_response.body.inspect}"

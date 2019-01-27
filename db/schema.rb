@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190102182416) do
+ActiveRecord::Schema.define(version: 20190114192759) do
 
   create_table "access_configurations", force: :cascade do |t|
     t.integer  "user_id"
@@ -88,6 +88,19 @@ ActiveRecord::Schema.define(version: 20190102182416) do
   add_index "delayed_jobs", ["created_at"], name: "index_delayed_jobs_on_created_at"
   add_index "delayed_jobs", ["failed_at"], name: "index_delayed_jobs_on_failed_at"
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "retrieval_collection_id"
+    t.string   "type"
+    t.text     "search_params"
+    t.string   "order_number"
+    t.string   "state"
+    t.text     "order_information"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "orders", ["retrieval_collection_id"], name: "index_orders_on_retrieval_collection_id"
 
   create_table "projects", force: :cascade do |t|
     t.text     "path"

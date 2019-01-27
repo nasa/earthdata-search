@@ -58,6 +58,15 @@ ns.ProjectList = do (ko
 
     _onReady: =>
       if window.location.href.indexOf('/data/retrieve') != -1
+        # Populate the project on page load
+        url = new URL(window.location.href).origin + '/api/v1/retrievals/' + @project.id() + '.json'
+        ajax
+          dataType: 'json'
+          url: url
+          success: (data, status, xhr) =>
+            @project.fromJson(data)
+
+        # Begin polling process
         @pollProjectUpdates()
 
     _launchDownload: (collection) =>
@@ -184,21 +193,20 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
-          canCancel = ['SUBMITTING', 'QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
+          canCancel = ['submitting', 'quoted', 'not_validated', 'quoted_with_exceptions', 'validated'].indexOf(m.orderStatus) != -1
           orders.push
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             order_status_to_classname: @orderStatusToClassName(m.orderStatus)
             cancel_link: urlUtil.fullPath("/data/remove?order_id=#{m.orderId}") if canCancel
-            is_in_progress: m.orderStatus == 'creating' || m.orderStatus.indexOf('PROCESSING') == 0 || canCancel
+            is_in_progress: m.orderStatus == 'creating' || m.orderStatus.indexOf('processing') == 0 || canCancel
             dropped_granules: m.droppedGranules
             downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             method_name: m.method()
             error_code: m.errorCode
             error_message: m.errorMessage
       orders
-
 
     _computeProjectUpdates: ->
       shouldPoll = false
@@ -212,7 +220,7 @@ ns.ProjectList = do (ko
         clearInterval(intervalId)
         @pollingIntervalId(null)
       else if shouldPoll && !intervalId
-        url = window.location.href + '.json'
+        url = new URL(window.location.href).origin + '/api/v1/retrievals/' + @project.id() + '.json'
         console.log "Loading project data for #{@project.id()}"
         intervalId = setInterval((=> ajax(
           dataType: 'json'

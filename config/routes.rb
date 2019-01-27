@@ -1,4 +1,18 @@
 EarthdataSearchClient::Application.routes.draw do
+  # -- API
+  namespace :api, defaults: { format: :json } do
+    namespace :v1, as: nil do
+      resources :retrievals, only: :show do
+        resources :retrieval_collections, only: [:index, :show], path: 'collections'
+      end
+
+      resources :retrieval_collections, only: [], path: 'collections' do
+        resources :orders, only: [:index, :show]
+      end
+    end
+  end
+
+  # -- Web
   get 'urs_callback' => 'oauth_tokens#urs_callback'
   get 'login' => 'users#login'
   get 'logout' => 'users#logout'

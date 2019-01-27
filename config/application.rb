@@ -54,6 +54,9 @@ module EarthdataSearchClient
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Configure ActiveJob to use DelayedJob
+    config.active_job.queue_adapter = :delayed_job
+
     config.is_plugin = Proc.new do |path|
       !%w(.css .map).include?(File.extname(path)) && File.basename(path).start_with?('edsc-plugin.')
     end
