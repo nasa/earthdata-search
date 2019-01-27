@@ -1,6 +1,10 @@
 class RetrievalCollection < ActiveRecord::Base
   belongs_to :retrieval
 
+  has_many :orders, dependent: :destroy
+  has_many :order_requests, through: :orders, source: :orderable, source_type: 'OrderRequest'
+  has_many :service_requests, through: :orders, source: :orderable, source_type: 'ServiceRequest'
+
   store :collection_metadata, coder: JSON
   store :access_method,       coder: JSON
   store :granule_params,      coder: JSON
@@ -11,6 +15,9 @@ class RetrievalCollection < ActiveRecord::Base
 
   DEFAULT_MAX_ORDER_SIZE     = 1_000_000  # The largest order that EDSC supports regardless of actual granule data
   DEFAULT_GRANULES_PER_ORDER = 2000       # The maximum size of an individual order
+
+  # Prevent multiple records for the same retrieval/collection combination
+  validates :collection_id, uniqueness: { scope: :retrieval_id }
 
   # Retrieves and sets the granule_count column on the record based on the granule params
   #
@@ -86,6 +93,20 @@ class RetrievalCollection < ActiveRecord::Base
     else
       DEFAULT_GRANULES_PER_ORDER
     end
+  end
+
+  # Determine a status to represent the collective orders for this collection.
+  #
+  # @return [String] the overall status of all the orders for this collection
+  def order_status
+    # Default order status
+    current_status = 'creating'
+
+    current_status = 'in progress' unless orders.any? { |o| o.order_status == 'creating' }
+    current_status = 'failed'      if orders.all? { |o| o.order_status == 'failed' }
+    current_status = 'complete'    if orders.all? { |o| %w(closed complete complete_with_errors).include?(o.order_status) }
+
+    current_status
   end
 
   # Construct a hash in the expected format for the ECHO Rest contact information endpoint.
