@@ -70,6 +70,7 @@ describe 'CWIC-enabled granule results view' do
 
       it 'displays no links to CMR metadata or formats' do
         within('#granule-details') do
+          expect(page).not_to have_content('UMM-G')
           expect(page).not_to have_content('ATOM')
           expect(page).not_to have_content('ECHO10')
           expect(page).not_to have_content('ISO 19115')
