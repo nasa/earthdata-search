@@ -41,6 +41,8 @@ class OauthTokensController < ApplicationController
     current_user.save
   end
 
+  protected
+  
   def retrieve_urs_profile(oauth_response)
     # Once we retrieve this from URS we can use the `uid` value but the oauth
     # endpoint only returns the path to the user
