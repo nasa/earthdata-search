@@ -53,7 +53,7 @@ describe 'CWIC-enabled granule results view' do
     context 'on `Information` tab' do
       it 'displays only metadata fields for which the granule has data' do
         within('#granule-details') do
-          expect(page).not_to have_content('GranuleUR:')
+          expect(page).not_to have_content('GranuleURL:')
           expect(page).not_to have_content('Collection:')
         end
       end
