@@ -1,10 +1,27 @@
 class ApplicationController < ActionController::Base
+  include AuthenticationUtils
   include ClientUtils
 
   protect_from_forgery
 
-  before_filter :refresh_urs_if_needed, except: [:logout, :refresh_token]
-  before_filter :validate_portal
+  before_action :refresh_urs_if_needed, except: [:logout, :refresh_token]
+  before_action :validate_portal
+  before_action :migrate_user_data
+
+  # As of EDSC-2057 we are storing profile and preference information for the user in the
+  # database instead of storing parts of it in the session and continually asking for it.
+  # This method looks for a key that we previously stored in the session and uses it's value
+  # to pull and store the information we now retrive when a user logs in. This method will
+  # ensure that users that were logged in before the deployment don't experience any issues.
+  def migrate_user_data
+    if logged_in? && session.key?(:user_name)
+      # Mocks the response from URS providing only the necessary keys to store the user data
+      store_user_data('endpoint' => "/api/users/#{session[:user_name]}")
+
+      # Remove this old value from the session
+      session.delete(:user_name)
+    end
+  end
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
   rescue_from Faraday::Error::ConnectionFailed, with: :handle_connection_failed
