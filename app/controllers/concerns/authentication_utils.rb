@@ -23,7 +23,6 @@ module AuthenticationUtils
     # endpoint only returns the path to the user
     username = oauth_response['endpoint'].gsub('/api/users/', '') if oauth_response['endpoint']
 
-    byebug
     response = echo_client.get_urs_user(username, token)
     if response.success?
       response.body
