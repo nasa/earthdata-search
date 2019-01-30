@@ -11,16 +11,22 @@
         </a>
       </div>
     </nav>
-    <!-- ko if: selected() -->
-    <div class="master-overlay-info">
-      <!-- ko if: selected().detailsLoaded -->
-        <h2 class="master-overlay-header-title" data-bind="text: selected().title"></h2>
-      <!-- /ko -->
-      <!-- ko ifnot: selected().detailsLoaded -->
-        <h2 class="master-overlay-header-title" data-bind="text: selected().title">Details Loading...</h2>
-      <!-- /ko -->
+    <div class="master-overlay-header-info">
+      <div class="master-overlay-info">
+        <div class="master-overlay-info-panel master-overlay-info-collection-panel">
+          <div class="master-overlay-info-collection-header" >
+            <!-- ko if: selected() -->
+              <!-- ko if: selected().detailsLoaded -->
+                <h2 class="master-overlay-header-heading master-overlay-header-title" data-bind="text: selected().title"></h2>
+              <!-- /ko -->
+              <!-- ko ifnot: selected().detailsLoaded -->
+                <h2 class="master-overlay-header-heading master-overlay-info-collection-loading" data-bind="text: selected().title">Details Loading...</h2>
+              <!-- /ko -->
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /ko -->
   </header>
   <div class="master-overlay-content">
     <ul id="granule-details-nav" class="nav nav-tabs">
