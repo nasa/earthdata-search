@@ -1,11 +1,19 @@
 class MockResponse
   attr_accessor :body, :headers, :status
 
-  def self.atom(body=[], headers={}, status=200)
+  def self.atom(body = [], headers = {}, status = 200)
     headers['echo-hits'] ||= body.size.to_s
     headers['echo-hits-estimated'] ||= false
     headers['echo-cursor-at-end'] ||= true
-    body = {'feed' => {'entry' => body}}
+    body = { 'feed' => { 'entry' => body } }
+    MockResponse.new(body, headers, status)
+  end
+
+  def self.get_collections(collections = [], facets = {}, headers = {}, status = 200)
+    headers['echo-hits'] ||= collections.size.to_s
+    headers['echo-hits-estimated'] ||= false
+    headers['echo-cursor-at-end'] ||= true
+    body = { 'feed' => { 'entry' => collections, 'facets' => facets } }
     MockResponse.new(body, headers, status)
   end
 
@@ -25,7 +33,7 @@ class MockResponse
     MockResponse.new(body, {}, 200)
   end
 
-  def initialize(body="", headers={}, status=200)
+  def initialize(body = '', headers = {}, status = 200)
     @body = body
     @headers = headers
     @status = status

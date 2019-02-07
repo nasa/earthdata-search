@@ -30,7 +30,6 @@ group :test do
   gem 'capybara-screenshot'
   gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
   gem 'rack_session_access'
   gem 'rspec_junit_formatter'
   gem 'selenium-webdriver'
