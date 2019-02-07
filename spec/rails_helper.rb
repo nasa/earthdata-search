@@ -230,7 +230,6 @@ RSpec.configure do |config|
   end
 
   config.include RSpec::Rails::FixtureSupport
-  config.include FactoryBot::Syntax::Methods
 
   config.extend SharedBrowserSession
 
@@ -244,6 +243,7 @@ RSpec.configure do |config|
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
   config.include Helpers::UrlHelpers
+  config.include Helpers::MockHelpers
   # config.include ::CapybaraExtension
   # config.include ::CapybaraSeleniumExtension
 end

@@ -41,17 +41,19 @@ describe 'Address bar' do
     end
   end
 
-  context 'when loading a url containing a search keyword', data_specific: true do
-    before(:all) do
-      load_page '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS&ac=true'
+  context 'when loading a url containing a search keyword' do
+    before do
+      mock_get_collections('get_collections_by_keyword')
+
+      load_page '/search/collections?q=C1234567890-EDSC&ok=C1234567890-EDSC&ac=true'
     end
 
     it 'loads the condition into the keywords field' do
-      expect(page).to have_field('keywords', with: 'C1219032686-LANCEMODIS')
+      expect(page).to have_field('keywords', with: 'C1234567890-EDSC')
     end
 
     it 'filters collections using the condition' do
-      expect(page).to have_content('MYD04_L2')
+      expect(page).to have_content('EDSC_MOCK_1')
     end
   end
 
