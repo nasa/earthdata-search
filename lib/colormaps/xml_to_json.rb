@@ -38,10 +38,10 @@ module Colormaps
 
         next unless products.nil? || products.include?(id)
 
-        # get v1.2 role metadata node
-        target = layer.xpath("./ows:Metadata[contains(@xlink:role, '1.2')]")
+        # get v1.3 role metadata node
+        target = layer.xpath("./ows:Metadata[contains(@xlink:role, '1.3')]")
         url = if target.empty?
-                # not upgraded yet, layer does not have a metadata node with xlink:role v1.2,
+                # not upgraded yet, layer does not have a metadata node with xlink:role v1.3,
                 # so try to use url from another metadata node (no version or v1.0)
                 layer.xpath('./ows:Metadata/@xlink:href').to_s
               else
@@ -70,85 +70,96 @@ module Colormaps
     xml_file = open(url).read
     xml = Nokogiri::XML(xml_file)
 
-    scale_colors = []
-    scale_labels = []
-    scale_values = []
-    class_colors = []
-    class_labels = []
+    scale_colors   = []
+    scale_labels   = []
+    scale_values   = []
+    class_colors   = []
+    class_labels   = []
     special_colors = []
     special_labels = []
 
-    # Colormaps 1.0
-    entries = xml.xpath('//ColorMap/ColorMapEntry')
+    colormaps = xml.xpath('//ColorMaps/ColorMap')
 
-    if entries.empty?
-      # Colormaps 1.2
-      colormaps = xml.xpath('//ColorMaps/ColorMap')
-
-      unless colormaps.find { |map| map.attribute('title').to_s == 'No Data' }.nil?
-        blank_colormap = colormaps.find { |cmap| cmap.attribute('title').to_s == 'No Data' && cmap.xpath('./Entries[not(@*)]') }
-        colormaps.delete(blank_colormap)
-      end
-      return if colormaps.nil?
-
-      entries = colormaps.xpath('./Entries/ColorMapEntry')
+    # Strip out colormap data that isn't necessary to generate our json files
+    colormaps_to_ignore = ['No Data', 'Classification', 'Classifications']
+    colormaps_to_ignore.each do |ignored_colormap_title|
+      colormap_to_delete = colormaps.find { |cmap| cmap.attribute('title').to_s == ignored_colormap_title && cmap.xpath('./Entries[not(@*)]') }
+      colormaps.delete(colormap_to_delete) unless colormap_to_delete.nil?
     end
 
-    entries.each do |entry|
-      r, g, b = entry.attribute('rgb').to_s.split(',')
-      a = 255
-      a = 0 if entry.attribute('transparent') && entry.attribute('transparent') == 'true'
-      color = "#{str_to_hex(r)}#{str_to_hex(g)}#{str_to_hex(b)}#{str_to_hex(a)}"
-      label = entry.attribute('label').value
-      if a == 0
-        special_colors << color
-        special_labels << label
-      elsif entry.attribute('value')
-        items = entry.attribute('value').to_s.gsub(/[\(\)\[\]]/, '').split(',')
-        begin
-          items.each do |scale_value|
-            v = scale_value.to_f
-            v = Float::MAX if v == Float::INFINITY
-            v = Float::MIN if v == -Float::INFINITY
-            scale_values << v
+    return if colormaps.nil?
+
+    colormaps.each do |colormap|
+      # Pull the units of measurement for the colormap data
+      units = colormap.attribute('units')
+
+      entries = colormap.xpath('./Entries/ColorMapEntry')
+      entries.each do |entry|
+        r, g, b = entry.attribute('rgb').to_s.split(',')
+        a = 255
+        a = 0 if entry.attribute('transparent') && entry.attribute('transparent') == 'true'
+        color = "#{str_to_hex(r)}#{str_to_hex(g)}#{str_to_hex(b)}#{str_to_hex(a)}"
+        ref = entry.attribute('ref').value
+
+        # v1.3 moved the `label` out of the ColorMapEntry into Legend/LegendEntry['tooltip']
+        legend_entry = colormap.xpath("./Legend/LegendEntry[@id='#{ref}']")
+
+        # Only process entries with legend entries
+        next if legend_entry.blank?
+
+        label = legend_entry.attribute('tooltip')
+
+        if a == 0
+          # transparent
+          special_colors << color
+          special_labels << label
+        elsif entry.attribute('value')
+          items = entry.attribute('value').to_s.gsub(/[\(\)\[\]]/, '').split(',')
+          begin
+            items.each do |scale_value|
+              v = scale_value.to_f
+              v = Float::MAX if v == Float::INFINITY
+              v = Float::MIN if v == -Float::INFINITY
+              scale_values << v
+            end
+          rescue ValueError
+            raise "Invalid value: {entry.attribute('value').to_s}"
           end
-        rescue ValueError => e
-          raise "Invalid value: {entry.attribute('value').to_s}"
+          scale_colors << color
+          scale_labels << "#{label} #{units}"
+        else
+          class_colors << color
+          class_labels << "#{label} #{units}"
         end
-        scale_colors << color
-        scale_labels << label
-      else
-        class_colors << color
-        class_labels << label
       end
-    end
 
-    data = {}
-    unless scale_colors.empty?
-      data['scale'] = {}
-      data['scale']['colors'] = scale_colors
-      data['scale']['values'] = scale_values
-      data['scale']['labels'] = scale_labels
-    end
-    unless special_colors.empty?
-      data['special'] = {}
-      data['special']['colors'] = special_colors
-      data['special']['labels'] = special_labels
-    end
-    unless class_colors.empty?
-      data['classes'] = {}
-      data['classes']['colors'] = class_colors
-      data['classes']['labels'] = class_labels
-    end
-    data['id'] = id
+      data = {}
+      unless scale_colors.empty?
+        data['scale'] = {}
+        data['scale']['colors'] = scale_colors
+        data['scale']['values'] = scale_values
+        data['scale']['labels'] = scale_labels
+      end
+      unless special_colors.empty?
+        data['special'] = {}
+        data['special']['colors'] = special_colors
+        data['special']['labels'] = special_labels
+      end
+      unless class_colors.empty?
+        data['classes'] = {}
+        data['classes']['colors'] = class_colors
+        data['classes']['labels'] = class_labels
+      end
+      data['id'] = id
 
-    output_file = File.join(output_dir, id + '.json')
-    File.open(output_file, 'w') do |f|
-      f.write(data.to_json)
+      output_file = File.join(output_dir, id + '.json')
+      File.open(output_file, 'w') do |f|
+        f.write(data.to_json)
+      end
     end
 
     return true
-  rescue Exception => e
+  rescue Exception
     # GIBS-876: GIBS serves up two URLs that are 404.  We need to cope with these.
     error_type = e.message == '404 Not Found' ? 'Warning' : 'Error'
     puts "#{error_type} [#{url}]: #{e.message}"
