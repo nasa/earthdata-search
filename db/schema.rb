@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190114192759) do
+ActiveRecord::Schema.define(version: 20190211155724) do
 
   create_table "access_configurations", force: :cascade do |t|
     t.integer  "user_id"
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 20190114192759) do
     t.string   "cat4",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "colormaps", force: :cascade do |t|
+    t.string   "product"
+    t.string   "url"
+    t.text     "jsondata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cron_job_histories", force: :cascade do |t|

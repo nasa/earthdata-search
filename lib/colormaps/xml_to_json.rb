@@ -5,15 +5,9 @@ require 'json'
 module Colormaps
   def self.load(products = nil)
     puts 'Loading GIBS colormap data...'
-    output_dir = "#{Rails.root}/public/colormaps"
-    begin
-      # if the directory exists, delete it before running the rake task
-      # so old/stale colormaps aren't stored b/c GIBS will be updating versions
-      FileUtils.remove_dir(output_dir)
-    rescue Errno::ENOENT
-      # blank rescue block, in case the directory did not already exist
-    end
-    FileUtils.mkdir_p(output_dir)
+
+    # Destroy all current colormaps to prevent orphaned records
+    Colormap.destroy_all
 
     # We need to process the GetCapabilities files for each projection, as some products do not appear in
     # the Geographic projection
@@ -47,11 +41,15 @@ module Colormaps
               else
                 target.attribute('href').to_s
               end
+
         url = url.gsub(/^http:/, 'https:')
 
-        next if id.empty? || url.empty? || !url.start_with?('http') || File.exist?(File.join(output_dir, "#{id}.json"))
+        colormap = Colormap.find_or_initialize_by(product: id)
+
+        next if id.empty? || url.empty? || !url.start_with?('http') || colormap.persisted?
+
         file_count += 1
-        result = Colormaps.xml_to_json(id, url, output_dir)
+        result = Colormaps.xml_to_json(colormap, url)
         error_count += 1 unless result
       end
     end
@@ -63,10 +61,9 @@ module Colormaps
 
   # This method takes a XML formatted GIBS colormap and converts it to JSON format
   # https://github.com/nasa-gibs/worldview/blob/12ac2e188048c1d32a858f68b2eaac85852462d6/bin/wv-options-colormap
-  # id: ID found in XML colormap. Used to name JSON file. (MODIS_Terra_NDSI_Snow_Cover)
+  # colormap: Colormap object initialized with an ID. Used to name JSON file. (MODIS_Terra_NDSI_Snow_Cover)
   # url: GIBS URL for XML colormap. (https://gibs.earthdata.nasa.gov/colormaps/v1.3/MODIS_Terra_NDSI_Snow_Cover.xml)
-  # output_dir: output directory of the JSON file. (public/colormaps)
-  def self.xml_to_json(id, url, output_dir)
+  def self.xml_to_json(provided_colormap, url)
     xml_file = open(url).read
     xml = Nokogiri::XML(xml_file)
 
@@ -150,16 +147,16 @@ module Colormaps
         data['classes']['colors'] = class_colors
         data['classes']['labels'] = class_labels
       end
-      data['id'] = id
+      data['id'] = provided_colormap.product
 
-      output_file = File.join(output_dir, id + '.json')
-      File.open(output_file, 'w') do |f|
-        f.write(data.to_json)
-      end
+      provided_colormap.jsondata = data
+      provided_colormap.url      = url
+
+      provided_colormap.save!
     end
 
     return true
-  rescue Exception
+  rescue Exception => e
     # GIBS-876: GIBS serves up two URLs that are 404.  We need to cope with these.
     error_type = e.message == '404 Not Found' ? 'Warning' : 'Error'
     puts "#{error_type} [#{url}]: #{e.message}"
