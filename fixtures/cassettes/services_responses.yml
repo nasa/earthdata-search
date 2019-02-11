@@ -1888,6 +1888,30 @@ d338f7bb0b09abf8bb732d1b5ec690f552af5b73:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1234044620-GES_DISC"}'
     http_version: 
+faec66adb0ea1e1471ba54e86b494ef683112b63:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      date:
+      - Mon, 11 Feb 2019 16:07:58 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding
+      content-length:
+      - '69'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1234567890-EDSC"}'
+    http_version: 
 9477075771e5ecc174273b36c43392b05e8e46b5:
   response:
     status:

@@ -1,0 +1,29 @@
+[
+	{
+		"time_start": "1979-01-01T00:00:00.000Z",
+		"version_id": "Not provided",
+		"dataset_id": "EDSC Mock Collection Metadata",
+		"has_spatial_subsetting": false,
+		"has_transforms": false,
+		"has_variables": false,
+		"data_center": "EDSC_MOCK",
+		"short_name": "EDSC_MOCK_1",
+		"organizations": [
+			"EDSC_MOCK"
+		],
+		"title": "EDSC Mock Collection Metadata",
+		"coordinate_system": "CARTESIAN",
+		"summary": "This is a mock collection for EDSC testing.",
+		"has_granules": false,
+		"time_end": "2009-12-01T23:59:59.000Z",
+		"orbit_parameters": {
+
+		},
+		"id": "C1234567890-EDSC",
+		"has_formats": false,
+		"original_format": "UMM_JSON",
+		"granule_count": 0,
+		"archive_center": "EDSC_MOCK",
+		"browse_flag": false
+	}
+]

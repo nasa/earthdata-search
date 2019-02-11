@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Collection results scrolling', data_specific: true do
+describe 'Collection results scrolling' do
   before :all do
     load_page :search, q: 'AQUARIUS_SAC-D AS'
   end
@@ -29,7 +29,7 @@ describe 'Collection results scrolling', data_specific: true do
         end
 
         it 'does not load additional results' do
-          expect(page).to have_css('#collection-results-list .panel-list-item', count: 69)
+          expect(page).to have_css('#collection-results-list .panel-list-item', count: 56)
         end
 
         it 'does not show the loading message' do

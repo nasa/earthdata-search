@@ -43,14 +43,14 @@ describe 'Collection API Endpoints' do
   end
 
   # collection is gone
-  context 'when viewing the collection details for a collection with MODAPS WCS', data_specific: true do
+  context 'when viewing the collection details for a collection with MODAPS WCS' do
     before :all do
-      load_page :collection_details, ac: true, focus: 'C1219032686-LANCEMODIS'
+      load_page :collection_details, ac: true, focus: 'C190733713-LPDAAC_ECS'
       click_on 'For developers'
     end
 
     it 'provides the path to the MODAPS WCS endpoint' do
-      expect(collection_details).to have_css('a[href="http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MYD04_L2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"]')
+      expect(collection_details).to have_css('a[href="http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MCD12Q2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"]')
     end
   end
 

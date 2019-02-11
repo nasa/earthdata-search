@@ -90,55 +90,6 @@ describe 'Collection details' do
     end
   end
 
-  context 'when selecting a collection with point spatial' do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :collection_details, focus: 'C179003030-ORNL_DAAC'
-    end
-
-    it 'dislpays the collection searched for in the results list' do
-      expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
-    end
-
-    it 'does not display the collection\'s spatial bounds on the map' do
-      expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-  end
-
-  context 'when selecting a collection with bounding box spatial' do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :collection_details, focus: 'C179002945-ORNL_DAAC'
-    end
-
-    it 'does not display the collection\'s spatial bounds on the map' do
-      expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-  end
-
-  context 'when selecting a collection with polygon spatial' do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :collection_details, focus: 'C1386246913-NSIDCV0', ac: true
-    end
-
-    it "does not display the collection's spatial bounds on the map" do
-      expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-  end
-
-  # FIXME: This collection no longer has line spatial
-  context 'when selecting a collection with line spatial', data_specific: true do
-    before :all do
-      load_page :search, q: 'NSIDC-0239'
-      first_collection_result.click_link('View collection details')
-    end
-
-    it 'displays the collection\'s spatial bounds on the map' do
-      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-  end
-
   context 'when selecting a collection with multiple temporal fields but some of which have only BeginningDateTime' do
     before :all do
       Capybara.reset_sessions!
@@ -197,14 +148,15 @@ describe 'Collection details' do
     end
   end
 
-  context 'when selecting a collection with multiple data centers', data_specific: true do
-    before :all do
+  context 'when selecting a collection with multiple data centers' do
+    before do
       Capybara.reset_sessions!
       load_page :collection_details, focus: 'C179460405-LPDAAC_ECS'
     end
 
     it 'displays all data center content' do
-      expect(page).to have_content('JP/METI/AIST/JSS/GDS PROCESSOR LP DAAC ARCHIVER')
+      expect(page).to have_content("LP DAAC\nDISTRIBUTOR")
+      expect(page).to have_content("JP/METI/AIST/JSS/GDS\nPROCESSOR")
     end
   end
 
@@ -264,10 +216,12 @@ describe 'Collection details' do
     end
   end
 
-  context 'when selecting a collection without related urls', data_specific: true do
+  context 'when selecting a collection without related urls' do
     before do
-      # Collection doesn't exist
-      load_page :collection_details, focus: 'C1297504182-LARC'
+      mock_get_collection('collection_without_related_urls')
+      load_page :search, q: 'C1234567890-EDSC'
+      first_collection_result.click_link('View collection details')
+      wait_for_xhr
     end
 
     it 'does not display option to view all related urls' do
@@ -276,9 +230,9 @@ describe 'Collection details' do
     end
   end
 
-  context 'when selecting a collection with polygon spatial', data_specific: true do
+  context 'when selecting a collection with polygon spatial' do
     before :all do
-      load_page :collection_details, focus: 'C1267337984-ASF'
+      load_page :collection_details, focus: 'C1267331834-ASF'
     end
 
     it 'displays the spatial' do
