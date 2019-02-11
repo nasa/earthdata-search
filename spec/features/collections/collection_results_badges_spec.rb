@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Collection results', data_specific: true do
+describe 'Collection results' do
   before :all do
-    load_page :search, ac: true, q: 'C1211793450-PODAAC'
+    load_page :search, ac: true, q: 'C194001241-LPDAAC_ECS'
   end
 
   it 'displays a badge for OPeNDAP-enabled collections' do

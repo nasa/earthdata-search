@@ -53,7 +53,7 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
       doi = doi.gsub("dx.doi.org/", '')
       doi = doi.gsub("doi.org/", '')
       if !doi.blank?
-        return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi} 
+        return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
       else
         return {doi_text: doi, doi_link: nil}
       end
@@ -141,8 +141,8 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
           s += ')'
           spatial_list << s
         end
-      elsif geometry['Line']
-        lines = Array.wrap(geometry['Line'])
+      elsif geometry['Lines']
+        lines = Array.wrap(geometry['Lines'])
         lines.each do |line|
           latitude1 = line['Points'][0]['Latitude']
           longitude1 = line['Points'][0]['Longitude']

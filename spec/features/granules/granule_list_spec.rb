@@ -236,9 +236,9 @@ describe 'Granule list' do
   end
 
   context 'for collections whose granules have more than one downloadable links' do
-    context 'clicking on the single granule download button when the links have titles', data_specific: true do
+    context 'clicking on the single granule download button when the links have titles' do
       before :all do
-       load_page :search, focus: 'C1000000042-LANCEAMSR2', timeline: '1501695072'
+        load_page :search, focus: 'C1000000020-LANCEAMSR2', timeline: '1501695072'
 
         within '#granules-scroll .panel-list-item:nth-child(1)' do
           find('a[data-toggle="dropdown"]').click
@@ -259,7 +259,7 @@ describe 'Granule list' do
       end
     end
 
-    context 'clicking on the single granule download button when the links do not have titles', data_specific: true do
+    context 'clicking on the single granule download button when the links do not have titles' do
       before :all do
         load_page :search, focus: 'C1353062857-NSIDC_ECS', timeline: '1501695072'
 
@@ -276,11 +276,11 @@ describe 'Granule list' do
 
       it 'shows a dropdown with all the downloadable granules' do
         within '#granules-scroll .panel-list-item:nth-child(1)' do
-          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ex_v1.2.tif')
-          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_ey_v1.2.tif')
-          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_v1.2.meta')
-          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vx_v1.2.tif')
-          expect(page).to have_content('TSX_W69.10N_31Dec16_11Jan17_10-05-59_vy_v1.2.tif')
+          expect(page).to have_content('TSX_W75.85N_31Dec17_11Jan18_11-04-37_ex_v1.2.tif')
+          expect(page).to have_content('TSX_W75.85N_31Dec17_11Jan18_11-04-37_ey_v1.2.tif')
+          expect(page).to have_content('TSX_W75.85N_31Dec17_11Jan18_11-04-37_v1.2.meta')
+          expect(page).to have_content('TSX_W75.85N_31Dec17_11Jan18_11-04-37_vx_v1.2.tif')
+          expect(page).to have_content('TSX_W75.85N_31Dec17_11Jan18_11-04-37_vy_v1.2.tif')
         end
       end
     end
@@ -320,15 +320,15 @@ describe 'Granule list' do
     end
   end
 
-  context 'for collections that have granules without end times', data_specific: true do
+  context 'for collections that have granules without end times' do
     before :all do
       load_page :search, focus: 'C1000-LPDAAC_TS2', timeline: '1501695072', env: :uat
     end
 
     it 'displays correct start and end temporal labels' do
       within '#granules-scroll .panel-list-item:nth-child(1)' do
-        expect(page).to have_content('START 2018-08-04 23:28:02')
-        expect(page).to have_content('END Not Provided')
+        expect(page).to have_content("START\n2019")
+        expect(page).to have_content("END\nNot Provided")
       end
     end
   end

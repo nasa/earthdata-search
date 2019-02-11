@@ -11,7 +11,7 @@ describe 'CWIC-enabled data access' do
     authenticate: 'edsc'
   }
 
-  context 'When configuring data access for a CWIC-tagged collection', data_specific: true do
+  context 'When configuring data access for a CWIC-tagged collection', edit_options: true do
     before :all do
       Capybara.reset_sessions!
       AccessConfiguration.destroy_all

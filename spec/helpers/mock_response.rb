@@ -9,6 +9,10 @@ class MockResponse
     MockResponse.new(body, headers, status)
   end
 
+  def self.get_collection(body = {}, headers = {}, status = 200)
+    MockResponse.new(body, headers, status)
+  end
+
   def self.get_collections(collections = [], facets = {}, headers = {}, status = 200)
     headers['echo-hits'] ||= collections.size.to_s
     headers['echo-hits-estimated'] ||= false

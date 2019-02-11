@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Collection Granule Count', data_specific: true do
+describe 'Collection Granule Count' do
   before :all do
     Capybara.reset_sessions!
     load_page :search, q: 'C1002-LPDAAC_TBD', env: :sit
@@ -19,7 +19,7 @@ describe 'Collection Granule Count', data_specific: true do
     end
 
     it 'displays an updated granule count' do
-      expect(page).to have_content('0 Granules')
+      expect(page).to have_content('0 Matching Collections')
     end
   end
 end
