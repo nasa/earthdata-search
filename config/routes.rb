@@ -3,12 +3,14 @@ EarthdataSearchClient::Application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1, as: nil do
       resources :retrievals, only: :show do
-        resources :retrieval_collections, only: [:index, :show], path: 'collections'
+        resources :retrieval_collections, only: %i[index show], path: 'collections'
       end
 
       resources :retrieval_collections, only: [], path: 'collections' do
-        resources :orders, only: [:index, :show]
+        resources :orders, only: %i[index show]
       end
+
+      resources :colormaps, only: :show
     end
   end
 

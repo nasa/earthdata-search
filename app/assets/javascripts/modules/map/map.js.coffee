@@ -162,7 +162,7 @@ ns.Map = do (window,
 
       if name?
         # get json from server
-        path = "/colormaps/#{name}.json"
+        path = "/api/v1/colormaps/#{name}.json"
         console.log("Request #{path}")
         ajax
           dataType: 'json'
