@@ -30,7 +30,7 @@ describe CollectionDetailsPresenterUmmJson do
   end
 
   it 'converts spatial lines' do
-    spatial = { 'HorizontalSpatialDomain' => { 'Geometry' => { 'Line' => { 'Points' => [{ 'Longitude' => '-55.0364', 'Latitude' => '-2.855' }, { 'Longitude' => '-54.959', 'Latitude' => '-2.855' }] } } } }
+    spatial = { 'HorizontalSpatialDomain' => { 'Geometry' => { 'Lines' => { 'Points' => [{ 'Longitude' => '-55.0364', 'Latitude' => '-2.855' }, { 'Longitude' => '-54.959', 'Latitude' => '-2.855' }] } } } }
     @collection['SpatialExtent'] = spatial
     CollectionDetailsPresenterUmmJson.new(@collection)
     expect(@collection[:spatial]).to eq(["Line: ((-2.855\xC2\xB0, -55.0364\xC2\xB0), (-2.855\xC2\xB0, -54.959\xC2\xB0))"])

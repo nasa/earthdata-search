@@ -434,13 +434,13 @@ describe 'Viewing Single Project' do
         expect(page).to have_content('2000 Pilot Environmental Sustainability Index (ESI)')
         expect(page).to have_content('2001 Environmental Sustainability Index (ESI)')
         expect(page).to have_content('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
-        expect(page).to have_content('NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE PRECIPITATION')
+        expect(page).to have_content('NRT AMSR2 L2B GLOBAL SWATH GSFC PROFILING ALGORITHM 2010: SURFACE')
         expect(page).to have_content('2002 Environmental Sustainability Index (ESI)')
         expect(page).to have_content('2005 Environmental Sustainability Index (ESI)')
         expect(page).to have_content('2008 Environmental Performance Index (EPI)')
         expect(page).to have_content('Anthropogenic Biomes of the World, Version 1')
         expect(page).to have_content('2010 Environmental Performance Index (EPI)')
-        expect(page).to have_content('2012 Environmental Performance Index and Pilot Trend Environmental Performance Index')
+        expect(page).to have_content('2012 Environmental Performance Index and Pilot Trend Environmental')
         expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
       end
     end
