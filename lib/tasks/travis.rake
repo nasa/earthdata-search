@@ -15,7 +15,7 @@ namespace :travis do
     Rake::Task['ci:cleancache'].invoke
   end
 
-  task :colormaps do
+  task colormaps: ['environment'] do
     collections_recordings = File.open(File.join(Rails.root, 'fixtures/cassettes', 'collections_responses.yml'), 'r').read
     required_colormaps = collections_recordings.scan(/\"product\"\: ?\"([\w\s-]*)\"/).flatten.uniq
 
