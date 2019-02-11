@@ -128,7 +128,7 @@ module EarthdataSearchClient
     config.thumbnail_width = 75
 
     # UMM Versions
-    config.umm_c_version   = '1.10'
+    config.umm_c_version   = '1.12'
     config.umm_s_version   = '1.2'
     config.umm_var_version = '1.2'
 
