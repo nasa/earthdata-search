@@ -122,7 +122,7 @@
     <master-overlay-panel style="display: none">
       <!-- ko foreach: $parent.project.collections() -->
       <master-overlay-panel-group params="panelGroupName: collection.id + '_collection-details', indicatorElement: collection.id + '_project-list-item'">
-        <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_details', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Detials'">
+        <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_details', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Details'">
           <div class="master-overlay-panel-item-content master-overlay-panel-item-content-trimmed">
             <!-- ko if: $parents[1].collection.granuleDatasource() -->
             <!-- ko if: $parents[1].collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
