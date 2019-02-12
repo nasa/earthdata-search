@@ -197,7 +197,7 @@ RSpec.configure do |config|
 
     # Include deprecated 'DatasetExtra' here to prevent an error on model.destroy_all.
     # For more info, see comments in dataset_extra.rb
-    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration, DatasetExtra]
+    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration, DatasetExtra, Colormap]
     ActiveRecord::Base.descendants.each do |model|
       model.destroy_all unless models_to_preserve.include?(model)
     end
