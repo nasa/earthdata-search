@@ -35,7 +35,7 @@ class CollectionsController < ApplicationController
     metrics_event('details', collections: [params[:id]])
 
     # TODO: make 1_9 configurable (yml + ENV)
-    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_9')
+    response = echo_client.get_collection(params[:id], token, 'umm_json_v1_12')
 
     if response.success?
       respond_with(CollectionDetailsPresenterUmmJson.new(response.body, params[:id], token, cmr_env), status: response.status)
@@ -153,7 +153,7 @@ class CollectionsController < ApplicationController
       {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
       {'title' => 'Customizable', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
     }]
-    
+
     if facets.present? && facets['children']
       feature_facet + facets['children']
     else

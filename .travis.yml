@@ -31,6 +31,7 @@ env:
 branches:
   only: # Only build master. Pull requests to master also get built.
     - master
+    - 1.84.x
 deploy:
   provider: script
   script: bin/ecc-sync
