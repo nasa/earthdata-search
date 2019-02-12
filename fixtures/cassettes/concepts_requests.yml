@@ -104,7 +104,7 @@ http_interactions:
   digest: 50a202864e565c9404d2c0ec592917d7df378612
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214305813-AU_AADC.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214305813-AU_AADC.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -119,7 +119,7 @@ http_interactions:
   digest: d7fb0692d7fe1bfad11ee1e7f524d798474029db
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560151-JAXA.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560151-JAXA.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -134,7 +134,7 @@ http_interactions:
   digest: 2dd9404de0e8f41574631802719ef600e7da588c
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560374-JAXA.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560374-JAXA.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -149,7 +149,7 @@ http_interactions:
   digest: 66c6f648d4f23935d2209493ed9ec0c092823470
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560812-JAXA.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560812-JAXA.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -164,7 +164,7 @@ http_interactions:
   digest: 5d582bcc6dc93a15c87c22526849a94e06c98a33
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1219032686-LANCEMODIS.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1219032686-LANCEMODIS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -179,7 +179,7 @@ http_interactions:
   digest: 1b2e3aba2f70feb0bff588b71934ff3dbc613f5a
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1220566654-USGS_LTA.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1220566654-USGS_LTA.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -194,7 +194,7 @@ http_interactions:
   digest: 282a3e8908de05b5b879fd26fe91d314ed987f2d
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1267337984-ASF.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1267337984-ASF.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -209,7 +209,7 @@ http_interactions:
   digest: 2cc5633aa91d0d85904d4c8539c96cd4e7e946da
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1297504182-LARC.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1297504182-LARC.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -275,7 +275,7 @@ http_interactions:
   digest: 1e300fc087a3feca7b8566696dd3e33654e1518e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -307,7 +307,7 @@ http_interactions:
   digest: c8741b286fc3abcb830c7c874c36854adc00e412
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002914-ORNL_DAAC.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002914-ORNL_DAAC.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -339,7 +339,7 @@ http_interactions:
   digest: d7d3b50c1300f4ea0697e1060baff892a0ef0a7e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179003030-ORNL_DAAC.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179003030-ORNL_DAAC.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -371,7 +371,7 @@ http_interactions:
   digest: d77b79097ef1512e50af0c4c9b71b82ce13e05ac
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -386,7 +386,7 @@ http_interactions:
   digest: 777ee368c307f20e424bd2f58da2c3806b0253a5
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -452,7 +452,7 @@ http_interactions:
   digest: d37b345482bc6eea0c126c4372ea84394bb95677
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C197265171-LPDAAC_ECS.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C197265171-LPDAAC_ECS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -467,7 +467,7 @@ http_interactions:
   digest: 422f4d4e6f9c2f3dc1dca78e492ceebffe42ad80
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C203234517-LAADS.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C203234517-LAADS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -567,7 +567,7 @@ http_interactions:
   digest: 22773077a42ba7efc9a0d56017a1d43ae54bd2a0
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C92711294-NSIDC_ECS.umm_json_v1_9
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C92711294-NSIDC_ECS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -612,7 +612,7 @@ http_interactions:
   digest: 1c5f6e248a5d239e63f6925e1d022cdfc37edab2
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000257-DEV07.umm_json_v1_9
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000257-DEV07.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -627,7 +627,7 @@ http_interactions:
   digest: 4e5fe7086caa3f7f7fcc12ff3ff0ecb9b98cd5f7
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200187767-EDF_OPS.umm_json_v1_9
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200187767-EDF_OPS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -642,7 +642,7 @@ http_interactions:
   digest: b39f596d24a225a0abf5aeb1d8ce6719e1925a03
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200230663-MMT_1.umm_json_v1_9
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200230663-MMT_1.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -657,7 +657,7 @@ http_interactions:
   digest: 5cf5d7f76f99ec3c555b563138b6d5b9f4b4322e
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200235634-EDF_DEV06.umm_json_v1_9
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200235634-EDF_DEV06.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -672,7 +672,7 @@ http_interactions:
   digest: b254400c8d4ce110ceccdc75a040c6dab2e88e49
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200269572-E2E_18_3.umm_json_v1_9
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200269572-E2E_18_3.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -704,7 +704,7 @@ http_interactions:
   digest: 49ca664c160187e02e9a9fa1500e7559313ce708
 - request:
     method: get
-    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C24936-LAADS.umm_json_v1_9
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C24936-LAADS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
@@ -719,7 +719,7 @@ http_interactions:
   digest: 9cdc3d2600617b4e45da2c985f5e22fccc93aaa6
 - request:
     method: get
-    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1216393716-EDF_OPS.umm_json_v1_9
+    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1216393716-EDF_OPS.umm_json_v1_12
     body:
       encoding: US-ASCII
       string: ''
