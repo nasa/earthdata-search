@@ -39,7 +39,7 @@ ns.XhrModel = do (ko
           error = @_translateCMRError(value) ? 'There was a problem completing the request'
 
           # Ignore errors from /granules/timeline.json since it is the same as what /search/granules.json returns.
-          edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true) unless url.indexOf('/granules/timeline.json') > -1
+          edsc.banner(url, title, error, className: 'banner-error', immediate: true) unless url.indexOf('/granules/timeline.json') > -1
 
           if url.indexOf('/granules/timeline.json') > -1
             currentPage=window.edsc.models.page.current
