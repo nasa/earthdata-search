@@ -18,10 +18,7 @@
       $banner.addClass(options.className) if options.className?
       $banner.find('.banner-title').text(title) if title?
       $message = $banner.find('.banner-text')
-      if options.html
-        $message.html(message)
-      else
-        $message.text(message)
+      $message.text(message)
       $banner.data('banner.key', key)
       $('body').after($banner)
       # Do this in a timeout so the element has time to be placed in the DOM and animations can happen
