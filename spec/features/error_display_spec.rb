@@ -16,10 +16,6 @@ describe 'Displaying system errors' do
       expect(page).to have_text('Some error string')
     end
 
-    it 'displays a link to retry requests' do
-      expect(page).to have_link('Retry')
-    end
-
     context 'and the user performs a subsequent successful request' do
       before :all do
         click_on 'Clear Filters'
