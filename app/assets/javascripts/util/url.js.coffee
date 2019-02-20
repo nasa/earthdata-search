@@ -147,6 +147,7 @@ this.edsc.util.url = do(window
     new ChildCompressor('pg', new ParamFlattener(['exclude', 'cwic_granule_id'], 'cx'))
     new ChildCompressor('pg', new CmrGranuleIdListCompressor('x'))
     new ChildCompressor('pg', new CwicGranuleIdListCompressor('cx'))
+    new ChildCompressor('pg', new ParamNameCompressor('output_format', 'of'))
   ]
 
 #   new ParamFlattener(['science_keywords_h', '0', 'category'], 'fsc', false)
