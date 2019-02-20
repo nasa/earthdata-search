@@ -58,6 +58,7 @@ ns.Project = do (ko,
       @variableSubsettingEnabled       = ko.observable(false)
       @transformationSubsettingEnabled = ko.observable(false)
       @reformattingSubsettingEnabled   = ko.observable(false)
+      @selectedOutputFormat            = ko.observable(null)
 
       # Designate as a member of the current project
       @isProjectCollection  = @collection.isProjectCollection(true)
@@ -325,6 +326,20 @@ ns.Project = do (ko,
     toggleVisibility: () ->
       @collection.visible(!@collection.visible())
 
+    availableOutputFormats: () ->
+      formatMapping = {
+        "NETCDF-3": "nc",
+        "NETCDF-4": "nc4",
+        "BINARY": "dods",
+        "ASCII": "ascii"
+      }
+
+      supportedFormats = @expectedUmmService()?.umm?.ServiceOptions?.SupportedOutputFormats
+
+      return false unless supportedFormats?
+
+      formats = ({ 'name': format, 'value': formatMapping[format] } for format in supportedFormats when Object.keys(formatMapping).indexOf(format) != -1)
+
   class Project
     constructor: (@query) ->
       @_collectionIds = ko.observableArray()
@@ -508,6 +523,9 @@ ns.Project = do (ko,
               queries[i + start] = query
               break
 
+          if projectCollection.selectedOutputFormat()?
+            query['output_format'] = projectCollection.selectedOutputFormat()
+
         for q, index in queries
           queries[index] = {} if q == undefined
         result.pg = queries if queries.length > 0
@@ -577,6 +595,9 @@ ns.Project = do (ko,
                   # Only look at the params for visibility on the project page
                   if page.current.page() == 'project'
                     collection.visible(true) if query.v == 't'
+
+                if query.output_format
+                  @getProjectCollection(collection.id).selectedOutputFormat(query.output_format)
 
               collection.dispose() # forIds ends up incrementing reference count
               @getProjectCollection(collection.id).fromJson(pending[collection.id]) if pending[collection.id]

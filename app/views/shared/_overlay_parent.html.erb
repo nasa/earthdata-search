@@ -265,6 +265,13 @@
               <button class="button-link panel-item-action-button" type="button" name="button" data-bind="click: function(){$root.ui.variableSelector.displayVariableSelector($parents[1]); $('#' + $parents[1].collection.id + '_variable-selection').trigger('open')}">Edit Variables</button>
             </div>
             <!-- /ko -->
+            <!-- ko if: $parents[1].availableOutputFormats() -->
+            <div class="panel-item-section">
+              <h3 class="panel-item-section-title">Output Format</h3>
+              <h4 class="panel-item-heading">Output Format Selection</h4>
+              <select id="output-format" data-bind="options: $parents[1].availableOutputFormats(), optionsText: 'name', optionsValue: 'value', value: $parents[1].selectedOutputFormat"></select>
+            </div>
+            <!-- /ko -->
           </div>
         </master-overlay-panel-item>
         <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_delivery-method', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Delivery Method', backToButton: { dest: $parents[0].collection.id + '_edit-options', text: 'Edit Options'}">

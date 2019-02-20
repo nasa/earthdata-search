@@ -68,14 +68,19 @@ module GranuleUtils
     collection_index += 1
 
     # Retrieve the variable concept ids, if any exist
-    collection_variables = project_params.fetch('pg', {}).fetch(collection_index.to_s, {})['variables'] if collection_index
+    if collection_index
+      collection_variables = project_params.fetch('pg', {}).fetch(collection_index.to_s, {})['variables']
+
+      output_format = project_params.fetch('pg', {}).fetch(collection_index.to_s, {})['output_format']
+    end
 
     # Default payload to send to OUS
     ous_params = {}
 
-    ous_params['variables']    = collection_variables.split('!')   if collection_variables
+    ous_params['variables']    = collection_variables.split('!') if collection_variables
     ous_params['bounding_box'] = project_params['bounding_box'] if project_params.key?('bounding_box')
     ous_params['temporal']     = project_params['temporal'] if project_params.key?('temporal')
+    ous_params['format']       = output_format if output_format
 
     excluded_granules = project_params.fetch('pg', {}).fetch(collection_index.to_s, {}).fetch('exclude', {}).fetch('echo_granule_id', [])
 

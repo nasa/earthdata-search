@@ -29,7 +29,7 @@ class DataAccessController < ApplicationController
     user = current_user
     unless user
       render file: 'public/401.html', status: :unauthorized
-      
+
       return
     end
 
@@ -322,6 +322,7 @@ class DataAccessController < ApplicationController
   end
 
   def get_order_access_methods(collection_id, granules, hits)
+    # Both s_record and echo form association need to be present for the access method to be supported
     s_record = get_service_for_collection_with_type(collection_id, 'ECHO ORDERS')
 
     return [] unless s_record
@@ -409,7 +410,8 @@ class DataAccessController < ApplicationController
     access_methods
   end
 
-  def get_service_access_methods(collection_id, granules, hits)
+  def get_service_access_methods(collection_id, granules, _hits)
+    # Both s_record and echo form association need to be present for the access method to be supported
     s_record = get_service_for_collection_with_type(collection_id, 'ESI')
 
     return [] unless s_record
