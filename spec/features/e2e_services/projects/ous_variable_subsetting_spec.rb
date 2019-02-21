@@ -1,19 +1,20 @@
 require 'rails_helper'
 
 describe 'When viewing the project page' do
-  before :all do
-    # This collection is specifically configured for this test on SIT. Any changes can
-    # and should be made to this test file if needed
-    load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
-  end
-
-  context 'When selecting variables for subsetting' do
+  context 'When selecting OPeNDAP delivery' do
     before :all do
+      # This collection is specifically configured for this test on SIT. Any changes can
+      # and should be made to this test file if needed
+      load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
+
       # Find the collection card to work with
       collection_card = find('.project-list-item', match: :first)
 
       # Click the customize link
       collection_card.find('.project-list-item-action-edit-options').click
+
+      click_button('Edit Delivery Method')
+      choose('Customize & Download')
 
       # Choose to subset based on variables
       find_button('Edit Variables').click
@@ -84,6 +85,27 @@ describe 'When viewing the project page' do
           end
         end
       end
+    end
+  end
+
+  context 'When selecting download' do
+    before do
+      # This collection is specifically configured for this test on SIT. Any changes can
+      # and should be made to this test file if needed
+      load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
+
+      # Find the collection card to work with
+      collection_card = find('.project-list-item', match: :first)
+
+      # Click the customize link
+      collection_card.find('.project-list-item-action-edit-options').click
+
+      click_button('Edit Delivery Method')
+      choose('Direct Download')
+    end
+
+    it 'does not display available output formats' do
+      expect(page).to have_no_content('Output Format Selection')
     end
   end
 end

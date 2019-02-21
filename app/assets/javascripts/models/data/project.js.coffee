@@ -327,6 +327,8 @@ ns.Project = do (ko,
       @collection.visible(!@collection.visible())
 
     availableOutputFormats: () ->
+      return false unless @selectedAccessMethodType() == 'opendap'
+
       formatMapping = {
         "NETCDF-3": "nc",
         "NETCDF-4": "nc4",
