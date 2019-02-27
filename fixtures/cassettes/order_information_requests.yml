@@ -47,6 +47,44 @@ http_interactions:
   digest: f8587242eb4ab46895ea50fe7aeef110f1c2ad70
 - request:
     method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1588516459-NSIDC_ECS&catalog_item_id%5B%5D=G1588517152-NSIDC_ECS&catalog_item_id%5B%5D=G1588516453-NSIDC_ECS&catalog_item_id%5B%5D=G1588517057-NSIDC_ECS&catalog_item_id%5B%5D=G1588516451-NSIDC_ECS&catalog_item_id%5B%5D=G1588517052-NSIDC_ECS&catalog_item_id%5B%5D=G1588517107-NSIDC_ECS&catalog_item_id%5B%5D=G1588515468-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 27 Feb 2019 20:07:05 GMT
+  digest: b09cee6b0b5854b31772a57cad13b369de10d121
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/legacy-services/rest/order_information.json
+    body:
+      encoding: UTF-8
+      string: catalog_item_id%5B%5D=G1588517059-NSIDC_ECS&catalog_item_id%5B%5D=G1588517111-NSIDC_ECS&catalog_item_id%5B%5D=G1588516998-NSIDC_ECS&catalog_item_id%5B%5D=G1588516421-NSIDC_ECS&catalog_item_id%5B%5D=G1588516939-NSIDC_ECS&catalog_item_id%5B%5D=G1588517018-NSIDC_ECS&catalog_item_id%5B%5D=G1588517105-NSIDC_ECS&catalog_item_id%5B%5D=G1588517173-NSIDC_ECS&catalog_item_id%5B%5D=G1588515134-NSIDC_ECS&catalog_item_id%5B%5D=G1588515135-NSIDC_ECS&catalog_item_id%5B%5D=G1588515159-NSIDC_ECS&catalog_item_id%5B%5D=G1588515478-NSIDC_ECS&catalog_item_id%5B%5D=G1588516953-NSIDC_ECS&catalog_item_id%5B%5D=G1588520396-NSIDC_ECS&catalog_item_id%5B%5D=G1588520464-NSIDC_ECS&catalog_item_id%5B%5D=G1588516436-NSIDC_ECS&catalog_item_id%5B%5D=G1588516471-NSIDC_ECS&catalog_item_id%5B%5D=G1588520577-NSIDC_ECS&catalog_item_id%5B%5D=G1588516907-NSIDC_ECS&catalog_item_id%5B%5D=G1588516413-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 27 Feb 2019 20:07:23 GMT
+  digest: 9cf663171d589eaa3e5007a410d0cc60261ea283
+- request:
+    method: post
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json
     body:
       encoding: UTF-8
@@ -102,9 +140,9 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Echo-Token:
-      - edsc-access
+      - edsc
   recorded_at: Thu, 17 Jan 2019 15:55:01 GMT
-  digest: 18e9b0b942a6601ca40e9828a7871c39b27cbf7e
+  digest: 41c6922307b0d2a03bd0506ab18cd4550aa09c39
 - request:
     method: post
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/order_information.json

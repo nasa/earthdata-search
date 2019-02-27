@@ -148,6 +148,32 @@ class DataAccessController < ApplicationController
       end
 
       defaults = AccessConfiguration.get_default_access_config(current_user, collection)
+      # look for spatial subsetting in defaults and remove it
+      if params['bounding_box'].nil? && defaults
+        model = defaults.service_options['accessMethod'][0]['model']
+        doc = Nokogiri::XML(model)
+        # reset spatial_subset_flag
+        flag = doc.at_xpath('//ecs:spatial_subset_flag')
+        if flag && flag.content == 'true'
+          flag.content = 'false'
+          defaults.service_options['accessMethod'][0]['model'] = doc.to_html
+        end
+
+        # update rawModel
+        raw_model = defaults.service_options['accessMethod'][0]['rawModel']
+        doc = Nokogiri::XML(raw_model)
+        # reset spatial_subset_flag
+        flag = doc.at_xpath('//ecs:spatial_subset_flag')
+        if flag && flag.content == 'true'
+          flag.content = 'false'
+          # reset default values in rawModel
+          doc.at_xpath('//ecs:ullat').content = '90' unless doc.at_xpath('//ecs:ullat').nil?
+          doc.at_xpath('//ecs:ullon').content = '-180' unless doc.at_xpath('//ecs:ullon').nil?
+          doc.at_xpath('//ecs:lrlat').content = '-90' unless doc.at_xpath('//ecs:lrlat').nil?
+          doc.at_xpath('//ecs:lrlon').content = '180' unless doc.at_xpath('//ecs:lrlon').nil?
+          defaults.service_options['accessMethod'][0]['rawModel'] = doc.to_html
+        end
+      end
 
       granules = catalog_response.body['feed']['entry']
 

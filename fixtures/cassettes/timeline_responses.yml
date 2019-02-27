@@ -249,6 +249,30 @@ a2ea5ffd545c157c8c169368d6bf6bae72ff4b80:
       encoding: UTF-8
       string: '[{"concept-id":"C203234448-LAADS","intervals":[[1330387200,1425254400,6652]]}]'
     http_version: 
+33130b027ea5ef46f6ec3838a35d41c84b36c544:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8569fbf5-f304-440a-bae9-14d6ba3b4e49
+      date:
+      - Wed, 27 Feb 2019 20:07:11 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '83'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000001167-NSIDC_ECS","intervals":[[1501632000,1551139200,4584]]}]'
+    http_version: 
 8fb3494534aead4439dfcc27b871d943ac631ea1:
   response:
     status:
@@ -996,6 +1020,30 @@ c6d01b0207768c4d20bf5bd60519b763e43590d2:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C1000001167-NSIDC_ECS","intervals":[[1440102927,1455840000,55979],[1456617600,1534970127,275804]]}]'
+    http_version: 
+a8eaad129b986f16a05ce315c95e2f4e0fa754bb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4716cd03-37c6-458c-ac54-e2f82912e450
+      date:
+      - Wed, 27 Feb 2019 20:07:46 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '89'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1000001167-NSIDC_ECS","intervals":[[1.5015887995E9,1551139200,175441]]}]'
     http_version: 
 e76bdc6e27163c05ebde506d39629cd23c88b2ab:
   response:
