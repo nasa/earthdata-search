@@ -7,7 +7,7 @@ describe 'When viewing the project page' do
     load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
   end
 
-  context 'When selecting variables for subsetting' do
+  context 'When selecting an output format for subsetting' do
     before :all do
       # Find the collection card to work with
       collection_card = find('.project-list-item', match: :first)
