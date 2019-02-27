@@ -1,4 +1,49 @@
 ---
+f4520dc72a22e331b9fc648422d09d991e630b22:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 27 Feb 2019 20:07:29 GMT
+      etag:
+      - '"3da2eb4a599707b6785b03606d804d76"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.107000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '1996'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"HTTPS Order
+        with browse","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
+        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                    </ecs:mediaformat>\n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <output
+        id=\"MediaTypeOutput\" label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value
+        =''FtpPull''\" type=\"xsd:string\" value=\"''HTTPS Pull''\"/>\n             <output
+        id=\"FtpPullMediaFormatOutput\" label=\"Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n        </group>   \n        <group
+        id=\"checkancillaryoptions\" label=\"Additional file options:\" ref=\"ecs:ancillary\"
+        relevant=\"//ecs:do-ancillaryprocessing =  ''true''\"> \n          <input
+        label=\"Include associated Browse file in order\" ref=\"ecs:orderBrowse\"
+        type=\"xsd:boolean\"/>\n        </group> \n    </ui>\n</form>","id":"AE90B3EA-46FC-7899-6983-D8A9A60875C6","last_update":"2018-01-08T20:57:15Z","name":"With
+        Browse","scope":"PROVIDER"}}'
+    http_version: 
 628024b088dbb70fb451376ed0dbebb867d26313:
   response:
     status:

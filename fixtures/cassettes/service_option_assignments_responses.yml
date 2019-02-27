@@ -1,4 +1,34 @@
 ---
+96807829f6950e3f8b7513540e34d9436d93f8d6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 27 Feb 2019 20:07:08 GMT
+      etag:
+      - '"4531498ef5da0498cdf602933df4a688"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.531000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '279'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000001167-NSIDC_ECS","id":"1763C6D9-C7FF-867D-3FE4-2DCC02456FFA","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"4627EE9B-89A5-9302-9E4B-CFF02C9FF075"}}]'
+    http_version: 
 8385f92b23532a3a2ae135e6deae222c46942bbd:
   response:
     status:

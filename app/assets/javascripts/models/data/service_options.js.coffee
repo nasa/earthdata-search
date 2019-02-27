@@ -129,7 +129,7 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
       @orderId = jsonObj.order_id
 
       # Default the order_status to `creating` as of EDSC-2058. On page load we
-      # immediately ping the endpoint to update the value 
+      # immediately ping the endpoint to update the value
       @orderStatus = jsonObj.order_status || 'creating'
       @errorCode = jsonObj.error_code
       @errorMessage = jsonObj.error_message
