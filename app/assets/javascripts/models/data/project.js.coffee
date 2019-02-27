@@ -112,8 +112,10 @@ ns.Project = do (ko,
       if @granuleAccessOptions()
         methods = @granuleAccessOptions().methods
         # Use the default method if available
-        methods = @granuleAccessOptions().defaults.accessMethod if @granuleAccessOptions().defaults?
-        $.each methods, (index, accessMethod) =>
+        if @granuleAccessOptions().defaults? && @granuleAccessOptions().defaults.accessMethod[0].id?
+          methods = @granuleAccessOptions().defaults.accessMethod
+
+        $.each methods, (index, accessMethod) ->
           # Download is our default method so if it's found we'll set it here which
           # is fine because if a supported UMM Service records is found below it will
           # override it and return, preventing that value from being overridden

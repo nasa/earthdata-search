@@ -148,30 +148,44 @@ class DataAccessController < ApplicationController
       end
 
       defaults = AccessConfiguration.get_default_access_config(current_user, collection)
-      # look for spatial subsetting in defaults and remove it
-      if params['bounding_box'].nil? && defaults
-        model = defaults.service_options['accessMethod'][0]['model']
-        doc = Nokogiri::XML(model)
-        # reset spatial_subset_flag
-        flag = doc.at_xpath('//ecs:spatial_subset_flag')
-        if flag && flag.content == 'true'
-          flag.content = 'false'
-          defaults.service_options['accessMethod'][0]['model'] = doc.to_html
-        end
 
-        # update rawModel
-        raw_model = defaults.service_options['accessMethod'][0]['rawModel']
-        doc = Nokogiri::XML(raw_model)
-        # reset spatial_subset_flag
-        flag = doc.at_xpath('//ecs:spatial_subset_flag')
-        if flag && flag.content == 'true'
-          flag.content = 'false'
-          # reset default values in rawModel
-          doc.at_xpath('//ecs:ullat').content = '90' unless doc.at_xpath('//ecs:ullat').nil?
-          doc.at_xpath('//ecs:ullon').content = '-180' unless doc.at_xpath('//ecs:ullon').nil?
-          doc.at_xpath('//ecs:lrlat').content = '-90' unless doc.at_xpath('//ecs:lrlat').nil?
-          doc.at_xpath('//ecs:lrlon').content = '180' unless doc.at_xpath('//ecs:lrlon').nil?
-          defaults.service_options['accessMethod'][0]['rawModel'] = doc.to_html
+      # If the user provides a spatial search for their project, those params
+      # will be saved in their default AccessConfiguration.
+      # If the user retrieves that collection again the original spatial params
+      # will be included in their form.
+      # If the user has a different spatial search those values will overwrite
+      # the original params, but if the user doesn't have any spatial applied
+      # they will still have the original spatial values applied in their echoform.
+      #
+      # This code removes any spatial params from the user's form, if they don't
+      # have a bounding_box param on their project page.
+      if params['bounding_box'].blank? && defaults.present?
+        model = defaults.service_options['accessMethod'][0]['model']
+        if model.present?
+          doc = Nokogiri::XML(model)
+          # reset spatial_subset_flag
+          flag = doc.at_xpath('//ecs:spatial_subset_flag')
+          if flag && flag.content == 'true'
+            flag.content = 'false'
+            defaults.service_options['accessMethod'][0]['model'] = doc.to_html
+          end
+
+          # update rawModel
+          raw_model = defaults.service_options['accessMethod'][0]['rawModel']
+          if raw_model.present?
+            doc = Nokogiri::XML(raw_model)
+            # reset spatial_subset_flag
+            flag = doc.at_xpath('//ecs:spatial_subset_flag')
+            if flag && flag.content == 'true'
+              flag.content = 'false'
+              # reset default values in rawModel
+              doc.at_xpath('//ecs:ullat').content = '90' unless doc.at_xpath('//ecs:ullat').nil?
+              doc.at_xpath('//ecs:ullon').content = '-180' unless doc.at_xpath('//ecs:ullon').nil?
+              doc.at_xpath('//ecs:lrlat').content = '-90' unless doc.at_xpath('//ecs:lrlat').nil?
+              doc.at_xpath('//ecs:lrlon').content = '180' unless doc.at_xpath('//ecs:lrlon').nil?
+              defaults.service_options['accessMethod'][0]['rawModel'] = doc.to_html
+            end
+          end
         end
       end
 
