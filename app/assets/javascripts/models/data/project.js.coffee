@@ -60,6 +60,9 @@ ns.Project = do (ko,
       @reformattingSubsettingEnabled   = ko.observable(false)
       @selectedOutputFormat            = ko.observable(null)
 
+      @selectedOutputFormat.subscribe =>
+        @reformattingSubsettingEnabled(@selectedOutputFormat?)
+
       # Designate as a member of the current project
       @isProjectCollection  = @collection.isProjectCollection(true)
 
