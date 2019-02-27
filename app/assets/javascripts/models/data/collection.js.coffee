@@ -123,7 +123,7 @@ ns.Collection = do (ko
       @isMaxOrderSizeReached = @computed(@_computeMaxOrderSize, this, deferEvaluation: true)
       @isProjectCollection = ko.observable(false)
 
-    handoffUrls: =>
+    handoffUrls: (project) =>
       urls = []
       for tag, details of @tags() when tag.indexOf('edsc.extra.handoff') != -1
         # Strip off just
@@ -131,7 +131,7 @@ ns.Collection = do (ko
 
         # TODO: There has to be a pattern that allows for dynamic instantation of these objects
         if handoffProvider == 'giovanni'
-          urls.push(new GiovanniHandoffModel(@query, this))
+          urls.push(new GiovanniHandoffModel(@query, this, project))
 
       urls
 

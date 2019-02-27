@@ -46,6 +46,14 @@ ns.GiovanniHandoff = do (
       if @collection
         giovanniParams['dataKeyword'] = @collection.short_name
 
+      if @variables?.length
+        variableAliases = []
+
+        for variable in @variables
+          variableAliases.push([@collection.short_name(), @collection.version_id, variable.umm()?.Name].join('_'))
+
+        giovanniParams['data'] = variableAliases.join(',')
+
       # Return the constructed URL
       [@getProviderRootUrl(), $.param(giovanniParams)].join('&')
 
