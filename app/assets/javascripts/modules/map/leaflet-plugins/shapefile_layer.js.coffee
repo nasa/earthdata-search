@@ -40,6 +40,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
     constructor: (options={}) ->
       @options =
         selection: L.extend({}, @defaultOptions.selection, options.selection)
+      @query = options.query
 
     onAdd: (map) ->
       @map = map
@@ -137,6 +138,11 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config) ->
         geojson.features.splice(index, 1)
 
     _geoJsonResponse: (file, response) =>
+      # Strip shapefile_id out of response and add to URL through @query
+      shapefileId = response.shapefile_id
+      delete response.shapefile_id
+      @query.shapefileId(shapefileId)
+
       @activate(false) unless @isActive()
       @hideHelp()
       @remove()

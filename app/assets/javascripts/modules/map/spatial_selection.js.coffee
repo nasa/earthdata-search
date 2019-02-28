@@ -19,7 +19,8 @@ ns.SpatialSelection = do (window,
   errorColor = '#990000'
 
   class SpatialSelection
-    constructor: (isMinimap = false) ->
+    constructor: (query, isMinimap = false) ->
+      @query = query
       @isMinimap = isMinimap
 
     addTo: (map) ->
@@ -84,7 +85,7 @@ ns.SpatialSelection = do (window,
       @_onToolChange(spatialType.name())
 
       if !@isMinimap
-        @_shapefileLayer = new ShapefileLayer(selection: @_colorOptions)
+        @_shapefileLayer = new ShapefileLayer(selection: @_colorOptions, query: @query)
         map.addLayer(@_shapefileLayer)
 
     onRemove: (map) ->

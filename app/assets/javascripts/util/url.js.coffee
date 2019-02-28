@@ -119,6 +119,7 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('bounding_box', 'sb')
     new ParamNameCompressor('line', 'sl')
     new ParamNameCompressor('line', 'sg')
+    new ParamNameCompressor('shapefile_id', 'sf')
     new ParamNameCompressor('all_collections', 'ac')
 
     new ParamFlattener(['two_d_coordinate_system', 'name'], 's2n')

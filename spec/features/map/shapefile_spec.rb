@@ -157,6 +157,15 @@ describe 'Shapefile search' do
     it 'sets a search constraint containing a reduced number of points' do
       expect(MapUtil.spatial(page).split(':').size).to be <= 51
     end
+
+    it 'saves the shapefile in the database' do
+      expect(Shapefile.count).to equal(1)
+    end
+
+    it 'updates the URL with the shapefile ID' do
+      id = Shapefile.first
+      expect(page).to have_query_param(sf: id)
+    end
   end
 
   context 'when removing an uploaded shapefile' do

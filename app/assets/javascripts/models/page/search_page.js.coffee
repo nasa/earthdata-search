@@ -48,7 +48,7 @@ ns.SearchPage = do (ko
     $('#sitetourModal').modal('show') if sitetour.safePath() && (preferences.doNotShowTourAgain() == 'false' || window.location.href.indexOf('?tour=true') != -1)
 
   $(document).ready ->
-    current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
+    current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo', false, current.query)
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
 
     $('.master-overlay').masterOverlay()
@@ -112,6 +112,7 @@ ns.SearchPage = do (ko
     clearSpatial: =>
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
+      @query.shapefileId(null)
       @query.spatial(null)
 
     pluralize: (value, singular, plural) ->
