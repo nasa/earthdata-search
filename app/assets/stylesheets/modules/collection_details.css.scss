@@ -2,7 +2,7 @@ $steel-blue:    rgb(68,   85, 101);
 $midnight-blue: rgb(44,   62,  80);
 
 .details /*.tab-content*/ {
-  a {
+  .master-overlay-content a {
     text-decoration: underline;
     white-space: nowrap;
   }
