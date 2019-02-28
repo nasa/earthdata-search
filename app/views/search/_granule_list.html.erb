@@ -18,27 +18,6 @@
               <a href="#" class="master-overlay-forward collection-title-link" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details"><i class="fa fa-info-circle"></i> View details</a>
             <!-- /ko -->
           </h2>
-          <!-- ko with: collection -->
-          <!-- ko if: $data.handoffTags().length > 0 -->
-          <div class="dropdown granule-details-dropdown handoff-dropdown dropdown-more-actions dropdown-tooltip-bottom">
-            <a class="button dropdown-button button-naked button-icon button-icon-ellipsis" href="#" data-toggle="dropdown" data-tooltip="true" data-placement="bottom" aria-expanded="false" title="More actions"><i class="fa fa-ellipsis-v"></i></a>
-            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
-              <li>
-                <div class="dropdown-fancy-header">
-                  Open collection in:
-                </div>
-                <div class="dropdown-fancy-content">
-                  <ul class="handoff-links">
-                    <!-- ko foreach: $data.handoffUrls($root.project) -->
-                    <li><a class="ext analytics-smart-handoff-link" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
-                    <!-- /ko -->
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- /ko -->
-          <!-- /ko -->
           <div id="datasource-caveats"></div>
           <div class="master-overlay-header-row">
             <!--ko ifnot: $data.collection.cwic()-->
@@ -62,6 +41,33 @@
             <!-- /ko -->
           </div>
         </div>
+        <!-- ko with: collection -->
+        <!-- ko if: $data.handoffTags().length > 0 -->
+        <div class="master-overlay-info-panel master-overlay-info-panel-separated">
+          <div class="cta-buttons">
+            <div class="dropdown dropdown-left handoff-dropdown dropdown-more-actions dropdown-tooltip-bottom">
+              <a href="#" data-toggle="dropdown" class="button dropdown-button button-naked button-icon button-icon-ellipsis" data-toggle="dropdown" data-tooltip="true" data-placement="bottom" title="More actions" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+              <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
+                <li>
+                  <div class="dropdown-fancy-header">
+                    Open collection in:
+                  </div>
+                  <div class="dropdown-fancy-content">
+                    <ul class="handoff-links">
+                      <!-- ko foreach: $data.handoffUrls($root.project) -->
+                      <li>
+                        <a class="dropdown-fancy-list-item ext analytics-smart-handoff-link" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a>
+                      </li>
+                      <!-- /ko -->
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
         <div class="master-overlay-info-panel master-overlay-global-actions actions">
             <strong data-bind="text: granules().hits() == 1 ? '1' : granules().hits()"></strong> <span data-bind="text: granules().hits() == 1 ? ' Granule' : ' Granules'"></span>
           <!-- ko with: collection -->

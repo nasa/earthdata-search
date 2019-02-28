@@ -238,8 +238,9 @@ input.day-of-year-input {
 
 .dropdown-fancy-header {
   padding: 0.5em 1em 0;
-  font-size: 0.875em;
+  font-size: 12px;
   font-weight: 700;
+  color: #424242;
 
   p {
     margin: 0;
@@ -255,28 +256,49 @@ input.day-of-year-input {
   padding: 0.5em 0 0.5em;
   color: #888;
   font-size: 0.875em;
+}
 
-  ul > li {
-    color: #424242;
+.dropdown-fancy-content-trim-bottom {
+  padding-bottom: 0;
+}
 
-    button,
-    a {
-      display: block;
-      text-align: left;
-      padding: 0.25em 1em;
-      width: 100%;
+.dropdown-fancy-list-item {
+  position: relative;
+  display: block;
+  width: 100%;
+  color: #424242;
+  padding: 0.25em 1em;
 
-      &:hover {
-        background: #f1efef;
-        color: #000;
-      }
+  &:hover {
+    background: #f1efef;
+    color: #000;
+  }
+
+  button,
+  a {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
     }
   }
+}
 
-  .fa {
-    text-align: center;
-    width: 1.5em;
-  }
+.dropdown-fancy-button-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 1.25em;
+}
+
+.dropdown-fancy-button-icon-text {
+  padding-left: 20px;
 }
 
 .dropdown-more-actions {

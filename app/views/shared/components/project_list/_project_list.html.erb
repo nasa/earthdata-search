@@ -13,39 +13,48 @@
             <button class="button dropdown-button button-naked button-icon button-icon-ellipsis" type="button" data-tooltip="true" data-placement="left" data-toggle="dropdown" aria-expanded="false" title="More actions"><i class="fa fa-ellipsis-v"></i></button>
             <ul class="dropdown-menu dropdown-menu-right dropdown-menu-fancy">
               <li>
-                <div class="dropdown-fancy-content">
+                <div class="dropdown-fancy-content" data-bind="css: { 'dropdown-fancy-content-trim-bottom': isLoadingComplete() && collection.handoffTags().length > 0 }">
                   <ul>
-                    <li>
+                    <li class="dropdown-fancy-list-item">
                       <button class="button-naked project-list-item-toggle" type="button" name="button" data-bind="click: toggleVisibility">
                         <!-- ko if: collection.visible() -->
-                          <i class="fa fa-eye-slash"></i>
+                          <i class="dropdown-fancy-button-icon fa fa-eye-slash"></i>
                         <!-- /ko -->
                         <!-- ko if: !collection.visible() -->
-                          <i class="fa fa-eye"></i>
+                          <i class="dropdown-fancy-button-icon fa fa-eye"></i>
                         <!-- /ko -->
-                        Toggle visibility
+                        <span class="dropdown-fancy-button-icon-text">Toggle visibility</span>
                       </button>
                     </li>
-                    <li>
-                      <button class="button-naked project-list-item-remove" type="button" name="button" data-bind="click: $root.removeProjectCollection"><i class="fa fa-times"></i> Remove</button>
+                    <li class="dropdown-fancy-list-item">
+                      <button class="button-naked project-list-item-remove" type="button" name="button" data-bind="click: $root.removeProjectCollection">
+                        <i class="dropdown-fancy-button-icon fa fa-times"></i>
+                        <span class="dropdown-fancy-button-icon-text">Remove</span>
+                      </button>
                     </li>
-                    <!-- ko if: isLoadingComplete() && collection.handoffTags().length > 0 -->
-                    <li>
-                      <div class="dropdown-fancy-header">
-                        Open collection in:
-                      </div>
-                      <div class="dropdown-fancy-content">
-                        <ul class="handoff-links">
-                          <!-- ko foreach: collection.handoffUrls($root.project) -->
-                          <li><a class="ext analytics-smart-handoff-link" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a></li>
-                          <!-- /ko -->
-                        </ul>
-                      </div>
-                    </li>
-                    <!-- /ko -->
                   </ul>
                 </div>
               </li>
+              <!-- ko if: isLoadingComplete() && collection.handoffTags().length > 0 -->
+              <li>
+                <div class="dropdown-fancy-header">
+                  Open collection in:
+                </div>
+                <div class="dropdown-fancy-content">
+                  <ul>
+                    <li>
+                      <ul class="handoff-links">
+                        <!-- ko foreach: collection.handoffUrls($root.project) -->
+                        <li>
+                          <a class="dropdown-fancy-list-item ext analytics-smart-handoff-link" target="_blank" data-bind="text: $data.getProviderName(), attr: { href: $data.getProviderUrl() }"></a>
+                        </li>
+                        <!-- /ko -->
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <!-- /ko -->
             </ul>
           </div>
           <div class="project-list-item-stats">

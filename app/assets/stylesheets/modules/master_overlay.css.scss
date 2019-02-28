@@ -365,11 +365,14 @@
   }
 }
 
+.master-overlay-info-panel-separated {
+  border-right: 1px solid #e3e3e3;
+  box-shadow: 10px 0px 15px -6px rgba(0,0,0,0.05);
+}
+
 .master-overlay-info-granule-panel {
   flex-grow: 1;
   width: 72%;
-  border-right: 1px solid #e3e3e3;
-  box-shadow: 5px 8px 15px rgba(0,0,0,0.05);
   min-height: 95px;
 }
 
@@ -660,12 +663,6 @@ $parent-width: $parent-split * 0.21;
 
 .collection-title-filters {
   position: relative;
-}
-
-.granule-details-dropdown {
-  position: absolute !important;
-  top: 14px;
-  right: 1em;
 }
 
 .for-developers-panel {
