@@ -33,7 +33,7 @@
     "es5-shim": "^4.5.12",
     "expose-loader": "0.7.3",
     "file-loader": "^2.0.0",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.1.0",
     "handlebars-loader": "^1.7.0",
     "html-loader": "^0.5.5",
     "jasmine": "^2.99.0",
