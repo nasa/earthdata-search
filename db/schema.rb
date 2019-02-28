@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190211155724) do
+ActiveRecord::Schema.define(version: 20190228185838) do
 
   create_table "access_configurations", force: :cascade do |t|
     t.integer  "user_id"
@@ -141,6 +141,16 @@ ActiveRecord::Schema.define(version: 20190211155724) do
   end
 
   add_index "retrievals", ["user_id"], name: "index_retrievals_on_user_id"
+
+  create_table "shapefiles", force: :cascade do |t|
+    t.text     "file"
+    t.string   "file_hash"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "shapefiles", ["user_id"], name: "index_shapefiles_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "echo_id",          limit: 255

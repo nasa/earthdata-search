@@ -1,7 +1,6 @@
 class ConversionsController < ApplicationController
   respond_to :json
 
-
   # This method is meant to be a very thin wrapper around calls to the http://ogre.adc4gis.com/
   # We should remain completely compatible with that API.  Doing things this way is slow and
   # will bog down our app.
@@ -20,7 +19,15 @@ class ConversionsController < ApplicationController
 
     response = OgreClient.convert_shapefile(params)
 
-    # render(json: current_user.to_fileupload(name, style), content_type: request.format)
-    render text: response.body, content_type: request.format
+    # Store the shapefile in the database, unless it already exists
+    json_response = JSON.parse(response.body)
+    file_hash = Shapefile.generate_hash(json_response)
+
+    shapefile = Shapefile.find_or_create_by(file_hash: file_hash) do |sf|
+      sf.file = json_response
+      sf.user = current_user
+    end
+
+    render json: shapefile.file_with_id, content_type: request.format
   end
 end

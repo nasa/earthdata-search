@@ -52,8 +52,9 @@ ns.Map = do (window,
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
-    constructor: (el, projection = 'geo', isProjectMap = false) ->
+    constructor: (el, projection = 'geo', isProjectMap = false, query) ->
       @isProjectMap = isProjectMap
+      @query = query
       $(el).data('map', this)
       @layers = []
 
@@ -80,7 +81,7 @@ ns.Map = do (window,
 
       if !@isProjectMap
         map.addControl(new ProjectionSwitcher())
-        map.addControl(new SpatialSelection())
+        map.addControl(new SpatialSelection(@query))
 
       @legendControl = new LegendControl(position: 'topleft')
       map.addControl(@legendControl)
@@ -90,7 +91,7 @@ ns.Map = do (window,
       @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
         map.fire('edsc.visiblecollectionschange', collections: collections)
       if @isProjectMap
-        map.addControl(new SpatialSelection(@isProjectMap))
+        map.addControl(new SpatialSelection(@query, @isProjectMap))
       @_setupStatePersistence()
 
     # Removes the map from the page
