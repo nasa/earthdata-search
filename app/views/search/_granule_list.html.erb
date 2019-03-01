@@ -69,7 +69,7 @@
         <!-- /ko -->
         <!-- /ko -->
         <div class="master-overlay-info-panel master-overlay-global-actions actions">
-            <strong data-bind="text: granules().hits() == 1 ? '1' : granules().hits()"></strong> <span data-bind="text: granules().hits() == 1 ? ' Granule' : ' Granules'"></span>
+            <strong data-bind="numberWithSeparator: granules().hits() == 1 ? '1' : granules().hits()"></strong> <span data-bind="text: granules().hits() == 1 ? ' Granule' : ' Granules'"></span>
           <!-- ko with: collection -->
             <a href="#" class="add-to-project" data-pulse="#project-count" title="Add collection to the current project"
                data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
@@ -81,7 +81,7 @@
             </a>
           <p>
             <button class="button retrieve master-overlay-info-tooltip-big" data-bind="click: isMaxOrderSizeReached() ? function(){} : $root.ui.projectList.loginAndDownloadCollection, css: {'button-disabled': isMaxOrderSizeReached(), retrieve: !isMaxOrderSizeReached()}, attr: {'data-placement': 'bottom', 'data-tooltip': isMaxOrderSizeReached().toString(), 'title': isMaxOrderSizeReached() ? 'Due to significant processing times, orders for this collection are limited to ' + tags()['edsc.limited_collections']['data']['limit'] + ' granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.' : 'Download granule results'}">
-              <i class="fa fa-download"></i> Download All <span class="pill" data-bind="text: $parent.granules().hits() == 1 ? '1 Granule' : $parent.granules().hits() + ' Granules'"></span>
+              <i class="fa fa-download"></i> Download All <span class="pill" data-bind="numberWithSeparator: $parent.granules().hits() == 1 ? '1 Granule' : $parent.granules().hits() + ' Granules'"></span>
             </button>
           </p>
           <!-- /ko -->
@@ -95,9 +95,9 @@
   <!-- ko with: ui.collectionsList.focused() -->
   <div id="granules-scroll" class="master-overlay-content panel-list granule-items" data-bind="event: {scroll: scrolled}">
     <p class="granule-match-stats">
-      Showing <span data-bind="text: granules().results().length"></span> of
+      Showing <span data-bind="numberWithSeparator: granules().results().length"></span> of
       <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
-      <span data-bind="text: granules().hits() == 1 ? '1 matching granule' : granules().hits() + ' matching granules'"></span>
+      <span data-bind="numberWithSeparator: granules().hits() == 1 ? '1 matching granule' : granules().hits() + ' matching granules'"></span>
       <!-- ko if: granules().parentQuery.focusedInterval() -->
       for the selected <span data-bind="text: granules().parentQuery.focusedInterval"></span>.
       (<a href="#" data-bind="click: $root.ui.granuleTimeline.clear">Show All</a>)

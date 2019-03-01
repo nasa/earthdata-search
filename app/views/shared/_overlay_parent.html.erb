@@ -87,7 +87,7 @@
             <ul class="master-overlay-content-project-stats project-stats-list" data-bind="fadeVisible: isLoaded">
               <!-- ko if: project.collections().length > 0 -->
               <li class="project-stats-item project-stats-granule-count">
-                <span class="project-stats-value" data-bind="text: projectSummary() ? projectSummary()['projectGranules'] : 'Loading'">&nbsp;</span>
+                <span class="project-stats-value" data-bind="abbreviateNumber: projectSummary() ? projectSummary()['projectGranules'] : 'Loading' ">&nbsp;</span>
                 <!-- ko text: projectSummary() && projectSummary()['projectGranules'] != 1 ? 'Granules' : 'Granule' --><!--/ko-->
               </li>
               <li class="project-stats-item project-stats-collection-count">

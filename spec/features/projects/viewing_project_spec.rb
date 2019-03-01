@@ -36,7 +36,7 @@ describe 'Viewing Single Project' do
     it 'shows total number of granules included in the project' do
       find('.project-list-item', match: :first) do
         within '.project-list-item-stat-granules' do
-          expect(page.text).to match(/\d{1,8} Granules/)
+          expect(page.text).to match(/[\d.kMBT]{1,8} Granules/)
         end
       end
     end
@@ -340,7 +340,7 @@ describe 'Viewing Single Project' do
     it 'shows total number of granules included in the project' do
       first('.project-list-item') do
         within '.project-stats-granule-count' do
-          expect(page.text).to match(/\d{1,8} Granules/)
+          expect(page.text).to match(/[\d.kMBT]{1,8} Granules/)
         end
       end
     end
