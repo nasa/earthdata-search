@@ -1,4 +1,4 @@
-do (ko, $=jQuery) ->
+do (ko) ->
 
   # Convert large numbers to their abbreviated forms. If numbers reach the
   # thousands spot, add commas where appropriate
@@ -16,7 +16,6 @@ do (ko, $=jQuery) ->
   ko.bindingHandlers.abbreviateNumber =
     update: (element, valueAccessor) ->
       originalText = ko.utils.unwrapObservable(valueAccessor())
-      # originalText = value.text
 
       decPlaces = 1
 

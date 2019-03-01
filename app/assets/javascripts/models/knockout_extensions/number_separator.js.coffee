@@ -1,4 +1,4 @@
-do (ko, $=jQuery) ->
+do (ko) ->
 
   ko.bindingHandlers.numberWithSeparator =
     update: (element, valueAccessor) ->
