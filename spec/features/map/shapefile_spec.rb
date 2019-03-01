@@ -13,6 +13,7 @@ describe 'Shapefile search' do
 
     after :all do
       clear_shapefile
+      Shapefile.destroy_all
     end
 
     it 'displays an error icon and an error message' do
@@ -28,6 +29,7 @@ describe 'Shapefile search' do
 
     after :all do
       clear_shapefile
+      Shapefile.destroy_all
     end
 
     it 'displays an error icon and a custom error message' do
@@ -43,6 +45,7 @@ describe 'Shapefile search' do
 
     after :all do
       clear_shapefile
+      Shapefile.destroy_all
     end
 
     it 'displays the shapefile\'s features' do
@@ -77,6 +80,7 @@ describe 'Shapefile search' do
     after :all do
       clear_shapefile
       clear_spatial
+      Shapefile.destroy_all
     end
 
     it 'doesn\'t display a help message explaining the point reduction' do
@@ -92,6 +96,7 @@ describe 'Shapefile search' do
     after :all do
       clear_shapefile
       clear_spatial
+      Shapefile.destroy_all
     end
 
     context 'removing the file and uploading another one' do
@@ -152,6 +157,7 @@ describe 'Shapefile search' do
     after :all do
       clear_shapefile
       clear_spatial
+      Shapefile.destroy_all
     end
 
     it 'sets a search constraint containing a reduced number of points' do
@@ -177,6 +183,7 @@ describe 'Shapefile search' do
 
     after :all do
       clear_spatial
+      Shapefile.destroy_all
     end
 
     it 'hides the shapefile\'s display' do
@@ -202,6 +209,7 @@ describe 'Shapefile search' do
       end
       clear_shapefile
       clear_spatial
+      Shapefile.destroy_all
     end
 
     it 'hides the shapefile\'s display' do
