@@ -271,12 +271,14 @@ describe 'Viewing Single Project' do
       it 'shows configuration icons' do
         within '.collection-capability' do
           expect(page).to have_css('span', count: 4)
-          expect(page).to have_css('span.enabled', count: 0)
+          expect(page).to have_css('span.enabled', count: 1)
+
+          expect(page).to have_css('span.enabled i.fa.fa-file-text-o')
 
           expect(page).to have_css('i.fa.fa-globe')
           expect(page).to have_css('i.fa.fa-tags')
           expect(page).to have_css('i.fa.fa-sliders')
-          expect(page).to have_css('i.fa.fa-file-text-o')
+
         end
       end
 
@@ -289,9 +291,10 @@ describe 'Viewing Single Project' do
         it 'shows configuration icons with spatial enabled' do
           within '.collection-capability' do
             expect(page).to have_css('span', count: 4)
-            expect(page).to have_css('span.enabled', count: 1)
+            expect(page).to have_css('span.enabled', count: 2)
 
             expect(page).to have_css('span.enabled i.fa.fa-globe')
+            expect(page).to have_css('span.enabled i.fa.fa-file-text-o')
 
             expect(page).to have_css('i.fa.fa-tags')
             expect(page).to have_css('i.fa.fa-sliders')
@@ -309,13 +312,13 @@ describe 'Viewing Single Project' do
         it 'shows configuration icons with spatial enabled' do
           within '.collection-capability' do
             expect(page).to have_css('span', count: 4)
-            expect(page).to have_css('span.enabled', count: 1)
+            expect(page).to have_css('span.enabled', count: 2)
 
             expect(page).to have_css('span.enabled i.fa.fa-globe')
+            expect(page).to have_css('span.enabled i.fa.fa-file-text-o')
 
             expect(page).to have_css('i.fa.fa-tags')
             expect(page).to have_css('i.fa.fa-sliders')
-            expect(page).to have_css('i.fa.fa-file-text-o')
           end
         end
       end
