@@ -10,9 +10,6 @@ describe 'Granule search filters' do
       wait_for_xhr
       number_granules = search_results_granule_count.text.match(/\d{1,3}(,\d{3})*(\.\d+)? Granules/)
       before_granule_count = number_granules.to_s.split(' ')[0]
-
-      # puts number_granules
-      # puts before_granule_count
     end
 
     context 'when choosing a day/night flag' do
