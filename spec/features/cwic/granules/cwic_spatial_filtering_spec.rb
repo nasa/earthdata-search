@@ -36,7 +36,7 @@ describe "CWIC-enabled granule results" do
       end
 
       it "updates the results list with the new filter", acceptance: true do
-        expect(page.text).to match(/Showing \d{2,} of \d{2,} matching granules/)
+        expect(page.text).to match(/Showing \d{2,} of \d{1,3}(,\d{3})*(\.\d+)? matching granules/)
       end
     end
 
@@ -59,7 +59,7 @@ describe "CWIC-enabled granule results" do
       end
 
       it "updates the results list with the new filter", acceptance: true do
-        expect(page.text).to match(/Showing 20 of \d{3,} matching granules/)
+        expect(page.text).to match(/Showing 20 of \d{1,3}(,\d{3})*(\.\d+)? matching granules/)
       end
     end
   end

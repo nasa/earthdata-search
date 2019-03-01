@@ -8,8 +8,11 @@ describe 'Granule search filters' do
       load_page :search, focus: 'C14758250-LPDAAC_ECS', labs: true, temporal: ['1999-12-01T00:00:00Z', '2015-01-01T00:00:00Z']
       click_on 'Granule filters'
       wait_for_xhr
-      number_granules = search_results_granule_count.text.match(/\d+ Granules/)
-      before_granule_count = number_granules.to_s.split(' ')[0].to_i
+      number_granules = search_results_granule_count.text.match(/\d{1,3}(,\d{3})*(\.\d+)? Granules/)
+      before_granule_count = number_granules.to_s.split(' ')[0]
+
+      # puts number_granules
+      # puts before_granule_count
     end
 
     context 'when choosing a day/night flag' do
@@ -167,7 +170,7 @@ describe 'Granule search filters' do
       end
 
       it "updates the page's hits count" do
-        expect(granule_list).to have_content("Showing 19 of #{before_granule_count.to_i - 1} matching granules")
+        expect(granule_list).to have_content("Showing 19 of #{ActiveSupport::NumberHelper.number_to_delimited(before_granule_count.delete(',').to_i - 1)} matching granules")
       end
 
       context 'when the user clicks the link to clear removed granules' do
@@ -330,8 +333,9 @@ describe 'Granule search filters' do
     before(:each) do
       load_page :search, focus: ['C1000001167-NSIDC_ECS'], labs: true
       click_on 'Granule filters'
-      number_granules = search_results_granule_count.text.match /\d+ Granules/
-      before_granule_count = number_granules.to_s.split(' ')[0].to_i
+
+      number_granules = search_results_granule_count.text.match(/\d{1,3}(,\d{3})*(\.\d+)? Granules/)
+      before_granule_count = number_granules.to_s.split(' ')[0]
     end
 
     it 'shows the orbit spatial parameters in the granule filter list' do

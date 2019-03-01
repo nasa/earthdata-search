@@ -145,7 +145,7 @@ describe 'Granule list' do
         end
 
         it 'loads next page' do
-          expect(page.text).to match(/Showing [1-9]\d* of 1855868 matching granules/)
+          expect(page.text).to match(/Showing [1-9]\d* of 1,855,868 matching granules/)
           expect(page).to have_content('Granule excluded. Undo')
         end
       end
