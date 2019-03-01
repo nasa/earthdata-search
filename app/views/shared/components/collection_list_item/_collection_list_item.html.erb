@@ -6,7 +6,7 @@
     <h3 data-bind="text: dataset_id"></h3>
     <p class="collection-granules-info panel-list-comparison-details">
       <!-- ko if: granuleDescription -->
-      <strong><span class="panel-list-granule-description" data-bind="text: granuleDescription"></span></strong>
+      <strong><span class="panel-list-granule-description" data-bind="numberWithSeparator: granuleDescription"></span></strong>
       <!-- /ko -->
       <strong>• <span data-bind="text: timeRange"></span> •</strong>
       <span data-bind="truncatedText: summary, maxLength: 280"></span>

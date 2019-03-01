@@ -5,6 +5,8 @@
 #= require models/knockout_extensions/load_default_form
 #= require models/knockout_extensions/map_display
 #= require models/knockout_extensions/multiline_ellipsis
+#= require models/knockout_extensions/number_abbreviator
+#= require models/knockout_extensions/number_separator
 #= require models/knockout_extensions/observable_array
 #= require models/knockout_extensions/show_modal
 #= require models/knockout_extensions/stop_binding

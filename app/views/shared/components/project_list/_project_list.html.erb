@@ -49,7 +49,7 @@
             <!-- /ko -->
             <!-- ko if: isLoadingComplete() -->
               <span class="project-list-item-stat project-list-item-stat-granules">
-                <span data-bind="text: collection.granule_hits, fadeVisible: isLoadingComplete"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko -->
+                <span data-bind="abbreviateNumber: collection.granule_hits , fadeVisible: isLoadingComplete"></span> <!--ko text: collection.granule_hits != 1 ? 'Granules' : 'Granule' --><!--/ko -->
               </span>
               <span class="project-list-item-stat project-list-item-stat-size">
                 <span>Est. Size: </span><!-- ko text: collection.total_size() + ' ' + collection.unit() --><!--/ko-->

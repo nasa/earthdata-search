@@ -7,7 +7,7 @@ describe 'Collection Granule Count' do
   end
 
   it 'displays many granules for the given collection' do
-    expect(page). to have_content('2149 Granules')
+    expect(page). to have_content('2,149 Granules')
   end
 
   context 'when applying search constraint' do
