@@ -8,7 +8,7 @@ import {
 import { addUrlProps, UrlQueryParamTypes, subqueryOmit } from 'react-url-query'
 import queryString from 'query-string'
 
-import './GranuleResults.scss'
+import './GranuleResultsContainer.scss'
 
 const urlPropsQueryConfig = {
   p: { type: UrlQueryParamTypes.string, queryParam: 'p' }
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
   granules: state.entities.granules
 })
 
-class GranuleResults extends Component {
+class GranuleResultsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -60,11 +60,11 @@ class GranuleResults extends Component {
   }
 }
 
-GranuleResults.defaultProps = {
+GranuleResultsContainer.defaultProps = {
   p: ''
 }
 
-GranuleResults.propTypes = {
+GranuleResultsContainer.propTypes = {
   granules: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   p: PropTypes.string
@@ -72,6 +72,6 @@ GranuleResults.propTypes = {
 
 export default addUrlProps({ urlPropsQueryConfig })(
   withRouter(
-    connect(mapStateToProps, null)(GranuleResults)
+    connect(mapStateToProps, null)(GranuleResultsContainer)
   )
 )

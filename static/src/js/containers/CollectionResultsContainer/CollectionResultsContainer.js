@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom'
 import queryString from 'query-string'
 
-import './CollectionResults.scss'
+import './CollectionResultsContainer.scss'
 
 const mapStateToProps = state => ({
   collections: state.entities.collections
 })
 
-class CollectionResults extends Component {
+class CollectionResultsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -172,11 +172,11 @@ class CollectionResults extends Component {
   }
 }
 
-CollectionResults.propTypes = {
+CollectionResultsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(
-  connect(mapStateToProps, null)(CollectionResults)
+  connect(mapStateToProps, null)(CollectionResultsContainer)
 )
