@@ -1,0 +1,127 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: earthdata-search # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  versionFunctions: false
+  # you can overwrite defaults here
+  #  stage: dev
+  #  region: us-east-1
+  environment:
+    cmr_host: https://cmr.sit.earthdata.nasa.gov
+
+plugins:
+  # - serverless-webpack
+  - serverless-offline
+  - serverless-s3-sync
+
+#
+# Lambda Functions
+#
+functions:
+  retrieveConcept:
+    handler: serverless/dist/handler.retrieveConcept
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: concepts/{id}
+          request:
+            parameters:
+              paths:
+                id: true
+
+  collectionSearch:
+    handler: serverless/dist/handler.collectionSearch
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: collections
+
+  granuleSearch:
+    handler: serverless/dist/handler.granuleSearch
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: granules/{id}
+          request:
+            parameters:
+              paths:
+                id: true
+
+  collectionGranules:
+    handler: serverless/dist/handler.collectionGranules
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: collections/{id}/granules
+          request:
+            parameters:
+              paths:
+                id: true
+
+#
+# Non code related resources
+#
+resources:
+  Resources:
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        BucketName: ${self:custom.siteName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticSite
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "StaticSite"
+                    },
+                    "/*"
+                  ]
+                ]
+
+custom:
+  siteName: earthdata-search
+  s3Sync:
+    - bucketName: ${self:custom.siteName}
+      localDir: static/dist
