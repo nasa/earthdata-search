@@ -1,0 +1,31 @@
+* > * {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: $color__black;
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 100%;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  html {
+    font-size: 105%;
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  html {
+    font-size: 115%;
+  }
+}

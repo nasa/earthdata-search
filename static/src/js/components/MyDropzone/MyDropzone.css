@@ -1,0 +1,4 @@
+.dropzone {
+  position: absolute;
+  z-index: 50;
+}

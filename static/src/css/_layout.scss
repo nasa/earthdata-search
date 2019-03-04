@@ -1,0 +1,27 @@
+.th-wrapper {
+  width: 100%;
+  z-index: 1000;
+  height: 34px;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  .th-wrapper + & {
+    padding-top: 32px;
+  }
+}
+
+.route-wrapper {
+  position: relative;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: row;
+  height: 100%;
+  overflow: hidden;
+  align-items: flex-end;
+}
