@@ -43,7 +43,7 @@ class DataAccessController < ApplicationController
     retrieval.environment = cmr_env
     retrieval.save!
 
-    ProcessRetrievalJob.perform_later(retrieval.id, edsc_path(request.base_url))
+    ProcessRetrievalJob.perform_later(retrieval.id, edsc_path(request.base_url), cmr_env)
 
     redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
