@@ -1,1 +1,0 @@
-json.merge! @colormap.jsondata
