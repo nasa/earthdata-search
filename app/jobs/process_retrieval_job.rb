@@ -13,7 +13,7 @@ class ProcessRetrievalJob < ActiveJob::Base
   #
   # @param retrieval_id [int] the id of a Retrieval object to process
   # @param base_url [String] the base url to provide to the user in their order to check on for status updates
-  def perform(retrieval_id, base_url)
+  def perform(retrieval_id, base_url, cmr_env)
     # Using find_by because we obfuscate the id of Retrieval and the default
     # `find` method will look for an obfuscated id instead of the raw integer
     retrieval = Retrieval.find_by(id: retrieval_id)
@@ -59,7 +59,8 @@ class ProcessRetrievalJob < ActiveJob::Base
           )
 
           SubmitLegacyServicesJob.set(queue: queue_name).perform_later(
-            legacy_services_order
+            legacy_services_order,
+            cmr_env
           )
         elsif method['type'] == 'service'
           # `Customize` Access Method
