@@ -5,9 +5,9 @@ import SidebarSection from './SidebarSection/SidebarSection'
 
 import Header from './Header/Header'
 
-import './Sidebar.scss'
+import './SidebarContainer.scss'
 
-const Sidebar = () => (
+const SidebarContainer = () => (
   <section className="sidebar">
     <Header />
     <SidebarSection sectionTitle="Browse Collections">
@@ -16,4 +16,4 @@ const Sidebar = () => (
   </section>
 )
 
-export default Sidebar
+export default SidebarContainer

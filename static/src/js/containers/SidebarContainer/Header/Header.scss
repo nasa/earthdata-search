@@ -6,7 +6,7 @@
 .header__site-logo {
   display: flex;
   align-items: flex-end;
-  background-image: url('../../../../../assets/images/app-logo.png');
+  background-image: url('../../../../assets/images/app-logo.png');
   background-size: 3.125rem 2.5rem;
   background-repeat: no-repeat;
   background-position: 0 center;
@@ -14,14 +14,14 @@
   cursor: pointer;
 
   &:hover {
-    background-image: url('../../../../../assets/images/app-logo_hover.png');
+    background-image: url('../../../../assets/images/app-logo_hover.png');
   }
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    background-image: url('../../../../../assets/images/app-logo_2x.png');
+    background-image: url('../../../../assets/images/app-logo_2x.png');
 
     &:hover {
-      background-image: url('../../../../../assets/images/app-logo_hover_2x.png');
+      background-image: url('../../../../assets/images/app-logo_hover_2x.png');
     }
   }
 }
