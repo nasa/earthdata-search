@@ -1,3 +1,5 @@
+require 'json'
+
 class ESIClient
   def self.submit_esi_request(*args)
     new.submit_esi_request(*args)
@@ -11,9 +13,10 @@ class ESIClient
     new.get_multi_esi_request(*args)
   end
 
-  def submit_esi_request(retrieval_collection, granule_params, request_url, token)
+  def submit_esi_request(retrieval_collection, granule_params, request_url, token, shapefile = nil)
     service_url = get_service_url(retrieval_collection.collection_id, retrieval_collection.client, token)
     options = {}
+    @shapefile = shapefile
 
     begin
       # Fetch the granules the user is requesting from CRM
@@ -106,6 +109,7 @@ class ESIClient
 
     add_subset_data_layers
     add_bounding_box
+    add_shapefile
 
     add_parameter(:EMAIL, find_field_element("email").text.strip)
 
@@ -227,6 +231,24 @@ class ESIClient
     tree_style_bands = find_by_xpath("//ecs:SUBSET_DATA_LAYERS[@style='tree']/descendant::*/text()")
 
     objects + fields + bands + tree_style_bands
+  end
+
+
+  def add_shapefile()
+
+    unless @shapefile.nil?
+      use_shapefile = false
+
+      find_by_xpath("//ecs:spatial_subset_shapefile_flag").map{|spatial_subset_shapefile_flag|
+        if spatial_subset_shapefile_flag.text == "true"
+          use_shapefile = true
+        end
+      }
+
+      if use_shapefile
+        add_parameter(:BoundingShape, @shapefile.to_json)
+      end
+    end
   end
 
   def add_bounding_box

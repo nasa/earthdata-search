@@ -64,6 +64,12 @@ class ProcessRetrievalJob < ActiveJob::Base
           )
         elsif method['type'] == 'service'
           # `Customize` Access Method
+
+          source = Rack::Utils.parse_nested_query(retrieval.project['source'])
+          if source.key?('sf')
+            params['sf'] = source['sf']
+          end
+
           catalog_rest_order = CatalogRestOrder.create(
             retrieval_collection: retrieval_collection,
             search_params: params

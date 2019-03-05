@@ -5,6 +5,13 @@ class SubmitCatalogRestJob < ActiveJob::Base
   # @param base_url [String] the base url to provide to the user in their order to check on for status updates
   def perform(order, base_url)
     request_url = "#{base_url}/data/retrieve/#{order.retrieval_collection.retrieval.to_param}"
+    shapefile = nil
+
+    if order.search_params.key?('sf') and not order.search_params['sf'].blank?
+      shapefile = Shapefile.find(order.search_params['sf'].to_i)
+      shapefile = shapefile.nil? ? nil : shapefile.file
+      order.search_params.delete('sf')
+    end
 
     order.submit! do
       # Submits the order
@@ -12,7 +19,8 @@ class SubmitCatalogRestJob < ActiveJob::Base
         order.retrieval_collection,
         order.search_params,
         request_url,
-        order.retrieval_collection.retrieval.token
+        order.retrieval_collection.retrieval.token,
+        shapefile
       ).body
 
       parsed_response = MultiXml.parse(esi_response)
