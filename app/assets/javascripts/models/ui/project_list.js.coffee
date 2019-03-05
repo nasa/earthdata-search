@@ -200,7 +200,7 @@ ns.ProjectList = do (ko
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             order_status_to_classname: @orderStatusToClassName(m.orderStatus)
             cancel_link: urlUtil.fullPath("/data/remove?order_id=#{m.orderId}") if canCancel
-            is_in_progress: m.orderStatus == 'creating' || m.orderStatus.indexOf('processing') == 0 || canCancel
+            is_in_progress: m.orderStatus == 'creating' || m.orderStatus.indexOf('processing') == 0 || m.orderStatus.indexOf('progress') != -1 || canCancel
             dropped_granules: m.droppedGranules
             downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             method_name: m.method()
