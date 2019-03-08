@@ -92,6 +92,6 @@ class ProcessRetrievalJob < ActiveJob::Base
     retrieval = Retrieval.find_by(id: retrieval_id)
 
     # After all the orders are submitted, kick off the order status jobs to retrieve updates from their respective services
-    OrderStatusJob.perform_later(retrieval.id, retrieval.token, retrieval.environment)
+    OrderStatusJob.set(queue: queue_name).perform_later(retrieval.id, retrieval.token, retrieval.environment)
   end
 end
