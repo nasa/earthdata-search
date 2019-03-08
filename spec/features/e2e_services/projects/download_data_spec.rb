@@ -45,5 +45,24 @@ describe 'When viewing the project page' do
         end
       end
     end
+
+    context 'When revisiting the project after choosing download access' do
+      before do
+        load_page :projects_page, project: ['C1200240776-DEV08'], env: :sit, authenticate: 'edsc'
+
+        collection_card = find('.project-list-item', match: :first)
+        collection_card.find('.project-list-item-action-edit-options').click
+        wait_for_xhr
+      end
+
+      after do
+        page.find_button('Download Data', disabled: false).click
+        wait_for_xhr
+      end
+
+      it 'remembers download as the access method' do
+        expect(page).to have_content('Direct Download')
+      end
+    end
   end
 end
