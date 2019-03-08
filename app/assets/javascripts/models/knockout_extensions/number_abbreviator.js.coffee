@@ -2,7 +2,7 @@ do (ko) ->
 
   # Convert large numbers to their abbreviated forms. If numbers reach the
   # thousands spot, add commas where appropriate
-  # 
+  #
   # abbreviateNumber(12 , 1)          => 12
   # abbreviateNumber(0 , 2)           => 0
   # abbreviateNumber(1234 , 0)        => 1k
@@ -10,7 +10,7 @@ do (ko) ->
   # abbreviateNumber(918395 , 1)      => 918.4k
   # abbreviateNumber(2134124 , 2)     => 2.13M
   # abbreviateNumber(47475782130 , 2) => 47.48B
-  # 
+  #
   # https://stackoverflow.com/a/2901298
 
   ko.bindingHandlers.abbreviateNumber =
@@ -52,3 +52,6 @@ do (ko) ->
       ko.bindingHandlers.text.update element, ->
         # https://stackoverflow.com/a/2901298
         number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+      # Update the title attribute with original value for hover
+      $(element).attr('title', originalText.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
