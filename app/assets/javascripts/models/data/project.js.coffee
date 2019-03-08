@@ -179,8 +179,6 @@ ns.Project = do (ko,
     showSpinner: (item, e) =>
       # This will likely need to change if we opt to support multiple access methods
       @serviceOptions?.accessMethod?()[0].showSpinner(item, e)
-      $('.master-overlay-panel-back').click()
-      @editingAccessMethod(false)
       true
 
     findSelectedVariable: (variable) =>
