@@ -89,6 +89,11 @@ ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutM
         if available.name == method
           result.type = available.type
           result.id = available.id
+
+          # Don't save model and rawModel if using download
+          if method.toLowerCase() == 'download'
+            result.model = available.model
+            result.rawModel = available.rawModel
           break
       result.subset = @subsetOptions()?.serialize()
       result

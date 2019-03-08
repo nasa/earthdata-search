@@ -115,7 +115,7 @@ ns.Project = do (ko,
       if @granuleAccessOptions()
         methods = @granuleAccessOptions().methods
         # Use the default method if available
-        if @granuleAccessOptions().defaults? && @granuleAccessOptions().defaults.accessMethod[0].id?
+        if @granuleAccessOptions().defaults?
           methods = @granuleAccessOptions().defaults.accessMethod
 
         $.each methods, (index, accessMethod) ->
@@ -137,7 +137,8 @@ ns.Project = do (ko,
 
         # Select the expected method
         if expectedMethod? && @serviceOptions.accessMethod().length > 0
-          @serviceOptions.accessMethod()[0].method(expectedMethod.name)
+          name = if expectedMethod.name? then expectedMethod.name else expectedMethod.method
+          @serviceOptions.accessMethod()[0].method(name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
         @isCustomizable(expectedMethod?.type in ['opendap', 'service', 'order'])
