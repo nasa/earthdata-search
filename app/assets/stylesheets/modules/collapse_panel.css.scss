@@ -1,0 +1,45 @@
+.collapse-panel-warning {
+    background: #fcf8e3;
+    color: rgba(0,0,0,0.7);
+    border-bottom: 1px solid #e2dcbb;
+}
+
+.collapse-panel-button {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+
+    .fa-chevron-down,
+    .fa-chevron-up {
+        align-self: flex-end;
+        color: rgba(0,0,0,0.4)
+    }
+
+    .fa-chevron-down {
+        display: none;
+    }
+
+    .fa-chevron-up {
+        display: block;
+    }
+
+    &.collapsed {
+        .fa-chevron-down {
+            display: block;
+        }
+
+        .fa-chevron-up {
+            display: none;
+        }
+    }
+}
+
+.collapse-panel-body {
+    padding: 15px;
+
+    .collapse-panel-data-quality & {
+        font-size: 0.875em;
+    }
+}

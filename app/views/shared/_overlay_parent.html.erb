@@ -123,267 +123,281 @@
       <!-- ko foreach: $parent.project.collections() -->
       <master-overlay-panel-group params="panelGroupName: collection.id + '_collection-details', indicatorElement: collection.id + '_project-list-item'">
         <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_details', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Details'">
-          <div class="master-overlay-panel-item-content master-overlay-panel-item-content-trimmed">
-            <!-- ko if: $parents[1].collection.granuleDatasource() -->
-            <!-- ko if: $parents[1].collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
-              <div class="panel-item-section">
-                <p class="undo">Granule excluded. <a href="#" data-bind="click: $parents[1].collection.granuleDatasource().data().undoExclude">Undo</a></p>
+          <div class="master-overlay-panel-item-wrapper master-overlay-panel-item-wrapper-trimmed">
+            <section class="master-overlay-panel-item-content">
+              <!-- ko if: $parents[1].collection.granuleDatasource() -->
+              <!-- ko if: $parents[1].collection.granuleDatasource().data().excludedGranulesList().length > 0 -->
+                <div class="panel-item-section">
+                  <p class="undo">Granule excluded. <a href="#" data-bind="click: $parents[1].collection.granuleDatasource().data().undoExclude">Undo</a></p>
+                </div>
+              <!-- /ko -->
+              <div class="panel-item-section panel-item-section-padded">
+                <h3 class="panel-item-section-title">Granules
+                  <!-- ko if: $parents[1].collection.granuleDatasource().data().results().length > 0 -->
+                    <span>
+                      (<span data-bind="text: $parents[1].collection.granuleDatasource().data().results().length
+                    "></span> Total)
+                    </span>
+                  <!-- /ko -->
+                </h3>
               </div>
-            <!-- /ko -->
-            <div class="panel-item-section panel-item-section-padded">
-              <h3 class="panel-item-section-title">Granules
-                <!-- ko if: $parents[1].collection.granuleDatasource().data().results().length > 0 -->
-                  <span>
-                    (<span data-bind="text: $parents[1].collection.granuleDatasource().data().results().length
-                  "></span> Total)
-                  </span>
-                <!-- /ko -->
-              </h3>
-            </div>
-            <!-- ko if: $parents[1].collection.granuleDatasource().data().results().length > 0 -->
-            <div class="master-overlay-panel-section">
-              <ul class="project-granules-list" data-bind="foreach: $parents[1].collection.granuleDatasource().data().results()">
-                <li class="project-granules-list-item">
-                  <div class="project-granules-list-item-main">
-                    <!-- ko if: browse_flag === 'true' || browse_flag === true -->
-                    <a class="project-granules-list-item-thumb-link" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
-                      <img class="project-granules-list-item-thumb" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
-                    </a>
-                    <!-- /ko -->
-                    <div class="project-granules-list-item-content">
-                      <h5 class="project-granules-list-item-title" data-bind="text: displayName()"></h5>
-                      <span class="project-granules-list-item-temporal" data-bind="text: humanizeTemporal()"></span>
-                    </div>
-                  </div>
-                  <div class="project-granules-list-item-actions">
-                    <!--ko if: dataLinks().length == 1 -->
-                      <a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parents[2].collection.cwic() && online_access_flag, attr: {href: dataLinks()[0].href}">
-                        <i class="fa fa-download"></i>
+              <!-- ko if: $parents[1].collection.granuleDatasource().data().results().length > 0 -->
+              <div class="master-overlay-panel-section">
+                <ul class="project-granules-list" data-bind="foreach: $parents[1].collection.granuleDatasource().data().results()">
+                  <li class="project-granules-list-item">
+                    <div class="project-granules-list-item-main">
+                      <!-- ko if: browse_flag === 'true' || browse_flag === true -->
+                      <a class="project-granules-list-item-thumb-link" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
+                        <img class="project-granules-list-item-thumb" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
                       </a>
-                    <!--/ko-->
-                    <!--ko if: dataLinks().length > 1 -->
-                      <a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>
-                      <ul class="dropdown-menu" data-bind="foreach: dataLinks">
-                        <li>
-                          <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
-                        </li>
-                      </ul>
-                    <!--/ko-->
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <!-- /ko -->
-            <!-- ko if: $parents[1].collection.granuleDatasource().data().results().length == 0 -->
-            <div class="master-overlay-panel-section master-overlay-panel-section-padded">
-              <ul class="project-granules-list">
-                <li>
-                  <p>There are no granules included in this collection.</p>
-                </li>
-              </ul>
-            </div>
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
+                      <!-- /ko -->
+                      <div class="project-granules-list-item-content">
+                        <h5 class="project-granules-list-item-title" data-bind="text: displayName()"></h5>
+                        <span class="project-granules-list-item-temporal" data-bind="text: humanizeTemporal()"></span>
+                      </div>
+                    </div>
+                    <div class="project-granules-list-item-actions">
+                      <!--ko if: dataLinks().length == 1 -->
+                        <a class="button icon-button direct-download" title="Download single granule data" target="_blank" data-bind="visible: !$parents[2].collection.cwic() && online_access_flag, attr: {href: dataLinks()[0].href}">
+                          <i class="fa fa-download"></i>
+                        </a>
+                      <!--/ko-->
+                      <!--ko if: dataLinks().length > 1 -->
+                        <a href="#" data-toggle="dropdown" class="button icon-button" aria-expanded="false"><i class="fa fa-download"></i></a>
+                        <ul class="dropdown-menu" data-bind="foreach: dataLinks">
+                          <li>
+                            <a target="_blank" href="#" data-bind="attr: {href: $data.href}, text: $data.title ? $data.title : 'Download Link ' + ($index() + 1)" class="dropdown-link direct-download"></a>
+                          </li>
+                        </ul>
+                      <!--/ko-->
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- /ko -->
+              <!-- ko if: $parents[1].collection.granuleDatasource().data().results().length == 0 -->
+              <div class="master-overlay-panel-section master-overlay-panel-section-padded">
+                <ul class="project-granules-list">
+                  <li>
+                    <p>There are no granules included in this collection.</p>
+                  </li>
+                </ul>
+              </div>
+              <!-- /ko -->
+              <!-- /ko -->
+              <!-- /ko -->
+            </section>
           </div>
         </master-overlay-panel-item>
       </master-overlay-panel-group>
       <master-overlay-panel-group params="panelGroupName: collection.id + '_collection-options', indicatorElement: collection.id + '_project-list-item'">
         <master-overlay-panel-item params="itemName: $parents[0].collection.id + '_edit-options', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Edit Options'">
-          <div class="master-overlay-panel-item-content panel-item">
-            <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length == 0 -->
-            <div class="panel-item-section">
-              <div class="panel-item-content">
-                <p>Data access is not available for this collection.</p>
-              </div>
-            </div>
-            <!-- /ko -->
-            <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
-            <div class="panel-item-section">
-              <p class="panel-item-content panel-item-content-light"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
-            </div>
-            <!-- /ko -->
+          <div class="master-overlay-panel-item-wrapper panel-item">
             <!-- ko if: $parents[1].granuleAccessOptions().dqs && $parents[1].granuleAccessOptions().dqs.length > 0 -->
-            <div class="panel-item-section">
-              <h3 class="panel-item-section-title">Quality Information</h3>
-              <div class="panel-item-content">
-                <!-- ko foreach: $parents[1].granuleAccessOptions().dqs -->
-                <p data-bind="html: data_quality_summary_definition.summary"></p>
-                <!-- /ko -->
-              </div>
-            </div>
-            <!-- /ko -->
-            <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length -->
-            <div class="panel-item-section">
-              <h3 class="panel-item-section-title">Select Data Access Method</h3>
-              <div class="radio-list">
-                <!-- ko foreach: $parents[1].serviceOptions.accessMethod -->
-                <!-- ko foreach: availableMethods -->
-                  <label data-bind="click: $parents[3].showSpinner, css: {'radio-list__item--active': $parent.method() == $data.name}" class="radio-list__item">
-                    <input class="radio-list__item-input" data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index(), form: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index(), name: $parents[3].collection.id + '-' + $parentContext.$index() + $index() + '-access-method' }" type="radio" />
-                    <!-- ko if: type == 'opendap' -->
-                    <span class="radio-list__item-title">Customize (OPeNDAP)</span>
-                    <i class="fa fa-question-circle radio-list__item-title-tooltip"
-                      data-tooltip="true"
-                      data-placement="right"
-                      title="Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script."
-                    ></i>
-                    <span class="sr-only">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
-                    <!-- /ko -->
-                    <!-- ko if: type == 'download' -->
-                    <span class="radio-list__item-title">Direct Download</span>
-                    <i class="fa fa-question-circle radio-list__item-title-tooltip"
-                      data-tooltip="true"
-                      data-placement="right"
-                      title="Direct download of all  data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script."
-                    ></i>
-                    <span class="sr-only">Direct download of <strong>all</strong> data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script. </span>
-                    <!-- /ko -->
-                    <!-- ko if: type == 'service' -->
-                    <span class="radio-list__item-title">Customize</span>
-                    <i class="fa fa-question-circle radio-list__item-title-tooltip"
-                      data-tooltip="true"
-                      data-placement="right"
-                      title="Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script."
-                    ></i>
-                    <span class="sr-only">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
-                    <!-- /ko -->
-                    <!-- ko if: type == 'order' -->
-                    <span class="radio-list__item-title">Stage for Delivery</span>
-                    <i class="fa fa-question-circle radio-list__item-title-tooltip"
-                      data-tooltip="true"
-                      data-placement="right"
-                      title="Submit a request for data to be staged for delivery. Data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download."
-                    ></i>
-                    <span class="sr-only">Submit a request for data to be staged for delivery. Data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.</span>
-                    <!-- /ko -->
-                  </label>
-                <!-- /ko -->
-                <!-- /ko-->
-              </div>
-            </div>
-            <!-- /ko -->
-            <!-- ko foreach: $parents[1].serviceOptions.accessMethod -->
-            <!-- ko if: $parents[2].serviceOptions.isLoaded() -->
-            <!-- ko if: $parents[2].selectedAccessMethodType() && ($parents[2].selectedAccessMethodType() == 'service' || $parents[2].selectedAccessMethodType() == 'order') -->
-              <div class="panel-item-section" style="margin-top: 1em;">
-                <div data-bind="visible: loadForm()">
-                  <div class="access-form-loading">
-                    <div class="loading-content access-form-loading-one"><span class="loading-content-inner"></span></div>
-                    <div class="loading-content access-form-loading-two"><span class="loading-content-inner"></span></div>
-                    <div class="loading-content access-form-loading-three"><span class="loading-content-inner"></span></div>
-                  </div>
+            <section class="collapse-panel collapse-panel-warning collapse-panel-data-quality">
+              <button class="collapse-panel-button button-naked collapsed" type="button" data-toggle="collapse" data-target="#dataQualityInfo" aria-expanded="false" aria-controls="dataQualityInfo">
+                <span><i class="fa fa-exclamation-circle"></i> Important data quality information</span>
+                <span>
+                  <i class="fa fa-chevron-down"></i>
+                  <i class="fa fa-chevron-up"></i> 
+                </span>
+              </button>
+              <div class="collapse" id="dataQualityInfo">
+                <div class="collapse-panel-body">
+                  <!-- ko foreach: $parents[1].granuleAccessOptions().dqs -->
+                  <p data-bind="html: data_quality_summary_definition.summary"></p>
+                  <!-- /ko -->
                 </div>
-                <!-- ko foreach: availableMethods -->
-                <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index()}, visible: $parent.method() == name"></div>
-                <!-- /ko -->
               </div>
+            </section>
             <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- ko if: $parents[1].selectedAccessMethod() == 'OPeNDAP' -->
-            <div class="panel-item-section">
-              <h4 class="panel-item-heading">Variable Selection</h4>
-              <p class="panel-item-content panel-item-content-light">Use science keywords to subset your collection granules by measurements and variables.</p>
-              <!-- ko if: $parents[1].selectedVariables().length > 0 -->
-                <p class="panel-item-content panel-item-content-emphasis"><span data-bind="text: $parents[1].selectedVariables().length"></span> variables selected</p>
+            <section class="master-overlay-panel-item-content">
+              <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length == 0 -->
+              <div class="panel-item-section">
+                <div class="panel-item-content">
+                  <p>Data access is not available for this collection.</p>
+                </div>
+              </div>
               <!-- /ko -->
-              <!-- ko if: $parents[1].selectedVariables().length == 0 -->
-                <p class="panel-item-content panel-item-content-emphasis">No variables selected. All variables will be included in download.</p>
+              <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
+              <div class="panel-item-section">
+                <p class="panel-item-content panel-item-content-light"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
+              </div>
               <!-- /ko -->
-              <button class="panel-item-action button button-small" type="button" name="button" data-bind="click: function(){$root.ui.variableSelector.displayVariableSelector($parents[1]); $('#' + $parents[1].collection.id + '_variable-selection').trigger('open')}">Edit Variables</button>
-            </div>
-            <!-- /ko -->
-            <!-- ko if: $parents[1].availableOutputFormats() -->
-            <div class="panel-item-section">
-              <h4 class="panel-item-heading">Output Format Selection</h4>
-              <p class="panel-item-content panel-item-content-light">Choose from output format options like GeoTIFF, NETCDF, and other file types.</p>
-              <select id="output-format" class="panel-item-action" data-bind="options: $parents[1].availableOutputFormats(), optionsText: 'name', optionsValue: 'value', value: $parents[1].selectedOutputFormat"></select>
-            </div>
-            <!-- /ko -->
+              <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length -->
+              <div class="panel-item-section">
+                <h3 class="panel-item-section-title">Select Data Access Method</h3>
+                <div class="radio-list">
+                  <!-- ko foreach: $parents[1].serviceOptions.accessMethod -->
+                  <!-- ko foreach: availableMethods -->
+                    <label data-bind="click: $parents[3].showSpinner, css: {'radio-list__item--active': $parent.method() == $data.name}" class="radio-list__item">
+                      <input class="radio-list__item-input" data-bind="checked: $parent.method, attr: { value: name, id: 'access-method-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index(), form: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index(), name: $parents[3].collection.id + '-' + $parentContext.$index() + $index() + '-access-method' }" type="radio" />
+                      <!-- ko if: type == 'opendap' -->
+                      <span class="radio-list__item-title">Customize (OPeNDAP)</span>
+                      <i class="fa fa-question-circle radio-list__item-title-tooltip"
+                        data-tooltip="true"
+                        data-placement="right"
+                        title="Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script."
+                      ></i>
+                      <span class="sr-only">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
+                      <!-- /ko -->
+                      <!-- ko if: type == 'download' -->
+                      <span class="radio-list__item-title">Direct Download</span>
+                      <i class="fa fa-question-circle radio-list__item-title-tooltip"
+                        data-tooltip="true"
+                        data-placement="right"
+                        title="Direct download of all  data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script."
+                      ></i>
+                      <span class="sr-only">Direct download of <strong>all</strong> data associated with the selected granules. The desired data will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script. </span>
+                      <!-- /ko -->
+                      <!-- ko if: type == 'service' -->
+                      <span class="radio-list__item-title">Customize</span>
+                      <i class="fa fa-question-circle radio-list__item-title-tooltip"
+                        data-tooltip="true"
+                        data-placement="right"
+                        title="Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script."
+                      ></i>
+                      <span class="sr-only">Select options like variables, transformations, and output formats to customize your data. The desired data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.</span>
+                      <!-- /ko -->
+                      <!-- ko if: type == 'order' -->
+                      <span class="radio-list__item-title">Stage for Delivery</span>
+                      <i class="fa fa-question-circle radio-list__item-title-tooltip"
+                        data-tooltip="true"
+                        data-placement="right"
+                        title="Submit a request for data to be staged for delivery. Data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download."
+                      ></i>
+                      <span class="sr-only">Submit a request for data to be staged for delivery. Data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.</span>
+                      <!-- /ko -->
+                    </label>
+                  <!-- /ko -->
+                  <!-- /ko-->
+                </div>
+              </div>
+              <!-- /ko -->
+              <!-- ko foreach: $parents[1].serviceOptions.accessMethod -->
+              <!-- ko if: $parents[2].serviceOptions.isLoaded() -->
+              <!-- ko if: $parents[2].selectedAccessMethodType() && ($parents[2].selectedAccessMethodType() == 'service' || $parents[2].selectedAccessMethodType() == 'order') -->
+                <div class="panel-item-section" style="margin-top: 1em;">
+                  <div data-bind="visible: loadForm()">
+                    <div class="access-form-loading">
+                      <div class="loading-content access-form-loading-one"><span class="loading-content-inner"></span></div>
+                      <div class="loading-content access-form-loading-two"><span class="loading-content-inner"></span></div>
+                      <div class="loading-content access-form-loading-three"><span class="loading-content-inner"></span></div>
+                    </div>
+                  </div>
+                  <!-- ko foreach: availableMethods -->
+                  <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index()}, visible: $parent.method() == name"></div>
+                  <!-- /ko -->
+                </div>
+              <!-- /ko -->
+              <!-- /ko -->
+              <!-- /ko -->
+              <!-- ko if: $parents[1].selectedAccessMethod() == 'OPeNDAP' -->
+              <div class="panel-item-section">
+                <h4 class="panel-item-heading">Variable Selection</h4>
+                <p class="panel-item-content panel-item-content-light">Use science keywords to subset your collection granules by measurements and variables.</p>
+                <!-- ko if: $parents[1].selectedVariables().length > 0 -->
+                  <p class="panel-item-content panel-item-content-emphasis"><span data-bind="text: $parents[1].selectedVariables().length"></span> variables selected</p>
+                <!-- /ko -->
+                <!-- ko if: $parents[1].selectedVariables().length == 0 -->
+                  <p class="panel-item-content panel-item-content-emphasis">No variables selected. All variables will be included in download.</p>
+                <!-- /ko -->
+                <button class="panel-item-action button button-small" type="button" name="button" data-bind="click: function(){$root.ui.variableSelector.displayVariableSelector($parents[1]); $('#' + $parents[1].collection.id + '_variable-selection').trigger('open')}">Edit Variables</button>
+              </div>
+              <!-- /ko -->
+              <!-- ko if: $parents[1].availableOutputFormats() -->
+              <div class="panel-item-section">
+                <h4 class="panel-item-heading">Output Format Selection</h4>
+                <p class="panel-item-content panel-item-content-light">Choose from output format options like GeoTIFF, NETCDF, and other file types.</p>
+                <select id="output-format" class="panel-item-action" data-bind="options: $parents[1].availableOutputFormats(), optionsText: 'name', optionsValue: 'value', value: $parents[1].selectedOutputFormat"></select>
+              </div>
+              <!-- /ko -->
+            </section>
           </div>
         </master-overlay-panel-item>
         <master-overlay-panel-item style="display: none;" params="itemName: $parents[0].collection.id + '_variable-selection', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Customizations', backToButton: { dest: $parents[0].collection.id + '_edit-options', callback: function() { $root.ui.variableSelector.clearSelections() }, text: 'Edit Options'}, isHeightConstrained: true">
           <!-- ko if: $parents[1].editingVariables() -->
-          <div class="master-overlay-panel-item-content panel-item">
-            <div class="variable-selection variable-selection-full" data-bind="css: {'is-active' : $parents[1].editingVariables}, with: $root.ui.variableSelector">
-              <div class="panel-item-section panel-item-section-padded panel-item-section-has-back-button">
-                <h3 class="panel-item-section-title">Variable Selection</h3>
-              </div>
-              <section data-bind="with: selectedKeyword(), visible: selectedKeyword()">
-                <span class="selected-keyword">
-                  <a href="#" data-bind="click: $parent.clearSelections">All Leafnodes</a>
-                  <i class="child-spacer fa fa-chevron-circle-right"></i>
-                  <!-- ko if: !$parent.selectedVariable() -->
-                  <strong data-bind="text: $data.keyword"></strong>
-                  <!-- /ko -->
-                  <!-- ko if: $parent.selectedVariable() -->
-                    <a href="#" data-bind="click: $root.ui.variableSelector.clearVariable, text: $data.keyword"></a>
-                  <!-- /ko -->
-                  <span data-bind="with: $parent.selectedVariable(), visible: $parent.selectedVariable()">
+          <div class="master-overlay-panel-item-wrapper panel-item">
+            <section class="master-overlay-panel-item-content">
+              <div class="variable-selection variable-selection-full" data-bind="css: {'is-active' : $parents[1].editingVariables}, with: $root.ui.variableSelector">
+                <div class="panel-item-section panel-item-section-padded panel-item-section-has-back-button">
+                  <h3 class="panel-item-section-title">Variable Selection</h3>
+                </div>
+                <section data-bind="with: selectedKeyword(), visible: selectedKeyword()">
+                  <span class="selected-keyword">
+                    <a href="#" data-bind="click: $parent.clearSelections">All Leafnodes</a>
                     <i class="child-spacer fa fa-chevron-circle-right"></i>
-                    <strong data-bind="text: $data.umm().Name"></strong>
+                    <!-- ko if: !$parent.selectedVariable() -->
+                    <strong data-bind="text: $data.keyword"></strong>
+                    <!-- /ko -->
+                    <!-- ko if: $parent.selectedVariable() -->
+                      <a href="#" data-bind="click: $root.ui.variableSelector.clearVariable, text: $data.keyword"></a>
+                    <!-- /ko -->
+                    <span data-bind="with: $parent.selectedVariable(), visible: $parent.selectedVariable()">
+                      <i class="child-spacer fa fa-chevron-circle-right"></i>
+                      <strong data-bind="text: $data.umm().Name"></strong>
+                    </span>
                   </span>
-                </span>
-              </section>
-              <section data-bind="css: {busy: _pending()}">
-                <div class="message-container" data-bind="visible: !_pending() && variables().length == 0">
-                <p>This collection doesn't have any associated variables.</p>
-                </div>
-                <div data-bind="visible: !selectedKeyword()">
-                  <ul id="associated-variables" class="keyword-list list-alternating" data-bind="foreach: keywordMappings">
-                    <li class="keyword-list-item">
-                      <a class="keyword-list-item-link" href="#" data-bind="click: $parent.selectKeyword, text: $data.keyword"></a>
-                      <!-- ko if: $data.selected > 0 -->
-                      <span class="pill" data-bind="text: $data.selected + ' selected'"></span>
-                      <!-- /ko -->
-                    </li>
-                  </ul>
-                </div>
-                <div class="variable-list" data-bind="with: selectedKeyword(), visible: selectedKeyword() && !selectedVariable()">
-                  <div class="collection-variable-list-item">
-                    <label class="collection-variable-list-item-label">
-                      <input type="checkbox" class="select-all" data-bind="checked: $parent.hasAllKeywordsSelected()">
-                      <div class="collection-variable-info">
-                        <span>Select All Variables</span>
-                      </div>
-                    </label>
+                </section>
+                <section data-bind="css: {busy: _pending()}">
+                  <div class="message-container" data-bind="visible: !_pending() && variables().length == 0">
+                  <p>This collection doesn't have any associated variables.</p>
                   </div>
-                  <div class="collection-variables" data-bind="foreach: $data.variables">
+                  <div data-bind="visible: !selectedKeyword()">
+                    <ul id="associated-variables" class="keyword-list list-alternating" data-bind="foreach: keywordMappings">
+                      <li class="keyword-list-item">
+                        <a class="keyword-list-item-link" href="#" data-bind="click: $parent.selectKeyword, text: $data.keyword"></a>
+                        <!-- ko if: $data.selected > 0 -->
+                        <span class="pill" data-bind="text: $data.selected + ' selected'"></span>
+                        <!-- /ko -->
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="variable-list" data-bind="with: selectedKeyword(), visible: selectedKeyword() && !selectedVariable()">
                     <div class="collection-variable-list-item">
-                      <label class="collection-variable-list-item-label" data-bind="attr: { id: $data.meta()['concept-id'] }">
-                        <input class="collection-variable-list-item-input" type="checkbox" data-bind="checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data), attr: {value: $data.meta()['concept-id']}">
+                      <label class="collection-variable-list-item-label">
+                        <input type="checkbox" class="select-all" data-bind="checked: $parent.hasAllKeywordsSelected()">
                         <div class="collection-variable-info">
-                          <h4 class="collection-variable-heading">
-                            <span class="collection-variable-name" data-bind="text: $data.umm().Name"></span>
-                          </h4>
-                          <ul class="collection-variable-meta text-info">
-                            <li class="collection-variable-longname" data-bind="text: $data.umm().LongName"></li>
-                            <li><a class="collection-variable-details-link clean underline subtle" href="#" data-bind="click: $root.ui.variableSelector.selectVariable">View Details</a></li>
-                          </ul>
+                          <span>Select All Variables</span>
                         </div>
                       </label>
                     </div>
+                    <div class="collection-variables" data-bind="foreach: $data.variables">
+                      <div class="collection-variable-list-item">
+                        <label class="collection-variable-list-item-label" data-bind="attr: { id: $data.meta()['concept-id'] }">
+                          <input class="collection-variable-list-item-input" type="checkbox" data-bind="checked: $parents[1].selectedProjectCollection().hasSelectedVariable($data), attr: {value: $data.meta()['concept-id']}">
+                          <div class="collection-variable-info">
+                            <h4 class="collection-variable-heading">
+                              <span class="collection-variable-name" data-bind="text: $data.umm().Name"></span>
+                            </h4>
+                            <ul class="collection-variable-meta text-info">
+                              <li class="collection-variable-longname" data-bind="text: $data.umm().LongName"></li>
+                              <li><a class="collection-variable-details-link clean underline subtle" href="#" data-bind="click: $root.ui.variableSelector.selectVariable">View Details</a></li>
+                            </ul>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </section>
-              <section class="master-overlay-panel-item-overlay" data-bind="with: selectedVariable(), css: {'master-overlay-panel-item-overlay-active' : selectedVariable()}">
-                <div class="panel-item-section variable-details">
-                  <header>
-                    <h2 class="collection-variable-heading">
-                      <span class="collection-variable-name" data-bind="text: $data.umm().Name"></span>
-                    </h2>
-                  </header>
-                  <p class="collection-variable-longname text-info" data-bind="text: $data.umm().LongName"></p>
-                  <!-- ko if: $data.umm().Definition -->
-                  <p class="collection-variable-description" data-bind="text: $data.umm().Definition"></p>
-                  <!-- /ko -->
-                  <!-- ko if: !$data.umm().Definition -->
-                  <p class="collection-variable-description">No definition available for this variable.</p>
-                  <!-- /ko -->
-                </div>
-              </section>
-            </div>
+                </section>
+                <section class="master-overlay-panel-item-overlay" data-bind="with: selectedVariable(), css: {'master-overlay-panel-item-overlay-active' : selectedVariable()}">
+                  <div class="panel-item-section variable-details">
+                    <header>
+                      <h2 class="collection-variable-heading">
+                        <span class="collection-variable-name" data-bind="text: $data.umm().Name"></span>
+                      </h2>
+                    </header>
+                    <p class="collection-variable-longname text-info" data-bind="text: $data.umm().LongName"></p>
+                    <!-- ko if: $data.umm().Definition -->
+                    <p class="collection-variable-description" data-bind="text: $data.umm().Definition"></p>
+                    <!-- /ko -->
+                    <!-- ko if: !$data.umm().Definition -->
+                    <p class="collection-variable-description">No definition available for this variable.</p>
+                    <!-- /ko -->
+                  </div>
+                </section>
+              </div>
+            </section>
           </div>
           <footer class="master-overlay-panel-item-fixed-footer" data-bind="visible: $root.ui.variableSelector.selectedKeyword(), with: $root.ui.variableSelector">
             <button class="button secondary master-overlay-panel-item-footer-action" data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword">Back</button>

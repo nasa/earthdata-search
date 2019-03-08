@@ -158,9 +158,8 @@
   transform: translateX(0);
 }
 
-.master-overlay-panel-item-content {
+.master-overlay-panel-item-wrapper {
   display: none;
-  padding: 55px 15px 50px 15px;
 
   .master-overlay-panel-initialized & {
     height: 100%;
@@ -168,8 +167,12 @@
   }
 }
 
-.master-overlay-panel-item-content-trimmed {
+.master-overlay-panel-item-wrapper-trimmed {
   padding: 0;
+}
+
+.master-overlay-panel-item-content {
+  padding: 55px 15px 50px 15px;
 }
 
 .master-overlay-panel-item-overlay {
