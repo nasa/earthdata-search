@@ -7,7 +7,7 @@ class SubmitCatalogRestJob < ActiveJob::Base
     request_url = "#{base_url}/data/retrieve/#{order.retrieval_collection.retrieval.to_param}"
     shapefile = nil
 
-    if order.search_params.key?('sf') and not order.search_params['sf'].blank?
+    if order.search_params.key?('sf') && !order.search_params['sf'].blank?
       shapefile = Shapefile.find(order.search_params['sf'].to_i)
       shapefile = shapefile.nil? ? nil : shapefile.file
       order.search_params.delete('sf')
