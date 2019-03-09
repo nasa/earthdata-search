@@ -16,7 +16,6 @@ class ESIClient
   def submit_esi_request(retrieval_collection, granule_params, request_url, token, shapefile = nil)
     service_url = get_service_url(retrieval_collection.collection_id, retrieval_collection.client, token)
     options = {}
-    @shapefile = shapefile
 
     begin
       # Fetch the granules the user is requesting from CRM
@@ -40,7 +39,7 @@ class ESIClient
       e.backtrace.each { |line| Rails.logger.error "\t#{line}" }
     end
 
-    options.merge!(build_params)
+    options.merge!(build_params(shapefile))
 
     Rails.logger.info " service_url: #{service_url}"
     Rails.logger.info " options:     #{options.inspect}"
@@ -99,7 +98,7 @@ class ESIClient
     @esi_fields ||= {}
   end
 
-  def build_params
+  def build_params(shapefile = nil)
     add_top_level_fields
 
     add_switch_field(:INCLUDE_META)
@@ -109,7 +108,7 @@ class ESIClient
 
     add_subset_data_layers
     add_bounding_box
-    add_shapefile
+    add_shapefile(shapefile)
 
     add_parameter(:EMAIL, find_field_element("email").text.strip)
 
@@ -234,9 +233,9 @@ class ESIClient
   end
 
 
-  def add_shapefile()
+  def add_shapefile(shapefile)
 
-    unless @shapefile.nil?
+    unless shapefile.nil?
       use_shapefile = false
 
       find_by_xpath("//ecs:spatial_subset_shapefile_flag").map{|spatial_subset_shapefile_flag|
@@ -246,7 +245,7 @@ class ESIClient
       }
 
       if use_shapefile
-        add_parameter(:BoundingShape, @shapefile.to_json)
+        add_parameter(:BoundingShape, shapefile.to_json)
       end
     end
   end
