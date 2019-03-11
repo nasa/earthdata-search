@@ -140,8 +140,7 @@ ns.Project = do (ko,
 
         # Select the expected method
         if expectedMethod? && @serviceOptions.accessMethod().length > 0
-          name = if expectedMethod.name? then expectedMethod.name else expectedMethod.method
-          @serviceOptions.accessMethod()[0].method(name)
+          @serviceOptions.accessMethod()[0].method(expectedMethod.name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
         @isCustomizable(expectedMethod?.type in ['opendap', 'service', 'order'])
