@@ -114,9 +114,12 @@ ns.Project = do (ko,
       expectedMethod = null
       if @granuleAccessOptions()
         methods = @granuleAccessOptions().methods
+
         # Use the default method if available
         if @granuleAccessOptions().defaults?
-          methods = @granuleAccessOptions().defaults.accessMethod
+          # pick the method that matches the defaults type
+          methodType = @granuleAccessOptions().defaults.accessMethod[0]?.type
+          methods = methods.filter (method) -> method.type == methodType
 
         $.each methods, (index, accessMethod) ->
           # Download is our default method so if it's found we'll set it here which
