@@ -39,7 +39,7 @@ describe 'Site tour' do
 
           it 'shows the third popover of the tour' do
             expect(page).to have_popover('Facets')
-          endshows the second popover of the tour
+          end
 
           context 'and when the "Next" button is clicked from the Facets popover' do
             before :each do

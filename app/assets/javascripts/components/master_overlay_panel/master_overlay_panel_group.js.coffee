@@ -118,7 +118,6 @@ do ($=jQuery, ko) ->
 
       # Handle the open-item event
       ko.utils.registerEventHandler element, 'open-item', (event, element) ->
-        console.log('open item', element, ko.contextFor(element))
         if element
           itemContext = ko.contextFor(element)
           bindingContext.$data.activeItem itemContext.$data.itemName()
