@@ -15,8 +15,6 @@ describe 'When viewing the project page' do
       collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
-      click_button('Edit Delivery Method')
-
       choose('Direct Download')
 
       page.find_button('Download Data', disabled: false).click

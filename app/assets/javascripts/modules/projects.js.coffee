@@ -28,6 +28,7 @@ do ($=jQuery, ajax=@edsc.util.xhr.ajax) ->
                     placement: "top"
                     template: template
                     html: true
+                    sanitize: false
                     content: content
                   }
 

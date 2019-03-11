@@ -18,8 +18,11 @@ describe 'When viewing the project page with an EGI supported collection' do
     end
 
     it 'displays the correct delivery method header' do
-      within '.panel-item-heading' do
-        expect(page).to have_content('Stage for Delivery')
+      within '.radio-list' do
+        field = find_field('C1000000739-DEV08-01-access-method')
+        field_parent = field.find(:xpath, '..')
+        expect(field).to be_checked
+        expect(field_parent).to have_content('Stage for Delivery')
       end
     end
 
