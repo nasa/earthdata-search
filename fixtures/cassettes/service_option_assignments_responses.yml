@@ -1,5 +1,5 @@
 ---
-96807829f6950e3f8b7513540e34d9436d93f8d6:
+104ef6094810d9a1fd6f98bba082cc3b68f878f3:
   response:
     status:
       code: 200
@@ -29,7 +29,7 @@
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000001167-NSIDC_ECS","id":"1763C6D9-C7FF-867D-3FE4-2DCC02456FFA","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"4627EE9B-89A5-9302-9E4B-CFF02C9FF075"}}]'
     http_version: 
-8385f92b23532a3a2ae135e6deae222c46942bbd:
+744942b03af638b79163d3405f2c14370449edb4:
   response:
     status:
       code: 200
@@ -59,7 +59,7 @@
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":false,"catalog_item_id":"C1000000029-EDF_OPS","id":"FBDE87A8-5935-36BA-D706-9A06D1947887","service_entry_id":"A6B2D5B4-3A58-3A10-AFF3-BDE67700CCA0","service_option_definition_id":"2882537F-E7FD-3F8B-64E6-57CAF36A9A0D"}},{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000029-EDF_OPS","id":"6DBC6485-51F1-C425-496C-E1AB1648B897","service_entry_id":"2582B150-BA08-A767-3128-F6C66C0362C6","service_option_definition_id":"E96C488E-B713-023E-8CCA-22B45AB0FFEE"}}]'
     http_version: 
-d232ee59fe9473292b1b607bc7bb1c9421ccb658:
+952925db8bb99ccc5606ad898d1a11c51aa9a070:
   response:
     status:
       code: 200
@@ -89,7 +89,7 @@ d232ee59fe9473292b1b607bc7bb1c9421ccb658:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000082-EDF_OPS","id":"71E53AB9-7DA2-ABD8-75DA-C51DCE0E5C94","service_entry_id":"2582B150-BA08-A767-3128-F6C66C0362C6","service_option_definition_id":"A4DD2432-77AB-5C80-DF00-2D9534852219"}}]'
     http_version: 
-2598e4e4d6e340c0060bc9e96a15492d8d34c09c:
+74221f972dd918d85276eaea9c0ffd1f19ff6691:
   response:
     status:
       code: 200
@@ -119,7 +119,7 @@ d232ee59fe9473292b1b607bc7bb1c9421ccb658:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000739-DEV08","id":"6C07EF9B-E6D0-9394-18AA-5B1490E777F8","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"52B52D7D-58BC-1A07-EA8A-E68AE489C304"}}]'
     http_version: 
-5443157e5085d036a839ac7527d0f21c6311f24f:
+7193b157ad9b86cdadf0e13dc195a744a68ac5ae:
   response:
     status:
       code: 200
@@ -149,7 +149,7 @@ d232ee59fe9473292b1b607bc7bb1c9421ccb658:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1000000969-DEV08","id":"E80371F5-E91F-0C1A-ABF5-384D0E7A9908","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"F431F03F-48FC-3DB3-59C8-9EBA698EBBDF"}}]'
     http_version: 
-7ee6371e42285ca5e0752d3da210c517e1479dae:
+7c33771c45504b408cbdbecc519e2e8e9596a992:
   response:
     status:
       code: 200
@@ -179,7 +179,37 @@ d232ee59fe9473292b1b607bc7bb1c9421ccb658:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1200240776-DEV08","id":"FDFC9DF8-3807-0275-DA53-AE9E3E83144D","service_entry_id":"36BB384A-5B21-35B0-1247-C98949A5BEA0","service_option_definition_id":"D7004637-C676-DAE3-E4EA-34535078758E"}}]'
     http_version: 
-dc9dab87db05707c79cfc7b98261fda48d4a711f:
+032c91d66da31968e40e619e44e6ace091cbd977:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Mon, 11 Mar 2019 14:30:53 GMT
+      etag:
+      - '"a93eef7854414eca9d21097f206dfe40"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.734000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '279'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1200341690-EDF_DEV02","id":"7434D999-63BC-72C0-C3B9-40C07C1F448D","service_entry_id":"0779A6E4-B93D-09EE-6C36-220274BA5D0F","service_option_definition_id":"C206763E-B183-F69D-3C8F-BF46175C64F3"}}]'
+    http_version: 
+2548fe4c6b1f8bb90c33b877f9161baf34481a1a:
   response:
     status:
       code: 200
