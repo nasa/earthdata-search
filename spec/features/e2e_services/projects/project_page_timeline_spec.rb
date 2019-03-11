@@ -16,6 +16,11 @@ describe 'Project Page Timeline' do
     before :all do
       load_page :projects_page, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
 
+      collection_card = find('.project-list-item', match: :first)
+      collection_card.find('.project-list-item-action-edit-options').click
+      click_on 'Edit Delivery Method'
+      choose 'Stage for Delivery'
+
       click_timeline_zoom_in
       pan_to_time(timeline_date)
 
@@ -43,6 +48,11 @@ describe 'Project Page Timeline' do
   context 'when focusing on a timeline date while temporal is applied' do
     before do
       load_page :projects_page, project: ['C1000000739-DEV08'], temporal: ['2010-02-01T00:00:00Z', '2010-02-16T23:59:59Z'], env: :sit, authenticate: 'edsc'
+
+      collection_card = find('.project-list-item', match: :first)
+      collection_card.find('.project-list-item-action-edit-options').click
+      click_on 'Edit Delivery Method'
+      choose 'Stage for Delivery'
 
       click_timeline_zoom_in
       pan_to_time(timeline_date)

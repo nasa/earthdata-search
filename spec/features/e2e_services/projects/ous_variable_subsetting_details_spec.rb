@@ -15,6 +15,9 @@ describe 'When viewing the project page' do
       # Click the edit link
       collection_card.find('.project-list-item-action-edit-options').click
 
+      click_button('Edit Delivery Method')
+      choose('Customize & Download')
+
       # Choose to subset based on variables
       find_button('Edit Variables').click
       wait_for_xhr
