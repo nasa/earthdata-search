@@ -14,9 +14,9 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Wed, 27 Feb 2019 20:07:06 GMT
-  digest: 06ea9467cc1f6193761e81fa76b21647f609cb92
+  digest: 9c4448b3235147e1c6ec86c8ccae9d0b260a5c2e
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/2882537F-E7FD-3F8B-64E6-57CAF36A9A0D.json
@@ -27,9 +27,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Wed, 07 Nov 2018 15:38:16 GMT
-  digest: cd6b659efc8a8424b8d5791d8da8bce6e1dbe861
+  digest: 040ad55b92ea6da1211d17023e90d43b36a1ee30
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/52B52D7D-58BC-1A07-EA8A-E68AE489C304.json
@@ -40,9 +40,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 06 Nov 2018 19:49:15 GMT
-  digest: 64d9ec37daad74cccc55b57610e060d48a46861d
+  digest: 1ce93eeab92dbce1e670d02c9bb0ad01606cd1c6
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/A4DD2432-77AB-5C80-DF00-2D9534852219.json
@@ -53,9 +53,26 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Mon, 31 Dec 2018 18:13:10 GMT
-  digest: 60a75fc5b1151225a222798cd4eaab51b364e0c9
+  digest: 9736f020ea8d35b6ef0d1c28e1843f79afe46d3b
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/C206763E-B183-F69D-3C8F-BF46175C64F3.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Mon, 11 Mar 2019 14:29:56 GMT
+  digest: dba5bde7fa8972ca204e54e2534b0c56d0f5bae8
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/D7004637-C676-DAE3-E4EA-34535078758E.json
@@ -66,9 +83,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 06 Nov 2018 17:47:38 GMT
-  digest: 8e2fad3a163404c247d509009fd90ba4aa9440b4
+  digest: 4a3ef02794c7df82a8d39d478afcf65bff9843e5
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/E96C488E-B713-023E-8CCA-22B45AB0FFEE.json
@@ -79,9 +96,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Wed, 07 Nov 2018 15:38:17 GMT
-  digest: 00cfbc42ea37698cd128e2a589f82618249e9455
+  digest: 9dde6cd9eb5339644a2135b9783d4b2d0a0b5c13
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/F431F03F-48FC-3DB3-59C8-9EBA698EBBDF.json
@@ -92,9 +109,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 06 Nov 2018 17:27:00 GMT
-  digest: fa161c8608564acc7c97dfc7373d6fa44bf51465
+  digest: b97abc4e0d107605e008cb8d17f96667f8123aa5
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/legacy-services/rest/service_option_definitions/9C5494D7-4EEB-2296-083E-435D7BB0448B.json
@@ -105,7 +122,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Mon, 31 Dec 2018 18:15:08 GMT
-  digest: 6d876497f6af89e15c2999d9da43d45bf6b688e9
+  digest: 74c1b3c7152eef43e0c0dd3795d6eef24054d8a8
 recorded_with: VCR 2.6.0

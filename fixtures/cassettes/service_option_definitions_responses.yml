@@ -1,5 +1,5 @@
 ---
-06ea9467cc1f6193761e81fa76b21647f609cb92:
+9c4448b3235147e1c6ec86c8ccae9d0b260a5c2e:
   response:
     status:
       code: 200
@@ -269,7 +269,7 @@
         label=\"\" ref=\"../../../ecs:NULL_MSG\" type=\"xsd:string\"/></group></group></ui></form>","id":"4627EE9B-89A5-9302-9E4B-CFF02C9FF075","name":"MOD10A1.6
         ESI Service","provider_id":"20604"}}'
     http_version: 
-cd6b659efc8a8424b8d5791d8da8bce6e1dbe861:
+040ad55b92ea6da1211d17023e90d43b36a1ee30:
   response:
     status:
       code: 200
@@ -1051,7 +1051,7 @@ cd6b659efc8a8424b8d5791d8da8bce6e1dbe861:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"2882537F-E7FD-3F8B-64E6-57CAF36A9A0D","name":"AA_L2A.1
         ESI Service","provider_id":"132AE551-C007-3A64-385E-829ECD83CC87"}}'
     http_version: 
-64d9ec37daad74cccc55b57610e060d48a46861d:
+1ce93eeab92dbce1e670d02c9bb0ad01606cd1c6:
   response:
     status:
       code: 200
@@ -1609,7 +1609,7 @@ cd6b659efc8a8424b8d5791d8da8bce6e1dbe861:
         less thanNorth</alert></constraint></constraints></input></group></group></ui></form>","id":"52B52D7D-58BC-1A07-EA8A-E68AE489C304","name":"MOD11A1.5
         ESI Service","provider_id":"ADCF11ED-676E-6F34-EE53-4260ABB4878B"}}'
     http_version: 
-60a75fc5b1151225a222798cd4eaab51b364e0c9:
+9736f020ea8d35b6ef0d1c28e1843f79afe46d3b:
   response:
     status:
       code: 200
@@ -2237,7 +2237,145 @@ cd6b659efc8a8424b8d5791d8da8bce6e1dbe861:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"A4DD2432-77AB-5C80-DF00-2D9534852219","name":"MCD43A4.5
         ESI Service","provider_id":"132AE551-C007-3A64-385E-829ECD83CC87"}}'
     http_version: 
-8e2fad3a163404c247d509009fd90ba4aa9440b4:
+dba5bde7fa8972ca204e54e2534b0c56d0f5bae8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Mon, 11 Mar 2019 14:30:01 GMT
+      etag:
+      - '"b6b79c94c6db13ed276e32d8c830a554"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.193000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '11057'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"service_option_definition":{"description":" ECHO Service/Order form
+        for DataSet \"ATLAS/ICESat-2 L2A Normalized Relative Backscatter Profiles
+        V203\" (ATL04.203) Updated: 2019/03/05: 19:07:18","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:forms=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://ecs.nasa.gov/options\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\"><!--\nECHO Service/Order
+        form for DataSet \"ATLAS/ICESat-2 L2A Normalized Relative Backscatter Profiles
+        V203\" (ATL04.203):\n--><model><instance><ecs:request xmlns:ecs=\"http://ecs.nasa.gov/options\"><!--NOTE:
+        elements in caps losely match the ESI API, those in lowercase are helper elements
+        --><ecs:requestInfo><ecs:email/></ecs:requestInfo><!--Dataset ID will be injected
+        by Reverb--><ecs:CLIENT>ESI</ecs:CLIENT><!--First SubsetAgent in the input
+        capabilities XML is used as the default.--><ecs:SUBAGENT_ID><ecs:value>ICESAT2</ecs:value></ecs:SUBAGENT_ID><!--
+        hardcode to async for Reverb services --><ecs:REQUEST_MODE>async</ecs:REQUEST_MODE><ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG><ecs:NO_PROJ_MSG>No
+        projection options available with current selection.</ecs:NO_PROJ_MSG><ecs:ADVANCED_OPT_MSG>No
+        resampling or interpolation options available with current selection.</ecs:ADVANCED_OPT_MSG><ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1><ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2><ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1><ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1><ecs:NULL_MSG/><ecs:ICESAT2-request><ecs:temporal_subsetting><!--Not
+        currently populating temporal defaults since no tools support--><ecs:START/><ecs:END/></ecs:temporal_subsetting><!--Need
+        to populate BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"--><ecs:BBOX/><ecs:spatial_subsetting><ecs:shapefile/><ecs:boundingbox><ecs:ullat>90</ecs:ullat><ecs:ullon>-180</ecs:ullon><ecs:lrlat>-90</ecs:lrlat><ecs:lrlon>180</ecs:lrlon></ecs:boundingbox></ecs:spatial_subsetting><!--First
+        Format in the input XML is used as the default.--><ecs:FORMAT><ecs:value/></ecs:FORMAT><!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)--><!-- FILE_IDS
+        must be injected by Reverb --><!-- FILE_URLS is not used in requests from
+        ECHO, Use FILE_IDS instead --><ecs:advanced_file_option_flag/><ecs:advanced_file_options><ecs:INTERPOLATION><ecs:value/></ecs:INTERPOLATION><!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.--><ecs:INCLUDE_META>false</ecs:INCLUDE_META></ecs:advanced_file_options><ecs:spatial_subset_flag>false</ecs:spatial_subset_flag><ecs:spatial_subset_shapefile_flag>false</ecs:spatial_subset_shapefile_flag><ecs:band_subset_flag/><ecs:temporal_subset_flag>true</ecs:temporal_subset_flag></ecs:ICESAT2-request></ecs:request></instance><extension
+        xmlns:pre=\"http://echo.nasa.gov/v9/echoforms/prepopulate\" name=\"pre:prepopulate\"><pre:expressions><pre:expression
+        ref=\"//ecs:requestInfo/ecs:dataset_ids\" source=\"ALL_DATASET_IDS_FROM_CART\"/><pre:expression
+        ref=\"//ecs:requestInfo/ecs:email\" source=\"EMAIL\"/><pre:expression ref=\"//ecs:requestInfo/ecs:keywords\"
+        source=\"KEYWORDS\"/><pre:expression ref=\"//ecs:requestInfo/ecs:spatial\"
+        source=\"SPATIAL\"/><pre:expression ref=\"//ecs:requestInfo/ecs:shp_file\"
+        source=\"SHP_FILE\"/><pre:expression ref=\"//ecs:ICESAT2-request/ecs:temporal_subsetting/ecs:START\"
+        source=\"TEMPORAL_START\"/><pre:expression ref=\"//ecs:ICESAT2-request/ecs:temporal_subsetting/ecs:END\"
+        source=\"TEMPORAL_END\"/><pre:expression ref=\"//ecs:ICESAT2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon\"
+        source=\"BBOX_WEST\"/><pre:expression ref=\"//ecs:ICESAT2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlat\"
+        source=\"BBOX_SOUTH\"/><pre:expression ref=\"//ecs:ICESAT2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon\"
+        source=\"BBOX_EAST\"/><pre:expression ref=\"//ecs:ICESAT2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullat\"
+        source=\"BBOX_NORTH\"/></pre:expressions></extension></model><ui><input label=\"Email
+        Address\" ref=\"ecs:requestInfo/ecs:email\" required=\"false()\" type=\"xsd:string\"><constraints><constraint><xpath>contains(ecs:requestInfo/ecs:email,
+        ''@'') and contains(substring-after(ecs:requestInfo/ecs:email, ''@''), ''.'')
+        and string-length(substring-after(ecs:requestInfo/ecs:email, ''.''))</xpath><alert>A
+        valid email address is required.</alert></constraint></constraints></input><input
+        label=\"Include Metadata and Processing History\" ref=\"ecs:ICESAT2-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''ICESAT2''&#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''PQF''&#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''GLAS''&#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \"
+        type=\"xsd:boolean\"/><group id=\"ICESAT2-reformatOptions\" label=\"Reformat
+        Output (Optional)\" ref=\"ecs:ICESAT2-request\" relevant=\"ecs:SUBAGENT_ID/ecs:value=''ICESAT2''\"><select
+        id=\"ICESAT2-formatselect\" label=\"Output File Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:FORMAT\" relevant=\"../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''\"
+        type=\"xsd:string\" valueElementName=\"value\"><item label=\"NetCDF4-CF\"
+        value=\"NetCDF4-CF\"/><item label=\"NetCDF-3\" value=\"NetCDF-3\"/><item label=\"No
+        Reformatting\" value=\"\"/><item label=\"Tabular ASCII\" value=\"TABULAR_ASCII\"/><item
+        label=\"Shapefile\" value=\"Shapefile\"/><item label=\"Shapefile(All in one
+        Shapefile)\" value=\"Shapefile-Combined\"/></select></group><group id=\"ICESAT2-spatial\"
+        label=\"Spatial Subsetting (Optional)\" ref=\"ecs:ICESAT2-request/ecs:spatial_subsetting\"
+        relevant=\"ecs:SUBAGENT_ID/ecs:value=''ICESAT2''\"><input label=\"Enter bounding
+        box\" ref=\"../ecs:spatial_subset_flag\" type=\"xsd:boolean\"/><input label=\"Use
+        Shapefile from Search\" ref=\"../ecs:spatial_subset_shapefile_flag\" type=\"xsd:boolean\"/><group
+        id=\"ICESAT2-NWESBoundingBox\" label=\"\" ref=\"ecs:boundingbox\"><input label=\"North\"
+        ref=\"ecs:ullat\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ../../ecs:spatial_subset_flag=''true''&#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)
+        &gt;= -90</xpath><alert>North must be greater than -90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)
+        &lt;= 90</xpath><alert>North must be less than 90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullat)  &gt;=  number(ecs:lrlat)</xpath><alert>North
+        must be greater than South</alert></constraint></constraints></input><input
+        label=\"West\" ref=\"ecs:ullon\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ../../ecs:spatial_subset_flag=''true''&#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)
+        &gt;= -180</xpath><alert>West must be greater than -180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)
+        &lt;= 180</xpath><alert>West must be less than 180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:ullon)  &lt;=  number(ecs:lrlon)</xpath><alert>West
+        must be less than East</alert></constraint></constraints></input><input label=\"East\"
+        ref=\"ecs:lrlon\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ../../ecs:spatial_subset_flag=''true''&#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)
+        &gt;= -180</xpath><alert>East must be greater than -180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)
+        &lt;= 180</xpath><alert>East must be less than 180</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlon)  &gt;=  number(ecs:ullon)</xpath><alert>East
+        must be greater than West</alert></constraint></constraints></input><input
+        label=\"South\" ref=\"ecs:lrlat\" relevant=\"../../../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ../../ecs:spatial_subset_flag=''true''&#10;            \" required=\"true()\"
+        type=\"xsd:double\"><constraints><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)
+        &gt;= -90</xpath><alert>South must be greater than -90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)
+        &lt;= 90</xpath><alert>South must be less than 90</alert></constraint><constraint><xpath>(../../../ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        and ../../../ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2'') or number(ecs:lrlat)  &lt;=  number(ecs:ullat)</xpath><alert>South
+        must be less than North</alert></constraint></constraints></input></group></group><group
+        id=\"ICESAT2-temporalSubsetOptions\" label=\"Temporal Subsetting (Optional)\"
+        ref=\"ecs:ICESAT2-request/ecs:temporal_subsetting\" relevant=\"ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ecs:ICESAT2-request/ecs:temporal_subset_flag=''true''\"><!--\nTODO: once
+        multi tools are fully supported, make temporal only show up if subsetagent
+        supports temporal\n--><input label=\"Start Date\" ref=\"ecs:START\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ../ecs:temporal_subset_flag=''true''\" required=\"false()\" type=\"xsd:dateTime\"><constraints><constraint><xpath>string-length(ecs:START)
+        = 0 or (number(translate(ecs:START,''-.:T'','''')) &gt;= number(translate(''2000-01-01T00:00:00'',''-.:T'','''')))</xpath><alert>Start
+        date must be greater than 2000-01-01T00:00:00</alert></constraint></constraints></input><input
+        label=\"End Date\" ref=\"ecs:END\" relevant=\"../../ecs:SUBAGENT_ID/ecs:value=''ICESAT2''
+        and ../ecs:temporal_subset_flag=''true''\" required=\"false()\" type=\"xsd:dateTime\"/></group></ui></form>","id":"C206763E-B183-F69D-3C8F-BF46175C64F3","name":"ATL04.203
+        ESI Service","provider_id":"DCE49537-444E-7BEF-B4C0-6FB2C4D9E72C"}}'
+    http_version: 
+4a3ef02794c7df82a8d39d478afcf65bff9843e5:
   response:
     status:
       code: 200
@@ -2949,7 +3087,7 @@ cd6b659efc8a8424b8d5791d8da8bce6e1dbe861:
         label=\"\" ref=\"../../../ecs:NULL_MSG\" type=\"xsd:string\"/></group></group></ui></form>","id":"D7004637-C676-DAE3-E4EA-34535078758E","name":"MOD13Q1.6
         ESI Service","provider_id":"ADCF11ED-676E-6F34-EE53-4260ABB4878B"}}'
     http_version: 
-00cfbc42ea37698cd128e2a589f82618249e9455:
+9dde6cd9eb5339644a2135b9783d4b2d0a0b5c13:
   response:
     status:
       code: 200
@@ -3575,7 +3713,7 @@ cd6b659efc8a8424b8d5791d8da8bce6e1dbe861:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"E96C488E-B713-023E-8CCA-22B45AB0FFEE","name":"ACR3L2DM.1
         ESI Service","provider_id":"132AE551-C007-3A64-385E-829ECD83CC87"}}'
     http_version: 
-fa161c8608564acc7c97dfc7373d6fa44bf51465:
+b97abc4e0d107605e008cb8d17f96667f8123aa5:
   response:
     status:
       code: 200
@@ -4373,7 +4511,7 @@ fa161c8608564acc7c97dfc7373d6fa44bf51465:
         label=\"\" ref=\"../../../ecs:NULL_MSG\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"F431F03F-48FC-3DB3-59C8-9EBA698EBBDF","name":"AE_L2A.2
         ESI Service","provider_id":"ADCF11ED-676E-6F34-EE53-4260ABB4878B"}}'
     http_version: 
-6d876497f6af89e15c2999d9da43d45bf6b688e9:
+74c1b3c7152eef43e0c0dd3795d6eef24054d8a8:
   response:
     status:
       code: 200
