@@ -14,7 +14,6 @@ do ($=jQuery, ko) ->
         primaryTitle = ko.observable('')
         secondaryTitle = ko.observable('')
         shouldAnimate = ko.observable(true)
-        state = params.state
 
         return {
           panelGroupName,
