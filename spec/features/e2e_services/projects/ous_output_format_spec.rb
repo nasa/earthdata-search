@@ -15,8 +15,7 @@ describe 'When viewing the project page' do
       # Click the customize link
       collection_card.find('.project-list-item-action-edit-options').click
 
-      click_on 'Edit Delivery Method'
-      choose 'Customize & Download (OPeNDAP)'
+      choose 'Customize (OPeNDAP)'
 
       select 'BINARY', from: 'output-format' # BINARY is `.dods`
     end

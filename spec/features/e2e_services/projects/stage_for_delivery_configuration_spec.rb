@@ -12,7 +12,6 @@ describe 'When viewing the project page with an EGI supported collection' do
       collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
-      click_on 'Edit Delivery Method'
       choose('Stage for Delivery')
     end
 

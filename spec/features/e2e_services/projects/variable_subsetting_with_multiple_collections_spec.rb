@@ -15,8 +15,7 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click
 
-      click_on 'Edit Delivery Method'
-      choose 'Customize & Download (OPeNDAP)'
+      choose 'Customize (OPeNDAP)'
     end
 
     it 'displays the customization modal' do
