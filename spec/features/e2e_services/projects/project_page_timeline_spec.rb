@@ -18,7 +18,6 @@ describe 'Project Page Timeline' do
 
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click
-      click_on 'Edit Delivery Method'
       choose 'Stage for Delivery'
 
       click_timeline_zoom_in
@@ -51,7 +50,6 @@ describe 'Project Page Timeline' do
 
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click
-      click_on 'Edit Delivery Method'
       choose 'Stage for Delivery'
 
       click_timeline_zoom_in

@@ -12,7 +12,6 @@ describe 'Switching Delivery Methods' do
       collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
-      click_on 'Edit Delivery Method'
       choose('Stage for Delivery')
 
       select 'FTP Push', from: 'Distribution Type'
