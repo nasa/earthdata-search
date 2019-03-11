@@ -288,7 +288,7 @@ d01537ac1b980a4377b21fabd637822e936f33b7:
         </body>
         </html>
     http_version: 
-a18e4a41c1de6288595089cb1e08c17086e4d2d2:
+670fd6e896050ff0479269bfc04904564d6fa4c5:
   response:
     status:
       code: 200
@@ -339,7 +339,7 @@ a18e4a41c1de6288595089cb1e08c17086e4d2d2:
         Interpolation","Nearest Neighbor"]},"LongName":"NSIDC_ECS ESI EOSDIS Service
         Implementation"}}]}'
     http_version: 
-db6b896b98b2ae736af3e495b4f7e9e8ff0b357f:
+1187f3ca8aafa841aa49a84837acd68897870ab9:
   response:
     status:
       code: 200
@@ -384,7 +384,7 @@ db6b896b98b2ae736af3e495b4f7e9e8ff0b357f:
         Interpolation","Nearest Neighbor"]},"LongName":"LANCEAMSR2 EOSDIS ECHO ORDERS
         Service Implementation"}}]}'
     http_version: 
-de0e12bccebb5da12d02cb9f31beaaff071428bd:
+cf9feed68ce94fe32d1d3f6b3e8728447ca6ed72:
   response:
     status:
       code: 200
@@ -431,7 +431,7 @@ de0e12bccebb5da12d02cb9f31beaaff071428bd:
         through OPeNDAP","Version":"1.9","Name":"AIRX3STD.006","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"SupportedInputProjections":[{"ProjectionName":"Geographic"}],"SupportedOutputProjections":[{"ProjectionName":"Geographic"}],"SupportedInputFormats":["HDF4","NETCDF-3","NETCDF-4","BINARY","ASCII"],"SupportedOutputFormats":["HDF4","NETCDF-3","NETCDF-4","BINARY","ASCII"]},"LongName":"AIRS/Aqua
         L3 Daily Standard Physical Retrieval (AIRS+AMSU) 1 degree x 1 degree V006."}}]}'
     http_version: 
-6f51f23c5119c4be538b93a8e03fb73030db58f0:
+b354acdaf5e4060134c42ff37c2c88d74cde2d3d:
   response:
     status:
       code: 200
@@ -504,7 +504,7 @@ de0e12bccebb5da12d02cb9f31beaaff071428bd:
         Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV01 ESI EOSDIS Service
         Implementation"}}]}'
     http_version: 
-906bfb80602d0b38680ed57eaa319792e1524980:
+4a7333bd483c5cb16de70780915a1913533149ef:
   response:
     status:
       code: 200
@@ -577,7 +577,7 @@ de0e12bccebb5da12d02cb9f31beaaff071428bd:
         Interpolation"],"SupportedInputFormats":["NETCDF-4"],"SupportedOutputFormats":["NETCDF-4"]},"LongName":"Mollis
         Etiam Magna Fermentum Fringilla"}}]}'
     http_version: 
-e307114ba27d56663f489f1879ebd3591bdbad4a:
+3ab9aea14db6bb14eefea41751866d67defcbc6b:
   response:
     status:
       code: 200
@@ -636,7 +636,7 @@ e307114ba27d56663f489f1879ebd3591bdbad4a:
         Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV01 ESI EOSDIS Service
         Implementation"}}]}'
     http_version: 
-aff7c2900d67d2e0a375e421cf14336c7a1af8c7:
+d856706f77e244473b7262c30c3a6786f74d2337:
   response:
     status:
       code: 200
@@ -682,7 +682,51 @@ aff7c2900d67d2e0a375e421cf14336c7a1af8c7:
         Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_OPS ESI EOSDIS Service
         Implementation"}}]}'
     http_version: 
-98b58f04d9e56225cad147ed17049c8eddb55e13:
+544c9bf3fe838f80afc685ee6049209e663d11a3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-hits:
+      - '1'
+      cmr-request-id:
+      - 42edc126-e21c-45e6-89cd-2102c3e7183a
+      cmr-took:
+      - '30'
+      content-type:
+      - application/vnd.nasa.cmr.umm_results+json;version=1.2; charset=utf-8
+      date:
+      - Mon, 11 Mar 2019 14:30:22 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '1874'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"hits":1,"took":28,"items":[{"meta":{"revision-id":1,"deleted":false,"format":"application/vnd.nasa.cmr.umm+json","provider-id":"EDF_DEV02","user-id":"scantrell8277","native-id":"EDF_DEV02_ESI_service","concept-id":"S1200299171-EDF_DEV02","revision-date":"2018-10-25T14:17:37Z","concept-type":"service"},"umm":{"RelatedURLs":[{"Description":"ESI
+        Service for EDF_DEV02 EOSDIS Service Implementation","URLContentType":"DistributionURL","Type":"GET
+        SERVICE","Subtype":"ACCESS WEB SERVICE","URL":"https://f5eil01.edn.ecs.nasa.gov/egi_DEV02/request","GetService":{"MimeType":"application/x-hdf","Protocol":"HTTPS","FullName":"EGI/Request","DataID":"Various","DataType":"Various"}}],"Type":"ESI","ServiceKeywords":[{"ServiceCategory":"EARTH
+        SCIENCE SERVICES","ServiceTopic":"DATA MANAGEMENT/DATA HANDLING","ServiceTerm":"DATA
+        INTEROPERABILITY","ServiceSpecificTerm":"DATA REFORMATTING"}],"ServiceOrganizations":[{"Roles":["PUBLISHER"],"ShortName":"NASA/GSFC/EOS/EOSDIS/EMD","LongName":"Maintenance
+        and Development, Earth Observing System Data and Information System, Earth
+        Observing System,Goddard Space Flight Center, NASA","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataContactURL","Type":"HOME
+        PAGE","URL":"http://newsroom.gsfc.nasa.gov/"}],"ContactMechanisms":[{"Type":"Email","Value":"david.p.auty@nasa.gov"}]}}],"ServiceQuality":{"QualityFlag":"Available"},"AccessConstraints":"NONE","Description":"EDF_DEV02
+        ESI EOSDIS Service Implementation","Version":"1","UseConstraints":"NONE","Name":"EDF_DEV02_ESI","ServiceOptions":{"SubsetTypes":["Spatial","Variable"],"InterpolationTypes":["Bilinear
+        Interpolation","Nearest Neighbor"]},"Platforms":[{"ShortName":"AQUA","LongName":"Earth
+        Observing System, AQUA","Instruments":[{"ShortName":"AMSR-E","LongName":"Advanced
+        Microwave Scanning Radiometer-EOS"}]}],"LongName":"EDF_DEV02 ESI EOSDIS Service
+        Implementation"}}]}'
+    http_version: 
+566e84e1c1604699cadc333cf2a39e4e78034339:
   response:
     status:
       code: 200
@@ -714,7 +758,7 @@ aff7c2900d67d2e0a375e421cf14336c7a1af8c7:
       encoding: UTF-8
       string: '{"hits":6,"took":0.759,"items":["https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2009.01.08/AIRS.2009.01.08.L3.RetStd001.v6.0.9.0.G13091205040.hdf.dods?EmisIR_A[0:1:3][79:1:90][209:1:220],EmisIR_A_ct[0:1:3][79:1:90][209:1:220],EmisIR_A_err[0:1:3][79:1:90][209:1:220],EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],EmisIR_A_sdev[0:1:3][79:1:90][209:1:220],SurfPres_Forecast_A[79:1:90][209:1:220],SurfPres_Forecast_A_ct[79:1:90][209:1:220],SurfPres_Forecast_A_max[79:1:90][209:1:220],SurfPres_Forecast_A_min[79:1:90][209:1:220],SurfPres_Forecast_A_sdev[79:1:90][209:1:220],SurfSkinTemp_A[79:1:90][209:1:220],SurfSkinTemp_A_ct[79:1:90][209:1:220],SurfSkinTemp_A_err[79:1:90][209:1:220],SurfSkinTemp_A_max[79:1:90][209:1:220],SurfSkinTemp_A_min[79:1:90][209:1:220],SurfSkinTemp_A_sdev[79:1:90][209:1:220],Temperature_A[0:1:23][79:1:90][209:1:220],Temperature_A_ct[0:1:23][79:1:90][209:1:220],Temperature_A_min[0:1:23][79:1:90][209:1:220],Temperature_A_sdev[0:1:23][79:1:90][209:1:220],TotalCounts_A[79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.01.20/AIRS.2016.01.20.L3.RetStd001.v6.0.31.0.G16027144006.hdf.dods?EmisIR_A[0:1:3][79:1:90][209:1:220],EmisIR_A_ct[0:1:3][79:1:90][209:1:220],EmisIR_A_err[0:1:3][79:1:90][209:1:220],EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],EmisIR_A_sdev[0:1:3][79:1:90][209:1:220],SurfPres_Forecast_A[79:1:90][209:1:220],SurfPres_Forecast_A_ct[79:1:90][209:1:220],SurfPres_Forecast_A_max[79:1:90][209:1:220],SurfPres_Forecast_A_min[79:1:90][209:1:220],SurfPres_Forecast_A_sdev[79:1:90][209:1:220],SurfSkinTemp_A[79:1:90][209:1:220],SurfSkinTemp_A_ct[79:1:90][209:1:220],SurfSkinTemp_A_err[79:1:90][209:1:220],SurfSkinTemp_A_max[79:1:90][209:1:220],SurfSkinTemp_A_min[79:1:90][209:1:220],SurfSkinTemp_A_sdev[79:1:90][209:1:220],Temperature_A[0:1:23][79:1:90][209:1:220],Temperature_A_ct[0:1:23][79:1:90][209:1:220],Temperature_A_min[0:1:23][79:1:90][209:1:220],Temperature_A_sdev[0:1:23][79:1:90][209:1:220],TotalCounts_A[79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.02.03/AIRS.2016.02.03.L3.RetStd001.v6.0.31.0.G16035170541.hdf.dods?EmisIR_A[0:1:3][79:1:90][209:1:220],EmisIR_A_ct[0:1:3][79:1:90][209:1:220],EmisIR_A_err[0:1:3][79:1:90][209:1:220],EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],EmisIR_A_sdev[0:1:3][79:1:90][209:1:220],SurfPres_Forecast_A[79:1:90][209:1:220],SurfPres_Forecast_A_ct[79:1:90][209:1:220],SurfPres_Forecast_A_max[79:1:90][209:1:220],SurfPres_Forecast_A_min[79:1:90][209:1:220],SurfPres_Forecast_A_sdev[79:1:90][209:1:220],SurfSkinTemp_A[79:1:90][209:1:220],SurfSkinTemp_A_ct[79:1:90][209:1:220],SurfSkinTemp_A_err[79:1:90][209:1:220],SurfSkinTemp_A_max[79:1:90][209:1:220],SurfSkinTemp_A_min[79:1:90][209:1:220],SurfSkinTemp_A_sdev[79:1:90][209:1:220],Temperature_A[0:1:23][79:1:90][209:1:220],Temperature_A_ct[0:1:23][79:1:90][209:1:220],Temperature_A_min[0:1:23][79:1:90][209:1:220],Temperature_A_sdev[0:1:23][79:1:90][209:1:220],TotalCounts_A[79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.04.03/AIRS.2016.04.03.L3.RetStd001.v6.0.31.0.G16095182314.hdf.dods?EmisIR_A[0:1:3][79:1:90][209:1:220],EmisIR_A_ct[0:1:3][79:1:90][209:1:220],EmisIR_A_err[0:1:3][79:1:90][209:1:220],EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],EmisIR_A_sdev[0:1:3][79:1:90][209:1:220],SurfPres_Forecast_A[79:1:90][209:1:220],SurfPres_Forecast_A_ct[79:1:90][209:1:220],SurfPres_Forecast_A_max[79:1:90][209:1:220],SurfPres_Forecast_A_min[79:1:90][209:1:220],SurfPres_Forecast_A_sdev[79:1:90][209:1:220],SurfSkinTemp_A[79:1:90][209:1:220],SurfSkinTemp_A_ct[79:1:90][209:1:220],SurfSkinTemp_A_err[79:1:90][209:1:220],SurfSkinTemp_A_max[79:1:90][209:1:220],SurfSkinTemp_A_min[79:1:90][209:1:220],SurfSkinTemp_A_sdev[79:1:90][209:1:220],Temperature_A[0:1:23][79:1:90][209:1:220],Temperature_A_ct[0:1:23][79:1:90][209:1:220],Temperature_A_min[0:1:23][79:1:90][209:1:220],Temperature_A_sdev[0:1:23][79:1:90][209:1:220],TotalCounts_A[79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2004.12.11/AIRS.2004.12.11.L3.RetStd001.v6.0.9.0.G13189111444.hdf.dods?EmisIR_A[0:1:3][79:1:90][209:1:220],EmisIR_A_ct[0:1:3][79:1:90][209:1:220],EmisIR_A_err[0:1:3][79:1:90][209:1:220],EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],EmisIR_A_sdev[0:1:3][79:1:90][209:1:220],SurfPres_Forecast_A[79:1:90][209:1:220],SurfPres_Forecast_A_ct[79:1:90][209:1:220],SurfPres_Forecast_A_max[79:1:90][209:1:220],SurfPres_Forecast_A_min[79:1:90][209:1:220],SurfPres_Forecast_A_sdev[79:1:90][209:1:220],SurfSkinTemp_A[79:1:90][209:1:220],SurfSkinTemp_A_ct[79:1:90][209:1:220],SurfSkinTemp_A_err[79:1:90][209:1:220],SurfSkinTemp_A_max[79:1:90][209:1:220],SurfSkinTemp_A_min[79:1:90][209:1:220],SurfSkinTemp_A_sdev[79:1:90][209:1:220],Temperature_A[0:1:23][79:1:90][209:1:220],Temperature_A_ct[0:1:23][79:1:90][209:1:220],Temperature_A_min[0:1:23][79:1:90][209:1:220],Temperature_A_sdev[0:1:23][79:1:90][209:1:220],TotalCounts_A[79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.dods?EmisIR_A[0:1:3][79:1:90][209:1:220],EmisIR_A_ct[0:1:3][79:1:90][209:1:220],EmisIR_A_err[0:1:3][79:1:90][209:1:220],EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],EmisIR_A_sdev[0:1:3][79:1:90][209:1:220],SurfPres_Forecast_A[79:1:90][209:1:220],SurfPres_Forecast_A_ct[79:1:90][209:1:220],SurfPres_Forecast_A_max[79:1:90][209:1:220],SurfPres_Forecast_A_min[79:1:90][209:1:220],SurfPres_Forecast_A_sdev[79:1:90][209:1:220],SurfSkinTemp_A[79:1:90][209:1:220],SurfSkinTemp_A_ct[79:1:90][209:1:220],SurfSkinTemp_A_err[79:1:90][209:1:220],SurfSkinTemp_A_max[79:1:90][209:1:220],SurfSkinTemp_A_min[79:1:90][209:1:220],SurfSkinTemp_A_sdev[79:1:90][209:1:220],Temperature_A[0:1:23][79:1:90][209:1:220],Temperature_A_ct[0:1:23][79:1:90][209:1:220],Temperature_A_min[0:1:23][79:1:90][209:1:220],Temperature_A_sdev[0:1:23][79:1:90][209:1:220],TotalCounts_A[79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]"],"request-id":"80cb5e64-3d5a-f5e7-0c28-06d3318a1bd4","warnings":null}'
     http_version: 
-bf1cba6a89cc482fb383cf7eac97c001e85592ea:
+801a07c32d691d44e3e37eaf396764bc75bfda84:
   response:
     status:
       code: 200
@@ -746,7 +790,7 @@ bf1cba6a89cc482fb383cf7eac97c001e85592ea:
       encoding: UTF-8
       string: '{"hits":6,"took":0.281,"items":["https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2009.01.08/AIRS.2009.01.08.L3.RetStd001.v6.0.9.0.G13091205040.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.01.20/AIRS.2016.01.20.L3.RetStd001.v6.0.31.0.G16027144006.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.02.03/AIRS.2016.02.03.L3.RetStd001.v6.0.31.0.G16035170541.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.04.03/AIRS.2016.04.03.L3.RetStd001.v6.0.31.0.G16095182314.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/user/FS2/AIRS/AIRX3STD.006/2004.12.11/AIRS.2004.12.11.L3.RetStd001.v6.0.9.0.G13189111444.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]","https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX3STD.006/2016.07.01/AIRS.2016.07.01.L3.RetStd001.v6.0.31.0.G16187132305.hdf.nc?EmisIR_A_max[0:1:3][79:1:90][209:1:220],EmisIR_A_min[0:1:3][79:1:90][209:1:220],Latitude[79:1:90],Longitude[209:1:220]"],"request-id":"75fb3302-270d-f213-ccac-124344098791","warnings":null}'
     http_version: 
-7c4e2b963215ac53e176e5c510588826d2a4438a:
+c750c69070ffc904c8353b43d577cab53709cffc:
   response:
     status:
       code: 200
