@@ -13,13 +13,16 @@ describe 'When viewing the project page with an EGI supported collection' do
       wait_for_xhr
     end
 
-    it 'displays the customization modal' do
+    it 'displays the customization panel' do
       expect(page).to have_content('Edit Options')
     end
 
-    it 'displays the correct delivery method header' do
-      within '.panel-item-heading' do
-        expect(page).to have_content('Stage for Delivery')
+    it 'displays the correct delivery method' do
+      within '.radio-list' do
+        field = find_field('C1000000969-DEV08-00-access-method')
+        field_parent = field.find(:xpath, '..')
+        expect(field).to be_checked
+        expect(field_parent).to have_content('Stage for Delivery')
       end
     end
 
@@ -27,10 +30,9 @@ describe 'When viewing the project page with an EGI supported collection' do
       expect(page).to have_css('.access-form')
     end
 
-    context 'when selecting the Customize & Download delivery option' do
+    context 'when selecting the Customize delivery option' do
       before do
-        click_on 'Edit Delivery Method'
-        choose('Customize & Download')
+        choose('Customize')
       end
 
       it 'prepopulates the form email address' do

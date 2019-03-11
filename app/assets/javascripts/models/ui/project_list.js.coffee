@@ -17,6 +17,8 @@ ns.ProjectList = do (ko
       @needsTemporalChoice = ko.observable(false)
       @moreDetailsActive = ko.observableArray()
       @downloadLinksActive = ko.observableArray()
+      @projectPanelCollectionId = ko.observable(null)
+      @projectPanelIsOpen = ko.observable(null)
 
       @collectionLinks = ko.computed(@_computeCollectionLinks, this, deferEvaluation: true)
       @collectionsToDownload = ko.computed(@_computeCollectionsToDownload, this, deferEvaluation: true)

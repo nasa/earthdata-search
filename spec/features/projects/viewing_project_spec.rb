@@ -77,8 +77,7 @@ describe 'Viewing Single Project' do
 
           project_list_item.find('.project-list-item-action-edit-options').click
 
-          click_button('Edit Delivery Method')
-          choose('Customize & Download')
+          choose('Customize')
           check 'Enter bounding box'
 
           within '.modal-footer' do

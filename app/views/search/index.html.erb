@@ -192,7 +192,7 @@
         <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-close fa-stack-1x fa-inverse"></i></span>
       </a>
     </div>
-    <div class="granule-browse collapse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">
+    <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}" id="browseImageDiv">
       <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
         <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
       </a>

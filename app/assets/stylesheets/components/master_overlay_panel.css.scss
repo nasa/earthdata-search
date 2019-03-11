@@ -8,7 +8,7 @@
 
 .master-overlay-panel-group-header {
   position: relative;
-  padding: 95px 15px 15px;
+  padding: 15px 40px 15px 15px;
   border-bottom: 1px solid #ddd;
 }
 
@@ -18,8 +18,9 @@
 
 .master-overlay-panel-group-heading-primary {
   display: block;
-  font-weight: normal;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #7F7F7F;
 }
 
 .master-overlay-panel-group-heading-secondary {
@@ -83,8 +84,9 @@
 
 .master-overlay-panel-group-close {
   position: absolute;
-  top: 25px;
-  right: 5px;
+  top: 0;
+  right: 0;
+  padding: 15px;
   background: none;
   font-size: 20px;
   color: #999;
@@ -156,17 +158,21 @@
   transform: translateX(0);
 }
 
-.master-overlay-panel-item-content {
+.master-overlay-panel-item-wrapper {
   display: none;
-  padding: 15px 15px 50px 15px;
 
   .master-overlay-panel-initialized & {
+    height: 100%;
     display: block;
   }
 }
 
-.master-overlay-panel-item-content-trimmed {
+.master-overlay-panel-item-wrapper-trimmed {
   padding: 0;
+}
+
+.master-overlay-panel-item-content {
+  padding: 55px 15px 50px 15px;
 }
 
 .master-overlay-panel-item-overlay {

@@ -13,8 +13,7 @@ describe 'When viewing the project page' do
       # Click the customize link
       collection_card.find('.project-list-item-action-edit-options').click
 
-      click_button('Edit Delivery Method')
-      choose('Customize & Download')
+      choose('Customize')
 
       # Choose to subset based on variables
       find_button('Edit Variables').click
@@ -100,7 +99,6 @@ describe 'When viewing the project page' do
       # Click the customize link
       collection_card.find('.project-list-item-action-edit-options').click
 
-      click_button('Edit Delivery Method')
       choose('Direct Download')
     end
 
