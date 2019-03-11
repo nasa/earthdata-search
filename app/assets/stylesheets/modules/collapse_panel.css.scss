@@ -7,9 +7,19 @@
 .collapse-panel-button {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 15px;
     width: 100%;
     text-align: left;
+    font-size: 14px;
+    color: rgba(0,0,0,0.7);
+    background: #fcf8e3;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        color: rgba(0,0,0,0.7);
+        background-color: #efe9cc;
+    }
 
     .fa-chevron-down,
     .fa-chevron-up {

@@ -4,7 +4,7 @@
     <li class="project-list-empty-notice">Your project is empty. <a href="#" data-bind="click: $component.project.backToSearch">Click here</a> to return to search and add collections to your project.</li>
     <!-- /ko -->
     <!-- ko foreach: $component.project.collections() -->
-      <li class="project-list-item" data-bind="css: collection.id + '_project-list-item', style: {borderLeft: '5px solid' + $data.meta.color}, attr: {'data-short_name': collection.short_name(), 'data-version_id': collection.version_id}" >
+      <li class="project-list-item" data-bind="css: {'project-list-item-is-active': $root.ui.projectList.projectPanelCollectionId() === $data.collection.id && $root.ui.projectList.projectPanelIsOpen() }, style: {borderLeft: '5px solid' + $data.meta.color}, attr: {'data-short_name': collection.short_name(), 'data-version_id': collection.version_id}" >  
         <div class="project-list-item-content">
           <div class="project-list-item-title-wrap" data-bind="multilineEllipsis: {text: collection.title}">
               <h3 class="project-list-item-title" data-bind="click: function(){$('#' + collection.id + '_details').trigger('toggle-panel')}"></h3>
@@ -105,7 +105,7 @@
                     </span> -->
                   </div>
                 </div>
-                <a class="project-list-item-action project-list-item-action-edit-options" data-toggle="modal" data-bind="click: launchEditModal, css: { enabled: isLoadingComplete()}, click: function(){$('#' + collection.id + '_edit-options').trigger('toggle-panel')}">
+                <a class="project-list-item-action project-list-item-action-edit-options" data-toggle="modal" data-bind="css: { enabled: isLoadingComplete()}, click: $parent.project.toggleActivePanel">
                   <!-- ko if: !serviceOptions.readyToDownload() -->
                   <i class="fa fa-exclamation-circle echoforms-error"></i>
                   <!-- /ko -->
@@ -119,4 +119,5 @@
       </li>
     <!-- /ko -->
   </ul>
+  <div class="project-list-filler"></div>
 </template>

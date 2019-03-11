@@ -431,6 +431,9 @@ ns.Project = do (ko,
         collections.push(collection) if collections.indexOf(collection) == -1
       collections
 
+    toggleActivePanel: (context) =>
+      $('#' + context.collection.id + '_edit-options').trigger('toggle-panel')
+
     backToSearch: ->
       projectId = urlUtil.projectId()
       if projectId
