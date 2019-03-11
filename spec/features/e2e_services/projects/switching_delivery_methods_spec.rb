@@ -18,11 +18,9 @@ describe 'Switching Delivery Methods' do
       select 'FTP Push', from: 'Distribution Type'
 
       # switch to different form
-      click_on 'Edit Delivery Method'
-      choose('Customize & Download')
+      choose('Customize')
 
       # switch back to original form
-      click_on 'Edit Delivery Method'
       choose('Stage for Delivery')
     end
 

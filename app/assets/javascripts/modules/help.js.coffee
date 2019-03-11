@@ -149,6 +149,7 @@ ns = @edsc.models.page
   defaultHelpOptions =
     placement: 'auto left'
     html: true
+    sanitize: false
     wait: true
     trigger: 'manual'
     template: defaultTemplate

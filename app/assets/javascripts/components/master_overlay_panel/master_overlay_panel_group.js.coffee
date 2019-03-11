@@ -14,7 +14,6 @@ do ($=jQuery, ko) ->
         primaryTitle = ko.observable('')
         secondaryTitle = ko.observable('')
         shouldAnimate = ko.observable(true)
-        indicatorElement = ko.observable(params.indicatorElement)
 
         return {
           panelGroupName,
@@ -25,8 +24,7 @@ do ($=jQuery, ko) ->
           items,
           primaryTitle,
           secondaryTitle,
-          shouldAnimate,
-          indicatorElement
+          shouldAnimate
         }
     }
     template: { element: 'tmpl_master-overlay-panel-group' },
@@ -35,7 +33,6 @@ do ($=jQuery, ko) ->
   ko.bindingHandlers.componentMasterOverlayPanelGroup = {
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) =>
       element = $(element)
-      indicator = $('.master-overlay-panel-indicator')
       element.closeButton = element.find('.master-overlay-panel-group-close')
       element.activeCssClass = 'master-overlay-panel-active'
       element.initializedCssClass = 'master-overlay-panel-initialized'
@@ -79,29 +76,9 @@ do ($=jQuery, ko) ->
       bindingContext.$data.setActivePanelGroup = () ->
         bindingContext.$parentContext.$component.updateActivePanelGroup bindingContext.$data.panelGroupName()
 
-        if bindingContext.$data.indicatorElement
-          indicator = $('.master-overlay-panel-indicator')
-          containerEl = $('.' + bindingContext.$data.indicatorElement())[0]
-          offsetTop = $('.' + bindingContext.$data.indicatorElement())[0].offsetTop
-          containerHeight = $(containerEl).height()
-          # TL: Leaving this here intentionally. Experienceing some strange behavior with translate-origin.
-          # Need to do some more poking, but dont want to lose the current state
-          # indicatorPosition = offsetTop
-          # indicator[0].style.transform = 'translateY(' + indicatorPosition + 'px)'
-          # firstInit = indicator.addClass('master-overlay-panel-indicator-active').length
-          # indicator.addClass('master-overlay-panel-indicator-active')
-          # if firstInit
-          #   indicator.show()
-
       # Trigger the panel close when the close button is clicked
       ko.utils.registerEventHandler element.closeButton, 'click', (event) ->
         bindingContext.$parentContext.$component.close()
-
-      # TL: Leaving this here intentionally. Experiencing some strange behavior with translate-origin.
-      # Need to do some more poking, but dont want to lose the current state
-      # $('.project-list').on 'scroll', (event) ->
-      #   indicator = $('.master-overlay-panel-indicator')
-      #   indicator[0].style.transformOrigin = $('.project-list').scrollTop() + 'px 10px'
 
       # Handle the open event
       ko.utils.registerEventHandler element, 'open-panel', (event) ->
@@ -123,7 +100,6 @@ do ($=jQuery, ko) ->
 
       # Handle the toggle event
       ko.utils.registerEventHandler element, 'toggle-panel', (event) ->
-
         # Prevent the animation if there is already an active panel
         if bindingContext.$parentContext.$component.activePanelGroup()
           bindingContext.$data.shouldAnimate false

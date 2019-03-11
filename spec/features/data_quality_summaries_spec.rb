@@ -9,12 +9,10 @@ describe 'Data Quality Summaries' do
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
-
-      click_button('Edit Delivery Method')
     end
 
     it 'shows data quality summaries' do
-      expect(page).to have_text('Quality Information')
+      expect(page).to have_text('Important data quality information')
       expect(page).to have_text('MODIS Snow and Sea Ice Quality Assessment and Validation')
     end
   end
@@ -26,12 +24,10 @@ describe 'Data Quality Summaries' do
       collection_card = find('.project-list-item', match: :first)
       collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
-
-      click_button('Edit Delivery Method')
     end
 
     it 'shows no data quality summaries' do
-      expect(page).to have_no_text('Quality Information')
+      expect(page).to have_no_text('Important data quality information')
     end
   end
 end

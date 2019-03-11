@@ -1,0 +1,33 @@
+.access-form-loading {
+  opacity: 0;
+  animation: fadein 0.2s;
+
+  .loading-content {
+    height: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .loading-content-inner {
+    width: 20em;
+  }
+}
+
+.access-form-loading-one {
+  height: 1.5em;
+  width: 320px;
+}
+
+.access-form-loading-two {
+  height: 1.5em;
+  width: 280px;
+}
+
+.access-form-loading-three {
+  height: 1.5em;
+  width: 300px;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

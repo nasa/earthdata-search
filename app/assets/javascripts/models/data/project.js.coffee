@@ -180,8 +180,6 @@ ns.Project = do (ko,
     showSpinner: (item, e) =>
       # This will likely need to change if we opt to support multiple access methods
       @serviceOptions?.accessMethod?()[0].showSpinner(item, e)
-      $('.master-overlay-panel-back').click()
-      @editingAccessMethod(false)
       true
 
     findSelectedVariable: (variable) =>
@@ -433,6 +431,9 @@ ns.Project = do (ko,
       for collection in Collection.visible()
         collections.push(collection) if collections.indexOf(collection) == -1
       collections
+
+    toggleActivePanel: (context) =>
+      $('#' + context.collection.id + '_edit-options').trigger('toggle-panel')
 
     backToSearch: ->
       projectId = urlUtil.projectId()

@@ -1,6 +1,9 @@
 .project-list {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .project-list-list {
@@ -8,6 +11,11 @@
   flex-direction: column;
   margin: 0;
   padding: 0;
+}
+
+.project-list-filler {
+  flex-grow: 1;
+  border-right: 1px solid #ddd;
 }
 
 .project-list-empty-notice {
@@ -23,7 +31,29 @@
   position: relative;
   width: 100%;
   border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
   @include transition(all 0.15s linear);
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -24px;
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px 3px rgba(0,0,0,0.04);
+    color: black;
+    transform: rotate(45deg) translate(-50%);
+    transition: right 0.2s ease-in-out;
+    will-change: right;
+  }
+
+  &.project-list-item-is-active:after {
+    right: -14px;
+  }
 }
 
 .project-list-item-content {

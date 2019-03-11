@@ -6,7 +6,7 @@
   }
 
   .variable-list {
-    padding: 10px 15px;
+    padding: 10px 0;
   }
 
   .variable-detail {
@@ -50,9 +50,19 @@
   padding-bottom: 70px;
 }
 
+.collection-variable-list-item-label {
+  display: flex;
+  padding: 5px 15px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 
-.collection-variable-list-item {
-  padding: 5px 0;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.collection-variable-list-item-input {
+  margin-top: 1px;
 }
 
 .collection-variable-info {
@@ -65,6 +75,7 @@
 .collection-variable-heading {
   display: inline-block;
   margin: 0;
+  line-height: 0.875em;
 }
 
 .collection-variable-longname {

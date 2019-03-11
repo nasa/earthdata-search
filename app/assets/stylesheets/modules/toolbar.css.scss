@@ -100,7 +100,11 @@
 }
 
 .leaflet-draw-toolbar {
-	margin-top: 0
+	margin-top: 0;
+}
+
+.leaflet-draw-toolbar a {
+	margin-top: 0;
 }
 
 .toolbar a.toggle-filter-stack {
@@ -114,6 +118,18 @@
   top: auto;
   bottom: 10px;
   z-index: 60;
+}
+
+.leaflet-right .leaflet-draw {
+  float: left;
+}
+
+.leaflet-right .projection-switcher {
+  float: left;
+}
+
+.leaflet-right .leaflet-control-zoom {
+  float: right;
 }
 
 .leaflet-bottom.leaflet-right {

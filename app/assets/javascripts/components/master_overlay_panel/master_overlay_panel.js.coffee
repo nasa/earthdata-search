@@ -5,10 +5,12 @@ do (ko) ->
 
         panelGroups = ko.observableArray()
         activePanelGroup = ko.observable()
+        activeCollectionId = ko.observable()
 
         return {
           panelGroups,
-          activePanelGroup
+          activePanelGroup,
+          activeCollectionId
         }
     }
     template: { element: 'tmpl_master-overlay-panel' },
@@ -19,9 +21,15 @@ do (ko) ->
 
         element = $(element)
 
+        bindingContext.$data.activePanelGroup.subscribe (data) ->
+          bindingContext.$root.ui.projectList.projectPanelIsOpen(!!data)
+
         # Sets the currently active panelGroup by name
         bindingContext.$data.updateActivePanelGroup = (panelGroupName) ->
           bindingContext.$data.activePanelGroup(panelGroupName)
+
+          # To set the collection ID, we split off the last element of the panel ID
+          bindingContext.$root.ui.projectList.projectPanelCollectionId(panelGroupName.split('_').splice(0, panelGroupName.split('_').length - 1).join('_'))
 
         # Sets isOpen to false on each of the panel groups
         bindingContext.$data.close = () ->
