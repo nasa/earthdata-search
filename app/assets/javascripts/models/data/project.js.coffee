@@ -113,34 +113,32 @@ ns.Project = do (ko,
     _computeExpectedAccessMethod: =>
       expectedMethod = null
       if @granuleAccessOptions()
-        methods = @granuleAccessOptions().methods
-
         # Use the default method if available
         if @granuleAccessOptions().defaults?
           # pick the method that matches the defaults type
           methodType = @granuleAccessOptions().defaults.accessMethod[0]?.type
-          methods = methods.filter (method) -> method.type == methodType
+          methods = @granuleAccessOptions().methods.filter (method) -> method.type == methodType
 
-        $.each methods, (index, accessMethod) ->
-          # Download is our default method so if it's found we'll set it here which
-          # is fine because if a supported UMM Service records is found below it will
-          # override it and return, preventing that value from being overridden
-          expectedMethod = accessMethod if accessMethod.type == 'download'
+          $.each methods, (index, accessMethod) ->
+            # Download is our default method so if it's found we'll set it here which
+            # is fine because if a supported UMM Service records is found below it will
+            # override it and return, preventing that value from being overridden
+            expectedMethod = accessMethod if accessMethod.type == 'download'
 
-          # For now we're using the first valid/supported UMM Service record found
-          if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
-            expectedMethod = accessMethod
+            # For now we're using the first valid/supported UMM Service record found
+            if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
+              expectedMethod = accessMethod
 
-            # A non-false return statemet within jQuery's `.each` will
-            # simply continue rather than return, so we need to set a variable
-            # to null outside of the loop, set the value like we've done above
-            # when the conditional is true, and return false which will exit
-            # the loop
-            return false
+              # A non-false return statemet within jQuery's `.each` will
+              # simply continue rather than return, so we need to set a variable
+              # to null outside of the loop, set the value like we've done above
+              # when the conditional is true, and return false which will exit
+              # the loop
+              return false
 
-        # Select the expected method
-        if expectedMethod? && @serviceOptions.accessMethod().length > 0
-          @serviceOptions.accessMethod()[0].method(expectedMethod.name)
+          # Select the expected method
+          if expectedMethod? && @serviceOptions.accessMethod().length > 0
+            @serviceOptions.accessMethod()[0].method(expectedMethod.name)
 
         # Determines if we should show or hide the `Customize` button on the collection card
         @isCustomizable(expectedMethod?.type in ['opendap', 'service', 'order'])
