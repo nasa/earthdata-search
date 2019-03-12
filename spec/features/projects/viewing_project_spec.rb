@@ -265,6 +265,10 @@ describe 'Viewing Single Project' do
       before :all do
         Capybara.reset_sessions!
         load_page :projects_page, project: ['C1200187767-EDF_OPS'], env: :sit, authenticate: 'edsc'
+
+        collection_card = find('.project-list-item', match: :first)
+        collection_card.find('.project-list-item-action-edit-options').click
+        choose('Customize')
       end
 
       it 'shows configuration icons' do
@@ -285,6 +289,10 @@ describe 'Viewing Single Project' do
         before :all do
           Capybara.reset_sessions!
           load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [-10, -10, 10, 10], env: :sit, authenticate: 'edsc'
+
+          collection_card = find('.project-list-item', match: :first)
+          collection_card.find('.project-list-item-action-edit-options').click
+          choose('Customize')
         end
 
         it 'shows configuration icons with spatial enabled' do
@@ -306,6 +314,10 @@ describe 'Viewing Single Project' do
         before :all do
           Capybara.reset_sessions!
           load_page :projects_page, project: ['C1200187767-EDF_OPS'], polygon: [10, 10, 10, -10, -10, -10, -10, 10, 10, 10], env: :sit, authenticate: 'edsc'
+
+          collection_card = find('.project-list-item', match: :first)
+          collection_card.find('.project-list-item-action-edit-options').click
+          choose('Customize')
         end
 
         it 'shows configuration icons with spatial enabled' do
