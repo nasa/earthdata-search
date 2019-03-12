@@ -42,7 +42,6 @@ ns.Project = do (ko,
       @isCustomizable       = ko.observable(false)
       @editingAccessMethod  = ko.observable(false)
       @editingVariables     = ko.observable(false)
-      @expectedAccessMethod = ko.computed(@_computeExpectedAccessMethod, this, deferEvaluation: true)
       @expectedUmmService   = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
       @isLoadingComplete    = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
 
@@ -106,55 +105,11 @@ ns.Project = do (ko,
 
       dataSource.loadAccessOptions(success, retry)
 
-    # Based on the fact that we are only supporting three UMM Service types we
-    # can infer which accessMethod the user *should* be choosing for a particular
-    # collection, here we are setting that accessMethod for use within the
-    # customization modals
-    _computeExpectedAccessMethod: =>
-      expectedMethod = null
-      if @granuleAccessOptions()
-        # Use the default method if available
-        if @granuleAccessOptions().defaults?
-          # pick the method that matches the defaults type
-          methodType = @granuleAccessOptions().defaults.accessMethod[0]?.type
-          methods = @granuleAccessOptions().methods.filter (method) -> method.type == methodType
-
-          $.each methods, (index, accessMethod) ->
-            # Download is our default method so if it's found we'll set it here which
-            # is fine because if a supported UMM Service records is found below it will
-            # override it and return, preventing that value from being overridden
-            expectedMethod = accessMethod if accessMethod.type == 'download'
-
-            # For now we're using the first valid/supported UMM Service record found
-            if accessMethod.umm_service?.umm?.Type in supportedServiceTypes
-              expectedMethod = accessMethod
-
-              # A non-false return statemet within jQuery's `.each` will
-              # simply continue rather than return, so we need to set a variable
-              # to null outside of the loop, set the value like we've done above
-              # when the conditional is true, and return false which will exit
-              # the loop
-              return false
-
-          # Select the expected method
-          if expectedMethod? && @serviceOptions.accessMethod().length > 0
-            @serviceOptions.accessMethod()[0].method(expectedMethod.name)
-
-        # Determines if we should show or hide the `Customize` button on the collection card
-        @isCustomizable(expectedMethod?.type in ['opendap', 'service', 'order'])
-
-      expectedMethod
-
     # Retrieve the user selected UMM Service from the access method. In the
     # future this will be set by the user, but for now were just going to
     # use the first supported UMM Service record as we'll only be assigning
     # one UMM Service record to each collection.
     _computeExpectedUmmService: =>
-      # If we've already determined the expectedAccessMethod we'll just use the
-      # associated UMM Service record, the logic in this method is the same as determining
-      # the expectedAccessMethod
-      return @expectedAccessMethod().umm_service if @expectedAccessMethod()?
-
       expectedUmmService = null
       if @granuleAccessOptions()
         $.each @granuleAccessOptions().methods, (index, accessMethod) =>
@@ -180,6 +135,7 @@ ns.Project = do (ko,
     showSpinner: (item, e) =>
       # This will likely need to change if we opt to support multiple access methods
       @serviceOptions?.accessMethod?()[0].showSpinner(item, e)
+      @_computeSubsettingFlags()
       true
 
     findSelectedVariable: (variable) =>
@@ -244,7 +200,7 @@ ns.Project = do (ko,
       @_computeReformattingSubsettingEnabled()
 
     _computeSpatialSubsettingEnabled: =>
-      if @expectedAccessMethod()?.type == 'opendap'
+      if @selectedAccessMethod()?.toLowerCase() == 'opendap'
         # For OPeNDAP collections we just pass along the spatial search params
         serializedObj = @project.serialized()
 
@@ -253,7 +209,7 @@ ns.Project = do (ko,
 
         # Return true if any of the spatial subsettings exist
         @spatialSubsettingEnabled(hasBoundingBox || hasPolygon)
-      else if @expectedAccessMethod()?.type == 'service'
+      else if @selectedAccessMethod()?.toLowerCase() == 'service'
           is_spatially_subset = @_findWithinAccessMethodModel('ecs-spatial_subset_flag')
 
           @spatialSubsettingEnabled(is_spatially_subset == "true")
@@ -261,9 +217,9 @@ ns.Project = do (ko,
         @spatialSubsettingEnabled(false)
 
     _computeVariableSubsettingEnabled: =>
-      if @expectedAccessMethod()?.type == 'opendap'
+      if @selectedAccessMethod()?.toLowerCase() == 'opendap'
         # OPeNDAP collections use a different means of calculating this value
-      else if @expectedAccessMethod()?.type == 'service'
+      else if @selectedAccessMethod()?.toLowerCase() == 'service'
         formXml = @_accessMethodModelXml()
 
         if formXml
@@ -279,9 +235,9 @@ ns.Project = do (ko,
         @variableSubsettingEnabled(false)
 
     _computeTransformationSubsettingEnabled: =>
-      if @expectedAccessMethod()?.type == 'opendap'
+      if @selectedAccessMethod()?.toLowerCase() == 'opendap'
         # OPeNDAP collections use a different means of calculating this value
-      else if @expectedAccessMethod()?.type == 'service'
+      else if @selectedAccessMethod()?.toLowerCase() == 'service'
           has_transformation_subsets = $.trim(@_findWithinAccessMethodModel('ecs-PROJECTION'))
 
           # Check for the existense, a blank value, or the ESI equivelant of blank which is `&`
@@ -290,9 +246,10 @@ ns.Project = do (ko,
         @transformationSubsettingEnabled(false)
 
     _computeReformattingSubsettingEnabled: =>
-      if @expectedAccessMethod()?.type == 'opendap'
+      if @selectedAccessMethod()?.toLowerCase() == 'opendap'
         # OPeNDAP collections use a different means of calculating this value
-      else if @expectedAccessMethod()?.type == 'service'
+        @selectedOutputFormat.valueHasMutated()
+      else if @selectedAccessMethod()?.toLowerCase() == 'service'
           has_reformatting_subsets = $.trim(@_findWithinAccessMethodModel('ecs-FORMAT'))
 
           # Check for the existense, a blank value, or the ESI equivelant of blank which is `&`

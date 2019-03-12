@@ -199,7 +199,7 @@
                 <span><i class="fa fa-exclamation-circle"></i> Important data quality information</span>
                 <span>
                   <i class="fa fa-chevron-down"></i>
-                  <i class="fa fa-chevron-up"></i> 
+                  <i class="fa fa-chevron-up"></i>
                 </span>
               </button>
               <div class="collapse" id="dataQualityInfo">
@@ -219,7 +219,7 @@
                 </div>
               </div>
               <!-- /ko -->
-              <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].expectedAccessMethod().type == 'opendap' -->
+              <!-- ko if: $parents[1].spatialSubsettingEnabled() && $parents[1].selectedAccessMethod() && $parents[1].selectedAccessMethod().toLowerCase() == 'opendap' -->
               <div class="panel-item-section">
                 <p class="panel-item-content panel-item-content-light"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
               </div>
