@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.5.1'
 
-gem 'rails', '~> 4.2.11'
+gem 'rails', '~> 4.2.11.1'
 
 gem 'aasm'
 gem 'atomic'
