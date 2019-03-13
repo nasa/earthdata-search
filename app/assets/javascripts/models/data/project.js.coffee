@@ -341,11 +341,7 @@ ns.Project = do (ko,
       true
 
     _computeAccessCollections: ->
-      focused = @focusedProjectCollection()
-      if focused
-        [focused]
-      else
-        @_collectionsById[id] for id in @_collectionIds()
+      @_collectionsById[id] for id in @_collectionIds()
 
     _readFocus: -> @focusedProjectCollection()
     _writeFocus: (collection) =>
