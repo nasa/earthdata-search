@@ -156,10 +156,13 @@ ns.Map = do (window,
       @legendControl.setData(null, {})
       gibs = collection?.gibs() ? []
       name = null
+      # Iterate through gibs tags (`edsc.extra.gibs`) on the collection
       for config in gibs
         unless config.match?.sit
-          name = config.product
-          break
+          # Only the overlays group is used for colormaps
+          if config.group == 'overlays'
+            name = config.product
+            break
 
       if name?
         # get json from server
