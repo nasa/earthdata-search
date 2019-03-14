@@ -182,8 +182,7 @@ describe 'Address bar' do
     end
 
     it 'filters collections using the condition' do
-      # TODO: RDA // Need to test something other than the fact that a specific collection is present
-      expect(page).to have_content('MODIS/Aqua Aerosol 5-Min L2 Swath 3km')
+      expect(page).to have_content('MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006')
     end
   end
 
