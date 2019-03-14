@@ -106,20 +106,19 @@ ns.ProjectList = do (ko
       @showProjectPage()
 
     _determineTemporalOverride: (callback) ->
-      if edsc.page.page() == 'project'
-        query = @project.query
-        focused = query.focusedTemporal()
+      query = @project.query
+      focused = query.focusedTemporal()
 
-        if focused
-          focusedStr = [dateUtil.toISOString(focused[0]), dateUtil.toISOString(focused[1])].join(',')
-          # If the query has a timeline selection
-          if query.temporalComponent()?
-            temporalStr = query.temporalComponent()
-            @needsTemporalChoice(callback: callback, focusedStr: focusedStr, temporalStr: temporalStr)
-          else
-            callback(focusedStr)
+      if focused
+        focusedStr = [dateUtil.toISOString(focused[0]), dateUtil.toISOString(focused[1])].join(',')
+        # If the query has a timeline selection
+        if query.temporalComponent()?
+          temporalStr = query.temporalComponent()
+          @needsTemporalChoice(callback: callback, focusedStr: focusedStr, temporalStr: temporalStr)
         else
-          callback(null)
+          callback(focusedStr)
+      else
+        callback(null)
 
     chooseTemporal: =>
       { callback, focusedStr, temporalStr } = @needsTemporalChoice()

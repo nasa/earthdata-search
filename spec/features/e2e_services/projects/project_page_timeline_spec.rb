@@ -12,6 +12,38 @@ describe 'Project Page Timeline' do
 
   timeline_date = DateTime.new(2010, 2, 15, 0, 0, 0, '+0')
 
+  context 'when focusing on a timeline date on the search page' do
+    before :all do
+      load_page :search, focus: 'C1000000739-DEV08', env: :sit, authenticate: 'edsc'
+      click_timeline_zoom_in
+      pan_to_time(timeline_date)
+
+      # focus timeline
+      click_timeline_date('02')
+    end
+
+    it 'adds the override_temporal url param' do
+      expect(page.current_url).to match(/ot=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.999Z/)
+    end
+
+    context 'when visiting the project page and downloading the data' do
+      before :all do
+        click_on 'Download All'
+
+        collection_card = find('.project-list-item', match: :first)
+        collection_card.find('.project-list-item-action-edit-options').click
+        choose 'Stage for Delivery'
+        click_on 'Download Data'
+        wait_for_xhr
+      end
+
+      it 'adds the override_temporal to the Retrieval object' do
+        retrieval = Retrieval.last
+        expect(retrieval.jsondata['query']).to match(/override_temporal=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.999Z/)
+      end
+    end
+  end
+
   context 'when focusing on a timeline date' do
     before :all do
       load_page :projects_page, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
