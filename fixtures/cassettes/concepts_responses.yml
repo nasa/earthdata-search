@@ -6362,6 +6362,33 @@ d3031e8ce4d7fa5a95e712c8620a73da2db1e80a:
         Earth Sciences Data and Information Services Center, Code 610.2, NASA Goddard
         Space Flight Center"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}}]}'
     http_version: 
+bd37214922554ba4b9cf39b1f941e0856abae729:
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 1dc2c45c-9845-4c0d-a378-eb15b1b51a24
+      content-type:
+      - application/json
+      date:
+      - Thu, 14 Mar 2019 14:25:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '82'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Concept with concept-id [C1200344956-EDF_DEV06] could not
+        be found."]}'
+    http_version: 
 49ca664c160187e02e9a9fa1500e7559313ce708:
   response:
     status:

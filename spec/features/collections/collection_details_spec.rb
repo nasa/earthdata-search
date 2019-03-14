@@ -242,7 +242,7 @@ describe 'Collection details' do
 
   context 'when selecting a collection with invalid DOI field' do
     before :all do
-      load_page :collection_details, focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200344956-EDF_DEV06', env: :sit, ac: true
     end
 
     it 'displays the DOI and the Authority' do

@@ -45,20 +45,24 @@ class CollectionDetailsPresenterUmmJson < DetailsPresenterUmmJson
   end
 
   def doi(doi)
-    if doi && doi['DOI']
+    if doi
+      if doi['MissingReason']
+        return { doi_link: nil, doi_text: doi['MissingReason'] }
+      end
+
       doi = doi['DOI']
       # EDSC-1645: This string varies - clean up permutations so that we start from the same place...
-      doi = doi.gsub(/^https?\:\/\//, '')
-      doi = doi.gsub("doi:", '')
-      doi = doi.gsub("dx.doi.org/", '')
-      doi = doi.gsub("doi.org/", '')
-      if !doi.blank?
-        return {doi_link: "https://dx.doi.org/#{doi}", doi_text: doi}
-      else
-        return {doi_text: doi, doi_link: nil}
-      end
+      doi = doi.gsub(%r{/^https?\:\/\//}, '')
+      doi = doi.gsub('doi:', '')
+      doi = doi.gsub('dx.doi.org/', '')
+      doi = doi.gsub('doi.org/', '')
+
+      return { doi_link: "https://dx.doi.org/#{doi}", doi_text: doi } if doi.present?
+
+      return { doi_text: doi, doi_link: nil }
     end
-    {doi_link: nil, doi_text: nil}
+
+    { doi_link: nil, doi_text: nil }
   end
 
   def data_centers(data_centers)

@@ -280,6 +280,7 @@ ns.Collection = do (ko
 
     _loadDatasource: ->
       desiredName = @granuleDatasourceName()
+
       if desiredName && @_currentName != desiredName
         @_currentName = desiredName
         @_unloadDatasource()

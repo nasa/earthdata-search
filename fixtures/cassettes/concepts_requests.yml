@@ -1403,6 +1403,23 @@ http_interactions:
   digest: d3031e8ce4d7fa5a95e712c8620a73da2db1e80a
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200344956-EDF_DEV06.umm_json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.12
+  recorded_at: Thu, 14 Mar 2019 14:24:44 GMT
+  digest: bd37214922554ba4b9cf39b1f941e0856abae729
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C24933-LAADS.json
     body:
       encoding: US-ASCII
