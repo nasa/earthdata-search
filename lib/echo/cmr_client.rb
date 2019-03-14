@@ -36,8 +36,8 @@ module Echo
       stringified_options = options.stringify_keys
 
       format = stringified_options.delete('cmr_format') || 'umm_json'
-      headers = token_header(token).merge('Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_s_version}")
-      get("/search/services.#{format}", stringified_options, headers)
+      headers = token_header(token).merge('Content-Type': 'application/x-www-form-urlencoded', 'Accept': "application/vnd.nasa.cmr.umm_results+json; version=#{Rails.configuration.umm_s_version}")
+      post("/search/services.#{format}", stringified_options.to_query, headers)
     end
 
     ##

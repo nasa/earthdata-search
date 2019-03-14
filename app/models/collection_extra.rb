@@ -49,7 +49,7 @@ class CollectionExtra < ActiveRecord::Base
     services.flatten!.compact!
 
     # Retreive details about each of the services associated with collections we care about
-    page_size       = 2000
+    page_size       = 1000
     page_num        = 1
     service_objects = []
 
@@ -57,11 +57,19 @@ class CollectionExtra < ActiveRecord::Base
     loop do
       service_response = client.get_services(page_size: page_size, page_num: page_num, concept_id: services)
 
-      service_objects += service_response.body.fetch('items', [])
+      # If an error ocurrs we'll assume its not specific to a single page and break
+      unless service_response.success?
+        Rails.logger.error "Error retrieving services within `CollectionExtra.get_collections_with_service_details`: #{service_response.body}"
 
-      Rails.logger.error "Error retrieving services within `CollectionExtra.get_collections_with_service_details`: #{service_response.body}" unless service_response.success?
+        break
+      end
 
-      break if !service_response.success? || service_response.body.fetch('items', []).length < page_size
+      page_results = service_response.body.fetch('items', [])
+
+      # Append the results from this page to the overall results
+      service_objects += page_results
+
+      break if page_results.length < page_size
 
       page_num += 1
     end

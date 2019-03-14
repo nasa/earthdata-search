@@ -78,9 +78,8 @@ describe 'Spatial manual entry' do
       it 'filters collections using the selected bounding box' do
         manually_create_bounding_box(0, 0, 10, 10)
         wait_for_xhr
-        # expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-        # expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
-        expect(page).to have_content('MODIS/Aqua Aerosol 5-Min L2 Swath 3km')
+
+        expect(page).to have_content('MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006')
       end
 
       it 'displays bounding box points in the manual entry text boxes' do
@@ -107,8 +106,7 @@ describe 'Spatial manual entry' do
         end
 
         it 'updates the collection filters using the new bounding box selection' do
-          # expect(page).to have_content("MODIS/Aqua Aerosol 5-Min L2 Swath 3km V006")
-          expect(page).to have_content('MODIS/Aqua Aerosol 5-Min L2 Swath 3km')
+          expect(page).to have_content('MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006')
         end
       end
 
