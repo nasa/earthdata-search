@@ -22,10 +22,13 @@ ns.Granules = do (ko,
 
       focusedTemporal = @parentQuery.focusedTemporal()
       @computed =>
-        newFocus = @parentQuery.focusedTemporal()
-        if newFocus != focusedTemporal && @isLoaded()
-          @results.readImmediate()
-        focusedTemporal = newFocus
+        setTimeout (=>
+          newFocus = @parentQuery.focusedTemporal()
+          if newFocus != focusedTemporal && @isLoaded()
+            @results.readImmediate()
+          focusedTemporal = newFocus
+          ), 0
+
 
       @excludedGranulesList = ko.observableArray()
 
