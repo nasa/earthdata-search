@@ -44,6 +44,7 @@ ns.Project = do (ko,
       @editingVariables     = ko.observable(false)
       @expectedUmmService   = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
       @isLoadingComplete    = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
+      @hasGranules      = ko.computed(@_computeHasGranules, this, deferEvaluation: true)
 
       # When the loadingServiceType is updated re-calculate the subsetting flags
       @loadingServiceType.subscribe(@_computeSubsettingFlags)
@@ -84,26 +85,27 @@ ns.Project = do (ko,
       false
 
     _loadGranuleAccessOptions: ->
-      dataSource = @collection.granuleDatasource()
-      unless dataSource
-        @granuleAccessOptions(hits: 0, methods: [])
-        return
+      unless @granuleAccessOptions.peek()?
+        dataSource = @collection.granuleDatasource()
+        unless dataSource
+          @granuleAccessOptions(hits: 0, methods: [])
+          return
 
-      @loadingServiceType(true)
+        @loadingServiceType(true)
 
-      console.log "Loading granule access options for #{@collection.id}"
+        console.log "Loading granule access options for #{@collection.id}"
 
-      $(document).trigger('dataaccessevent', [@collection.id])
-      success = (data) =>
-        console.log "Finished loading access options for #{@collection.id}"
+        $(document).trigger('dataaccessevent', [@collection.id])
+        success = (data) =>
+          console.log "Finished loading access options for #{@collection.id}"
 
-        @granuleAccessOptions(data)
+          @granuleAccessOptions(data)
 
-        # Done loading
-        @loadingServiceType(false)
-      retry = => @_loadGranuleAccessOptions
+          # Done loading
+          @loadingServiceType(false)
+        retry = => @_loadGranuleAccessOptions
 
-      dataSource.loadAccessOptions(success, retry)
+        dataSource.loadAccessOptions(success, retry)
 
     # Retrieve the user selected UMM Service from the access method. In the
     # future this will be set by the user, but for now were just going to
@@ -306,6 +308,9 @@ ns.Project = do (ko,
 
       formats = ({ 'name': format, 'value': formatMapping[format] } for format in supportedFormats when Object.keys(formatMapping).indexOf(format) != -1)
 
+    _computeHasGranules: () ->
+      @collection.granule_hits() > 0
+
   class Project
     constructor: (@query) ->
       @_collectionIds = ko.observableArray()
@@ -337,7 +342,8 @@ ns.Project = do (ko,
 
     _computeAllReadyToDownload: ->
       return false if !@accessCollections().length
-      return false for ds in @accessCollections() when !ds.serviceOptions.readyToDownload()
+      return false for collection in @accessCollections() when !collection.hasGranules()
+      return false for collection in @accessCollections() when !collection.serviceOptions.readyToDownload()
       true
 
     _computeAccessCollections: ->

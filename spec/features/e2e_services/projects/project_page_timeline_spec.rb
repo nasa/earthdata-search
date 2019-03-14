@@ -141,4 +141,39 @@ describe 'Project Page Timeline' do
       end
     end
   end
+
+  context 'when focusing on a timeline date after configuring an access method' do
+    before :all do
+      load_page :projects_page, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
+
+      collection_card = find('.project-list-item', match: :first)
+      collection_card.find('.project-list-item-action-edit-options').click
+      choose 'Customize'
+
+      check 'Include Metadata and Processing History'
+
+      click_timeline_zoom_in
+      pan_to_time(timeline_date)
+
+      # focus timeline
+      click_timeline_date('02')
+    end
+
+    it 'does not reload the access methods' do
+      expect(page).to have_checked_field('Include Metadata and Processing History')
+    end
+
+    context 'when filtering out all granules' do
+      before do
+        pan_to_time(DateTime.new(2012, 2, 15, 0, 0, 0, '+0'))
+
+        # focus timeline
+        click_timeline_date('02')
+      end
+
+      it 'disabled the Download Data button' do
+        expect(page).to have_css('.button-download-data.button-disabled')
+      end
+    end
+  end
 end
