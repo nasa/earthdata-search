@@ -242,7 +242,7 @@ describe 'Collection details' do
 
   context 'when selecting a collection with invalid DOI field' do
     before :all do
-      load_page :collection_details, focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200235634-EDF_DEV06', env: :sit, ac: true, authenticate: 'edsc'
     end
 
     it 'displays the DOI and the Authority' do
@@ -254,7 +254,7 @@ describe 'Collection details' do
 
   context 'when selecting a collection with a DOI field which contains "http://"' do
     before :all do
-      load_page :collection_details, focus: 'C1200230663-MMT_1', env: :sit, ac: true
+      load_page :collection_details, focus: 'C1200230663-MMT_1', env: :sit, ac: true, authenticate: 'edsc'
     end
 
     it 'updates the URL to contain "https://"" instead' do

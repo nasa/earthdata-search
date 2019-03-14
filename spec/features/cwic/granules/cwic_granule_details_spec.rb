@@ -11,7 +11,7 @@ describe 'CWIC-enabled granule results view' do
     wait_for_xhr
   end
 
-  context 'for CWIC granules' do
+  context 'for CWIC granules', pending_updates: true do
     context 'viewing granule details' do
       it 'displays a textual summary of metadata provided in the OpenSearch result' do
         within('#granule-details') do

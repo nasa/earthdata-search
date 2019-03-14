@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # As of EDSC-2057 we are storing profile and preference information for the user in the
   # database instead of storing parts of it in the session and continually asking for it.
   # This method looks for a key that we previously stored in the session and uses it's value
-  # to pull and store the information we now retrive when a user logs in. This method will
+  # to pull and store the information we now retrieve when a user logs in. This method will
   # ensure that users that were logged in before the deployment don't experience any issues.
   def migrate_user_data
     if logged_in? && session.key?(:user_name)

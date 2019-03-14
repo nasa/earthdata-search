@@ -104,6 +104,7 @@ class GibsConfiguration
       config = {
         match: match,
         product: layer['id'],
+        group: layer['group'],
         maxNativeZoom: 5,
         title: layer['title'],
         source: layer['subtitle'],

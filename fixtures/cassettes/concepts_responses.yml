@@ -6362,6 +6362,40 @@ d3031e8ce4d7fa5a95e712c8620a73da2db1e80a:
         Earth Sciences Data and Information Services Center, Code 610.2, NASA Goddard
         Space Flight Center"],"City":"Greenbelt","StateProvince":"MD","Country":"USA","PostalCode":"20771"}]}}]}'
     http_version: 
+df5d4bd5dcf676a976cae7a7e143ebe3fe33b9ff:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - daa7ea5d-99a3-456e-9ee7-1a953c5b2fc2
+      content-type:
+      - application/vnd.nasa.cmr.umm+json;version=1.12; charset=utf-8
+      date:
+      - Thu, 14 Mar 2019 21:33:31 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      content-length:
+      - '958'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"MetadataDates":[{"Date":"2019-03-14T14:02:00.000Z","Type":"CREATE"},{"Date":"2019-03-14T14:02:00.000Z","Type":"UPDATE"}],"ShortName":"EDSC-1140","Abstract":"Morbi
+        leo risus, porta ac consectetur ac, vestibulum at eros.","DOI":{"MissingReason":"Not
+        Applicable"},"SpatialExtent":{"GranuleSpatialRepresentation":"GEODETIC"},"ScienceKeywords":[{"Category":"EARTH
+        SCIENCE","Topic":"OCEANS","Term":"OCEAN ACOUSTICS","VariableLevel1":"AMBIENT
+        NOISE"}],"EntryTitle":"EDSC-1140 Collection","CollectionProgress":"NOT PROVIDED","ProcessingLevel":{"Id":"Not
+        Provided"},"Platforms":[{"Type":"Aircraft","ShortName":"CESSNA 172 SKYHAWK"}],"Version":"1","TemporalExtents":[{"EndsAtPresentFlag":true,"SingleDateTimes":["2019-03-14T00:00:00.000Z"]}],"DataCenters":[{"Roles":["PROCESSOR"],"ShortName":"E-INFO","LongName":"Earth-Info","ContactInformation":{"RelatedUrls":[{"URLContentType":"DataCenterURL","Type":"HOME
+        PAGE","URL":"http://www.nga.mil/portal/site/nga01/"}]}}]}'
+    http_version: 
 49ca664c160187e02e9a9fa1500e7559313ce708:
   response:
     status:
