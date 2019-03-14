@@ -44,7 +44,7 @@ ns.Project = do (ko,
       @editingVariables     = ko.observable(false)
       @expectedUmmService   = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
       @isLoadingComplete    = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
-      @hasGranules      = ko.computed(@_computeHasGranules, this, deferEvaluation: true)
+      @hasGranules          = ko.computed(@_computeHasGranules, this, deferEvaluation: true)
 
       # When the loadingServiceType is updated re-calculate the subsetting flags
       @loadingServiceType.subscribe(@_computeSubsettingFlags)
