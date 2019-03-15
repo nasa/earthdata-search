@@ -1,15 +1,21 @@
 .access-form-loading {
   opacity: 0;
-  animation: fadein 0.2s;
+  animation: 0.2s 0s fadein;
+  animation-fill-mode: forwards;
 
   .loading-content {
-    height: 1.5em;
-    margin-bottom: 0.5em;
+    height: 45px;
+    margin-bottom: 5px;
   }
 
   .loading-content-inner {
     width: 20em;
   }
+}
+
+.access-form-loading-access-method {
+  height: 45px;
+  width: 300px;
 }
 
 .access-form-loading-one {

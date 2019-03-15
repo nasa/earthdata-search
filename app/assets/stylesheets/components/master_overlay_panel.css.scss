@@ -8,7 +8,7 @@
 
 .master-overlay-panel-group-header {
   position: relative;
-  padding: 15px 40px 15px 15px;
+  padding: 10px 40px 10px 15px;
   border-bottom: 1px solid #ddd;
 }
 
@@ -175,6 +175,16 @@
   padding: 55px 15px 50px 15px;
 }
 
+.master-overlay-panel-item-content-has-footer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  padding-bottom: 69px;
+}
+
 .master-overlay-panel-item-overlay {
   display: none;
   position: absolute;
@@ -191,14 +201,14 @@
   display: block;
 }
 
-
 .master-overlay-panel-item-fixed-footer {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   position: absolute;
   bottom: 0;
   background: #fff;
-  padding: 15px;
+  padding: 10px 15px;
   width: 100%;
   border-top: 1px solid #dddddd;
   box-shadow: 0px 1px 10px 10px rgba(0, 0, 0, 0);
@@ -219,4 +229,34 @@
 
 .master-overlay-panel-back {
   font-size: 0.875em;
+}
+
+.master-overlay-panel-footer-page {
+  margin-right: 5px;
+  color: #7d7d7d;
+}
+
+.master-overlay-panel-footer-icon {
+  margin-right: 5px;
+  font-size: 1.25em;
+  vertical-align: middle;
+}
+
+.master-overlay-panel-footer-icon-loading {
+  color: #7d7d7d;
+  animation:spin 2s linear infinite;
+}
+
+.master-overlay-panel-footer-icon-valid {
+  color: #289152;
+}
+
+.master-overlay-panel-footer-icon-invalid {
+  color: #b94a48;
+}
+
+@keyframes spin {
+  100% {
+    transform:rotate(360deg);
+  }
 }

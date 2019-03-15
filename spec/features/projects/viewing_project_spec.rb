@@ -227,7 +227,7 @@ describe 'Viewing Single Project' do
           end
         end
 
-        context 'when transofmrations is disabled' do
+        context 'when transformations is disabled' do
           before :all do
             project_list_item = find('.project-list-item', match: :first)
 
@@ -242,7 +242,7 @@ describe 'Viewing Single Project' do
             end
           end
 
-          it 'shows configuration icons with transofmrations disabled' do
+          it 'shows configuration icons with transformations disabled' do
             within '.collection-capability' do
               expect(page).to have_css('span', count: 4)
               # ECHO forms defaults the value for the variables to 'ALL' so unless the

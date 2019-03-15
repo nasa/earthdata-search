@@ -3115,6 +3115,44 @@ http_interactions:
   digest: 926bec5af6ecf7b2fff29cc29eca52fdcf159472
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200187767-EDF_OPS&echo_collection_id%5B%5D=C1000000969-DEV08&echo_collection_id%5B%5D=C1000000082-EDF_OPS&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.12
+  recorded_at: Fri, 15 Mar 2019 17:59:17 GMT
+  digest: 264990afd11d1220d15fa5e0e8fdc887628ac4e8
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200187767-EDF_OPS&echo_collection_id%5B%5D=C1000000969-DEV08&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.12
+  recorded_at: Fri, 15 Mar 2019 17:58:53 GMT
+  digest: 3db764e89121a19229b8c5bd49b7d1c2d180fd02
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1200187767-EDF_OPS&echo_collection_id%5B%5D=C1200187767-EDF_OPS&has_granules_or_cwic=true&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&sort_key%5B%5D=has_granules_or_cwic
     body:
       encoding: US-ASCII

@@ -108,8 +108,9 @@
         <project-list class="project-list" params="{ project: project }"></project-list>
         <footer class="master-overlay-footer-actions">
           <div class="master-overlay-footer-notes">
-            <p class="master-overlay-footer-note" data-bind="if: $root.project.allReadyToDownload() || !$root.project.isLoadingComplete()">Click "Edit Options" above to customize the output for each project.</p>
-            <p class="master-overlay-footer-note" data-bind="if: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete()">One or more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
+            <p class="master-overlay-footer-note" data-bind="visible: !$root.project.allReadyToDownload() && !$root.project.allHaveAccessMethod()">Select a data access method for each collection in your project before downloading.</p>
+            <p class="master-overlay-footer-note" data-bind="visible: $root.project.allReadyToDownload() && $root.project.isLoadingComplete()">Click "Edit Options" above to customize the output for each project.</p>
+            <p class="master-overlay-footer-note" data-bind="visible: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() && $root.project.allHaveAccessMethod()">One or more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
           </div>
           <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() && !$root.project.isLoadingComplete() }, css: { 'button-disabled': !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() }" href="#" class="button button-full button-download-data" disabled>
             <i class="fa fa-download" aria-hidden="true"></i> Download Data
@@ -211,7 +212,7 @@
               </div>
             </section>
             <!-- /ko -->
-            <section class="master-overlay-panel-item-content">
+            <section class="master-overlay-panel-item-content master-overlay-panel-item-content-has-footer">
               <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length == 0 -->
               <div class="panel-item-section">
                 <div class="panel-item-content">
@@ -223,6 +224,14 @@
               <div class="panel-item-section">
                 <p class="panel-item-content panel-item-content-light"><span class="fa fa-globe"></span> Spatial subsetting is inherited from your search session. <a href="#" data-bind="click: $parents[1].project.backToSearch">Click here</a> to modify.</p>
               </div>
+              <!-- /ko -->
+              <!-- ko if: !$parents[1].serviceOptions.isLoaded() -->
+                <h3 class="panel-item-section-title">Select Data Access Method</h3>
+                <div class="access-form-loading">
+                  <div class="loading-content access-form-loading-access-method"><span class="loading-content-inner"></span></div>
+                  <div class="loading-content access-form-loading-access-method"><span class="loading-content-inner"></span></div>
+                  <div class="loading-content access-form-loading-access-method"><span class="loading-content-inner"></span></div>
+                </div>
               <!-- /ko -->
               <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length -->
               <div class="panel-item-section">
@@ -314,6 +323,21 @@
               <!-- /ko -->
             </section>
           </div>
+          <footer class="master-overlay-panel-item-fixed-footer" data-bind="visible: true">
+            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-loading" data-bind="visible: !$parents[1].serviceOptions.isLoaded()">
+              <i class="fa fa-spinner"></i>
+            </span>
+            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-valid" data-bind="visible: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.readyToDownload()">
+              <i class="fa fa-check-circle"></i>
+            </span>
+            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-invalid" data-bind="visible: $parents[1].serviceOptions.isLoaded() && !$parents[1].serviceOptions.readyToDownload()">
+              <i class="fa fa-exclamation-circle"></i>
+            </span>
+            <span class="master-overlay-panel-footer-page" data-bind="text: 'Collection ' + ($parents[1].projectIndex() + 1) + ' of ' + $parents[1].project.collections().length">Collection 0 of 0</span>
+            <button class="master-overlay-panel-pagination-back button secondary master-overlay-panel-item-footer-action" data-bind="visible: $parents[1].previousProjectCollectionId(), click: $root.toggleCollectionPanel.bind($data, $parents[1].previousProjectCollectionId())">Back</button>
+            <button class="master-overlay-panel-pagination-next master-overlay-panel-item-footer-action" data-bind="visible: $parents[1].nextProjectCollectionId(), click: $root.toggleCollectionPanel.bind($data, $parents[1].nextProjectCollectionId())">Next</button>
+            <button class="master-overlay-panel-pagination-done master-overlay-panel-item-footer-action" data-bind="visible: !$parents[1].nextProjectCollectionId(), click: $root.toggleCollectionPanel.bind($data, $parents[1].collection.id)">Done</button>
+          </footer>
         </master-overlay-panel-item>
         <master-overlay-panel-item style="display: none;" params="itemName: $parents[0].collection.id + '_variable-selection', primaryTitle: $parents[0].collection.dataset_id, secondaryTitle: 'Customizations', backToButton: { dest: $parents[0].collection.id + '_edit-options', callback: function() { $root.ui.variableSelector.clearSelections() }, text: 'Edit Options'}, isHeightConstrained: true">
           <!-- ko if: $parents[1].editingVariables() -->

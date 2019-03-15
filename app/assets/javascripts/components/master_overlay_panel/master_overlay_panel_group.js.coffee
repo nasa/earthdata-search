@@ -14,6 +14,8 @@ do ($=jQuery, ko) ->
         primaryTitle = ko.observable('')
         secondaryTitle = ko.observable('')
         shouldAnimate = ko.observable(true)
+        firstRender = ko.observable(true)
+        allItemsRendered = ko.observable(false)
 
         return {
           panelGroupName,
@@ -24,7 +26,9 @@ do ($=jQuery, ko) ->
           items,
           primaryTitle,
           secondaryTitle,
-          shouldAnimate
+          shouldAnimate,
+          firstRender,
+          allItemsRendered
         }
     }
     template: { element: 'tmpl_master-overlay-panel-group' },
@@ -131,10 +135,7 @@ do ($=jQuery, ko) ->
           # Set the isActive flag on the child item
           itemContext.$data.isActive true
 
-    update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
-
-      panelsContainer = $('.master-overlay-panel-panels')
-
+    update: (element, valueAccessor, allBindings, viewModel, bindingContext) =>
       # Loop through the current items to see which should be active by matching the activeItem to the current itemName, then set the
       # isActive flag on that item. If this item is inactive, do the inverse.
       if bindingContext.$data.activeItem()
@@ -154,4 +155,11 @@ do ($=jQuery, ko) ->
           $('.master-overlay-panel-panels').addClass('master-overlay-panel-panels-scrolled')
         else
           $('.master-overlay-panel-panels').removeClass('master-overlay-panel-panels-scrolled')
+
+      if bindingContext.$data.firstRender() and \
+         bindingContext.$data.items().length and \
+         bindingContext.$data.items().length == $(element).find('.master-overlay-panel-panels').children().length
+
+        bindingContext.$data.allItemsRendered(true)
+        bindingContext.$data.firstRender(false)
   }

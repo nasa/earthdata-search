@@ -491,18 +491,11 @@
   border-right: 1px solid #ddd;
 }
 
-.master-overlay-footer-notes {
-  margin-bottom: 10px;
-}
-
 .master-overlay-footer-note {
+  margin-bottom: 10px;
   font-size: 0.875em;
   line-height: 1.4;
   color: #7F7F7F;
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
 }
 
 .master-overlay-download-tooltip {

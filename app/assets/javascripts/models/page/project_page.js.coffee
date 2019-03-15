@@ -216,6 +216,9 @@ ns.ProjectPage = do (ko,
       if @project.collections?().length == 0
         $('#project-empty-notice').show()
 
+    toggleCollectionPanel: (collectionId, context, e) =>
+      $('#' + collectionId + '_edit-options').trigger('toggle-panel')
+
   current = new ProjectPage 'project'
   setCurrent(current)
 
