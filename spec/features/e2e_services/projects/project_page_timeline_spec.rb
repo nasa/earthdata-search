@@ -29,9 +29,6 @@ describe 'Project Page Timeline' do
     context 'when visiting the project page and downloading the data' do
       before :all do
         click_on 'Download All'
-
-        collection_card = find('.project-list-item', match: :first)
-        collection_card.find('.project-list-item-action-edit-options').click
         choose 'Stage for Delivery'
         click_on 'Download Data'
         wait_for_xhr
@@ -48,8 +45,6 @@ describe 'Project Page Timeline' do
     before :all do
       load_page :projects_page, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
 
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
       choose 'Stage for Delivery'
 
       click_timeline_zoom_in
@@ -80,8 +75,6 @@ describe 'Project Page Timeline' do
     before do
       load_page :projects_page, project: ['C1000000739-DEV08'], temporal: ['2010-02-01T00:00:00Z', '2010-02-16T23:59:59Z'], env: :sit, authenticate: 'edsc'
 
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
       choose 'Stage for Delivery'
 
       click_timeline_zoom_in
@@ -146,8 +139,6 @@ describe 'Project Page Timeline' do
     before :all do
       load_page :projects_page, project: ['C1000000739-DEV08'], env: :sit, authenticate: 'edsc'
 
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
       choose 'Customize'
 
       check 'Include Metadata and Processing History'

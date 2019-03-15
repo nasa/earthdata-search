@@ -8,10 +8,6 @@ describe 'User missing ordering preferences' do
       click_button 'Download All'
       wait_for_xhr
 
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
-      wait_for_xhr
-
       choose 'Stage for Delivery'
       wait_for_xhr
 

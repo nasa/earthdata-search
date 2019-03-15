@@ -7,11 +7,6 @@ describe 'When viewing the project page with an EGI supported collection' do
 
   context 'When choosing to edit the collection' do
     before :all do
-      collection_card = find('.project-list-item', match: :first)
-
-      collection_card.find('.project-list-item-action-edit-options').click
-      wait_for_xhr
-
       choose 'Stage for Delivery'
     end
 

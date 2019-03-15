@@ -10,11 +10,8 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
     expect(first_collection_card).to have_css('.collection-capability i.fa.fa-tags', count: 1)
   end
 
-  context 'When choosing to edit the collection' do
+  context 'When editing the collection' do
     before :all do
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
-
       choose 'Customize (OPeNDAP)'
     end
 
@@ -60,7 +57,7 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
         end
 
         it 'displays a button to save selected keywords' do
-          within '.master-overlay-panel-item-fixed-footer' do
+          within '#C1200187767-EDF_OPS_variable-selection .master-overlay-panel-item-fixed-footer' do
             expect(page).to have_button('Save')
           end
         end
@@ -69,7 +66,7 @@ describe 'When viewing the project page with an OPeNDAP supported collection' do
           before :all do
             first('.collection-variable-list-item input[type="checkbox"]').set(true)
 
-            within '.master-overlay-panel-item-fixed-footer' do
+            within '#C1200187767-EDF_OPS_variable-selection .master-overlay-panel-item-fixed-footer' do
               click_button 'Save'
               wait_for_xhr
             end

@@ -11,8 +11,6 @@ describe 'When viewing the project page' do
       # so will this count and we don't want tests failing on simple data changes.
       collection_card = find('.project-list-item', match: :first)
       @granule_count = collection_card.find('.project-list-item-stat-granules').text.to_i
-
-      collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
       choose('Direct Download')
@@ -47,10 +45,6 @@ describe 'When viewing the project page' do
     context 'When revisiting the project after choosing download access' do
       before do
         load_page :projects_page, project: ['C1200240776-DEV08'], env: :sit, authenticate: 'edsc'
-
-        collection_card = find('.project-list-item', match: :first)
-        collection_card.find('.project-list-item-action-edit-options').click
-        wait_for_xhr
       end
 
       after do

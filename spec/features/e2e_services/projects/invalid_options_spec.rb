@@ -9,7 +9,6 @@ describe 'Invalid Delivery Options' do
     before do
       collection_card = find('.project-list-item', match: :first)
 
-      collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
       choose('Customize')
@@ -52,7 +51,6 @@ describe 'Invalid Delivery Options' do
     before do
       collection_card = find('.project-list-item', match: :first)
 
-      collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
       choose('Direct Download')
