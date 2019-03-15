@@ -108,9 +108,10 @@
         <project-list class="project-list" params="{ project: project }"></project-list>
         <footer class="master-overlay-footer-actions">
           <div class="master-overlay-footer-notes">
-            <p class="master-overlay-footer-note" data-bind="visible: !$root.project.allReadyToDownload() && !$root.project.allHaveAccessMethod()">Select a data access method for each collection in your project before downloading.</p>
-            <p class="master-overlay-footer-note" data-bind="visible: $root.project.allReadyToDownload() && $root.project.isLoadingComplete()">Click "Edit Options" above to customize the output for each project.</p>
-            <p class="master-overlay-footer-note" data-bind="visible: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() && $root.project.allHaveAccessMethod()">One or more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
+            <p class="master-overlay-footer-note" style="display: none" data-bind="visible: $root.project.isLoadingComplete() && !$root.project.allHaveGranules()">One or more collections in your project contains zero granules. Adjust temporal constraints or remove the collections before downloading.</p>
+            <p class="master-overlay-footer-note" style="display: none" data-bind="visible: $root.project.isLoadingComplete() && !$root.project.allReadyToDownload() && !$root.project.allHaveAccessMethod() && $root.project.allHaveGranules()">Select a data access method for  each collection in your project before downloading.</p>
+            <p class="master-overlay-footer-note" style="display: none" data-bind="visible: $root.project.allReadyToDownload() && $root.project.isLoadingComplete() && $root.project.allHaveGranules()">Click "Edit Options" above to customize the output for each project.</p>
+            <p class="master-overlay-footer-note" style="display: none" data-bind="visible: !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() && $root.project.allHaveAccessMethod() && $root.project.allHaveGranules()">One or more collections in your project contains customization errors. Please click "Edit Options" to fix the errors before downloading.</p>
           </div>
           <button data-bind=" click: $root.downloadProject, style: { pointerEvents: $root.project.allReadyToDownload() ? 'auto' : 'none' }, attr: { disabled: !$root.project.allReadyToDownload() && !$root.project.isLoadingComplete() }, css: { 'button-disabled': !$root.project.allReadyToDownload() && $root.project.isLoadingComplete() }" href="#" class="button button-full button-download-data" disabled>
             <i class="fa fa-download" aria-hidden="true"></i> Download Data
@@ -327,10 +328,10 @@
             <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-loading" data-bind="visible: !$parents[1].serviceOptions.isLoaded()">
               <i class="fa fa-spinner"></i>
             </span>
-            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-valid" data-bind="visible: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.readyToDownload()">
+            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-valid" data-bind="visible: $parents[1].serviceOptions.isLoaded() && $parents[1].isReadyToDownload()">
               <i class="fa fa-check-circle"></i>
             </span>
-            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-invalid" data-bind="visible: $parents[1].serviceOptions.isLoaded() && !$parents[1].serviceOptions.readyToDownload()">
+            <span class="master-overlay-panel-footer-icon master-overlay-panel-footer-icon-invalid" data-bind="visible: $parents[1].serviceOptions.isLoaded() && !$parents[1].isReadyToDownload()">
               <i class="fa fa-exclamation-circle"></i>
             </span>
             <span class="master-overlay-panel-footer-page" data-bind="text: 'Collection ' + ($parents[1].projectIndex() + 1) + ' of ' + $parents[1].project.collections().length">Collection 0 of 0</span>
