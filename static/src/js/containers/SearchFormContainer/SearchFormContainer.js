@@ -14,9 +14,10 @@ const urlPropsQueryConfig = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getCollections: (query) => {
-    dispatch(actions.getCollections(query))
-  },
+  // getCollections: (query) => {
+  //   dispatch(actions.getCollections(query))
+  // },
+  onChangeQuery: query => dispatch(actions.changeQuery(query)),
   onChangeKeywordSearch: query => dispatch(actions.changeKeywordSearch(query))
 })
 
@@ -36,9 +37,9 @@ export class SearchFormContainer extends Component {
   }
 
   componentDidMount() {
-    const { getCollections } = this.props
+    const { onChangeQuery } = this.props
     const { keywordSearch } = this.state
-    getCollections(keywordSearch)
+    onChangeQuery({ keyword: keywordSearch })
   }
 
   onFormSubmit(e) {
@@ -50,10 +51,10 @@ export class SearchFormContainer extends Component {
   }
 
   onKeywordBlur() {
-    const { onChangeKeywordSearch, getCollections } = this.props
+    const { onChangeKeywordSearch, onChangeQuery } = this.props
     const { keywordSearch } = this.state
     onChangeKeywordSearch(keywordSearch)
-    getCollections(keywordSearch)
+    onChangeQuery({ keyword: keywordSearch })
   }
 
   render() {
@@ -80,7 +81,7 @@ SearchFormContainer.defaultProps = {
 
 SearchFormContainer.propTypes = {
   keywordSearch: PropTypes.string,
-  getCollections: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
   onChangeKeywordSearch: PropTypes.func.isRequired
 }
 

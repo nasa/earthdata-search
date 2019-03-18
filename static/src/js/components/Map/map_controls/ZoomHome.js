@@ -62,7 +62,6 @@ class ZoomExtended extends Control.Zoom {
 }
 
 class ZoomHome extends MapControl {
-  // eslint-disable-next-line
   createLeafletElement() {
     return new ZoomExtended()
   }

@@ -6,9 +6,18 @@ export const updateSearchQuery = payload => ({
   payload
 })
 
-export const changeQuery = query => (dispatch) => {
-  dispatch(getCollections(query))
+export const updateSpatialQuery = payload => ({
+  type: 'UPDATE_SPATIAL_QUERY',
+  payload
+})
+
+export const changeQuery = query => (dispatch, getState) => {
+  console.log('query', query)
+
   dispatch(updateSearchQuery(query))
+  const updatedQuery = getState().query
+  console.log('getState', getState().query)
+  dispatch(getCollections(updatedQuery))
 }
 
 export const changeP = collectionId => (dispatch) => {

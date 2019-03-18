@@ -38,6 +38,9 @@ API.buildEntity({
       name: 'getAll',
       callback: ({
         keyword,
+        point,
+        boundingBox,
+        polygon,
         hasGranules,
         hasGranulesOrCwic,
         includeHasGranules,
@@ -50,6 +53,9 @@ API.buildEntity({
       } = {}) => API.get('collections', {
         params: {
           keyword,
+          point,
+          bounding_box: boundingBox,
+          polygon,
           has_granules: hasGranules,
           include_granule_counts: includeGranuleCounts,
           include_has_granules: includeHasGranules,

@@ -47,12 +47,19 @@ export const onFacetsErrored = () => ({
   type: ERRORED_FACETS
 })
 
-export const getCollections = keyword => (dispatch) => {
+export const getCollections = query => (dispatch) => {
+  console.log('getCollections', query)
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
 
+  const { keyword, spatial = {} } = query
+  const { point, boundingBox, polygon } = spatial
+
   API.endpoints.collections.getAll({
     keyword,
+    point,
+    boundingBox,
+    polygon,
     includeFacets: 'v2',
     pageSize: 20,
     pageNum: 1,

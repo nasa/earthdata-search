@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -5,14 +7,19 @@ import { withRouter } from 'react-router-dom'
 import 'proj4'
 import 'proj4leaflet'
 import L from 'leaflet'
-import { Map, LayersControl } from 'react-leaflet'
+import {
+  Map,
+  LayersControl,
+  ScaleControl
+} from 'react-leaflet'
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query'
 import actions from '../../actions/index'
-import ZoomHome from './ZoomHome'
+import ZoomHome from './map_controls/ZoomHome'
 
 import 'leaflet/dist/leaflet.css'
 import './Map.scss'
 import LayerBuilder from './LayerBuilder'
+import SpatialSelection from './map_controls/SpatialSelection'
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -76,11 +83,12 @@ const EPSG3031 = new window.L.Proj.CRS(
 const crsProjections = [EPSG3413, EPSG4326, EPSG3031]
 
 const urlPropsQueryConfig = {
-  map: {
-    type: UrlQueryParamTypes.string,
-    queryParam: 'm'
-  }
+  map: { type: UrlQueryParamTypes.string, queryParam: 'm' },
+  pointSearch: { type: UrlQueryParamTypes.string, queryParam: 'sp' },
+  boundingBoxSearch: { type: UrlQueryParamTypes.string, queryParam: 'sb' },
+  polygonSearch: { type: UrlQueryParamTypes.string, queryParam: 'polygon' }
 }
+
 
 const mapDispatchToProps = dispatch => ({
   onChangeMap: ({ map }) => {
@@ -88,19 +96,43 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-// const mapStateToProps = state => ({
-//   map: state.map
-// })
-
 class EdscMap extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      pointSearch: props.pointSearch ? props.pointSearch : '',
+      boundingBoxSearch: props.boundingBoxSearch ? props.boundingBoxSearch : '',
+      polygonSearch: props.polygonSearch ? props.polygonSearch : ''
+    }
+
     this.handleMoveend = this.handleMoveend.bind(this)
   }
 
   componentDidMount() {
     const { map, onChangeMap } = this.props
     onChangeMap({ map })
+
+    const {
+      pointSearch,
+      boundingBoxSearch,
+      polygonSearch
+    } = this.state
+
+    if (pointSearch !== '') {
+      const shape = L.latLng(pointSearch.split(',').reverse())
+      this.renderPoint(shape)
+    } else if (boundingBoxSearch !== '') {
+      // split on every other `,`
+      const result = boundingBoxSearch.match(/[^,]+,[^,]+/g)
+      const shape = Array.from(result).map(pointStr => L.latLng(pointStr.split(',').reverse()))
+      this.renderRectangle(shape)
+    } else if (polygonSearch !== '') {
+      // split on every other `,`
+      const result = polygonSearch.match(/[^,]+,[^,]+/g)
+      const shape = Array.from(result).map(pointStr => L.latLng(pointStr.split(',').reverse()))
+      this.renderPolygon(shape)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -134,9 +166,80 @@ class EdscMap extends Component {
   }
 
   updateQuery(obj) {
-    console.log('updateQuery', obj)
+    // console.log('updateQuery', obj)
     const { onChangeUrlQueryParams } = this.props
     onChangeUrlQueryParams(obj)
+  }
+
+  renderPoint(point) {
+    const map = this.mapRef.leafletElement
+    // const shape = point.split(',').reverse()
+    const marker = new L.Marker(point, {
+      icon: L.Draw.Marker.prototype.options.icon
+    })
+    marker.addTo(map)
+    map.panTo(marker.getLatLng())
+    map.drawnItems = [marker]
+
+    // TODO Add these drawn items to a drawn items array in state(?)
+    // pass that value to SpatialSelection so that I can delete
+    // the old layer when drawing a new layer
+
+    // this._layer = marker
+    // marker.type = 'marker'
+    // this._drawnItems.addLayer(marker)
+
+    // if (!this.isMinimap) {
+    //   // pan to empty area
+    //   const masterOverlay = __guard__(document.getElementsByClassName('master-overlay-main'), x => x[0])
+    //   const facetOverlay = document.getElementById('master-overlay-parent')
+    //   const offsetWidth = 0 - ((util.isElementInViewPort(facetOverlay) ? facetOverlay.offsetWidth : 0) / 2)
+    //   const offsetHeight = (masterOverlay != null ? masterOverlay.offsetHeight : undefined) / 4
+    //   return this.map.panTo(marker.getLatLng()).panBy([offsetWidth, offsetHeight])
+    // }
+  }
+
+  renderRectangle(rectangle) {
+    const map = this.mapRef.leafletElement
+    const shape = rectangle
+    // southwest longitude should not be greater than northeast
+    if (shape[0].lng > shape[1].lng) {
+      shape[1].lng += 360
+    }
+
+    const bounds = new L.LatLngBounds(...Array.from(shape || []))
+    const options = L.extend({}, L.Draw.Rectangle.prototype.options.shapeOptions, this._colorOptions)
+    const rect = new L.Rectangle(bounds, options)
+
+    rect.addTo(map)
+    map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter())
+    map.drawnItems = [rect]
+
+    //     rect.type = 'rectangle'
+    //     this._drawnItems.addLayer(rect)
+
+    //     if (!this.isMinimap) {
+    //       // pan to empty area
+    //       const masterOverlay = __guard__(document.getElementsByClassName('master-overlay-main'), x => x[0])
+    //       const facetOverlay = document.getElementById('master-overlay-parent')
+    //       const offsetWidth = 0 - ((util.isElementInViewPort(facetOverlay) ? facetOverlay.offsetWidth : 0) / 2)
+    //       const offsetHeight = (masterOverlay != null ? masterOverlay.offsetHeight : undefined) / 4
+    //       return this.map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offsetWidth, offsetHeight])
+    //     }
+  }
+
+  renderPolygon(polygon) {
+    const map = this.mapRef.leafletElement
+
+    const options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, this._colorOptions)
+    // const poly = new L.sphericalPolygon(polygon, options)
+    const poly = new L.Polyline(polygon, options)
+
+    poly.addTo(map)
+    map.panTo(L.latLngBounds(poly.getLatLngs()).getCenter())
+    map.drawnItems = [poly]
+    // poly.type = 'polygon'
+    // return this._drawnItems.addLayer(poly)
   }
 
   render() {
@@ -144,11 +247,12 @@ class EdscMap extends Component {
     // if (map === '') {
     //   map = '0!0!2!1!0!0,2'
     // }
-    console.log('map', map)
-    const [lat, lng, zoom, proj, base, overlays] = map.split('!')
-    console.log('proj', proj)
-    console.log('base', base)
-    console.log('overlays', overlays)
+    // console.log('map', map)
+    // const [lat, lng, zoom, proj, base, overlays] = map.split('!')
+    const [lat, lng, zoom, proj] = map.split('!')
+    // console.log('proj', proj)
+    // console.log('base', base)
+    // console.log('overlays', overlays)
     const projections = ['epsg3413', 'epsg4326', 'epsg3031']
     const projIndex = proj !== undefined ? proj : 1
 
@@ -221,17 +325,25 @@ class EdscMap extends Component {
           </Overlay>
         </LayersControl>
         <ZoomHome />
+        <ScaleControl position="bottomright" />
+        <SpatialSelection />
       </Map>
     )
   }
 }
 
 EdscMap.defaultProps = {
-  map: '0!0!2!1!0!0,2'
+  map: '0!0!2!1!0!0,2',
+  pointSearch: '',
+  boundingBoxSearch: '',
+  polygonSearch: ''
 }
 
 EdscMap.propTypes = {
   map: PropTypes.string,
+  pointSearch: PropTypes.string,
+  boundingBoxSearch: PropTypes.string,
+  polygonSearch: PropTypes.string,
   onChangeUrlQueryParams: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired
