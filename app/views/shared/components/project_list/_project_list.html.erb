@@ -108,7 +108,7 @@
                   <!-- /ko -->
                 </div>
                 <a class="project-list-item-action project-list-item-action-edit-options" data-toggle="modal" data-bind="css: { enabled: isLoadingComplete()}, click: $parent.project.toggleActivePanel">
-                  <!-- ko if: !serviceOptions.readyToDownload() -->
+                  <!-- ko if: !isReadyToDownload() -->
                   <i class="fa fa-exclamation-circle echoforms-error"></i>
                   <!-- /ko -->
                   <i class="fa fa-cog"></i>

@@ -9,11 +9,6 @@ describe 'When viewing the project page' do
 
   context 'When viewing variables for subsetting' do
     before :all do
-      # Find the collection card to work with
-      collection_card = find('.project-list-item', match: :first)
-
-      # Click the edit link
-      collection_card.find('.project-list-item-action-edit-options').click
 
       choose('Customize')
 
@@ -45,7 +40,7 @@ describe 'When viewing the project page' do
       end
 
       it 'displays a back button' do
-        el = find('.master-overlay-panel-item-fixed-footer')
+        el = find('#C1200187767-EDF_OPS_variable-selection .master-overlay-panel-item-fixed-footer')
         expect(el).to have_content('Back')
       end
     end

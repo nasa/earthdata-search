@@ -6,11 +6,15 @@ do (ko) ->
         panelGroups = ko.observableArray()
         activePanelGroup = ko.observable()
         activeCollectionId = ko.observable()
+        firstRender = ko.observable(true)
+        allPanelsRendered = ko.observable(false)
 
         return {
           panelGroups,
           activePanelGroup,
-          activeCollectionId
+          activeCollectionId,
+          firstRender,
+          allPanelsRendered
         }
     }
     template: { element: 'tmpl_master-overlay-panel' },
@@ -37,12 +41,21 @@ do (ko) ->
             elementContext = ko.contextFor panelGroup.element[0]
             bindingContext.$data.activePanelGroup(null)
             elementContext.$component.isOpen(false)
-            # TL: Leaving this here intentionally. Experienceing some strange behavior with translate-origin.
-            # Need to do some more poking, but dont want to lose the current state
-            # $('.master-overlay-panel-indicator').removeClass('master-overlay-panel-indicator-active')
 
       update: (element, valueAccessor, allBindings, viewModel, bindingContext) =>
         # The element starts hidden to prevent the content from being seen. Once update is called, we know the dom is
         # in good shape and we can show the panels
-        $(element).parent().show()
+
+        hasRendered = (collection) =>
+          ko.contextFor(collection.element?[0]).$data.allItemsRendered()
+
+        # Once all panels have registered as rendered, show the element and open the panel
+        bindingContext.$data.allPanelsRendered(bindingContext.$data.panelGroups().length && bindingContext.$data.panelGroups().every(hasRendered))
+
+        if bindingContext.$data.firstRender() and \
+           bindingContext.$data.allPanelsRendered()
+
+          bindingContext.$data.firstRender(false)
+          $(element).parent().show()
+          $('#' + bindingContext.$parent.project.collections()[0]?.collection.id + '_edit-options').trigger('toggle-panel')
     }

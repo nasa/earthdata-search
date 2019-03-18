@@ -45,6 +45,7 @@ ns.Project = do (ko,
       @expectedUmmService   = ko.computed(@_computeExpectedUmmService, this, deferEvaluation: true)
       @isLoadingComplete    = ko.computed(@_computeIsLoadingComplete, this, deferEvaluation: true)
       @hasGranules          = ko.computed(@_computeHasGranules, this, deferEvaluation: true)
+      @isReadyToDownload    = ko.computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
 
       # When the loadingServiceType is updated re-calculate the subsetting flags
       @loadingServiceType.subscribe(@_computeSubsettingFlags)
@@ -311,6 +312,21 @@ ns.Project = do (ko,
     _computeHasGranules: () ->
       @collection.granule_hits() > 0
 
+    _computeIsReadyToDownload: () ->
+      return true if @hasGranules() && @serviceOptions.readyToDownload()
+      false
+
+    projectIndex: () =>
+      collections = @project.collections()
+      [result] = ({collection, i} for collection, i in collections when collection.collection.id == @collection.id)
+      result.i
+
+    nextProjectCollectionId: () =>
+      @project.collections()[@projectIndex() + 1]?.collection.id
+
+    previousProjectCollectionId: () =>
+      @project.collections()[@projectIndex() - 1]?.collection.id
+
   class Project
     constructor: (@query) ->
       @_collectionIds = ko.observableArray()
@@ -323,6 +339,8 @@ ns.Project = do (ko,
       @searchGranulesCollection = ko.observable(null)
       @accessCollections = ko.computed(read: @_computeAccessCollections, owner: this, deferEvaluation: true)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
+      @allHaveAccessMethod = ko.computed(@_computeAllHaveAccessMethod, this, deferEvaluation: true)
+      @allHaveGranules = ko.computed(@_computeAllHaveGranules, this, deferEvaluation: true)
       @visibleCollections = ko.computed(read: @_computeVisibleCollections, owner: this, deferEvaluation: true)
       @isLoadingComplete = ko.computed(read: @_computeIsLoadingComplete, this, deferEvaluation: true)
 
@@ -344,6 +362,16 @@ ns.Project = do (ko,
       return false if !@accessCollections().length
       return false for collection in @accessCollections() when !collection.hasGranules()
       return false for collection in @accessCollections() when !collection.serviceOptions.readyToDownload()
+      true
+
+    _computeAllHaveAccessMethod: ->
+      return false if !@accessCollections().length
+      return false for ds in @accessCollections() when !ds.selectedAccessMethod()
+      true
+
+    _computeAllHaveGranules: ->
+      return false if !@accessCollections().length
+      return false for ds in @accessCollections() when !ds.hasGranules()
       true
 
     _computeAccessCollections: ->

@@ -7,12 +7,6 @@ describe 'When viewing the project page' do
       # and should be made to this test file if needed
       load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
 
-      # Find the collection card to work with
-      collection_card = find('.project-list-item', match: :first)
-
-      # Click the customize link
-      collection_card.find('.project-list-item-action-edit-options').click
-
       choose('Customize')
 
       # Choose to subset based on variables
@@ -27,7 +21,7 @@ describe 'When viewing the project page' do
       find('.variable-list input[value="V1200265914-EDF_OPS"]').set(true)
 
       # Save the selections and return to the project page
-      within '.master-overlay-panel-item-fixed-footer' do
+      within '#C1200187767-EDF_OPS_variable-selection .master-overlay-panel-item-fixed-footer' do
         click_button 'Save'
         wait_for_xhr
       end
@@ -92,12 +86,6 @@ describe 'When viewing the project page' do
       # This collection is specifically configured for this test on SIT. Any changes can
       # and should be made to this test file if needed
       load_page :projects_page, project: ['C1200187767-EDF_OPS'], bounding_box: [0, 30, 10, 40], env: :sit, authenticate: 'edsc'
-
-      # Find the collection card to work with
-      collection_card = find('.project-list-item', match: :first)
-
-      # Click the customize link
-      collection_card.find('.project-list-item-action-edit-options').click
 
       choose('Direct Download')
     end

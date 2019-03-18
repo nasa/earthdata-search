@@ -7,11 +7,6 @@ describe 'Switching Delivery Methods' do
 
   context 'when switching between delivery methods' do
     before do
-      collection_card = find('.project-list-item', match: :first)
-
-      collection_card.find('.project-list-item-action-edit-options').click
-      wait_for_xhr
-
       choose('Stage for Delivery')
 
       select 'FTP Push', from: 'Distribution Type'

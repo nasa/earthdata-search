@@ -9,12 +9,6 @@ describe 'When viewing the project page' do
 
   context 'When selecting an output format for subsetting' do
     before :all do
-      # Find the collection card to work with
-      collection_card = find('.project-list-item', match: :first)
-
-      # Click the customize link
-      collection_card.find('.project-list-item-action-edit-options').click
-
       choose 'Customize (OPeNDAP)'
 
       select 'BINARY', from: 'output-format' # BINARY is `.dods`

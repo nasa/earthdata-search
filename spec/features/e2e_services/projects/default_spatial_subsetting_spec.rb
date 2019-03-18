@@ -16,7 +16,6 @@ describe 'Default Spatial Subsetting' do
 
       collection_card = find('.project-list-item', match: :first)
 
-      collection_card.find('.project-list-item-action-edit-options').click
       wait_for_xhr
 
       choose('Customize')
@@ -38,7 +37,6 @@ describe 'Default Spatial Subsetting' do
         load_page :projects_page, project: ['C1000001167-NSIDC_ECS'], temporal: ['2019-02-01T00:00:00Z', '2019-02-01T23:59:59Z'], authenticate: 'edsc'
 
         collection_card = find('.project-list-item', match: :first)
-        collection_card.find('.project-list-item-action-edit-options').click
         wait_for_xhr
 
         check 'Enter bounding box'
