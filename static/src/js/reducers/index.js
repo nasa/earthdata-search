@@ -5,12 +5,10 @@ import collectionsReducer from './collections'
 import facetsReducer from './facets'
 import granulesReducer from './granules'
 import queryReducer from './search'
-import mapReducer from './map'
 
 export default history => combineReducers({
   router: connectRouter(history),
   query: queryReducer,
-  map: mapReducer,
   entities: combineReducers({
     collections: collectionsReducer,
     facets: facetsReducer,

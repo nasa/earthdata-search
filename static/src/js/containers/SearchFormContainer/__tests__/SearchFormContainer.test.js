@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     keywordSearch: 'Test value',
-    getCollections: jest.fn(),
+    onChangeQuery: jest.fn(),
     onChangeKeywordSearch: jest.fn()
   }
 
@@ -48,14 +48,14 @@ describe('SearchFormContainer component', () => {
     expect(props.onChangeKeywordSearch.mock.calls.length).toBe(1)
     expect(props.onChangeKeywordSearch.mock.calls[0]).toEqual(['new value'])
 
-    expect(props.getCollections.mock.calls.length).toBe(2) // called once on componentDidMount
-    expect(props.getCollections.mock.calls[1]).toEqual(['new value'])
+    expect(props.onChangeQuery.mock.calls.length).toBe(2) // called once on componentDidMount
+    expect(props.onChangeQuery.mock.calls[1]).toEqual([{ keyword: 'new value' }])
   })
 
-  test('should call getCollections on page load', () => {
+  test('should call onChangeQuery on page load', () => {
     const { props } = setup()
 
-    expect(props.getCollections.mock.calls.length).toBe(1)
-    expect(props.getCollections.mock.calls[0]).toEqual(['Test value'])
+    expect(props.onChangeQuery.mock.calls.length).toBe(1)
+    expect(props.onChangeQuery.mock.calls[0]).toEqual([{ keyword: 'Test value' }])
   })
 })
