@@ -54,7 +54,10 @@
 
 .editable-text-button {
   .editable-text-project & {
-    padding: 0.125em;
+    margin-top: -1px;
+    padding: 4px 5px;
+    height: 25px;
+    width: 25px;
     background-color: #fff;
     font-size: 0.925em;
     color: #ababab;
@@ -65,10 +68,16 @@
     &:hover,
     &:focus {
       color: #656363;
+      background: #e8e6e6;
+      border-radius: 50%;
     }
 
     .fa {
       transform: translate(-1px, -2px);
+
+      &.fa-pencil {
+        transform: translate(0px, -2px)
+      }
     }
   }
 }
