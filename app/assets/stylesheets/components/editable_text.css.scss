@@ -32,7 +32,9 @@
 
     &:hover,
     &:focus {
-      border-bottom: 2px solid #ededed;
+      .editable-text-is-editable & {
+        border-bottom: 2px solid #ededed;
+      }
     }
   }
 }
@@ -84,5 +86,17 @@
     width: 0;
     visibility: hidden;
     position: absolute;
+  }
+}
+
+.editable-text-icon-loading {
+  margin-top: -1px;
+  color: #ababab;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform:rotate(360deg);
   }
 }

@@ -10,6 +10,7 @@ do (ko, $=jQuery) ->
           buttonStyle = params.buttonStyle
           editButtonText = params.editButtonText
           className = params.className
+          editingEnabled = params.editingEnabled
 
           return {
             initialValue,
@@ -18,14 +19,15 @@ do (ko, $=jQuery) ->
             submitCallback,
             buttonStyle,
             editButtonText,
-            className
+            className,
+            editingEnabled
           }
       }
       template: { element: 'tmpl_editable-text' },
     }
 
     ko.bindingHandlers.componentEditableText =
-      init: (element, valueAccessor) ->
+      init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
         value = valueAccessor()
         element = $(element)
 
@@ -42,6 +44,9 @@ do (ko, $=jQuery) ->
         textWrapper = element.find('.editable-text-text-wrapper')
         editWrapper =  element.find('.editable-text-edit-wrapper')
         wrapper = element.find('.editable-text-wrapper')
+
+        # Build out the class name for the element
+        bindingContext.$component.className = 'editable-text-' + bindingContext.$component.className
 
         # Setting some vars to track the edit action timer. This is used to toggle the visibility
         # of the edit actions after a period of inactivity
@@ -117,10 +122,12 @@ do (ko, $=jQuery) ->
           element.resizeInput()
 
         element.onTextElementClick = (e) ->
+          return if !bindingContext.$component.editingEnabled()
           element.onEdit()
           element.resizeInput()
 
         element.onEditButtonClick = (e) ->
+          return if !bindingContext.$component.editingEnabled()
           element.onEdit()
           element.resizeInput()
 
@@ -224,14 +231,24 @@ do (ko, $=jQuery) ->
           element.unbindEvents()
 
 
-      update: (element, valueAccessor) ->
+      update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
         element = $(element)
         value = valueAccessor()
         textElement = element.find('.editable-text-content')
+        editButton = element.find('.editable-text-button-edit')
+        loadingIcon = element.find('.editable-text-icon-loading')
 
         # Set the inital value of the text element
         if !value.initialValue() && value.defaultValue
           value.initialValue(value.defaultValue)
+
+        if !bindingContext.$component.editingEnabled()
+          editButton.hide()
+          loadingIcon.show()
+        else
+          console.warn 'hiding icon'
+          editButton.show()
+          loadingIcon.hide()
 
         # Trigger the edit event based on the current state, defaulting to false if
         # no state is set on the bound element

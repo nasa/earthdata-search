@@ -1,11 +1,14 @@
 <template id="tmpl_editable-text">
-  <div class="editable-text" data-bind="css: 'editable-text-' + $component.className, componentEditableText: { initialValue: $component.initialValue, defaultValue: $component.defaultValue, submitCallback: $component.submitCallback, buttonStyle: $component.buttonStyle}">
+  <div class="editable-text" data-bind="css: 'editable-text-' + $component.className, css2: { 'editable-text-editable': $component.editingEnabled() }, componentEditableText: { initialValue: $component.initialValue, defaultValue: $component.defaultValue, submitCallback: $component.submitCallback, buttonStyle: $component.buttonStyle}">
     <div class="editable-text-wrapper">
       <div class="editable-text-text-wrapper">
         <h2 class="editable-text-content" data-bind="attr: { title: $component.initialValue }">&nbsp;</h2>
-        <button type="button" class="editable-text-button editable-text-button-edit" data-bind="attr: { title: $component.editButtonText }">
+        <button type="button" class="editable-text-button editable-text-button-edit" data-bind="attr: { title: $component.editButtonText, visible: $component.editingEnabled() }">
           <i class="fa fa-pencil"></i>
         </button>
+        <div class="editable-text-icon-loading" style="display: none">
+          <i class=" fa fa-spinner"></i>
+        </div>
       </div>
       <form class="editable-text-edit-wrapper">
         <input type="text" class="editable-text-input" data-bind='value: $component.inputValue' />
