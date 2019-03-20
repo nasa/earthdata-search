@@ -82,7 +82,7 @@
             buttonStyle: 'icon',
             className: 'project',
             editButtonText:'Edit Project Title',
-            editingEnabled: $root.project.isLoadingComplete()
+            editingEnabled: $root.project.isLoadingComplete() || $root.project.collections().length === 0
           }"></editable-text>
           <div class="project-stats">
             <ul class="master-overlay-content-project-stats project-stats-list" data-bind="fadeVisible: isLoaded">

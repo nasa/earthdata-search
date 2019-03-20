@@ -45,9 +45,6 @@ do (ko, $=jQuery) ->
         editWrapper =  element.find('.editable-text-edit-wrapper')
         wrapper = element.find('.editable-text-wrapper')
 
-        # Build out the class name for the element
-        bindingContext.$component.className = 'editable-text-' + bindingContext.$component.className
-
         # Setting some vars to track the edit action timer. This is used to toggle the visibility
         # of the edit actions after a period of inactivity
         editActionTimer = null
