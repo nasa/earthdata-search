@@ -14,24 +14,34 @@ export const nlpSpatialToCmrParams = (nlpSpatialParam) => {
   ]
 }
 
-export const searchNlp = keyword => dispatch => API.endpoints.nlp.search({ text: keyword })
-  .then((response) => {
-    const payload = {}
+export const searchNlp = keyword => (dispatch) => {
+  let response = null
 
-    payload.keyword = response.data.keyword
+  if (keyword) {
+    response = API.endpoints.nlp.search({ text: keyword })
+      .then((response) => {
+        const payload = {}
 
-    if (response.data.edscSpatial) {
-      const bbox = nlpSpatialToCmrParams(response.data.edscSpatial)
+        payload.keyword = response.data.keyword
 
-      payload.spatial = {
-        boundingBox: bbox.join(',')
-      }
-    }
+        if (response.data.edscSpatial) {
+          const bbox = nlpSpatialToCmrParams(response.data.edscSpatial)
 
-    dispatch(actions.changeQuery(payload))
-  }, (error) => {
-    throw new Error('Request failed', error)
-  })
-  .catch(() => {
-    console.log('Promise Rejected')
-  })
+          payload.spatial = {
+            boundingBox: bbox.join(',')
+          }
+        }
+
+        dispatch(actions.changeQuery(payload))
+      }, (error) => {
+        throw new Error('Request failed', error)
+      })
+      .catch(() => {
+        console.log('Promise Rejected')
+      })
+  } else {
+    dispatch(actions.changeQuery({ keyword: '' }))
+  }
+
+  return response
+}
