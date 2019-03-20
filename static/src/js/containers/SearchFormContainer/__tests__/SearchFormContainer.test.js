@@ -65,5 +65,6 @@ describe('SearchFormContainer component', () => {
     expect(enzymeWrapper.state().keywordSearch).toEqual('Test value')
     const newSearch = 'new seach'
     enzymeWrapper.setProps({ keywordSearch: newSearch })
+    expect(enzymeWrapper.state().keywordSearch).toEqual(newSearch)
   })
 })

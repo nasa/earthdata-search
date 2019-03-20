@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
+import ConnectedSpatialDisplayContainer from '../SpatialDisplayContainer/SpatialDisplayContainer'
+
 // Form Fields
 import TextField from '../../components/form_fields/TextField/TextField'
 import Button from '../../components/form_fields/Button/Button'
@@ -80,6 +82,7 @@ export class SearchFormContainer extends Component {
             text="Clear Filters"
             onClick={this.onSearchClear}
           />
+          <ConnectedSpatialDisplayContainer />
         </form>
       </section>
     )
