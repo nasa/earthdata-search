@@ -47,7 +47,8 @@ export const onFacetsErrored = () => ({
   type: ERRORED_FACETS
 })
 
-export const getCollections = query => (dispatch) => {
+export const getCollections = () => (dispatch, getState) => {
+  const { query } = getState()
   console.log('getCollections', query)
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())

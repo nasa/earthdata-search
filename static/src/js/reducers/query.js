@@ -1,8 +1,13 @@
-const initialState = ''
+import { UPDATE_SEARCH_QUERY } from '../constants/actionTypes'
+
+const initialState = {
+  keyword: '',
+  spatial: {}
+}
 
 const queryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_SEARCH_QUERY': {
+    case UPDATE_SEARCH_QUERY: {
       return {
         ...state,
         ...action.payload

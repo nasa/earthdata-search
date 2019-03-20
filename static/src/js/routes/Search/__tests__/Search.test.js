@@ -17,7 +17,7 @@ function setup() {
 }
 
 describe('TextField component', () => {
-  it('should render self', () => {
+  test('should render self', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.exists()).toBeTruthy()

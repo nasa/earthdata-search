@@ -9,7 +9,7 @@ function setup() {
   const props = {
     keywordSearch: 'Test value',
     onChangeQuery: jest.fn(),
-    onChangeKeywordSearch: jest.fn()
+    onClearFilters: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
@@ -45,17 +45,25 @@ describe('SearchFormContainer component', () => {
 
     input.simulate('change', 'keywordSearch', 'new value')
     input.simulate('blur')
-    expect(props.onChangeKeywordSearch.mock.calls.length).toBe(1)
-    expect(props.onChangeKeywordSearch.mock.calls[0]).toEqual(['new value'])
-
-    expect(props.onChangeQuery.mock.calls.length).toBe(2) // called once on componentDidMount
-    expect(props.onChangeQuery.mock.calls[1]).toEqual([{ keyword: 'new value' }])
-  })
-
-  test('should call onChangeQuery on page load', () => {
-    const { props } = setup()
 
     expect(props.onChangeQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeQuery.mock.calls[0]).toEqual([{ keyword: 'Test value' }])
+    expect(props.onChangeQuery.mock.calls[0]).toEqual([{ keyword: 'new value' }])
+  })
+
+  test('should call onClearFilters when the Clear Button is clicked', () => {
+    const { enzymeWrapper, props } = setup()
+    const button = enzymeWrapper.find('Button')
+
+    button.simulate('click')
+
+    expect(props.onClearFilters.mock.calls.length).toBe(1)
+  })
+
+  test('componentWillReceiveProps sets the state', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.state().keywordSearch).toEqual('Test value')
+    const newSearch = 'new seach'
+    enzymeWrapper.setProps({ keywordSearch: newSearch })
   })
 })

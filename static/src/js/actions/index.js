@@ -1,22 +1,17 @@
 import { getCollections } from './collections'
-import { changeQuery, changeP } from './search'
 import {
-  changeKeywordSearch,
-  changePointSearch,
-  changeBoundingBoxSearch,
-  changePolygonSearch,
-  changeMap
-} from './urlQuery'
+  changeQuery,
+  changeP,
+  clearFilters
+} from './search'
+import { changeUrl } from './urlQuery'
 
 const actions = {
   getCollections,
   changeQuery,
   changeP,
-  changeMap,
-  changeKeywordSearch,
-  changePointSearch,
-  changeBoundingBoxSearch,
-  changePolygonSearch
+  clearFilters,
+  changeUrl
 }
 
 export default actions

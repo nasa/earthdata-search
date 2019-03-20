@@ -3,7 +3,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { addUrlProps, UrlQueryParamTypes } from 'react-url-query'
 
 import { FeatureGroup } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
@@ -31,6 +30,31 @@ L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Release to finish drawing'
 L.drawLocal.draw.toolbar.buttons.polygon = 'Search by spatial polygon'
 L.drawLocal.draw.toolbar.buttons.rectangle = 'Search by spatial rectangle'
 L.drawLocal.draw.toolbar.buttons.marker = 'Search by spatial coordinate'
+
+// Append coordinate information to tooltips
+const originalUpdateContent = L.Draw.Tooltip.prototype.updateContent
+L.Draw.Tooltip.prototype.updateContent = function updateContent(content) {
+  let newContent = content
+  this._content = content
+  if (this._point) {
+    newContent = {
+      text: `${content.text}<br>${this._point}`,
+      subtext: content.subtext
+    }
+  }
+  return originalUpdateContent.call(this, newContent)
+}
+
+const originalUpdatePosition = L.Draw.Tooltip.prototype.updatePosition
+L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
+  this._point = `(${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)})`
+  if (this._content != null) {
+    this.updateContent(this._content)
+  }
+
+  return originalUpdatePosition.call(this, latlng)
+}
+
 
 // const normalColor = '#00ffff'
 // const errorColor = '#990000'
@@ -501,60 +525,90 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Search by spatial coordinate'
 // import { FeatureGroup, Circle } from 'react-leaflet'
 // import { EditControl } from 'react-leaflet-draw'
 
-const urlPropsQueryConfig = {
-  pointSearch: { type: UrlQueryParamTypes.string, queryParam: 'sp' },
-  boundingBoxSearch: { type: UrlQueryParamTypes.string, queryParam: 'sb' },
-  polygonSearch: { type: UrlQueryParamTypes.string, queryParam: 'polygon' }
-}
 
 const mapDispathToProps = dispatch => ({
-  onChangePointSearch: point => dispatch(actions.changePointSearch(point)),
   onChangeQuery: query => dispatch(actions.changeQuery(query))
+})
+
+const mapStateToProps = state => ({
+  pointSearch: state.query.spatial.point,
+  boundingBoxSearch: state.query.spatial.boundingBox,
+  polygonSearch: state.query.spatial.polygon
 })
 
 class SpatialSelection extends Component {
   constructor(props) {
     super(props)
+    // console.log('SpatialSelection props', props)
+    const { mapRef } = props
 
-    this.state = {
-      pointSearch: props.pointSearch ? props.pointSearch : '',
-      boundingBoxSearch: props.boundingBoxSearch ? props.boundingBoxSearch : '',
-      polygonSearch: props.polygonSearch ? props.polygonSearch : ''
+    if (mapRef.leafletElement) {
+      this.map = mapRef.leafletElement
     }
-
-    console.log('state', this.state)
 
     this.onCreate = this.onCreate.bind(this)
   }
 
   componentDidMount() {
-    const { onChangeQuery } = this.props
+    console.log('componentDidMount SpatialSelection')
+    // const { onChangeQuery } = this.props
     const {
       pointSearch,
       boundingBoxSearch,
       polygonSearch
-    } = this.state
+    } = this.props
 
     if (pointSearch !== '') {
-      // renderPoint(pointSearch)
-      onChangeQuery({ spatial: { point: pointSearch } })
+      const shape = L.latLng(pointSearch.split(',').reverse())
+      this.renderPoint(shape)
+      // onChangeQuery({ spatial: { point: pointSearch } })
     } else if (boundingBoxSearch !== '') {
-      onChangeQuery({ spatial: { boundingBox: boundingBoxSearch } })
+      // split on every other `,`
+      const result = boundingBoxSearch.match(/[^,]+,[^,]+/g)
+      const shape = Array.from(result).map(pointStr => L.latLng(pointStr.split(',').reverse()))
+      this.renderRectangle(shape)
+      // onChangeQuery({ spatial: { boundingBox: boundingBoxSearch } })
     } else if (polygonSearch !== '') {
-      onChangeQuery({ spatial: { polygon: polygonSearch } })
+      // split on every other `,`
+      const result = polygonSearch.match(/[^,]+,[^,]+/g)
+      const shape = Array.from(result).map(pointStr => L.latLng(pointStr.split(',').reverse()))
+      this.renderPolygon(shape)
+      // onChangeQuery({ spatial: { polygon: polygonSearch } })
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps', nextProps)
+    console.log('componentDidUpdate SpatialSelection')
+    const { mapRef } = this.props
+    const map = mapRef.leafletElement
+
+    const newDrawing = nextProps.pointSearch || nextProps.boundingBoxSearch || nextProps.polygonSearch
+    console.log('newDrawing', newDrawing)
+
+    // If there is no new drawing in the props, remove the old drawing
+    // This happens from the Clear Filters button updating the store
+    // TODO NLP updating the store (or other things add spatial) will cause this to change
+    if (map && !newDrawing) {
+      console.log('map.drawnItems', map.drawnItems)
+      if (map.drawnItems) {
+        Array.from(map.drawnItems).forEach(layer => layer.remove())
+      }
     }
   }
 
   onDrawStart(e) {
     console.log('onDrawStart', e)
     // Remove the old layer
-    if (this.oldLayer !== undefined) {
+    if (this.oldLayer !== undefined && this.oldLayer !== null) {
       this.oldLayer.remove()
     }
     this.oldLayer = null
     // this._oldLayerIsShapefile = this._shapefileLayer.isActive()
     // return this._removeSpatial()
-    Array.from(this.drawnItems).forEach(layer => layer.remove())
+    if (this.drawnItems) {
+      Array.from(this.drawnItems).forEach(layer => layer.remove())
+    }
   }
 
   onDrawStop(e) {
@@ -565,7 +619,7 @@ class SpatialSelection extends Component {
     console.log('onCreate', e)
     const { layer, layerType } = e
     e.sourceTarget.oldLayer = layer
-    this.drawnItems = [layer]
+    layer._map.drawnItems = [layer]
 
     // Update url/query with e.layer information
     let type
@@ -573,39 +627,24 @@ class SpatialSelection extends Component {
     if (layerType === 'marker') {
       type = 'point'
     } else if (layerType === 'rectangle') {
-      type = 'bounding_box'
+      type = 'boundingBox'
     } else {
       type = layerType
     }
 
-    const {
-      onChangePointSearch,
-      onChangeBoundingBoxSearch,
-      onChangePolygonSearch,
-      onChangeQuery
-    } = this.props
-
-    onChangePointSearch(null)
-    onChangeBoundingBoxSearch(null)
-    onChangePolygonSearch(null)
+    const { onChangeQuery } = this.props
 
     switch (type) {
       case 'point':
         latLngs = [layer.getLatLng()].map(p => `${p.lng},${p.lat}`)
-        onChangePointSearch(latLngs)
-        onChangeQuery({ spatial: { point: latLngs.join() } })
         break
-      case 'bounding_box':
+      case 'boundingBox':
         latLngs = [layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`)
-        onChangeBoundingBoxSearch(latLngs)
-        onChangeQuery({ spatial: { boundingBox: latLngs.join() } })
         break
       case 'polygon':
         latLngs = (Array.from(layer.getLatLngs()[0]).map(p => `${p.lng},${p.lat}`))
         // Close the polygon by duplicating the first point as the last point
         latLngs.push(latLngs[0])
-        onChangePolygonSearch(latLngs)
-        onChangeQuery({ spatial: { polygon: latLngs.join() } })
         break
       // case 'arctic-rectangle':
       //   latLngs = layer.getLatLngs()
@@ -616,26 +655,81 @@ class SpatialSelection extends Component {
       default:
         console.error(`Unrecognized shape: ${type}`)
     }
+
+    onChangeQuery({ spatial: { [type]: latLngs.join() } })
   }
 
-  // renderPoint(point) {
-  //   const shape = point.split(',')
-  //   const marker = new L.Marker(shape[0], {
-  //     icon: L.Draw.Marker.prototype.options.icon
-  //   })
-  //   this._layer = marker
-  //   marker.type = 'marker'
-  //   this._drawnItems.addLayer(marker)
+  renderPoint(point) {
+    const { map } = this
+    if (map) {
+      // const shape = point.split(',').reverse()
+      const marker = new L.Marker(point, {
+        icon: L.Draw.Marker.prototype.options.icon
+      })
+      marker.addTo(map)
+      map.panTo(marker.getLatLng())
+      map.drawnItems = [marker]
+    }
+    // TODO Add these drawn items to a drawn items array in state(?)
+    // pass that value to SpatialSelection so that I can delete
+    // the old layer when drawing a new layer
 
-  //   // if (!this.isMinimap) {
-  //   //   // pan to empty area
-  //   //   const masterOverlay = __guard__(document.getElementsByClassName('master-overlay-main'), x => x[0])
-  //   //   const facetOverlay = document.getElementById('master-overlay-parent')
-  //   //   const offsetWidth = 0 - ((util.isElementInViewPort(facetOverlay) ? facetOverlay.offsetWidth : 0) / 2)
-  //   //   const offsetHeight = (masterOverlay != null ? masterOverlay.offsetHeight : undefined) / 4
-  //   //   return this.map.panTo(marker.getLatLng()).panBy([offsetWidth, offsetHeight])
-  //   // }
-  // }
+    // this._layer = marker
+    // marker.type = 'marker'
+    // this._drawnItems.addLayer(marker)
+
+    // if (!this.isMinimap) {
+    //   // pan to empty area
+    //   const masterOverlay = __guard__(document.getElementsByClassName('master-overlay-main'), x => x[0])
+    //   const facetOverlay = document.getElementById('master-overlay-parent')
+    //   const offsetWidth = 0 - ((util.isElementInViewPort(facetOverlay) ? facetOverlay.offsetWidth : 0) / 2)
+    //   const offsetHeight = (masterOverlay != null ? masterOverlay.offsetHeight : undefined) / 4
+    //   return this.map.panTo(marker.getLatLng()).panBy([offsetWidth, offsetHeight])
+    // }
+  }
+
+  renderRectangle(rectangle) {
+    const { map } = this
+    const shape = rectangle
+    // southwest longitude should not be greater than northeast
+    if (shape[0].lng > shape[1].lng) {
+      shape[1].lng += 360
+    }
+
+    const bounds = new L.LatLngBounds(...Array.from(shape || []))
+    const options = L.extend({}, L.Draw.Rectangle.prototype.options.shapeOptions, this._colorOptions)
+    const rect = new L.Rectangle(bounds, options)
+
+    rect.addTo(map)
+    map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter())
+    map.drawnItems = [rect]
+
+    //     rect.type = 'rectangle'
+    //     this._drawnItems.addLayer(rect)
+
+    //     if (!this.isMinimap) {
+    //       // pan to empty area
+    //       const masterOverlay = __guard__(document.getElementsByClassName('master-overlay-main'), x => x[0])
+    //       const facetOverlay = document.getElementById('master-overlay-parent')
+    //       const offsetWidth = 0 - ((util.isElementInViewPort(facetOverlay) ? facetOverlay.offsetWidth : 0) / 2)
+    //       const offsetHeight = (masterOverlay != null ? masterOverlay.offsetHeight : undefined) / 4
+    //       return this.map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter()).panBy([offsetWidth, offsetHeight])
+    //     }
+  }
+
+  renderPolygon(polygon) {
+    const { map } = this
+
+    const options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, this._colorOptions)
+    // const poly = new L.sphericalPolygon(polygon, options)
+    const poly = new L.Polyline(polygon, options)
+
+    poly.addTo(map)
+    map.panTo(L.latLngBounds(poly.getLatLngs()).getCenter())
+    map.drawnItems = [poly]
+    // poly.type = 'polygon'
+    // return this._drawnItems.addLayer(poly)
+  }
 
   render() {
     return (
@@ -661,19 +755,16 @@ class SpatialSelection extends Component {
 SpatialSelection.defaultProps = {
   pointSearch: '',
   boundingBoxSearch: '',
-  polygonSearch: ''
+  polygonSearch: '',
+  mapRef: {}
 }
 
 SpatialSelection.propTypes = {
   pointSearch: PropTypes.string,
   boundingBoxSearch: PropTypes.string,
   polygonSearch: PropTypes.string,
-  onChangePointSearch: PropTypes.func.isRequired,
-  onChangeBoundingBoxSearch: PropTypes.func.isRequired,
-  onChangePolygonSearch: PropTypes.func.isRequired,
+  mapRef: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired
 }
 
-export default addUrlProps({ urlPropsQueryConfig })(
-  connect(null, mapDispathToProps)(SpatialSelection)
-)
+export default connect(mapStateToProps, mapDispathToProps)(SpatialSelection)
