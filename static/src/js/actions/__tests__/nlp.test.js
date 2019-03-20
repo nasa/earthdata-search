@@ -83,11 +83,11 @@ describe('nlp#searchNlp', () => {
 
     const addMock = jest.spyOn(actions, 'changeQuery').mockImplementation(() => jest.fn())
 
-    store.dispatch(actions.searchNlp('')).then(() => {
-      expect(addMock).toHaveBeenCalledTimes(1)
-      expect(addMock).toHaveBeenCalledWith({
-        keyword: ''
-      })
+    store.dispatch(actions.searchNlp(''))
+
+    expect(addMock).toHaveBeenCalledTimes(1)
+    expect(addMock).toHaveBeenCalledWith({
+      keyword: ''
     })
   })
 
