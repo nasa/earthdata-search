@@ -26,6 +26,7 @@ provider:
   #  region: us-east-1
   environment:
     cmr_host: https://cmr.sit.earthdata.nasa.gov
+    nlp_host: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov
 
 plugins:
   # - serverless-webpack
@@ -36,8 +37,20 @@ plugins:
 # Lambda Functions
 #
 functions:
+  nlpSearch:
+    handler: serverless/dist/nlp.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin : '*'
+          path: nlp
+          request:
+            template:
+              application/json: { "text" : "$input.params('text')" }
+
   retrieveConcept:
-    handler: serverless/dist/handler.retrieveConcept
+    handler: serverless/dist/cmr.retrieveConcept
     events:
       - http:
           method: get
@@ -50,7 +63,7 @@ functions:
                 id: true
 
   collectionSearch:
-    handler: serverless/dist/handler.collectionSearch
+    handler: serverless/dist/cmr.collectionSearch
     events:
       - http:
           method: get
@@ -59,7 +72,7 @@ functions:
           path: collections
 
   granuleSearch:
-    handler: serverless/dist/handler.granuleSearch
+    handler: serverless/dist/cmr.granuleSearch
     events:
       - http:
           method: get
@@ -72,7 +85,7 @@ functions:
                 id: true
 
   collectionGranules:
-    handler: serverless/dist/handler.collectionGranules
+    handler: serverless/dist/cmr.collectionGranules
     events:
       - http:
           method: get

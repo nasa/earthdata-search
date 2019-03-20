@@ -1,7 +1,5 @@
 // Select only desired keys from a provided object
-export const pick = (providedObj = {}, keys) => {
-  const pickedObj = {}
-
+const pick = (providedObj = {}, keys) => {
   let obj = null
 
   // if `null` is provided the default parameter will not be
@@ -13,29 +11,12 @@ export const pick = (providedObj = {}, keys) => {
   }
 
   Object.keys(obj).forEach((k) => {
-    if (keys.includes(k)) {
-      pickedObj[k] = obj[k]
+    if (!keys.includes(k)) {
+      delete obj[k]
     }
   })
 
-  return pickedObj
+  return obj
 }
 
-// Converts an object to a query string
-export const objToQueryString = (obj = {}) => {
-  const result = []
-  Object.keys(obj).forEach((k) => {
-    const keyStr = encodeURIComponent(k)
-    const val = obj[k]
-    if (Array.isArray(val)) {
-      for (let i = 0; i < val.length; i += 1) {
-        // Use [] syntax for defining arrays in the query string
-        result.push(`${keyStr}[]=${encodeURIComponent(val[i])}`)
-      }
-    } else {
-      result.push(`${keyStr}=${encodeURIComponent(val)}`)
-    }
-  })
-
-  return result.join('&')
-}
+export default pick
