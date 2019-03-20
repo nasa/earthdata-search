@@ -1,24 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { addUrlProps, UrlQueryParamTypes } from 'react-url-query'
 import actions from '../../actions/index'
 
 // Form Fields
 import TextField from '../../components/form_fields/TextField/TextField'
+import Button from '../../components/form_fields/Button/Button'
 
 import './SearchFormContainer.scss'
 
-const urlPropsQueryConfig = {
-  keywordSearch: { type: UrlQueryParamTypes.string, queryParam: 'q' }
-}
-
 const mapDispatchToProps = dispatch => ({
-  // getCollections: (query) => {
-  //   dispatch(actions.getCollections(query))
-  // },
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onChangeKeywordSearch: query => dispatch(actions.changeKeywordSearch(query))
+  onClearFilters: () => dispatch(actions.clearFilters())
+})
+
+const mapStateToProps = state => ({
+  keywordSearch: state.query.keyword
 })
 
 // Export non-redux-connected component for use in tests
@@ -34,12 +31,15 @@ export class SearchFormContainer extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
     this.onKeywordBlur = this.onKeywordBlur.bind(this)
+    this.onSearchClear = this.onSearchClear.bind(this)
   }
 
-  componentDidMount() {
-    const { onChangeQuery } = this.props
-    const { keywordSearch } = this.state
-    onChangeQuery({ keyword: keywordSearch })
+  componentWillReceiveProps(nextProps) {
+    const { keywordSearch } = this.props
+
+    if (keywordSearch !== nextProps.keywordSearch) {
+      this.setState({ keywordSearch: nextProps.keywordSearch })
+    }
   }
 
   onFormSubmit(e) {
@@ -51,10 +51,18 @@ export class SearchFormContainer extends Component {
   }
 
   onKeywordBlur() {
-    const { onChangeKeywordSearch, onChangeQuery } = this.props
+    const {
+      onChangeQuery
+    } = this.props
+
     const { keywordSearch } = this.state
-    onChangeKeywordSearch(keywordSearch)
     onChangeQuery({ keyword: keywordSearch })
+  }
+
+  onSearchClear() {
+    const { onClearFilters } = this.props
+    this.setState({ keywordSearch: '' })
+    onClearFilters()
   }
 
   render() {
@@ -69,6 +77,10 @@ export class SearchFormContainer extends Component {
             onChange={this.onInputChange}
             onBlur={this.onKeywordBlur}
           />
+          <Button
+            text="Clear Filters"
+            onClick={this.onSearchClear}
+          />
         </form>
       </section>
     )
@@ -82,11 +94,9 @@ SearchFormContainer.defaultProps = {
 SearchFormContainer.propTypes = {
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
-  onChangeKeywordSearch: PropTypes.func.isRequired
+  onClearFilters: PropTypes.func.isRequired
 }
 
 // Export redux-connected component for use in application
 // Import this class as `import ConnectedSearchFormContainer from './SearchFormContainer'`
-export default addUrlProps({ urlPropsQueryConfig })(
-  connect(null, mapDispatchToProps)(SearchFormContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchFormContainer)
