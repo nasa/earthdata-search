@@ -21,6 +21,10 @@ class APIWrapper {
     return axios.get(`${this.url}/${endpoint}`, options)
   }
 
+  post(endpoint, body = {}) {
+    return axios.post(`${this.url}/${endpoint}`, body)
+  }
+
   static createEndpoints({ endpoints }) {
     const endpointsObj = {}
     endpoints.forEach((endpoint) => {
