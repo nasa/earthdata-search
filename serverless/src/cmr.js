@@ -49,7 +49,7 @@ export function collectionSearch(event, context, callback) {
     'include_has_granules',
     'keyword',
     'line',
-    // 'options',
+    'options',
     'page_num',
     'page_size',
     'point',
@@ -58,15 +58,22 @@ export function collectionSearch(event, context, callback) {
     'sort_key[]', // support both single and multiple sort keys
     'temporal'
   ]
-  const obj = pick(event.queryStringParameters, permittedCmrKeys)
+
+  const { params = {} } = JSON.parse(event.body)
+
+  console.log(`Parameters received: ${Object.keys(params)}`)
+
+  const obj = pick(params, permittedCmrKeys)
+
+  console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
   // Transform the query string hash to an encoded url string
-  const queryParams = qs.stringify(obj)
+  const queryParams = qs.stringify(obj, { indices: false })
 
   const collectionUrl = `${process.env.cmr_host}`
     + `/search/collections.json?${queryParams}`
 
-  console.log(collectionUrl)
+  console.log(`CMR Query: ${collectionUrl}`)
 
   https.get(collectionUrl, (resp) => {
     if (resp.statusCode !== 200) {
@@ -107,7 +114,13 @@ export function granuleSearch(event, context, callback) {
     'page_size',
     'sort_key'
   ]
-  const obj = pick(event.queryStringParameters, permittedCmrKeys)
+  const { params = {} } = JSON.parse(event.body)
+
+  console.log(`Parameters received: ${Object.keys(params)}`)
+
+  const obj = pick(params, permittedCmrKeys)
+
+  console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
   // Transform the query string hash to an encoded url string
   const queryParams = qs.stringify(obj)
@@ -115,7 +128,7 @@ export function granuleSearch(event, context, callback) {
   const granuleUrl = `${process.env.cmr_host}`
     + `/search/granules.json?${queryParams}`
 
-  console.log(granuleUrl)
+  console.log(`CMR Query: ${granuleUrl}`)
 
   https.get(granuleUrl, (resp) => {
     if (resp.statusCode !== 200) {

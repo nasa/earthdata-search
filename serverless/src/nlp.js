@@ -7,10 +7,17 @@ export default function search(event, context, callback) {
   let bodyContent = ''
 
   // Whitelist parameters supplied by the request
-  const permittedCmrKeys = [
+  const permittedNlpKeys = [
     'text'
   ]
-  const obj = pick(event.queryStringParameters, permittedCmrKeys)
+
+  const { params = {} } = JSON.parse(event.body)
+
+  console.log(`Parameters received: ${Object.keys(params)}`)
+
+  const obj = pick(params, permittedNlpKeys)
+
+  console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
   // Transform the query string hash to an encoded url string
   const queryParams = qs.stringify(obj)
@@ -18,7 +25,7 @@ export default function search(event, context, callback) {
   const nlpUrl = `${process.env.nlp_host}`
     + `/nlp?${queryParams}`
 
-  console.log(nlpUrl)
+  console.log(`NLP Query: ${nlpUrl}`)
 
   https.get(nlpUrl, (resp) => {
     if (resp.statusCode !== 200) {
