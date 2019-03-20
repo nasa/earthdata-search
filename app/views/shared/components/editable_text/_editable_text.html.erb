@@ -14,10 +14,10 @@
         <input type="text" class="editable-text-input" data-bind='value: $component.inputValue' />
         <div class="editable-text-form-controls visually-hidden">
           <!-- ko if: $component.buttonStyle == 'icon' -->
-            <button type="submit" class="button-icon editable-text-button editable-text-button-submit" title="Submit">
+            <button type="submit" class="editable-text-button editable-text-button-submit" title="Submit" data-bind="attr: { title: $component.submitButtonText }">
               <i class="fa fa-check"></i>
             </button>
-            <button type="button" class="button-icon editable-text-button editable-text-button-cancel" title="Cancel">
+            <button type="button" class="editable-text-button editable-text-button-cancel" title="Cancel" data-bind="attr: { title: $component.cancelButtonText }">
               <i class="fa fa-times"></i>
             </button>
           <!-- /ko -->

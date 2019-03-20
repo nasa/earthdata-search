@@ -81,8 +81,10 @@
             submitCallback: function(){$(window).trigger('edsc.save_workspace')},
             buttonStyle: 'icon',
             className: 'project',
-            editButtonText:'Edit Project Title',
-            editingEnabled: $root.project.isLoadingComplete() || $root.project.collections().length === 0
+            editButtonText:'Edit project name',
+            editingEnabled: $root.project.isLoadingComplete() || $root.project.collections().length === 0,
+            submitButtonText: 'Save project name',
+            cancelButtonText: 'Cancel'
           }"></editable-text>
           <div class="project-stats">
             <ul class="master-overlay-content-project-stats project-stats-list" data-bind="fadeVisible: isLoaded">
