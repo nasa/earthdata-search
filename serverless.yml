@@ -41,7 +41,7 @@ functions:
     handler: serverless/dist/nlp.default
     events:
       - http:
-          method: get
+          method: post
           cors:
             origin : '*'
           path: nlp

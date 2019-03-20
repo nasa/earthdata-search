@@ -7,7 +7,7 @@ export default {
       name: 'search',
       callback: ({
         text
-      } = {}) => API.get('nlp', {
+      } = {}) => API.post('nlp', {
         params: {
           text
         }
