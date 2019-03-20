@@ -1,4 +1,5 @@
 import { getCollections } from './collections'
+import { searchNlp } from './nlp'
 import {
   changeQuery,
   changeP,
@@ -11,7 +12,8 @@ const actions = {
   changeQuery,
   changeP,
   clearFilters,
-  changeUrl
+  changeUrl,
+  searchNlp
 }
 
 export default actions

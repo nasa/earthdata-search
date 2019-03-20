@@ -8,8 +8,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     keywordSearch: 'Test value',
-    onChangeQuery: jest.fn(),
-    onClearFilters: jest.fn()
+    onClearFilters: jest.fn(),
+    onChangeNlpSearch: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
@@ -46,8 +46,8 @@ describe('SearchFormContainer component', () => {
     input.simulate('change', 'keywordSearch', 'new value')
     input.simulate('blur')
 
-    expect(props.onChangeQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeQuery.mock.calls[0]).toEqual([{ keyword: 'new value' }])
+    expect(props.onChangeNlpSearch.mock.calls.length).toBe(1)
+    expect(props.onChangeNlpSearch.mock.calls[0]).toEqual(['new value'])
   })
 
   test('should call onClearFilters when the Clear Button is clicked', () => {

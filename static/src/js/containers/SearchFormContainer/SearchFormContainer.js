@@ -11,7 +11,8 @@ import './SearchFormContainer.scss'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onClearFilters: () => dispatch(actions.clearFilters())
+  onClearFilters: () => dispatch(actions.clearFilters()),
+  onChangeNlpSearch: query => dispatch(actions.searchNlp(query))
 })
 
 const mapStateToProps = state => ({
@@ -51,12 +52,10 @@ export class SearchFormContainer extends Component {
   }
 
   onKeywordBlur() {
-    const {
-      onChangeQuery
-    } = this.props
-
+    const { onChangeNlpSearch } = this.props
     const { keywordSearch } = this.state
-    onChangeQuery({ keyword: keywordSearch })
+
+    onChangeNlpSearch(keywordSearch)
   }
 
   onSearchClear() {
@@ -93,8 +92,8 @@ SearchFormContainer.defaultProps = {
 
 SearchFormContainer.propTypes = {
   keywordSearch: PropTypes.string,
-  onChangeQuery: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired
+  onClearFilters: PropTypes.func.isRequired,
+  onChangeNlpSearch: PropTypes.func.isRequired
 }
 
 // Export redux-connected component for use in application
