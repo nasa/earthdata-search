@@ -20,7 +20,7 @@ export const collectionsEndpoints = {
         point,
         polygon,
         sortKey
-      } = {}) => API.get('collections', {
+      } = {}) => API.post('collections', {
         params: {
           bounding_box: boundingBox,
           has_granules: hasGranules,
@@ -51,7 +51,7 @@ export const granulesEndpoints = {
   endpoints: [
     {
       name: 'getAll',
-      callback: ({ collectionId } = {}) => API.get(`collections/${collectionId}/granules`)
+      callback: ({ collectionId } = {}) => API.post(`collections/${collectionId}/granules`)
     },
     {
       name: 'getOne',
