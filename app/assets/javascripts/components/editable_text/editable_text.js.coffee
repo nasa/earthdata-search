@@ -11,6 +11,8 @@ do (ko, $=jQuery) ->
           editButtonText = params.editButtonText
           className = params.className
           editingEnabled = params.editingEnabled
+          submitButtonText = params.submitButtonText
+          cancelButtonText = params.cancelButtonText
 
           return {
             initialValue,
@@ -20,7 +22,9 @@ do (ko, $=jQuery) ->
             buttonStyle,
             editButtonText,
             className,
-            editingEnabled
+            editingEnabled,
+            submitButtonText,
+            cancelButtonText
           }
       }
       template: { element: 'tmpl_editable-text' },
@@ -53,6 +57,7 @@ do (ko, $=jQuery) ->
         # Defining some user triggered actions
         element.onEditSubmit = ->
           value.submitCallback()
+          element.trigger 'edit', [false]
           element.unbindEditingEvents()
           element.toggleEditControls false
           element.stopTimer editActionTimer
@@ -243,7 +248,6 @@ do (ko, $=jQuery) ->
           editButton.hide()
           loadingIcon.show()
         else
-          console.warn 'hiding icon'
           editButton.show()
           loadingIcon.hide()
 
