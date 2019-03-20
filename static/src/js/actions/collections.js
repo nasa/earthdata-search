@@ -57,17 +57,18 @@ export const getCollections = () => (dispatch, getState) => {
   const { point, boundingBox, polygon } = spatial
 
   API.endpoints.collections.getAll({
-    keyword,
-    point,
     boundingBox,
-    polygon,
-    includeFacets: 'v2',
-    pageSize: 20,
-    pageNum: 1,
     hasGranulesOrCwic: true,
-    includeHasGranules: true,
+    includeFacets: 'v2',
     includeGranuleCounts: true,
+    includeHasGranules: true,
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+    keyword,
+    options: { temporal: { limit_to_granules: true } },
+    pageNum: 1,
+    pageSize: 20,
+    point,
+    polygon,
     sortKey: ['has_granules_or_cwic']
   }).then((response) => {
     const payload = {}

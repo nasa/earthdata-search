@@ -4,13 +4,14 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ServerlessWebpackConfig = {
   name: 'serverless',
   entry: {
-    serverless: './serverless/src/handler.js'
+    cmr: './serverless/src/cmr.js',
+    nlp: './serverless/src/nlp.js'
   },
   target: 'node',
   output: {
     path: path.resolve(__dirname, 'serverless/dist'),
-    filename: 'handler.js',
-    libraryTarget: 'umd'
+    filename: '[name].js',
+    libraryTarget: 'commonjs'
   },
   // optimization: {
   //   minimize: false

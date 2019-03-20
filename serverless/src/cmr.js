@@ -1,12 +1,15 @@
-import { pick, objToQueryString } from './util'
+import pick from './util'
 
 const https = require('https')
+const qs = require('qs')
 
 export function retrieveConcept(event, context, callback) {
   let bodyContent = ''
 
   const conceptUrl = `${process.env.cmr_host}`
     + `/search/concepts/${event.pathParameters.id}`
+
+  console.log(conceptUrl)
 
   https.get(conceptUrl, (resp) => {
     if (resp.statusCode !== 200) {
@@ -46,6 +49,7 @@ export function collectionSearch(event, context, callback) {
     'include_has_granules',
     'keyword',
     'line',
+    // 'options',
     'page_num',
     'page_size',
     'point',
@@ -54,15 +58,15 @@ export function collectionSearch(event, context, callback) {
     'sort_key[]', // support both single and multiple sort keys
     'temporal'
   ]
-  console.log(event.queryStringParameters)
   const obj = pick(event.queryStringParameters, permittedCmrKeys)
 
   // Transform the query string hash to an encoded url string
-  const queryParams = objToQueryString(obj)
-  console.log(queryParams)
+  const queryParams = qs.stringify(obj)
 
   const collectionUrl = `${process.env.cmr_host}`
     + `/search/collections.json?${queryParams}`
+
+  console.log(collectionUrl)
 
   https.get(collectionUrl, (resp) => {
     if (resp.statusCode !== 200) {
@@ -106,10 +110,12 @@ export function granuleSearch(event, context, callback) {
   const obj = pick(event.queryStringParameters, permittedCmrKeys)
 
   // Transform the query string hash to an encoded url string
-  const queryParams = objToQueryString(obj)
+  const queryParams = qs.stringify(obj)
 
   const granuleUrl = `${process.env.cmr_host}`
     + `/search/granules.json?${queryParams}`
+
+  console.log(granuleUrl)
 
   https.get(granuleUrl, (resp) => {
     if (resp.statusCode !== 200) {
@@ -138,6 +144,8 @@ export function collectionGranules(event, context, callback) {
 
   const granuleUrl = `${process.env.cmr_host}`
     + `/search/granules.json?echo_collection_id=${event.pathParameters.id}`
+
+  console.log(granuleUrl)
 
   https.get(granuleUrl, (resp) => {
     if (resp.statusCode !== 200) {

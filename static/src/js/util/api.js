@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { collectionsEndpoints, granulesEndpoints } from './api/cmr_api'
+import nlpEndpoints from './api/nlp_api'
 
 class APIWrapper {
   constructor({ url }) {
@@ -31,62 +33,11 @@ class APIWrapper {
 
 const API = new APIWrapper({ url: 'http://localhost:3000' })
 
-API.buildEntity({
-  name: 'collections',
-  endpoints: [
-    {
-      name: 'getAll',
-      callback: ({
-        keyword,
-        point,
-        boundingBox,
-        polygon,
-        hasGranules,
-        hasGranulesOrCwic,
-        includeHasGranules,
-        includeGranuleCounts,
-        includeFacets,
-        includeTags,
-        sortKey,
-        pageSize,
-        pageNum
-      } = {}) => API.get('collections', {
-        params: {
-          keyword,
-          point,
-          bounding_box: boundingBox,
-          polygon,
-          has_granules: hasGranules,
-          include_granule_counts: includeGranuleCounts,
-          include_has_granules: includeHasGranules,
-          has_granules_or_cwic: hasGranulesOrCwic,
-          include_facets: includeFacets,
-          sort_key: sortKey,
-          include_tags: includeTags,
-          page_size: pageSize,
-          page_num: pageNum
-        }
-      })
-    },
-    {
-      name: 'getOne',
-      callback: ({ collectionId } = {}) => API.get(`collections/${collectionId}`)
-    }
-  ]
-})
+// CMR
+API.buildEntity(collectionsEndpoints)
+API.buildEntity(granulesEndpoints)
 
-API.buildEntity({
-  name: 'granules',
-  endpoints: [
-    {
-      name: 'getAll',
-      callback: ({ collectionId } = {}) => API.get(`collections/${collectionId}/granules`)
-    },
-    {
-      name: 'getOne',
-      callback: ({ granuleId } = {}) => API.get(`granules/${granuleId}`)
-    }
-  ]
-})
+// NLP
+API.buildEntity(nlpEndpoints)
 
 export default API
