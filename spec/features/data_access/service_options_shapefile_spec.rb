@@ -4,7 +4,7 @@
 require 'rails_helper'
 require 'rake'
 
-describe 'Service options order with use shapefile field', pending_updates: true, single_granule: true do
+describe 'Service options order with use shapefile field' do
   collection_id = 'C1200343735-DEV07'
 
   context 'when viewing service order form' do
@@ -29,7 +29,7 @@ describe 'Service options order with use shapefile field', pending_updates: true
       Delayed::Worker.delay_jobs = false
     end
 
-    it 'contains a checkbox for using shapefile from search' do
+    it 'contains a disabled checkbox for using shapefile from search' do
       expect(page).to have_field('ICESAT2-use-shapefile-element', :type => 'checkbox', :disabled => true)
     end
 
