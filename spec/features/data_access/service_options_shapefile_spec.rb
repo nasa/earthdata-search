@@ -30,7 +30,6 @@ describe 'Service options order with use shapefile field', pending_updates: true
     end
 
     it 'contains a checkbox for using shapefile from search' do
-    #   expect(page).to have_selector('input[id=ICESAT2-use-shapefile-element]'
       expect(page).to have_field('ICESAT2-use-shapefile-element', :type => 'checkbox', :disabled => true)
     end
 

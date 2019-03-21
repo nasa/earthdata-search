@@ -61,7 +61,7 @@ do (ko, $=jQuery) ->
       if !hasShapefile
         $useShapefile = $('[id*=spatial] :input[id*=use-shapefile-element]')
         $useShapefile.prop('disabled', true).parent().siblings('label').css('color','#aaa')
-        $useShapefile.closest('.echoforms-elements').siblings('.echoforms-help').css('font-size','small')
+        $useShapefile.closest('.echoforms-elements').siblings('.echoforms-help')
           .html('Click <b>Back to Search Session</b> and upload a KML or Shapefile to enable this option.')
 
       null
