@@ -13,7 +13,7 @@ import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 import actions from '../../actions'
 
-import { makeCounterClockwise } from '../../util/geoUtil'
+import { makeCounterClockwise } from '../../util/geo'
 
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
