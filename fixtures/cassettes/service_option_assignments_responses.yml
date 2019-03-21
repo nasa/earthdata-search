@@ -209,6 +209,36 @@
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1200341690-EDF_DEV02","id":"7434D999-63BC-72C0-C3B9-40C07C1F448D","service_entry_id":"0779A6E4-B93D-09EE-6C36-220274BA5D0F","service_option_definition_id":"C206763E-B183-F69D-3C8F-BF46175C64F3"}}]'
     http_version: 
+12e0ad2f57023c46c15486dcff13b273e614181e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Thu, 21 Mar 2019 18:19:28 GMT
+      etag:
+      - '"eb4117e8211d2201ca5efd1a396f3226"'
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      x-runtime:
+      - '0.886000'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      content-length:
+      - '275'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C1200343735-DEV07","id":"929B06A1-8D19-D2FC-3737-D18EC534807F","service_entry_id":"417CD0BE-807A-62EB-692A-08BF8C5B12CA","service_option_definition_id":"802A217B-40F1-1038-B100-3C5374537935"}}]'
+    http_version: 
 2548fe4c6b1f8bb90c33b877f9161baf34481a1a:
   response:
     status:
