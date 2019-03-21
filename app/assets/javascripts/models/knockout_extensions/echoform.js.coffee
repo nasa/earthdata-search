@@ -6,6 +6,13 @@ do (ko, $=jQuery) ->
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       $el = $(element)
 
+      queryString = if window.location.search && window.location.search.length then window.location.search.slice(1) else null;
+      queryStringParams = if queryString then queryString.split('&') else []
+      hasShapefile = false
+      for i of queryStringParams
+        if queryStringParams[i].startsWith('sf=')
+          hasShapefile = true
+
       options = ko.unwrap(valueAccessor())
       methodName = options.method()
       if methodName?
@@ -50,4 +57,11 @@ do (ko, $=jQuery) ->
         else
           options.isValid(true)
         options.isReadFromDefaults = true
+
+      if !hasShapefile
+        $useShapefile = $('[id*=spatial] :input[id*=use-shapefile-element]')
+        $useShapefile.prop('disabled', true).parent().siblings('label').css('color','#aaa')
+        $useShapefile.closest('.echoforms-elements').siblings('.echoforms-help').css('font-size','small')
+          .html('Click <b>Back to Search Session</b> and upload a KML or Shapefile to enable this option.')
+
       null
