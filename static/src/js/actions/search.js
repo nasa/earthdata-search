@@ -27,6 +27,5 @@ export const clearFilters = () => (dispatch) => {
   dispatch(actions.changeUrl({}))
 
   // Update Store
-  dispatch(updateSearchQuery(query))
-  dispatch(actions.getCollections())
+  dispatch(changeQuery(query))
 }

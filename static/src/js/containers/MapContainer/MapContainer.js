@@ -11,17 +11,34 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import whyDidYouUpdate from 'why-did-you-update'
+// import whyDidYouUpdate from 'why-did-you-update'
 
 import actions from '../../actions/index'
-import ZoomHome from './map_controls/ZoomHome'
+import ZoomHome from '../../components/map_controls/ZoomHome'
 
 import 'leaflet/dist/leaflet.css'
-import './Map.scss'
-import LayerBuilder from './LayerBuilder'
-import SpatialSelection from './map_controls/SpatialSelection'
+import './MapContainer.scss'
+import LayerBuilder from '../../components/map_controls/LayerBuilder'
+import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelection'
 
-whyDidYouUpdate(React, { include: [/(Map)|(SpatialSelection)/] })
+// whyDidYouUpdate(React)
+
+// L.Map.include({
+//   fitBounds(bounds, options = {}) {
+//     console.log('here is stuff')
+//     const newOptions = options
+//     newOptions.animate = true
+
+//     const newBounds = L.latLngBounds(bounds)
+
+//     if (!newBounds.isValid()) {
+//       throw new Error('Bounds are not valid.')
+//     }
+
+//     const target = this._getBoundsCenterZoom(newBounds, newOptions)
+//     return this.setView(target.center, target.zoom, newOptions)
+//   }
+// })
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -85,14 +102,14 @@ const EPSG3031 = new window.L.Proj.CRS(
 const crsProjections = [EPSG3413, EPSG4326, EPSG3031]
 
 const mapDispatchToProps = dispatch => ({
-  onChangeQuery: query => dispatch(actions.changeQuery(query))
+  onChangeMap: query => dispatch(actions.changeMap(query))
 })
 
 const mapStateToProps = state => ({
-  mapParam: state.query.map
+  mapParam: state.map.mapParam
 })
 
-class EdscMap extends Component {
+export class EdscMapContainer extends Component {
   constructor(props) {
     super(props)
 
@@ -102,9 +119,8 @@ class EdscMap extends Component {
   // shouldComponentUpdate(nextProps) {
   //   console.log('shouldComponentUpdate Map', nextProps)
   //   // return true if we _want_ the next stuff to cause an update
-  //   const { map: oldMap } = this.props
-  //   const { map: newMap } = nextProps
-  //   return oldMap !== newMap
+  //   const { mapParam } = this.props
+  //   return mapParam !== nextProps.mapParam
   // }
 
   componentDidUpdate() {
@@ -118,6 +134,7 @@ class EdscMap extends Component {
   }
 
   handleMoveend(event) {
+    console.log('handleMoveend')
     const map = event.target
     // console.log('map', map)
     const center = map.getCenter()
@@ -128,11 +145,12 @@ class EdscMap extends Component {
 
     const mapParam = `${lat}!${lng}!${zoom}!1!0!0,2`
 
-    const { onChangeQuery } = this.props
-    onChangeQuery({ map: mapParam })
+    const { onChangeMap } = this.props
+    onChangeMap({ mapParam })
   }
 
   render() {
+    console.log('Map Render')
     const { mapParam } = this.props
     // if (map === '') {
     //   map = '0!0!2!1!0!0,2'
@@ -219,19 +237,19 @@ class EdscMap extends Component {
         </LayersControl>
         <ZoomHome />
         <ScaleControl position="bottomright" />
-        <SpatialSelection mapRef={this.mapRef} />
+        <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
       </Map>
     )
   }
 }
 
-EdscMap.defaultProps = {
+EdscMapContainer.defaultProps = {
   mapParam: '0!0!2!1!0!0,2'
 }
 
-EdscMap.propTypes = {
+EdscMapContainer.propTypes = {
   mapParam: PropTypes.string,
-  onChangeQuery: PropTypes.func.isRequired
+  onChangeMap: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EdscMap)
+export default connect(mapStateToProps, mapDispatchToProps)(EdscMapContainer)

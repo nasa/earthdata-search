@@ -5,11 +5,13 @@ import {
   changeP,
   clearFilters
 } from './search'
+import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
 
 const actions = {
   getCollections,
   changeQuery,
+  changeMap,
   changeP,
   clearFilters,
   changeUrl,

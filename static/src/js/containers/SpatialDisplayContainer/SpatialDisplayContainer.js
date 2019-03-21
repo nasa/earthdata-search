@@ -7,7 +7,8 @@ import './SpatialDisplayContainer.scss'
 const mapStateToProps = state => ({
   pointSearch: state.query.spatial.point,
   boundingBoxSearch: state.query.spatial.boundingBox,
-  polygonSearch: state.query.spatial.polygon
+  polygonSearch: state.query.spatial.polygon,
+  drawingNewLayer: state.map.drawingNewLayer
 })
 
 export class SpatialDisplayContainer extends Component {
@@ -40,6 +41,7 @@ export class SpatialDisplayContainer extends Component {
   }
 
   render() {
+    const { drawingNewLayer } = this.props
     const {
       pointSearch,
       boundingBoxSearch,
@@ -47,16 +49,16 @@ export class SpatialDisplayContainer extends Component {
     } = this.state
 
     let text
-    if (pointSearch) {
+    if (pointSearch || drawingNewLayer === 'marker') {
       text = `Point: ${pointSearch.split(',').reverse().join(',')}`
-    } else if (boundingBoxSearch) {
+    } else if (boundingBoxSearch || drawingNewLayer === 'rectangle') {
       // Arrange the points in the right order
       const points = boundingBoxSearch
         .match(/[^,]+,[^,]+/g)
         .map(pointStr => pointStr.split(',').reverse().join(','))
 
       text = `Rectangle: SW: ${points[0]} NE: ${points[1]}`
-    } else if (polygonSearch) {
+    } else if (polygonSearch || drawingNewLayer === 'polygon') {
       text = 'Polygon'
     }
 
@@ -77,13 +79,15 @@ export class SpatialDisplayContainer extends Component {
 SpatialDisplayContainer.defaultProps = {
   pointSearch: '',
   boundingBoxSearch: '',
-  polygonSearch: ''
+  polygonSearch: '',
+  drawingNewLayer: ''
 }
 
 SpatialDisplayContainer.propTypes = {
   pointSearch: PropTypes.string,
   boundingBoxSearch: PropTypes.string,
-  polygonSearch: PropTypes.string
+  polygonSearch: PropTypes.string,
+  drawingNewLayer: PropTypes.string
 }
 
 export default connect(mapStateToProps)(SpatialDisplayContainer)
