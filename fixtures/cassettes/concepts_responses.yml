@@ -6400,6 +6400,45 @@ d3031e8ce4d7fa5a95e712c8620a73da2db1e80a:
         Includes calibration coefficient values derived from data within the polar
         regions.","orbit_parameters":{},"id":"C1200341690-EDF_DEV02","has_formats":false,"original_format":"ISO19115","archive_center":"EDF_DEV02","browse_flag":false,"online_access_flag":true,"links":[{"length":"0.0KB","rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://dx.doi.org/10.5067/ATLAS/ATL04.001"}]}'
     http_version: 
+73b8e54599e9f329e2dbb7783f6abdffa18f7546:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id, CMR-Scroll-Id
+      cmr-request-id:
+      - 4ae42433-08be-4118-bfcc-cb417a546400
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Thu, 21 Mar 2019 18:18:39 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains;
+      vary:
+      - Accept-Encoding, User-Agent
+      content-length:
+      - '865'
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"Level 2A","boxes":["-90 -180 90 180"],"time_start":"2005-01-01T00:00:00.000Z","version_id":"205","dataset_id":"ATLAS/ICESat-2
+        L2A Global Geolocated Photon Data V205","has_spatial_subsetting":true,"has_transforms":true,"associations":{"services":["S1200299170-DEV07","S1200299169-DEV07"]},"has_variables":false,"data_center":"DEV07","short_name":"ATL03","organizations":["DEV07","NASA
+        National Snow and Ice Data Center Distributed Active Archive Center","NASA/GSFC/EOS/ESDIS"],"title":"ATLAS/ICESat-2
+        L2A Global Geolocated Photon Data V205","coordinate_system":"CARTESIAN","summary":"This
+        data set contains precise latitudes, longitudes, and heights above the ellipsoid
+        for all photons downlinked by the ATLAS sensor. Geophysical corrections are
+        applied to photon heights and each photon is classified as signal or background.
+        Segmented data are included at a 20-meter along-track length and geophysical
+        corrections, atmosphere corrections, and surface cover (land ice, sea ice,
+        ocean, land, inland water) are provided for each segment.","orbit_parameters":{"swath_width":"36.0","period":"96.8","inclination_angle":"92.0","number_of_orbits":"0.071428571","start_circular_latitude":"0.0"},"id":"C1200343735-DEV07","has_formats":false,"original_format":"ISO19115","archive_center":"DEV07","browse_flag":false,"online_access_flag":true,"links":[{"length":"0.0KB","rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://dx.doi.org/10.5067/ATLAS/ATL03.001"}]}'
+    http_version: 
 4adefddee1dba155da691483d8d84ecbe7f03299:
   response:
     status:
