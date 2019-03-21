@@ -185,6 +185,48 @@ http_interactions:
   recorded_at: Wed, 13 Mar 2019 19:14:50 GMT
   digest: fd3c3adf6aa15b76b3af664b36f79e963401b32e
 - request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json
+    body:
+      encoding: UTF-8
+      string: concept_id%5B%5D=S1200299170-DEV07&concept_id%5B%5D=S1200299169-DEV07
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Thu, 21 Mar 2019 22:40:28 GMT
+  digest: 2305ba16ba3857a75700cb5ed07cc0c11e2a888c
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json
+    body:
+      encoding: UTF-8
+      string: concept_id%5B%5D=S1200299171-EDF_DEV02
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc-access
+      Accept:
+      - application/vnd.nasa.cmr.umm_results+json; version=1.2
+  recorded_at: Thu, 21 Mar 2019 22:48:40 GMT
+  digest: 9d87e1e3407985265bd8cc5be84bc5bd1d0ef642
+- request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/services.umm_json?concept_id%5B%5D=S1200299170-DEV07&concept_id%5B%5D=S1200299169-DEV07
     body:
