@@ -14,7 +14,8 @@ const urlPropsQueryConfig = {
 
 const mapDispatchToProps = dispatch => ({
   onChangeUrl: query => dispatch(actions.changeUrl(query)),
-  onChangeQuery: query => dispatch(actions.changeQuery(query))
+  onChangeQuery: query => dispatch(actions.changeQuery(query)),
+  onChangeMap: query => dispatch(actions.changeMap(query))
 })
 
 const mapStateToProps = state => ({
@@ -22,7 +23,7 @@ const mapStateToProps = state => ({
   pointSearch: state.query.spatial.point,
   boundingBoxSearch: state.query.spatial.boundingBox,
   polygonSearch: state.query.spatial.polygon,
-  mapParam: state.query.map
+  mapParam: state.map.mapParam
 })
 
 export class UrlQueryContainer extends Component {
@@ -34,7 +35,8 @@ export class UrlQueryContainer extends Component {
       boundingBoxSearchFromUrl,
       polygonSearchFromUrl,
       mapParamFromUrl,
-      onChangeQuery
+      onChangeQuery,
+      onChangeMap
     } = this.props
 
     // build the query
@@ -54,11 +56,11 @@ export class UrlQueryContainer extends Component {
       newQuery.spatial = { polygon: polygonSearchFromUrl }
     }
 
-    if (mapParamFromUrl !== '') {
-      newQuery.map = mapParamFromUrl
-    }
-
     onChangeQuery({ ...newQuery })
+
+    if (mapParamFromUrl !== '') {
+      onChangeMap({ mapParam: mapParamFromUrl })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -122,7 +124,8 @@ UrlQueryContainer.propTypes = {
   mapParamFromUrl: PropTypes.string,
   children: PropTypes.node.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired
+  onChangeQuery: PropTypes.func.isRequired,
+  onChangeMap: PropTypes.func.isRequired
 }
 
 export default addUrlProps({ urlPropsQueryConfig })(

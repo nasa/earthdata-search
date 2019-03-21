@@ -11,7 +11,7 @@ import CollectionResultsContainer from '../../containers/CollectionResultsContai
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 
-import EdscMap from '../../components/Map/Map'
+import ConnectedEdscMapContainer from '../../containers/MapContainer/MapContainer'
 import MyDropzone from '../../components/MyDropzone/MyDropzone'
 
 import './Search.scss'
@@ -21,7 +21,7 @@ const Search = (props) => {
 
   return (
     <div className="route-wrapper route-wrapper--search search">
-      <EdscMap />
+      <ConnectedEdscMapContainer />
       <MyDropzone />
       <SidebarContainer />
       <ConnectedSearchFormContainer />
