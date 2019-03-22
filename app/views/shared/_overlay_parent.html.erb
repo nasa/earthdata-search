@@ -299,7 +299,7 @@
                     </div>
                   </div>
                   <!-- ko foreach: availableMethods -->
-                  <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index()}, visible: $parent.method() == name"></div>
+                  <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index(), 'data-shapefile': $parents[3].project.query.shapefileId()}, visible: $parent.method() == name"></div>
                   <!-- /ko -->
                 </div>
               <!-- /ko -->
@@ -307,16 +307,10 @@
               <!-- /ko -->
               <!-- ko if: $parents[1].selectedAccessMethod() == 'OPeNDAP' -->
               <div class="panel-item-section">
-<<<<<<< HEAD
                 <h4 class="panel-item-heading">Variable Selection</h4>
                 <p class="panel-item-content panel-item-content-light">Use science keywords to subset your collection granules by measurements and variables.</p>
                 <!-- ko if: $parents[1].selectedVariables().length > 0 -->
                   <p class="panel-item-content panel-item-content-emphasis"><span data-bind="text: $parents[1].selectedVariables().length"></span> variables selected</p>
-=======
-                <h3 class="panel-item-section-title">Additional Options</h3>
-                <!-- ko foreach: availableMethods -->
-                <div class="access-form" data-bind="attr: {id: 'access-form-' + $parents[3].collection.id + '-' + $parentContext.$index() + $index(), 'data-shapefile': $parents[3].project.query.shapefileId()}, visible: $parent.method() == name"></div>
->>>>>>> EDSC-2084 update to work with shortened urls
                 <!-- /ko -->
                 <!-- ko if: $parents[1].selectedVariables().length == 0 -->
                   <p class="panel-item-content panel-item-content-emphasis">No variables selected. All variables will be included in download.</p>
