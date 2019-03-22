@@ -3259,7 +3259,7 @@ http_interactions:
       - edsc-access
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.12
-  recorded_at: Thu, 21 Mar 2019 21:25:47 GMT
+  recorded_at: Fri, 22 Mar 2019 02:28:27 GMT
   digest: 06fd7b683ecfcf5674ec8b99393c3c5519d1ff0d
 - request:
     method: get
@@ -3278,7 +3278,7 @@ http_interactions:
       - edsc-access
       Accept:
       - application/vnd.nasa.cmr.umm_results+json; version=1.12
-  recorded_at: Thu, 21 Mar 2019 21:25:12 GMT
+  recorded_at: Fri, 22 Mar 2019 02:32:34 GMT
   digest: 41ed82d47323428121c1e74b3702e81f8451f1be
 - request:
     method: get

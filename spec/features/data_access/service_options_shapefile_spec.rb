@@ -5,12 +5,7 @@ describe 'Service options order with use shapefile field' do
     before :all do
       load_page :projects_page, project: ['C1200343735-DEV07'], authenticate: 'edsc', env: :sit
 
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
-      wait_for_xhr
-
-      click_on 'Edit Delivery Method'
-      choose('Customize & Download')
+      choose('Customize')
       wait_for_xhr
     end
 

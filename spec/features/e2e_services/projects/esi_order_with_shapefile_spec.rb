@@ -19,12 +19,7 @@ describe 'ESI Order with Shapefile' do
 
       load_page :projects_page, project: ['C1200341690-EDF_DEV02'], shapefile: @shapefile.to_param, authenticate: 'edsc', env: :sit
 
-      collection_card = find('.project-list-item', match: :first)
-      collection_card.find('.project-list-item-action-edit-options').click
-      wait_for_xhr
-
-      click_on 'Edit Delivery Method'
-      choose('Customize & Download')
+      choose('Customize')
       check 'Use Shapefile from Search'
       find('.button-download-data').click
       wait_for_xhr
