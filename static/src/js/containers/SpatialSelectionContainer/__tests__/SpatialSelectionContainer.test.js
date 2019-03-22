@@ -283,45 +283,44 @@ describe('EdscMapContainer component', () => {
 
   describe('renderShape', () => {
     test('with point spatial it calls renderPoint', () => {
-      const { enzymeWrapper } = setup(defaultProps)
+      const { enzymeWrapper, props } = setup(defaultProps)
       enzymeWrapper.instance().renderPoint = jest.fn()
 
-      enzymeWrapper.instance().renderShape({ pointSearch: '0,10' })
+      enzymeWrapper.instance().renderShape({ ...props, pointSearch: '0,10' })
 
       expect(enzymeWrapper.instance().renderPoint.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderPoint.mock.calls[0]).toEqual([[{ lat: 10, lng: 0 }]])
+      expect(enzymeWrapper.instance().renderPoint.mock.calls[0][0]).toEqual([{ lat: 10, lng: 0 }])
+      expect(enzymeWrapper.instance().renderPoint.mock.calls[0][1]).toBe(props.mapRef.leafletElement)
     })
 
     test('with boundingBox spatial it calls renderBoundingBox', () => {
-      const { enzymeWrapper } = setup(defaultProps)
+      const { enzymeWrapper, props } = setup(defaultProps)
       enzymeWrapper.instance().renderBoundingBox = jest.fn()
 
-      enzymeWrapper.instance().renderShape({ boundingBoxSearch: '10,20,30,40' })
+      enzymeWrapper.instance().renderShape({ ...props, boundingBoxSearch: '10,20,30,40' })
 
       expect(enzymeWrapper.instance().renderBoundingBox.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0]).toEqual([
-        [
-          { lat: 20, lng: 10 },
-          { lat: 40, lng: 30 }
-        ]
+      expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0][0]).toEqual([
+        { lat: 20, lng: 10 },
+        { lat: 40, lng: 30 }
       ])
+      expect(enzymeWrapper.instance().renderBoundingBox.mock.calls[0][1]).toBe(props.mapRef.leafletElement)
     })
 
     test('with rectangle spatial it calls renderPolygon', () => {
-      const { enzymeWrapper } = setup(defaultProps)
+      const { enzymeWrapper, props } = setup(defaultProps)
       enzymeWrapper.instance().renderPolygon = jest.fn()
 
-      enzymeWrapper.instance().renderShape({ polygonSearch: '10,0,20,10,5,15,10,0' })
+      enzymeWrapper.instance().renderShape({ ...props, polygonSearch: '10,0,20,10,5,15,10,0' })
 
       expect(enzymeWrapper.instance().renderPolygon.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().renderPolygon.mock.calls[0]).toEqual([
-        [
-          { lat: 0, lng: 10 },
-          { lat: 10, lng: 20 },
-          { lat: 15, lng: 5 },
-          { lat: 0, lng: 10 }
-        ]
+      expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][0]).toEqual([
+        { lat: 0, lng: 10 },
+        { lat: 10, lng: 20 },
+        { lat: 15, lng: 5 },
+        { lat: 0, lng: 10 }
       ])
+      expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][1]).toBe(props.mapRef.leafletElement)
     })
   })
 

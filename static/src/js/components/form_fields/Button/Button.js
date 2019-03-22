@@ -9,9 +9,7 @@ class Button extends Component {
   }
 
   handleClick(event) {
-    const {
-      onClick
-    } = this.props
+    const { onClick } = this.props
     onClick(event)
   }
 

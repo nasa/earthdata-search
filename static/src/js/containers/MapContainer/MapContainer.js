@@ -20,24 +20,6 @@ import './MapContainer.scss'
 import LayerBuilder from '../../components/map_controls/LayerBuilder'
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 
-
-// L.Map.include({
-//   fitBounds(bounds, options = {}) {
-//     console.log('here is stuff')
-//     const newOptions = options
-//     newOptions.animate = true
-
-//     const newBounds = L.latLngBounds(bounds)
-
-//     if (!newBounds.isValid()) {
-//       throw new Error('Bounds are not valid.')
-//     }
-
-//     const target = this._getBoundsCenterZoom(newBounds, newOptions)
-//     return this.setView(target.center, target.zoom, newOptions)
-//   }
-// })
-
 const { BaseLayer, Overlay } = LayersControl
 
 const EPSG4326 = new window.L.Proj.CRS(
@@ -126,11 +108,9 @@ export class EdscMapContainer extends Component {
 
   handleMoveend(event) {
     const map = event.target
-    // console.log('map', map)
     const center = map.getCenter()
     const { lat } = center
     const { lng } = center
-    // console.log('lat, lng', lat, lng)
     const zoom = map.getZoom()
 
     const mapParam = `${lat}!${lng}!${zoom}!1!0!0,2`
@@ -141,10 +121,6 @@ export class EdscMapContainer extends Component {
 
   render() {
     const { mapParam } = this.props
-    // if (map === '') {
-    //   map = '0!0!2!1!0!0,2'
-    // }
-    // console.log('map', map)
     // const [lat, lng, zoom, proj, base, overlays] = map.split('!')
     const [lat, lng, zoom, proj] = mapParam.split('!')
     const center = [lat, lng]
@@ -152,9 +128,6 @@ export class EdscMapContainer extends Component {
       [-120, -220],
       [120, 220]
     ]
-    // console.log('proj', proj)
-    // console.log('base', base)
-    // console.log('overlays', overlays)
     const projections = ['epsg3413', 'epsg4326', 'epsg3031']
     const projIndex = proj !== undefined ? proj : 1
 
