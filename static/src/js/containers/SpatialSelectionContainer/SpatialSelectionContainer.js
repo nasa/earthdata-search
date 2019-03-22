@@ -15,6 +15,7 @@ import actions from '../../actions'
 
 import { makeCounterClockwise } from '../../util/geo'
 
+// Fix the leaflet Marker icons
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: icon,
@@ -22,6 +23,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: iconShadow
 })
 
+// Add some custom text to leaflet draw things
 L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Release to finish drawing'
 L.drawLocal.draw.toolbar.buttons.polygon = 'Search by spatial polygon'
 L.drawLocal.draw.toolbar.buttons.rectangle = 'Search by spatial rectangle'
@@ -40,7 +42,6 @@ L.Draw.Tooltip.prototype.updateContent = function updateContent(content) {
   }
   return originalUpdateContent.call(this, newContent)
 }
-
 const originalUpdatePosition = L.Draw.Tooltip.prototype.updatePosition
 L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
   this._point = `(${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)})`
@@ -65,11 +66,6 @@ const mapStateToProps = state => ({
 export class SpatialSelectionContainer extends Component {
   constructor(props) {
     super(props)
-
-    const { mapRef } = props
-    if (mapRef.leafletElement) {
-      this.map = mapRef.leafletElement
-    }
 
     this.state = {
       drawnPoints: null,
@@ -110,24 +106,28 @@ export class SpatialSelectionContainer extends Component {
     }
   }
 
+  // Callback from EditControl, called when clicking the draw shape button
   onDrawStart(e) {
     const { drawnLayer } = this.state
 
     if (drawnLayer) {
       drawnLayer.remove()
+      this.setState({ drawnLayer: null })
     }
-    this.setState({ drawnLayer: null })
 
     const { layerType } = e
     const { onChangeMap } = this.props
     onChangeMap({ drawingNewLayer: layerType })
   }
 
+  // Callback from EditControl, called when the drawing is stopped from
+  // cancelling or completing
   onDrawStop() {
     const { onChangeMap } = this.props
     onChangeMap({ drawingNewLayer: '' })
   }
 
+  // Callback from EditControl, contains the layer that was just drawn
   onCreate(e) {
     const { layer, layerType } = e
     this.setState({ drawnLayer: layer })
@@ -173,16 +173,26 @@ export class SpatialSelectionContainer extends Component {
     onChangeQuery({ spatial: { [type]: latLngs.join() } })
   }
 
+  // Takes an array of lat/lon pairs and returns array of objects with lat/lon keys
+  // input: ['10,0','20,10']
+  // output: [{ lat: 0, lng: 10 }, { lat: 10, lng: 20 }]
   getShape(points) {
     return points.map(pointStr => L.latLng(pointStr.split(',').reverse()))
   }
 
+  // Splits a string of points on every other comma
+  // input: '10,0,20,10'
+  // output: ['10,0','20,10']
   splitListOfPoints(points) {
     // split on every other `,`
     return points.match(/[^,]+,[^,]+/g)
   }
 
+  // Draws a leaflet shape based on provided props
   renderShape(props) {
+    const { mapRef } = props
+    const map = mapRef.leafletElement
+
     const {
       pointSearch,
       boundingBoxSearch,
@@ -190,18 +200,18 @@ export class SpatialSelectionContainer extends Component {
     } = props
 
     if (pointSearch) {
-      this.renderPoint(this.getShape([pointSearch]))
+      this.renderPoint(this.getShape([pointSearch]), map)
     } else if (boundingBoxSearch) {
       const points = this.splitListOfPoints(boundingBoxSearch)
-      this.renderBoundingBox(this.getShape(points))
+      this.renderBoundingBox(this.getShape(points), map)
     } else if (polygonSearch) {
       const points = this.splitListOfPoints(polygonSearch)
-      this.renderPolygon(this.getShape(points))
+      this.renderPolygon(this.getShape(points), map)
     }
   }
 
-  renderPoint(point) {
-    const { map } = this
+  // Draws a leaflet Marker
+  renderPoint(point, map) {
     if (map) {
       const marker = new L.Marker(point[0], {
         icon: L.Draw.Marker.prototype.options.icon
@@ -212,8 +222,8 @@ export class SpatialSelectionContainer extends Component {
     }
   }
 
-  renderBoundingBox(rectangle) {
-    const { map } = this
+  // Draws a leaflet Rectangle
+  renderBoundingBox(rectangle, map) {
     if (map) {
       const shape = rectangle
       // southwest longitude should not be greater than northeast
@@ -231,8 +241,8 @@ export class SpatialSelectionContainer extends Component {
     }
   }
 
-  renderPolygon(polygon) {
-    const { map } = this
+  // Draws a leaflet Polygon
+  renderPolygon(polygon, map) {
     if (map) {
       const options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, this._colorOptions)
       // const poly = new L.sphericalPolygon(polygon, options)
