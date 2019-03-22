@@ -11,7 +11,6 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-// import whyDidYouUpdate from 'why-did-you-update'
 
 import actions from '../../actions/index'
 import ZoomHome from '../../components/map_controls/ZoomHome'
@@ -19,9 +18,8 @@ import ZoomHome from '../../components/map_controls/ZoomHome'
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 import LayerBuilder from '../../components/map_controls/LayerBuilder'
-import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelection'
+import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 
-// whyDidYouUpdate(React)
 
 // L.Map.include({
 //   fitBounds(bounds, options = {}) {
@@ -116,13 +114,6 @@ export class EdscMapContainer extends Component {
     this.handleMoveend = this.handleMoveend.bind(this)
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   console.log('shouldComponentUpdate Map', nextProps)
-  //   // return true if we _want_ the next stuff to cause an update
-  //   const { mapParam } = this.props
-  //   return mapParam !== nextProps.mapParam
-  // }
-
   componentDidUpdate() {
     const {
       leafletElement: map = null
@@ -134,7 +125,6 @@ export class EdscMapContainer extends Component {
   }
 
   handleMoveend(event) {
-    console.log('handleMoveend')
     const map = event.target
     // console.log('map', map)
     const center = map.getCenter()
@@ -150,7 +140,6 @@ export class EdscMapContainer extends Component {
   }
 
   render() {
-    console.log('Map Render')
     const { mapParam } = this.props
     // if (map === '') {
     //   map = '0!0!2!1!0!0,2'

@@ -166,7 +166,7 @@ export class SpatialSelectionContainer extends Component {
       //   latLngs = layer.getLatLngs()
       //   break
       default:
-        console.error(`Unrecognized shape: ${type}`)
+        return
     }
 
     this.setState({ drawnPoints: latLngs.join() })
@@ -193,7 +193,7 @@ export class SpatialSelectionContainer extends Component {
       this.renderPoint(this.getShape([pointSearch]))
     } else if (boundingBoxSearch) {
       const points = this.splitListOfPoints(boundingBoxSearch)
-      this.renderRectangle(this.getShape(points))
+      this.renderBoundingBox(this.getShape(points))
     } else if (polygonSearch) {
       const points = this.splitListOfPoints(polygonSearch)
       this.renderPolygon(this.getShape(points))
@@ -212,7 +212,7 @@ export class SpatialSelectionContainer extends Component {
     }
   }
 
-  renderRectangle(rectangle) {
+  renderBoundingBox(rectangle) {
     const { map } = this
     if (map) {
       const shape = rectangle

@@ -52,12 +52,15 @@ export class SpatialDisplayContainer extends Component {
     if (pointSearch || drawingNewLayer === 'marker') {
       text = `Point: ${pointSearch.split(',').reverse().join(',')}`
     } else if (boundingBoxSearch || drawingNewLayer === 'rectangle') {
-      // Arrange the points in the right order
-      const points = boundingBoxSearch
-        .match(/[^,]+,[^,]+/g)
-        .map(pointStr => pointStr.split(',').reverse().join(','))
+      text = 'Rectangle'
+      if (boundingBoxSearch) {
+        // Arrange the points in the right order
+        const points = boundingBoxSearch
+          .match(/[^,]+,[^,]+/g)
+          .map(pointStr => pointStr.split(',').reverse().join(','))
 
-      text = `Rectangle: SW: ${points[0]} NE: ${points[1]}`
+        text = `Rectangle: SW: ${points[0]} NE: ${points[1]}`
+      }
     } else if (polygonSearch || drawingNewLayer === 'polygon') {
       text = 'Polygon'
     }
