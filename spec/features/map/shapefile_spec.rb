@@ -72,22 +72,6 @@ describe 'Shapefile search' do
     end
   end
 
-  context 'when uploading a simple shapefile which points can be simplified' do
-    before :all do
-      upload_shapefile('doc/example-data/shapefiles/shape_with_redundancies.zip')
-    end
-
-    after :all do
-      clear_shapefile
-      clear_spatial
-      Shapefile.destroy_all
-    end
-
-    it 'doesn\'t display a help message explaining the point reduction' do
-      expect(page).not_to have_popover('Shape file has too many points')
-    end
-  end
-
   context 'when uploading a shapefile containing a single feature' do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
