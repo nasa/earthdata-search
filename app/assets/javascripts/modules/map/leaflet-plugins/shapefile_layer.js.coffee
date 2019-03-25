@@ -202,7 +202,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         latlngs = @_simplifyPoints(originalLatLngs)
 
         if originalLatLngs[0].length > MAX_POLYGON_SIZE && latlngs.length != originalLatLngs.length
-          console.log 'Show Shapefile Reduction help'
           help.add('shapefile_reduction', element: '.leaflet-draw-edit-edit')
 
         layer = L.sphericalPolygon(latlngs, @options.selection)
