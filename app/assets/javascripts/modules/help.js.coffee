@@ -9,6 +9,13 @@ ns = @edsc.models.page
 
 
   tourOptions =
+    shapefile_reduction:
+        once: true
+        title: "Shape file has too many points"
+        content: "To improve search performance, your shapefile has been simplified.
+          Your original shapefile will be used for spatial subsetting if you choose
+          to enable that setting during download."
+
     tour_end:
       title: 'Tour Ended'
       element: '#main-toolbar h1 a'
