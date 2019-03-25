@@ -5,30 +5,40 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
-import { addUrlProps, UrlQueryParamTypes, subqueryOmit } from 'react-url-query'
 import queryString from 'query-string'
+import actions from '../../actions/index'
 
 import './GranuleResultsContainer.scss'
 
-const urlPropsQueryConfig = {
-  p: { type: UrlQueryParamTypes.string, queryParam: 'p' }
-}
+const mapDispatchToProps = dispatch => ({
+  onFocusedCollectionChange: (collectionId) => {
+    dispatch(actions.changeFocusedCollection(collectionId))
+  }
+})
 
 const mapStateToProps = state => ({
-  granules: state.entities.granules
+  granules: state.entities.granules,
+  focusedCollection: state.focusedCollection
 })
 
 class GranuleResultsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+
+    this.handleBackClick = this.handleBackClick.bind(this)
+  }
+
+  handleBackClick = () => {
+    const { onFocusedCollectionChange } = this.props
+    onFocusedCollectionChange('')
   }
 
   render() {
     const {
       granules,
       location,
-      p
+      focusedCollection
     } = this.props
 
     const granuleResults = granules.allIds.map((id) => {
@@ -41,18 +51,20 @@ class GranuleResultsContainer extends Component {
 
     return (
       <div className="inner-panel">
-        <Link to={{
-          pathname: '/search',
-          search: queryString
-            .stringify(Object
-              .assign({}, subqueryOmit(queryString.parse(location.search), 'p')))
-        }}
+        <Link
+          onClick={this.handleBackClick}
+          to={{
+            pathname: '/search',
+            search: queryString
+              .stringify(Object
+                .assign({}, queryString.parse(location.search)))
+          }}
         >
           Back to collections
         </Link>
         <p>Granules for collection</p>
         <ul>
-          {p}
+          {focusedCollection}
         </ul>
         {granuleResults}
       </div>
@@ -61,17 +73,16 @@ class GranuleResultsContainer extends Component {
 }
 
 GranuleResultsContainer.defaultProps = {
-  p: ''
+  focusedCollection: ''
 }
 
 GranuleResultsContainer.propTypes = {
   granules: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  p: PropTypes.string
+  focusedCollection: PropTypes.string,
+  onFocusedCollectionChange: PropTypes.func.isRequired
 }
 
-export default addUrlProps({ urlPropsQueryConfig })(
-  withRouter(
-    connect(mapStateToProps, null)(GranuleResultsContainer)
-  )
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(GranuleResultsContainer)
 )

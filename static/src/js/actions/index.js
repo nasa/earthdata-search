@@ -1,8 +1,9 @@
 import { getCollections } from './collections'
+import { getGranules } from './granules'
 import { searchNlp } from './nlp'
 import {
   changeQuery,
-  changeP,
+  changeFocusedCollection,
   clearFilters
 } from './search'
 import { changeMap } from './map'
@@ -10,9 +11,10 @@ import { changeUrl } from './urlQuery'
 
 const actions = {
   getCollections,
+  getGranules,
   changeQuery,
   changeMap,
-  changeP,
+  changeFocusedCollection,
   clearFilters,
   changeUrl,
   searchNlp
