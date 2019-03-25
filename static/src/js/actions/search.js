@@ -1,8 +1,13 @@
 import actions from './index'
-import { UPDATE_SEARCH_QUERY } from '../constants/actionTypes'
+import { UPDATE_SEARCH_QUERY, UPDATE_FOCUSED_COLLECTION } from '../constants/actionTypes'
 
 export const updateSearchQuery = payload => ({
   type: UPDATE_SEARCH_QUERY,
+  payload
+})
+
+export const updateFocusedCollection = payload => ({
+  type: UPDATE_FOCUSED_COLLECTION,
   payload
 })
 
@@ -11,10 +16,9 @@ export const changeQuery = query => (dispatch) => {
   dispatch(actions.getCollections())
 }
 
-// TODO I think we might want to rethink this
-// maybe have a collectionQuery and a granuleQuery
-export const changeP = collectionId => (dispatch) => {
-  dispatch(actions.getGranules(collectionId))
+export const changeFocusedCollection = collectionId => (dispatch) => {
+  dispatch(updateFocusedCollection(collectionId))
+  dispatch(actions.getGranules())
 }
 
 export const clearFilters = () => (dispatch) => {

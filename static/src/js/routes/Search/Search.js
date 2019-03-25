@@ -6,8 +6,10 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import GranuleResultsContainer from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
-import CollectionResultsContainer from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
+import GranuleResultsContainer
+  from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
+import CollectionResultsContainer
+  from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 
@@ -15,6 +17,7 @@ import ConnectedEdscMapContainer from '../../containers/MapContainer/MapContaine
 import MyDropzone from '../../components/MyDropzone/MyDropzone'
 
 import './Search.scss'
+
 
 const Search = (props) => {
   const { match } = props

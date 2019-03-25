@@ -7,7 +7,15 @@ import {
 } from 'react-router-dom'
 import queryString from 'query-string'
 
+import actions from '../../actions/index'
+
 import './CollectionResultsContainer.scss'
+
+const mapDispatchToProps = dispatch => ({
+  onFocusedCollectionChange: (collectionId) => {
+    dispatch(actions.changeFocusedCollection(collectionId))
+  }
+})
 
 const mapStateToProps = state => ({
   collections: state.entities.collections
@@ -17,6 +25,14 @@ class CollectionResultsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+
+    this.handleClickCollection = this.handleClickCollection.bind(this)
+  }
+
+  handleClickCollection = (collectionId) => {
+    console.log('collectionId', collectionId)
+    const { onFocusedCollectionChange } = this.props
+    onFocusedCollectionChange(collectionId)
   }
 
   render() {
@@ -67,6 +83,7 @@ class CollectionResultsContainer extends Component {
             <div className="coll-res__item-body-primary">
               <h3 className="coll-res__item-title">
                 <Link
+                  onClick={() => this.handleClickCollection(collection.id)}
                   className="coll-res__item-title-link"
                   to={{
                     pathname: '/search/granules',
@@ -174,9 +191,10 @@ class CollectionResultsContainer extends Component {
 
 CollectionResultsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired
+  location: PropTypes.shape({}).isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(mapStateToProps, null)(CollectionResultsContainer)
+  connect(mapStateToProps, mapDispatchToProps)(CollectionResultsContainer)
 )

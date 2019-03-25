@@ -9,13 +9,15 @@ const urlPropsQueryConfig = {
   pointSearchFromUrl: { type: UrlQueryParamTypes.string, queryParam: 'sp' },
   boundingBoxSearchFromUrl: { type: UrlQueryParamTypes.string, queryParam: 'sb' },
   polygonSearchFromUrl: { type: UrlQueryParamTypes.string, queryParam: 'polygon' },
-  mapParamFromUrl: { type: UrlQueryParamTypes.string, queryParam: 'm' }
+  mapParamFromUrl: { type: UrlQueryParamTypes.string, queryParam: 'm' },
+  focusedCollectionFromUrl: { type: UrlQueryParamTypes.string, queryParam: 'p' }
 }
 
 const mapDispatchToProps = dispatch => ({
   onChangeUrl: query => dispatch(actions.changeUrl(query)),
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onChangeMap: query => dispatch(actions.changeMap(query))
+  onChangeMap: query => dispatch(actions.changeMap(query)),
+  onChangeFocusedCollection: collectionId => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
 const mapStateToProps = state => ({
@@ -23,7 +25,8 @@ const mapStateToProps = state => ({
   pointSearch: state.query.spatial.point,
   boundingBoxSearch: state.query.spatial.boundingBox,
   polygonSearch: state.query.spatial.polygon,
-  mapParam: state.map.mapParam
+  mapParam: state.map.mapParam,
+  focusedCollection: state.focusedCollection
 })
 
 export class UrlQueryContainer extends Component {
@@ -35,8 +38,10 @@ export class UrlQueryContainer extends Component {
       boundingBoxSearchFromUrl,
       polygonSearchFromUrl,
       mapParamFromUrl,
+      focusedCollectionFromUrl,
       onChangeQuery,
-      onChangeMap
+      onChangeMap,
+      onChangeFocusedCollection
     } = this.props
 
     // build the query
@@ -61,6 +66,10 @@ export class UrlQueryContainer extends Component {
     if (mapParamFromUrl !== '') {
       onChangeMap({ mapParam: mapParamFromUrl })
     }
+
+    if (focusedCollectionFromUrl !== '') {
+      onChangeFocusedCollection(focusedCollectionFromUrl)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,7 +81,8 @@ export class UrlQueryContainer extends Component {
       pointSearch,
       boundingBoxSearch,
       polygonSearch,
-      mapParam
+      mapParam,
+      focusedCollection
     } = nextProps
 
     const newQuery = {
@@ -80,7 +90,8 @@ export class UrlQueryContainer extends Component {
       sp: pointSearch,
       sb: boundingBoxSearch,
       polygon: polygonSearch,
-      m: mapParam
+      m: mapParam,
+      p: focusedCollection
     }
 
     if (newQuery !== {}) {
@@ -108,7 +119,9 @@ UrlQueryContainer.defaultProps = {
   polygonSearch: '',
   polygonSearchFromUrl: '',
   mapParam: '',
-  mapParamFromUrl: ''
+  mapParamFromUrl: '',
+  focusedCollection: '',
+  focusedCollectionFromUrl: ''
 }
 
 UrlQueryContainer.propTypes = {
@@ -122,10 +135,13 @@ UrlQueryContainer.propTypes = {
   polygonSearchFromUrl: PropTypes.string,
   mapParam: PropTypes.string,
   mapParamFromUrl: PropTypes.string,
+  focusedCollection: PropTypes.string,
+  focusedCollectionFromUrl: PropTypes.string,
   children: PropTypes.node.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onChangeMap: PropTypes.func.isRequired
+  onChangeMap: PropTypes.func.isRequired,
+  onChangeFocusedCollection: PropTypes.func.isRequired
 }
 
 export default addUrlProps({ urlPropsQueryConfig })(
