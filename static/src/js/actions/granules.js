@@ -14,25 +14,28 @@ export const getGranules = () => (dispatch, getState) => {
     dispatch(updateGranules({
       results: []
     }))
-    return
+    return null
   }
 
-  API.endpoints.granules.getAll({
+  const response = API.endpoints.granules.getAll({
     collectionId,
     pageNum: 1,
     pageSize: 20,
     sortKey: '-start_date'
-  }).then((response) => {
-    const payload = {}
-
-    payload.results = response.data.feed.entry
-
-    if (collectionId) {
-      payload.collectionId = collectionId
-    }
-
-    dispatch(updateGranules(payload))
-  }, (error) => {
-    throw new Error('Request failed', error)
   })
+    .then((response) => {
+      const payload = {}
+
+      payload.collectionId = collectionId
+      payload.results = response.data.feed.entry
+
+      dispatch(updateGranules(payload))
+    }, (error) => {
+      throw new Error('Request failed', error)
+    })
+    .catch(() => {
+      console.log('Promise Rejected')
+    })
+
+  return response
 }

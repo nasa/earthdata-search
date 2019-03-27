@@ -55,7 +55,7 @@ describe('nlp#searchNlp', () => {
     moxios.uninstall()
   })
 
-  test('does not call changeQuery on error', () => {
+  test('does not call changeQuery on error', async () => {
     moxios.stubRequest(/nlp.*/, {
       status: 500,
       response: {}
@@ -64,7 +64,7 @@ describe('nlp#searchNlp', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    store.dispatch(actions.searchNlp('michigan')).then(() => {
+    await store.dispatch(actions.searchNlp('michigan')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -91,7 +91,7 @@ describe('nlp#searchNlp', () => {
     })
   })
 
-  test('calls changeQuery without only keyword', () => {
+  test('calls changeQuery without only keyword', async () => {
     moxios.stubRequest(/nlp.*/, {
       status: 200,
       response: {
@@ -105,7 +105,7 @@ describe('nlp#searchNlp', () => {
 
     const addMock = jest.spyOn(actions, 'changeQuery').mockImplementation(() => jest.fn())
 
-    store.dispatch(actions.searchNlp('michigan')).then(() => {
+    await store.dispatch(actions.searchNlp('michigan')).then(() => {
       expect(addMock).toHaveBeenCalledTimes(1)
       expect(addMock).toHaveBeenCalledWith({
         keyword: 'michigan'
@@ -113,7 +113,7 @@ describe('nlp#searchNlp', () => {
     })
   })
 
-  test('calls changeQuery with spatial payload', () => {
+  test('calls changeQuery with spatial payload', async () => {
     moxios.stubRequest(/nlp.*/, {
       status: 200,
       response: {
@@ -141,7 +141,7 @@ describe('nlp#searchNlp', () => {
 
     const addMock = jest.spyOn(actions, 'changeQuery').mockImplementation(() => jest.fn())
 
-    store.dispatch(actions.searchNlp('michigan')).then(() => {
+    await store.dispatch(actions.searchNlp('michigan')).then(() => {
       expect(addMock).toHaveBeenCalledTimes(1)
       expect(addMock).toHaveBeenCalledWith({
         keyword: 'michigan',
