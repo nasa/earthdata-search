@@ -151,33 +151,3 @@ export function granuleSearch(event, context, callback) {
     console.error(`Error: ${err.message}`)
   })
 }
-
-export function collectionGranules(event, context, callback) {
-  let bodyContent = ''
-
-  const granuleUrl = `${process.env.cmr_host}`
-    + `/search/granules.json?echo_collection_id=${event.pathParameters.id}`
-
-  console.log(granuleUrl)
-
-  https.get(granuleUrl, (resp) => {
-    if (resp.statusCode !== 200) {
-      bodyContent = resp.statusMessage
-    }
-
-    resp.on('data', (chunk) => {
-      bodyContent += chunk
-    })
-
-    resp.on('end', () => {
-      callback(null, {
-        isBase64Encoded: false,
-        statusCode: resp.statusCode,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: bodyContent
-      })
-    })
-  }).on('error', (err) => {
-    console.error(`Error: ${err.message}`)
-  })
-}

@@ -51,7 +51,19 @@ export const granulesEndpoints = {
   endpoints: [
     {
       name: 'getAll',
-      callback: ({ collectionId } = {}) => API.post(`collections/${collectionId}/granules`)
+      callback: ({
+        collectionId,
+        pageNum,
+        pageSize,
+        sortKey
+      } = {}) => API.post(`granules/${collectionId}`, {
+        params: {
+          echo_collection_id: collectionId,
+          page_num: pageNum,
+          page_size: pageSize,
+          sort_key: sortKey
+        }
+      })
     },
     {
       name: 'getOne',

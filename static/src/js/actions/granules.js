@@ -17,7 +17,12 @@ export const getGranules = () => (dispatch, getState) => {
     return
   }
 
-  API.endpoints.granules.getAll({ collectionId }).then((response) => {
+  API.endpoints.granules.getAll({
+    collectionId,
+    pageNum: 1,
+    pageSize: 20,
+    sortKey: '-start_date'
+  }).then((response) => {
     const payload = {}
 
     payload.results = response.data.feed.entry

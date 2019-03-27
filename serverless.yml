@@ -84,19 +84,6 @@ functions:
               paths:
                 id: true
 
-  collectionGranules:
-    handler: serverless/dist/cmr.collectionGranules
-    events:
-      - http:
-          method: post
-          cors:
-            origin: '*'
-          path: collections/{id}/granules
-          request:
-            parameters:
-              paths:
-                id: true
-
 #
 # Non code related resources
 #
