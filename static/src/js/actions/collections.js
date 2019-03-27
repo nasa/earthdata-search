@@ -49,14 +49,14 @@ export const onFacetsErrored = () => ({
 
 export const getCollections = () => (dispatch, getState) => {
   const { query } = getState()
-  console.log('getCollections', query)
+
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
 
   const { keyword, spatial = {} } = query
   const { point, boundingBox, polygon } = spatial
 
-  API.endpoints.collections.getAll({
+  const response = API.endpoints.collections.getAll({
     boundingBox,
     hasGranulesOrCwic: true,
     includeFacets: 'v2',
@@ -70,34 +70,37 @@ export const getCollections = () => (dispatch, getState) => {
     point,
     polygon,
     sortKey: ['has_granules_or_cwic']
-  }).then((response) => {
-    const payload = {}
-    payload.results = response.data.feed.entry
-    payload.hits = response.data.feed.hits
-    payload.facets = response.data.feed.facets.children || []
-
-    if (keyword) {
-      payload.keyword = keyword
-    }
-
-    dispatch(onCollectionsLoaded({
-      loaded: true
-    }))
-    dispatch(onFacetsLoaded({
-      loaded: true
-    }))
-    dispatch(updateCollections(payload))
-    dispatch(updateFacets(payload))
-  }, (error) => {
-    dispatch(onCollectionsErrored())
-    dispatch(onFacetsErrored())
-    dispatch(onCollectionsLoaded({
-      loaded: false
-    }))
-    dispatch(onFacetsLoaded({
-      loaded: false
-    }))
-
-    throw new Error('Request failed', error)
   })
+    .then((response) => {
+      const payload = {}
+      payload.results = response.data.feed.entry
+      payload.hits = response.data.feed.hits
+      payload.facets = response.data.feed.facets.children || []
+      payload.keyword = keyword
+
+      dispatch(onCollectionsLoaded({
+        loaded: true
+      }))
+      dispatch(onFacetsLoaded({
+        loaded: true
+      }))
+      dispatch(updateCollections(payload))
+      dispatch(updateFacets(payload))
+    }, (error) => {
+      dispatch(onCollectionsErrored())
+      dispatch(onFacetsErrored())
+      dispatch(onCollectionsLoaded({
+        loaded: false
+      }))
+      dispatch(onFacetsLoaded({
+        loaded: false
+      }))
+
+      throw new Error('Request failed', error)
+    })
+    .catch((e) => {
+      console.log('Promise Rejected', e)
+    })
+
+  return response
 }
