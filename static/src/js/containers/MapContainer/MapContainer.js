@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* eslint-disable no-underscore-dangle */
 
 import React, { Component } from 'react'
@@ -18,7 +19,11 @@ import ZoomHome from '../../components/map_controls/ZoomHome'
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 import LayerBuilder from '../../components/map_controls/LayerBuilder'
-import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
+import ConnectedSpatialSelectionContainer
+  from '../SpatialSelectionContainer/SpatialSelectionContainer'
+// import GranuleVisualizationsLayerContainer
+//   from '../GranuleVisualizationsLayerContainer/GranuleVisualizationsLayerContainer'
+import GranuleGridLayer from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -86,7 +91,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  mapParam: state.map.mapParam
+  mapParam: state.map.mapParam,
+  focusedCollection: state.focusedCollection,
+  granules: state.entities.granules
 })
 
 export class EdscMapContainer extends Component {
@@ -120,14 +127,14 @@ export class EdscMapContainer extends Component {
   }
 
   render() {
-    const { mapParam } = this.props
+    const {
+      mapParam,
+      focusedCollection,
+      granules
+    } = this.props
     // const [lat, lng, zoom, proj, base, overlays] = map.split('!')
     const [lat, lng, zoom, proj] = mapParam.split('!')
     const center = [lat, lng]
-    const maxBounds = [
-      [-120, -220],
-      [120, 220]
-    ]
     const projections = ['epsg3413', 'epsg4326', 'epsg3031']
     const projIndex = proj !== undefined ? proj : 1
 
@@ -139,12 +146,12 @@ export class EdscMapContainer extends Component {
         zoom={zoom}
         maxZoom={7}
         crs={crsProjections[projIndex]}
-        maxBounds={maxBounds}
         ref={(ref) => { this.mapRef = ref }}
         projIndex={projIndex}
         zoomControl={false}
         attributionControl={false}
         onMoveend={this.handleMoveend}
+        zoomAnimation={false}
       >
         <LayersControl position="bottomright">
           <BaseLayer checked name="Blue Marble">
@@ -197,6 +204,10 @@ export class EdscMapContainer extends Component {
             />
           </Overlay>
         </LayersControl>
+        <GranuleGridLayer
+          focusedCollection={focusedCollection}
+          granules={granules}
+        />
         <ZoomHome />
         <ScaleControl position="bottomright" />
         <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
@@ -206,12 +217,15 @@ export class EdscMapContainer extends Component {
 }
 
 EdscMapContainer.defaultProps = {
-  mapParam: '0!0!2!1!0!0,2'
+  mapParam: '0!0!2!1!0!0,2',
+  focusedCollection: ''
 }
 
 EdscMapContainer.propTypes = {
   mapParam: PropTypes.string,
-  onChangeMap: PropTypes.func.isRequired
+  onChangeMap: PropTypes.func.isRequired,
+  focusedCollection: PropTypes.string,
+  granules: PropTypes.shape({}).isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EdscMapContainer)

@@ -10,13 +10,16 @@ import {
 import { EdscMapContainer } from '../MapContainer'
 import ZoomHome from '../../../components/map_controls/ZoomHome'
 import LayerBuilder from '../../../components/map_controls/LayerBuilder'
-import ConnectedSpatialSelectionContainer from '../../SpatialSelectionContainer/SpatialSelectionContainer'
+import ConnectedSpatialSelectionContainer
+  from '../../SpatialSelectionContainer/SpatialSelectionContainer'
+import GranuleGridLayer from '../../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
     mapParam: '0!0!2!1!0!0,2',
+    granules: {},
     onChangeMap: jest.fn()
   }
 
@@ -39,6 +42,7 @@ describe('EdscMapContainer component', () => {
     expect(enzymeWrapper.find(ZoomHome).length).toBe(1)
     expect(enzymeWrapper.find(LayerBuilder).length).toBe(6)
     expect(enzymeWrapper.find(ConnectedSpatialSelectionContainer).length).toBe(1)
+    expect(enzymeWrapper.find(GranuleGridLayer).length).toBe(1)
   })
 
   test('handleMoveend calls onChangeMap', () => {
