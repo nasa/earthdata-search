@@ -39,8 +39,6 @@ const facetsReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        isLoading: false,
-        isLoaded: true,
         byId,
         allIds
       }
