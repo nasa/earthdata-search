@@ -1,14 +1,14 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Search from '../Search'
+import App from '../App'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {}
 
-  const enzymeWrapper = shallow(<Search {...props} />)
+  const enzymeWrapper = mount(<App {...props} />)
 
   return {
     props,
@@ -16,7 +16,7 @@ function setup() {
   }
 }
 
-describe('Search component', () => {
+describe('App component', () => {
   test('should render self', () => {
     const { enzymeWrapper } = setup()
 
