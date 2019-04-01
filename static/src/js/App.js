@@ -8,7 +8,7 @@ import { RouterToUrlQuery } from 'react-url-query'
 import store from './store/configureStore'
 import history from './util/history'
 
-import Footer from './components/Footer/Footer'
+import FooterContainer from './containers/FooterContainer/FooterContainer'
 
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
@@ -42,7 +42,7 @@ class App extends Component {
                   <Project />
                 </Route>
               </Switch>
-              <Footer />
+              <FooterContainer />
             </ConnectedUrlQueryContainer>
           </RouterToUrlQuery>
         </ConnectedRouter>

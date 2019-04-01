@@ -8,7 +8,9 @@ import {
   LOADING_FACETS,
   LOADED_FACETS,
   UPDATE_FACETS,
-  ERRORED_FACETS
+  ERRORED_FACETS,
+  STARTED_TIMER,
+  FINISHED_TIMER
 } from '../constants/actionTypes'
 
 export const updateCollections = payload => ({
@@ -47,11 +49,20 @@ export const onFacetsErrored = () => ({
   type: ERRORED_FACETS
 })
 
+export const startTimer = () => ({
+  type: STARTED_TIMER
+})
+
+export const finishTimer = () => ({
+  type: FINISHED_TIMER
+})
+
 export const getCollections = () => (dispatch, getState) => {
   const { query } = getState()
 
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
+  dispatch(startTimer())
 
   const { keyword, spatial = {} } = query
   const { point, boundingBox, polygon } = spatial
@@ -78,6 +89,7 @@ export const getCollections = () => (dispatch, getState) => {
       payload.facets = response.data.feed.facets.children || []
       payload.keyword = keyword
 
+      dispatch(finishTimer())
       dispatch(onCollectionsLoaded({
         loaded: true
       }))
@@ -87,6 +99,7 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(updateCollections(payload))
       dispatch(updateFacets(payload))
     }, (error) => {
+      dispatch(finishTimer())
       dispatch(onCollectionsErrored())
       dispatch(onFacetsErrored())
       dispatch(onCollectionsLoaded({
