@@ -1,7 +1,9 @@
 import {
   UPDATE_COLLECTIONS,
   LOADING_COLLECTIONS,
-  LOADED_COLLECTIONS
+  LOADED_COLLECTIONS,
+  STARTED_TIMER,
+  FINISHED_TIMER
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -10,7 +12,9 @@ const initialState = {
   byId: {},
   allIds: [],
   isLoading: false,
-  isLoaded: false
+  isLoaded: false,
+  timerStart: null,
+  loadTime: 0
 }
 
 const resultToStateObj = result => result
@@ -29,6 +33,20 @@ const collectionsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isLoaded: action.payload.loaded
+      }
+    }
+    case STARTED_TIMER: {
+      return {
+        ...state,
+        timerStart: Date.now()
+      }
+    }
+    case FINISHED_TIMER: {
+      const { timerStart } = state
+      return {
+        ...state,
+        timerStart: null,
+        loadTime: Date.now() - timerStart
       }
     }
     case UPDATE_COLLECTIONS: {

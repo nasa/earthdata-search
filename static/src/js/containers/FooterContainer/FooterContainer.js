@@ -1,19 +1,31 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import './Footer.scss'
+import './FooterContainer.scss'
 
-class Footer extends Component {
+const mapStateToProps = state => ({
+  loadTime: state.entities.collections.loadTime
+})
+
+class FooterContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {}
   }
 
   render() {
+    const { loadTime } = this.props
+
     return (
       <footer className="footer">
         <span className="footer__info footer__info--left">
           <span className="footer__ver-pill">v Research</span>
-          <span className="footer__info-bit footer__info-bit--emph">Search Time: 1ms</span>
+          <span className="footer__info-bit footer__info-bit--emph">
+            Search Time:
+            {(loadTime / 1000).toFixed(1)}
+            s
+          </span>
           <span className="footer__info-bit footer__info-bit--emph">NASA Official: Stephen Barrick</span>
           <span className="footer__info-bit">
             <a className="footer__info-link" href="http://www.nasa.gov/FOIA/index.html">FOIA</a>
@@ -37,4 +49,12 @@ class Footer extends Component {
   }
 }
 
-export default Footer
+FooterContainer.defaultProps = {
+  loadTime: 0
+}
+
+FooterContainer.propTypes = {
+  loadTime: PropTypes.number
+}
+
+export default connect(mapStateToProps)(FooterContainer)

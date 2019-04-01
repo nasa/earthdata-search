@@ -11,7 +11,9 @@ const initialState = {
   byId: {},
   allIds: [],
   isLoading: false,
-  isLoaded: false
+  isLoaded: false,
+  loadTime: 0,
+  timerStart: null
 }
 
 describe('INITIAL_STATE', () => {
