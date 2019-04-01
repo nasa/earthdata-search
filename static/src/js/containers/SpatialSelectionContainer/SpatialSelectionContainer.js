@@ -13,7 +13,7 @@ import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 import actions from '../../actions'
 
-import { makeCounterClockwise } from '../../util/geo'
+import { makeCounterClockwise } from '../../util/map/geo'
 
 // Fix the leaflet Marker icons
 delete L.Icon.Default.prototype._getIconUrl

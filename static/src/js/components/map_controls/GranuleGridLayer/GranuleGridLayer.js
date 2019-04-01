@@ -7,8 +7,18 @@ import {
   GridLayer
 } from 'react-leaflet'
 
-import { dividePolygon } from '../../../util/geo'
-import projectPath from '../../../util/interpolation'
+import {
+  addPath,
+  isCartesian,
+  isClockwise,
+  getPolygons,
+  getLines,
+  getPoints,
+  getRectangles,
+  getlprojection
+} from '../../../util/map/granules'
+import { dividePolygon } from '../../../util/map/geo'
+import projectPath from '../../../util/map/interpolation'
 
 const config = {
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
@@ -16,129 +26,6 @@ const config = {
 }
 
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
-
-// function __guard__(value, transform) {
-//   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined
-// }
-
-// function capitalize(str) {
-//   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
-// }
-
-//
-// helper methods to get things working for now
-//
-function __range__(left, right, inclusive) {
-  const range = []
-  const ascending = left < right
-  const nonInclusive = ascending ? right + 1 : right - 1
-  const end = !inclusive ? right : nonInclusive
-  for (let i = left; ascending ? i < end : i > end; ascending ? i += 1 : i -= 1) {
-    range.push(i)
-  }
-  return range
-}
-
-function pairs(array, options = {}) {
-  const wrap = options.wrap != null ? options.wrap : true
-  let len = array.length
-  if (!wrap) {
-    len -= 1
-  }
-
-  return __range__(0, len, false).map(i => [array[i], array[(i + 1) % len]])
-}
-
-function isClockwise(path) {
-  let sum = 0
-  // for (const [p0, p1] of arrayUtil.pairs(path)) {
-  pairs(path).forEach(([p0, p1]) => {
-    sum += (p1.x - p0.x) * (p1.y + p0.y)
-  })
-  return sum > 0
-}
-
-function addPath(ctx, path) {
-  let { poly } = path
-  const { line } = path
-
-  if ((poly != null) || (line != null)) {
-    if (poly == null) { poly = line }
-    const len = poly.length
-    if (len < 2) { return }
-
-    ctx.moveTo(poly[0].x, poly[0].y)
-    poly.slice(1).forEach(p => ctx.lineTo(p.x, p.y))
-    if (line == null) { ctx.closePath() }
-  }
-}
-
-function parseSpatial(str) {
-  let newStr = str
-  if (newStr instanceof Array) {
-    [newStr] = str
-  }
-  const coords = newStr.split(' ')
-  const len = coords.length - 1
-  return (() => {
-    const result = []
-    for (let i = 0, end = len; i < end; i += 2) {
-      result.push(new L.LatLng(coords[i], coords[i + 1]))
-    }
-    return result
-  })()
-}
-function isCartesian(granule) {
-  return granule.coordinate_system === 'CARTESIAN'
-}
-function getPoints(granule) {
-  let points = []
-  if ((granule._points == null) && (granule.points != null)) {
-    const merged = []
-    points = merged.concat(...granule.points.map(parseSpatial))
-  }
-  return points
-}
-function getPolygons(granule) {
-  const { polygons: granulePolygons } = granule
-  let polygons = []
-  if (granulePolygons && granulePolygons !== null) {
-    polygons = granulePolygons.map(p => p.map(s => parseSpatial(s)))
-    return polygons
-  }
-  return polygons
-}
-function getLines(granule) {
-  let lines = []
-  if ((granule._lines == null) && (granule.lines != null)) {
-    lines = granule.lines.map(parseSpatial)
-  }
-  return lines
-}
-function getRectangles(granule) {
-  const rects = []
-  if ((granule._rects == null) && (granule.boxes != null)) {
-    granule.boxes.map(parseSpatial).forEach((rect) => {
-      let divided
-      if (rect[0].lng > rect[1].lng) {
-        divided = [
-          [rect[0], L.latLng(rect[1].lat, 180)],
-          [L.latLng(rect[0].lat, -180), rect[1]]
-        ]
-      } else {
-        divided = [rect]
-      }
-
-      divided.forEach((box) => {
-        rects.push([L.latLng(box[0].lat, box[0].lng), L.latLng(box[0].lat, box[1].lng),
-          L.latLng(box[1].lat, box[1].lng), L.latLng(box[1].lat, box[0].lng),
-          L.latLng(box[0].lat, box[0].lng)
-        ])
-      })
-    })
-  }
-  return rects
-}
 
 class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {
@@ -164,6 +51,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return super.initialize(this.originalOptions)
   }
 
+  // Overwrite the leaflet onAdd function
   onAdd() {
     super.onAdd()
 
@@ -171,11 +59,12 @@ class GranuleGridLayerExtended extends L.GridLayer {
     // this._handle(map, 'on', 'edsc.focuscollection')
     // this.setFocus((map.focusedCollection != null ? map.focusedCollection.id : undefined) === this.collection.id)
 
-    // this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this._loadResults.bind(this)))
-    this._loadResults(this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined)
+    // this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this.loadResults.bind(this)))
+    // this.loadResults(this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined)
     this._added = true
   }
 
+  // Overwrite the leaflet onRemove function
   onRemove(map) {
     super.onRemove(map)
     this._added = false
@@ -192,27 +81,29 @@ class GranuleGridLayerExtended extends L.GridLayer {
   //   if (this.collection.granuleDatasource() && this._added && !this._resultsSubscription) {
   //     const granuleDatasource = this.collection.granuleDatasource()
   //     this.granules = granuleDatasource.data()
-  //     this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this._loadResults.bind(this)))
-  //     this._loadResults(this.granules != null ? this.granules.results() : undefined)
+  //     this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this.loadResults.bind(this)))
+  //     this.loadResults(this.granules != null ? this.granules.results() : undefined)
   //     return (this._datasourceSubscription != null ? this._datasourceSubscription.dispose() : undefined)
   //   }
   //   return false
   // }
 
+  // Overwrite the leaflet createTile function
   createTile(tilePoint) {
-    const tile = this._createTile()
+    const tile = this.newTile()
 
     // # force the map _zoom to the new value before we calculate
     // # where things need to be drawn
     // # This was to fix the granules being drawn incorrectly after a zoom, but
     // # it isn't needed if we turn zoomAnimation off for the map
     // @_map._zoom = tilePoint.z
-    this.drawTile(tile, this._getBackTile(tilePoint), tilePoint)
+    this.drawTile(tile, this.getBackTile(tilePoint), tilePoint)
 
     return tile
   }
 
-  _createTile() {
+  // Create a new canvas tile
+  newTile() {
     const tile = L.DomUtil.create('canvas', 'leaflet-tile')
 
     const size = this.getTileSize()
@@ -224,14 +115,14 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return tile
   }
 
-  _getBackTile(tilePoint) {
+  getBackTile(tilePoint) {
     const key = `${tilePoint.x}:${tilePoint.y}`
     if (this._backTiles == null) { this._backTiles = {} }
-    if (this._backTiles[key] == null) { this._backTiles[key] = this._createTile() }
+    if (this._backTiles[key] == null) { this._backTiles[key] = this.newTile() }
     return this._backTiles[key]
   }
 
-  _matches(granule, matcher) {
+  matches(granule, matcher) {
     const operators = ['>=', '<=']
     Object.keys(matcher || {}).forEach((prop) => {
       let value = matcher[prop]
@@ -255,37 +146,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return true
   }
 
-  _getlprojection() {
-    if (this.options.geo) {
-      return 'epsg4326'
-    }
-    if (this.options.arctic) {
-      return 'epsg3031'
-    }
-    if (this.options.antarctic) {
-      return 'epsg3413'
-    }
-    return ''
-  }
-
-  _getTileUrl(coords) {
-    const data = {
-      lprojection: this._getlprojection(),
-      x: coords.x,
-      y: coords.y,
-      z: coords.z,
-      time: this.options.time
-    }
-    if (this._map && !this._map.options.crs.infinite) {
-      const invertedY = this._globalTileRange.max.y - (coords.y)
-      if (this.options.tms) {
-        data.y = invertedY
-      }
-      data['-y'] = invertedY
-    }
-    return L.Util.template(this._url, L.Util.extend(data, this.options))
-  }
-
   getTileUrl(tilePoint, granule) {
     if (!this.multiOptions) { return null }
     const date = granule.time_start != null ? granule.time_start.substring(0, 10) : undefined
@@ -294,7 +154,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     // for (const optionSet of this.multiOptions) {
     this.multiOptions.forEach((optionSet) => {
       const newOptionSet = optionSet
-      if (this._matches(granule, newOptionSet.match)) {
+      if (this.matches(granule, newOptionSet.match)) {
         let newResolution
 
         const oldResolution = newOptionSet.resolution
@@ -334,9 +194,24 @@ class GranuleGridLayerExtended extends L.GridLayer {
       this._url = this._originalUrl || this._url || config.gibsUrl
     }
 
-    return this._getTileUrl(tilePoint)
+    const data = {
+      lprojection: getlprojection(this.options),
+      x: tilePoint.x,
+      y: tilePoint.y,
+      z: tilePoint.z,
+      time: this.options.time
+    }
+    if (this._map && !this._map.options.crs.infinite) {
+      const invertedY = this._globalTileRange.max.y - (tilePoint.y)
+      if (this.options.tms) {
+        data.y = invertedY
+      }
+      data['-y'] = invertedY
+    }
+    return L.Util.template(this._url, L.Util.extend(data, this.options))
   }
 
+  // Draw the granule tile
   drawTile(canvas, back, tilePoint) {
     let reverse
     if ((this._results == null) || (this._results.length <= 0)) { return }
@@ -358,7 +233,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
     for (let i = 0; i < this._results.length; i += 1) {
       const granule = this._results[i]
-      const overlaps = this._granulePathsOverlappingTile(granule, bounds)
+      const overlaps = this.granulePathsOverlappingTile(granule, bounds)
       if (overlaps.length > 0) {
         const url = this.getTileUrl(tilePoint, granule)
         for (let j = 0; j < overlaps.length; j += 1) {
@@ -376,17 +251,18 @@ class GranuleGridLayerExtended extends L.GridLayer {
       }
     }
 
-    setTimeout((() => this._drawOutlines(canvas, paths, nwPoint)), 0)
-    setTimeout((() => this._drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint)), 0)
-    setTimeout((() => this._drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
-    setTimeout((() => this._drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
+    setTimeout((() => this.drawOutlines(canvas, paths, nwPoint)), 0)
+    setTimeout((() => this.drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint)), 0)
+    setTimeout((() => this.drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
+    setTimeout((() => this.drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
 
     if ((paths.length > 0) && config.debug) {
       console.log(`${paths.length} Overlapping Granules [(${bounds.getNorth()}, ${bounds.getWest()}), (${bounds.getSouth()}, ${bounds.getEast()})]`)
     }
   }
 
-  _drawOutlines(canvas, paths, nwPoint) {
+  // Draws an outline of the granule paths
+  drawOutlines(canvas, paths, nwPoint) {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -402,7 +278,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  _drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint) {
+  // Draws the granule paths
+  drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint) {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -425,7 +302,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  _loadImage(url, callback, retries = 0) {
+  loadImage(url, callback, retries = 0) {
     if (url != null) {
       const image = new Image()
       image.onload = function onload() {
@@ -435,7 +312,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       image.onerror = () => {
         if (retries < MAX_RETRIES) {
-          return this._loadImage(url, callback, retries + 1)
+          return this.loadImage(url, callback, retries + 1)
         }
         console.error(`Failed to load tile after ${MAX_RETRIES} tries: ${url}`)
         return callback(null)
@@ -451,7 +328,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return callback(null)
   }
 
-  _drawClippedImage(ctx, boundary, paths, nwPoint, image, size) {
+  drawClippedImage(ctx, boundary, paths, nwPoint, image, size) {
     if (image != null) {
       ctx.save()
       ctx.beginPath()
@@ -471,7 +348,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  _drawClippedImagery(canvas, boundary, paths, nwPoint) {
+  // Draws the gibs imagery for the granule
+  drawClippedImagery(canvas, boundary, paths, nwPoint) {
     const ctx = canvas.getContext('2d')
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -510,8 +388,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       // ((i, urlPaths, url) => {
       // eslint-disable-next-line no-loop-func
-      self._loadImage(url, (image) => {
-        queue[i] = () => this._drawClippedImage(ctx, boundary, urlPaths, nwPoint, image, size)
+      self.loadImage(url, (image) => {
+        queue[i] = () => this.drawClippedImage(ctx, boundary, urlPaths, nwPoint, image, size)
 
         while (queue[index] != null) {
           queue[index]()
@@ -528,7 +406,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  _drawFullBackTile(canvas, boundary, pathsWithHoles, nwPoint) {
+  drawFullBackTile(canvas, boundary, pathsWithHoles, nwPoint) {
     const ctx = canvas.getContext('2d')
 
     ctx.save()
@@ -554,7 +432,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  _addIntersections(result, paths, bounds, type, interpolation) {
+  addIntersections(result, paths, bounds, type, interpolation) {
     if (paths == null) { return null }
 
     paths.forEach((path) => {
@@ -568,7 +446,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return null
   }
 
-  _granulePathsOverlappingTile(granule, tileBounds) {
+  // Determine what granule paths fit into a given tileBounds
+  granulePathsOverlappingTile(granule, tileBounds) {
     const result = []
 
     // const interpolation = granule.isCartesian() ? 'cartesian' : 'geodetic'
@@ -578,12 +457,12 @@ class GranuleGridLayerExtended extends L.GridLayer {
     Array.from(getPolygons(granule)).forEach((polygon) => {
       // if (granule.isCartesian()) {
       if (isCartesian(granule)) {
-        this._addIntersections(result, polygon, tileBounds, 'poly', interpolation)
+        this.addIntersections(result, polygon, tileBounds, 'poly', interpolation)
       } else {
         // Handle holes
         Array.from(polygon).forEach((shape) => {
           const { interiors } = dividePolygon(shape)
-          this._addIntersections(result, interiors, tileBounds, 'poly', interpolation)
+          this.addIntersections(result, interiors, tileBounds, 'poly', interpolation)
         })
       }
       // Workaround for EDSC-657
@@ -593,8 +472,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
       return false
     })
 
-    this._addIntersections(result, getRectangles(granule), tileBounds, 'poly', 'cartesian')
-    this._addIntersections(result, getLines(granule), tileBounds, 'line', interpolation)
+    this.addIntersections(result, getRectangles(granule), tileBounds, 'poly', 'cartesian')
+    this.addIntersections(result, getLines(granule), tileBounds, 'line', interpolation)
 
     // for (const point of (left1 = granule.getPoints()) != null ? left1 : []) {
     Array.from(getPoints(granule)).forEach((point) => {
@@ -606,14 +485,15 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return result
   }
 
-  granuleAt(p) {
+  // Is there are granule at a give point?
+  granuleAt(point) {
     const origin = this._map.getPixelOrigin()
     const tileSize = this.getTileSize()
-    const tilePoint = p.add(origin).divideBy(tileSize.x).floor()
-    const canvas = this._getBackTile(tilePoint)
+    const tilePoint = point.add(origin).divideBy(tileSize.x).floor()
+    const canvas = this.getBackTile(tilePoint)
     const bounds = this._tileCoordsToBounds(tilePoint)
 
-    const tilePixel = p.subtract(this._map.latLngToLayerPoint(bounds.getNorthWest()))
+    const tilePixel = point.subtract(this._map.latLngToLayerPoint(bounds.getNorthWest()))
 
     let result = null
     const ctx = canvas.getContext('2d')
@@ -627,9 +507,11 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return result
   }
 
+  // Set the granule results that need to be drawna
   setResults(results) {
     this._results = results
     if (results && results[0] && results[0].collection_concept_id === 'C24931-LAADS') {
+      // Hard code C24931-LAADS to work with gibs imagery until we have that full functionality in place
       this.multiOptions = [{
         antarctic: true,
         antarctic_resolution: '1km',
@@ -654,29 +536,30 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return this.redraw()
   }
 
-  _reorderedResults(results, defaultResults) {
-    if (this._stickied != null) {
-      const newResults = results.concat()
-      const index = newResults.indexOf(this._stickied)
-      if (index === -1) {
-        this._stickied = null
-        this.stickyId = null
-        if (this._granuleStickyLayer != null) {
-          this._granuleStickyLayer.onRemove(this._map)
-        }
-        this._granuleStickyLayer = null
-      } else {
-        newResults.splice(index, 1)
-        newResults.unshift(this._stickied)
-      }
-      return newResults
-    }
-    return defaultResults
-  }
+  // We might need this once we start looking at sticky granules
+  // _reorderedResults(results, defaultResults) {
+  //   if (this._stickied != null) {
+  //     const newResults = results.concat()
+  //     const index = newResults.indexOf(this._stickied)
+  //     if (index === -1) {
+  //       this._stickied = null
+  //       this.stickyId = null
+  //       if (this._granuleStickyLayer != null) {
+  //         this._granuleStickyLayer.onRemove(this._map)
+  //       }
+  //       this._granuleStickyLayer = null
+  //     } else {
+  //       newResults.splice(index, 1)
+  //       newResults.unshift(this._stickied)
+  //     }
+  //     return newResults
+  //   }
+  //   return defaultResults
+  // }
 
-  _loadResults(results) {
-    return this.setResults(this._reorderedResults(results, this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined))
-  }
+  // loadResults(results) {
+  //   return this.setResults(this._reorderedResults(results, this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined))
+  // }
 
   // setFocus(focus, map = this._map) {
   //   if (this._isFocused === focus) { return }
@@ -772,7 +655,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   //     }
   //   }
 
-  //   this._loadResults(this._results)
+  //   this.loadResults(this._results)
   // }
 
   // _granuleLayer(granule, options) {
@@ -839,6 +722,7 @@ class GranuleGridLayer extends GridLayer {
     return layer
   }
 
+  // Update the granules if the new props are different
   updateLeafletElement(fromProps, toProps) {
     const { layer } = this
     console.log('updateLeafletElement', fromProps, toProps)
