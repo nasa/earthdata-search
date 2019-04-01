@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* eslint-disable no-underscore-dangle */
 
 import React, { Component } from 'react'
@@ -21,8 +20,6 @@ import './MapContainer.scss'
 import LayerBuilder from '../../components/map_controls/LayerBuilder'
 import ConnectedSpatialSelectionContainer
   from '../SpatialSelectionContainer/SpatialSelectionContainer'
-// import GranuleVisualizationsLayerContainer
-//   from '../GranuleVisualizationsLayerContainer/GranuleVisualizationsLayerContainer'
 import GranuleGridLayer from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
 const { BaseLayer, Overlay } = LayersControl
@@ -225,7 +222,7 @@ EdscMapContainer.propTypes = {
   mapParam: PropTypes.string,
   onChangeMap: PropTypes.func.isRequired,
   focusedCollection: PropTypes.string,
-  granules: PropTypes.shape({}).isRequired,
+  granules: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EdscMapContainer)
