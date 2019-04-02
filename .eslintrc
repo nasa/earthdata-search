@@ -40,7 +40,17 @@
     "no-console": "off",
 
     # Allow console log messages
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+
+    # Disable the depricated label-has-for rule
+    "jsx-a11y/label-has-for": "off",
+
+    # Use the correct version of this rule, rather than label-has-for
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "labelComponents": ["label"],
+      "labelAttributes": ["htmlFor"],
+      "controlComponents": ["input"]
+    }]
   },
 
   # Use AirBnb settings as a base
