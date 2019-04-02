@@ -15,6 +15,11 @@
 .facets__facet-group {
   height: 0;
   overflow: hidden;
+  background: $color__black--900;
+}
+
+.facets__facet-group:first-child {
+  padding-top: 0.6rem;
 }
 
 .facets__facet-group--is-open {
@@ -42,11 +47,16 @@
   align-self: flex-end;
 }
 
+.facets__selected {
+  padding: 0.2rem 0.4rem 0.2rem 1.1rem;
+  font-size: 0.875rem;
+  color: $color__black--400;
+}
+
 .facets__list {
   margin: 0;
   padding: 0;
   list-style: none;
-  background: $color__black--900;
 }
 
 .facets__item-checkbox {
@@ -73,8 +83,16 @@
   vertical-align: middle;
   border-left: .2rem solid transparent;
 
-  .facets__list-item:first-child & {
-    padding-top: 0.6rem;
+  .facets__list-item--level-1 & {
+    padding-left: 2rem;
+  }
+
+  .facets__list-item--level-2 & {
+    padding-left: 3rem;
+  }
+
+  .facets__list-item--level-3 & {
+    padding-left: 4rem;
   }
 
   &:hover {

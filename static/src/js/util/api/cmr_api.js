@@ -19,7 +19,13 @@ export const collectionsEndpoints = {
         pageSize,
         point,
         polygon,
-        sortKey
+        scienceKeywordsH,
+        sortKey,
+        platformH,
+        instrumentH,
+        dataCenterH,
+        projectH,
+        processingLevelId
       } = {}) => API.post('collections', {
         params: {
           bounding_box: boundingBox,
@@ -35,6 +41,12 @@ export const collectionsEndpoints = {
           page_size: pageSize,
           point,
           polygon,
+          science_keywords_h: scienceKeywordsH,
+          platform_h: platformH,
+          instrument_h: instrumentH,
+          data_center_h: dataCenterH,
+          project_h: projectH,
+          processing_level_id_h: processingLevelId,
           sort_key: sortKey
         }
       })

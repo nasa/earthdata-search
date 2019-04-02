@@ -8,6 +8,7 @@ import {
 } from './search'
 import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
+import toggleFacet from './facets'
 
 const actions = {
   getCollections,
@@ -15,9 +16,10 @@ const actions = {
   changeQuery,
   changeMap,
   changeFocusedCollection,
-  clearFilters,
   changeUrl,
-  searchNlp
+  clearFilters,
+  searchNlp,
+  toggleFacet
 }
 
 export default actions

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import Dropzone from 'react-dropzone'
 
-import './MyDropzone.css'
+import './MyDropzone.scss'
 
 class MyDropzone extends Component {
   onDrop = (acceptedFiles, rejectedFiles) => {

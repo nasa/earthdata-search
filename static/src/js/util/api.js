@@ -35,7 +35,7 @@ class APIWrapper {
   }
 }
 
-const API = new APIWrapper({ url: 'http://localhost:3000' })
+const API = new APIWrapper({ url: 'http://localhost:3001' })
 
 // CMR
 API.buildEntity(collectionsEndpoints)

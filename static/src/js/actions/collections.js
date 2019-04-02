@@ -1,3 +1,5 @@
+import qs from 'qs'
+
 import API from '../util/api'
 
 import {
@@ -57,15 +59,34 @@ export const finishTimer = () => ({
   type: FINISHED_TIMER
 })
 
-export const getCollections = () => (dispatch, getState) => {
-  const { query } = getState()
 
+/**
+ * Perform a collections request based on the current redux state.
+ * @param {function} dispatch - A dispatch function provided by redux.
+ * @param {function} getState - A function that returns the current state provided by redux.
+ */
+
+export const getCollections = () => (dispatch, getState) => {
+  const {
+    query,
+    facetsParams
+  } = getState()
+
+  const {
+    keyword,
+    spatial = {}
+  } = query
+
+  const {
+    point,
+    boundingBox,
+    polygon
+  } = spatial
+
+  const facetLink = qs.parse(facetsParams)
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
   dispatch(startTimer())
-
-  const { keyword, spatial = {} } = query
-  const { point, boundingBox, polygon } = spatial
 
   const response = API.endpoints.collections.getAll({
     boundingBox,
@@ -75,11 +96,24 @@ export const getCollections = () => (dispatch, getState) => {
     includeHasGranules: true,
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     keyword,
-    options: { temporal: { limit_to_granules: true } },
+    options: {
+      temporal: {
+        limit_to_granules: true
+      },
+      science_keywords_h: {
+        or: true
+      }
+    },
     pageNum: 1,
     pageSize: 20,
     point,
     polygon,
+    scienceKeywordsH: facetLink.science_keywords_h,
+    platformH: facetLink.platform_h,
+    instrumentH: facetLink.instrument_h,
+    dataCenterH: facetLink.data_center_h,
+    projectH: facetLink.project_h,
+    processingLevelId: facetLink.processing_level_id_h,
     sortKey: ['has_granules_or_cwic']
   })
     .then((response) => {

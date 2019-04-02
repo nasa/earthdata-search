@@ -1,3 +1,5 @@
+import { countSelectedFacets } from '../util/facets'
+
 import {
   LOADING_FACETS,
   LOADED_FACETS,
@@ -10,8 +12,6 @@ const initialState = {
   isLoading: false,
   isLoaded: false
 }
-
-const resultToStateObj = result => result
 
 const facetsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -32,9 +32,10 @@ const facetsReducer = (state = initialState, action) => {
     case UPDATE_FACETS: {
       const byId = {}
       const allIds = []
-      action.payload.facets.forEach((result) => {
-        byId[result.title] = resultToStateObj(result)
-        allIds.push(result.title)
+      action.payload.facets.forEach((facetCategory) => {
+        byId[facetCategory.title] = facetCategory
+        byId[facetCategory.title].totalSelected = countSelectedFacets(facetCategory)
+        allIds.push(facetCategory.title)
       })
 
       return {
