@@ -19,7 +19,8 @@ const urlDefs = {
   sp: 'pointSearch',
   sb: 'boundingBoxSearch',
   polygon: 'polygonSearch',
-  m: 'mapParam'
+  m: 'mapParam',
+  qt: 'temporalSearch'
 }
 
 
@@ -47,6 +48,7 @@ export const decodeUrlParams = (paramString) => {
 
   const query = {}
   query.keyword = params[getUrlShortKey('keywordSearch')]
+  query.temporal = params[getUrlShortKey('temporalSearch')]
 
   const spatial = {}
   spatial.point = params[getUrlShortKey('pointSearch')]

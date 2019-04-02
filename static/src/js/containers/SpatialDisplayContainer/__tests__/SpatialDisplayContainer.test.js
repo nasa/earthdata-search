@@ -27,7 +27,7 @@ describe('SpatialDisplayContainer component', () => {
     expect(enzymeWrapper.type()).toBe(null)
   })
 
-  test('with pointSearch should render the display spatial info', () => {
+  test('with pointSearch should render the spatial info', () => {
     const { enzymeWrapper } = setup()
     const newPoint = '-77.0418825,38.805869' // Lon,Lat
     enzymeWrapper.setProps({ pointSearch: newPoint })
@@ -36,7 +36,7 @@ describe('SpatialDisplayContainer component', () => {
     expect(spatialDisplay.text()).toEqual('Point: 38.805869,-77.0418825') // Lat,Lon
   })
 
-  test('with boundingBoxSearch should render the display spatial info', () => {
+  test('with boundingBoxSearch should render the spatial info', () => {
     const { enzymeWrapper } = setup()
     const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
     enzymeWrapper.setProps({ boundingBoxSearch: newBoundingBox })
@@ -45,7 +45,7 @@ describe('SpatialDisplayContainer component', () => {
     expect(spatialDisplay.text()).toEqual('Rectangle: SW: 38.791645,-77.119759 NE: 38.995845,-76.909393') // Lat,Lon Lat,Lon
   })
 
-  test('with polygonSearch should render the display without spatial info', () => {
+  test('with polygonSearch should render without spatial info', () => {
     const { enzymeWrapper } = setup()
     const newPolygon = '-77.04444122314453,38.99228142151045,-77.01992797851562,38.79166886339155,-76.89415168762207,38.902629947921575,-77.04444122314453,38.99228142151045'
     enzymeWrapper.setProps({ polygonSearch: newPolygon })

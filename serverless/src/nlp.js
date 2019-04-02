@@ -1,4 +1,4 @@
-import pick from './util'
+import { pick } from './util'
 
 const https = require('https')
 const qs = require('qs')

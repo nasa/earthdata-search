@@ -71,7 +71,8 @@ export const getCollections = () => (dispatch, getState) => {
 
   const {
     keyword,
-    spatial = {}
+    spatial = {},
+    temporal
   } = query
 
   const {
@@ -121,7 +122,8 @@ export const getCollections = () => (dispatch, getState) => {
     projectH: cmrFacets.project_h,
     scienceKeywordsH: cmrFacets.science_keywords_h,
     sortKey: ['has_granules_or_cwic'],
-    tagKey
+    tagKey,
+    temporal
   })
     .then((response) => {
       const payload = {}

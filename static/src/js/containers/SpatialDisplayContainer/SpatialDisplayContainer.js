@@ -70,10 +70,8 @@ export class SpatialDisplayContainer extends Component {
     }
 
     return (
-      <div>
-        <div className="spatial-display">
-          {text}
-        </div>
+      <div className="spatial-display">
+        {text}
       </div>
     )
   }

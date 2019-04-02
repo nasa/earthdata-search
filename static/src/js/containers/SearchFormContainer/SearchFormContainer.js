@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import ConnectedSpatialDisplayContainer from '../SpatialDisplayContainer/SpatialDisplayContainer'
+import ConnectedTemporalDisplayContainer from '../TemporalDisplayContainer/TemporalDisplayContainer'
+import ConnectedTemporalSelectionDropdownContainer
+  from '../TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 
 // Form Fields
 import TextField from '../../components/form_fields/TextField/TextField'
@@ -78,12 +81,17 @@ export class SearchFormContainer extends Component {
             onChange={this.onInputChange}
             onBlur={this.onKeywordBlur}
           />
-          <Button
-            text="Clear Filters"
-            onClick={this.onSearchClear}
-          />
-          <ConnectedSpatialDisplayContainer />
         </form>
+
+        <ConnectedTemporalSelectionDropdownContainer />
+
+        <Button
+          text="Clear Filters"
+          onClick={this.onSearchClear}
+        />
+
+        <ConnectedSpatialDisplayContainer />
+        <ConnectedTemporalDisplayContainer />
       </section>
     )
   }
