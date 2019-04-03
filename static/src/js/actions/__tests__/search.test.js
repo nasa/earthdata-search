@@ -134,14 +134,10 @@ describe('clearFilters', () => {
     // Is changeUrl called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: CHANGE_URL,
-      meta: {
-        updateType: 'push',
-        urlQuery: true
-      },
+      type: '@@router/CALL_HISTORY_METHOD',
       payload: {
-        decodedQuery: {},
-        encodedQuery: {}
+        args: [{}],
+        method: 'push'
       }
     })
 
