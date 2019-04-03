@@ -8,6 +8,7 @@ import queryReducer from './query'
 import mapReducer from './map'
 import focusedCollectionReducer from './focusedCollection'
 import facetsParamsReducer from './facetsParams'
+import uiReducer from './ui'
 
 export default history => combineReducers({
   router: connectRouter(history),
@@ -19,5 +20,6 @@ export default history => combineReducers({
     facets: facetsReducer,
     granules: granulesReducer
   }),
-  facetsParams: facetsParamsReducer
+  facetsParams: facetsParamsReducer,
+  ui: uiReducer
 })

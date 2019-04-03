@@ -12,7 +12,7 @@ import CollectionResultsContainer
   from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
-
+import ConnectedMasterOverlayPanelContainer from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
 import ConnectedEdscMapContainer from '../../containers/MapContainer/MapContainer'
 import MyDropzone from '../../components/MyDropzone/MyDropzone'
 
@@ -28,7 +28,7 @@ const Search = (props) => {
       <MyDropzone />
       <SidebarContainer />
       <ConnectedSearchFormContainer />
-      <div className="search__panel">
+      <ConnectedMasterOverlayPanelContainer>
         <Switch>
           <Route exact path={match.path}>
             <CollectionResultsContainer />
@@ -37,7 +37,7 @@ const Search = (props) => {
             <GranuleResultsContainer />
           </Route>
         </Switch>
-      </div>
+      </ConnectedMasterOverlayPanelContainer>
     </div>
   )
 }

@@ -9,6 +9,11 @@ import {
 import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
 import toggleFacet from './facets'
+import {
+  masterOverlayPanelResize,
+  masterOverlayPanelDragStart,
+  masterOverlayPanelDragEnd
+} from './ui'
 
 const actions = {
   getCollections,
@@ -19,7 +24,10 @@ const actions = {
   changeUrl,
   clearFilters,
   searchNlp,
-  toggleFacet
+  toggleFacet,
+  masterOverlayPanelResize,
+  masterOverlayPanelDragStart,
+  masterOverlayPanelDragEnd
 }
 
 export default actions
