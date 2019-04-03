@@ -37,7 +37,7 @@ ns.GranuleGridLayer = do (
     else if point?
       {x, y} = point
       ctx.moveTo(x + 10, y)
-      ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise ? true);
+      ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise ? true)
     null
 
   colors = new ColorsModel()
@@ -188,11 +188,11 @@ ns.GranuleGridLayer = do (
 
       @options.time = date
       if @options.granule
-        this._originalUrl = this._originalUrl || this._url;
-        this._url = config.gibsGranuleUrl || this._originalUrl;
+        this._originalUrl = this._originalUrl || this._url
+        this._url = config.gibsGranuleUrl || this._originalUrl
         @options.time = granule.time_start.replace(/\.\d{3}Z$/, 'Z')
       else
-        this._url = this._originalUrl || this._url || gibsUrl;
+        this._url = this._originalUrl || this._url || gibsUrl
 
       @_getTileUrl(tilePoint)
 
@@ -201,14 +201,16 @@ ns.GranuleGridLayer = do (
 
       tileSize = @getTileSize()
 
-      bounds = @_tileCoordsToBounds(tilePoint)
-      nwPoint = @_map.latLngToLayerPoint(bounds.getNorthWest())
-
+      layerPointToLatLng = @_map.layerPointToLatLng.bind(@_map)
+      nwPoint = @_getTilePos(tilePoint)
       nePoint = nwPoint.add([tileSize.x, 0])
       sePoint = nwPoint.add([tileSize.x, tileSize.y])
       swPoint = nwPoint.add([0, tileSize.y])
+
       boundary = {poly: [nwPoint, nePoint, sePoint, swPoint]}
       boundary.poly.reverse() unless isClockwise(boundary.poly)
+
+      bounds = new L.latLngBounds(boundary.poly.map(layerPointToLatLng))
       bounds = bounds.pad(0.1)
       date = null
       paths = []
@@ -286,7 +288,7 @@ ns.GranuleGridLayer = do (
 
         # IE seems to like to get smart and occasionally not load images when they're
         # not in the DOM
-        image.setAttribute('style', 'display: none;');
+        image.setAttribute('style', 'display: none;')
         document.body.appendChild(image)
         image.src = url
       else
