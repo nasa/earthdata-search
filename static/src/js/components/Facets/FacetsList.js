@@ -18,7 +18,7 @@ const FacetsList = (props) => {
     // https://stackoverflow.com/questions/17387435/javascript-sort-array-of-objects-by-a-boolean-property#comment25241651_17387454
     orderedFacets = facets.sort((a, b) => b.applied - a.applied)
   } else {
-    orderedFacets = facets.map(facet => facet)
+    orderedFacets = [...facets]
   }
 
   const list = orderedFacets.map((child, i) => {

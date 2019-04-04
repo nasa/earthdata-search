@@ -2,8 +2,8 @@ import { getCollections } from './collections'
 import { getGranules } from './granules'
 import { searchNlp } from './nlp'
 import {
-  changeQuery,
   changeFocusedCollection,
+  changeQuery,
   clearFilters
 } from './search'
 import { changeMap } from './map'
@@ -13,25 +13,25 @@ import {
   changeFeatureFacet
 } from './facets'
 import {
-  masterOverlayPanelResize,
+  masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
-  masterOverlayPanelDragEnd
+  masterOverlayPanelResize
 } from './ui'
 
 const actions = {
-  getCollections,
-  getGranules,
-  changeQuery,
-  changeMap,
-  changeFocusedCollection,
-  changeUrl,
-  clearFilters,
-  searchNlp,
   changeCmrFacet,
   changeFeatureFacet,
-  masterOverlayPanelResize,
+  changeFocusedCollection,
+  changeMap,
+  changeQuery,
+  changeUrl,
+  clearFilters,
+  getCollections,
+  getGranules,
+  masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
-  masterOverlayPanelDragEnd
+  masterOverlayPanelResize,
+  searchNlp
 }
 
 export default actions

@@ -16,7 +16,6 @@ import actions from './index'
  * @param {object} facetInfo - An object containing information about the selected facet.
  * @param {function} dispatch - A dispatch function provided by redux.
  */
-
 export const changeFeatureFacet = (e, facetInfo) => (dispatch) => {
   if (e.target.checked) {
     dispatch({
@@ -39,30 +38,29 @@ export const changeFeatureFacet = (e, facetInfo) => (dispatch) => {
  * @param {object} newParams - An object containing the params from the apply/remove link
  * @param {function} dispatch - A dispatch function provided by redux.
  */
-
 export const changeCmrFacet = (e, newParams) => (dispatch) => {
   if (e.target.checked) {
     dispatch({
       type: ADD_SELECTED_CMR_FACET,
       payload: {
-        science_keywords_h: newParams.science_keywords_h ? newParams.science_keywords_h : undefined,
-        platform_h: newParams.platform_h ? newParams.platform_h : undefined,
-        instrument_h: newParams.instrument_h ? newParams.instrument_h : undefined,
         data_center_h: newParams.data_center_h ? newParams.data_center_h : undefined,
+        instrument_h: newParams.instrument_h ? newParams.instrument_h : undefined,
+        platform_h: newParams.platform_h ? newParams.platform_h : undefined,
+        processing_level_id_h: newParams.processing_level_id_h ? newParams.processing_level_id_h : undefined,
         project_h: newParams.project_h ? newParams.project_h : undefined,
-        processing_level_id_h: newParams.processing_level_id_h ? newParams.processing_level_id_h : undefined
+        science_keywords_h: newParams.science_keywords_h ? newParams.science_keywords_h : undefined
       }
     })
   } else {
     dispatch({
       type: REMOVE_SELECTED_CMR_FACET,
       payload: {
-        science_keywords_h: newParams.science_keywords_h ? newParams.science_keywords_h : undefined,
-        platform_h: newParams.platform_h ? newParams.platform_h : undefined,
-        instrument_h: newParams.instrument_h ? newParams.instrument_h : undefined,
         data_center_h: newParams.data_center_h ? newParams.data_center_h : undefined,
+        instrument_h: newParams.instrument_h ? newParams.instrument_h : undefined,
+        platform_h: newParams.platform_h ? newParams.platform_h : undefined,
+        processing_level_id_h: newParams.processing_level_id_h ? newParams.processing_level_id_h : undefined,
         project_h: newParams.project_h ? newParams.project_h : undefined,
-        processing_level_id_h: newParams.processing_level_id_h ? newParams.processing_level_id_h : undefined
+        science_keywords_h: newParams.science_keywords_h ? newParams.science_keywords_h : undefined
       }
     })
   }

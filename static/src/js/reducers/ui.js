@@ -1,11 +1,9 @@
-// import { UPDATE_SEARCH_QUERY } from '../constants/actionTypes'
-
 const initialState = {
   masterOverlayPanel: {
-    dragging: false,
-    height: 500,
+    clickStartHeight: undefined,
     clickStartY: undefined,
-    clickStartHeight: undefined
+    dragging: false,
+    height: 500
   }
 }
 
@@ -16,9 +14,9 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         masterOverlayPanel: {
           ...state.masterOverlayPanel,
-          dragging: true,
+          clickStartHeight: action.payload.clickStartHeight,
           clickStartY: action.payload.clickStartY,
-          clickStartHeight: action.payload.clickStartHeight
+          dragging: true
         }
       }
     }
@@ -27,9 +25,9 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         masterOverlayPanel: {
           ...state.masterOverlayPanel,
-          dragging: false,
+          clickStartHeight: undefined,
           clickStartY: undefined,
-          clickStartHeight: undefined
+          dragging: false
         }
       }
     }

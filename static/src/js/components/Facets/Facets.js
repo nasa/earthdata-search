@@ -1,33 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { camelCase } from 'lodash'
 import qs from 'qs'
 
-import { queryParamsFromUrlString } from '../../../util/url'
-import actions from '../../../actions/index'
+import { queryParamsFromUrlString } from '../../util/url'
 
 import FacetsGroup from './FacetsGroup'
 
 import './Facets.scss'
 
-const mapDispatchToProps = dispatch => ({
-  onChangeFeatureFacet: (e, facetLinkInfo) => dispatch(actions.changeFeatureFacet(e, facetLinkInfo)),
-  onChangeCmrFacet: (e, facetLinkInfo) => dispatch(actions.changeCmrFacet(e, facetLinkInfo))
-})
-
-
-const mapStateToProps = state => ({
-  facets: state.entities.facets,
-  featureFacets: state.facetsParams.feature
-})
-
 const Facets = (props) => {
   const {
     facets,
-    onChangeFeatureFacet,
+    featureFacets,
     onChangeCmrFacet,
-    featureFacets
+    onChangeFeatureFacet
   } = props
 
   const changeFeatureFacet = (e, facetLinkInfo) => {
@@ -38,12 +25,12 @@ const Facets = (props) => {
     const newParams = qs.parse(queryParamsFromUrlString(facetLinkInfo.destination))
 
     const paramsToSend = {
-      science_keywords_h: newParams.science_keywords_h,
-      platform_h: newParams.platform_h,
-      instrument_h: newParams.instrument_h,
       data_center_h: newParams.data_center_h,
+      instrument_h: newParams.instrument_h,
+      platform_h: newParams.platform_h,
+      processing_level_id_h: newParams.processing_level_id_h,
       project_h: newParams.project_h,
-      processing_level_id_h: newParams.processing_level_id_h
+      science_keywords_h: newParams.science_keywords_h
     }
 
     onChangeCmrFacet(e, paramsToSend)
@@ -57,18 +44,18 @@ const Facets = (props) => {
     changeHandler: changeFeatureFacet,
     children: [
       {
-        title: 'Map Imagery',
         applied: featureFacets.mapImagery,
+        title: 'Map Imagery',
         type: 'feature'
       },
       {
-        title: 'Near Real Time',
         applied: featureFacets.nearRealTime,
+        title: 'Near Real Time',
         type: 'feature'
       },
       {
-        title: 'Customizable',
         applied: featureFacets.customizable,
+        title: 'Customizable',
         type: 'feature'
       }
     ]
@@ -83,28 +70,28 @@ const Facets = (props) => {
   }
 
   const platformsFacet = {
-    title: 'Platforms',
-    changeHandler: changeCmrFacet
+    changeHandler: changeCmrFacet,
+    title: 'Platforms'
   }
 
   const instrumentsFacet = {
-    title: 'Instruments',
-    changeHandler: changeCmrFacet
+    changeHandler: changeCmrFacet,
+    title: 'Instruments'
   }
 
   const organizationsFacet = {
-    title: 'Organizations',
-    changeHandler: changeCmrFacet
+    changeHandler: changeCmrFacet,
+    title: 'Organizations'
   }
 
   const projectsTemplate = {
-    title: 'Projects',
-    changeHandler: changeCmrFacet
+    changeHandler: changeCmrFacet,
+    title: 'Projects'
   }
 
   const processingLevels = {
-    title: 'Processing levels',
-    changeHandler: changeCmrFacet
+    changeHandler: changeCmrFacet,
+    title: 'Processing levels'
   }
 
   const facetsTemplate = [
@@ -143,9 +130,9 @@ const Facets = (props) => {
 
 Facets.propTypes = {
   facets: PropTypes.shape({}).isRequired,
-  onChangeFeatureFacet: PropTypes.func.isRequired,
+  featureFacets: PropTypes.shape({}).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
-  featureFacets: PropTypes.shape({}).isRequired
+  onChangeFeatureFacet: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Facets)
+export default Facets

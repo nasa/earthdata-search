@@ -5,36 +5,36 @@ import actions from '../../actions/index'
 import { decodeUrlParams, encodeUrlQuery } from '../../util/url'
 
 const mapDispatchToProps = dispatch => ({
-  onChangeUrl: query => dispatch(actions.changeUrl(query)),
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
+  onChangeFocusedCollection: collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
   onChangeMap: query => dispatch(actions.changeMap(query)),
-  onChangeFocusedCollection: collectionId => dispatch(actions.changeFocusedCollection(collectionId))
+  onChangeQuery: query => dispatch(actions.changeQuery(query)),
+  onChangeUrl: query => dispatch(actions.changeUrl(query))
 })
 
 const mapStateToProps = state => ({
-  pathname: state.router.location.pathname,
-  search: state.router.location.search,
-  keywordSearch: state.query.keyword,
-  pointSearch: state.query.spatial.point,
   boundingBoxSearch: state.query.spatial.boundingBox,
-  polygonSearch: state.query.spatial.polygon,
+  focusedCollection: state.focusedCollection,
+  keywordSearch: state.query.keyword,
   mapParam: state.map.mapParam,
-  focusedCollection: state.focusedCollection
+  pathname: state.router.location.pathname,
+  pointSearch: state.query.spatial.point,
+  polygonSearch: state.query.spatial.polygon,
+  search: state.router.location.search
 })
 
 export class UrlQueryContainer extends Component {
   componentDidMount() {
     const {
-      search,
-      onChangeQuery,
+      onChangeFocusedCollection,
       onChangeMap,
-      onChangeFocusedCollection
+      onChangeQuery,
+      search
     } = this.props
 
     const {
-      query,
+      focusedCollection,
       mapParam,
-      focusedCollection
+      query
     } = decodeUrlParams(search)
 
     onChangeQuery({ ...query })
@@ -73,12 +73,12 @@ UrlQueryContainer.defaultProps = {
 }
 
 UrlQueryContainer.propTypes = {
-  search: PropTypes.string,
   children: PropTypes.node.isRequired,
-  onChangeUrl: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
+  onChangeFocusedCollection: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
-  onChangeFocusedCollection: PropTypes.func.isRequired
+  onChangeQuery: PropTypes.func.isRequired,
+  onChangeUrl: PropTypes.func.isRequired,
+  search: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)

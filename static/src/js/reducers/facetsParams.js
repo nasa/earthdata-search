@@ -1,16 +1,16 @@
 const initialCmrState = {
-  science_keywords_h: undefined,
-  platform_h: undefined,
-  instrument_h: undefined,
   data_center_h: undefined,
+  instrument_h: undefined,
+  platform_h: undefined,
+  processing_level_id_h: undefined,
   project_h: undefined,
-  processing_level_id_h: undefined
+  science_keywords_h: undefined
 }
 
 const initialFeatureState = {
+  customizable: false,
   mapImagery: false,
-  nearRealTime: false,
-  customizable: false
+  nearRealTime: false
 }
 
 export const cmrFacetsReducer = (state = initialCmrState, action) => {

@@ -146,13 +146,13 @@ describe('getCollections', () => {
       query: {
         keyword: 'search keyword'
       },
+      cmr: {},
       facetsParams: {
         feature: {
+          customizable: false,
           mapImagery: false,
-          nearRealTime: false,
-          customizable: false
-        },
-        cmr: {}
+          nearRealTime: false
+        }
       }
     })
 
@@ -206,13 +206,13 @@ describe('getCollections', () => {
 
     const store = mockStore({
       query: {},
+      cmr: {},
       facetsParams: {
         feature: {
+          customizable: false,
           mapImagery: false,
-          nearRealTime: false,
-          customizable: false
-        },
-        cmr: {}
+          nearRealTime: false
+        }
       }
     })
 

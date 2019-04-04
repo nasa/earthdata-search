@@ -18,7 +18,7 @@ import {
   getlprojection
 } from '../../../util/map/granules'
 import { dividePolygon } from '../../../util/map/geo'
-import { projectPath } from '../../../util/map/interpolation'
+import projectPath from '../../../util/map/interpolation'
 
 const config = {
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
@@ -728,9 +728,7 @@ class GranuleGridLayer extends GridLayer {
   // Update the granules if the new props are different
   updateLeafletElement(fromProps, toProps) {
     const { layer } = this
-    console.log('updateLeafletElement', fromProps, toProps)
     if (fromProps.granules !== toProps.granules) {
-      console.log('do stuff with the layer!', layer)
       layer.setResults(Object.values(toProps.granules.byId))
     }
   }

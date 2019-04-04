@@ -16,8 +16,8 @@ import './CollectionResultsContainer.scss'
 const mapDispatchToProps = dispatch => ({
   onFocusedCollectionChange: collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
   onMasterOverlayHeightChange: newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
-  onMasterOverlayPanelDragStart: data => dispatch(actions.masterOverlayPanelDragStart(data)),
-  onMasterOverlayPanelDragEnd: () => dispatch(actions.masterOverlayPanelDragEnd())
+  onMasterOverlayPanelDragEnd: () => dispatch(actions.masterOverlayPanelDragEnd()),
+  onMasterOverlayPanelDragStart: data => dispatch(actions.masterOverlayPanelDragStart(data))
 })
 
 const mapStateToProps = state => ({
@@ -30,11 +30,11 @@ class CollectionResultsContainer extends Component {
     super(props)
     this.handleClickCollection = this.handleClickCollection.bind(this)
     this.onMasterOverlayHeightChange = props.onMasterOverlayHeightChange.bind(this)
-    this.onMasterOverlayPanelDragStart = props.onMasterOverlayPanelDragStart.bind(this)
     this.onMasterOverlayPanelDragEnd = props.onMasterOverlayPanelDragEnd.bind(this)
+    this.onMasterOverlayPanelDragStart = props.onMasterOverlayPanelDragStart.bind(this)
+    this.onMouseDown = this.onMouseDown.bind(this)
     this.onMouseMove = _.throttle(this.onMouseMove.bind(this), 16)
     this.onMouseUp = this.onMouseUp.bind(this)
-    this.onMouseDown = this.onMouseDown.bind(this)
   }
 
   onMouseDown(e) {
@@ -49,8 +49,8 @@ class CollectionResultsContainer extends Component {
     document.addEventListener('mouseup', this.onMouseUp)
 
     onMasterOverlayPanelDragStart({
-      clickStartY: e.pageY,
-      clickStartHeight: masterOverlayPanel.height
+      clickStartHeight: masterOverlayPanel.height,
+      clickStartY: e.pageY
     })
 
     e.stopPropagation()
@@ -60,8 +60,8 @@ class CollectionResultsContainer extends Component {
   onMouseUp(e) {
     const {
       masterOverlayPanel,
-      onMasterOverlayPanelDragEnd,
-      onMasterOverlayHeightChange
+      onMasterOverlayHeightChange,
+      onMasterOverlayPanelDragEnd
     } = this.props
 
     document.removeEventListener('mousemove', this.onMouseMove)
@@ -295,8 +295,8 @@ CollectionResultsContainer.propTypes = {
   masterOverlayPanel: PropTypes.shape({}).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMasterOverlayHeightChange: PropTypes.func.isRequired,
-  onMasterOverlayPanelDragStart: PropTypes.func.isRequired,
-  onMasterOverlayPanelDragEnd: PropTypes.func.isRequired
+  onMasterOverlayPanelDragEnd: PropTypes.func.isRequired,
+  onMasterOverlayPanelDragStart: PropTypes.func.isRequired
 }
 
 export default withRouter(

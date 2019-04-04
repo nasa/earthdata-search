@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from 'lodash'
 
-import { generateFacetArgs } from '../../../util/facets'
+import { generateFacetArgs } from '../../util/facets'
 
 class FacetsItem extends Component {
   constructor(props) {
@@ -30,11 +30,11 @@ class FacetsItem extends Component {
 
   render() {
     const {
+      changeHandler,
       facet,
-      level,
-      uid,
       facetCategory,
-      changeHandler
+      level,
+      uid
     } = this.props
 
     const { applied } = this.state
@@ -71,7 +71,7 @@ class FacetsItem extends Component {
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
           />
           <span className="facets__item-title">{facet.title}</span>
-          { !applied && <span className="facets__item-total">{facet.count}</span> }
+          { (!applied || !children) && <span className="facets__item-total">{facet.count}</span> }
         </label>
         { children && <ul className="facets__list">{children}</ul> }
       </li>
@@ -84,11 +84,11 @@ FacetsItem.defaultProps = {
 }
 
 FacetsItem.propTypes = {
+  changeHandler: PropTypes.func.isRequired,
   facet: PropTypes.shape({}).isRequired,
-  level: PropTypes.number.isRequired,
-  uid: PropTypes.string,
   facetCategory: PropTypes.string.isRequired,
-  changeHandler: PropTypes.func.isRequired
+  level: PropTypes.number.isRequired,
+  uid: PropTypes.string
 }
 
 export default FacetsItem

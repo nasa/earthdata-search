@@ -6,15 +6,13 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import GranuleResultsContainer
-  from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
-import CollectionResultsContainer
-  from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
-import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
-import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
-import ConnectedMasterOverlayPanelContainer from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
+import CollectionResultsContainer from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
 import ConnectedEdscMapContainer from '../../containers/MapContainer/MapContainer'
+import ConnectedMasterOverlayPanelContainer from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
+import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
+import GranuleResultsContainer from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
 import MyDropzone from '../../components/MyDropzone/MyDropzone'
+import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
 import './Search.scss'
 

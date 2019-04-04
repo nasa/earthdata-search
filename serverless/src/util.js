@@ -7,7 +7,6 @@ import { stringify as qsStringify } from 'qs'
  * @param {array} keys - An array of strings that represent the keys to be picked.
  * @return {obj} An object containing only the desired keys.
  */
-
 export const pick = (providedObj = {}, keys) => {
   let obj = null
 
@@ -35,7 +34,6 @@ export const pick = (providedObj = {}, keys) => {
  * @param {array} nonIndexedKeys - An array of strings that represent the keys which should not be indexed.
  * @return {string} A query string containing both indexed and non-indexed keys.
  */
-
 export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
   const nonIndexedAttrs = {}
   const indexedAttrs = { ...queryParams }

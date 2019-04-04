@@ -4,7 +4,6 @@
  * @param {number} startingValue - A number representing the number from which to start counting.
  * @return {number} The number of selected facets within the provided facet group.
  */
-
 export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
   let totalSelectedFacets = 0
   let selected = []
@@ -20,16 +19,16 @@ export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
   return startingValue + totalSelectedFacets
 }
 
+
 /**
  * Takes a facet and returns the arguments to be passed to it's changeHandler function.
  * @param {object} facet - The clicked facet.
  * @return {object} The arguments to be passed to the changeHandler function.
  */
-
 export const generateFacetArgs = (facet) => {
   const link = {
-    title: facet.title,
-    destination: null
+    destination: null,
+    title: facet.title
   }
 
   if (facet.type === 'group' || facet.type === 'filter') {

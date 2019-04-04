@@ -1,12 +1,14 @@
 import qs from 'qs'
 import cleanDeep from 'clean-deep'
 
+
 /**
  * Takes a URL containing a path and query string and returns only the query string
  * @param {string} url - A string containing both a path and query string
  * @return {string} A string containing only query parameter values
  */
 export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
+
 
 /**
  * Mapping of URL Shortened Keys to their redux store keys
@@ -20,12 +22,14 @@ const urlDefs = {
   m: 'mapParam'
 }
 
+
 /**
  * Lookup a URL Shortened key in urlDefs given a long key name
  * @param {string} value Long version of a URL parameter key
  * @return {string} A shortened URL parameter key
  */
 const getUrlShortKey = value => Object.keys(urlDefs).find(key => urlDefs[key] === value)
+
 
 /**
  * Given a URL param string, returns an object that matches the redux store
@@ -56,6 +60,7 @@ export const decodeUrlParams = (paramString) => {
     focusedCollection
   }
 }
+
 
 /**
  * Given a set of React Component Props, returns a URL path with URL encoded parameter string
