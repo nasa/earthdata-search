@@ -1,7 +1,7 @@
-import pick from './util'
+import https from 'https'
+import { stringify as qsStringify } from 'qs'
 
-const https = require('https')
-const qs = require('qs')
+import { pick, cmrStringify } from './util'
 
 export function retrieveConcept(event, context, callback) {
   let bodyContent = ''
@@ -39,24 +39,43 @@ export function collectionSearch(event, context, callback) {
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
+    'collection_data_type',
     'concept_id',
+    'data_center_h',
     'format',
-    'has_granules',
     'has_granules_or_cwic',
+    'has_granules',
     'include_facets',
-    'include_tags',
     'include_granule_counts',
     'include_has_granules',
+    'include_tags',
+    'include_tags',
+    'instrument_h',
     'keyword',
     'line',
     'options',
     'page_num',
     'page_size',
+    'platform_h',
     'point',
     'polygon',
+    'processing_level_id_h',
+    'project_h',
+    'science_keywords_h',
     'sort_key',
-    'sort_key[]', // support both single and multiple sort keys
+    'tag_key',
     'temporal'
+  ]
+
+  const nonIndexedKeys = [
+    'collection_data_type',
+    'data_center_h',
+    'instrument_h',
+    'platform_h',
+    'processing_level_id_h',
+    'project_h',
+    'sort_key',
+    'tag_key'
   ]
 
   const { params = {} } = JSON.parse(event.body)
@@ -68,7 +87,7 @@ export function collectionSearch(event, context, callback) {
   console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
   // Transform the query string hash to an encoded url string
-  const queryParams = qs.stringify(obj, { indices: false })
+  const queryParams = cmrStringify(obj, nonIndexedKeys)
 
   const collectionUrl = `${process.env.cmr_host}`
     + `/search/collections.json?${queryParams}`
@@ -123,7 +142,7 @@ export function granuleSearch(event, context, callback) {
   console.log(`Filtered parameters: ${Object.keys(obj)}`)
 
   // Transform the query string hash to an encoded url string
-  const queryParams = qs.stringify(obj)
+  const queryParams = qsStringify(obj)
 
   const granuleUrl = `${process.env.cmr_host}`
     + `/search/granules.json?${queryParams}`

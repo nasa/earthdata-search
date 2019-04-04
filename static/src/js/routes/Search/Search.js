@@ -6,18 +6,13 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import GranuleResultsContainer
-  from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
-import CollectionResultsContainer
-  from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
-import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
-import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
-
+import CollectionResultsContainer from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
 import ConnectedEdscMapContainer from '../../containers/MapContainer/MapContainer'
+import ConnectedMasterOverlayPanelContainer from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
+import ConnectedSearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
+import GranuleResultsContainer from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
 import MyDropzone from '../../components/MyDropzone/MyDropzone'
-
-import './Search.scss'
-
+import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
 const Search = (props) => {
   const { match } = props
@@ -28,7 +23,7 @@ const Search = (props) => {
       <MyDropzone />
       <SidebarContainer />
       <ConnectedSearchFormContainer />
-      <div className="search__panel">
+      <ConnectedMasterOverlayPanelContainer>
         <Switch>
           <Route exact path={match.path}>
             <CollectionResultsContainer />
@@ -37,7 +32,7 @@ const Search = (props) => {
             <GranuleResultsContainer />
           </Route>
         </Switch>
-      </div>
+      </ConnectedMasterOverlayPanelContainer>
     </div>
   )
 }

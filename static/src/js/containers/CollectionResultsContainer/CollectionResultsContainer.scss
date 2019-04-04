@@ -12,8 +12,16 @@
   position: absolute;
   bottom: 100%;
   left: 0;
-  padding: $spacer 1.25rem;
   background: $color__white;
+}
+
+.coll-res__tab-handle {
+  position: absolute;
+  top: 0;
+  height: 10px;
+  width: 100%;
+  background: $color__white url('../../../assets/images/drag.png') no-repeat center 5px;
+  cursor: row-resize;
 }
 
 .coll-res__header {
@@ -22,6 +30,7 @@
 
 .coll-res__tab-heading {
   margin: 0;
+  padding: $spacer 1.25rem;
   font-size: 1.1875rem;
   font-weight: 700;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Facets from './Facets/Facets'
+import ConnectedFacetsContainer from '../FacetsContainer/FacetsContainer'
 import SidebarSection from './SidebarSection/SidebarSection'
 
 import Header from './Header/Header'
@@ -11,7 +11,7 @@ const SidebarContainer = () => (
   <section className="sidebar">
     <Header />
     <SidebarSection sectionTitle="Browse Collections">
-      <Facets />
+      <ConnectedFacetsContainer />
     </SidebarSection>
   </section>
 )

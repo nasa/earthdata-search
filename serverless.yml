@@ -125,3 +125,5 @@ custom:
   s3Sync:
     - bucketName: ${self:custom.siteName}
       localDir: static/dist
+  serverless-offline:
+    port: 3001

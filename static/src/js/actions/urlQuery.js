@@ -1,6 +1,7 @@
-import { urlPushAction } from 'react-url-query'
-import { CHANGE_URL } from '../constants/actionTypes'
+import { push } from 'connected-react-router'
 
-export const changeUrl = urlPushAction(CHANGE_URL, newQuery => ({ ...newQuery }))
+export const changeUrl = url => (dispatch) => {
+  dispatch(push(url))
+}
 
 export default changeUrl

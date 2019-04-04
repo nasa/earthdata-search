@@ -2,7 +2,6 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { urlQueryMiddleware, urlQueryReducer } from 'react-url-query'
 
 import createRootReducer from '../reducers'
 
@@ -18,16 +17,13 @@ const store = createStore(
 
   // Build out the Redux middleware
   composeWithDevTools(
-    applyMiddleware(
-
-      // Set up Redux's connection with React Router
-      routerMiddleware(history),
-    ),
-
     // Add the Redux Thunk middleware
     applyMiddleware(thunk),
 
-    applyMiddleware(urlQueryMiddleware({ reducer: urlQueryReducer }))
+    applyMiddleware(
+      // Set up Redux's connection with React Router
+      routerMiddleware(history),
+    )
   ),
 )
 

@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { RouterToUrlQuery } from 'react-url-query'
 
 import store from './store/configureStore'
 import history from './util/history'
@@ -25,26 +24,24 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <RouterToUrlQuery>
-            <ConnectedUrlQueryContainer>
-              <Helmet>
-                <meta charSet="utf-8" />
-                <title>Earthdata Search</title>
-              </Helmet>
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/search" />
-                </Route>
-                <Route path="/search">
-                  <Search />
-                </Route>
-                <Route path="/project">
-                  <Project />
-                </Route>
-              </Switch>
-              <FooterContainer />
-            </ConnectedUrlQueryContainer>
-          </RouterToUrlQuery>
+          <ConnectedUrlQueryContainer>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>Earthdata Search</title>
+            </Helmet>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/search" />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+              <Route path="/project">
+                <Project />
+              </Route>
+            </Switch>
+            <FooterContainer />
+          </ConnectedUrlQueryContainer>
         </ConnectedRouter>
       </Provider>
     )

@@ -218,14 +218,17 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
     const tileSize = this.getTileSize()
 
-    let bounds = this._tileCoordsToBounds(tilePoint)
-    const nwPoint = this._map.latLngToLayerPoint(bounds.getNorthWest())
+    const layerPointToLatLng = this._map.layerPointToLatLng.bind(this._map)
+    const nwPoint = this._getTilePos(tilePoint)
 
     const nePoint = nwPoint.add([tileSize.x, 0])
     const sePoint = nwPoint.add([tileSize.x, tileSize.y])
     const swPoint = nwPoint.add([0, tileSize.y])
+
     const boundary = { poly: [nwPoint, nePoint, sePoint, swPoint] }
     if (!isClockwise(boundary.poly)) { boundary.poly.reverse() }
+
+    let bounds = new L.LatLngBounds(boundary.poly.map(layerPointToLatLng))
     bounds = bounds.pad(0.1)
 
     let paths = []
@@ -725,9 +728,7 @@ class GranuleGridLayer extends GridLayer {
   // Update the granules if the new props are different
   updateLeafletElement(fromProps, toProps) {
     const { layer } = this
-    console.log('updateLeafletElement', fromProps, toProps)
     if (fromProps.granules !== toProps.granules) {
-      console.log('do stuff with the layer!', layer)
       layer.setResults(Object.values(toProps.granules.byId))
     }
   }
