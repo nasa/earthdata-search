@@ -1,3 +1,9 @@
+import {
+  MASTER_OVERLAY_PANEL_DRAG_END,
+  MASTER_OVERLAY_PANEL_DRAG_START,
+  MASTER_OVERLAY_PANEL_UPDATE_RESIZE
+} from '../constants/actionTypes'
+
 const initialState = {
   masterOverlayPanel: {
     clickStartHeight: undefined,
@@ -9,7 +15,7 @@ const initialState = {
 
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'MASTER_OVERLAY_PANEL_DRAG_START': {
+    case MASTER_OVERLAY_PANEL_DRAG_START: {
       return {
         ...state,
         masterOverlayPanel: {
@@ -20,7 +26,7 @@ const uiReducer = (state = initialState, action) => {
         }
       }
     }
-    case 'MASTER_OVERLAY_PANEL_DRAG_END': {
+    case MASTER_OVERLAY_PANEL_DRAG_END: {
       return {
         ...state,
         masterOverlayPanel: {
@@ -31,7 +37,7 @@ const uiReducer = (state = initialState, action) => {
         }
       }
     }
-    case 'MASTER_OVERLAY_PANEL_UPDATE_RESIZE': {
+    case MASTER_OVERLAY_PANEL_UPDATE_RESIZE: {
       return {
         ...state,
         masterOverlayPanel: {

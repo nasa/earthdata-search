@@ -14,9 +14,6 @@ import GranuleResultsContainer from '../../containers/GranuleResultsContainer/Gr
 import MyDropzone from '../../components/MyDropzone/MyDropzone'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
-import './Search.scss'
-
-
 const Search = (props) => {
   const { match } = props
 
