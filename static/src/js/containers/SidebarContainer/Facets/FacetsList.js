@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from 'lodash'
-import { connect } from 'react-redux'
 
 import FacetsItem from './FacetsItem'
 
@@ -9,8 +8,8 @@ const FacetsList = (props) => {
   const {
     facets,
     facetCategory,
-    dispatch,
-    liftSelectedFacets
+    liftSelectedFacets,
+    changeHandler
   } = props
 
   let orderedFacets = []
@@ -26,18 +25,14 @@ const FacetsList = (props) => {
     if (i < 50) {
       const uid = uniqueId('facet-item_')
       const startingLevel = 0
-      const facetApplyLink = child.links && child.links.apply ? child.links.apply : undefined
-      const facetRemoveLink = child.links && child.links.remove ? child.links.remove : undefined
       return (
         <FacetsItem
           key={uid}
           uid={uid}
           facet={child}
           level={startingLevel}
-          dispatch={dispatch}
           facetCategory={facetCategory}
-          facetApplyLink={facetApplyLink}
-          facetRemoveLink={facetRemoveLink}
+          changeHandler={changeHandler}
         />
       )
     }
@@ -59,8 +54,8 @@ FacetsList.defaultProps = {
 FacetsList.propTypes = {
   facets: PropTypes.arrayOf(PropTypes.shape({})),
   facetCategory: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  liftSelectedFacets: PropTypes.bool
+  liftSelectedFacets: PropTypes.bool,
+  changeHandler: PropTypes.func.isRequired
 }
 
-export default connect()(FacetsList)
+export default FacetsList

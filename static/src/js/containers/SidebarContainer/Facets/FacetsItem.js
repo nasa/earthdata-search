@@ -1,75 +1,94 @@
-import React, {} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from 'lodash'
 
-import actions from '../../../actions'
+import { generateFacetArgs } from '../../../util/facets'
 
-const FacetsItem = ({
-  dispatch,
-  facet,
-  level,
-  uid,
-  facetCategory,
-  facetApplyLink,
-  facetRemoveLink
-}) => {
-  let children = ''
-  const facetActions = { facetApplyLink, facetRemoveLink }
+class FacetsItem extends Component {
+  constructor(props) {
+    super(props)
 
-  if (facet.children && facet.applied) {
-    children = facet.children.map((child) => {
-      const nextUid = uniqueId('facet-item_')
-      const nextLevel = level + 1
-      const nextFacetApplyLink = child.links && child.links.apply ? child.links.apply : undefined
-      const nextFacetRemoveLink = child.links && child.links.remove ? child.links.remove : undefined
-      return (
-        <FacetsItem
-          key={nextUid}
-          uid={nextUid}
-          facet={child}
-          level={nextLevel}
-          dispatch={dispatch}
-          facetCategory={facetCategory}
-          facetApplyLink={nextFacetApplyLink}
-          facetRemoveLink={nextFacetRemoveLink}
-        />
-      )
-    })
+    const { facet } = props
+
+    this.state = {
+      applied: facet.applied
+    }
+
+    this.onFacetChange = this.onFacetChange.bind(this)
   }
 
-  return (
-    <li className={`facets__list-item facets__list-item--level-${level}`}>
-      <label className="facets__item-label" htmlFor={uid}>
-        <input
-          id={uid}
-          className="facets__item-checkbox"
-          type="checkbox"
-          checked={facet.applied}
-          onChange={e => dispatch(actions.toggleFacet(e, facetActions))}
-        />
-        <span className="facets__item-title">{facet.title}</span>
-        { !facet.applied && <span className="facets__item-total">{facet.count}</span> }
-      </label>
-      { children && <ul className="facets__list">{children}</ul> }
-    </li>
-  )
+  onFacetChange(changeHandlerArgs, e) {
+    const { changeHandler } = this.props
+    const { applied } = this.state
+
+    this.setState({
+      applied: !applied
+    })
+
+    changeHandler(e, changeHandlerArgs)
+  }
+
+  render() {
+    const {
+      facet,
+      level,
+      uid,
+      facetCategory,
+      changeHandler
+    } = this.props
+
+    const { applied } = this.state
+
+    let children = ''
+
+    const changeHandlerArgs = generateFacetArgs(facet)
+
+    if (facet.children && applied) {
+      children = facet.children.map((child) => {
+        const nextUid = uniqueId('facet-item_')
+        const nextLevel = level + 1
+        return (
+          <FacetsItem
+            key={nextUid}
+            uid={nextUid}
+            facet={child}
+            level={nextLevel}
+            facetCategory={facetCategory}
+            changeHandler={changeHandler}
+          />
+        )
+      })
+    }
+
+    return (
+      <li className={`facets__list-item facets__list-item--level-${level}`}>
+        <label className="facets__item-label" htmlFor={uid}>
+          <input
+            id={uid}
+            className="facets__item-checkbox"
+            type="checkbox"
+            checked={applied}
+            onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
+          />
+          <span className="facets__item-title">{facet.title}</span>
+          { !applied && <span className="facets__item-total">{facet.count}</span> }
+        </label>
+        { children && <ul className="facets__list">{children}</ul> }
+      </li>
+    )
+  }
 }
 
-
 FacetsItem.defaultProps = {
-  uid: '',
-  facetApplyLink: undefined,
-  facetRemoveLink: undefined
+  uid: ''
 }
 
 FacetsItem.propTypes = {
   facet: PropTypes.shape({}).isRequired,
   level: PropTypes.number.isRequired,
   uid: PropTypes.string,
-  dispatch: PropTypes.func.isRequired,
   facetCategory: PropTypes.string.isRequired,
-  facetApplyLink: PropTypes.string,
-  facetRemoveLink: PropTypes.string
+  changeHandler: PropTypes.func.isRequired
 }
 
 export default FacetsItem

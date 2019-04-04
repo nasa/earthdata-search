@@ -7,7 +7,10 @@ import granulesReducer from './granules'
 import queryReducer from './query'
 import mapReducer from './map'
 import focusedCollectionReducer from './focusedCollection'
-import facetsParamsReducer from './facetsParams'
+import {
+  featureFacetsReducer,
+  cmrFacetsReducer
+} from './facetsParams'
 import uiReducer from './ui'
 
 export default history => combineReducers({
@@ -20,6 +23,9 @@ export default history => combineReducers({
     facets: facetsReducer,
     granules: granulesReducer
   }),
-  facetsParams: facetsParamsReducer,
+  facetsParams: combineReducers({
+    feature: featureFacetsReducer,
+    cmr: cmrFacetsReducer
+  }),
   ui: uiReducer
 })

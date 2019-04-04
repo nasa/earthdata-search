@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 /**
  * Counts the selected facets in a facet group provided from CMR.
  * @param {object} groupToCheck - An object representing the facet to be checked.
@@ -20,4 +18,23 @@ export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
   })
 
   return startingValue + totalSelectedFacets
+}
+
+/**
+ * Takes a facet and returns the arguments to be passed to it's changeHandler function.
+ * @param {object} facet - The clicked facet.
+ * @return {object} The arguments to be passed to the changeHandler function.
+ */
+
+export const generateFacetArgs = (facet) => {
+  const link = {
+    title: facet.title,
+    destination: null
+  }
+
+  if (facet.type === 'group' || facet.type === 'filter') {
+    link.destination = facet.links.apply ? facet.links.apply : facet.links.remove
+  }
+
+  return link
 }

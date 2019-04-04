@@ -8,7 +8,10 @@ import {
 } from './search'
 import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
-import toggleFacet from './facets'
+import {
+  changeCmrFacet,
+  changeFeatureFacet
+} from './facets'
 import {
   masterOverlayPanelResize,
   masterOverlayPanelDragStart,
@@ -24,7 +27,8 @@ const actions = {
   changeUrl,
   clearFilters,
   searchNlp,
-  toggleFacet,
+  changeCmrFacet,
+  changeFeatureFacet,
   masterOverlayPanelResize,
   masterOverlayPanelDragStart,
   masterOverlayPanelDragEnd

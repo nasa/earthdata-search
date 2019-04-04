@@ -69,6 +69,7 @@ class FacetsGroup extends Component {
             : null
           }
           <FacetsList
+            changeHandler={facet.changeHandler}
             facets={facet.children}
             facetCategory={facetCategory}
             liftSelectedFacets={facetOptions.liftSelectedFacets}

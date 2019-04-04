@@ -1,18 +1,41 @@
-import { queryParamsFromUrlString } from '../util/url'
+const initialCmrState = {}
 
-const initialState = ''
+const initialFeatureState = {}
 
-const facetsParamsReducer = (state = initialState, action) => {
+export const cmrFacetsReducer = (state = initialCmrState, action) => {
   switch (action.type) {
-    case 'ADD_SELECTED_FACET': {
-      return queryParamsFromUrlString(action.payload)
+    case 'ADD_SELECTED_CMR_FACET': {
+      return {
+        ...state,
+        ...action.payload
+      }
     }
-    case 'REMOVE_SELECTED_FACET': {
-      return queryParamsFromUrlString(action.payload)
+    case 'REMOVE_SELECTED_CMR_FACET': {
+      return {
+        ...state,
+        ...action.payload
+      }
     }
     default:
       return state
   }
 }
 
-export default facetsParamsReducer
+export const featureFacetsReducer = (state = initialFeatureState, action) => {
+  switch (action.type) {
+    case 'ADD_SELECTED_FEATURE_FACET': {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case 'REMOVE_SELECTED_FEATURE_FACET': {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    default:
+      return state
+  }
+}
