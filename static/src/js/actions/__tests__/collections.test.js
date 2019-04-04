@@ -145,6 +145,14 @@ describe('getCollections', () => {
     const store = mockStore({
       query: {
         keyword: 'search keyword'
+      },
+      facetsParams: {
+        feature: {
+          mapImagery: false,
+          nearRealTime: false,
+          customizable: false
+        },
+        cmr: {}
       }
     })
 
@@ -197,7 +205,15 @@ describe('getCollections', () => {
     })
 
     const store = mockStore({
-      query: {}
+      query: {},
+      facetsParams: {
+        feature: {
+          mapImagery: false,
+          nearRealTime: false,
+          customizable: false
+        },
+        cmr: {}
+      }
     })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())

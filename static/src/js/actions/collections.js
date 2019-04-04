@@ -81,9 +81,14 @@ export const getCollections = () => (dispatch, getState) => {
     polygon
   } = spatial
 
+  const {
+    feature: featureFacets = {},
+    cmr: cmrFacets = {}
+  } = facetsParams
+
   const tagKey = []
-  if (facetsParams.feature.mapImagery) tagKey.push('edsc.extra.gibs')
-  if (facetsParams.feature.customizable) tagKey.push('edsc.extra.subset_service.*')
+  if (featureFacets.mapImagery) tagKey.push('edsc.extra.gibs')
+  if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
 
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
@@ -91,7 +96,7 @@ export const getCollections = () => (dispatch, getState) => {
 
   const response = API.endpoints.collections.getAll({
     boundingBox,
-    collectionDataType: facetsParams.feature.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
+    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
     hasGranulesOrCwic: true,
     includeFacets: 'v2',
     includeGranuleCounts: true,
@@ -110,12 +115,12 @@ export const getCollections = () => (dispatch, getState) => {
     pageSize: 20,
     point,
     polygon,
-    scienceKeywordsH: facetsParams.cmr.science_keywords_h,
-    platformH: facetsParams.cmr.platform_h,
-    instrumentH: facetsParams.cmr.instrument_h,
-    dataCenterH: facetsParams.cmr.data_center_h,
-    projectH: facetsParams.cmr.project_h,
-    processingLevelId: facetsParams.cmr.processing_level_id_h,
+    scienceKeywordsH: cmrFacets.science_keywords_h,
+    platformH: cmrFacets.platform_h,
+    instrumentH: cmrFacets.instrument_h,
+    dataCenterH: cmrFacets.data_center_h,
+    projectH: cmrFacets.project_h,
+    processingLevelId: cmrFacets.processing_level_id_h,
     sortKey: ['has_granules_or_cwic'],
     tagKey
   })

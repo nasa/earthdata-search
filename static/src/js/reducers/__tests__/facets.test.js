@@ -45,7 +45,8 @@ describe('UPDATE_FACETS', () => {
           title: 'Keywords',
           children: {
             title: 'Keyword facet'
-          }
+          },
+          totalSelected: 0
         }
       }
     }

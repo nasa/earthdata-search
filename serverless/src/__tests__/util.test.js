@@ -1,4 +1,4 @@
-import pick from '../util'
+import { pick } from '../util'
 
 describe('util#pick', () => {
   test('correctly returns when null is provided', () => {
