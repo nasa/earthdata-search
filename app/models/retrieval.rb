@@ -130,6 +130,10 @@ class Retrieval < ActiveRecord::Base
     orders.any? && (orders.map(&:order_status) & IN_PROGRESS_STATUS_LIST).any?
   end
 
+  def logging_tag
+    "Retreival [#{id}##{to_param}]"
+  end
+
   private
 
   def get_collection_id(id)

@@ -47,10 +47,10 @@ class OrderStatusJob < ActiveJob::Base
   def hydrate_orders(orders, echo_client, token)
     return if orders.empty?
 
-    order_ids = orders.map(&:order_number)
+    order_ids = orders.map(&:order_number).compact
 
     # If no order numbers exist yet we've not submitted this order to
-    # CMR yet, which means its still in our queue
+    # CMR yet, which means its still in our queue or the order failed to create
     return if order_ids.empty?
 
     order_response = echo_client.get_orders({ id: order_ids }, token)
@@ -85,6 +85,12 @@ class OrderStatusJob < ActiveJob::Base
   # @param token [String] the token to supply to CMR
   def hydrate_service_orders(service_orders, echo_client, token)
     return if service_orders.empty?
+
+    service_order_ids = service_orders.map(&:order_number).compact
+
+    # If no order numbers exist yet we've not submitted this order to
+    # CMR yet, which means its still in our queue or the order failed to create
+    return if service_order_ids.empty?
 
     # TODO: We loop through `service_orders` twice here, it seems as though we could be a
     # bit smarter about the way we ask catalog rest for order status information (possibly
@@ -156,6 +162,7 @@ class OrderStatusJob < ActiveJob::Base
       end
     else
       multi_response = MultiXml.parse(multi_response.body)
+      
 
       # If the entire request fails
       if multi_response['Exception']

@@ -14,20 +14,55 @@ class SubmitCatalogRestJob < ActiveJob::Base
     end
 
     order.submit! do
-      # Submits the order
-      esi_response = ESIClient.submit_esi_request(
-        order.retrieval_collection,
-        order.search_params,
-        request_url,
-        order.retrieval_collection.retrieval.token,
-        shapefile
-      ).body
+      Rails.logger.tagged(order.logging_tag) do
+        # Submits the order
+        esi_response = ESIClient.submit_esi_request(
+          order.retrieval_collection,
+          order.search_params,
+          request_url,
+          order.retrieval_collection.retrieval.token,
+          shapefile
+        )
 
-      parsed_response = MultiXml.parse(esi_response)
+        if esi_response.success?
+          begin
+            parsed_response = MultiXml.parse(esi_response.body)
 
-      order_id = parsed_response.fetch('agentResponse', {}).fetch('order', {})['orderId']
+            order_id = parsed_response.fetch('agentResponse', {}).fetch('order', {})['orderId']
 
-      order.update_attribute('order_number', order_id)
+            order.update_attribute('order_number', order_id)
+          rescue MultiXml::ParseError => e
+            Rails.logger.error e
+          end
+        else
+          begin
+            # Errors seem to come back from a non SDPS service and are in HTML
+            failed_response = {
+              order: {
+                orderId: '',
+                Instructions: 'This order failed to create.'
+              },
+              contactInformation: {
+                contactName: 'Earthdata Search Support',
+                contactEmail: 'edsc-support@earthdata.nasa.gov'
+              },
+              processInfo: {
+                message: Nokogiri::HTML(esi_response.body).text
+              },
+              requestStatus: {
+                status: 'failed',
+                numberProcessed: '0',
+                totalNumber: '0'
+              },
+              type: 'eesi:Response-Type'
+            }
+
+            order.update_attribute('order_information', failed_response)
+          rescue => e
+            Rails.logger.error e
+          end
+        end
+      end
     end
   end
 end
