@@ -182,7 +182,12 @@
   right: 0;
   bottom: 0;
   overflow-y: scroll;
-  padding-bottom: 69px;
+  margin-bottom: 3.6em;
+  padding-bottom: 0;
+}
+
+.master-overlay-panel-item-content-has-dqs {
+  margin-top: 2.5em;
 }
 
 .master-overlay-panel-item-overlay {

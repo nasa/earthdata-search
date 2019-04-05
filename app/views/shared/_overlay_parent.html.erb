@@ -216,7 +216,7 @@
               </div>
             </section>
             <!-- /ko -->
-            <section class="master-overlay-panel-item-content master-overlay-panel-item-content-has-footer">
+            <section class="master-overlay-panel-item-content master-overlay-panel-item-content-has-footer" data-bind="css: {'master-overlay-panel-item-content-has-dqs': $parents[1].granuleAccessOptions().dqs && $parents[1].granuleAccessOptions().dqs.length > 0}">
               <!-- ko if: $parents[1].serviceOptions.isLoaded() && $parents[1].serviceOptions.accessMethod().length == 0 -->
               <div class="panel-item-section">
                 <div class="panel-item-content">
