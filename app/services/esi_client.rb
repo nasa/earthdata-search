@@ -41,8 +41,16 @@ class ESIClient
 
     options.merge!(build_params(shapefile))
 
-    Rails.logger.info " service_url: #{service_url}"
-    Rails.logger.info " options:     #{options.inspect}"
+    log_object = {
+      retrieval: "#{retrieval_collection.retrieval.id}##{retrieval_collection.retrieval.to_param}",
+      retrieval_collection: retrieval_collection.collection_id,
+      service_url: service_url,
+      options: options.inspect
+    }
+
+    Rails.logger.tagged('esi_client#submit_esi_request') do
+      Rails.logger.info log_object.to_json
+    end
 
     post(service_url, options)
   end

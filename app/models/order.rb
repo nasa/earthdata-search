@@ -7,6 +7,10 @@ class Order < ActiveRecord::Base
 
   validates :order_number, uniqueness: { scope: :retrieval_collection_id }
 
+  def logging_tag
+    "#{retrieval_collection.logging_tag} -- Order [#{id}##{order_number}]"
+  end
+
   def order_type
     throw 'No Order Type method defined for order.'
   end

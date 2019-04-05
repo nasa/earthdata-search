@@ -1,6 +1,8 @@
 module Api
   module V1
     class RetrievalCollectionsController < ApiController
+      before_action :set_retrieval
+
       def index
         @collections = @retrieval.retrieval_collections
       end

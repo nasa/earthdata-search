@@ -125,4 +125,8 @@ class RetrievalCollection < ActiveRecord::Base
       }
     }
   end
+
+  def logging_tag
+    "#{retrieval.logging_tag} -- Collection [#{id}##{collection_id}]"
+  end
 end
