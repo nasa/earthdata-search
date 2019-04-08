@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import 'proj4'
@@ -88,9 +89,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  mapParam: state.map.mapParam,
   focusedCollection: state.focusedCollection,
-  granules: state.entities.granules
+  granules: state.entities.granules,
+  mapParam: state.map.mapParam,
+  masterOverlayPanelHeight: state.ui.masterOverlayPanel.height
 })
 
 export class EdscMapContainer extends Component {
@@ -100,7 +102,16 @@ export class EdscMapContainer extends Component {
     this.handleMoveend = this.handleMoveend.bind(this)
   }
 
+  componentDidMount() {
+    this.controlContainer = ReactDOM.findDOMNode(this.mapRef).querySelector('.leaflet-control-container')  // eslint-disable-line
+
+    if (this.controlContainer) {
+      this.onMasterOverlayPanelResize()
+    }
+  }
+
   componentDidUpdate() {
+    const { masterOverlayPanelHeight } = this.props
     const {
       leafletElement: map = null
     } = this.mapRef
@@ -108,6 +119,14 @@ export class EdscMapContainer extends Component {
     if (this.mapRef) {
       map.invalidateSize()
     }
+
+    if (this.controlContainer) {
+      this.onMasterOverlayPanelResize(masterOverlayPanelHeight)
+    }
+  }
+
+  onMasterOverlayPanelResize(newHeight) {
+    this.controlContainer.style.bottom = `${newHeight}px`
   }
 
   handleMoveend(event) {
@@ -150,7 +169,7 @@ export class EdscMapContainer extends Component {
         onMoveend={this.handleMoveend}
         zoomAnimation={false}
       >
-        <LayersControl position="bottomright">
+        <LayersControl position="bottomright" ref={(r) => { this.controls = r }}>
           <BaseLayer checked name="Blue Marble">
             <LayerBuilder
               projection={projections[projIndex]}
@@ -214,15 +233,16 @@ export class EdscMapContainer extends Component {
 }
 
 EdscMapContainer.defaultProps = {
-  mapParam: '0!0!2!1!0!0,2',
-  focusedCollection: ''
+  focusedCollection: '',
+  mapParam: '0!0!2!1!0!0,2'
 }
 
 EdscMapContainer.propTypes = {
-  mapParam: PropTypes.string,
-  onChangeMap: PropTypes.func.isRequired,
   focusedCollection: PropTypes.string,
-  granules: PropTypes.shape({}).isRequired
+  granules: PropTypes.shape({}).isRequired,
+  mapParam: PropTypes.string,
+  masterOverlayPanelHeight: PropTypes.number.isRequired,
+  onChangeMap: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EdscMapContainer)

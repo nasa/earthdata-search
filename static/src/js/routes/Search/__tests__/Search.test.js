@@ -11,8 +11,8 @@ function setup() {
   const enzymeWrapper = shallow(<Search {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 

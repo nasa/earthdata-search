@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { SearchFormContainer } from '../SearchFormContainer'
+import SearchForm from '../../../components/SearchForm/SearchForm'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -9,62 +10,26 @@ function setup() {
   const props = {
     keywordSearch: 'Test value',
     onClearFilters: jest.fn(),
-    onChangeNlpSearch: jest.fn()
+    onChangeNlpSearch: jest.fn(),
+    onChangeQuery: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 
 describe('SearchFormContainer component', () => {
-  test('should render self and form fields', () => {
-    const { enzymeWrapper } = setup()
-    const keywordSearch = enzymeWrapper.find('TextField')
-
-    expect(keywordSearch.prop('name')).toEqual('keywordSearch')
-    expect(keywordSearch.prop('value')).toEqual('Test value')
-  })
-
-  test('should call onInputChange when TextField value changes', () => {
-    const { enzymeWrapper } = setup()
-    const input = enzymeWrapper.find('TextField')
-
-    expect(enzymeWrapper.state().keywordSearch).toEqual('Test value')
-
-    input.simulate('change', 'keywordSearch', 'new value')
-    expect(enzymeWrapper.state().keywordSearch).toEqual('new value')
-  })
-
-  test('should call onBlur when the TextField is blurred', () => {
-    const { enzymeWrapper, props } = setup()
-    const input = enzymeWrapper.find('TextField')
-
-    input.simulate('change', 'keywordSearch', 'new value')
-    input.simulate('blur')
-
-    expect(props.onChangeNlpSearch.mock.calls.length).toBe(1)
-    expect(props.onChangeNlpSearch.mock.calls[0]).toEqual(['new value'])
-  })
-
-  test('should call onClearFilters when the Clear Button is clicked', () => {
-    const { enzymeWrapper, props } = setup()
-    const button = enzymeWrapper.find('Button')
-
-    button.simulate('click')
-
-    expect(props.onClearFilters.mock.calls.length).toBe(1)
-  })
-
-  test('componentWillReceiveProps sets the state', () => {
+  test('passes its props and renders a single SearchForm component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.state().keywordSearch).toEqual('Test value')
-    const newSearch = 'new seach'
-    enzymeWrapper.setProps({ keywordSearch: newSearch })
-    expect(enzymeWrapper.state().keywordSearch).toEqual(newSearch)
+    expect(enzymeWrapper.find(SearchForm).length).toBe(1)
+    expect(enzymeWrapper.find(SearchForm).props().keywordSearch).toEqual('Test value')
+    expect(typeof enzymeWrapper.find(SearchForm).props().onClearFilters).toEqual('function')
+    expect(typeof enzymeWrapper.find(SearchForm).props().onChangeNlpSearch).toEqual('function')
+    expect(typeof enzymeWrapper.find(SearchForm).props().onChangeQuery).toEqual('function')
   })
 })

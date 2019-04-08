@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Button from '../Button'
 
@@ -7,15 +7,15 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    text: 'Button Text',
-    onClick: jest.fn()
+    onClick: jest.fn(),
+    text: 'Button Text'
   }
 
-  const enzymeWrapper = shallow(<Button {...props} />)
+  const enzymeWrapper = mount(<Button {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 
@@ -32,5 +32,27 @@ describe('Button component', () => {
 
     button.simulate('click')
     expect(props.onClick.mock.calls.length).toBe(1)
+  })
+
+  test('should not render self with an icon when missing an iconClass prop', () => {
+    const { enzymeWrapper } = setup()
+
+    enzymeWrapper.setProps({buttonStyle: 'icon'})
+
+    expect(!enzymeWrapper.find('i'))
+    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
+  })
+
+  test('should render self with an icon', () => {
+    const { enzymeWrapper } = setup()
+
+    enzymeWrapper.setProps({
+      buttonStyle: 'icon',
+      iconClass: 'test'
+    })
+
+    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
+    expect(enzymeWrapper.find('i').hasClass('fa fa-test'))
+    expect(enzymeWrapper.find('span').hasClass('visually-hidden'))
   })
 })

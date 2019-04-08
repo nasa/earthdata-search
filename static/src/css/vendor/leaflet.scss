@@ -1,0 +1,30 @@
+.root {
+  .leaflet-control {
+    display: flex;
+  }
+
+  .leaflet-draw-toolbar {
+    margin-top: 0;
+  }
+
+  .leaflet-draw-toolbar-top {
+    margin-right: 10px;
+  }
+
+  .leaflet-control-layers-toggle, .leaflet-retina .leaflet-control-layers-toggle {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .leaflet-control-layers-expanded {
+    padding: 10px 10px 0 10px;
+    width: 175px;
+  }
+
+  .leaflet-control-scale {
+    position: absolute;
+    bottom: 50px;
+    right: 2px;
+  }
+}

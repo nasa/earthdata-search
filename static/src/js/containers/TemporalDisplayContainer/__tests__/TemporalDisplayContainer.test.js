@@ -14,8 +14,8 @@ function setup() {
   const enzymeWrapper = shallow(<TemporalDisplayContainer {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 

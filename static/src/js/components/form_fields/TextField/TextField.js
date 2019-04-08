@@ -23,19 +23,21 @@ class TextField extends Component {
 
   render() {
     const {
+      classNames,
       name,
-      value
+      value,
+      placeholder
     } = this.props
 
     return (
-      <label htmlFor="input__search-bar">
-        <span className="visually-hidden">Search</span>
+      <label htmlFor="input__search-bar" className={classNames.label}>
+        <span className={`visually-hidden ${classNames.labelSpan}`}>{placeholder}</span>
         <input
           id="input__search-bar"
           name={name}
           type="text"
-          placeholder="Search"
-          className="search-form__input"
+          placeholder={placeholder}
+          className={`${classNames.input}`}
           value={value}
           onBlur={this.handleBlur}
           // onKeyPress={this.handleKeypress}
@@ -47,14 +49,22 @@ class TextField extends Component {
 }
 
 TextField.defaultProps = {
+  classNames: {
+    input: null,
+    label: null,
+    labelSpan: null
+  },
+  placeholder: '',
   value: ''
 }
 
 TextField.propTypes = {
+  classNames: PropTypes.shape({}),
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired
+  placeholder: PropTypes.string,
+  value: PropTypes.string
 }
 
 export default TextField

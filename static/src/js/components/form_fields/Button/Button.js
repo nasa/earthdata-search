@@ -15,6 +15,8 @@ class Button extends Component {
 
   render() {
     const {
+      buttonStyle,
+      iconClass,
       text
     } = this.props
 
@@ -23,15 +25,30 @@ class Button extends Component {
         type="button"
         onClick={this.handleClick}
       >
-        {text}
+        {
+          buttonStyle === 'icon' && iconClass
+            ? (
+              <i className={`fa fa-${iconClass}`}>
+                <span className="visually-hidden">{text}</span>
+              </i>
+            )
+            : text
+        }
       </button>
     )
   }
 }
 
+Button.defaultProps = {
+  buttonStyle: 'text',
+  iconClass: ''
+}
+
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  buttonStyle: PropTypes.string,
+  iconClass: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default Button

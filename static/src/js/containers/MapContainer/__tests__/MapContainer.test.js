@@ -1,5 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import L from 'leaflet'
 import {
@@ -14,25 +15,33 @@ import ConnectedSpatialSelectionContainer
   from '../../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
+import store from '../../../store/configureStore'
+
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    mapParam: '0!0!2!1!0!0,2',
     granules: {},
+    mapParam: '0!0!2!1!0!0,2',
+    masterOverlayPanelHeight: 500,
     onChangeMap: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<EdscMapContainer {...props} />)
+  // Mount is required here so we can have access to the mapRef
+  const enzymeWrapper = mount(
+    <Provider store={store}>
+      <EdscMapContainer {...props} />
+    </Provider>
+  )
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 
 describe('EdscMapContainer component', () => {
-  test('should render shelf and controls', () => {
+  test('should render self and controls', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.exists()).toBe(true)
 
