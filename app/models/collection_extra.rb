@@ -185,7 +185,7 @@ class CollectionExtra < ActiveRecord::Base
     sync_subsetting_tags('subset_service.opendap', ['OPeNDAP'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_OPENDAP_TAGS', 'true'))
 
     # ESI Tagging
-    sync_subsetting_tags('subset_service.esi', ['ESI', 'ECHO ORDERS'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_EGI_TAGS', 'true'))
+    sync_subsetting_tags('subset_service.esi', ['ESI'], collections, client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_EGI_TAGS', 'true'))
 
     # GIBS Tagging
     sync_gibs(client, token) if ActiveRecord::Type::Boolean.new.type_cast_from_user(ENV.fetch('SYNC_GIBS_TAGS', 'true'))
