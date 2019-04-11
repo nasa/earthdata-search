@@ -47,7 +47,7 @@ do (ko) ->
         # in good shape and we can show the panels
 
         hasRendered = (collection) =>
-          ko.contextFor(collection.element?[0]).$data.allItemsRendered()
+          ko.contextFor(collection.element?[0])?.$data.allItemsRendered()
 
         # Once all panels have registered as rendered, show the element and open the panel
         bindingContext.$data.allPanelsRendered(bindingContext.$data.panelGroups().length && bindingContext.$data.panelGroups().every(hasRendered))
