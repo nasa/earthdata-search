@@ -53,7 +53,7 @@ L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
   return originalUpdatePosition.call(this, latlng)
 }
 
-export class SpatialSelection extends Component {
+class SpatialSelection extends Component {
   constructor(props) {
     super(props)
 

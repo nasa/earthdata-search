@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { SpatialSelectionContainer } from '../SpatialSelectionContainer'
-import { SpatialSelection } from '../../../components/SpatialSelection/SpatialSelection'
+import SpatialSelection from '../../../components/SpatialSelection/SpatialSelection'
 
 Enzyme.configure({ adapter: new Adapter() })
 
