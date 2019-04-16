@@ -39,8 +39,6 @@ describe('SpatialSelection component', () => {
     const { enzymeWrapper } = setup(defaultProps)
     expect(enzymeWrapper.exists()).toBe(true)
 
-    console.warn('enzymeWrapper', enzymeWrapper)
-
     const editControl = enzymeWrapper.find(EditControl)
 
     expect(editControl.length).toBe(1)

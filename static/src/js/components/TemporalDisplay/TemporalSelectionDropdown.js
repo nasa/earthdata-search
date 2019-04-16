@@ -121,7 +121,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.setState({
       temporal: {
         ...temporal,
-        startDate: startDate.isValid() ? startDate.toISOString() : ''
+        startDate: startDate.isValid() ? startDate.toISOString() : startDate._i // eslint-disable-line
       }
     })
   }
@@ -138,7 +138,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.setState({
       temporal: {
         ...temporal,
-        endDate: endDate.isValid() ? endDate.toISOString() : ''
+        endDate: endDate.isValid() ? endDate.toISOString() : endDate._i // eslint-disable-line
       }
     })
   }
@@ -148,17 +148,26 @@ export default class TemporalSelectionDropdown extends PureComponent {
    * @param {object} temporal - An object containing temporal values
    */
   checkTemporal(temporal) {
-    const start = moment(temporal.startDate)
-    const end = moment(temporal.endDate)
+    const start = moment.utc(temporal.startDate, 'YYYY-MM-DDTHH:m:s.SSSZ', true)
+    const end = moment.utc(temporal.endDate, 'YYYY-MM-DDTHH:m:s.SSSZ', true)
     const value = {
-      startAfterEnd: false,
-      invalidDate: false
+      invalidEndDate: false,
+      invalidStartDate: false,
+      startAfterEnd: false
     }
 
     if (temporal && temporal.startDate && temporal.endDate) {
       if (end.isBefore(start)) {
         value.startAfterEnd = true
       }
+    }
+
+    if (temporal && temporal.startDate) {
+      value.invalidStartDate = !start.isValid()
+    }
+
+    if (temporal && temporal.endDate) {
+      value.invalidEndDate = !end.isValid()
     }
 
     return value
@@ -171,6 +180,11 @@ export default class TemporalSelectionDropdown extends PureComponent {
     } = this.state
 
     const temporalState = this.checkTemporal(temporal)
+    const disabled = (
+      temporalState.startAfterEnd
+      || temporalState.invalidStartDate
+      || temporalState.invalidEndDate
+    )
 
     const classes = {
       btnApply: classNames(
@@ -203,7 +217,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
         </Dropdown.Toggle>
         <Dropdown.Menu className="temporal-selection-dropdown__menu">
           <div className="temporal-selection-dropdown__inputs">
-            <Form.Group controlId="endDate" className={classes.inputStart}>
+            <Form.Group controlId="startDate" className={classes.inputStart}>
               <Form.Label className="temporal-selection-dropdown__label">
                 Start
               </Form.Label>
@@ -231,6 +245,16 @@ export default class TemporalSelectionDropdown extends PureComponent {
             {' '}
             <strong>End</strong>
           </Alert>
+          <Alert
+            variant="danger"
+            show={
+              temporalState.invalidStartDate || temporalState.invalidEndDate
+            }
+          >
+            Invalid
+            {` ${temporalState.invalidStartDate ? 'start' : 'end'} ` }
+            date
+          </Alert>
           <Form.Group controlId="formBasicChecbox">
             <Form.Check>
               <Form.Check.Input type="checkbox" />
@@ -244,7 +268,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
               className={classes.btnApply}
               variant="primary"
               onClick={this.onApplyClick}
-              disabled={temporalState.startAfterEnd}
+              disabled={disabled}
             >
               Apply
             </Button>

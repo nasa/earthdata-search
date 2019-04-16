@@ -4,12 +4,13 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import Datetime from 'react-datetime'
 
+import isCustomTime from '../../util/datepicker'
+
 import './Datepicker.scss'
 
 class Datepicker extends PureComponent {
   constructor(props) {
     super(props)
-    const { value } = props
     this.format = 'YYYY-MM-DD HH:mm:ss'
     this.isValidDate = this.isValidDate.bind(this)
     this.onBlur = this.onBlur.bind(this)
@@ -23,14 +24,16 @@ class Datepicker extends PureComponent {
     }
 
     this.state = {
-      value: value || ''
+      value: ''
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     // Clear out the value in the input if the component is updated with empty value. This occurs
     // when the props are updated outside of the component (i.e. when the "clear" button) is clicked
+
     if (nextProps.value !== prevState.value) {
+      // console.warn('getDerivedStateFromProps', nextProps.value)
       return { value: nextProps.value }
     }
     return null
@@ -43,10 +46,12 @@ class Datepicker extends PureComponent {
     const buttonClear = document.createElement('button')
     const buttonContainer = document.createElement('div')
 
+    buttonContainer.classList.add('datetime__buttons')
+    container.appendChild(buttonContainer)
     buttonToday.innerHTML = 'Today'
     buttonClear.innerHTML = 'Clear'
-    buttonToday.classList.add('datetime__button')
-    buttonClear.classList.add('datetime__button')
+    buttonToday.classList.add('datetime__button', 'datetime__button--today')
+    buttonClear.classList.add('datetime__button', 'datetime__button--clear')
     buttonContainer.classList.add('datetime__buttons')
     buttonToday.addEventListener('click', this.onTodayClick)
     buttonClear.addEventListener('click', this.onClearClick)
@@ -55,21 +60,10 @@ class Datepicker extends PureComponent {
     container.appendChild(buttonContainer)
   }
 
-  onBlur(value) {
-    const {
-      onSubmit
-    } = this.props
-
-    // Set strict parsing so we can use isValid on the date
-    const valueFromForm = moment.utc(value, 'YYYY-MM-DD HH:mm:ss', true)
-
-    this.setState({
-      value: valueFromForm
-    })
-
-    onSubmit(valueFromForm)
-
-    // Set the picker back to the 'years' view
+  /**
+  * Set view back to 'years' when a user closes the datepicker
+  */
+  onBlur() {
     this.picker.setState({
       currentView: 'years'
     })
@@ -79,11 +73,7 @@ class Datepicker extends PureComponent {
   * Set the date to today using the beginning of the day for "Start" and the end of the day for "End"
   */
   onTodayClick() {
-    const {
-      onSubmit,
-      type
-    } = this.props
-
+    const { type } = this.props
     const today = moment().utc()
     let valueToSet = null
 
@@ -93,19 +83,19 @@ class Datepicker extends PureComponent {
       valueToSet = today.endOf('day')
     }
 
-    onSubmit(valueToSet)
+    this.onChange(valueToSet)
   }
 
   /**
   * Clear out the currently selected date
   */
   onClearClick() {
-    const { onSubmit } = this.props
-    onSubmit('')
+    this.onChange('')
   }
 
   /**
   * Set up the onChange event for the datepicker
+  * @param {moment|string} value - The value passed from the Datetime component
   */
   onChange(value) {
     const {
@@ -113,21 +103,19 @@ class Datepicker extends PureComponent {
       type
     } = this.props
 
-    // value will only ever be a moment object when a user clicks an item from the picker. We need to manually trigger the submission to the parent component
-    if (typeof value !== 'string' && value instanceof moment) {
-      let valueToSet = null
+    let valueToSet = null
 
-      // Set the date to UTC to avoid timezone issues
-      value.utc()
-
+    if (typeof value !== 'string' && moment.isMoment(value) && !isCustomTime(value)) {
       if (type === 'start') {
         valueToSet = value.startOf('day')
       } else if (type === 'end') {
         valueToSet = value.endOf('day')
       }
-
-      onSubmit(valueToSet)
+    } else {
+      valueToSet = moment.utc(value, this.format, true)
     }
+
+    onSubmit(valueToSet)
   }
 
   /**
@@ -154,10 +142,17 @@ class Datepicker extends PureComponent {
       setRef,
       state
     } = this
+
     let { value } = state
 
-    // If we are passing a value, make sure it is the correct format
-    if (value) value = moment(value, moment.HTML5_FMT.DATETIME_LOCAL_MS).format(format)
+    // A valid date will come be passed as an ISO string. Check to see if the date is a valid ISO string,
+    // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
+    // then we leave it untouched and pass it to the input.
+    const isValidISO = moment.utc(value, 'YYYY-MM-DDTHH:m:s.SSSZ', true).isValid()
+
+    if (isValidISO) {
+      value = moment.utc(value).format(format)
+    }
 
     return (
       <Datetime
@@ -171,6 +166,7 @@ class Datepicker extends PureComponent {
         onNavigateBack={onNavigateBack}
         ref={setRef}
         timeFormat={false}
+        utc
         value={value}
         viewMode="years"
       />
