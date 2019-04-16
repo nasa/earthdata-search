@@ -1,7 +1,7 @@
 const path = require('path')
 
 const resources = [
-  'utils/variables/_colors.scss',
+  'utils/utils.scss',
   'vendor/bootstrap/_vars.scss'
 ]
 

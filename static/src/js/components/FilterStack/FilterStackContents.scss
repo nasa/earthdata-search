@@ -6,8 +6,8 @@
   &:not(:first-child) {
     margin-left: 1rem;
   }
-}
 
-.filter-stack-contents__body {
-  font-size: 0.925rem;
+  &__body {
+    font-size: 0.925rem;
+  }
 }

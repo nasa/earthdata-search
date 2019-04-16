@@ -53,7 +53,7 @@ L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
   return originalUpdatePosition.call(this, latlng)
 }
 
-export class SpatialSelectionContainer extends Component {
+export class SpatialSelection extends Component {
   constructor(props) {
     super(props)
 
@@ -263,14 +263,14 @@ export class SpatialSelectionContainer extends Component {
   }
 }
 
-SpatialSelectionContainer.defaultProps = {
+SpatialSelection.defaultProps = {
   boundingBoxSearch: '',
   mapRef: {},
   pointSearch: '',
   polygonSearch: ''
 }
 
-SpatialSelectionContainer.propTypes = {
+SpatialSelection.propTypes = {
   boundingBoxSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),
   onChangeMap: PropTypes.func.isRequired,
@@ -279,4 +279,4 @@ SpatialSelectionContainer.propTypes = {
   polygonSearch: PropTypes.string
 }
 
-export default SpatialSelectionContainer
+export default SpatialSelection

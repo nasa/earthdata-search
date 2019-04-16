@@ -2,21 +2,22 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-}
 
-.sidebar-section__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1rem 1rem 1.125rem;
-  color: $color__white;
-}
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 1rem 1.125rem;
+    color: $color__white;
+  }
 
-.sidebar-section__title {
-  margin: 0;
-  font-size: 1rem;
-}
+  &__title {
+    margin: 0;
+    font-size: 1rem;
+  }
 
-.sidebar-section__icon {
-  color: rgba(255,255,255,0.3)
+  &__icon {
+    color: rgba(255,255,255,0.3)
+  }
+
 }

@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from 'lodash'
+import classNames from 'classnames'
 
 import { generateFacetArgs } from '../../util/facets'
+
+import './FacetsItem.scss'
+
 
 class FacetsItem extends Component {
   constructor(props) {
@@ -60,18 +64,23 @@ class FacetsItem extends Component {
       })
     }
 
+    const className = classNames(
+      'facets-item',
+      `facets-item--level-${level}`
+    )
+
     return (
-      <li className={`facets__list-item facets__list-item--level-${level}`}>
-        <label className="facets__item-label" htmlFor={uid}>
+      <li className={className}>
+        <label className="facets-item__label" htmlFor={uid}>
           <input
             id={uid}
-            className="facets__item-checkbox"
+            className="facets-item__checkbox"
             type="checkbox"
             checked={applied}
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
           />
-          <span className="facets__item-title">{facet.title}</span>
-          { (!applied || !children) && <span className="facets__item-total">{facet.count}</span> }
+          <span className="facets-item__title">{facet.title}</span>
+          { (!applied || !children) && <span className="facets-item__total">{facet.count}</span> }
         </label>
         { children && <ul className="facets__list">{children}</ul> }
       </li>

@@ -55,7 +55,11 @@ class SpatialDisplay extends Component {
     let entry
 
     if (pointSearch || drawingNewLayer === 'marker') {
-      entry = <SpatialDisplayEntry value={trimSpatial(pointSearch.split(','), 8).reverse().join(', ')} />
+      entry = (
+        <SpatialDisplayEntry
+          value={trimSpatial(pointSearch.split(','), 8).reverse().join(', ')}
+        />
+      )
 
       contents = (
         <FilterStackContents
@@ -80,7 +84,6 @@ class SpatialDisplay extends Component {
         )
       }
     } else if (polygonSearch || drawingNewLayer === 'polygon') {
-
       entry = <SpatialDisplayEntry value={polygonSearch} />
 
       contents = (

@@ -1,0 +1,58 @@
+.facets-item {
+  &__checkbox {
+    margin-right: 0.7rem;
+    border-radius: 4px;
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: top;
+    opacity: 0.3;
+    flex: none;
+
+    &:checked {
+      opacity: 1;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0.2rem 0.4rem 0.2rem 1.1rem;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    border-left: .2rem solid transparent;
+
+    .facets-item--level-1 & {
+      padding-left: 2rem;
+    }
+
+    .facets-item--level-2 & {
+      padding-left: 3rem;
+    }
+
+    .facets-item--level-3 & {
+      padding-left: 4rem;
+    }
+
+    &:hover {
+      background: $color__black--700;
+      border-left: .2rem solid $color__green--500;
+      cursor: pointer;
+    }
+  }
+
+  &__title {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__total {
+    margin-left: auto;
+    padding-left: 0.125rem;
+    color: $color__black--400;
+    font-size: 0.825rem;
+  }
+}

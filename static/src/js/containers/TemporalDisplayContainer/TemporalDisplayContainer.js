@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import TemporalDisplay from '../../components/TemporalDisplay/TemporalDisplay'
 
-import './TemporalDisplayContainer.scss'
-
 const mapStateToProps = state => ({
   temporalSearch: state.query.temporal
 })

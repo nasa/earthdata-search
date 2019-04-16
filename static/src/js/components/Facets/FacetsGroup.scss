@@ -1,0 +1,51 @@
+.facets-group {
+  display: block;
+  color: $color__white;
+
+  &__heading {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: space-between;
+    padding: .6rem 1.1rem;
+    color: $color__white;
+    border-radius: 0;
+
+    &:hover {
+      color: $color__white;
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+
+  &__action {
+    align-self: flex-end;
+  }
+
+  &__selected {
+    padding: 0.2rem 0.4rem 0.2rem 1.1rem;
+    font-size: 0.875rem;
+    color: $color__black--400;
+  }
+
+  &__body {
+    height: 0;
+    overflow: hidden;
+    background: $color__black--900;
+
+    &:first-child {
+      padding-top: 0.6rem;
+    }
+
+    &--is-open {
+      height: auto;
+    }
+  }
+}
+

@@ -4,6 +4,8 @@ import { uniqueId } from 'lodash'
 
 import FacetsItem from './FacetsItem'
 
+import './FacetsList.scss'
+
 const FacetsList = (props) => {
   const {
     facets,
@@ -40,7 +42,7 @@ const FacetsList = (props) => {
   })
 
   return (
-    <ul className="facets__list facets__list--level-0">
+    <ul className="facets-list">
       {list}
     </ul>
   )

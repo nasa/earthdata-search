@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     children: undefined,
-    visible: false
+    isOpen: false
   }
 
   const enzymeWrapper = shallow(<FilterStack {...props} />)
@@ -41,8 +41,8 @@ describe('FilterStack component', () => {
 
   test('renders with the correct css when not visible', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ visible: true, children: 'Hello!' })
+    enzymeWrapper.setProps({ isOpen: true, children: 'Hello!' })
 
-    expect(enzymeWrapper.hasClass('filter-stack--visible')).toBe(true)
+    expect(enzymeWrapper.hasClass('filter-stack--is-open')).toBe(true)
   })
 })

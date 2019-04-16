@@ -9,7 +9,7 @@ import ConnectedTemporalSelectionDropdownContainer from '../../containers/Tempor
 import FilterStack from '../FilterStack/FilterStack'
 
 // Form Fields
-import TextField from '../form_fields/TextField/TextField'
+import TextField from '../FormFields/TextField/TextField'
 
 import './SearchForm.scss'
 
@@ -110,7 +110,7 @@ class SearchForm extends Component {
         >
           <i className="fa fa-bars" />
         </Button>
-        <FilterStack visible={showFilterStack}>
+        <FilterStack isOpen={showFilterStack}>
           <ConnectedSpatialDisplayContainer />
           <ConnectedTemporalDisplayContainer />
         </FilterStack>

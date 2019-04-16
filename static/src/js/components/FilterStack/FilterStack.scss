@@ -7,10 +7,10 @@
   background-color: $color__black--900;
   color: $color__white;
   visibility: hidden;
-}
 
-.filter-stack--visible {
-  height: auto;
-  width: auto;
-  visibility: visible;
+  &--is-open {
+    height: auto;
+    width: auto;
+    visibility: visible;
+  }
 }

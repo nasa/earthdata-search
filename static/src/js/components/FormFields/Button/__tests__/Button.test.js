@@ -37,7 +37,7 @@ describe('Button component', () => {
   test('should not render self with an icon when missing an iconClass prop', () => {
     const { enzymeWrapper } = setup()
 
-    enzymeWrapper.setProps({buttonStyle: 'icon'})
+    enzymeWrapper.setProps({ buttonStyle: 'icon' })
 
     expect(!enzymeWrapper.find('i'))
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')

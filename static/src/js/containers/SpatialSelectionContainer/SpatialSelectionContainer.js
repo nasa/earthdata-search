@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions'
 
-import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
+import { SpatialSelection } from '../../components/SpatialSelection/SpatialSelection'
 
 const mapDispathToProps = dispatch => ({
   onChangeMap: query => dispatch(actions.changeMap(query)),
