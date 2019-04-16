@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
 
-class TemporalDisplay extends Component {
+import './TemporalDisplay.scss'
+
+class TemporalDisplay extends PureComponent {
   constructor(props) {
     super(props)
 
@@ -54,7 +56,7 @@ class TemporalDisplay extends Component {
         />
         <FilterStackContents
           body={temporalEndDisplay}
-          title="End"
+          title="Stop"
         />
       </FilterStackItem>
     )

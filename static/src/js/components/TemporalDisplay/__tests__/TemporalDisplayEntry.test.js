@@ -11,7 +11,7 @@ function setup() {
     value: '2019-03-30T00:00:00Z'
   }
 
-  const enzymeWrapper = shallow(<TemporalDisplayEntry {...props} />)
+  const enzymeWrapper = shallow(<TemporalDisplayEntry {...props} />).dive()
 
   return {
     enzymeWrapper,
@@ -23,6 +23,6 @@ describe('TemporalDisplayEntry component', () => {
   test('with valid type and value should render correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.text()).toEqual('2019-03-30T00:00:00Z')
+    expect(enzymeWrapper.text()).toEqual('2019-03-30 00:00:00')
   })
 })
