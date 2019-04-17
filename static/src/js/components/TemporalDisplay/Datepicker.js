@@ -8,6 +8,11 @@ import isCustomTime from '../../util/datepicker'
 
 import './Datepicker.scss'
 
+/**
+ * Component representing the Datepicker. We use this to make some of the customizations
+ * that should be passed down to the react-datetime component
+ * @extends PureComponent
+ */
 class Datepicker extends PureComponent {
   constructor(props) {
     super(props)
@@ -33,7 +38,6 @@ class Datepicker extends PureComponent {
     // when the props are updated outside of the component (i.e. when the "clear" button) is clicked
 
     if (nextProps.value !== prevState.value) {
-      // console.warn('getDerivedStateFromProps', nextProps.value)
       return { value: nextProps.value }
     }
     return null
@@ -105,6 +109,12 @@ class Datepicker extends PureComponent {
 
     let valueToSet = null
 
+    // Check to see if the current date is a moment object, and whether or not it has a
+    // custom time set (i.e. not 00:00:00 or 23:59:59), if it doesn't, set the time to either
+    // the start or end of the day based on the input 'type'. If it does have a custom time, or
+    // it is a string from an invalid date, we wrap it in a moment object to pass to the callback.
+    // We do this for the invalid date strings so we can call moment.isValid on any value passed
+    // out of the callback.
     if (typeof value !== 'string' && moment.isMoment(value) && !isCustomTime(value)) {
       if (type === 'start') {
         valueToSet = value.startOf('day')
@@ -138,12 +148,11 @@ class Datepicker extends PureComponent {
       isValidDate,
       onBlur,
       onChange,
-      onNavigateBack,
-      setRef,
-      state
+      setRef
     } = this
 
-    let { value } = state
+    const { id } = this.props
+    let { value } = this.state
 
     // A valid date will come be passed as an ISO string. Check to see if the date is a valid ISO string,
     // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
@@ -158,12 +167,14 @@ class Datepicker extends PureComponent {
       <Datetime
         className="datetime"
         closeOnSelect
-        dateFormat="YYYY-MM-DD HH:mm:ss"
-        inputProps={{ placeholder: 'YYYY-MM-DD HH:mm:ss' }}
+        dateFormat={format}
+        inputProps={{
+          id,
+          placeholder: format
+        }}
         isValidDate={isValidDate}
         onBlur={onBlur}
         onChange={onChange}
-        onNavigateBack={onNavigateBack}
         ref={setRef}
         timeFormat={false}
         utc
@@ -180,6 +191,7 @@ Datepicker.defaultProps = {
 }
 
 Datepicker.propTypes = {
+  id: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   type: PropTypes.string,
   value: PropTypes.string

@@ -5,14 +5,18 @@ const SpatialDisplayEntry = (props) => {
   const { value } = props
 
   return (
-    <React.Fragment>
+    <>
       {value}
-    </React.Fragment>
+    </>
   )
 }
 
+SpatialDisplayEntry.defaultProps = {
+  value: ''
+}
+
 SpatialDisplayEntry.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.string
 }
 
 export default SpatialDisplayEntry

@@ -39,6 +39,8 @@ describe('LayerBuilder component', () => {
     const projectionResolution = `${projection.toUpperCase()}_${resolution}`
 
     expect(tileLayer.length).toBe(1)
+
+    // eslint-disable-next-line max-len
     expect(tileLayer.prop('url')).toEqual(`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${time}/${projectionResolution}/{z}/{y}/{x}.${format}`)
   })
 })

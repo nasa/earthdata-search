@@ -21,13 +21,6 @@ function setup() {
 }
 
 describe('FilterStackItem component', () => {
-  test('does not render with missing props', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ children: null })
-
-    expect(enzymeWrapper.type()).toBe(null)
-  })
-
   test('renders itself as a list item', () => {
     const { enzymeWrapper } = setup()
 

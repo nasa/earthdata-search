@@ -84,7 +84,7 @@ class SpatialDisplay extends Component {
         )
       }
     } else if (polygonSearch || drawingNewLayer === 'polygon') {
-      entry = <SpatialDisplayEntry value={polygonSearch} />
+      entry = <SpatialDisplayEntry />
 
       contents = (
         <FilterStackContents

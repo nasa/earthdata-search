@@ -14,14 +14,12 @@ import './TemporalSelectionDropdown.scss'
 
 /**
  * TODO:
- * - Find a way to better handle invalid dates. Currently, they will be removed from the inputs. This is due to limitations
- *   in the react-datetime package. It does not provide a way to display invalid dates.
  * - Find a way to prevent viewing sets of dates that do not have clickable items in the picker
  */
 
 /**
  * Component representing the temporal selection dropdown
- * @extends Component
+ * @extends PureComponent
  */
 export default class TemporalSelectionDropdown extends PureComponent {
   constructor(props) {
@@ -121,7 +119,8 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.setState({
       temporal: {
         ...temporal,
-        startDate: startDate.isValid() ? startDate.toISOString() : startDate._i // eslint-disable-line
+        // eslint-disable-next-line no-underscore-dangle
+        startDate: startDate.isValid() ? startDate.toISOString() : startDate._i
       }
     })
   }
@@ -138,7 +137,8 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.setState({
       temporal: {
         ...temporal,
-        endDate: endDate.isValid() ? endDate.toISOString() : endDate._i // eslint-disable-line
+        // eslint-disable-next-line no-underscore-dangle
+        endDate: endDate.isValid() ? endDate.toISOString() : endDate._i
       }
     })
   }
@@ -217,21 +217,23 @@ export default class TemporalSelectionDropdown extends PureComponent {
         </Dropdown.Toggle>
         <Dropdown.Menu className="temporal-selection-dropdown__menu">
           <div className="temporal-selection-dropdown__inputs">
-            <Form.Group controlId="startDate" className={classes.inputStart}>
+            <Form.Group controlId="temporal-form__start-date" className={classes.inputStart}>
               <Form.Label className="temporal-selection-dropdown__label">
                 Start
               </Form.Label>
               <Datepicker
+                id="temporal-form__start-date"
                 onSubmit={value => this.setStartDate(value)}
                 type="start"
                 value={temporal.startDate}
               />
             </Form.Group>
-            <Form.Group controlId="endDate" className={classes.inputEnd}>
+            <Form.Group controlId="temporal-form__end-date" className={classes.inputEnd}>
               <Form.Label className="temporal-selection-dropdown__label">
                 End
               </Form.Label>
               <Datepicker
+                id="temporal-form__end-date"
                 onSubmit={value => this.setEndDate(value)}
                 type="end"
                 value={temporal.endDate}
@@ -255,7 +257,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
             {` ${temporalState.invalidStartDate ? 'start' : 'end'} ` }
             date
           </Alert>
-          <Form.Group controlId="formBasicChecbox">
+          <Form.Group controlId="temporal-form__recurring">
             <Form.Check>
               <Form.Check.Input type="checkbox" />
               <Form.Check.Label className="temporal-selection-dropdown__label">

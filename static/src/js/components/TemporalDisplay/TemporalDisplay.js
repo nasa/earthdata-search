@@ -42,8 +42,12 @@ class TemporalDisplay extends PureComponent {
       return null
     }
 
-    const temporalStartDisplay = startDate ? <TemporalDisplayEntry type="start" value={startDate} /> : null
-    const temporalEndDisplay = endDate ? <TemporalDisplayEntry type="end" value={endDate} /> : null
+    const temporalStartDisplay = startDate
+      ? <TemporalDisplayEntry type="start" value={startDate} />
+      : null
+    const temporalEndDisplay = endDate
+      ? <TemporalDisplayEntry type="end" value={endDate} />
+      : null
 
     return (
       <FilterStackItem

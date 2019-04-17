@@ -14,10 +14,14 @@ import actions from '../../actions/index'
 import './CollectionResultsContainer.scss'
 
 const mapDispatchToProps = dispatch => ({
-  onFocusedCollectionChange: collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
-  onMasterOverlayHeightChange: newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
-  onMasterOverlayPanelDragEnd: () => dispatch(actions.masterOverlayPanelDragEnd()),
-  onMasterOverlayPanelDragStart: data => dispatch(actions.masterOverlayPanelDragStart(data))
+  onFocusedCollectionChange:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onMasterOverlayHeightChange:
+    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
+  onMasterOverlayPanelDragEnd:
+    () => dispatch(actions.masterOverlayPanelDragEnd()),
+  onMasterOverlayPanelDragStart:
+    data => dispatch(actions.masterOverlayPanelDragStart(data))
 })
 
 const mapStateToProps = state => ({
@@ -142,6 +146,7 @@ class CollectionResultsContainer extends Component {
       return (
         <li className="collection-results__item" key={collection.id}>
           <div className="collection-results__item-thumb">
+            {/* eslint-disable-next-line max-len */}
             <img src="https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/datasets/C179003620-ORNL_DAAC?h=75&w=75" alt="Thumbnail" />
           </div>
           <div className="collection-results__item-body">

@@ -12,6 +12,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setupMounted() {
   const props = {
+    id: 'test-id',
     onSubmit: jest.fn(),
     type: 'start',
     value: ''
@@ -27,6 +28,7 @@ function setupMounted() {
 
 function setupShallow() {
   const props = {
+    id: 'test-id',
     onSubmit: jest.fn(),
     type: 'start',
     value: ''
@@ -92,6 +94,26 @@ describe('Datepicker component', () => {
   })
 
   describe('onTodayClick', () => {
+    test('without "start" or "end", returns null', () => {
+      const { enzymeWrapper } = setupShallow()
+      enzymeWrapper.instance().onChange = jest.fn()
+      const { onChange } = enzymeWrapper.instance()
+
+      enzymeWrapper.setProps({ type: null })
+
+      // MockDate is used here to overwrite the js Date object. This allows us to
+      // mock changes needed to test the moment functions
+      MockDate.set('09/03/1988')
+
+      enzymeWrapper.instance().onTodayClick()
+
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange.mock.calls[0][0])
+        .toEqual(null)
+
+      MockDate.reset()
+    })
+
     test('from "start" input, selects the beginning of the today', () => {
       const { enzymeWrapper } = setupShallow()
       enzymeWrapper.instance().onChange = jest.fn()
@@ -99,6 +121,8 @@ describe('Datepicker component', () => {
 
       enzymeWrapper.setProps({ type: 'start' })
 
+      // MockDate is used here to overwrite the js Date object. This allows us to
+      // mock changes needed to test the moment functions
       MockDate.set('09/03/1988')
 
       enzymeWrapper.instance().onTodayClick()
@@ -215,6 +239,19 @@ describe('Datepicker component', () => {
         expect(onSubmit.mock.calls[0][0].toISOString())
           .toEqual('1988-09-03T23:59:59.999Z')
       })
+
+      test('without when "start" and "end" defined, null is passed', () => {
+        const { enzymeWrapper, props } = setupShallow()
+        const { onChange } = enzymeWrapper.instance()
+        const { onSubmit } = props
+        enzymeWrapper.setProps({ type: null })
+
+        onChange(moment.utc('1988-09-03'))
+
+        expect(onSubmit).toHaveBeenCalledTimes(1)
+        expect(onSubmit.mock.calls[0][0])
+          .toEqual(null)
+      })
     })
   })
 
@@ -236,175 +273,14 @@ describe('Datepicker component', () => {
 
       expect(value).toEqual(false)
     })
+
+    test('when passed a date one day in the past, returns true', () => {
+      const { enzymeWrapper } = setupShallow()
+      const { isValidDate } = enzymeWrapper.instance()
+
+      const value = isValidDate(moment.utc(moment.utc().add(-1, 'day')))
+
+      expect(value).toEqual(true)
+    })
   })
-
-  // test('when clicked toggles the state of show ', () => {
-  //   const { enzymeWrapper } = setup()
-
-  //   enzymeWrapper.find(Dropdown.Toggle).simulate('click')
-  //   expect(enzymeWrapper.find(Dropdown).prop('show')).toBe(true)
-  // })
-
-  // test('when passed a start date renders DatePicker component correctly', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00Z,' })
-
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('2019-03-30T00:00:00Z')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('type')).toBe('end')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('value')).toBe('')
-  // })
-
-  // test('when passed a end date renders DatePicker component correctly', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: ',2019-03-30T00:00:00Z' })
-
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('type')).toBe('end')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('value')).toBe('2019-03-30T00:00:00Z')
-  // })
-
-  // test('when passed a both start and end dates renders DatePicker components correctly', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: '2019-03-29T00:00:00Z,2019-03-30T00:00:00Z' })
-
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('2019-03-29T00:00:00Z')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('type')).toBe('end')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('value')).toBe('2019-03-30T00:00:00Z')
-  // })
-
-  // test('when passed a start date after the end date renders DatePicker components correctly', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00Z,2019-03-29T00:00:00Z' })
-
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
-  //   expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('2019-03-30T00:00:00Z')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('type')).toBe('end')
-  //   expect(enzymeWrapper.find(Datepicker).at(1).prop('value')).toBe('2019-03-29T00:00:00Z')
-  // })
-
-  // test('when passed a start date after the end date disables the apply button', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00Z,2019-03-29T00:00:00Z' })
-
-  //   expect(enzymeWrapper.find('.temporal-selection-dropdown__button--apply').prop('disabled')).toBe(true)
-  // })
-
-  // test('when passed a start date before the end date renders Alert correctly', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: '2019-03-29T00:00:00Z,2019-03-30T00:00:00Z' })
-
-  //   expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(false)
-  // })
-
-  // test('when passed a start date after the end date renders Alert correctly', () => {
-  //   const { enzymeWrapper } = setup()
-  //   enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00Z,2019-03-29T00:00:00Z' })
-
-  //   expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(true)
-  // })
-
-  // test('sets the start date correctly when an invalid date is passed', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const testObj = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-  //   enzymeWrapper.find(Datepicker).at(0).props().onSubmit(testObj)
-  //   expect(enzymeWrapper.state().temporal.startDate).toEqual('')
-  // })
-
-  // test('sets the end date correctly when an invalid date is passed', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const testObj = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-  //   enzymeWrapper.find(Datepicker).at(1).props().onSubmit(testObj)
-  //   expect(enzymeWrapper.state().temporal.startDate).toEqual('')
-  // })
-
-  // test('sets the start date correctly when an valid date is passed', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const testObj = moment.utc('2012-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-  //   enzymeWrapper.find(Datepicker).at(0).props().onSubmit(testObj)
-  //   expect(enzymeWrapper.state().temporal.startDate).toEqual('2012-01-01T12:00:00.000Z')
-  // })
-
-  // test('sets the end date correctly when an valid date is passed', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const testObj = moment.utc('2012-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-  //   enzymeWrapper.find(Datepicker).at(1).props().onSubmit(testObj)
-  //   expect(enzymeWrapper.state().temporal.endDate).toEqual('2012-01-01T12:00:00.000Z')
-  // })
-
-  // test('sets the state correctly with an invalid start date', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const invalidDate = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-  //   const validStartDate = moment.utc('2012-01-01 12:00:00').toISOString()
-  //   const validEndDate = moment.utc('2012-01-02 12:00:00').toISOString()
-
-  //   enzymeWrapper.setState({ temporal: { startDate: validStartDate, endDate: validEndDate } })
-  //   enzymeWrapper.instance().setStartDate(invalidDate)
-  //   expect(enzymeWrapper.state().temporal.startDate).toBe('')
-  //   expect(enzymeWrapper.state().temporal.endDate).toBe('2012-01-02T12:00:00.000Z')
-  // })
-
-  // test('sets the state correctly with an invalid end date', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const invalidDate = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-  //   const validStartDate = moment.utc('2012-01-01 12:00:00').toISOString()
-  //   const validEndDate = moment.utc('2012-01-02 12:00:00').toISOString()
-
-  //   enzymeWrapper.setState({ temporal: { startDate: validStartDate, endDate: validEndDate } })
-  //   enzymeWrapper.instance().setEndDate(invalidDate)
-  //   expect(enzymeWrapper.state().temporal.startDate).toBe('2012-01-01T12:00:00.000Z')
-  //   expect(enzymeWrapper.state().temporal.endDate).toBe('')
-  // })
-
-  // test('clears the values onClearClick', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const onChangeQueryMock = jest.fn()
-  //   enzymeWrapper.setProps({
-  //     onChangeQuery: onChangeQueryMock,
-  //     temporalSearch: '2019-03-29T00:00:00Z,2019-03-30T00:00:00Z'
-  //   })
-  //   enzymeWrapper.setState({ open: true })
-
-  //   enzymeWrapper.instance().onClearClick()
-
-  //   expect(onChangeQueryMock).toHaveBeenCalledWith({ temporal: '' })
-  //   expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-  //   expect(enzymeWrapper.state()).toEqual({ open: false, temporal: { startDate: '', endDate: '' } })
-  // })
-
-  // test('applies the values onApplyClick', () => {
-  //   const { enzymeWrapper } = setup()
-  //   const onChangeQueryMock = jest.fn()
-  //   enzymeWrapper.setProps({
-  //     onChangeQuery: onChangeQueryMock,
-  //     temporalSearch: ''
-  //   })
-  //   enzymeWrapper.setState({
-  //     open: true,
-  //     temporal: {
-  //       endDate: '2019-03-30T00:00:00Z',
-  //       startDate: '2019-03-29T00:00:00Z'
-  //     }
-  //   })
-
-  //   enzymeWrapper.instance().onApplyClick()
-
-  //   expect(onChangeQueryMock).toHaveBeenCalledWith({
-  //     temporal: '2019-03-29T00:00:00Z,2019-03-30T00:00:00Z'
-  //   })
-  //   expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-  //   expect(enzymeWrapper.state()).toEqual({
-  //     open: false,
-  //     temporal: {
-  //       endDate: '2019-03-30T00:00:00Z',
-  //       startDate: '2019-03-29T00:00:00Z'
-  //     }
-  //   })
-  // })
 })

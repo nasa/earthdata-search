@@ -39,7 +39,7 @@ describe('Button component', () => {
 
     enzymeWrapper.setProps({ buttonStyle: 'icon' })
 
-    expect(!enzymeWrapper.find('i'))
+    expect(enzymeWrapper.find('i').length).toEqual(0)
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
   })
 

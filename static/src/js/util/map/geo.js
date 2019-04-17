@@ -264,7 +264,11 @@ export const calculateArea = (origLatlngs) => {
   let crossesMeridian = false
   let sum = 0
   const len = latlngs.length
-  for (let i = 0, end1 = len, asc1 = end1 >= 0; asc1 ? i < end1 : i > end1; asc1 ? i += 1 : i -= 1) {
+  for (
+    let i = 0, end1 = len, asc1 = end1 >= 0;
+    asc1 ? i < end1 : i > end1;
+    asc1 ? i += 1 : i -= 1
+  ) {
     const latlngA = latlngs[i]
     const latlngB = latlngs[(i + 1) % len]
     const latlngC = latlngs[(i + 2) % len]
@@ -392,7 +396,12 @@ export const dividePolygon = (latlngs) => {
   const holes = []
 
   // Handle a list containing holes
-  if (newLatLngs && newLatLngs[0] && (newLatLngs[0].constructor === Array) && (typeof newLatLngs[0][0] !== 'number')) {
+  if (
+    newLatLngs
+    && newLatLngs[0]
+    && (newLatLngs[0].constructor === Array)
+    && (typeof newLatLngs[0][0] !== 'number')
+  ) {
     newLatLngs.slice(1).forEach((hole) => {
       holes.push(makeCounterClockwise(convertLatLngs(hole)))
     })

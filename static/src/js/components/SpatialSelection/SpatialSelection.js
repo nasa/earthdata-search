@@ -222,7 +222,11 @@ class SpatialSelection extends Component {
       }
 
       const bounds = new L.LatLngBounds(...Array.from(shape || []))
-      const options = L.extend({}, L.Draw.Rectangle.prototype.options.shapeOptions, this._colorOptions)
+      const options = L.extend(
+        {},
+        L.Draw.Rectangle.prototype.options.shapeOptions,
+        this._colorOptions
+      )
       const rect = new L.Rectangle(bounds, options)
 
       rect.addTo(map)
@@ -234,7 +238,11 @@ class SpatialSelection extends Component {
   // Draws a leaflet Polygon
   renderPolygon(polygon, map) {
     if (map) {
-      const options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, this._colorOptions)
+      const options = L.extend(
+        {},
+        L.Draw.Polygon.prototype.options.shapeOptions,
+        this._colorOptions
+      )
       // const poly = new L.sphericalPolygon(polygon, options)
       const poly = new L.Polyline(polygon, options)
 

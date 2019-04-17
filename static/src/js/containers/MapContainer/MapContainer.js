@@ -13,15 +13,21 @@ import {
   ScaleControl
 } from 'react-leaflet'
 
+import LayerBuilder
+  from '../../components/map_controls/LayerBuilder'
+import ConnectedSpatialSelectionContainer
+  from '../SpatialSelectionContainer/SpatialSelectionContainer'
+import GranuleGridLayer
+  from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
+import ZoomHome
+  from '../../components/map_controls/ZoomHome'
+
+
 import actions from '../../actions/index'
-import ZoomHome from '../../components/map_controls/ZoomHome'
+
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
-import LayerBuilder from '../../components/map_controls/LayerBuilder'
-import ConnectedSpatialSelectionContainer
-  from '../SpatialSelectionContainer/SpatialSelectionContainer'
-import GranuleGridLayer from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -48,6 +54,7 @@ const EPSG4326 = new window.L.Proj.CRS(
 )
 const EPSG3413 = new window.L.Proj.CRS(
   'EPSG:3413',
+  // eslint-disable-next-line max-len
   '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
     origin: [-4194304, 4194304],
     resolutions: [
@@ -66,6 +73,7 @@ const EPSG3413 = new window.L.Proj.CRS(
 )
 const EPSG3031 = new window.L.Proj.CRS(
   'EPSG:3031',
+  // eslint-disable-next-line max-len
   '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
     origin: [-4194304, 4194304],
     resolutions: [
@@ -103,7 +111,10 @@ export class EdscMapContainer extends Component {
   }
 
   componentDidMount() {
-    this.controlContainer = ReactDOM.findDOMNode(this.mapRef).querySelector('.leaflet-control-container')  // eslint-disable-line
+    // eslint-disable-next-line react/no-find-dom-node
+    this.controlContainer = ReactDOM
+      .findDOMNode(this.mapRef)
+      .querySelector('.leaflet-control-container')
 
     if (this.controlContainer) {
       this.onMasterOverlayPanelResize()

@@ -89,6 +89,7 @@ describe('TemporalSelectionDropdown component', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({ temporalSearch: '2019-03-29T00:00:00.000Z,2019-03-30T00:00:00.000Z' })
 
+    expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(false)
     expect(enzymeWrapper.find(Alert).at(1).prop('show')).toBe(false)
   })
 
@@ -97,6 +98,7 @@ describe('TemporalSelectionDropdown component', () => {
     enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00.000Z,2019-03-29T00:00:00.000Z' })
 
     expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(true)
+    expect(enzymeWrapper.find(Alert).at(1).prop('show')).toBe(false)
   })
 
   test('sets the start date correctly when an invalid date is passed', () => {

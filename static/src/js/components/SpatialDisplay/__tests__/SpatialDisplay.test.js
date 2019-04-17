@@ -54,12 +54,17 @@ describe('SpatialDisplay component', () => {
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
     expect(filterStackContents.props().title).toEqual('Rectangle')
-    expect(filterStackContents.props().body.props.value).toEqual('SW: 38.79165, -77.11976 NE: 38.99585, -76.90939') // Lat,Lon Lat,Lon
+    expect(filterStackContents.props().body.props.value)
+      .toEqual('SW: 38.79165, -77.11976 NE: 38.99585, -76.90939') // Lat,Lon Lat,Lon
   })
 
   test('with polygonSearch should render without spatial info', () => {
     const { enzymeWrapper } = setup()
-    const newPolygon = '-77.04444122314453,38.99228142151045,-77.01992797851562,38.79166886339155,-76.89415168762207,38.902629947921575,-77.04444122314453,38.99228142151045'
+    const newPolygon = '-77.04444122314453,38.99228142151045,'
+      + '-77.01992797851562,38.79166886339155,'
+      + '-76.89415168762207,38.902629947921575,'
+      + '-77.04444122314453,38.99228142151045'
+
     enzymeWrapper.setProps({ polygonSearch: newPolygon })
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
@@ -68,7 +73,7 @@ describe('SpatialDisplay component', () => {
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
     expect(filterStackContents.props().title).toEqual('Polygon')
-    expect(filterStackContents.props().body.props.value).toEqual(newPolygon) // Points
+    expect(filterStackContents.props().body.props.value).toEqual('')
   })
 
   test('componentWillReceiveProps sets the state', () => {

@@ -3,10 +3,14 @@ import PropTypes from 'prop-types'
 
 import { Button } from 'react-bootstrap'
 
-import ConnectedSpatialDisplayContainer from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
-import ConnectedTemporalDisplayContainer from '../../containers/TemporalDisplayContainer/TemporalDisplayContainer'
-import ConnectedTemporalSelectionDropdownContainer from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
-import FilterStack from '../FilterStack/FilterStack'
+import ConnectedSpatialDisplayContainer
+  from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
+import ConnectedTemporalDisplayContainer
+  from '../../containers/TemporalDisplayContainer/TemporalDisplayContainer'
+import ConnectedTemporalSelectionDropdownContainer
+  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
+import FilterStack
+  from '../FilterStack/FilterStack'
 
 // Form Fields
 import TextField from '../FormFields/TextField/TextField'

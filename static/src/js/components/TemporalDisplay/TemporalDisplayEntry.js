@@ -12,9 +12,9 @@ const TemporalDisplayEntry = pure((props) => {
   const { value } = props
 
   return (
-    <React.Fragment>
+    <>
       {reformatDateString(value)}
-    </React.Fragment>
+    </>
   )
 })
 

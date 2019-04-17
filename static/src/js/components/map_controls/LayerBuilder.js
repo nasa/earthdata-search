@@ -15,6 +15,7 @@ const LayerBuilder = (props) => {
 
   return (
     <TileLayer
+      // eslint-disable-next-line max-len
       url={`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${time}/${projectionResolution}/{z}/{y}/{x}.${format}`}
       bounds={[
         [-89.9999, -179.9999],

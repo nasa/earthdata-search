@@ -64,7 +64,10 @@ export default class Arc {
     }
 
     // On the meridian
-    if ((abs(Math.PI - abs(this.coordA.theta)) < EPSILON) || (abs(Math.PI - abs(this.coordB.theta)) < EPSILON)) {
+    if (
+      (abs(Math.PI - abs(this.coordA.theta)) < EPSILON)
+      || (abs(Math.PI - abs(this.coordB.theta)) < EPSILON)
+    ) {
       return null
     }
 
