@@ -11,8 +11,8 @@
   overflow-x: scroll;
   overflow-y: hidden;
   background: $color__black--800;
-}
 
-.sidebar__section-title {
-  color: $color__white;
+  &__section-title {
+    color: $color__white;
+  }
 }

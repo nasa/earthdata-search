@@ -1,0 +1,42 @@
+.filter-stack-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $color__white;
+
+  &__header {
+    display: flex;
+    flex-grow: 0;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+  }
+
+  &__icon {
+    text-align: center;
+    color: $color__black--400;
+    font-size: 1.25rem;
+  }
+
+  &__title {
+    display: block;
+    height: 0;
+    width: 0;
+    font-size: 1rem;
+    visibility: hidden;
+  }
+
+  &__body {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    height: 3rem;
+    padding-right: 1.5rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+

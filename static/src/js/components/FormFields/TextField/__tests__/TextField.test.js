@@ -8,16 +8,16 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     name: 'testName',
-    value: 'Test value',
     onBlur: jest.fn(),
-    onChange: jest.fn()
+    onChange: jest.fn(),
+    value: 'Test value'
   }
 
   const enzymeWrapper = shallow(<TextField {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 

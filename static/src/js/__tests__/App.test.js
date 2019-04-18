@@ -11,8 +11,8 @@ function setup() {
   const enzymeWrapper = mount(<App {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import API from '../util/api'
 import actions from './index'
 
@@ -29,6 +30,19 @@ export const searchNlp = keyword => (dispatch) => {
 
           payload.spatial = {
             boundingBox: bbox.join(',')
+          }
+        }
+
+        if (response.data.edscTemporal) {
+          payload.temporal = response.data.edscTemporal.query
+
+          if (response.data.edscTemporal.isRecurring) {
+            const recurringDaysOfTheYear = [
+              moment(response.data.edscTemporal.start).dayOfYear(),
+              moment(response.data.edscTemporal.end).dayOfYear()
+            ]
+
+            payload.temporal = [payload.temporal, recurringDaysOfTheYear.join(',')].join(',')
           }
         }
 

@@ -9,18 +9,18 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    projection: 'epsg4326',
-    product: 'mock_product',
-    resolution: '500m',
     format: 'jpeg',
+    product: 'mock_product',
+    projection: 'epsg4326',
+    resolution: '500m',
     time: '2019-01-01'
   }
 
   const enzymeWrapper = shallow(<LayerBuilder {...props} />)
 
   return {
-    props,
-    enzymeWrapper
+    enzymeWrapper,
+    props
   }
 }
 
@@ -30,15 +30,17 @@ describe('LayerBuilder component', () => {
     const tileLayer = enzymeWrapper.find(TileLayer)
 
     const {
-      projection,
-      product,
-      resolution,
       format,
+      product,
+      projection,
+      resolution,
       time
     } = props
     const projectionResolution = `${projection.toUpperCase()}_${resolution}`
 
     expect(tileLayer.length).toBe(1)
+
+    // eslint-disable-next-line max-len
     expect(tileLayer.prop('url')).toEqual(`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${time}/${projectionResolution}/{z}/{y}/{x}.${format}`)
   })
 })

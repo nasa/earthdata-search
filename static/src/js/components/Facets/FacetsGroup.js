@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import FacetsList from './FacetsList'
 
+import './FacetsGroup.scss'
+
 class FacetsGroup extends Component {
   constructor(props) {
     super(props)
@@ -33,15 +35,15 @@ class FacetsGroup extends Component {
     const { isOpen } = this.state
 
     return (
-      <li className="facets__facet" key={facet.title}>
-        <h3 className="facets__facet-heading">
+      <li className="facets-group" key={facet.title}>
+        <h3 className="facets-group__heading">
           <button
-            className="btn btn-block facets__facet-button"
+            className="btn btn-block facets-group__button"
             type="button"
             onClick={this.onToggle}
           >
-            <span className="facets__facet-title">{facet.title}</span>
-            <div className="facets__facet-action">
+            <span className="facets-group__title">{facet.title}</span>
+            <div className="facets-group__action">
               {
                 !isOpen
                   ? (
@@ -57,13 +59,13 @@ class FacetsGroup extends Component {
             </div>
           </button>
         </h3>
-        <section className={`facets__facet-group
-          ${isOpen ? ' facets__facet-group--is-open' : ''}`}
+        <section className={`facets-group__body
+          ${isOpen ? ' facets-group__body--is-open' : ''}`}
         >
           { facet.totalSelected
             ? (
               <header>
-                <span className="facets__selected">{`${facet.totalSelected} Selected`}</span>
+                <span className="facets-group__selected">{`${facet.totalSelected} Selected`}</span>
               </header>
             )
             : null

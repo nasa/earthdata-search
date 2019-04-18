@@ -1,0 +1,51 @@
+.temporal-selection-dropdown {
+  display: inline-block;
+
+  &__menu {
+    width: 26.25rem;
+    margin-top: -0.5rem;
+    padding: $spacer;
+    border: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: $shadow__panel;
+
+    @include media-breakpoint-up(xl) {
+      width: 29.25rem;
+    }
+  }
+
+  &__button {
+    &--cancel {
+      color: $color__black--400;
+
+      &:hover {
+        color: $color__black--600;
+      }
+    }
+  }
+
+  &__inputs {
+    display: flex;
+  }
+
+  &__input-group {
+    width: 50%;
+    margin-bottom: 0.5rem;
+
+    &--start {
+      margin-right: 0.25rem;
+    }
+
+    &--end {
+      margin-left: 0.25rem;
+    }
+  }
+
+  &__label {
+    margin-bottom: 0.25rem;
+    font-size: 0.825em;
+    font-weight: 700;
+  }
+}
+

@@ -8,8 +8,6 @@ import {
 import queryString from 'query-string'
 import actions from '../../actions/index'
 
-import './GranuleResultsContainer.scss'
-
 const mapDispatchToProps = dispatch => ({
   onFocusedCollectionChange: (collectionId) => {
     dispatch(actions.changeFocusedCollection(collectionId))

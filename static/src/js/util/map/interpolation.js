@@ -3,7 +3,10 @@ import L from 'leaflet'
 import { gcInterpolate } from './geo'
 
 // Cartesian interpolation.  Averages lat and lng
-const interpolateCartesian = (ll0, ll1) => L.latLng((ll0.lat + ll1.lat) / 2, (ll0.lng + ll1.lng) / 2)
+const interpolateCartesian = (ll0, ll1) => L.latLng(
+  (ll0.lat + ll1.lat) / 2,
+  (ll0.lng + ll1.lng) / 2
+)
 
 // Geodetic interpolation.  Finds great circle path between the given points.
 // See geoutil.gcInterpolate

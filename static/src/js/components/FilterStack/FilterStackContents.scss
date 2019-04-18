@@ -1,0 +1,13 @@
+.filter-stack-contents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &:not(:first-child) {
+    margin-left: 1rem;
+  }
+
+  &__body {
+    font-size: 0.925rem;
+  }
+}

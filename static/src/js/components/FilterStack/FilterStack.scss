@@ -1,0 +1,16 @@
+.filter-stack {
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: $color__black--900;
+  color: $color__white;
+  visibility: hidden;
+
+  &--is-open {
+    height: auto;
+    width: auto;
+    visibility: visible;
+  }
+}

@@ -48,7 +48,8 @@ describe('changeQuery', () => {
       keyword: 'new keyword',
       spatial: {
         point: '0,0'
-      }
+      },
+      temporal: {}
     }
 
     // mock getCollections
@@ -73,7 +74,8 @@ describe('changeQuery', () => {
         keyword: 'new keyword',
         spatial: {
           point: '0,0'
-        }
+        },
+        temporal: {}
       }
     })
 
@@ -118,7 +120,8 @@ describe('clearFilters', () => {
     }
     const emptyQuery = {
       keyword: '',
-      spatial: {}
+      spatial: {},
+      temporal: ''
     }
 
     // mockStore with initialState

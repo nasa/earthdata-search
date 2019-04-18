@@ -151,4 +151,35 @@ describe('nlp#searchNlp', () => {
       })
     })
   })
+
+  test('calls changeQuery with temporal payload', () => {
+    moxios.stubRequest(/nlp.*/, {
+      status: 200,
+      response: {
+        edscSpatial: null,
+        edscTemporal: {
+          textAfterExtraction: '',
+          temporal: 'null, 2019-03',
+          timex: 'null, 2019-03',
+          query: '2019-03-01T00:00:00Z,2019-03-31T23:59:59Z',
+          start: '2019-03-01T00:00:00Z',
+          end: '2019-03-31T23:59:59Z',
+          recurring: true
+        },
+        keyword: 'march'
+      }
+    })
+
+    const store = mockStore()
+
+    const addMock = jest.spyOn(actions, 'changeQuery').mockImplementation(() => jest.fn())
+
+    store.dispatch(actions.searchNlp('march')).then(() => {
+      expect(addMock).toHaveBeenCalledTimes(1)
+      expect(addMock).toHaveBeenCalledWith({
+        keyword: 'march',
+        temporal: '2019-03-01T00:00:00Z,2019-03-31T23:59:59Z'
+      })
+    })
+  })
 })

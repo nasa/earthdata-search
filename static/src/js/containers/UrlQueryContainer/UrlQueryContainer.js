@@ -5,10 +5,14 @@ import actions from '../../actions/index'
 import { decodeUrlParams, encodeUrlQuery } from '../../util/url'
 
 const mapDispatchToProps = dispatch => ({
-  onChangeFocusedCollection: collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
-  onChangeMap: query => dispatch(actions.changeMap(query)),
-  onChangeQuery: query => dispatch(actions.changeQuery(query)),
-  onChangeUrl: query => dispatch(actions.changeUrl(query))
+  onChangeFocusedCollection:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onChangeMap:
+    query => dispatch(actions.changeMap(query)),
+  onChangeQuery:
+    query => dispatch(actions.changeQuery(query)),
+  onChangeUrl:
+    query => dispatch(actions.changeUrl(query))
 })
 
 const mapStateToProps = state => ({
@@ -19,7 +23,8 @@ const mapStateToProps = state => ({
   pathname: state.router.location.pathname,
   pointSearch: state.query.spatial.point,
   polygonSearch: state.query.spatial.polygon,
-  search: state.router.location.search
+  search: state.router.location.search,
+  temporalSearch: state.query.temporal
 })
 
 export class UrlQueryContainer extends Component {
@@ -61,9 +66,9 @@ export class UrlQueryContainer extends Component {
   render() {
     const { children } = this.props
     return (
-      <React.Fragment>
+      <>
         { children }
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -13,7 +13,11 @@ const Header = () => (
         <span className="header__site-name-ent header__site-name-ent--e">Earthdata</span>
         <span className="header__site-name-ent header__site-name-ent--s">Search</span>
       </Link>
-      <span className="header__site-env">Research</span>
+      <span className="header__site-env">
+        <i className="fa fa-bolt" />
+        {' '}
+        Serverless
+      </span>
     </h1>
   </header>
 )

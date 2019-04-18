@@ -24,7 +24,8 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
 export const clearFilters = () => (dispatch) => {
   const query = {
     keyword: '',
-    spatial: {}
+    spatial: {},
+    temporal: ''
   }
 
   // Remove URL items

@@ -21,7 +21,9 @@ import { dividePolygon } from '../../../util/map/geo'
 import projectPath from '../../../util/map/interpolation'
 
 const config = {
+  // eslint-disable-next-line max-len
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
+  // eslint-disable-next-line max-len
   gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
 }
 
@@ -254,12 +256,21 @@ class GranuleGridLayerExtended extends L.GridLayer {
       }
     }
 
-    setTimeout((() => this.drawOutlines(canvas, paths, nwPoint)), 0)
-    setTimeout((() => this.drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint)), 0)
-    setTimeout((() => this.drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
-    setTimeout((() => this.drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
+    setTimeout((
+      () => this.drawOutlines(canvas, paths, nwPoint)
+    ), 0)
+    setTimeout((
+      () => this.drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint)
+    ), 0)
+    setTimeout((
+      () => this.drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)
+    ), 0)
+    setTimeout((
+      () => this.drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)
+    ), 0)
 
     if ((paths.length > 0) && config.debug) {
+      // eslint-disable-next-line max-len
       console.log(`${paths.length} Overlapping Granules [(${bounds.getNorth()}, ${bounds.getWest()}), (${bounds.getSouth()}, ${bounds.getEast()})]`)
     }
   }

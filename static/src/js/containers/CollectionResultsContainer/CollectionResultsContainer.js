@@ -14,10 +14,14 @@ import actions from '../../actions/index'
 import './CollectionResultsContainer.scss'
 
 const mapDispatchToProps = dispatch => ({
-  onFocusedCollectionChange: collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
-  onMasterOverlayHeightChange: newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
-  onMasterOverlayPanelDragEnd: () => dispatch(actions.masterOverlayPanelDragEnd()),
-  onMasterOverlayPanelDragStart: data => dispatch(actions.masterOverlayPanelDragStart(data))
+  onFocusedCollectionChange:
+    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onMasterOverlayHeightChange:
+    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
+  onMasterOverlayPanelDragEnd:
+    () => dispatch(actions.masterOverlayPanelDragEnd()),
+  onMasterOverlayPanelDragStart:
+    data => dispatch(actions.masterOverlayPanelDragStart(data))
 })
 
 const mapStateToProps = state => ({
@@ -140,16 +144,17 @@ class CollectionResultsContainer extends Component {
       }
 
       return (
-        <li className="coll-res__item" key={collection.id}>
-          <div className="coll-res__item-thumb">
+        <li className="collection-results__item" key={collection.id}>
+          <div className="collection-results__item-thumb">
+            {/* eslint-disable-next-line max-len */}
             <img src="https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/datasets/C179003620-ORNL_DAAC?h=75&w=75" alt="Thumbnail" />
           </div>
-          <div className="coll-res__item-body">
-            <div className="coll-res__item-body-primary">
-              <h3 className="coll-res__item-title">
+          <div className="collection-results__item-body">
+            <div className="collection-results__item-body-primary">
+              <h3 className="collection-results__item-title">
                 <Link
                   onClick={() => this.handleClickCollection(collection.id)}
-                  className="coll-res__item-title-link"
+                  className="collection-results__item-title-link"
                   to={{
                     pathname: '/search/granules',
                     search: queryString
@@ -165,7 +170,7 @@ class CollectionResultsContainer extends Component {
                   {collection.dataset_id}
                 </Link>
               </h3>
-              <p className="coll-res__item-desc">
+              <p className="collection-results__item-desc">
                 <strong>{`${collection.granule_count} Granules`}</strong>
                 <strong> &bull; </strong>
                 <strong>{timeRange}</strong>
@@ -173,9 +178,9 @@ class CollectionResultsContainer extends Component {
                 <span>{collection.summary}</span>
               </p>
             </div>
-            <div className="coll-res__item-body-secondary">
+            <div className="collection-results__item-body-secondary">
               <p>
-                <span className="badge coll-res__item-attribution">
+                <span className="badge collection-results__item-attribution">
                   {`${collection.short_name} v${collection.version_id} -
                     ${displayOrganization}`
                   }
@@ -188,8 +193,8 @@ class CollectionResultsContainer extends Component {
     })
 
     return (
-      <section className="coll-res inner-panel">
-        <header className="container-fluid p-3 coll-res__header">
+      <section className="collection-results inner-panel">
+        <header className="container-fluid p-3 collection-results__header">
           <div className="row">
             <div className="col">
               <form className="form-inline mb-1" action="/">
@@ -266,9 +271,9 @@ class CollectionResultsContainer extends Component {
               </span>
             </div>
           </div>
-          <span className="coll-res__tab">
+          <span className="collection-results__tab">
             <span
-              className="coll-res__tab-handle"
+              className="collection-results__tab-handle"
               role="button"
               tabIndex="0"
               ref={(node) => {
@@ -276,12 +281,12 @@ class CollectionResultsContainer extends Component {
               }}
               onMouseDown={this.onMouseDown}
             />
-            <h2 className="coll-res__tab-heading">
+            <h2 className="collection-results__tab-heading">
               {`${collectionHits} Matching Collections`}
             </h2>
           </span>
         </header>
-        <ul className="coll-res__list">
+        <ul className="collection-results__list">
           { !collections.isLoading ? collectionResults : 'Loading...' }
         </ul>
       </section>

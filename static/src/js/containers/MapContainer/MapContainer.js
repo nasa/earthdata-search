@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import 'proj4'
@@ -12,15 +13,21 @@ import {
   ScaleControl
 } from 'react-leaflet'
 
+import LayerBuilder
+  from '../../components/map_controls/LayerBuilder'
+import ConnectedSpatialSelectionContainer
+  from '../SpatialSelectionContainer/SpatialSelectionContainer'
+import GranuleGridLayer
+  from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
+import ZoomHome
+  from '../../components/map_controls/ZoomHome'
+
+
 import actions from '../../actions/index'
-import ZoomHome from '../../components/map_controls/ZoomHome'
+
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
-import LayerBuilder from '../../components/map_controls/LayerBuilder'
-import ConnectedSpatialSelectionContainer
-  from '../SpatialSelectionContainer/SpatialSelectionContainer'
-import GranuleGridLayer from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
 const { BaseLayer, Overlay } = LayersControl
 
@@ -47,6 +54,7 @@ const EPSG4326 = new window.L.Proj.CRS(
 )
 const EPSG3413 = new window.L.Proj.CRS(
   'EPSG:3413',
+  // eslint-disable-next-line max-len
   '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
     origin: [-4194304, 4194304],
     resolutions: [
@@ -65,6 +73,7 @@ const EPSG3413 = new window.L.Proj.CRS(
 )
 const EPSG3031 = new window.L.Proj.CRS(
   'EPSG:3031',
+  // eslint-disable-next-line max-len
   '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
     origin: [-4194304, 4194304],
     resolutions: [
@@ -88,9 +97,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  mapParam: state.map.mapParam,
   focusedCollection: state.focusedCollection,
-  granules: state.entities.granules
+  granules: state.entities.granules,
+  mapParam: state.map.mapParam,
+  masterOverlayPanelHeight: state.ui.masterOverlayPanel.height
 })
 
 export class EdscMapContainer extends Component {
@@ -100,7 +110,19 @@ export class EdscMapContainer extends Component {
     this.handleMoveend = this.handleMoveend.bind(this)
   }
 
+  componentDidMount() {
+    // eslint-disable-next-line react/no-find-dom-node
+    this.controlContainer = ReactDOM
+      .findDOMNode(this.mapRef)
+      .querySelector('.leaflet-control-container')
+
+    if (this.controlContainer) {
+      this.onMasterOverlayPanelResize()
+    }
+  }
+
   componentDidUpdate() {
+    const { masterOverlayPanelHeight } = this.props
     const {
       leafletElement: map = null
     } = this.mapRef
@@ -108,6 +130,14 @@ export class EdscMapContainer extends Component {
     if (this.mapRef) {
       map.invalidateSize()
     }
+
+    if (this.controlContainer) {
+      this.onMasterOverlayPanelResize(masterOverlayPanelHeight)
+    }
+  }
+
+  onMasterOverlayPanelResize(newHeight) {
+    this.controlContainer.style.bottom = `${newHeight}px`
   }
 
   handleMoveend(event) {
@@ -150,7 +180,7 @@ export class EdscMapContainer extends Component {
         onMoveend={this.handleMoveend}
         zoomAnimation={false}
       >
-        <LayersControl position="bottomright">
+        <LayersControl position="bottomright" ref={(r) => { this.controls = r }}>
           <BaseLayer checked name="Blue Marble">
             <LayerBuilder
               projection={projections[projIndex]}
@@ -214,15 +244,16 @@ export class EdscMapContainer extends Component {
 }
 
 EdscMapContainer.defaultProps = {
-  mapParam: '0!0!2!1!0!0,2',
-  focusedCollection: ''
+  focusedCollection: '',
+  mapParam: '0!0!2!1!0!0,2'
 }
 
 EdscMapContainer.propTypes = {
-  mapParam: PropTypes.string,
-  onChangeMap: PropTypes.func.isRequired,
   focusedCollection: PropTypes.string,
-  granules: PropTypes.shape({}).isRequired
+  granules: PropTypes.shape({}).isRequired,
+  mapParam: PropTypes.string,
+  masterOverlayPanelHeight: PropTypes.number.isRequired,
+  onChangeMap: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EdscMapContainer)

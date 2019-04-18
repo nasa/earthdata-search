@@ -27,7 +27,8 @@ export const collectionsEndpoints = {
         projectH,
         scienceKeywordsH,
         sortKey,
-        tagKey
+        tagKey,
+        temporal
       } = {}) => API.post('collections', {
         params: {
           bounding_box: boundingBox,
@@ -51,7 +52,8 @@ export const collectionsEndpoints = {
           project_h: projectH,
           science_keywords_h: scienceKeywordsH,
           sort_key: sortKey,
-          tag_key: tagKey
+          tag_key: tagKey,
+          temporal
         }
       })
     },
