@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { camelCase } from 'lodash'
 import qs from 'qs'
 
-import { queryParamsFromUrlString } from '../../util/url'
+import { queryParamsFromUrlString } from '../../util/url/url'
 
 import FacetsGroup from './FacetsGroup'
 

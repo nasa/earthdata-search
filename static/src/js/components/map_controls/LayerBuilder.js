@@ -13,10 +13,13 @@ const LayerBuilder = (props) => {
 
   const projectionResolution = `${projection.toUpperCase()}_${resolution}`
 
+  let date = ''
+  if (time) [date] = new Date().toISOString().split('T')
+
   return (
     <TileLayer
       // eslint-disable-next-line max-len
-      url={`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${time}/${projectionResolution}/{z}/{y}/{x}.${format}`}
+      url={`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${projectionResolution}/{z}/{y}/{x}.${format}`}
       bounds={[
         [-89.9999, -179.9999],
         [89.9999, 179.9999]
@@ -29,7 +32,7 @@ const LayerBuilder = (props) => {
 }
 
 LayerBuilder.defaultProps = {
-  time: ''
+  time: false
 }
 
 LayerBuilder.propTypes = {
@@ -37,7 +40,7 @@ LayerBuilder.propTypes = {
   product: PropTypes.string.isRequired,
   resolution: PropTypes.string.isRequired,
   format: PropTypes.string.isRequired,
-  time: PropTypes.string
+  time: PropTypes.bool
 }
 
 export default LayerBuilder

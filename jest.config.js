@@ -7,5 +7,8 @@ module.exports = {
   coveragePathIgnorePatterns: [
     'package.json',
     'package-lock.json'
+  ],
+  setupFiles: [
+    '<rootDir>/test-env.js'
   ]
 }

@@ -4,7 +4,22 @@ import { UPDATE_MAP } from '../../constants/actionTypes'
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
-    const initialState = {}
+    const initialState = {
+      base: {
+        blueMarble: true,
+        trueColor: false,
+        landWaterMap: false
+      },
+      latitude: 0,
+      longitude: 0,
+      overlays: {
+        referenceFeatures: true,
+        coastlines: false,
+        referenceLabels: true
+      },
+      projection: 'epsg4326',
+      zoom: 2
+    }
 
     expect(mapReducer(undefined, action)).toEqual(initialState)
   })
@@ -13,7 +28,20 @@ describe('INITIAL_STATE', () => {
 describe('UPDATE_MAP', () => {
   test('returns the correct state', () => {
     const payload = {
-      mapParam: '0!0!2!1!0!0,2'
+      base: {
+        blueMarble: true,
+        trueColor: false,
+        landWaterMap: false
+      },
+      latitude: 0,
+      longitude: 0,
+      overlays: {
+        referenceFeatures: true,
+        coastlines: false,
+        referenceLabels: true
+      },
+      projection: 'epsg4326',
+      zoom: 2
     }
     const action = {
       type: UPDATE_MAP,

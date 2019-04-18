@@ -1,6 +1,6 @@
 import { UPDATE_FOCUSED_COLLECTION } from '../constants/actionTypes'
 
-const initialState = ''
+const initialState = {}
 
 const focusedCollectionReducer = (state = initialState, action) => {
   switch (action.type) {

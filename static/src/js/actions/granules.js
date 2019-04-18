@@ -8,7 +8,8 @@ export const updateGranules = payload => ({
 })
 
 export const getGranules = () => (dispatch, getState) => {
-  const { focusedCollection: collectionId } = getState()
+  const { focusedCollection = {} } = getState()
+  const { collectionId } = focusedCollection
 
   if (!collectionId) {
     dispatch(updateGranules({

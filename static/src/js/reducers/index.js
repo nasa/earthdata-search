@@ -12,6 +12,7 @@ import granulesReducer from './granules'
 import mapReducer from './map'
 import queryReducer from './query'
 import uiReducer from './ui'
+import timelineReducer from './timeline'
 
 export default history => combineReducers({
   entities: combineReducers({
@@ -27,5 +28,6 @@ export default history => combineReducers({
   map: mapReducer,
   query: queryReducer,
   router: connectRouter(history),
+  timeline: timelineReducer,
   ui: uiReducer
 })

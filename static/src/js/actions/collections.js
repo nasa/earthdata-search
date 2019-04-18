@@ -72,7 +72,7 @@ export const getCollections = () => (dispatch, getState) => {
   const {
     keyword,
     spatial = {},
-    temporal
+    temporal = {}
   } = query
 
   const {
@@ -80,6 +80,9 @@ export const getCollections = () => (dispatch, getState) => {
     point,
     polygon
   } = spatial
+
+  const { endDate, startDate } = temporal
+  const temporalString = startDate || endDate ? [startDate, endDate].join(',') : null
 
   const {
     cmr: cmrFacets = {},
@@ -123,7 +126,7 @@ export const getCollections = () => (dispatch, getState) => {
     scienceKeywordsH: cmrFacets.science_keywords_h,
     sortKey: ['has_granules_or_cwic'],
     tagKey,
-    temporal
+    temporal: temporalString
   })
     .then((response) => {
       const payload = {}

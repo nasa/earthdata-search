@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    temporalSearch: ''
+    temporalSearch: {}
   }
 
   const enzymeWrapper = shallow(<TemporalDisplay {...props} />)
@@ -29,8 +29,10 @@ describe('TemporalDisplay component', () => {
 
   test('with only a start date should render the start date', () => {
     const { enzymeWrapper } = setup()
-    const newPoint = '2019-03-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: newPoint })
+    const temporal = {
+      startDate: '2019-03-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -46,8 +48,10 @@ describe('TemporalDisplay component', () => {
 
   test('with only a end date should render the end date', () => {
     const { enzymeWrapper } = setup()
-    const newPoint = ',2019-05-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: newPoint })
+    const temporal = {
+      endDate: '2019-05-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -63,8 +67,11 @@ describe('TemporalDisplay component', () => {
 
   test('with both start and end date should render the both start and end date', () => {
     const { enzymeWrapper } = setup()
-    const newPoint = '2019-03-30T00:00:00Z,2019-05-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: newPoint })
+    const temporal = {
+      endDate: '2019-05-30T00:00:00Z',
+      startDate: '2019-03-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -81,8 +88,11 @@ describe('TemporalDisplay component', () => {
 
   test('with the same props should not rerender', () => {
     const { enzymeWrapper } = setup()
-    const firstPoint = '2019-03-30T00:00:00Z,2019-05-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: firstPoint })
+    const temporal = {
+      endDate: '2019-05-30T00:00:00Z',
+      startDate: '2019-03-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -96,8 +106,11 @@ describe('TemporalDisplay component', () => {
     expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
     expect(filterStackContents.at(1).prop('body').props.value).toBe('2019-05-30T00:00:00Z')
 
-    const secondPoint = '2019-03-30T00:00:00Z,2019-05-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: secondPoint })
+    const secondTemporal = {
+      endDate: '2019-05-30T00:00:00Z',
+      startDate: '2019-03-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: secondTemporal })
 
     expect(filterStackItem.length).toBe(1)
     expect(filterStackContents.length).toBe(2)
@@ -111,8 +124,11 @@ describe('TemporalDisplay component', () => {
 
   test('with new props should rerender', () => {
     const { enzymeWrapper } = setup()
-    const firstPoint = '2019-03-30T00:00:00Z,2019-05-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: firstPoint })
+    const temporal = {
+      endDate: '2019-05-30T00:00:00Z',
+      startDate: '2019-03-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
@@ -126,7 +142,10 @@ describe('TemporalDisplay component', () => {
     expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
     expect(filterStackContents.at(1).prop('body').props.value).toBe('2019-05-30T00:00:00Z')
 
-    const secondPoint = '2019-03-29T00:00:00Z,2019-05-29T00:00:00Z'
+    const secondPoint = {
+      endDate: '2019-05-29T00:00:00Z',
+      startDate: '2019-03-29T00:00:00Z'
+    }
     enzymeWrapper.setProps({ temporalSearch: secondPoint })
 
     const secondfilterStackItem = enzymeWrapper.find(FilterStackItem)

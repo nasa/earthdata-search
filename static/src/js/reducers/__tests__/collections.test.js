@@ -31,6 +31,7 @@ describe('UPDATE_COLLECTIONS', () => {
       type: UPDATE_COLLECTIONS,
       payload: {
         results: [{
+          id: 'mockCollectionId',
           mockCollectionData: 'goes here'
         }],
         hits: 0,
@@ -42,9 +43,10 @@ describe('UPDATE_COLLECTIONS', () => {
       ...initialState,
       keyword: 'search keyword',
       hits: 0,
-      allIds: [0],
+      allIds: ['mockCollectionId'],
       byId: {
-        0: {
+        mockCollectionId: {
+          id: 'mockCollectionId',
           mockCollectionData: 'goes here'
         }
       }

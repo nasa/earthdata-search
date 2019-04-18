@@ -12,11 +12,11 @@ export const TemporalDisplayContainer = ({ temporalSearch }) => (
 )
 
 TemporalDisplayContainer.defaultProps = {
-  temporalSearch: ''
+  temporalSearch: {}
 }
 
 TemporalDisplayContainer.propTypes = {
-  temporalSearch: PropTypes.string
+  temporalSearch: PropTypes.shape({})
 }
 
 export default connect(mapStateToProps)(TemporalDisplayContainer)

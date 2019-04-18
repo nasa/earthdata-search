@@ -59,7 +59,15 @@ export const collectionsEndpoints = {
     },
     {
       name: 'getOne',
-      callback: ({ collectionId } = {}) => API.get(`collections/${collectionId}`)
+      callback: ({
+        collectionId,
+        includeTags
+      } = {}) => API.post('collections', {
+        params: {
+          concept_id: collectionId,
+          include_tags: includeTags
+        }
+      })
     }
   ]
 }
@@ -88,4 +96,30 @@ export const granulesEndpoints = {
       callback: ({ granuleId } = {}) => API.get(`granules/${granuleId}`)
     }
   ]
+}
+
+export const timelineEndpoints = {
+  name: 'timeline',
+  endpoints: [{
+    name: 'getAll',
+    callback: ({
+      collectionId,
+      endDate,
+      interval,
+      pageNum,
+      pageSize,
+      sortKey,
+      startDate
+    } = {}) => API.post('granules/timeline', {
+      params: {
+        echo_collection_id: collectionId,
+        end_date: endDate,
+        interval,
+        page_num: pageNum,
+        page_size: pageSize,
+        sort_key: sortKey,
+        start_date: startDate
+      }
+    })
+  }]
 }

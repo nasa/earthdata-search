@@ -8,7 +8,7 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import { EdscMapContainer } from '../MapContainer'
+import { MapContainer } from '../MapContainer'
 import ZoomHome from '../../../components/map_controls/ZoomHome'
 import LayerBuilder from '../../../components/map_controls/LayerBuilder'
 import ConnectedSpatialSelectionContainer
@@ -22,7 +22,22 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     granules: {},
-    mapParam: '0!0!2!1!0!0,2',
+    map: {
+      base: {
+        blueMarble: true,
+        trueColor: false,
+        landWaterMap: false
+      },
+      latitude: '0',
+      longitude: '0',
+      overlays: {
+        referenceFeatures: true,
+        coastlines: false,
+        referenceLabels: true
+      },
+      projection: 'epsg4326',
+      zoom: '2'
+    },
     masterOverlayPanelHeight: 500,
     onChangeMap: jest.fn()
   }
@@ -30,7 +45,7 @@ function setup() {
   // Mount is required here so we can have access to the mapRef
   const enzymeWrapper = mount(
     <Provider store={store}>
-      <EdscMapContainer {...props} />
+      <MapContainer {...props} />
     </Provider>
   )
 
@@ -40,7 +55,7 @@ function setup() {
   }
 }
 
-describe('EdscMapContainer component', () => {
+describe('MapContainer component', () => {
   test('should render self and controls', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.exists()).toBe(true)
@@ -67,9 +82,13 @@ describe('EdscMapContainer component', () => {
     const map = enzymeWrapper.find(Map)
     map.prop('onMoveend')(event)
 
-    const newMapParam = '38.805869!-77.0418825!2!1!0!0,2'
+    const newMap = {
+      latitude: 38.805869,
+      longitude: -77.0418825,
+      zoom: 2
+    }
 
     expect(props.onChangeMap.mock.calls.length).toBe(1)
-    expect(props.onChangeMap.mock.calls[0]).toEqual([{ mapParam: newMapParam }])
+    expect(props.onChangeMap.mock.calls[0]).toEqual([{ ...newMap }])
   })
 })

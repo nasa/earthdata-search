@@ -2,12 +2,8 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
-import { updateSearchQuery, updateFocusedCollection } from '../search'
-import {
-  UPDATE_SEARCH_QUERY,
-  CHANGE_URL,
-  UPDATE_FOCUSED_COLLECTION
-} from '../../constants/actionTypes'
+import { updateSearchQuery } from '../search'
+import { UPDATE_SEARCH_QUERY } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -28,17 +24,6 @@ describe('updateSearchQuery', () => {
       payload
     }
     expect(updateSearchQuery(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('updateFocusedCollection', () => {
-  test('should create an action to update the focused collection', () => {
-    const payload = 'newCollectionId'
-    const expectedAction = {
-      type: UPDATE_FOCUSED_COLLECTION,
-      payload
-    }
-    expect(updateFocusedCollection(payload)).toEqual(expectedAction)
   })
 })
 
@@ -84,32 +69,6 @@ describe('changeQuery', () => {
   })
 })
 
-describe('changeFocusedCollection', () => {
-  test('should update the focusedCollection and call getGranules', () => {
-    const newCollectionId = 'newCollectionId'
-
-    // mock getGranules
-    const getGranulesMock = jest.spyOn(actions, 'getGranules')
-    getGranulesMock.mockImplementation(() => jest.fn())
-
-    // mockStore with initialState
-    const store = mockStore()
-
-    // call the dispatch
-    store.dispatch(actions.changeFocusedCollection(newCollectionId))
-
-    // Is updateSearchQuery called with the right payload
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_FOCUSED_COLLECTION,
-      payload: newCollectionId
-    })
-
-    // was getGranules called
-    expect(getGranulesMock).toHaveBeenCalledTimes(1)
-  })
-})
-
 describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
     const query = {
@@ -121,7 +80,7 @@ describe('clearFilters', () => {
     const emptyQuery = {
       keyword: '',
       spatial: {},
-      temporal: ''
+      temporal: {}
     }
 
     // mockStore with initialState

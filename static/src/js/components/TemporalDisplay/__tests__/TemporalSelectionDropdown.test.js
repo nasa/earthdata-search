@@ -13,7 +13,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    temporalSearch: '',
+    temporalSearch: {},
     onChangeQuery: jest.fn()
   }
 
@@ -40,7 +40,11 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when passed a start date renders DatePicker component correctly', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00.000Z,' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        startDate: '2019-03-30T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
     expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('2019-03-30T00:00:00.000Z')
@@ -50,7 +54,11 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when passed a end date renders DatePicker component correctly', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: ',2019-03-30T00:00:00.000Z' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        endDate: '2019-03-30T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
     expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('')
@@ -60,7 +68,12 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when passed a both start and end dates renders DatePicker components correctly', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: '2019-03-29T00:00:00.000Z,2019-03-30T00:00:00.000Z' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        endDate: '2019-03-30T00:00:00.000Z',
+        startDate: '2019-03-29T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
     expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('2019-03-29T00:00:00.000Z')
@@ -70,7 +83,12 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when passed a start date after the end date renders DatePicker components correctly', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00.000Z,2019-03-29T00:00:00.000Z' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        endDate: '2019-03-29T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find(Datepicker).at(0).prop('type')).toBe('start')
     expect(enzymeWrapper.find(Datepicker).at(0).prop('value')).toBe('2019-03-30T00:00:00.000Z')
@@ -80,14 +98,24 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when passed a start date after the end date disables the apply button', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00.000Z,2019-03-29T00:00:00.000Z' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        endDate: '2019-03-29T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find('.temporal-selection-dropdown__button--apply').prop('disabled')).toBe(true)
   })
 
   test('when passed a start date before the end date renders Alert correctly', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: '2019-03-29T00:00:00.000Z,2019-03-30T00:00:00.000Z' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        endDate: '2019-03-30T00:00:00.000Z',
+        startDate: '2019-03-29T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(false)
     expect(enzymeWrapper.find(Alert).at(1).prop('show')).toBe(false)
@@ -95,7 +123,12 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when passed a start date after the end date renders Alert correctly', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ temporalSearch: '2019-03-30T00:00:00.000Z,2019-03-29T00:00:00.000Z' })
+    enzymeWrapper.setProps({
+      temporalSearch: {
+        endDate: '2019-03-29T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z'
+      }
+    })
 
     expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(true)
     expect(enzymeWrapper.find(Alert).at(1).prop('show')).toBe(false)
@@ -162,7 +195,10 @@ describe('TemporalSelectionDropdown component', () => {
     const onChangeQueryMock = jest.fn()
     enzymeWrapper.setProps({
       onChangeQuery: onChangeQueryMock,
-      temporalSearch: '2019-03-29T00:00:00.000Z,2019-03-30T00:00:00.000Z'
+      temporalSearch: {
+        endDate: '2019-03-30T00:00:00.000Z',
+        startDate: '2019-03-29T00:00:00.000Z'
+      }
     })
     enzymeWrapper.setState({ open: true })
 
@@ -178,7 +214,7 @@ describe('TemporalSelectionDropdown component', () => {
     const onChangeQueryMock = jest.fn()
     enzymeWrapper.setProps({
       onChangeQuery: onChangeQueryMock,
-      temporalSearch: ''
+      temporalSearch: {}
     })
     enzymeWrapper.setState({
       open: true,
@@ -191,7 +227,10 @@ describe('TemporalSelectionDropdown component', () => {
     enzymeWrapper.instance().onApplyClick()
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
-      temporal: '2019-03-29T00:00:00.000Z,2019-03-30T00:00:00.000Z'
+      temporal: {
+        endDate: '2019-03-30T00:00:00.000Z',
+        startDate: '2019-03-29T00:00:00.000Z'
+      }
     })
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
     expect(enzymeWrapper.state()).toEqual({

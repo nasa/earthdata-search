@@ -22,6 +22,7 @@ const mapStateToProps = state => ({
 export const SpatialSelectionContainer = (props) => {
   const {
     boundingBoxSearch,
+    mapRef,
     onChangeMap,
     onChangeQuery,
     pointSearch,
@@ -30,10 +31,11 @@ export const SpatialSelectionContainer = (props) => {
 
   return (
     <SpatialSelection
-      onChangeQuery={onChangeQuery}
-      onChangeMap={onChangeMap}
-      pointSearch={pointSearch}
       boundingBoxSearch={boundingBoxSearch}
+      mapRef={mapRef}
+      onChangeMap={onChangeMap}
+      onChangeQuery={onChangeQuery}
+      pointSearch={pointSearch}
       polygonSearch={polygonSearch}
     />
   )

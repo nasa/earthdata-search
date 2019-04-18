@@ -522,31 +522,18 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   // Set the granule results that need to be drawna
-  setResults(results) {
+  setResults(focusedCollection, results) {
     this._results = results
-    if (results && results[0] && results[0].collection_concept_id === 'C24931-LAADS') {
-      // Hard code C24931-LAADS to work with gibs imagery until we have that full functionality in place
-      this.multiOptions = [{
-        antarctic: true,
-        antarctic_resolution: '1km',
-        arctic: true,
-        arctic_resolution: '1km',
-        format: 'png',
-        geo: true,
-        geo_resolution: '1km',
-        group: 'overlays',
-        match: {
-          time_start: '>=2000-02-24T00:00:00Z'
-        },
-        maxNativeZoom: 5,
-        product: 'MODIS_Terra_Brightness_Temp_Band31_Day',
-        resolution: '1km',
-        source: 'Terra / MODIS',
-        title: 'Brightness Temperature (Band 31-Day)'
-      }]
-    } else {
-      this.multiOptions = undefined
-    }
+
+    // Set multiOptions (gibs data)
+    const { collectionId, metadata = {} } = focusedCollection
+    const { tags = {} } = metadata
+    const { 'edsc.extra.gibs': gibsTag = {} } = tags
+    const { data } = gibsTag
+    this.multiOptions = data
+
+    this._container.setAttribute('id', `granule-vis-${collectionId}`)
+
     return this.redraw()
   }
 
@@ -733,6 +720,7 @@ class GranuleGridLayer extends GridLayer {
   createLeafletElement(props) {
     const layer = new GranuleGridLayerExtended(props)
     this.layer = layer
+    layer.setZIndex(20)
     return layer
   }
 
@@ -740,7 +728,7 @@ class GranuleGridLayer extends GridLayer {
   updateLeafletElement(fromProps, toProps) {
     const { layer } = this
     if (fromProps.granules !== toProps.granules) {
-      layer.setResults(Object.values(toProps.granules.byId))
+      layer.setResults(toProps.focusedCollection, Object.values(toProps.granules.byId))
     }
   }
 }

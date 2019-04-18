@@ -1,6 +1,7 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const StaticCommonConfig = {
@@ -97,7 +98,10 @@ const StaticCommonConfig = {
     }),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery'
+    })
   ]
 }
 

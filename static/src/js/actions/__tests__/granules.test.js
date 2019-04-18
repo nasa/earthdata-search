@@ -2,7 +2,6 @@ import moxios from 'moxios'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-// import actions from '../index'
 import {
   updateGranules,
   getGranules
@@ -49,7 +48,7 @@ describe('getGranules', () => {
     })
 
     // mockStore with initialState
-    const store = mockStore({ focusedCollection: 'collectionId' })
+    const store = mockStore({ focusedCollection: { collectionId: 'collectionId' } })
 
     // call the dispatch
     await store.dispatch(getGranules()).then(() => {
@@ -86,7 +85,7 @@ describe('getGranules', () => {
       response: {}
     })
 
-    const store = mockStore({ focusedCollection: 'collectionId' })
+    const store = mockStore({ focusedCollection: { collectionId: 'collectionId' } })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 

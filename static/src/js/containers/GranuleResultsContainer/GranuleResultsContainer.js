@@ -39,6 +39,8 @@ class GranuleResultsContainer extends Component {
       focusedCollection
     } = this.props
 
+    const { id: collectionId } = focusedCollection
+
     const granuleResults = granules.allIds.map((id) => {
       const granule = granules.byId[id]
 
@@ -62,7 +64,7 @@ class GranuleResultsContainer extends Component {
         </Link>
         <p>Granules for collection</p>
         <ul>
-          {focusedCollection}
+          {collectionId}
         </ul>
         {granuleResults}
       </div>
@@ -71,13 +73,13 @@ class GranuleResultsContainer extends Component {
 }
 
 GranuleResultsContainer.defaultProps = {
-  focusedCollection: ''
+  focusedCollection: {}
 }
 
 GranuleResultsContainer.propTypes = {
   granules: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string,
+  focusedCollection: PropTypes.shape({}),
   onFocusedCollectionChange: PropTypes.func.isRequired
 }
 

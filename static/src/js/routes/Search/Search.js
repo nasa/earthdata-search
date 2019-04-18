@@ -8,7 +8,7 @@ import {
 
 import CollectionResultsContainer
   from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
-import ConnectedEdscMapContainer
+import ConnectedMapContainer
   from '../../containers/MapContainer/MapContainer'
 import ConnectedMasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
@@ -26,7 +26,7 @@ const Search = (props) => {
 
   return (
     <div className="route-wrapper route-wrapper--search search">
-      <ConnectedEdscMapContainer />
+      <ConnectedMapContainer />
       <MyDropzone />
       <SidebarContainer />
       <ConnectedSearchFormContainer />

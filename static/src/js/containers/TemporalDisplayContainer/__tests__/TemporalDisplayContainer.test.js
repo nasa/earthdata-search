@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    temporalSearch: ''
+    temporalSearch: {}
   }
 
   const enzymeWrapper = shallow(<TemporalDisplayContainer {...props} />)
@@ -22,8 +22,8 @@ function setup() {
 describe('TemporalDisplayContainer component', () => {
   test('with start date should render the temporal info', () => {
     const { enzymeWrapper } = setup()
-    const newStartDate = '2019-03-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: newStartDate })
+    const temporal = { startDate: '2019-03-30T00:00:00Z' }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     expect(enzymeWrapper.find(TemporalDisplay).length).toEqual(1)
 
@@ -32,8 +32,11 @@ describe('TemporalDisplayContainer component', () => {
 
   test('with start date and end date should render the temporal info', () => {
     const { enzymeWrapper } = setup()
-    const newStartDate = '2019-03-30T00:00:00Z,2019-05-30T00:00:00Z'
-    enzymeWrapper.setProps({ temporalSearch: newStartDate })
+    const temporal = {
+      endDate: '2019-05-30T00:00:00Z',
+      startDate: '2019-03-30T00:00:00Z'
+    }
+    enzymeWrapper.setProps({ temporalSearch: temporal })
 
     expect(enzymeWrapper.find(TemporalDisplay).length).toEqual(1)
 
