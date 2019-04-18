@@ -46,7 +46,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
       temporalSearch
     } = this.props
 
-    const [startDate, endDate] = nextProps.temporalSearch.split(',')
+    const { endDate, startDate } = nextProps.temporalSearch
 
     if (temporalSearch !== nextProps.temporalSearch) {
       this.setState({
@@ -79,10 +79,10 @@ export default class TemporalSelectionDropdown extends PureComponent {
     const { startDate, endDate } = temporal
 
     onChangeQuery({
-      temporal: [
+      temporal: {
         startDate,
         endDate
-      ].join(',')
+      }
     })
 
     this.setState({
@@ -289,10 +289,10 @@ export default class TemporalSelectionDropdown extends PureComponent {
 }
 
 TemporalSelectionDropdown.defaultProps = {
-  temporalSearch: ''
+  temporalSearch: {}
 }
 
 TemporalSelectionDropdown.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
-  temporalSearch: PropTypes.string
+  temporalSearch: PropTypes.shape({})
 }

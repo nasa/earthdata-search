@@ -23,7 +23,7 @@ class TemporalDisplay extends PureComponent {
     } = this.props
 
     if (temporalSearch !== nextProps.temporalSearch) {
-      const [startDate, endDate] = nextProps.temporalSearch.split(',')
+      const { endDate, startDate } = nextProps.temporalSearch
 
       this.setState({
         endDate,
@@ -68,11 +68,11 @@ class TemporalDisplay extends PureComponent {
 }
 
 TemporalDisplay.defaultProps = {
-  temporalSearch: ''
+  temporalSearch: {}
 }
 
 TemporalDisplay.propTypes = {
-  temporalSearch: PropTypes.string
+  temporalSearch: PropTypes.shape({})
 }
 
 export default TemporalDisplay

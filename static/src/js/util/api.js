@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { collectionsEndpoints, granulesEndpoints } from './api/cmr_api'
+import {
+  collectionsEndpoints,
+  granulesEndpoints,
+  timelineEndpoints
+} from './api/cmr_api'
 import nlpEndpoints from './api/nlp_api'
 
 class APIWrapper {
@@ -40,6 +44,7 @@ const API = new APIWrapper({ url: 'http://localhost:3001' })
 // CMR
 API.buildEntity(collectionsEndpoints)
 API.buildEntity(granulesEndpoints)
+API.buildEntity(timelineEndpoints)
 
 // NLP
 API.buildEntity(nlpEndpoints)

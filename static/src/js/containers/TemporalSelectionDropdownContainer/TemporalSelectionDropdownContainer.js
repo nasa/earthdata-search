@@ -34,11 +34,11 @@ const TemporalSelectionDropdownContainer = (props) => {
 }
 
 TemporalSelectionDropdownContainer.defaultProps = {
-  temporalSearch: ''
+  temporalSearch: {}
 }
 
 TemporalSelectionDropdownContainer.propTypes = {
-  temporalSearch: PropTypes.string,
+  temporalSearch: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired
 }
 

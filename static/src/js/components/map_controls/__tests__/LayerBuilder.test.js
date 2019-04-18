@@ -13,7 +13,7 @@ function setup() {
     product: 'mock_product',
     projection: 'epsg4326',
     resolution: '500m',
-    time: '2019-01-01'
+    time: true
   }
 
   const enzymeWrapper = shallow(<LayerBuilder {...props} />)
@@ -33,14 +33,15 @@ describe('LayerBuilder component', () => {
       format,
       product,
       projection,
-      resolution,
-      time
+      resolution
     } = props
     const projectionResolution = `${projection.toUpperCase()}_${resolution}`
+
+    const [date] = new Date().toISOString().split('T')
 
     expect(tileLayer.length).toBe(1)
 
     // eslint-disable-next-line max-len
-    expect(tileLayer.prop('url')).toEqual(`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${time}/${projectionResolution}/{z}/{y}/{x}.${format}`)
+    expect(tileLayer.prop('url')).toEqual(`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${projectionResolution}/{z}/{y}/{x}.${format}`)
   })
 })

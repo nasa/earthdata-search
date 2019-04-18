@@ -5,6 +5,6 @@ export const updateMap = payload => ({
   payload
 })
 
-export const changeMap = mapParam => (dispatch) => {
-  dispatch(updateMap({ ...mapParam }))
+export const changeMap = map => (dispatch) => {
+  dispatch(updateMap(map))
 }

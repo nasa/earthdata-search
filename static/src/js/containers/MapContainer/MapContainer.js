@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import 'proj4'
 import 'proj4leaflet'
-import L from 'leaflet'
 import {
   Map,
   LayersControl,
@@ -21,76 +20,17 @@ import GranuleGridLayer
   from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 import ZoomHome
   from '../../components/map_controls/ZoomHome'
+import ProjectionSwitcher
+  from '../../components/map_controls/ProjectionSwitcher'
 
+import crsProjections from '../../util/map/projections'
 
 import actions from '../../actions/index'
-
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
 const { BaseLayer, Overlay } = LayersControl
-
-const EPSG4326 = new window.L.Proj.CRS(
-  'EPSG:4326',
-  '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs', {
-    origin: [-180, 90],
-    resolutions: [
-      0.5625,
-      0.28125,
-      0.140625,
-      0.0703125,
-      0.03515625,
-      0.017578125,
-      0.0087890625,
-      0.00439453125,
-      0.002197265625
-    ],
-    bounds: L.Bounds([
-      [-180, -90],
-      [180, 90]
-    ])
-  }
-)
-const EPSG3413 = new window.L.Proj.CRS(
-  'EPSG:3413',
-  // eslint-disable-next-line max-len
-  '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
-    origin: [-4194304, 4194304],
-    resolutions: [
-      8192.0,
-      4096.0,
-      2048.0,
-      1024.0,
-      512.0,
-      256.0
-    ],
-    bounds: L.bounds([
-      [-4194304, -4194304],
-      [4194304, 4194304]
-    ])
-  }
-)
-const EPSG3031 = new window.L.Proj.CRS(
-  'EPSG:3031',
-  // eslint-disable-next-line max-len
-  '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
-    origin: [-4194304, 4194304],
-    resolutions: [
-      8192.0,
-      4096.0,
-      2048.0,
-      1024.0,
-      512.0,
-      256.0
-    ],
-    bounds: L.Bounds([
-      [-4194304, -4194304],
-      [4194304, 4194304]
-    ])
-  }
-)
-const crsProjections = [EPSG3413, EPSG4326, EPSG3031]
 
 const mapDispatchToProps = dispatch => ({
   onChangeMap: query => dispatch(actions.changeMap(query))
@@ -99,15 +39,18 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection,
   granules: state.entities.granules,
-  mapParam: state.map.mapParam,
+  map: state.map,
   masterOverlayPanelHeight: state.ui.masterOverlayPanel.height
 })
 
-export class EdscMapContainer extends Component {
+export class MapContainer extends Component {
   constructor(props) {
     super(props)
 
     this.handleMoveend = this.handleMoveend.bind(this)
+    this.handleBaseLayerChange = this.handleBaseLayerChange.bind(this)
+    this.handleOverlayChange = this.handleOverlayChange.bind(this)
+    this.handleProjectionSwitching = this.handleProjectionSwitching.bind(this)
   }
 
   componentDidMount() {
@@ -147,84 +90,175 @@ export class EdscMapContainer extends Component {
     const { lng } = center
     const zoom = map.getZoom()
 
-    const mapParam = `${lat}!${lng}!${zoom}!1!0!0,2`
-
     const { onChangeMap } = this.props
-    onChangeMap({ mapParam })
+    onChangeMap({
+      latitude: lat,
+      longitude: lng,
+      zoom
+    })
+  }
+
+  handleBaseLayerChange(event) {
+    const { onChangeMap } = this.props
+    const base = {
+      blueMarble: false,
+      trueColor: false,
+      landWaterMap: false
+    }
+
+    if (event.name === 'Blue Marble') base.blueMarble = true
+    if (event.name === 'Corrected Reflectance (True Color)') base.trueColor = true
+    if (event.name === 'Land / Water Map *') base.landWaterMap = true
+
+    onChangeMap({ base })
+  }
+
+  handleOverlayChange(event) {
+    const { map, onChangeMap } = this.props
+    const { overlays } = map
+
+    const enabled = event.type === 'overlayadd'
+    switch (event.name) {
+      case 'Borders and Roads *':
+        overlays.referenceFeatures = enabled
+        break
+      case 'Coastlines':
+        overlays.coastlines = enabled
+        break
+      case 'Place Labels *':
+        overlays.referenceLabels = enabled
+        break
+      default:
+        break
+    }
+
+    onChangeMap({ overlays })
+  }
+
+  handleProjectionSwitching(projection) {
+    const { onChangeMap } = this.props
+    const map = {
+      latitude: 0,
+      longitude: 0,
+      projection,
+      zoom: 2
+    }
+
+    if (projection === 'epsg3413') {
+      map.latitude = 90
+      map.zoom = 0
+    }
+
+    if (projection === 'epsg3031') {
+      map.latitude = -90
+      map.zoom = 0
+    }
+
+    this.mapRef.leafletElement.options.crs = crsProjections[projection]
+    onChangeMap({ ...map })
   }
 
   render() {
     const {
-      mapParam,
+      map,
       focusedCollection,
       granules
     } = this.props
-    // const [lat, lng, zoom, proj, base, overlays] = map.split('!')
-    const [lat, lng, zoom, proj] = mapParam.split('!')
-    const center = [lat, lng]
-    const projections = ['epsg3413', 'epsg4326', 'epsg3031']
-    const projIndex = proj !== undefined ? proj : 1
 
+    const {
+      base,
+      latitude,
+      longitude,
+      overlays,
+      projection,
+      zoom
+    } = map
+
+    const center = [latitude, longitude]
+
+    const maxZoom = projection === 'epsg4326' ? 7 : 4
+
+    if (this.mapRef) this.mapRef.leafletElement.options.crs = crsProjections[projection]
 
     return (
       <Map
         className="map"
         center={center}
         zoom={zoom}
-        maxZoom={7}
-        crs={crsProjections[projIndex]}
+        maxZoom={maxZoom}
+        crs={crsProjections[projection]}
         ref={(ref) => { this.mapRef = ref }}
-        projIndex={projIndex}
         zoomControl={false}
         attributionControl={false}
         onMoveend={this.handleMoveend}
+        onBaselayerChange={this.handleBaseLayerChange}
+        onOverlayAdd={this.handleOverlayChange}
+        onOverlayRemove={this.handleOverlayChange}
         zoomAnimation={false}
       >
         <LayersControl position="bottomright" ref={(r) => { this.controls = r }}>
-          <BaseLayer checked name="Blue Marble">
+          <BaseLayer
+            checked={base.blueMarble}
+            name="Blue Marble"
+          >
             <LayerBuilder
-              projection={projections[projIndex]}
+              projection={projection}
               product="BlueMarble_ShadedRelief_Bathymetry"
               resolution="500m"
               format="jpeg"
             />
           </BaseLayer>
-          <BaseLayer name="Corrected Reflectance (True Color)">
+          <BaseLayer
+            checked={base.trueColor}
+            name="Corrected Reflectance (True Color)"
+          >
             <LayerBuilder
-              projection={projections[projIndex]}
+              projection={projection}
               product="MODIS_Terra_CorrectedReflectance_TrueColor"
               resolution="250m"
               format="jpeg"
-              time="2019-02-01"
+              time
             />
           </BaseLayer>
-          <BaseLayer name="Land / Water Map *">
+          <BaseLayer
+            checked={base.landWaterMap}
+            name="Land / Water Map *"
+          >
             <LayerBuilder
-              projection={projections[projIndex]}
+              projection={projection}
               product="OSM_Land_Water_Map"
               resolution="250m"
               format="png"
             />
           </BaseLayer>
-          <Overlay checked name="Borders and Roads *">
+          <Overlay
+            checked={overlays.referenceFeatures}
+            name="Borders and Roads *"
+          >
             <LayerBuilder
-              projection={projections[projIndex]}
+              projection={projection}
               product="Reference_Features"
               resolution="250m"
               format="png"
             />
           </Overlay>
-          <Overlay name="Coastlines">
+          <Overlay
+            checked={overlays.coastlines}
+            name="Coastlines"
+          >
             <LayerBuilder
-              projection={projections[projIndex]}
+              projection={projection}
               product="Coastlines"
               resolution="250m"
               format="png"
             />
           </Overlay>
-          <Overlay checked name="Place Labels *">
+          <Overlay
+            checked={overlays.referenceLabels}
+            name="Place Labels *"
+          >
             <LayerBuilder
-              projection={projections[projIndex]}
+              projection={projection}
               product="Reference_Labels"
               resolution="250m"
               format="png"
@@ -236,6 +270,7 @@ export class EdscMapContainer extends Component {
           granules={granules}
         />
         <ZoomHome />
+        <ProjectionSwitcher onChangeProjection={this.handleProjectionSwitching} />
         <ScaleControl position="bottomright" />
         <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
       </Map>
@@ -243,17 +278,17 @@ export class EdscMapContainer extends Component {
   }
 }
 
-EdscMapContainer.defaultProps = {
-  focusedCollection: '',
-  mapParam: '0!0!2!1!0!0,2'
+MapContainer.defaultProps = {
+  focusedCollection: {},
+  map: {}
 }
 
-EdscMapContainer.propTypes = {
-  focusedCollection: PropTypes.string,
+MapContainer.propTypes = {
+  focusedCollection: PropTypes.shape({}),
   granules: PropTypes.shape({}).isRequired,
-  mapParam: PropTypes.string,
+  map: PropTypes.shape({}),
   masterOverlayPanelHeight: PropTypes.number.isRequired,
   onChangeMap: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EdscMapContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

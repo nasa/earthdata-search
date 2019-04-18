@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import SearchForm from '../SearchForm'
+import TextField from '../../FormFields/TextField/TextField'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -31,7 +32,7 @@ describe('SearchForm component', () => {
 
   test('should call onInputChange when TextField value changes', () => {
     const { enzymeWrapper } = setup()
-    const input = enzymeWrapper.find('TextField')
+    const input = enzymeWrapper.find(TextField)
 
     expect(enzymeWrapper.state().keywordSearch).toEqual('Test value')
 
@@ -41,7 +42,7 @@ describe('SearchForm component', () => {
 
   test('should call onBlur when the TextField is blurred', () => {
     const { enzymeWrapper, props } = setup()
-    const input = enzymeWrapper.find('TextField')
+    const input = enzymeWrapper.find(TextField)
 
     input.simulate('change', 'keywordSearch', 'new value')
     input.simulate('blur')

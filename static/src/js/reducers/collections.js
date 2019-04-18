@@ -17,8 +17,6 @@ const initialState = {
   loadTime: 0
 }
 
-const resultToStateObj = result => result
-
 const collectionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING_COLLECTIONS: {
@@ -52,9 +50,10 @@ const collectionsReducer = (state = initialState, action) => {
     case UPDATE_COLLECTIONS: {
       const byId = {}
       const allIds = []
-      action.payload.results.forEach((result, i) => {
-        byId[i] = resultToStateObj(result)
-        allIds.push(i)
+      action.payload.results.forEach((result) => {
+        const { id } = result
+        byId[id] = result
+        allIds.push(id)
       })
 
       return {

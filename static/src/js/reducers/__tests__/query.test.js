@@ -7,7 +7,7 @@ describe('INITIAL_STATE', () => {
     const initialState = {
       keyword: '',
       spatial: {},
-      temporal: ''
+      temporal: {}
     }
 
     expect(queryReducer(undefined, action)).toEqual(initialState)
@@ -21,7 +21,7 @@ describe('UPDATE_SEARCH_QUERY', () => {
       spatial: {
         point: '0,0'
       },
-      temporal: ''
+      temporal: {}
     }
     const action = {
       type: UPDATE_SEARCH_QUERY,

@@ -1,7 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-// import L from 'leaflet'
 import {
   EditControl
 } from 'react-leaflet-draw'
@@ -47,17 +46,6 @@ describe('SpatialSelection component', () => {
       circlemarker: false,
       circle: false
     })
-  })
-
-  test('componentDidMount calls renderShape', () => {
-    const { enzymeWrapper } = setup(defaultProps)
-    enzymeWrapper.instance().renderShape = jest.fn()
-
-    // call componentDidMount again, since we hadn't mocked renderShape before
-    // we created the wrapper
-    enzymeWrapper.instance().componentDidMount()
-
-    expect(enzymeWrapper.instance().renderShape.mock.calls.length).toBe(1)
   })
 
   describe('componentWillReceiveProps', () => {

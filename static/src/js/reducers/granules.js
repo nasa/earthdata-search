@@ -5,16 +5,15 @@ const initialState = {
   allIds: []
 }
 
-const resultToStateObj = result => result
-
 const granulesReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_GRANULES: {
       const byId = {}
       const allIds = []
-      action.payload.results.forEach((result, i) => {
-        byId[i] = resultToStateObj(result)
-        allIds.push(i)
+      action.payload.results.forEach((result) => {
+        const { id } = result
+        byId[id] = result
+        allIds.push(id)
       })
 
       return {

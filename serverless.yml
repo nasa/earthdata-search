@@ -53,7 +53,7 @@ functions:
     handler: serverless/dist/cmr.retrieveConcept
     events:
       - http:
-          method: get
+          method: post
           cors:
             origin: '*'
           path: concepts/{id}
@@ -83,6 +83,15 @@ functions:
             parameters:
               paths:
                 id: true
+
+  timelineSearch:
+    handler: serverless/dist/cmr.timelineSearch
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: granules/timeline
 
 #
 # Non code related resources

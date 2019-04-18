@@ -21,6 +21,7 @@ describe('UPDATE_GRANULES', () => {
       type: UPDATE_GRANULES,
       payload: {
         results: [{
+          id: 'mockGranuleId',
           mockGranuleData: 'goes here'
         }],
         hits: 0,
@@ -30,9 +31,10 @@ describe('UPDATE_GRANULES', () => {
 
     const expectedState = {
       ...initialState,
-      allIds: [0],
+      allIds: ['mockGranuleId'],
       byId: {
-        0: {
+        mockGranuleId: {
+          id: 'mockGranuleId',
           mockGranuleData: 'goes here'
         }
       }

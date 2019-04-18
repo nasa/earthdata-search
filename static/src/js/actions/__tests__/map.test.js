@@ -9,7 +9,11 @@ const mockStore = configureMockStore([thunk])
 describe('updateMap', () => {
   test('should create an action to update the search query', () => {
     const payload = {
-      mapParam: '0!0!2!1!0!0,2'
+      map: {
+        latitude: 0,
+        longitude: 0,
+        zoom: 2
+      }
     }
     const expectedAction = {
       type: UPDATE_MAP,
@@ -22,7 +26,11 @@ describe('updateMap', () => {
 describe('changeMap', () => {
   test('should create an action to update the query', () => {
     const newMap = {
-      mapParam: '0!0!2!1!0!0,2'
+      map: {
+        latitude: 0,
+        longitude: 0,
+        zoom: 2
+      }
     }
 
     // mockStore with initialState

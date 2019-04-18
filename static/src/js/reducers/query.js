@@ -3,7 +3,7 @@ import { UPDATE_SEARCH_QUERY } from '../constants/actionTypes'
 const initialState = {
   keyword: '',
   spatial: {},
-  temporal: ''
+  temporal: {}
 }
 
 const queryReducer = (state = initialState, action) => {

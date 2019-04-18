@@ -67,10 +67,6 @@ class SpatialSelection extends Component {
     this.onDrawStop = this.onDrawStop.bind(this)
   }
 
-  componentDidMount() {
-    this.renderShape(this.props)
-  }
-
   componentWillReceiveProps(nextProps) {
     const { mapRef } = this.props
     const { drawnPoints, drawnLayer } = this.state
@@ -190,11 +186,14 @@ class SpatialSelection extends Component {
     } = props
 
     if (pointSearch) {
+      this.setState({ drawnPoints: pointSearch })
       this.renderPoint(this.getShape([pointSearch]), map)
     } else if (boundingBoxSearch) {
+      this.setState({ drawnPoints: boundingBoxSearch })
       const points = this.splitListOfPoints(boundingBoxSearch)
       this.renderBoundingBox(this.getShape(points), map)
     } else if (polygonSearch) {
+      this.setState({ drawnPoints: polygonSearch })
       const points = this.splitListOfPoints(polygonSearch)
       this.renderPolygon(this.getShape(points), map)
     }
@@ -206,6 +205,7 @@ class SpatialSelection extends Component {
       const marker = new L.Marker(point[0], {
         icon: L.Draw.Marker.prototype.options.icon
       })
+
       marker.addTo(map)
       map.panTo(marker.getLatLng())
       this.setState({ drawnLayer: marker })

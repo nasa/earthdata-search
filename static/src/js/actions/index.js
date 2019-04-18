@@ -1,8 +1,13 @@
 import { getCollections } from './collections'
-import { getGranules } from './granules'
+import { changeFocusedCollection } from './focusedCollection'
+import { getGranules, updateGranules } from './granules'
+import {
+  changeTimelineQuery,
+  changeTimelineState,
+  getTimeline
+} from './timeline'
 import { searchNlp } from './nlp'
 import {
-  changeFocusedCollection,
   changeQuery,
   clearFilters
 } from './search'
@@ -24,14 +29,18 @@ const actions = {
   changeFocusedCollection,
   changeMap,
   changeQuery,
+  changeTimelineQuery,
+  changeTimelineState,
   changeUrl,
   clearFilters,
   getCollections,
   getGranules,
+  getTimeline,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
-  searchNlp
+  searchNlp,
+  updateGranules
 }
 
 export default actions
