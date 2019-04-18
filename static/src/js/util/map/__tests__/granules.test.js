@@ -8,6 +8,8 @@ import {
   getlprojection
 } from '../granules'
 
+import projections from '../projections'
+
 describe('granules#isClockwise', () => {
   test('doin stuff here', () => {
     const clockwiseInput = [
@@ -101,16 +103,16 @@ describe('granules#getRectangles', () => {
 })
 
 describe('granules#getlprojection', () => {
-  test('returns espg4326 for geo', () => {
-    expect(getlprojection({ geo: true })).toEqual('epsg4326')
+  test('returns epsg4326 for geo', () => {
+    expect(getlprojection({ geo: true })).toEqual(projections.geographic)
   })
 
   test('returns epsg3031 for arctic', () => {
-    expect(getlprojection({ arctic: true })).toEqual('epsg3031')
+    expect(getlprojection({ arctic: true })).toEqual(projections.arctic)
   })
 
   test('returns epsg3413 for antarctic', () => {
-    expect(getlprojection({ antarctic: true })).toEqual('epsg3413')
+    expect(getlprojection({ antarctic: true })).toEqual(projections.antarctic)
   })
 
   test('returns an empty string for anything else', () => {

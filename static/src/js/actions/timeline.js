@@ -1,13 +1,13 @@
 import API from '../util/api'
 import actions from './index'
 import {
-  UPDATE_TIMELINE_GRANULES,
+  UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
   UPDATE_TIMELINE_STATE
 } from '../constants/actionTypes'
 
-export const updateTimelineGranules = payload => ({
-  type: UPDATE_TIMELINE_GRANULES,
+export const updateTimelineIntervals = payload => ({
+  type: UPDATE_TIMELINE_INTERVALS,
   payload
 })
 
@@ -32,7 +32,7 @@ export const getTimeline = () => (dispatch, getState) => {
   } = query
 
   if (!collectionId) {
-    dispatch(updateTimelineGranules({
+    dispatch(updateTimelineIntervals({
       results: []
     }))
     return null
@@ -49,7 +49,7 @@ export const getTimeline = () => (dispatch, getState) => {
 
       payload.results = response.data
 
-      dispatch(updateTimelineGranules(payload))
+      dispatch(updateTimelineIntervals(payload))
     }, (error) => {
       throw new Error('Request failed', error)
     })

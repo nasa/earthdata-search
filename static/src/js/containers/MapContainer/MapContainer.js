@@ -23,7 +23,8 @@ import ZoomHome
 import ProjectionSwitcher
   from '../../components/map_controls/ProjectionSwitcher'
 
-import crsProjections from '../../util/map/projections'
+import crsProjections from '../../util/map/crs'
+import projections from '../../util/map/projections'
 
 import actions from '../../actions/index'
 
@@ -86,8 +87,7 @@ export class MapContainer extends Component {
   handleMoveend(event) {
     const map = event.target
     const center = map.getCenter()
-    const { lat } = center
-    const { lng } = center
+    const { lat, lng } = center
     const zoom = map.getZoom()
 
     const { onChangeMap } = this.props
@@ -144,12 +144,12 @@ export class MapContainer extends Component {
       zoom: 2
     }
 
-    if (projection === 'epsg3413') {
+    if (projection === projections.arctic) {
       map.latitude = 90
       map.zoom = 0
     }
 
-    if (projection === 'epsg3031') {
+    if (projection === projections.antarctic) {
       map.latitude = -90
       map.zoom = 0
     }
@@ -176,7 +176,7 @@ export class MapContainer extends Component {
 
     const center = [latitude, longitude]
 
-    const maxZoom = projection === 'epsg4326' ? 7 : 4
+    const maxZoom = projection === projections.geographic ? 7 : 4
 
     if (this.mapRef) this.mapRef.leafletElement.options.crs = crsProjections[projection]
 
@@ -214,7 +214,7 @@ export class MapContainer extends Component {
           >
             <LayerBuilder
               projection={projection}
-              product="MODIS_Terra_CorrectedReflectance_TrueColor"
+              product="VIIRS_SNPP_CorrectedReflectance_TrueColor"
               resolution="250m"
               format="jpeg"
               time

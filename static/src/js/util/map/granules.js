@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import L from 'leaflet'
+import projections from './projections'
 
 function pairs(array) {
   const len = array.length
@@ -116,13 +117,13 @@ export function getRectangles(granule) {
 // Translate project types into 'epsg####' strings
 export function getlprojection(options) {
   if (options.geo) {
-    return 'epsg4326'
+    return projections.geographic
   }
   if (options.arctic) {
-    return 'epsg3031'
+    return projections.arctic
   }
   if (options.antarctic) {
-    return 'epsg3413'
+    return projections.antarctic
   }
   return ''
 }

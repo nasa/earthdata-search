@@ -2,7 +2,9 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { TileLayer } from 'react-leaflet'
+import moment from 'moment'
 import LayerBuilder from '../LayerBuilder'
+import projections from '../../../util/map/projections'
 
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -11,7 +13,7 @@ function setup() {
   const props = {
     format: 'jpeg',
     product: 'mock_product',
-    projection: 'epsg4326',
+    projection: projections.geographic,
     resolution: '500m',
     time: true
   }
@@ -37,7 +39,8 @@ describe('LayerBuilder component', () => {
     } = props
     const projectionResolution = `${projection.toUpperCase()}_${resolution}`
 
-    const [date] = new Date().toISOString().split('T')
+    const yesterday = moment().subtract(1, 'days')
+    const date = yesterday.format('YYYY-MM-DD')
 
     expect(tileLayer.length).toBe(1)
 

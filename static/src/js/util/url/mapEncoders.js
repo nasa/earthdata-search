@@ -1,4 +1,10 @@
-const projectionList = ['epsg3413', 'epsg4326', 'epsg3031']
+import projections from '../map/projections'
+
+const projectionList = [
+  projections.arctic,
+  projections.geographic,
+  projections.antarctic
+]
 
 /**
  * Encodes a Map object into a string

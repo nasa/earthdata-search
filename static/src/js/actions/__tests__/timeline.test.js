@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 import {
-  updateTimelineGranules,
+  updateTimelineIntervals,
   updateTimelineQuery,
   updateTimelineState,
   getTimeline,
@@ -12,21 +12,21 @@ import {
   changeTimelineQuery
 } from '../timeline'
 import {
-  UPDATE_TIMELINE_GRANULES,
+  UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
   UPDATE_TIMELINE_STATE
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
-describe('updateTimelineGranules', () => {
+describe('updateTimelineIntervals', () => {
   test('should create an action to update the timeline granules', () => {
     const payload = []
     const expectedAction = {
-      type: UPDATE_TIMELINE_GRANULES,
+      type: UPDATE_TIMELINE_INTERVALS,
       payload
     }
-    expect(updateTimelineGranules(payload)).toEqual(expectedAction)
+    expect(updateTimelineIntervals(payload)).toEqual(expectedAction)
   })
 })
 
@@ -97,7 +97,7 @@ describe('getTimeline', () => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: UPDATE_TIMELINE_GRANULES,
+        type: UPDATE_TIMELINE_INTERVALS,
         payload: {
           results: [{
             'concept-id': 'collectionId',
@@ -125,7 +125,7 @@ describe('getTimeline', () => {
     store.dispatch(getTimeline())
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_TIMELINE_GRANULES,
+      type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: []
       }

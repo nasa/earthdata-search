@@ -19,11 +19,9 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
     return null
   }
 
-  const includeTags = 'edsc.extra.gibs'
-
   const response = API.endpoints.collections.getOne({
     collectionId,
-    includeTags
+    includeTags: 'edsc.extra.gibs'
   })
     .then((response) => {
       const payload = {}

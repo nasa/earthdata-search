@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { TileLayer } from 'react-leaflet'
+import moment from 'moment'
 
 const LayerBuilder = (props) => {
   const {
@@ -14,7 +15,11 @@ const LayerBuilder = (props) => {
   const projectionResolution = `${projection.toUpperCase()}_${resolution}`
 
   let date = ''
-  if (time) [date] = new Date().toISOString().split('T')
+  if (time) {
+    const yesterday = moment().subtract(1, 'days')
+
+    date = yesterday.format('YYYY-MM-DD')
+  }
 
   return (
     <TileLayer

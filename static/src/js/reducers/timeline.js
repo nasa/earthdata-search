@@ -1,5 +1,5 @@
 import {
-  UPDATE_TIMELINE_GRANULES,
+  UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
   UPDATE_TIMELINE_STATE
 } from '../constants/actionTypes'
@@ -13,7 +13,7 @@ const initialState = {
 
 const timelineReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_TIMELINE_GRANULES: {
+    case UPDATE_TIMELINE_INTERVALS: {
       let collectionId
       let intervals
       action.payload.results.forEach((result) => {

@@ -16,6 +16,7 @@ import ConnectedSpatialSelectionContainer
 import GranuleGridLayer from '../../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
 
 import store from '../../../store/configureStore'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -28,15 +29,15 @@ function setup() {
         trueColor: false,
         landWaterMap: false
       },
-      latitude: '0',
-      longitude: '0',
+      latitude: 0,
+      longitude: 0,
       overlays: {
         referenceFeatures: true,
         coastlines: false,
         referenceLabels: true
       },
-      projection: 'epsg4326',
-      zoom: '2'
+      projection: projections.geographic,
+      zoom: 2
     },
     masterOverlayPanelHeight: 500,
     onChangeMap: jest.fn()

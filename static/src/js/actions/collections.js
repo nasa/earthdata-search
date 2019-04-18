@@ -1,5 +1,7 @@
 import API from '../util/api'
 
+import { encodeTemporal } from '../util/url/temporalEncoders'
+
 import {
   UPDATE_COLLECTIONS,
   LOADING_COLLECTIONS,
@@ -81,8 +83,7 @@ export const getCollections = () => (dispatch, getState) => {
     polygon
   } = spatial
 
-  const { endDate, startDate } = temporal
-  const temporalString = startDate || endDate ? [startDate, endDate].join(',') : null
+  const temporalString = encodeTemporal(temporal)
 
   const {
     cmr: cmrFacets = {},

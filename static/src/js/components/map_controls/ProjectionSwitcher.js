@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Control from 'react-leaflet-control'
 
+import projections from '../../util/map/projections'
+
 import './ProjectionSwitcher.scss'
 
 const ProjectionSwitcher = (props) => {
@@ -12,7 +14,7 @@ const ProjectionSwitcher = (props) => {
       <div className="projection-switcher leaflet-bar">
         <button
           className="project-switcher-arctic"
-          onClick={() => onChangeProjection('epsg3413')}
+          onClick={() => onChangeProjection(projections.arctic)}
           title="North Polar Stereographic"
           type="button"
         >
@@ -20,7 +22,7 @@ const ProjectionSwitcher = (props) => {
         </button>
         <button
           className="project-switcher-geo"
-          onClick={() => onChangeProjection('epsg4326')}
+          onClick={() => onChangeProjection(projections.geographic)}
           title="Geographic (Equirectangular)"
           type="button"
         >
@@ -28,7 +30,7 @@ const ProjectionSwitcher = (props) => {
         </button>
         <button
           className="project-switcher-antarctic"
-          onClick={() => onChangeProjection('epsg3031')}
+          onClick={() => onChangeProjection(projections.antarctic)}
           title="South Polar Stereographic"
           type="button"
         >
