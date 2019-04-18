@@ -19,16 +19,28 @@ module AuthenticationUtils
   end
 
   def retrieve_urs_profile(oauth_response)
-    # Once we retrieve this from URS we can use the `uid` value but the oauth
-    # endpoint only returns the path to the user
-    username = oauth_response['endpoint'].gsub('/api/users/', '') if oauth_response['endpoint']
+    Rails.logger.tagged('EDSC:URS') do
+      # Once we retrieve this from URS we can use the `uid` value but the oauth
+      # endpoint only returns the path to the user
+      if oauth_response['endpoint']
+        Rails.logger.info "Provided endpoint: #{oauth_response['endpoint']}"
+        username = oauth_response['endpoint'].gsub('/api/users/', '')
+        Rails.logger.info "Endpoint with path stripped (username): #{username}"
 
-    response = echo_client.get_urs_user(username, token)
-    if response.success?
-      response.body
-    else
-      {}
+        response = echo_client.get_urs_user(username, token)
+        if response.success?
+          response.body
+        else
+          Rails.logger.error "Error retrieving URS Profile data for '#{username}': #{response.body}"
+
+          {}
+        end
+      else
+        Rails.logger.info 'Key `endpoint` was not provided in the OAuth response'
+      end
     end
+  rescue => e
+    Rails.logger.error "EDSC:URS Error: #{e}"
   end
 
   def retrieve_echo_profile
