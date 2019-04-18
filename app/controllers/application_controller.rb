@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   # to pull and store the information we now retrieve when a user logs in. This method will
   # ensure that users that were logged in before the deployment don't experience any issues.
   def migrate_user_data
-    if logged_in? && session.key?(:user_name)
+    if logged_in? && session.key?(:user_name) && session[:user_name]
       # Mocks the response from URS providing only the necessary keys to store the user data
       store_user_data('endpoint' => "/api/users/#{session[:user_name]}")
 
