@@ -1,6 +1,6 @@
 import timelineReducer from '../timeline'
 import {
-  UPDATE_TIMELINE_GRANULES,
+  UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
   UPDATE_TIMELINE_STATE
 } from '../../constants/actionTypes'
@@ -20,7 +20,7 @@ describe('INITIAL_STATE', () => {
   })
 })
 
-describe('UPDATE_TIMELINE_GRANULES', () => {
+describe('UPDATE_TIMELINE_INTERVALS', () => {
   test('returns the correct state', () => {
     const intervals = [
       [
@@ -31,7 +31,7 @@ describe('UPDATE_TIMELINE_GRANULES', () => {
     ]
 
     const action = {
-      type: UPDATE_TIMELINE_GRANULES,
+      type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: [{
           'concept-id': 'collectionId',

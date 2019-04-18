@@ -1,4 +1,5 @@
 import { UPDATE_MAP } from '../constants/actionTypes'
+import projections from '../util/map/projections'
 
 const initialState = {
   base: {
@@ -13,7 +14,7 @@ const initialState = {
     coastlines: false,
     referenceLabels: true
   },
-  projection: 'epsg4326',
+  projection: projections.geographic,
   zoom: 2
 }
 

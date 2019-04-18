@@ -5,6 +5,9 @@ import '../../../../../node_modules/edsc-timeline/dist/edsc-timeline.min'
 import timelineIntervals from '../../util/timeline'
 import getObjectKeyByValue from '../../util/object'
 
+const earliestStart = '1960-01-01'
+const defaultInterval = 'day'
+
 class Timeline extends Component {
   constructor(props) {
     super(props)
@@ -71,7 +74,7 @@ class Timeline extends Component {
         time_end: timeEnd = new Date().toISOString()
       } = metadata
 
-      const newInterval = nextTimeline.query.interval || 'day'
+      const newInterval = nextTimeline.query.interval || defaultInterval
 
       if (id) {
         query = {
@@ -111,7 +114,7 @@ class Timeline extends Component {
     const { endDate, startDate } = temporalSearch
 
     if (startDate || endDate) {
-      const rangeStart = startDate ? new Date(startDate) : new Date('1970-01-01')
+      const rangeStart = startDate ? new Date(startDate) : new Date(earliestStart)
       const rangeEnd = endDate ? new Date(endDate) : new Date()
 
       this.$el.timeline('setTemporal', [[rangeStart, rangeEnd]])
@@ -160,7 +163,7 @@ class Timeline extends Component {
    */
   setTimelineCenter(timelineState) {
     const { center } = timelineState
-    const oldCenter = Math.round(this.$el.timeline('center') / 1000)
+    const oldCenter = this.findTimelineCenter()
 
     if (center && center !== oldCenter) {
       this.$el.timeline('center', parseInt(center, 10) * 1000)
@@ -181,6 +184,13 @@ class Timeline extends Component {
       const intervalNum = timelineIntervals[interval]
       this.$el.timeline('zoom', parseInt(intervalNum, 10))
     }
+  }
+
+  /**
+   * Helper method to get the current Timeline center
+   */
+  findTimelineCenter() {
+    return Math.round(this.$el.timeline('center') / 1000)
   }
 
 
@@ -207,7 +217,7 @@ class Timeline extends Component {
     } = this.props
     const { interval: oldInterval } = timeline.query
 
-    const center = Math.round(this.$el.timeline('center') / 1000)
+    const center = this.findTimelineCenter()
     onChangeTimelineState({ center })
 
     if (oldInterval !== interval) onChangeTimelineQuery({ interval })

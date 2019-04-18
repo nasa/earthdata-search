@@ -1,5 +1,6 @@
 import mapReducer from '../map'
 import { UPDATE_MAP } from '../../constants/actionTypes'
+import projections from '../../util/map/projections'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
@@ -17,7 +18,7 @@ describe('INITIAL_STATE', () => {
         coastlines: false,
         referenceLabels: true
       },
-      projection: 'epsg4326',
+      projection: projections.geographic,
       zoom: 2
     }
 
@@ -40,7 +41,7 @@ describe('UPDATE_MAP', () => {
         coastlines: false,
         referenceLabels: true
       },
-      projection: 'epsg4326',
+      projection: projections.geographic,
       zoom: 2
     }
     const action = {

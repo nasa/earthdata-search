@@ -30,6 +30,17 @@ const urlDefs = {
 
 
 /**
+ * Helper method to decode a given paramName from URL parameters base on urlDefs keys
+ * @param {object} params Object of encoded URL parameters
+ * @param {string} paramName Param to decode
+ */
+const decodeHelp = (params, paramName) => {
+  const value = params[urlDefs[paramName].shortKey]
+  return urlDefs[paramName].decode(value)
+}
+
+
+/**
  * Given a URL param string, returns an object that matches the redux store
  * @param {string} paramString a URL encoded parameter string
  * @return {object} An object of values that match the redux store
@@ -41,22 +52,21 @@ export const decodeUrlParams = (paramString) => {
   // build the param object based on the structure in the redux store
   // e.g. map is store separately from query
   const focusedCollection = {}
-  focusedCollection.collectionId = urlDefs.focusedCollection
-    .decode(params[urlDefs.focusedCollection.shortKey])
+  focusedCollection.collectionId = decodeHelp(params, 'focusedCollection')
 
-  const map = urlDefs.map.decode(params[urlDefs.map.shortKey])
+  const map = decodeHelp(params, 'map')
 
   const query = {}
-  query.keyword = urlDefs.keywordSearch.decode(params[urlDefs.keywordSearch.shortKey])
-  query.temporal = urlDefs.temporalSearch.decode(params[urlDefs.temporalSearch.shortKey])
+  query.keyword = decodeHelp(params, 'keywordSearch')
+  query.temporal = decodeHelp(params, 'temporalSearch')
 
   const spatial = {}
-  spatial.point = urlDefs.pointSearch.decode(params[urlDefs.pointSearch.shortKey])
-  spatial.boundingBox = urlDefs.boundingBoxSearch.decode(params[urlDefs.boundingBoxSearch.shortKey])
-  spatial.polygon = urlDefs.polygonSearch.decode(params[urlDefs.polygonSearch.shortKey])
+  spatial.point = decodeHelp(params, 'pointSearch')
+  spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
+  spatial.polygon = decodeHelp(params, 'polygonSearch')
   query.spatial = spatial
 
-  const timeline = urlDefs.timeline.decode(params[urlDefs.timeline.shortKey])
+  const timeline = decodeHelp(params, 'timeline')
 
   return {
     focusedCollection,

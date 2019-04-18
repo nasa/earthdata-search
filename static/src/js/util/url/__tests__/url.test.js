@@ -1,4 +1,5 @@
 import { decodeUrlParams, encodeUrlQuery } from '../url'
+import projections from '../../map/projections'
 
 const emptyDecodedResult = {
   focusedCollection: {
@@ -118,7 +119,7 @@ describe('url#decodeUrlParams', () => {
           coastlines: false,
           referenceLabels: true
         },
-        projection: 'epsg4326',
+        projection: projections.geographic,
         zoom: 2
       }
     }
@@ -218,7 +219,7 @@ describe('url#encodeUrlQuery', () => {
           coastlines: false,
           referenceLabels: true
         },
-        projection: 'epsg4326',
+        projection: projections.geographic,
         zoom: '2'
       }
     }
