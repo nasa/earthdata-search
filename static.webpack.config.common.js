@@ -98,7 +98,10 @@ const StaticCommonConfig = {
     }),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery'
+    })
   ]
 }
 
