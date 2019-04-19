@@ -13,6 +13,19 @@ import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 
 import { makeCounterClockwise } from '../../util/map/geo'
 
+const normalColor = '#00ffff'
+const errorColor = '#990000'
+export const colorOptions = {
+  color: normalColor,
+  dashArray: null,
+  pointerEvents: 'stroke',
+  fillOpacity: 0
+}
+export const errorOptions = {
+  color: errorColor,
+  dashArray: null
+}
+
 // Fix the leaflet Marker icons
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -140,17 +153,11 @@ class SpatialSelection extends Component {
         latLngs = [layer.getLatLngs()[0][0], layer.getLatLngs()[0][2]].map(p => `${p.lng},${p.lat}`)
         break
       case 'polygon':
-        originalLatLngs = Array.from(layer.getLatLngs()[0])
+        originalLatLngs = Array.from(layer.getLatLngs())
         latLngs = makeCounterClockwise(originalLatLngs).map(p => `${p.lng},${p.lat}`)
         // Close the polygon by duplicating the first point as the last point
         latLngs.push(latLngs[0])
         break
-      // case 'arctic-rectangle':
-      //   latLngs = layer.getLatLngs()
-      //   break
-      // case 'antarctic-rectangle':
-      //   latLngs = layer.getLatLngs()
-      //   break
       default:
         return
     }
@@ -225,7 +232,7 @@ class SpatialSelection extends Component {
       const options = L.extend(
         {},
         L.Draw.Rectangle.prototype.options.shapeOptions,
-        this._colorOptions
+        colorOptions
       )
       const rect = new L.Rectangle(bounds, options)
 
@@ -241,10 +248,10 @@ class SpatialSelection extends Component {
       const options = L.extend(
         {},
         L.Draw.Polygon.prototype.options.shapeOptions,
-        this._colorOptions
+        colorOptions
       )
-      // const poly = new L.sphericalPolygon(polygon, options)
-      const poly = new L.Polyline(polygon, options)
+      const poly = new L.SphericalPolygon(polygon, options)
+      // const poly = new L.Polyline(polygon, options)
 
       poly.addTo(map)
       map.panTo(L.latLngBounds(poly.getLatLngs()).getCenter())
@@ -261,9 +268,23 @@ class SpatialSelection extends Component {
           onDrawStop={this.onDrawStop}
           onCreated={this.onCreate}
           draw={{
+            polygon: {
+              drawError: errorOptions,
+              shapeOptions: colorOptions
+            },
+            rectangle: {
+              drawError: errorOptions,
+              shapeOptions: colorOptions
+            },
             polyline: false,
             circlemarker: false,
             circle: false
+          }}
+          edit={{
+            selectedPathOptions: {
+              opacity: 0.6,
+              dashArray: '10, 10'
+            }
           }}
         />
       </FeatureGroup>

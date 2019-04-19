@@ -5,7 +5,7 @@ import {
   EditControl
 } from 'react-leaflet-draw'
 
-import SpatialSelection from '../SpatialSelection'
+import SpatialSelection, { colorOptions, errorOptions } from '../SpatialSelection'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -42,6 +42,14 @@ describe('SpatialSelection component', () => {
 
     expect(editControl.length).toBe(1)
     expect(editControl.prop('draw')).toEqual({
+      polygon: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      },
+      rectangle: {
+        drawError: errorOptions,
+        shapeOptions: colorOptions
+      },
       polyline: false,
       circlemarker: false,
       circle: false
@@ -173,11 +181,11 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      const latLngResponse = [[
+      const latLngResponse = [
         { lng: 10, lat: 0 },
         { lng: 20, lat: 10 },
         { lng: 5, lat: 15 }
-      ]]
+      ]
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
@@ -198,11 +206,11 @@ describe('SpatialSelection component', () => {
       const { enzymeWrapper, props } = setup(defaultProps)
 
       const editControl = enzymeWrapper.find(EditControl)
-      const latLngResponse = [[
+      const latLngResponse = [
         { lng: 5, lat: 15 },
         { lng: 20, lat: 10 },
         { lng: 10, lat: 0 }
-      ]]
+      ]
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
