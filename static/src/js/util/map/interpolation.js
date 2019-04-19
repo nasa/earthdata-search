@@ -104,11 +104,14 @@ const projectPath = (map, latlngs, fn = 'geodetic', tolerance = 1, maxDepth = 10
 // Overrides the default projectLatLngs in Polyline to project and interpolate the
 // path instead of just projecting it
 // https://github.com/Leaflet/Leaflet/blob/v1.3.4/src/layer/vector/Polyline.js#L217
-export const projectLatlngs = (latlngs, result, projectedBounds) => {
-  let newLatLngs = latlngs
-  const flat = newLatLngs[0] instanceof L.LatLng
-  newLatLngs = newLatLngs.concat()
-  latlngs.push(newLatLngs[0])
+function projectLatlngs(latlngs, result, projectedBounds) {
+  const flat = latlngs[0] instanceof L.LatLng
+
+  if (latlngs[0] !== latlngs[latlngs.length - 1]) {
+    // the first and last latlngs don't match, make them match
+    latlngs.push(latlngs[0])
+  }
+
   let ring
   if (flat) {
     ring = []
@@ -116,22 +119,24 @@ export const projectLatlngs = (latlngs, result, projectedBounds) => {
     // use projectPath to interpolate the latlngs into the "great circle"
     // path between the two points. returns layer points so we don't have
     // to do that conversion like the original method
-    const iterable = projectPath(this._map, newLatLngs, this._interpolationFn)
-    for (let index = 0; index < iterable.length; index += 1) {
-      const point = iterable[index]
+    const path = projectPath(this._map, latlngs, this._interpolationFn)
+    path.forEach((point, index) => {
       ring[index] = point
-      projectedBounds.extend(ring[index])
-    }
-    return result.push(ring)
+      projectedBounds.extend(point)
+    })
+    result.push(ring)
+  } else {
+    latlngs.forEach((latlng) => {
+      this._projectLatlngs(latlng, result, projectedBounds)
+    })
   }
-  return newLatLngs.map(latlng => this._projectLatlngs(latlng, result, projectedBounds))
 }
 
-// // Override methods
-// L.Polyline.prototype._projectLatlngs = projectLatlngs
+// Override methods
+L.Polyline.prototype._projectLatlngs = projectLatlngs
 
-// // Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
-// L.Polyline.prototype._interpolationFn = interpolateGeodetic
-// L.Rectangle.prototype._interpolationFn = interpolateCartesian
+// Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
+L.Polyline.prototype._interpolationFn = interpolateGeodetic
+L.Rectangle.prototype._interpolationFn = interpolateCartesian
 
 export default projectPath

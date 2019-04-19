@@ -9,11 +9,11 @@ import {
   ScaleControl
 } from 'react-leaflet'
 import { MapContainer } from '../MapContainer'
-import ZoomHome from '../../../components/map_controls/ZoomHome'
-import LayerBuilder from '../../../components/map_controls/LayerBuilder'
+import ZoomHome from '../../../components/MapControls/ZoomHome'
+import LayerBuilder from '../../../components/MapControls/LayerBuilder'
 import ConnectedSpatialSelectionContainer
   from '../../SpatialSelectionContainer/SpatialSelectionContainer'
-import GranuleGridLayer from '../../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
+import GranuleGridLayer from '../../../components/MapControls/GranuleGridLayer/GranuleGridLayer'
 
 import store from '../../../store/configureStore'
 import projections from '../../../util/map/projections'

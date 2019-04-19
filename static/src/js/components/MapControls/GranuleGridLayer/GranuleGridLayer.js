@@ -20,6 +20,8 @@ import {
 import { dividePolygon } from '../../../util/map/geo'
 import projectPath from '../../../util/map/interpolation'
 
+// import '../../../util/map/interpolation'
+
 const config = {
   // eslint-disable-next-line max-len
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',

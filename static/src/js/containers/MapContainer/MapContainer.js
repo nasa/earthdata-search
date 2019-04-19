@@ -12,16 +12,18 @@ import {
   ScaleControl
 } from 'react-leaflet'
 
+import '../../util/map/sphericalPolygon'
+
 import LayerBuilder
-  from '../../components/map_controls/LayerBuilder'
+  from '../../components/MapControls/LayerBuilder'
 import ConnectedSpatialSelectionContainer
   from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer
-  from '../../components/map_controls/GranuleGridLayer/GranuleGridLayer'
+  from '../../components/MapControls/GranuleGridLayer/GranuleGridLayer'
 import ZoomHome
-  from '../../components/map_controls/ZoomHome'
+  from '../../components/MapControls/ZoomHome'
 import ProjectionSwitcher
-  from '../../components/map_controls/ProjectionSwitcher'
+  from '../../components/MapControls/ProjectionSwitcher'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
