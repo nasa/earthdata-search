@@ -251,7 +251,6 @@ class SpatialSelection extends Component {
         colorOptions
       )
       const poly = new L.SphericalPolygon(polygon, options)
-      // const poly = new L.Polyline(polygon, options)
 
       poly.addTo(map)
       map.panTo(L.latLngBounds(poly.getLatLngs()).getCenter())
