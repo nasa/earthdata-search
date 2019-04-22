@@ -11,11 +11,12 @@ import ConnectedTemporalSelectionDropdownContainer
   from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 import FilterStack
   from '../FilterStack/FilterStack'
-
 // Form Fields
 import TextField from '../FormFields/TextField/TextField'
+import SpatialSelectionDropdown from '../SpatialDisplay/SpatialSelectionDropdown'
 
 import './SearchForm.scss'
+
 
 class SearchForm extends Component {
   constructor(props) {
@@ -99,6 +100,7 @@ class SearchForm extends Component {
           />
         </form>
         <ConnectedTemporalSelectionDropdownContainer />
+        <SpatialSelectionDropdown />
         <Button
           variant="inline-block"
           className="search-form__button search-form__button--clear"

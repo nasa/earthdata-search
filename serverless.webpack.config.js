@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const ServerlessWebpackConfig = {
   name: 'serverless',
+  mode: 'development',
   entry: {
     cmr: './serverless/src/cmr.js',
     nlp: './serverless/src/nlp.js'
