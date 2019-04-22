@@ -34,8 +34,12 @@
     top: 0;
     height: 10px;
     width: 100%;
-    background: $color__white url('../../../assets/images/drag.png') no-repeat center 5px;
+    background: $color__white url('~Images/drag.png') no-repeat center 5px;
     cursor: row-resize;
+  }
+
+  &__header {
+    border-bottom: 1px solid $border-color;
   }
 
   &__body {

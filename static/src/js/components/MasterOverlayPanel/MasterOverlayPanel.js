@@ -100,7 +100,7 @@ class MasterOverlayPanel extends PureComponent {
         style={{ height: `${panelHeight}px` }}
       >
         <section className="master-overlay-panel__inner inner-panel">
-          <header className="container-fluid p-3 coll-res__header">
+          <header className="container-fluid p-3 master-overlay-panel__header">
             <span className="master-overlay-panel__tab">
               <span
                 className="master-overlay-panel__tab-handle"
