@@ -42,8 +42,6 @@ class CollectionResultsBody extends PureComponent {
       location
     } = this.props
 
-    // const collectionHits = collections.hits
-
     const collectionResults = collections.allIds.map((id) => {
       const collection = collections.byId[id]
 
