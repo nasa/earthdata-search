@@ -15,6 +15,12 @@ const StaticCommonConfig = {
     path: path.resolve(__dirname, 'static/dist'),
     publicPath: '/'
   },
+  resolve: {
+    alias: {
+      Fonts: path.join(__dirname, 'static/src/assets/fonts'),
+      Images: path.join(__dirname, 'static/src/assets/images')
+    }
+  },
   module: {
     rules: [
       {

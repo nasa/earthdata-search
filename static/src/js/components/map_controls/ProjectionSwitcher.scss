@@ -1,15 +1,50 @@
-// .leaflet-bar.projection-switcher a {
-//   @include retina-image(projection-sprite, 90px 30px, png, null, '@2x', true);
+.projection-switcher {
+  &__button {
+    background-image: url('~Images/projection-sprite.png');
+    background-size: 90px 30px;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 0;
 
-//   &.projection-switcher-arctic {
-//     background-position: -59px -2px;
-//   }
+    &:hover {
+      background-color: #f4f4f4;
+    }
 
-//   &.projection-switcher-geo {
-//     background-position: -31px -2px;
-//   }
+    &:focus {
+      outline: 0;
+      box-shadow: 0;
+    }
 
-//   &.projection-switcher-antarctic {
-//     background-position: -3px -2px;
-//   }
-// }
+    &:first-child {
+      border-top-left-radius: 2px;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 0;
+    }
+
+    &:last-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 2px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 2px;
+    }
+
+    &--arctic {
+      background-position: -57px -1px;
+    }
+
+    &--geo {
+      background-position: -29px -1px;
+    }
+
+    &--antarctic {
+      background-position: -1px -1px;
+    }
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      background-image: url('~Images/projection-sprite@2x.png');
+    }
+  }
+}

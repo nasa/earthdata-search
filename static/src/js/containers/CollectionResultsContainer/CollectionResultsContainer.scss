@@ -7,33 +7,6 @@
   flex-shrink: 0;
   height: 100%;
 
-  &__tab {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    background: $color__white;
-  }
-
-  &__tab-handle {
-    position: absolute;
-    top: 0;
-    height: 10px;
-    width: 100%;
-    background: $color__white url('../../../assets/images/drag.png') no-repeat center 5px;
-    cursor: row-resize;
-  }
-
-  &__header {
-    border-bottom: 1px solid $border-color;
-  }
-
-  &__tab-heading {
-    margin: 0;
-    padding: $spacer 1.25rem;
-    font-size: 1.1875rem;
-    font-weight: 700;
-  }
-
   &__list {
     margin: 0;
     padding: 0;
