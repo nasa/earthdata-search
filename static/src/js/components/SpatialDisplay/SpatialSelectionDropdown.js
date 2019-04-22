@@ -69,4 +69,3 @@ export default class SpatialSelectionDropdown extends PureComponent {
     )
   }
 }
-
