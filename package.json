@@ -34,6 +34,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@welldone-software/why-did-you-render": "^3.0.6",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.4",
@@ -80,7 +81,6 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
-    "@welldone-software/why-did-you-render": "^3.0.6",
     "autoprefixer": "^9.3.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
