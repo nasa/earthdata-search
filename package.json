@@ -34,6 +34,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@welldone-software/why-did-you-render": "^3.0.6",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.4",
@@ -63,6 +64,7 @@
     "postcss-scss": "^2.0.0",
     "react-test-renderer": "^16.8.1",
     "redux-mock-store": "^1.5.3",
+    "resolve-url-loader": "^3.1.0",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "serverless": "^1.40.0",
@@ -71,10 +73,11 @@
     "serverless-webpack": "^5.2.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.24.0",
-    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.10",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.1",
+    "why-did-you-update": "^1.0.6"
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
@@ -113,6 +116,7 @@
     "react-leaflet": "^2.2.0",
     "react-leaflet-control": "^2.1.1",
     "react-leaflet-draw": "^0.19.0",
+    "react-lines-ellipsis": "^0.14.1",
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
@@ -123,8 +127,7 @@
     "redux-thunk": "^2.3.0",
     "terser-webpack-plugin": "^1.2.2",
     "three": "~0.86.0",
-    "uglifyjs-webpack-plugin": "^2.1.1",
-    "why-did-you-update": "^1.0.6"
+    "uglifyjs-webpack-plugin": "^2.1.1"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."

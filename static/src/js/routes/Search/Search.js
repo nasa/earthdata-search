@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import {
   Route,
@@ -6,9 +6,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import CollectionResultsContainer
-  from '../../containers/CollectionResultsContainer/CollectionResultsContainer'
-import ConnectedMapContainer
+import ConnectedEdscMapContainer
   from '../../containers/MapContainer/MapContainer'
 import ConnectedMasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
@@ -20,28 +18,46 @@ import MyDropzone
   from '../../components/MyDropzone/MyDropzone'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
+import CollectionResultsHeader
+  from '../../components/CollectionResults/CollectionResultsHeader'
+import CollectionResultsBody
+  from '../../components/CollectionResults/CollectionResultsBody'
 
-const Search = (props) => {
-  const { match } = props
+import '../../components/CollectionResults/CollectionResults.scss'
 
-  return (
-    <div className="route-wrapper route-wrapper--search search">
-      <ConnectedMapContainer />
-      <MyDropzone />
-      <SidebarContainer />
-      <ConnectedSearchFormContainer />
-      <ConnectedMasterOverlayPanelContainer>
+const headerCollectionResults = <CollectionResultsHeader />
+const bodyCollectionResults = <CollectionResultsBody />
+
+const headerGranuleResults = <div />
+const bodyGranuleResults = <GranuleResultsContainer />
+
+// eslint-disable-next-line
+class Search extends PureComponent {
+  render() {
+    const { match } = this.props
+    return (
+      <div className="route-wrapper route-wrapper--search search">
+        <ConnectedEdscMapContainer />
+        <MyDropzone />
+        <SidebarContainer />
+        <ConnectedSearchFormContainer />
         <Switch>
           <Route exact path={match.path}>
-            <CollectionResultsContainer />
+            <ConnectedMasterOverlayPanelContainer
+              header={headerCollectionResults}
+              body={bodyCollectionResults}
+            />
           </Route>
           <Route path={`${match.path}/granules`}>
-            <GranuleResultsContainer />
+            <ConnectedMasterOverlayPanelContainer
+              header={headerGranuleResults}
+              body={bodyGranuleResults}
+            />
           </Route>
         </Switch>
-      </ConnectedMasterOverlayPanelContainer>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 Search.propTypes = {

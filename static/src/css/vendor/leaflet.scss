@@ -27,4 +27,44 @@
     bottom: 50px;
     right: 2px;
   }
+
+  .leaflet-bar a,
+  .leaflet-bar a:hover,
+  .leaflet-bar a:last-child {
+    border: 0;
+  }
+
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove {
+    background-position: -240px 0px;
+
+    &.leaflet-disabled {
+      background-position: -240px 0px;
+    }
+  }
+
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit {
+    background-position: -209px 0px;
+
+    &.leaflet-disabled {
+      background-position: -209px 0px;
+    }
+  }
+
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled {
+    cursor: not-allowed;
+  }
+
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
+    background-position: -29px 0px;
+  }
+
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
+    background-position: -60px 0px;
+  }
+
+  .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
+    background-position: -120px 0px;
+  }
 }
+
