@@ -7,13 +7,15 @@ import Header from './Header/Header'
 
 import './SidebarContainer.scss'
 
-const SidebarContainer = () => (
-  <section className="sidebar">
-    <Header />
-    <SidebarSection sectionTitle="Browse Collections">
-      <ConnectedFacetsContainer />
-    </SidebarSection>
-  </section>
-)
+const SidebarContainer = () => {
+  return (
+    <section className="sidebar">
+      <Header />
+      <SidebarSection sectionTitle="Browse Collections">
+        <ConnectedFacetsContainer />
+      </SidebarSection>
+    </section>
+  )
+}
 
 export default SidebarContainer

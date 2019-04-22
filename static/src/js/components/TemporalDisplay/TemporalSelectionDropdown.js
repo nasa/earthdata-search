@@ -209,7 +209,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
       <Dropdown show={open} className="temporal-selection-dropdown">
         <Dropdown.Toggle
           variant="inline-block"
-          id="dropdown-basic"
+          id="temporal-selection-dropdown"
           className="search-form__button"
           onClick={this.onToggleClick}
         >

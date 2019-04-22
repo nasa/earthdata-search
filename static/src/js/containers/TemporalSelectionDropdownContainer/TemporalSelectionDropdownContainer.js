@@ -16,9 +16,9 @@ const mapStateToProps = state => ({
 
 /**
  * Component representing the temporal selection dropdown
- * @extends Component
+ * @param {object} temporalSearch - The temporal state from the redux store
+ * @param {function} onChangeQuery - A redux action to update the temporal state
  */
-
 const TemporalSelectionDropdownContainer = (props) => {
   const {
     onChangeQuery,

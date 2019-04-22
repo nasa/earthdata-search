@@ -11,10 +11,13 @@ const mapDispatchToProps = dispatch => ({
   onChangeFeatureFacet: (e, facetLinkInfo) => dispatch(actions.changeFeatureFacet(e, facetLinkInfo))
 })
 
-const mapStateToProps = state => ({
-  facets: state.entities.facets,
-  featureFacets: state.facetsParams.feature
-})
+const mapStateToProps = (state) => {
+  const { entities, facetsParams } = state
+  return {
+    facets: entities.facets,
+    featureFacets: facetsParams.feature
+  }
+}
 
 const FacetsContainer = (props) => {
   const {

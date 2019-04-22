@@ -13,29 +13,23 @@ const ProjectionSwitcher = (props) => {
     <Control position="bottomright">
       <div className="projection-switcher leaflet-bar">
         <button
-          className="project-switcher-arctic"
+          className="projection-switcher-arctic"
           onClick={() => onChangeProjection(projections.arctic)}
           title="North Polar Stereographic"
           type="button"
-        >
-          Arctic
-        </button>
+        />
         <button
-          className="project-switcher-geo"
+          className="projection-switcher-geo"
           onClick={() => onChangeProjection(projections.geographic)}
           title="Geographic (Equirectangular)"
           type="button"
-        >
-          Geographic
-        </button>
+        />
         <button
-          className="project-switcher-antarctic"
+          className="projection-switcher-antarctic"
           onClick={() => onChangeProjection(projections.antarctic)}
           title="South Polar Stereographic"
           type="button"
-        >
-          Antarctic
-        </button>
+        />
       </div>
     </Control>
   )
