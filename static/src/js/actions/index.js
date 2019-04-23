@@ -15,7 +15,9 @@ import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
 import {
   changeCmrFacet,
-  changeFeatureFacet
+  updateCmrFacet,
+  changeFeatureFacet,
+  updateFeatureFacet
 } from './facets'
 import {
   masterOverlayPanelDragEnd,
@@ -25,7 +27,9 @@ import {
 
 const actions = {
   changeCmrFacet,
+  updateCmrFacet,
   changeFeatureFacet,
+  updateFeatureFacet,
   changeFocusedCollection,
   changeMap,
   changeQuery,

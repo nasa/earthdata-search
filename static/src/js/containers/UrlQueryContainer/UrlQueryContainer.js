@@ -5,6 +5,10 @@ import actions from '../../actions/index'
 import { decodeUrlParams, encodeUrlQuery } from '../../util/url/url'
 
 const mapDispatchToProps = dispatch => ({
+  onUpdateCmrFacet:
+    facet => dispatch(actions.updateCmrFacet(facet)),
+  onUpdateFeatureFacet:
+    facet => dispatch(actions.updateFeatureFacet(facet)),
   onChangeFocusedCollection:
     collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
   onChangeMap:
@@ -21,12 +25,19 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.spatial.boundingBox,
+  featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection.collectionId,
+  instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.keyword,
   map: state.map,
+  organizationFacets: state.facetsParams.cmr.data_center_h,
   pathname: state.router.location.pathname,
+  platformFacets: state.facetsParams.cmr.platform_h,
   pointSearch: state.query.spatial.point,
   polygonSearch: state.query.spatial.polygon,
+  processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
+  projectFacets: state.facetsParams.cmr.project_h,
+  scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   search: state.router.location.search,
   temporalSearch: state.query.temporal,
   timeline: state.timeline
@@ -35,6 +46,8 @@ const mapStateToProps = state => ({
 export class UrlQueryContainer extends Component {
   componentDidMount() {
     const {
+      onUpdateCmrFacet,
+      onUpdateFeatureFacet,
       onChangeFocusedCollection,
       onChangeMap,
       onChangeQuery,
@@ -44,13 +57,13 @@ export class UrlQueryContainer extends Component {
     } = this.props
 
     const {
+      cmrFacets,
+      featureFacets,
       focusedCollection,
       map,
       query,
       timeline
     } = decodeUrlParams(search)
-
-    onChangeQuery({ ...query })
 
     if (map) {
       onChangeMap(map)
@@ -65,6 +78,16 @@ export class UrlQueryContainer extends Component {
       onChangeTimelineState(state)
       onChangeTimelineQuery(query)
     }
+
+    if (featureFacets) {
+      onUpdateFeatureFacet(featureFacets)
+    }
+
+    if (cmrFacets) {
+      onUpdateCmrFacet(cmrFacets)
+    }
+
+    onChangeQuery({ ...query })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,6 +117,8 @@ UrlQueryContainer.defaultProps = {
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
+  onUpdateCmrFacet: PropTypes.func.isRequired,
+  onUpdateFeatureFacet: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,

@@ -1,3 +1,8 @@
+import {
+  UPDATE_SELECTED_FEATURE_FACET,
+  UPDATE_SELECTED_CMR_FACET
+} from '../constants/actionTypes'
+
 const initialCmrState = {
   data_center_h: undefined,
   instrument_h: undefined,
@@ -15,13 +20,7 @@ const initialFeatureState = {
 
 export const cmrFacetsReducer = (state = initialCmrState, action) => {
   switch (action.type) {
-    case 'ADD_SELECTED_CMR_FACET': {
-      return {
-        ...state,
-        ...action.payload
-      }
-    }
-    case 'REMOVE_SELECTED_CMR_FACET': {
+    case UPDATE_SELECTED_CMR_FACET: {
       return {
         ...state,
         ...action.payload
@@ -34,13 +33,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action) => {
 
 export const featureFacetsReducer = (state = initialFeatureState, action) => {
   switch (action.type) {
-    case 'ADD_SELECTED_FEATURE_FACET': {
-      return {
-        ...state,
-        ...action.payload
-      }
-    }
-    case 'REMOVE_SELECTED_FEATURE_FACET': {
+    case UPDATE_SELECTED_FEATURE_FACET: {
       return {
         ...state,
         ...action.payload

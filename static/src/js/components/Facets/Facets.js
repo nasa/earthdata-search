@@ -18,7 +18,10 @@ const Facets = (props) => {
   } = props
 
   const changeFeatureFacet = (e, facetLinkInfo) => {
-    onChangeFeatureFacet(e, facetLinkInfo)
+    const { title } = facetLinkInfo
+    const { checked } = e.target
+
+    onChangeFeatureFacet({ [camelCase(title)]: checked })
   }
 
   const changeCmrFacet = (e, facetLinkInfo) => {
@@ -33,7 +36,7 @@ const Facets = (props) => {
       science_keywords_h: newParams.science_keywords_h
     }
 
-    onChangeCmrFacet(e, paramsToSend)
+    onChangeCmrFacet(paramsToSend)
   }
 
   const featuresFacet = {
