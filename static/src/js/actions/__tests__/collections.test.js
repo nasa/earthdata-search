@@ -185,19 +185,6 @@ describe('getCollections', () => {
     })
   })
 
-  // test('returns no results if there is no focused collection', () => {
-  //   const store = mockStore()
-
-  //   store.dispatch(getGranules())
-  //   const storeActions = store.getActions()
-  //   expect(storeActions[0]).toEqual({
-  //     type: UPDATE_GRANULES,
-  //     payload: {
-  //       results: []
-  //     }
-  //   })
-  // })
-
   test('does not call updateCollections on error', async () => {
     moxios.stubRequest(/collections.*/, {
       status: 500,

@@ -1,7 +1,10 @@
 import qs from 'qs'
 import cleanDeep from 'clean-deep'
 
+import { decodeFeatures, encodeFeatures } from './featureFacetEncoders'
+import { decodeFacets, encodeFacets } from './facetEncoders'
 import { decodeMap, encodeMap } from './mapEncoders'
+import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEncoders'
 import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
@@ -25,7 +28,13 @@ const urlDefs = {
   polygonSearch: { shortKey: 'polygon', encode: encodeString, decode: decodeString },
   map: { shortKey: 'm', encode: encodeMap, decode: decodeMap },
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
-  timeline: { shortKey: 'tl', encode: encodeTimeline, decode: decodeTimeline }
+  timeline: { shortKey: 'tl', encode: encodeTimeline, decode: decodeTimeline },
+  featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
+  platformFacets: { shortKey: 'fp', encode: encodeFacets, decode: decodeFacets },
+  instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
+  organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
+  projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
+  processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets }
 }
 
 
@@ -68,7 +77,26 @@ export const decodeUrlParams = (paramString) => {
 
   const timeline = decodeHelp(params, 'timeline')
 
+  const featureFacets = decodeHelp(params, 'featureFacets')
+  const scienceKeywords = decodeScienceKeywords(params)
+  const platforms = decodeHelp(params, 'platformFacets')
+  const instruments = decodeHelp(params, 'instrumentFacets')
+  const organizations = decodeHelp(params, 'organizationFacets')
+  const projects = decodeHelp(params, 'projectFacets')
+  const processingLevels = decodeHelp(params, 'processingLevelFacets')
+
+  const cmrFacets = {
+    data_center_h: organizations,
+    instrument_h: instruments,
+    platform_h: platforms,
+    processing_level_id_h: processingLevels,
+    project_h: projects,
+    science_keywords_h: scienceKeywords
+  }
+
   return {
+    cmrFacets,
+    featureFacets,
     focusedCollection,
     map,
     query,
@@ -92,8 +120,12 @@ export const encodeUrlQuery = (props) => {
     query[shortKey] = value
   })
 
+  const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
+
+  const encodedQuery = Object.assign({}, query, scienceKeywordQuery)
+
   // endcode query as a URL string
-  const paramString = qs.stringify(cleanDeep(query), { addQueryPrefix: true })
+  const paramString = qs.stringify(cleanDeep(encodedQuery), { addQueryPrefix: true })
 
   // return the full pathname + paramString
   const { pathname } = props
