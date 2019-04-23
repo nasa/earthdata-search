@@ -63,7 +63,7 @@ describe('changeCmrFacet', () => {
     // call the dispatch
     store.dispatch(changeCmrFacet({ ...newFacets }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCmrFacet called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_SELECTED_CMR_FACET,
@@ -91,7 +91,7 @@ describe('changeFeatureFacet', () => {
     // call the dispatch
     store.dispatch(changeFeatureFacet({ ...newFacets }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateFeatureFacet called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_SELECTED_FEATURE_FACET,
