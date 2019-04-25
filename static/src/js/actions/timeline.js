@@ -1,5 +1,6 @@
-import API from '../util/api'
 import actions from './index'
+
+import { TimelineRequest } from '../util/request/cmr'
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
@@ -37,9 +38,10 @@ export const getTimeline = () => (dispatch, getState) => {
     }))
     return null
   }
+  const requestObject = new TimelineRequest()
 
-  const response = API.endpoints.timeline.getAll({
-    collectionId,
+  const response = requestObject.search({
+    echoCollectionId: collectionId,
     endDate,
     interval,
     startDate

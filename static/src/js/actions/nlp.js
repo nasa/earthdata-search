@@ -1,6 +1,7 @@
 import moment from 'moment'
-import API from '../util/api'
 import actions from './index'
+
+import NlpRequest from '../util/request/nlp'
 
 export const nlpSpatialToCmrParams = (nlpSpatialParam) => {
   if (!nlpSpatialParam) {
@@ -19,7 +20,9 @@ export const searchNlp = keyword => (dispatch) => {
   let response = null
 
   if (keyword) {
-    response = API.endpoints.nlp.search({ text: keyword })
+    const requestObject = new NlpRequest()
+
+    response = requestObject.search({ text: keyword })
       .then((response) => {
         const payload = {}
 

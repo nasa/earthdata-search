@@ -177,11 +177,7 @@ export function timelineSearch(event, context, callback) {
   const permittedCmrKeys = [
     'echo_collection_id',
     'end_date',
-    'format',
     'interval',
-    'page_num',
-    'page_size',
-    'sort_key',
     'start_date'
   ]
   const { params = {} } = JSON.parse(event.body)
