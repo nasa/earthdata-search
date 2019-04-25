@@ -60,14 +60,11 @@ export const getGranules = () => (dispatch, getState) => {
     .then((response) => {
       const payload = populateGranuleResults(collectionId, isCwicCollection, response)
 
-      console.log(payload)
-
       dispatch(updateGranules(payload))
     }, (error) => {
       throw new Error('Request failed', error)
     })
-    .catch((e) => {
-      console.log(e)
+    .catch(() => {
       console.log('Promise Rejected')
     })
 
