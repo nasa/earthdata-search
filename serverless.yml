@@ -25,18 +25,37 @@ provider:
   #  stage: dev
   #  region: us-east-1
   environment:
-    cmr_host: https://cmr.sit.earthdata.nasa.gov
+    cmr_host: https://cmr.earthdata.nasa.gov
     nlp_host: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov
 
 plugins:
   # - serverless-webpack
+  - serverless-localstack
+  - serverless-finch
   - serverless-offline
-  - serverless-s3-sync
 
 #
 # Lambda Functions
 #
 functions:
+
+  # 
+  # Scheduled Tasks
+  # 
+
+
+  # 
+  # Endpoints
+  # 
+  cwicGranuleSearch:
+    handler: serverless/dist/cwic.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: cwic/granules
+
   nlpSearch:
     handler: serverless/dist/nlp.default
     events:
@@ -131,8 +150,16 @@ resources:
 
 custom:
   siteName: earthdata-search
-  s3Sync:
-    - bucketName: ${self:custom.siteName}
-      localDir: static/dist
+  stage: 'dev'
+  client:
+    bucketName: ${self:custom.siteName}
+    distributionFolder: static/dist
   serverless-offline:
     port: 3001
+  localstack:
+    host: http://localhost
+    debug: true
+    stages:
+      - dev
+    lambda:
+      mountCode: True

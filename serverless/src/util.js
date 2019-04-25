@@ -43,5 +43,8 @@ export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
     delete indexedAttrs[key]
   })
 
-  return [qsStringify(indexedAttrs), qsStringify(nonIndexedAttrs, { arrayFormat: 'brackets' })].join('&')
+  return [
+    qsStringify(indexedAttrs),
+    qsStringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
+  ].join('&')
 }

@@ -1,5 +1,5 @@
 import actions from './index'
-import API from '../util/api'
+import { CollectionRequest } from '../util/request/cmr'
 import { UPDATE_FOCUSED_COLLECTION } from '../constants/actionTypes'
 
 export const updateFocusedCollection = payload => ({
@@ -19,9 +19,12 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
     return null
   }
 
-  const response = API.endpoints.collections.getOne({
-    collectionId,
-    includeTags: 'edsc.extra.gibs'
+  const requestObject = new CollectionRequest()
+
+  const response = requestObject.search({
+    concept_id: collectionId,
+    includeTags: 'edsc.extra.gibs,org.ceos.wgiss.cwic.granules.prod',
+    includeHasGranules: true
   })
     .then((response) => {
       const payload = {}

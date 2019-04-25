@@ -1,5 +1,4 @@
-import API from '../util/api'
-
+import { CollectionRequest } from '../util/request/cmr'
 import { encodeTemporal } from '../util/url/temporalEncoders'
 
 import {
@@ -98,7 +97,9 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startTimer())
 
-  const response = API.endpoints.collections.getAll({
+  const requestObject = new CollectionRequest()
+
+  const response = requestObject.search({
     boundingBox,
     collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
     dataCenterH: cmrFacets.data_center_h,
@@ -106,7 +107,7 @@ export const getCollections = () => (dispatch, getState) => {
     includeFacets: 'v2',
     includeGranuleCounts: true,
     includeHasGranules: true,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+    includeTags: 'edsc.*',
     instrumentH: cmrFacets.instrument_h,
     keyword,
     options: {
@@ -122,7 +123,7 @@ export const getCollections = () => (dispatch, getState) => {
     platformH: cmrFacets.platform_h,
     point,
     polygon,
-    processingLevelId: cmrFacets.processing_level_id_h,
+    processingLevelIdH: cmrFacets.processing_level_id_h,
     projectH: cmrFacets.project_h,
     scienceKeywordsH: cmrFacets.science_keywords_h,
     sortKey: ['has_granules_or_cwic'],
@@ -131,8 +132,9 @@ export const getCollections = () => (dispatch, getState) => {
   })
     .then((response) => {
       const payload = {}
+
       payload.facets = response.data.feed.facets.children || []
-      payload.hits = response.data.feed.hits
+      payload.hits = response.headers['cmr-hits']
       payload.keyword = keyword
       payload.results = response.data.feed.entry
 

@@ -1,11 +1,12 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+// const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const ServerlessWebpackConfig = {
   name: 'serverless',
   mode: 'development',
   entry: {
     cmr: './serverless/src/cmr.js',
+    cwic: './serverless/src/cwic.js',
     nlp: './serverless/src/nlp.js'
   },
   target: 'node',

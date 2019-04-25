@@ -1,4 +1,5 @@
 import API from '../api'
+import { CollectionRequest } from '../request'
 
 export const collectionsEndpoints = {
   name: 'collections',
@@ -29,32 +30,30 @@ export const collectionsEndpoints = {
         sortKey,
         tagKey,
         temporal
-      } = {}) => API.post('collections', {
-        params: {
-          bounding_box: boundingBox,
-          collection_data_type: collectionDataType,
-          data_center_h: dataCenterH,
-          has_granules_or_cwic: hasGranulesOrCwic,
-          has_granules: hasGranules,
-          include_facets: includeFacets,
-          include_granule_counts: includeGranuleCounts,
-          include_has_granules: includeHasGranules,
-          include_tags: includeTags,
-          instrument_h: instrumentH,
-          keyword,
-          options,
-          page_num: pageNum,
-          page_size: pageSize,
-          platform_h: platformH,
-          point,
-          polygon,
-          processing_level_id_h: processingLevelId,
-          project_h: projectH,
-          science_keywords_h: scienceKeywordsH,
-          sort_key: sortKey,
-          tag_key: tagKey,
-          temporal
-        }
+      } = {}) => CollectionRequest.search({
+        bounding_box: boundingBox,
+        collection_data_type: collectionDataType,
+        data_center_h: dataCenterH,
+        has_granules_or_cwic: hasGranulesOrCwic,
+        has_granules: hasGranules,
+        include_facets: includeFacets,
+        include_granule_counts: includeGranuleCounts,
+        include_has_granules: includeHasGranules,
+        include_tags: includeTags,
+        instrument_h: instrumentH,
+        keyword,
+        options,
+        page_num: pageNum,
+        page_size: pageSize,
+        platform_h: platformH,
+        point,
+        polygon,
+        processing_level_id_h: processingLevelId,
+        project_h: projectH,
+        science_keywords_h: scienceKeywordsH,
+        sort_key: sortKey,
+        tag_key: tagKey,
+        temporal
       })
     },
     {
