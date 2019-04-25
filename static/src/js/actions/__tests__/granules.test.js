@@ -44,11 +44,22 @@ describe('getGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
+      },
+      headers: {
+        'cmr-hits': 1
       }
     })
 
     // mockStore with initialState
-    const store = mockStore({ focusedCollection: { collectionId: 'collectionId' } })
+    const store = mockStore({
+      focusedCollection: {
+        collectionId: 'collectionId'
+      },
+      query: {
+        temporal: {},
+        spatial: {}
+      }
+    })
 
     // call the dispatch
     await store.dispatch(getGranules()).then(() => {
@@ -57,8 +68,11 @@ describe('getGranules', () => {
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULES,
         payload: {
+          hits: 1,
           collectionId: 'collectionId',
+          isCwic: false,
           results: [{
+            is_cwic: false,
             mockGranuleData: 'goes here'
           }]
         }
@@ -67,7 +81,13 @@ describe('getGranules', () => {
   })
 
   test('returns no results if there is no focused collection', () => {
-    const store = mockStore()
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        temporal: {},
+        spatial: {}
+      }
+    })
 
     store.dispatch(getGranules())
     const storeActions = store.getActions()
@@ -85,7 +105,15 @@ describe('getGranules', () => {
       response: {}
     })
 
-    const store = mockStore({ focusedCollection: { collectionId: 'collectionId' } })
+    const store = mockStore({
+      focusedCollection: {
+        collectionId: 'collectionId'
+      },
+      query: {
+        temporal: {},
+        spatial: {}
+      }
+    })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 

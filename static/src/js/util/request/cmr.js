@@ -100,8 +100,10 @@ export class GranuleRequest extends CmrRequest {
       const h = 170
       const w = 170
 
-      // eslint-disable-next-line
-      updatedGranule.thumbnail = `https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+      if (granule.id) {
+        // eslint-disable-next-line
+        updatedGranule.thumbnail = `https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+      }
 
       return updatedGranule
     })

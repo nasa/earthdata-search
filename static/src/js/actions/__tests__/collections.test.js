@@ -135,9 +135,11 @@ describe('getCollections', () => {
           entry: [{
             mockCollectionData: 'goes here'
           }],
-          facets: {},
-          hits: 1
+          facets: {}
         }
+      },
+      headers: {
+        'cmr-hits': 1
       }
     })
 
