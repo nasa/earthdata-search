@@ -65,15 +65,29 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
+      expect(storeActions[0]).toEqual({ type: 'LOADING_GRANULES' })
+      expect(storeActions[1]).toEqual({ type: 'STARTED_GRANULES_TIMER' })
+      expect(storeActions[2]).toEqual({ type: 'FINISHED_GRANULES_TIMER' })
+      expect(storeActions[3]).toEqual({
+        type: 'LOADED_GRANULES',
+        payload: {
+          loaded: true
+        }
+      })
+      expect(storeActions[4]).toEqual({
         type: UPDATE_GRANULES,
         payload: {
-          hits: 1,
           collectionId: 'collectionId',
+          hits: 1,
           isCwic: false,
           results: [{
+            mockGranuleData: 'goes here',
+            formattedTemporal: [
+              null,
+              null
+            ],
             is_cwic: false,
-            mockGranuleData: 'goes here'
+            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/undefined?h=85&w=85'
           }]
         }
       })

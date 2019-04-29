@@ -2,8 +2,14 @@ import granulesReducer from '../granules'
 import { UPDATE_GRANULES } from '../../constants/actionTypes'
 
 const initialState = {
+  allIds: [],
   byId: {},
-  allIds: []
+  hits: null,
+  isCwic: null,
+  isLoaded: false,
+  isLoading: false,
+  loadTime: 0,
+  timerStart: null
 }
 
 describe('INITIAL_STATE', () => {
@@ -24,8 +30,9 @@ describe('UPDATE_GRANULES', () => {
           id: 'mockGranuleId',
           mockGranuleData: 'goes here'
         }],
-        hits: 0,
-        keyword: 'search keyword'
+        hits: null,
+        keyword: 'search keyword',
+        isCwic: true
       }
     }
 
@@ -37,7 +44,8 @@ describe('UPDATE_GRANULES', () => {
           id: 'mockGranuleId',
           mockGranuleData: 'goes here'
         }
-      }
+      },
+      isCwic: true
     }
 
     expect(granulesReducer(undefined, action)).toEqual(expectedState)

@@ -1,6 +1,6 @@
 import { parse as parseXml } from 'fast-xml-parser'
 import LambdaRequest from './lambda'
-
+import { getTemporal } from '../edsc-date'
 
 export default class CwicGranuleRequest extends LambdaRequest {
   permittedCmrKeys() {
@@ -54,6 +54,8 @@ export default class CwicGranuleRequest extends LambdaRequest {
       const [timeStart, timeEnd] = granule['dc:date'].split('/')
       updatedGranule.time_start = timeStart
       updatedGranule.time_end = timeEnd
+
+      updatedGranule.formattedTemporal = getTemporal(timeStart, timeEnd)
 
       // Both keys are the same format
       updatedGranule.boxes = [

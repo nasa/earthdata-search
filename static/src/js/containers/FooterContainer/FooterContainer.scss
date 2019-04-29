@@ -1,7 +1,7 @@
 .footer {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   flex-basis: auto;
   padding: 0 1rem;
@@ -11,9 +11,32 @@
   font-size: 0.7rem;
   line-height: 1.25rem;
 
+  @media (min-width: 940px) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+
   &__info {
     padding: 0.5rem;
+
+    &--left {
+      padding-bottom: 0;
+      text-align: center;
+
+      @media (min-width: 940px) {
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    &--right {
+      padding-top: 0;
+
+      @media (min-width: 940px) {
+        padding-top: 0.5rem;
+      }
+    }
   }
+
 
   &__ver-pill {
     display: inline-block;
@@ -52,6 +75,7 @@
   }
 
   &__info-link {
+    white-space:nowrap;
     color: $color__brand--blue-light;
 
     &__info-bit--emph & {

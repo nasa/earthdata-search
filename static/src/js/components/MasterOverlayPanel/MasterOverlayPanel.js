@@ -8,10 +8,10 @@ import './MasterOverlayPanel.scss'
 /**
  * Renders MasterOverlayPanel.
  * @param {object} props - The props passed into the component.
- * @param {ReactElement} header - The element to pass that make up the header section.
- * @param {ReactElement} body - The element to pass that make up the body section.
+ * @param {ReactElement} header - The content for the header section.
+ * @param {ReactElement} body - The content for the body section.
+ * @param {ReactElement} tabHandle - The content for the tab handle.
  * @param {number} panelHeight - The height of the component from the redux store.
- * @param {number} collectionHits - The elements to pass that make up the body section.
  * @param {function} masterOverlayPanel - An object representing the state of the component.
  * @param {function} onMasterOverlayHeightChange - Fired when the collection height changes.
  * @param {function} onMasterOverlayPanelDragStart - Fired when a user drags the panel.
@@ -73,15 +73,18 @@ class MasterOverlayPanel extends PureComponent {
       onMasterOverlayHeightChange
     } = this.props
 
-    if (!masterOverlayPanel.dragging) return
+    requestAnimationFrame(() => {
+      if (!masterOverlayPanel.dragging) return
 
-    // This can be improved but will work for now. It currently will let the user scroll past the max height,
-    // but we can just reset it when the onMouseUp fires.
-    if ($(this.node).offset().top < 105) return
+      // This can be improved but will work for now. It currently will let the user scroll past the max height,
+      // but we can just reset it when the onMouseUp fires.
+      if ($(this.node).offset().top < 105) return
 
-    const distanceScrolled = masterOverlayPanel.clickStartY - e.pageY
+      const distanceScrolled = masterOverlayPanel.clickStartY - e.pageY
 
-    onMasterOverlayHeightChange(distanceScrolled + masterOverlayPanel.clickStartHeight)
+      onMasterOverlayHeightChange(distanceScrolled + masterOverlayPanel.clickStartHeight)
+    })
+
     e.stopPropagation()
     e.preventDefault()
   }
@@ -89,9 +92,9 @@ class MasterOverlayPanel extends PureComponent {
   render() {
     const {
       body,
-      collectionHits,
       header,
-      panelHeight
+      panelHeight,
+      tabHandle
     } = this.props
 
     return (
@@ -112,7 +115,7 @@ class MasterOverlayPanel extends PureComponent {
                 onMouseDown={this.onMouseDown}
               />
               <h2 className="master-overlay-panel__tab-heading">
-                {`${collectionHits} Matching Collections`}
+                {tabHandle}
               </h2>
             </span>
             {header}
@@ -126,19 +129,15 @@ class MasterOverlayPanel extends PureComponent {
   }
 }
 
-MasterOverlayPanel.defaultProps = {
-  collectionHits: null
-}
-
 MasterOverlayPanel.propTypes = {
   body: PropTypes.node.isRequired,
-  collectionHits: PropTypes.string,
   header: PropTypes.node.isRequired,
   panelHeight: PropTypes.number.isRequired,
   masterOverlayPanel: PropTypes.shape({}).isRequired,
   onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onMasterOverlayPanelDragStart: PropTypes.func.isRequired,
-  onMasterOverlayPanelDragEnd: PropTypes.func.isRequired
+  onMasterOverlayPanelDragEnd: PropTypes.func.isRequired,
+  tabHandle: PropTypes.node.isRequired
 }
 
 export default MasterOverlayPanel

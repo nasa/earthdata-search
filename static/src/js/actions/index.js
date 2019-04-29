@@ -1,3 +1,5 @@
+/* eslint-disable import/no-cycle */
+
 import { getCollections } from './collections'
 import { changeFocusedCollection } from './focusedCollection'
 import { getGranules, updateGranules } from './granules'
@@ -22,7 +24,9 @@ import {
 import {
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
-  masterOverlayPanelResize
+  masterOverlayPanelResize,
+  granuleResultsPanelUpdateSortOrder,
+  granuleResultsPanelUpdateSearchValue
 } from './ui'
 
 const actions = {
@@ -40,6 +44,8 @@ const actions = {
   getCollections,
   getGranules,
   getTimeline,
+  granuleResultsPanelUpdateSortOrder,
+  granuleResultsPanelUpdateSearchValue,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,

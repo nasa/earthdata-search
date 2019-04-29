@@ -1,5 +1,6 @@
 import { prepKeysForCmr } from '../url/url'
 import Request from './request'
+import { getTemporal } from '../edsc-date'
 
 
 /**
@@ -128,8 +129,10 @@ export class GranuleRequest extends CmrRequest {
 
       updatedGranule.is_cwic = false
 
-      const h = 170
-      const w = 170
+      updatedGranule.formattedTemporal = getTemporal(granule.time_start, granule.time_end)
+
+      const h = 85
+      const w = 85
 
       if (granule.id) {
         // eslint-disable-next-line

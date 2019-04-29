@@ -12,8 +12,14 @@ import ConnectedMasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
 import ConnectedSearchFormContainer
   from '../../containers/SearchFormContainer/SearchFormContainer'
-import GranuleResultsContainer
-  from '../../containers/GranuleResultsContainer/GranuleResultsContainer'
+import CollectionResultsTabContainer
+  from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
+import GranuleResultsTabContainer
+  from '../../containers/GranuleResultsTabContainer/GranuleResultsTabContainer'
+import GranuleResultsBodyContainer
+  from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
+import GranuleResultsHeaderContainer
+  from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
 import MyDropzone
   from '../../components/MyDropzone/MyDropzone'
 import SidebarContainer
@@ -28,10 +34,10 @@ import '../../components/CollectionResults/CollectionResults.scss'
 const headerCollectionResults = <CollectionResultsHeader />
 const bodyCollectionResults = <CollectionResultsBody />
 
-const headerGranuleResults = <div />
-const bodyGranuleResults = <GranuleResultsContainer />
+const headerGranuleResults = <GranuleResultsHeaderContainer />
+const bodyGranuleResults = <GranuleResultsBodyContainer />
 
-// eslint-disable-next-line
+
 class Search extends PureComponent {
   render() {
     const { match } = this.props
@@ -44,12 +50,14 @@ class Search extends PureComponent {
         <Switch>
           <Route exact path={match.path}>
             <ConnectedMasterOverlayPanelContainer
+              tabHandle={<CollectionResultsTabContainer />}
               header={headerCollectionResults}
               body={bodyCollectionResults}
             />
           </Route>
           <Route path={`${match.path}/granules`}>
             <ConnectedMasterOverlayPanelContainer
+              tabHandle={<GranuleResultsTabContainer />}
               header={headerGranuleResults}
               body={bodyGranuleResults}
             />
