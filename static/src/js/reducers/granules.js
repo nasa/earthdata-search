@@ -1,13 +1,54 @@
-import { UPDATE_GRANULES } from '../constants/actionTypes'
+import {
+  UPDATE_GRANULES,
+  LOADING_GRANULES,
+  LOADED_GRANULES,
+  STARTED_GRANULES_TIMER,
+  FINISHED_GRANULES_TIMER
+} from '../constants/actionTypes'
 
 const initialState = {
   byId: {},
-  allIds: []
+  allIds: [],
+  hits: null,
+  isLoading: false,
+  isLoaded: false,
+  timerStart: null,
+  loadTime: 0,
+  isCwic: null
 }
 
 const granulesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOADING_GRANULES: {
+      return {
+        ...state,
+        isLoading: true,
+        isLoaded: false
+      }
+    }
+    case LOADED_GRANULES: {
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: action.payload.loaded
+      }
+    }
+    case STARTED_GRANULES_TIMER: {
+      return {
+        ...state,
+        timerStart: Date.now()
+      }
+    }
+    case FINISHED_GRANULES_TIMER: {
+      const { timerStart } = state
+      return {
+        ...state,
+        timerStart: null,
+        loadTime: Date.now() - timerStart
+      }
+    }
     case UPDATE_GRANULES: {
+      const { hits, isCwic } = action.payload
       const byId = {}
       const allIds = []
       action.payload.results.forEach((result) => {
@@ -18,8 +59,10 @@ const granulesReducer = (state = initialState, action) => {
 
       return {
         ...state,
+        allIds,
         byId,
-        allIds
+        hits,
+        isCwic
       }
     }
     default:

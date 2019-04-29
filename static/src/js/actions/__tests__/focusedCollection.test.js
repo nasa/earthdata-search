@@ -94,7 +94,7 @@ describe('changeFocusedCollection', () => {
 
     expect(storeActions[0]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
-      payload: {}
+      payload: ""
     })
     expect(storeActions[1]).toEqual({
       type: UPDATE_GRANULES,

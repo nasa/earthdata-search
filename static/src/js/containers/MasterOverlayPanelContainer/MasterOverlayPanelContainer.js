@@ -36,6 +36,7 @@ const MasterOverlayPanelContainer = (props) => {
   const {
     header,
     body,
+    tabHandle,
     panelHeight,
     collectionHits,
     masterOverlayPanel,
@@ -56,6 +57,7 @@ const MasterOverlayPanelContainer = (props) => {
       onMasterOverlayHeightChange={onMasterOverlayHeightChange}
       onMasterOverlayPanelDragStart={onMasterOverlayPanelDragStart}
       onMasterOverlayPanelDragEnd={onMasterOverlayPanelDragEnd}
+      tabHandle={tabHandle}
     />
   )
 }
@@ -73,7 +75,8 @@ MasterOverlayPanelContainer.propTypes = {
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onMasterOverlayPanelDragStart: PropTypes.func.isRequired,
-  onMasterOverlayPanelDragEnd: PropTypes.func.isRequired
+  onMasterOverlayPanelDragEnd: PropTypes.func.isRequired,
+  tabHandle: PropTypes.node.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MasterOverlayPanelContainer)

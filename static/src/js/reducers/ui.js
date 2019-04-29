@@ -1,7 +1,9 @@
 import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
-  MASTER_OVERLAY_PANEL_UPDATE_RESIZE
+  MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
+  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -9,7 +11,11 @@ const initialState = {
     clickStartHeight: undefined,
     clickStartY: undefined,
     dragging: false,
-    height: 500
+    height: 300
+  },
+  granuleResultsPanel: {
+    sortOrder: 'start_date_newest_first',
+    searchValue: ''
   }
 }
 
@@ -43,6 +49,24 @@ const uiReducer = (state = initialState, action) => {
         masterOverlayPanel: {
           ...state.masterOverlayPanel,
           height: action.payload
+        }
+      }
+    }
+    case GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER: {
+      return {
+        ...state,
+        granuleResultsPanel: {
+          ...state.granuleResultsPanel,
+          sortOrder: action.payload
+        }
+      }
+    }
+    case GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE: {
+      return {
+        ...state,
+        granuleResultsPanel: {
+          ...state.granuleResultsPanel,
+          searchValue: action.payload
         }
       }
     }
