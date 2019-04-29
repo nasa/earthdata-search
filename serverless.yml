@@ -26,11 +26,10 @@ provider:
   #  region: us-east-1
   environment:
     cmr_host: https://cmr.earthdata.nasa.gov
-    nlp_host: https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov
+    nlp_host: https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov
 
 plugins:
   # - serverless-webpack
-  - serverless-localstack
   - serverless-finch
   - serverless-offline
 
@@ -64,53 +63,50 @@ functions:
           cors:
             origin : '*'
           path: nlp
-          request:
-            template:
-              application/json: { "text" : "$input.params('text')" }
 
-  retrieveConcept:
-    handler: serverless/dist/cmr.retrieveConcept
-    events:
-      - http:
-          method: post
-          cors:
-            origin: '*'
-          path: concepts/{id}
-          request:
-            parameters:
-              paths:
-                id: true
+  # retrieveConcept:
+  #   handler: serverless/dist/cmr.retrieveConcept
+  #   events:
+  #     - http:
+  #         method: post
+  #         cors:
+  #           origin: '*'
+  #         path: concepts/{id}
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
 
-  collectionSearch:
-    handler: serverless/dist/cmr.collectionSearch
-    events:
-      - http:
-          method: post
-          cors:
-            origin: '*'
-          path: collections
+  # collectionSearch:
+  #   handler: serverless/dist/cmr.collectionSearch
+  #   events:
+  #     - http:
+  #         method: post
+  #         cors:
+  #           origin: '*'
+  #         path: collections
 
-  granuleSearch:
-    handler: serverless/dist/cmr.granuleSearch
-    events:
-      - http:
-          method: post
-          cors:
-            origin: '*'
-          path: granules/{id}
-          request:
-            parameters:
-              paths:
-                id: true
+  # granuleSearch:
+  #   handler: serverless/dist/cmr.granuleSearch
+  #   events:
+  #     - http:
+  #         method: post
+  #         cors:
+  #           origin: '*'
+  #         path: granules/{id}
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
 
-  timelineSearch:
-    handler: serverless/dist/cmr.timelineSearch
-    events:
-      - http:
-          method: post
-          cors:
-            origin: '*'
-          path: granules/timeline
+  # timelineSearch:
+  #   handler: serverless/dist/cmr.timelineSearch
+  #   events:
+  #     - http:
+  #         method: post
+  #         cors:
+  #           origin: '*'
+  #         path: granules/timeline
 
 #
 # Non code related resources
@@ -150,16 +146,8 @@ resources:
 
 custom:
   siteName: earthdata-search
-  stage: 'dev'
   client:
     bucketName: ${self:custom.siteName}
     distributionFolder: static/dist
   serverless-offline:
     port: 3001
-  localstack:
-    host: http://localhost
-    debug: true
-    stages:
-      - dev
-    lambda:
-      mountCode: True

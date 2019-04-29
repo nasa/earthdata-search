@@ -1,14 +1,8 @@
-import pick from 'lodash/pick'
-import snakeCaseKeys from 'snakecase-keys'
 import { parse as parseXml } from 'fast-xml-parser'
-import Request from './request'
+import LambdaRequest from './lambda'
 
 
-export default class CwicGranuleRequest extends Request {
-  baseUrl() {
-    return 'http://localhost:3001'
-  }
-
+export default class CwicGranuleRequest extends LambdaRequest {
   permittedCmrKeys() {
     return [
       'bounding_box',
@@ -18,30 +12,15 @@ export default class CwicGranuleRequest extends Request {
     ]
   }
 
-  nonIndexedKeys() {
-    return []
-  }
-
-  transformRequest(data) {
-    // Converts javascript compliant keys to snake cased keys for use
-    // in URLs and request payloads
-    const snakeKeyData = snakeCaseKeys(data)
-
-    // Prevent keys that our external services don't support from being sent
-    const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
-
-    // CWIC does not support CORS so all of our requests will need to go through
-    // Lambda. POST requests to Lambda use a JSON string
-    return JSON.stringify(filteredData)
-  }
-
   transformResponse(data) {
     const formattedResponse = parseXml(data, { ignoreAttributes: false, attributeNamePrefix: '' })
 
     const { feed = {} } = formattedResponse
     const { entry = [] } = feed
 
-    entry.map((granule) => {
+    const granuleReults = [].concat(entry)
+
+    granuleReults.map((granule) => {
       const updatedGranule = granule
 
       updatedGranule.is_cwic = true
@@ -72,12 +51,15 @@ export default class CwicGranuleRequest extends Request {
 
     return {
       feed: {
-        entry,
+        entry: granuleReults,
         hits: feed['opensearch:totalResults']
       }
     }
   }
 
+  /*
+   * Makes a POST request to Lambda
+   */
   search(data) {
     return super.post('cwic/granules', data)
   }
