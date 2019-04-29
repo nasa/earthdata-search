@@ -86,8 +86,7 @@ describe('getGranules', () => {
               null,
               null
             ],
-            is_cwic: false,
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/undefined?h=85&w=85'
+            is_cwic: false
           }]
         }
       })
