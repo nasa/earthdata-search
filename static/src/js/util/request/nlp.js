@@ -1,6 +1,10 @@
-import Request from './request'
+import LambdaRequest from './lambda'
 
-export default class NlpRequest extends Request {
+export default class NlpRequest extends LambdaRequest {
+  /**
+   * Defines the default array keys that our API endpoints allow.
+   * @return {Array} An empty array
+   */
   permittedCmrKeys() {
     return [
       'text'

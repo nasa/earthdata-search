@@ -1,33 +1,34 @@
 import axios from 'axios'
-import pick from 'lodash/pick'
-import snakeCaseKeys from 'snakecase-keys'
+
 
 /**
  * Parent class for the application API layer to communicate with external services
  */
 export default class Request {
-  /**
-   * Returns the default URL used to communicate with external APIs.
-   * @return {String} The default URL our API will hit (API Gateway)
-   */
-  baseUrl() {
-    return 'http://localhost:3001'
+  constructor(baseUrl) {
+    if (!baseUrl) {
+      throw new Error('A baseUrl must be provided.')
+    }
+
+    this.baseUrl = baseUrl
   }
 
   /**
-   * Defines the default keys that our API endpoints allow.
-   * @return {Array} An empty array
+   * Modifies the payload just before the request is sent.
+   * @param {Object} data - An object containing any keys.
+   * @return {Object} A modified object.
    */
-  permittedCmrKeys() {
-    return []
+  transformRequest(data) {
+    return data
   }
 
   /**
-   * Defines the default array keys that should exclude their index when stringified.
-   * @return {Array} An empty array
+   * Transform the response before completing the Promise.
+   * @param {Object} data - Response object from the object.
+   * @return {Object} The object provided
    */
-  nonIndexedKeys() {
-    return []
+  transformResponse(data) {
+    return data
   }
 
   /**
@@ -39,7 +40,7 @@ export default class Request {
   post(url, data) {
     return axios({
       method: 'post',
-      baseURL: this.baseUrl(),
+      baseURL: this.baseUrl,
       url,
       data,
       transformRequest: [
@@ -49,30 +50,5 @@ export default class Request {
         data => this.transformResponse(data)
       )
     })
-  }
-
-  /**
-   * Modifies the payload just before the request is sent.
-   * @param {Object} data - An object containing any keys.
-   * @return {Object} A modified object.
-   */
-  transformRequest(data) {
-    // Converts javascript compliant keys to snake cased keys for use
-    // in URLs and request payloads
-    const snakeKeyData = snakeCaseKeys(data)
-
-    // Prevent keys that our external services don't support from being sent
-    const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
-
-    return filteredData
-  }
-
-  /**
-   * Transform the response before completing the Promise.
-   * @param {Object} data - Response object from the object.
-   * @return {Object} The object provided
-   */
-  transformResponse(data) {
-    return data
   }
 }

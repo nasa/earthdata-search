@@ -1,9 +1,32 @@
 import { prepKeysForCmr } from '../url/url'
 import Request from './request'
 
+
+/**
+ * Top level CMR request object that contains all the most generic transformations and settings
+ */
 export class CmrRequest extends Request {
-  baseUrl() {
-    return 'http://cmr.earthdata.nasa.gov'
+  /**
+   * Constructor.
+   */
+  constructor() {
+    super('https://cmr.earthdata.nasa.gov')
+  }
+
+  /**
+   * Defines the default keys that our API endpoints allow.
+   * @return {Array} An empty array
+   */
+  permittedCmrKeys() {
+    return []
+  }
+
+  /**
+   * Defines the default array keys that should exclude their index when stringified.
+   * @return {Array} An empty array
+   */
+  nonIndexedKeys() {
+    return []
   }
 
   /**
@@ -12,7 +35,9 @@ export class CmrRequest extends Request {
    * @return {Object} An object containing only the desired keys.
    */
   transformRequest(data) {
-    const cmrData = prepKeysForCmr(data, this.nonIndexedKeys())
+    let cmrData = super.transformRequest(data)
+
+    cmrData = prepKeysForCmr(data, this.nonIndexedKeys())
 
     return cmrData
   }
@@ -67,11 +92,17 @@ export class CollectionRequest extends CmrRequest {
     ]
   }
 
+  /*
+   * Makes a POST request to CMR
+   */
   search(params) {
     return super.post('search/collections.json', params)
   }
 }
 
+/**
+ * Request object for granule specific requests
+ */
 export class GranuleRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
@@ -102,7 +133,7 @@ export class GranuleRequest extends CmrRequest {
 
       if (granule.id) {
         // eslint-disable-next-line
-        updatedGranule.thumbnail = `https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+        updatedGranule.thumbnail = `${this.baseUrl}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
       }
 
       return updatedGranule
@@ -115,12 +146,18 @@ export class GranuleRequest extends CmrRequest {
     }
   }
 
-
+  /*
+   * Makes a POST request to CMR
+   */
   search(params) {
     return super.post('search/granules.json', params)
   }
 }
 
+
+/**
+ * Request object for timeline specific requests
+ */
 export class TimelineRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
@@ -131,6 +168,9 @@ export class TimelineRequest extends CmrRequest {
     ]
   }
 
+  /*
+   * Makes a POST request to CMR
+   */
   search(params) {
     return super.post('search/granules/timeline.json', params)
   }
