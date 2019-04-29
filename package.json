@@ -87,7 +87,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
-    "connected-react-router": "^6.2.2",
+    "connected-react-router": "^6.4.0",
     "cssnano": "^4.1.10",
     "edsc-timeline": "git+https://github.com/nasa/edsc-timeline.git",
     "extract-text-webpack-plugin": "^3.0.2",

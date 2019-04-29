@@ -82,7 +82,7 @@ class FacetsItem extends Component {
           <span className="facets-item__title">{facet.title}</span>
           { (!applied || !children) && <span className="facets-item__total">{facet.count}</span> }
         </label>
-        { children && <ul className="facets__list">{children}</ul> }
+        { children && <ul className="facets-list">{children}</ul> }
       </li>
     )
   }

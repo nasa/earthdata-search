@@ -14,7 +14,7 @@ export const updateFocusedCollection = payload => ({
  */
 export const changeFocusedCollection = collectionId => (dispatch) => {
   if (!collectionId) {
-    dispatch(updateFocusedCollection({}))
+    dispatch(updateFocusedCollection(''))
     dispatch(actions.updateGranules({ results: [] }))
     return null
   }

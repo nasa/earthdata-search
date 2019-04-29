@@ -23,8 +23,8 @@ import {
   LOADED_FACETS,
   UPDATE_FACETS,
   ERRORED_FACETS,
-  STARTED_TIMER,
-  FINISHED_TIMER
+  STARTED_COLLECTIONS_TIMER,
+  FINISHED_COLLECTIONS_TIMER
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -163,8 +163,8 @@ describe('getCollections', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_COLLECTIONS })
       expect(storeActions[1]).toEqual({ type: LOADING_FACETS })
-      expect(storeActions[2]).toEqual({ type: STARTED_TIMER })
-      expect(storeActions[3]).toEqual({ type: FINISHED_TIMER })
+      expect(storeActions[2]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
+      expect(storeActions[3]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({
         type: LOADED_COLLECTIONS,
         payload: { loaded: true }
@@ -211,8 +211,8 @@ describe('getCollections', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_COLLECTIONS })
       expect(storeActions[1]).toEqual({ type: LOADING_FACETS })
-      expect(storeActions[2]).toEqual({ type: STARTED_TIMER })
-      expect(storeActions[3]).toEqual({ type: FINISHED_TIMER })
+      expect(storeActions[2]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
+      expect(storeActions[3]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({ type: ERRORED_COLLECTIONS })
       expect(storeActions[5]).toEqual({ type: ERRORED_FACETS })
       expect(storeActions[6]).toEqual({

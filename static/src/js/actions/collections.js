@@ -10,8 +10,8 @@ import {
   LOADED_FACETS,
   UPDATE_FACETS,
   ERRORED_FACETS,
-  STARTED_TIMER,
-  FINISHED_TIMER
+  STARTED_COLLECTIONS_TIMER,
+  FINISHED_COLLECTIONS_TIMER
 } from '../constants/actionTypes'
 
 export const updateCollections = payload => ({
@@ -50,12 +50,12 @@ export const onFacetsErrored = () => ({
   type: ERRORED_FACETS
 })
 
-export const startTimer = () => ({
-  type: STARTED_TIMER
+export const startCollectionsTimer = () => ({
+  type: STARTED_COLLECTIONS_TIMER
 })
 
-export const finishTimer = () => ({
-  type: FINISHED_TIMER
+export const finishCollectionsTimer = () => ({
+  type: FINISHED_COLLECTIONS_TIMER
 })
 
 
@@ -95,7 +95,7 @@ export const getCollections = () => (dispatch, getState) => {
 
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
-  dispatch(startTimer())
+  dispatch(startCollectionsTimer())
 
   const requestObject = new CollectionRequest()
 
@@ -138,7 +138,7 @@ export const getCollections = () => (dispatch, getState) => {
       payload.keyword = keyword
       payload.results = response.data.feed.entry
 
-      dispatch(finishTimer())
+      dispatch(finishCollectionsTimer())
       dispatch(onCollectionsLoaded({
         loaded: true
       }))
@@ -148,7 +148,7 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(updateCollections(payload))
       dispatch(updateFacets(payload))
     }, (error) => {
-      dispatch(finishTimer())
+      dispatch(finishCollectionsTimer())
       dispatch(onCollectionsErrored())
       dispatch(onFacetsErrored())
       dispatch(onCollectionsLoaded({

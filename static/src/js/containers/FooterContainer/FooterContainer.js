@@ -17,17 +17,19 @@ class FooterContainer extends Component {
   render() {
     const { loadTime } = this.props
 
+    const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
+
     return (
       <React.Fragment>
         <ConnectedTimelineContainer />
         <footer className="footer">
           <span className="footer__info footer__info--left">
             <span className="footer__ver-pill">v Research</span>
-            <span className="footer__info-bit footer__info-bit--emph">
-              Search Time:
-              {(loadTime / 1000).toFixed(1)}
-              s
-            </span>
+            { loadTime !== 0 && (
+              <span className="footer__info-bit footer__info-bit--emph">
+                {`Search Time: ${loadTimeInSeconds}s`}
+              </span>
+            ) }
             <span className="footer__info-bit footer__info-bit--emph">
               NASA Official: Stephen Barrick
             </span>

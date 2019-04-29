@@ -1,0 +1,19 @@
+.granule-results-header {
+  &__title {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    margin-right: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1875rem;
+  }
+
+  &__link {
+    font-size: 0.925rem;
+  }
+
+  &__granule-search-input {
+    .form-inline & {
+      width: 17.5rem;
+    }
+  }
+}
