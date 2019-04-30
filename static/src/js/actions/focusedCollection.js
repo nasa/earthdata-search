@@ -23,7 +23,7 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
 
   const response = requestObject.search({
     concept_id: collectionId,
-    includeTags: 'edsc.extra.gibs,org.ceos.wgiss.cwic.granules.prod',
+    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     includeHasGranules: true
   })
     .then((response) => {

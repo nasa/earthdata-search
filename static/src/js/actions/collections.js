@@ -107,7 +107,7 @@ export const getCollections = () => (dispatch, getState) => {
     includeFacets: 'v2',
     includeGranuleCounts: true,
     includeHasGranules: true,
-    includeTags: 'edsc.*',
+    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     instrumentH: cmrFacets.instrument_h,
     keyword,
     options: {
