@@ -10,7 +10,8 @@ $color_loading_dark: #e6e1e1;
     width: 100%;
     background: linear-gradient(90deg, $color_loading_dark 30%, $color_loading_light 50%, $color_loading_dark 70%);
     background-size: 400% 400%;
-    animation: pulse 1.5s ease-in-out infinite;
+    animation: pulse 3s ease-in-out infinite;
+    will-change: background-position;
 
     @keyframes pulse {
       0%{background-position:100% 50%}
@@ -18,3 +19,4 @@ $color_loading_dark: #e6e1e1;
     }
   }
 }
+

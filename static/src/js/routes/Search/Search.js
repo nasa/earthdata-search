@@ -31,13 +31,6 @@ import CollectionResultsBody
 
 import '../../components/CollectionResults/CollectionResults.scss'
 
-const headerCollectionResults = <CollectionResultsHeader />
-const bodyCollectionResults = <CollectionResultsBody />
-
-const headerGranuleResults = <GranuleResultsHeaderContainer />
-const bodyGranuleResults = <GranuleResultsBodyContainer />
-
-
 class Search extends PureComponent {
   render() {
     const { match } = this.props
@@ -51,15 +44,15 @@ class Search extends PureComponent {
           <Route exact path={match.path}>
             <ConnectedMasterOverlayPanelContainer
               tabHandle={<CollectionResultsTabContainer />}
-              header={headerCollectionResults}
-              body={bodyCollectionResults}
+              header={<CollectionResultsHeader />}
+              body={<CollectionResultsBody />}
             />
           </Route>
           <Route path={`${match.path}/granules`}>
             <ConnectedMasterOverlayPanelContainer
               tabHandle={<GranuleResultsTabContainer />}
-              header={headerGranuleResults}
-              body={bodyGranuleResults}
+              header={<GranuleResultsHeaderContainer />}
+              body={<GranuleResultsBodyContainer />}
             />
           </Route>
         </Switch>

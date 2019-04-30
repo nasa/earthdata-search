@@ -1,11 +1,13 @@
-export const collectionTitle = [{
-  shape: 'rectangle',
-  x: 0,
-  y: 0,
-  height: 22,
-  width: 280,
-  radius: 3
-}]
+export const collectionTitle = [
+  {
+    shape: 'rectangle',
+    x: 0,
+    y: 0,
+    height: 22,
+    width: 280,
+    radius: 3
+  }
+]
 
 export const granuleListTotal = [
   {
