@@ -2,7 +2,10 @@ $color_loading_light: #f7f5f5;
 $color_loading_dark: #e6e1e1;
 
 .skeleton {
+  position: relative;
+
   &__inner {
+    position: absolute;
     height: 100%;
     width: 100%;
     background: linear-gradient(90deg, $color_loading_dark 30%, $color_loading_light 50%, $color_loading_dark 70%);

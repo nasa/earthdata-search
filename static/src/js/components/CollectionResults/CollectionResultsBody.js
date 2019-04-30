@@ -6,6 +6,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import actions from '../../actions'
 
@@ -101,7 +102,16 @@ class CollectionResultsBody extends PureComponent {
                 </Link>
               </h3>
               <p className="collection-results__item-desc">
-                <strong>{`${collection.granule_count} Granules`}</strong>
+                {
+                  collection.is_cwic && (
+                    <strong>Int&apos;l / Interagency</strong>
+                  )
+                }
+                {
+                  !collection.is_cwic && (
+                    <strong>{`${collection.granule_count} Granules`}</strong>
+                  )
+                }
                 <strong> &bull; </strong>
                 <strong>{timeRange}</strong>
                 <strong> &bull; </strong>
@@ -110,11 +120,29 @@ class CollectionResultsBody extends PureComponent {
             </div>
             <div className="collection-results__item-body-secondary">
               <p>
-                <span className="badge collection-results__item-attribution">
-                  {`${collection.short_name} v${collection.version_id} -
-                  ${displayOrganization}`
-                  }
-                </span>
+                {
+                  collection.is_cwic && (
+                    <OverlayTrigger
+                      placement="top"
+                      overlay={(
+                        <Tooltip id="tooltip__quic-badge" className="collection-results__item-badge-tooltip">Int&apos;l / Interagency Data</Tooltip>
+                      )}
+                    >
+                      <span className="badge collection-results__item-badge collection-results__item-badge--cwic">CWIC</span>
+                    </OverlayTrigger>
+                  )
+                }
+                {
+                  collection.short_name && (
+                    <span className="badge collection-results__item-badge collection-results__item-badge--attribution">
+                      {
+                        `${collection.short_name}
+                        v${collection.version_id} -
+                        ${displayOrganization}`
+                      }
+                    </span>
+                  )
+                }
               </p>
             </div>
           </div>

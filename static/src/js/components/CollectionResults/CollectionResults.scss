@@ -49,7 +49,20 @@
   color: $color__black--600;
 }
 
-.collection-results__item-attribution {
+.collection-results__item-badge {
+  margin-right: $spacer/4;
+}
+
+.collection-results__item-badge--attribution {
   background-color: $color__black--400;
   color: $color__white;
+}
+
+.collection-results__item-badge--cwic {
+  background-color: $color__yellow;
+  color: $color__white;
+}
+
+.collection-results__item-badge-tooltip {
+  font-size: 0.75rem;
 }
