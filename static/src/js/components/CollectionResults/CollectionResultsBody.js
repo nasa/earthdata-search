@@ -1,23 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import queryString from 'query-string'
 import {
-  Link,
-  withRouter
+  Link
 } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-
-import actions from '../../actions'
-
-const mapStateToProps = state => ({
-  collections: state.entities.collections
-})
-
-const mapDispatchToProps = dispatch => ({
-  onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId))
-})
 
 /**
  * Renders CollectionResultsBody.
@@ -164,6 +151,4 @@ CollectionResultsBody.propTypes = {
   onFocusedCollectionChange: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionResultsBody)
-)
+export default CollectionResultsBody
