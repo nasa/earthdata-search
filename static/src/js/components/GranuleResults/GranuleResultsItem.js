@@ -11,7 +11,7 @@ import './GranuleResultsItem.scss'
  */
 const GranuleResultsItem = ({ granule }) => {
   const title = granule.producer_granule_id ? granule.producer_granule_id : granule.title
-  const temporal = granule.formattedTemporal
+  const temporal = granule.formatted_temporal
   const timeStart = temporal[0]
   const timeEnd = temporal[1]
   const thumbnail = granule.browse_flag ? granule.thumbnail : false

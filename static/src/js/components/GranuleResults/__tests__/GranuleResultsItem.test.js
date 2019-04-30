@@ -13,7 +13,7 @@ function setup(type) {
     props = {
       granule: {
         browse_flag: true,
-        formattedTemporal: [
+        formatted_temporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
@@ -27,7 +27,7 @@ function setup(type) {
     props = {
       granule: {
         browse_flag: false,
-        formattedTemporal: [
+        formatted_temporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
@@ -40,7 +40,7 @@ function setup(type) {
     props = {
       granule: {
         browse_flag: true,
-        formattedTemporal: [
+        formatted_temporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
