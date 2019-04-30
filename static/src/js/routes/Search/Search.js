@@ -12,6 +12,8 @@ import ConnectedMasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
 import ConnectedSearchFormContainer
   from '../../containers/SearchFormContainer/SearchFormContainer'
+import CollectionResultsBodyContainer
+  from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsTabContainer
   from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
 import GranuleResultsTabContainer
@@ -26,8 +28,6 @@ import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import CollectionResultsHeader
   from '../../components/CollectionResults/CollectionResultsHeader'
-import CollectionResultsBody
-  from '../../components/CollectionResults/CollectionResultsBody'
 
 import '../../components/CollectionResults/CollectionResults.scss'
 
@@ -45,7 +45,7 @@ class Search extends PureComponent {
             <ConnectedMasterOverlayPanelContainer
               tabHandle={<CollectionResultsTabContainer />}
               header={<CollectionResultsHeader />}
-              body={<CollectionResultsBody />}
+              body={<CollectionResultsBodyContainer />}
             />
           </Route>
           <Route path={`${match.path}/granules`}>

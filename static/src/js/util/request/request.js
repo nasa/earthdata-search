@@ -28,22 +28,7 @@ export default class Request {
    * @return {Object} The transformed response.
    */
   transformResponse(data) {
-    const transformedData = data
-    const { entry } = data.feed
-
-    const transformedEntry = entry.map((collection) => {
-      const transformedCollection = collection
-
-      if (collection && collection.tags) {
-        transformedCollection.is_cwic = Object.keys(collection.tags).includes('org.ceos.wgiss.cwic.granules.prod')
-          && collection.has_granules === false
-      }
-
-      return transformedCollection
-    })
-
-    transformedData.entry = transformedEntry
-    return transformedData
+    return data
   }
 
   /**

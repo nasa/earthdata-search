@@ -93,6 +93,30 @@ export class CollectionRequest extends CmrRequest {
     ]
   }
 
+  /**
+   * Transform the response before completing the Promise.
+   * @param {Object} data - Response object from the object.
+   * @return {Object} The object provided
+   */
+  transformResponse(data) {
+    const transformedData = data
+    const { entry } = data.feed
+
+    const transformedEntry = entry.map((collection) => {
+      const transformedCollection = collection
+
+      if (collection && collection.tags) {
+        transformedCollection.is_cwic = Object.keys(collection.tags).includes('org.ceos.wgiss.cwic.granules.prod')
+          && collection.has_granules === false
+      }
+
+      return transformedCollection
+    })
+
+    transformedData.entry = transformedEntry
+    return transformedData
+  }
+
   /*
    * Makes a POST request to CMR
    */
