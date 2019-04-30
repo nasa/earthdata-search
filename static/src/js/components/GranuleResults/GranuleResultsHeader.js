@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
+import Skeleton from '../Skeleton/Skeleton'
+
+import { collectionTitle } from './skeleton'
+
 import './GranuleResultsHeader.scss'
 
 /**
@@ -54,91 +58,134 @@ class GranuleResultsHeader extends Component {
       <>
         <div className="row">
           <div className="col-auto">
-            <h2 className="granule-results-header__title">{title}</h2>
-            <a
-              className="granule-results-header__link"
-              href="/"
-            >
-              <i className="fa fa-info-circle" />
-              {' View Details'}
-            </a>
+            <div className="granule-results-header__title-wrap">
+              {
+                // TODO: Create isLoading state in reducer so we can use that rather than the title
+                !title && (
+                  <Skeleton
+                    className="granule-results-header__title"
+                    containerStyle={{ display: 'inline-block', height: '22px', width: '280px' }}
+                    shapes={collectionTitle}
+                  />
+                )
+              }
+              {
+                title && (
+                  <h2 className="granule-results-header__title">{title}</h2>
+                )
+              }
+              <a
+                className="granule-results-header__link"
+                href="/"
+              >
+                <i className="fa fa-info-circle" />
+                {' View Details'}
+              </a>
+            </div>
           </div>
         </div>
         <div className="row">
           <div className="col">
-            <form className="form-inline mb-1" action="/">
-              <div className="form-row align-items-center">
-                <div className="col-auto">
-                  <div className="form-group">
-                    <label
-                      className="col-form-label col-form-label-sm mr-1"
-                      htmlFor="input__sort-granules"
+            {metadata.is_cwic && (
+              <>
+                <div>
+                  <span className="granule-results-header__cwic-note">
+                    {'This is '}
+                    <span className="granule-results-header__cwic-emph">Int&apos;l / Interagency Data</span>
+                    {' data. Searches will be performed by external services which may vary in performance and available features. '}
+                    <a
+                      className="granule-results-header__link granule-results-header__link--cwic"
+                      href="/"
                     >
-                      Sort by:
-                    </label>
-                    <select
-                      id="input__sort-granules"
-                      className="form-control form-control-sm"
-                      onChange={this.handleUpdateSortOrder}
-                      value={sortOrder}
+                      <i className="fa fa-question-circle" />
+                      {' More details'}
+                    </a>
+                  </span>
+                </div>
+                <a
+                  className="granule-results-header__link"
+                  href="/"
+                >
+                  <i className="fa fa-filter" />
+                  {' Granule Filters'}
+                </a>
+              </>
+            )}
+            {!metadata.is_cwic && (
+              <form className="form-inline mb-1" action="/">
+                <div className="form-row align-items-center">
+                  <div className="col-auto">
+                    <div className="form-group">
+                      <label
+                        className="col-form-label col-form-label-sm mr-1"
+                        htmlFor="input__sort-granules"
+                      >
+                        Sort by:
+                      </label>
+                      <select
+                        id="input__sort-granules"
+                        className="form-control form-control-sm"
+                        onChange={this.handleUpdateSortOrder}
+                        value={sortOrder}
+                      >
+                        <option value="start_date_newest_first">Start Date, Newest First</option>
+                        <option value="start_date_oldest_first">Start Date, Oldest First</option>
+                        <option value="end_date_newest_first">End Date, Newest First</option>
+                        <option value="end_date_oldest_first">End Date, Oldest First</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-auto">
+                    <div className="form-group">
+                      <label
+                        className="col-form-label col-form-label-sm mr-1"
+                        htmlFor="input__granule-search"
+                      >
+                        Granule Search:
+                      </label>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={(
+                          <Tooltip
+                            id="tooltip__granule-search"
+                            className="tooltip--large tooltip--ta-left tooltip--wide"
+                          >
+                            <strong>Wildcards:</strong>
+                            {' '}
+                            <ul className="m-0">
+                              <li>* (asterisk) matches any number of characters</li>
+                              <li>? (question mark) matches exactly one character.</li>
+                            </ul>
+                            <br />
+                            <strong>Delimiters:</strong>
+                            {' '}
+                            Separate multiple granule IDs by space, comma, or new line.
+                          </Tooltip>
+                        )}
+                      >
+                        <input
+                          id="input__granule-search"
+                          className="form-control form-control-sm granule-results-header__granule-search-input"
+                          type="text"
+                          placeholder="Search Single of Multiple Granule IDs..."
+                          onChange={this.handleUpdateSearchValue}
+                          value={searchValue}
+                        />
+                      </OverlayTrigger>
+                    </div>
+                  </div>
+                  <div className="col-auto">
+                    <a
+                      className="granule-results-header__link"
+                      href="/"
                     >
-                      <option value="start_date_newest_first">Start Date, Newest First</option>
-                      <option value="start_date_oldest_first">Start Date, Oldest First</option>
-                      <option value="end_date_newest_first">End Date, Newest First</option>
-                      <option value="end_date_oldest_first">End Date, Oldest First</option>
-                    </select>
+                      <i className="fa fa-filter" />
+                      {' Granule Filters'}
+                    </a>
                   </div>
                 </div>
-                <div className="col-auto">
-                  <div className="form-group">
-                    <label
-                      className="col-form-label col-form-label-sm mr-1"
-                      htmlFor="input__granule-search"
-                    >
-                      Granule Search:
-                    </label>
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={(
-                        <Tooltip
-                          id="tooltip__granule-search"
-                          className="tooltip--large tooltip--ta-left tooltip--wide"
-                        >
-                          <strong>Wildcards:</strong>
-                          {' '}
-                          <ul className="m-0">
-                            <li>* (asterisk) matches any number of characters</li>
-                            <li>? (question mark) matches exactly one character.</li>
-                          </ul>
-                          <br />
-                          <strong>Delimiters:</strong>
-                          {' '}
-                          Separate multiple granule IDs by space, comma, or new line.
-                        </Tooltip>
-                      )}
-                    >
-                      <input
-                        id="input__granule-search"
-                        className="form-control form-control-sm granule-results-header__granule-search-input"
-                        type="text"
-                        placeholder="Search Single of Multiple Granule IDs..."
-                        onChange={this.handleUpdateSearchValue}
-                        value={searchValue}
-                      />
-                    </OverlayTrigger>
-                  </div>
-                </div>
-                <div className="col-auto">
-                  <a
-                    className="granule-results-header__link"
-                    href="/"
-                  >
-                    <i className="fa fa-filter" />
-                    {' Granule Filters'}
-                  </a>
-                </div>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
         </div>
       </>

@@ -44,9 +44,9 @@ export default class CwicGranuleRequest extends LambdaRequest {
       }
     }
 
-    const granuleReults = [].concat(entry)
+    const granuleResults = [].concat(entry)
 
-    granuleReults.map((granule) => {
+    granuleResults.map((granule) => {
       const updatedGranule = granule
 
       updatedGranule.is_cwic = true
@@ -81,7 +81,7 @@ export default class CwicGranuleRequest extends LambdaRequest {
 
     return {
       feed: {
-        entry: granuleReults,
+        entry: granuleResults,
         hits: feed['opensearch:totalResults']
       }
     }

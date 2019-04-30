@@ -1,7 +1,14 @@
 .granule-results-header {
+  &__title-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
   &__title {
     display: inline-block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
     margin-right: 0.75rem;
     font-weight: 700;
     font-size: 1.1875rem;
@@ -9,11 +16,28 @@
 
   &__link {
     font-size: 0.925rem;
+    white-space: nowrap;
+  }
+
+  &__filters-link {
+    display: flex;
+    align-items: center;
   }
 
   &__granule-search-input {
     .form-inline & {
       width: 17.5rem;
     }
+  }
+
+  &__cwic-note {
+    display: block;
+    margin-bottom: $spacer/2;
+    color: $color__black--400;
+  }
+
+  &__cwic-emph {
+    font-weight: 700;
+    color: $color__yellow;
   }
 }
