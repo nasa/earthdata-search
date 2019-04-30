@@ -82,7 +82,7 @@ describe('getGranules', () => {
           isCwic: false,
           results: [{
             mockGranuleData: 'goes here',
-            formattedTemporal: [
+            formatted_temporal: [
               null,
               null
             ],

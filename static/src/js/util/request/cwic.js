@@ -55,7 +55,7 @@ export default class CwicGranuleRequest extends LambdaRequest {
       updatedGranule.time_start = timeStart
       updatedGranule.time_end = timeEnd
 
-      updatedGranule.formattedTemporal = getTemporal(timeStart, timeEnd)
+      updatedGranule.formatted_temporal = getTemporal(timeStart, timeEnd)
 
       // Both keys are the same format
       updatedGranule.boxes = [

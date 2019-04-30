@@ -128,10 +128,10 @@ class GranuleResultsHeader extends Component {
                         onChange={this.handleUpdateSortOrder}
                         value={sortOrder}
                       >
-                        <option value="start_date_newest_first">Start Date, Newest First</option>
-                        <option value="start_date_oldest_first">Start Date, Oldest First</option>
-                        <option value="end_date_newest_first">End Date, Newest First</option>
-                        <option value="end_date_oldest_first">End Date, Oldest First</option>
+                        <option value="-start_date">Start Date, Newest First</option>
+                        <option value="start_date">Start Date, Oldest First</option>
+                        <option value="-end_date">End Date, Newest First</option>
+                        <option value="end_date">End Date, Oldest First</option>
                       </select>
                     </div>
                   </div>

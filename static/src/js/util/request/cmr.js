@@ -129,7 +129,7 @@ export class GranuleRequest extends CmrRequest {
 
       updatedGranule.is_cwic = false
 
-      updatedGranule.formattedTemporal = getTemporal(granule.time_start, granule.time_end)
+      updatedGranule.formatted_temporal = getTemporal(granule.time_start, granule.time_end)
 
       const h = 85
       const w = 85

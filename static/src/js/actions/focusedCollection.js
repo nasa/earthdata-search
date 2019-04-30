@@ -14,7 +14,7 @@ export const updateFocusedCollection = payload => ({
  */
 export const changeFocusedCollection = collectionId => (dispatch) => {
   if (!collectionId) {
-    dispatch(updateFocusedCollection(''))
+    dispatch(updateFocusedCollection(false))
     dispatch(actions.updateGranules({ results: [] }))
     return null
   }
@@ -35,7 +35,7 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
       dispatch(updateFocusedCollection(payload))
       dispatch(actions.getGranules())
     }, (error) => {
-      dispatch(updateFocusedCollection({}))
+      dispatch(updateFocusedCollection(false))
 
       throw new Error('Request failed', error)
     })

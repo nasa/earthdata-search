@@ -31,7 +31,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: flex-end;
+    height: 5.2rem;
+    width: 5.2rem;
     background-color: $color__black--900;
+
+    img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
   }
 
   &__temporal {
