@@ -12,11 +12,37 @@ export default class CwicGranuleRequest extends LambdaRequest {
     ]
   }
 
+
+  /**
+   * Transform the response before completing the Promise.
+   * @param {Object} data - Response object from the CWIC.
+   * @return {Object} The transformed response
+   */
   transformResponse(data) {
     const formattedResponse = parseXml(data, { ignoreAttributes: false, attributeNamePrefix: '' })
 
+    // CWIC provides a completely different response format when a 4XX error is thrown
+    // so we handle that format and response here
+    const { OpenSearchDescription: errorBody = {} } = formattedResponse
+    if (errorBody.ShortName === 'Exception') {
+      return {
+        errors: [
+          errorBody.Description
+        ]
+      }
+    }
+
     const { feed = {} } = formattedResponse
     const { entry = [] } = feed
+
+    // Parse out the slightly different body of the response for 5XX responses
+    if (feed.title === 'CWIC OpenSearch Exception') {
+      return {
+        errors: [
+          feed.subtitle['#text']
+        ]
+      }
+    }
 
     const granuleReults = [].concat(entry)
 
@@ -37,7 +63,9 @@ export default class CwicGranuleRequest extends LambdaRequest {
       // Default `browse_flag` to false
       updatedGranule.browse_flag = false
 
-      granule.link.forEach((link) => {
+      const granuleLinks = [].concat(granule.link)
+
+      granuleLinks.forEach((link) => {
         if (link.rel === 'icon') {
           updatedGranule.thumbnail = link.href
 
