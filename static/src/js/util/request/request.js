@@ -24,8 +24,8 @@ export default class Request {
 
   /**
    * Transform the response before completing the Promise.
-   * @param {Object} data - Response object from the object.
-   * @return {Object} The object provided
+   * @param {Object} data - Response object from the request.
+   * @return {Object} The transformed response.
    */
   transformResponse(data) {
     return data

@@ -6,19 +6,19 @@ import { pick } from './util'
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
  * @param {String} collectionId - The collection ID to retrieve the url for.
- * @return {Object} An object representing the OpenSearch URL or an error message
+ * @return {Object} An object representing the OpenSearch OSDD or an error message
  */
 const getCwicGranulesUrl = async (collectionId) => {
-  // eslint-disable-next-line max-len
   const collectionTemplate = `https://cwic.wgiss.ceos.org/opensearch/datasets/${collectionId}/osdd.xml?clientId=eed-edsc-dev`
 
-  // TODO: We may need a try/catch here but need to investigate what happens when this endpoint is provided a collection that it doesnt support
-  const osddResponse = await request.get({
-    uri: collectionTemplate,
-    resolveWithFullResponse: true
-  })
+  console.log(`OpenSearch OSDD: ${collectionTemplate}`)
 
-  if (osddResponse.statusCode === 200) {
+  try {
+    const osddResponse = await request.get({
+      uri: collectionTemplate,
+      resolveWithFullResponse: true
+    })
+
     const osddBody = parseXml(osddResponse.body, {
       ignoreAttributes: false,
       attributeNamePrefix: ''
@@ -26,12 +26,22 @@ const getCwicGranulesUrl = async (collectionId) => {
 
     const granuleUrls = osddBody.OpenSearchDescription.Url
 
-    return granuleUrls.find(url => url.type === 'application/atom+xml')
-  }
+    return {
+      statusCode: osddResponse.statusCode,
+      body: granuleUrls.find(url => url.type === 'application/atom+xml')
+    }
+  } catch (e) {
+    if (e.response) {
+      return {
+        statusCode: e.statusCode,
+        body: e.response.body
+      }
+    }
 
-  // TODO: Clean up error handling/responses
-  return {
-    error: osddResponse.body
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Oh No!' })
+    }
   }
 }
 
@@ -94,6 +104,13 @@ const renderOpenSearchTemplate = (template, params) => {
  * @return {String} A formatted URL with the users request parameters inserted
  */
 export default async function cwicGranuleSearch(event) {
+  // The headers we'll send back regardless of our response
+  const responseHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+    'Content-Type': 'application/xml'
+  }
+
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
@@ -113,30 +130,41 @@ export default async function cwicGranuleSearch(event) {
 
   const conceptUrl = await getCwicGranulesUrl(obj.echo_collection_id)
 
-  if (conceptUrl.error) {
+  console.log(`Completed OSDD request with status ${conceptUrl.statusCode}.`)
+
+  if (conceptUrl.statusCode !== 200) {
     return {
       isBase64Encoded: false,
-      statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/xml' },
-      body: conceptUrl.error
+      statusCode: conceptUrl.statusCode,
+      headers: responseHeaders,
+      body: conceptUrl.body
     }
   }
 
-  const { template } = conceptUrl
+  const { template } = conceptUrl.body
 
   const renderedTemplate = renderOpenSearchTemplate(template, obj)
 
-  console.log(`CWIC Query: ${renderedTemplate}`)
+  console.log(`CWIC Granule Query: ${renderedTemplate}`)
 
-  const granuleResponse = await request.get({
-    uri: renderedTemplate,
-    resolveWithFullResponse: true
-  })
+  try {
+    const granuleResponse = await request.get({
+      uri: renderedTemplate,
+      resolveWithFullResponse: true
+    })
 
-  return {
-    isBase64Encoded: false,
-    statusCode: granuleResponse.statusCode,
-    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/xml' },
-    body: granuleResponse.body
+    return {
+      isBase64Encoded: false,
+      statusCode: granuleResponse.statusCode,
+      headers: responseHeaders,
+      body: granuleResponse.body
+    }
+  } catch (e) {
+    return {
+      isBase64Encoded: false,
+      statusCode: e.statusCode,
+      headers: responseHeaders,
+      body: e.error
+    }
   }
 }

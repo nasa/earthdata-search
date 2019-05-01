@@ -11,7 +11,7 @@ export default class LambdaRequest extends Request {
    * Constructor.
    */
   constructor() {
-    super('https://localhost:3001')
+    super('http://localhost:3001')
   }
 
   /**
