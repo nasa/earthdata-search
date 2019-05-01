@@ -149,7 +149,7 @@ export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
   })
 
   return [
-    qs.stringify(indexedAttrs, { arrayFormat: 'brackets' }),
+    qs.stringify(indexedAttrs),
     qs.stringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
   ].filter(Boolean).join('&')
 }

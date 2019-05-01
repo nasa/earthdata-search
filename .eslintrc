@@ -18,7 +18,8 @@
     # Setting a max line-length
     "max-len": [1, 100, 2, {
       "ignoreComments": true,
-      "ignoreStrings": true
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
     }],
 
     # Disallow all semicolons on line endings

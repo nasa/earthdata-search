@@ -2,7 +2,6 @@ import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from './util'
 
-
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
  * @param {String} collectionId - The collection ID to retrieve the url for.
@@ -44,7 +43,6 @@ const getCwicGranulesUrl = async (collectionId) => {
     }
   }
 }
-
 
 /**
  * Replaces all valid keys from the users request within the granule url template provided by OpenSearch

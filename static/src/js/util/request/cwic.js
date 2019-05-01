@@ -12,7 +12,6 @@ export default class CwicGranuleRequest extends LambdaRequest {
     ]
   }
 
-
   /**
    * Transform the response before completing the Promise.
    * @param {Object} data - Response object from the CWIC.

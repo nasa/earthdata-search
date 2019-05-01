@@ -1,7 +1,8 @@
+import pick from 'lodash/pick'
+import snakeCaseKeys from 'snakecase-keys'
 import { prepKeysForCmr } from '../url/url'
 import Request from './request'
 import { getTemporal } from '../edsc-date'
-
 
 /**
  * Top level CMR request object that contains all the most generic transformations and settings
@@ -38,7 +39,14 @@ export class CmrRequest extends Request {
   transformRequest(data) {
     let cmrData = super.transformRequest(data)
 
-    cmrData = prepKeysForCmr(data, this.nonIndexedKeys())
+    // Converts javascript compliant keys to snake cased keys for use
+    // in URLs and request payloads
+    const snakeKeyData = snakeCaseKeys(data)
+
+    // Prevent keys that our external services don't support from being sent
+    const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
+
+    cmrData = prepKeysForCmr(filteredData, this.nonIndexedKeys())
 
     return cmrData
   }
@@ -180,7 +188,6 @@ export class GranuleRequest extends CmrRequest {
     return super.post('search/granules.json', params)
   }
 }
-
 
 /**
  * Request object for timeline specific requests
