@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 /**
  * Parent class for the application API layer to communicate with external services
  */

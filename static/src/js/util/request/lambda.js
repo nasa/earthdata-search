@@ -2,7 +2,6 @@ import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 import Request from './request'
 
-
 /**
  * Parent class for the application API layer to communicate with our AWS API Gateway / Lambda
  */
