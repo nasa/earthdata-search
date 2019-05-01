@@ -54,3 +54,20 @@ a.banner-close {
     color: #444;
   }
 }
+
+.banner--info {
+  position: relative;
+  z-index: 10;
+  padding: 0.75em 1em;
+  text-align: center;
+  color: #a28801;
+  font-weight: 500;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.15);
+  border: 0px solid #c7b657;
+  border-top: 3px solid #c7b657;
+  background-color: #fff6c7;
+}
+
+.banner__message {
+  margin: 0;
+}
