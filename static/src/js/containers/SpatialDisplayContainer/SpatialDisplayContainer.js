@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 import SpatialDisplay from '../../components/SpatialDisplay/SpatialDisplay'
 
 const mapStateToProps = state => ({
-  pointSearch: state.query.spatial.point,
-  boundingBoxSearch: state.query.spatial.boundingBox,
-  polygonSearch: state.query.spatial.polygon,
+  pointSearch: state.query.collection.spatial.point,
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  polygonSearch: state.query.collection.spatial.polygon,
   drawingNewLayer: state.map.drawingNewLayer
 })
 

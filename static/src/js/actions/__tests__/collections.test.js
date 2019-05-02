@@ -2,29 +2,29 @@ import moxios from 'moxios'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-// import actions from '../index'
 import {
-  updateCollections,
-  onCollectionsLoading,
-  onCollectionsLoaded,
+  getCollections,
   onCollectionsErrored,
-  updateFacets,
-  onFacetsLoading,
-  onFacetsLoaded,
+  onCollectionsLoaded,
+  onCollectionsLoading,
   onFacetsErrored,
-  getCollections
+  onFacetsLoaded,
+  onFacetsLoading,
+  updateCollections,
+  updateFacets
 } from '../collections'
 import {
-  UPDATE_COLLECTIONS,
-  LOADING_COLLECTIONS,
-  LOADED_COLLECTIONS,
+  ADD_MORE_COLLECTIONS,
   ERRORED_COLLECTIONS,
-  LOADING_FACETS,
-  LOADED_FACETS,
-  UPDATE_FACETS,
   ERRORED_FACETS,
+  FINISHED_COLLECTIONS_TIMER,
+  LOADED_COLLECTIONS,
+  LOADED_FACETS,
+  LOADING_COLLECTIONS,
+  LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  FINISHED_COLLECTIONS_TIMER
+  UPDATE_COLLECTIONS,
+  UPDATE_FACETS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -146,7 +146,9 @@ describe('getCollections', () => {
     // mockStore with initialState
     const store = mockStore({
       query: {
-        keyword: 'search keyword'
+        collection: {
+          keyword: 'search keyword'
+        }
       },
       cmr: {},
       facetsParams: {
@@ -174,7 +176,7 @@ describe('getCollections', () => {
         payload: { loaded: true }
       })
       expect(storeActions[6]).toEqual({
-        type: UPDATE_COLLECTIONS,
+        type: ADD_MORE_COLLECTIONS,
         payload: {
           keyword: 'search keyword',
           results: [{
@@ -194,7 +196,9 @@ describe('getCollections', () => {
     })
 
     const store = mockStore({
-      query: {},
+      query: {
+        collection: {}
+      },
       cmr: {},
       facetsParams: {
         feature: {

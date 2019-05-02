@@ -2,8 +2,8 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
-import { updateSearchQuery } from '../search'
-import { UPDATE_SEARCH_QUERY } from '../../constants/actionTypes'
+import { updateCollectionQuery, updateGranuleQuery } from '../search'
+import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -11,19 +11,33 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('updateSearchQuery', () => {
+describe('updateCollectionQuery', () => {
   test('should create an action to update the search query', () => {
     const payload = {
       keyword: 'new keyword',
+      pageNum: 1,
       spatial: {
         point: '0,0'
       }
     }
     const expectedAction = {
-      type: UPDATE_SEARCH_QUERY,
+      type: UPDATE_COLLECTION_QUERY,
       payload
     }
-    expect(updateSearchQuery(payload)).toEqual(expectedAction)
+    expect(updateCollectionQuery(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('updateGranuleQuery', () => {
+  test('should create an action to update the search query', () => {
+    const payload = {
+      pageNum: 1
+    }
+    const expectedAction = {
+      type: UPDATE_GRANULE_QUERY,
+      payload
+    }
+    expect(updateGranuleQuery(payload)).toEqual(expectedAction)
   })
 })
 
@@ -51,12 +65,13 @@ describe('changeQuery', () => {
     // call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_SEARCH_QUERY,
+      type: UPDATE_COLLECTION_QUERY,
       payload: {
         keyword: 'new keyword',
+        pageNum: 1,
         spatial: {
           point: '0,0'
         },
@@ -66,6 +81,71 @@ describe('changeQuery', () => {
 
     // was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('changeCollectionPageNum', () => {
+  test('should update the collection query and call getCollections', () => {
+    const pageNum = 2
+
+    // mock getCollections
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+    getCollectionsMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: { pageNum: 1 }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeCollectionPageNum(pageNum))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        pageNum: 2
+      }
+    })
+
+    // was getCollections called
+    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('changeGranulePageNum', () => {
+  test('should update the collection query and call getCollections', () => {
+    const pageNum = 2
+
+    // mock getGranules
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: {},
+        granule: { pageNum: 1 }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeGranulePageNum(pageNum))
+
+    // Is updateGranuleQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: {
+        pageNum: 2
+      }
+    })
+
+    // was getCollections called
+    expect(getGranulesMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -79,6 +159,7 @@ describe('clearFilters', () => {
     }
     const emptyQuery = {
       keyword: '',
+      pageNum: 1,
       spatial: {},
       temporal: {}
     }
@@ -103,9 +184,9 @@ describe('clearFilters', () => {
       }
     })
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     expect(storeActions[1]).toEqual({
-      type: UPDATE_SEARCH_QUERY,
+      type: UPDATE_COLLECTION_QUERY,
       payload: emptyQuery
     })
 

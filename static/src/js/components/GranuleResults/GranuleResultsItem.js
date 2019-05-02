@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { Waypoint } from 'react-waypoint'
 
 import './GranuleResultsItem.scss'
 
@@ -9,7 +10,7 @@ import './GranuleResultsItem.scss'
  * @param {object} props - The props passed into the component.
  * @param {object} props.granule - Granule passed from redux store.
  */
-const GranuleResultsItem = ({ granule }) => {
+const GranuleResultsItem = ({ granule, isLast, waypointEnter }) => {
   const title = granule.producer_granule_id ? granule.producer_granule_id : granule.title
   const temporal = granule.formatted_temporal
   const timeStart = temporal[0]
@@ -65,12 +66,15 @@ const GranuleResultsItem = ({ granule }) => {
           </div>
         </div>
       </div>
+      { isLast && <Waypoint onEnter={waypointEnter} /> }
     </li>
   )
 }
 
 GranuleResultsItem.propTypes = {
-  granule: PropTypes.shape({}).isRequired
+  granule: PropTypes.shape({}).isRequired,
+  isLast: PropTypes.bool.isRequired,
+  waypointEnter: PropTypes.func.isRequired
 }
 
 export default GranuleResultsItem

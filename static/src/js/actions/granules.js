@@ -2,6 +2,7 @@ import populateGranuleResults from '../util/granules'
 import { GranuleRequest } from '../util/request/cmr'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
+  ADD_MORE_GRANULES,
   LOADING_GRANULES,
   LOADED_GRANULES,
   UPDATE_GRANULES,
@@ -10,6 +11,11 @@ import {
   FINISHED_GRANULES_TIMER
 } from '../constants/actionTypes'
 import { encodeTemporal } from '../util/url/temporalEncoders'
+
+export const addMoreGranules = payload => ({
+  type: ADD_MORE_GRANULES,
+  payload
+})
 
 export const updateGranules = payload => ({
   type: UPDATE_GRANULES,
@@ -44,9 +50,16 @@ export const getGranules = () => (dispatch, getState) => {
   } = getState()
 
   const {
+    collection: collectionQuery,
+    granule: granuleQuery
+  } = query
+
+  const {
     spatial = {},
     temporal = {}
-  } = query
+  } = collectionQuery
+
+  const { pageNum } = granuleQuery
 
   const {
     boundingBox,
@@ -83,7 +96,7 @@ export const getGranules = () => (dispatch, getState) => {
   const response = requestObject.search({
     boundingBox,
     echoCollectionId: collectionId,
-    pageNum: 1,
+    pageNum,
     pageSize: 20,
     point,
     sortKey: '-start_date',
@@ -96,7 +109,12 @@ export const getGranules = () => (dispatch, getState) => {
       dispatch(onGranulesLoaded({
         loaded: true
       }))
-      dispatch(updateGranules(payload))
+
+      if (pageNum === 1) {
+        dispatch(updateGranules(payload))
+      } else {
+        dispatch(addMoreGranules(payload))
+      }
     })
     .catch((e) => {
       dispatch(onGranulesErrored())

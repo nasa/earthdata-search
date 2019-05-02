@@ -1,4 +1,5 @@
 import {
+  ADD_MORE_COLLECTIONS,
   UPDATE_COLLECTIONS,
   LOADING_COLLECTIONS,
   LOADED_COLLECTIONS,
@@ -17,7 +18,20 @@ const initialState = {
   loadTime: 0
 }
 
+const processResults = (results) => {
+  const byId = {}
+  const allIds = []
+  results.forEach((result) => {
+    const { id } = result
+    byId[id] = result
+    allIds.push(id)
+  })
+
+  return { byId, allIds }
+}
+
 const collectionsReducer = (state = initialState, action) => {
+  console.log('asdfad', state, initialState, action)
   switch (action.type) {
     case LOADING_COLLECTIONS: {
       return {
@@ -48,13 +62,7 @@ const collectionsReducer = (state = initialState, action) => {
       }
     }
     case UPDATE_COLLECTIONS: {
-      const byId = {}
-      const allIds = []
-      action.payload.results.forEach((result) => {
-        const { id } = result
-        byId[id] = result
-        allIds.push(id)
-      })
+      const { byId, allIds } = processResults(action.payload.results)
 
       return {
         ...state,
@@ -62,6 +70,21 @@ const collectionsReducer = (state = initialState, action) => {
         hits: action.payload.hits,
         byId,
         allIds
+      }
+    }
+    case ADD_MORE_COLLECTIONS: {
+      const { byId, allIds } = processResults(action.payload.results)
+
+      return {
+        ...state,
+        allIds: [
+          ...state.allIds,
+          ...allIds
+        ],
+        byId: {
+          ...state.byId,
+          ...byId
+        }
       }
     }
     default:

@@ -1,8 +1,11 @@
 import collectionsReducer from '../collections'
 import {
-  UPDATE_COLLECTIONS,
+  ADD_MORE_COLLECTIONS,
+  FINISHED_COLLECTIONS_TIMER,
+  LOADED_COLLECTIONS,
   LOADING_COLLECTIONS,
-  LOADED_COLLECTIONS
+  STARTED_COLLECTIONS_TIMER,
+  UPDATE_COLLECTIONS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -24,9 +27,48 @@ describe('INITIAL_STATE', () => {
   })
 })
 
+describe('STARTED_COLLECTIONS_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: STARTED_COLLECTIONS_TIMER
+    }
+
+    // Mock current time to equal 5
+    jest.spyOn(Date, 'now').mockImplementation(() => 5)
+
+    const expectedState = {
+      ...initialState,
+      timerStart: 5
+    }
+
+    expect(collectionsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('FINISHED_COLLECTIONS_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: FINISHED_COLLECTIONS_TIMER
+    }
+
+    // Set current time to 10, and future time to 15
+    // Load time will equal 5
+    jest.spyOn(Date, 'now').mockImplementation(() => 15)
+
+    const start = 10
+
+    const expectedState = {
+      ...initialState,
+      timerStart: null,
+      loadTime: 5
+    }
+
+    expect(collectionsReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
+  })
+})
+
 describe('UPDATE_COLLECTIONS', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: UPDATE_COLLECTIONS,
       payload: {
@@ -56,13 +98,57 @@ describe('UPDATE_COLLECTIONS', () => {
   })
 })
 
+describe('ADD_MORE_COLLECTIONS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: ADD_MORE_COLLECTIONS,
+      payload: {
+        results: [{
+          id: 'mockCollectionId2',
+          mockCollectionData: 'goes here 2'
+        }],
+        hits: 0,
+        keyword: 'search keyword'
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      allIds: ['mockCollectionId1'],
+      byId: {
+        mockCollectionId1: {
+          id: 'mockCollectionId1',
+          mockCollectionData: 'goes here 1'
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      allIds: ['mockCollectionId1', 'mockCollectionId2'],
+      byId: {
+        mockCollectionId1: {
+          id: 'mockCollectionId1',
+          mockCollectionData: 'goes here 1'
+        },
+        mockCollectionId2: {
+          id: 'mockCollectionId2',
+          mockCollectionData: 'goes here 2'
+        }
+      }
+    }
+
+    expect(collectionsReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
 describe('LOADING_COLLECTIONS', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: LOADING_COLLECTIONS
     }
 
+    console.log('about to be wrong')
     const expectedState = {
       ...initialState,
       isLoading: true,
@@ -75,7 +161,6 @@ describe('LOADING_COLLECTIONS', () => {
 
 describe('LOADED_COLLECTIONS', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: LOADED_COLLECTIONS,
       payload: {

@@ -133,6 +133,7 @@ export const encodeUrlQuery = (props) => {
   return fullPath
 }
 
+
 /**
  * Create a query string containing both indexed and non-indexed keys.
  * @param {object} queryParams - An object containing all queryParams.

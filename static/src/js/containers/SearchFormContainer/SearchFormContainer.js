@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  keywordSearch: state.query.keyword
+  keywordSearch: state.query.collection.keyword
 })
 
 // Export non-redux-connected component for use in tests

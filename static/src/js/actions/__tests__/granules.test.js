@@ -56,8 +56,11 @@ describe('getGranules', () => {
         collectionId: 'collectionId'
       },
       query: {
-        temporal: {},
-        spatial: {}
+        collection: {
+          temporal: {},
+          spatial: {}
+        },
+        granule: { pageNum: 1 }
       }
     })
 
@@ -97,8 +100,11 @@ describe('getGranules', () => {
     // mockStore with initialState
     const store = mockStore({
       query: {
-        temporal: {},
-        spatial: {}
+        collection: {
+          temporal: {},
+          spatial: {}
+        },
+        granule: { pageNum: 1 }
       }
     })
 
@@ -123,8 +129,11 @@ describe('getGranules', () => {
         collectionId: 'collectionId'
       },
       query: {
-        temporal: {},
-        spatial: {}
+        collection: {
+          temporal: {},
+          spatial: {}
+        },
+        granule: { pageNum: 1 }
       }
     })
 

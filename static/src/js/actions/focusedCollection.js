@@ -1,4 +1,5 @@
 import actions from './index'
+import { updateGranuleQuery } from './search'
 import { CollectionRequest } from '../util/request/cmr'
 import { UPDATE_FOCUSED_COLLECTION } from '../constants/actionTypes'
 
@@ -13,6 +14,9 @@ export const updateFocusedCollection = payload => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeFocusedCollection = collectionId => (dispatch) => {
+  // Reset granule pageNum to 1 when focusedCollection is changing
+  dispatch(updateGranuleQuery({ pageNum: 1 }))
+
   if (!collectionId) {
     dispatch(updateFocusedCollection(false))
     dispatch(actions.updateGranules({ results: [] }))

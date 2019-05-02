@@ -23,7 +23,7 @@ const granuleListItemSkeletonStyle = {
  * @param {object} props.granules - List of granules passed from redux store.
  */
 export const GranuleResultsList = (props) => {
-  const { granules } = props
+  const { granules, pageNum, waypointEnter } = props
   const {
     hits,
     loadTime,
@@ -31,11 +31,21 @@ export const GranuleResultsList = (props) => {
     isLoaded
   } = granules
 
-  const doneLoading = (!isLoading && isLoaded)
+  const granuleIds = granules.allIds
 
-  const granulesList = granules.allIds.map(granuleId => (
-    <GranuleResultsItem key={granuleId} granule={granules.byId[granuleId]} />
-  ))
+  const initialLoading = (pageNum === 1 && !isLoaded)
+
+  const granulesList = granuleIds.map((granuleId, index) => {
+    const isLast = granuleIds.length > 0 && index === granuleIds.length - 1
+    return (
+      <GranuleResultsItem
+        key={granuleId}
+        granule={granules.byId[granuleId]}
+        isLast={isLast}
+        waypointEnter={waypointEnter}
+      />
+    )
+  })
 
   const granulesLoadingList = [1, 2, 3].map((item,
     i) => {
@@ -50,6 +60,10 @@ export const GranuleResultsList = (props) => {
     )
   })
 
+  // if loading pageNum > 1, append more skeletons to the granulesList
+  if (pageNum > 1 && isLoading) {
+    granulesList.push(granulesLoadingList[0])
+  }
 
   const visibleGranules = granulesList.length ? granulesList.length : 0
 
@@ -59,34 +73,40 @@ export const GranuleResultsList = (props) => {
     <div className="granule-results-list">
       <div className="granule-results-list__header">
         <span className="granule-results-list__header-item">
-          {!doneLoading && (
-            <Skeleton
-              containerStyle={{ height: '18px', width: '213px' }}
-              shapes={granuleListTotal}
-            />
-          )}
-          {doneLoading && `Showing ${visibleGranules} of ${hits} matching granules` }
+          {
+            initialLoading && (
+              <Skeleton
+                containerStyle={{ height: '18px', width: '213px' }}
+                shapes={granuleListTotal}
+              />
+            )
+          }
+          {!initialLoading && `Showing ${visibleGranules} of ${hits} matching granules` }
         </span>
         <span className="granule-results-list__header-item">
-          {!doneLoading && (
-            <Skeleton
-              containerStyle={{ height: '18px', width: '110px' }}
-              shapes={granuleTimeTotal}
-            />
-          )}
-          {doneLoading && `Search Time: ${loadTimeInSeconds}s`}
+          {
+            initialLoading && (
+              <Skeleton
+                containerStyle={{ height: '18px', width: '110px' }}
+                shapes={granuleTimeTotal}
+              />
+            )
+          }
+          {!initialLoading && `Search Time: ${loadTimeInSeconds}s` }
         </span>
       </div>
       <ul className="granule-results-list__list">
-        {!doneLoading && granulesLoadingList}
-        {doneLoading && granulesList}
+        {initialLoading && granulesLoadingList}
+        {!initialLoading && granulesList}
       </ul>
     </div>
   )
 }
 
 GranuleResultsList.propTypes = {
-  granules: PropTypes.shape({}).isRequired
+  granules: PropTypes.shape({}).isRequired,
+  pageNum: PropTypes.number.isRequired,
+  waypointEnter: PropTypes.func.isRequired
 }
 
 export default pure(GranuleResultsList)

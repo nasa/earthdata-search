@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import TemporalDisplay from '../../components/TemporalDisplay/TemporalDisplay'
 
 const mapStateToProps = state => ({
-  temporalSearch: state.query.temporal
+  temporalSearch: state.query.collection.temporal
 })
 
 export const TemporalDisplayContainer = ({ temporalSearch }) => (

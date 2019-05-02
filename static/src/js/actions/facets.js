@@ -5,6 +5,8 @@ import {
 
 import actions from './index'
 
+import { updateCollectionQuery } from './search'
+
 export const updateFeatureFacet = facetInfo => ({
   type: UPDATE_SELECTED_FEATURE_FACET,
   payload: { ...facetInfo }
@@ -17,6 +19,7 @@ export const updateFeatureFacet = facetInfo => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeFeatureFacet = facetInfo => (dispatch) => {
+  dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateFeatureFacet(facetInfo))
   dispatch(actions.getCollections())
 }
@@ -53,6 +56,7 @@ export const updateCmrFacet = newParams => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeCmrFacet = newParams => (dispatch) => {
+  dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateCmrFacet(newParams))
   dispatch(actions.getCollections())
 }
