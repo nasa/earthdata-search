@@ -97,7 +97,6 @@ export class CollectionRequest extends CmrRequest {
       'processing_level_id_h',
       'project_h',
       'sort_key',
-      'sortKey',
       'tag_key'
     ]
   }

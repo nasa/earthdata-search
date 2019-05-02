@@ -19,6 +19,7 @@ export const updateFeatureFacet = facetInfo => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeFeatureFacet = facetInfo => (dispatch) => {
+  // Reset collection pageNum to 1 when facets are changing
   dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateFeatureFacet(facetInfo))
   dispatch(actions.getCollections())
@@ -56,6 +57,7 @@ export const updateCmrFacet = newParams => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeCmrFacet = newParams => (dispatch) => {
+  // Reset collection pageNum to 1 when facets are changing
   dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateCmrFacet(newParams))
   dispatch(actions.getCollections())

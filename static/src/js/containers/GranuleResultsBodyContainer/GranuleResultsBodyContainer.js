@@ -26,7 +26,7 @@ export const GranuleResultsBodyContainer = (props) => {
 
   const { pageNum } = granuleQuery
 
-  const loadGranules = (params) => {
+  const onWaypointEnter = (params) => {
     if (params.event !== null) {
       onChangeGranulePageNum(pageNum + 1)
     }
@@ -37,7 +37,7 @@ export const GranuleResultsBodyContainer = (props) => {
       granules={granules}
       focusedCollection={focusedCollection}
       pageNum={pageNum}
-      waypointEnter={loadGranules}
+      waypointEnter={onWaypointEnter}
     />
   )
 }

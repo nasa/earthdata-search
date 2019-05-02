@@ -153,7 +153,6 @@ class CollectionResultsBody extends PureComponent {
 
     return (
       <ul className="collection-results__list">
-        {/* {!collections.isLoading ? collectionResults : 'Loading...'} */}
         {collectionResults}
         {collections.isLoading && (
           <li>
