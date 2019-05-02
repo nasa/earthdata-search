@@ -30,7 +30,7 @@ export const CollectionResultsBodyContainer = (props) => {
     onChangeCollectionPageNum
   } = props
 
-  const loadCollections = (params) => {
+  const onWaypointEnter = (params) => {
     if (params.event !== null) {
       const { pageNum } = query
       onChangeCollectionPageNum(pageNum + 1)
@@ -42,7 +42,7 @@ export const CollectionResultsBodyContainer = (props) => {
       collections={collections}
       location={location}
       onFocusedCollectionChange={onFocusedCollectionChange}
-      waypointEnter={loadCollections}
+      waypointEnter={onWaypointEnter}
     />
   )
 }

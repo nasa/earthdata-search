@@ -16,7 +16,6 @@ import { decodeTimeline, encodeTimeline } from './timelineEncoders'
  */
 export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
 
-
 /**
  * Mapping of URL Shortened Keys to their redux store keys
  */
@@ -37,7 +36,6 @@ const urlDefs = {
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets }
 }
 
-
 /**
  * Helper method to decode a given paramName from URL parameters base on urlDefs keys
  * @param {object} params Object of encoded URL parameters
@@ -47,7 +45,6 @@ const decodeHelp = (params, paramName) => {
   const value = params[urlDefs[paramName].shortKey]
   return urlDefs[paramName].decode(value)
 }
-
 
 /**
  * Given a URL param string, returns an object that matches the redux store
@@ -104,7 +101,6 @@ export const decodeUrlParams = (paramString) => {
   }
 }
 
-
 /**
  * Given a set of React Component Props, returns a URL path with URL encoded parameter string
  * @param {object} props React Props
@@ -132,7 +128,6 @@ export const encodeUrlQuery = (props) => {
   const fullPath = pathname + paramString
   return fullPath
 }
-
 
 /**
  * Create a query string containing both indexed and non-indexed keys.
