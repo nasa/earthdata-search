@@ -148,7 +148,6 @@ describe('LOADING_COLLECTIONS', () => {
       type: LOADING_COLLECTIONS
     }
 
-    console.log('about to be wrong')
     const expectedState = {
       ...initialState,
       isLoading: true,

@@ -109,7 +109,6 @@ describe('LOADING_GRANULES', () => {
       type: LOADING_GRANULES
     }
 
-    console.log('about to be wrong')
     const expectedState = {
       ...initialState,
       isLoading: true,

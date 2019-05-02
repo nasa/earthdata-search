@@ -31,7 +31,6 @@ const processResults = (results) => {
 }
 
 const collectionsReducer = (state = initialState, action) => {
-  console.log('asdfad', state, initialState, action)
   switch (action.type) {
     case LOADING_COLLECTIONS: {
       return {
