@@ -31,7 +31,7 @@ The Earthdata Search application uses Node v10.15.1 and Webpack 4.24.0 to genera
 ### Prerequisites
 
 ##### Node
-Earthdata Search runs on Node.js and React, in order to run the application you'll need to [install it](https://nodejs.org/en/download/).
+Earthdata Search runs on Node.js, in order to run the application you'll need to [install it](https://nodejs.org/en/download/).
 
 ##### NPM
 In order to run the application for development, you need a local install of [npm](https://www.npmjs.com/get-npm).
