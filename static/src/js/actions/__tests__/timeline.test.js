@@ -176,7 +176,7 @@ describe('changeTimelineState', () => {
     // call the dispatch
     store.dispatch(changeTimelineState({ newState }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_TIMELINE_STATE,
@@ -208,7 +208,7 @@ describe('changeTimelineQuery', () => {
     // call the dispatch
     store.dispatch(changeTimelineQuery({ newQuery }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_TIMELINE_QUERY,

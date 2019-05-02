@@ -4,7 +4,11 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 import { updateFocusedCollection } from '../focusedCollection'
-import { UPDATE_FOCUSED_COLLECTION, UPDATE_GRANULES } from '../../constants/actionTypes'
+import {
+  UPDATE_FOCUSED_COLLECTION,
+  UPDATE_GRANULES,
+  UPDATE_GRANULE_QUERY
+} from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -69,7 +73,7 @@ describe('changeFocusedCollection', () => {
     // call the dispatch
     await store.dispatch(actions.changeFocusedCollection(newCollectionId))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     const payload = {
       collectionId: 'newCollectionId',
@@ -78,6 +82,10 @@ describe('changeFocusedCollection', () => {
       }
     }
     expect(storeActions[0]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: { pageNum: 1 }
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
       payload
     })
@@ -93,10 +101,14 @@ describe('changeFocusedCollection', () => {
     const storeActions = store.getActions()
 
     expect(storeActions[0]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: { pageNum: 1 }
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
       payload: false
     })
-    expect(storeActions[1]).toEqual({
+    expect(storeActions[2]).toEqual({
       type: UPDATE_GRANULES,
       payload: {
         results: []

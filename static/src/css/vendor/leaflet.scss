@@ -11,7 +11,7 @@
     margin-right: 10px;
   }
 
-  .leaflet-control-layers-toggle, .leaflet-retina .leaflet-control-layers-toggle {
+  .leaflet-touch .leaflet-control-layers-toggle, .leaflet-retina .leaflet-control-layers-toggle {
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -67,4 +67,3 @@
     background-position: -120px 0px;
   }
 }
-

@@ -19,7 +19,9 @@ function setup(type) {
         ],
         thumbnail: '/fake/path/image.jpg',
         title: 'Granule title'
-      }
+      },
+      isLast: false,
+      waypointEnter: jest.fn()
     }
   }
 
@@ -32,7 +34,9 @@ function setup(type) {
           '2019-04-29 23:59:59'
         ],
         title: 'Granule title'
-      }
+      },
+      isLast: false,
+      waypointEnter: jest.fn()
     }
   }
 
@@ -46,7 +50,9 @@ function setup(type) {
         ],
         producer_granule_id: 'Granule title',
         thumbnail: '/fake/path/image.jpg'
-      }
+      },
+      isLast: false,
+      waypointEnter: jest.fn()
     }
   }
 

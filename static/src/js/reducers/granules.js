@@ -1,4 +1,5 @@
 import {
+  ADD_MORE_GRANULES,
   UPDATE_GRANULES,
   LOADING_GRANULES,
   LOADED_GRANULES,
@@ -15,6 +16,18 @@ const initialState = {
   timerStart: null,
   loadTime: 0,
   isCwic: null
+}
+
+const processResults = (results) => {
+  const byId = {}
+  const allIds = []
+  results.forEach((result) => {
+    const { id } = result
+    byId[id] = result
+    allIds.push(id)
+  })
+
+  return { byId, allIds }
 }
 
 const granulesReducer = (state = initialState, action) => {
@@ -49,13 +62,7 @@ const granulesReducer = (state = initialState, action) => {
     }
     case UPDATE_GRANULES: {
       const { hits, isCwic } = action.payload
-      const byId = {}
-      const allIds = []
-      action.payload.results.forEach((result) => {
-        const { id } = result
-        byId[id] = result
-        allIds.push(id)
-      })
+      const { byId, allIds } = processResults(action.payload.results)
 
       return {
         ...state,
@@ -63,6 +70,21 @@ const granulesReducer = (state = initialState, action) => {
         byId,
         hits,
         isCwic
+      }
+    }
+    case ADD_MORE_GRANULES: {
+      const { byId, allIds } = processResults(action.payload.results)
+
+      return {
+        ...state,
+        allIds: [
+          ...state.allIds,
+          ...allIds
+        ],
+        byId: {
+          ...state.byId,
+          ...byId
+        }
       }
     }
     default:

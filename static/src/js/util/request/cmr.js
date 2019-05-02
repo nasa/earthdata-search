@@ -37,18 +37,18 @@ export class CmrRequest extends Request {
    * @return {Object} An object containing only the desired keys.
    */
   transformRequest(data) {
-    let cmrData = super.transformRequest(data)
+    const cmrData = super.transformRequest(data)
 
     // Converts javascript compliant keys to snake cased keys for use
     // in URLs and request payloads
-    const snakeKeyData = snakeCaseKeys(data)
+    const snakeKeyData = snakeCaseKeys(cmrData)
 
     // Prevent keys that our external services don't support from being sent
     const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
 
-    cmrData = prepKeysForCmr(filteredData, this.nonIndexedKeys())
+    const result = prepKeysForCmr(filteredData, this.nonIndexedKeys())
 
-    return cmrData
+    return result
   }
 }
 
@@ -97,6 +97,7 @@ export class CollectionRequest extends CmrRequest {
       'processing_level_id_h',
       'project_h',
       'sort_key',
+      'sortKey',
       'tag_key'
     ]
   }

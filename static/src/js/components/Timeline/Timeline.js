@@ -246,8 +246,9 @@ class Timeline extends Component {
 
   render() {
     const { focusedCollection = {} } = this.props
+    const { metadata = {} } = focusedCollection
     // Don't display the timeline if there isn't a focusedCollection with metadata
-    const display = focusedCollection.metadata ? 'block' : 'none'
+    const display = Object.keys(metadata).length === 0 ? 'none' : 'block'
 
     return (
       <section className="timeline" style={{ display }}>

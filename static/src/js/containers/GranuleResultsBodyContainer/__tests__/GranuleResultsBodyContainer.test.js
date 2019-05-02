@@ -10,7 +10,8 @@ function setup() {
   const props = {
     focusedCollection: { value: 'focusedCollection' },
     granules: { value: 'granules' },
-    onFocusedCollectionChange: jest.fn()
+    granuleQuery: { pageNum: 1 },
+    onChangeGranulePageNum: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBodyContainer {...props} />)
@@ -28,6 +29,28 @@ describe('GranuleResultsBodyContainer component', () => {
     expect(enzymeWrapper.find(GranuleResultsBody).length).toBe(1)
     expect(enzymeWrapper.find(GranuleResultsBody).props().focusedCollection).toEqual({ value: 'focusedCollection' })
     expect(enzymeWrapper.find(GranuleResultsBody).props().granules).toEqual({ value: 'granules' })
-    expect(typeof enzymeWrapper.find(GranuleResultsBody).props().onFocusedCollectionChange).toEqual('function')
+    expect(enzymeWrapper.find(GranuleResultsBody).props().pageNum).toEqual(1)
+    expect(typeof enzymeWrapper.find(GranuleResultsBody).props().waypointEnter).toEqual('function')
+  })
+
+  test('waypointEnter calls onChangeGranulePageNum', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const granuleResultsBody = enzymeWrapper.find(GranuleResultsBody)
+
+    granuleResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
+
+    expect(props.onChangeGranulePageNum.mock.calls.length).toBe(1)
+    expect(props.onChangeGranulePageNum.mock.calls[0]).toEqual([2])
+  })
+
+  test('waypointEnter does not call onChangeGranulePageNum if there is no scroll event', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const granuleResultsBody = enzymeWrapper.find(GranuleResultsBody)
+
+    granuleResultsBody.prop('waypointEnter')({ event: null })
+
+    expect(props.onChangeGranulePageNum.mock.calls.length).toBe(0)
   })
 })

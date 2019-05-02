@@ -2,6 +2,7 @@ import { CollectionRequest } from '../util/request/cmr'
 import { encodeTemporal } from '../util/url/temporalEncoders'
 
 import {
+  ADD_MORE_COLLECTIONS,
   UPDATE_COLLECTIONS,
   LOADING_COLLECTIONS,
   LOADED_COLLECTIONS,
@@ -13,6 +14,11 @@ import {
   STARTED_COLLECTIONS_TIMER,
   FINISHED_COLLECTIONS_TIMER
 } from '../constants/actionTypes'
+
+export const addMoreCollections = payload => ({
+  type: ADD_MORE_COLLECTIONS,
+  payload
+})
 
 export const updateCollections = payload => ({
   type: UPDATE_COLLECTIONS,
@@ -70,11 +76,14 @@ export const getCollections = () => (dispatch, getState) => {
     query
   } = getState()
 
+  const { collection: collectionQuery } = query
+
   const {
     keyword,
+    pageNum,
     spatial = {},
     temporal = {}
-  } = query
+  } = collectionQuery
 
   const {
     boundingBox,
@@ -92,6 +101,13 @@ export const getCollections = () => (dispatch, getState) => {
   const tagKey = []
   if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
   if (featureFacets.mapImagery) tagKey.push('edsc.extra.gibs')
+
+  if (pageNum === 1) {
+    const emptyPayload = {
+      results: []
+    }
+    dispatch(updateCollections(emptyPayload))
+  }
 
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
@@ -118,7 +134,7 @@ export const getCollections = () => (dispatch, getState) => {
         limit_to_granules: true
       }
     },
-    pageNum: 1,
+    pageNum,
     pageSize: 20,
     platformH: cmrFacets.platform_h,
     point,
@@ -145,7 +161,11 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(onFacetsLoaded({
         loaded: true
       }))
-      dispatch(updateCollections(payload))
+      if (pageNum === 1) {
+        dispatch(updateCollections(payload))
+      } else {
+        dispatch(addMoreCollections(payload))
+      }
       dispatch(updateFacets(payload))
     }, (error) => {
       dispatch(finishCollectionsTimer())

@@ -9,8 +9,10 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collections: { value: 'collections' },
+    query: { pageNum: 1 },
     location: { value: 'location' },
-    onFocusedCollectionChange: jest.fn()
+    onFocusedCollectionChange: jest.fn(),
+    onChangeCollectionPageNum: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
@@ -29,5 +31,26 @@ describe('CollectionResultsBodyContainer component', () => {
     expect(enzymeWrapper.find(CollectionResultsBody).props().collections).toEqual({ value: 'collections' })
     expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({ value: 'location' })
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onFocusedCollectionChange).toEqual('function')
+  })
+
+  test('waypointEnter calls onChangeCollectionPageNum', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
+
+    collectionResultsBody.prop('waypointEnter')({ event: { type: 'scroll' } })
+
+    expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
+    expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
+  })
+
+  test('waypointEnter does not call onChangeCollectionPageNum if there is no scroll event', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
+
+    collectionResultsBody.prop('waypointEnter')({ event: null })
+
+    expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(0)
   })
 })

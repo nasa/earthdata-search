@@ -11,7 +11,9 @@ import {
 import { searchNlp } from './nlp'
 import {
   changeQuery,
-  clearFilters
+  clearFilters,
+  changeCollectionPageNum,
+  changeGranulePageNum
 } from './search'
 import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
@@ -50,7 +52,9 @@ const actions = {
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   searchNlp,
-  updateGranules
+  updateGranules,
+  changeCollectionPageNum,
+  changeGranulePageNum
 }
 
 export default actions
