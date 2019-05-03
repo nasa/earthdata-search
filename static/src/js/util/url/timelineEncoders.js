@@ -1,4 +1,4 @@
-import timelineIntervals from '../timeline'
+import { timelineIntervals } from '../timeline'
 import getObjectKeyByValue from '../object'
 
 /**

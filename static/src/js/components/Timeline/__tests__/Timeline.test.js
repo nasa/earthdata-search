@@ -68,10 +68,6 @@ describe('Timeline component', () => {
         interval: 'day',
         startDate: '2019-01-01T00:00:00.000Z'
       }])
-      expect(props.onChangeTimelineState.mock.calls.length).toBe(1)
-      expect(props.onChangeTimelineState.mock.calls[0]).toEqual([{
-        collectionId: 'collectionId'
-      }])
     })
 
     test('when the timeline center is new', () => {

@@ -139,9 +139,12 @@ export class CollectionRequest extends CmrRequest {
 export class GranuleRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
+      'bounding_box',
       'echo_collection_id',
       'page_num',
       'page_size',
+      'point',
+      'polygon',
       'sort_key'
     ]
   }
@@ -195,9 +198,12 @@ export class GranuleRequest extends CmrRequest {
 export class TimelineRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
+      'bounding_box',
       'echo_collection_id',
       'end_date',
       'interval',
+      'point',
+      'polygon',
       'start_date'
     ]
   }

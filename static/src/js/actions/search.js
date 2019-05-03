@@ -20,6 +20,8 @@ export const changeQuery = query => (dispatch) => {
 
   dispatch(updateCollectionQuery(newQuery))
   dispatch(actions.getCollections())
+  dispatch(actions.getGranules())
+  dispatch(actions.getTimeline())
 }
 
 export const changeCollectionPageNum = pageNum => (dispatch) => {

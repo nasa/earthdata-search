@@ -57,8 +57,11 @@ describe('changeQuery', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      focusedCollection: {},
       query: {
-        keyword: 'old stuff'
+        collection: {
+          keyword: 'old stuff'
+        }
       }
     })
 
@@ -152,9 +155,12 @@ describe('changeGranulePageNum', () => {
 describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
     const query = {
-      keyword: 'keyword search',
-      spatial: {
-        point: '0,0'
+      focusedCollection: {},
+      collection: {
+        keyword: 'keyword search',
+        spatial: {
+          point: '0,0'
+        }
       }
     }
     const emptyQuery = {

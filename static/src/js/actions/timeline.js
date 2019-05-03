@@ -6,6 +6,7 @@ import {
   UPDATE_TIMELINE_QUERY,
   UPDATE_TIMELINE_STATE
 } from '../constants/actionTypes'
+import { prepareTimelineParams } from '../util/timeline'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
@@ -23,27 +24,34 @@ export const updateTimelineQuery = payload => ({
 })
 
 export const getTimeline = () => (dispatch, getState) => {
-  const { timeline } = getState()
-  const { query, state } = timeline
-  const { collectionId } = state
-  const {
-    endDate,
-    interval,
-    startDate
-  } = query
+  const timelineParams = prepareTimelineParams(getState())
 
-  if (!collectionId) {
+  if (!timelineParams) {
     dispatch(updateTimelineIntervals({
       results: []
     }))
     return null
   }
+
+  const {
+    boundingBox,
+    collectionId,
+    endDate,
+    interval,
+    point,
+    polygon,
+    startDate
+  } = timelineParams
+
   const requestObject = new TimelineRequest()
 
   const response = requestObject.search({
+    boundingBox,
     echoCollectionId: collectionId,
     endDate,
     interval,
+    point,
+    polygon,
     startDate
   })
     .then((response) => {
