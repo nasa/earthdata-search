@@ -1,5 +1,5 @@
 import { CollectionRequest } from '../util/request/cmr'
-import { encodeTemporal } from '../util/url/temporalEncoders'
+import prepareCollectionParams from '../util/collections'
 
 import {
   ADD_MORE_COLLECTIONS,
@@ -72,35 +72,16 @@ export const finishCollectionsTimer = () => ({
  */
 export const getCollections = () => (dispatch, getState) => {
   const {
-    facetsParams,
-    query
-  } = getState()
-
-  const { collection: collectionQuery } = query
-
-  const {
+    boundingBox,
+    cmrFacets,
+    featureFacets,
     keyword,
     pageNum,
-    spatial = {},
-    temporal = {}
-  } = collectionQuery
-
-  const {
-    boundingBox,
     point,
-    polygon
-  } = spatial
-
-  const temporalString = encodeTemporal(temporal)
-
-  const {
-    cmr: cmrFacets = {},
-    feature: featureFacets = {}
-  } = facetsParams
-
-  const tagKey = []
-  if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
-  if (featureFacets.mapImagery) tagKey.push('edsc.extra.gibs')
+    polygon,
+    tagKey,
+    temporalString
+  } = prepareCollectionParams(getState())
 
   if (pageNum === 1) {
     const emptyPayload = {

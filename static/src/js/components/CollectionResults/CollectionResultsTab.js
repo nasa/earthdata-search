@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-class GranuleResultsTab extends PureComponent {
+class CollectionResultsTab extends PureComponent {
   render() {
     const { collectionHits } = this.props
 
@@ -13,12 +13,12 @@ class GranuleResultsTab extends PureComponent {
   }
 }
 
-GranuleResultsTab.defaultProps = {
+CollectionResultsTab.defaultProps = {
   collectionHits: null
 }
 
-GranuleResultsTab.propTypes = {
+CollectionResultsTab.propTypes = {
   collectionHits: PropTypes.string
 }
 
-export default GranuleResultsTab
+export default CollectionResultsTab
