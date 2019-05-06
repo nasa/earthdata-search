@@ -164,7 +164,7 @@ class DataAccessController < ApplicationController
         if model.present?
           doc = Nokogiri::XML(model)
           # reset spatial_subset_flag
-          flag = doc.at_xpath('//ecs:spatial_subset_flag')
+          flag = doc.at_xpath('//*[local-name() = "spatial_subset_flag"]')
           if flag && flag.content == 'true'
             flag.content = 'false'
             defaults.service_options['accessMethod'][0]['model'] = doc.to_html
@@ -175,14 +175,14 @@ class DataAccessController < ApplicationController
           if raw_model.present?
             doc = Nokogiri::XML(raw_model)
             # reset spatial_subset_flag
-            flag = doc.at_xpath('//ecs:spatial_subset_flag')
+            flag = doc.at_xpath('//*[local-name() = "spatial_subset_flag"]')
             if flag && flag.content == 'true'
               flag.content = 'false'
               # reset default values in rawModel
-              doc.at_xpath('//ecs:ullat').content = '90' unless doc.at_xpath('//ecs:ullat').nil?
-              doc.at_xpath('//ecs:ullon').content = '-180' unless doc.at_xpath('//ecs:ullon').nil?
-              doc.at_xpath('//ecs:lrlat').content = '-90' unless doc.at_xpath('//ecs:lrlat').nil?
-              doc.at_xpath('//ecs:lrlon').content = '180' unless doc.at_xpath('//ecs:lrlon').nil?
+              doc.at_xpath('//*[local-name() = "ullat"]').content = '90' unless doc.at_xpath('//*[local-name() = "ullat"]').nil?
+              doc.at_xpath('//*[local-name() = "ullon"]').content = '-180' unless doc.at_xpath('//*[local-name() = "ullon"]').nil?
+              doc.at_xpath('//*[local-name() = "lrlat"]').content = '-90' unless doc.at_xpath('//*[local-name() = "lrlat"]').nil?
+              doc.at_xpath('//*[local-name() = "lrlon"]').content = '180' unless doc.at_xpath('//*[local-name() = "lrlon"]').nil?
               defaults.service_options['accessMethod'][0]['rawModel'] = doc.to_html
             end
           end
