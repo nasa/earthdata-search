@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { camelCase } from 'lodash'
-// import qs from 'qs'
 
-// import { queryParamsFromUrlString } from '../../util/url/url'
 import { changeFeatureFacet, changeCmrFacet } from '../../util/facets'
 
 import FacetsGroup from './FacetsGroup'
@@ -52,43 +50,42 @@ const Facets = (props) => {
     ]
   }
 
-  const keywordsFacet = {
-    title: 'Keywords',
+  const cmrFacetDefaults = {
     changeHandler: cmrFacetHandler,
+    children: []
+  }
+
+  const keywordsFacet = {
+    ...cmrFacetDefaults,
+    title: 'Keywords',
     options: {
       liftSelectedFacets: true
-    },
-    children: []
+    }
   }
 
   const platformsFacet = {
-    changeHandler: cmrFacetHandler,
-    title: 'Platforms',
-    children: []
+    ...cmrFacetDefaults,
+    title: 'Platforms'
   }
 
   const instrumentsFacet = {
-    changeHandler: cmrFacetHandler,
-    title: 'Instruments',
-    children: []
+    ...cmrFacetDefaults,
+    title: 'Instruments'
   }
 
   const organizationsFacet = {
-    changeHandler: cmrFacetHandler,
-    title: 'Organizations',
-    children: []
+    ...cmrFacetDefaults,
+    title: 'Organizations'
   }
 
   const projectsTemplate = {
-    changeHandler: cmrFacetHandler,
-    title: 'Projects',
-    children: []
+    ...cmrFacetDefaults,
+    title: 'Projects'
   }
 
   const processingLevels = {
-    changeHandler: cmrFacetHandler,
-    title: 'Processing levels',
-    children: []
+    ...cmrFacetDefaults,
+    title: 'Processing levels'
   }
 
   const facetsTemplate = [

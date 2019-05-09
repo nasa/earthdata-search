@@ -2,7 +2,7 @@ import { toggleFacetsModal } from './ui'
 import { CollectionRequest } from '../util/request/cmr'
 import { buildSearchParams, prepareCollectionParams } from '../util/collections'
 import { prepareCMRFacetPayload } from '../util/facets'
-import actions from './index'
+import { changeCmrFacet } from './facets'
 
 import {
   ERRORED_VIEW_ALL_FACETS,
@@ -37,7 +37,7 @@ export const onViewAllFacetsErrored = () => ({
 export const applyViewAllFacets = () => (dispatch, getState) => {
   const selectedFacets = { ...getState().facetsParams.viewAll }
   dispatch(toggleFacetsModal(false))
-  dispatch(actions.changeCmrFacet(selectedFacets))
+  dispatch(changeCmrFacet(selectedFacets))
 }
 
 export const copyCMRFacets = () => (dispatch, getState) => {
@@ -55,6 +55,8 @@ export const updateViewAllFacet = newParams => ({
 
 /**
  * Perform a collections request based on the current redux state.
+ * @param {string} category - The string representing the selected category. This should be the humanized version,
+ * and not the one we use to pass the parameters.
  * @param {function} dispatch - A dispatch function provided by redux.
  * @param {function} getState - A function that returns the current state provided by redux.
  */

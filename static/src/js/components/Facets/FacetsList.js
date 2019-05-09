@@ -4,8 +4,7 @@ import { pure } from 'recompose'
 import { uniqueId } from 'lodash'
 import classNames from 'classnames'
 
-import { isNumber } from '../../util/is-number'
-import { alphabet, createEmptyAlphabeticListObj } from '../../util/alphabetic-list'
+import { buildOrganizedFacets } from '../../util/facets'
 
 import FacetsItem from './FacetsItem'
 import FacetsSectionHeading from './FacetsSectionHeading'
@@ -23,45 +22,12 @@ const FacetsList = (props) => {
   } = props
 
   // Start by creating arrays to sort lifted and non-lifted facets
-  let facetsToLift = []
-  let facetsToSort = []
-
-  // Populate the arrays based on the applied property if liftSelectedFacets is set,
-  // otherwise put all facets on facetsToSort
-  if (liftSelectedFacets) {
-    facetsToLift = facets.filter(facet => facet.applied)
-    facetsToSort = facets.filter(facet => !facet.applied)
-  } else {
-    facetsToSort = [...facets]
-  }
-
-  let current = '#'
-
-  // Set alphabetizedList to an object where each property is an array for a given letter
-  const alphabetizedList = createEmptyAlphabeticListObj()
-
-  // Sort remaining 'non-lifted' facets into their respective arrays based on the first letter
-  facetsToSort.forEach((facet) => {
-    const firstLetter = facet.title[0].toUpperCase()
-    const firstIsNumber = isNumber(firstLetter)
-
-    // If the first letter is not the current letter, set the current letter to the first letter of
-    // the selected letters facet. This relies on CMR returning the facets in alpabetical order
-    if (firstLetter !== current) {
-      current = firstIsNumber ? '#' : alphabet[alphabet.indexOf(facet.title[0])]
-    }
-
-    // If the first letter matches the current letter, push it onto the list. We also need to account
-    // for the first letter being a number, in which case it's added to the '#' list
-    if (firstLetter === current || (current === '#' && firstIsNumber)) {
-      alphabetizedList[current].push(facet)
-    }
-  })
+  const { alphabetizedList, facetsToLift } = buildOrganizedFacets(facets, { liftSelectedFacets })
 
   // Create the list that is ultimately displayed in the component
   let list = []
 
-  // This function returns a list of facet components to be displayed
+  // Return a list of facet components to be displayed
   const buildFacetList = (facets, limit = null) => facets.map((child, i) => {
     if (i < limit || limit === null) {
       const uid = uniqueId('facet-item_')

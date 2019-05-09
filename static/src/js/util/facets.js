@@ -1,7 +1,8 @@
 import qs from 'qs'
 import { camelCase } from 'lodash'
-import { isNumber } from './is-number'
+import { containsNumber } from './contains-number'
 import { queryParamsFromUrlString } from './url/url'
+import { alphabet, createEmptyAlphabeticListObj } from './alphabetic-list'
 
 
 /**
@@ -35,7 +36,7 @@ export const getStartingLetters = (facets) => {
   const firstLetters = []
   facets.forEach((facet) => {
     let firstLetter = facet.title[0].toUpperCase()
-    if (isNumber(firstLetter)) firstLetter = '#'
+    if (containsNumber(firstLetter)) firstLetter = '#'
     if (!firstLetters.includes(firstLetter)) firstLetters.push(firstLetter)
   })
   return firstLetters
@@ -157,3 +158,53 @@ export const prepareCMRFacetPayload = newParams => ({
     ? newParams.science_keywords_h
     : undefined
 })
+
+/**
+ * Takes a facets object and some options and returns arrays populated with the relevant facets.
+ * @param {object} facets - An object containing the facets to sort.
+ * @param {object} options - An object containing options to control sorting.
+ * @param {boolean} options.liftSelectedFacets - Designates whether the selected facets should be separated
+ * into their own category to be displayed separatly
+ * @return {{alphabetizedList: array, facetsToLift: array }} An object containing the organized facets.
+ */
+export const buildOrganizedFacets = (facets, options) => {
+  let facetsToLift = []
+  let facetsToSort = []
+
+  // Populate the arrays based on the applied property if liftSelectedFacets is set,
+  // otherwise put all facets on facetsToSort
+  if (options.liftSelectedFacets) {
+    facetsToLift = facets.filter(facet => facet.applied)
+    facetsToSort = facets.filter(facet => !facet.applied)
+  } else {
+    facetsToSort = [...facets]
+  }
+
+  let current = '#'
+
+  // Set alphabetizedList to an object where each property is an array for a given letter
+  const alphabetizedList = createEmptyAlphabeticListObj()
+
+  // Sort remaining 'non-lifted' facets into their respective arrays based on the first letter
+  facetsToSort.forEach((facet) => {
+    const firstLetter = facet.title[0].toUpperCase()
+    const firstcontainsNumber = containsNumber(firstLetter)
+
+    // If the first letter is not the current letter, set the current letter to the first letter of
+    // the selected letters facet. This relies on CMR returning the facets in alpabetical order
+    if (firstLetter !== current) {
+      current = firstcontainsNumber ? '#' : alphabet[alphabet.indexOf(facet.title[0])]
+    }
+
+    // If the first letter matches the current letter, push it onto the list. We also need to account
+    // for the first letter being a number, in which case it's added to the '#' list
+    if (firstLetter === current || (current === '#' && firstcontainsNumber)) {
+      alphabetizedList[current].push(facet)
+    }
+  })
+
+  return {
+    alphabetizedList,
+    facetsToLift
+  }
+}
