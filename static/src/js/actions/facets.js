@@ -3,6 +3,7 @@ import {
   UPDATE_SELECTED_CMR_FACET
 } from '../constants/actionTypes'
 
+import { prepareCMRFacetPayload } from '../util/facets'
 import actions from './index'
 
 import { updateCollectionQuery } from './search'
@@ -28,26 +29,7 @@ export const changeFeatureFacet = facetInfo => (dispatch) => {
 
 export const updateCmrFacet = newParams => ({
   type: UPDATE_SELECTED_CMR_FACET,
-  payload: {
-    data_center_h: newParams.data_center_h
-      ? newParams.data_center_h
-      : undefined,
-    instrument_h: newParams.instrument_h
-      ? newParams.instrument_h
-      : undefined,
-    platform_h: newParams.platform_h
-      ? newParams.platform_h
-      : undefined,
-    processing_level_id_h: newParams.processing_level_id_h
-      ? newParams.processing_level_id_h
-      : undefined,
-    project_h: newParams.project_h
-      ? newParams.project_h
-      : undefined,
-    science_keywords_h: newParams.science_keywords_h
-      ? newParams.science_keywords_h
-      : undefined
-  }
+  payload: prepareCMRFacetPayload(newParams)
 })
 
 

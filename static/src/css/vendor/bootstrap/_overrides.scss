@@ -6,6 +6,15 @@
 $body-bg: #000;
 $body-color: #333;
 
+// Theme Colors
+$theme-colors: (
+  "primary": $color__button--blue,
+  // "danger": #ff4136
+);
+
+// Buttons
+$btn-border-radius: 0.125rem;
+
 // Links
 $link-color: $color__brand--blue;
 $link-hover-color: $color__brand--blue;
@@ -17,7 +26,6 @@ $badge-padding-y: 0.3125rem;
 $badge-padding-x: 0.5rem;
 $badge-font-size: 0.6875rem;
 $badge-border-radius: 0.125rem;
-
 
 // Custom Breakpoints
 

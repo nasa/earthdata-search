@@ -145,6 +145,12 @@ describe('getCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      entities: {
+        collections: {},
+        facets: {},
+        granules: {},
+        viewAllFacets: {}
+      },
       query: {
         collection: {
           keyword: 'search keyword'
@@ -196,6 +202,12 @@ describe('getCollections', () => {
     })
 
     const store = mockStore({
+      entities: {
+        collections: {},
+        facets: {},
+        granules: {},
+        viewAllFacets: {}
+      },
       query: {
         collection: {}
       },

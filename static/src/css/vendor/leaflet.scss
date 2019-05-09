@@ -68,13 +68,9 @@
     margin-right: 10px;
   }
 
-<<<<<<< 5f464ad93607a21b9b944410446c213ec1cebe83
-  .leaflet-touch .leaflet-control-layers-toggle, .leaflet-retina .leaflet-control-layers-toggle {
-=======
   // Force the layers toggle to be the same size as the other elements
   .leaflet-control-layers-toggle,
   .leaflet-touch .leaflet-control-layers-toggle {
->>>>>>> EDSC-2202: Leaflet updates
     width: 30px;
     height: 30px;
     line-height: 30px;

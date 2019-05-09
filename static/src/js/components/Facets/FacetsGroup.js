@@ -19,10 +19,43 @@ class FacetsGroup extends Component {
     }
 
     this.onToggle = this.onToggle.bind(this)
+    this.onViewAllClick = this.onViewAllClick.bind(this)
   }
 
   onToggle() {
     this.setState(state => ({ isOpen: !state.isOpen }))
+  }
+
+  onViewAllClick() {
+    const {
+      facet,
+      onTriggerViewAllFacets
+    } = this.props
+    onTriggerViewAllFacets(facet.title)
+  }
+
+  renderHeaderInfo() {
+    const { facet } = this.props
+
+    return (
+      <>
+        {
+          facet.totalSelected > 0 && (
+            <span className="facets-group__meta">{`${facet.totalSelected} Selected`}</span>
+          )
+        }
+        {
+          (facet.totalSelected === 0 && facet.children.length > 49) && (
+            <span className="facets-group__meta">{`Showing Top 50 ${facet.title}`}</span>
+          )
+        }
+        {
+          facet.children.length > 49 && (
+            <button className="facets-group__view-all" type="button" onClick={this.onViewAllClick}>View All</button>
+          )
+        }
+      </>
+    )
   }
 
   render() {
@@ -33,6 +66,8 @@ class FacetsGroup extends Component {
     } = this.props
 
     const { isOpen } = this.state
+
+    const headerInfo = this.renderHeaderInfo()
 
     return (
       <li className="facets-group" key={facet.title}>
@@ -62,14 +97,11 @@ class FacetsGroup extends Component {
         <section className={`facets-group__body
           ${isOpen ? ' facets-group__body--is-open' : ''}`}
         >
-          { facet.totalSelected
-            ? (
-              <header>
-                <span className="facets-group__selected">{`${facet.totalSelected} Selected`}</span>
-              </header>
-            )
-            : null
-          }
+          {headerInfo && (
+            <header className="facets-group__header">
+              {headerInfo}
+            </header>
+          )}
           <FacetsList
             changeHandler={facet.changeHandler}
             facets={facet.children}
@@ -89,7 +121,8 @@ FacetsGroup.defaultProps = {
 FacetsGroup.propTypes = {
   facet: PropTypes.shape({}).isRequired,
   facetCategory: PropTypes.string.isRequired,
-  facetOptions: PropTypes.shape({})
+  facetOptions: PropTypes.shape({}),
+  onTriggerViewAllFacets: PropTypes.func.isRequired
 }
 
 export default FacetsGroup

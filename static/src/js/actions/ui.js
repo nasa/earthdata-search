@@ -3,7 +3,8 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE
+  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
 
 export const masterOverlayPanelDragStart = data => (dispatch) => {
@@ -39,3 +40,8 @@ export const granuleResultsPanelUpdateSearchValue = searchValue => (dispatch) =>
     payload: searchValue
   })
 }
+
+export const toggleFacetsModal = state => ({
+  type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+  payload: state
+})
