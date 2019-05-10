@@ -151,7 +151,7 @@ describe('copyCMRFacets', () => {
   })
 })
 
-describe('getCollections', () => {
+describe('getViewAllFacets', () => {
   beforeEach(() => {
     moxios.install()
 

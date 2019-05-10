@@ -219,7 +219,6 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
-      enzymeWrapper.instance().onApplyClick()
       const changeHandler = enzymeWrapper.find(FacetsList).prop('changeHandler')
       changeHandler({}, { destination: '' })
       expect(props.onChangeViewAllFacet).toHaveBeenCalledTimes(1)
