@@ -28,33 +28,45 @@ import {
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   granuleResultsPanelUpdateSortOrder,
-  granuleResultsPanelUpdateSearchValue
+  granuleResultsPanelUpdateSearchValue,
+  toggleFacetsModal
 } from './ui'
+import {
+  applyViewAllFacets,
+  getViewAllFacets,
+  changeViewAllFacet,
+  triggerViewAllFacets
+} from './viewAllFacets'
 
 const actions = {
+  applyViewAllFacets,
   changeCmrFacet,
-  updateCmrFacet,
+  changeCollectionPageNum,
   changeFeatureFacet,
-  updateFeatureFacet,
   changeFocusedCollection,
+  changeGranulePageNum,
   changeMap,
   changeQuery,
   changeTimelineQuery,
   changeTimelineState,
   changeUrl,
+  changeViewAllFacet,
   clearFilters,
   getCollections,
   getGranules,
   getTimeline,
-  granuleResultsPanelUpdateSortOrder,
+  getViewAllFacets,
   granuleResultsPanelUpdateSearchValue,
+  granuleResultsPanelUpdateSortOrder,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   searchNlp,
-  updateGranules,
-  changeCollectionPageNum,
-  changeGranulePageNum
+  toggleFacetsModal,
+  triggerViewAllFacets,
+  updateCmrFacet,
+  updateFeatureFacet,
+  updateGranules
 }
 
 export default actions

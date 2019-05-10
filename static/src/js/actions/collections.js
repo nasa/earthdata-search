@@ -1,5 +1,8 @@
 import { CollectionRequest } from '../util/request/cmr'
-import prepareCollectionParams from '../util/collections'
+import {
+  buildSearchParams,
+  prepareCollectionParams
+} from '../util/collections'
 
 import {
   ADD_MORE_COLLECTIONS,
@@ -71,17 +74,11 @@ export const finishCollectionsTimer = () => ({
  * @param {function} getState - A function that returns the current state provided by redux.
  */
 export const getCollections = () => (dispatch, getState) => {
+  const collectionParams = prepareCollectionParams(getState())
   const {
-    boundingBox,
-    cmrFacets,
-    featureFacets,
     keyword,
-    pageNum,
-    point,
-    polygon,
-    tagKey,
-    temporalString
-  } = prepareCollectionParams(getState())
+    pageNum
+  } = collectionParams
 
   if (pageNum === 1) {
     const emptyPayload = {
@@ -96,37 +93,7 @@ export const getCollections = () => (dispatch, getState) => {
 
   const requestObject = new CollectionRequest()
 
-  const response = requestObject.search({
-    boundingBox,
-    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
-    dataCenterH: cmrFacets.data_center_h,
-    hasGranulesOrCwic: true,
-    includeFacets: 'v2',
-    includeGranuleCounts: true,
-    includeHasGranules: true,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
-    instrumentH: cmrFacets.instrument_h,
-    keyword,
-    options: {
-      science_keywords_h: {
-        or: true
-      },
-      temporal: {
-        limit_to_granules: true
-      }
-    },
-    pageNum,
-    pageSize: 20,
-    platformH: cmrFacets.platform_h,
-    point,
-    polygon,
-    processingLevelIdH: cmrFacets.processing_level_id_h,
-    projectH: cmrFacets.project_h,
-    scienceKeywordsH: cmrFacets.science_keywords_h,
-    sortKey: ['has_granules_or_cwic'],
-    tagKey,
-    temporal: temporalString
-  })
+  const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {
       const payload = {}
 

@@ -63,6 +63,7 @@ export class CollectionRequest extends CmrRequest {
       'concept_id',
       'data_center_h',
       'format',
+      'facets_size',
       'has_granules',
       'has_granules_or_cwic',
       'include_facets',

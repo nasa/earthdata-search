@@ -28,10 +28,29 @@
     align-self: flex-end;
   }
 
-  &__selected {
+  &__header {
+    display: flex;
     padding: 0.2rem 0.4rem 0.2rem 1.1rem;
-    font-size: 0.875rem;
+  }
+
+  &__meta {
+    font-size: 0.8rem;
     color: $color__black--400;
+  }
+
+  &__view-all {
+    margin-left: auto;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $color__black--400;
+    background: none;
+    outline: none;
+    border: 0;
+
+    &:focus {
+      outline: 0;
+    }
   }
 
   &__body {

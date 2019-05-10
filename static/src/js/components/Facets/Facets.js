@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { camelCase } from 'lodash'
-import qs from 'qs'
 
-import { queryParamsFromUrlString } from '../../util/url/url'
+import { changeFeatureFacet, changeCmrFacet } from '../../util/facets'
 
 import FacetsGroup from './FacetsGroup'
 
@@ -14,29 +13,16 @@ const Facets = (props) => {
     facets,
     featureFacets,
     onChangeCmrFacet,
-    onChangeFeatureFacet
+    onChangeFeatureFacet,
+    onTriggerViewAllFacets
   } = props
 
-  const changeFeatureFacet = (e, facetLinkInfo) => {
-    const { title } = facetLinkInfo
-    const { checked } = e.target
-
-    onChangeFeatureFacet({ [camelCase(title)]: checked })
+  const featureFacetHandler = (e, facetLinkInfo) => {
+    changeFeatureFacet(e, facetLinkInfo, onChangeFeatureFacet)
   }
 
-  const changeCmrFacet = (e, facetLinkInfo) => {
-    const newParams = qs.parse(queryParamsFromUrlString(facetLinkInfo.destination))
-
-    const paramsToSend = {
-      data_center_h: newParams.data_center_h,
-      instrument_h: newParams.instrument_h,
-      platform_h: newParams.platform_h,
-      processing_level_id_h: newParams.processing_level_id_h,
-      project_h: newParams.project_h,
-      science_keywords_h: newParams.science_keywords_h
-    }
-
-    onChangeCmrFacet(paramsToSend)
+  const cmrFacetHandler = (e, facetLinkInfo) => {
+    changeCmrFacet(e, facetLinkInfo, onChangeCmrFacet)
   }
 
   const featuresFacet = {
@@ -44,7 +30,7 @@ const Facets = (props) => {
     options: {
       isOpen: true
     },
-    changeHandler: changeFeatureFacet,
+    changeHandler: featureFacetHandler,
     children: [
       {
         applied: featureFacets.mapImagery,
@@ -64,36 +50,41 @@ const Facets = (props) => {
     ]
   }
 
+  const cmrFacetDefaults = {
+    changeHandler: cmrFacetHandler,
+    children: []
+  }
+
   const keywordsFacet = {
+    ...cmrFacetDefaults,
     title: 'Keywords',
-    changeHandler: changeCmrFacet,
     options: {
       liftSelectedFacets: true
     }
   }
 
   const platformsFacet = {
-    changeHandler: changeCmrFacet,
+    ...cmrFacetDefaults,
     title: 'Platforms'
   }
 
   const instrumentsFacet = {
-    changeHandler: changeCmrFacet,
+    ...cmrFacetDefaults,
     title: 'Instruments'
   }
 
   const organizationsFacet = {
-    changeHandler: changeCmrFacet,
+    ...cmrFacetDefaults,
     title: 'Organizations'
   }
 
   const projectsTemplate = {
-    changeHandler: changeCmrFacet,
+    ...cmrFacetDefaults,
     title: 'Projects'
   }
 
   const processingLevels = {
-    changeHandler: changeCmrFacet,
+    ...cmrFacetDefaults,
     title: 'Processing levels'
   }
 
@@ -120,14 +111,17 @@ const Facets = (props) => {
         facet={facet}
         facetCategory={camelCase(facet.title)}
         facetOptions={options}
+        onTriggerViewAllFacets={onTriggerViewAllFacets}
       />
     )
   })
 
   return (
-    <ul className="facets">
-      {facetsGroups}
-    </ul>
+    <>
+      <ul className="facets">
+        {facetsGroups}
+      </ul>
+    </>
   )
 }
 
@@ -135,7 +129,8 @@ Facets.propTypes = {
   facets: PropTypes.shape({}).isRequired,
   featureFacets: PropTypes.shape({}).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
-  onChangeFeatureFacet: PropTypes.func.isRequired
+  onChangeFeatureFacet: PropTypes.func.isRequired,
+  onTriggerViewAllFacets: PropTypes.func.isRequired
 }
 
 export default Facets
