@@ -81,7 +81,7 @@ class DataAccessController < ApplicationController
 
         Rails.logger.info "Queueing up a new job to retrieve order status information for Retrieval ##{id.to_i}"
 
-        OrderStatusJob.set(queue: @retrieval.determine_queue).perform_now(id.to_i, token, cmr_env)
+        OrderStatusJob.set(queue: @retrieval.determine_queue).perform_later(id.to_i, token, cmr_env)
       end
     end
 
