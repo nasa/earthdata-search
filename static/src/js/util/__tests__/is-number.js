@@ -1,15 +1,15 @@
-import { containsNumber } from '../contains-number'
+import { isNumber } from '../is-number'
 
-describe('containsNumber', () => {
+describe('isNumber', () => {
   describe('when provided a non number string', () => {
     test('returns false', () => {
-      expect(containsNumber('test')).toEqual(false)
+      expect(isNumber('test')).toEqual(false)
     })
   })
 
   describe('when provided a number string', () => {
     test('returns true', () => {
-      expect(containsNumber('100')).toEqual(true)
+      expect(isNumber('100')).toEqual(true)
     })
   })
 })

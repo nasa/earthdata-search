@@ -1,6 +1,6 @@
 import qs from 'qs'
 import { camelCase } from 'lodash'
-import { containsNumber } from './contains-number'
+import { isNumber } from './is-number'
 import { queryParamsFromUrlString } from './url/url'
 import { alphabet, createEmptyAlphabeticListObj } from './alphabetic-list'
 
@@ -36,7 +36,7 @@ export const getStartingLetters = (facets) => {
   const firstLetters = []
   facets.forEach((facet) => {
     let firstLetter = facet.title[0].toUpperCase()
-    if (containsNumber(firstLetter)) firstLetter = '#'
+    if (isNumber(firstLetter)) firstLetter = '#'
     if (!firstLetters.includes(firstLetter)) firstLetters.push(firstLetter)
   })
   return firstLetters
@@ -188,17 +188,17 @@ export const buildOrganizedFacets = (facets, options) => {
   // Sort remaining 'non-lifted' facets into their respective arrays based on the first letter
   facetsToSort.forEach((facet) => {
     const firstLetter = facet.title[0].toUpperCase()
-    const firstcontainsNumber = containsNumber(firstLetter)
+    const firstisNumber = isNumber(firstLetter)
 
     // If the first letter is not the current letter, set the current letter to the first letter of
     // the selected letters facet. This relies on CMR returning the facets in alpabetical order
     if (firstLetter !== current) {
-      current = firstcontainsNumber ? '#' : alphabet[alphabet.indexOf(facet.title[0])]
+      current = firstisNumber ? '#' : alphabet[alphabet.indexOf(facet.title[0])]
     }
 
     // If the first letter matches the current letter, push it onto the list. We also need to account
     // for the first letter being a number, in which case it's added to the '#' list
-    if (firstLetter === current || (current === '#' && firstcontainsNumber)) {
+    if (firstLetter === current || (current === '#' && firstisNumber)) {
       alphabetizedList[current].push(facet)
     }
   })
