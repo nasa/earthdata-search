@@ -41,19 +41,69 @@ Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) fo
 
     npm install -g serverless
 
-
+##### PostgreSQL
+Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already have it installed, [download](https://www.postgresql.org/download/) and install it to your development environment.
 
 ### Initial Setup
+
+##### Package Installation
 
 Once npm is installed locally, you need to download the dependencies by executing the command below in the project root directory:
 
     npm install
+
+##### Database Migration
+
+Ensure that you have a database created:
+
+	createdb edsc_serverless_dev
+
+Database credentials and other information are kept in `.env.development`, you'll need to update that file with your local database credentials to ensure migrations and general connectivity works. 
+
+> NOTE: Depending on your setup, you may not have a uname/pw configured locally, if this is the case just leave those value blank in the config
+
+    
+Our database migrations run within Lambda due to the fact that in non-develoment environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
+
+	serverless invoke local --function migrateDatabase
+
 
 ### Building the Application
 
 The production build of the application will be output in the `/static/dist/` directory:
 
     npm run build
+    
+    
+### Run the Application Locally
+
+The local development environment for the static assets can be started by executing the command below in the project root directory:
+
+    npm run start
+
+This will run the React application at [http://localhost:8080](http://localhost:8080) -- please see `Serverless Framework` below for enabling the 'server' side functionality.
+    
+
+### Serverless Framework
+
+The [serverless framework](https://serverless.com/framework/docs/providers/aws/) offers many plugins which allow for local development utilizing many of the services AWS offers. For the most part we only need API Gateway and Lambda for this application but there are plugins for many more services (a list of known exceptions will be maintained below).
+
+##### Exceptions
+- SQS
+
+	While there is an sqs-offline plugin for servless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
+	- Generating Colormaps
+
+#### Running API Gateway and Lambda Locally
+
+Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
+
+	serverless offline
+
+This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
+
+Additionally, this ties in with the `serverless webpack` plugin which will ensure that your lambdas are re-built when changes are detected.
+
 
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
@@ -61,26 +111,14 @@ Once the project is built, you must ensure that the automated tests pass:
 
     npm run test
 
-All tests should pass in less than a few minutes.
+### Deployment
 
-### Run the Application Locally
+When the time comes to deploy the application, first ensure that you have the required ENV vars set:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
 
-The local development environment for the static assets can be started by executing the command below in the project root directory:
+To deploy the full application use the following:
 
-    npm run start
-
-This will run the application at [http://localhost:8080](http://localhost:8080)
-
-### Run API Gateway Locally
-
-Certain endpoints require the use of AWS API Gateway and Lambda, to avoid using live environments you should run Serverless Offline to mimic that functionality.
-
-This offline functionality relies on built assets, in order to build the assets for serverless run:
-
-    npm run build-serverless
-
-Once the build successfully completes, start serverless offline:
-
-    serverless offline
-
-This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
+	NODE_ENV=production serverless deploy
+    
+We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. 
