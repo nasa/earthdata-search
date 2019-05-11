@@ -1,53 +1,112 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
-service: earthdata-search # NOTE: update this with your service name
-
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
+service: earthdata-search
 
 provider:
   name: aws
   runtime: nodejs8.10
   versionFunctions: false
-  # you can overwrite defaults here
-  #  stage: dev
-  #  region: us-east-1
-  environment:
-    cmr_host: https://cmr.earthdata.nasa.gov
-    nlp_host: https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov
+  stage: ${opt:stage, 'lab'}
 
 plugins:
-  # - serverless-webpack
+  - serverless-dotenv-plugin
   - serverless-finch
   - serverless-offline
+  - serverless-webpack
 
 #
 # Lambda Functions
 #
 functions:
+  migrateDatabase:
+    handler: serverless/src/migrateDatabase.default
+    timeout: 300
+    webpack:
+      includeMigrations: true
+    role: ScheduledLambdaRole
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds:
+        - subnet-086c53aec52be1e70 # 1a
+        - subnet-09d8f21a539138693 # 1b
 
   # 
-  # Scheduled Tasks
+  # SQS Lambdas
   # 
+  processColorMap:
+    handler: serverless/src/processColorMap.default
+    timeout: 300
+    reservedConcurrency: 10
+    role: ScheduledLambdaRole
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds:
+        - subnet-086c53aec52be1e70 # 1a
+        - subnet-09d8f21a539138693 # 1b
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - ColorMapsProcessing
+              - Arn
 
+  # 
+  # Scheduled Lambdas
+  # 
+  generateColorMaps:
+    handler: serverless/src/generateColorMaps.default
+    timeout: 300
+    role: ScheduledLambdaRole
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds:
+        - subnet-086c53aec52be1e70 # 1a
+        - subnet-09d8f21a539138693 # 1b
+    events:
+      - schedule:
+          rate: cron(0 5 * * ? *)
+          enabled: true
+          input:
+            projection: 'epsg4326'
+      - schedule:
+          rate: cron(5 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg3857'
+      - schedule:
+          rate: cron(10 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg3413'
+      - schedule:
+          rate: cron(15 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg3031'
 
   # 
-  # Endpoints
+  # API Gateway Endpoints
   # 
+  getColorMap:
+    handler: serverless/src/getColorMap.default
+    timeout: 300
+    role: ScheduledLambdaRole
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds:
+        - subnet-086c53aec52be1e70 # 1a
+        - subnet-09d8f21a539138693 # 1b
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: colormaps/{product}
+
   cwicGranuleSearch:
-    handler: serverless/dist/cwic.default
+    handler: serverless/src/cwicGranuleSearch.default
     events:
       - http:
           method: post
@@ -56,7 +115,8 @@ functions:
           path: cwic/granules
 
   nlpSearch:
-    handler: serverless/dist/nlp.default
+    handler: serverless/src/nlpSearch.default
+    memorySize: 128
     events:
       - http:
           method: post
@@ -64,8 +124,12 @@ functions:
             origin : '*'
           path: nlp
 
+  # 
+  # EDL Authenticated API Gateway Endpoints
+  #
+
   # retrieveConcept:
-  #   handler: serverless/dist/cmr.retrieveConcept
+  #   handler: serverless/src/cmr.retrieveConcept
   #   events:
   #     - http:
   #         method: post
@@ -78,7 +142,7 @@ functions:
   #               id: true
 
   # collectionSearch:
-  #   handler: serverless/dist/cmr.collectionSearch
+  #   handler: serverless/src/cmr.collectionSearch
   #   events:
   #     - http:
   #         method: post
@@ -87,7 +151,7 @@ functions:
   #         path: collections
 
   # granuleSearch:
-  #   handler: serverless/dist/cmr.granuleSearch
+  #   handler: serverless/src/cmr.granuleSearch
   #   events:
   #     - http:
   #         method: post
@@ -100,7 +164,7 @@ functions:
   #               id: true
 
   # timelineSearch:
-  #   handler: serverless/dist/cmr.timelineSearch
+  #   handler: serverless/src/cmr.timelineSearch
   #   events:
   #     - http:
   #         method: post
@@ -109,40 +173,169 @@ functions:
   #         path: granules/timeline
 
 #
-# Non code related resources
+# Additional AWS Resources
 #
 resources:
   Resources:
-    StaticSite:
-      Type: AWS::S3::Bucket
-      Properties:
-        AccessControl: PublicRead
-        BucketName: ${self:custom.siteName}
-        WebsiteConfiguration:
-          IndexDocument: index.html
+    # StaticSite:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     AccessControl: PublicRead
+    #     BucketName: ${self:custom.siteName}
+    #     WebsiteConfiguration:
+    #       IndexDocument: index.html
 
-    StaticSiteS3BucketPolicy:
-      Type: AWS::S3::BucketPolicy
+    # StaticSiteS3BucketPolicy:
+    #   Type: AWS::S3::BucketPolicy
+    #   Properties:
+    #     Bucket:
+    #       Ref: StaticSite
+    #     PolicyDocument:
+    #       Statement:
+    #         - Sid: PublicReadGetObject
+    
+    #           Effect: Allow
+    #           Principal: "*"
+    #           Action:
+    #             - s3:GetObject
+    #           Resource:
+    #             Fn::Join: [
+    #               "", [
+    #                 "arn:aws:s3:::",
+    #                 {
+    #                   "Ref": "StaticSite"
+    #                 },
+    #                 "/*"
+    #               ]
+    #             ]
+
+    # SQS Queue to process Color Map entries
+    ColorMapsProcessing:
+      Type: 'AWS::SQS::Queue'
       Properties:
-        Bucket:
-          Ref: StaticSite
-        PolicyDocument:
+        QueueName: 'ColorMapsProcessing'
+        MessageRetentionPeriod: 345600 # Default value, leaving for visibility
+        VisibilityTimeout: 300
+
+    LambdaSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        GroupDescription: 'Security Group for Lambda functions'
+        SecurityGroupEgress:
+          - CidrIp: '0.0.0.0/0'
+            IpProtocol: -1
+            FromPort: 0
+            ToPort: 65535
+        VpcId: ${self:custom.awsResources.vpc}
+
+    Database:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        DBName: earthdata_search_lab
+        AllocatedStorage: '20'
+        DBInstanceClass: db.t2.micro
+        Engine: postgres
+        EngineVersion: '10.6'
+        MasterUsername: ${ssm:rdsMasterUsername}
+        MasterUserPassword: ${ssm:rdsMasterPassword~true}
+        StorageType: gp2
+        DBSubnetGroupName:
+          Ref: DBSubnetGroup
+        VPCSecurityGroups:
+          - Ref: DatabaseVpcSecurityGroup
+
+    DBSubnetGroup:
+      Type: 'AWS::RDS::DBSubnetGroup'
+      Properties: 
+        DBSubnetGroupName: PrivateDbSubnet
+        DBSubnetGroupDescription: PrivateDbSubnet
+        SubnetIds:
+          - subnet-086c53aec52be1e70 # 1a
+          - subnet-09d8f21a539138693 # 1b
+
+    DatabaseVpcSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        GroupName: DBSecurityGroup
+        GroupDescription: Allow local access
+        SecurityGroupIngress:
+          - SourceSecurityGroupId: 
+              Ref: LambdaSecurityGroup
+            IpProtocol: tcp
+            FromPort: 5432
+            ToPort: 5432
+        VpcId: ${self:custom.awsResources.vpc}
+
+    # Merge the NGAP PermissionsBoundary into the
+    # default (Serverless Defined) role for executing Lambdas
+    IamRoleLambdaExecution:
+      Properties:
+        PermissionsBoundary:
+          Fn::Join: [
+            "", [
+              "arn:aws:iam::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":policy/NGAPShRoleBoundary"
+            ]
+          ]
+          
+    ScheduledLambdaRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        RoleName: ScheduledLambdaRole
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+        PermissionsBoundary:
+          Fn::Join: [
+            "", [
+              "arn:aws:iam::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":policy/NGAPShRoleBoundary"
+            ]
+          ]
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
           Statement:
-            - Sid: PublicReadGetObject
-              Effect: Allow
-              Principal: "*"
-              Action:
-              - s3:GetObject
-              Resource:
-                Fn::Join: [
-                  "", [
-                    "arn:aws:s3:::",
-                    {
-                      "Ref": "StaticSite"
-                    },
-                    "/*"
-                  ]
-                ]
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: RDSIAMAuthentication
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - rds-db:connect
+                  Resource:
+                    Fn::Join: [
+                      "", [
+                          "arn:aws:rds-db:",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          ":",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          ":dbuser",
+                          "/lambda"
+                      ]
+                    ]
+          - PolicyName: EDSCLambdaBase
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - sqs:*
+                  Resource: "*"
 
     GatewayResponseDefault4XX:
       Type: AWS::ApiGateway::GatewayResponse
@@ -164,10 +357,29 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
 
+# Package each lambda into individual zip files. This reduces the size of
+# each lambda of but increases the complexity of the compilation step slightly
+package:
+  individually: true
+
 custom:
-  siteName: earthdata-search
+  siteName: earthdata-search-lab
+
+  awsResources:
+    vpc: 'vpc-0ae48cd75a6141657'
+
+  # Finch (S3 sync plugin)
   client:
     bucketName: ${self:custom.siteName}
     distributionFolder: static/dist
+
+  # Default is 3000 so to avoid conflicts with rails applications we'll define a new port
   serverless-offline:
     port: 3001
+
+  # Serverless Webpack configurations
+  webpack:
+    webpackConfig: 'serverless.webpack.config.js'
+    includeModules: true
+    packager: 'npm'
+    excludeFiles: src/**/*.test.js
