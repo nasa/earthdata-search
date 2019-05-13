@@ -6,7 +6,6 @@ import {
 } from '../../constants/actionTypes'
 
 const initialState = {
-  collectionId: '',
   intervals: [],
   query: {},
   state: {}
@@ -34,7 +33,6 @@ describe('UPDATE_TIMELINE_INTERVALS', () => {
       type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: [{
-          'concept-id': 'collectionId',
           intervals
         }]
       }
@@ -42,7 +40,6 @@ describe('UPDATE_TIMELINE_INTERVALS', () => {
 
     const expectedState = {
       ...initialState,
-      collectionId: 'collectionId',
       intervals
     }
 

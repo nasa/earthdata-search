@@ -14,6 +14,8 @@ function setup(type) {
 
   if (type === 'loading') {
     props = {
+      collectionId: 'collectionId',
+      excludedGranuleIds: [],
       granules: {
         hits: null,
         loadTime: null,
@@ -23,12 +25,15 @@ function setup(type) {
         byId: {}
       },
       pageNum: 1,
-      waypointEnter: jest.fn()
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn()
     }
   }
 
   if (type === 'loadingMore') {
     props = {
+      collectionId: 'collectionId',
+      excludedGranuleIds: [],
       granules: {
         hits: null,
         loadTime: null,
@@ -38,12 +43,15 @@ function setup(type) {
         byId: {}
       },
       pageNum: 2,
-      waypointEnter: jest.fn()
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn()
     }
   }
 
   if (type === 'loaded') {
     props = {
+      collectionId: 'collectionId',
+      excludedGranuleIds: [],
       granules: {
         hits: 23,
         loadTime: 1524,
@@ -63,7 +71,8 @@ function setup(type) {
         }
       },
       pageNum: 1,
-      waypointEnter: jest.fn()
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn()
     }
   }
 

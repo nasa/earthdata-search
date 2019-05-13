@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  facets: state.entities.facets,
+  facets: state.searchResults.facets,
   featureFacets: state.facetsParams.feature
 })
 

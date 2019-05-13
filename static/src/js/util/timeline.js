@@ -22,8 +22,7 @@ export const prepareTimelineParams = (state) => {
   } = state
 
   // If we don't have a focusedCollection, bail out!
-  const { collectionId } = focusedCollection
-  if (!collectionId) {
+  if (!focusedCollection) {
     return null
   }
 
@@ -42,9 +41,13 @@ export const prepareTimelineParams = (state) => {
     startDate
   } = timelineQuery
 
+  if (!startDate) {
+    return null
+  }
+
   return {
     boundingBox,
-    collectionId,
+    focusedCollection,
     endDate,
     interval,
     point,

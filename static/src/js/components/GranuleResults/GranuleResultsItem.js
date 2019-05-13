@@ -10,7 +10,18 @@ import './GranuleResultsItem.scss'
  * @param {object} props - The props passed into the component.
  * @param {object} props.granule - Granule passed from redux store.
  */
-const GranuleResultsItem = ({ granule, isLast, waypointEnter }) => {
+const GranuleResultsItem = ({
+  collectionId,
+  granule,
+  isLast,
+  waypointEnter,
+  onExcludeGranule
+}) => {
+  const handleRemoveClick = () => {
+    const { id } = granule
+    onExcludeGranule({ collectionId, granuleId: id })
+  }
+
   const title = granule.producer_granule_id ? granule.producer_granule_id : granule.title
   const temporal = granule.formatted_temporal
   const timeStart = temporal[0]
@@ -59,6 +70,7 @@ const GranuleResultsItem = ({ granule, isLast, waypointEnter }) => {
                 className="button granule-results-item__button"
                 type="button"
                 title="Remove granule"
+                onClick={handleRemoveClick}
               >
                 <i className="fa fa-close" />
               </button>
@@ -72,9 +84,11 @@ const GranuleResultsItem = ({ granule, isLast, waypointEnter }) => {
 }
 
 GranuleResultsItem.propTypes = {
+  collectionId: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
   isLast: PropTypes.bool.isRequired,
-  waypointEnter: PropTypes.func.isRequired
+  waypointEnter: PropTypes.func.isRequired,
+  onExcludeGranule: PropTypes.func.isRequired
 }
 
 export default GranuleResultsItem

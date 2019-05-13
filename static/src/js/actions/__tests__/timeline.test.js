@@ -121,7 +121,7 @@ describe('getTimeline', () => {
 
   test('returns no results if there is no focused collection', () => {
     const store = mockStore({
-      focusedCollection: {},
+      focusedCollection: '',
       timeline: {
         query: {},
         state: {}

@@ -5,7 +5,8 @@ import {
   LOADED_GRANULES,
   LOADING_GRANULES,
   STARTED_GRANULES_TIMER,
-  UPDATE_GRANULES
+  UPDATE_GRANULES,
+  ADD_GRANULES_FROM_COLLECTIONS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -29,7 +30,6 @@ describe('INITIAL_STATE', () => {
 
 describe('UPDATE_GRANULES', () => {
   test('returns the correct state', () => {
-
     const action = {
       type: UPDATE_GRANULES,
       payload: {
@@ -175,5 +175,30 @@ describe('FINISHED_GRANULES_TIMER', () => {
     }
 
     expect(granulesReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
+  })
+})
+
+describe('ADD_GRANULES_FROM_COLLECTIONS', () => {
+  test('returns the correct state', () => {
+    const payload = {
+      allIds: ['granule1'],
+      byId: {
+        granule1: { mock: 'data' }
+      },
+      isCwic: false,
+      hits: 1
+    }
+    const action = {
+      type: ADD_GRANULES_FROM_COLLECTIONS,
+      payload
+    }
+
+    const expectedState = {
+      ...initialState,
+      ...payload,
+      isLoaded: true
+    }
+
+    expect(granulesReducer(undefined, action)).toEqual(expectedState)
   })
 })

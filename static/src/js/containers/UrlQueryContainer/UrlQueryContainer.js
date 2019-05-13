@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   featureFacets: state.facetsParams.feature,
-  focusedCollection: state.focusedCollection.collectionId,
+  focusedCollection: state.focusedCollection,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
   map: state.map,

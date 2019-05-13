@@ -5,7 +5,6 @@ import {
 } from '../constants/actionTypes'
 
 const initialState = {
-  collectionId: '',
   intervals: [],
   query: {},
   state: {}
@@ -14,16 +13,13 @@ const initialState = {
 const timelineReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_TIMELINE_INTERVALS: {
-      let collectionId
       let intervals
       action.payload.results.forEach((result) => {
         ({ intervals } = result)
-        collectionId = result['concept-id']
       })
 
       return {
         ...state,
-        collectionId,
         intervals
       }
     }

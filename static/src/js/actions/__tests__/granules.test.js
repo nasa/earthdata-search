@@ -4,9 +4,10 @@ import thunk from 'redux-thunk'
 
 import {
   updateGranules,
-  getGranules
+  getGranules,
+  excludeGranule
 } from '../granules'
-import { UPDATE_GRANULES } from '../../constants/actionTypes'
+import { UPDATE_GRANULES, EXCLUDE_GRANULE_ID } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -52,9 +53,15 @@ describe('getGranules', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      focusedCollection: {
-        collectionId: 'collectionId'
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            mock: 'data'
+          }
+        }
       },
+      focusedCollection: 'collectionId',
       query: {
         collection: {
           temporal: {},
@@ -125,9 +132,15 @@ describe('getGranules', () => {
     })
 
     const store = mockStore({
-      focusedCollection: {
-        collectionId: 'collectionId'
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            mock: 'data'
+          }
+        }
       },
+      focusedCollection: 'collectionId',
       query: {
         collection: {
           temporal: {},
@@ -142,5 +155,22 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
+  })
+})
+
+describe('excludeGranule', () => {
+  test('should create an action to update the collection', () => {
+    const payload = {
+      collectionId: 'collectionId',
+      granuleId: 'granuleId'
+    }
+    const expectedAction = {
+      type: EXCLUDE_GRANULE_ID,
+      payload
+    }
+    const store = mockStore()
+    store.dispatch(excludeGranule(payload))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual(expectedAction)
   })
 })

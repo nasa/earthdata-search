@@ -10,11 +10,10 @@ import {
   onFacetsErrored,
   onFacetsLoaded,
   onFacetsLoading,
-  updateCollections,
+  updateCollectionsResults,
   updateFacets
 } from '../collections'
 import {
-  ADD_MORE_COLLECTIONS,
   ERRORED_COLLECTIONS,
   ERRORED_FACETS,
   FINISHED_COLLECTIONS_TIMER,
@@ -23,7 +22,7 @@ import {
   LOADING_COLLECTIONS,
   LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTIONS,
+  UPDATE_COLLECTIONS_RESULTS,
   UPDATE_FACETS
 } from '../../constants/actionTypes'
 
@@ -33,14 +32,14 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('updateCollections', () => {
+describe('updateCollectionsResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
     const expectedAction = {
-      type: UPDATE_COLLECTIONS,
+      type: UPDATE_COLLECTIONS_RESULTS,
       payload
     }
-    expect(updateCollections(payload)).toEqual(expectedAction)
+    expect(updateCollectionsResults(payload)).toEqual(expectedAction)
   })
 })
 
@@ -145,7 +144,7 @@ describe('getCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      entities: {
+      searchResults: {
         collections: {},
         facets: {},
         granules: {},
@@ -153,6 +152,7 @@ describe('getCollections', () => {
       },
       query: {
         collection: {
+          pageNum: 1,
           keyword: 'search keyword'
         }
       },
@@ -169,20 +169,26 @@ describe('getCollections', () => {
     // call the dispatch
     await store.dispatch(getCollections()).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: LOADING_COLLECTIONS })
-      expect(storeActions[1]).toEqual({ type: LOADING_FACETS })
-      expect(storeActions[2]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
-      expect(storeActions[3]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_COLLECTIONS_RESULTS,
+        payload: {
+          results: []
+        }
+      })
+      expect(storeActions[1]).toEqual({ type: LOADING_COLLECTIONS })
+      expect(storeActions[2]).toEqual({ type: LOADING_FACETS })
+      expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
+      expect(storeActions[4]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
+      expect(storeActions[5]).toEqual({
         type: LOADED_COLLECTIONS,
         payload: { loaded: true }
       })
-      expect(storeActions[5]).toEqual({
+      expect(storeActions[6]).toEqual({
         type: LOADED_FACETS,
         payload: { loaded: true }
       })
-      expect(storeActions[6]).toEqual({
-        type: ADD_MORE_COLLECTIONS,
+      expect(storeActions[7]).toEqual({
+        type: UPDATE_COLLECTIONS_RESULTS,
         payload: {
           keyword: 'search keyword',
           results: [{
@@ -195,14 +201,14 @@ describe('getCollections', () => {
     })
   })
 
-  test('does not call updateCollections on error', async () => {
+  test('does not call updateCollectionsResults on error', async () => {
     moxios.stubRequest(/collections.*/, {
       status: 500,
       response: {}
     })
 
     const store = mockStore({
-      entities: {
+      searchResults: {
         collections: {},
         facets: {},
         granules: {},

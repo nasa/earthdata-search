@@ -8,8 +8,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollection: {
-      metadata: {
+    focusedCollectionMetadata: {
+      collectionId: {
         title: 'Title'
       }
     },

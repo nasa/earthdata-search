@@ -8,7 +8,11 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollection: {},
+    collections: {
+      allIds: [],
+      byId: {}
+    },
+    focusedCollection: '',
     temporalSearch: {},
     timeline: { query: {}, state: {} },
     onChangeQuery: jest.fn(),
@@ -29,6 +33,11 @@ describe('TimelineContainer component', () => {
     const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
-    expect(enzymeWrapper.find(Timeline).props()).toEqual(props)
+    expect(enzymeWrapper.find(Timeline).props()).toEqual({
+      ...props,
+      collections: undefined,
+      focusedCollection: undefined,
+      focusedCollectionMetadata: {}
+    })
   })
 })

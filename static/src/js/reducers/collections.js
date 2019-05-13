@@ -1,78 +1,46 @@
 import {
-  ADD_MORE_COLLECTIONS,
-  UPDATE_COLLECTIONS,
-  LOADING_COLLECTIONS,
-  LOADED_COLLECTIONS,
-  STARTED_COLLECTIONS_TIMER,
-  FINISHED_COLLECTIONS_TIMER
+  ADD_COLLECTION_GRANULES,
+  EXCLUDE_GRANULE_ID,
+  UPDATE_COLLECTIONS
 } from '../constants/actionTypes'
 
 const initialState = {
-  keyword: false,
-  hits: null,
-  byId: {},
   allIds: [],
-  isLoading: false,
-  isLoaded: false,
-  timerStart: null,
-  loadTime: 0
-}
-
-const processResults = (results) => {
-  const byId = {}
-  const allIds = []
-  results.forEach((result) => {
-    const { id } = result
-    byId[id] = result
-    allIds.push(id)
-  })
-
-  return { byId, allIds }
+  byId: {},
+  projectIds: []
 }
 
 const collectionsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_COLLECTIONS: {
-      return {
-        ...state,
-        isLoading: true,
-        isLoaded: false
-      }
-    }
-    case LOADED_COLLECTIONS: {
-      return {
-        ...state,
-        isLoading: false,
-        isLoaded: action.payload.loaded
-      }
-    }
-    case STARTED_COLLECTIONS_TIMER: {
-      return {
-        ...state,
-        timerStart: Date.now()
-      }
-    }
-    case FINISHED_COLLECTIONS_TIMER: {
-      const { timerStart } = state
-      return {
-        ...state,
-        timerStart: null,
-        loadTime: Date.now() - timerStart
-      }
-    }
     case UPDATE_COLLECTIONS: {
-      const { byId, allIds } = processResults(action.payload.results)
-
-      return {
-        ...state,
-        keyword: action.payload.keyword,
-        hits: action.payload.hits,
-        byId,
-        allIds
+      const [collectionId] = Object.keys(action.payload)
+      const allIds = [collectionId]
+      const byId = {
+        [collectionId]: {
+          excludedGranuleIds: [],
+          granules: {},
+          metadata: action.payload[collectionId]
+        }
       }
-    }
-    case ADD_MORE_COLLECTIONS: {
-      const { byId, allIds } = processResults(action.payload.results)
+
+      if (state.allIds.indexOf(collectionId) !== -1) {
+        return {
+          ...state,
+          allIds: [
+            ...state.allIds
+          ],
+          byId: {
+            ...state.byId,
+            [collectionId]: {
+              excludedGranuleIds: [
+                ...state.byId[collectionId].excludedGranuleIds
+              ],
+              granules: {},
+              metadata: action.payload[collectionId]
+            }
+          }
+        }
+      }
 
       return {
         ...state,
@@ -83,6 +51,48 @@ const collectionsReducer = (state = initialState, action) => {
         byId: {
           ...state.byId,
           ...byId
+        }
+      }
+    }
+    case EXCLUDE_GRANULE_ID: {
+      const { collectionId, granuleId } = action.payload
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            excludedGranuleIds: [
+              ...state.byId[collectionId].excludedGranuleIds,
+              granuleId
+            ]
+          }
+        }
+      }
+    }
+    case ADD_COLLECTION_GRANULES: {
+      const { collectionId, granules } = action.payload
+      const {
+        allIds,
+        byId,
+        isCwic,
+        hits
+      } = granules
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              allIds,
+              byId,
+              isCwic,
+              hits
+            }
+          }
         }
       }
     }

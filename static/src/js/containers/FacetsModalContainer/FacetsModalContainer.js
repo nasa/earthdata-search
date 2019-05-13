@@ -7,8 +7,8 @@ import actions from '../../actions'
 import FacetsModal from '../../components/Facets/FacetsModal'
 
 const mapStateToProps = state => ({
-  collectionHits: state.entities.viewAllFacets.hits,
-  viewAllFacets: state.entities.viewAllFacets,
+  collectionHits: state.searchResults.viewAllFacets.hits,
+  viewAllFacets: state.searchResults.viewAllFacets,
   isOpen: state.ui.facetsModal.isOpen
 })
 

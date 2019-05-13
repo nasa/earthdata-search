@@ -26,14 +26,16 @@ class Timeline extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      focusedCollection: oldFocusedCollection,
+      // focusedCollection: oldFocusedCollection,
+      focusedCollectionMetadata: oldFocusedCollectionMetadata,
       temporalSearch: oldTemporalSearch,
       timeline: oldTimeline,
       onChangeTimelineQuery
     } = this.props
 
     const {
-      focusedCollection: nextFocusedCollection,
+      // focusedCollection: nextFocusedCollection,
+      focusedCollectionMetadata: nextFocusedCollectionMetadata,
       temporalSearch: nextTemporalSearch,
       timeline: nextTimeline
     } = nextProps
@@ -65,33 +67,39 @@ class Timeline extends Component {
 
 
     // if the focusedCollection has changed, change the timeline query (will fetch timeline granules)
-    if (oldFocusedCollection.collectionId !== nextFocusedCollection.collectionId) {
-      const { metadata = {} } = nextFocusedCollection
-      const {
-        id,
-        time_start: timeStart,
-        time_end: timeEnd = new Date().toISOString()
-      } = metadata
 
-      const newInterval = nextTimeline.query.interval || defaultInterval
+    const [oldCollectionId = ''] = Object.keys(oldFocusedCollectionMetadata)
+    const [nextCollectionId = ''] = Object.keys(nextFocusedCollectionMetadata)
+    const metadata = nextFocusedCollectionMetadata[nextCollectionId]
+    if (oldCollectionId !== nextCollectionId) {
+      if (!metadata) {
+        onChangeTimelineQuery({})
+      } else {
+        const {
+          id,
+          time_start: timeStart,
+          time_end: timeEnd = new Date().toISOString()
+        } = metadata
 
-      if (id) {
-        query = {
-          endDate: timeEnd,
-          interval: newInterval,
-          startDate: timeStart
+        const newInterval = nextTimeline.query.interval || defaultInterval
+
+        if (id) {
+          query = {
+            endDate: timeEnd,
+            interval: newInterval,
+            startDate: timeStart
+          }
         }
-      }
 
-      onChangeTimelineQuery(query)
+        onChangeTimelineQuery(query)
+      }
     }
 
 
     // if the timeline granules have changed
     if (oldTimeline.intervals !== nextTimeline.intervals) {
-      if (nextFocusedCollection !== {} && nextFocusedCollection.metadata) {
-        const { metadata: collection } = nextFocusedCollection
-        this.setTimelineData(collection, nextTimeline)
+      if (metadata) {
+        this.setTimelineData(metadata, nextTimeline)
       } else {
         this.clearTimelineData()
       }
@@ -243,10 +251,11 @@ class Timeline extends Component {
   }
 
   render() {
-    const { focusedCollection = {} } = this.props
-    const { metadata = {} } = focusedCollection
+    const { focusedCollectionMetadata = {} } = this.props
+    const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
+    const metadata = focusedCollectionMetadata[collectionId]
     // Don't display the timeline if there isn't a focusedCollection with metadata
-    const display = Object.keys(metadata).length === 0 ? 'none' : 'block'
+    const display = collectionId === '' || Object.keys(metadata).length === 0 ? 'none' : 'block'
 
     return (
       <section className="timeline" style={{ display }}>
@@ -256,8 +265,12 @@ class Timeline extends Component {
   }
 }
 
+Timeline.defaultProps = {
+  focusedCollectionMetadata: {}
+}
+
 Timeline.propTypes = {
-  focusedCollection: PropTypes.shape({}).isRequired,
+  focusedCollectionMetadata: PropTypes.shape({}),
   temporalSearch: PropTypes.shape({}).isRequired,
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,

@@ -10,7 +10,7 @@ export const prepareCollectionParams = (state) => {
   const {
     facetsParams,
     query,
-    entities
+    searchResults
   } = state
 
   const { collection: collectionQuery } = query
@@ -28,7 +28,7 @@ export const prepareCollectionParams = (state) => {
     polygon
   } = spatial
 
-  const { selectedCategory: viewAllFacetsCategory } = entities.viewAllFacets
+  const { selectedCategory: viewAllFacetsCategory } = searchResults.viewAllFacets
 
   const temporalString = encodeTemporal(temporal)
 

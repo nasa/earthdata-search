@@ -7,24 +7,22 @@ import { updateFocusedCollection } from '../focusedCollection'
 import {
   UPDATE_FOCUSED_COLLECTION,
   UPDATE_GRANULES,
-  UPDATE_GRANULE_QUERY
+  UPDATE_GRANULE_QUERY,
+  UPDATE_COLLECTIONS,
+  ADD_COLLECTION_GRANULES,
+  ADD_GRANULES_FROM_COLLECTIONS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+  jest.restoreAllMocks()
 })
 
 describe('updateFocusedCollection', () => {
   test('should create an action to update the focused collection', () => {
-    const payload = {
-      collectionId: 'newCollectionId',
-      metadata: {
-        id: 'newCollectionId',
-        metadata: 'here'
-      }
-    }
+    const payload = 'newCollectionId'
     const expectedAction = {
       type: UPDATE_FOCUSED_COLLECTION,
       payload
@@ -34,6 +32,145 @@ describe('updateFocusedCollection', () => {
 })
 
 describe('changeFocusedCollection', () => {
+  test('with a collectionId it should update the focusedCollection and call getFocusedCollection', () => {
+    const collectionId = 'collectionId'
+
+    // mock getFocusedCollection
+    const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
+    getFocusedCollectionMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      collections: {
+        allIds: [],
+        byId: {}
+      },
+      focusedCollection: '',
+      query: {
+        collection: {
+          keyword: 'old stuff'
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeFocusedCollection(collectionId))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_FOCUSED_COLLECTION,
+      payload: collectionId
+    })
+
+    // was getCollections called
+    expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('with a previously visited collectionId it should update the focusedCollection and copy granules', () => {
+    const collectionId = 'collectionId'
+
+    // mock getFocusedCollection
+    const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
+    getFocusedCollectionMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const granules = {
+      allIds: ['granule1'],
+      byId: {
+        granule1: {
+          mock: 'data'
+        }
+      }
+    }
+    const store = mockStore({
+      collections: {
+        allIds: [collectionId],
+        byId: {
+          [collectionId]: {
+            granules
+          }
+        }
+      },
+      focusedCollection: '',
+      query: {
+        collection: {
+          keyword: 'old stuff'
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeFocusedCollection(collectionId))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: ADD_GRANULES_FROM_COLLECTIONS,
+      payload: {
+        ...granules
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_FOCUSED_COLLECTION,
+      payload: collectionId
+    })
+
+    // was getCollections called
+    expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('without a collectionId it should clear the focusedCollection', () => {
+    const collectionId = ''
+
+    // mock getFocusedCollection
+    const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
+    getFocusedCollectionMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const granules = {
+      allIds: ['granule1'],
+      byId: {
+        granule1: {
+          mock: 'data'
+        }
+      }
+    }
+    const store = mockStore({
+      collections: {
+        allIds: [],
+        byId: {}
+      },
+      focusedCollection: '',
+      query: {
+        collection: {
+          keyword: 'old stuff'
+        }
+      },
+      searchResults: {
+        granules
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeFocusedCollection(collectionId))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: ADD_COLLECTION_GRANULES,
+      payload: {
+        collectionId: '',
+        granules
+      }
+    })
+
+    // was getCollections called
+    expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('getFocusedCollection stuff', () => {
   beforeEach(() => {
     moxios.install()
 
@@ -44,7 +181,7 @@ describe('changeFocusedCollection', () => {
     moxios.uninstall()
   })
 
-  test('should update the focusedCollection and call getGranules', async () => {
+  test('should update the collections and call getGranules', async () => {
     moxios.stubRequest(/collections.*/, {
       status: 200,
       response: {
@@ -61,43 +198,112 @@ describe('changeFocusedCollection', () => {
       }
     })
 
-    const newCollectionId = 'newCollectionId'
+    const collectionId = 'collectionId'
 
     // mock getGranules
     const getGranulesMock = jest.spyOn(actions, 'getGranules')
     getGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
-    const store = mockStore()
+    const store = mockStore({
+      focusedCollection: collectionId,
+      searchResults: {
+        granules: {}
+      }
+    })
 
     // call the dispatch
-    await store.dispatch(actions.changeFocusedCollection(newCollectionId))
-
-    // Is updateCollectionQuery called with the right payload
-    const storeActions = store.getActions()
-    const payload = {
-      collectionId: 'newCollectionId',
-      metadata: {
-        mockCollectionData: 'goes here'
-      }
-    }
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_GRANULE_QUERY,
-      payload: { pageNum: 1 }
-    })
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_FOCUSED_COLLECTION,
-      payload
+    await store.dispatch(actions.getFocusedCollection()).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_GRANULE_QUERY,
+        payload: { pageNum: 1 }
+      })
+      // updateCollections
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTIONS,
+        payload: {
+          [collectionId]: {
+            mockCollectionData: 'goes here'
+          }
+        }
+      })
     })
 
     // was getGranules called
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
   })
 
-  test('returns no result if there is no collectionId', () => {
-    const store = mockStore()
+  test('should not call getGranules is previous granules are used', async () => {
+    moxios.stubRequest(/collections.*/, {
+      status: 200,
+      response: {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
+          title: 'ECHO dataset metadata',
+          entry: [{
+            mockCollectionData: 'goes here'
+          }],
+          facets: {},
+          hits: 1
+        }
+      }
+    })
 
-    store.dispatch(actions.changeFocusedCollection())
+    const collectionId = 'collectionId'
+
+    // mock getGranules
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const granules = {
+      allIds: ['granule1'],
+      byId: {
+        granule1: {
+          mock: 'data'
+        }
+      }
+    }
+    const store = mockStore({
+      focusedCollection: collectionId,
+      searchResults: {
+        granules
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(actions.getFocusedCollection()).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_GRANULE_QUERY,
+        payload: { pageNum: 1 }
+      })
+      // updateCollections
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTIONS,
+        payload: {
+          [collectionId]: {
+            mockCollectionData: 'goes here'
+          }
+        }
+      })
+    })
+
+    // was getGranules called
+    expect(getGranulesMock).toHaveBeenCalledTimes(0)
+  })
+
+  test('returns no result if there is no focusedCollection', () => {
+    const store = mockStore({
+      focusedCollection: '',
+      searchResults: {
+        granules: {}
+      }
+    })
+
+    store.dispatch(actions.getFocusedCollection())
     const storeActions = store.getActions()
 
     expect(storeActions[0]).toEqual({
@@ -105,14 +311,8 @@ describe('changeFocusedCollection', () => {
       payload: { pageNum: 1 }
     })
     expect(storeActions[1]).toEqual({
-      type: UPDATE_FOCUSED_COLLECTION,
-      payload: false
-    })
-    expect(storeActions[2]).toEqual({
       type: UPDATE_GRANULES,
-      payload: {
-        results: []
-      }
+      payload: { results: [] }
     })
   })
 
@@ -122,11 +322,16 @@ describe('changeFocusedCollection', () => {
       response: {}
     })
 
-    const store = mockStore({ focusedCollection: { collectionId: 'collectionId' } })
+    const store = mockStore({
+      focusedCollection: 'collectionId',
+      searchResults: {
+        granules: {}
+      }
+    })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    await store.dispatch(actions.changeFocusedCollection('collectionId')).then(() => {
+    await store.dispatch(actions.getFocusedCollection('')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
