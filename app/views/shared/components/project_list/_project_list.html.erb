@@ -86,19 +86,24 @@
                       <i class="fa fa-globe" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Spatial subsetting options available"></i>
                     </span>
                     <!-- /ko -->
-                    <!-- ko if: collection.has_variables -->
+                    <!-- ko if: collection.has_variables() -->
                     <span data-bind="css: {enabled: variableSubsettingEnabled()}">
                       <i class="fa fa-tags" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Variable subsetting options available"></i>
                     </span>
                     <!-- /ko -->
-                    <!-- ko if: collection.has_transforms -->
+                    <!-- ko if: collection.has_transforms() -->
                     <span data-bind="css: {enabled: transformationSubsettingEnabled()}">
                       <i class="fa fa-sliders" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Data transformation options available"></i>
                     </span>
                     <!-- /ko -->
-                    <!-- ko if: collection.has_formats -->
+                    <!-- ko if: collection.has_formats() -->
                     <span data-bind="css: {enabled: reformattingSubsettingEnabled()}">
                       <i class="fa fa-file-text-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Reformatting options available"></i>
+                    </span>
+                    <!-- /ko -->
+                    <!-- ko if: collection.has_temporal_subsetting() -->
+                    <span data-bind="css: {enabled: temporalSubsettingEnabled()}">
+                      <i class="fa fa-clock-o" aria-hidden="true" data-tooltip="true" data-placement="bottom" data-title="Temporal subsetting options available"></i>
                     </span>
                     <!-- /ko -->
                     <!-- <span data-bind="css: {enabled: serviceOptions.readyToDownload}">

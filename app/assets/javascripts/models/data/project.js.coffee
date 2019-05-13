@@ -59,6 +59,7 @@ ns.Project = do (ko,
       @variableSubsettingEnabled       = ko.observable(false)
       @transformationSubsettingEnabled = ko.observable(false)
       @reformattingSubsettingEnabled   = ko.observable(false)
+      @temporalSubsettingEnabled       = ko.observable(false)
       @selectedOutputFormat            = ko.observable(null)
 
       @selectedOutputFormat.subscribe =>
@@ -201,6 +202,7 @@ ns.Project = do (ko,
       @_computeVariableSubsettingEnabled()
       @_computeTransformationSubsettingEnabled()
       @_computeReformattingSubsettingEnabled()
+      @_computeTemporalSubsettingEnabled()
 
     _computeSpatialSubsettingEnabled: =>
       if @selectedAccessMethod()?.toLowerCase() == 'opendap'
@@ -218,6 +220,17 @@ ns.Project = do (ko,
           @spatialSubsettingEnabled(is_spatially_subset == "true")
       else
         @spatialSubsettingEnabled(false)
+
+    _computeTemporalSubsettingEnabled: =>
+      if @selectedAccessMethod()?.toLowerCase() == 'opendap'
+        # OPeNDAP collections use a different means of calculating this value
+      else if @selectedAccessMethod()?.toLowerCase() == 'service'
+        is_temporally_subset = @_findWithinAccessMethodModel('ecs-temporal_subset_flag')
+
+        @temporalSubsettingEnabled(is_temporally_subset == "true")
+      else
+        @temporalSubsettingEnabled(false)
+
 
     _computeVariableSubsettingEnabled: =>
       if @selectedAccessMethod()?.toLowerCase() == 'opendap'

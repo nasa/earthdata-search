@@ -352,6 +352,7 @@ ns.Collection = do (ko
       @_setObservable('has_transforms', jsonObj)
       @_setObservable('has_formats', jsonObj)
       @_setObservable('has_variables', jsonObj)
+      @_setObservable('has_temporal_subsetting', jsonObj)
       @_setObservable('associations', jsonObj)
 
       @truncatedTitle = ko.observable(if jsonObj.title?.length > 102 then jsonObj.title.substring(0, 102) + '...' else jsonObj.title)
