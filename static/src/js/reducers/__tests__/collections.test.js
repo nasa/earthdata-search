@@ -1,22 +1,14 @@
 import collectionsReducer from '../collections'
 import {
-  ADD_MORE_COLLECTIONS,
-  FINISHED_COLLECTIONS_TIMER,
-  LOADED_COLLECTIONS,
-  LOADING_COLLECTIONS,
-  STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTIONS
+  UPDATE_COLLECTIONS,
+  EXCLUDE_GRANULE_ID,
+  ADD_COLLECTION_GRANULES
 } from '../../constants/actionTypes'
 
 const initialState = {
-  keyword: false,
-  hits: null,
-  byId: {},
   allIds: [],
-  isLoading: false,
-  isLoaded: false,
-  loadTime: 0,
-  timerStart: null
+  byId: {},
+  projectIds: []
 }
 
 describe('INITIAL_STATE', () => {
@@ -27,113 +19,75 @@ describe('INITIAL_STATE', () => {
   })
 })
 
-describe('STARTED_COLLECTIONS_TIMER', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: STARTED_COLLECTIONS_TIMER
-    }
-
-    // Mock current time to equal 5
-    jest.spyOn(Date, 'now').mockImplementation(() => 5)
-
-    const expectedState = {
-      ...initialState,
-      timerStart: 5
-    }
-
-    expect(collectionsReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('FINISHED_COLLECTIONS_TIMER', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: FINISHED_COLLECTIONS_TIMER
-    }
-
-    // Set current time to 10, and future time to 15
-    // Load time will equal 5
-    jest.spyOn(Date, 'now').mockImplementation(() => 15)
-
-    const start = 10
-
-    const expectedState = {
-      ...initialState,
-      timerStart: null,
-      loadTime: 5
-    }
-
-    expect(collectionsReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
-  })
-})
-
 describe('UPDATE_COLLECTIONS', () => {
-  test('returns the correct state', () => {
+  test('returns the correct state when collection has not been visited yet', () => {
     const action = {
       type: UPDATE_COLLECTIONS,
       payload: {
-        results: [{
-          id: 'mockCollectionId',
-          mockCollectionData: 'goes here'
-        }],
-        hits: 0,
-        keyword: 'search keyword'
+        collectionId: {
+          mock: 'data'
+        }
       }
     }
 
     const expectedState = {
       ...initialState,
-      keyword: 'search keyword',
-      hits: 0,
-      allIds: ['mockCollectionId'],
+      allIds: ['collectionId'],
       byId: {
-        mockCollectionId: {
-          id: 'mockCollectionId',
-          mockCollectionData: 'goes here'
+        collectionId: {
+          excludedGranuleIds: [],
+          granules: {},
+          metadata: {
+            mock: 'data'
+          }
         }
       }
     }
 
     expect(collectionsReducer(undefined, action)).toEqual(expectedState)
   })
-})
 
-describe('ADD_MORE_COLLECTIONS', () => {
-  test('returns the correct state', () => {
+  test('returns the correct state when collection has been visited yet', () => {
     const action = {
-      type: ADD_MORE_COLLECTIONS,
+      type: UPDATE_COLLECTIONS,
       payload: {
-        results: [{
-          id: 'mockCollectionId2',
-          mockCollectionData: 'goes here 2'
-        }],
-        hits: 0,
-        keyword: 'search keyword'
+        collectionId: {
+          mock: 'data'
+        }
       }
     }
 
     const initial = {
       ...initialState,
-      allIds: ['mockCollectionId1'],
+      allIds: ['collectionId'],
       byId: {
-        mockCollectionId1: {
-          id: 'mockCollectionId1',
-          mockCollectionData: 'goes here 1'
+        collectionId: {
+          excludedGranuleIds: ['granuleId1'],
+          granules: {
+            allIds: ['granuleId1'],
+            byId: {
+              granuleId1: {
+                mock: 'data'
+              }
+            }
+          },
+          metadata: {
+            mock: 'data'
+          }
         }
       }
     }
 
     const expectedState = {
       ...initialState,
-      allIds: ['mockCollectionId1', 'mockCollectionId2'],
+      allIds: ['collectionId'],
       byId: {
-        mockCollectionId1: {
-          id: 'mockCollectionId1',
-          mockCollectionData: 'goes here 1'
-        },
-        mockCollectionId2: {
-          id: 'mockCollectionId2',
-          mockCollectionData: 'goes here 2'
+        collectionId: {
+          excludedGranuleIds: ['granuleId1'],
+          granules: {},
+          metadata: {
+            mock: 'data'
+          }
         }
       }
     }
@@ -142,35 +96,76 @@ describe('ADD_MORE_COLLECTIONS', () => {
   })
 })
 
-describe('LOADING_COLLECTIONS', () => {
+describe('EXCLUDE_GRANULE_ID', () => {
   test('returns the correct state', () => {
     const action = {
-      type: LOADING_COLLECTIONS
-    }
-
-    const expectedState = {
-      ...initialState,
-      isLoading: true,
-      isLoaded: false
-    }
-
-    expect(collectionsReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('LOADED_COLLECTIONS', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: LOADED_COLLECTIONS,
+      type: EXCLUDE_GRANULE_ID,
       payload: {
-        loaded: true
+        collectionId: 'collectionId',
+        granuleId: 'granuleId1'
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      allIds: ['collectionId'],
+      byId: {
+        collectionId: {
+          excludedGranuleIds: [],
+          granules: {},
+          metadata: {
+            mock: 'data'
+          }
+        }
       }
     }
 
     const expectedState = {
       ...initialState,
-      isLoading: false,
-      isLoaded: true
+      allIds: ['collectionId'],
+      byId: {
+        collectionId: {
+          excludedGranuleIds: ['granuleId1'],
+          granules: {},
+          metadata: {
+            mock: 'data'
+          }
+        }
+      }
+    }
+
+    expect(collectionsReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('ADD_COLLECTION_GRANULES', () => {
+  test('returns the correct state', () => {
+    const granules = {
+      allIds: ['mockGranuleId1'],
+      byId: {
+        mockGranuleId1: {
+          id: 'mockGranuleId1',
+          mockGranuleData: 'goes here 1'
+        }
+      },
+      isCwic: false,
+      hits: 1
+    }
+    const action = {
+      type: ADD_COLLECTION_GRANULES,
+      payload: {
+        collectionId: 'collectionId',
+        granules
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      byId: {
+        collectionId: {
+          granules
+        }
+      }
     }
 
     expect(collectionsReducer(undefined, action)).toEqual(expectedState)

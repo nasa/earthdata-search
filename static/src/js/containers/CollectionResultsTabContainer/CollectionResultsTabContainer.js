@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import CollectionResultsTab from '../../components/CollectionResults/CollectionResultsTab'
 
 const mapStateToProps = state => ({
-  collectionHits: state.entities.collections.hits
+  collectionHits: state.searchResults.collections.hits
 })
 
 export const CollectionResultsTabContainer = ({ collectionHits }) => (

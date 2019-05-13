@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 
 import actions from '../../actions'
+import getFocusedCollectionMetadata from '../../util/focusedCollection'
 
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
 
@@ -17,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  collections: state.collections,
   focusedCollection: state.focusedCollection,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue
@@ -24,6 +26,7 @@ const mapStateToProps = state => ({
 
 export const GranuleResultsHeaderContainer = (props) => {
   const {
+    collections,
     focusedCollection,
     location,
     onUpdateSearchValue,
@@ -32,10 +35,14 @@ export const GranuleResultsHeaderContainer = (props) => {
     sortOrder
   } = props
 
+  const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+
+  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+
   return (
     <GranuleResultsHeader
       location={location}
-      focusedCollection={focusedCollection}
+      focusedCollectionMetadata={focusedCollectionMetadata}
       onUpdateSortOrder={onUpdateSortOrder}
       onUpdateSearchValue={onUpdateSearchValue}
       sortOrder={sortOrder}
@@ -44,13 +51,10 @@ export const GranuleResultsHeaderContainer = (props) => {
   )
 }
 
-GranuleResultsHeaderContainer.defaultProps = {
-  focusedCollection: {}
-}
-
 GranuleResultsHeaderContainer.propTypes = {
   location: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.shape({}),
+  collections: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,

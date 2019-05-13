@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import Timeline from '../../components/Timeline/Timeline'
+import getFocusedCollectionMetadata from '../../util/focusedCollection'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -12,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  collections: state.collections,
   focusedCollection: state.focusedCollection,
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
@@ -19,6 +21,7 @@ const mapStateToProps = state => ({
 
 export const TimelineContainer = (props) => {
   const {
+    collections,
     focusedCollection,
     temporalSearch,
     timeline,
@@ -27,9 +30,12 @@ export const TimelineContainer = (props) => {
     onChangeTimelineState
   } = props
 
+  const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
+
   return (
     <Timeline
-      focusedCollection={focusedCollection}
+      // focusedCollection={focusedCollection}
+      focusedCollectionMetadata={focusedCollectionMetadata}
       temporalSearch={temporalSearch}
       timeline={timeline}
       onChangeQuery={onChangeQuery}
@@ -40,12 +46,12 @@ export const TimelineContainer = (props) => {
 }
 
 TimelineContainer.defaultProps = {
-  focusedCollection: {},
   temporalSearch: {}
 }
 
 TimelineContainer.propTypes = {
-  focusedCollection: PropTypes.shape({}),
+  collections: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   temporalSearch: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,

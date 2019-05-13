@@ -8,10 +8,20 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollection: { value: 'focusedCollection' },
+    collections: {
+      allIds: ['focusedCollection'],
+      byId: {
+        focusedCollection: {
+          excludedGranuleIds: [],
+          metadata: {}
+        }
+      }
+    },
+    focusedCollection: 'focusedCollection',
     granules: { value: 'granules' },
     granuleQuery: { pageNum: 1 },
-    onChangeGranulePageNum: jest.fn()
+    onChangeGranulePageNum: jest.fn(),
+    onExcludeGranule: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBodyContainer {...props} />)
@@ -27,7 +37,7 @@ describe('GranuleResultsBodyContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsBody).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsBody).props().focusedCollection).toEqual({ value: 'focusedCollection' })
+    expect(enzymeWrapper.find(GranuleResultsBody).props().collectionId).toEqual('focusedCollection')
     expect(enzymeWrapper.find(GranuleResultsBody).props().granules).toEqual({ value: 'granules' })
     expect(enzymeWrapper.find(GranuleResultsBody).props().pageNum).toEqual(1)
     expect(typeof enzymeWrapper.find(GranuleResultsBody).props().waypointEnter).toEqual('function')

@@ -3,13 +3,20 @@ import { GranuleRequest } from '../util/request/cmr'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
   ADD_MORE_GRANULES,
-  LOADING_GRANULES,
-  LOADED_GRANULES,
-  UPDATE_GRANULES,
   ERRORED_GRANULES,
+  EXCLUDE_GRANULE_ID,
+  FINISHED_GRANULES_TIMER,
+  LOADED_GRANULES,
+  LOADING_GRANULES,
   STARTED_GRANULES_TIMER,
-  FINISHED_GRANULES_TIMER
+  UPDATE_GRANULES,
+  ADD_GRANULES_FROM_COLLECTIONS
 } from '../constants/actionTypes'
+
+export const addGranulesFromCollection = payload => ({
+  type: ADD_GRANULES_FROM_COLLECTIONS,
+  payload
+})
 
 export const addMoreGranules = payload => ({
   type: ADD_MORE_GRANULES,
@@ -41,6 +48,19 @@ export const startGranulesTimer = () => ({
 export const finishGranulesTimer = () => ({
   type: FINISHED_GRANULES_TIMER
 })
+
+export const onExcludeGranule = payload => ({
+  type: EXCLUDE_GRANULE_ID,
+  payload
+})
+
+export const excludeGranule = data => (dispatch) => {
+  const { collectionId, granuleId } = data
+  dispatch(onExcludeGranule({
+    collectionId,
+    granuleId
+  }))
+}
 
 export const getGranules = () => (dispatch, getState) => {
   const granuleParams = prepareGranuleParams(getState())

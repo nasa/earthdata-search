@@ -1,8 +1,13 @@
 /* eslint-disable import/no-cycle */
 
 import { getCollections } from './collections'
-import { changeFocusedCollection } from './focusedCollection'
-import { getGranules, updateGranules } from './granules'
+import { changeFocusedCollection, getFocusedCollection } from './focusedCollection'
+import {
+  addGranulesFromCollection,
+  excludeGranule,
+  getGranules,
+  updateGranules
+} from './granules'
 import {
   changeTimelineQuery,
   changeTimelineState,
@@ -39,6 +44,7 @@ import {
 } from './viewAllFacets'
 
 const actions = {
+  addGranulesFromCollection,
   applyViewAllFacets,
   changeCmrFacet,
   changeCollectionPageNum,
@@ -52,7 +58,9 @@ const actions = {
   changeUrl,
   changeViewAllFacet,
   clearFilters,
+  excludeGranule,
   getCollections,
+  getFocusedCollection,
   getGranules,
   getTimeline,
   getViewAllFacets,

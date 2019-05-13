@@ -5,7 +5,7 @@ import ConnectedTimelineContainer from '../TimelineContainer/TimelineContainer'
 import './FooterContainer.scss'
 
 const mapStateToProps = state => ({
-  loadTime: state.entities.collections.loadTime
+  loadTime: state.searchResults.collections.loadTime
 })
 
 class FooterContainer extends Component {

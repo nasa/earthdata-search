@@ -9,7 +9,7 @@ import MasterOverlayPanel from '../../components/MasterOverlayPanel/MasterOverla
 const mapStateToProps = state => ({
   masterOverlayPanel: state.ui.masterOverlayPanel,
   panelHeight: state.ui.masterOverlayPanel.height,
-  collectionHits: state.entities.collections.hits
+  collectionHits: state.searchResults.collections.hits
 })
 
 const mapDispatchToProps = dispatch => ({

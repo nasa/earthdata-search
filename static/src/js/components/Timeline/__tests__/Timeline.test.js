@@ -7,7 +7,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollection: {},
+    focusedCollection: '',
+    focusedCollectionMetadata: {},
     temporalSearch: {},
     timeline: { query: {}, state: {} },
     onChangeQuery: jest.fn(),
@@ -35,16 +36,16 @@ describe('Timeline component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
     enzymeWrapper.setProps({
-      focusedCollection: {
-        collectionId: 'collectionId',
-        metadata: {
+      focusedCollection: 'collectionId',
+      focusedCollectionMetadata: {
+        collectionId: {
           mock: 'metadata'
         }
       }
     })
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'block' })
 
-    enzymeWrapper.setProps({ focusedCollection: {} })
+    enzymeWrapper.setProps({ focusedCollection: '', focusedCollectionMetadata: {} })
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
   })
 
@@ -52,9 +53,9 @@ describe('Timeline component', () => {
     test('when the focusedCollection is new', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({
-        focusedCollection: {
-          collectionId: 'collectionId',
-          metadata: {
+        focusedCollection: 'collectionId',
+        focusedCollectionMetadata: {
+          collectionId: {
             id: 'collectionId',
             time_start: '2019-01-01T00:00:00.000Z',
             time_end: '2019-02-01T00:00:00.000Z'
@@ -182,9 +183,9 @@ describe('Timeline component', () => {
         3
       ]]
       enzymeWrapper.setProps({
-        focusedCollection: {
-          collectionId: metadata.id,
-          metadata
+        focusedCollection: metadata.id,
+        focusedCollectionMetadata: {
+          [metadata.id]: metadata
         },
         timeline: {
           intervals,
@@ -229,9 +230,9 @@ describe('Timeline component', () => {
 
       // Add some intervals
       enzymeWrapper.setProps({
-        focusedCollection: {
-          collectionId: metadata.id,
-          metadata
+        focusedCollection: metadata.id,
+        focusedCollectionMetadata: {
+          [metadata.id]: metadata
         },
         timeline: {
           intervals,
@@ -247,7 +248,8 @@ describe('Timeline component', () => {
 
       // remove the focused collection and intervals
       enzymeWrapper.setProps({
-        focusedCollection: {},
+        focusedCollection: '',
+        focusedCollectionMetadata: {},
         timeline: {
           intervals: [],
           query: {

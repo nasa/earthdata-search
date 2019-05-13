@@ -1,3 +1,4 @@
+import getFocusedCollectionMetadata from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
 
 /**
@@ -30,15 +31,18 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
  */
 export const prepareGranuleParams = (state) => {
   const {
-    focusedCollection = {},
+    collections,
+    focusedCollection: collectionId,
     query = {}
   } = state
 
   // If we don't have a focusedCollection, bail out!
-  const { collectionId } = focusedCollection
   if (!collectionId) {
     return null
   }
+
+  const focusedCollectionMetadata = getFocusedCollectionMetadata(collectionId, collections)
+  if (!focusedCollectionMetadata) return null
 
   const {
     collection: collectionQuery,
@@ -58,13 +62,13 @@ export const prepareGranuleParams = (state) => {
     polygon
   } = spatial
 
-  const { metadata = {} } = focusedCollection
+  const { metadata = {} } = focusedCollectionMetadata
   const { tags = {} } = metadata
 
   const temporalString = encodeTemporal(temporal)
 
   const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !focusedCollection.metadata.has_granules
+    && !metadata.has_granules
 
   return {
     boundingBox,

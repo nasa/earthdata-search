@@ -8,12 +8,15 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    collectionId: 'collectionId',
+    excludedGranuleIds: [],
     granules: {
       one: 'test',
       two: 'test'
     },
     pageNum: 1,
-    waypointEnter: jest.fn()
+    waypointEnter: jest.fn(),
+    onExcludeGranule: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBody {...props} />)

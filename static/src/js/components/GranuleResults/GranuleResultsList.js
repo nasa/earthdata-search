@@ -1,6 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { pure } from 'recompose'
+import _ from 'lodash'
 
 import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
@@ -23,7 +24,14 @@ const granuleListItemSkeletonStyle = {
  * @param {object} props.granules - List of granules passed from redux store.
  */
 export const GranuleResultsList = (props) => {
-  const { granules, pageNum, waypointEnter } = props
+  const {
+    collectionId,
+    excludedGranuleIds,
+    granules,
+    pageNum,
+    waypointEnter,
+    onExcludeGranule
+  } = props
   const {
     hits,
     loadTime,
@@ -31,7 +39,7 @@ export const GranuleResultsList = (props) => {
     isLoaded
   } = granules
 
-  const granuleIds = granules.allIds
+  const granuleIds = _.difference(granules.allIds, excludedGranuleIds)
 
   const initialLoading = (pageNum === 1 && !isLoaded)
 
@@ -39,10 +47,12 @@ export const GranuleResultsList = (props) => {
     const isLast = granuleIds.length > 0 && index === granuleIds.length - 1
     return (
       <GranuleResultsItem
+        collectionId={collectionId}
         key={granuleId}
         granule={granules.byId[granuleId]}
         isLast={isLast}
         waypointEnter={waypointEnter}
+        onExcludeGranule={onExcludeGranule}
       />
     )
   })
@@ -104,9 +114,12 @@ export const GranuleResultsList = (props) => {
 }
 
 GranuleResultsList.propTypes = {
+  collectionId: PropTypes.string.isRequired,
+  excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.shape({}).isRequired,
   pageNum: PropTypes.number.isRequired,
-  waypointEnter: PropTypes.func.isRequired
+  waypointEnter: PropTypes.func.isRequired,
+  onExcludeGranule: PropTypes.func.isRequired
 }
 
 export default pure(GranuleResultsList)

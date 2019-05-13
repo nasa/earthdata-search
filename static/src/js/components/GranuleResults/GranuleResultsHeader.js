@@ -11,7 +11,7 @@ import './GranuleResultsHeader.scss'
 /**
  * Renders GranuleResultsHeader.
  * @param {object} props - The props passed into the component.
- * @param {object} props.focusedCollection - Focused collection passed from redux store.
+ * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
  * @param {function} props.onUpdateSortOrder - Function to call when the sort order is changed.
  * @param {function} props.onUpdateSearchValue - Function to call when the granule search value is changed.
  * @param {string} props.sortOrder - The current granule sort order from the state.
@@ -49,9 +49,10 @@ class GranuleResultsHeader extends Component {
   }
 
   render() {
-    const { focusedCollection } = this.props
+    const { focusedCollectionMetadata } = this.props
     const { sortOrder, searchValue } = this.state
-    const { metadata } = focusedCollection
+    const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
+    const metadata = focusedCollectionMetadata[collectionId]
     const { title } = metadata
 
     return (
@@ -194,7 +195,7 @@ class GranuleResultsHeader extends Component {
 }
 
 GranuleResultsHeader.propTypes = {
-  focusedCollection: PropTypes.shape({}).isRequired,
+  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,

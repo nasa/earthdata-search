@@ -6,12 +6,13 @@ import GranuleResultsItem from '../GranuleResultsItem'
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(type) {
-
   let props
 
   if (type === 'cmr') {
     props = {
+      collectionId: 'collectionId',
       granule: {
+        id: 'granuleId',
         browse_flag: true,
         formatted_temporal: [
           '2019-04-28 00:00:00',
@@ -21,12 +22,14 @@ function setup(type) {
         title: 'Granule title'
       },
       isLast: false,
-      waypointEnter: jest.fn()
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn()
     }
   }
 
   if (type === 'no-thumb') {
     props = {
+      collectionId: 'collectionId',
       granule: {
         browse_flag: false,
         formatted_temporal: [
@@ -36,12 +39,14 @@ function setup(type) {
         title: 'Granule title'
       },
       isLast: false,
-      waypointEnter: jest.fn()
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn()
     }
   }
 
   if (type === 'cwic') {
     props = {
+      collectionId: 'collectionId',
       granule: {
         browse_flag: true,
         formatted_temporal: [
@@ -52,7 +57,8 @@ function setup(type) {
         thumbnail: '/fake/path/image.jpg'
       },
       isLast: false,
-      waypointEnter: jest.fn()
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn()
     }
   }
 
@@ -122,6 +128,17 @@ describe('GranuleResultsItem component', () => {
       expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('2019-04-28 00:00:00')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('2019-04-29 23:59:59')
+    })
+  })
+
+  describe('when clicking the remove button', () => {
+    test('it excludes the granule from results', () => {
+      const { enzymeWrapper, props } = setup('cmr')
+      const removeButton = enzymeWrapper.find('button[title="Remove granule"]')
+
+      removeButton.simulate('click')
+      expect(props.onExcludeGranule.mock.calls.length).toBe(1)
+      expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
     })
   })
 })

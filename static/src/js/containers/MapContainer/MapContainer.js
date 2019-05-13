@@ -40,8 +40,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  collections: state.collections,
   focusedCollection: state.focusedCollection,
-  granules: state.entities.granules,
+  granules: state.searchResults.granules,
   map: state.map,
   masterOverlayPanelHeight: state.ui.masterOverlayPanel.height
 })
@@ -281,12 +282,12 @@ export class MapContainer extends Component {
 }
 
 MapContainer.defaultProps = {
-  focusedCollection: {},
   map: {}
 }
 
 MapContainer.propTypes = {
-  focusedCollection: PropTypes.shape({}),
+  collections: PropTypes.shape({}).isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
   masterOverlayPanelHeight: PropTypes.number.isRequired,

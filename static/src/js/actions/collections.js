@@ -5,8 +5,9 @@ import {
 } from '../util/collections'
 
 import {
-  ADD_MORE_COLLECTIONS,
+  ADD_MORE_COLLECTION_RESULTS,
   UPDATE_COLLECTIONS,
+  UPDATE_COLLECTIONS_RESULTS,
   LOADING_COLLECTIONS,
   LOADED_COLLECTIONS,
   ERRORED_COLLECTIONS,
@@ -18,8 +19,13 @@ import {
   FINISHED_COLLECTIONS_TIMER
 } from '../constants/actionTypes'
 
-export const addMoreCollections = payload => ({
-  type: ADD_MORE_COLLECTIONS,
+export const addMoreCollectionResults = payload => ({
+  type: ADD_MORE_COLLECTION_RESULTS,
+  payload
+})
+
+export const updateCollectionsResults = payload => ({
+  type: UPDATE_COLLECTIONS_RESULTS,
   payload
 })
 
@@ -84,7 +90,7 @@ export const getCollections = () => (dispatch, getState) => {
     const emptyPayload = {
       results: []
     }
-    dispatch(updateCollections(emptyPayload))
+    dispatch(updateCollectionsResults(emptyPayload))
   }
 
   dispatch(onCollectionsLoading())
@@ -110,9 +116,9 @@ export const getCollections = () => (dispatch, getState) => {
         loaded: true
       }))
       if (pageNum === 1) {
-        dispatch(updateCollections(payload))
+        dispatch(updateCollectionsResults(payload))
       } else {
-        dispatch(addMoreCollections(payload))
+        dispatch(addMoreCollectionResults(payload))
       }
       dispatch(updateFacets(payload))
     }, (error) => {

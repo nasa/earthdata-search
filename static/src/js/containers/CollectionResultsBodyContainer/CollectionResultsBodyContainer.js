@@ -10,7 +10,7 @@ import actions from '../../actions/index'
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
 
 const mapStateToProps = state => ({
-  collections: state.entities.collections,
+  collections: state.searchResults.collections,
   query: state.query.collection
 })
 

@@ -91,7 +91,7 @@ describe('applyViewAllFacets', () => {
       query: {
         collection: {}
       },
-      entities: {
+      searchResults: {
         viewAllFacets: {}
       }
     })
@@ -137,7 +137,7 @@ describe('copyCMRFacets', () => {
       query: {
         collection: {}
       },
-      entities: {
+      searchResults: {
         viewAllFacets: {}
       }
     })
@@ -212,7 +212,7 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      entities: {
+      searchResults: {
         collections: {},
         facets: {},
         granules: {},
@@ -290,7 +290,7 @@ describe('getViewAllFacets', () => {
     })
   })
 
-  test('does not call updateCollections on error', async () => {
+  test('does not call updateCollectionsResults on error', async () => {
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
     moxios.stubRequest(/collections.*/, {
@@ -303,7 +303,7 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      entities: {
+      searchResults: {
         collections: {},
         facets: {},
         granules: {},
@@ -354,7 +354,7 @@ describe('getViewAllFacets', () => {
 test('triggerViewAllFacets', () => {
   // mockStore with initialState
   const store = mockStore({
-    entities: {
+    searchResults: {
       collections: {},
       facets: {},
       granules: {},
@@ -393,7 +393,7 @@ test('triggerViewAllFacets', () => {
 test('changeViewAllFacet', () => {
   // mockStore with initialState
   const store = mockStore({
-    entities: {
+    searchResults: {
       collections: {},
       facets: {},
       granules: {},

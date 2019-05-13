@@ -35,7 +35,7 @@ export const getTimeline = () => (dispatch, getState) => {
 
   const {
     boundingBox,
-    collectionId,
+    focusedCollection,
     endDate,
     interval,
     point,
@@ -47,7 +47,7 @@ export const getTimeline = () => (dispatch, getState) => {
 
   const response = requestObject.search({
     boundingBox,
-    echoCollectionId: collectionId,
+    echoCollectionId: focusedCollection,
     endDate,
     interval,
     point,
