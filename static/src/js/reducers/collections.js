@@ -2,7 +2,8 @@ import {
   ADD_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTIONS,
-  RESTORE_COLLECTIONS
+  RESTORE_COLLECTIONS,
+  UNDO_EXCLUDE_GRANULE_ID
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -56,8 +57,6 @@ const collectionsReducer = (state = initialState, action) => {
       }
     }
     case RESTORE_COLLECTIONS: {
-      console.log('RESTORE_COLLECTIONS', action.payload)
-
       return {
         ...state,
         ...action.payload
@@ -76,6 +75,22 @@ const collectionsReducer = (state = initialState, action) => {
               ...state.byId[collectionId].excludedGranuleIds,
               granuleId
             ]
+          }
+        }
+      }
+    }
+    case UNDO_EXCLUDE_GRANULE_ID: {
+      const collectionId = action.payload
+      const excludedGranuleIds = [...state.byId[collectionId].excludedGranuleIds]
+      excludedGranuleIds.pop()
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            excludedGranuleIds
           }
         }
       }

@@ -10,7 +10,8 @@ import {
   LOADING_GRANULES,
   STARTED_GRANULES_TIMER,
   UPDATE_GRANULES,
-  ADD_GRANULES_FROM_COLLECTIONS
+  ADD_GRANULES_FROM_COLLECTIONS,
+  UNDO_EXCLUDE_GRANULE_ID
 } from '../constants/actionTypes'
 
 export const addGranulesFromCollection = payload => ({
@@ -54,12 +55,21 @@ export const onExcludeGranule = payload => ({
   payload
 })
 
+export const onUndoExcludeGranule = payload => ({
+  type: UNDO_EXCLUDE_GRANULE_ID,
+  payload
+})
+
 export const excludeGranule = data => (dispatch) => {
   const { collectionId, granuleId } = data
   dispatch(onExcludeGranule({
     collectionId,
     granuleId
   }))
+}
+
+export const undoExcludeGranule = collectionId => (dispatch) => {
+  dispatch(onUndoExcludeGranule(collectionId))
 }
 
 export const getGranules = () => (dispatch, getState) => {

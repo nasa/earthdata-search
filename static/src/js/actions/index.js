@@ -6,6 +6,7 @@ import {
   addGranulesFromCollection,
   excludeGranule,
   getGranules,
+  undoExcludeGranule,
   updateGranules
 } from './granules'
 import {
@@ -73,6 +74,7 @@ const actions = {
   searchNlp,
   toggleFacetsModal,
   triggerViewAllFacets,
+  undoExcludeGranule,
   updateCmrFacet,
   updateFeatureFacet,
   updateGranules

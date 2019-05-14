@@ -7,7 +7,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollection: '',
     focusedCollectionMetadata: {},
     temporalSearch: {},
     timeline: { query: {}, state: {} },
@@ -36,10 +35,11 @@ describe('Timeline component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
     enzymeWrapper.setProps({
-      focusedCollection: 'collectionId',
       focusedCollectionMetadata: {
         collectionId: {
-          mock: 'metadata'
+          metadata: {
+            mock: 'metadata'
+          }
         }
       }
     })
@@ -53,12 +53,13 @@ describe('Timeline component', () => {
     test('when the focusedCollection is new', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({
-        focusedCollection: 'collectionId',
         focusedCollectionMetadata: {
           collectionId: {
-            id: 'collectionId',
-            time_start: '2019-01-01T00:00:00.000Z',
-            time_end: '2019-02-01T00:00:00.000Z'
+            metadata: {
+              id: 'collectionId',
+              time_start: '2019-01-01T00:00:00.000Z',
+              time_end: '2019-02-01T00:00:00.000Z'
+            }
           }
         }
       })
@@ -75,12 +76,13 @@ describe('Timeline component', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.instance().$el.timeline = jest.fn()
       enzymeWrapper.setProps({
-        focusedCollection: {
-          collectionId: 'collectionId',
-          metadata: {
-            id: 'collectionId',
-            time_start: '2019-01-01T00:00:00.000Z',
-            time_end: '2019-02-01T00:00:00.000Z'
+        focusedCollectionMetadata: {
+          collectionId: {
+            metadata: {
+              id: 'collectionId',
+              time_start: '2019-01-01T00:00:00.000Z',
+              time_end: '2019-02-01T00:00:00.000Z'
+            }
           }
         },
         timeline: {
@@ -102,12 +104,13 @@ describe('Timeline component', () => {
       })
 
       enzymeWrapper.setProps({
-        focusedCollection: {
-          collectionId: 'collectionId',
-          metadata: {
-            id: 'collectionId',
-            time_start: '2019-01-01T00:00:00.000Z',
-            time_end: '2019-02-01T00:00:00.000Z'
+        focusedCollectionMetadata: {
+          collectionId: {
+            metadata: {
+              id: 'collectionId',
+              time_start: '2019-01-01T00:00:00.000Z',
+              time_end: '2019-02-01T00:00:00.000Z'
+            }
           }
         },
         timeline: {
@@ -183,9 +186,10 @@ describe('Timeline component', () => {
         3
       ]]
       enzymeWrapper.setProps({
-        focusedCollection: metadata.id,
         focusedCollectionMetadata: {
-          [metadata.id]: metadata
+          [metadata.id]: {
+            metadata
+          }
         },
         timeline: {
           intervals,
@@ -232,7 +236,9 @@ describe('Timeline component', () => {
       enzymeWrapper.setProps({
         focusedCollection: metadata.id,
         focusedCollectionMetadata: {
-          [metadata.id]: metadata
+          [metadata.id]: {
+            metadata
+          }
         },
         timeline: {
           intervals,

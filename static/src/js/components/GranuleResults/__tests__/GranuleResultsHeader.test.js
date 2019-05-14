@@ -10,11 +10,15 @@ function setup() {
   const props = {
     focusedCollectionMetadata: {
       collectionId: {
-        title: 'Title'
+        excludedGranuleIds: [],
+        metadata: {
+          title: 'Title'
+        }
       }
     },
     onUpdateSortOrder: jest.fn(),
     onUpdateSearchValue: jest.fn(),
+    onUndoExcludeGranule: jest.fn(),
     sortOrder: 'start_date_newest_first',
     searchValue: 'searchValue'
   }
@@ -104,7 +108,7 @@ describe('GranuleResultsHeader component', () => {
       expect(enzymeWrapper.state()).toEqual({ searchValue: 'Some new value', sortOrder: 'start_date_newest_first' })
     })
 
-    test('fires the onUpdateSortOrder', () => {
+    test('fires the onUpdateSearchValue', () => {
       const { enzymeWrapper, props } = setup()
       const mockEvent = {
         target: {
@@ -116,5 +120,28 @@ describe('GranuleResultsHeader component', () => {
       expect(props.onUpdateSearchValue).toHaveBeenCalledTimes(1)
       expect(props.onUpdateSearchValue).toHaveBeenCalledWith('Some new value')
     })
+  })
+})
+
+describe('handleUndoExcludeGranule', () => {
+  test('fires onUndoExcludeGranule', () => {
+    const { enzymeWrapper, props } = setup()
+
+    // Exclude a granule to test undo button
+    enzymeWrapper.setProps({
+      focusedCollectionMetadata: {
+        collectionId: {
+          excludedGranuleIds: ['granuleId1', 'granuleId2'],
+          metadata: {
+            title: 'Title'
+          }
+        }
+      }
+    })
+
+    enzymeWrapper.find('.granule-results-header__button').simulate('click')
+
+    expect(props.onUndoExcludeGranule).toHaveBeenCalledTimes(1)
+    expect(props.onUndoExcludeGranule).toHaveBeenCalledWith('collectionId')
   })
 })

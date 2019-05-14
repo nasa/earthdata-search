@@ -11,6 +11,8 @@ import getFocusedCollectionMetadata from '../../util/focusedCollection'
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
 
 const mapDispatchToProps = dispatch => ({
+  onUndoExcludeGranule:
+    collectionId => dispatch(actions.undoExcludeGranule(collectionId)),
   onUpdateSortOrder:
     sortOrder => dispatch(actions.granuleResultsPanelUpdateSortOrder(sortOrder)),
   onUpdateSearchValue:
@@ -29,6 +31,7 @@ export const GranuleResultsHeaderContainer = (props) => {
     collections,
     focusedCollection,
     location,
+    onUndoExcludeGranule,
     onUpdateSearchValue,
     onUpdateSortOrder,
     searchValue,
@@ -45,6 +48,7 @@ export const GranuleResultsHeaderContainer = (props) => {
       focusedCollectionMetadata={focusedCollectionMetadata}
       onUpdateSortOrder={onUpdateSortOrder}
       onUpdateSearchValue={onUpdateSearchValue}
+      onUndoExcludeGranule={onUndoExcludeGranule}
       sortOrder={sortOrder}
       searchValue={searchValue}
     />
@@ -55,6 +59,7 @@ GranuleResultsHeaderContainer.propTypes = {
   location: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
+  onUndoExcludeGranule: PropTypes.func.isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
