@@ -12,6 +12,7 @@ function setup() {
       allIds: ['collectionId'],
       byId: {
         collectionId: {
+          excludedGranuleIds: [],
           metadata: {
             mock: 'here'
           }
@@ -20,6 +21,7 @@ function setup() {
     },
     focusedCollection: 'collectionId',
     location: { value: 'location' },
+    onUndoExcludeGranule: jest.fn(),
     onUpdateSearchValue: jest.fn(),
     onUpdateSortOrder: jest.fn(),
     searchValue: 'searchValue',
@@ -39,7 +41,12 @@ describe('GranuleResultsHeaderContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionMetadata).toEqual({ collectionId: { mock: 'here' } })
+    expect(enzymeWrapper.find(GranuleResultsHeader).props().focusedCollectionMetadata).toEqual({
+      collectionId: {
+        excludedGranuleIds: [],
+        metadata: { mock: 'here' }
+      }
+    })
     expect(enzymeWrapper.find(GranuleResultsHeader).props().location).toEqual({ value: 'location' })
     expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onUpdateSortOrder).toEqual('function')
     expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onUpdateSearchValue).toEqual('function')

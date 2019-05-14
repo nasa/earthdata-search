@@ -70,11 +70,13 @@ class Timeline extends Component {
 
     const [oldCollectionId = ''] = Object.keys(oldFocusedCollectionMetadata)
     const [nextCollectionId = ''] = Object.keys(nextFocusedCollectionMetadata)
-    const metadata = nextFocusedCollectionMetadata[nextCollectionId]
+    const nextCollection = nextFocusedCollectionMetadata[nextCollectionId]
     if (oldCollectionId !== nextCollectionId) {
-      if (!metadata) {
+      if (!nextCollection) {
         onChangeTimelineQuery({})
       } else {
+        const { metadata } = nextCollection
+
         const {
           id,
           time_start: timeStart,
@@ -98,7 +100,9 @@ class Timeline extends Component {
 
     // if the timeline granules have changed
     if (oldTimeline.intervals !== nextTimeline.intervals) {
-      if (metadata) {
+      if (nextCollection) {
+        const { metadata } = nextCollection
+
         this.setTimelineData(metadata, nextTimeline)
       } else {
         this.clearTimelineData()

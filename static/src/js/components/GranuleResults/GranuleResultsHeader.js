@@ -28,6 +28,7 @@ class GranuleResultsHeader extends Component {
 
     this.handleUpdateSortOrder = this.handleUpdateSortOrder.bind(this)
     this.handleUpdateSearchValue = this.handleUpdateSearchValue.bind(this)
+    this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
   }
 
   handleUpdateSortOrder(e) {
@@ -48,12 +49,20 @@ class GranuleResultsHeader extends Component {
     onUpdateSearchValue(value)
   }
 
+  handleUndoExcludeGranule() {
+    const { focusedCollectionMetadata, onUndoExcludeGranule } = this.props
+    const [collectionId] = Object.keys(focusedCollectionMetadata)
+
+    onUndoExcludeGranule(collectionId)
+  }
+
   render() {
     const { focusedCollectionMetadata } = this.props
     const { sortOrder, searchValue } = this.state
     const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-    const metadata = focusedCollectionMetadata[collectionId]
+    const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
     const { title } = metadata
+    const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
     return (
       <>
@@ -184,6 +193,22 @@ class GranuleResultsHeader extends Component {
                       {' Granule Filters'}
                     </a>
                   </div>
+                  {
+                    showUndoExcludedGranules && (
+                      <div>
+                        <p>
+                          Granule excluded.
+                          <button
+                            className="granule-results-header__button"
+                            onClick={this.handleUndoExcludeGranule}
+                            type="button"
+                          >
+                            Undo
+                          </button>
+                        </p>
+                      </div>
+                    )
+                  }
                 </div>
               </form>
             )}
@@ -198,6 +223,7 @@ GranuleResultsHeader.propTypes = {
   focusedCollectionMetadata: PropTypes.shape({}).isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
+  onUndoExcludeGranule: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
   searchValue: PropTypes.string.isRequired
 }

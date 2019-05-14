@@ -3,10 +3,10 @@ const getFocusedCollectionMetadata = (collectionId, collections) => {
 
   if (!collection) return {}
 
-  const { metadata } = collection
-
   return {
-    [collectionId]: metadata
+    [collectionId]: {
+      ...collection
+    }
   }
 }
 

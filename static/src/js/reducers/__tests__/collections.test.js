@@ -2,7 +2,9 @@ import collectionsReducer from '../collections'
 import {
   UPDATE_COLLECTIONS,
   EXCLUDE_GRANULE_ID,
-  ADD_COLLECTION_GRANULES
+  ADD_COLLECTION_GRANULES,
+  UNDO_EXCLUDE_GRANULE_ID,
+  RESTORE_COLLECTIONS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -96,6 +98,34 @@ describe('UPDATE_COLLECTIONS', () => {
   })
 })
 
+describe('RESTORE_COLLECTIONS', () => {
+  test('return the correct state', () => {
+    const payload = {
+      allIds: ['collectionId'],
+      byId: {
+        collectionId: {
+          excludedGranuleIds: ['granuleId1'],
+          granules: {},
+          metadata: {}
+        }
+      },
+      projectIds: []
+    }
+    const action = {
+      type: RESTORE_COLLECTIONS,
+      payload
+    }
+
+    const expectedState = {
+      ...initialState,
+      ...payload
+    }
+
+    expect(collectionsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+
 describe('EXCLUDE_GRANULE_ID', () => {
   test('returns the correct state', () => {
     const action = {
@@ -112,6 +142,45 @@ describe('EXCLUDE_GRANULE_ID', () => {
       byId: {
         collectionId: {
           excludedGranuleIds: [],
+          granules: {},
+          metadata: {
+            mock: 'data'
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      allIds: ['collectionId'],
+      byId: {
+        collectionId: {
+          excludedGranuleIds: ['granuleId1'],
+          granules: {},
+          metadata: {
+            mock: 'data'
+          }
+        }
+      }
+    }
+
+    expect(collectionsReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UNDO_EXCLUDE_GRANULE_ID', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UNDO_EXCLUDE_GRANULE_ID,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      ...initialState,
+      allIds: ['collectionId'],
+      byId: {
+        collectionId: {
+          excludedGranuleIds: ['granuleId1', 'granuleId2'],
           granules: {},
           metadata: {
             mock: 'data'

@@ -5,9 +5,10 @@ import thunk from 'redux-thunk'
 import {
   updateGranules,
   getGranules,
-  excludeGranule
+  excludeGranule,
+  undoExcludeGranule
 } from '../granules'
-import { UPDATE_GRANULES, EXCLUDE_GRANULE_ID } from '../../constants/actionTypes'
+import { UPDATE_GRANULES, EXCLUDE_GRANULE_ID, UNDO_EXCLUDE_GRANULE_ID } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -170,6 +171,20 @@ describe('excludeGranule', () => {
     }
     const store = mockStore()
     store.dispatch(excludeGranule(payload))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual(expectedAction)
+  })
+})
+
+describe('undoExcludeGranule', () => {
+  test('should create an action to update the collection', () => {
+    const payload = 'collectionId'
+    const expectedAction = {
+      type: UNDO_EXCLUDE_GRANULE_ID,
+      payload
+    }
+    const store = mockStore()
+    store.dispatch(undoExcludeGranule(payload))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual(expectedAction)
   })
