@@ -1,11 +1,11 @@
 import {
-  ADD_MORE_GRANULES,
+  ADD_MORE_GRANULE_RESULTS,
   FINISHED_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
   STARTED_GRANULES_TIMER,
-  UPDATE_GRANULES,
-  ADD_GRANULES_FROM_COLLECTIONS
+  UPDATE_GRANULE_RESULTS,
+  ADD_GRANULE_RESULTS_FROM_COLLECTIONS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -31,7 +31,7 @@ const processResults = (results) => {
   return { byId, allIds }
 }
 
-const granulesReducer = (state = initialState, action) => {
+const granuleResultsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING_GRANULES: {
       return {
@@ -61,7 +61,7 @@ const granulesReducer = (state = initialState, action) => {
         loadTime: Date.now() - timerStart
       }
     }
-    case UPDATE_GRANULES: {
+    case UPDATE_GRANULE_RESULTS: {
       const { hits, isCwic } = action.payload
       const { byId, allIds } = processResults(action.payload.results)
 
@@ -73,7 +73,7 @@ const granulesReducer = (state = initialState, action) => {
         isCwic
       }
     }
-    case ADD_MORE_GRANULES: {
+    case ADD_MORE_GRANULE_RESULTS: {
       const { byId, allIds } = processResults(action.payload.results)
 
       return {
@@ -88,7 +88,7 @@ const granulesReducer = (state = initialState, action) => {
         }
       }
     }
-    case ADD_GRANULES_FROM_COLLECTIONS: {
+    case ADD_GRANULE_RESULTS_FROM_COLLECTIONS: {
       const {
         allIds,
         byId,
@@ -110,4 +110,4 @@ const granulesReducer = (state = initialState, action) => {
   }
 }
 
-export default granulesReducer
+export default granuleResultsReducer

@@ -1,9 +1,10 @@
 import {
   ADD_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
-  UPDATE_COLLECTIONS,
+  UPDATE_COLLECTION_METADATA,
   RESTORE_COLLECTIONS,
-  UNDO_EXCLUDE_GRANULE_ID
+  UNDO_EXCLUDE_GRANULE_ID,
+  CLEAR_COLLECTION_GRANULES
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -12,9 +13,27 @@ const initialState = {
   projectIds: []
 }
 
-const collectionsReducer = (state = initialState, action) => {
+const collectionMetadataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_COLLECTIONS: {
+    case CLEAR_COLLECTION_GRANULES: {
+      const byId = {}
+
+      state.allIds.forEach((id) => {
+        const collection = state.byId[id]
+        const { excludedGranuleIds, metadata } = collection
+        byId[id] = {
+          excludedGranuleIds,
+          granules: {},
+          metadata
+        }
+      })
+
+      return {
+        ...state,
+        byId
+      }
+    }
+    case UPDATE_COLLECTION_METADATA: {
       const [collectionId] = Object.keys(action.payload)
       const allIds = [collectionId]
       const byId = {
@@ -125,4 +144,4 @@ const collectionsReducer = (state = initialState, action) => {
   }
 }
 
-export default collectionsReducer
+export default collectionMetadataReducer

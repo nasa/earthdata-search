@@ -22,6 +22,7 @@ export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
  */
 const urlDefs = {
   focusedCollection: { shortKey: 'p', encode: encodeString, decode: decodeString },
+  focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
   keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
   pointSearch: { shortKey: 'sp', encode: encodeString, decode: decodeString },
   boundingBoxSearch: { shortKey: 'sb', encode: encodeString, decode: decodeString },
@@ -35,7 +36,6 @@ const urlDefs = {
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets }
-  // collections: { shortKey: 'pg', encode: encodeCollections, decode: decodeCollections }
 }
 
 /**
@@ -60,6 +60,7 @@ export const decodeUrlParams = (paramString) => {
   // build the param object based on the structure in the redux store
   // e.g. map is store separately from query
   const focusedCollection = decodeHelp(params, 'focusedCollection')
+  const focusedGranule = decodeHelp(params, 'focusedGranule')
 
   const map = decodeHelp(params, 'map')
 
@@ -99,6 +100,7 @@ export const decodeUrlParams = (paramString) => {
     cmrFacets,
     featureFacets,
     focusedCollection,
+    focusedGranule,
     map,
     query,
     timeline

@@ -1,9 +1,13 @@
 import actions from './index'
 import { updateGranuleQuery } from './search'
 import { CollectionRequest } from '../util/request/cmr'
-import { UPDATE_FOCUSED_COLLECTION, ADD_COLLECTION_GRANULES } from '../constants/actionTypes'
-import { updateCollections } from './collections'
-import { updateGranules, addGranulesFromCollection } from './granules'
+import {
+  UPDATE_FOCUSED_COLLECTION,
+  ADD_COLLECTION_GRANULES,
+  CLEAR_COLLECTION_GRANULES
+} from '../constants/actionTypes'
+import { updateCollectionMetadata } from './collections'
+import { updateGranuleResults, addGranulesFromCollection } from './granules'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -13,6 +17,10 @@ export const updateFocusedCollection = payload => ({
 export const addCollectionGranules = payload => ({
   type: ADD_COLLECTION_GRANULES,
   payload
+})
+
+export const clearCollectionGranules = () => ({
+  type: CLEAR_COLLECTION_GRANULES
 })
 
 /**
@@ -45,21 +53,22 @@ export const copyGranulesToCollection = () => (dispatch, getState) => {
  * @param {string} collectionId
  */
 export const copyGranulesFromCollection = collectionId => (dispatch, getState) => {
-  const { collections } = getState()
+  const { metadata } = getState()
+  const { collections } = metadata
   const collection = collections.byId[collectionId]
 
   if (!collection) return null
 
   const { granules } = collection
+  const { allIds } = granules
+  if (!allIds) return null
 
   return dispatch(addGranulesFromCollection(granules))
 }
 
 
 /**
- * Perform a collection request based on a supplied collection ID.
- * @param {string} collectionId - A CMR Collection ID.
- * @param {function} dispatch - A dispatch function provided by redux.
+ * Perform a collection request based on the focusedCollection from the store.
  */
 export const getFocusedCollection = () => (dispatch, getState) => {
   const { focusedCollection, searchResults } = getState()
@@ -71,7 +80,7 @@ export const getFocusedCollection = () => (dispatch, getState) => {
   dispatch(updateGranuleQuery({ pageNum: 1 }))
 
   if (focusedCollection === '') {
-    dispatch(updateGranules({ results: [] }))
+    dispatch(updateGranuleResults({ results: [] }))
     return null
   }
 
@@ -87,9 +96,7 @@ export const getFocusedCollection = () => (dispatch, getState) => {
       const [metadata] = response.data.feed.entry
       payload[focusedCollection] = metadata
 
-      // dispatch(updateFocusedCollection(focusedCollection))
-
-      dispatch(updateCollections(payload))
+      dispatch(updateCollectionMetadata(payload))
 
       // If granules were copied from collections, don't make a new getGranules request
       if (allIds.length === 0) dispatch(actions.getGranules())

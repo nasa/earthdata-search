@@ -2,30 +2,36 @@ import { populateGranuleResults, prepareGranuleParams } from '../util/granules'
 import { GranuleRequest } from '../util/request/cmr'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
-  ADD_MORE_GRANULES,
+  ADD_MORE_GRANULE_RESULTS,
   ERRORED_GRANULES,
   EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
   STARTED_GRANULES_TIMER,
-  UPDATE_GRANULES,
-  ADD_GRANULES_FROM_COLLECTIONS,
-  UNDO_EXCLUDE_GRANULE_ID
+  UPDATE_GRANULE_RESULTS,
+  ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
+  UNDO_EXCLUDE_GRANULE_ID,
+  UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
 
 export const addGranulesFromCollection = payload => ({
-  type: ADD_GRANULES_FROM_COLLECTIONS,
+  type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   payload
 })
 
-export const addMoreGranules = payload => ({
-  type: ADD_MORE_GRANULES,
+export const addMoreGranuleResults = payload => ({
+  type: ADD_MORE_GRANULE_RESULTS,
   payload
 })
 
-export const updateGranules = payload => ({
-  type: UPDATE_GRANULES,
+export const updateGranuleResults = payload => ({
+  type: UPDATE_GRANULE_RESULTS,
+  payload
+})
+
+export const updateGranuleMetadata = payload => ({
+  type: UPDATE_GRANULE_METADATA,
   payload
 })
 
@@ -76,7 +82,7 @@ export const getGranules = () => (dispatch, getState) => {
   const granuleParams = prepareGranuleParams(getState())
 
   if (!granuleParams) {
-    dispatch(updateGranules({
+    dispatch(updateGranuleResults({
       results: []
     }))
     return null
@@ -121,9 +127,9 @@ export const getGranules = () => (dispatch, getState) => {
       }))
 
       if (pageNum === 1) {
-        dispatch(updateGranules(payload))
+        dispatch(updateGranuleResults(payload))
       } else {
-        dispatch(addMoreGranules(payload))
+        dispatch(addMoreGranuleResults(payload))
       }
     })
     .catch((e) => {

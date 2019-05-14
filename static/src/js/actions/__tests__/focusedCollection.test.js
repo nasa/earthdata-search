@@ -6,11 +6,11 @@ import actions from '../index'
 import { updateFocusedCollection } from '../focusedCollection'
 import {
   UPDATE_FOCUSED_COLLECTION,
-  UPDATE_GRANULES,
+  UPDATE_GRANULE_RESULTS,
   UPDATE_GRANULE_QUERY,
-  UPDATE_COLLECTIONS,
+  UPDATE_COLLECTION_METADATA,
   ADD_COLLECTION_GRANULES,
-  ADD_GRANULES_FROM_COLLECTIONS
+  ADD_GRANULE_RESULTS_FROM_COLLECTIONS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -41,9 +41,11 @@ describe('changeFocusedCollection', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      collections: {
-        allIds: [],
-        byId: {}
+      metadata: {
+        collections: {
+          allIds: [],
+          byId: {}
+        }
       },
       focusedCollection: '',
       query: {
@@ -84,11 +86,13 @@ describe('changeFocusedCollection', () => {
       }
     }
     const store = mockStore({
-      collections: {
-        allIds: [collectionId],
-        byId: {
-          [collectionId]: {
-            granules
+      metadata: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            [collectionId]: {
+              granules
+            }
           }
         }
       },
@@ -106,7 +110,7 @@ describe('changeFocusedCollection', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: ADD_GRANULES_FROM_COLLECTIONS,
+      type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
       payload: {
         ...granules
       }
@@ -170,7 +174,7 @@ describe('changeFocusedCollection', () => {
   })
 })
 
-describe('getFocusedCollection stuff', () => {
+describe('getFocusedCollection', () => {
   beforeEach(() => {
     moxios.install()
 
@@ -219,9 +223,9 @@ describe('getFocusedCollection stuff', () => {
         type: UPDATE_GRANULE_QUERY,
         payload: { pageNum: 1 }
       })
-      // updateCollections
+      // updateCollectionMetadata
       expect(storeActions[1]).toEqual({
-        type: UPDATE_COLLECTIONS,
+        type: UPDATE_COLLECTION_METADATA,
         payload: {
           [collectionId]: {
             mockCollectionData: 'goes here'
@@ -280,9 +284,9 @@ describe('getFocusedCollection stuff', () => {
         type: UPDATE_GRANULE_QUERY,
         payload: { pageNum: 1 }
       })
-      // updateCollections
+      // updateCollectionMetadata
       expect(storeActions[1]).toEqual({
-        type: UPDATE_COLLECTIONS,
+        type: UPDATE_COLLECTION_METADATA,
         payload: {
           [collectionId]: {
             mockCollectionData: 'goes here'
@@ -311,7 +315,7 @@ describe('getFocusedCollection stuff', () => {
       payload: { pageNum: 1 }
     })
     expect(storeActions[1]).toEqual({
-      type: UPDATE_GRANULES,
+      type: UPDATE_GRANULE_RESULTS,
       payload: { results: [] }
     })
   })

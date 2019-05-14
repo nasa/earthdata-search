@@ -5,7 +5,7 @@ import {
   LOADED_COLLECTIONS,
   LOADING_COLLECTIONS,
   STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTIONS_RESULTS
+  UPDATE_COLLECTION_RESULTS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -67,10 +67,10 @@ describe('FINISHED_COLLECTIONS_TIMER', () => {
   })
 })
 
-describe('UPDATE_COLLECTIONS_RESULTS', () => {
+describe('UPDATE_COLLECTION_RESULTS', () => {
   test('returns the correct state', () => {
     const action = {
-      type: UPDATE_COLLECTIONS_RESULTS,
+      type: UPDATE_COLLECTION_RESULTS,
       payload: {
         results: [{
           id: 'mockCollectionId',

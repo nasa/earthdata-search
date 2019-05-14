@@ -22,8 +22,10 @@ function setup(type) {
         title: 'Granule title'
       },
       isLast: false,
+      location: { search: 'location' },
       waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn()
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
     }
   }
 
@@ -39,8 +41,10 @@ function setup(type) {
         title: 'Granule title'
       },
       isLast: false,
+      location: { search: 'location' },
       waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn()
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
     }
   }
 
@@ -57,8 +61,10 @@ function setup(type) {
         thumbnail: '/fake/path/image.jpg'
       },
       isLast: false,
+      location: { search: 'location' },
       waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn()
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
     }
   }
 

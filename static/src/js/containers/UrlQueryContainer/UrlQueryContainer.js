@@ -11,6 +11,8 @@ const mapDispatchToProps = dispatch => ({
     facet => dispatch(actions.updateFeatureFacet(facet)),
   onChangeFocusedCollection:
     collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onChangeFocusedGranule:
+    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeMap:
     query => dispatch(actions.changeMap(query)),
   onChangeQuery:
@@ -27,9 +29,10 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
-  collections: state.collections,
+  collections: state.metadata.collections,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
+  focusedGranule: state.focusedGranule,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
   map: state.map,
@@ -50,6 +53,7 @@ export class UrlQueryContainer extends Component {
   componentDidMount() {
     const {
       onChangeFocusedCollection,
+      onChangeFocusedGranule,
       onChangeMap,
       onChangeQuery,
       onChangeTimelineQuery,
@@ -65,6 +69,7 @@ export class UrlQueryContainer extends Component {
       cmrFacets,
       featureFacets,
       focusedCollection,
+      focusedGranule,
       map,
       query,
       timeline
@@ -76,6 +81,10 @@ export class UrlQueryContainer extends Component {
 
     if (focusedCollection) {
       onChangeFocusedCollection(focusedCollection)
+    }
+
+    if (focusedGranule) {
+      onChangeFocusedGranule(focusedGranule)
     }
 
     if (timeline) {
@@ -134,6 +143,7 @@ UrlQueryContainer.defaultProps = {
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
+  onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,

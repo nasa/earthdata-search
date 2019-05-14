@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
-import collectionsReducer from './collections'
+import collectionMetadataReducer from './collectionMetadata'
+import granuleMetadataReducer from './granuleMetadata'
 import collectionsResultsReducer from './collectionsResults'
 import facetsReducer from './facets'
 import {
@@ -10,28 +11,33 @@ import {
   viewAllFacetsReducer
 } from './facetsParams'
 import focusedCollectionReducer from './focusedCollection'
-import granulesReducer from './granules'
+import granuleResultsReducer from './granuleResults'
 import mapReducer from './map'
 import queryReducer from './query'
 import uiReducer from './ui'
 import timelineReducer from './timeline'
 import viewAllFacetsRequestReducer from './viewAllFacets'
+import focusedGranuleReducer from './focusedGranule'
 
 export default history => combineReducers({
-  collections: collectionsReducer,
   facetsParams: combineReducers({
     feature: featureFacetsReducer,
     cmr: cmrFacetsReducer,
     viewAll: viewAllFacetsReducer
   }),
   focusedCollection: focusedCollectionReducer,
+  focusedGranule: focusedGranuleReducer,
   map: mapReducer,
+  metadata: combineReducers({
+    collections: collectionMetadataReducer,
+    granules: granuleMetadataReducer
+  }),
   query: queryReducer,
   router: connectRouter(history),
   searchResults: combineReducers({
     collections: collectionsResultsReducer,
     facets: facetsReducer,
-    granules: granulesReducer,
+    granules: granuleResultsReducer,
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   timeline: timelineReducer,

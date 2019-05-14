@@ -15,8 +15,10 @@ const GranuleResultsBody = ({
   excludedGranuleIds,
   granules,
   pageNum,
+  location,
   waypointEnter,
-  onExcludeGranule
+  onExcludeGranule,
+  onFocusedGranuleChange
 }) => (
   <div className="granule-results-body__inner">
     <GranuleResultsList
@@ -24,8 +26,10 @@ const GranuleResultsBody = ({
       excludedGranuleIds={excludedGranuleIds}
       granules={granules}
       pageNum={pageNum}
+      location={location}
       waypointEnter={waypointEnter}
       onExcludeGranule={onExcludeGranule}
+      onFocusedGranuleChange={onFocusedGranuleChange}
     />
   </div>
 )
@@ -35,8 +39,10 @@ GranuleResultsBody.propTypes = {
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.shape({}).isRequired,
   pageNum: PropTypes.number.isRequired,
+  location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
-  onExcludeGranule: PropTypes.func.isRequired
+  onExcludeGranule: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired
 }
 
 export default GranuleResultsBody

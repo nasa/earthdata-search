@@ -31,10 +31,11 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
  */
 export const prepareGranuleParams = (state) => {
   const {
-    collections,
+    metadata = {},
     focusedCollection: collectionId,
     query = {}
   } = state
+  const { collections } = metadata
 
   // If we don't have a focusedCollection, bail out!
   if (!collectionId) {
@@ -62,13 +63,13 @@ export const prepareGranuleParams = (state) => {
     polygon
   } = spatial
 
-  const { metadata = {} } = focusedCollectionMetadata
-  const { tags = {} } = metadata
+  const { metadata: collectionMetadata = {} } = focusedCollectionMetadata
+  const { tags = {} } = collectionMetadata
 
   const temporalString = encodeTemporal(temporal)
 
   const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !metadata.has_granules
+    && !collectionMetadata.has_granules
 
   return {
     boundingBox,

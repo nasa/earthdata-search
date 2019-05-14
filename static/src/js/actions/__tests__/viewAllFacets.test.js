@@ -290,7 +290,7 @@ describe('getViewAllFacets', () => {
     })
   })
 
-  test('does not call updateCollectionsResults on error', async () => {
+  test('does not call updateCollectionResults on error', async () => {
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
     moxios.stubRequest(/collections.*/, {

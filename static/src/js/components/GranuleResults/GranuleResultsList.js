@@ -29,8 +29,10 @@ export const GranuleResultsList = (props) => {
     excludedGranuleIds,
     granules,
     pageNum,
+    location,
     waypointEnter,
-    onExcludeGranule
+    onExcludeGranule,
+    onFocusedGranuleChange
   } = props
   const {
     hits,
@@ -51,8 +53,10 @@ export const GranuleResultsList = (props) => {
         key={granuleId}
         granule={granules.byId[granuleId]}
         isLast={isLast}
+        location={location}
         waypointEnter={waypointEnter}
         onExcludeGranule={onExcludeGranule}
+        onFocusedGranuleChange={onFocusedGranuleChange}
       />
     )
   })
@@ -118,8 +122,10 @@ GranuleResultsList.propTypes = {
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.shape({}).isRequired,
   pageNum: PropTypes.number.isRequired,
+  location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
-  onExcludeGranule: PropTypes.func.isRequired
+  onExcludeGranule: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired
 }
 
 export default pure(GranuleResultsList)

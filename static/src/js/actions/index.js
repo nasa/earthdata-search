@@ -1,13 +1,18 @@
 /* eslint-disable import/no-cycle */
 
 import { getCollections, restoreCollections } from './collections'
-import { changeFocusedCollection, getFocusedCollection } from './focusedCollection'
+import {
+  changeFocusedCollection,
+  clearCollectionGranules,
+  getFocusedCollection
+} from './focusedCollection'
 import {
   addGranulesFromCollection,
   excludeGranule,
   getGranules,
   undoExcludeGranule,
-  updateGranules
+  updateGranuleResults,
+  updateGranuleMetadata
 } from './granules'
 import {
   changeTimelineQuery,
@@ -43,6 +48,10 @@ import {
   changeViewAllFacet,
   triggerViewAllFacets
 } from './viewAllFacets'
+import {
+  changeFocusedGranule,
+  getFocusedGranule
+} from './focusedGranule'
 
 const actions = {
   addGranulesFromCollection,
@@ -51,6 +60,7 @@ const actions = {
   changeCollectionPageNum,
   changeFeatureFacet,
   changeFocusedCollection,
+  changeFocusedGranule,
   changeGranulePageNum,
   changeMap,
   changeQuery,
@@ -58,10 +68,12 @@ const actions = {
   changeTimelineState,
   changeUrl,
   changeViewAllFacet,
+  clearCollectionGranules,
   clearFilters,
   excludeGranule,
   getCollections,
   getFocusedCollection,
+  getFocusedGranule,
   getGranules,
   getTimeline,
   getViewAllFacets,
@@ -77,7 +89,8 @@ const actions = {
   undoExcludeGranule,
   updateCmrFacet,
   updateFeatureFacet,
-  updateGranules
+  updateGranuleResults,
+  updateGranuleMetadata
 }
 
 export default actions

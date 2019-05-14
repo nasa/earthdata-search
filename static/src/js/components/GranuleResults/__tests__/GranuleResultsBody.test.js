@@ -15,8 +15,10 @@ function setup() {
       two: 'test'
     },
     pageNum: 1,
+    location: { search: 'value' },
     waypointEnter: jest.fn(),
-    onExcludeGranule: jest.fn()
+    onExcludeGranule: jest.fn(),
+    onFocusedGranuleChange: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBody {...props} />)

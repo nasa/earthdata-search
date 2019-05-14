@@ -40,7 +40,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.collections,
+  collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
   map: state.map,

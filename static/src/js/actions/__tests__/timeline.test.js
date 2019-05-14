@@ -99,7 +99,7 @@ describe('getTimeline', () => {
 
     // call the dispatch
     await store.dispatch(getTimeline()).then(() => {
-      // Is updateGranules called with the right payload
+      // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: UPDATE_TIMELINE_INTERVALS,
@@ -138,7 +138,7 @@ describe('getTimeline', () => {
     })
   })
 
-  test('does not call updateGranules on error', async () => {
+  test('does not call updateTimelineIntervals on error', async () => {
     moxios.stubRequest(/granules\/timeline.*/, {
       status: 500,
       response: {}

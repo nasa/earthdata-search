@@ -20,8 +20,10 @@ function setup() {
     focusedCollection: 'focusedCollection',
     granules: { value: 'granules' },
     granuleQuery: { pageNum: 1 },
+    location: { search: 'value' },
     onChangeGranulePageNum: jest.fn(),
-    onExcludeGranule: jest.fn()
+    onExcludeGranule: jest.fn(),
+    onFocusedGranuleChange: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBodyContainer {...props} />)

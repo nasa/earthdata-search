@@ -1,6 +1,6 @@
 import {
   ADD_MORE_COLLECTION_RESULTS,
-  UPDATE_COLLECTIONS_RESULTS,
+  UPDATE_COLLECTION_RESULTS,
   LOADING_COLLECTIONS,
   LOADED_COLLECTIONS,
   STARTED_COLLECTIONS_TIMER,
@@ -60,7 +60,7 @@ const collectionsResultsReducer = (state = initialState, action) => {
         loadTime: Date.now() - timerStart
       }
     }
-    case UPDATE_COLLECTIONS_RESULTS: {
+    case UPDATE_COLLECTION_RESULTS: {
       const { byId, allIds } = processResults(action.payload.results)
 
       return {

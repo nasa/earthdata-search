@@ -6,8 +6,8 @@ import {
 
 import {
   ADD_MORE_COLLECTION_RESULTS,
-  UPDATE_COLLECTIONS,
-  UPDATE_COLLECTIONS_RESULTS,
+  UPDATE_COLLECTION_METADATA,
+  UPDATE_COLLECTION_RESULTS,
   LOADING_COLLECTIONS,
   LOADED_COLLECTIONS,
   ERRORED_COLLECTIONS,
@@ -25,13 +25,13 @@ export const addMoreCollectionResults = payload => ({
   payload
 })
 
-export const updateCollectionsResults = payload => ({
-  type: UPDATE_COLLECTIONS_RESULTS,
+export const updateCollectionResults = payload => ({
+  type: UPDATE_COLLECTION_RESULTS,
   payload
 })
 
-export const updateCollections = payload => ({
-  type: UPDATE_COLLECTIONS,
+export const updateCollectionMetadata = payload => ({
+  type: UPDATE_COLLECTION_METADATA,
   payload
 })
 
@@ -95,7 +95,7 @@ export const getCollections = () => (dispatch, getState) => {
     const emptyPayload = {
       results: []
     }
-    dispatch(updateCollectionsResults(emptyPayload))
+    dispatch(updateCollectionResults(emptyPayload))
   }
 
   dispatch(onCollectionsLoading())
@@ -121,7 +121,7 @@ export const getCollections = () => (dispatch, getState) => {
         loaded: true
       }))
       if (pageNum === 1) {
-        dispatch(updateCollectionsResults(payload))
+        dispatch(updateCollectionResults(payload))
       } else {
         dispatch(addMoreCollectionResults(payload))
       }
