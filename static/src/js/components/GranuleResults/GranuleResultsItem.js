@@ -2,6 +2,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Waypoint } from 'react-waypoint'
+import queryString from 'query-string'
+import { Link } from 'react-router-dom'
 
 import './GranuleResultsItem.scss'
 
@@ -14,17 +16,24 @@ const GranuleResultsItem = ({
   collectionId,
   granule,
   isLast,
+  location,
   waypointEnter,
-  onExcludeGranule
+  onExcludeGranule,
+  onFocusedGranuleChange
 }) => {
   const handleRemoveClick = () => {
     const { id } = granule
     onExcludeGranule({ collectionId, granuleId: id })
   }
 
+  const handleClickGranuleDetails = (granuleId) => {
+    onFocusedGranuleChange(granuleId)
+  }
+
   const {
     browse_flag: browseFlag,
     formatted_temporal: formattedTemporal,
+    id,
     links,
     online_access_flag: onlineAccessFlag,
     producer_granule_id: producerGranuleId,
@@ -97,13 +106,29 @@ const GranuleResultsItem = ({
           </div>
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
-              <button
-                className="button granule-results-item__button"
-                type="button"
-                title="View granule details"
+              <Link
+                onClick={() => handleClickGranuleDetails(id)}
+                className="collection-results__item-title-link"
+                to={{
+                  pathname: '/search/granules/granule-details',
+                  search: queryString
+                    .stringify(
+                      Object.assign(
+                        {},
+                        queryString.parse(location.search),
+                        { g: id }
+                      )
+                    )
+                }}
               >
-                <i className="fa fa-info-circle" />
-              </button>
+                <button
+                  className="button granule-results-item__button"
+                  type="button"
+                  title="View granule details"
+                >
+                  <i className="fa fa-info-circle" />
+                </button>
+              </Link>
               {
                 onlineAccessFlag && (
                   <a
@@ -144,8 +169,10 @@ GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
   isLast: PropTypes.bool.isRequired,
+  location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
-  onExcludeGranule: PropTypes.func.isRequired
+  onExcludeGranule: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired
 }
 
 export default GranuleResultsItem

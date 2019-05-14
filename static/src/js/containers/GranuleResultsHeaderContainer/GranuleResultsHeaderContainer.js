@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.collections,
+  collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue

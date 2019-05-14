@@ -193,6 +193,12 @@ export class GranuleRequest extends CmrRequest {
   }
 }
 
+export class ConceptRequest extends CmrRequest {
+  search(conceptId, format) {
+    return super.get(`search/concepts/${conceptId}.${format}`)
+  }
+}
+
 /**
  * Request object for timeline specific requests
  */

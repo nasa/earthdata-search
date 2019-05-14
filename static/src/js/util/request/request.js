@@ -34,7 +34,7 @@ export default class Request {
    * Makes a POST request to the provided URL.
    * @param {String} url - URL to send the provided data to.
    * @param {Object} data - Data to be sent with the request.
-   * @return {Promise} A Promise object representing the reques that was made
+   * @return {Promise} A Promise object representing the request that was made
    */
   post(url, data) {
     return axios({
@@ -48,6 +48,19 @@ export default class Request {
       transformResponse: axios.defaults.transformResponse.concat(
         data => this.transformResponse(data)
       )
+    })
+  }
+
+  /**
+   * Makes a GET request to the provided URL
+   * @param {string} url URL to send the request to
+   * @return {Promise} A Promise object representing the request that was made
+   */
+  get(url) {
+    return axios({
+      method: 'get',
+      baseURL: this.baseUrl,
+      url
     })
   }
 }

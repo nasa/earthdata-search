@@ -3,23 +3,23 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  updateGranules,
+  updateGranuleResults,
   getGranules,
   excludeGranule,
   undoExcludeGranule
 } from '../granules'
-import { UPDATE_GRANULES, EXCLUDE_GRANULE_ID, UNDO_EXCLUDE_GRANULE_ID } from '../../constants/actionTypes'
+import { UPDATE_GRANULE_RESULTS, EXCLUDE_GRANULE_ID, UNDO_EXCLUDE_GRANULE_ID } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
-describe('updateGranules', () => {
+describe('updateGranuleResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
     const expectedAction = {
-      type: UPDATE_GRANULES,
+      type: UPDATE_GRANULE_RESULTS,
       payload
     }
-    expect(updateGranules(payload)).toEqual(expectedAction)
+    expect(updateGranuleResults(payload)).toEqual(expectedAction)
   })
 })
 
@@ -54,11 +54,13 @@ describe('getGranules', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      collections: {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            mock: 'data'
+      metadata: {
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              mock: 'data'
+            }
           }
         }
       },
@@ -74,7 +76,7 @@ describe('getGranules', () => {
 
     // call the dispatch
     await store.dispatch(getGranules()).then(() => {
-      // Is updateGranules called with the right payload
+      // Is updateGranuleResults called with the right payload
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: 'LOADING_GRANULES' })
       expect(storeActions[1]).toEqual({ type: 'STARTED_GRANULES_TIMER' })
@@ -86,7 +88,7 @@ describe('getGranules', () => {
         }
       })
       expect(storeActions[4]).toEqual({
-        type: UPDATE_GRANULES,
+        type: UPDATE_GRANULE_RESULTS,
         payload: {
           collectionId: 'collectionId',
           hits: 1,
@@ -119,14 +121,14 @@ describe('getGranules', () => {
     store.dispatch(getGranules())
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_GRANULES,
+      type: UPDATE_GRANULE_RESULTS,
       payload: {
         results: []
       }
     })
   })
 
-  test('does not call updateGranules on error', async () => {
+  test('does not call updateGranuleResults on error', async () => {
     moxios.stubRequest(/granules.*/, {
       status: 500,
       response: {}

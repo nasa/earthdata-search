@@ -19,6 +19,10 @@ export const changeQuery = query => (dispatch) => {
   }
 
   dispatch(updateCollectionQuery(newQuery))
+
+  // Remove all saved granules in the metadata/collections store
+  dispatch(actions.clearCollectionGranules())
+
   dispatch(actions.getCollections())
   dispatch(actions.getGranules())
   dispatch(actions.getTimeline())

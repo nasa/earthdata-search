@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+
 import actions from '../../actions/index'
 import getFocusedCollectionMetadata from '../../util/focusedCollection'
 
@@ -10,11 +12,13 @@ const mapDispatchToProps = dispatch => ({
   onChangeGranulePageNum:
     data => dispatch(actions.changeGranulePageNum(data)),
   onExcludeGranule:
-    data => dispatch(actions.excludeGranule(data))
+    data => dispatch(actions.excludeGranule(data)),
+  onFocusedGranuleChange:
+    granuleId => dispatch(actions.changeFocusedGranule(granuleId))
 })
 
 const mapStateToProps = state => ({
-  collections: state.collections,
+  collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
   granuleQuery: state.query.granule
@@ -26,8 +30,10 @@ export const GranuleResultsBodyContainer = (props) => {
     focusedCollection,
     granules,
     granuleQuery,
+    location,
     onChangeGranulePageNum,
-    onExcludeGranule
+    onExcludeGranule,
+    onFocusedGranuleChange
   } = props
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
@@ -50,8 +56,10 @@ export const GranuleResultsBodyContainer = (props) => {
       excludedGranuleIds={excludedGranuleIds}
       granules={granules}
       pageNum={pageNum}
+      location={location}
       waypointEnter={onWaypointEnter}
       onExcludeGranule={onExcludeGranule}
+      onFocusedGranuleChange={onFocusedGranuleChange}
     />
   )
 }
@@ -61,8 +69,12 @@ GranuleResultsBodyContainer.propTypes = {
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
-  onExcludeGranule: PropTypes.func.isRequired
+  onExcludeGranule: PropTypes.func.isRequired,
+  onFocusedGranuleChange: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GranuleResultsBodyContainer)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(GranuleResultsBodyContainer)
+)

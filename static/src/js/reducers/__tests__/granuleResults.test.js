@@ -1,12 +1,12 @@
-import granulesReducer from '../granules'
+import granuleResultsReducer from '../granuleResults'
 import {
-  ADD_MORE_GRANULES,
+  ADD_MORE_GRANULE_RESULTS,
   FINISHED_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
   STARTED_GRANULES_TIMER,
-  UPDATE_GRANULES,
-  ADD_GRANULES_FROM_COLLECTIONS
+  UPDATE_GRANULE_RESULTS,
+  ADD_GRANULE_RESULTS_FROM_COLLECTIONS
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -24,14 +24,14 @@ describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
 
-    expect(granulesReducer(undefined, action)).toEqual(initialState)
+    expect(granuleResultsReducer(undefined, action)).toEqual(initialState)
   })
 })
 
-describe('UPDATE_GRANULES', () => {
+describe('UPDATE_GRANULE_RESULTS', () => {
   test('returns the correct state', () => {
     const action = {
-      type: UPDATE_GRANULES,
+      type: UPDATE_GRANULE_RESULTS,
       payload: {
         results: [{
           id: 'mockGranuleId',
@@ -55,14 +55,14 @@ describe('UPDATE_GRANULES', () => {
       isCwic: true
     }
 
-    expect(granulesReducer(undefined, action)).toEqual(expectedState)
+    expect(granuleResultsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
-describe('ADD_MORE_GRANULES', () => {
+describe('ADD_MORE_GRANULE_RESULTS', () => {
   test('returns the correct state', () => {
     const action = {
-      type: ADD_MORE_GRANULES,
+      type: ADD_MORE_GRANULE_RESULTS,
       payload: {
         results: [{
           id: 'mockCollectionId2',
@@ -99,7 +99,7 @@ describe('ADD_MORE_GRANULES', () => {
       }
     }
 
-    expect(granulesReducer(initial, action)).toEqual(expectedState)
+    expect(granuleResultsReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -115,7 +115,7 @@ describe('LOADING_GRANULES', () => {
       isLoaded: false
     }
 
-    expect(granulesReducer(undefined, action)).toEqual(expectedState)
+    expect(granuleResultsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
@@ -134,7 +134,7 @@ describe('LOADED_GRANULES', () => {
       isLoaded: true
     }
 
-    expect(granulesReducer(undefined, action)).toEqual(expectedState)
+    expect(granuleResultsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
@@ -152,7 +152,7 @@ describe('STARTED_GRANULES_TIMER', () => {
       timerStart: 5
     }
 
-    expect(granulesReducer(undefined, action)).toEqual(expectedState)
+    expect(granuleResultsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
@@ -174,11 +174,11 @@ describe('FINISHED_GRANULES_TIMER', () => {
       loadTime: 5
     }
 
-    expect(granulesReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
+    expect(granuleResultsReducer({ ...initialState, timerStart: start }, action)).toEqual(expectedState)
   })
 })
 
-describe('ADD_GRANULES_FROM_COLLECTIONS', () => {
+describe('ADD_GRANULE_RESULTS_FROM_COLLECTIONS', () => {
   test('returns the correct state', () => {
     const payload = {
       allIds: ['granule1'],
@@ -189,7 +189,7 @@ describe('ADD_GRANULES_FROM_COLLECTIONS', () => {
       hits: 1
     }
     const action = {
-      type: ADD_GRANULES_FROM_COLLECTIONS,
+      type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
       payload
     }
 
@@ -199,6 +199,6 @@ describe('ADD_GRANULES_FROM_COLLECTIONS', () => {
       isLoaded: true
     }
 
-    expect(granulesReducer(undefined, action)).toEqual(expectedState)
+    expect(granuleResultsReducer(undefined, action)).toEqual(expectedState)
   })
 })

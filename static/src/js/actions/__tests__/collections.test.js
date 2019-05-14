@@ -10,7 +10,7 @@ import {
   onFacetsErrored,
   onFacetsLoaded,
   onFacetsLoading,
-  updateCollectionsResults,
+  updateCollectionResults,
   updateFacets
 } from '../collections'
 import {
@@ -22,7 +22,7 @@ import {
   LOADING_COLLECTIONS,
   LOADING_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTIONS_RESULTS,
+  UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS
 } from '../../constants/actionTypes'
 
@@ -32,14 +32,14 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('updateCollectionsResults', () => {
+describe('updateCollectionResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
     const expectedAction = {
-      type: UPDATE_COLLECTIONS_RESULTS,
+      type: UPDATE_COLLECTION_RESULTS,
       payload
     }
-    expect(updateCollectionsResults(payload)).toEqual(expectedAction)
+    expect(updateCollectionResults(payload)).toEqual(expectedAction)
   })
 })
 
@@ -170,7 +170,7 @@ describe('getCollections', () => {
     await store.dispatch(getCollections()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: UPDATE_COLLECTIONS_RESULTS,
+        type: UPDATE_COLLECTION_RESULTS,
         payload: {
           results: []
         }
@@ -188,7 +188,7 @@ describe('getCollections', () => {
         payload: { loaded: true }
       })
       expect(storeActions[7]).toEqual({
-        type: UPDATE_COLLECTIONS_RESULTS,
+        type: UPDATE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
           results: [{
@@ -201,7 +201,7 @@ describe('getCollections', () => {
     })
   })
 
-  test('does not call updateCollectionsResults on error', async () => {
+  test('does not call updateCollectionResults on error', async () => {
     moxios.stubRequest(/collections.*/, {
       status: 500,
       response: {}

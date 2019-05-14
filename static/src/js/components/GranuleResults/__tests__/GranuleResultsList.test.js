@@ -25,8 +25,10 @@ function setup(type) {
         byId: {}
       },
       pageNum: 1,
+      location: { search: 'value' },
       waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn()
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
     }
   }
 
@@ -43,8 +45,10 @@ function setup(type) {
         byId: {}
       },
       pageNum: 2,
+      location: { search: 'value' },
       waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn()
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
     }
   }
 
@@ -71,8 +75,10 @@ function setup(type) {
         }
       },
       pageNum: 1,
+      location: { search: 'value' },
       waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn()
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
     }
   }
 
