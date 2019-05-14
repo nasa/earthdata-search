@@ -12,6 +12,13 @@ describe('url#decodeUrlParams', () => {
     }
     expect(decodeUrlParams('?fp=facet%201%21facet%202')).toEqual(expectedResult)
   })
+
+  test('decodes platformFacets correctly if no values existed', () => {
+    const expectedResult = {
+      ...emptyDecodedResult
+    }
+    expect(decodeUrlParams('?fp=')).toEqual(expectedResult)
+  })
 })
 
 describe('url#encodeUrlQuery', () => {

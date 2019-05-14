@@ -37,9 +37,7 @@ export const encodeTimeline = (timeline) => {
  * @return {object} Timeline object with query and state
  */
 export const decodeTimeline = (string) => {
-  if (!string) {
-    return {}
-  }
+  if (!string) return undefined
 
   const [center, intervalNum, start, end] = string.split('!')
 

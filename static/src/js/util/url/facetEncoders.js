@@ -28,7 +28,5 @@ export const decodeFacets = (string) => {
 
   const decodedValues = string.split('!')
 
-  if (decodedValues.length > 0) return decodedValues
-
-  return undefined
+  return decodedValues
 }

@@ -8,6 +8,7 @@ import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEn
 import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
+import { decodeCollections, encodeCollections } from './collectionsEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -34,6 +35,7 @@ const urlDefs = {
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets }
+  // collections: { shortKey: 'pg', encode: encodeCollections, decode: decodeCollections }
 }
 
 /**
@@ -57,8 +59,7 @@ export const decodeUrlParams = (paramString) => {
 
   // build the param object based on the structure in the redux store
   // e.g. map is store separately from query
-  const focusedCollection = {}
-  focusedCollection.collectionId = decodeHelp(params, 'focusedCollection')
+  const focusedCollection = decodeHelp(params, 'focusedCollection')
 
   const map = decodeHelp(params, 'map')
 
@@ -82,6 +83,8 @@ export const decodeUrlParams = (paramString) => {
   const projects = decodeHelp(params, 'projectFacets')
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
 
+  const collections = decodeCollections(params)
+
   const cmrFacets = {
     data_center_h: organizations,
     instrument_h: instruments,
@@ -92,6 +95,7 @@ export const decodeUrlParams = (paramString) => {
   }
 
   return {
+    collections,
     cmrFacets,
     featureFacets,
     focusedCollection,
@@ -117,8 +121,13 @@ export const encodeUrlQuery = (props) => {
   })
 
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
+  const collectionsQuery = encodeCollections(props.collections, props.focusedCollection)
 
-  const encodedQuery = Object.assign({}, query, scienceKeywordQuery)
+  const encodedQuery = {
+    ...query,
+    ...scienceKeywordQuery,
+    ...collectionsQuery
+  }
 
   // endcode query as a URL string
   const paramString = qs.stringify(cleanDeep(encodedQuery), { addQueryPrefix: true })
