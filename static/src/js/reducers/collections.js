@@ -1,7 +1,8 @@
 import {
   ADD_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
-  UPDATE_COLLECTIONS
+  UPDATE_COLLECTIONS,
+  RESTORE_COLLECTIONS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -52,6 +53,14 @@ const collectionsReducer = (state = initialState, action) => {
           ...state.byId,
           ...byId
         }
+      }
+    }
+    case RESTORE_COLLECTIONS: {
+      console.log('RESTORE_COLLECTIONS', action.payload)
+
+      return {
+        ...state,
+        ...action.payload
       }
     }
     case EXCLUDE_GRANULE_ID: {

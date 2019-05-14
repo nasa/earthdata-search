@@ -1,6 +1,7 @@
 import { decodeUrlParams, encodeUrlQuery } from '../url'
 
 const emptyDecodedResult = {
+  collections: undefined,
   cmrFacets: {
     data_center_h: undefined,
     instrument_h: undefined,
@@ -14,9 +15,7 @@ const emptyDecodedResult = {
     mapImagery: false,
     nearRealTime: false
   },
-  focusedCollection: {
-    collectionId: undefined
-  },
+  focusedCollection: undefined,
   map: {},
   query: {
     keyword: undefined,
@@ -27,7 +26,7 @@ const emptyDecodedResult = {
     },
     temporal: {}
   },
-  timeline: {}
+  timeline: undefined
 }
 
 describe('url#decodeUrlParams', () => {

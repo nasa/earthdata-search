@@ -16,7 +16,8 @@ import {
   UPDATE_FACETS,
   ERRORED_FACETS,
   STARTED_COLLECTIONS_TIMER,
-  FINISHED_COLLECTIONS_TIMER
+  FINISHED_COLLECTIONS_TIMER,
+  RESTORE_COLLECTIONS
 } from '../constants/actionTypes'
 
 export const addMoreCollectionResults = payload => ({
@@ -73,6 +74,10 @@ export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
 })
 
+export const restoreCollections = payload => ({
+  type: RESTORE_COLLECTIONS,
+  payload
+})
 
 /**
  * Perform a collections request based on the current redux state.

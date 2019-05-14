@@ -6,9 +6,7 @@ describe('url#decodeUrlParams', () => {
   test('decodes focusedCollection correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      focusedCollection: {
-        collectionId: 'collectionId'
-      }
+      focusedCollection: 'collectionId'
     }
     expect(decodeUrlParams('?p=collectionId')).toEqual(expectedResult)
   })

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 
-import { getCollections } from './collections'
+import { getCollections, restoreCollections } from './collections'
 import { changeFocusedCollection, getFocusedCollection } from './focusedCollection'
 import {
   addGranulesFromCollection,
@@ -69,6 +69,7 @@ const actions = {
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
+  restoreCollections,
   searchNlp,
   toggleFacetsModal,
   triggerViewAllFacets,

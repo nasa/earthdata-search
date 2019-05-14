@@ -20,11 +20,14 @@ const mapDispatchToProps = dispatch => ({
   onChangeTimelineState:
     state => dispatch(actions.changeTimelineState(state)),
   onChangeUrl:
-    query => dispatch(actions.changeUrl(query))
+    query => dispatch(actions.changeUrl(query)),
+  onRestoreCollections:
+    collections => dispatch(actions.restoreCollections(collections))
 })
 
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  collections: state.collections,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
@@ -46,17 +49,19 @@ const mapStateToProps = state => ({
 export class UrlQueryContainer extends Component {
   componentDidMount() {
     const {
-      onUpdateCmrFacet,
-      onUpdateFeatureFacet,
       onChangeFocusedCollection,
       onChangeMap,
       onChangeQuery,
       onChangeTimelineQuery,
       onChangeTimelineState,
+      onRestoreCollections,
+      onUpdateCmrFacet,
+      onUpdateFeatureFacet,
       search
     } = this.props
 
     const {
+      collections,
       cmrFacets,
       featureFacets,
       focusedCollection,
@@ -69,11 +74,11 @@ export class UrlQueryContainer extends Component {
       onChangeMap(map)
     }
 
-    if (focusedCollection.collectionId) {
-      onChangeFocusedCollection(focusedCollection.collectionId)
+    if (focusedCollection) {
+      onChangeFocusedCollection(focusedCollection)
     }
 
-    if (Object.keys(timeline).length > 0) {
+    if (timeline) {
       const { state, query } = timeline
       onChangeTimelineState(state)
       onChangeTimelineQuery(query)
@@ -85,6 +90,12 @@ export class UrlQueryContainer extends Component {
 
     if (cmrFacets) {
       onUpdateCmrFacet(cmrFacets)
+    }
+
+    if (collections) {
+      console.log('collections', collections)
+      // TODO do something with the collections data
+      onRestoreCollections(collections)
     }
 
     if (Object.keys(query).length > 0) {
@@ -125,13 +136,14 @@ UrlQueryContainer.defaultProps = {
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  onUpdateCmrFacet: PropTypes.func.isRequired,
-  onUpdateFeatureFacet: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onChangeTimelineState: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
+  onRestoreCollections: PropTypes.func.isRequired,
+  onUpdateCmrFacet: PropTypes.func.isRequired,
+  onUpdateFeatureFacet: PropTypes.func.isRequired,
   search: PropTypes.string
 }
 
