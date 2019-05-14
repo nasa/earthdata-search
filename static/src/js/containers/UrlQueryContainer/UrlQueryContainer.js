@@ -93,8 +93,6 @@ export class UrlQueryContainer extends Component {
     }
 
     if (collections) {
-      console.log('collections', collections)
-      // TODO do something with the collections data
       onRestoreCollections(collections)
     }
 

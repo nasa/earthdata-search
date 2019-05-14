@@ -22,11 +22,56 @@ const GranuleResultsItem = ({
     onExcludeGranule({ collectionId, granuleId: id })
   }
 
-  const title = granule.producer_granule_id ? granule.producer_granule_id : granule.title
-  const temporal = granule.formatted_temporal
+  const {
+    browse_flag: browseFlag,
+    formatted_temporal: formattedTemporal,
+    links,
+    online_access_flag: onlineAccessFlag,
+    producer_granule_id: producerGranuleId,
+    thumbnail: granuleThumbnail,
+    title: granuleTitle
+  } = granule
+
+  const title = producerGranuleId || granuleTitle
+  const temporal = formattedTemporal
   const timeStart = temporal[0]
   const timeEnd = temporal[1]
-  const thumbnail = granule.browse_flag ? granule.thumbnail : false
+  const thumbnail = browseFlag ? granuleThumbnail : false
+
+  const dataLinks = () => {
+    // All 'http' data links that are not inherited
+    const httpDataLinks = links.filter((link) => {
+      const {
+        href,
+        inherited = false,
+        rel
+      } = link
+
+      return href.indexOf('http') !== -1 && rel.indexOf('/data#') !== -1 && inherited !== true
+    })
+
+    // Strip filenames from httpDataLinks
+    const filenames = httpDataLinks.map(link => link.href.substr(link.href.lastIndexOf('/') + 1).replace('.html', ''))
+
+    // Find any 'ftp' data links that are not interited that have filenames not already included with 'http' links
+    const ftpLinks = links.filter((link) => {
+      const {
+        href,
+        inherited = false,
+        rel
+      } = link
+
+      const filename = href.substr(href.lastIndexOf('/') + 1)
+
+      return href.indexOf('ftp://') !== -1 && rel.indexOf('/data#') !== -1 && inherited !== true && filenames.indexOf(filename) === -1
+    })
+
+    // Return http and ftp data links with a unique list of filenames, prefering http
+    return [
+      ...httpDataLinks,
+      ...ftpLinks
+    ]
+  }
 
   return (
     <li className="granule-results-item">
@@ -34,11 +79,12 @@ const GranuleResultsItem = ({
         <h3 className="granule-results-item__title">{title}</h3>
       </div>
       <div className="granule-results-item__body">
-        { thumbnail && (
-          <div className="granule-results-item__thumb">
-            <img src={thumbnail} height="85" width="85" alt={`Browse Image for ${title}`} />
-          </div>
-        )
+        {
+          thumbnail && (
+            <div className="granule-results-item__thumb">
+              <img src={thumbnail} height="85" width="85" alt={`Browse Image for ${title}`} />
+            </div>
+          )
         }
         <div className="granule-results-item__meta">
           <div className="granule-results-item__temporal granule-results-item__temporal--start">
@@ -58,14 +104,25 @@ const GranuleResultsItem = ({
               >
                 <i className="fa fa-info-circle" />
               </button>
-              <button
-                className="button granule-results-item__button"
-                type="button"
-                title="Download single granule details"
-              >
-                <i className="fa fa-download" />
-                {/* TODO handle multiple download links dropdown */}
-              </button>
+              {
+                onlineAccessFlag && (
+                  <a
+                    className="button granule-results-item__button"
+                    href={dataLinks()[0].href}
+                    rel="noopener noreferrer"
+                    type="button"
+                    title="Download single granule data"
+                    target="_blank"
+                  >
+                    <i className="fa fa-download" />
+                    {/*
+                      TODO handle multiple download links dropdown,
+                      example: C1548317484-PODAAC
+                    */}
+                  </a>
+                )
+              }
+
               <button
                 className="button granule-results-item__button"
                 type="button"
