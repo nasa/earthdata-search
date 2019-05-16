@@ -48,3 +48,20 @@ export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
     qsStringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
   ].join('&')
 }
+
+/**
+ * Returns a Knex database connection object to the EDSC RDS database
+ */
+export const getDbConnection = () => {
+  const dbPassword = getDbPassword();
+  return knex({
+    client: 'pg',
+    connection: {
+      host: process.env.dbEndpoint,
+      user: process.env.dbUsername,
+      password: dbPassword,
+      database: process.env.dbName,
+      port: 5432
+    }
+  });
+}

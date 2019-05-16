@@ -1,6 +1,6 @@
 import 'array-foreach-async'
 import 'pg'
-import knex from 'knex'
+import { getDbConnection } from './util'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
@@ -8,16 +8,7 @@ import AWS from 'aws-sdk'
 // CREATE USER lambda WITH LOGIN;
 // GRANT rds_iam TO edsc_test;
 
-const connection = knex({
-  client: 'pg',
-  connection: {
-    host: process.env.dbEndpoint,
-    user: process.env.dbUsername,
-    password: process.env.dbPassword,
-    database: process.env.dbName,
-    port: 5432
-  }
-})
+const connection = getDbConnection();
 
 const colorMapsTableName = 'colormaps'
 

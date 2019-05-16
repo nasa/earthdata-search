@@ -1,16 +1,7 @@
 import 'pg'
-import knex from 'knex'
+import { getDbConnection } from './util'
 
-const connection = knex({
-  client: 'pg',
-  connection: {
-    host: process.env.dbEndpoint,
-    user: process.env.dbUsername,
-    password: process.env.dbPassword,
-    database: process.env.dbName,
-    port: 5432
-  }
-})
+const connection = getDbConnection();
 
 export default function getColorMap(event, context, callback) {
   try {
