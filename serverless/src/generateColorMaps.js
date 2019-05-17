@@ -71,7 +71,7 @@ const getProjectionCapabilities = async (projection) => {
 
           try {
             sqs.sendMessage({
-              QueueUrl: 'https://sqs.us-east-1.amazonaws.com/955096628022/ColorMapsProcessing',
+              QueueUrl: process.env.colorMapQueueUrl,
               MessageBody: JSON.stringify(knownColorMap)
             }, (error) => {
               if (error) {

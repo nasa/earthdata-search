@@ -58,7 +58,7 @@ functions:
       - sqs:
           arn:
             Fn::GetAtt:
-              - ColorMapsProcessing
+              - ColorMapsProcessingQueue
               - Arn
 
   # 
@@ -66,6 +66,9 @@ functions:
   # 
   generateColorMaps:
     handler: serverless/src/generateColorMaps.default
+    environment:
+      colorMapQueueUrl:
+        Ref: ColorMapsProcessingQueue
     timeout: 300
     role: ScheduledLambdaRole
     vpc:
