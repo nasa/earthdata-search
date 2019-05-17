@@ -1,14 +1,14 @@
 import 'array-foreach-async'
 import 'pg'
-import { getDbConnection } from './util'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
+import { getDbConnection } from './util'
 
 // CREATE USER lambda WITH LOGIN;
 // GRANT rds_iam TO edsc_test;
 
-const connection = getDbConnection();
+const connection = getDbConnection()
 
 const colorMapsTableName = 'colormaps'
 

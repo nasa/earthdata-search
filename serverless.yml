@@ -5,6 +5,17 @@ provider:
   runtime: nodejs8.10
   versionFunctions: false
   stage: ${opt:stage, 'lab'}
+  environment:
+    dbEndpoint:
+      Fn::GetAtt:
+        - Database
+        - Endpoint.Address
+    dbPort:
+      Fn::GetAtt:
+        - Database
+        - Endpoint.Port
+    dbUsername: edsc
+    dbName: edsc
 
 plugins:
   - serverless-dotenv-plugin
@@ -209,34 +220,53 @@ resources:
     #             ]
 
     # SQS Queue to process Color Map entries
-    ColorMapsProcessing:
+    ColorMapsProcessingQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
-        QueueName: 'ColorMapsProcessing'
         MessageRetentionPeriod: 345600 # Default value, leaving for visibility
         VisibilityTimeout: 300
 
     LambdaSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
       Properties:
-        GroupDescription: 'Security Group for Lambda functions'
+        GroupDescription: 'Security Group for EDSC Lambda functions'
         SecurityGroupEgress:
           - CidrIp: '0.0.0.0/0'
             IpProtocol: -1
             FromPort: 0
             ToPort: 65535
         VpcId: ${self:custom.awsResources.vpc}
+    
+    # Database password secret storage
+    DbPasswordSecret:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Description: "EDSC RDS database master password"
+        GenerateSecretString:
+          SecretStringTemplate: "{\"username\":\"edsc\"}"
+          GenerateStringKey: "password"
+          PasswordLength: 30
+          ExcludeCharacters: "\"@/\\"
 
+    SecretRDSInstanceAttachment:
+      Type: "AWS::SecretsManager::SecretTargetAttachment"
+      Properties:
+        SecretId:
+          Ref: DbPasswordSecret
+        TargetId:
+          Ref: Database
+        TargetType: AWS::RDS::DBInstance
+
+    # RDS database
     Database:
       Type: AWS::RDS::DBInstance
       Properties:
-        DBName: earthdata_search_lab
         AllocatedStorage: '20'
         DBInstanceClass: db.t2.micro
         Engine: postgres
         EngineVersion: '10.6'
-        MasterUsername: ${ssm:rdsMasterUsername}
-        MasterUserPassword: ${ssm:rdsMasterPassword~true}
+        MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
+        MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
         StorageType: gp2
         DBSubnetGroupName:
           Ref: DBSubnetGroup
@@ -335,6 +365,11 @@ resources:
                   Action:
                     - sqs:*
                   Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - secretsmanager:GetSecretValue
+                  Resource:
+                    Ref: DbPasswordSecret
 
     GatewayResponseDefault4XX:
       Type: AWS::ApiGateway::GatewayResponse

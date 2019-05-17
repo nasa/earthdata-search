@@ -1,7 +1,7 @@
 import 'pg'
 import { getDbConnection } from './util'
 
-const connection = getDbConnection();
+const connection = getDbConnection()
 
 export default function getColorMap(event, context, callback) {
   try {
