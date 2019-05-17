@@ -90,7 +90,6 @@ functions:
   # 
   getColorMap:
     handler: serverless/src/getColorMap.default
-    timeout: 300
     role: ScheduledLambdaRole
     vpc:
       securityGroupIds:
