@@ -11,6 +11,6 @@ describe('Lambda#transformRequest', () => {
 
     // Our top level lambda object doesnt permit any keys, anything that inherits from
     // this class will need to white list the parmeters used.
-    expect(transformedData).toEqual('{}')
+    expect(transformedData).toEqual('{"params":{}}')
   })
 })

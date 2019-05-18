@@ -36,12 +36,13 @@ export default class Request {
    * @param {Object} data - Data to be sent with the request.
    * @return {Promise} A Promise object representing the request that was made
    */
-  post(url, data) {
+  post(url, data, withCredentials) {
     return axios({
       method: 'post',
       baseURL: this.baseUrl,
       url,
       data,
+      withCredentials,
       transformRequest: [
         data => this.transformRequest(data)
       ],

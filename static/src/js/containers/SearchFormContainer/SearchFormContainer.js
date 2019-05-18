@@ -12,6 +12,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   keywordSearch: state.query.collection.keyword
 })
 
@@ -20,6 +21,7 @@ const mapStateToProps = state => ({
 
 export const SearchFormContainer = (props) => {
   const {
+    auth,
     keywordSearch,
     onChangeNlpSearch,
     onChangeQuery,
@@ -28,6 +30,7 @@ export const SearchFormContainer = (props) => {
 
   return (
     <SearchForm
+      auth={auth}
       onChangeQuery={onChangeQuery}
       onClearFilters={onClearFilters}
       onChangeNlpSearch={onChangeNlpSearch}
@@ -41,6 +44,7 @@ SearchFormContainer.defaultProps = {
 }
 
 SearchFormContainer.propTypes = {
+  auth: PropTypes.string.isRequired,
   keywordSearch: PropTypes.string,
   onChangeNlpSearch: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,

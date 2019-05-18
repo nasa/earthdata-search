@@ -42,9 +42,9 @@ functions:
     webpack:
       includeMigrations: true
 
-  # 
+  #
   # SQS Lambdas
-  # 
+  #
   processColorMap:
     handler: serverless/src/processColorMap.default
     timeout: 300
@@ -56,9 +56,9 @@ functions:
               - ColorMapsProcessingQueue
               - Arn
 
-  # 
+  #
   # Scheduled Lambdas
-  # 
+  #
   generateColorMaps:
     handler: serverless/src/generateColorMaps.default
     timeout: 300
@@ -84,9 +84,9 @@ functions:
           input:
             projection: 'epsg3031'
 
-  # 
+  #
   # API Gateway Endpoints
-  # 
+  #
   getColorMap:
     handler: serverless/src/getColorMap.default
     events:
@@ -115,7 +115,7 @@ functions:
             origin : '*'
           path: nlp
 
-  # 
+  #
   # EDL Authenticated API Gateway Endpoints
   #
 
@@ -132,36 +132,46 @@ functions:
   #             paths:
   #               id: true
 
-  # collectionSearch:
-  #   handler: serverless/src/cmr.collectionSearch
-  #   events:
-  #     - http:
-  #         method: post
-  #         cors:
-  #           origin: '*'
-  #         path: collections
+  collectionSearch:
+    handler: serverless/src/collectionSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: collections
 
-  # granuleSearch:
-  #   handler: serverless/src/cmr.granuleSearch
-  #   events:
-  #     - http:
-  #         method: post
-  #         cors:
-  #           origin: '*'
-  #         path: granules/{id}
-  #         request:
-  #           parameters:
-  #             paths:
-  #               id: true
+  granuleSearch:
+    handler: serverless/src/cmrGranuleSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: granules
 
-  # timelineSearch:
-  #   handler: serverless/src/cmr.timelineSearch
-  #   events:
-  #     - http:
-  #         method: post
-  #         cors:
-  #           origin: '*'
-  #         path: granules/timeline
+  timelineSearch:
+    handler: serverless/src/timelineSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: granules/timeline
+
+  ursCallback:
+    handler: serverless/src/earthdataLogin.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: urs_callback
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: logout
 
 #
 # Additional AWS Resources
@@ -184,7 +194,7 @@ resources:
     #     PolicyDocument:
     #       Statement:
     #         - Sid: PublicReadGetObject
-    
+
     #           Effect: Allow
     #           Principal: "*"
     #           Action:
@@ -217,7 +227,7 @@ resources:
             FromPort: 0
             ToPort: 65535
         VpcId: ${self:custom.awsResources.vpc}
-    
+
     # Database password secret storage
     DbPasswordSecret:
       Type: AWS::SecretsManager::Secret
@@ -267,7 +277,7 @@ resources:
       Properties:
         GroupDescription: Allow Lambdas to access database
         SecurityGroupIngress:
-          - SourceSecurityGroupId: 
+          - SourceSecurityGroupId:
               Ref: LambdaSecurityGroup
             IpProtocol: tcp
             FromPort: 5432
@@ -289,7 +299,7 @@ resources:
               ":policy/NGAPShRoleBoundary"
             ]
           ]
-          
+
     ScheduledLambdaRole:
       Type: "AWS::IAM::Role"
       Properties:

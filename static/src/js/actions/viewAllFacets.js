@@ -1,8 +1,9 @@
 import { toggleFacetsModal } from './ui'
-import { CollectionRequest } from '../util/request/cmr'
+import CollectionRequest from '../util/request/collectionRequest'
 import { buildSearchParams, prepareCollectionParams } from '../util/collections'
 import { prepareCMRFacetPayload } from '../util/facets'
 import { changeCmrFacet } from './facets'
+import { updateAuthFromHeaders } from './auth'
 
 import {
   ERRORED_VIEW_ALL_FACETS,
@@ -66,7 +67,8 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
 
   const collectionParams = prepareCollectionParams(getState())
 
-  const requestObject = new CollectionRequest()
+  const { auth } = collectionParams
+  const requestObject = new CollectionRequest(auth !== '')
 
   const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {
@@ -76,6 +78,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
       payload.facets = response.data.feed.facets.children || []
       payload.hits = response.headers['cmr-hits']
 
+      dispatch(updateAuthFromHeaders(response.headers))
       dispatch(onViewAllFacetsLoaded({
         loaded: true
       }))

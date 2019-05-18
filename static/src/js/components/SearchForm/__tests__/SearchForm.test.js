@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    auth: '',
     keywordSearch: 'Test value',
     onChangeNlpSearch: jest.fn(),
     onClearFilters: jest.fn()

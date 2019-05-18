@@ -83,8 +83,25 @@ class SearchForm extends Component {
       showFilterStack
     } = this.state
 
+    const { auth } = this.props
+    const loggedIn = auth !== ''
+    const returnPath = window.location.href
+    const edlHost = 'https://urs.earthdata.nasa.gov'
+    // TODO get these config values saved somewhere
+    const clientId = 'fill this in with a real client id'
+
+    const loginLink = <a href={`${edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Furs_callback&state=${encodeURIComponent(returnPath)}`}>Login</a>
+    const logoutLink = <a href={`http://localhost:3001/logout?redirect=${encodeURIComponent('http://localhost:8080')}`}>Logout</a>
+
     return (
       <section className="search-form">
+        {
+          loggedIn && (logoutLink)
+        }
+        {
+          !loggedIn && (loginLink)
+        }
+
         <form className="search-form__form" onSubmit={this.onFormSubmit}>
           <TextField
             name="keywordSearch"
@@ -126,6 +143,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
+  auth: PropTypes.string.isRequired,
   keywordSearch: PropTypes.string.isRequired,
   onChangeNlpSearch: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired
