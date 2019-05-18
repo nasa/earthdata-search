@@ -14,7 +14,8 @@ import {
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
-  UPDATE_TIMELINE_STATE
+  UPDATE_TIMELINE_STATE,
+  UPDATE_AUTH
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -64,7 +65,7 @@ describe('getTimeline', () => {
   })
 
   test('calls the API to get timeline granules', async () => {
-    moxios.stubRequest(/granules\/timeline.*/, {
+    moxios.stubRequest(/gov\/search\/granules\/timeline.*/, {
       status: 200,
       response: [{
         'concept-id': 'collectionId',
@@ -80,6 +81,7 @@ describe('getTimeline', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      auth: '',
       focusedCollection: {
         collectionId: 'collectionId'
       },
@@ -102,6 +104,74 @@ describe('getTimeline', () => {
       // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
+        type: UPDATE_AUTH,
+        payload: ''
+      })
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_TIMELINE_INTERVALS,
+        payload: {
+          results: [{
+            'concept-id': 'collectionId',
+            intervals: [
+              [
+                1298937600,
+                1304208000,
+                3
+              ]
+            ]
+          }]
+        }
+      })
+    })
+  })
+
+  test('calls lambda to get authenticated timeline granules', async () => {
+    moxios.stubRequest(/3001\/granules\/timeline.*/, {
+      status: 200,
+      response: [{
+        'concept-id': 'collectionId',
+        intervals: [
+          [
+            1298937600,
+            1304208000,
+            3
+          ]
+        ]
+      }],
+      headers: {
+        'jwt-token': 'token'
+      }
+    })
+
+    // mockStore with initialState
+    const store = mockStore({
+      auth: 'token',
+      focusedCollection: {
+        collectionId: 'collectionId'
+      },
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
+      timeline: {
+        query: {
+          endDate: '2009-12-01T23:59:59.000Z',
+          interval: 'day',
+          startDate: '1979-01-01T00:00:00.000Z'
+        }
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(getTimeline()).then(() => {
+      // Is updateTimelineIntervals called with the right payload
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_AUTH,
+        payload: 'token'
+      })
+      expect(storeActions[1]).toEqual({
         type: UPDATE_TIMELINE_INTERVALS,
         payload: {
           results: [{

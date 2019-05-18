@@ -1,8 +1,10 @@
-import { CollectionRequest } from '../util/request/cmr'
+import CollectionRequest from '../util/request/collectionRequest'
 import {
   buildSearchParams,
   prepareCollectionParams
 } from '../util/collections'
+import { updateAuthFromHeaders } from './auth'
+
 
 import {
   ADD_MORE_COLLECTION_RESULTS,
@@ -87,6 +89,7 @@ export const restoreCollections = payload => ({
 export const getCollections = () => (dispatch, getState) => {
   const collectionParams = prepareCollectionParams(getState())
   const {
+    auth,
     keyword,
     pageNum
   } = collectionParams
@@ -102,18 +105,20 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  const requestObject = new CollectionRequest()
+  const requestObject = new CollectionRequest(auth !== '')
 
   const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {
       const payload = {}
+      const { 'cmr-hits': cmrHits } = response.headers
 
       payload.facets = response.data.feed.facets.children || []
-      payload.hits = response.headers['cmr-hits']
+      payload.hits = cmrHits
       payload.keyword = keyword
       payload.results = response.data.feed.entry
 
       dispatch(finishCollectionsTimer())
+      dispatch(updateAuthFromHeaders(response.headers))
       dispatch(onCollectionsLoaded({
         loaded: true
       }))

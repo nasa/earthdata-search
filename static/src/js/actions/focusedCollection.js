@@ -1,6 +1,5 @@
 import actions from './index'
 import { updateGranuleQuery } from './search'
-import { CollectionRequest } from '../util/request/cmr'
 import {
   UPDATE_FOCUSED_COLLECTION,
   ADD_COLLECTION_GRANULES,
@@ -8,6 +7,7 @@ import {
 } from '../constants/actionTypes'
 import { updateCollectionMetadata } from './collections'
 import { updateGranuleResults, addGranulesFromCollection } from './granules'
+import CollectionRequest from '../util/request/collectionRequest'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -84,7 +84,8 @@ export const getFocusedCollection = () => (dispatch, getState) => {
     return null
   }
 
-  const requestObject = new CollectionRequest()
+  const { auth } = getState()
+  const requestObject = new CollectionRequest(auth !== '')
 
   const response = requestObject.search({
     concept_id: focusedCollection,

@@ -4,6 +4,7 @@ import { connectRouter } from 'connected-react-router'
 import collectionMetadataReducer from './collectionMetadata'
 import granuleMetadataReducer from './granuleMetadata'
 import collectionsResultsReducer from './collectionsResults'
+import authReducer from './auth'
 import facetsReducer from './facets'
 import {
   cmrFacetsReducer,
@@ -14,12 +15,13 @@ import focusedCollectionReducer from './focusedCollection'
 import granuleResultsReducer from './granuleResults'
 import mapReducer from './map'
 import queryReducer from './query'
-import uiReducer from './ui'
 import timelineReducer from './timeline'
+import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
 
 export default history => combineReducers({
+  auth: authReducer,
   facetsParams: combineReducers({
     feature: featureFacetsReducer,
     cmr: cmrFacetsReducer,

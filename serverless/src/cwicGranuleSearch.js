@@ -118,7 +118,8 @@ export default async function cwicGranuleSearch(event) {
     'point',
     'temporal'
   ]
-  const params = JSON.parse(event.body)
+
+  const { params = {} } = JSON.parse(event.body)
 
   console.log(`Parameters received: ${Object.keys(params)}`)
 

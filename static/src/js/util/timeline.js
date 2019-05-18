@@ -16,6 +16,7 @@ export const timelineIntervals = {
  */
 export const prepareTimelineParams = (state) => {
   const {
+    auth,
     focusedCollection,
     query,
     timeline
@@ -46,6 +47,7 @@ export const prepareTimelineParams = (state) => {
   }
 
   return {
+    auth,
     boundingBox,
     focusedCollection,
     endDate,

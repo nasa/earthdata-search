@@ -36,7 +36,7 @@ export default class LambdaRequest extends Request {
 
     // CWIC does not support CORS so all of our requests will need to go through
     // Lambda. POST requests to Lambda use a JSON string
-    return JSON.stringify(filteredData)
+    return JSON.stringify({ params: filteredData })
   }
 
   /**

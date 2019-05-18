@@ -1,5 +1,5 @@
 import { populateGranuleResults, prepareGranuleParams } from '../util/granules'
-import { GranuleRequest } from '../util/request/cmr'
+import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
   ADD_MORE_GRANULE_RESULTS,
@@ -14,6 +14,7 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
+import { updateAuthFromHeaders } from './auth'
 
 export const addGranulesFromCollection = payload => ({
   type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
@@ -89,6 +90,7 @@ export const getGranules = () => (dispatch, getState) => {
   }
 
   const {
+    auth,
     boundingBox,
     collectionId,
     isCwicCollection,
@@ -105,7 +107,7 @@ export const getGranules = () => (dispatch, getState) => {
   if (isCwicCollection) {
     requestObject = new CwicGranuleRequest()
   } else {
-    requestObject = new GranuleRequest()
+    requestObject = new GranuleRequest(auth !== '')
   }
 
   const response = requestObject.search({
@@ -122,6 +124,7 @@ export const getGranules = () => (dispatch, getState) => {
       const payload = populateGranuleResults(collectionId, isCwicCollection, response)
 
       dispatch(finishGranulesTimer())
+      dispatch(updateAuthFromHeaders(response.headers))
       dispatch(onGranulesLoaded({
         loaded: true
       }))

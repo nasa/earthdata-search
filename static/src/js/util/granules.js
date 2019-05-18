@@ -31,6 +31,7 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
  */
 export const prepareGranuleParams = (state) => {
   const {
+    auth,
     metadata = {},
     focusedCollection: collectionId,
     query = {}
@@ -72,6 +73,7 @@ export const prepareGranuleParams = (state) => {
     && !collectionMetadata.has_granules
 
   return {
+    auth,
     boundingBox,
     collectionId,
     isCwicCollection,
