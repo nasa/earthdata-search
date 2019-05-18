@@ -1,8 +1,8 @@
 import 'array-foreach-async'
 import 'pg'
-import knex from 'knex'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
+import { getDbConnection } from './util'
 
 
 /**
@@ -18,16 +18,8 @@ const componentToHex = (component) => {
 
 const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === ref)
 
-const connection = knex({
-  client: 'pg',
-  connection: {
-    host: process.env.dbEndpoint,
-    user: process.env.dbUsername,
-    password: process.env.dbPassword,
-    database: process.env.dbName,
-    port: 5432
-  }
-})
+const connection = getDbConnection()
+
 
 /**
  * Replaces all valid keys from the users request within the granule url template provided by OpenSearch

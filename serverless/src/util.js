@@ -1,5 +1,9 @@
+import AWS from 'aws-sdk'
+import knex from 'knex'
 import { stringify as qsStringify } from 'qs'
 
+// for fetching configuration
+const secretsmanager = new AWS.SecretsManager()
 
 /**
  * Select only desired keys from a provided object.
@@ -47,4 +51,38 @@ export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
     qsStringify(indexedAttrs),
     qsStringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
   ].join('&')
+}
+
+/**
+ * Returns the decrypted database credentials from Secrets Manager
+ */
+export const getDbCredentials = () => {
+  const params = { SecretId: process.env.configSecretId }
+  let creds = null
+  secretsmanager.getSecretValue(params, (err, data) => {
+    if (err) {
+      console.log(err, err.stack)
+    } else {
+      creds = JSON.parse(data.SecretString)
+    }
+  })
+  return creds
+}
+
+/**
+ * Returns a Knex database connection object to the EDSC RDS database
+ */
+export const getDbConnection = () => {
+  const dbCredentials = getDbCredentials()
+  const connection = knex({
+    client: 'pg',
+    connection: {
+      host: process.env.dbEndpoint,
+      user: dbCredentials.username,
+      password: dbCredentials.password,
+      database: process.env.dbName,
+      port: 5432
+    }
+  })
+  return connection
 }

@@ -5,6 +5,26 @@ provider:
   runtime: nodejs8.10
   versionFunctions: false
   stage: ${opt:stage, 'lab'}
+  environment:
+    dbEndpoint:
+      Fn::GetAtt:
+        - Database
+        - Endpoint.Address
+    dbPort:
+      Fn::GetAtt:
+        - Database
+        - Endpoint.Port
+    dbUsername: edsc
+    dbName: edsc
+    colorMapQueueUrl:
+        Ref: ColorMapsProcessingQueue
+  vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds:
+        - ${self:custom.awsResources.subnet.a}
+        - ${self:custom.awsResources.subnet.b}
+  role: ScheduledLambdaRole
 
 plugins:
   - serverless-dotenv-plugin
@@ -21,13 +41,6 @@ functions:
     timeout: 300
     webpack:
       includeMigrations: true
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
 
   # 
   # SQS Lambdas
@@ -36,18 +49,11 @@ functions:
     handler: serverless/src/processColorMap.default
     timeout: 300
     reservedConcurrency: 10
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
     events:
       - sqs:
           arn:
             Fn::GetAtt:
-              - ColorMapsProcessing
+              - ColorMapsProcessingQueue
               - Arn
 
   # 
@@ -56,13 +62,6 @@ functions:
   generateColorMaps:
     handler: serverless/src/generateColorMaps.default
     timeout: 300
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
     events:
       - schedule:
           rate: cron(0 5 * * ? *)
@@ -90,14 +89,6 @@ functions:
   # 
   getColorMap:
     handler: serverless/src/getColorMap.default
-    timeout: 300
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
     events:
       - http:
           method: get
@@ -210,34 +201,53 @@ resources:
     #             ]
 
     # SQS Queue to process Color Map entries
-    ColorMapsProcessing:
+    ColorMapsProcessingQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
-        QueueName: 'ColorMapsProcessing'
         MessageRetentionPeriod: 345600 # Default value, leaving for visibility
         VisibilityTimeout: 300
 
     LambdaSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
       Properties:
-        GroupDescription: 'Security Group for Lambda functions'
+        GroupDescription: 'Security Group for EDSC Lambda functions'
         SecurityGroupEgress:
           - CidrIp: '0.0.0.0/0'
             IpProtocol: -1
             FromPort: 0
             ToPort: 65535
         VpcId: ${self:custom.awsResources.vpc}
+    
+    # Database password secret storage
+    DbPasswordSecret:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Description: "EDSC RDS database master password"
+        GenerateSecretString:
+          SecretStringTemplate: "{\"username\":\"edsc\"}"
+          GenerateStringKey: "password"
+          PasswordLength: 30
+          ExcludeCharacters: "\"@/\\"
 
+    SecretRDSInstanceAttachment:
+      Type: "AWS::SecretsManager::SecretTargetAttachment"
+      Properties:
+        SecretId:
+          Ref: DbPasswordSecret
+        TargetId:
+          Ref: Database
+        TargetType: AWS::RDS::DBInstance
+
+    # RDS database
     Database:
       Type: AWS::RDS::DBInstance
       Properties:
-        DBName: earthdata_search_lab
         AllocatedStorage: '20'
         DBInstanceClass: db.t2.micro
         Engine: postgres
         EngineVersion: '10.6'
-        MasterUsername: ${ssm:rdsMasterUsername}
-        MasterUserPassword: ${ssm:rdsMasterPassword~true}
+        MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
+        MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
         StorageType: gp2
         DBSubnetGroupName:
           Ref: DBSubnetGroup
@@ -246,18 +256,16 @@ resources:
 
     DBSubnetGroup:
       Type: 'AWS::RDS::DBSubnetGroup'
-      Properties: 
-        DBSubnetGroupName: PrivateDbSubnet
-        DBSubnetGroupDescription: PrivateDbSubnet
+      Properties:
+        DBSubnetGroupDescription: EDSC DB subnet group
         SubnetIds:
-          - subnet-086c53aec52be1e70 # 1a
-          - subnet-09d8f21a539138693 # 1b
+          - ${self:custom.awsResources.subnet.a}
+          - ${self:custom.awsResources.subnet.b}
 
     DatabaseVpcSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
       Properties:
-        GroupName: DBSecurityGroup
-        GroupDescription: Allow local access
+        GroupDescription: Allow Lambdas to access database
         SecurityGroupIngress:
           - SourceSecurityGroupId: 
               Ref: LambdaSecurityGroup
@@ -269,6 +277,7 @@ resources:
     # Merge the NGAP PermissionsBoundary into the
     # default (Serverless Defined) role for executing Lambdas
     IamRoleLambdaExecution:
+      Type: "AWS::IAM::Role"
       Properties:
         PermissionsBoundary:
           Fn::Join: [
@@ -284,7 +293,6 @@ resources:
     ScheduledLambdaRole:
       Type: "AWS::IAM::Role"
       Properties:
-        RoleName: ScheduledLambdaRole
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
         PermissionsBoundary:
@@ -336,6 +344,11 @@ resources:
                   Action:
                     - sqs:*
                   Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - secretsmanager:GetSecretValue
+                  Resource:
+                    Ref: DbPasswordSecret
 
     GatewayResponseDefault4XX:
       Type: AWS::ApiGateway::GatewayResponse
@@ -367,6 +380,10 @@ custom:
 
   awsResources:
     vpc: 'vpc-0ae48cd75a6141657'
+    subnet:
+      a: 'subnet-086c53aec52be1e70'
+      b: 'subnet-09d8f21a539138693'
+
 
   # Finch (S3 sync plugin)
   client:
