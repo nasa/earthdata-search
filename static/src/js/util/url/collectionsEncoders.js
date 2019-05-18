@@ -1,12 +1,17 @@
+import isNumber from '../is-number'
+
 /**
  * Encode a list of Granule IDs
  * @param {boolean} isCwic Are the granules CWIC
  * @param {array} excludedGranuleIds List of granule IDs
  */
 const encodeExcludedGranules = (isCwic, excludedGranuleIds) => {
-  if (isCwic) {
-    // TODO figure this part out later
-    return ''
+  // On page log, isCwic hasn't been determined yet
+  // temporary fix, if the granule doesn't start with G, it is CWIC
+  const [firstGranuleId] = excludedGranuleIds
+
+  if (isCwic || isNumber(firstGranuleId)) {
+    return excludedGranuleIds.join('!')
   }
 
   // CMR Granule Ids
@@ -36,10 +41,12 @@ const decodedExcludeGranules = (excludedGranules) => {
     }
   }
   if (keys.indexOf('cx') !== -1) {
-    // TODO Cwic, figure this part out later
+    const { cx: granules } = excludedGranules
+    const granuleIds = granules.split('!')
+
     return {
       isCwic: true,
-      granuleIds: []
+      granuleIds
     }
   }
   return {}
@@ -70,7 +77,7 @@ export const encodeCollections = (collections, focusedCollection) => {
   const { granules, excludedGranuleIds = [] } = collection
   if (!granules || excludedGranuleIds.length === 0) return ''
 
-  const { isCwic = false } = granules
+  const { is_cwic: isCwic = false } = collection.metadata
   const excludedKey = isCwic ? 'cx' : 'x'
 
   const encoded = {

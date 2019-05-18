@@ -13,6 +13,7 @@ import {
 } from './skeleton'
 
 import './GranuleResultsList.scss'
+import murmurhash3 from '../../util/murmurhash3'
 
 const granuleListItemSkeletonStyle = {
   height: '144px'
@@ -28,6 +29,7 @@ export const GranuleResultsList = (props) => {
     collectionId,
     excludedGranuleIds,
     granules,
+    isCwic,
     pageNum,
     location,
     waypointEnter,
@@ -41,7 +43,16 @@ export const GranuleResultsList = (props) => {
     isLoaded
   } = granules
 
-  const granuleIds = _.difference(granules.allIds, excludedGranuleIds)
+  const allGranuleIds = granules.allIds
+  let granuleIds
+  if (isCwic) {
+    granuleIds = allGranuleIds.filter((id) => {
+      const hashedId = murmurhash3(id).toString()
+      return excludedGranuleIds.indexOf(hashedId) === -1
+    })
+  } else {
+    granuleIds = _.difference(allGranuleIds, excludedGranuleIds)
+  }
 
   const initialLoading = (pageNum === 1 && !isLoaded)
 
@@ -122,6 +133,7 @@ GranuleResultsList.propTypes = {
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.shape({}).isRequired,
   pageNum: PropTypes.number.isRequired,
+  isCwic: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

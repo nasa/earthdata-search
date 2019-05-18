@@ -52,11 +52,13 @@ function setup(type) {
     props = {
       collectionId: 'collectionId',
       granule: {
+        id: 'granuleId',
         browse_flag: true,
         formatted_temporal: [
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
+        is_cwic: true,
         producer_granule_id: 'Granule title',
         thumbnail: '/fake/path/image.jpg'
       },
@@ -138,13 +140,26 @@ describe('GranuleResultsItem component', () => {
   })
 
   describe('when clicking the remove button', () => {
-    test('it excludes the granule from results', () => {
-      const { enzymeWrapper, props } = setup('cmr')
-      const removeButton = enzymeWrapper.find('button[title="Remove granule"]')
+    describe('with CMR granules', () => {
+      test('it excludes the granule from results', () => {
+        const { enzymeWrapper, props } = setup('cmr')
+        const removeButton = enzymeWrapper.find('button[title="Remove granule"]')
 
-      removeButton.simulate('click')
-      expect(props.onExcludeGranule.mock.calls.length).toBe(1)
-      expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+        removeButton.simulate('click')
+        expect(props.onExcludeGranule.mock.calls.length).toBe(1)
+        expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+      })
+    })
+
+    describe('with CWIC granules', () => {
+      test('it excludes the granule from results with a hashed granule id', () => {
+        const { enzymeWrapper, props } = setup('cwic')
+        const removeButton = enzymeWrapper.find('button[title="Remove granule"]')
+
+        removeButton.simulate('click')
+        expect(props.onExcludeGranule.mock.calls.length).toBe(1)
+        expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
+      })
     })
   })
 })

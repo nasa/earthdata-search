@@ -24,6 +24,7 @@ function setup(type) {
         allIds: [],
         byId: {}
       },
+      isCwic: false,
       pageNum: 1,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
@@ -44,6 +45,7 @@ function setup(type) {
         allIds: [],
         byId: {}
       },
+      isCwic: false,
       pageNum: 2,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
@@ -74,6 +76,63 @@ function setup(type) {
           }
         }
       },
+      isCwic: false,
+      pageNum: 1,
+      location: { search: 'value' },
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
+    }
+  }
+
+  if (type === 'excludedCmr') {
+    props = {
+      collectionId: 'collectionId',
+      excludedGranuleIds: ['G12345-PROV'],
+      granules: {
+        hits: 23,
+        loadTime: 1524,
+        isLoading: false,
+        isLoaded: true,
+        allIds: ['G12345-PROV', 'G56789-PROV'],
+        byId: {
+          'G12345-PROV': {
+            title: 'G12345-PROV'
+          },
+          'G56789-PROV': {
+            title: 'G56789-PROV'
+          }
+        }
+      },
+      isCwic: false,
+      pageNum: 1,
+      location: { search: 'value' },
+      waypointEnter: jest.fn(),
+      onExcludeGranule: jest.fn(),
+      onFocusedGranuleChange: jest.fn()
+    }
+  }
+
+  if (type === 'excludedCwic') {
+    props = {
+      collectionId: 'collectionId',
+      excludedGranuleIds: ['329585043'],
+      granules: {
+        hits: 23,
+        loadTime: 1524,
+        isLoading: false,
+        isLoaded: true,
+        allIds: ['12345', '56789'],
+        byId: {
+          12345: {
+            title: '12345 Granule'
+          },
+          56789: {
+            title: '56789 Granule'
+          }
+        }
+      },
+      isCwic: true,
       pageNum: 1,
       location: { search: 'value' },
       waypointEnter: jest.fn(),
@@ -133,6 +192,20 @@ describe('GranuleResultsList component', () => {
       const { enzymeWrapper } = setup('loaded')
 
       expect(enzymeWrapper.find(GranuleResultsItem).length).toEqual(2)
+    })
+
+    test('removes CMR excludedGranules from the list', () => {
+      const { enzymeWrapper } = setup('excludedCmr')
+
+      expect(enzymeWrapper.find(GranuleResultsItem).length).toEqual(1)
+      expect(enzymeWrapper.find(GranuleResultsItem).props().granule).toEqual({ title: 'G56789-PROV' })
+    })
+
+    test('removes CWIC excludedGranules from the list', () => {
+      const { enzymeWrapper } = setup('excludedCwic')
+
+      expect(enzymeWrapper.find(GranuleResultsItem).length).toEqual(1)
+      expect(enzymeWrapper.find(GranuleResultsItem).props().granule).toEqual({ title: '56789 Granule' })
     })
   })
 })

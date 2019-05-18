@@ -40,6 +40,9 @@ export const GranuleResultsBodyContainer = (props) => {
 
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
+  const { metadata } = focusedCollectionMetadata[focusedCollection]
+  const { is_cwic: isCwic = false } = metadata
+
   const { pageNum } = granuleQuery
 
   const onWaypointEnter = (params) => {
@@ -55,6 +58,7 @@ export const GranuleResultsBodyContainer = (props) => {
       collectionId={focusedCollection}
       excludedGranuleIds={excludedGranuleIds}
       granules={granules}
+      isCwic={isCwic}
       pageNum={pageNum}
       location={location}
       waypointEnter={onWaypointEnter}

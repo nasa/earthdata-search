@@ -43,7 +43,7 @@ export const prepareGranuleParams = (state) => {
   }
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(collectionId, collections)
-  if (!focusedCollectionMetadata) return null
+  if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   const {
     collection: collectionQuery,
@@ -63,7 +63,7 @@ export const prepareGranuleParams = (state) => {
     polygon
   } = spatial
 
-  const { metadata: collectionMetadata = {} } = focusedCollectionMetadata
+  const { metadata: collectionMetadata = {} } = focusedCollectionMetadata[collectionId]
   const { tags = {} } = collectionMetadata
 
   const temporalString = encodeTemporal(temporal)
