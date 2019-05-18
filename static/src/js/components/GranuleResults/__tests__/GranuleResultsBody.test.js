@@ -11,7 +11,9 @@ function setup() {
     granules: {
       one: 'test',
       two: 'test'
-    }
+    },
+    pageNum: 1,
+    waypointEnter: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
@@ -34,11 +36,11 @@ describe('GranuleResultsBody component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsList).props()).toEqual({
-      granules: {
-        one: 'test',
-        two: 'test'
-      }
+    expect(enzymeWrapper.find(GranuleResultsList).props().granules).toEqual({
+      one: 'test',
+      two: 'test'
     })
+    expect(enzymeWrapper.find(GranuleResultsList).props().pageNum).toEqual(1)
+    expect(typeof enzymeWrapper.find(GranuleResultsList).props().waypointEnter).toEqual('function')
   })
 })

@@ -41,7 +41,7 @@ describe('changeMap', () => {
     // call the dispatch
     store.dispatch(changeMap({ ...newMap }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_MAP,

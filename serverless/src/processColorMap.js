@@ -4,6 +4,7 @@ import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from './util'
 
+
 /**
  * Converts a single color component to hex
  * @param {String} component - An OpenSearch string template representing the URL to retreive granules with.
@@ -18,6 +19,7 @@ const componentToHex = (component) => {
 const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === ref)
 
 const connection = getDbConnection()
+
 
 /**
  * Replaces all valid keys from the users request within the granule url template provided by OpenSearch

@@ -9,7 +9,6 @@ import { getDbConnection } from './util'
 // GRANT rds_iam TO edsc_test;
 
 const connection = getDbConnection()
-
 const colorMapsTableName = 'colormaps'
 
 /**

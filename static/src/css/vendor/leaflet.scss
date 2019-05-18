@@ -1,20 +1,79 @@
 .root {
-  .leaflet-control {
+  // Reposition the container and controls
+  .leaflet-container {
+    height: 100%;
+  }
+
+  .leaflet-control-container {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+  }
+
+  // Set baseline styles for icons
+  .leaflet-control-container .fa {
+    font-size: 12px;
+    line-height: 1.65;
+    vertical-align: middle;
+  }
+
+  // Adds padding to the container and forces rows
+  .leaflet-bottom.leaflet-right {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 10px;
+    margin-right: 44px;
+  }
+
+  // Removes bottom padding from the control elements
+  .leaflet-bottom .leaflet-control {
+    margin-bottom: 0;
+  }
+
+  // Positions the layers list and scale elements outside of the default container
+  // to allow the layers list to not affect position of the rest of the controls while
+  // its in its expanded state
+  .leaflet-control-scale,
+  .leaflet-control-layers {
+    position: absolute;
+    right: -44px;
+  }
+
+  // Set flex on all the controls to force them to flow horizontally
+  .leaflet-control,
+  .leaflet-touch .leaflet-bar {
     display: flex;
   }
 
+  // Break the scale elements on to separate lines and position it
+  .leaflet-control-scale {
+    display: block;
+    bottom: 50px;
+  }
+
+  // Reduce the font size on the scale elements
+  .leaflet-control-scale-line {
+    font-weight: 400;
+  }
+
+  // Remove default margin top on the draw toolbar
   .leaflet-draw-toolbar {
     margin-top: 0;
   }
 
+  // Add right margin to be consistent with other scale elements
   .leaflet-draw-toolbar-top {
     margin-right: 10px;
   }
 
-  .leaflet-control-layers-toggle, .leaflet-retina .leaflet-control-layers-toggle {
+  // Force the layers toggle to be the same size as the other elements
+  .leaflet-control-layers-toggle,
+  .leaflet-touch .leaflet-control-layers-toggle {
     width: 30px;
     height: 30px;
     line-height: 30px;
+    background-size: 16px 16px;
   }
 
   .leaflet-control-layers-expanded {
@@ -22,18 +81,61 @@
     width: 175px;
   }
 
-  .leaflet-control-scale {
-    position: absolute;
-    bottom: 50px;
-    right: 2px;
-  }
-
+  // Force the horizontal toolbar and adjust button radius
   .leaflet-bar a,
-  .leaflet-bar a:hover,
-  .leaflet-bar a:last-child {
+  .leaflet-touch .leaflet-bar a {
+    float: left;
     border: 0;
+
+    &:hover,
+    &:last-child {
+      border: 0;
+    }
+
+    &:first-child {
+      border-bottom-left-radius: 2px;
+      border-top-right-radius: 0;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 0;
+      border-top-right-radius: 2px;
+    }
   }
 
+  // Leaflet draw section
+  .leaflet-draw-section {
+    margin-bottom: 36px;
+    padding-left: 30px;
+    float: right;
+    margin: 0 0 0 10px;
+    padding: 0;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  .leaflet-draw-actions-top {
+    margin-top: 0;
+  }
+
+  .leaflet-right .leaflet-draw-actions {
+    top: -30px !important;
+    right: 0;
+
+    li:first-child a {
+      border-radius: 0;
+
+    }
+  }
+
+  .leaflet-container .leaflet-draw-actions a {
+    background-color: $color__black--400;
+    color: $color__white;
+  }
+
+  .leaflet-draw-toolbar .leaflet-draw-edit-remove,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove {
     background-position: -240px 0px;
 
@@ -42,6 +144,7 @@
     }
   }
 
+  .leaflet-draw-toolbar .leaflet-draw-edit-edit,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit {
     background-position: -209px 0px;
 
@@ -50,21 +153,39 @@
     }
   }
 
+  .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled,
+  .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled {
+    position: relative;
     cursor: not-allowed;
+    background-color: #e6e6e6;
+    overflow: hidden;
+
+    // A little trickery to make the background image look faded to match the other disabled styles
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
   }
 
+  .leaflet-draw-toolbar .leaflet-draw-draw-polygon,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
     background-position: -29px 0px;
   }
 
+  .leaflet-draw-toolbar .leaflet-draw-draw-rectangle,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
     background-position: -60px 0px;
   }
 
+  .leaflet-draw-toolbar .leaflet-draw-draw-marker,
   .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
     background-position: -120px 0px;
   }
 }
-

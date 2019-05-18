@@ -1,7 +1,8 @@
-import populateGranuleResults from '../util/granules'
+import { populateGranuleResults, prepareGranuleParams } from '../util/granules'
 import { GranuleRequest } from '../util/request/cmr'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
+  ADD_MORE_GRANULES,
   LOADING_GRANULES,
   LOADED_GRANULES,
   UPDATE_GRANULES,
@@ -9,7 +10,11 @@ import {
   STARTED_GRANULES_TIMER,
   FINISHED_GRANULES_TIMER
 } from '../constants/actionTypes'
-import { encodeTemporal } from '../util/url/temporalEncoders'
+
+export const addMoreGranules = payload => ({
+  type: ADD_MORE_GRANULES,
+  payload
+})
 
 export const updateGranules = payload => ({
   type: UPDATE_GRANULES,
@@ -38,37 +43,24 @@ export const finishGranulesTimer = () => ({
 })
 
 export const getGranules = () => (dispatch, getState) => {
-  const {
-    focusedCollection = {},
-    query = {}
-  } = getState()
+  const granuleParams = prepareGranuleParams(getState())
 
-  const {
-    spatial = {},
-    temporal = {}
-  } = query
-
-  const {
-    boundingBox,
-    point
-  } = spatial
-
-  const { collectionId } = focusedCollection
-
-  if (!collectionId) {
+  if (!granuleParams) {
     dispatch(updateGranules({
       results: []
     }))
     return null
   }
 
-  const { metadata = {} } = focusedCollection
-  const { tags = {} } = metadata
-
-  const temporalString = encodeTemporal(temporal)
-
-  const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !focusedCollection.metadata.has_granules
+  const {
+    boundingBox,
+    collectionId,
+    isCwicCollection,
+    pageNum,
+    point,
+    polygon,
+    temporalString
+  } = granuleParams
 
   dispatch(onGranulesLoading())
   dispatch(startGranulesTimer())
@@ -83,9 +75,10 @@ export const getGranules = () => (dispatch, getState) => {
   const response = requestObject.search({
     boundingBox,
     echoCollectionId: collectionId,
-    pageNum: 1,
+    pageNum,
     pageSize: 20,
     point,
+    polygon,
     sortKey: '-start_date',
     temporal: temporalString
   })
@@ -96,7 +89,12 @@ export const getGranules = () => (dispatch, getState) => {
       dispatch(onGranulesLoaded({
         loaded: true
       }))
-      dispatch(updateGranules(payload))
+
+      if (pageNum === 1) {
+        dispatch(updateGranules(payload))
+      } else {
+        dispatch(addMoreGranules(payload))
+      }
     })
     .catch((e) => {
       dispatch(onGranulesErrored())

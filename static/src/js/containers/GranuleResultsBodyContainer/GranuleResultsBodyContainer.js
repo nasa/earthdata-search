@@ -6,28 +6,38 @@ import actions from '../../actions/index'
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
 const mapDispatchToProps = dispatch => ({
-  onFocusedCollectionChange: (collectionId) => {
-    dispatch(actions.changeFocusedCollection(collectionId))
-  }
+  onChangeGranulePageNum:
+    data => dispatch(actions.changeGranulePageNum(data))
 })
 
 const mapStateToProps = state => ({
   granules: state.entities.granules,
+  granuleQuery: state.query.granule,
   focusedCollection: state.focusedCollection
 })
 
 export const GranuleResultsBodyContainer = (props) => {
   const {
     granules,
+    granuleQuery,
     focusedCollection,
-    onFocusedCollectionChange
+    onChangeGranulePageNum
   } = props
+
+  const { pageNum } = granuleQuery
+
+  const onWaypointEnter = (params) => {
+    if (params.event !== null) {
+      onChangeGranulePageNum(pageNum + 1)
+    }
+  }
 
   return (
     <GranuleResultsBody
       granules={granules}
       focusedCollection={focusedCollection}
-      onFocusedCollectionChange={onFocusedCollectionChange}
+      pageNum={pageNum}
+      waypointEnter={onWaypointEnter}
     />
   )
 }
@@ -38,8 +48,9 @@ GranuleResultsBodyContainer.defaultProps = {
 
 GranuleResultsBodyContainer.propTypes = {
   granules: PropTypes.shape({}).isRequired,
+  granuleQuery: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.shape({}),
-  onFocusedCollectionChange: PropTypes.func.isRequired
+  onChangeGranulePageNum: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GranuleResultsBodyContainer)

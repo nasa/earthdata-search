@@ -14,9 +14,9 @@ const mapDispathToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  boundingBoxSearch: state.query.spatial.boundingBox,
-  pointSearch: state.query.spatial.point,
-  polygonSearch: state.query.spatial.polygon
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  pointSearch: state.query.collection.spatial.point,
+  polygonSearch: state.query.collection.spatial.polygon
 })
 
 export const SpatialSelectionContainer = (props) => {

@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection,
-  temporalSearch: state.query.temporal,
+  temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })
 

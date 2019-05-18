@@ -7,8 +7,12 @@ import actions from '../../actions/index'
 import Facets from '../../components/Facets/Facets'
 
 const mapDispatchToProps = dispatch => ({
-  onChangeCmrFacet: (e, facetLinkInfo) => dispatch(actions.changeCmrFacet(e, facetLinkInfo)),
-  onChangeFeatureFacet: (e, facetLinkInfo) => dispatch(actions.changeFeatureFacet(e, facetLinkInfo))
+  onChangeCmrFacet:
+    (e, facetLinkInfo) => dispatch(actions.changeCmrFacet(e, facetLinkInfo)),
+  onChangeFeatureFacet:
+    (e, facetLinkInfo) => dispatch(actions.changeFeatureFacet(e, facetLinkInfo)),
+  onTriggerViewAllFacets:
+    category => dispatch(actions.triggerViewAllFacets(category))
 })
 
 const mapStateToProps = state => ({
@@ -21,7 +25,8 @@ const FacetsContainer = (props) => {
     facets,
     featureFacets,
     onChangeCmrFacet,
-    onChangeFeatureFacet
+    onChangeFeatureFacet,
+    onTriggerViewAllFacets
   } = props
 
   return (
@@ -30,6 +35,7 @@ const FacetsContainer = (props) => {
       featureFacets={featureFacets}
       onChangeCmrFacet={onChangeCmrFacet}
       onChangeFeatureFacet={onChangeFeatureFacet}
+      onTriggerViewAllFacets={onTriggerViewAllFacets}
     />
   )
 }
@@ -38,7 +44,8 @@ FacetsContainer.propTypes = {
   facets: PropTypes.shape({}).isRequired,
   featureFacets: PropTypes.shape({}).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
-  onChangeFeatureFacet: PropTypes.func.isRequired
+  onChangeFeatureFacet: PropTypes.func.isRequired,
+  onTriggerViewAllFacets: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FacetsContainer)

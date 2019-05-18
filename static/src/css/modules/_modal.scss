@@ -1,0 +1,37 @@
+.modal {
+  &--full {
+    .modal-content {
+      height: 90vh;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      flex-grow: 0;
+    }
+
+    .modal-body {
+      flex-grow: 1;
+      overflow-y: scroll
+    }
+
+    .modal-footer {
+      flex-grow: 0;
+    }
+  }
+
+  &--has-inner-header {
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__inner-header {
+    flex-grow: 0;
+  }
+
+  &__inner-body {
+    flex-grow: 1;
+    overflow-y: scroll;
+  }
+}

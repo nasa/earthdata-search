@@ -11,7 +11,7 @@ const mapDispathToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  temporalSearch: state.query.temporal
+  temporalSearch: state.query.collection.temporal
 })
 
 /**

@@ -11,7 +11,9 @@ import {
 import { searchNlp } from './nlp'
 import {
   changeQuery,
-  clearFilters
+  clearFilters,
+  changeCollectionPageNum,
+  changeGranulePageNum
 } from './search'
 import { changeMap } from './map'
 import { changeUrl } from './urlQuery'
@@ -26,30 +28,44 @@ import {
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   granuleResultsPanelUpdateSortOrder,
-  granuleResultsPanelUpdateSearchValue
+  granuleResultsPanelUpdateSearchValue,
+  toggleFacetsModal
 } from './ui'
+import {
+  applyViewAllFacets,
+  getViewAllFacets,
+  changeViewAllFacet,
+  triggerViewAllFacets
+} from './viewAllFacets'
 
 const actions = {
+  applyViewAllFacets,
   changeCmrFacet,
-  updateCmrFacet,
+  changeCollectionPageNum,
   changeFeatureFacet,
-  updateFeatureFacet,
   changeFocusedCollection,
+  changeGranulePageNum,
   changeMap,
   changeQuery,
   changeTimelineQuery,
   changeTimelineState,
   changeUrl,
+  changeViewAllFacet,
   clearFilters,
   getCollections,
   getGranules,
   getTimeline,
-  granuleResultsPanelUpdateSortOrder,
+  getViewAllFacets,
   granuleResultsPanelUpdateSearchValue,
+  granuleResultsPanelUpdateSortOrder,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   searchNlp,
+  toggleFacetsModal,
+  triggerViewAllFacets,
+  updateCmrFacet,
+  updateFeatureFacet,
   updateGranules
 }
 

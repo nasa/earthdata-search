@@ -24,22 +24,22 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  boundingBoxSearch: state.query.spatial.boundingBox,
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection.collectionId,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
-  keywordSearch: state.query.keyword,
+  keywordSearch: state.query.collection.keyword,
   map: state.map,
   organizationFacets: state.facetsParams.cmr.data_center_h,
   pathname: state.router.location.pathname,
   platformFacets: state.facetsParams.cmr.platform_h,
-  pointSearch: state.query.spatial.point,
-  polygonSearch: state.query.spatial.polygon,
+  pointSearch: state.query.collection.spatial.point,
+  polygonSearch: state.query.collection.spatial.polygon,
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
   projectFacets: state.facetsParams.cmr.project_h,
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   search: state.router.location.search,
-  temporalSearch: state.query.temporal,
+  temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })
 
@@ -73,7 +73,7 @@ export class UrlQueryContainer extends Component {
       onChangeFocusedCollection(focusedCollection.collectionId)
     }
 
-    if (timeline) {
+    if (Object.keys(timeline).length > 0) {
       const { state, query } = timeline
       onChangeTimelineState(state)
       onChangeTimelineQuery(query)
@@ -87,16 +87,24 @@ export class UrlQueryContainer extends Component {
       onUpdateCmrFacet(cmrFacets)
     }
 
-    onChangeQuery({ ...query })
+    if (Object.keys(query).length > 0) {
+      onChangeQuery({ ...query })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { onChangeUrl } = this.props
+    const { search: nextSearch } = nextProps
+    const { onChangeUrl, search } = this.props
 
-    const path = encodeUrlQuery(nextProps)
+    // The only time the search prop changes is after the URL has been updated
+    // So we only need to worry about encoding the query and updating the URL
+    // if the previous search and next search are the same
+    if (search === nextSearch) {
+      const path = encodeUrlQuery(nextProps)
 
-    if (path !== '') {
-      onChangeUrl(path)
+      if (path !== '') {
+        onChangeUrl(path)
+      }
     }
   }
 

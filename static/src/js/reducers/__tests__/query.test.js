@@ -1,41 +1,51 @@
 import queryReducer from '../query'
-import { UPDATE_SEARCH_QUERY } from '../../constants/actionTypes'
+import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
     const initialState = {
-      keyword: '',
-      spatial: {},
-      temporal: {}
+      collection: {
+        pageNum: 1,
+        spatial: {},
+        temporal: {}
+      },
+      granule: {
+        pageNum: 1
+      }
     }
 
     expect(queryReducer(undefined, action)).toEqual(initialState)
   })
 })
 
-describe('UPDATE_SEARCH_QUERY', () => {
+describe('UPDATE_COLLECTION_QUERY', () => {
   test('returns the correct state', () => {
     const payload = {
       keyword: 'new keyword',
+      pageNum: 1,
       spatial: {
         point: '0,0'
       },
       temporal: {}
     }
     const action = {
-      type: UPDATE_SEARCH_QUERY,
+      type: UPDATE_COLLECTION_QUERY,
       payload
     }
 
-    const expectedState = payload
+    const expectedState = {
+      collection: payload,
+      granule: { pageNum: 1 }
+    }
 
     expect(queryReducer(undefined, action)).toEqual(expectedState)
   })
 
   test('does not overwrite existing values', () => {
     const initialState = {
-      keyword: 'old keyword'
+      collection: { keyword: 'old keyword' },
+      granule: { pageNum: 1 }
     }
     const payload = {
       spatial: {
@@ -43,14 +53,63 @@ describe('UPDATE_SEARCH_QUERY', () => {
       }
     }
     const action = {
-      type: UPDATE_SEARCH_QUERY,
+      type: UPDATE_COLLECTION_QUERY,
       payload
     }
     const expectedState = {
-      keyword: 'old keyword',
-      spatial: {
-        point: '0,0'
-      }
+      collection: {
+        keyword: 'old keyword',
+        spatial: {
+          point: '0,0'
+        }
+      },
+      granule: { pageNum: 1 }
+    }
+
+    expect(queryReducer(initialState, action)).toEqual(expectedState)
+  })
+})
+
+
+describe('UPDATE_GRANULE_QUERY', () => {
+  test('returns the correct state', () => {
+    const payload = {
+      pageNum: 1
+    }
+    const action = {
+      type: UPDATE_GRANULE_QUERY,
+      payload
+    }
+
+    const expectedState = {
+      collection: {
+        pageNum: 1,
+        spatial: {},
+        temporal: {}
+      },
+      granule: payload
+    }
+
+    expect(queryReducer(undefined, action)).toEqual(expectedState)
+  })
+
+  test('does not overwrite existing values', () => {
+    const initialState = {
+      collection: { keyword: 'old keyword' },
+      granule: { pageNum: 1 }
+    }
+    const payload = {
+      pageNum: 2
+    }
+    const action = {
+      type: UPDATE_GRANULE_QUERY,
+      payload
+    }
+    const expectedState = {
+      collection: {
+        keyword: 'old keyword'
+      },
+      granule: { pageNum: 2 }
     }
 
     expect(queryReducer(initialState, action)).toEqual(expectedState)

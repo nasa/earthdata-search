@@ -1,17 +1,34 @@
-import { UPDATE_SEARCH_QUERY } from '../constants/actionTypes'
+import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../constants/actionTypes'
 
 const initialState = {
-  keyword: '',
-  spatial: {},
-  temporal: {}
+  collection: {
+    pageNum: 1,
+    spatial: {},
+    temporal: {}
+  },
+  granule: {
+    pageNum: 1
+  }
 }
 
 const queryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_SEARCH_QUERY: {
+    case UPDATE_COLLECTION_QUERY: {
       return {
         ...state,
-        ...action.payload
+        collection: {
+          ...state.collection,
+          ...action.payload
+        }
+      }
+    }
+    case UPDATE_GRANULE_QUERY: {
+      return {
+        ...state,
+        granule: {
+          ...state.granule,
+          ...action.payload
+        }
       }
     }
     default:

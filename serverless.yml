@@ -22,8 +22,8 @@ provider:
       securityGroupIds:
         - Ref: LambdaSecurityGroup
       subnetIds:
-        - ${env:SUBNET_AZ_A}
-        - ${env:SUBNET_AZ_B}
+        - ${self:custom.awsResources.subnet.a}
+        - ${self:custom.awsResources.subnet.b}
   role: ScheduledLambdaRole
 
 plugins:
@@ -259,8 +259,8 @@ resources:
       Properties:
         DBSubnetGroupDescription: EDSC DB subnet group
         SubnetIds:
-          - ${env:SUBNET_AZ_A}
-          - ${env:SUBNET_AZ_B}
+          - ${self:custom.awsResources.subnet.a}
+          - ${self:custom.awsResources.subnet.b}
 
     DatabaseVpcSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
@@ -379,7 +379,11 @@ custom:
   siteName: earthdata-search-lab
 
   awsResources:
-    vpc: ${env:SUBNET_AZ_A}
+    vpc: 'vpc-0ae48cd75a6141657'
+    subnet:
+      a: 'subnet-086c53aec52be1e70'
+      b: 'subnet-09d8f21a539138693'
+
 
   # Finch (S3 sync plugin)
   client:

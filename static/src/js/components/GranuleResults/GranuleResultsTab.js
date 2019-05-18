@@ -18,7 +18,7 @@ export class GranuleResultsTab extends PureComponent {
         <Link
           className="granule-results-tab__button"
           type="button"
-          to="/"
+          to="/search"
           onClick={() => onFocusedCollectionChange('')}
         >
           <i className="fa fa-chevron-circle-left" />

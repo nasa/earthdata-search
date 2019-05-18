@@ -10,14 +10,20 @@ import './GranuleResultsBody.scss'
  * @param {object} props - The props passed into the component.
  * @param {object} props.granules - Granules passed from redux store.
  */
-const GranuleResultsBody = ({ granules }) => (
+const GranuleResultsBody = ({ granules, pageNum, waypointEnter }) => (
   <div className="granule-results-body__inner">
-    <GranuleResultsList granules={granules} />
+    <GranuleResultsList
+      granules={granules}
+      pageNum={pageNum}
+      waypointEnter={waypointEnter}
+    />
   </div>
 )
 
 GranuleResultsBody.propTypes = {
-  granules: PropTypes.shape({}).isRequired
+  granules: PropTypes.shape({}).isRequired,
+  pageNum: PropTypes.number.isRequired,
+  waypointEnter: PropTypes.func.isRequired
 }
 
 export default GranuleResultsBody

@@ -3,7 +3,10 @@ import {
   UPDATE_SELECTED_CMR_FACET
 } from '../constants/actionTypes'
 
+import { prepareCMRFacetPayload } from '../util/facets'
 import actions from './index'
+
+import { updateCollectionQuery } from './search'
 
 export const updateFeatureFacet = facetInfo => ({
   type: UPDATE_SELECTED_FEATURE_FACET,
@@ -17,6 +20,8 @@ export const updateFeatureFacet = facetInfo => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeFeatureFacet = facetInfo => (dispatch) => {
+  // Reset collection pageNum to 1 when facets are changing
+  dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateFeatureFacet(facetInfo))
   dispatch(actions.getCollections())
 }
@@ -24,26 +29,7 @@ export const changeFeatureFacet = facetInfo => (dispatch) => {
 
 export const updateCmrFacet = newParams => ({
   type: UPDATE_SELECTED_CMR_FACET,
-  payload: {
-    data_center_h: newParams.data_center_h
-      ? newParams.data_center_h
-      : undefined,
-    instrument_h: newParams.instrument_h
-      ? newParams.instrument_h
-      : undefined,
-    platform_h: newParams.platform_h
-      ? newParams.platform_h
-      : undefined,
-    processing_level_id_h: newParams.processing_level_id_h
-      ? newParams.processing_level_id_h
-      : undefined,
-    project_h: newParams.project_h
-      ? newParams.project_h
-      : undefined,
-    science_keywords_h: newParams.science_keywords_h
-      ? newParams.science_keywords_h
-      : undefined
-  }
+  payload: prepareCMRFacetPayload(newParams)
 })
 
 
@@ -53,6 +39,8 @@ export const updateCmrFacet = newParams => ({
  * @param {function} dispatch - A dispatch function provided by redux.
  */
 export const changeCmrFacet = newParams => (dispatch) => {
+  // Reset collection pageNum to 1 when facets are changing
+  dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateCmrFacet(newParams))
   dispatch(actions.getCollections())
 }

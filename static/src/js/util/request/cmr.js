@@ -37,18 +37,18 @@ export class CmrRequest extends Request {
    * @return {Object} An object containing only the desired keys.
    */
   transformRequest(data) {
-    let cmrData = super.transformRequest(data)
+    const cmrData = super.transformRequest(data)
 
     // Converts javascript compliant keys to snake cased keys for use
     // in URLs and request payloads
-    const snakeKeyData = snakeCaseKeys(data)
+    const snakeKeyData = snakeCaseKeys(cmrData)
 
     // Prevent keys that our external services don't support from being sent
     const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
 
-    cmrData = prepKeysForCmr(filteredData, this.nonIndexedKeys())
+    const result = prepKeysForCmr(filteredData, this.nonIndexedKeys())
 
-    return cmrData
+    return result
   }
 }
 
@@ -63,6 +63,7 @@ export class CollectionRequest extends CmrRequest {
       'concept_id',
       'data_center_h',
       'format',
+      'facets_size',
       'has_granules',
       'has_granules_or_cwic',
       'include_facets',
@@ -139,9 +140,12 @@ export class CollectionRequest extends CmrRequest {
 export class GranuleRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
+      'bounding_box',
       'echo_collection_id',
       'page_num',
       'page_size',
+      'point',
+      'polygon',
       'sort_key'
     ]
   }
@@ -195,9 +199,12 @@ export class GranuleRequest extends CmrRequest {
 export class TimelineRequest extends CmrRequest {
   permittedCmrKeys() {
     return [
+      'bounding_box',
       'echo_collection_id',
       'end_date',
       'interval',
+      'point',
+      'polygon',
       'start_date'
     ]
   }

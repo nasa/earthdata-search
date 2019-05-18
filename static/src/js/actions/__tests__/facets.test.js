@@ -11,6 +11,7 @@ import {
 } from '../facets'
 
 import {
+  UPDATE_COLLECTION_QUERY,
   UPDATE_SELECTED_FEATURE_FACET,
   UPDATE_SELECTED_CMR_FACET
 } from '../../constants/actionTypes'
@@ -66,6 +67,10 @@ describe('changeCmrFacet', () => {
     // Is updateCmrFacet called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: { pageNum: 1 }
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_SELECTED_CMR_FACET,
       payload: newFacets
     })
@@ -94,6 +99,10 @@ describe('changeFeatureFacet', () => {
     // Is updateFeatureFacet called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: { pageNum: 1 }
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_SELECTED_FEATURE_FACET,
       payload: newFacets
     })

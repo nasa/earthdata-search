@@ -16,6 +16,8 @@ import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsTabContainer
   from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
+import FacetsModalContainer
+  from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import GranuleResultsTabContainer
   from '../../containers/GranuleResultsTabContainer/GranuleResultsTabContainer'
 import GranuleResultsBodyContainer
@@ -56,6 +58,7 @@ class Search extends PureComponent {
             />
           </Route>
         </Switch>
+        <FacetsModalContainer />
       </div>
     )
   }

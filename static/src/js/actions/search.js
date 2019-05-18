@@ -1,14 +1,37 @@
 import actions from './index'
-import { UPDATE_SEARCH_QUERY } from '../constants/actionTypes'
+import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../constants/actionTypes'
 
-export const updateSearchQuery = payload => ({
-  type: UPDATE_SEARCH_QUERY,
+export const updateCollectionQuery = payload => ({
+  type: UPDATE_COLLECTION_QUERY,
+  payload
+})
+
+export const updateGranuleQuery = payload => ({
+  type: UPDATE_GRANULE_QUERY,
   payload
 })
 
 export const changeQuery = query => (dispatch) => {
-  dispatch(updateSearchQuery(query))
+  // query is changing, so reset pageNum
+  const newQuery = {
+    ...query,
+    pageNum: 1
+  }
+
+  dispatch(updateCollectionQuery(newQuery))
   dispatch(actions.getCollections())
+  dispatch(actions.getGranules())
+  dispatch(actions.getTimeline())
+}
+
+export const changeCollectionPageNum = pageNum => (dispatch) => {
+  dispatch(updateCollectionQuery({ pageNum }))
+  dispatch(actions.getCollections())
+}
+
+export const changeGranulePageNum = pageNum => (dispatch) => {
+  dispatch(updateGranuleQuery({ pageNum }))
+  dispatch(actions.getGranules())
 }
 
 export const clearFilters = () => (dispatch) => {

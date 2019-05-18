@@ -21,7 +21,24 @@ function setup(type) {
         isLoaded: false,
         allIds: [],
         byId: {}
-      }
+      },
+      pageNum: 1,
+      waypointEnter: jest.fn()
+    }
+  }
+
+  if (type === 'loadingMore') {
+    props = {
+      granules: {
+        hits: null,
+        loadTime: null,
+        isLoading: true,
+        isLoaded: false,
+        allIds: [],
+        byId: {}
+      },
+      pageNum: 2,
+      waypointEnter: jest.fn()
     }
   }
 
@@ -44,7 +61,9 @@ function setup(type) {
             title: '456'
           }
         }
-      }
+      },
+      pageNum: 1,
+      waypointEnter: jest.fn()
     }
   }
 
@@ -71,6 +90,14 @@ describe('GranuleResultsList component', () => {
       expect(enzymeWrapper.find('.granule-results-list__header-item').at(0).find(Skeleton).length).toEqual(1)
       expect(enzymeWrapper.find('.granule-results-list__header-item').at(1).find(Skeleton).length).toEqual(1)
       expect(enzymeWrapper.find('.granule-results-list__list').find(Skeleton).length).toEqual(3)
+    })
+  })
+
+  describe('while loading more pages', () => {
+    test('renders the correct Skeleton elements', () => {
+      const { enzymeWrapper } = setup('loadingMore')
+
+      expect(enzymeWrapper.find('.granule-results-list__list').find(Skeleton).length).toEqual(1)
     })
   })
 

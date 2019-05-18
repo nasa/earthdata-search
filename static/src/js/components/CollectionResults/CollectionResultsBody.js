@@ -5,6 +5,7 @@ import {
   Link
 } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Waypoint } from 'react-waypoint'
 
 /**
  * Renders CollectionResultsBody.
@@ -27,10 +28,13 @@ class CollectionResultsBody extends PureComponent {
   render() {
     const {
       collections,
-      location
+      location,
+      waypointEnter
     } = this.props
 
-    const collectionResults = collections.allIds.map((id) => {
+    const collectionIds = collections.allIds
+
+    const collectionResults = collectionIds.map((id, index) => {
       const collection = collections.byId[id]
 
       let displayOrganization = ''
@@ -60,6 +64,8 @@ class CollectionResultsBody extends PureComponent {
           timeRange = `Up to ${dateEnd}`
         }
       }
+
+      const isLast = collectionIds.length > 0 && index === collectionIds.length - 1
 
       return (
         <li className="collection-results__item" key={collection.id}>
@@ -133,13 +139,26 @@ class CollectionResultsBody extends PureComponent {
               </p>
             </div>
           </div>
+          {
+            isLast && (
+              <Waypoint
+                bottomOffset="-400px"
+                onEnter={waypointEnter}
+              />
+            )
+          }
         </li>
       )
     })
 
     return (
       <ul className="collection-results__list">
-        {!collections.isLoading ? collectionResults : 'Loading...'}
+        {collectionResults}
+        {collections.isLoading && (
+          <li>
+            Loading...
+          </li>
+        )}
       </ul>
     )
   }
@@ -148,7 +167,8 @@ class CollectionResultsBody extends PureComponent {
 CollectionResultsBody.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired
+  onFocusedCollectionChange: PropTypes.func.isRequired,
+  waypointEnter: PropTypes.func.isRequired
 }
 
 export default CollectionResultsBody

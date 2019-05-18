@@ -71,7 +71,11 @@ class FacetsItem extends Component {
 
     return (
       <li className={className}>
-        <label className="facets-item__label" htmlFor={uid}>
+        <label
+          className="facets-item__label"
+          htmlFor={uid}
+          title={facet.title}
+        >
           <input
             id={uid}
             className="facets-item__checkbox"

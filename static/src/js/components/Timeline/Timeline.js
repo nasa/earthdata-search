@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
 import '../../../../../node_modules/edsc-timeline/dist/edsc-timeline.min'
-import timelineIntervals from '../../util/timeline'
+import { timelineIntervals } from '../../util/timeline'
 import getObjectKeyByValue from '../../util/object'
 
 const earliestStart = '1960-01-01'
@@ -29,8 +29,7 @@ class Timeline extends Component {
       focusedCollection: oldFocusedCollection,
       temporalSearch: oldTemporalSearch,
       timeline: oldTimeline,
-      onChangeTimelineQuery,
-      onChangeTimelineState
+      onChangeTimelineQuery
     } = this.props
 
     const {
@@ -84,7 +83,6 @@ class Timeline extends Component {
         }
       }
 
-      onChangeTimelineState({ collectionId: id })
       onChangeTimelineQuery(query)
     }
 
@@ -246,8 +244,9 @@ class Timeline extends Component {
 
   render() {
     const { focusedCollection = {} } = this.props
+    const { metadata = {} } = focusedCollection
     // Don't display the timeline if there isn't a focusedCollection with metadata
-    const display = focusedCollection.metadata ? 'block' : 'none'
+    const display = Object.keys(metadata).length === 0 ? 'none' : 'block'
 
     return (
       <section className="timeline" style={{ display }}>

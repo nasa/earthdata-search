@@ -1,22 +1,20 @@
 import {
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
   UPDATE_SELECTED_FEATURE_FACET,
-  UPDATE_SELECTED_CMR_FACET
+  UPDATE_SELECTED_CMR_FACET,
+  UPDATE_SELECTED_VIEW_ALL_FACET,
+  COPY_CMR_FACETS_TO_VIEW_ALL
 } from '../constants/actionTypes'
 
-const initialCmrState = {
-  data_center_h: undefined,
-  instrument_h: undefined,
-  platform_h: undefined,
-  processing_level_id_h: undefined,
-  project_h: undefined,
-  science_keywords_h: undefined
-}
+const initialCmrState = {}
 
 const initialFeatureState = {
   customizable: false,
   mapImagery: false,
   nearRealTime: false
 }
+
+const initialViewAllState = {}
 
 export const cmrFacetsReducer = (state = initialCmrState, action) => {
   switch (action.type) {
@@ -36,6 +34,29 @@ export const featureFacetsReducer = (state = initialFeatureState, action) => {
     case UPDATE_SELECTED_FEATURE_FACET: {
       return {
         ...state,
+        ...action.payload
+      }
+    }
+    default:
+      return state
+  }
+}
+
+export const viewAllFacetsReducer = (state = initialViewAllState, action) => {
+  switch (action.type) {
+    case UPDATE_SELECTED_VIEW_ALL_FACET: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case TOGGLE_VIEW_ALL_FACETS_MODAL: {
+      // Clear out the results when the modal is closed
+      if (action.payload !== false) return state
+      return initialViewAllState
+    }
+    case COPY_CMR_FACETS_TO_VIEW_ALL: {
+      return {
         ...action.payload
       }
     }

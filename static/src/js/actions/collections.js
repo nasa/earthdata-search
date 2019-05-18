@@ -1,7 +1,11 @@
 import { CollectionRequest } from '../util/request/cmr'
-import { encodeTemporal } from '../util/url/temporalEncoders'
+import {
+  buildSearchParams,
+  prepareCollectionParams
+} from '../util/collections'
 
 import {
+  ADD_MORE_COLLECTIONS,
   UPDATE_COLLECTIONS,
   LOADING_COLLECTIONS,
   LOADED_COLLECTIONS,
@@ -13,6 +17,11 @@ import {
   STARTED_COLLECTIONS_TIMER,
   FINISHED_COLLECTIONS_TIMER
 } from '../constants/actionTypes'
+
+export const addMoreCollections = payload => ({
+  type: ADD_MORE_COLLECTIONS,
+  payload
+})
 
 export const updateCollections = payload => ({
   type: UPDATE_COLLECTIONS,
@@ -65,33 +74,18 @@ export const finishCollectionsTimer = () => ({
  * @param {function} getState - A function that returns the current state provided by redux.
  */
 export const getCollections = () => (dispatch, getState) => {
-  const {
-    facetsParams,
-    query
-  } = getState()
-
+  const collectionParams = prepareCollectionParams(getState())
   const {
     keyword,
-    spatial = {},
-    temporal = {}
-  } = query
+    pageNum
+  } = collectionParams
 
-  const {
-    boundingBox,
-    point,
-    polygon
-  } = spatial
-
-  const temporalString = encodeTemporal(temporal)
-
-  const {
-    cmr: cmrFacets = {},
-    feature: featureFacets = {}
-  } = facetsParams
-
-  const tagKey = []
-  if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
-  if (featureFacets.mapImagery) tagKey.push('edsc.extra.gibs')
+  if (pageNum === 1) {
+    const emptyPayload = {
+      results: []
+    }
+    dispatch(updateCollections(emptyPayload))
+  }
 
   dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
@@ -99,37 +93,7 @@ export const getCollections = () => (dispatch, getState) => {
 
   const requestObject = new CollectionRequest()
 
-  const response = requestObject.search({
-    boundingBox,
-    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
-    dataCenterH: cmrFacets.data_center_h,
-    hasGranulesOrCwic: true,
-    includeFacets: 'v2',
-    includeGranuleCounts: true,
-    includeHasGranules: true,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
-    instrumentH: cmrFacets.instrument_h,
-    keyword,
-    options: {
-      science_keywords_h: {
-        or: true
-      },
-      temporal: {
-        limit_to_granules: true
-      }
-    },
-    pageNum: 1,
-    pageSize: 20,
-    platformH: cmrFacets.platform_h,
-    point,
-    polygon,
-    processingLevelIdH: cmrFacets.processing_level_id_h,
-    projectH: cmrFacets.project_h,
-    scienceKeywordsH: cmrFacets.science_keywords_h,
-    sortKey: ['has_granules_or_cwic'],
-    tagKey,
-    temporal: temporalString
-  })
+  const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {
       const payload = {}
 
@@ -145,7 +109,11 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(onFacetsLoaded({
         loaded: true
       }))
-      dispatch(updateCollections(payload))
+      if (pageNum === 1) {
+        dispatch(updateCollections(payload))
+      } else {
+        dispatch(addMoreCollections(payload))
+      }
       dispatch(updateFacets(payload))
     }, (error) => {
       dispatch(finishCollectionsTimer())

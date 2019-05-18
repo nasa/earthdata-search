@@ -80,14 +80,19 @@ describe('getTimeline', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      focusedCollection: {
+        collectionId: 'collectionId'
+      },
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
       timeline: {
         query: {
           endDate: '2009-12-01T23:59:59.000Z',
           interval: 'day',
           startDate: '1979-01-01T00:00:00.000Z'
-        },
-        state: {
-          collectionId: 'collectionId'
         }
       }
     })
@@ -116,6 +121,7 @@ describe('getTimeline', () => {
 
   test('returns no results if there is no focused collection', () => {
     const store = mockStore({
+      focusedCollection: {},
       timeline: {
         query: {},
         state: {}
@@ -139,14 +145,19 @@ describe('getTimeline', () => {
     })
 
     const store = mockStore({
+      focusedCollection: {
+        collectionId: 'collectionId'
+      },
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
       timeline: {
         query: {
           endDate: '2009-12-01T23:59:59.000Z',
           interval: 'day',
           startDate: '1979-01-01T00:00:00.000Z'
-        },
-        state: {
-          collectionId: 'collectionId'
         }
       }
     })
@@ -176,7 +187,7 @@ describe('changeTimelineState', () => {
     // call the dispatch
     store.dispatch(changeTimelineState({ newState }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_TIMELINE_STATE,
@@ -208,7 +219,7 @@ describe('changeTimelineQuery', () => {
     // call the dispatch
     store.dispatch(changeTimelineQuery({ newQuery }))
 
-    // Is updateSearchQuery called with the right payload
+    // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: UPDATE_TIMELINE_QUERY,
