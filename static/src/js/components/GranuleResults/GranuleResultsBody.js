@@ -14,6 +14,7 @@ const GranuleResultsBody = ({
   collectionId,
   excludedGranuleIds,
   granules,
+  isCwic,
   pageNum,
   location,
   waypointEnter,
@@ -25,6 +26,7 @@ const GranuleResultsBody = ({
       collectionId={collectionId}
       excludedGranuleIds={excludedGranuleIds}
       granules={granules}
+      isCwic={isCwic}
       pageNum={pageNum}
       location={location}
       waypointEnter={waypointEnter}
@@ -38,6 +40,7 @@ GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   granules: PropTypes.shape({}).isRequired,
+  isCwic: PropTypes.bool.isRequired,
   pageNum: PropTypes.number.isRequired,
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,

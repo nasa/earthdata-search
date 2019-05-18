@@ -5,6 +5,8 @@ import { Waypoint } from 'react-waypoint'
 import queryString from 'query-string'
 import { Link } from 'react-router-dom'
 
+import murmurhash3 from '../../util/murmurhash3'
+
 import './GranuleResultsItem.scss'
 
 /**
@@ -22,8 +24,17 @@ const GranuleResultsItem = ({
   onFocusedGranuleChange
 }) => {
   const handleRemoveClick = () => {
-    const { id } = granule
-    onExcludeGranule({ collectionId, granuleId: id })
+    const {
+      id,
+      is_cwic: isCwic
+    } = granule
+
+    let hashedId
+    if (isCwic) hashedId = murmurhash3(id).toString()
+    onExcludeGranule({
+      collectionId,
+      granuleId: hashedId || id
+    })
   }
 
   const handleClickGranuleDetails = (granuleId) => {

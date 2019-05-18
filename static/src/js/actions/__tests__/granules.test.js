@@ -135,11 +135,13 @@ describe('getGranules', () => {
     })
 
     const store = mockStore({
-      collections: {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            mock: 'data'
+      metadata: {
+        collections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              mock: 'data'
+            }
           }
         }
       },

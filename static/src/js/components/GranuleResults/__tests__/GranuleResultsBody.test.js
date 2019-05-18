@@ -14,6 +14,7 @@ function setup() {
       one: 'test',
       two: 'test'
     },
+    isCwic: false,
     pageNum: 1,
     location: { search: 'value' },
     waypointEnter: jest.fn(),
