@@ -1,24 +1,14 @@
 import 'array-foreach-async'
 import 'pg'
-import knex from 'knex'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
+import { getDbConnection } from './util'
 
 // CREATE USER lambda WITH LOGIN;
 // GRANT rds_iam TO edsc_test;
 
-const connection = knex({
-  client: 'pg',
-  connection: {
-    host: process.env.dbEndpoint,
-    user: process.env.dbUsername,
-    password: process.env.dbPassword,
-    database: process.env.dbName,
-    port: 5432
-  }
-})
-
+const connection = getDbConnection()
 const colorMapsTableName = 'colormaps'
 
 /**
@@ -80,7 +70,7 @@ const getProjectionCapabilities = async (projection) => {
 
           try {
             sqs.sendMessage({
-              QueueUrl: 'https://sqs.us-east-1.amazonaws.com/955096628022/ColorMapsProcessing',
+              QueueUrl: process.env.colorMapQueueUrl,
               MessageBody: JSON.stringify(knownColorMap)
             }, (error) => {
               if (error) {
