@@ -16,6 +16,15 @@ provider:
         - Endpoint.Port
     dbUsername: edsc
     dbName: edsc
+    colorMapQueueUrl:
+        Ref: ColorMapsProcessingQueue
+  vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds:
+        - ${env:SUBNET_AZ_A}
+        - ${env:SUBNET_AZ_B}
+  role: ScheduledLambdaRole
 
 plugins:
   - serverless-dotenv-plugin
@@ -32,13 +41,6 @@ functions:
     timeout: 300
     webpack:
       includeMigrations: true
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
 
   # 
   # SQS Lambdas
@@ -47,13 +49,6 @@ functions:
     handler: serverless/src/processColorMap.default
     timeout: 300
     reservedConcurrency: 10
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
     events:
       - sqs:
           arn:
@@ -66,17 +61,7 @@ functions:
   # 
   generateColorMaps:
     handler: serverless/src/generateColorMaps.default
-    environment:
-      colorMapQueueUrl:
-        Ref: ColorMapsProcessingQueue
     timeout: 300
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
     events:
       - schedule:
           rate: cron(0 5 * * ? *)
@@ -104,13 +89,6 @@ functions:
   # 
   getColorMap:
     handler: serverless/src/getColorMap.default
-    role: ScheduledLambdaRole
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - subnet-086c53aec52be1e70 # 1a
-        - subnet-09d8f21a539138693 # 1b
     events:
       - http:
           method: get
@@ -281,8 +259,8 @@ resources:
       Properties:
         DBSubnetGroupDescription: EDSC DB subnet group
         SubnetIds:
-          - subnet-086c53aec52be1e70 # 1a
-          - subnet-09d8f21a539138693 # 1b
+          - ${env:SUBNET_AZ_A}
+          - ${env:SUBNET_AZ_B}
 
     DatabaseVpcSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
@@ -299,6 +277,7 @@ resources:
     # Merge the NGAP PermissionsBoundary into the
     # default (Serverless Defined) role for executing Lambdas
     IamRoleLambdaExecution:
+      Type: "AWS::IAM::Role"
       Properties:
         PermissionsBoundary:
           Fn::Join: [
@@ -400,7 +379,7 @@ custom:
   siteName: earthdata-search-lab
 
   awsResources:
-    vpc: 'vpc-0ae48cd75a6141657'
+    vpc: ${env:SUBNET_AZ_A}
 
   # Finch (S3 sync plugin)
   client:
