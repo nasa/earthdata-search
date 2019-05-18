@@ -11,7 +11,7 @@ export default function search(event, context, callback) {
     'text'
   ]
 
-  const params = JSON.parse(event.body)
+  const { params = {} } = JSON.parse(event.body)
 
   console.log(`Parameters received: ${Object.keys(params)}`)
 

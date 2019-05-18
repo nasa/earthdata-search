@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 
+import { updateAuth } from './auth'
 import { getCollections } from './collections'
 import { changeFocusedCollection } from './focusedCollection'
 import { getGranules, updateGranules } from './granules'
@@ -64,6 +65,7 @@ const actions = {
   searchNlp,
   toggleFacetsModal,
   triggerViewAllFacets,
+  updateAuth,
   updateCmrFacet,
   updateFeatureFacet,
   updateGranules

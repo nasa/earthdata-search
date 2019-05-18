@@ -1,6 +1,6 @@
 import actions from './index'
 import { updateGranuleQuery } from './search'
-import { CollectionRequest } from '../util/request/cmr'
+import CollectionRequest from '../util/request/collectionRequest'
 import { UPDATE_FOCUSED_COLLECTION } from '../constants/actionTypes'
 
 export const updateFocusedCollection = payload => ({
@@ -13,7 +13,7 @@ export const updateFocusedCollection = payload => ({
  * @param {string} collectionId - A CMR Collection ID.
  * @param {function} dispatch - A dispatch function provided by redux.
  */
-export const changeFocusedCollection = collectionId => (dispatch) => {
+export const changeFocusedCollection = collectionId => (dispatch, getState) => {
   // Reset granule pageNum to 1 when focusedCollection is changing
   dispatch(updateGranuleQuery({ pageNum: 1 }))
 
@@ -23,7 +23,8 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
     return null
   }
 
-  const requestObject = new CollectionRequest()
+  const { auth } = getState()
+  const requestObject = new CollectionRequest(auth !== '')
 
   const response = requestObject.search({
     concept_id: collectionId,

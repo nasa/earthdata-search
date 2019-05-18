@@ -1,12 +1,13 @@
 import actions from './index'
 
-import { TimelineRequest } from '../util/request/cmr'
+import TimelineRequest from '../util/request/timelineRequest'
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
   UPDATE_TIMELINE_STATE
 } from '../constants/actionTypes'
 import { prepareTimelineParams } from '../util/timeline'
+import { updateAuthFromHeaders } from './auth'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
@@ -34,6 +35,7 @@ export const getTimeline = () => (dispatch, getState) => {
   }
 
   const {
+    auth,
     boundingBox,
     collectionId,
     endDate,
@@ -43,7 +45,7 @@ export const getTimeline = () => (dispatch, getState) => {
     startDate
   } = timelineParams
 
-  const requestObject = new TimelineRequest()
+  const requestObject = new TimelineRequest(auth !== '')
 
   const response = requestObject.search({
     boundingBox,
@@ -59,6 +61,7 @@ export const getTimeline = () => (dispatch, getState) => {
 
       payload.results = response.data
 
+      dispatch(updateAuthFromHeaders(response.headers))
       dispatch(updateTimelineIntervals(payload))
     }, (error) => {
       throw new Error('Request failed', error)

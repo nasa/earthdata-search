@@ -11,7 +11,6 @@ import {
   onViewAllFacetsLoaded,
   onViewAllFacetsLoading,
   triggerViewAllFacets,
-  updateViewAllFacet,
   updateViewAllFacets
 } from '../viewAllFacets'
 import {
@@ -23,7 +22,8 @@ import {
   UPDATE_VIEW_ALL_FACETS,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   UPDATE_COLLECTION_QUERY,
-  UPDATE_SELECTED_CMR_FACET
+  UPDATE_SELECTED_CMR_FACET,
+  UPDATE_AUTH
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -162,49 +162,84 @@ describe('getViewAllFacets', () => {
     moxios.uninstall()
   })
 
-  test('calls the API to get the View All Facets', async () => {
-    moxios.stubRequest(/collections.*/, {
-      status: 200,
-      response: {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000',
-          title: 'ECHO dataset metadata',
-          entry: [{
-            mockCollectionData: 'goes here'
-          }],
-          facets: {
-            children: {
-              instrument: {
-                applied: true,
-                has_children: true,
-                title: 'Instrument',
-                type: 'group',
-                children: [
-                  {
-                    title: '1 Test facet',
-                    type: 'filter',
-                    applied: false,
-                    has_children: false,
-                    links : {
-                      apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=1+Test+facet'
-                    }
-                  },
-                  {
-                    title: 'Test facet 2',
-                    type: 'filter',
-                    applied: false,
-                    has_children: false,
-                    links: {
-                      apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=Test+facet+2'
-                    }
-                  }
-                ]
+  const stubResponse = {
+    feed: {
+      updated: '2019-03-27T20:21:14.705Z',
+      id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000',
+      title: 'ECHO dataset metadata',
+      entry: [{
+        mockCollectionData: 'goes here'
+      }],
+      facets: {
+        children: {
+          instrument: {
+            applied: true,
+            has_children: true,
+            title: 'Instrument',
+            type: 'group',
+            children: [
+              {
+                title: '1 Test facet',
+                type: 'filter',
+                applied: false,
+                has_children: false,
+                links: {
+                  apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=1+Test+facet'
+                }
+              },
+              {
+                title: 'Test facet 2',
+                type: 'filter',
+                applied: false,
+                has_children: false,
+                links: {
+                  apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=Test+facet+2'
+                }
               }
-            }
+            ]
           }
         }
-      },
+      }
+    }
+  }
+
+  const facetsPayload = {
+    hits: 1,
+    selectedCategory: undefined,
+    facets: {
+      instrument: {
+        applied: true,
+        has_children: true,
+        title: 'Instrument',
+        type: 'group',
+        children: [
+          {
+            title: '1 Test facet',
+            type: 'filter',
+            applied: false,
+            has_children: false,
+            links: {
+              apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=1+Test+facet'
+            }
+          },
+          {
+            title: 'Test facet 2',
+            type: 'filter',
+            applied: false,
+            has_children: false,
+            links: {
+              apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=Test+facet+2'
+            }
+          }
+        ]
+      }
+    }
+  }
+
+  test('calls the API to get the View All Facets', async () => {
+    moxios.stubRequest(/gov\/search\/collections.*/, {
+      status: 200,
+      response: stubResponse,
       headers: {
         'cmr-hits': 1
       }
@@ -212,6 +247,7 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      auth: '',
       entities: {
         collections: {},
         facets: {},
@@ -247,45 +283,82 @@ describe('getViewAllFacets', () => {
         payload: true
       })
       expect(storeActions[2]).toEqual({
+        type: UPDATE_AUTH,
+        payload: ''
+      })
+      expect(storeActions[3]).toEqual({
         type: LOADED_VIEW_ALL_FACETS,
         payload: {
           loaded: true
         }
       })
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: UPDATE_VIEW_ALL_FACETS,
-        payload: {
-          hits: 1,
-          selectedCategory: undefined,
-          facets: {
-            instrument: {
-              applied: true,
-              has_children: true,
-              title: 'Instrument',
-              type: 'group',
-              children: [
-                {
-                  title: '1 Test facet',
-                  type: 'filter',
-                  applied: false,
-                  has_children: false,
-                  links: {
-                    apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=1+Test+facet'
-                  }
-                },
-                {
-                  title: 'Test facet 2',
-                  type: 'filter',
-                  applied: false,
-                  has_children: false,
-                  links: {
-                    apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h%5B%5D=Test+facet+2'
-                  }
-                }
-              ]
-            }
-          }
+        payload: facetsPayload
+      })
+    })
+  })
+
+  test('calls lambda to get the authenticated View All Facets', async () => {
+    moxios.stubRequest(/3001\/collections.*/, {
+      status: 200,
+      response: stubResponse,
+      headers: {
+        'cmr-hits': 1,
+        'jwt-token': 'token'
+      }
+    })
+
+    // mockStore with initialState
+    const store = mockStore({
+      auth: 'token',
+      entities: {
+        collections: {},
+        facets: {},
+        granules: {},
+        viewAllFacets: {}
+      },
+      query: {
+        collection: {
+          keyword: 'search keyword'
         }
+      },
+      cmr: {},
+      facetsParams: {
+        feature: {
+          customizable: false,
+          mapImagery: false,
+          nearRealTime: false
+        }
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(getViewAllFacets('Instruments')).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: LOADING_VIEW_ALL_FACETS,
+        payload: {
+          selectedCategory: 'Instruments'
+        }
+      })
+      expect(storeActions[1]).toEqual({
+        type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+        payload: true
+      })
+      expect(storeActions[2]).toEqual({
+        type: UPDATE_AUTH,
+        payload: 'token'
+      })
+      expect(storeActions[3]).toEqual({
+        type: LOADED_VIEW_ALL_FACETS,
+        payload: {
+          loaded: true
+        }
+      })
+      expect(storeActions[4]).toEqual({
+        type: UPDATE_VIEW_ALL_FACETS,
+        payload: facetsPayload
       })
     })
   })
@@ -303,6 +376,7 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      auth: '',
       entities: {
         collections: {},
         facets: {},

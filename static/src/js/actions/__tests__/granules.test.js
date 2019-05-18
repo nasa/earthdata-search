@@ -6,7 +6,14 @@ import {
   updateGranules,
   getGranules
 } from '../granules'
-import { UPDATE_GRANULES } from '../../constants/actionTypes'
+import {
+  UPDATE_GRANULES,
+  LOADING_GRANULES,
+  STARTED_GRANULES_TIMER,
+  FINISHED_GRANULES_TIMER,
+  LOADED_GRANULES,
+  UPDATE_AUTH
+} from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -33,7 +40,7 @@ describe('getGranules', () => {
   })
 
   test('calls the API to get granules', async () => {
-    moxios.stubRequest(/granules.*/, {
+    moxios.stubRequest(/gov\/search\/granules.*/, {
       status: 200,
       response: {
         feed: {
@@ -52,6 +59,7 @@ describe('getGranules', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      auth: '',
       focusedCollection: {
         collectionId: 'collectionId'
       },
@@ -68,16 +76,90 @@ describe('getGranules', () => {
     await store.dispatch(getGranules()).then(() => {
       // Is updateGranules called with the right payload
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: 'LOADING_GRANULES' })
-      expect(storeActions[1]).toEqual({ type: 'STARTED_GRANULES_TIMER' })
-      expect(storeActions[2]).toEqual({ type: 'FINISHED_GRANULES_TIMER' })
+      expect(storeActions[0]).toEqual({ type: LOADING_GRANULES })
+      expect(storeActions[1]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
       expect(storeActions[3]).toEqual({
-        type: 'LOADED_GRANULES',
+        type: UPDATE_AUTH,
+        payload: ''
+      })
+      expect(storeActions[4]).toEqual({
+        type: LOADED_GRANULES,
         payload: {
           loaded: true
         }
       })
+      expect(storeActions[5]).toEqual({
+        type: UPDATE_GRANULES,
+        payload: {
+          collectionId: 'collectionId',
+          hits: 1,
+          isCwic: false,
+          results: [{
+            mockGranuleData: 'goes here',
+            formatted_temporal: [
+              null,
+              null
+            ],
+            is_cwic: false
+          }]
+        }
+      })
+    })
+  })
+
+  test('calls lambda to get authenticated granules', async () => {
+    moxios.stubRequest(/3001\/granules.*/, {
+      status: 200,
+      response: {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          title: 'ECHO granule metadata',
+          entry: [{
+            mockGranuleData: 'goes here'
+          }]
+        }
+      },
+      headers: {
+        'cmr-hits': 1,
+        'jwt-token': 'token'
+      }
+    })
+
+    // mockStore with initialState
+    const store = mockStore({
+      auth: 'token',
+      focusedCollection: {
+        collectionId: 'collectionId'
+      },
+      query: {
+        collection: {
+          temporal: {},
+          spatial: {}
+        },
+        granule: { pageNum: 1 }
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(getGranules()).then(() => {
+      // Is updateGranules called with the right payload
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({ type: LOADING_GRANULES })
+      expect(storeActions[1]).toEqual({ type: STARTED_GRANULES_TIMER })
+      expect(storeActions[2]).toEqual({ type: FINISHED_GRANULES_TIMER })
+      expect(storeActions[3]).toEqual({
+        type: UPDATE_AUTH,
+        payload: 'token'
+      })
       expect(storeActions[4]).toEqual({
+        type: LOADED_GRANULES,
+        payload: {
+          loaded: true
+        }
+      })
+      expect(storeActions[5]).toEqual({
         type: UPDATE_GRANULES,
         payload: {
           collectionId: 'collectionId',
@@ -125,6 +207,7 @@ describe('getGranules', () => {
     })
 
     const store = mockStore({
+      auth: '',
       focusedCollection: {
         collectionId: 'collectionId'
       },

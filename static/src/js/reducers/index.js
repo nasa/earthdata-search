@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
+import authReducer from './auth'
 import collectionsReducer from './collections'
 import facetsReducer from './facets'
 import {
@@ -12,11 +13,12 @@ import focusedCollectionReducer from './focusedCollection'
 import granulesReducer from './granules'
 import mapReducer from './map'
 import queryReducer from './query'
-import uiReducer from './ui'
 import timelineReducer from './timeline'
+import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 
 export default history => combineReducers({
+  auth: authReducer,
   entities: combineReducers({
     collections: collectionsReducer,
     facets: facetsReducer,

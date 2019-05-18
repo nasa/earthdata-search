@@ -12,6 +12,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
+import ConnectedAuthContainer from './containers/AuthContainer/AuthContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -32,20 +33,22 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ConnectedUrlQueryContainer>
-            <Helmet>
-              <meta charSet="utf-8" />
-              <title>Earthdata Search</title>
-            </Helmet>
-            <Switch>
-              <Route exact path="/">
-                <Redirect to="/search" />
-              </Route>
-              <Route path="/search" component={Search} />
-              <Route path="/project" component={Project} />
-            </Switch>
-            <FooterContainer />
-          </ConnectedUrlQueryContainer>
+          <ConnectedAuthContainer>
+            <ConnectedUrlQueryContainer>
+              <Helmet>
+                <meta charSet="utf-8" />
+                <title>Earthdata Search</title>
+              </Helmet>
+              <Switch>
+                <Route exact path="/">
+                  <Redirect to="/search" />
+                </Route>
+                <Route path="/search" component={Search} />
+                <Route path="/project" component={Project} />
+              </Switch>
+              <FooterContainer />
+            </ConnectedUrlQueryContainer>
+          </ConnectedAuthContainer>
         </ConnectedRouter>
       </Provider>
     )

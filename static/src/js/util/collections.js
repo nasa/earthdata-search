@@ -8,6 +8,7 @@ import { categoryNameToCMRParam } from './facets'
  */
 export const prepareCollectionParams = (state) => {
   const {
+    auth,
     facetsParams,
     query,
     entities
@@ -43,6 +44,7 @@ export const prepareCollectionParams = (state) => {
   if (featureFacets.mapImagery) tagKey.push('edsc.extra.gibs')
 
   return {
+    auth,
     boundingBox,
     cmrFacets,
     featureFacets,
