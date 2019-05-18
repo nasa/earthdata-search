@@ -1,8 +1,10 @@
 import pgMigrate from 'node-pg-migrate'
+import { getDbCredentials } from './util'
 
 export default function migrateDatabase(event, context, callback) {
   try {
-    const databaseUrl = `postgres://${process.env.dbUsername}:${process.env.dbPassword}@${process.env.dbEndpoint}/${process.env.dbName}`
+    const dbCredentials = getDbCredentials()
+    const databaseUrl = `postgres://${dbCredentials.username}:${dbCredentials.password}@${process.env.dbEndpoint}/${process.env.dbName}`
 
     const config = {
       databaseUrl,
