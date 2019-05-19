@@ -1,6 +1,9 @@
 import { buildURL, doSearchRequest } from './util'
 
-
+/**
+ * Handler to perform an authenticated CMR Collection search
+ * @param {object} event Event Data
+ */
 export default async function collectionSearch(event) {
   const { body, requestContext } = event
   const { jwtToken } = requestContext.authorizer
