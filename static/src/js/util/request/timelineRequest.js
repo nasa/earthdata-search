@@ -20,13 +20,19 @@ class BaseTimelineRequest extends Request {
  * Authenticated Request object for collection specific requests
  */
 class AuthenticatedTimelineRequest extends LambdaRequest {
+  constructor(auth) {
+    super()
+
+    this.auth = auth
+  }
+
   permittedCmrKeys = BaseTimelineRequest.prototype.permittedCmrKeys
 
   /*
    * Makes a POST request to Lambda
    */
   search(params) {
-    return super.post('granules/timeline', params, true)
+    return super.post('granules/timeline', params)
   }
 }
 
@@ -48,8 +54,8 @@ class UnauthenticatedTimelineRequest extends CmrRequest {
  * Request object for collection specific requests
  */
 export default class TimelineRequest {
-  constructor(authenticated) {
-    if (authenticated) return new AuthenticatedTimelineRequest()
+  constructor(auth) {
+    if (auth) return new AuthenticatedTimelineRequest(auth)
     return new UnauthenticatedTimelineRequest()
   }
 }

@@ -13,7 +13,7 @@ describe('CwicRequest#transformRequest', () => {
 
     const transformedData = cwicRequest.transformRequest({
       echoCollectionId: 'TEST_COLLECTION_ID'
-    })
+    }, {})
 
     expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
   })
@@ -24,7 +24,7 @@ describe('CwicRequest#transformRequest', () => {
     const transformedData = cwicRequest.transformRequest({
       echoCollectionId: 'TEST_COLLECTION_ID',
       nonPermittedKey: 'NOPE'
-    })
+    }, {})
 
     expect(transformedData).toEqual('{"params":{"echo_collection_id":"TEST_COLLECTION_ID"}}')
   })

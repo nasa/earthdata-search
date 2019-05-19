@@ -115,6 +115,20 @@ functions:
             origin : '*'
           path: nlp
 
+  edlLogin:
+    handler: serverless/src/edlLogin.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: login
+
+  edlAuthorizer:
+    handler: serverless/src/edlAuthorizer.default
+    cors: true
+
+
   #
   # EDL Authenticated API Gateway Endpoints
   #
@@ -140,6 +154,7 @@ functions:
           cors:
             origin: '*'
           path: collections
+          authorizer: edlAuthorizer
 
   granuleSearch:
     handler: serverless/src/cmrGranuleSearch.default
@@ -149,6 +164,7 @@ functions:
           cors:
             origin: '*'
           path: granules
+          authorizer: edlAuthorizer
 
   timelineSearch:
     handler: serverless/src/timelineSearch.default
@@ -158,9 +174,10 @@ functions:
           cors:
             origin: '*'
           path: granules/timeline
+          authorizer: edlAuthorizer
 
-  ursCallback:
-    handler: serverless/src/earthdataLogin.default
+  edlCallback:
+    handler: serverless/src/edlCallback.default
     events:
       - http:
           method: get

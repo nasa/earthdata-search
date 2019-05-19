@@ -3,7 +3,7 @@ import https from 'https'
 function retrieveConcept(event, context, callback) {
   let bodyContent = ''
 
-  const conceptUrl = `${process.env.cmr_host}`
+  const conceptUrl = `${process.env.cmrHost}`
     + `/search/concepts/${event.pathParameters.id}`
 
   console.log(conceptUrl)

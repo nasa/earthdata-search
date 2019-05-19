@@ -45,7 +45,7 @@ export const getTimeline = () => (dispatch, getState) => {
     startDate
   } = timelineParams
 
-  const requestObject = new TimelineRequest(auth !== '')
+  const requestObject = new TimelineRequest(auth)
 
   const response = requestObject.search({
     boundingBox,
