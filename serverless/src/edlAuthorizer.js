@@ -4,7 +4,6 @@ import simpleOAuth2 from 'simple-oauth2'
 
 const config = JSON.parse(fs.readFileSync('config.json'))
 
-
 const generatePolicy = (username, jwtToken, effect, resource) => {
   const authResponse = {}
   authResponse.principalId = username

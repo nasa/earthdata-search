@@ -1,6 +1,11 @@
 import AWS from 'aws-sdk'
 import knex from 'knex'
 import { stringify as qsStringify } from 'qs'
+import request from 'request-promise'
+import jwt from 'jsonwebtoken'
+import fs from 'fs'
+
+const config = JSON.parse(fs.readFileSync('config.json'))
 
 // for fetching configuration
 const secretsmanager = new AWS.SecretsManager()
@@ -50,7 +55,7 @@ export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
   return [
     qsStringify(indexedAttrs),
     qsStringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
-  ].join('&')
+  ].filter(str => str !== '').join('&')
 }
 
 /**
@@ -85,4 +90,90 @@ export const getDbConnection = () => {
     }
   })
   return connection
+}
+
+/**
+ * Builds a URL used to perform a search request
+ * @param {object} paramObj Parameters needed to build a search request URL
+ */
+export const buildURL = (paramObj) => {
+  const {
+    body,
+    nonIndexedKeys,
+    path,
+    permittedCmrKeys
+  } = paramObj
+
+  const { params = {} } = JSON.parse(body)
+
+  console.log(`Parameters received: ${Object.keys(params)}`)
+
+  const obj = pick(params, permittedCmrKeys)
+
+  console.log(`Filtered parameters: ${Object.keys(obj)}`)
+
+  // Transform the query string hash to an encoded url string
+  const queryParams = cmrStringify(obj, nonIndexedKeys)
+
+  const url = `${process.env.cmrHost}`
+      + `${path}?${queryParams}`
+
+  console.log(`CMR Query: ${url}`)
+
+  return url
+}
+
+export const prepareExposeHeaders = (headers) => {
+  // Add 'jwt-token' to access-control-expose-headers, so the client app can read the JWT
+  const { 'access-control-expose-headers': exposeHeaders = '' } = headers
+  const exposeHeadersList = exposeHeaders.split(',').filter(header => header !== '')
+  exposeHeadersList.push('jwt-token')
+  return exposeHeadersList.join(', ')
+}
+
+/**
+ * Performs a search request and returns the result body and the JWT
+ * @param {string} jwtToken JWT returned from edlAuthorizer
+ * @param {string} url URL for to perform search
+ */
+export const doSearchRequest = async (jwtToken, url) => {
+  // Get the access token and clientId to build the Echo-Token header
+  const token = jwt.verify(jwtToken, config.secret)
+  const { id: clientId } = config.oauth.client
+
+  try {
+    console.log('url', url)
+    const response = await request.get({
+      uri: url,
+      resolveWithFullResponse: true,
+      headers: {
+        'Echo-Token': `${token.token.access_token}:${clientId}`
+      }
+    })
+
+    const { body, headers } = response
+
+    return {
+      statusCode: response.statusCode,
+      headers: {
+        ...headers,
+        'access-control-expose-headers': prepareExposeHeaders(headers),
+        'jwt-token': jwtToken
+      },
+      body
+    }
+  } catch (e) {
+    console.log('error', e)
+    if (e.response) {
+      return {
+        statusCode: e.statusCode,
+        body: e.response.body
+      }
+    }
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Oh No!' })
+    }
+  }
 }
