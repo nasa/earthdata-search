@@ -2,6 +2,12 @@ import fs from 'fs'
 
 const config = JSON.parse(fs.readFileSync('config.json'))
 
+/**
+ * Handler for redirecting the user to the correct EDL login URL
+ * @param {*} event
+ * @param {*} context
+ * @param {*} callback
+ */
 export default function edlLogin(event, context, callback) {
   const params = event.queryStringParameters
 

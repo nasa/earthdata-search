@@ -184,11 +184,7 @@ functions:
           cors:
             origin: '*'
           path: urs_callback
-      - http:
-          method: get
-          cors:
-            origin: '*'
-          path: logout
+
 
 #
 # Additional AWS Resources
