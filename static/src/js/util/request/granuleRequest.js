@@ -60,6 +60,12 @@ class BaseGranuleRequest extends Request {
  * Authenticated Request object for collection specific requests
  */
 class AuthenticatedGranuleRequest extends LambdaRequest {
+  constructor(auth) {
+    super()
+
+    this.auth = auth
+  }
+
   permittedCmrKeys = BaseGranuleRequest.prototype.permittedCmrKeys
 
   nonIndexedKeys = BaseGranuleRequest.prototype.nonIndexedKeys
@@ -70,7 +76,7 @@ class AuthenticatedGranuleRequest extends LambdaRequest {
    * Makes a POST request to Lambda
    */
   search(params) {
-    return super.post('granules', params, true)
+    return super.post('granules', params)
   }
 }
 
@@ -96,8 +102,8 @@ class UnauthenticatedGranuleRequest extends CmrRequest {
  * Request object for collection specific requests
  */
 export default class GranuleRequest {
-  constructor(authenticated) {
-    if (authenticated) return new AuthenticatedGranuleRequest()
+  constructor(auth) {
+    if (auth) return new AuthenticatedGranuleRequest(auth)
     return new UnauthenticatedGranuleRequest()
   }
 }

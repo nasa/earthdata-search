@@ -68,7 +68,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const collectionParams = prepareCollectionParams(getState())
 
   const { auth } = collectionParams
-  const requestObject = new CollectionRequest(auth !== '')
+  const requestObject = new CollectionRequest(auth)
 
   const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {

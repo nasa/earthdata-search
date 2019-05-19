@@ -22,7 +22,7 @@ export default function search(event, context, callback) {
   // Transform the query string hash to an encoded url string
   const queryParams = qs.stringify(obj)
 
-  const nlpUrl = `${process.env.nlp_host}`
+  const nlpUrl = `${process.env.nlpHost}`
     + `/nlp?${queryParams}`
 
   console.log(`NLP Query: ${nlpUrl}`)

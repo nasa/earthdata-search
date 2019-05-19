@@ -7,7 +7,8 @@ import { updateFocusedCollection } from '../focusedCollection'
 import {
   UPDATE_FOCUSED_COLLECTION,
   UPDATE_GRANULES,
-  UPDATE_GRANULE_QUERY
+  UPDATE_GRANULE_QUERY,
+  UPDATE_AUTH
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -45,7 +46,7 @@ describe('changeFocusedCollection', () => {
   })
 
   test('should update the focusedCollection and call getGranules', async () => {
-    moxios.stubRequest(/collections.*/, {
+    moxios.stubRequest(/gov\/search\/collections.*/, {
       status: 200,
       response: {
         feed: {
@@ -68,7 +69,7 @@ describe('changeFocusedCollection', () => {
     getGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
-    const store = mockStore()
+    const store = mockStore({ auth: '' })
 
     // call the dispatch
     await store.dispatch(actions.changeFocusedCollection(newCollectionId))
@@ -86,6 +87,68 @@ describe('changeFocusedCollection', () => {
       payload: { pageNum: 1 }
     })
     expect(storeActions[1]).toEqual({
+      type: UPDATE_AUTH,
+      payload: ''
+    })
+    expect(storeActions[2]).toEqual({
+      type: UPDATE_FOCUSED_COLLECTION,
+      payload
+    })
+
+    // was getGranules called
+    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('should update the authenticated focusedCollection and call getGranules', async () => {
+    moxios.stubRequest(/3001\/collections.*/, {
+      status: 200,
+      response: {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
+          title: 'ECHO dataset metadata',
+          entry: [{
+            mockCollectionData: 'goes here'
+          }],
+          facets: {},
+          hits: 1
+        }
+      },
+      headers: {
+        'cmr-hits': 1,
+        'jwt-token': 'token'
+      }
+    })
+
+    const newCollectionId = 'newCollectionId'
+
+    // mock getGranules
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({ auth: 'token' })
+
+    // call the dispatch
+    await store.dispatch(actions.changeFocusedCollection(newCollectionId))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    const payload = {
+      collectionId: 'newCollectionId',
+      metadata: {
+        mockCollectionData: 'goes here'
+      }
+    }
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: { pageNum: 1 }
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_AUTH,
+      payload: 'token'
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_FOCUSED_COLLECTION,
       payload
     })
@@ -122,7 +185,7 @@ describe('changeFocusedCollection', () => {
       response: {}
     })
 
-    const store = mockStore({ focusedCollection: { collectionId: 'collectionId' } })
+    const store = mockStore({ auth: '', focusedCollection: { collectionId: 'collectionId' } })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 

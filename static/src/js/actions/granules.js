@@ -71,7 +71,7 @@ export const getGranules = () => (dispatch, getState) => {
   if (isCwicCollection) {
     requestObject = new CwicGranuleRequest()
   } else {
-    requestObject = new GranuleRequest(auth !== '')
+    requestObject = new GranuleRequest(auth)
   }
 
   const response = requestObject.search({

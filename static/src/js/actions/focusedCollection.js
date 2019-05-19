@@ -1,5 +1,6 @@
 import actions from './index'
 import { updateGranuleQuery } from './search'
+import { updateAuthFromHeaders } from './auth'
 import CollectionRequest from '../util/request/collectionRequest'
 import { UPDATE_FOCUSED_COLLECTION } from '../constants/actionTypes'
 
@@ -24,7 +25,7 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
   }
 
   const { auth } = getState()
-  const requestObject = new CollectionRequest(auth !== '')
+  const requestObject = new CollectionRequest(auth)
 
   const response = requestObject.search({
     concept_id: collectionId,
@@ -37,6 +38,7 @@ export const changeFocusedCollection = collectionId => (dispatch, getState) => {
       const [metadata] = response.data.feed.entry
       payload.metadata = metadata
 
+      dispatch(updateAuthFromHeaders(response.headers))
       dispatch(updateFocusedCollection(payload))
       dispatch(actions.getGranules())
     }, (error) => {
