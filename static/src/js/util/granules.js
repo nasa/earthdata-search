@@ -81,3 +81,31 @@ export const prepareGranuleParams = (state) => {
     temporalString
   }
 }
+
+/**
+ * Create the ECHO10 Metadata URLs using the granule concept ID
+ * @param {string} granuleId - The granule ID
+ * @returns {object} - An object containing the various URLs
+ */
+export const createEcho10MetadataUrls = (granuleId) => {
+  // TODO: This should eventually support authentication by appending the token information
+  const metadataUrlTypes = [
+    { ext: 'atom', title: 'ATOM' },
+    { ext: 'echo10', title: 'ECHO 10' },
+    { ext: 'iso19115', title: 'ISO 19115' },
+    { ext: 'native', title: 'Native' },
+    { ext: 'umm_json', title: 'UMM-G' }
+  ]
+  const metadataUrls = {}
+
+  // Set a key for each URL type and append the display title and href. 'native' does not
+  // use an extension on the href so we omit it.
+  metadataUrlTypes.forEach((type) => {
+    metadataUrls[type.ext] = {
+      title: type.title,
+      href: `https://cmr.earthdata.nasa.gov/search/concepts/${granuleId}${type.ext !== 'native' ? `.${type.ext}` : ''}`
+    }
+  })
+
+  return metadataUrls
+}

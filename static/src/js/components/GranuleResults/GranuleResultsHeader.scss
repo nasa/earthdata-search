@@ -40,4 +40,29 @@
     font-weight: 700;
     color: $color__yellow;
   }
+
+  &__granule-undo {
+    padding: $spacer/8 $spacer/2;
+    background-color: $color__orange;
+    font-size: 0.925rem;
+    color: $color__white;
+    border-radius: $border-radius-sm;
+  }
+
+  &__granule-undo-button {
+    margin-left: $spacer/4;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    color: darken($color__orange, 25);
+    text-decoration: underline;
+
+    &:hover {
+      color: darken($color__orange, 35);
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
 }

@@ -19,7 +19,14 @@ function setup(type) {
           '2019-04-29 23:59:59'
         ],
         thumbnail: '/fake/path/image.jpg',
-        title: 'Granule title'
+        title: 'Granule title',
+        links: [
+          {
+            rel: 'http://linkrel',
+            title: 'linktitle',
+            href: 'htt[://linkhref'
+          }
+        ]
       },
       isLast: false,
       location: { search: 'location' },
@@ -38,7 +45,14 @@ function setup(type) {
           '2019-04-28 00:00:00',
           '2019-04-29 23:59:59'
         ],
-        title: 'Granule title'
+        title: 'Granule title',
+        links: [
+          {
+            rel: 'http://linkrel',
+            title: 'linktitle',
+            href: 'htt[://linkhref'
+          }
+        ]
       },
       isLast: false,
       location: { search: 'location' },
@@ -60,7 +74,14 @@ function setup(type) {
         ],
         is_cwic: true,
         producer_granule_id: 'Granule title',
-        thumbnail: '/fake/path/image.jpg'
+        thumbnail: '/fake/path/image.jpg',
+        links: [
+          {
+            rel: 'http://linkrel',
+            title: 'linktitle',
+            href: 'htt[://linkhref'
+          }
+        ]
       },
       isLast: false,
       location: { search: 'location' },

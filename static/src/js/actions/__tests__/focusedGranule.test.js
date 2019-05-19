@@ -95,7 +95,34 @@ describe('getFocusedGranule', () => {
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULE_METADATA,
         payload: {
-          [granuleId]: metadata
+          [granuleId]: {
+            json: {
+              MockGranule: 'Data'
+            },
+            metadataUrls: {
+              atom: {
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.atom',
+                title: 'ATOM'
+              },
+              echo10: {
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.echo10',
+                title: 'ECHO 10'
+              },
+              iso19115: {
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.iso19115',
+                title: 'ISO 19115'
+              },
+              native: {
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId',
+                title: 'Native'
+              },
+              umm_json: {
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.umm_json',
+                title: 'UMM-G'
+              }
+            },
+            xml: '<MockGranule>Data</MockGranule>'
+          }
         }
       })
     })

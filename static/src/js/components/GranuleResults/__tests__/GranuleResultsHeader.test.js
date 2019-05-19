@@ -139,7 +139,7 @@ describe('handleUndoExcludeGranule', () => {
       }
     })
 
-    enzymeWrapper.find('.granule-results-header__button').simulate('click')
+    enzymeWrapper.find('.granule-results-header__granule-undo-button').simulate('click')
 
     expect(props.onUndoExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.onUndoExcludeGranule).toHaveBeenCalledWith('collectionId')

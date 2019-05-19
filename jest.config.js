@@ -12,6 +12,7 @@ module.exports = {
     '<rootDir>/test-env.js'
   ],
   testPathIgnorePatterns: [
-    'mocks.js'
+    'mocks.js',
+    'test_data.js'
   ]
 }

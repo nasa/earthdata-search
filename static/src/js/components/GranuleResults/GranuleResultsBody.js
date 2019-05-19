@@ -21,7 +21,7 @@ const GranuleResultsBody = ({
   onExcludeGranule,
   onFocusedGranuleChange
 }) => (
-  <div className="granule-results-body__inner">
+  <div className="granule-results-body">
     <GranuleResultsList
       collectionId={collectionId}
       excludedGranuleIds={excludedGranuleIds}
