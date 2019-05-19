@@ -142,7 +142,6 @@ export const doSearchRequest = async (jwtToken, url) => {
   const { id: clientId } = config.oauth.client
 
   try {
-    console.log('url', url)
     const response = await request.get({
       uri: url,
       resolveWithFullResponse: true,

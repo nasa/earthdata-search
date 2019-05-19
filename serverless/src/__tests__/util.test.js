@@ -1,6 +1,6 @@
-import moxios from 'moxios'
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
+import request from 'request-promise'
 
 import {
   pick,
@@ -77,22 +77,25 @@ describe('util#prepareExposeHeaders', () => {
   })
 })
 
-xdescribe('util#doSearchRequest', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
+describe('util#doSearchRequest', () => {
   test('correctly returns the search response', async () => {
-    moxios.stubRequest(/example.*/, {
-      status: 200,
-      response: {}
-    })
+    const body = { success: true }
+    const headers = {
+      'access-control-expose-headers': 'jwt-token',
+      'jwt-token': '123.456.789'
+    }
+    const statusCode = 200
+    const expectedResponse = {
+      body,
+      headers,
+      statusCode
+    }
+
+    jest.spyOn(request, 'get').mockImplementation(() => ({
+      body,
+      headers: {},
+      statusCode
+    }))
 
     const token = {
       token: {
@@ -105,9 +108,6 @@ xdescribe('util#doSearchRequest', () => {
     const jwtToken = '123.456.789'
     const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'
 
-    // await doSearchRequest(jwtToken, url).then((data) => {
-    //   expect(data).toEqual('data?')
-    // })
-    await expect(doSearchRequest(jwtToken, url)).resolves.toEqual('stuff?')
+    await expect(doSearchRequest(jwtToken, url)).resolves.toEqual(expectedResponse)
   })
 })
