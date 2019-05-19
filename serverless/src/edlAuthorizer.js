@@ -4,6 +4,13 @@ import simpleOAuth2 from 'simple-oauth2'
 
 const config = JSON.parse(fs.readFileSync('config.json'))
 
+/**
+ * Generate AuthPolicy for the Authorizer, and attach the JWT
+ * @param {*} username username of authenticated uset
+ * @param {*} jwtToken JWT containing EDL token
+ * @param {*} effect
+ * @param {*} resource
+ */
 const generatePolicy = (username, jwtToken, effect, resource) => {
   const authResponse = {}
   authResponse.principalId = username
@@ -23,6 +30,9 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
   return authResponse
 }
 
+/**
+ * API Gateway Authorizer to verify requets are authenticated
+ */
 function edlAuthorizer(event, context, callback) {
   if (!event.authorizationToken) {
     return callback('Unauthorized')

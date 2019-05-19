@@ -29,7 +29,6 @@ describe('updateAuthFromHeaders', () => {
       'jwt-token': token
     }
 
-    // expect(updateAuthFromHeaders(payload)).toEqual(expectedAction)
     // mockStore with initialState
     const store = mockStore({
       auth: ''
@@ -47,7 +46,6 @@ describe('updateAuthFromHeaders', () => {
   })
 
   test('should remove the auth if a header token is not available', () => {
-    // expect(updateAuthFromHeaders(payload)).toEqual(expectedAction)
     // mockStore with initialState
     const store = mockStore({
       auth: 'auth-token'
