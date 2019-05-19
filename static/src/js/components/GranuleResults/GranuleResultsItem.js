@@ -4,10 +4,78 @@ import { PropTypes } from 'prop-types'
 import { Waypoint } from 'react-waypoint'
 import queryString from 'query-string'
 import { Link } from 'react-router-dom'
+import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
 
 import './GranuleResultsItem.scss'
+
+class CustomDataLinksToggle extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(e) {
+    e.preventDefault()
+    const { onClick } = this.props
+    onClick(e)
+  }
+
+  render() {
+    return (
+      <button
+        className="button granule-results-item__button"
+        type="button"
+        title="Download single granule data"
+        onClick={this.handleClick}
+      >
+        <i className="fa fa-download" />
+      </button>
+    )
+  }
+}
+
+CustomDataLinksToggle.propTypes = {
+  onClick: PropTypes.func.isRequired
+}
+
+const DataLinksButton = ({ dataLinks }) => {
+  if (dataLinks.length > 1) {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle as={CustomDataLinksToggle} />
+        <Dropdown.Menu>
+          {
+            dataLinks.map((dataLink, i) => {
+              const key = `data_link_${i}`
+              return (
+                <Dropdown.Item key={key} href={dataLink.href} className="granule-results-item__dropdown-item">
+                  {dataLink.title}
+                </Dropdown.Item>
+              )
+            })
+          }
+        </Dropdown.Menu>
+      </Dropdown>
+    )
+  }
+  return (
+    <a
+      className="button granule-results-item__button"
+      href={dataLinks[0].href}
+      rel="noopener noreferrer"
+      title="Download single granule data"
+      target="_blank"
+    >
+      <i className="fa fa-download" />
+    </a>
+  )
+}
+
+DataLinksButton.propTypes = {
+  dataLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+}
 
 /**
  * Renders GranuleResultsItem.
@@ -58,7 +126,7 @@ const GranuleResultsItem = ({
   const timeEnd = temporal[1]
   const thumbnail = browseFlag ? granuleThumbnail : false
 
-  const dataLinks = () => {
+  const createDataLinks = () => {
     // All 'http' data links that are not inherited
     const httpDataLinks = links.filter((link) => {
       const {
@@ -92,6 +160,8 @@ const GranuleResultsItem = ({
       ...ftpLinks
     ]
   }
+
+  const dataLinks = createDataLinks()
 
   return (
     <li className="granule-results-item">
@@ -142,23 +212,9 @@ const GranuleResultsItem = ({
               </Link>
               {
                 onlineAccessFlag && (
-                  <a
-                    className="button granule-results-item__button"
-                    href={dataLinks()[0].href}
-                    rel="noopener noreferrer"
-                    type="button"
-                    title="Download single granule data"
-                    target="_blank"
-                  >
-                    <i className="fa fa-download" />
-                    {/*
-                      TODO handle multiple download links dropdown,
-                      example: C1548317484-PODAAC
-                    */}
-                  </a>
+                  <DataLinksButton dataLinks={dataLinks} />
                 )
               }
-
               <button
                 className="button granule-results-item__button"
                 type="button"

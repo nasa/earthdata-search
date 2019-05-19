@@ -35,7 +35,7 @@ describe('GranuleResultsBody component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.prop('className')).toBe('granule-results-body__inner')
+    expect(enzymeWrapper.prop('className')).toBe('granule-results-body')
   })
 
   test('passes the granules to a single GranuleResultsList component', () => {

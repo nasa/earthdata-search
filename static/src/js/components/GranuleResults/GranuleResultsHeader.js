@@ -66,7 +66,7 @@ class GranuleResultsHeader extends Component {
 
     return (
       <>
-        <div className="row">
+        <div className="row granule-results-header">
           <div className="col-auto">
             <div className="granule-results-header__title-wrap">
               {
@@ -195,17 +195,15 @@ class GranuleResultsHeader extends Component {
                   </div>
                   {
                     showUndoExcludedGranules && (
-                      <div>
-                        <p>
-                          Granule excluded.
-                          <button
-                            className="granule-results-header__button"
-                            onClick={this.handleUndoExcludeGranule}
-                            type="button"
-                          >
-                            Undo
-                          </button>
-                        </p>
+                      <div className="granule-results-header__granule-undo">
+                        Granule excluded.
+                        <button
+                          className="granule-results-header__granule-undo-button"
+                          onClick={this.handleUndoExcludeGranule}
+                          type="button"
+                        >
+                          Undo
+                        </button>
                       </div>
                     )
                   }

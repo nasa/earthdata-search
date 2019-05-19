@@ -1,6 +1,9 @@
+import { parse as parseXml } from 'fast-xml-parser'
+
 import actions from './index'
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
 import { ConceptRequest } from '../util/request/cmr'
+import { createEcho10MetadataUrls } from '../util/granules'
 
 export const updateFocusedGranule = payload => ({
   type: UPDATE_FOCUSED_GRANULE,
@@ -22,8 +25,13 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   const response = requestObject.search(focusedGranule, 'echo10')
     .then((response) => {
       const { data } = response
+
       const payload = {
-        [focusedGranule]: data
+        [focusedGranule]: {
+          xml: data,
+          json: parseXml(data),
+          metadataUrls: createEcho10MetadataUrls(focusedGranule)
+        }
       }
 
       dispatch(actions.updateGranuleMetadata(payload))
