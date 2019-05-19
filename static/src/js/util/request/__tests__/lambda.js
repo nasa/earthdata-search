@@ -7,7 +7,7 @@ describe('Lambda#transformRequest', () => {
 
     const transformedData = cwicRequest.transformRequest({
       echoCollectionId: 'TEST_COLLECTION_ID'
-    })
+    }, {})
 
     // Our top level lambda object doesnt permit any keys, anything that inherits from
     // this class will need to white list the parmeters used.

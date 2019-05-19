@@ -26,7 +26,10 @@ export default class LambdaRequest extends Request {
    * @param {Object} data - The payload being sent to Lambda.
    * @return {Object} An object modified to meet the requirements of a Lambda request.
    */
-  transformRequest(data) {
+  transformRequest(data, headers) {
+    // eslint-disable-next-line no-param-reassign
+    headers.Authorization = `Bearer: ${this.auth}`
+
     // Converts javascript compliant keys to snake cased keys for use
     // in URLs and request payloads
     const snakeKeyData = snakeCaseKeys(data)

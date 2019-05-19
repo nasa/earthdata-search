@@ -82,6 +82,12 @@ class BaseCollectionRequest extends Request {
  * Authenticated Request object for collection specific requests
  */
 class AuthenticatedCollectionRequest extends LambdaRequest {
+  constructor(auth) {
+    super()
+
+    this.auth = auth
+  }
+
   permittedCmrKeys = BaseCollectionRequest.prototype.permittedCmrKeys
 
   nonIndexedKeys = BaseCollectionRequest.prototype.nonIndexedKeys
@@ -92,7 +98,7 @@ class AuthenticatedCollectionRequest extends LambdaRequest {
    * Makes a POST request to Lambda
    */
   search(params) {
-    return super.post('collections', params, true)
+    return super.post('collections', params)
   }
 }
 
@@ -118,8 +124,8 @@ class UnauthenticatedCollectionRequest extends CmrRequest {
  * Request object for collection specific requests
  */
 export default class CollectionRequest {
-  constructor(authenticated) {
-    if (authenticated) return new AuthenticatedCollectionRequest()
+  constructor(auth) {
+    if (auth !== '') return new AuthenticatedCollectionRequest(auth)
     return new UnauthenticatedCollectionRequest()
   }
 }

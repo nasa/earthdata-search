@@ -7,6 +7,7 @@ import {
 } from '../constants/actionTypes'
 import { updateCollectionMetadata } from './collections'
 import { updateGranuleResults, addGranulesFromCollection } from './granules'
+import { updateAuthFromHeaders } from './auth'
 import CollectionRequest from '../util/request/collectionRequest'
 
 export const updateFocusedCollection = payload => ({
@@ -85,7 +86,7 @@ export const getFocusedCollection = () => (dispatch, getState) => {
   }
 
   const { auth } = getState()
-  const requestObject = new CollectionRequest(auth !== '')
+  const requestObject = new CollectionRequest(auth)
 
   const response = requestObject.search({
     concept_id: focusedCollection,
@@ -97,6 +98,7 @@ export const getFocusedCollection = () => (dispatch, getState) => {
       const [metadata] = response.data.feed.entry
       payload[focusedCollection] = metadata
 
+      dispatch(updateAuthFromHeaders(response.headers))
       dispatch(updateCollectionMetadata(payload))
 
       // If granules were copied from collections, don't make a new getGranules request

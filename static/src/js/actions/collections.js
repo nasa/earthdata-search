@@ -105,7 +105,7 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  const requestObject = new CollectionRequest(auth !== '')
+  const requestObject = new CollectionRequest(auth)
 
   const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {

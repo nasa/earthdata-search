@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { remove } from 'tiny-cookie'
 
 import { Button } from 'react-bootstrap'
 
@@ -77,6 +78,13 @@ class SearchForm extends Component {
     })
   }
 
+  /**
+   * Remove the auth cookie
+   */
+  handleLogout() {
+    remove('auth')
+  }
+
   render() {
     const {
       keywordSearch,
@@ -86,12 +94,9 @@ class SearchForm extends Component {
     const { auth } = this.props
     const loggedIn = auth !== ''
     const returnPath = window.location.href
-    const edlHost = 'https://urs.earthdata.nasa.gov'
-    // TODO get these config values saved somewhere
-    const clientId = 'fill this in with a real client id'
 
-    const loginLink = <a href={`${edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Furs_callback&state=${encodeURIComponent(returnPath)}`}>Login</a>
-    const logoutLink = <a href={`http://localhost:3001/logout?redirect=${encodeURIComponent('http://localhost:8080')}`}>Logout</a>
+    const loginLink = <a href={`http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}>Login</a>
+    const logoutLink = <a onClick={this.handleLogout} href="http://localhost:8080">Logout</a>
 
     return (
       <section className="search-form">
