@@ -92,16 +92,13 @@ const GranuleResultsItem = ({
   onFocusedGranuleChange
 }) => {
   const handleRemoveClick = () => {
-    const {
-      id,
-      is_cwic: isCwic
-    } = granule
+    let { id } = granule
+    const { is_cwic: isCwic } = granule
 
-    let hashedId
-    if (isCwic) hashedId = murmurhash3(id).toString()
+    if (isCwic) id = murmurhash3(id).toString()
     onExcludeGranule({
       collectionId,
-      granuleId: hashedId || id
+      granuleId: id
     })
   }
 
