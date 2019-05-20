@@ -8,7 +8,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    auth: '',
     keywordSearch: 'Test value',
     onClearFilters: jest.fn(),
     onChangeNlpSearch: jest.fn(),
@@ -28,7 +27,6 @@ describe('SearchFormContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(SearchForm).length).toBe(1)
-    expect(enzymeWrapper.find(SearchForm).props().auth).toEqual('')
     expect(enzymeWrapper.find(SearchForm).props().keywordSearch).toEqual('Test value')
     expect(typeof enzymeWrapper.find(SearchForm).props().onClearFilters).toEqual('function')
     expect(typeof enzymeWrapper.find(SearchForm).props().onChangeNlpSearch).toEqual('function')
