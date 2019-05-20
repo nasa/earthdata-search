@@ -14,7 +14,7 @@ import {
   updateGranuleResults,
   updateGranuleMetadata
 } from './granules'
-import { updateAuth } from './auth'
+import { updateAuthToken } from './authToken'
 import {
   changeTimelineQuery,
   changeTimelineState,
@@ -88,7 +88,7 @@ const actions = {
   toggleFacetsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
-  updateAuth,
+  updateAuthToken,
   updateCmrFacet,
   updateFeatureFacet,
   updateGranuleResults,

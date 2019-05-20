@@ -28,7 +28,7 @@ export default class LambdaRequest extends Request {
    */
   transformRequest(data, headers) {
     // eslint-disable-next-line no-param-reassign
-    headers.Authorization = `Bearer: ${this.auth}`
+    headers.AuthTokenorization = `Bearer: ${this.authToken}`
 
     // Converts javascript compliant keys to snake cased keys for use
     // in URLs and request payloads

@@ -55,7 +55,7 @@ export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
   return [
     qsStringify(indexedAttrs),
     qsStringify(nonIndexedAttrs, { indices: false, arrayFormat: 'brackets' })
-  ].filter(str => str !== '').join('&')
+  ].filter(Boolean).join('&')
 }
 
 /**
@@ -126,7 +126,7 @@ export const buildURL = (paramObj) => {
 export const prepareExposeHeaders = (headers) => {
   // Add 'jwt-token' to access-control-expose-headers, so the client app can read the JWT
   const { 'access-control-expose-headers': exposeHeaders = '' } = headers
-  const exposeHeadersList = exposeHeaders.split(',').filter(header => header !== '')
+  const exposeHeadersList = exposeHeaders.split(',').filter(Boolean)
   exposeHeadersList.push('jwt-token')
   return exposeHeadersList.join(', ')
 }
@@ -175,4 +175,15 @@ export const doSearchRequest = async (jwtToken, url) => {
       body: JSON.stringify({ error: 'Oh No!' })
     }
   }
+}
+
+/**
+ * Returns the JWT Token from our custom authorizer context
+ * @param {object} event Lambda function event parameter
+ */
+export const getJwtToken = (event) => {
+  const { requestContext } = event
+  const { authorizer } = requestContext
+  const { jwtToken } = authorizer
+  return jwtToken
 }

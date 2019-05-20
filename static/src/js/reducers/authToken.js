@@ -2,7 +2,7 @@ import { UPDATE_AUTH } from '../constants/actionTypes'
 
 const initialState = ''
 
-const authReducer = (state = initialState, action) => {
+const authTokenReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_AUTH: {
       return action.payload
@@ -12,4 +12,4 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-export default authReducer
+export default authTokenReducer

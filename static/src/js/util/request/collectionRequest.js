@@ -59,6 +59,14 @@ class BaseCollectionRequest extends Request {
    * @return {Object} The object provided
    */
   transformResponse(data) {
+    if (data.statusCode === 401) {
+      const returnPath = window.location.href
+
+      window.location.href = `http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
+    }
+
+    if (data.statusCode !== 200) return data
+
     const transformedData = data
     const { entry } = data.feed
 
@@ -79,13 +87,13 @@ class BaseCollectionRequest extends Request {
 }
 
 /**
- * Authenticated Request object for collection specific requests
+ * AuthTokenenticated Request object for collection specific requests
  */
-class AuthenticatedCollectionRequest extends LambdaRequest {
-  constructor(auth) {
+class AuthTokenenticatedCollectionRequest extends LambdaRequest {
+  constructor(authToken) {
     super()
 
-    this.auth = auth
+    this.authToken = authToken
   }
 
   permittedCmrKeys = BaseCollectionRequest.prototype.permittedCmrKeys
@@ -103,9 +111,9 @@ class AuthenticatedCollectionRequest extends LambdaRequest {
 }
 
 /**
- * Unauthenticated Request object for collection specific requests
+ * UnauthTokenenticated Request object for collection specific requests
  */
-class UnauthenticatedCollectionRequest extends CmrRequest {
+class UnauthTokenenticatedCollectionRequest extends CmrRequest {
   permittedCmrKeys = BaseCollectionRequest.prototype.permittedCmrKeys
 
   nonIndexedKeys = BaseCollectionRequest.prototype.nonIndexedKeys
@@ -124,8 +132,8 @@ class UnauthenticatedCollectionRequest extends CmrRequest {
  * Request object for collection specific requests
  */
 export default class CollectionRequest {
-  constructor(auth) {
-    if (auth !== '') return new AuthenticatedCollectionRequest(auth)
-    return new UnauthenticatedCollectionRequest()
+  constructor(authToken) {
+    if (authToken !== '') return new AuthTokenenticatedCollectionRequest(authToken)
+    return new UnauthTokenenticatedCollectionRequest()
   }
 }
