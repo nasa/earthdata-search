@@ -63,11 +63,7 @@ export const encodeCollections = (collections, focusedCollection) => {
   // TODO Encode granule filters
 
   if (!collections) return ''
-  const {
-    // allIds,
-    byId// ,
-    // projectIds
-  } = collections
+  const { byId } = collections
 
   if (focusedCollection === '') return ''
 

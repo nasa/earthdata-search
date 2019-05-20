@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { granuleResultsBodyProps, formattedGranuleInformation } from './test_data'
+import { granuleResultsBodyProps, formattedGranuleInformation } from './mocks'
 import GranuleDetailsInfo from '../GranuleDetailsInfo'
 
 Enzyme.configure({ adapter: new Adapter() })

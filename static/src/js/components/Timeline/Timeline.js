@@ -26,7 +26,6 @@ class Timeline extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      // focusedCollection: oldFocusedCollection,
       focusedCollectionMetadata: oldFocusedCollectionMetadata,
       temporalSearch: oldTemporalSearch,
       timeline: oldTimeline,
@@ -34,7 +33,6 @@ class Timeline extends Component {
     } = this.props
 
     const {
-      // focusedCollection: nextFocusedCollection,
       focusedCollectionMetadata: nextFocusedCollectionMetadata,
       temporalSearch: nextTemporalSearch,
       timeline: nextTimeline

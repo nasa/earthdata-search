@@ -34,7 +34,6 @@ export const TimelineContainer = (props) => {
 
   return (
     <Timeline
-      // focusedCollection={focusedCollection}
       focusedCollectionMetadata={focusedCollectionMetadata}
       temporalSearch={temporalSearch}
       timeline={timeline}
