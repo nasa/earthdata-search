@@ -1,4 +1,4 @@
-import authReducer from '../auth'
+import authTokenReducer from '../authToken'
 import { UPDATE_AUTH } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
@@ -6,13 +6,13 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
     const initialState = ''
 
-    expect(authReducer(undefined, action)).toEqual(initialState)
+    expect(authTokenReducer(undefined, action)).toEqual(initialState)
   })
 })
 
 describe('UPDATE_AUTH', () => {
   test('returns the correct state', () => {
-    const token = 'auth-token'
+    const token = 'authToken-token'
     const action = {
       type: UPDATE_AUTH,
       payload: token
@@ -20,6 +20,6 @@ describe('UPDATE_AUTH', () => {
 
     const expectedState = token
 
-    expect(authReducer(undefined, action)).toEqual(expectedState)
+    expect(authTokenReducer(undefined, action)).toEqual(expectedState)
   })
 })

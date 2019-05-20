@@ -59,7 +59,7 @@ describe('getGranules', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       focusedCollection: {
         collectionId: 'collectionId'
       },
@@ -108,7 +108,7 @@ describe('getGranules', () => {
     })
   })
 
-  test('calls lambda to get authenticated granules', async () => {
+  test('calls lambda to get authTokenenticated granules', async () => {
     moxios.stubRequest(/3001\/granules.*/, {
       status: 200,
       response: {
@@ -129,7 +129,7 @@ describe('getGranules', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: 'token',
+      authToken: 'token',
       focusedCollection: {
         collectionId: 'collectionId'
       },
@@ -207,7 +207,7 @@ describe('getGranules', () => {
     })
 
     const store = mockStore({
-      auth: '',
+      authToken: '',
       focusedCollection: {
         collectionId: 'collectionId'
       },

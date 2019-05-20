@@ -12,7 +12,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
-import ConnectedAuthContainer from './containers/AuthContainer/AuthContainer'
+import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ConnectedAuthContainer>
+          <ConnectedAuthTokenContainer>
             <ConnectedUrlQueryContainer>
               <Helmet>
                 <meta charSet="utf-8" />
@@ -48,7 +48,7 @@ class App extends Component {
               </Switch>
               <FooterContainer />
             </ConnectedUrlQueryContainer>
-          </ConnectedAuthContainer>
+          </ConnectedAuthTokenContainer>
         </ConnectedRouter>
       </Provider>
     )

@@ -5,19 +5,19 @@ import PropTypes from 'prop-types'
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  authToken: state.authToken
 })
 
 export const SecondaryToolbarContainer = (props) => {
-  const { auth } = props
+  const { authToken } = props
 
   return (
-    <SecondaryToolbar auth={auth} />
+    <SecondaryToolbar authToken={authToken} />
   )
 }
 
 SecondaryToolbarContainer.propTypes = {
-  auth: PropTypes.string.isRequired
+  authToken: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, null)(SecondaryToolbarContainer)

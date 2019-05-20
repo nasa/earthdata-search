@@ -69,7 +69,7 @@ describe('changeFocusedCollection', () => {
     getGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
-    const store = mockStore({ auth: '' })
+    const store = mockStore({ authToken: '' })
 
     // call the dispatch
     await store.dispatch(actions.changeFocusedCollection(newCollectionId))
@@ -99,7 +99,7 @@ describe('changeFocusedCollection', () => {
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
   })
 
-  test('should update the authenticated focusedCollection and call getGranules', async () => {
+  test('should update the authTokenenticated focusedCollection and call getGranules', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: {
@@ -127,7 +127,7 @@ describe('changeFocusedCollection', () => {
     getGranulesMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
-    const store = mockStore({ auth: 'token' })
+    const store = mockStore({ authToken: 'token' })
 
     // call the dispatch
     await store.dispatch(actions.changeFocusedCollection(newCollectionId))
@@ -185,7 +185,7 @@ describe('changeFocusedCollection', () => {
       response: {}
     })
 
-    const store = mockStore({ auth: '', focusedCollection: { collectionId: 'collectionId' } })
+    const store = mockStore({ authToken: '', focusedCollection: { collectionId: 'collectionId' } })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 

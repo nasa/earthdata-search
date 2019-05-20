@@ -146,7 +146,7 @@ describe('getCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       entities: {
         collections: {},
         facets: {},
@@ -201,7 +201,7 @@ describe('getCollections', () => {
     })
   })
 
-  test('calls lambda to get authenticated collections', async () => {
+  test('calls lambda to get authTokenenticated collections', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: {
@@ -223,7 +223,7 @@ describe('getCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: 'token',
+      authToken: 'token',
       entities: {
         collections: {},
         facets: {},
@@ -285,7 +285,7 @@ describe('getCollections', () => {
     })
 
     const store = mockStore({
-      auth: '',
+      authToken: '',
       entities: {
         collections: {},
         facets: {},

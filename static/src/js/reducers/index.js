@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
-import authReducer from './auth'
+import authTokenReducer from './authToken'
 import collectionsReducer from './collections'
 import facetsReducer from './facets'
 import {
@@ -18,7 +18,7 @@ import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 
 export default history => combineReducers({
-  auth: authReducer,
+  authToken: authTokenReducer,
   entities: combineReducers({
     collections: collectionsReducer,
     facets: facetsReducer,

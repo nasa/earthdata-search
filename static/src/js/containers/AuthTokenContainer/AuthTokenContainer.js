@@ -6,16 +6,16 @@ import { connect } from 'react-redux'
 import actions from '../../actions/index'
 
 const mapDispatchToProps = dispatch => ({
-  onUpdateAuth:
-    token => dispatch(actions.updateAuth(token))
+  onUpdateAuthToken:
+    token => dispatch(actions.updateAuthToken(token))
 })
 
-export class AuthContainer extends Component {
+export class AuthTokenContainer extends Component {
   componentWillMount() {
-    const { onUpdateAuth } = this.props
+    const { onUpdateAuthToken } = this.props
 
-    const jwtToken = get('auth')
-    onUpdateAuth(jwtToken || '')
+    const jwtToken = get('authToken')
+    onUpdateAuthToken(jwtToken || '')
   }
 
   render() {
@@ -29,9 +29,9 @@ export class AuthContainer extends Component {
   }
 }
 
-AuthContainer.propTypes = {
+AuthTokenContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  onUpdateAuth: PropTypes.func.isRequired
+  onUpdateAuthToken: PropTypes.func.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(AuthContainer)
+export default connect(null, mapDispatchToProps)(AuthTokenContainer)
