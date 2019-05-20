@@ -99,7 +99,7 @@ describe('changeFocusedCollection', () => {
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
   })
 
-  test('should update the authTokenenticated focusedCollection and call getGranules', async () => {
+  test('should update the authenticated focusedCollection and call getGranules', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: {

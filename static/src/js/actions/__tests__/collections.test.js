@@ -201,7 +201,7 @@ describe('getCollections', () => {
     })
   })
 
-  test('calls lambda to get authTokenenticated collections', async () => {
+  test('calls lambda to get authenticated collections', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: {

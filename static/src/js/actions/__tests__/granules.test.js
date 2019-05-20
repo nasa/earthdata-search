@@ -108,7 +108,7 @@ describe('getGranules', () => {
     })
   })
 
-  test('calls lambda to get authTokenenticated granules', async () => {
+  test('calls lambda to get authenticated granules', async () => {
     moxios.stubRequest(/3001\/granules.*/, {
       status: 200,
       response: {

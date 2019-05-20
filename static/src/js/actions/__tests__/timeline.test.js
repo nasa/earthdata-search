@@ -125,7 +125,7 @@ describe('getTimeline', () => {
     })
   })
 
-  test('calls lambda to get authTokenenticated timeline granules', async () => {
+  test('calls lambda to get authenticated timeline granules', async () => {
     moxios.stubRequest(/3001\/granules\/timeline.*/, {
       status: 200,
       response: [{
