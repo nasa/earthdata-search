@@ -7,7 +7,7 @@ import {
   UPDATE_TIMELINE_STATE
 } from '../constants/actionTypes'
 import { prepareTimelineParams } from '../util/timeline'
-import { updateAuthFromHeaders } from './auth'
+import { updateAuthTokenFromHeaders } from './authToken'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
@@ -35,7 +35,7 @@ export const getTimeline = () => (dispatch, getState) => {
   }
 
   const {
-    auth,
+    authToken,
     boundingBox,
     focusedCollection,
     endDate,
@@ -45,7 +45,7 @@ export const getTimeline = () => (dispatch, getState) => {
     startDate
   } = timelineParams
 
-  const requestObject = new TimelineRequest(auth)
+  const requestObject = new TimelineRequest(authToken)
 
   const response = requestObject.search({
     boundingBox,
@@ -61,7 +61,7 @@ export const getTimeline = () => (dispatch, getState) => {
 
       payload.results = response.data
 
-      dispatch(updateAuthFromHeaders(response.headers))
+      dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(updateTimelineIntervals(payload))
     }, (error) => {
       throw new Error('Request failed', error)

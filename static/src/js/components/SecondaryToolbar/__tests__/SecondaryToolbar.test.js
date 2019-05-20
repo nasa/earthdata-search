@@ -8,10 +8,10 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(state) {
   const props = {
-    auth: ''
+    authToken: ''
   }
 
-  if (state === 'loggedIn') props.auth = 'fakeauthkey'
+  if (state === 'loggedIn') props.authToken = 'fakeauthTokenkey'
 
   const enzymeWrapper = shallow(<SecondaryToolbar {...props} />)
 

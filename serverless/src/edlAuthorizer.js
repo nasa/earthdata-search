@@ -44,7 +44,6 @@ function edlAuthorizer(event, context, callback) {
   try {
     jwt.verify(jwtToken, config.secret, async (verifyError, decoded) => {
       if (verifyError) {
-        console.log('verifyError', verifyError)
         // 401 Unauthorized
         console.log(`Token invalid. ${verifyError}`)
         return callback('Unauthorized')
@@ -62,13 +61,12 @@ function edlAuthorizer(event, context, callback) {
         }
       }
 
-      // is custom authorizer function
-      console.log('valid from customAuthorizer', decoded)
+      // Return success
       const username = decoded.token.endpoint.split('/').pop()
       return callback(null, generatePolicy(username, jwtToken, 'Allow', event.methodArn))
     })
   } catch (err) {
-    console.log('catch error. Invalid token', err)
+    console.log('Authorizer error. Invalid token', err)
     return callback('Unauthorized')
   }
   return null

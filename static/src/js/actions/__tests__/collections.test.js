@@ -24,7 +24,8 @@ import {
   STARTED_COLLECTIONS_TIMER,
   UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS,
-  UPDATE_AUTH
+  UPDATE_AUTH,
+  ADD_MORE_COLLECTION_RESULTS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -145,7 +146,7 @@ describe('getCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       searchResults: {
         collections: {},
         facets: {},
@@ -181,7 +182,7 @@ describe('getCollections', () => {
       expect(storeActions[2]).toEqual({ type: LOADING_FACETS })
       expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
       expect(storeActions[4]).toEqual({ type: FINISHED_COLLECTIONS_TIMER })
-      expect(storeActions[4]).toEqual({
+      expect(storeActions[5]).toEqual({
         type: UPDATE_AUTH,
         payload: ''
       })
@@ -194,7 +195,7 @@ describe('getCollections', () => {
         payload: { loaded: true }
       })
       expect(storeActions[8]).toEqual({
-        type: ADD_MORE_COLLECTIONS,
+        type: UPDATE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
           results: [{
@@ -207,7 +208,7 @@ describe('getCollections', () => {
     })
   })
 
-  test('calls lambda to get authenticated collections', async () => {
+  test('calls lambda to get authTokenenticated collections', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: {
@@ -229,8 +230,8 @@ describe('getCollections', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: 'token',
-      entities: {
+      authToken: 'token',
+      searchResults: {
         collections: {},
         facets: {},
         granules: {},
@@ -271,7 +272,7 @@ describe('getCollections', () => {
         payload: { loaded: true }
       })
       expect(storeActions[7]).toEqual({
-        type: ADD_MORE_COLLECTIONS,
+        type: ADD_MORE_COLLECTION_RESULTS,
         payload: {
           keyword: 'search keyword',
           results: [{
@@ -291,7 +292,7 @@ describe('getCollections', () => {
     })
 
     const store = mockStore({
-      auth: '',
+      authToken: '',
       searchResults: {
         collections: {},
         facets: {},

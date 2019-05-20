@@ -247,7 +247,7 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       searchResults: {
         collections: {},
         facets: {},
@@ -299,7 +299,7 @@ describe('getViewAllFacets', () => {
     })
   })
 
-  test('calls lambda to get the authenticated View All Facets', async () => {
+  test('calls lambda to get the authTokenenticated View All Facets', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: stubResponse,
@@ -311,8 +311,8 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: 'token',
-      entities: {
+      authToken: 'token',
+      searchResults: {
         collections: {},
         facets: {},
         granules: {},
@@ -376,7 +376,7 @@ describe('getViewAllFacets', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       searchResults: {
         collections: {},
         facets: {},

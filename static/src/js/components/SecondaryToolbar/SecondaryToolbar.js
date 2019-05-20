@@ -13,15 +13,15 @@ class SecondaryToolbar extends Component {
   }
 
   /**
-   * Remove the auth cookie
+   * Remove the authToken cookie
    */
   handleLogout() {
-    remove('auth')
+    remove('authToken')
   }
 
   render() {
-    const { auth } = this.props
-    const loggedIn = auth !== ''
+    const { authToken } = this.props
+    const loggedIn = authToken !== ''
     const returnPath = window.location.href
 
     const loginLink = (
@@ -62,7 +62,7 @@ class SecondaryToolbar extends Component {
 }
 
 SecondaryToolbar.propTypes = {
-  auth: PropTypes.string.isRequired
+  authToken: PropTypes.string.isRequired
 }
 
 export default SecondaryToolbar

@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    auth: ''
+    authToken: ''
   }
 
   const enzymeWrapper = shallow(<SecondaryToolbarContainer {...props} />)
@@ -23,6 +23,6 @@ describe('SecondaryToolbarContainer component', () => {
   test('passes its props and renders a single SearchForm component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(SecondaryToolbar).props().auth).toEqual('')
+    expect(enzymeWrapper.find(SecondaryToolbar).props().authToken).toEqual('')
   })
 })

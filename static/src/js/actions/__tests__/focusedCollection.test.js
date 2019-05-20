@@ -211,7 +211,7 @@ describe('getFocusedCollection', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       focusedCollection: collectionId,
       searchResults: {
         granules: {}
@@ -244,7 +244,7 @@ describe('getFocusedCollection', () => {
     expect(getGranulesMock).toHaveBeenCalledTimes(1)
   })
 
-  test('should update the authenticated focusedCollection and call getGranules', async () => {
+  test('should update the authTokenenticated focusedCollection and call getGranules', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: {
@@ -273,7 +273,7 @@ describe('getFocusedCollection', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: 'token',
+      authToken: 'token',
       focusedCollection: collectionId,
       searchResults: {
         granules: {}
@@ -399,7 +399,7 @@ describe('getFocusedCollection', () => {
     })
 
     const store = mockStore({
-      auth: '',
+      authToken: '',
       focusedCollection: 'collectionId',
       searchResults: {
         granules: {}

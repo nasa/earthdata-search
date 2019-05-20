@@ -6,7 +6,8 @@ import {
   pick,
   buildURL,
   doSearchRequest,
-  prepareExposeHeaders
+  prepareExposeHeaders,
+  getJwtToken
 } from '../util'
 
 const config = JSON.parse(fs.readFileSync('config.json'))
@@ -109,5 +110,21 @@ describe('util#doSearchRequest', () => {
     const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'
 
     await expect(doSearchRequest(jwtToken, url)).resolves.toEqual(expectedResponse)
+  })
+})
+
+describe('util#getJwtToken', () => {
+  test('correctly returns the JWT', () => {
+    const token = '123.456.789'
+
+    const event = {
+      requestContext: {
+        authorizer: {
+          jwtToken: token
+        }
+      }
+    }
+
+    expect(getJwtToken(event)).toEqual(token)
   })
 })

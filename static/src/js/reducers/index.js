@@ -4,7 +4,7 @@ import { connectRouter } from 'connected-react-router'
 import collectionMetadataReducer from './collectionMetadata'
 import granuleMetadataReducer from './granuleMetadata'
 import collectionsResultsReducer from './collectionsResults'
-import authReducer from './auth'
+import authTokenReducer from './authToken'
 import facetsReducer from './facets'
 import {
   cmrFacetsReducer,
@@ -21,7 +21,7 @@ import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
 
 export default history => combineReducers({
-  auth: authReducer,
+  authToken: authTokenReducer,
   facetsParams: combineReducers({
     feature: featureFacetsReducer,
     cmr: cmrFacetsReducer,

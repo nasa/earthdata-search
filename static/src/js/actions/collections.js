@@ -3,7 +3,7 @@ import {
   buildSearchParams,
   prepareCollectionParams
 } from '../util/collections'
-import { updateAuthFromHeaders } from './auth'
+import { updateAuthTokenFromHeaders } from './authToken'
 
 
 import {
@@ -89,7 +89,7 @@ export const restoreCollections = payload => ({
 export const getCollections = () => (dispatch, getState) => {
   const collectionParams = prepareCollectionParams(getState())
   const {
-    auth,
+    authToken,
     keyword,
     pageNum
   } = collectionParams
@@ -105,7 +105,7 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  const requestObject = new CollectionRequest(auth)
+  const requestObject = new CollectionRequest(authToken)
 
   const response = requestObject.search(buildSearchParams(collectionParams))
     .then((response) => {
@@ -118,7 +118,7 @@ export const getCollections = () => (dispatch, getState) => {
       payload.results = response.data.feed.entry
 
       dispatch(finishCollectionsTimer())
-      dispatch(updateAuthFromHeaders(response.headers))
+      dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(onCollectionsLoaded({
         loaded: true
       }))

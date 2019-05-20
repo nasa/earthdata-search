@@ -81,7 +81,7 @@ describe('getTimeline', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: '',
+      authToken: '',
       focusedCollection: {
         collectionId: 'collectionId'
       },
@@ -125,7 +125,7 @@ describe('getTimeline', () => {
     })
   })
 
-  test('calls lambda to get authenticated timeline granules', async () => {
+  test('calls lambda to get authTokenenticated timeline granules', async () => {
     moxios.stubRequest(/3001\/granules\/timeline.*/, {
       status: 200,
       response: [{
@@ -145,7 +145,7 @@ describe('getTimeline', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      auth: 'token',
+      authToken: 'token',
       focusedCollection: {
         collectionId: 'collectionId'
       },
