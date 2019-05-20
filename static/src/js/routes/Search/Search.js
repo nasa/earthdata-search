@@ -34,6 +34,8 @@ import MyDropzone
   from '../../components/MyDropzone/MyDropzone'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
+import SecondaryToolbarContainer
+  from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import CollectionResultsHeader
   from '../../components/CollectionResults/CollectionResultsHeader'
 
@@ -45,6 +47,7 @@ const Search = () => (
     <MyDropzone />
     <SidebarContainer />
     <ConnectedSearchFormContainer />
+    <SecondaryToolbarContainer />
     <Switch>
       <Route exact path="/search">
         <ConnectedMasterOverlayPanelContainer
