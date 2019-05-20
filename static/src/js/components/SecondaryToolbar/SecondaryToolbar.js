@@ -30,7 +30,7 @@ class SecondaryToolbar extends Component {
         {' Earthdata Login'}
       </Button>
     )
-    // const logoutLink = <Button variant="light" onClick={this.handleLogout} href="http://localhost:8080">Logout</Button
+
     const loggedInDropdown = (
       <Dropdown className="secondary-toolbar__user-dropdown">
         <Dropdown.Toggle
