@@ -17,9 +17,9 @@ class BaseTimelineRequest extends Request {
 }
 
 /**
- * AuthTokenenticated Request object for collection specific requests
+ * Authenticated Request object for collection specific requests
  */
-class AuthTokenenticatedTimelineRequest extends LambdaRequest {
+class AuthenticatedTimelineRequest extends LambdaRequest {
   constructor(authToken) {
     super()
 
@@ -37,9 +37,9 @@ class AuthTokenenticatedTimelineRequest extends LambdaRequest {
 }
 
 /**
- * UnauthTokenenticated Request object for collection specific requests
+ * Unauthenticated Request object for collection specific requests
  */
-class UnauthTokenenticatedTimelineRequest extends CmrRequest {
+class UnauthenticatedTimelineRequest extends CmrRequest {
   permittedCmrKeys = BaseTimelineRequest.prototype.permittedCmrKeys
 
   /*
@@ -55,7 +55,7 @@ class UnauthTokenenticatedTimelineRequest extends CmrRequest {
  */
 export default class TimelineRequest {
   constructor(authToken) {
-    if (authToken) return new AuthTokenenticatedTimelineRequest(authToken)
-    return new UnauthTokenenticatedTimelineRequest()
+    if (authToken) return new AuthenticatedTimelineRequest(authToken)
+    return new UnauthenticatedTimelineRequest()
   }
 }

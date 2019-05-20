@@ -87,9 +87,9 @@ class BaseCollectionRequest extends Request {
 }
 
 /**
- * AuthTokenenticated Request object for collection specific requests
+ * Authenticated Request object for collection specific requests
  */
-class AuthTokenenticatedCollectionRequest extends LambdaRequest {
+class AuthenticatedCollectionRequest extends LambdaRequest {
   constructor(authToken) {
     super()
 
@@ -111,9 +111,9 @@ class AuthTokenenticatedCollectionRequest extends LambdaRequest {
 }
 
 /**
- * UnauthTokenenticated Request object for collection specific requests
+ * Unauthenticated Request object for collection specific requests
  */
-class UnauthTokenenticatedCollectionRequest extends CmrRequest {
+class UnauthenticatedCollectionRequest extends CmrRequest {
   permittedCmrKeys = BaseCollectionRequest.prototype.permittedCmrKeys
 
   nonIndexedKeys = BaseCollectionRequest.prototype.nonIndexedKeys
@@ -133,7 +133,7 @@ class UnauthTokenenticatedCollectionRequest extends CmrRequest {
  */
 export default class CollectionRequest {
   constructor(authToken) {
-    if (authToken !== '') return new AuthTokenenticatedCollectionRequest(authToken)
-    return new UnauthTokenenticatedCollectionRequest()
+    if (authToken !== '') return new AuthenticatedCollectionRequest(authToken)
+    return new UnauthenticatedCollectionRequest()
   }
 }

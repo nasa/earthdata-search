@@ -1,7 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Dropdown } from 'react-bootstrap'
 import * as tinyCookie from 'tiny-cookie'
 import SecondaryToolbar from '../SecondaryToolbar'
 
@@ -12,7 +11,7 @@ function setup(state) {
     authToken: ''
   }
 
-  if (state === 'loggedIn') props.authToken = 'fakeauthTokenkey'
+  if (state === 'loggedIn') props.authToken = 'fakeauthkey'
 
   const enzymeWrapper = shallow(<SecondaryToolbar {...props} />)
 

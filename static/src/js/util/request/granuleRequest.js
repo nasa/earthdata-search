@@ -57,9 +57,9 @@ class BaseGranuleRequest extends Request {
 }
 
 /**
- * AuthTokenenticated Request object for collection specific requests
+ * Authenticated Request object for collection specific requests
  */
-class AuthTokenenticatedGranuleRequest extends LambdaRequest {
+class AuthenticatedGranuleRequest extends LambdaRequest {
   constructor(authToken) {
     super()
 
@@ -81,9 +81,9 @@ class AuthTokenenticatedGranuleRequest extends LambdaRequest {
 }
 
 /**
- * UnauthTokenenticated Request object for collection specific requests
+ * Unauthenticated Request object for collection specific requests
  */
-class UnauthTokenenticatedGranuleRequest extends CmrRequest {
+class UnauthenticatedGranuleRequest extends CmrRequest {
   permittedCmrKeys = BaseGranuleRequest.prototype.permittedCmrKeys
 
   nonIndexedKeys = BaseGranuleRequest.prototype.nonIndexedKeys
@@ -103,7 +103,7 @@ class UnauthTokenenticatedGranuleRequest extends CmrRequest {
  */
 export default class GranuleRequest {
   constructor(authToken) {
-    if (authToken) return new AuthTokenenticatedGranuleRequest(authToken)
-    return new UnauthTokenenticatedGranuleRequest()
+    if (authToken) return new AuthenticatedGranuleRequest(authToken)
+    return new UnauthenticatedGranuleRequest()
   }
 }
