@@ -299,7 +299,7 @@ describe('getViewAllFacets', () => {
     })
   })
 
-  test('calls lambda to get the authTokenenticated View All Facets', async () => {
+  test('calls lambda to get the authenticated View All Facets', async () => {
     moxios.stubRequest(/3001\/collections.*/, {
       status: 200,
       response: stubResponse,
