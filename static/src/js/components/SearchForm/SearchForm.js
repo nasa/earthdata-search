@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { remove } from 'tiny-cookie'
 
 import { Button } from 'react-bootstrap'
 
@@ -78,35 +77,14 @@ class SearchForm extends Component {
     })
   }
 
-  /**
-   * Remove the auth cookie
-   */
-  handleLogout() {
-    remove('auth')
-  }
-
   render() {
     const {
       keywordSearch,
       showFilterStack
     } = this.state
 
-    const { auth } = this.props
-    const loggedIn = auth !== ''
-    const returnPath = window.location.href
-
-    const loginLink = <a href={`http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}>Login</a>
-    const logoutLink = <a onClick={this.handleLogout} href="http://localhost:8080">Logout</a>
-
     return (
       <section className="search-form">
-        {
-          loggedIn && (logoutLink)
-        }
-        {
-          !loggedIn && (loginLink)
-        }
-
         <form className="search-form__form" onSubmit={this.onFormSubmit}>
           <TextField
             name="keywordSearch"
@@ -148,7 +126,6 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  auth: PropTypes.string.isRequired,
   keywordSearch: PropTypes.string.isRequired,
   onChangeNlpSearch: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired

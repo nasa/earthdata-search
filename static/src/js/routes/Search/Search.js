@@ -28,6 +28,8 @@ import MyDropzone
   from '../../components/MyDropzone/MyDropzone'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
+import SecondaryToolbarContainer
+  from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import CollectionResultsHeader
   from '../../components/CollectionResults/CollectionResultsHeader'
 
@@ -42,6 +44,7 @@ class Search extends PureComponent {
         <MyDropzone />
         <SidebarContainer />
         <ConnectedSearchFormContainer />
+        <SecondaryToolbarContainer />
         <Switch>
           <Route exact path={match.path}>
             <ConnectedMasterOverlayPanelContainer
