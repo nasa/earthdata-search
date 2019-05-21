@@ -1,7 +1,7 @@
 import { parse as parseXml } from 'fast-xml-parser'
 import Request from './request'
 import { getTemporal } from '../edsc-date'
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 export default class CwicGranuleRequest extends Request {
   constructor() {

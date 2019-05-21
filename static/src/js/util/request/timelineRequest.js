@@ -1,5 +1,5 @@
 import Request from './request'
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Request object for timeline specific requests

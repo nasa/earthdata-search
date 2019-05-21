@@ -1,32 +1,51 @@
 import AWS from 'aws-sdk'
-import getConfig from '../../sharedUtils/config'
-// import fs from 'fs'
+
+import { getConfig, getSecretConfig } from '../../sharedUtils/config'
 
 const secretsmanager = new AWS.SecretsManager({
   region: 'us-east-1'
 })
 
-export const getEdlConfig = async () => {
-  console.log(process.env.NODE_ENV)
-  // if (process.env.NODE_ENV === 'development') {
-  //   const config = JSON.parse(fs.readFileSync('config.json'))
-  //   console.log('config', config)
-  //   return config.oauth
-  // }
-
-  const params = { SecretId: 'ursClientConfigProd' }
-  console.log('params', params)
-
-  const secretValue = await secretsmanager.getSecretValue(params).promise()
-
-  console.log('secretValue', secretValue)
-  const clientConfig = JSON.parse(secretValue.SecretString)
-  return {
-    client: clientConfig,
-    auth: {
-      tokenHost: getConfig('prod').edlHost
-    }
+/**
+ * Builds a configuration object used by the simple-oauth2 plugin
+ * @param {*} clientConfig
+ */
+export const buildOauthConfig = clientConfig => ({
+  client: clientConfig,
+  auth: {
+    tokenHost: getConfig('prod').edlHost
   }
-}
+})
 
-export default getEdlConfig
+/**
+ * Get the Earthdata Login configuration, from either secret.config.json or AWS
+ * @param {*} edlConfig
+ */
+export const getEdlConfig = async (edlConfig) => {
+  if (edlConfig !== null) {
+    return edlConfig
+  }
+
+  try {
+    if (process.env.NODE_ENV === 'development') {
+      const { clientId, password } = getSecretConfig('prod')
+
+      return buildOauthConfig({
+        id: clientId,
+        secret: password
+      })
+    }
+
+    const params = { SecretId: 'ursClientConfigProd' }
+
+    const secretValue = await secretsmanager.getSecretValue(params).promise()
+
+    const clientConfig = JSON.parse(secretValue.SecretString)
+
+    return buildOauthConfig(clientConfig)
+  } catch (e) {
+    console.log(e)
+  }
+
+  return null
+}

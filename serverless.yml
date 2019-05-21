@@ -39,9 +39,9 @@ plugins:
 # Lambda Functions
 #
 functions:
-  # 
+  #
   # Standalone functions
-  # 
+  #
   migrateDatabase:
     handler: serverless/src/migrateDatabase.default
     timeout: 300
@@ -162,7 +162,7 @@ functions:
           path: collections
           authorizer: edlAuthorizer
 
-  granuleSearch:
+  cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch.default
     events:
       - http:
@@ -387,8 +387,7 @@ resources:
                 - Effect: Allow
                   Action:
                     - secretsmanager:GetSecretValue
-                  Resource:
-                    Ref: DbPasswordSecret
+                  Resource: "*"
 
     GatewayResponseDefault4XX:
       Type: AWS::ApiGateway::GatewayResponse

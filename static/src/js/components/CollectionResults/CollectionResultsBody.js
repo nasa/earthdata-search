@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
 
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Renders CollectionResultsBody.

@@ -1,5 +1,5 @@
 import https from 'https'
-import getConfig from '../../sharedUtils/config'
+import { getConfig } from '../../sharedUtils/config'
 
 function retrieveConcept(event, context, callback) {
   let bodyContent = ''

@@ -3,10 +3,7 @@ import knex from 'knex'
 import { stringify as qsStringify } from 'qs'
 import request from 'request-promise'
 import jwt from 'jsonwebtoken'
-import fs from 'fs'
-import getConfig from '../../sharedUtils/config'
-
-const config = JSON.parse(fs.readFileSync('config.json'))
+import { getConfig, getSecretConfig } from '../../sharedUtils/config'
 
 // for fetching configuration
 const secretsmanager = new AWS.SecretsManager()
@@ -138,8 +135,9 @@ export const prepareExposeHeaders = (headers) => {
  */
 export const doSearchRequest = async (jwtToken, url) => {
   // Get the access token and clientId to build the Echo-Token header
-  const token = jwt.verify(jwtToken, config.secret)
-  const { id: clientId } = config.oauth.client
+  const { clientId, secret } = getSecretConfig('prod')
+
+  const token = jwt.verify(jwtToken, secret)
 
   try {
     const response = await request.get({

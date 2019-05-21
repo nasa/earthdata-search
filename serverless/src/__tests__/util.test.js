@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
-import fs from 'fs'
 import request from 'request-promise'
+
+import * as getConfig from '../../../sharedUtils/config'
 
 import {
   pick,
@@ -9,8 +10,6 @@ import {
   prepareExposeHeaders,
   getJwtToken
 } from '../util'
-
-const config = JSON.parse(fs.readFileSync('config.json'))
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -46,7 +45,7 @@ describe('util#pick', () => {
 
 describe('util#buildURL', () => {
   test('correctly builds a search URL', () => {
-    process.env.cmrHost = 'http://example.com'
+    jest.spyOn(getConfig, 'getConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 
     const body = '{"params":{"param1":123,"param2":"abc","param3":["987"]}}'
     const permittedCmrKeys = [
@@ -105,7 +104,8 @@ describe('util#doSearchRequest', () => {
     }
 
     jest.spyOn(jwt, 'verify').mockImplementation(() => token)
-    config.oauth.client.id = 'clientId'
+    jest.spyOn(getConfig, 'getSecretConfig').mockImplementation(() => ({ clientId: 'clientId' }))
+
     const jwtToken = '123.456.789'
     const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'
 

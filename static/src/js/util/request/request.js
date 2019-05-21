@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
 import { prepKeysForCmr } from '../url/url'
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Parent class for the application API layer to communicate with external services

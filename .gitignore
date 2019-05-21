@@ -3,7 +3,7 @@ node_modules
 .DS_Store
 .serverless
 coverage
-config.json
+secret.config.json
 
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
