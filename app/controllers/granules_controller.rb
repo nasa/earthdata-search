@@ -95,8 +95,8 @@ class GranulesController < ApplicationController
     collection = Array.wrap(project['collections']).find { |ds| ds['id'] == collection_id }
 
     query = Rack::Utils.parse_nested_query(collection['params'])
-
-    # don't send override_temporal to CMR
+    puts "query: #{query.inspect}"
+    # don't sent override_temporal to CMR
     override_temporal = query.delete('override_temporal')
     query['temporal'] = override_temporal if override_temporal
 
