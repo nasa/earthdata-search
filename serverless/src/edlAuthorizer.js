@@ -54,6 +54,7 @@ function edlAuthorizer(event, context, callback) {
       if (oauthToken.expired()) {
         try {
           const refreshed = await oauthToken.refresh()
+          console.log('Token refreshed successfully')
           jwtToken = jwt.sign({ token: refreshed.token }, config.secret)
         } catch (error) {
           console.log('Error refreshing access token: ', error.message)

@@ -1,8 +1,14 @@
 import { parse as parseXml } from 'fast-xml-parser'
-import LambdaRequest from './lambda'
+import Request from './request'
 import { getTemporal } from '../edsc-date'
 
-export default class CwicGranuleRequest extends LambdaRequest {
+export default class CwicGranuleRequest extends Request {
+  constructor() {
+    super('http://localhost:3001')
+    this.lambda = true
+    this.searchPath = 'cwic/granules'
+  }
+
   permittedCmrKeys() {
     return [
       'bounding_box',
@@ -84,12 +90,5 @@ export default class CwicGranuleRequest extends LambdaRequest {
         hits: feed['opensearch:totalResults']
       }
     }
-  }
-
-  /*
-   * Makes a POST request to Lambda
-   */
-  search(data) {
-    return super.post('cwic/granules', data)
   }
 }
