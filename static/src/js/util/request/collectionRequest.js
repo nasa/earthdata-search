@@ -1,11 +1,23 @@
-import CmrRequest from './cmr'
-import LambdaRequest from './lambda'
 import Request from './request'
 
 /**
  * Base Request object for collection specific requests
  */
-class BaseCollectionRequest extends Request {
+export default class CollectionRequest extends Request {
+  constructor(authToken) {
+    if (authToken && authToken !== '') {
+      super('http://localhost:3001')
+
+      this.authenticated = true
+      this.authToken = authToken
+      this.searchPath = 'collections'
+    } else {
+      super('https://cmr.earthdata.nasa.gov')
+
+      this.searchPath = 'search/collections.json'
+    }
+  }
+
   permittedCmrKeys() {
     return [
       'params',
@@ -59,18 +71,17 @@ class BaseCollectionRequest extends Request {
    * @return {Object} The object provided
    */
   transformResponse(data) {
-    if (data.statusCode === 401) {
-      const returnPath = window.location.href
+    this.handleUnauthorized(data)
 
-      window.location.href = `http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
-    }
+    // If the response status code is not 200, return unaltered data
+    // If the status code is 200, it doesn't exist in the response
+    const { statusCode = 200 } = data
+    if (statusCode !== 200) return data
 
-    if (data.statusCode !== 200) return data
+    const { feed } = data
+    const { entry } = feed
 
-    const transformedData = data
-    const { entry } = data.feed
-
-    const transformedEntry = entry.map((collection) => {
+    entry.map((collection) => {
       const transformedCollection = collection
 
       if (collection && collection.tags) {
@@ -81,59 +92,6 @@ class BaseCollectionRequest extends Request {
       return transformedCollection
     })
 
-    transformedData.entry = transformedEntry
-    return transformedData
-  }
-}
-
-/**
- * Authenticated Request object for collection specific requests
- */
-class AuthenticatedCollectionRequest extends LambdaRequest {
-  constructor(authToken) {
-    super()
-
-    this.authToken = authToken
-  }
-
-  permittedCmrKeys = BaseCollectionRequest.prototype.permittedCmrKeys
-
-  nonIndexedKeys = BaseCollectionRequest.prototype.nonIndexedKeys
-
-  transformResponse = BaseCollectionRequest.prototype.transformResponse
-
-  /*
-   * Makes a POST request to Lambda
-   */
-  search(params) {
-    return super.post('collections', params)
-  }
-}
-
-/**
- * Unauthenticated Request object for collection specific requests
- */
-class UnauthenticatedCollectionRequest extends CmrRequest {
-  permittedCmrKeys = BaseCollectionRequest.prototype.permittedCmrKeys
-
-  nonIndexedKeys = BaseCollectionRequest.prototype.nonIndexedKeys
-
-  transformResponse = BaseCollectionRequest.prototype.transformResponse
-
-  /*
-   * Makes a POST request to CMR
-   */
-  search(params) {
-    return super.post('search/collections.json', params)
-  }
-}
-
-/**
- * Request object for collection specific requests
- */
-export default class CollectionRequest {
-  constructor(authToken) {
-    if (authToken !== '') return new AuthenticatedCollectionRequest(authToken)
-    return new UnauthenticatedCollectionRequest()
+    return data
   }
 }

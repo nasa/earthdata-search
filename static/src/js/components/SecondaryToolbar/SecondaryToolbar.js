@@ -43,7 +43,7 @@ class SecondaryToolbar extends Component {
           <Dropdown.Item
             className="secondary-toolbar__logout"
             onClick={this.handleLogout}
-            href="http://localhost:8080"
+            href="/"
           >
             Logout
           </Dropdown.Item>

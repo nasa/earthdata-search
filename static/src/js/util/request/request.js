@@ -1,4 +1,7 @@
 import axios from 'axios'
+import pick from 'lodash/pick'
+import snakeCaseKeys from 'snakecase-keys'
+import { prepKeysForCmr } from '../url/url'
 
 /**
  * Parent class for the application API layer to communicate with external services
@@ -9,7 +12,26 @@ export default class Request {
       throw new Error('A baseUrl must be provided.')
     }
 
+    this.authenticated = false
     this.baseUrl = baseUrl
+    this.lambda = false
+    this.searchPath = ''
+  }
+
+  /**
+   * Defines the default keys that our API endpoints allow.
+   * @return {Array} An empty array
+   */
+  permittedCmrKeys() {
+    return []
+  }
+
+  /**
+   * Defines the default array keys that should exclude their index when stringified.
+   * @return {Array} An empty array
+   */
+  nonIndexedKeys() {
+    return []
   }
 
   /**
@@ -17,8 +39,23 @@ export default class Request {
    * @param {Object} data - An object containing any keys.
    * @return {Object} A modified object.
    */
-  transformRequest(data) {
-    return data
+  transformRequest(data, headers) {
+    if (this.authenticated) {
+      // eslint-disable-next-line no-param-reassign
+      headers.Authorization = `Bearer: ${this.authToken}`
+    }
+
+    // Converts javascript compliant keys to snake cased keys for use
+    // in URLs and request payloads
+    const snakeKeyData = snakeCaseKeys(data)
+
+    // Prevent keys that our external services don't support from being sent
+    const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
+
+    // CWIC does not support CORS so all of our requests will need to go through
+    // Lambda. POST requests to Lambda use a JSON string
+    if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData })
+    return prepKeysForCmr(filteredData, this.nonIndexedKeys())
   }
 
   /**
@@ -27,6 +64,8 @@ export default class Request {
    * @return {Object} The transformed response.
    */
   transformResponse(data) {
+    this.handleUnauthorized(data)
+
     return data
   }
 
@@ -62,5 +101,23 @@ export default class Request {
       baseURL: this.baseUrl,
       url
     })
+  }
+
+  /*
+   * Makes a POST request to this.searchPath
+   */
+  search(params) {
+    return this.post(this.searchPath, params)
+  }
+
+  /**
+   * Handle an unauthorized response
+   */
+  handleUnauthorized(data) {
+    if (data.statusCode === 401) {
+      const returnPath = window.location.href
+
+      window.location.href = `http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
+    }
   }
 }

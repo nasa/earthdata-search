@@ -32,7 +32,7 @@ export default async function edlCallback(event, context, callback) {
     statusCode: 307,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Set-Cookie': `auth=${jwtToken}`,
+      'Set-Cookie': `authToken=${jwtToken}`,
       Location: state
     }
   })

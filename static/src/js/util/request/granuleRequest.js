@@ -1,5 +1,3 @@
-import CmrRequest from './cmr'
-import LambdaRequest from './lambda'
 import Request from './request'
 
 import { getTemporal } from '../edsc-date'
@@ -7,7 +5,21 @@ import { getTemporal } from '../edsc-date'
 /**
  * Request object for granule specific requests
  */
-class BaseGranuleRequest extends Request {
+export default class GranuleRequest extends Request {
+  constructor(authToken) {
+    if (authToken && authToken !== '') {
+      super('http://localhost:3001')
+
+      this.authenticated = true
+      this.authToken = authToken
+      this.searchPath = 'granules'
+    } else {
+      super('https://cmr.earthdata.nasa.gov')
+
+      this.searchPath = 'search/granules.json'
+    }
+  }
+
   permittedCmrKeys() {
     return [
       'bounding_box',
@@ -27,6 +39,13 @@ class BaseGranuleRequest extends Request {
   }
 
   transformResponse(data) {
+    this.handleUnauthorized(data)
+
+    // If the response status code is not 200, return unaltered data
+    // If the status code is 200, it doesn't exist in the response
+    const { statusCode = 200 } = data
+    if (statusCode !== 200) return data
+
     const { feed = {} } = data
     const { entry = [] } = feed
 
@@ -53,57 +72,5 @@ class BaseGranuleRequest extends Request {
         entry
       }
     }
-  }
-}
-
-/**
- * Authenticated Request object for collection specific requests
- */
-class AuthenticatedGranuleRequest extends LambdaRequest {
-  constructor(authToken) {
-    super()
-
-    this.authToken = authToken
-  }
-
-  permittedCmrKeys = BaseGranuleRequest.prototype.permittedCmrKeys
-
-  nonIndexedKeys = BaseGranuleRequest.prototype.nonIndexedKeys
-
-  transformResponse = BaseGranuleRequest.prototype.transformResponse
-
-  /*
-   * Makes a POST request to Lambda
-   */
-  search(params) {
-    return super.post('granules', params)
-  }
-}
-
-/**
- * Unauthenticated Request object for collection specific requests
- */
-class UnauthenticatedGranuleRequest extends CmrRequest {
-  permittedCmrKeys = BaseGranuleRequest.prototype.permittedCmrKeys
-
-  nonIndexedKeys = BaseGranuleRequest.prototype.nonIndexedKeys
-
-  transformResponse = BaseGranuleRequest.prototype.transformResponse
-
-  /*
-   * Makes a POST request to CMR
-   */
-  search(params) {
-    return super.post('search/granules.json', params)
-  }
-}
-
-/**
- * Request object for collection specific requests
- */
-export default class GranuleRequest {
-  constructor(authToken) {
-    if (authToken) return new AuthenticatedGranuleRequest(authToken)
-    return new UnauthenticatedGranuleRequest()
   }
 }
