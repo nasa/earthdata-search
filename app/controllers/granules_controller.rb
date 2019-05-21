@@ -95,11 +95,6 @@ class GranulesController < ApplicationController
     collection = Array.wrap(project['collections']).find { |ds| ds['id'] == collection_id }
 
     query = Rack::Utils.parse_nested_query(collection['params'])
-    puts "query: #{query.inspect}"
-    # don't sent override_temporal to CMR
-    override_temporal = query.delete('override_temporal')
-    query['temporal'] = override_temporal if override_temporal
-
     catalog_response = echo_client.get_granules(query.merge(page_num: page_num, page_size: 2000, format: :json), token)
 
     if catalog_response.success?
