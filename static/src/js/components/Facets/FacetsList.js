@@ -21,6 +21,8 @@ const FacetsList = (props) => {
     variation
   } = props
 
+  console.log(facetCategory)
+
   // Start by creating arrays to sort lifted and non-lifted facets
   const { alphabetizedList, facetsToLift } = buildOrganizedFacets(facets, { liftSelectedFacets })
 

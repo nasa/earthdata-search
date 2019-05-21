@@ -1,4 +1,5 @@
 import Request from './request'
+import getConfig from '../../../../../sharedUtils/config'
 
 /**
  * Base Request object for collection specific requests
@@ -6,13 +7,13 @@ import Request from './request'
 export default class CollectionRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super('http://localhost:3001')
+      super(getConfig('prod').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'collections'
     } else {
-      super('https://cmr.earthdata.nasa.gov')
+      super(getConfig('prod').cmrHost)
 
       this.searchPath = 'search/collections.json'
     }
@@ -71,7 +72,7 @@ export default class CollectionRequest extends Request {
    * @return {Object} The object provided
    */
   transformResponse(data) {
-    this.handleUnauthorized(data)
+    super.transformResponse(data)
 
     // If the response status code is not 200, return unaltered data
     // If the status code is 200, it doesn't exist in the response

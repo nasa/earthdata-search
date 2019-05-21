@@ -1,5 +1,8 @@
 import fs from 'fs'
 
+import getConfig from '../../sharedUtils/config'
+import getEdlConfig from './configUtil'
+
 const config = JSON.parse(fs.readFileSync('config.json'))
 
 /**
@@ -8,18 +11,20 @@ const config = JSON.parse(fs.readFileSync('config.json'))
  * @param {*} context
  * @param {*} callback
  */
-export default function edlLogin(event, context, callback) {
+export default async function edlLogin(event, context, callback) {
   const params = event.queryStringParameters
 
   const { state } = params
 
+  const oauthConfig = await getEdlConfig()
+
   const { redirectUri } = config
-  const clientId = config.oauth.client.id
+  // const clientId = config.oauth.client.id
 
   callback(null, {
     statusCode: 307,
     headers: {
-      Location: `${process.env.edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(state)}`
+      Location: `${getConfig('prod').edlHost}/oauth/authorize?response_type=code&client_id=${oauthConfig.client.id}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(state)}`
     }
   })
 }

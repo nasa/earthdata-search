@@ -9,9 +9,9 @@ import {
 const initialCmrState = {}
 
 const initialFeatureState = {
-  customizable: false,
   mapImagery: false,
-  nearRealTime: false
+  nearRealTime: false,
+  customizable: false
 }
 
 const initialViewAllState = {}

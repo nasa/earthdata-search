@@ -1,4 +1,5 @@
 import Request from './request'
+import getConfig from '../../../../../sharedUtils/config'
 
 /**
  * Request object for timeline specific requests
@@ -6,13 +7,13 @@ import Request from './request'
 export default class TimelineRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super('http://localhost:3001')
+      super(getConfig('prod').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules/timeline'
     } else {
-      super('https://cmr.earthdata.nasa.gov')
+      super(getConfig('prod').cmrHost)
 
       this.searchPath = 'search/granules/timeline.json'
     }
