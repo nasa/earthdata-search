@@ -1,6 +1,5 @@
 const merge = require('webpack-merge')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const extractHtml = new HtmlWebPackPlugin({
   template: './static/src/public/index.html',
@@ -17,7 +16,6 @@ const Config = merge(StaticCommonConfig, {
   },
   plugins: [
     extractHtml
-    // new BundleAnalyzerPlugin()
   ]
 })
 

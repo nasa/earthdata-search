@@ -1,9 +1,10 @@
 import https from 'https'
+import getConfig from '../../sharedUtils/config'
 
 function retrieveConcept(event, context, callback) {
   let bodyContent = ''
 
-  const conceptUrl = `${process.env.cmrHost}`
+  const conceptUrl = `${getConfig('prod').cmrHost}`
     + `/search/concepts/${event.pathParameters.id}`
 
   console.log(conceptUrl)

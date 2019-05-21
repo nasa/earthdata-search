@@ -4,6 +4,7 @@ import { stringify as qsStringify } from 'qs'
 import request from 'request-promise'
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
+import getConfig from '../../sharedUtils/config'
 
 const config = JSON.parse(fs.readFileSync('config.json'))
 
@@ -115,8 +116,7 @@ export const buildURL = (paramObj) => {
   // Transform the query string hash to an encoded url string
   const queryParams = cmrStringify(obj, nonIndexedKeys)
 
-  const url = `${process.env.cmrHost}`
-      + `${path}?${queryParams}`
+  const url = `${getConfig('prod').cmrHost}${path}?${queryParams}`
 
   console.log(`CMR Query: ${url}`)
 

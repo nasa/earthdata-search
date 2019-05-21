@@ -1,8 +1,9 @@
 import Request from './request'
+import getConfig from '../../../../../sharedUtils/config'
 
 export default class NlpRequest extends Request {
   constructor() {
-    super('http://localhost:3001')
+    super(getConfig('prod').apiHost)
     this.lambda = true
     this.searchPath = 'nlp'
   }
