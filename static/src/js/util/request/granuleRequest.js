@@ -1,4 +1,5 @@
 import Request from './request'
+import getConfig from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edsc-date'
 
@@ -8,13 +9,13 @@ import { getTemporal } from '../edsc-date'
 export default class GranuleRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super('http://localhost:3001')
+      super(getConfig('prod').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules'
     } else {
-      super('https://cmr.earthdata.nasa.gov')
+      super(getConfig('prod').cmrHost)
 
       this.searchPath = 'search/granules.json'
     }
@@ -39,7 +40,7 @@ export default class GranuleRequest extends Request {
   }
 
   transformResponse(data) {
-    this.handleUnauthorized(data)
+    super.transformResponse(data)
 
     // If the response status code is not 200, return unaltered data
     // If the status code is 200, it doesn't exist in the response
@@ -61,7 +62,7 @@ export default class GranuleRequest extends Request {
 
       if (granule.id) {
         // eslint-disable-next-line
-        updatedGranule.thumbnail = `${this.baseUrl}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+        updatedGranule.thumbnail = `${getConfig('prod').cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
       }
 
       return updatedGranule
