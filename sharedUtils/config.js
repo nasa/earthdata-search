@@ -1,5 +1,5 @@
 import config from '../static.config.json'
+import secretConfig from '../secret.config.json'
 
-const getConfig = env => config[env]
-
-export default getConfig
+export const getConfig = env => config[env]
+export const getSecretConfig = env => secretConfig[env]

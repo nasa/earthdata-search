@@ -1,5 +1,5 @@
 import Request from './request'
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Base Request object for collection specific requests

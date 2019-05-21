@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken'
-import fs from 'fs'
 import simpleOAuth2 from 'simple-oauth2'
-import getEdlConfig from './configUtil'
+import { getEdlConfig } from './configUtil'
+import { getSecretConfig } from '../../sharedUtils/config'
 
-const config = JSON.parse(fs.readFileSync('config.json'))
 
 /**
  * Generate AuthPolicy for the Authorizer, and attach the JWT
@@ -31,77 +30,53 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
   return authResponse
 }
 
-let oauthConfig = null
-
-// eslint-disable-next-line no-unused-expressions
-const getOauthConfig = async () => {
-// async function getOauthConfig() {
-  try {
-    if (oauthConfig === null) {
-      console.log('getting new edlconfig...')
-      oauthConfig = await getEdlConfig()
-    }
-  } catch (e) {
-    console.log(e)
-  }
-
-  return oauthConfig
-
-  // if (oauthConfig) return oauthConfig
-  // try {
-  //   oauthConfig = await getEdlConfig()
-  //   return oauthConfig
-  // } catch (e) {
-  //   console.log(e)
-  // }
-  // return null
-}
+let edlConfig = null
 
 /**
  * API Gateway Authorizer to verify requets are authenticated
  */
 async function edlAuthorizer(event, context, callback) {
-  // const oauthConfig = await getEdlConfig()
-  oauthConfig = await getOauthConfig()
-  console.log('oauthConfig', oauthConfig)
-  if (oauthConfig !== null) {
-    if (!event.authorizationToken) {
-      return callback('Unauthorized')
-    }
+  edlConfig = await getEdlConfig(edlConfig)
 
-    const tokenParts = event.authorizationToken.split(' ')
-    let jwtToken = tokenParts[1]
+  if (!event.authorizationToken) {
+    return callback('Unauthorized')
+  }
 
-    try {
-      jwt.verify(jwtToken, config.secret, async (verifyError, decoded) => {
-        if (verifyError) {
-          // 401 Unauthorized
-          console.log(`Token invalid. ${verifyError}`)
+  const tokenParts = event.authorizationToken.split(' ')
+  let jwtToken = tokenParts[1]
+
+  try {
+    const { secret } = getSecretConfig('prod')
+
+    jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
+      if (verifyError) {
+        // 401 Unauthorized
+        console.log(`Token invalid. ${verifyError}`)
+        return callback('Unauthorized')
+      }
+
+      const oauth2 = simpleOAuth2.create(edlConfig)
+      const oauthToken = oauth2.accessToken.create(decoded.token)
+      if (oauthToken.expired()) {
+        try {
+          const refreshed = await oauthToken.refresh()
+          console.log('Token refreshed successfully')
+          jwtToken = jwt.sign({ token: refreshed.token }, secret)
+        } catch (error) {
+          console.log('Error refreshing access token: ', error.message)
           return callback('Unauthorized')
         }
+      }
 
-        const oauth2 = simpleOAuth2.create(oauthConfig)
-        const oauthToken = oauth2.accessToken.create(decoded.token)
-        if (oauthToken.expired()) {
-          try {
-            const refreshed = await oauthToken.refresh()
-            console.log('Token refreshed successfully')
-            jwtToken = jwt.sign({ token: refreshed.token }, config.secret)
-          } catch (error) {
-            console.log('Error refreshing access token: ', error.message)
-            return callback('Unauthorized')
-          }
-        }
-
-        // Return success
-        const username = decoded.token.endpoint.split('/').pop()
-        return callback(null, generatePolicy(username, jwtToken, 'Allow', event.methodArn))
-      })
-    } catch (err) {
-      console.log('Authorizer error. Invalid token', err)
-      return callback('Unauthorized')
-    }
+      // Return success
+      const username = decoded.token.endpoint.split('/').pop()
+      return callback(null, generatePolicy(username, jwtToken, 'Allow', event.methodArn))
+    })
+  } catch (err) {
+    console.log('Authorizer error. Invalid token', err)
+    return callback('Unauthorized')
   }
+
   return null
 }
 

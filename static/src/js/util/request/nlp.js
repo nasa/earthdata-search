@@ -1,5 +1,5 @@
 import Request from './request'
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 export default class NlpRequest extends Request {
   constructor() {

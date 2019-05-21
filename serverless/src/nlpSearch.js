@@ -1,5 +1,5 @@
 import { pick } from './util'
-import getConfig from '../../sharedUtils/config'
+import { getConfig } from '../../sharedUtils/config'
 
 const https = require('https')
 const qs = require('qs')

@@ -5,7 +5,7 @@ import { remove } from 'tiny-cookie'
 import { Button, Dropdown } from 'react-bootstrap'
 
 import './SecondaryToolbar.scss'
-import getConfig from '../../../../../sharedUtils/config'
+import { getConfig } from '../../../../../sharedUtils/config'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
