@@ -4,7 +4,8 @@ provider:
   name: aws
   runtime: nodejs8.10
   versionFunctions: false
-  stage: ${opt:stage, 'lab'}
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
   environment:
     dbEndpoint:
       Fn::GetAtt:
@@ -15,9 +16,11 @@ provider:
         - Database
         - Endpoint.Port
     dbUsername: edsc
-    dbName: edsc
+    dbName: edsc_${self:provider.stage}
     colorMapQueueUrl:
-        Ref: ColorMapsProcessingQueue
+      Ref: ColorMapsProcessingQueue
+    configSecretId:
+      Ref: DbPasswordSecret
   vpc:
       securityGroupIds:
         - Ref: LambdaSecurityGroup
@@ -36,6 +39,9 @@ plugins:
 # Lambda Functions
 #
 functions:
+  # 
+  # Standalone functions
+  # 
   migrateDatabase:
     handler: serverless/src/migrateDatabase.default
     timeout: 300
@@ -190,6 +196,8 @@ functions:
 # Additional AWS Resources
 #
 resources:
+  # A method to include environment specific resources
+  # Resources: ${file(./resources-${self:provider.stage}.yml)}
   Resources:
     # StaticSite:
     #   Type: AWS::S3::Bucket
@@ -265,6 +273,7 @@ resources:
     Database:
       Type: AWS::RDS::DBInstance
       Properties:
+        DBName: edsc_${self:provider.stage}
         AllocatedStorage: '20'
         DBInstanceClass: db.t2.micro
         Engine: postgres
@@ -299,19 +308,27 @@ resources:
 
     # Merge the NGAP PermissionsBoundary into the
     # default (Serverless Defined) role for executing Lambdas
-    IamRoleLambdaExecution:
-      Type: "AWS::IAM::Role"
-      Properties:
-        PermissionsBoundary:
-          Fn::Join: [
-            "", [
-              "arn:aws:iam::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":policy/NGAPShRoleBoundary"
-            ]
-          ]
+    # IamRoleLambdaExecution:
+    #   Type: "AWS::IAM::Role"
+    #   Properties:
+    #     PermissionsBoundary:
+    #       Fn::Join: [
+    #         "", [
+    #           "arn:aws:iam::",
+    #           {
+    #             "Ref": "AWS::AccountId"
+    #           },
+    #           ":policy/NGAPShNonProdRoleBoundary"
+    #         ]
+    #       ]
+    #     AssumeRolePolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Principal:
+    #             Service:
+    #               - lambda.amazonaws.com
+    #           Action: sts:AssumeRole
 
     ScheduledLambdaRole:
       Type: "AWS::IAM::Role"
@@ -325,7 +342,7 @@ resources:
               {
                 "Ref": "AWS::AccountId"
               },
-              ":policy/NGAPShRoleBoundary"
+              ":policy/NGAPShNonProdRoleBoundary"
             ]
           ]
         AssumeRolePolicyDocument:
@@ -394,19 +411,18 @@ resources:
           Ref: ApiGatewayRestApi
 
 # Package each lambda into individual zip files. This reduces the size of
-# each lambda of but increases the complexity of the compilation step slightly
+# each lambda but increases the complexity of the compilation process slightly
 package:
   individually: true
 
 custom:
-  siteName: earthdata-search-lab
+  siteName: earthdata-search-${self:provider.stage}
 
   awsResources:
     vpc: 'vpc-0ae48cd75a6141657'
     subnet:
       a: 'subnet-086c53aec52be1e70'
       b: 'subnet-09d8f21a539138693'
-
 
   # Finch (S3 sync plugin)
   client:
