@@ -4,6 +4,7 @@ cache:
   - node_modules
 script:
   - npm install
+  - npm run copy-secrets
   - npm test
   # - npm run build
 branches:
