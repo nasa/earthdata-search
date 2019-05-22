@@ -1,9 +1,33 @@
 {
-  "prod": {
-    "apiHost": "http://localhost:3001",
-    "cmrHost": "https://cmr.earthdata.nasa.gov",
-    "edlHost": "https://urs.earthdata.nasa.gov",
-    "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
-    "redirectUriPath": "/urs_callback"
+  "environment": {
+    "development": {
+      "dbHost": "127.0.0.1",
+      "dbName": "edsc_dev",
+      "dbPort": 5432
+    },
+    "production": {}
+  },
+  "earthdata": {
+      "sit": {
+        "apiHost": "http://localhost:3001",
+        "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
+        "edlHost": "https://urs.sit.earthdata.nasa.gov",
+        "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
+        "redirectUriPath": "/urs_callback"
+      },
+      "uat": {
+        "apiHost": "http://localhost:3001",
+        "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
+        "edlHost": "https://urs.uat.earthdata.nasa.gov",
+        "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
+        "redirectUriPath": "/urs_callback"
+      },
+      "prod": {
+        "apiHost": "http://localhost:3001",
+        "cmrHost": "https://cmr.earthdata.nasa.gov",
+        "edlHost": "https://urs.earthdata.nasa.gov",
+        "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
+        "redirectUriPath": "/urs_callback"
+      }
   }
 }

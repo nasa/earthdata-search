@@ -1,9 +1,9 @@
 import Request from './request'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 export default class NlpRequest extends Request {
   constructor() {
-    super(getConfig('prod').apiHost)
+    super(getEarthdataConfig('prod').apiHost)
     this.lambda = true
     this.searchPath = 'nlp'
   }

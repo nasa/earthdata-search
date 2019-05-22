@@ -5,7 +5,7 @@ import { remove } from 'tiny-cookie'
 import { Button, Dropdown } from 'react-bootstrap'
 
 import './SecondaryToolbar.scss'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class SecondaryToolbar extends Component {
     const returnPath = window.location.href
 
     const loginLink = (
-      <Button className="secondary-toolbar__login" variant="light" href={`${getConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}>
+      <Button className="secondary-toolbar__login" variant="light" href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}>
         <i className="fa fa-lock" />
         {' Earthdata Login'}
       </Button>

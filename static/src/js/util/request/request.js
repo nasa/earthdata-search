@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
 import { prepKeysForCmr } from '../url/url'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Parent class for the application API layer to communicate with external services
@@ -125,7 +125,7 @@ export default class Request {
     if (data.statusCode === 401) {
       const returnPath = window.location.href
 
-      window.location.href = `${getConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
     }
   }
 }

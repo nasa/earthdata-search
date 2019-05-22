@@ -5,15 +5,18 @@ import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
 import { getDbConnection } from './util'
 
-// CREATE USER lambda WITH LOGIN;
-// GRANT rds_iam TO edsc_test;
+// Knex database connection object
+let dbConnection = null
 
-const connection = getDbConnection()
+// Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'
+
+// AWS SQS adapter
+const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
- * @param {String} projecttion - The projection used to determine which GIBS file to examine
+ * @param {String} projection - The projection used to determine which GIBS file to examine
  * @return {Object} An object containing a valid response code and a JSON body
  */
 const getProjectionCapabilities = async (projection) => {
@@ -22,10 +25,11 @@ const getProjectionCapabilities = async (projection) => {
   console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
 
   try {
-    const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
+    // Retrive a connection to the database
+    dbConnection = await getDbConnection(dbConnection)
 
     // Delete colormaps that havent been updated in the last 5 days
-    await connection(colorMapsTableName).whereRaw('updated_at <= now()').del()
+    await dbConnection(colorMapsTableName).whereRaw('updated_at <= now()').del()
 
     const colormapUrls = []
 
@@ -44,7 +48,7 @@ const getProjectionCapabilities = async (projection) => {
     const { Layer: capabilityLayers = [] } = contents
 
     await capabilityLayers.filter(Boolean).forEachAsync(async (layer) => {
-      let knownColorMap = await connection(colorMapsTableName)
+      let knownColorMap = await dbConnection(colorMapsTableName)
         .first('id', 'product', 'url')
         .where({ product: layer['ows:Identifier'] })
 
@@ -54,17 +58,15 @@ const getProjectionCapabilities = async (projection) => {
         if (link['xlink:role'].includes('1.3')) {
           // If there is no previous record of this product, insert a new row into the database
           if (knownColorMap === undefined) {
-            knownColorMap = await connection(colorMapsTableName)
+            knownColorMap = await dbConnection(colorMapsTableName)
               .returning(['id', 'product', 'url'])
               .insert({
                 product: layer['ows:Identifier'],
                 url: link['xlink:href']
               })
 
-            console.log('New Color Map:')
             console.log(knownColorMap)
           } else {
-            console.log('Known Color Map:')
             console.log(knownColorMap)
           }
 

@@ -3,13 +3,13 @@ import {
   getJwtToken
 } from './util'
 
-import { getConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig } from '../../sharedUtils/config'
 
 /**
  * Handler to perform an authenticated CMR concept search
  */
 function retrieveConcept(event) {
-  const conceptUrl = `${getConfig('prod').cmrHost}`
+  const conceptUrl = `${getEarthdataConfig('prod').cmrHost}`
     + `/search/concepts/${event.pathParameters.id}`
 
   console.log(conceptUrl)

@@ -30,7 +30,6 @@ provider:
   role: ScheduledLambdaRole
 
 plugins:
-  - serverless-dotenv-plugin
   - serverless-finch
   - serverless-offline
   - serverless-webpack
@@ -428,10 +427,10 @@ custom:
   siteName: earthdata-search-${self:provider.stage}
 
   awsResources:
-    vpc: 'vpc-0ae48cd75a6141657'
+    vpc: ${env:VPC_ID}
     subnet:
-      a: 'subnet-086c53aec52be1e70'
-      b: 'subnet-09d8f21a539138693'
+      a: ${env:SUBNET_ID_A}
+      b: ${env:SUBNET_ID_B}
 
   # Finch (S3 sync plugin)
   client:

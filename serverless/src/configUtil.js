@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'
 
-import { getConfig, getSecretConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 
 const secretsmanager = new AWS.SecretsManager({
   region: 'us-east-1'
@@ -13,7 +13,7 @@ const secretsmanager = new AWS.SecretsManager({
 export const buildOauthConfig = clientConfig => ({
   client: clientConfig,
   auth: {
-    tokenHost: getConfig('prod').edlHost
+    tokenHost: getEarthdataConfig('prod').edlHost
   }
 })
 
@@ -28,7 +28,7 @@ export const getEdlConfig = async (edlConfig) => {
 
   try {
     if (process.env.NODE_ENV === 'development') {
-      const { clientId, password } = getSecretConfig('prod')
+      const { clientId, password } = getSecretEarthdataConfig('prod')
 
       return buildOauthConfig({
         id: clientId,

@@ -1,5 +1,5 @@
 import { pick } from './util'
-import { getConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig } from '../../sharedUtils/config'
 
 const https = require('https')
 const qs = require('qs')
@@ -23,7 +23,7 @@ export default function search(event, context, callback) {
   // Transform the query string hash to an encoded url string
   const queryParams = qs.stringify(obj)
 
-  const nlpUrl = `${getConfig('prod').nlpHost}/nlp?${queryParams}`
+  const nlpUrl = `${getEarthdataConfig('prod').nlpHost}/nlp?${queryParams}`
 
   console.log(`NLP Query: ${nlpUrl}`)
 

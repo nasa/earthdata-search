@@ -1,5 +1,5 @@
 import Request from './request'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Request object for concept specific requests
@@ -7,13 +7,13 @@ import { getConfig } from '../../../../../sharedUtils/config'
 export default class ConceptRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super(getConfig('prod').apiHost)
+      super(getEarthdataConfig('prod').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'concepts'
     } else {
-      super(getConfig('prod').cmrHost)
+      super(getEarthdataConfig('prod').cmrHost)
 
       this.searchPath = 'search/concepts'
     }

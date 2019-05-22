@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-import { getSecretConfig } from '../../sharedUtils/config'
+import { getSecretEarthdataConfig } from '../../sharedUtils/config'
 
 /**
  * Handler to perform an authenticated CMR concept metadata download
@@ -8,7 +8,7 @@ import { getSecretConfig } from '../../sharedUtils/config'
 function conceptMetadata(event, context, callback) {
   const { url, token: jwtToken } = event.queryStringParameters
 
-  const { clientId, secret } = getSecretConfig('prod')
+  const { clientId, secret } = getSecretEarthdataConfig('prod')
   const token = jwt.verify(jwtToken, secret)
 
   const conceptUrl = `${url}?token=${token.token.access_token}:${clientId}`

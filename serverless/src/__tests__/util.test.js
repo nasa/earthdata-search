@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import request from 'request-promise'
 
-import * as getConfig from '../../../sharedUtils/config'
+import * as getEarthdataConfig from '../../../sharedUtils/config'
 
 import {
   pick,
@@ -45,7 +45,7 @@ describe('util#pick', () => {
 
 describe('util#buildURL', () => {
   test('correctly builds a search URL', () => {
-    jest.spyOn(getConfig, 'getConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 
     const body = '{"params":{"param1":123,"param2":"abc","param3":["987"]}}'
     const permittedCmrKeys = [
@@ -104,7 +104,7 @@ describe('util#doSearchRequest', () => {
     }
 
     jest.spyOn(jwt, 'verify').mockImplementation(() => token)
-    jest.spyOn(getConfig, 'getSecretConfig').mockImplementation(() => ({ clientId: 'clientId' }))
+    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
 
     const jwtToken = '123.456.789'
     const url = 'http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987'

@@ -1,4 +1,4 @@
-import { getConfig, getSecretConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 
 /**
  * Handler for redirecting the user to the correct EDL login URL
@@ -8,13 +8,13 @@ export default function edlLogin(event, context, callback) {
 
   const { state } = params
 
-  const { clientId } = getSecretConfig('prod')
+  const { clientId } = getSecretEarthdataConfig('prod')
 
   const {
     apiHost,
     edlHost,
     redirectUriPath
-  } = getConfig('prod')
+  } = getEarthdataConfig('prod')
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   callback(null, {
