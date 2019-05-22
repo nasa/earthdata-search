@@ -141,7 +141,7 @@ describe('getGranules', () => {
 
     // mockStore with initialState
     const store = mockStore({
-      authToken: '',
+      authToken: 'token',
       metadata: {
         collections: {
           allIds: ['collectionId'],
