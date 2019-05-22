@@ -128,11 +128,18 @@ Once the project is built, you must ensure that the automated tests pass:
 ### Deployment
 
 When the time comes to deploy the application, first ensure that you have the required ENV vars set:
+
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
 
+This application runs in a VPC for NASA security purposes, therefor the following values are expected when a deployment ocurrs.
+
+- VPC_ID
+- SUBNET_ID_A
+- SUBNET_ID_B
+
 To deploy the full application use the following:
 
-	NODE_ENV=production serverless deploy
+	NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
     
-We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. 
+We specify `NODE_ENV` here because we are using `dotenv` which breaks our environment variables out into logical files that contain environment specific values. `UNIQUE_STAGE` defaults to `dev` but customizing it here allows you to deploy multiple stacks within the same account.
