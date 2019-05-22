@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
+import { createDataLinks } from '../../util/granules'
 
 import './GranuleResultsItem.scss'
 
@@ -123,42 +124,7 @@ const GranuleResultsItem = ({
   const timeEnd = temporal[1]
   const thumbnail = browseFlag ? granuleThumbnail : false
 
-  const createDataLinks = () => {
-    // All 'http' data links that are not inherited
-    const httpDataLinks = links.filter((link) => {
-      const {
-        href,
-        inherited = false,
-        rel
-      } = link
-
-      return href.indexOf('http') !== -1 && rel.indexOf('/data#') !== -1 && inherited !== true
-    })
-
-    // Strip filenames from httpDataLinks
-    const filenames = httpDataLinks.map(link => link.href.substr(link.href.lastIndexOf('/') + 1).replace('.html', ''))
-
-    // Find any 'ftp' data links that are not interited that have filenames not already included with 'http' links
-    const ftpLinks = links.filter((link) => {
-      const {
-        href,
-        inherited = false,
-        rel
-      } = link
-
-      const filename = href.substr(href.lastIndexOf('/') + 1)
-
-      return href.indexOf('ftp://') !== -1 && rel.indexOf('/data#') !== -1 && inherited !== true && filenames.indexOf(filename) === -1
-    })
-
-    // Return http and ftp data links with a unique list of filenames, prefering http
-    return [
-      ...httpDataLinks,
-      ...ftpLinks
-    ]
-  }
-
-  const dataLinks = createDataLinks()
+  const dataLinks = createDataLinks(links)
 
   return (
     <li className="granule-results-item">
