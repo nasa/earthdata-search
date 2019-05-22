@@ -24,7 +24,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "build-sit": "NODE_ENV=production webpack --mode production",
-    "setup-travis": "cp secret.config.json.example secret.config.json",
+    "copy-secrets": "cp secret.config.json.example secret.config.json",
     "start": "NODE_ENV=development webpack-dev-server --open --config webpack.config.dev.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
