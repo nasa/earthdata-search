@@ -1,4 +1,8 @@
-import { createEcho10MetadataUrls } from '../granules'
+import {
+  createEcho10MetadataUrls,
+  isDataLink,
+  createDataLinks
+} from '../granules'
 
 describe('createEcho10MetadataUrls', () => {
   describe('when provided a granule id', () => {
@@ -29,5 +33,94 @@ describe('createEcho10MetadataUrls', () => {
 
       expect(data).toEqual(expectedData)
     })
+  })
+})
+
+describe('isDataLink', () => {
+  test('returns true http data links', () => {
+    const link = {
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      title: 'This link provides direct download access to the granule.',
+      hreflang: 'en-US',
+      href: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/NHx-deposition2050.txt'
+    }
+
+    expect(isDataLink(link, 'http')).toBeTruthy()
+  })
+
+  test('returns true ftp data links', () => {
+    const link = {
+      rel: 'ftp://esipfed.org/ns/fedsearch/1.1/data#',
+      title: 'This link provides direct download access to the granule.',
+      hreflang: 'en-US',
+      href: 'ftp://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/NHx-deposition2050.txt'
+    }
+
+    expect(isDataLink(link, 'ftp')).toBeTruthy()
+  })
+
+  test('returns false non-inherited links', () => {
+    const link = {
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      title: 'This link provides direct download access to the granule.',
+      hreflang: 'en-US',
+      href: 'http://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/NHx-deposition2050.txt',
+      inherited: true
+    }
+
+    expect(isDataLink(link, 'http')).toBeFalsy()
+  })
+
+  test('returns false non-data links', () => {
+    const link = {
+      rel: 'http://esipfed.org/ns/fedsearch/1.1',
+      title: 'This link provides direct download access to the granule.',
+      hreflang: 'en-US',
+      href: 'http://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/NHx-deposition2050.txt'
+    }
+
+    expect(isDataLink(link, 'http')).toBeFalsy()
+  })
+})
+
+describe('createDataLinks', () => {
+  test('returns only data links, prefering http over ftp for matching filenames', () => {
+    const links = [
+      {
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+        title: 'This link provides direct download access to the granule.',
+        hreflang: 'en-US',
+        href: 'http://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/filename1.txt'
+      },
+      {
+        rel: 'ftp://esipfed.org/ns/fedsearch/1.1/data#',
+        title: 'This link provides direct download access to the granule.',
+        hreflang: 'en-US',
+        href: 'ftp://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/filename1.txt'
+      },
+      {
+        rel: 'ftp://esipfed.org/ns/fedsearch/1.1/data#',
+        title: 'This link provides direct download access to the granule.',
+        hreflang: 'en-US',
+        href: 'ftp://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/filename2.txt'
+      }
+    ]
+
+    const expectedLinks = [
+      {
+        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+        title: 'This link provides direct download access to the granule.',
+        hreflang: 'en-US',
+        href: 'http://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/filename1.txt'
+      },
+      {
+        rel: 'ftp://esipfed.org/ns/fedsearch/1.1/data#',
+        title: 'This link provides direct download access to the granule.',
+        hreflang: 'en-US',
+        href: 'ftp://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/data/filename2.txt'
+      }
+    ]
+
+    expect(createDataLinks(links)).toEqual(expectedLinks)
   })
 })

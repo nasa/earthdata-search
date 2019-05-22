@@ -109,3 +109,51 @@ export const createEcho10MetadataUrls = (granuleId) => {
 
   return metadataUrls
 }
+
+/**
+ * Determines if a given link is a data link.
+ * A link is a data link if it has data in the rel property and it is not inherited.
+ * @param {object} link An individual link object from granule metadata
+ * @param {string} type 'http' or 'ftp'
+ * @returns {boolean}
+ */
+export const isDataLink = (link, type) => {
+  const {
+    href,
+    inherited = false,
+    rel
+  } = link
+
+  return href.indexOf(type) !== -1
+    && rel.indexOf('/data#') !== -1
+    && inherited !== true
+}
+
+/**
+ * Given a list of granule metadata links, filters out those links that are not data links
+ * prefering http over ftp for duplicate filenames
+ * @param {array} links List of links from granule metadata
+ * @returns {array} List of data links filters from input links
+ */
+export const createDataLinks = (links) => {
+  // All 'http' data links
+  const httpDataLinks = links.filter(link => isDataLink(link, 'http'))
+
+  // Strip filenames from httpDataLinks
+  const filenames = httpDataLinks.map(link => link.href.substr(link.href.lastIndexOf('/') + 1).replace('.html', ''))
+
+  // Find any 'ftp' data links that have filenames not already included with 'http' links
+  const ftpLinks = links.filter((link) => {
+    const { href } = link
+
+    const filename = href.substr(href.lastIndexOf('/') + 1)
+
+    return isDataLink(link, 'ftp') && filenames.indexOf(filename) === -1
+  })
+
+  // Return http and ftp data links with a unique list of filenames, prefering http
+  return [
+    ...httpDataLinks,
+    ...ftpLinks
+  ]
+}
