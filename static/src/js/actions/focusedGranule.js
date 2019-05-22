@@ -2,7 +2,7 @@ import { parse as parseXml } from 'fast-xml-parser'
 
 import actions from './index'
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
-import { ConceptRequest } from '../util/request/cmr'
+import ConceptRequest from '../util/request/conceptRequest'
 import { createEcho10MetadataUrls } from '../util/granules'
 
 export const updateFocusedGranule = payload => ({
