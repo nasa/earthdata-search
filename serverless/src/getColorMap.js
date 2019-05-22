@@ -5,9 +5,7 @@ import { getDbConnection } from './util'
 let dbConnection = null
 
 /**
- * Retrieve a single ColorMap
- * @param {object} event The Lambda event body
- * @param {object} context AWS Lambda execution context
+ * Handler to retrieve a single color map record from the application database
  */
 export default async function getColorMap(event, context) {
   try {

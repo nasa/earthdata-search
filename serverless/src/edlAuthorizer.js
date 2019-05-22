@@ -6,10 +6,10 @@ import { getSecretEarthdataConfig } from '../../sharedUtils/config'
 
 /**
  * Generate AuthPolicy for the Authorizer, and attach the JWT
- * @param {string} username username of authenticated uset
- * @param {object} jwtToken JWT containing EDL token
- * @param {string} effect
- * @param {object} resource
+ * @param {String} username username of authenticated uset
+ * @param {Object} jwtToken JWT containing EDL token
+ * @param {String} effect
+ * @param {Object} resource
  */
 const generatePolicy = (username, jwtToken, effect, resource) => {
   const authResponse = {}
@@ -68,7 +68,6 @@ async function edlAuthorizer(event, context, callback) {
         }
       }
 
-      // Return success
       const username = decoded.token.endpoint.split('/').pop()
       return callback(null, generatePolicy(username, jwtToken, 'Allow', event.methodArn))
     })

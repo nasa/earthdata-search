@@ -5,9 +5,7 @@ import { getDbConnectionConfig } from './util'
 let dbConnectionConfig = null
 
 /**
- * Migrate the application database
- * @param {Object} event The Lambda event body
- * @return {String} A formatted URL with the users request parameters inserted
+ * Handler that migrates the application database
  */
 export default async function migrateDatabase(event) {
   try {
@@ -42,7 +40,6 @@ export default async function migrateDatabase(event) {
       body: JSON.stringify({ message: 'No migrations to run!' })
     }
   } catch (e) {
-    console.log(e)
     return {
       isBase64Encoded: false,
       statusCode: 500,

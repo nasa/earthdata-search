@@ -204,16 +204,17 @@ export const doSearchRequest = async (jwtToken, url) => {
     }
   } catch (e) {
     console.log('error', e)
+
     if (e.response) {
       return {
         statusCode: e.statusCode,
-        body: e.response.body
+        body: JSON.stringify({ errors: [e.response.body] })
       }
     }
 
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Oh No!' })
+      body: JSON.stringify({ errors: ['Unexpected error encountered!', e] })
     }
   }
 }

@@ -97,9 +97,7 @@ const renderOpenSearchTemplate = (template, params) => {
 }
 
 /**
- * Retrieves granules from CWIC
- * @param {Object} event - Event object provided by Lambda
- * @return {String} A formatted URL with the users request parameters inserted
+ * Handler to retrieve granules from CWIC
  */
 export default async function cwicGranuleSearch(event) {
   // The headers we'll send back regardless of our response
