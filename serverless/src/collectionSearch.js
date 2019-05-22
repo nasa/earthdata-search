@@ -6,7 +6,6 @@ import {
 
 /**
  * Handler to perform an authenticated CMR Collection search
- * @param {object} event Event Data
  */
 export default async function collectionSearch(event) {
   // Whitelist parameters supplied by the request

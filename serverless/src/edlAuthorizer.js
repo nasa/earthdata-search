@@ -6,10 +6,10 @@ import { getSecretConfig } from '../../sharedUtils/config'
 
 /**
  * Generate AuthPolicy for the Authorizer, and attach the JWT
- * @param {*} username username of authenticated uset
- * @param {*} jwtToken JWT containing EDL token
- * @param {*} effect
- * @param {*} resource
+ * @param {string} username username of authenticated uset
+ * @param {object} jwtToken JWT containing EDL token
+ * @param {string} effect
+ * @param {object} resource
  */
 const generatePolicy = (username, jwtToken, effect, resource) => {
   const authResponse = {}

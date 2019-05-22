@@ -6,7 +6,6 @@ import {
 
 /**
  * Handler to perform an authenticated CMR Timeline search
- * @param {object} event Event Data
  */
 export default async function timelineSearch(event) {
   // Whitelist parameters supplied by the request

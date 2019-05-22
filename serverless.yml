@@ -121,6 +121,15 @@ functions:
             origin : '*'
           path: nlp
 
+  conceptMetadata:
+    handler: serverless/src/conceptMetadata.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: concepts/metadata
+
   edlLogin:
     handler: serverless/src/edlLogin.default
     events:
@@ -139,18 +148,19 @@ functions:
   # EDL Authenticated API Gateway Endpoints
   #
 
-  # retrieveConcept:
-  #   handler: serverless/src/cmr.retrieveConcept
-  #   events:
-  #     - http:
-  #         method: post
-  #         cors:
-  #           origin: '*'
-  #         path: concepts/{id}
-  #         request:
-  #           parameters:
-  #             paths:
-  #               id: true
+  retrieveConcept:
+    handler: serverless/src/retrieveConcept.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: concepts/{id}
+          authorizer: edlAuthorizer
+          request:
+            parameters:
+              paths:
+                id: true
 
   collectionSearch:
     handler: serverless/src/collectionSearch.default

@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './GranuleDetailsMetadata.scss'
+import { getConfig } from '../../../../../sharedUtils/config'
 
-export const GranuleDetailsMetadata = ({ metadataUrls }) => {
+export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
   const metdataUrlKeys = [
     'native',
     'umm_json',
@@ -11,6 +12,9 @@ export const GranuleDetailsMetadata = ({ metadataUrls }) => {
     'echo10',
     'iso19115'
   ]
+
+  const { apiHost } = getConfig('prod')
+
   return (
     <div className="granule-details-metadata">
       <div className="granule-details-metadata__content">
@@ -19,12 +23,16 @@ export const GranuleDetailsMetadata = ({ metadataUrls }) => {
           {
             metdataUrlKeys.length && metdataUrlKeys.map((key) => {
               const metadataUrl = metadataUrls[key]
+
+              let url = metadataUrl.href
+              if (authToken !== '') url = `${apiHost}/concepts/metadata?url=${encodeURIComponent(metadataUrl.href)}&token=${authToken}`
+
               return (
                 <li
                   key={`metadata_url_${metadataUrl.title}`}
                   className="granule-details-metadata__list"
                 >
-                  <a href={metadataUrl.href}>
+                  <a href={url}>
                     {metadataUrl.title}
                   </a>
                 </li>
@@ -38,6 +46,7 @@ export const GranuleDetailsMetadata = ({ metadataUrls }) => {
 }
 
 GranuleDetailsMetadata.propTypes = {
+  authToken: PropTypes.string.isRequired,
   metadataUrls: PropTypes.shape({}).isRequired
 }
 
