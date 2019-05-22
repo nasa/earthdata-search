@@ -26,10 +26,7 @@ const componentToHex = (component) => {
 const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === ref)
 
 /**
- * Accepts ColorMap(s) from SQS to process and store in our database
- * @param {Object} event The Lambda event body
- * @param {Object} context AWS Lambda execution context
- * @return {String} A formatted URL with the users request parameters inserted
+ * Handler that accepts a ColorMap (or array of ColorMaps) from SQS to process and store in our database
  */
 export default async function processColorMap(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js

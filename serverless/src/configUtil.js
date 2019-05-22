@@ -19,7 +19,7 @@ export const buildOauthConfig = clientConfig => ({
 
 /**
  * Get the Earthdata Login configuration, from either secret.config.json or AWS
- * @param {*} edlConfig
+ * @param {Object} edlConfig A previously defined config object, or null if one has not be instantiated
  */
 export const getEdlConfig = async (edlConfig) => {
   if (edlConfig !== null) {

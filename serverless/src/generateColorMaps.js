@@ -15,7 +15,7 @@ const colorMapsTableName = 'colormaps'
 const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
 /**
- * Get the URL that will be used to retrieve granules from OpenSearch
+ * Parse the GIBS capabilities document and provide individual ColorMaps to SQS for further processing
  * @param {String} projection - The projection used to determine which GIBS file to examine
  * @return {Object} An object containing a valid response code and a JSON body
  */
@@ -29,7 +29,7 @@ const getProjectionCapabilities = async (projection) => {
     dbConnection = await getDbConnection(dbConnection)
 
     // Delete colormaps that havent been updated in the last 5 days
-    await dbConnection(colorMapsTableName).whereRaw('updated_at <= now()').del()
+    await dbConnection(colorMapsTableName).whereRaw("updated_at <= now() - INTERVAL '5 DAYS'").del()
 
     const colormapUrls = []
 
@@ -110,9 +110,7 @@ const getProjectionCapabilities = async (projection) => {
 }
 
 /**
- * Retrieves granules from CWIC
- * @param {Object} event - Event object provided by Lambda
- * @return {Object} An object containing a valid response code and a JSON body
+ * Handler to process colormap records from GIBS
  */
 export default async function generateColorMaps(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
