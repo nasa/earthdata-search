@@ -1,5 +1,5 @@
 import Request from './request'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edsc-date'
 
@@ -9,13 +9,13 @@ import { getTemporal } from '../edsc-date'
 export default class GranuleRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super(getConfig('prod').apiHost)
+      super(getEarthdataConfig('prod').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules'
     } else {
-      super(getConfig('prod').cmrHost)
+      super(getEarthdataConfig('prod').cmrHost)
 
       this.searchPath = 'search/granules.json'
     }
@@ -62,7 +62,7 @@ export default class GranuleRequest extends Request {
 
       if (granule.id) {
         // eslint-disable-next-line
-        updatedGranule.thumbnail = `${getConfig('prod').cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+        updatedGranule.thumbnail = `${getEarthdataConfig('prod').cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
       }
 
       return updatedGranule

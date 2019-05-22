@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './GranuleDetailsMetadata.scss'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
   const metdataUrlKeys = [
@@ -13,7 +13,7 @@ export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
     'iso19115'
   ]
 
-  const { apiHost } = getConfig('prod')
+  const { apiHost } = getEarthdataConfig('prod')
 
   return (
     <div className="granule-details-metadata">

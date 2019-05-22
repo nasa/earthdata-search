@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
 import { getEdlConfig } from './configUtil'
-import { getSecretConfig } from '../../sharedUtils/config'
+import { getSecretEarthdataConfig } from '../../sharedUtils/config'
 
 
 /**
@@ -46,7 +46,7 @@ async function edlAuthorizer(event, context, callback) {
   let jwtToken = tokenParts[1]
 
   try {
-    const { secret } = getSecretConfig('prod')
+    const { secret } = getSecretEarthdataConfig('prod')
 
     jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
       if (verifyError) {

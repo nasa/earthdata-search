@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
 
-import { getConfig, getSecretConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 import { getEdlConfig } from './configUtil'
 
 let edlConfig = null
@@ -16,7 +16,7 @@ export default async function edlCallback(event, context, callback) {
   const params = event.queryStringParameters
   const { code, state } = params
 
-  const { apiHost, redirectUriPath } = getConfig('prod')
+  const { apiHost, redirectUriPath } = getEarthdataConfig('prod')
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)
@@ -29,7 +29,7 @@ export default async function edlCallback(event, context, callback) {
   const oauthToken = await oauth2.authorizationCode.getToken(tokenConfig)
 
   // Create a JWT token from the EDL token
-  const { secret } = getSecretConfig('prod')
+  const { secret } = getSecretEarthdataConfig('prod')
   const jwtToken = jwt.sign({ token: oauth2.accessToken.create(oauthToken).token }, secret)
 
   // Set the JWT token to a cookie and redirect back to EDSC

@@ -26,7 +26,13 @@ and a number of OPeNDAP services hosted by data providers.
 
 ## Application Installation and Usage
 
-The Earthdata Search application uses Node v10.15.1 and Webpack 4.24.0 to generate static assets. The serverless application uses AWS Cloudfront, S3, and API Gateway to serve the application.
+The Earthdata Search application uses Node v10.15.1 and Webpack 4.24.0 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+- S3
+  - We highly recommend using CloudFront in front of S3.
+- SQS
+- API Gateway
+- Lambda
+- Cloudwatch (Events)
 
 ### Prerequisites
 
@@ -51,18 +57,26 @@ Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already 
 Once npm is installed locally, you need to download the dependencies by executing the command below in the project root directory:
 
     npm install
+    
+##### Configuration
+
+###### Secrets
+
+For local development Earthata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
+
+	cp secret.config.json.example secret.config.json
+    
+In order to operate against a local databse this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
+
+###### Public (Non Secure)
+Non secure values are stored in `static.config.json`. It's best to keep these values as they are set and use the values in your local environment to prevent conflicts amongst developers.
 
 ##### Database Migration
 
 Ensure that you have a database created:
 
-	createdb edsc_serverless_dev
+	createdb edsc_dev
 
-Database credentials and other information are kept in `.env.development`, you'll need to update that file with your local database credentials to ensure migrations and general connectivity works. 
-
-> NOTE: Depending on your setup, you may not have a uname/pw configured locally, if this is the case just leave those value blank in the config
-
-    
 Our database migrations run within Lambda due to the fact that in non-develoment environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
 	serverless invoke local --function migrateDatabase
@@ -82,7 +96,7 @@ The local development environment for the static assets can be started by execut
     npm run start
 
 This will run the React application at [http://localhost:8080](http://localhost:8080) -- please see `Serverless Framework` below for enabling the 'server' side functionality.
-    
+
 
 ### Serverless Framework
 

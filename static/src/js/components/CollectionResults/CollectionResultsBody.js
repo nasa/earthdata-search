@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
 
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Renders CollectionResultsBody.
@@ -71,7 +71,7 @@ class CollectionResultsBody extends PureComponent {
         <li className="collection-results__item" key={collection.id}>
           <div className="collection-results__item-thumb">
             {/* eslint-disable-next-line max-len */}
-            <img src={`${getConfig('prod').cmrHost}/browse-scaler/browse_images/datasets/C179003620-ORNL_DAAC?h=75&w=75`} alt="Thumbnail" />
+            <img src={`${getEarthdataConfig('prod').cmrHost}/browse-scaler/browse_images/datasets/C179003620-ORNL_DAAC?h=75&w=75`} alt="Thumbnail" />
           </div>
           <div className="collection-results__item-body">
             <div className="collection-results__item-body-primary">

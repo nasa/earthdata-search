@@ -3,7 +3,7 @@ import knex from 'knex'
 import { stringify as qsStringify } from 'qs'
 import request from 'request-promise'
 import jwt from 'jsonwebtoken'
-import { getConfig, getSecretConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 
 // for fetching configuration
 const secretsmanager = new AWS.SecretsManager()
@@ -59,35 +59,78 @@ export const cmrStringify = (queryParams, nonIndexedKeys = []) => {
 /**
  * Returns the decrypted database credentials from Secrets Manager
  */
-export const getDbCredentials = () => {
-  const params = { SecretId: process.env.configSecretId }
-  let creds = null
-  secretsmanager.getSecretValue(params, (err, data) => {
-    if (err) {
-      console.log(err, err.stack)
-    } else {
-      creds = JSON.parse(data.SecretString)
+export const getDbCredentials = async (dbCredentials) => {
+  if (dbCredentials === null) {
+    if (process.env.NODE_ENV === 'development') {
+      const { dbUsername, dbPassword } = getSecretEarthdataConfig()
+
+      return {
+        username: dbUsername,
+        password: dbPassword
+      }
     }
-  })
-  return creds
+
+    // If not running in development mode fetch secrets from AWS
+    const params = {
+      SecretId: process.env.configSecretId
+    }
+
+    const secretValue = await secretsmanager.getSecretValue(params).promise()
+
+    return JSON.parse(secretValue.SecretString)
+  }
+
+  return dbCredentials
+}
+
+/**
+ * Returns an object representing a database configuration
+ */
+export const getDbConnectionConfig = async (connectionConfig) => {
+  if (connectionConfig) {
+    return connectionConfig
+  }
+
+  const dbCredentials = await getDbCredentials(null)
+
+  const configObject = {
+    user: dbCredentials.username,
+    password: dbCredentials.password
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    const { dbHost, dbName, dbPort } = getEarthdataConfig()
+
+    Object.assign(configObject, {
+      host: dbHost,
+      database: dbName,
+      port: dbPort
+    })
+  } else {
+    Object.assign(configObject, {
+      host: process.env.dbEndpoint,
+      database: process.env.dbName,
+      port: process.env.dbPort
+    })
+  }
+
+  return configObject
 }
 
 /**
  * Returns a Knex database connection object to the EDSC RDS database
  */
-export const getDbConnection = () => {
-  const dbCredentials = getDbCredentials()
-  const connection = knex({
-    client: 'pg',
-    connection: {
-      host: process.env.dbEndpoint,
-      user: dbCredentials.username,
-      password: dbCredentials.password,
-      database: process.env.dbName,
-      port: 5432
-    }
-  })
-  return connection
+export const getDbConnection = async (dbConnection) => {
+  if (dbConnection === null) {
+    const dbConnectionConfig = await getDbConnectionConfig(null)
+
+    return knex({
+      client: 'pg',
+      connection: dbConnectionConfig
+    })
+  }
+
+  return dbConnection
 }
 
 /**
@@ -113,7 +156,7 @@ export const buildURL = (paramObj) => {
   // Transform the query string hash to an encoded url string
   const queryParams = cmrStringify(obj, nonIndexedKeys)
 
-  const url = `${getConfig('prod').cmrHost}${path}?${queryParams}`
+  const url = `${getEarthdataConfig('prod').cmrHost}${path}?${queryParams}`
 
   console.log(`CMR Query: ${url}`)
 
@@ -135,7 +178,7 @@ export const prepareExposeHeaders = (headers) => {
  */
 export const doSearchRequest = async (jwtToken, url) => {
   // Get the access token and clientId to build the Echo-Token header
-  const { clientId, secret } = getSecretConfig('prod')
+  const { clientId, secret } = getSecretEarthdataConfig('prod')
 
   const token = jwt.verify(jwtToken, secret)
 

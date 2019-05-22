@@ -4,35 +4,42 @@ import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from './util'
 
+// Knex database connection object
+let dbConnection = null
 
 /**
  * Converts a single color component to hex
  * @param {String} component - An OpenSearch string template representing the URL to retreive granules with.
  * @return {String} A formatted URL with the users request parameters inserted
  */
-
 const componentToHex = (component) => {
   const hex = parseInt(component, 10).toString(16)
   return hex.length === 1 ? `0${hex}` : hex
 }
 
+/**
+ * Retrieve a single legend entry (which contains a tooltip) from a provided list of legends
+ * @param {Array} legends - A list of legends from a ColorMap
+ * @param {String} ref - The ref to lookup in the list of legendshaha.
+ * @return {Object} The requested legend containing a tooltip
+ */
 const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === ref)
 
-const connection = getDbConnection()
-
-
 /**
- * Replaces all valid keys from the users request within the granule url template provided by OpenSearch
- * @param {String} template - An OpenSearch string template representing the URL to retreive granules with.
- * @param {Object} params - The parameters from the users request to supply to the template.
+ * Accepts ColorMap(s) from SQS to process and store in our database
+ * @param {Object} event The Lambda event body
+ * @param {Object} context AWS Lambda execution context
  * @return {String} A formatted URL with the users request parameters inserted
  */
-export default async function processColorMap(event, context, callback) {
+export default async function processColorMap(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line
   context.callbackWaitsForEmptyEventLoop = false
 
   const { Records: sqsRecords = {} } = event
+
+  // Retrive a connection to the database
+  dbConnection = await getDbConnection(dbConnection)
 
   console.log(`Processing ${sqsRecords.length} color map(s)`)
 
@@ -166,16 +173,16 @@ export default async function processColorMap(event, context, callback) {
       }
 
       // Update the database with the formatted colormap data
-      await connection('colormaps')
+      await dbConnection('colormaps')
         .where({ id: providedColorMap.id })
         .update({ jsondata: data })
     })
   })
 
-  callback(null, {
+  return {
     isBase64Encoded: false,
     statusCode: 200,
     headers: { 'Access-Control-Allow-Origin': '*' },
     body: JSON.stringify(sqsRecords)
-  })
+  }
 }

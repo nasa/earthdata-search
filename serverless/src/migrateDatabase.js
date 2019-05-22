@@ -1,38 +1,52 @@
 import pgMigrate from 'node-pg-migrate'
-import { getDbCredentials } from './util'
+import { Client } from 'pg'
+import { getDbConnectionConfig } from './util'
 
-export default function migrateDatabase(event, context, callback) {
+let dbConnectionConfig = null
+
+/**
+ * Migrate the application database
+ * @param {Object} event The Lambda event body
+ * @return {String} A formatted URL with the users request parameters inserted
+ */
+export default async function migrateDatabase(event) {
   try {
-    const dbCredentials = getDbCredentials()
-    const databaseUrl = `postgres://${dbCredentials.username}:${dbCredentials.password}@${process.env.dbEndpoint}/${process.env.dbName}`
+    dbConnectionConfig = await getDbConnectionConfig(dbConnectionConfig)
+
+    const dbClient = new Client(dbConnectionConfig)
+
+    await dbClient.connect()
 
     const config = {
-      databaseUrl,
+      dbClient,
       direction: event.direction || 'up',
       dir: 'migrations',
       migrationsTable: 'pgmigrations'
     }
 
-    const migrationResponse = pgMigrate(config)
+    const migrationResponse = await pgMigrate(config)
+
+    await dbClient.end()
 
     if (migrationResponse) {
-      callback(null, {
+      return {
         isBase64Encoded: false,
         statusCode: 200,
         body: JSON.stringify(migrationResponse)
-      })
+      }
     }
 
-    callback(null, {
+    return {
       isBase64Encoded: false,
       statusCode: 200,
       body: JSON.stringify({ message: 'No migrations to run!' })
-    })
+    }
   } catch (e) {
-    callback(null, {
+    console.log(e)
+    return {
       isBase64Encoded: false,
       statusCode: 500,
       body: JSON.stringify({ errors: [e] })
-    })
+    }
   }
 }

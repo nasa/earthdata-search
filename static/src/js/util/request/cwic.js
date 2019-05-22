@@ -1,11 +1,11 @@
 import { parse as parseXml } from 'fast-xml-parser'
 import Request from './request'
 import { getTemporal } from '../edsc-date'
-import { getConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 export default class CwicGranuleRequest extends Request {
   constructor() {
-    super(getConfig('prod').apiHost)
+    super(getEarthdataConfig('prod').apiHost)
     this.lambda = true
     this.searchPath = 'cwic/granules'
   }
