@@ -11,9 +11,8 @@ function conceptMetadata(event, context, callback) {
   const { clientId, secret } = getSecretEarthdataConfig('prod')
   const token = jwt.verify(jwtToken, secret)
 
+  console.log(url)
   const conceptUrl = `${url}?token=${token.token.access_token}:${clientId}`
-
-  console.log(conceptUrl)
 
   callback(null, {
     statusCode: 307,
