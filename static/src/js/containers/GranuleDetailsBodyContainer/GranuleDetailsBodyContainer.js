@@ -8,11 +8,13 @@ import getFocusedGranuleMetadata from '../../util/focusedGranule'
 import GranuleDetailsBody from '../../components/GranuleDetails/GranuleDetailsBody'
 
 const mapStateToProps = state => ({
+  authToken: state.authToken,
   focusedGranule: state.focusedGranule,
   granules: state.metadata.granules
 })
 
 export const GranuleDetailsBodyContainer = ({
+  authToken,
   focusedGranule,
   granules
 }) => {
@@ -24,6 +26,7 @@ export const GranuleDetailsBodyContainer = ({
 
   return (
     <GranuleDetailsBody
+      authToken={authToken}
       json={json}
       metadataUrls={metadataUrls}
       xml={xml}
@@ -32,6 +35,7 @@ export const GranuleDetailsBodyContainer = ({
 }
 
 GranuleDetailsBodyContainer.propTypes = {
+  authToken: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   focusedGranule: PropTypes.string.isRequired
 }

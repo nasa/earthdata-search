@@ -9,9 +9,6 @@ let edlConfig = null
 /**
  * Handler for the EDL callback. Fetches an EDL token based on 'code' param supplied by EDL. Sets
  * a cookie containing a JWT containing the EDL token
- * @param {*} event
- * @param {*} context
- * @param {*} callback
  */
 export default async function edlCallback(event, context, callback) {
   edlConfig = await getEdlConfig(edlConfig)

@@ -47,17 +47,20 @@ export default class Request {
       headers.Authorization = `Bearer: ${this.authToken}`
     }
 
-    // Converts javascript compliant keys to snake cased keys for use
-    // in URLs and request payloads
-    const snakeKeyData = snakeCaseKeys(data)
+    if (data) {
+      // Converts javascript compliant keys to snake cased keys for use
+      // in URLs and request payloads
+      const snakeKeyData = snakeCaseKeys(data)
 
-    // Prevent keys that our external services don't support from being sent
-    const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
+      // Prevent keys that our external services don't support from being sent
+      const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
 
-    // CWIC does not support CORS so all of our requests will need to go through
-    // Lambda. POST requests to Lambda use a JSON string
-    if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData })
-    return prepKeysForCmr(filteredData, this.nonIndexedKeys())
+      // CWIC does not support CORS so all of our requests will need to go through
+      // Lambda. POST requests to Lambda use a JSON string
+      if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData })
+      return prepKeysForCmr(filteredData, this.nonIndexedKeys())
+    }
+    return null
   }
 
   /**
@@ -101,7 +104,10 @@ export default class Request {
     return axios({
       method: 'get',
       baseURL: this.baseUrl,
-      url
+      url,
+      transformRequest: [
+        (data, headers) => this.transformRequest(data, headers)
+      ]
     })
   }
 

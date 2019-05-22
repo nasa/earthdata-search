@@ -1,4 +1,5 @@
 export const granuleResultsBodyProps = {
+  authToken: '',
   json: {
     Granule: {
       GranuleUR: '1860_1993_2050_NITROGEN.N-deposition1860.tfw',

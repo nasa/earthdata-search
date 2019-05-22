@@ -6,7 +6,6 @@ import {
 
 /**
  * Handler to perform an authenticated CMR Granule search
- * @param {object} event Event Data
  */
 export default async function cmrGranuleSearch(event) {
   // Whitelist parameters supplied by the request

@@ -2,9 +2,6 @@ import { getConfig, getSecretConfig } from '../../sharedUtils/config'
 
 /**
  * Handler for redirecting the user to the correct EDL login URL
- * @param {*} event
- * @param {*} context
- * @param {*} callback
  */
 export default function edlLogin(event, context, callback) {
   const params = event.queryStringParameters

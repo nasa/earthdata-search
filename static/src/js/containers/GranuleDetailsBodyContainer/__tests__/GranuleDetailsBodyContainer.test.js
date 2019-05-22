@@ -19,6 +19,7 @@ describe('GranuleResultsBodyContainer component', () => {
   describe('with no granule metadata', () => {
     test('returns null', () => {
       const { enzymeWrapper } = setup({
+        authToken: '',
         granules: {
           allIds: [],
           byId: {}
@@ -32,6 +33,7 @@ describe('GranuleResultsBodyContainer component', () => {
   describe('when passed granule metadata', () => {
     test('passes its props and renders a single GranuleResultsBody component', () => {
       const { enzymeWrapper } = setup({
+        authToken: '',
         granules: {
           allIds: ['focusedGranule'],
           byId: {
@@ -50,6 +52,7 @@ describe('GranuleResultsBodyContainer component', () => {
       })
 
       expect(enzymeWrapper.find(GranuleDetailsBody).length).toBe(1)
+      expect(enzymeWrapper.find(GranuleDetailsBody).props().authToken).toEqual('')
       expect(enzymeWrapper.find(GranuleDetailsBody).props().json).toEqual({ Granule: {} })
       expect(enzymeWrapper.find(GranuleDetailsBody).props().metadataUrls).toEqual({ atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom' })
       expect(enzymeWrapper.find(GranuleDetailsBody).props().xml).toEqual('<Granule><Granule>')

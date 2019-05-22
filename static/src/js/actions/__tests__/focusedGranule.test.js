@@ -6,7 +6,8 @@ import actions from '../index'
 import { updateFocusedGranule } from '../focusedGranule'
 import {
   UPDATE_FOCUSED_GRANULE,
-  UPDATE_GRANULE_METADATA
+  UPDATE_GRANULE_METADATA,
+  UPDATE_AUTH
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -56,6 +57,37 @@ describe('changeFocusedGranule', () => {
 })
 
 describe('getFocusedGranule', () => {
+  const granulePayload = {
+    granuleId: {
+      json: {
+        MockGranule: 'Data'
+      },
+      metadataUrls: {
+        atom: {
+          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.atom',
+          title: 'ATOM'
+        },
+        echo10: {
+          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.echo10',
+          title: 'ECHO 10'
+        },
+        iso19115: {
+          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.iso19115',
+          title: 'ISO 19115'
+        },
+        native: {
+          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId',
+          title: 'Native'
+        },
+        umm_json: {
+          href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.umm_json',
+          title: 'UMM-G'
+        }
+      },
+      xml: '<MockGranule>Data</MockGranule>'
+    }
+  }
+
   beforeEach(() => {
     moxios.install()
 
@@ -69,7 +101,7 @@ describe('getFocusedGranule', () => {
   test('should update the granule metadata', async () => {
     const metadata = '<MockGranule>Data</MockGranule>'
 
-    moxios.stubRequest(/concepts.*/, {
+    moxios.stubRequest(/gov\/search\/concepts.*/, {
       status: 200,
       response: metadata
     })
@@ -78,6 +110,7 @@ describe('getFocusedGranule', () => {
 
     // mockStore with initialState
     const store = mockStore({
+      authToken: '',
       focusedGranule: granuleId,
       metadata: {
         granules: {
@@ -93,37 +126,53 @@ describe('getFocusedGranule', () => {
 
       // updateGranuleMetadata
       expect(storeActions[0]).toEqual({
+        type: UPDATE_AUTH,
+        payload: ''
+      })
+      expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_METADATA,
-        payload: {
-          [granuleId]: {
-            json: {
-              MockGranule: 'Data'
-            },
-            metadataUrls: {
-              atom: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.atom',
-                title: 'ATOM'
-              },
-              echo10: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.echo10',
-                title: 'ECHO 10'
-              },
-              iso19115: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.iso19115',
-                title: 'ISO 19115'
-              },
-              native: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId',
-                title: 'Native'
-              },
-              umm_json: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/granuleId.umm_json',
-                title: 'UMM-G'
-              }
-            },
-            xml: '<MockGranule>Data</MockGranule>'
-          }
+        payload: granulePayload
+      })
+    })
+  })
+
+  test('should update the authenticated granule metadata', async () => {
+    const metadata = '<MockGranule>Data</MockGranule>'
+
+    moxios.stubRequest(/3001\/concepts.*/, {
+      status: 200,
+      response: metadata,
+      headers: {
+        'jwt-token': 'token'
+      }
+    })
+
+    const granuleId = 'granuleId'
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: 'token',
+      focusedGranule: granuleId,
+      metadata: {
+        granules: {
+          allIds: [],
+          byId: {}
         }
+      }
+    })
+
+    // call the dispatch
+    await store.dispatch(actions.getFocusedGranule()).then(() => {
+      const storeActions = store.getActions()
+
+      // updateGranuleMetadata
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_AUTH,
+        payload: 'token'
+      })
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_GRANULE_METADATA,
+        payload: granulePayload
       })
     })
   })
