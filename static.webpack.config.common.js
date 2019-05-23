@@ -2,7 +2,6 @@ const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const StaticCommonConfig = {
   name: 'static',
@@ -113,7 +112,10 @@ const StaticCommonConfig = {
     ]),
     new webpack.ProvidePlugin({
       jQuery: 'jquery'
-    })
+    }),
+    // Prevent importing of all moment locales. Moment includes and uses en-us by default.
+    // https://medium.com/@michalozogan/how-to-split-moment-js-locales-to-chunks-with-webpack-de9e25caccea
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
 }
 

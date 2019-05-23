@@ -25,8 +25,8 @@
     "build": "NODE_ENV=production webpack --config static.webpack.config.prod.js",
     "build-sit": "NODE_ENV=production webpack --mode production",
     "copy-secrets": "cp secret.config.json.example secret.config.json",
-    "start": "NODE_ENV=development webpack-dev-server --open --config webpack.config.dev.js",
     "migrate": "node-pg-migrate",
+    "start": "NODE_ENV=development webpack-dev-server --open --config static.webpack.config.dev.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
