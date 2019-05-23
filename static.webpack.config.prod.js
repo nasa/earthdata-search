@@ -7,7 +7,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CSSNano = require('cssnano')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
@@ -32,7 +33,12 @@ const Config = merge(StaticCommonConfig, {
         sourceMap: true,
         include: /\.js$/
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({
+        cssProcessor: CSSNano,
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }]
+        }
+      })
     ],
     splitChunks: {
       cacheGroups: {
@@ -63,7 +69,8 @@ const Config = merge(StaticCommonConfig, {
     }),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
-    ])
+    ]),
+    new BundleAnalyzerPlugin()
   ]
 })
 
