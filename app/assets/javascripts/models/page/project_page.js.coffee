@@ -196,6 +196,35 @@ ns.ProjectPage = do (ko,
         ).pop()
         projectCollection.collection.granuleDatasource().data().loadNextPage()
 
+    ordersRequiringChunks: =>
+      allCollections = []
+      for accessCollection in @project.accessCollections()
+        if accessCollection.collection.granule_hits() > 2000
+          for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
+            checkedAccessMethodName = checkedAccessMethod.method()
+
+            for method in accessCollection.serviceOptions.granuleAccessOptions().methods
+              limitedCollection = if accessCollection.collection.tags() then accessCollection.collection.tags()['edsc.limited_collections'] else false
+
+              if method.name == checkedAccessMethodName &&
+                method.type != 'download' &&
+                (method.type == 'order' || method.type == 'service' && edsc.config.enableEsiOrderChunking) && !limitedCollection
+                  numberOfOrders = Math.ceil(accessCollection.collection.granule_hits() / 2000)
+
+                  allCollections.push({
+                    id: accessCollection.collection.id
+                    title: accessCollection.collection.title,
+                    orderCount: numberOfOrders
+                  })
+
+      allCollections
+
+    downloadWithChunkingCheck: =>
+      if @ordersRequiringChunks().length > 0
+        $('#tooManyGranulesModal').modal('show')
+      else
+        @downloadProject()
+
     downloadProject: =>
       # TODO: This is work around for code that takes action on focused
       # collections during the download process. This should be removed

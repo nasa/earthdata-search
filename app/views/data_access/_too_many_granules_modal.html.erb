@@ -1,0 +1,22 @@
+<div class="modal fade" id="tooManyGranulesModal" tabindex="-1" role="dialog" aria-labelledby="tooManyGranulesModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></a>
+        <h4 class="modal-title" id="tooManyGranulesModalLabel">Maximum Granules Exceeded</h4>
+      </div>
+      <div class="modal-body">
+        <!-- ko foreach: $root.ordersRequiringChunks() -->
+        <p>
+          Your order for <em data-bind="text: title"></em> will be automatically split up into <span id="number-of-orders" data-bind="abbreviateNumber: orderCount"></span> orders. You will receive a set of emails for each order placed.
+        </p>
+        <!-- /ko -->
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" href="#" data-bind="click: $root.project.backToSearch"><i class="fa fa-arrow-circle-left"></i> Refine your search</a>
+        <a class="button text-button" data-dismiss="modal" href="#">Change access methods</a>
+        <a class="button text-button" href="#" data-bind="click: $root.downloadProject">Continue</a>
+      </div>
+    </div>
+  </div>
+</div>

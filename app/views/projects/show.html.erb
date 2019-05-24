@@ -48,6 +48,10 @@
   </form>
 </div>
 
+<% content_for :global do %>
+  <%= render partial: 'data_access/too_many_granules_modal' %>
+<% end %>
+
 <% content_for :footer do %>
   <%= render partial: 'search/timeline' %>
 <% end %>
