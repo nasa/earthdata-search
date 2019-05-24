@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   store :search_params,      coder: JSON
   store :order_information,  coder: JSON
 
-  validates :order_number, uniqueness: { scope: :retrieval_collection_id }
+  validates :order_number, uniqueness: { scope: :retrieval_collection_id, allow_blank: true }
 
   def logging_tag
     "#{retrieval_collection.logging_tag} -- Order [#{id}##{order_number}]"

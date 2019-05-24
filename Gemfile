@@ -45,6 +45,7 @@ group :development do
   # For dumping additional metadata stored in DatasetExtras and similar
   gem 'rubocop', require: false
   gem 'seed_dump'
+  gem 'rb-readline'
 end
 
 group :sit, :uat, :production, :lab do
