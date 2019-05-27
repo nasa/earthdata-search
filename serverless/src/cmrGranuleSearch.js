@@ -14,7 +14,8 @@ export default async function cmrGranuleSearch(event) {
     'format',
     'page_num',
     'page_size',
-    'sort_key'
+    'sort_key',
+    'temporal'
   ]
 
   const { body } = event

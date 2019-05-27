@@ -14,6 +14,7 @@ export default async function collectionSearch(event) {
     'collection_data_type',
     'concept_id',
     'data_center_h',
+    'facets_size',
     'format',
     'has_granules_or_cwic',
     'has_granules',
@@ -40,6 +41,7 @@ export default async function collectionSearch(event) {
 
   const nonIndexedKeys = [
     'collection_data_type',
+    'concept_id',
     'data_center_h',
     'instrument_h',
     'platform_h',

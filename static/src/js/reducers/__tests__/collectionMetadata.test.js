@@ -1,11 +1,14 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
-  UPDATE_COLLECTION_METADATA,
+  COPY_GRANULE_RESULTS_TO_COLLECTION,
+  ADD_COLLECTION_TO_PROJECT,
+  CLEAR_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
-  ADD_COLLECTION_GRANULES,
-  UNDO_EXCLUDE_GRANULE_ID,
+  REMOVE_COLLECTION_FROM_PROJECT,
   RESTORE_COLLECTIONS,
-  CLEAR_COLLECTION_GRANULES
+  UNDO_EXCLUDE_GRANULE_ID,
+  UPDATE_COLLECTION_METADATA,
+  UPDATE_PROJECT_GRANULES
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -19,6 +22,50 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(initialState)
+  })
+})
+
+describe('ADD_COLLECTION_TO_PROJECT', () => {
+  test('returns the correct state', () => {
+    const collectionId = 'collectionId'
+
+    const action = {
+      type: ADD_COLLECTION_TO_PROJECT,
+      payload: collectionId
+    }
+
+    const initial = {
+      ...initialState,
+      projectIds: ['existingCollectionId']
+    }
+
+    const expectedState = {
+      ...initial,
+      projectIds: ['existingCollectionId', collectionId]
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state if collection is already a project collection', () => {
+    const collectionId = 'collectionId'
+
+    const action = {
+      type: ADD_COLLECTION_TO_PROJECT,
+      payload: collectionId
+    }
+
+    const initial = {
+      ...initialState,
+      projectIds: [collectionId]
+    }
+
+    const expectedState = {
+      ...initial,
+      projectIds: [collectionId]
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -94,15 +141,38 @@ describe('CLEAR_COLLECTION_GRANULES', () => {
   })
 })
 
+describe('REMOVE_COLLECTION_FROM_PROJECT', () => {
+  test('returns the correct state', () => {
+    const collectionId = 'collectionId'
+
+    const action = {
+      type: REMOVE_COLLECTION_FROM_PROJECT,
+      payload: collectionId
+    }
+
+    const initial = {
+      ...initialState,
+      projectIds: ['existingCollectionId', collectionId, 'anotherExistingCollectionId']
+    }
+
+    const expectedState = {
+      ...initial,
+      projectIds: ['existingCollectionId', 'anotherExistingCollectionId']
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
 describe('UPDATE_COLLECTION_METADATA', () => {
   test('returns the correct state when collection has not been visited yet', () => {
     const action = {
       type: UPDATE_COLLECTION_METADATA,
-      payload: {
+      payload: [{
         collectionId: {
           mock: 'data'
         }
-      }
+      }]
     }
 
     const expectedState = {
@@ -125,11 +195,11 @@ describe('UPDATE_COLLECTION_METADATA', () => {
   test('returns the correct state when collection has been visited yet', () => {
     const action = {
       type: UPDATE_COLLECTION_METADATA,
-      payload: {
+      payload: [{
         collectionId: {
           mock: 'data'
         }
-      }
+      }]
     }
 
     const initial = {
@@ -280,7 +350,7 @@ describe('UNDO_EXCLUDE_GRANULE_ID', () => {
   })
 })
 
-describe('ADD_COLLECTION_GRANULES', () => {
+describe('COPY_GRANULE_RESULTS_TO_COLLECTION', () => {
   test('returns the correct state', () => {
     const granules = {
       allIds: ['mockGranuleId1'],
@@ -294,7 +364,7 @@ describe('ADD_COLLECTION_GRANULES', () => {
       hits: 1
     }
     const action = {
-      type: ADD_COLLECTION_GRANULES,
+      type: COPY_GRANULE_RESULTS_TO_COLLECTION,
       payload: {
         collectionId: 'collectionId',
         granules
@@ -306,6 +376,53 @@ describe('ADD_COLLECTION_GRANULES', () => {
       byId: {
         collectionId: {
           granules
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_PROJECT_GRANULES', () => {
+  test('returns the correct state', () => {
+    const granules = [{
+      id: 'mockGranuleId1',
+      mockGranuleData: 'goes here 1'
+    }]
+    const action = {
+      type: UPDATE_PROJECT_GRANULES,
+      payload: {
+        collectionId: 'collectionId',
+        results: granules,
+        isCwic: false,
+        hits: 1,
+        totalSize: {
+          size: 42,
+          unit: 'MB'
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      byId: {
+        collectionId: {
+          granules: {
+            allIds: ['mockGranuleId1'],
+            byId: {
+              mockGranuleId1: {
+                id: 'mockGranuleId1',
+                mockGranuleData: 'goes here 1'
+              }
+            },
+            isCwic: false,
+            hits: 1,
+            totalSize: {
+              size: 42,
+              unit: 'MB'
+            }
+          }
         }
       }
     }

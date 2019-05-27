@@ -56,6 +56,7 @@ export default class CollectionRequest extends Request {
   nonIndexedKeys() {
     return [
       'collection_data_type',
+      'concept_id',
       'data_center_h',
       'instrument_h',
       'platform_h',

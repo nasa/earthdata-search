@@ -18,10 +18,22 @@ import { decodeCollections, encodeCollections } from './collectionsEncoders'
 export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
 
 /**
+ * Stringify a URL parameter object
+ * @param {Object} params Object with encoded URL parameters
+ */
+export const stringify = params => qs.stringify(
+  cleanDeep(params, { undefinedValues: false }),
+  {
+    addQueryPrefix: true,
+    encoder: str => str.replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
+  }
+)
+
+/**
  * Mapping of URL Shortened Keys to their redux store keys
  */
 const urlDefs = {
-  focusedCollection: { shortKey: 'p', encode: encodeString, decode: decodeString },
+  // focusedCollection: { shortKey: 'p', encode: encodeString, decode: decodeString },
   focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
   keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
   pointSearch: { shortKey: 'sp', encode: encodeString, decode: decodeString },
@@ -55,11 +67,10 @@ const decodeHelp = (params, paramName) => {
  */
 export const decodeUrlParams = (paramString) => {
   // decode the paramString
-  const params = qs.parse(paramString, { ignoreQueryPrefix: true })
+  const params = qs.parse(paramString, { ignoreQueryPrefix: true, parseArrays: false })
 
   // build the param object based on the structure in the redux store
   // e.g. map is store separately from query
-  const focusedCollection = decodeHelp(params, 'focusedCollection')
   const focusedGranule = decodeHelp(params, 'focusedGranule')
 
   const map = decodeHelp(params, 'map')
@@ -84,7 +95,7 @@ export const decodeUrlParams = (paramString) => {
   const projects = decodeHelp(params, 'projectFacets')
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
 
-  const collections = decodeCollections(params)
+  const { collections, focusedCollection } = decodeCollections(params)
 
   const cmrFacets = {
     data_center_h: organizations,
@@ -126,13 +137,12 @@ export const encodeUrlQuery = (props) => {
   const collectionsQuery = encodeCollections(props.collections, props.focusedCollection)
 
   const encodedQuery = {
+    ...collectionsQuery,
     ...query,
-    ...scienceKeywordQuery,
-    ...collectionsQuery
+    ...scienceKeywordQuery
   }
 
-  // endcode query as a URL string
-  const paramString = qs.stringify(cleanDeep(encodedQuery), { addQueryPrefix: true })
+  const paramString = stringify(encodedQuery)
 
   // return the full pathname + paramString
   const { pathname } = props

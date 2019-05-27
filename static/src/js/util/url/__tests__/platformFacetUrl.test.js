@@ -10,7 +10,7 @@ describe('url#decodeUrlParams', () => {
         platform_h: ['facet 1', 'facet 2']
       }
     }
-    expect(decodeUrlParams('?fp=facet%201%21facet%202')).toEqual(expectedResult)
+    expect(decodeUrlParams('?fp=facet%201!facet%202')).toEqual(expectedResult)
   })
 
   test('decodes platformFacets correctly if no values existed', () => {
@@ -27,6 +27,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       platformFacets: ['facet 1', 'facet 2']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fp=facet%201%21facet%202')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?fp=facet%201!facet%202')
   })
 })

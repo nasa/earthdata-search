@@ -53,8 +53,15 @@ import {
   changeFocusedGranule,
   getFocusedGranule
 } from './focusedGranule'
+import {
+  addProjectCollection,
+  removeCollectionFromProject,
+  getProjectGranules,
+  getProjectCollections
+} from './project'
 
 const actions = {
+  addProjectCollection,
   addGranulesFromCollection,
   applyViewAllFacets,
   changeCmrFacet,
@@ -76,6 +83,8 @@ const actions = {
   getFocusedCollection,
   getFocusedGranule,
   getGranules,
+  getProjectCollections,
+  getProjectGranules,
   getTimeline,
   getViewAllFacets,
   granuleResultsPanelUpdateSearchValue,
@@ -83,6 +92,7 @@ const actions = {
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
+  removeCollectionFromProject,
   restoreCollections,
   searchNlp,
   toggleFacetsModal,
@@ -91,8 +101,8 @@ const actions = {
   updateAuthToken,
   updateCmrFacet,
   updateFeatureFacet,
-  updateGranuleResults,
-  updateGranuleMetadata
+  updateGranuleMetadata,
+  updateGranuleResults
 }
 
 export default actions

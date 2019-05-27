@@ -10,7 +10,7 @@ describe('url#decodeUrlParams', () => {
         processing_level_id_h: ['facet 1', 'facet 2']
       }
     }
-    expect(decodeUrlParams('?fl=facet%201%21facet%202')).toEqual(expectedResult)
+    expect(decodeUrlParams('?fl=facet%201!facet%202')).toEqual(expectedResult)
   })
 })
 
@@ -20,6 +20,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       processingLevelFacets: ['facet 1', 'facet 2']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fl=facet%201%21facet%202')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?fl=facet%201!facet%202')
   })
 })

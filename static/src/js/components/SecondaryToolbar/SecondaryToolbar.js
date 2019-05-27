@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { remove } from 'tiny-cookie'
+import queryString from 'query-string'
+import { Link } from 'react-router-dom'
 
 import { Button, Dropdown } from 'react-bootstrap'
 
@@ -21,9 +23,33 @@ class SecondaryToolbar extends Component {
   }
 
   render() {
-    const { authToken } = this.props
+    const {
+      authToken,
+      projectIds,
+      location
+    } = this.props
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
+
+    const projectLink = (
+      <Link
+        className="collection-results__item-title-link"
+        to={{
+          pathname: '/projects',
+          search: queryString
+            .stringify(
+              Object.assign(
+                {},
+                queryString.parse(location.search)
+              )
+            )
+        }}
+      >
+        <Button className="secondary-toolbar__project" variant="light">
+          My Project
+        </Button>
+      </Link>
+    )
 
     const loginLink = (
       <Button className="secondary-toolbar__login" variant="light" href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}>
@@ -55,6 +81,9 @@ class SecondaryToolbar extends Component {
     return (
       <section className="secondary-toolbar">
         {
+          projectIds.length > 0 && projectLink
+        }
+        {
           !loggedIn ? loginLink : loggedInDropdown
         }
       </section>
@@ -63,7 +92,9 @@ class SecondaryToolbar extends Component {
 }
 
 SecondaryToolbar.propTypes = {
-  authToken: PropTypes.string.isRequired
+  authToken: PropTypes.string.isRequired,
+  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  location: PropTypes.shape({}).isRequired
 }
 
 export default SecondaryToolbar

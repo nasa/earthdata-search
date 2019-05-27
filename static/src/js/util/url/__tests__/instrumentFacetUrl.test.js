@@ -10,7 +10,7 @@ describe('url#decodeUrlParams', () => {
         instrument_h: ['facet 1', 'facet 2']
       }
     }
-    expect(decodeUrlParams('?fi=facet%201%21facet%202')).toEqual(expectedResult)
+    expect(decodeUrlParams('?fi=facet%201!facet%202')).toEqual(expectedResult)
   })
 })
 
@@ -20,6 +20,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       instrumentFacets: ['facet 1', 'facet 2']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fi=facet%201%21facet%202')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?fi=facet%201!facet%202')
   })
 })

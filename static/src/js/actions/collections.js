@@ -21,6 +21,7 @@ import {
   FINISHED_COLLECTIONS_TIMER,
   RESTORE_COLLECTIONS
 } from '../constants/actionTypes'
+import { getProjectCollections } from './project'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -76,10 +77,13 @@ export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
 })
 
-export const restoreCollections = payload => ({
-  type: RESTORE_COLLECTIONS,
-  payload
-})
+export const restoreCollections = payload => (dispatch) => {
+  dispatch({
+    type: RESTORE_COLLECTIONS,
+    payload
+  })
+  dispatch(getProjectCollections())
+}
 
 /**
  * Perform a collections request based on the current redux state.

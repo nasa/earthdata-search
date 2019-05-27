@@ -35,11 +35,11 @@ let edlConfig = null
 /**
  * API Gateway Authorizer to verify requets are authenticated
  */
-async function edlAuthorizer(event, context, callback) {
+async function edlAuthorizer(event) {
   edlConfig = await getEdlConfig(edlConfig)
 
   if (!event.authorizationToken) {
-    return callback('Unauthorized')
+    throw new Error('Unauthorized')
   }
 
   const tokenParts = event.authorizationToken.split(' ')
@@ -48,11 +48,11 @@ async function edlAuthorizer(event, context, callback) {
   try {
     const { secret } = getSecretEarthdataConfig('prod')
 
-    jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
+    return jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
       if (verifyError) {
         // 401 Unauthorized
         console.log(`Token invalid. ${verifyError}`)
-        return callback('Unauthorized')
+        throw new Error('Unauthorized')
       }
 
       const oauth2 = simpleOAuth2.create(edlConfig)
@@ -64,19 +64,17 @@ async function edlAuthorizer(event, context, callback) {
           jwtToken = jwt.sign({ token: refreshed.token }, secret)
         } catch (error) {
           console.log('Error refreshing access token: ', error.message)
-          return callback('Unauthorized')
+          throw new Error('Unauthorized')
         }
       }
 
       const username = decoded.token.endpoint.split('/').pop()
-      return callback(null, generatePolicy(username, jwtToken, 'Allow', event.methodArn))
+      return generatePolicy(username, jwtToken, 'Allow', event.methodArn)
     })
   } catch (err) {
     console.log('Authorizer error. Invalid token', err)
-    return callback('Unauthorized')
+    throw new Error('Unauthorized')
   }
-
-  return null
 }
 
 export default edlAuthorizer
