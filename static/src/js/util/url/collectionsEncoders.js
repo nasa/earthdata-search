@@ -29,13 +29,14 @@ const encodeExcludedGranules = (isCwic, excludedGranuleIds) => {
 const decodedExcludeGranules = (excludedGranules) => {
   const keys = Object.keys(excludedGranules)
 
+  let result = {}
   if (keys.indexOf('x') !== -1) {
     const { x: granules } = excludedGranules
     const granulesList = granules.split('!')
     const provider = granulesList.pop()
     const granuleIds = granulesList.map(granuleId => `G${granuleId}-${provider}`)
 
-    return {
+    result = {
       isCwic: false,
       granuleIds
     }
@@ -44,12 +45,12 @@ const decodedExcludeGranules = (excludedGranules) => {
     const { cx: granules } = excludedGranules
     const granuleIds = granules.split('!')
 
-    return {
+    result = {
       isCwic: true,
       granuleIds
     }
   }
-  return {}
+  return result
 }
 
 /**
@@ -59,27 +60,62 @@ const decodedExcludeGranules = (excludedGranules) => {
  * @return {string} An object with encoded Collections
  */
 export const encodeCollections = (collections, focusedCollection) => {
-  // TODO Encode project Collections
-  // TODO Encode granule filters
+  const { byId, projectIds = [] } = collections || {}
 
-  if (!collections) return ''
-  const { byId } = collections
+  // pParameter - focusedCollection!projectCollection1!projectCollection2
+  const pParameter = [
+    focusedCollection,
+    ...projectIds
+  ].join('!')
 
-  if (focusedCollection === '') return ''
+  // If there isn't a focusedCollection or any projectIds, we don't see to continue
+  if (pParameter === '') return ''
 
-  const collection = byId[focusedCollection]
-  if (!collection) return ''
+  // pgParameter - excluded granules and granule filters based on pParameter collections
+  const pgParameter = []
+  if (byId) {
+    pParameter.split('!').forEach((collectionId, index) => {
+      const pg = {}
 
-  const { granules, excludedGranuleIds = [] } = collection
-  if (!granules || excludedGranuleIds.length === 0) return ''
 
-  const { is_cwic: isCwic = false } = collection.metadata
-  const excludedKey = isCwic ? 'cx' : 'x'
+      // if the focusedCollection is also in projectIds, don't encode the focusedCollection
+      if (index === 0 && projectIds.indexOf(focusedCollection) !== -1) {
+        pgParameter[index] = undefined
+        return
+      }
+
+      const collection = byId[collectionId]
+      if (!collection) {
+        pgParameter[index] = undefined
+        return
+      }
+
+      // excludedGranules
+      let encodedExcludedGranules
+      const {
+        excludedGranuleIds = [],
+        granules,
+        metadata
+      } = collection
+      const { is_cwic: isCwic = false } = metadata
+      const excludedKey = isCwic ? 'cx' : 'x'
+
+      if (granules && excludedGranuleIds.length > 0) {
+        encodedExcludedGranules = encodeExcludedGranules(isCwic, excludedGranuleIds)
+      }
+
+      if (encodedExcludedGranules) pg[excludedKey] = encodedExcludedGranules
+
+      // TODO Encode granule filters
+
+      pgParameter[index] = pg
+    })
+  }
+
 
   const encoded = {
-    pg: [{
-      [excludedKey]: encodeExcludedGranules(isCwic, excludedGranuleIds)
-    }]
+    p: pParameter,
+    pg: pgParameter
   }
 
   return encoded
@@ -92,34 +128,57 @@ export const encodeCollections = (collections, focusedCollection) => {
  * @return {object} Collections object
  */
 export const decodeCollections = (params) => {
-  // TODO Decode project Collections
-  // TODO Decode granule filters
-
-  if (Object.keys(params).length === 0) return undefined
+  if (Object.keys(params).length === 0) return {}
 
   const { p, pg } = params
+  if (!p && !pg) return {}
 
-  if (!p || !pg) return undefined
-
+  let focusedCollection = ''
+  let collections
   const allIds = []
   const byId = {}
   const projectIds = []
 
   p.split('!').forEach((collectionId, index) => {
-    allIds.push(collectionId)
+    // If there is no collectionId, move on to the next index
+    // i.e. there is no focusedCollection
+    if (collectionId === '') return
+
+    // Add collectionId to correct allIds and projectIds
+    if (allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
     if (index > 0) projectIds.push(collectionId)
 
-    const { isCwic, granuleIds } = decodedExcludeGranules(pg[index])
+    // Set the focusedCollection
+    if (index === 0) focusedCollection = collectionId
+
+    let granuleIds = []
+    let isCwic = false
+    if (pg && pg[index]) {
+      ({ isCwic, granuleIds } = decodedExcludeGranules(pg[index]))
+    }
+
+    // TODO Decode granule filters
+
+    // Populate the collection object for the redux store
     byId[collectionId] = {
       excludedGranuleIds: granuleIds,
+      granules: {},
       isCwic,
       metadata: {}
     }
   })
 
+  // if no decoded collections information exists, return undfined for collections
+  if (pg || projectIds.length > 0) {
+    collections = {
+      allIds,
+      byId,
+      projectIds
+    }
+  }
+
   return {
-    allIds,
-    byId,
-    projectIds
+    collections,
+    focusedCollection
   }
 }

@@ -8,7 +8,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    authToken: ''
+    authToken: '',
+    location: {},
+    projectIds: []
   }
 
   const enzymeWrapper = shallow(<SecondaryToolbarContainer {...props} />)

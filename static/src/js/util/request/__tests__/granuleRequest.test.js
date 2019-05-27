@@ -36,7 +36,8 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'page_size',
       'point',
       'polygon',
-      'sort_key'
+      'sort_key',
+      'temporal'
     ])
   })
 })

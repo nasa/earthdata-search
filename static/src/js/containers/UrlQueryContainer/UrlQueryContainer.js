@@ -79,10 +79,6 @@ export class UrlQueryContainer extends Component {
       onChangeMap(map)
     }
 
-    if (focusedCollection) {
-      onChangeFocusedCollection(focusedCollection)
-    }
-
     if (focusedGranule) {
       onChangeFocusedGranule(focusedGranule)
     }
@@ -101,12 +97,16 @@ export class UrlQueryContainer extends Component {
       onUpdateCmrFacet(cmrFacets)
     }
 
+    if (Object.keys(query).length > 0) {
+      onChangeQuery({ ...query })
+    }
+
     if (collections) {
       onRestoreCollections(collections)
     }
 
-    if (Object.keys(query).length > 0) {
-      onChangeQuery({ ...query })
+    if (focusedCollection) {
+      onChangeFocusedCollection(focusedCollection)
     }
   }
 

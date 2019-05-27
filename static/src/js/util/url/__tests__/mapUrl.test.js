@@ -24,7 +24,7 @@ describe('url#decodeUrlParams', () => {
         zoom: 2
       }
     }
-    expect(decodeUrlParams('?m=0%210%212%211%210%210%2C2')).toEqual(expectedResult)
+    expect(decodeUrlParams('?m=0!0!2!1!0!0%2C2')).toEqual(expectedResult)
   })
 })
 
@@ -74,7 +74,7 @@ describe('url#encodeUrlQuery', () => {
           zoom: 0
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?m=10%2115%210%211%212%210')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?m=10!15!0!1!2!0')
     })
   })
 })

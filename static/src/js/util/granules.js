@@ -25,20 +25,23 @@ export const populateGranuleResults = (collectionId, isCwic, response) => {
 }
 
 /**
- * Prepare parameters used in getGranules() based on current Redux State
+ * Prepare parameters used in getGranules() based on current Redux State, or provided project collection
  * @param {object} state Current Redux State
+ * @param {string} projectCollectionId Optional: CollectionId of a Project collection
  * @returns Parameters used in Granules request
  */
-export const prepareGranuleParams = (state) => {
+export const prepareGranuleParams = (state, projectCollectionId) => {
   const {
     authToken,
     metadata = {},
-    focusedCollection: collectionId,
+    focusedCollection: focusedCollectionId,
     query = {}
   } = state
   const { collections } = metadata
 
-  // If we don't have a focusedCollection, bail out!
+  const collectionId = projectCollectionId || focusedCollectionId
+
+  // If we don't have a focusedCollection or projectCollectionId, bail out!
   if (!collectionId) {
     return null
   }

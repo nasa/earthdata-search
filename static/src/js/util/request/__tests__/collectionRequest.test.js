@@ -69,6 +69,7 @@ describe('CollectionRequest#nonIndexedKeys', () => {
 
     expect(request.nonIndexedKeys()).toEqual([
       'collection_data_type',
+      'concept_id',
       'data_center_h',
       'instrument_h',
       'platform_h',

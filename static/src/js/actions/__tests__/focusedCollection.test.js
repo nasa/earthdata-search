@@ -9,7 +9,7 @@ import {
   UPDATE_GRANULE_RESULTS,
   UPDATE_GRANULE_QUERY,
   UPDATE_COLLECTION_METADATA,
-  ADD_COLLECTION_GRANULES,
+  COPY_GRANULE_RESULTS_TO_COLLECTION,
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UPDATE_AUTH
 } from '../../constants/actionTypes'
@@ -163,7 +163,7 @@ describe('changeFocusedCollection', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: ADD_COLLECTION_GRANULES,
+      type: COPY_GRANULE_RESULTS_TO_COLLECTION,
       payload: {
         collectionId: '',
         granules
@@ -213,6 +213,11 @@ describe('getFocusedCollection', () => {
     const store = mockStore({
       authToken: '',
       focusedCollection: collectionId,
+      metadata: {
+        collections: {
+          allIds: []
+        }
+      },
       searchResults: {
         granules: {}
       }
@@ -232,11 +237,11 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: {
+        payload: [{
           [collectionId]: {
             mockCollectionData: 'goes here'
           }
-        }
+        }]
       })
     })
 
@@ -275,6 +280,11 @@ describe('getFocusedCollection', () => {
     const store = mockStore({
       authToken: 'token',
       focusedCollection: collectionId,
+      metadata: {
+        collections: {
+          allIds: []
+        }
+      },
       searchResults: {
         granules: {}
       }
@@ -294,11 +304,11 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: {
+        payload: [{
           [collectionId]: {
             mockCollectionData: 'goes here'
           }
-        }
+        }]
       })
     })
 
@@ -340,6 +350,11 @@ describe('getFocusedCollection', () => {
     }
     const store = mockStore({
       focusedCollection: collectionId,
+      metadata: {
+        collections: {
+          allIds: []
+        }
+      },
       searchResults: {
         granules
       }
@@ -359,11 +374,11 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: {
+        payload: [{
           [collectionId]: {
             mockCollectionData: 'goes here'
           }
-        }
+        }]
       })
     })
 
@@ -401,6 +416,11 @@ describe('getFocusedCollection', () => {
     const store = mockStore({
       authToken: '',
       focusedCollection: 'collectionId',
+      metadata: {
+        collections: {
+          allIds: []
+        }
+      },
       searchResults: {
         granules: {}
       }

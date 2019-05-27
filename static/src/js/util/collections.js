@@ -9,9 +9,9 @@ import { categoryNameToCMRParam } from './facets'
 export const prepareCollectionParams = (state) => {
   const {
     authToken,
-    facetsParams,
+    facetsParams = {},
     query,
-    searchResults
+    searchResults = {}
   } = state
 
   const { collection: collectionQuery } = query
@@ -29,7 +29,8 @@ export const prepareCollectionParams = (state) => {
     polygon
   } = spatial
 
-  const { selectedCategory: viewAllFacetsCategory } = searchResults.viewAllFacets
+  const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
+  const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults
 
   const temporalString = encodeTemporal(temporal)
 
@@ -70,6 +71,7 @@ export const prepareCollectionParams = (state) => {
 export const buildSearchParams = (params) => {
   const {
     boundingBox,
+    conceptId,
     cmrFacets,
     featureFacets,
     keyword,
@@ -113,6 +115,7 @@ export const buildSearchParams = (params) => {
     ...defaultParams,
     boundingBox,
     collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
+    concept_id: conceptId,
     dataCenterH: facetsToSend.data_center_h,
     instrumentH: facetsToSend.instrument_h,
     keyword,

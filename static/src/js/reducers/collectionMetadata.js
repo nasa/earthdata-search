@@ -1,10 +1,13 @@
 import {
-  ADD_COLLECTION_GRANULES,
+  COPY_GRANULE_RESULTS_TO_COLLECTION,
   CLEAR_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
   RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_COLLECTION_METADATA
+  UPDATE_COLLECTION_METADATA,
+  ADD_COLLECTION_TO_PROJECT,
+  REMOVE_COLLECTION_FROM_PROJECT,
+  UPDATE_PROJECT_GRANULES
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -13,8 +16,31 @@ const initialState = {
   projectIds: []
 }
 
+const processResults = (results) => {
+  const byId = {}
+  const allIds = []
+  results.forEach((result) => {
+    const { id } = result
+    byId[id] = result
+    allIds.push(id)
+  })
+
+  return { byId, allIds }
+}
+
 const collectionMetadataReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_COLLECTION_TO_PROJECT: {
+      if (state.projectIds.indexOf(action.payload) !== -1) return state
+
+      return {
+        ...state,
+        projectIds: [
+          ...state.projectIds,
+          action.payload
+        ]
+      }
+    }
     case CLEAR_COLLECTION_GRANULES: {
       const byId = {}
 
@@ -33,35 +59,37 @@ const collectionMetadataReducer = (state = initialState, action) => {
         byId
       }
     }
-    case UPDATE_COLLECTION_METADATA: {
-      const [collectionId] = Object.keys(action.payload)
-      const allIds = [collectionId]
-      const byId = {
-        [collectionId]: {
-          excludedGranuleIds: [],
-          granules: {},
-          metadata: action.payload[collectionId]
-        }
-      }
+    case REMOVE_COLLECTION_FROM_PROJECT: {
+      const { projectIds } = state
+      const index = projectIds.indexOf(action.payload)
 
-      if (state.allIds.indexOf(collectionId) !== -1) {
-        return {
-          ...state,
-          allIds: [
-            ...state.allIds
-          ],
-          byId: {
-            ...state.byId,
-            [collectionId]: {
-              excludedGranuleIds: [
-                ...state.byId[collectionId].excludedGranuleIds
-              ],
-              granules: {},
-              metadata: action.payload[collectionId]
-            }
-          }
-        }
+      return {
+        ...state,
+        projectIds: [
+          ...state.projectIds.slice(0, index),
+          ...state.projectIds.slice(index + 1)
+        ]
       }
+    }
+    case UPDATE_COLLECTION_METADATA: {
+      const allIds = []
+      const byId = {
+        ...state.byId
+      }
+      action.payload.forEach((collection, index) => {
+        const [collectionId] = Object.keys(collection)
+        const metadata = action.payload[index][collectionId]
+
+        if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
+
+        let excludedGranuleIds = []
+        if (state.byId[collectionId]) ({ excludedGranuleIds } = state.byId[collectionId])
+        byId[collectionId] = {
+          excludedGranuleIds,
+          granules: {},
+          metadata
+        }
+      })
 
       return {
         ...state,
@@ -114,13 +142,14 @@ const collectionMetadataReducer = (state = initialState, action) => {
         }
       }
     }
-    case ADD_COLLECTION_GRANULES: {
+    case COPY_GRANULE_RESULTS_TO_COLLECTION: {
       const { collectionId, granules } = action.payload
       const {
         allIds,
         byId,
+        hits,
         isCwic,
-        hits
+        totalSize
       } = granules
 
       return {
@@ -132,8 +161,35 @@ const collectionMetadataReducer = (state = initialState, action) => {
             granules: {
               allIds,
               byId,
+              hits,
               isCwic,
-              hits
+              totalSize
+            }
+          }
+        }
+      }
+    }
+    case UPDATE_PROJECT_GRANULES: {
+      const {
+        collectionId,
+        hits,
+        isCwic,
+        totalSize
+      } = action.payload
+      const { byId, allIds } = processResults(action.payload.results)
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [collectionId]: {
+            ...state.byId[collectionId],
+            granules: {
+              allIds,
+              byId,
+              hits,
+              isCwic,
+              totalSize
             }
           }
         }

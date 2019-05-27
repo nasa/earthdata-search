@@ -13,6 +13,7 @@ import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
+import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -44,7 +45,14 @@ class App extends Component {
                   <Redirect to="/search" />
                 </Route>
                 <Route path="/search" component={Search} />
-                <Route path="/project" component={Project} />
+                <Route
+                  path="/projects"
+                  render={() => (
+                    <AuthRequiredContainer>
+                      <Project />
+                    </AuthRequiredContainer>
+                  )}
+                />
               </Switch>
               <FooterContainer />
             </ConnectedUrlQueryContainer>

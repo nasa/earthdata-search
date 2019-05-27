@@ -8,7 +8,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(state) {
   const props = {
-    authToken: ''
+    authToken: '',
+    location: {},
+    projectIds: []
   }
 
   if (state === 'loggedIn') props.authToken = 'fakeauthkey'
@@ -74,6 +76,26 @@ describe('SecondaryToolbar component', () => {
       enzymeWrapper.instance().handleLogout()
 
       expect(removeMock).toBeCalledTimes(1)
+    })
+  })
+
+  describe('My Project button', () => {
+    describe('when there are no projectIds', () => {
+      test('does not display the My Project button', () => {
+        const { enzymeWrapper } = setup()
+
+        expect(enzymeWrapper.exists('.secondary-toolbar__project')).toBeFalsy()
+      })
+    })
+
+    describe('when there are projectIds', () => {
+      test('dispalys the My Project button', () => {
+        const { enzymeWrapper } = setup()
+
+        enzymeWrapper.setProps({ projectIds: ['123'] })
+
+        expect(enzymeWrapper.exists('.secondary-toolbar__project')).toBeTruthy()
+      })
     })
   })
 })

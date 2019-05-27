@@ -10,7 +10,7 @@ describe('url#decodeUrlParams', () => {
         data_center_h: ['facet 1', 'facet 2']
       }
     }
-    expect(decodeUrlParams('?fdc=facet%201%21facet%202')).toEqual(expectedResult)
+    expect(decodeUrlParams('?fdc=facet%201!facet%202')).toEqual(expectedResult)
   })
 })
 
@@ -20,6 +20,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       organizationFacets: ['facet 1', 'facet 2']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fdc=facet%201%21facet%202')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?fdc=facet%201!facet%202')
   })
 })

@@ -29,7 +29,8 @@ export default class GranuleRequest extends Request {
       'page_size',
       'point',
       'polygon',
-      'sort_key'
+      'sort_key',
+      'temporal'
     ]
   }
 

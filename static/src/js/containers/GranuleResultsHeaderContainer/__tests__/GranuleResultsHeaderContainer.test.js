@@ -17,10 +17,16 @@ function setup() {
             mock: 'here'
           }
         }
-      }
+      },
+      projectIds: []
     },
     focusedCollection: 'collectionId',
+    granules: {
+      hits: 1
+    },
     location: { value: 'location' },
+    onAddProjectCollection: jest.fn(),
+    onRemoveCollectionFromProject: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     onUpdateSearchValue: jest.fn(),
     onUpdateSortOrder: jest.fn(),

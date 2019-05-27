@@ -17,7 +17,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
     }
-    expect(decodeUrlParams('?tl=1534577879%214%21%21')).toEqual(expectedResult)
+    expect(decodeUrlParams('?tl=1534577879!4!!')).toEqual(expectedResult)
   })
 })
 
@@ -36,7 +36,7 @@ describe('url#encodeUrlQuery', () => {
           }
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?tl=1534577879%214%21%21')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?tl=1534577879!4!!')
     })
 
     test('encodes timelineQuery correctly when the timeline has no center state', () => {

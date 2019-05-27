@@ -1,16 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Settings extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+import ConnectedEdscMapContainer
+  from '../../containers/MapContainer/MapContainer'
+import SidebarContainer
+  from '../../containers/SidebarContainer/SidebarContainer'
+import SecondaryToolbarContainer
+  from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
-  render() {
-    return (
-      <div className="route-wrapper route-wrapper--project">Project</div>
-    )
-  }
-}
+const Project = () => (
+  <div className="route-wrapper route-wrapper--project">
+    <ConnectedEdscMapContainer />
+    <SidebarContainer />
+    <SecondaryToolbarContainer />
+    Project
+  </div>
+)
 
-export default Settings
+export default Project

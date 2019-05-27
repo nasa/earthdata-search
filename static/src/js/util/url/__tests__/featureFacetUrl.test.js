@@ -12,7 +12,7 @@ describe('url#decodeUrlParams', () => {
         nearRealTime: true
       }
     }
-    expect(decodeUrlParams('?ff=Map%20Imagery%21Near%20Real%20Time%21Customizable')).toEqual(expectedResult)
+    expect(decodeUrlParams('?ff=Map%20Imagery!Near%20Real%20Time!Customizable')).toEqual(expectedResult)
   })
 })
 
@@ -38,6 +38,6 @@ describe('url#encodeUrlQuery', () => {
         nearRealTime: true
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Map%20Imagery%21Near%20Real%20Time%21Customizable')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Map%20Imagery!Near%20Real%20Time!Customizable')
   })
 })

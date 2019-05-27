@@ -1,9 +1,9 @@
 import actions from './index'
 import { updateGranuleQuery } from './search'
 import {
-  UPDATE_FOCUSED_COLLECTION,
-  ADD_COLLECTION_GRANULES,
-  CLEAR_COLLECTION_GRANULES
+  CLEAR_COLLECTION_GRANULES,
+  COPY_GRANULE_RESULTS_TO_COLLECTION,
+  UPDATE_FOCUSED_COLLECTION
 } from '../constants/actionTypes'
 import { updateCollectionMetadata } from './collections'
 import { updateGranuleResults, addGranulesFromCollection } from './granules'
@@ -16,7 +16,7 @@ export const updateFocusedCollection = payload => ({
 })
 
 export const addCollectionGranules = payload => ({
-  type: ADD_COLLECTION_GRANULES,
+  type: COPY_GRANULE_RESULTS_TO_COLLECTION,
   payload
 })
 
@@ -72,7 +72,7 @@ export const copyGranulesFromCollection = collectionId => (dispatch, getState) =
  * Perform a collection request based on the focusedCollection from the store.
  */
 export const getFocusedCollection = () => (dispatch, getState) => {
-  const { focusedCollection, searchResults } = getState()
+  const { focusedCollection, metadata, searchResults } = getState()
 
   const { granules } = searchResults
   const { allIds = [] } = granules
@@ -85,25 +85,33 @@ export const getFocusedCollection = () => (dispatch, getState) => {
     return null
   }
 
+  const { collections } = metadata
+  const { allIds: fetchedCollectionIds } = collections
+  // If we already have the metadata for this focusedCollection, don't fetch it again
+  if (fetchedCollectionIds.indexOf(focusedCollection) !== -1) {
+    // If granules were copied from collections, don't make a new getGranules request
+    if (allIds.length === 0) dispatch(actions.getGranules())
+    return null
+  }
+
   const { authToken } = getState()
   const requestObject = new CollectionRequest(authToken)
 
   const response = requestObject.search({
-    concept_id: focusedCollection,
+    concept_id: [focusedCollection],
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     includeHasGranules: true
   })
     .then((response) => {
-      const payload = {}
+      const payload = []
       const [metadata] = response.data.feed.entry
-      payload[focusedCollection] = metadata
+      payload.push({ [focusedCollection]: metadata })
 
       dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(updateCollectionMetadata(payload))
 
       // If granules were copied from collections, don't make a new getGranules request
       if (allIds.length === 0) dispatch(actions.getGranules())
-      // dispatch(getGranules())
     }, (error) => {
       dispatch(updateFocusedCollection(''))
 
