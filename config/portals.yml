@@ -64,7 +64,7 @@ portals: &portals
     scripts:
       - edsc-portal.cwic.js
 
-  IDN:
+  idn:
     org: CEOS IDN
     title: International Directory Network (IDN) Search
     params:
@@ -74,9 +74,11 @@ portals: &portals
     logos:
       - id: CEOS-logo
         image: /images/portals/idn/logo2.png
-        link: https://idn.uat.earthdata.nasa.gov
+        link: https://idn.ceos.org/
         title: CEOS IDN Search
-
+    scripts:
+      - edsc-portal.cwic.js
+      
 examples: &examples
   example:
 
