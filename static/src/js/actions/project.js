@@ -2,7 +2,8 @@ import actions from './index'
 import {
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
-  UPDATE_PROJECT_GRANULES
+  UPDATE_PROJECT_GRANULES,
+  TOGGLE_COLLECTION_VISIBILITY
 } from '../constants/actionTypes'
 import CollectionRequest from '../util/request/collectionRequest'
 import GranuleRequest from '../util/request/granuleRequest'
@@ -25,6 +26,11 @@ export const removeCollectionFromProject = payload => ({
 
 export const updateProjectGranules = payload => ({
   type: UPDATE_PROJECT_GRANULES,
+  payload
+})
+
+export const toggleCollectionVisibility = payload => ({
+  type: TOGGLE_COLLECTION_VISIBILITY,
   payload
 })
 
@@ -111,6 +117,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
   const response = requestObject.search(buildSearchParams({
     ...collectionParams,
+    featureFacets: {},
     conceptId: projectIds,
     includeFacets: undefined,
     tagKey: undefined

@@ -14,9 +14,15 @@ import { Button } from 'react-bootstrap'
 const ProjectCollectionItem = ({
   collectionId,
   collection,
-  onRemoveCollectionFromProject
+  color,
+  onRemoveCollectionFromProject,
+  onToggleCollectionVisibility
 }) => {
-  const { granules, metadata } = collection
+  const {
+    granules,
+    isVisible,
+    metadata
+  } = collection
   const {
     dataset_id: title,
     granule_count: granuleCount
@@ -25,15 +31,15 @@ const ProjectCollectionItem = ({
   const { size = '', unit = '' } = totalSize
 
   return (
-    <li className="granule-results-item">
+    <li style={{ borderWidth: '5x', borderColor: color }} className="granule-results-item">
       <div className="granule-results-item__header">
         <h3 className="granule-results-item__title">{collectionId}</h3>
       </div>
-      <div className="granule-results-item__body">
-        <p className="collection-title">{title}</p>
-        <p className="granule-count">{`${granuleCount} Granules`}</p>
-        <p className="total-size">{`${size} ${unit}`}</p>
-        <p>
+      <div className="">
+        <div className="collection-title">{title}</div>
+        <div className="granule-count">{`${granuleCount} Granules`}</div>
+        <div className="total-size">{`${size} ${unit}`}</div>
+        <div>
           <Button
             className="remove-collection"
             onClick={() => onRemoveCollectionFromProject(collectionId)}
@@ -42,7 +48,18 @@ const ProjectCollectionItem = ({
             <i className="fa fa-times-circle" />
             Remove from project
           </Button>
-        </p>
+        </div>
+        <div>
+          <Button
+            className="toggle-visibility"
+            onClick={() => onToggleCollectionVisibility(collectionId)}
+            variant="info"
+          >
+            { isVisible && (<i className="fa fa-eye-slash" />)}
+            { !isVisible && (<i className="fa fa-eye" />)}
+            Toggle Visibility
+          </Button>
+        </div>
       </div>
     </li>
   )
@@ -51,7 +68,9 @@ const ProjectCollectionItem = ({
 ProjectCollectionItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   collection: PropTypes.shape({}).isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  color: PropTypes.string.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onToggleCollectionVisibility: PropTypes.func.isRequired
 }
 
 export default ProjectCollectionItem

@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
+import _ from 'lodash'
 
 import {
   withLeaflet,
-  GridLayer
+  MapLayer
 } from 'react-leaflet'
 
 import {
@@ -16,9 +17,10 @@ import {
   getPoints,
   getRectangles,
   getlprojection
-} from '../../../util/map/granules'
-import { dividePolygon } from '../../../util/map/geo'
-import projectPath from '../../../util/map/interpolation'
+} from '../../util/map/granules'
+import { dividePolygon } from '../../util/map/geo'
+import projectPath from '../../util/map/interpolation'
+import colors from '../../util/colors'
 
 const config = {
   // eslint-disable-next-line max-len
@@ -30,24 +32,10 @@ const config = {
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
 
 class GranuleGridLayerExtended extends L.GridLayer {
-  initialize(props) {
-    const { focusedCollection, granules } = props
-    this.collection = focusedCollection
+  initialize(collectionId, collection, granules, color) {
+    this.collectionId = collectionId
 
-    this.granules = granules
-    this._results = granules
-
-    // If on the search page, the color should always be green.
-    // if (page.current.page() === 'search') {
-    //   color = colors.green
-    // }
-
-    // // If were on the project page, set it to blue while we finish loading the collection data.
-    // if (page.current.page() === 'project') {
-    //   color = color != null ? color : colors.blue
-    // }
-
-    this.color = '#2ECC71'
+    this.setResults(collectionId, collection, granules, color)
 
     this.originalOptions = { tileSize: 512 }
     return super.initialize(this.originalOptions)
@@ -57,26 +45,26 @@ class GranuleGridLayerExtended extends L.GridLayer {
   onAdd() {
     super.onAdd()
 
-    this._container.setAttribute('id', `granule-vis-${this.collection}`)
+    this._container.setAttribute('id', `granule-vis-${this.collectionId}`)
     // this._handle(map, 'on', 'edsc.focuscollection')
     // this.setFocus((map.focusedCollection != null ? map.focusedCollection.id : undefined) === this.collection.id)
 
     // this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this.loadResults.bind(this)))
     // this.loadResults(this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined)
-    this._added = true
+    // this._added = true
   }
 
   // Overwrite the leaflet onRemove function
   onRemove(map) {
     super.onRemove(map)
-    this._added = false
+    // this._added = false
 
     // this.setFocus(false, map)
     // this._handle(map, 'off', 'edsc.focuscollection')
     // if (this._resultsSubscription != null) {
     //   this._resultsSubscription.dispose()
     // }
-    this._results = null
+    this.granules = null
   }
 
   // _subscribe() {
@@ -216,7 +204,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   // Draw the granule tile
   drawTile(canvas, back, tilePoint) {
     let reverse
-    if ((this._results == null) || (this._results.length <= 0)) { return }
+    if ((this.granules === null) || (this.granules.length <= 0)) { return }
 
     const tileSize = this.getTileSize()
 
@@ -236,8 +224,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
     let paths = []
     const pathsWithHoles = []
 
-    for (let i = 0; i < this._results.length; i += 1) {
-      const granule = this._results[i]
+    for (let i = 0; i < this.granules.length; i += 1) {
+      const granule = this.granules[i]
       const overlaps = this.granulePathsOverlappingTile(granule, bounds)
       if (overlaps.length > 0) {
         const url = this.getTileUrl(tilePoint, granule)
@@ -515,24 +503,27 @@ class GranuleGridLayerExtended extends L.GridLayer {
     if (data[3] === 255) {
       // eslint-disable-next-line no-bitwise
       const index = (data[0] << 16) + (data[1] << 8) + data[2]
-      result = this._results != null ? this._results[index] : undefined
+      result = this.granules != null ? this.granules[index] : undefined
     }
 
     return result
   }
 
   // Set the granule results that need to be drawna
-  setResults(focusedCollection, results) {
-    this._results = results
+  setResults(collectionId, metadata, granules, color) {
+    this.granules = granules
+
+    this.color = color
 
     // Set multiOptions (gibs data)
-    const { collectionId, metadata = {} } = focusedCollection
     const { tags = {} } = metadata
     const { 'edsc.extra.gibs': gibsTag = {} } = tags
     const { data } = gibsTag
     this.multiOptions = data
 
-    this._container.setAttribute('id', `granule-vis-${collectionId}`)
+    if (this._container) {
+      this._container.setAttribute('id', `granule-vis-${collectionId}`)
+    }
 
     return this.redraw()
   }
@@ -716,20 +707,168 @@ class GranuleGridLayerExtended extends L.GridLayer {
   // }
 }
 
-class GranuleGridLayer extends GridLayer {
-  createLeafletElement(props) {
-    const layer = new GranuleGridLayerExtended(props)
-    this.layer = layer
-    layer.setZIndex(20)
-    return layer
+class GranuleGridLayer extends MapLayer {
+  /**
+   * Get the data needed to create a new GranuleGridLayerExtended layer
+   * @param {object} props
+   * @returns {array} Array of layer data objects
+   */
+  getLayerData(props) {
+    const {
+      collections,
+      focusedCollection,
+      isProjectPage,
+      granules
+    } = props
+
+    const layers = []
+    const color = '#2ECC71'
+
+    if (isProjectPage) {
+      // If we are on the project page, return data for each project collection
+      const { projectIds } = collections
+      projectIds.forEach((collectionId, index) => {
+        const {
+          granules: collectionGranules,
+          isVisible,
+          metadata
+        } = collections.byId[collectionId]
+
+        if (!collectionGranules) return
+
+        layers.push({
+          collectionId,
+          color: Object.values(colors)[index],
+          metadata,
+          isVisible,
+          granules: collectionGranules
+        })
+      })
+    } else if (focusedCollection && focusedCollection !== '') {
+      // If we aren't on the project page, return data for focusedCollection if it exists
+      const { byId } = collections
+      const collection = byId[focusedCollection] || {}
+      const { metadata = {} } = collection
+
+      layers.push({
+        collectionId: focusedCollection,
+        color,
+        isVisible: true,
+        metadata,
+        granules
+      })
+    }
+
+    return layers
   }
 
-  // Update the granules if the new props are different
+  /**
+   * Create a feature group of GranuleGridLayerExtended layers.
+   * @param {object} props
+   */
+  createLeafletElement(props) {
+    const { layers = [] } = this
+
+    // Create a GranuleGridLayerExtended layer from each data object in getLayerData
+    const layerData = this.getLayerData(props)
+    layerData.forEach((data, index) => {
+      const {
+        collectionId,
+        color,
+        metadata,
+        granules
+      } = data
+
+      const { byId = {} } = granules
+      const granuleData = Object.values(byId)
+
+      const layer = new GranuleGridLayerExtended(collectionId, metadata, granuleData, color)
+
+      // Set the ZIndex for the layer
+      layer.setZIndex(20 + index)
+
+      layers.push(layer)
+    })
+
+    // Save the list of layers and create a feature group for the layers
+    const featureGroup = new L.FeatureGroup(layers)
+    return featureGroup
+  }
+
+  /**
+   * Handles updating the granules in each GranuleGridLayerExtended layer on the map
+   * @param {object} fromProps
+   * @param {obect} toProps
+   */
   updateLeafletElement(fromProps, toProps) {
-    const { layer } = this
-    if (fromProps.granules !== toProps.granules) {
-      layer.setResults(toProps.focusedCollection, Object.values(toProps.granules.byId))
+    const layers = this.leafletElement._layers // List of layers
+
+    const oldLayerData = this.getLayerData(fromProps)
+    const layerData = this.getLayerData(toProps)
+
+    // Nothing should be drawn, remove any existing layers
+    if (layerData.length === 0) {
+      Object.values(layers).forEach(layer => this.leafletElement.removeLayer(layer))
     }
+
+    // If there is less data than before, figure out which collection was removed and remove the layer
+    if (layerData.length < oldLayerData.length) {
+      const oldIds = oldLayerData.map(data => data.collectionId)
+      const newIds = layerData.map(data => data.collectionId)
+
+      const diffIds = _.difference(oldIds, newIds)
+
+      diffIds.forEach((collectionId) => {
+        Object.values(layers).forEach((layer) => {
+          if (layer.collectionId === collectionId) {
+            this.leafletElement.removeLayer(layer)
+          }
+        })
+      })
+    }
+
+    // Loop through each layer data object to update the layer
+    layerData.forEach((data, index) => {
+      const {
+        collectionId,
+        color,
+        metadata,
+        isVisible,
+        granules
+      } = data
+
+      // if there are no granules, bail out
+      if (!granules.byId) return
+
+      // If the collecton is not visible, set the granuleData to an empty array
+      const granuleData = isVisible ? Object.values(granules.byId) : []
+
+      // Find the layer for this collection
+      const [layer] = Object.values(layers).filter(l => l.collectionId === collectionId)
+      if (layer) {
+        // if there isn't an 'fromProps' layer, bail out because we need to compare props
+        const oldLayer = oldLayerData[index]
+        if (!oldLayer) return
+
+        const {
+          isVisible: oldIsVisible,
+          granules: oldGranules
+        } = oldLayer
+
+        // If the granules and the visibility haven't changed, bail out
+        if (oldGranules === granules && oldIsVisible === isVisible) return
+
+        // Update the layer with the new granuleData
+        layer.setResults(collectionId, metadata, granuleData, color)
+      } else {
+        // A layer doesn't exist for this collection yet, maybe we just added a focusedCollection, so create a new layer
+        const layer = new GranuleGridLayerExtended(collectionId, metadata, granuleData, color)
+        layer.setZIndex(20)
+
+        // Add the layer to the feature group
+        layer.addTo(this.leafletElement)
+      }
+    })
   }
 }
 

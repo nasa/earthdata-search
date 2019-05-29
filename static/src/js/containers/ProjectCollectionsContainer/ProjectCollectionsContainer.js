@@ -7,7 +7,9 @@ import ProjectCollectionsList from '../../components/ProjectCollections/ProjectC
 
 const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
-    collectionId => dispatch(actions.removeCollectionFromProject(collectionId))
+    collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+  onToggleCollectionVisibility:
+    collectionId => dispatch(actions.toggleCollectionVisibility(collectionId))
 })
 
 const mapStateToProps = state => ({
@@ -17,7 +19,8 @@ const mapStateToProps = state => ({
 export const ProjectCollectionsContainer = (props) => {
   const {
     collections,
-    onRemoveCollectionFromProject
+    onRemoveCollectionFromProject,
+    onToggleCollectionVisibility
   } = props
 
   return (
@@ -25,6 +28,7 @@ export const ProjectCollectionsContainer = (props) => {
       <ProjectCollectionsList
         collections={collections}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+        onToggleCollectionVisibility={onToggleCollectionVisibility}
       />
     </div>
   )
@@ -32,7 +36,8 @@ export const ProjectCollectionsContainer = (props) => {
 
 ProjectCollectionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onToggleCollectionVisibility: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

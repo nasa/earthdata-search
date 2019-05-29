@@ -29,7 +29,11 @@ const encodeExcludedGranules = (isCwic, excludedGranuleIds) => {
 const decodedExcludeGranules = (excludedGranules) => {
   const keys = Object.keys(excludedGranules)
 
-  let result = {}
+  let result = {
+    isCwic: false,
+    granuleIds: []
+  }
+
   if (keys.indexOf('x') !== -1) {
     const { x: granules } = excludedGranules
     const granulesList = granules.split('!')
@@ -80,13 +84,13 @@ export const encodeCollections = (collections, focusedCollection) => {
 
       // if the focusedCollection is also in projectIds, don't encode the focusedCollection
       if (index === 0 && projectIds.indexOf(focusedCollection) !== -1) {
-        pgParameter[index] = undefined
+        pgParameter[index] = pg
         return
       }
 
       const collection = byId[collectionId]
       if (!collection) {
-        pgParameter[index] = undefined
+        pgParameter[index] = pg
         return
       }
 
@@ -95,6 +99,7 @@ export const encodeCollections = (collections, focusedCollection) => {
       const {
         excludedGranuleIds = [],
         granules,
+        isVisible,
         metadata
       } = collection
       const { is_cwic: isCwic = false } = metadata
@@ -106,12 +111,14 @@ export const encodeCollections = (collections, focusedCollection) => {
 
       if (encodedExcludedGranules) pg[excludedKey] = encodedExcludedGranules
 
+      // Collection visible, don't encode the focusedCollection
+      if (index !== 0 && isVisible) pg.v = 't'
+
       // TODO Encode granule filters
 
       pgParameter[index] = pg
     })
   }
-
 
   const encoded = {
     p: pParameter,
@@ -153,8 +160,14 @@ export const decodeCollections = (params) => {
 
     let granuleIds = []
     let isCwic = false
+    let isVisible = false
     if (pg && pg[index]) {
+      // Excluded Granules
       ({ isCwic, granuleIds } = decodedExcludeGranules(pg[index]))
+
+      // Collection visible
+      const { v: visible = '' } = pg[index]
+      if (visible === 't') isVisible = true
     }
 
     // TODO Decode granule filters
@@ -164,6 +177,7 @@ export const decodeCollections = (params) => {
       excludedGranuleIds: granuleIds,
       granules: {},
       isCwic,
+      isVisible,
       metadata: {}
     }
   })

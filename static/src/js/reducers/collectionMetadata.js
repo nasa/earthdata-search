@@ -7,7 +7,8 @@ import {
   UPDATE_COLLECTION_METADATA,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
-  UPDATE_PROJECT_GRANULES
+  UPDATE_PROJECT_GRANULES,
+  TOGGLE_COLLECTION_VISIBILITY
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -83,10 +84,20 @@ const collectionMetadataReducer = (state = initialState, action) => {
         if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
 
         let excludedGranuleIds = []
-        if (state.byId[collectionId]) ({ excludedGranuleIds } = state.byId[collectionId])
+        let isCwic = false
+        let isVisible = true
+        if (state.byId[collectionId]) {
+          ({
+            excludedGranuleIds,
+            isCwic,
+            isVisible
+          } = state.byId[collectionId])
+        }
         byId[collectionId] = {
           excludedGranuleIds,
           granules: {},
+          isCwic,
+          isVisible,
           metadata
         }
       })
@@ -165,6 +176,18 @@ const collectionMetadataReducer = (state = initialState, action) => {
               isCwic,
               totalSize
             }
+          }
+        }
+      }
+    }
+    case TOGGLE_COLLECTION_VISIBILITY: {
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload]: {
+            ...state.byId[action.payload],
+            isVisible: !state.byId[action.payload].isVisible
           }
         }
       }

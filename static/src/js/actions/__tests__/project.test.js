@@ -9,7 +9,8 @@ import {
   REMOVE_COLLECTION_FROM_PROJECT,
   UPDATE_AUTH,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_PROJECT_GRANULES
+  UPDATE_PROJECT_GRANULES,
+  TOGGLE_COLLECTION_VISIBILITY
 } from '../../constants/actionTypes'
 
 import {
@@ -17,7 +18,8 @@ import {
   addProjectCollection,
   getProjectCollections,
   getProjectGranules,
-  removeCollectionFromProject
+  removeCollectionFromProject,
+  toggleCollectionVisibility
 } from '../project'
 
 // import * as projectMethods from '../project'
@@ -30,7 +32,7 @@ beforeEach(() => {
 })
 
 describe('addCollectionToProject', () => {
-  test('should create an action to update the CMR Facets query', () => {
+  test('should create an action to add the collection to a project', () => {
     const payload = 'collectionId'
     const expectedAction = {
       type: ADD_COLLECTION_TO_PROJECT,
@@ -41,13 +43,24 @@ describe('addCollectionToProject', () => {
 })
 
 describe('removeCollectionFromProject', () => {
-  test('should create an action to update the CMR Facets query', () => {
+  test('should create an action to remove the collection from a project', () => {
     const payload = 'collectionId'
     const expectedAction = {
       type: REMOVE_COLLECTION_FROM_PROJECT,
       payload
     }
     expect(removeCollectionFromProject(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('toggleCollectionVisibility', () => {
+  test('should create an action to update the collection visibility', () => {
+    const payload = 'collectionId'
+    const expectedAction = {
+      type: TOGGLE_COLLECTION_VISIBILITY,
+      payload
+    }
+    expect(toggleCollectionVisibility(payload)).toEqual(expectedAction)
   })
 })
 

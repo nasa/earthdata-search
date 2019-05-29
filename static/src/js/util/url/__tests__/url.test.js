@@ -16,6 +16,7 @@ const emptyDecodedResult = {
     nearRealTime: false
   },
   focusedCollection: undefined,
+  focusedGranule: undefined,
   map: {},
   query: {
     keyword: undefined,

@@ -22,7 +22,7 @@ export const queryParamsFromUrlString = url => url.split(/[?#]/)[1]
  * @param {Object} params Object with encoded URL parameters
  */
 export const stringify = params => qs.stringify(
-  cleanDeep(params, { undefinedValues: false }),
+  cleanDeep(params, { emptyObjects: false, undefinedValues: false }),
   {
     addQueryPrefix: true,
     encoder: str => str.replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
