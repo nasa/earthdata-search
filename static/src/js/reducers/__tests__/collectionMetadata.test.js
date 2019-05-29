@@ -8,7 +8,8 @@ import {
   RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_PROJECT_GRANULES
+  UPDATE_PROJECT_GRANULES,
+  TOGGLE_COLLECTION_VISIBILITY
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -182,6 +183,8 @@ describe('UPDATE_COLLECTION_METADATA', () => {
         collectionId: {
           excludedGranuleIds: [],
           granules: {},
+          isCwic: false,
+          isVisible: true,
           metadata: {
             mock: 'data'
           }
@@ -216,6 +219,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
               }
             }
           },
+          isVisible: true,
           metadata: {
             mock: 'data'
           }
@@ -230,6 +234,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
         collectionId: {
           excludedGranuleIds: ['granuleId1'],
           granules: {},
+          isVisible: true,
           metadata: {
             mock: 'data'
           }
@@ -381,6 +386,35 @@ describe('COPY_GRANULE_RESULTS_TO_COLLECTION', () => {
     }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_COLLECTION_VISIBILITY', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_COLLECTION_VISIBILITY,
+      payload: 'collectionId'
+    }
+
+    const initial = {
+      ...initialState,
+      byId: {
+        collectionId: {
+          isVisible: true
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      byId: {
+        collectionId: {
+          isVisible: false
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
   })
 })
 

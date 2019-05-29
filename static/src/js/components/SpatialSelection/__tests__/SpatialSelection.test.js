@@ -19,12 +19,13 @@ function setup(props) {
 }
 
 const defaultProps = {
-  pointSearch: '',
   boundingBoxSearch: '',
-  polygonSearch: '',
+  isProjectPage: false,
   mapRef: {
     leafletElement: jest.fn()
   },
+  pointSearch: '',
+  polygonSearch: '',
   onChangeQuery: jest.fn(),
   onChangeMap: jest.fn()
 }
@@ -54,6 +55,18 @@ describe('SpatialSelection component', () => {
       circlemarker: false,
       circle: false
     })
+  })
+
+  test('should not render controls on project page', () => {
+    const { enzymeWrapper } = setup({
+      ...defaultProps,
+      isProjectPage: true
+    })
+    expect(enzymeWrapper.exists()).toBe(true)
+
+    const editControl = enzymeWrapper.find(EditControl)
+
+    expect(editControl.length).toBe(0)
   })
 
   describe('componentWillReceiveProps', () => {

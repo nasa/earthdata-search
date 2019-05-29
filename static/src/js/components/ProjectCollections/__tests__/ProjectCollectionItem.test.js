@@ -19,7 +19,9 @@ function setup() {
         granule_count: 4
       }
     },
-    onRemoveCollectionFromProject: jest.fn()
+    color: 'color',
+    onRemoveCollectionFromProject: jest.fn(),
+    onToggleCollectionVisibility: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionItem {...props} />)
@@ -47,5 +49,15 @@ describe('ProjectCollectionItem component', () => {
     button.simulate('click')
     expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
     expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+  })
+
+  test('Toggle visibility button calls onToggleCollectionVisibility', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const button = enzymeWrapper.find('.toggle-visibility')
+
+    button.simulate('click')
+    expect(props.onToggleCollectionVisibility).toHaveBeenCalledTimes(1)
+    expect(props.onToggleCollectionVisibility).toHaveBeenCalledWith('collectionId')
   })
 })

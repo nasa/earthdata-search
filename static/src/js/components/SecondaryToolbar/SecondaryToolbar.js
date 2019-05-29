@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { remove } from 'tiny-cookie'
-import queryString from 'query-string'
 import { Link } from 'react-router-dom'
 
 import { Button, Dropdown } from 'react-bootstrap'
@@ -36,13 +35,7 @@ class SecondaryToolbar extends Component {
         className="collection-results__item-title-link"
         to={{
           pathname: '/projects',
-          search: queryString
-            .stringify(
-              Object.assign(
-                {},
-                queryString.parse(location.search)
-              )
-            )
+          search: location.search
         }}
       >
         <Button className="secondary-toolbar__project" variant="light">

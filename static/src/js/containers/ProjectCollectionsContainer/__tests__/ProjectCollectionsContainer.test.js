@@ -17,7 +17,8 @@ function setup() {
       },
       projectIds: ['collectionId']
     },
-    onRemoveCollectionFromProject: jest.fn()
+    onRemoveCollectionFromProject: jest.fn(),
+    onToggleCollectionVisibility: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)

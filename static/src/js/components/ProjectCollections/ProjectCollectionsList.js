@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types'
 
 import ProjectCollectionItem from './ProjectCollectionItem'
 import ProjectHeader from './ProjectHeader'
+import colors from '../../util/colors'
 
 
 /**
@@ -14,7 +15,8 @@ import ProjectHeader from './ProjectHeader'
 const ProjectCollectionsList = (props) => {
   const {
     collections,
-    onRemoveCollectionFromProject
+    onRemoveCollectionFromProject,
+    onToggleCollectionVisibility
   } = props
 
   const {
@@ -22,14 +24,19 @@ const ProjectCollectionsList = (props) => {
     projectIds
   } = collections
 
-  const collectionsList = projectIds.map(collectionId => (
-    <ProjectCollectionItem
-      collectionId={collectionId}
-      collection={byId[collectionId]}
-      key={collectionId}
-      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-    />
-  ))
+  const collectionsList = projectIds.map((collectionId, index) => {
+    const color = Object.values(colors)[index]
+    return (
+      <ProjectCollectionItem
+        collectionId={collectionId}
+        collection={byId[collectionId]}
+        color={color}
+        key={collectionId}
+        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+        onToggleCollectionVisibility={onToggleCollectionVisibility}
+      />
+    )
+  })
 
   return (
     <>
@@ -45,7 +52,8 @@ const ProjectCollectionsList = (props) => {
 
 ProjectCollectionsList.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onToggleCollectionVisibility: PropTypes.func.isRequired
 }
 
 export default ProjectCollectionsList

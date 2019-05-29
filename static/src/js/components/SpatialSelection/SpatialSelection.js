@@ -259,7 +259,9 @@ class SpatialSelection extends Component {
   }
 
   render() {
-    return (
+    const { isProjectPage } = this.props
+
+    const controls = (
       <FeatureGroup>
         <EditControl
           position="bottomright"
@@ -288,6 +290,11 @@ class SpatialSelection extends Component {
         />
       </FeatureGroup>
     )
+    return (
+      <>
+        { !isProjectPage && controls }
+      </>
+    )
   }
 }
 
@@ -300,6 +307,7 @@ SpatialSelection.defaultProps = {
 
 SpatialSelection.propTypes = {
   boundingBoxSearch: PropTypes.string,
+  isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),
   onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,

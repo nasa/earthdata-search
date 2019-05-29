@@ -13,6 +13,7 @@ describe('url#decodeUrlParams', () => {
             collectionId: {
               excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK'],
               isCwic: false,
+              isVisible: false,
               granules: {},
               metadata: {}
             }
@@ -33,6 +34,7 @@ describe('url#decodeUrlParams', () => {
             collectionId: {
               excludedGranuleIds: ['12345', '56789'],
               isCwic: true,
+              isVisible: false,
               granules: {},
               metadata: {}
             }
@@ -55,6 +57,7 @@ describe('url#decodeUrlParams', () => {
             collectionId: {
               excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK'],
               isCwic: false,
+              isVisible: false,
               granules: {},
               metadata: {}
             }
@@ -77,6 +80,7 @@ describe('url#decodeUrlParams', () => {
             collectionId: {
               excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK'],
               isCwic: false,
+              isVisible: false,
               granules: {},
               metadata: {}
             }

@@ -15,15 +15,15 @@ import {
 import '../../util/map/sphericalPolygon'
 
 import LayerBuilder
-  from '../../components/MapControls/LayerBuilder'
+  from '../../components/Map/LayerBuilder'
 import ConnectedSpatialSelectionContainer
   from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer
-  from '../../components/MapControls/GranuleGridLayer/GranuleGridLayer'
+  from '../../components/Map/GranuleGridLayer'
 import ZoomHome
-  from '../../components/MapControls/ZoomHome'
+  from '../../components/Map/ZoomHome'
 import ProjectionSwitcher
-  from '../../components/MapControls/ProjectionSwitcher'
+  from '../../components/Map/ProjectionSwitcher'
 
 import crsProjections from '../../util/map/crs'
 import projections from '../../util/map/projections'
@@ -44,7 +44,8 @@ const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
   map: state.map,
-  masterOverlayPanelHeight: state.ui.masterOverlayPanel.height
+  masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
+  pathname: state.router.location.pathname
 })
 
 export class MapContainer extends Component {
@@ -164,8 +165,10 @@ export class MapContainer extends Component {
   render() {
     const {
       map,
+      collections,
       focusedCollection,
-      granules
+      granules,
+      pathname
     } = this.props
 
     const {
@@ -176,6 +179,8 @@ export class MapContainer extends Component {
       projection,
       zoom
     } = map
+
+    const isProjectPage = pathname.startsWith('/project')
 
     const center = [latitude, longitude]
 
@@ -269,11 +274,17 @@ export class MapContainer extends Component {
           </Overlay>
         </LayersControl>
         <GranuleGridLayer
+          collections={collections}
           focusedCollection={focusedCollection}
+          isProjectPage={isProjectPage}
           granules={granules}
         />
         <ZoomHome />
-        <ProjectionSwitcher onChangeProjection={this.handleProjectionSwitching} />
+        {
+          !isProjectPage && (
+          <ProjectionSwitcher onChangeProjection={this.handleProjectionSwitching} />
+          )
+        }
         <ScaleControl position="bottomright" />
         <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
       </Map>
@@ -291,6 +302,7 @@ MapContainer.propTypes = {
   granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
   masterOverlayPanelHeight: PropTypes.number.isRequired,
+  pathname: PropTypes.string.isRequired,
   onChangeMap: PropTypes.func.isRequired
 }
 

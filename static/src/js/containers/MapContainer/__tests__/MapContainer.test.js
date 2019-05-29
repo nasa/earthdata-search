@@ -9,11 +9,11 @@ import {
   ScaleControl
 } from 'react-leaflet'
 import { MapContainer } from '../MapContainer'
-import ZoomHome from '../../../components/MapControls/ZoomHome'
-import LayerBuilder from '../../../components/MapControls/LayerBuilder'
+import ZoomHome from '../../../components/Map/ZoomHome'
+import LayerBuilder from '../../../components/Map/LayerBuilder'
 import ConnectedSpatialSelectionContainer
   from '../../SpatialSelectionContainer/SpatialSelectionContainer'
-import GranuleGridLayer from '../../../components/MapControls/GranuleGridLayer/GranuleGridLayer'
+import GranuleGridLayer from '../../../components/Map/GranuleGridLayer'
 
 import store from '../../../store/configureStore'
 import projections from '../../../util/map/projections'
@@ -25,6 +25,7 @@ function setup() {
     collections: {},
     focusedCollection: '',
     granules: {},
+    pathname: '/search',
     map: {
       base: {
         blueMarble: true,

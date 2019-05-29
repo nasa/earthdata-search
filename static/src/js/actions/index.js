@@ -57,7 +57,8 @@ import {
   addProjectCollection,
   removeCollectionFromProject,
   getProjectGranules,
-  getProjectCollections
+  getProjectCollections,
+  toggleCollectionVisibility
 } from './project'
 
 const actions = {
@@ -95,6 +96,7 @@ const actions = {
   removeCollectionFromProject,
   restoreCollections,
   searchNlp,
+  toggleCollectionVisibility,
   toggleFacetsModal,
   triggerViewAllFacets,
   undoExcludeGranule,

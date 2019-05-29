@@ -15,6 +15,7 @@ const mapDispathToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  pathname: state.router.location.pathname,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon
 })
@@ -25,13 +26,17 @@ export const SpatialSelectionContainer = (props) => {
     mapRef,
     onChangeMap,
     onChangeQuery,
+    pathname,
     pointSearch,
     polygonSearch
   } = props
 
+  const isProjectPage = pathname.startsWith('/project')
+
   return (
     <SpatialSelection
       boundingBoxSearch={boundingBoxSearch}
+      isProjectPage={isProjectPage}
       mapRef={mapRef}
       onChangeMap={onChangeMap}
       onChangeQuery={onChangeQuery}
@@ -53,6 +58,7 @@ SpatialSelectionContainer.propTypes = {
   mapRef: PropTypes.shape({}),
   onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
+  pathname: PropTypes.string.isRequired,
   pointSearch: PropTypes.string,
   polygonSearch: PropTypes.string
 }
