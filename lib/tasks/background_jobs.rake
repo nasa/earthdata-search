@@ -21,4 +21,10 @@ namespace :background_jobs do
       puts "#{queue}: #{records.count}"
     end
   end
+
+  desc 'Migrate old queue names to more efficient queues'
+  task migrate: ['environment'] do
+    DelayedJob.where("handler LIKE '%job_class: SubmitLegacyServicesJob%'").update_all(queue: 'legacy_services')
+    DelayedJob.where("handler NOT LIKE '%job_class: SubmitLegacyServicesJob%'").update_all(queue: 'default')
+  end
 end

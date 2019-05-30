@@ -83,21 +83,6 @@ class Retrieval < ActiveRecord::Base
     self.jsondata = project_json.except('collections').merge(datasets: datasets)
   end
 
-  # Certain DAACs have their own queues for large order processing which is determined by
-  # examining the collections within the order. If any of the collection are for one of the
-  # specified DAACs then the order is placed in the respective queue
-  def determine_queue
-    daacs = %w(nsidc lpdaac)
-
-    daacs.each do |daac|
-      collections.each do |collection|
-        return daac if collection['id'].include?(daac)
-      end
-    end
-
-    'default'
-  end
-
   # Using stored user data construct a contact object expected by echo when placing an order
   #
   # @return [Hash] object representing the user provided formatted for echo orders
