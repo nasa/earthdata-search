@@ -4,7 +4,7 @@ import { pick } from './util'
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
- * @param {String} collectionId - The collection ID to retrieve the url for.
+ * @param {String} collectionId The collection ID to retrieve the url for.
  * @return {Object} An object representing the OpenSearch OSDD or an error message
  */
 const getCwicGranulesUrl = async (collectionId) => {

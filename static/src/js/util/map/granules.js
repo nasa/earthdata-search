@@ -116,7 +116,7 @@ export function getRectangles(granule) {
 
 // Translate project types into 'epsg####' strings
 export function getlprojection(options) {
-  if (options.geo) {
+  if (options.geographic) {
     return projections.geographic
   }
   if (options.arctic) {
