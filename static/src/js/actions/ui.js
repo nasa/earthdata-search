@@ -4,6 +4,7 @@ import {
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
+  TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
 
@@ -43,5 +44,10 @@ export const granuleResultsPanelUpdateSearchValue = searchValue => (dispatch) =>
 
 export const toggleFacetsModal = state => ({
   type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+  payload: state
+})
+
+export const toggleRelatedUrlsModal = state => ({
+  type: TOGGLE_RELATED_URLS_MODAL,
   payload: state
 })

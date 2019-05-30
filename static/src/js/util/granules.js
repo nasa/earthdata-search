@@ -1,4 +1,4 @@
-import getFocusedCollectionMetadata from './focusedCollection'
+import { getFocusedCollectionMetadata } from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
 
 /**
@@ -73,7 +73,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const temporalString = encodeTemporal(temporal)
 
   const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !collectionMetadata.has_granules
+    && !collectionMetadata.hasGranules
 
   return {
     authToken,

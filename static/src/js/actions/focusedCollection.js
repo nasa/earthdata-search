@@ -8,7 +8,9 @@ import {
 import { updateCollectionMetadata } from './collections'
 import { updateGranuleResults, addGranulesFromCollection } from './granules'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import CollectionRequest from '../util/request/collectionRequest'
+import ConceptRequest from '../util/request/conceptRequest'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -71,7 +73,7 @@ export const copyGranulesFromCollection = collectionId => (dispatch, getState) =
 /**
  * Perform a collection request based on the focusedCollection from the store.
  */
-export const getFocusedCollection = () => (dispatch, getState) => {
+export const getFocusedCollection = () => async (dispatch, getState) => {
   const { focusedCollection, metadata, searchResults } = getState()
 
   const { granules } = searchResults
@@ -96,36 +98,71 @@ export const getFocusedCollection = () => (dispatch, getState) => {
 
   const { authToken } = getState()
   const requestObject = new CollectionRequest(authToken)
+  const ummRequestObject = new ConceptRequest(authToken)
 
-  const response = requestObject.search({
+  // Define both the umm and ummJson requests with the correct aruguments.
+  const collectionJsonRequest = () => requestObject.search({
     concept_id: [focusedCollection],
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     includeHasGranules: true
   })
-    .then((response) => {
-      const payload = []
-      const [metadata] = response.data.feed.entry
-      payload.push({ [focusedCollection]: metadata })
 
-      dispatch(updateAuthTokenFromHeaders(response.headers))
+  const collectionUmmRequest = () => ummRequestObject.search(focusedCollection, 'umm_json')
+
+  let collectionJsonResponse
+  let collectionUmmResponse
+
+  // Get data in both json and umm_json formats. Both formats are used in order to create the
+  // metadata that we transform and add to the state on the [focusedCollection].metadata key.
+  await Promise.all([
+    collectionJsonRequest(),
+    collectionUmmRequest()
+  ])
+    .then(([collectionJson, collectionUmm]) => {
+      const payload = []
+      const [json] = collectionJson.data.feed.entry
+      const ummJson = collectionUmm.data
+
+      // Pass json and ummJson into createFocusedCollectionMetadata to transform/normalize the data
+      // to be used in the UI.
+      const metadata = createFocusedCollectionMetadata(json, ummJson)
+
+      // The raw data from the json and ummJson requests are added to the state, as well as the
+      // transformed/normalized metadata.
+      payload.push({
+        [focusedCollection]: {
+          json,
+          ummJson,
+          metadata
+        }
+      })
+
+      collectionJsonResponse = collectionJson
+      collectionUmmResponse = collectionUmm
+
+      // The .all().then() will only fires when both requests resolve successfully, so we can
+      // rely on collectionJson to have the correct auth information in its headers.
+      dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
 
-      // If granules were copied from collections, don't make a new getGranules request
+      // If granules were copied from collections, don't make a new getGranules request.
       if (allIds.length === 0) dispatch(actions.getGranules())
     }, (error) => {
-      dispatch(updateFocusedCollection(''))
-
-      throw new Error('Request failed', error)
+      console.log('Promise Rejected', error)
     })
     .catch((e) => {
       console.log('Promise Rejected', e)
+      dispatch(updateFocusedCollection(''))
     })
 
-  return response
+  return {
+    json: collectionJsonResponse,
+    ummJson: collectionUmmResponse
+  }
 }
 
 /**
- * Change the focusedCollection, copy granules, and get the focusedCollection metadata
+ * Change the focusedCollection, copy granules, and get the focusedCollection metadata.
  * @param {string} collectionId
  */
 export const changeFocusedCollection = collectionId => (dispatch) => {

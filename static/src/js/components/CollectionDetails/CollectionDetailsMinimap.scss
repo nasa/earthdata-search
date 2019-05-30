@@ -1,0 +1,10 @@
+.collection-details-minimap {
+    &.leaflet-container {
+      width: 360px;
+      height: 180px;
+    }
+
+    .leaflet-interactive {
+      cursor: default;
+    }
+}

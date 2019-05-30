@@ -1,4 +1,8 @@
 .modal {
+  .modal-title {
+    font-size: 1em;
+  }
+
   &--full {
     .modal-content {
       height: 90vh;

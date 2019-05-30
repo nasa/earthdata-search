@@ -4,6 +4,7 @@ import {
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
+  TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
 
@@ -19,6 +20,9 @@ const initialState = {
     searchValue: ''
   },
   facetsModal: {
+    isOpen: false
+  },
+  relatedUrlsModal: {
     isOpen: false
   }
 }
@@ -78,6 +82,14 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         facetsModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_RELATED_URLS_MODAL: {
+      return {
+        ...state,
+        relatedUrlsModal: {
           isOpen: action.payload
         }
       }

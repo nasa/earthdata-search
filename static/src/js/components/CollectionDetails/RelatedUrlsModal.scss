@@ -1,0 +1,22 @@
+.related-urls-modal {
+  &__group {
+    margin-bottom: $spacer*1.5;
+  }
+
+  &__group-title {
+    padding-bottom: $spacer/2;
+    font-size: 1rem;
+    border-bottom: 1px solid $color__black--200;
+  }
+
+  &__url {
+    margin: 0;
+    margin-bottom: $spacer/2;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__link {
+    word-break: break-all;
+  }
+}

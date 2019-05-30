@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
-import getFocusedCollectionMetadata from '../../util/focusedCollection'
+import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 
 import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBody'
 
@@ -41,7 +41,7 @@ export const GranuleResultsBodyContainer = (props) => {
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   const { metadata } = focusedCollectionMetadata[focusedCollection]
-  const { is_cwic: isCwic = false } = metadata
+  const { isCwic = false } = metadata
 
   const { pageNum } = granuleQuery
 
