@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
-import _ from 'lodash'
+import { difference } from 'lodash'
 
 import {
   withLeaflet,
@@ -816,7 +816,7 @@ class GranuleGridLayer extends MapLayer {
       const oldIds = oldLayerData.map(data => data.collectionId)
       const newIds = layerData.map(data => data.collectionId)
 
-      const diffIds = _.difference(oldIds, newIds)
+      const diffIds = difference(oldIds, newIds)
 
       diffIds.forEach((collectionId) => {
         Object.values(layers).forEach((layer) => {
