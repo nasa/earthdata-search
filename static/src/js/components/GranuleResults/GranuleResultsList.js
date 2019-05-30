@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { pure } from 'recompose'
-import _ from 'lodash'
+import { difference } from 'lodash'
 
 import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
@@ -51,7 +51,7 @@ export const GranuleResultsList = (props) => {
       return excludedGranuleIds.indexOf(hashedId) === -1
     })
   } else {
-    granuleIds = _.difference(allGranuleIds, excludedGranuleIds)
+    granuleIds = difference(allGranuleIds, excludedGranuleIds)
   }
 
   const initialLoading = (pageNum === 1 && !isLoaded)

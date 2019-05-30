@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
-import _ from 'lodash'
+import { throttle } from 'lodash'
 
 import './MasterOverlayPanel.scss'
 
@@ -23,7 +23,7 @@ class MasterOverlayPanel extends PureComponent {
     this.onMasterOverlayHeightChange = props.onMasterOverlayHeightChange.bind(this)
     this.onMasterOverlayPanelDragStart = props.onMasterOverlayPanelDragStart.bind(this)
     this.onMasterOverlayPanelDragEnd = props.onMasterOverlayPanelDragEnd.bind(this)
-    this.onMouseMove = _.throttle(this.onMouseMove.bind(this), 16)
+    this.onMouseMove = throttle(this.onMouseMove.bind(this), 16)
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
   }
