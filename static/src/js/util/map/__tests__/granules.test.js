@@ -104,7 +104,7 @@ describe('granules#getRectangles', () => {
 
 describe('granules#getlprojection', () => {
   test('returns epsg4326 for geo', () => {
-    expect(getlprojection({ geo: true })).toEqual(projections.geographic)
+    expect(getlprojection({ geographic: true })).toEqual(projections.geographic)
   })
 
   test('returns epsg3031 for arctic', () => {

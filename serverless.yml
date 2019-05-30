@@ -4,8 +4,10 @@ provider:
   name: aws
   runtime: nodejs8.10
   versionFunctions: false
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'lab'}
   region: us-east-1
+  endpointType: PRIVATE
+  memorySize: 256
   environment:
     dbEndpoint:
       Fn::GetAtt:
@@ -19,6 +21,8 @@ provider:
     dbName: edsc_${self:provider.stage}
     colorMapQueueUrl:
       Ref: ColorMapsProcessingQueue
+    tagQueueUrl:
+      Ref: TagProcessingQueue
     configSecretId:
       Ref: DbPasswordSecret
   vpc:
@@ -53,7 +57,8 @@ functions:
   processColorMap:
     handler: serverless/src/processColorMap.default
     timeout: 300
-    reservedConcurrency: 10
+    receiveMessageWaitTimeSeconds: 30
+    reservedConcurrency: 25
     events:
       - sqs:
           arn:
@@ -61,11 +66,24 @@ functions:
               - ColorMapsProcessingQueue
               - Arn
 
+  processTag:
+    handler: serverless/src/processTag.default
+    timeout: 300
+    receiveMessageWaitTimeSeconds: 30
+    reservedConcurrency: 25
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - TagProcessingQueue
+              - Arn
+
   #
   # Scheduled Lambdas
   #
   generateColorMaps:
     handler: serverless/src/generateColorMaps.default
+    description: Gather Color Map data from GIBS and store it in RDS
     timeout: 300
     events:
       - schedule:
@@ -88,6 +106,15 @@ functions:
           enabled: false
           input:
             projection: 'epsg3031'
+
+  generateGibsTags:
+    handler: serverless/src/generateGibsTags.default
+    description: Tag CMR collections with GIBS product information
+    timeout: 300
+    events:
+      - schedule:
+          rate: cron(0 * * * ? *)
+          enabled: true
 
   #
   # API Gateway Endpoints
@@ -140,8 +167,8 @@ functions:
 
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer.default
-    cors: true
-
+    cors:
+      origin: '*'
 
   #
   # EDL Authenticated API Gateway Endpoints
@@ -200,7 +227,6 @@ functions:
             origin: '*'
           path: urs_callback
 
-
 #
 # Additional AWS Resources
 #
@@ -208,13 +234,10 @@ resources:
   # A method to include environment specific resources
   # Resources: ${file(./resources-${self:provider.stage}.yml)}
   Resources:
-    # StaticSite:
-    #   Type: AWS::S3::Bucket
-    #   Properties:
-    #     AccessControl: PublicRead
-    #     BucketName: ${self:custom.siteName}
-    #     WebsiteConfiguration:
-    #       IndexDocument: index.html
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.siteName}
 
     # StaticSiteS3BucketPolicy:
     #   Type: AWS::S3::BucketPolicy
@@ -224,7 +247,6 @@ resources:
     #     PolicyDocument:
     #       Statement:
     #         - Sid: PublicReadGetObject
-
     #           Effect: Allow
     #           Principal: "*"
     #           Action:
@@ -245,6 +267,11 @@ resources:
       Type: 'AWS::SQS::Queue'
       Properties:
         MessageRetentionPeriod: 345600 # Default value, leaving for visibility
+        VisibilityTimeout: 300
+
+    TagProcessingQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
         VisibilityTimeout: 300
 
     LambdaSecurityGroup:
@@ -436,6 +463,9 @@ custom:
   client:
     bucketName: ${self:custom.siteName}
     distributionFolder: static/dist
+
+    # Prevent the plugin from attempting to change the bucket policy
+    manageResources: false
 
   # Default is 3000 so to avoid conflicts with rails applications we'll define a new port
   serverless-offline:

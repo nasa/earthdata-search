@@ -153,10 +153,10 @@ class GranuleGridLayerExtended extends L.GridLayer {
         // and if the layer exists within newOptionSet
 
         // TODO force map project to geo because we don't have projection switching yet
-        this._map.projection = 'geo'
-        if ((this._map.projection === 'geo') && newOptionSet.geo) {
+        this._map.projection = 'geographic'
+        if ((this._map.projection === 'geographic') && newOptionSet.geographic) {
           matched = true
-          newResolution = newOptionSet.geo_resolution
+          newResolution = newOptionSet.geographic_resolution
         } else if ((this._map.projection === 'arctic') && newOptionSet.arctic) {
           matched = true
           newResolution = newOptionSet.arctic_resolution
@@ -517,7 +517,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
     // Set multiOptions (gibs data)
     const { tags = {} } = metadata
-    const { 'edsc.extra.gibs': gibsTag = {} } = tags
+    const { 'edsc.extra.serverless.gibs': gibsTag = {} } = tags
     const { data } = gibsTag
     this.multiOptions = data
 

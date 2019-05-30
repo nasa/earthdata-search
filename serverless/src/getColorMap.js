@@ -10,7 +10,7 @@ let dbConnection = null
 export default async function getColorMap(event, context) {
   try {
     // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-param-reassign
     context.callbackWaitsForEmptyEventLoop = false
 
     const { product: providedProduct } = event.pathParameters

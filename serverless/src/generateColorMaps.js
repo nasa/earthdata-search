@@ -74,13 +74,7 @@ const getProjectionCapabilities = async (projection) => {
             sqs.sendMessage({
               QueueUrl: process.env.colorMapQueueUrl,
               MessageBody: JSON.stringify(knownColorMap)
-            }, (error) => {
-              if (error) {
-                console.log(error)
-              } else {
-                colormapUrls.push(knownColorMap)
-              }
-            })
+            }).promise()
           } catch (e) {
             console.log(e)
           }
@@ -114,7 +108,7 @@ const getProjectionCapabilities = async (projection) => {
  */
 export default async function generateColorMaps(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
   // The headers we'll send back regardless of our response

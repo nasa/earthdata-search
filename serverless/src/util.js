@@ -4,6 +4,7 @@ import { stringify as qsStringify } from 'qs'
 import request from 'request-promise'
 import jwt from 'jsonwebtoken'
 import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
+import { getEdlConfig } from './configUtil'
 
 // for fetching configuration
 const secretsmanager = new AWS.SecretsManager()
@@ -228,4 +229,81 @@ export const getJwtToken = (event) => {
   const { authorizer } = requestContext
   const { jwtToken } = authorizer
   return jwtToken
+}
+
+/**
+ * Returns the decrypted urs system credentials from Secrets Manager
+ */
+export const getUrsSystemCredentials = async (ursSystemCredentials) => {
+  if (ursSystemCredentials === null) {
+    if (process.env.NODE_ENV === 'development') {
+      const { cmrSystemUsername, cmrSystemPassword } = getSecretEarthdataConfig()
+
+      return {
+        username: cmrSystemUsername,
+        password: cmrSystemPassword
+      }
+    }
+
+    // If not running in development mode fetch secrets from AWS
+    const params = {
+      SecretId: 'UrsSystemPasswordSecret'
+    }
+
+    const secretValue = await secretsmanager.getSecretValue(params).promise()
+
+    return JSON.parse(secretValue.SecretString)
+  }
+
+  return ursSystemCredentials
+}
+
+/**
+ * Returns a token from URS
+ */
+export const getSystemToken = async (providedToken) => {
+  if (providedToken) {
+    return providedToken
+  }
+
+  const dbCredentials = await getUrsSystemCredentials(null)
+  const { username: dbUsername, password: dbPassword } = dbCredentials
+
+  // The client id is part of our Earthdata Login credentials
+  const edlConfig = await getEdlConfig(null)
+  const { client } = edlConfig
+  const { id: clientId } = client
+
+  const authenticationParams = {
+    username: dbUsername,
+    password: dbPassword,
+    client_id: clientId,
+    user_ip_address: '127.0.0.1'
+  }
+
+  const authenticationUrl = `${getEarthdataConfig('prod').cmrHost}/legacy-services/rest/tokens.json`
+  const tokenResponse = await request.post({
+    uri: authenticationUrl,
+    body: {
+      token: authenticationParams
+    },
+    json: true,
+    resolveWithFullResponse: true
+  })
+
+  const { body } = tokenResponse
+
+  if (tokenResponse.statusCode !== 201) {
+    // On error return whatever body is provided and let
+    // the caller deal with it
+    return body
+  }
+
+  const { token } = body
+  const { id, username } = token
+
+  console.log(`Successfully retrieved a token for '${username}'`)
+
+  // The actual token is returned as `id`
+  return id
 }

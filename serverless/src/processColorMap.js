@@ -30,7 +30,7 @@ const getLegendTooltip = (legends, ref) => legends.find(legend => legend.id === 
  */
 export default async function processColorMap(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
   const { Records: sqsRecords = {} } = event
@@ -45,7 +45,7 @@ export default async function processColorMap(event, context) {
 
     console.log('body', body)
 
-    const providedColorMap = JSON.parse(body)[0]
+    const providedColorMap = JSON.parse(body)
 
     console.log('providedColorMap', providedColorMap)
 

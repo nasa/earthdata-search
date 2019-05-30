@@ -4,6 +4,9 @@ import { getEarthdataConfig } from '../../sharedUtils/config'
 const https = require('https')
 const qs = require('qs')
 
+/*
+ * Handler to perform a search against NLP
+ */
 export default function search(event, context, callback) {
   let bodyContent = ''
 

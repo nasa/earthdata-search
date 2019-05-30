@@ -8,6 +8,7 @@ import {
   buildURL,
   doSearchRequest,
   prepareExposeHeaders,
+  getSystemToken,
   getJwtToken
 } from '../util'
 
@@ -114,7 +115,7 @@ describe('util#doSearchRequest', () => {
 })
 
 describe('util#getJwtToken', () => {
-  test('correctly returns the JWT', () => {
+  test('correctly returns the JWT token when one is already set', () => {
     const token = '123.456.789'
 
     const event = {
@@ -125,6 +126,15 @@ describe('util#getJwtToken', () => {
       }
     }
 
-    expect(getJwtToken(event)).toEqual(token)
+    expect(getJwtToken(event)).toEqual('123.456.789')
+  })
+})
+
+describe('util#getSystemToken', () => {
+  test('correctly returns the cmr token when one is already set', async () => {
+    const token = '1234-abcd-5678-efgh'
+    const tokenResponse = await getSystemToken(token)
+
+    expect(tokenResponse).toEqual('1234-abcd-5678-efgh')
   })
 })

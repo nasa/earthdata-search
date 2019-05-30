@@ -26,7 +26,7 @@ describe('CollectionRequest#constructor', () => {
 })
 
 describe('CollectionRequest#permittedCmrKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
+  test('returns an array of collection CMR keys', () => {
     const request = new CollectionRequest()
 
     expect(request.permittedCmrKeys()).toEqual([
@@ -64,7 +64,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
 })
 
 describe('CollectionRequest#nonIndexedKeys', () => {
-  test('returns an array of timeline CMR keys', () => {
+  test('returns an array of collection CMR keys', () => {
     const request = new CollectionRequest()
 
     expect(request.nonIndexedKeys()).toEqual([
