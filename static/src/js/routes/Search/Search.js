@@ -15,6 +15,12 @@ import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import CollectionResultsTabContainer
   from '../../containers/CollectionResultsTabContainer/CollectionResultsTabContainer'
+import CollectionDetailsTabContainer
+  from '../../containers/CollectionDetailsTabContainer/CollectionDetailsTabContainer'
+import CollectionDetailsBodyContainer
+  from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
+import CollectionDetailsHeaderContainer
+  from '../../containers/CollectionDetailsHeaderContainer/CollectionDetailsHeaderContainer'
 import FacetsModalContainer
   from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import GranuleResultsTabContainer
@@ -33,6 +39,8 @@ import GranuleDetailsHeaderContainer
   from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
 import MyDropzone
   from '../../components/MyDropzone/MyDropzone'
+import RelatedUrlsModalContainer
+  from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
@@ -90,9 +98,17 @@ export class Search extends Component {
                 body={<GranuleDetailsBodyContainer />}
               />
             </Route>
+            <Route exact path="/search/granules/collection-details">
+              <MasterOverlayPanelContainer
+                tabHandle={<CollectionDetailsTabContainer />}
+                header={<CollectionDetailsHeaderContainer />}
+                body={<CollectionDetailsBodyContainer />}
+              />
+            </Route>
           </Switch>
+          <RelatedUrlsModalContainer />
+          <FacetsModalContainer />
         </div>
-        <FacetsModalContainer />
       </div>
     )
   }

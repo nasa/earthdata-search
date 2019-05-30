@@ -1,0 +1,45 @@
+.collection-details-data-center {
+  flex: 0 1 320px;
+  margin: 0px $spacer $spacer 0;
+  font-size: 0.825rem;
+  border: 1px solid $color__black--200;
+  background-color: $color__black--100;
+
+  &__title {
+    margin-bottom: 0.3125rem;
+    font-size: 1em;
+  }
+
+  &__badge {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0.3125rem;
+  }
+
+  &__description {
+    margin-bottom: 0.3125rem;
+  }
+
+  &__email {
+    display: block;
+    margin-bottom: 0.3125rem;
+  }
+
+  &__contact {
+    margin-bottom: 0;
+
+    dt {
+      display: inline-block;
+      width: 40%;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    dd {
+      display: inline-block;
+      width: 60%;
+      margin-bottom: 0;
+      padding-left: $spacer/2;
+    }
+  }
+}

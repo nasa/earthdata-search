@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import Skeleton from '../Skeleton/Skeleton'
@@ -57,7 +58,7 @@ class GranuleResultsHeader extends Component {
   }
 
   render() {
-    const { focusedCollectionMetadata } = this.props
+    const { focusedCollectionMetadata, location } = this.props
     const { sortOrder, searchValue } = this.state
     const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
     const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
@@ -84,13 +85,16 @@ class GranuleResultsHeader extends Component {
                   <h2 className="granule-results-header__title">{title}</h2>
                 )
               }
-              <a
+              <Link
                 className="granule-results-header__link"
-                href="/"
+                to={{
+                  pathname: '/search/granules/collection-details',
+                  search: location.search
+                }}
               >
                 <i className="fa fa-info-circle" />
                 {' View Details'}
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -219,6 +223,7 @@ class GranuleResultsHeader extends Component {
 
 GranuleResultsHeader.propTypes = {
   focusedCollectionMetadata: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,

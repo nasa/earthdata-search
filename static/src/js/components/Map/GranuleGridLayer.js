@@ -10,14 +10,16 @@ import {
 
 import {
   addPath,
-  isCartesian,
   isClockwise,
+  getlprojection
+} from '../../util/map/granules'
+import {
+  isCartesian,
   getPolygons,
   getLines,
   getPoints,
-  getRectangles,
-  getlprojection
-} from '../../util/map/granules'
+  getRectangles
+} from '../../util/map/layers'
 import { dividePolygon } from '../../util/map/geo'
 import projectPath from '../../util/map/interpolation'
 import { colors, getColorByIndex } from '../../util/colors'

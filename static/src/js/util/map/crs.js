@@ -1,4 +1,18 @@
 import L from 'leaflet'
+import 'proj4'
+import 'proj4leaflet'
+
+console.warn('L', L)
+
+const ScaledLonLatProjection = scale => ({
+  project: latlng => (
+    new L.Point(latlng.lng * scale, latlng.lat * scale)
+  ),
+  unproject: point => (
+    new L.LatLng(point.y / scale, point.x / scale)
+  ),
+  bounds: L.bounds([-180 * scale, -90 * scale], [180 * scale, 90 * scale])
+})
 
 const crsProjections = {
   epsg4326: new L.Proj.CRS(
@@ -59,6 +73,9 @@ const crsProjections = {
         [4194304, 4194304]
       ])
     }
+  ),
+  simpleScaled: scale => (
+    L.extend({}, L.CRS.Simple, { projection: ScaledLonLatProjection(scale) })
   )
 }
 

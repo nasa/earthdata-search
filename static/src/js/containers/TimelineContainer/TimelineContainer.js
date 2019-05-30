@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import Timeline from '../../components/Timeline/Timeline'
-import getFocusedCollectionMetadata from '../../util/focusedCollection'
+import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),

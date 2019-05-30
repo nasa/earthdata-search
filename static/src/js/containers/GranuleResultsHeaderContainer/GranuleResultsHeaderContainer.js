@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
-import getFocusedCollectionMetadata from '../../util/focusedCollection'
+import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
 

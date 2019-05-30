@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 
 import actions from '../../actions'
-import getFocusedCollectionMetadata from '../../util/focusedCollection'
+import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
 

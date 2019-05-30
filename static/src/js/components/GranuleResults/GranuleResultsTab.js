@@ -7,18 +7,23 @@ import './GranuleResultsTab.scss'
 /**
  * Renders GranuleResultsTab.
  * @param {object} props - The props passed into the component.
+ * @param {object} location - The location passed into the component from React Router.
  * @param {object} props.onFocusedCollectionChange - Function to call to reset the focused collection.
  */
 export class GranuleResultsTab extends PureComponent {
   render() {
-    const { onFocusedCollectionChange } = this.props
+    console.warn('this.props', this.props)
+    const { location, onFocusedCollectionChange } = this.props
 
     return (
       <span className="granule-results-tab">
         <Link
           className="granule-results-tab__button"
           type="button"
-          to="/search"
+          to={{
+            pathname: '/search',
+            search: location.search
+          }}
           onClick={() => onFocusedCollectionChange('')}
         >
           <i className="fa fa-chevron-circle-left" />
@@ -30,6 +35,7 @@ export class GranuleResultsTab extends PureComponent {
 }
 
 GranuleResultsTab.propTypes = {
+  location: PropTypes.shape({}).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired
 }
 

@@ -1,0 +1,12 @@
+.split-badge {
+  padding: 0;
+  padding-left: 0.5rem;
+  overflow: hidden;
+
+  &__inner {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.3125rem 0.5rem;
+    background-color: rgba(0,0,0,0.4)
+  }
+}

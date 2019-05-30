@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 import GranuleDetailsTab from '../../components/GranuleDetails/GranuleDetailsTab'
 
@@ -11,14 +12,18 @@ const mapDispatchToProps = dispatch => ({
     collectionId => dispatch(actions.changeFocusedGranule(collectionId))
 })
 
-export const GranuleDetailsTabContainer = ({ onFocusedGranuleChange }) => (
+export const GranuleDetailsTabContainer = ({ location, onFocusedGranuleChange }) => (
   <GranuleDetailsTab
+    location={location}
     onFocusedGranuleChange={onFocusedGranuleChange}
   />
 )
 
 GranuleDetailsTabContainer.propTypes = {
+  location: PropTypes.shape({}).isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(GranuleDetailsTabContainer)
+export default withRouter(
+  connect(null, mapDispatchToProps)(GranuleDetailsTabContainer)
+)

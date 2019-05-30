@@ -41,7 +41,8 @@ import {
   masterOverlayPanelResize,
   granuleResultsPanelUpdateSortOrder,
   granuleResultsPanelUpdateSearchValue,
-  toggleFacetsModal
+  toggleFacetsModal,
+  toggleRelatedUrlsModal
 } from './ui'
 import {
   applyViewAllFacets,
@@ -98,6 +99,7 @@ const actions = {
   searchNlp,
   toggleCollectionVisibility,
   toggleFacetsModal,
+  toggleRelatedUrlsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAuthToken,
