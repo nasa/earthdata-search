@@ -78,7 +78,6 @@ export const buildUrls = (json, authToken) => {
   // TODO: Opendap
   // TODO: Modaps
 
-  console.warn('cmrMetadataUrlFormats', urls)
   return urls
 }
 

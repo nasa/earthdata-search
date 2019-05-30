@@ -5,12 +5,8 @@ import { Badge, Card } from 'react-bootstrap'
 import './CollectionDetailsDataCenter.scss'
 
 export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
-  const { contactInformation = {} } = dataCenter
-  const {
-    ContactMechanisms: contactMechanisms = [],
-    ContactInstruction: contactInstruction
-  } = contactInformation
-
+  console.warn('dataCenter', dataCenter)
+  console.warn('dataCenter', item)
   return (
     <Card
       as="li"
@@ -41,14 +37,14 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
           dataCenter.contactInformation && (
             <>
               {
-                contactInstruction && (
+                dataCenter.contactInstruction && (
                   <p className="collection-details-data-center__description">
-                    {contactInstruction}
+                    {dataCenter.contactInstruction}
                   </p>
                 )
               }
               {
-                contactMechanisms.map((contact, i) => {
+                dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
                   const key = `data_center_email_${item}-${i}`
                   if (contact.Type === 'Email') {
                     return (
@@ -64,7 +60,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
               }
               <dl className="collection-details-data-center__contact">
                 {
-                  contactMechanisms.map((contact, i) => {
+                  dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
                     const key = `data_center_other_${item}-${i}`
                     if (contact.Type === 'Facebook') {
                       return (
@@ -96,7 +92,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
           )
         }
         {
-          !contactInformation && <p>No contact information for this data center.</p>
+          !dataCenter.contactInformation && <p>No contact information for this data center.</p>
         }
       </Card.Body>
     </Card>

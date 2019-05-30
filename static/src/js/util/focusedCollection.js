@@ -22,8 +22,6 @@ export const getFocusedCollectionMetadata = (collectionId, collections) => {
 }
 
 export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
-  console.warn('args', [json, ummJson])
-
   // Metadata from the CMR .json response
   const jsonMetadata = {
     boxes: json.boxes,
@@ -53,11 +51,6 @@ export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
     temporal: buildTemporal(ummJson),
     spatial: buildSpatial(ummJson)
   }
-
-  console.log('response', {
-    ...jsonMetadata,
-    ...ummJsonMetadata
-  })
 
   return {
     ...jsonMetadata,
