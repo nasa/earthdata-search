@@ -1,14 +1,4 @@
 class ProcessRetrievalJob < ActiveJob::Base
-  # Pull any jobs for the specified DAACs into their own queues as to not fill
-  # up the default queue with long running jobs
-  queue_as do
-    retrieval_id = arguments.first
-
-    retrieval = Retrieval.find_by(id: retrieval_id)
-
-    retrieval.determine_queue
-  end
-
   # Processes a Retrieval object creating necessary jobs to submit orders associated with the request
   #
   # @param retrieval_id [int] the id of a Retrieval object to process
@@ -59,7 +49,7 @@ class ProcessRetrievalJob < ActiveJob::Base
               search_params: params
             )
 
-            SubmitLegacyServicesJob.set(queue: queue_name).perform_later(
+            SubmitLegacyServicesJob.set(queue: 'legacy_services').perform_later(
               legacy_services_order,
               cmr_env
             )
@@ -73,7 +63,7 @@ class ProcessRetrievalJob < ActiveJob::Base
               search_params: params
             )
 
-            SubmitCatalogRestJob.set(queue: queue_name).perform_later(
+            SubmitCatalogRestJob.perform_later(
               catalog_rest_order,
               base_url
             )
@@ -91,6 +81,6 @@ class ProcessRetrievalJob < ActiveJob::Base
     retrieval = Retrieval.find_by(id: retrieval_id)
 
     # After all the orders are submitted, kick off the order status jobs to retrieve updates from their respective services
-    OrderStatusJob.set(queue: queue_name).perform_later(retrieval.id, retrieval.token, retrieval.environment)
+    OrderStatusJob.perform_later(retrieval.id, retrieval.token, retrieval.environment)
   end
 end

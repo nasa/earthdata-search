@@ -1,7 +1,5 @@
 web: ./start.sh
-normal_jobs: bundle exec bin/delayed_job --pool=default run
-nsidc_jobs: bundle exec bin/delayed_job --pool=nsidc run
-lpdaac_jobs: bundle exec bin/delayed_job --pool=lpdaac run
-worker: bundle exec rake jobs:work
+default_jobs: bundle exec bin/delayed_job --queue=default run
+legacy_services_jobs: bundle exec bin/delayed_job --queue=legacy_services run
 cron: ./cron.sh
 on_build: bundle exec rake deploy:pre
