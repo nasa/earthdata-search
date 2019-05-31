@@ -6,10 +6,6 @@ class OrderJob < ActiveJob::Base
 
       # Order status jobs operate on retreivals so that we can utilize the multi order endpoint to get
       # the status of more than one order at a time
-      Order.find(order_id).retrieval_collection.retrieval
-
-      # Using find_by because we obfuscate the id of Retrieval and the default
-      # `find` method will look for an obfuscated id instead of the raw integer
       retrieval = Order.find(order_id).retrieval_collection.retrieval
 
       # After all the orders are submitted, kick off the order status jobs to retrieve updates from their respective services
