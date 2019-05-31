@@ -42,6 +42,9 @@ class ProcessRetrievalJob < ActiveJob::Base
           params[:page_size] = page_size
           params[:page_num]  = page_num
 
+          # The last job created should fire off the order status job
+          check_status = (page_num * page_size > granule_count)
+
           if method['type'] == 'order'
             # `Stage For Delivery` Access Method
             legacy_services_order = LegacyServicesOrder.create(
@@ -51,7 +54,8 @@ class ProcessRetrievalJob < ActiveJob::Base
 
             SubmitLegacyServicesJob.perform_later(
               legacy_services_order,
-              cmr_env
+              cmr_env,
+              check_status
             )
           elsif method['type'] == 'service'
             # `Customize` Access Method
@@ -65,22 +69,12 @@ class ProcessRetrievalJob < ActiveJob::Base
 
             SubmitCatalogRestJob.perform_later(
               catalog_rest_order,
-              base_url
+              base_url,
+              check_status
             )
           end
         end
       end
     end
-  end
-
-  after_perform do |job|
-    retrieval_id = job.arguments.first
-
-    # Using find_by because we obfuscate the id of Retrieval and the default
-    # `find` method will look for an obfuscated id instead of the raw integer
-    retrieval = Retrieval.find_by(id: retrieval_id)
-
-    # After all the orders are submitted, kick off the order status jobs to retrieve updates from their respective services
-    OrderStatusJob.perform_later(retrieval.id, retrieval.token, retrieval.environment)
   end
 end

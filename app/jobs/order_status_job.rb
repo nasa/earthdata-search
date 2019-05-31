@@ -3,10 +3,7 @@ class OrderStatusJob < ActiveJob::Base
   #
   # @param retrieval_id [int] the id of a Retrieval object to process
   # @param base_url [String] the base url to provide to the user in their order to check on for status updates
-  def perform(id, token, cmr_env)
-    # Time the operation to determine how long to stall the next job
-    started_at = Time.zone.now
-
+  def perform(id, token, cmr_env, attempts)
     retrieval = Retrieval.find_by_id(id)
 
     echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
@@ -19,23 +16,25 @@ class OrderStatusJob < ActiveJob::Base
 
     # If there were orders that have status values
     if (orders + service_orders).any?
-      # End the timer to determine the period of time to stall before our next attempt
-      ended_at = Time.zone.now
-
-      # Duration of the execution in seconds
-      elapsed_seconds = (ended_at - started_at).to_i
-
-      # Normalize the refresh time between fast and slow jobs by having fast jobs wait.
-      # If the job only takes 2 seconds, we'll stall for 28 seconds so were not asking
-      # for an update too often.
-      stall_time = 30 - [30, elapsed_seconds].min
-
       # If there are any orders that provide status values any of the orders
       # are in creating or pending state we need to continue asking for updates
       if retrieval.in_progress && !Rails.env.test?
         # The order isn't done processing, continue pinging for updated statuses
-        OrderStatusJob.set(wait_until: (Time.zone.now + stall_time)).perform_later(id, token, cmr_env)
+        OrderStatusJob.set(wait_until: (Time.zone.now + stall_time(retrieval.created_at))).perform_later(id, token, cmr_env, ((attempts || 0) + 1))
       end
+    end
+  end
+
+  # Basic backoff for order status jobs
+  def stall_time(created_at)
+    since_creation = Time.zone.now - created_at
+
+    if since_creation < 20.minutes
+      30
+    elsif since_creation < 2.hours
+      5.minutes
+    else
+      1.hour
     end
   end
 

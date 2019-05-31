@@ -1,10 +1,10 @@
-class SubmitLegacyServicesJob < ActiveJob::Base
+class SubmitLegacyServicesJob < OrderJob
   queue_as :legacy_services
 
   # Processes a Order object submitting it's data to Legacy Services
   #
   # @param order [Order] the Order object to process
-  def perform(order, cmr_env)
+  def perform(order, cmr_env, check_status = false)
     client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
 
     token = order.retrieval_collection.retrieval.token
