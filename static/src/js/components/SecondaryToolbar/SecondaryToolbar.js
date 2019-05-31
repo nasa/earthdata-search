@@ -30,6 +30,20 @@ class SecondaryToolbar extends Component {
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
 
+    const backLink = (
+      <Link
+        className="collection-results__item-title-link"
+        to={{
+          pathname: '/search',
+          search: location.search
+        }}
+      >
+        <Button className="secondary-toolbar__project" variant="light">
+          Back
+        </Button>
+      </Link>
+    )
+
     const projectLink = (
       <Link
         className="collection-results__item-title-link"
@@ -74,7 +88,10 @@ class SecondaryToolbar extends Component {
     return (
       <section className="secondary-toolbar">
         {
-          projectIds.length > 0 && projectLink
+          location.pathname === '/projects' && backLink
+        }
+        {
+          (location.pathname !== '/projects' && projectIds.length > 0) && projectLink
         }
         {
           !loggedIn ? loginLink : loggedInDropdown
