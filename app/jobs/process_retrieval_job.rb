@@ -49,7 +49,7 @@ class ProcessRetrievalJob < ActiveJob::Base
               search_params: params
             )
 
-            SubmitLegacyServicesJob.set(queue: 'legacy_services').perform_later(
+            SubmitLegacyServicesJob.perform_later(
               legacy_services_order,
               cmr_env
             )
