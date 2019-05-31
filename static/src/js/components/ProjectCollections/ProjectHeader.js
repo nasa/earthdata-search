@@ -12,11 +12,11 @@ import { convertSizeToMB, convertSize } from '../../util/project'
 const ProjectHeader = ({
   collections
 }) => {
-  const { allIds, byId } = collections
+  const { byId, projectIds } = collections
 
   let totalGranules = 0
   let size = 0
-  allIds.forEach((collectionId) => {
+  projectIds.forEach((collectionId) => {
     const collection = byId[collectionId]
     const { granules } = collection
     const { hits, totalSize: granuleSize } = granules
@@ -35,7 +35,7 @@ const ProjectHeader = ({
   return (
     <div>
       <p className="total-granules">{`${totalGranules} Granules`}</p>
-      <p className="total-collections">{`${allIds.length} Collections`}</p>
+      <p className="total-collections">{`${projectIds.length} Collections`}</p>
       <p className="total-size">{`${totalProjectSize} ${totalUnit}`}</p>
     </div>
   )
