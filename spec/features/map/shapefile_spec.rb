@@ -123,7 +123,7 @@ describe 'Shapefile search' do
       expect(lng).to be_within(0.15).of(100.5)
     end
 
-    it 'zooms the map to the spatial constraint' do
+    it 'zooms the map to the spatial constraint', pending_updates: true do
       script = "return $('#map').data('map').map.getZoom();"
       result = page.execute_script(script)
 
