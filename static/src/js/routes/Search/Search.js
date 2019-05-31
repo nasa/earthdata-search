@@ -6,8 +6,6 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import ConnectedEdscMapContainer
-  from '../../containers/MapContainer/MapContainer'
 import ConnectedMasterOverlayPanelContainer
   from '../../containers/MasterOverlayPanelContainer/MasterOverlayPanelContainer'
 import ConnectedSearchFormContainer
@@ -43,7 +41,6 @@ import '../../components/CollectionResults/CollectionResults.scss'
 
 const Search = () => (
   <div className="route-wrapper route-wrapper--search search">
-    <ConnectedEdscMapContainer />
     <MyDropzone />
     <SidebarContainer />
     <ConnectedSearchFormContainer />
