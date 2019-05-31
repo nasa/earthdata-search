@@ -1,4 +1,6 @@
 class SubmitLegacyServicesJob < ActiveJob::Base
+  queue_as :legacy_services
+
   # Processes a Order object submitting it's data to Legacy Services
   #
   # @param order [Order] the Order object to process
