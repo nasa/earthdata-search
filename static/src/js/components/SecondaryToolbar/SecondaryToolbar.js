@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { remove } from 'tiny-cookie'
 import { Link } from 'react-router-dom'
+import { Dropdown } from 'react-bootstrap'
 
-import { Button, Dropdown } from 'react-bootstrap'
+import Button from '../Button/Button'
 
 import './SecondaryToolbar.scss'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
@@ -35,33 +36,56 @@ class SecondaryToolbar extends Component {
         className="collection-results__item-title-link"
         to={{
           pathname: '/search',
-          search: location.search
+          search: window.location.search
         }}
       >
-        <Button className="secondary-toolbar__project" variant="light">
+        <Button className="secondary-toolbar__back" bootstrapVariant="light">
           Back
         </Button>
       </Link>
     )
 
-    const projectLink = (
-      <Link
-        className="collection-results__item-title-link"
-        to={{
-          pathname: '/projects',
-          search: location.search
-        }}
-      >
-        <Button className="secondary-toolbar__project" variant="light">
-          My Project
-        </Button>
-      </Link>
-    )
+    const buildProjectLink = (loggedIn) => {
+      if (!loggedIn) {
+        const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
+        return (
+          <Button
+            className="secondary-toolbar__project"
+            bootstrapVariant="light"
+            href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(projectPath)}`}
+          >
+            My Project
+          </Button>
+        )
+      }
+      return (
+        <Link
+          className="collection-results__item-title-link"
+          to={{
+            pathname: '/projects',
+            search: window.location.search
+          }}
+        >
+          <Button
+            className="secondary-toolbar__project"
+            bootstrapVariant="light"
+          >
+            My Project
+          </Button>
+        </Link>
+      )
+    }
+
+    const projectLink = buildProjectLink(loggedIn)
 
     const loginLink = (
-      <Button className="secondary-toolbar__login" variant="light" href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}>
-        <i className="fa fa-lock" />
-        {' Earthdata Login'}
+      <Button
+        className="secondary-toolbar__login"
+        bootstrapVariant="light"
+        href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}
+        icon="lock"
+      >
+        Earthdata Login
       </Button>
     )
 

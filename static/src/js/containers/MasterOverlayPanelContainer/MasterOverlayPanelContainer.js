@@ -34,6 +34,7 @@ const mapDispatchToProps = dispatch => ({
  */
 const MasterOverlayPanelContainer = (props) => {
   const {
+    actions,
     header,
     body,
     tabHandle,
@@ -48,6 +49,7 @@ const MasterOverlayPanelContainer = (props) => {
 
   return (
     <MasterOverlayPanel
+      actions={actions}
       header={header}
       body={body}
       panelHeight={panelHeight}
@@ -63,10 +65,12 @@ const MasterOverlayPanelContainer = (props) => {
 }
 
 MasterOverlayPanelContainer.defaultProps = {
+  actions: null,
   collectionHits: null
 }
 
 MasterOverlayPanelContainer.propTypes = {
+  actions: PropTypes.node,
   body: PropTypes.node.isRequired,
   collectionHits: PropTypes.string,
   header: PropTypes.node.isRequired,

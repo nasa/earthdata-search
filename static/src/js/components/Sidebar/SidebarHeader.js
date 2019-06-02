@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import './Header.scss'
+import './SidebarHeader.scss'
 
 const Header = () => (
   <header className="header">

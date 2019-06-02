@@ -1,9 +1,9 @@
 $color__brand--blue-light: #92bfec;
-$color__brand--blue: #2980BA;
+$color__brand--blue: #2980ba;
 $color__brand--blue-dark: #2276ac;
 
-$color__button--blue: #5382b1;
-
+$color__red: #c0392b;
+$color__red--dark: #94261a;
 $color__orange: #f39c12;
 $color__yellow: #ccaa00;
 
@@ -20,4 +20,8 @@ $color__black--700: #2c2d2e;
 $color__black--800: #191a1b;
 $color__black--900: #121315;
 
-$color__green--500: #30AB62;
+$color__green--500: #30ab62;
+
+$color__theme--blue: #5382b1;
+$color__theme--light: #ebedef;
+$color__theme--yellow: $color__yellow;

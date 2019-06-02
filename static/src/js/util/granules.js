@@ -140,7 +140,7 @@ export const isDataLink = (link, type) => {
  * @param {array} links List of links from granule metadata
  * @returns {array} List of data links filters from input links
  */
-export const createDataLinks = (links) => {
+export const createDataLinks = (links = []) => {
   // All 'http' data links
   const httpDataLinks = links.filter(link => isDataLink(link, 'http'))
 

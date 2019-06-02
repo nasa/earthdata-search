@@ -10,10 +10,6 @@
   position: relative;
   height: 100%;
   overflow: hidden;
-
-  .th-wrapper + & {
-    padding-top: 32px;
-  }
 }
 
 .route-wrapper {
@@ -24,4 +20,26 @@
   height: 100%;
   overflow: hidden;
   align-items: flex-end;
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0.625rem;
+    width: 100%;
+    height: auto;
+
+    @include media-breakpoint-up(md) {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+  }
 }

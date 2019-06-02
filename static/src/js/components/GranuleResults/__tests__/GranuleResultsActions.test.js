@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import GranuleResultsHeaderActions from '../GranuleResultsHeaderActions'
+
+import { Button } from 'react-bootstrap'
+import GranuleResultsActions from '../GranuleResultsActions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
     collectionId: 'collectionId',
-    granuleCount: 5,
+    granuleCount: 5000,
     isCollectionInProject: false,
     location: {
       search: '?p=collectionId'
@@ -17,7 +19,7 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsHeaderActions {...props} />)
+  const enzymeWrapper = shallow(<GranuleResultsActions {...props} />)
 
   return {
     enzymeWrapper,
@@ -25,29 +27,29 @@ function setup() {
   }
 }
 
-describe('GranuleResultsHeaderActions component', () => {
+describe('GranuleResultsActions component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.type()).toBe(Fragment)
+    expect(enzymeWrapper.type()).toBe('div')
   })
 
   test('renders the granule count', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.granule-count').text()).toEqual('5 Granules')
+    expect(enzymeWrapper.find('.granule-results-actions__granule-count').text()).toEqual('5,000 Granules')
   })
 
   test('renders a Download All button', () => {
     const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('.secondary-toolbar__project').text()).toEqual('Download All5 Granules')
+    expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().children).toEqual('Download All')
+    expect(enzymeWrapper.find('.granule-results-actions__download-all-button').find('Button').props().badge).toEqual('5,000 Granules')
   })
 
   test('renders a link to add the collection to the project', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.exists('.add-to-project')).toBeTruthy()
+    expect(enzymeWrapper.exists('.granule-results-actions__proj-action--add')).toBeTruthy()
     expect(enzymeWrapper.exists('.remove-from-project')).toBeFalsy()
   })
 
@@ -55,14 +57,14 @@ describe('GranuleResultsHeaderActions component', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({ isCollectionInProject: true })
 
-    expect(enzymeWrapper.exists('.remove-from-project')).toBeTruthy()
-    expect(enzymeWrapper.exists('.add-to-project')).toBeFalsy()
+    expect(enzymeWrapper.exists('.granule-results-actions__proj-action--remove')).toBeTruthy()
+    expect(enzymeWrapper.exists('.granule-results-actions__proj-action--add')).toBeFalsy()
   })
 
   describe('addToProjectButton', () => {
     test('calls onAddProjectCollection', () => {
       const { enzymeWrapper, props } = setup()
-      const button = enzymeWrapper.find('.add-to-project')
+      const button = enzymeWrapper.find('.granule-results-actions__proj-action--add')
 
       button.simulate('click')
       expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
@@ -74,7 +76,7 @@ describe('GranuleResultsHeaderActions component', () => {
     test('calls onRemoveCollectionFromProject', () => {
       const { enzymeWrapper, props } = setup()
       enzymeWrapper.setProps({ isCollectionInProject: true })
-      const button = enzymeWrapper.find('.remove-from-project')
+      const button = enzymeWrapper.find('.granule-results-actions__proj-action--remove')
 
       button.simulate('click')
       expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
@@ -86,7 +88,7 @@ describe('GranuleResultsHeaderActions component', () => {
     test('calls onAddProjectCollection', () => {
       const { enzymeWrapper, props } = setup()
 
-      const button = enzymeWrapper.find('.download-all')
+      const button = enzymeWrapper.find('.granule-results-actions__download-all')
 
       button.simulate('click')
       expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)

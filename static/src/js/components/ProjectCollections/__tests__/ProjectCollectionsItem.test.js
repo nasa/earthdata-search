@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import ProjectCollectionItem from '../ProjectCollectionItem'
+import ProjectCollectionsItem from '../ProjectCollectionsItem'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -24,7 +24,7 @@ function setup() {
     onToggleCollectionVisibility: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<ProjectCollectionItem {...props} />)
+  const enzymeWrapper = shallow(<ProjectCollectionsItem {...props} />)
 
   return {
     enzymeWrapper,
@@ -36,15 +36,15 @@ describe('ProjectCollectionItem component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.collection-title').text()).toEqual('Collection Title')
-    expect(enzymeWrapper.find('.granule-count').text()).toEqual('4 Granules')
-    expect(enzymeWrapper.find('.total-size').text()).toEqual('4.0 MB')
+    expect(enzymeWrapper.find('.project-collections-item__title').text()).toEqual('Collection Title')
+    expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('4 Granules')
+    expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
   })
 
   test('Remove from project button calls onRemoveCollectionFromProject', () => {
     const { enzymeWrapper, props } = setup()
 
-    const button = enzymeWrapper.find('.remove-collection')
+    const button = enzymeWrapper.find('.project-collections-item__more-actions-remove')
 
     button.simulate('click')
     expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
@@ -54,7 +54,7 @@ describe('ProjectCollectionItem component', () => {
   test('Toggle visibility button calls onToggleCollectionVisibility', () => {
     const { enzymeWrapper, props } = setup()
 
-    const button = enzymeWrapper.find('.toggle-visibility')
+    const button = enzymeWrapper.find('.project-collections-item__more-actions-vis')
 
     button.simulate('click')
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledTimes(1)

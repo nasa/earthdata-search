@@ -1,0 +1,31 @@
+.granule-results-actions {
+  &__info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: $spacer/4;
+    vertical-align: middle;
+  }
+
+  &__granule-count {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &__granule-num {
+    font-weight: 700;
+  }
+
+  &__proj-action {
+    padding: 0;
+
+    &--remove {
+      color: $color__red;
+
+      &:hover,
+      &:active {
+        color: $color__red--dark;
+      }
+    }
+  }
+}

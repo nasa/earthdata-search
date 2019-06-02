@@ -1,0 +1,38 @@
+.project-header {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: $spacer*2 $spacer $spacer;
+  border-right: 1px solid $color__black--300;
+  border-bottom: 1px solid $color__black--300;
+
+  &__title {
+    margin-bottom: $spacer/4;
+    font-size: 1.125rem;
+    font-weight: 300;
+  }
+
+  &__stats-list {
+    height: 1.25rem;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__stats-item {
+    margin-right: $spacer/2;
+    display: inline-block;
+    font-size: 0.775rem;
+    line-height: 1.25rem;
+    color: $color__black--500;
+  }
+
+  &__stats-val {
+    font-weight: 700;
+  }
+
+  &__stats-icon {
+    margin-left: $spacer/4;
+    color: $color__black--400;
+  }
+}

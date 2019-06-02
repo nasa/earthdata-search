@@ -12,8 +12,11 @@ import {
   granuleTimeTotal
 } from './skeleton'
 
-import './GranuleResultsList.scss'
 import murmurhash3 from '../../util/murmurhash3'
+import { commafy } from '../../util/commafy'
+import { pluralize } from '../../util/pluralize'
+
+import './GranuleResultsList.scss'
 
 const granuleListItemSkeletonStyle = {
   height: '144px'
@@ -106,7 +109,7 @@ export const GranuleResultsList = (props) => {
               />
             )
           }
-          {!initialLoading && `Showing ${visibleGranules} of ${hits} matching granules` }
+          {!initialLoading && `Showing ${commafy(visibleGranules)} of ${commafy(hits)} matching ${pluralize('granule', hits)}` }
         </span>
         <span className="granule-results-list__header-item">
           {

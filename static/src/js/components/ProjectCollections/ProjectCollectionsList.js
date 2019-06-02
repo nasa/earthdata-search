@@ -1,10 +1,14 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import {
+  withRouter,
+  Link
+} from 'react-router-dom'
 
-import ProjectCollectionItem from './ProjectCollectionItem'
-import ProjectHeader from './ProjectHeader'
-import colors from '../../util/colors'
+import ProjectCollectionItem from './ProjectCollectionsItem'
+import { colors, getColorByIndex } from '../../util/colors'
 
+import './ProjectCollectionsList.scss'
 
 /**
  * Renders ProjectCollectionsList.
@@ -12,11 +16,13 @@ import colors from '../../util/colors'
  * @param {object} props.collections - List of collections passed from redux store.
  * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
  */
-const ProjectCollectionsList = (props) => {
+export const ProjectCollectionsList = (props) => {
   const {
     collections,
+    loading,
     onRemoveCollectionFromProject,
-    onToggleCollectionVisibility
+    onToggleCollectionVisibility,
+    location
   } = props
 
   const {
@@ -24,8 +30,10 @@ const ProjectCollectionsList = (props) => {
     projectIds
   } = collections
 
+  const projectIsEmpty = !projectIds.length
+
   const collectionsList = projectIds.map((collectionId, index) => {
-    const color = Object.values(colors)[index]
+    const color = getColorByIndex(index, colors)
     return (
       <ProjectCollectionItem
         collectionId={collectionId}
@@ -39,21 +47,37 @@ const ProjectCollectionsList = (props) => {
   })
 
   return (
-    <>
-      <ProjectHeader
-        collections={collections}
-      />
-      <ul className="granule-results-list__list">
-        {collectionsList}
-      </ul>
-    </>
+    <div className="project-collections-list">
+      {projectIsEmpty && (
+        <p className="project-collections-list__notice">
+          {'Your project is empty. Click '}
+          <Link
+            to={`/search${location.search}`}
+          >
+            here
+          </Link>
+          {' to return to search and add collections to your project.'}
+        </p>
+      )}
+      {!projectIsEmpty && (
+        <ul className="project-collections-list__list">
+          {loading && (
+            <></>
+          )}
+          {!loading && collectionsList}
+        </ul>
+      )}
+      <div className="project-collections-list__filler" />
+    </div>
   )
 }
 
 ProjectCollectionsList.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  loading: PropTypes.bool.isRequired,
+  location: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired
 }
 
-export default ProjectCollectionsList
+export default withRouter(ProjectCollectionsList)
