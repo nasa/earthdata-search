@@ -1,6 +1,19 @@
 .search-form {
+  position: relative;
+  display: flex;
+  margin-right: $spacer/2;
+  flex-direction: column;
+  width: auto;
   z-index: 2;
   background-color: $color__black--900;
+
+  &__primary {
+    display: flex;
+  }
+
+  &__secondary {
+    display: flex;
+  }
 
   &__form {
     display: inline;
@@ -40,9 +53,13 @@
 
   &__input {
     display: inline;
-    width: 21em;
+    width: 10em;
     padding: 0.825rem 0.925rem;
     border: none;
+
+    @include media-breakpoint-up(xl) {
+      width: 21em;
+    }
 
     &:focus {
       box-shadow: none;

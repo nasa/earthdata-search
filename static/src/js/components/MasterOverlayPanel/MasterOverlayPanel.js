@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import { throttle } from 'lodash'
 
+import history from '../../util/history'
 import './MasterOverlayPanel.scss'
 
 /**
@@ -20,12 +21,46 @@ import './MasterOverlayPanel.scss'
 class MasterOverlayPanel extends PureComponent {
   constructor(props) {
     super(props)
+
+    this.state = {
+      maxHeight: null,
+      minHeight: 0
+    }
+
     this.onMasterOverlayHeightChange = props.onMasterOverlayHeightChange.bind(this)
     this.onMasterOverlayPanelDragStart = props.onMasterOverlayPanelDragStart.bind(this)
     this.onMasterOverlayPanelDragEnd = props.onMasterOverlayPanelDragEnd.bind(this)
     this.onMouseMove = throttle(this.onMouseMove.bind(this), 16)
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
+    this.onWindowResize = this.onWindowResize.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onWindowResize)
+    history.listen(this.onWindowResize)
+
+    const maxHeight = this.calculateMaxHeight()
+
+    this.setState({
+      maxHeight
+    })
+  }
+
+  componentWillUnmount() {
+    window.addEventListener('resize', this.onWindowResize)
+  }
+
+  onWindowResize() {
+    setTimeout(() => {
+      const { onMasterOverlayHeightChange, panelHeight } = this.props
+      const maxHeight = this.calculateMaxHeight()
+      this.setState({
+        maxHeight
+      })
+
+      if (panelHeight > maxHeight) onMasterOverlayHeightChange(maxHeight)
+    }, 0)
   }
 
   onMouseDown(e) {
@@ -49,18 +84,10 @@ class MasterOverlayPanel extends PureComponent {
   }
 
   onMouseUp(e) {
-    const {
-      masterOverlayPanel,
-      onMasterOverlayPanelDragEnd,
-      onMasterOverlayHeightChange
-    } = this.props
+    const { onMasterOverlayPanelDragEnd } = this.props
 
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
-
-    if ($(this.node).offset().top < 105) {
-      onMasterOverlayHeightChange(masterOverlayPanel.height - 50)
-    }
 
     onMasterOverlayPanelDragEnd()
     e.stopPropagation()
@@ -76,17 +103,32 @@ class MasterOverlayPanel extends PureComponent {
     requestAnimationFrame(() => {
       if (!masterOverlayPanel.dragging) return
 
-      // This can be improved but will work for now. It currently will let the user scroll past the max height,
-      // but we can just reset it when the onMouseUp fires.
-      if ($(this.node).offset().top < 105) return
-
+      const { maxHeight, minHeight } = this.state
       const distanceScrolled = masterOverlayPanel.clickStartY - e.pageY
+      const newHeight = (distanceScrolled + masterOverlayPanel.clickStartHeight)
 
-      onMasterOverlayHeightChange(distanceScrolled + masterOverlayPanel.clickStartHeight)
+      if (newHeight > maxHeight) {
+        onMasterOverlayHeightChange(maxHeight)
+        return
+      }
+      if (newHeight < minHeight) {
+        onMasterOverlayHeightChange(minHeight)
+        return
+      }
+
+      onMasterOverlayHeightChange(newHeight)
     })
 
     e.stopPropagation()
     e.preventDefault()
+  }
+
+  calculateMaxHeight() {
+    const headerHeight = $('.route-wrapper__header').outerHeight()
+    const tabHeight = $('.master-overlay-panel__tab').height()
+    const routeWrapperHeight = $('.route-wrapper').height()
+    const maxHeight = routeWrapperHeight - (headerHeight + tabHeight)
+    return maxHeight
   }
 
   render() {

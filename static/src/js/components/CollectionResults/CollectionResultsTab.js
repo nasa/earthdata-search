@@ -1,13 +1,19 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import { commafy } from '../../util/commafy'
+
 class CollectionResultsTab extends PureComponent {
   render() {
-    const { collectionHits } = this.props
+    let { collectionHits } = this.props
+
+    if (collectionHits === null) {
+      collectionHits = 0
+    }
 
     return (
       <>
-        {`${collectionHits} Matching Collections`}
+        {`${commafy(collectionHits)} Matching Collections`}
       </>
     )
   }

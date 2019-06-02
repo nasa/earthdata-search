@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'react-bootstrap'
-
+import Button from '../Button/Button'
 import ConnectedSpatialDisplayContainer
   from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
 import ConnectedTemporalDisplayContainer
@@ -85,41 +84,45 @@ class SearchForm extends Component {
 
     return (
       <section className="search-form">
-        <form className="search-form__form" onSubmit={this.onFormSubmit}>
-          <TextField
-            name="keywordSearch"
-            classNames={{
-              label: 'search-form__label',
-              labelSpan: 'search-form__assistive',
-              input: 'search-form__input'
-            }}
-            placeholder="Type any topic, collection, or place name"
-            value={keywordSearch}
-            onChange={this.onInputChange}
-            onBlur={this.onKeywordBlur}
-          />
-        </form>
-        <ConnectedTemporalSelectionDropdownContainer />
-        <SpatialSelectionDropdown />
-        <Button
-          variant="inline-block"
-          className="search-form__button search-form__button--clear"
-          onClick={this.onSearchClear}
-        >
-          <i className="fa fa-eraser" />
-        </Button>
-        <Button
-          variant="inline-block"
-          className="search-form__button search-form__button--dark search-form__button--toggle"
-          onClick={this.onToggleFilterStack}
-          title="Toggle Filter Stack"
-        >
-          <i className="fa fa-bars" />
-        </Button>
-        <FilterStack isOpen={showFilterStack}>
-          <ConnectedSpatialDisplayContainer />
-          <ConnectedTemporalDisplayContainer />
-        </FilterStack>
+        <div className="search-form__primary">
+          <form className="search-form__form" onSubmit={this.onFormSubmit}>
+            <TextField
+              name="keywordSearch"
+              classNames={{
+                label: 'search-form__label',
+                labelSpan: 'search-form__assistive',
+                input: 'search-form__input'
+              }}
+              placeholder="Type any topic, collection, or place name"
+              value={keywordSearch}
+              onChange={this.onInputChange}
+              onBlur={this.onKeywordBlur}
+            />
+          </form>
+          <ConnectedTemporalSelectionDropdownContainer />
+          <SpatialSelectionDropdown />
+          <Button
+            bootstrapVariant="inline-block"
+            className="search-form__button search-form__button--clear"
+            onClick={this.onSearchClear}
+          >
+            <i className="fa fa-eraser" />
+          </Button>
+          <Button
+            bootstrapVariant="inline-block"
+            className="search-form__button search-form__button--dark search-form__button--toggle"
+            onClick={this.onToggleFilterStack}
+            title="Toggle Filter Stack"
+          >
+            <i className="fa fa-bars" />
+          </Button>
+        </div>
+        <div className="search-form__secondary">
+          <FilterStack isOpen={showFilterStack}>
+            <ConnectedSpatialDisplayContainer />
+            <ConnectedTemporalDisplayContainer />
+          </FilterStack>
+        </div>
       </section>
     )
   }

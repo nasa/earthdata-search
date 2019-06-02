@@ -2,10 +2,12 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
 import { Link } from 'react-router-dom'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { commafy } from '../../util/commafy'
+import { pluralize } from '../../util/pluralize'
 
 /**
  * Renders CollectionResultsBody.
@@ -102,13 +104,13 @@ class CollectionResultsBody extends PureComponent {
                 }
                 {
                   !collection.is_cwic && (
-                    <strong>{`${collection.granule_count} Granules`}</strong>
+                    <strong>{`${commafy(collection.granule_count)} ${pluralize('Granule', collection.granule_count)}`}</strong>
                   )
                 }
                 <strong> &bull; </strong>
                 <strong>{timeRange}</strong>
                 <strong> &bull; </strong>
-                <span>{collection.summary}</span>
+                {collection.summary}
               </p>
             </div>
             <div className="collection-results__item-body-secondary">
@@ -121,19 +123,25 @@ class CollectionResultsBody extends PureComponent {
                         <Tooltip id="tooltip__quic-badge" className="collection-results__item-badge-tooltip">Int&apos;l / Interagency Data</Tooltip>
                       )}
                     >
-                      <span className="badge collection-results__item-badge collection-results__item-badge--cwic">CWIC</span>
+                      <Badge
+                        className="collection-results__item-badge collection-results__item-badge--cwic"
+                      >
+                        CWIC
+                      </Badge>
                     </OverlayTrigger>
                   )
                 }
                 {
                   collection.short_name && (
-                    <span className="badge collection-results__item-badge collection-results__item-badge--attribution">
+                    <Badge
+                      className="badge collection-results__item-badge collection-results__item-badge--attribution"
+                    >
                       {
                         `${collection.short_name}
                         v${collection.version_id} -
                         ${displayOrganization}`
                       }
-                    </span>
+                    </Badge>
                   )
                 }
               </p>
