@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import classNames from 'classnames'
 
 import { changeViewAllFacet } from '../../util/facets'
 
+import Button from '../Button/Button'
 import FacetsList from './FacetsList'
 import FacetsModalNav from './FacetsModalNav'
 import Spinner from '../Spinner/Spinner'
@@ -113,14 +114,14 @@ export class FacetsModal extends Component {
           <div>
             <Button
               className="facets-modal__action facets-modal__action--cancel"
-              variant="light"
+              bootstrapVariant="light"
               onClick={this.onModalClose}
             >
               Cancel
             </Button>
             <Button
               className="facets-modal__action facets-modal__action--apply"
-              variant="primary"
+              bootstrapVariant="primary"
               onClick={this.onApplyClick}
             >
               Apply

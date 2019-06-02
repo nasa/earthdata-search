@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import moment from 'moment'
 
 import Alert from 'react-bootstrap/Alert'
-import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 
+import Button from '../Button/Button'
 import Datepicker from './Datepicker'
 
 import './TemporalSelectionDropdown.scss'
@@ -268,7 +268,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
           <div>
             <Button
               className={classes.btnApply}
-              variant="primary"
+              bootstrapVariant="primary"
               onClick={this.onApplyClick}
               disabled={disabled}
             >
@@ -276,7 +276,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
             </Button>
             <Button
               className={classes.btnCancel}
-              variant="link"
+              bootstrapVariant="link"
               onClick={this.onClearClick}
             >
               Clear

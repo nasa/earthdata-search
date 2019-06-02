@@ -12,7 +12,7 @@ const initialState = {
     clickStartHeight: undefined,
     clickStartY: undefined,
     dragging: false,
-    height: 350
+    height: 0
   },
   granuleResultsPanel: {
     sortOrder: '-start_date',

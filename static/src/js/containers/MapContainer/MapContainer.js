@@ -11,6 +11,7 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
+import $ from 'jquery'
 
 import '../../util/map/sphericalPolygon'
 
@@ -85,7 +86,9 @@ export class MapContainer extends Component {
   }
 
   onMasterOverlayPanelResize(newHeight) {
-    this.controlContainer.style.bottom = `${newHeight}px`
+    const routeWrapperHeight = $('.route-wrapper').height()
+    this.controlContainer.style.width = '100%'
+    this.controlContainer.style.height = `${routeWrapperHeight - newHeight}px`
   }
 
   handleMoveend(event) {
