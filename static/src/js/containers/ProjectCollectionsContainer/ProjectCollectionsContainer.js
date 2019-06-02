@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
-import ProjectCollectionsList from '../../components/ProjectCollections/ProjectCollectionsList'
+import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 const mapDispatchToProps = dispatch => ({
   onRemoveCollectionFromProject:
@@ -13,29 +13,31 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  collections: state.metadata.collections
+  collections: state.metadata.collections,
+  collectionsSearch: state.searchResults.collections
 })
 
 export const ProjectCollectionsContainer = (props) => {
   const {
     collections,
+    collectionsSearch,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility
   } = props
 
   return (
-    <div style={{ backgroundColor: 'white' }}>
-      <ProjectCollectionsList
-        collections={collections}
-        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-        onToggleCollectionVisibility={onToggleCollectionVisibility}
-      />
-    </div>
+    <ProjectCollections
+      collections={collections}
+      collectionsSearch={collectionsSearch}
+      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+      onToggleCollectionVisibility={onToggleCollectionVisibility}
+    />
   )
 }
 
 ProjectCollectionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  collectionsSearch: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired
 }

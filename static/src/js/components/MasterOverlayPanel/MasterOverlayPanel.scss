@@ -39,7 +39,21 @@
   }
 
   &__header {
+    display: flex;
     border-bottom: 1px solid $border-color;
+  }
+
+  &__header-content {
+    flex-grow: 1;
+    padding: $spacer $spacer*1.25;
+  }
+
+  &__header-actions {
+    flex-shrink: 0;
+    width: 28%;
+    padding: $spacer $spacer*1.25;
+    border-left: 1px solid #e3e3e3;
+    box-shadow: inset 10px 0px 15px -6px rgba(0,0,0,0.05);
   }
 
   &__body {

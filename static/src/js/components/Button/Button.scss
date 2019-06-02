@@ -1,0 +1,39 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+
+  &--naked {
+    padding: 0;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &--link {
+    border: 0;
+
+    .button__icon {
+      margin-right: $spacer/4;
+    }
+  }
+
+  &__contents {
+    vertical-align: middle;
+  }
+
+  &__icon {
+    display: inline-block;
+    margin-right: $spacer/2;
+    vertical-align: middle;
+  }
+
+  &__badge {
+    margin-left: $spacer/2;
+    font-weight: 300;
+    background-color: rgba($color__black, 0.5);
+    border-radius: 1em;
+  }
+}

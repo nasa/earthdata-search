@@ -122,7 +122,7 @@ class GranuleResultsHeader extends Component {
               </>
             )}
             {!metadata.is_cwic && (
-              <form className="form-inline mb-1" action="/">
+              <form className="form-inline" action="/">
                 <div className="form-row align-items-center">
                   <div className="col-auto">
                     <div className="form-group">

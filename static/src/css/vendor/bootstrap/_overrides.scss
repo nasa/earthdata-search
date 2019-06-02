@@ -8,8 +8,9 @@ $body-color: #333;
 
 // Theme Colors
 $theme-colors: (
-  "primary": $color__button--blue,
-  // "danger": #ff4136
+  "primary": $color__theme--blue,
+  "light": $color__theme--light,
+  "yellow": $color__theme--yellow
 );
 
 // Buttons

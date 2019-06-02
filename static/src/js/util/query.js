@@ -1,17 +1,19 @@
-import { browserHistory } from 'react-router'
+import history from './history'
 
 export const addQueryParam = (query) => {
-  const location = Object.assign({}, browserHistory.getCurrentLocation())
+  console.warn('addQueryParam history', history)
+  const location = Object.assign({}, history.getCurrentLocation())
 
   Object.assign(location.query, query)
 
-  browserHistory.push(location)
+  history.push(location)
 }
 
 export const removeQueryParam = (...queryKeys) => {
-  const location = Object.assign({}, browserHistory.getCurrentLocation())
+  console.warn('removeQueryParam history', history)
+  const location = Object.assign({}, history.getCurrentLocation())
 
   queryKeys.forEach(queryKey => delete location.query[queryKey])
 
-  browserHistory.push(location)
+  history.push(location)
 }

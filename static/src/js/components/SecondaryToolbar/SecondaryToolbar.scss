@@ -1,6 +1,16 @@
 .secondary-toolbar {
-  position: absolute;
-  top: 0.625rem;
-  right: 0.625rem;
+  display: flex;
+  position: relative;
   z-index: 2;
+
+  @include media-breakpoint-up(md) {
+    margin-left: auto;
+  }
+
+  .button {
+    flex-shrink: 0;
+    flex-grow: 0;
+    white-space: nowrap;
+    margin-right: $spacer/2;
+  }
 }

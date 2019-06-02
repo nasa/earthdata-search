@@ -278,7 +278,6 @@ Timeline.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onChangeTimelineState: PropTypes.func.isRequired
-
 }
 
 export default Timeline

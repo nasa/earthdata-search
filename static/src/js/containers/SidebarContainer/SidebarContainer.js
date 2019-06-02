@@ -1,34 +1,41 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, Route, withRouter } from 'react-router-dom'
 
-import ConnectedFacetsContainer from '../FacetsContainer/FacetsContainer'
-import ConnectedProjectCollectionsContainer from '../ProjectCollectionsContainer/ProjectCollectionsContainer'
-import SidebarSection from './SidebarSection/SidebarSection'
+import FacetsContainer from '../FacetsContainer/FacetsContainer'
+import ProjectCollectionsContainer from '../ProjectCollectionsContainer/ProjectCollectionsContainer'
+import Sidebar from '../../components/Sidebar/Sidebar'
+import SidebarSection from '../../components/Sidebar/SidebarSection'
 
-import Header from './Header/Header'
-
-import './SidebarContainer.scss'
-
-const SidebarContainer = () => {
+const SidebarContainer = ({ location }) => {
   const facetsSidebar = () => (
     <SidebarSection sectionTitle="Browse Collections">
-      <ConnectedFacetsContainer />
+      <FacetsContainer />
     </SidebarSection>
   )
 
   const projectSidebar = () => (
-    <ConnectedProjectCollectionsContainer />
+    <ProjectCollectionsContainer />
   )
 
+  const visible = pathname => pathname === '/search' || pathname === '/projects'
+  const sidebarVisible = visible(location.pathname)
+
   return (
-    <section className="sidebar">
-      <Header />
+    <Sidebar
+      location={location}
+      visible={sidebarVisible}
+    >
       <Switch>
         <Route path="/search" component={facetsSidebar} />
         <Route path="/projects" component={projectSidebar} />
       </Switch>
-    </section>
+    </Sidebar>
   )
+}
+
+SidebarContainer.propTypes = {
+  location: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(SidebarContainer)

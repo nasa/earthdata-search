@@ -9,7 +9,6 @@ import actions from '../../actions'
 import getFocusedCollectionMetadata from '../../util/focusedCollection'
 
 import GranuleResultsHeader from '../../components/GranuleResults/GranuleResultsHeader'
-import GranuleResultsHeaderActions from '../../components/GranuleResults/GranuleResultsHeaderActions'
 
 const mapDispatchToProps = dispatch => ({
   onAddProjectCollection:
@@ -36,10 +35,7 @@ export const GranuleResultsHeaderContainer = (props) => {
   const {
     collections,
     focusedCollection,
-    granules,
     location,
-    onAddProjectCollection,
-    onRemoveCollectionFromProject,
     onUndoExcludeGranule,
     onUpdateSearchValue,
     onUpdateSortOrder,
@@ -51,29 +47,17 @@ export const GranuleResultsHeaderContainer = (props) => {
 
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
-  const [collectionId] = Object.keys(focusedCollectionMetadata)
-  const { projectIds } = collections
-  const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
-  const granuleCount = granules.hits
-
   return (
     <>
       <GranuleResultsHeader
         location={location}
+        focusedCollection={focusedCollection}
         focusedCollectionMetadata={focusedCollectionMetadata}
         onUpdateSortOrder={onUpdateSortOrder}
         onUpdateSearchValue={onUpdateSearchValue}
         onUndoExcludeGranule={onUndoExcludeGranule}
         sortOrder={sortOrder}
         searchValue={searchValue}
-      />
-      <GranuleResultsHeaderActions
-        collectionId={collectionId}
-        granuleCount={granuleCount}
-        isCollectionInProject={isCollectionInProject}
-        location={location}
-        onAddProjectCollection={onAddProjectCollection}
-        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       />
     </>
   )
@@ -84,8 +68,6 @@ GranuleResultsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,

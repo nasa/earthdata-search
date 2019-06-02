@@ -91,6 +91,7 @@ class MasterOverlayPanel extends PureComponent {
 
   render() {
     const {
+      actions,
       body,
       header,
       panelHeight,
@@ -103,7 +104,7 @@ class MasterOverlayPanel extends PureComponent {
         style={{ height: `${panelHeight}px` }}
       >
         <section className="master-overlay-panel__inner inner-panel">
-          <header className="container-fluid p-3 master-overlay-panel__header">
+          <header className="master-overlay-panel__header">
             <span className="master-overlay-panel__tab">
               <span
                 className="master-overlay-panel__tab-handle"
@@ -118,7 +119,16 @@ class MasterOverlayPanel extends PureComponent {
                 {tabHandle}
               </h2>
             </span>
-            {header}
+            <div className="master-overlay-panel__header-content">
+              {header}
+            </div>
+            {
+              actions && (
+                <div className="master-overlay-panel__header-actions">
+                  {actions}
+                </div>
+              )
+            }
           </header>
           <section className="master-overlay-panel__body">
             {body}
@@ -129,7 +139,12 @@ class MasterOverlayPanel extends PureComponent {
   }
 }
 
+MasterOverlayPanel.defaultProps = {
+  actions: null
+}
+
 MasterOverlayPanel.propTypes = {
+  actions: PropTypes.node,
   body: PropTypes.node.isRequired,
   header: PropTypes.node.isRequired,
   panelHeight: PropTypes.number.isRequired,

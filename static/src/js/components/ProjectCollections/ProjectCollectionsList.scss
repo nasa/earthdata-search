@@ -1,0 +1,25 @@
+.project-collections-list {
+  flex-grow: 1;
+  overflow-y: scroll;
+
+  &__list {
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__notice {
+    margin: 0 auto;
+    padding: $spacer;
+    font-size: 0.825rem;
+    font-style: italic;
+    text-align: center;
+    color: $color__black--400;
+  }
+
+  &__filler {
+    flex-grow: 1;
+    border-right: 1px solid $color__black--300;
+  }
+}

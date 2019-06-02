@@ -5,13 +5,20 @@ import Button from '../Button'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(type) {
   const props = {
-    onClick: jest.fn(),
-    text: 'Button Text'
+    onClick: jest.fn()
   }
 
-  const enzymeWrapper = mount(<Button {...props} />)
+  if (type === 'icon') {
+    props.icon = 'test'
+  }
+
+  if (type === 'badge') {
+    props.badge = 'badge test'
+  }
+
+  const enzymeWrapper = mount(<Button {...props}>Button Text</Button>)
 
   return {
     enzymeWrapper,
@@ -36,23 +43,19 @@ describe('Button component', () => {
 
   test('should not render self with an icon when missing an iconClass prop', () => {
     const { enzymeWrapper } = setup()
-
-    enzymeWrapper.setProps({ buttonStyle: 'icon' })
-
     expect(enzymeWrapper.find('i').length).toEqual(0)
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
   })
 
   test('should render self with an icon', () => {
-    const { enzymeWrapper } = setup()
-
-    enzymeWrapper.setProps({
-      buttonStyle: 'icon',
-      iconClass: 'test'
-    })
+    const { enzymeWrapper } = setup('icon')
 
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
     expect(enzymeWrapper.find('i').hasClass('fa fa-test'))
-    expect(enzymeWrapper.find('span').hasClass('visually-hidden'))
+  })
+
+  test('should render self with a badge', () => {
+    const { enzymeWrapper } = setup('badge')
+    expect(enzymeWrapper.find('button').find('.badge').text()).toEqual('badge test')
   })
 })
