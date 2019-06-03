@@ -33,7 +33,6 @@ export const stringify = params => qs.stringify(
  * Mapping of URL Shortened Keys to their redux store keys
  */
 const urlDefs = {
-  // focusedCollection: { shortKey: 'p', encode: encodeString, decode: decodeString },
   focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
   keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
   pointSearch: { shortKey: 'sp', encode: encodeString, decode: decodeString },

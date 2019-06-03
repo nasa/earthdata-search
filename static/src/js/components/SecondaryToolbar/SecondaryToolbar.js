@@ -39,8 +39,12 @@ class SecondaryToolbar extends Component {
           search: window.location.search
         }}
       >
-        <Button className="secondary-toolbar__back" bootstrapVariant="light">
-          Back
+        <Button
+          className="secondary-toolbar__back"
+          bootstrapVariant="light"
+          icon="arrow-circle-o-left"
+        >
+          Back to Search
         </Button>
       </Link>
     )

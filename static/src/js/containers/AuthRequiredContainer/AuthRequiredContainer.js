@@ -1,13 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { get } from 'tiny-cookie'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-
-const mapStateToProps = state => ({
-  authToken: state.authToken
-})
 
 export const AuthRequiredContainer = (props) => {
   const {
@@ -33,4 +28,4 @@ AuthRequiredContainer.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default connect(mapStateToProps, null)(AuthRequiredContainer)
+export default AuthRequiredContainer

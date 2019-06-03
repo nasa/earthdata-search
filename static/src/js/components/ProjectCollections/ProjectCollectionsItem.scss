@@ -49,8 +49,7 @@
 
   &__more-actions-menu {
     @include carat('topright');
-    top: 75%;
-    right: -0.45rem;
+    left: 0.5rem!important;
   }
 
   &__more-actions-item {
