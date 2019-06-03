@@ -2,7 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+import { TruncateText } from 'react-truncate-text'
+
 import ProjectCollectionsItem from '../ProjectCollectionsItem'
+
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -36,7 +39,10 @@ describe('ProjectCollectionItem component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.project-collections-item__title').text()).toEqual('Collection Title')
+    expect(enzymeWrapper.find('t').props().as).toEqual('h3')
+    expect(enzymeWrapper.find('t').props().className).toEqual('project-collections-item__title')
+    expect(enzymeWrapper.find('t').props().children).toEqual('Collection Title')
+    expect(enzymeWrapper.find('t').props().lines).toEqual(3)
     expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('4 Granules')
     expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
   })
