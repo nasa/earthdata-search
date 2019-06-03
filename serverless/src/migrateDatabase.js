@@ -1,6 +1,6 @@
 import pgMigrate from 'node-pg-migrate'
 import { Client } from 'pg'
-import { getDbConnectionConfig } from './util'
+import { getDbConnectionConfig } from './util/database'
 
 let dbConnectionConfig = null
 

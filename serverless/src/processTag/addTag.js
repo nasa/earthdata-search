@@ -71,35 +71,39 @@ export async function addTag({
       associationData = collections.map(collection => ({ 'concept-id': collection.id }))
     }
 
-    const addTagUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations`
-    const addTagResponse = await request.post({
-      uri: addTagUrl,
+    try {
+      const addTagUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations`
+      await request.post({
+        uri: addTagUrl,
+        headers: {
+          'Echo-Token': cmrToken
+        },
+        body: associationData,
+        json: true,
+        resolveWithFullResponse: true
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  try {
+    // If no tagData was provided, and granules are not required we dont need to ask CMR
+    // for anything, so we'll just associate the tag with all collections that match the searchCriteria
+    const tagRemovalUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations/by_query`
+
+    await request.post({
+      uri: tagRemovalUrl,
       headers: {
         'Echo-Token': cmrToken
       },
-      body: associationData,
+      body: searchCriteria,
       json: true,
       resolveWithFullResponse: true
     })
-
-    return addTagResponse
+  } catch (e) {
+    console.log(e)
   }
 
-  // If no tagData was provided, and granules are not required we dont need to ask CMR
-  // for anything, so we'll just associate the tag with all collections that match the searchCriteria
-  const addTagUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations/by_query`
-
-  const tagRemovalResponse = await request.post({
-    uri: addTagUrl,
-    headers: {
-      'Echo-Token': cmrToken
-    },
-    body: searchCriteria,
-    json: true,
-    resolveWithFullResponse: true
-  })
-
-  return tagRemovalResponse
+  return true
 }
-
-export default addTag

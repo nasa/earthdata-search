@@ -1,8 +1,6 @@
-import {
-  buildURL,
-  doSearchRequest,
-  getJwtToken
-} from './util'
+import { buildURL } from './util/cmr/buildUrl'
+import { doSearchRequest } from './util/cmr/doSearchRequest'
+import { getJwtToken } from './util'
 
 /**
  * Handler to perform an authenticated CMR Granule search

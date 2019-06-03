@@ -1,7 +1,6 @@
 import request from 'request-promise'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getCollectionsByJson from '../getCollectionsByJson'
-import * as lambdaUtils from '../../util'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -12,7 +11,6 @@ describe('getCollectionsByJson', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 
     const mockedTokenValue = 'mocked-system-token'
-    jest.spyOn(lambdaUtils, 'getSystemToken').mockImplementation(() => mockedTokenValue)
 
     const headers = {
       'Echo-Token': mockedTokenValue
@@ -38,7 +36,7 @@ describe('getCollectionsByJson', () => {
     }
     const statusCode = 200
 
-    const requestMock = jest.spyOn(request, 'post').mockImplementation(() => ({
+    const requestMock = jest.spyOn(request, 'post').mockImplementationOnce(() => ({
       statusCode,
       headers,
       body

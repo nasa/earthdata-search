@@ -67,7 +67,7 @@ functions:
               - Arn
 
   processTag:
-    handler: serverless/src/processTag.default
+    handler: serverless/src/processTag/handler.default
     timeout: 300
     receiveMessageWaitTimeSeconds: 30
     reservedConcurrency: 25
@@ -88,7 +88,7 @@ functions:
     events:
       - schedule:
           rate: cron(0 5 * * ? *)
-          enabled: true
+          enabled: false
           input:
             projection: 'epsg4326'
       - schedule:
@@ -114,7 +114,7 @@ functions:
     events:
       - schedule:
           rate: cron(0 * * * ? *)
-          enabled: true
+          enabled: false
 
   #
   # API Gateway Endpoints

@@ -10,16 +10,21 @@ import { getEarthdataConfig } from '../../../sharedUtils/config'
 export async function removeTag(tagName, searchCriteria, cmrToken) {
   const tagRemovalUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations/by_query`
 
-  const tagRemovalResponse = await request.delete({
-    uri: tagRemovalUrl,
-    headers: {
-      'Echo-Token': cmrToken
-    },
-    body: searchCriteria,
-    resolveWithFullResponse: true
-  })
+  try {
+    await request.delete({
+      uri: tagRemovalUrl,
+      headers: {
+        'Echo-Token': cmrToken
+      },
+      body: searchCriteria,
+      json: true,
+      resolveWithFullResponse: true
+    })
+  } catch (e) {
+    console.log(e)
 
-  return tagRemovalResponse
+    return false
+  }
+
+  return true
 }
-
-export default removeTag

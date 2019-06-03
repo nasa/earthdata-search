@@ -21,7 +21,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -39,7 +41,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -67,7 +69,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -85,7 +89,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -120,7 +124,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -138,7 +144,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -173,7 +179,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -191,7 +199,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -227,7 +235,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -245,7 +255,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -280,7 +290,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -298,7 +310,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -334,7 +346,7 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post').mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -377,7 +389,9 @@ describe('addTag', () => {
       }]
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post')
+      .mockImplementationOnce(() => jest.fn())
+      .mockImplementationOnce(() => jest.fn())
 
     await addTag.addTag({
       tagName: 'edsc.extra.gibs',
@@ -395,7 +409,7 @@ describe('addTag', () => {
       '1234-abcd-5678-efgh'
     )
 
-    expect(cmrPostMock).toBeCalledTimes(1)
+    expect(cmrPostMock).toBeCalledTimes(2)
     expect(cmrPostMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations',
       headers: {
@@ -418,7 +432,7 @@ describe('addTag', () => {
       errors: ['This is a fake CMR error']
     }))
 
-    const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
+    const cmrPostMock = jest.spyOn(request, 'post').mockImplementationOnce(() => jest.fn())
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 

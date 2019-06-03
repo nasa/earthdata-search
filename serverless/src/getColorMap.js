@@ -1,5 +1,5 @@
 import 'pg'
-import { getDbConnection } from './util'
+import { getDbConnection } from './util/database'
 
 // Knex database connection object
 let dbConnection = null
