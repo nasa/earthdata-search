@@ -3,18 +3,12 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
+import TruncateText from 'react-truncate-text'
 
 import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 import Button from '../Button/Button'
 
 import './ProjectCollectionsItem.scss'
-
-// let ProjectTitle = React.forwardRef(({ truncatedText, title }, ref) => (
-//   <h3 ref={ref} className="project-collections-item__title" title={title}>{truncatedText}</h3>
-// ))
-
-
-// ProjectTitle = withTruncatedText(ProjectTitle, 3)
 
 /**
  * Renders ProjectCollectionItem.
@@ -45,7 +39,9 @@ const ProjectCollectionItem = ({
   return (
     <li style={{ borderLeftColor: color }} className="project-collections-item">
       <div className="project-collections-item__header">
-        <h3 className="project-collections-item__title">{title}</h3>
+        <TruncateText as="h3" lines={3} className="project-collections-item__title">
+          {title}
+        </TruncateText>
         <Dropdown className="project-collections-item__more-actions">
           <Dropdown.Toggle
             className="project-collections-item__more-actions-toggle"

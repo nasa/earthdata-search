@@ -4,6 +4,7 @@ import queryString from 'query-string'
 import { Link } from 'react-router-dom'
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
+import TruncateText from 'react-truncate-text'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { commafy } from '../../util/commafy'
@@ -110,7 +111,7 @@ class CollectionResultsBody extends PureComponent {
                 <strong> &bull; </strong>
                 <strong>{timeRange}</strong>
                 <strong> &bull; </strong>
-                {collection.summary}
+                <TruncateText lines="3">{collection.summary}</TruncateText>
               </p>
             </div>
             <div className="collection-results__item-body-secondary">
