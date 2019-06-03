@@ -1,7 +1,7 @@
-import processTag from '../processTag'
-import * as addTag from '../processTag/addTag'
-import * as removeTag from '../processTag/removeTag'
-import * as lambdaUtils from '../util'
+import processTag from '../handler'
+import * as addTag from '../addTag'
+import * as removeTag from '../removeTag'
+import * as getSystemToken from '../../util/urs/getSystemToken'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -9,7 +9,7 @@ beforeEach(() => {
 
 describe('processTag', () => {
   test('correctly defaults the Records array', async () => {
-    jest.spyOn(lambdaUtils, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -21,7 +21,7 @@ describe('processTag', () => {
   })
 
   test('correctly calls addTag', async () => {
-    jest.spyOn(lambdaUtils, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -57,7 +57,7 @@ describe('processTag', () => {
   })
 
   test('correctly calls removeTag', async () => {
-    jest.spyOn(lambdaUtils, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const removeTagMock = jest.spyOn(removeTag, 'removeTag').mockImplementation(() => jest.fn())
 

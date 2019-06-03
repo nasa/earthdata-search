@@ -26,6 +26,7 @@ describe('removeTag', () => {
         'Echo-Token': '1234-abcd-5678-efgh'
       },
       body: { short_name: 'MIL3MLS' },
+      json: true,
       resolveWithFullResponse: true
     })
   })

@@ -1,7 +1,5 @@
-import {
-  doSearchRequest,
-  getJwtToken
-} from './util'
+import { doSearchRequest } from './util/cmr/doSearchRequest'
+import { getJwtToken } from './util'
 
 import { getEarthdataConfig } from '../../sharedUtils/config'
 

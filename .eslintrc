@@ -69,6 +69,25 @@
     ]
   },
 
+  "overrides": [
+    {
+      "files": [
+        "*.test.js"
+      ],
+      "rules": {
+        "import/first": 0
+      }
+    },
+    {
+      "files": [
+        "serverless/src/**/*"
+      ],
+      "rules": {
+        "import/prefer-default-export": 0
+      }
+    }
+  ],
+
   # Use AirBnb settings as a base
   "extends": [
     "airbnb",

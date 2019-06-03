@@ -2,9 +2,7 @@ import AWS from 'aws-sdk'
 
 import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 
-const secretsmanager = new AWS.SecretsManager({
-  region: 'us-east-1'
-})
+const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 
 /**
  * Builds a configuration object used by the simple-oauth2 plugin

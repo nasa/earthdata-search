@@ -3,7 +3,7 @@ import 'pg'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
-import { getDbConnection } from './util'
+import { getDbConnection } from './util/database'
 
 // Knex database connection object
 let dbConnection = null

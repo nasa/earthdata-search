@@ -39,5 +39,3 @@ export async function getCollectionsByJson(queryParams, searchCriteria, cmrToken
     return { errors: [e] }
   }
 }
-
-export default getCollectionsByJson
