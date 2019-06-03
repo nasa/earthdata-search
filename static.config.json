@@ -36,10 +36,7 @@
         "cmrClientId": "edsc-prod",
         "edlHost": "https://urs.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback",
-        "tags": {
-          "gibs": "edsc.extra.serverless.gibs"
-        }
+        "redirectUriPath": "/urs_callback"
       }
   }
 }
