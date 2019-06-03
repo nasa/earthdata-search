@@ -22,8 +22,6 @@ import {
   toggleCollectionVisibility
 } from '../project'
 
-// import * as projectMethods from '../project'
-
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {

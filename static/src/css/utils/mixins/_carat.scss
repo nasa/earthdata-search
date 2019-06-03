@@ -5,8 +5,8 @@
     position: absolute;
 
     @if $location == 'topleft' {
-      top: -0.5rem;
-      left: 0.5rem;
+      top: -0.48rem;
+      left: .46rem;
       border-left: 0.4375rem solid transparent;
       border-right: 0.4375rem solid transparent;
       border-bottom: 0.4375rem solid $color__black--200;
@@ -14,8 +14,8 @@
     }
 
     @if $location == 'topright' {
-      top: -0.5rem;
-      right: 0.5rem;
+      top: -0.48rem;
+      right: .46rem;
       border-left: 0.4375rem solid transparent;
       border-right: 0.4375rem solid transparent;
       border-bottom: 0.4375rem solid $color__black--200;

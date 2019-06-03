@@ -34,9 +34,7 @@ const ProjectCollections = (props) => {
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
       />
-      <div className="project-collections__footer">
-        Footer
-      </div>
+      <div className="project-collections__footer" />
     </section>
   )
 }
