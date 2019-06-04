@@ -3,7 +3,7 @@ class OrderStatusJob < ActiveJob::Base
   #
   # @param retrieval_id [int] the id of a Retrieval object to process
   # @param base_url [String] the base url to provide to the user in their order to check on for status updates
-  def perform(id, token, cmr_env, attempts)
+  def perform(id, token, cmr_env, attempts = 0)
     retrieval = Retrieval.find_by_id(id)
 
     echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)

@@ -24,43 +24,67 @@ class SubmitCatalogRestJob < OrderJob
           shapefile
         )
 
-        if esi_response.success?
-          begin
-            parsed_response = MultiXml.parse(esi_response.body)
+        begin
+          if esi_response.success?
+            begin
+              parsed_response = MultiXml.parse(esi_response.body)
 
-            order_id = parsed_response.fetch('agentResponse', {}).fetch('order', {})['orderId']
+              order_id = parsed_response.fetch('agentResponse', {}).fetch('order', {})['orderId']
 
-            order.update_attribute('order_number', order_id)
-          rescue MultiXml::ParseError => e
-            Rails.logger.error e
+              order.update_attribute('order_number', order_id)
+            rescue MultiXml::ParseError => e
+              Rails.logger.error e
+            end
+          else
+            begin
+              # Errors seem to come back from a non SDPS service and are in HTML
+              failed_response = {
+                order: {
+                  orderId: '',
+                  Instructions: 'This order failed to create.'
+                },
+                contactInformation: {
+                  contactName: 'Earthdata Search Support',
+                  contactEmail: 'edsc-support@earthdata.nasa.gov'
+                },
+                processInfo: {
+                  message: Nokogiri::HTML(esi_response.body).text
+                },
+                requestStatus: {
+                  status: 'failed',
+                  numberProcessed: '0',
+                  totalNumber: '0'
+                },
+                type: 'eesi:Response-Type'
+              }
+
+              order.update_attribute('order_information', failed_response)
+            rescue => e
+              Rails.logger.error e
+            end
           end
-        else
-          begin
-            # Errors seem to come back from a non SDPS service and are in HTML
-            failed_response = {
-              order: {
-                orderId: '',
-                Instructions: 'This order failed to create.'
-              },
-              contactInformation: {
-                contactName: 'Earthdata Search Support',
-                contactEmail: 'edsc-support@earthdata.nasa.gov'
-              },
-              processInfo: {
-                message: Nokogiri::HTML(esi_response.body).text
-              },
-              requestStatus: {
-                status: 'failed',
-                numberProcessed: '0',
-                totalNumber: '0'
-              },
-              type: 'eesi:Response-Type'
-            }
+        rescue => e
+          errored_response = {
+            order: {
+              orderId: '',
+              Instructions: 'This order failed to create.'
+            },
+            contactInformation: {
+              contactName: 'Earthdata Search Support',
+              contactEmail: 'edsc-support@earthdata.nasa.gov'
+            },
+            processInfo: {
+              message: e
+            },
+            requestStatus: {
+              status: 'failed',
+              numberProcessed: '0',
+              totalNumber: '0'
+            },
+            type: 'eesi:Response-Type'
+          }
 
-            order.update_attribute('order_information', failed_response)
-          rescue => e
-            Rails.logger.error e
-          end
+          order.update_attribute('order_information', errored_response)
         end
       end
     end
