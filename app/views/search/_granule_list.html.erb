@@ -71,10 +71,12 @@
         <div class="master-overlay-info-panel master-overlay-global-actions actions">
             <strong data-bind="numberWithSeparator: granules().hits() == 1 ? '1' : granules().hits()"></strong> <span data-bind="text: granules().hits() == 1 ? ' Granule' : ' Granules'"></span>
           <!-- ko with: collection -->
+            <!-- ko if: !isMaxOrderSizeReached() -->
             <a href="#" class="add-to-project" data-pulse="#project-count" title="Add collection to the current project"
                data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
                <i class="fa fa-plus-circle"></i> Add to project
             </a>
+            <!-- /ko -->
             <a href="#" class="remove-from-project" data-pulse="#project-count" title="Remove collection from the current project"
                data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-times-circle"></i> Remove from project
