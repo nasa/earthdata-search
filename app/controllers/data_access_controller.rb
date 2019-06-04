@@ -61,30 +61,6 @@ class DataAccessController < ApplicationController
     render file: "#{Rails.root}/public/401.html", status: :unauthorized  and return unless user
     render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == @retrieval.user
 
-    # Ignore this for ajax requests and purposfully place it after the
-    # check for ownership, we don't want randos causing jobs to be created
-    unless params[:format] == 'json' || Rails.env.test?
-      # Check the database for any jobs that exist to create this order
-      processing_job = DelayedJob.where("handler LIKE '%job_class: ProcessRetrievalJob%'")
-                                 .where("handler LIKE '%arguments:\n- #{id.to_i}%'")
-                                 .where(failed_at: nil)
-
-      # Check the database for any jobs that exist to refresh this orders data
-      retrieval_jobs = DelayedJob.where("handler LIKE '%job_class: OrderStatusJob%'")
-                                 .where("handler LIKE '%arguments:\n- #{id.to_i}%'")
-                                 .where(failed_at: nil)
-
-      # If there are no jobs scheduled for this order and its not
-      # already complete create a new one to retrieve new data
-      if processing_job.empty? && retrieval_jobs.empty? && @retrieval.in_progress
-        @retrieval.update_attribute('token', token)
-
-        Rails.logger.info "Queueing up a new job to retrieve order status information for Retrieval ##{id.to_i}"
-
-        OrderStatusJob.perform_later(id.to_i, token, cmr_env)
-      end
-    end
-
     respond_to do |format|
       format.html
       format.json { render json: @retrieval.project.merge(id: @retrieval.to_param).to_json }
