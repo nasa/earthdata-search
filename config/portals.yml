@@ -69,7 +69,7 @@ portals: &portals
     title: International Directory Network (IDN) Search
     params:
     	keyword:
-    		- *
+        - *
     
     logos:
       - id: CEOS-logo
