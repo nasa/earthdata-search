@@ -36,14 +36,14 @@ class ProcessRetrievalJob < ActiveJob::Base
         page_size = retrieval_collection.max_order_size
         page_num  = 0
 
-        until page_num * page_size > granule_count
+        until page_num * page_size >= granule_count
           page_num += 1
 
           params[:page_size] = page_size
           params[:page_num]  = page_num
 
           # The last job created should fire off the order status job
-          check_status = (page_num * page_size > granule_count)
+          check_status = (page_num * page_size >= granule_count)
 
           if method['type'] == 'order'
             # `Stage For Delivery` Access Method
