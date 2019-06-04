@@ -326,6 +326,7 @@ ns.Project = do (ko,
       @collection.granule_hits() > 0
 
     _computeIsReadyToDownload: () ->
+      return false if @collection.isMaxOrderSizeReached()
       return true if @hasGranules() && @serviceOptions.readyToDownload()
       false
 
@@ -354,6 +355,7 @@ ns.Project = do (ko,
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
       @allHaveAccessMethod = ko.computed(@_computeAllHaveAccessMethod, this, deferEvaluation: true)
       @allHaveGranules = ko.computed(@_computeAllHaveGranules, this, deferEvaluation: true)
+      @allHaveFewEnoughGranules = ko.computed(@_computeAllHaveFewEnoughGranules, this, deferEvaluation: true)
       @visibleCollections = ko.computed(read: @_computeVisibleCollections, owner: this, deferEvaluation: true)
       @isLoadingComplete = ko.computed(read: @_computeIsLoadingComplete, this, deferEvaluation: true)
 
@@ -375,6 +377,7 @@ ns.Project = do (ko,
       return false if !@accessCollections().length
       return false for collection in @accessCollections() when !collection.hasGranules()
       return false for collection in @accessCollections() when !collection.serviceOptions.readyToDownload()
+      return false for collection in @accessCollections() when collection.collection.isMaxOrderSizeReached()
       true
 
     _computeAllHaveAccessMethod: ->
@@ -385,6 +388,10 @@ ns.Project = do (ko,
     _computeAllHaveGranules: ->
       return false if !@accessCollections().length
       return false for ds in @accessCollections() when !ds.hasGranules()
+      true
+
+    _computeAllHaveFewEnoughGranules: ->
+      return false for collection in @accessCollections() when collection.collection.isMaxOrderSizeReached()
       true
 
     _computeAccessCollections: ->
