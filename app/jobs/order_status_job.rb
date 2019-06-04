@@ -3,7 +3,7 @@ class OrderStatusJob < ActiveJob::Base
   #
   # @param retrieval_id [int] the id of a Retrieval object to process
   # @param base_url [String] the base url to provide to the user in their order to check on for status updates
-  def perform(id, token, cmr_env, attempts = 0)
+  def perform(id, token, cmr_env)
     retrieval = Retrieval.find_by_id(id)
 
     echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
@@ -20,7 +20,7 @@ class OrderStatusJob < ActiveJob::Base
       # are in creating or pending state we need to continue asking for updates
       if retrieval.in_progress && !Rails.env.test?
         # The order isn't done processing, continue pinging for updated statuses
-        OrderStatusJob.set(wait_until: (Time.zone.now + stall_time(retrieval.created_at))).perform_later(id, token, cmr_env, ((attempts || 0) + 1))
+        OrderStatusJob.set(wait_until: (Time.zone.now + stall_time(retrieval.created_at))).perform_later(id, token, cmr_env)
       end
     end
   end
