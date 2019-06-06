@@ -23,14 +23,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-      { short_name: 'MIL3MLS' },
-      false,
-      true,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -69,14 +69,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-      { short_name: 'MIL3MLS' },
-      false,
-      true,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -122,14 +122,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-      { short_name: 'MIL3MLS' },
-      false,
-      true,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -175,14 +175,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
-      { short_name: 'MIL3MLS' },
-      false,
-      true,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -229,14 +229,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
-      { short_name: 'MIL3MLS' },
-      false,
-      false,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: false,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -282,14 +282,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
-      { short_name: 'MIL3MLS' },
-      true,
-      true,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_7' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: true,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -336,14 +336,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      null,
-      { short_name: 'MIL3MLS' },
-      false,
-      false,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: null,
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: false,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(0)
 
@@ -379,14 +379,14 @@ describe('addTag', () => {
 
     const cmrPostMock = jest.spyOn(request, 'post').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      null,
-      { short_name: 'MIL3MLS' },
-      true,
-      false,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: null,
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: true,
+      append: false,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(
@@ -422,14 +422,14 @@ describe('addTag', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    await addTag.addTag(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-      { short_name: 'MIL3MLS' },
-      false,
-      true,
-      '1234-abcd-5678-efgh'
-    )
+    await addTag.addTag({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: '1234-abcd-5678-efgh'
+    })
 
     expect(getCollectionsByJsonMock).toBeCalledTimes(1)
     expect(getCollectionsByJsonMock).toBeCalledWith(

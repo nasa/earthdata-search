@@ -1,8 +1,8 @@
 import 'array-foreach-async'
 import 'pg'
-import { getSystemToken } from './util'
-import { addTag } from './processTag/addTag'
-import { removeTag } from './processTag/removeTag'
+import { getSystemToken } from '../util/urs/getSystemToken'
+import { addTag } from './addTag'
+import { removeTag } from './removeTag'
 
 let cmrToken = null
 
@@ -11,7 +11,7 @@ let cmrToken = null
  */
 export default async function processTag(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-  // eslint-disable-next-line no-param-reassign
+  // eslint-disable-next-line
   context.callbackWaitsForEmptyEventLoop = false
 
   const { Records: sqsRecords = [] } = event

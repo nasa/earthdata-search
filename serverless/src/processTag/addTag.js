@@ -11,14 +11,14 @@ import { getEarthdataConfig } from '../../../sharedUtils/config'
  * @param {Boolean} append If tag data already exists, should the provided data be appended or not
  * @return {Object} An object representing the CMR tag association response
  */
-export async function addTag(
+export async function addTag({
   tagName,
   tagData,
   searchCriteria,
   requireGranules,
   append,
   cmrToken
-) {
+}) {
   if (tagData || requireGranules) {
     const cmrParams = {
       include_tags: tagName,

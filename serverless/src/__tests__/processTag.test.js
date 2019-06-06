@@ -46,14 +46,14 @@ describe('processTag', () => {
     await processTag(event, {})
 
     expect(addTagMock).toBeCalledTimes(1)
-    expect(addTagMock).toBeCalledWith(
-      'edsc.extra.gibs',
-      { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
-      { short_name: 'MIL3MLS' },
-      false,
-      true,
-      'mocked-system-token'
-    )
+    expect(addTagMock).toBeCalledWith({
+      tagName: 'edsc.extra.gibs',
+      tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      searchCriteria: { short_name: 'MIL3MLS' },
+      requireGranules: false,
+      append: true,
+      cmrToken: 'mocked-system-token'
+    })
   })
 
   test('correctly calls removeTag', async () => {
