@@ -19,8 +19,12 @@ class OrderStatusJob < ActiveJob::Base
       # If there are any orders that provide status values any of the orders
       # are in creating or pending state we need to continue asking for updates
       if retrieval.in_progress && !Rails.env.test?
-        # The order isn't done processing, continue pinging for updated statuses
-        OrderStatusJob.set(wait_until: (Time.zone.now + stall_time(retrieval.created_at))).perform_later(id, token, cmr_env)
+        determined_stall_time = stall_time(retrieval.created_at)
+
+        unless determined_stall_time == false
+          # The order isn't done processing, continue pinging for updated statuses
+          OrderStatusJob.set(wait_until: (Time.zone.now + determined_stall_time)).perform_later(id, token, cmr_env)
+        end
       end
     end
   end
@@ -28,6 +32,11 @@ class OrderStatusJob < ActiveJob::Base
   # Basic backoff for order status jobs
   def stall_time(created_at)
     since_creation = Time.zone.now - created_at
+
+    # Return false to signify that we no longer want to stall, we just want to stop creating this job
+    if since_creation > 2.weeks
+      return false
+    end
 
     if since_creation < 20.minutes
       30

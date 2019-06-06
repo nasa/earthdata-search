@@ -27,4 +27,12 @@ namespace :background_jobs do
     DelayedJob.where("handler LIKE '%job_class: SubmitLegacyServicesJob%'").update_all(queue: 'legacy_services')
     DelayedJob.where("handler NOT LIKE '%job_class: SubmitLegacyServicesJob%'").update_all(queue: 'default')
   end
+
+  desc 'Kick of an order status job for a retreival provided the obfuscated retrieval id'
+  task :create_order_status_job, [:retrieval_id] => ['environment'] do |task, args|
+    # Accepts an obfuscated retrieval
+    retrieval = Retrieval.find(args[:retrieval_id])
+
+    OrderStatusJob.perform_later(retrieval.id, retrieval.token, retrieval.environment)
+  end
 end
