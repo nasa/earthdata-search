@@ -31,5 +31,17 @@ describe OrderStatusJob do
 
       expect(stall_time).to eq(1.hour)
     end
+
+    it 'correctly determines the stall time for jobs created 2 weeks ago' do
+      stall_time = OrderStatusJob.new.stall_time(Time.zone.now - 2.weeks)
+
+      expect(stall_time).to eq(false)
+    end
+
+    it 'correctly determines the stall time for jobs created more than 2 weeks ago' do
+      stall_time = OrderStatusJob.new.stall_time(Time.zone.now - 1.month)
+
+      expect(stall_time).to eq(false)
+    end
   end
 end
