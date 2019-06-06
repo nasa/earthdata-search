@@ -234,10 +234,10 @@ resources:
   # A method to include environment specific resources
   # Resources: ${file(./resources-${self:provider.stage}.yml)}
   Resources:
-    StaticSite:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.siteName}
+    # StaticSite:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     BucketName: ${self:custom.siteName}
 
     # StaticSiteS3BucketPolicy:
     #   Type: AWS::S3::BucketPolicy
