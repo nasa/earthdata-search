@@ -16,7 +16,7 @@ class Retrieval < ActiveRecord::Base
 
   # '' could be the status if we start checking order status before the order has been created. In that case we want to
   # assume the status is 'in progress'
-  IN_PROGRESS_STATUS_LIST = ['', 'creating', 'in progress', 'not_validated', 'validated', 'quoting', 'quoted', 'quoted_with_exceptions', 'submitting', 'submitted_with_exceptions', 'processing', 'processing_with_exceptions', 'cancelling'].freeze
+  IN_PROGRESS_STATUS_LIST = ['', 'cancelling', 'creating', 'in progress', 'not_validated', 'pending', 'processing', 'processing_with_exceptions', 'quoted', 'quoted_with_exceptions', 'quoting', 'submitted_with_exceptions', 'submitting', 'validated'].freeze
 
   def log_obfuscation_info
     Rails.logger.info "Retrieval Object with obfuscated ID of #{to_param} has ID #{id}."
