@@ -7,8 +7,16 @@ const CopyPlugin = require('copy-webpack-plugin')
 // Allow for conditionally copying files into the output for a defined entry
 const ConditionalPlugin = (condition, plugin) => ({
   apply: (compiler) => {
-    const name = Object.keys(compiler.options.entry)[0].split('/').pop()
-    const config = Object.assign({ webpack: {} }, slsw.lib.serverless.service.getFunction(name))
+    const name = Object.keys(compiler.options.entry)[0].split('/')
+    // Pull the filename of the Lambda
+    let fileName = name.pop()
+
+    // For lambdas that have been updated to the new `serverless/src/LAMBDA/handler.js`
+    if (fileName === 'handler') {
+      fileName = name.pop()
+    }
+
+    const config = Object.assign({ webpack: {} }, slsw.lib.serverless.service.getFunction(fileName))
 
     if (condition(config)) {
       plugin.apply(compiler)
