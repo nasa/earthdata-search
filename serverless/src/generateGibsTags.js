@@ -3,8 +3,7 @@ import request from 'request-promise'
 import AWS from 'aws-sdk'
 import customGibsProducts from './static/gibs'
 
-// AWS SQS adapter
-const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
+let sqs
 
 const tagName = 'edsc.extra.serverless.gibs'
 
@@ -213,6 +212,8 @@ export default async function generateGibsTags(event, context) {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
+
+  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
   // The headers we'll send back regardless of our response
   const responseHeaders = {
