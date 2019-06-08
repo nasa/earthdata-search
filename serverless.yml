@@ -46,7 +46,7 @@ functions:
   # Standalone functions
   #
   migrateDatabase:
-    handler: serverless/src/migrateDatabase.default
+    handler: serverless/src/migrateDatabase/handler.default
     timeout: 300
     webpack:
       includeMigrations: true

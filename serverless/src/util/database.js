@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'
 import knex from 'knex'
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 
 const secretsmanager = new AWS.SecretsManager()
 
@@ -47,22 +47,21 @@ export const getDbConnectionConfig = async (connectionConfig) => {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    const { dbHost, dbName, dbPort } = getEarthdataConfig()
-
-    Object.assign(configObject, {
+    const { dbHost, dbName, dbPort } = getEnvironmentConfig()
+    return {
+      ...configObject,
       host: dbHost,
       database: dbName,
       port: dbPort
-    })
-  } else {
-    Object.assign(configObject, {
-      host: process.env.dbEndpoint,
-      database: process.env.dbName,
-      port: process.env.dbPort
-    })
+    }
   }
 
-  return configObject
+  return {
+    ...configObject,
+    host: process.env.dbEndpoint,
+    database: process.env.dbName,
+    port: process.env.dbPort
+  }
 }
 
 /**
