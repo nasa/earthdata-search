@@ -1,13 +1,13 @@
 import pgMigrate from 'node-pg-migrate'
 import { Client } from 'pg'
-import { getDbConnectionConfig } from './util/database'
+import { getDbConnectionConfig } from '../util/database'
 
 let dbConnectionConfig = null
 
 /**
  * Handler that migrates the application database
  */
-export default async function migrateDatabase(event) {
+const migrateDatabase = async (event) => {
   try {
     dbConnectionConfig = await getDbConnectionConfig(dbConnectionConfig)
 
@@ -26,7 +26,7 @@ export default async function migrateDatabase(event) {
 
     await dbClient.end()
 
-    if (migrationResponse) {
+    if (migrationResponse.length) {
       return {
         isBase64Encoded: false,
         statusCode: 200,
@@ -47,3 +47,5 @@ export default async function migrateDatabase(event) {
     }
   }
 }
+
+export default migrateDatabase
