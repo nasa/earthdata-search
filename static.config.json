@@ -11,6 +11,8 @@
       "sit": {
         "apiHost": "http://localhost:3001",
         "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
+        "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
+        "cmrClientId": "edsc-sit",
         "edlHost": "https://urs.sit.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
         "redirectUriPath": "/urs_callback"
@@ -18,6 +20,8 @@
       "uat": {
         "apiHost": "http://localhost:3001",
         "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
+        "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
+        "cmrClientId": "edsc-uat",
         "edlHost": "https://urs.uat.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
         "redirectUriPath": "/urs_callback"
@@ -25,6 +29,8 @@
       "prod": {
         "apiHost": "http://localhost:3001",
         "cmrHost": "https://cmr.earthdata.nasa.gov",
+        "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
+        "cmrClientId": "edsc-prod",
         "edlHost": "https://urs.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
         "opensearchUrl": "https://cmr.earthdata.nasa.gov/opensearch/",

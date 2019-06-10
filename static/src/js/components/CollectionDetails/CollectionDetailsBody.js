@@ -233,7 +233,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
           <div className="col-auto">
             <h4 className="collection-details-body__dev-cat">API Endpoints</h4>
             <ul className="collection-details-body__dev-list">
-              {(urls.granuleDatasource && urls.granuleDatasource.title === 'CMR') && buildForDeveloperLink(urls.granuleDatasource)}
+              {urls.granuleDatasource && buildForDeveloperLink(urls.granuleDatasource)}
               {urls.osdd && buildForDeveloperLink(urls.osdd)}
               {
                 // TODO: GIBS

@@ -69,7 +69,6 @@ export const copyGranulesFromCollection = collectionId => (dispatch, getState) =
   return dispatch(addGranulesFromCollection(granules))
 }
 
-
 /**
  * Perform a collection request based on the focusedCollection from the store.
  */
@@ -125,7 +124,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
       // Pass json and ummJson into createFocusedCollectionMetadata to transform/normalize the data
       // to be used in the UI.
-      const metadata = createFocusedCollectionMetadata(json, ummJson)
+      const metadata = createFocusedCollectionMetadata(json, ummJson, authToken)
 
       // The raw data from the json and ummJson requests are added to the state, as well as the
       // transformed/normalized metadata.
@@ -140,7 +139,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       collectionJsonResponse = collectionJson
       collectionUmmResponse = collectionUmm
 
-      // The .all().then() will only fires when both requests resolve successfully, so we can
+      // The .all().then() will only fire when both requests resolve successfully, so we can
       // rely on collectionJson to have the correct auth information in its headers.
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
@@ -172,5 +171,4 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
 
   dispatch(updateFocusedCollection(collectionId))
   dispatch(actions.getFocusedCollection())
-  // dispatch(getFocusedCollection())
 }

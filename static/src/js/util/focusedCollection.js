@@ -21,7 +21,7 @@ export const getFocusedCollectionMetadata = (collectionId, collections) => {
   }
 }
 
-export const createFocusedCollectionMetadata = (json, ummJson) => {
+export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
   console.warn('args', [json, ummJson])
 
   // Metadata from the CMR .json response
@@ -40,7 +40,7 @@ export const createFocusedCollectionMetadata = (json, ummJson) => {
     timeStart: json.time_start,
     timeEnd: json.time_end,
     title: json.title,
-    urls: buildUrls(json),
+    urls: buildUrls(json, authToken),
     versionId: json.version_id
   }
 
