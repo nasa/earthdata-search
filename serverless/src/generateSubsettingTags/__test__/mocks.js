@@ -99,8 +99,7 @@ export const relevantServices = {
   'S00000001-EDSC':
   {
     collections: [],
-    tagData:
-    {
+    tagData: {
       id: 'S00000001-EDSC',
       type: 'ESI',
       url: 'http://mapserver.eol.ucar.edu/acadis/'
@@ -110,6 +109,15 @@ export const relevantServices = {
   {
     collections: [],
     tagData: { id: 'S00000002-EDSC', type: 'ESI' }
+  },
+  'S00000003-EDSC':
+  {
+    collections: [],
+    tagData: {
+      id: 'S00000003-EDSC',
+      type: 'ECHO ORDERS',
+      url: 'http://mapserver.eol.ucar.edu/acadis/'
+    }
   },
   'S00000005-EDSC':
   {
@@ -142,6 +150,13 @@ export const relevantServiceCollections = [
     associations: {
       services: [
         'S00000005-EDSC'
+      ]
+    }
+  }, {
+    id: 'C00000009-EDSC',
+    associations: {
+      services: [
+        'S00000003-EDSC'
       ]
     }
   }

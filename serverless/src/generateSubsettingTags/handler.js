@@ -1,6 +1,5 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
-
 import { chunkArray } from '../util'
 import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from './pageAllCmrResults'
@@ -50,7 +49,8 @@ const generateSubsettingTags = async (event, context) => {
   // Keep track of collections per type so that we can remove old tags
   const collectionsToTag = {
     esi: [],
-    opendap: []
+    opendap: [],
+    echo_orders: []
   }
 
   await Object.keys(serviceObjects).forEachAsync(async (serviceConceptId) => {
@@ -61,11 +61,12 @@ const generateSubsettingTags = async (event, context) => {
 
     if (collections.length) {
       try {
-        const tagPostFix = type.toLowerCase()
+        // Conver the CMR Service Type to a lowercase string with no spaces
+        const tagPostFix = type.toLowerCase().replace(/ /g, '_')
 
         const collectionCriteria = collections.map(collectionId => ({ concept_id: collectionId }))
 
-        if (['opendap', 'esi'].includes(tagPostFix)) {
+        if (['opendap', 'esi', 'echo_orders'].includes(tagPostFix)) {
           collectionsToTag[tagPostFix].push(...collectionCriteria)
         }
 
