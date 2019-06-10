@@ -18,7 +18,7 @@ export const getRelevantServices = async () => {
     const { Type: serviceType, RelatedURLs: relatedUrls = [] } = umm
 
     // We only need to tag ECHO ORDERS and ESI collections
-    if (!['OPeNDAP', 'ESI'].includes(serviceType)) {
+    if (!['OPeNDAP', 'ESI', 'ECHO ORDERS'].includes(serviceType)) {
       return
     }
 
@@ -27,7 +27,7 @@ export const getRelevantServices = async () => {
       type: serviceType
     }
 
-    if (serviceType === 'ESI') {
+    if (serviceType === 'ESI' || serviceType === 'ECHO ORDERS') {
       relatedUrls.forEach((relatedUrl) => {
         const { Type: urlType, URL: urlValue } = relatedUrl
 

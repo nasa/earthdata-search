@@ -52,19 +52,25 @@ describe('generateSubsettingTags', () => {
       .mockImplementationOnce(() => ({
         sendMessage: sqsSendMessagePromise
       }))
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsSendMessagePromise
+      }))
+      .mockImplementationOnce(() => ({
+        sendMessage: sqsSendMessagePromise
+      }))
 
     const event = {}
     const context = {}
     await generateSubsettingTags(event, context)
 
-    // 3 calls to add tags to collections
-    // 2 calls to remove stale tags
-    expect(sqsSendMessagePromise).toBeCalledTimes(5)
+    // 4 calls to add tags to collections
+    // 3 calls to remove stale tags
+    expect(sqsSendMessagePromise).toBeCalledTimes(7)
 
     /**
      * We have to make a call for each service that we are going
-     * to associate collections with. Our mocked data returns 3
-     * relevant services which will result in 3 calls to sqs
+     * to associate collections with. Our mocked data returns 4
+     * relevant services which will result in 4 calls to sqs
      */
     expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
       MessageBody: JSON.stringify({
@@ -115,6 +121,29 @@ describe('generateSubsettingTags', () => {
     }])
     expect(sqsSendMessagePromise.mock.calls[2]).toEqual([{
       MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.subset_service.echo_orders',
+        action: 'ADD',
+        append: false,
+        requireGranules: false,
+        searchCriteria: {
+          condition: {
+            or: [
+              {
+                concept_id: 'C00000009-EDSC'
+              }
+            ]
+          }
+        },
+        tagData: {
+          id: 'S00000003-EDSC',
+          type: 'ECHO ORDERS',
+          url: 'http://mapserver.eol.ucar.edu/acadis/'
+        }
+      }),
+      QueueUrl: 'http://example.com/queue'
+    }])
+    expect(sqsSendMessagePromise.mock.calls[3]).toEqual([{
+      MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.subset_service.opendap',
         action: 'ADD',
         append: false,
@@ -140,10 +169,10 @@ describe('generateSubsettingTags', () => {
      * To remove stale tags we can provide CMR with the tag and
      * all collections that we want to disassociate data from because
      * we dont have specific data that we care about. Our mocked data
-     * returns two relevant tags (ESI and OPeNDAP) which will result in
-     * 2 calls to sqs
+     * returns three relevant tags (ESI, ECHO ORDERS and OPeNDAP)
+     * which will result in 3 calls to sqs
      */
-    expect(sqsSendMessagePromise.mock.calls[3]).toEqual([{
+    expect(sqsSendMessagePromise.mock.calls[4]).toEqual([{
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.subset_service.esi',
         action: 'REMOVE',
@@ -174,7 +203,7 @@ describe('generateSubsettingTags', () => {
       }),
       QueueUrl: 'http://example.com/queue'
     }])
-    expect(sqsSendMessagePromise.mock.calls[4]).toEqual([{
+    expect(sqsSendMessagePromise.mock.calls[5]).toEqual([{
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.subset_service.opendap',
         action: 'REMOVE',
@@ -191,6 +220,33 @@ describe('generateSubsettingTags', () => {
                   or: [
                     {
                       concept_id: 'C00000005-EDSC'
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }),
+      QueueUrl: 'http://example.com/queue'
+    }])
+    expect(sqsSendMessagePromise.mock.calls[6]).toEqual([{
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.subset_service.echo_orders',
+        action: 'REMOVE',
+        searchCriteria: {
+          condition: {
+            and: [
+              {
+                tag: {
+                  tag_key: 'edsc.extra.serverless.subset_service.echo_orders'
+                }
+              },
+              {
+                not: {
+                  or: [
+                    {
+                      concept_id: 'C00000009-EDSC'
                     }
                   ]
                 }
