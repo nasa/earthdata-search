@@ -14,6 +14,7 @@ export async function getSupportedGibsLayers(mergeCustomProducts = true) {
   const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
   const worldviewResponse = await request.get({
     uri: worldviewConfig,
+    json: true,
     resolveWithFullResponse: true
   })
 
@@ -23,8 +24,7 @@ export async function getSupportedGibsLayers(mergeCustomProducts = true) {
     'GIBS:geographic'
   ]
 
-  const { body } = worldviewResponse
-  const worldviewProducts = JSON.parse(body)
+  const { body: worldviewProducts } = worldviewResponse
 
   // Merge the EDSC custom products into the GIBS products before processing
   if (mergeCustomProducts) {
