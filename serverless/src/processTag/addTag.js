@@ -85,6 +85,8 @@ export async function addTag({
     } catch (e) {
       console.log(e)
     }
+
+    return associationData
   }
 
   try {
@@ -105,5 +107,5 @@ export async function addTag({
     console.log(e)
   }
 
-  return true
+  return searchCriteria
 }

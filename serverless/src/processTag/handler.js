@@ -56,7 +56,7 @@ const processTag = async (event, context) => {
     isBase64Encoded: false,
     statusCode: 200,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    body: JSON.stringify(sqsRecords)
+    body: sqsRecords
   }
 }
 
