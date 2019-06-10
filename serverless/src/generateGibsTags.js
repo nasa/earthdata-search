@@ -23,14 +23,18 @@ export async function getSupportedGibsLayers(mergeCustomProducts = true) {
     'GIBS:geographic'
   ]
 
-  const { body: worldviewProducts } = worldviewResponse
+  const { body } = worldviewResponse
+  const worldviewProducts = JSON.parse(body)
 
   // Merge the EDSC custom products into the GIBS products before processing
   if (mergeCustomProducts) {
     Object.keys(customGibsProducts).forEach((key) => {
       console.log(`Merged ${Object.keys(customGibsProducts[key]).length} objects into '${key}'`)
 
-      worldviewProducts[key] = Object.assign(worldviewProducts[key], customGibsProducts[key])
+      worldviewProducts[key] = {
+        ...worldviewProducts[key],
+        ...customGibsProducts[key]
+      }
     })
   }
 
