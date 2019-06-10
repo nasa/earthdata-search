@@ -1,54 +1,76 @@
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { getValueForTag } from '../tags'
 
-export const buildUrls = (json) => {
-  const urlTypes = [
+export const buildUrls = (json, authToken) => {
+  const {
+    id: collectionId,
+    short_name: providedCollectionShortName,
+    version_id: collectionVersionId,
+    is_cwic: isCwic
+  } = json
+
+  const collectionShortName = encodeURI(providedCollectionShortName)
+
+  const cmrMetadataUrlFormats = [
     { ext: 'html', title: 'HTML' },
     { ext: 'native', title: 'Native' },
     { ext: 'atom', title: 'ATOM' },
     { ext: 'echo10', title: 'ECHO10' },
     { ext: 'iso19115', title: 'ISO19115' },
     { ext: 'dif', title: 'DIF' }
-    // { ext: 'smap_iso', title: 'SMAP ISO' }
   ]
 
-  const urls = {}
-  const metadataUrl = `${getEarthdataConfig('prod').cmrHost}/search/concepts/${json.id}`
+  const eartdataConfig = getEarthdataConfig('prod')
+  const {
+    apiHost,
+    cmrClientId,
+    cmrHost,
+    opensearchRoot
+  } = eartdataConfig
 
-  urlTypes.forEach((type) => {
+  const urls = {}
+
+  cmrMetadataUrlFormats.forEach((type) => {
+    // Direct CMR URL
+    let url = `${cmrHost}/search/concepts/${collectionId}.${type.ext}`
+
+    if (authToken !== '') {
+      // If an auth token is provided route the request through Lambda
+      url = `${apiHost}/concepts/metadata?url=${encodeURIComponent(url)}&token=${authToken}`
+    }
+
     urls[type.ext] = {
       title: type.title,
-      href: `${metadataUrl}.${type.ext}`
+      href: url
     }
   })
 
-  // This should be coming from a config or lambda
-  const cmrClientId = 'edsc-prod'
-
   let provider = ''
-  if (typeof json.id === 'string') provider = json.id.split('-')[json.id.split('-').length - 1]
+  if (typeof collectionId === 'string') provider = collectionId.split('-')[collectionId.split('-').length - 1]
   provider = encodeURI(provider)
 
-  const collectionShortName = encodeURI(json.short_name)
-  const collectionVersionId = json.version_id
-
-  const opensearchUrl = `${getEarthdataConfig('prod').opensearchRoot}/granules/descriptor_document.xml`
+  const opensearchUrl = `${opensearchRoot}/granules/descriptor_document.xml`
 
   urls.osdd = {
     title: 'OSDD',
-    href: `${opensearchUrl}?utf8=%E2%9C%93&clientId=${cmrClientId}&shortName=${collectionShortName}&versionId=${collectionVersionId}&dataCenter=${provider}&commit=Generate`
+    href: `${opensearchUrl}?clientId=${cmrClientId}&shortName=${collectionShortName}&versionId=${collectionVersionId}&dataCenter=${provider}`
   }
 
-  if (getValueForTag('datasource')) {
-    urls.granuleDatasource = {
-      // TODO:
-      title: 'datasourcegoeshere'
-    }
+  if (isCwic) {
+    // TODO: Replace the `href` here with teh value stored in the tag created in EDSC-2265
+    // urls.granuleDatasource = {
+    //   title: 'CWIC',
+    //   href: 'example.com'
+    // }
   } else if (json.has_granules) {
+    let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
+    if (authToken !== '') {
+      // If an auth token is provided route the request through Lambda
+      cmrGranulesUrl = `${apiHost}/granules?url=${encodeURIComponent(cmrGranulesUrl)}&token=${authToken}`
+    }
+
     urls.granuleDatasource = {
-      // TODO:
       title: 'CMR',
-      href: '/cmrdatasourceurlgoeshere'
+      href: cmrGranulesUrl
     }
   }
 
@@ -56,7 +78,7 @@ export const buildUrls = (json) => {
   // TODO: Opendap
   // TODO: Modaps
 
-  console.warn('urlTypes', urls)
+  console.warn('cmrMetadataUrlFormats', urls)
   return urls
 }
 

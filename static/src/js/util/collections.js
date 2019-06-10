@@ -98,7 +98,7 @@ export const buildSearchParams = (params) => {
     includeFacets: 'v2',
     includeGranuleCounts: true,
     includeHasGranules: true,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+    includeTags: 'edsc.extra*,org.ceos.wgiss.cwic.granules.prod',
     options: {
       science_keywords_h: {
         or: true

@@ -7,6 +7,13 @@ import './CollectionDetailsDataCenter.scss'
 export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
   console.warn('dataCenter', dataCenter)
   console.warn('dataCenter', item)
+
+  const { contactInformation = {} } = dataCenter
+  const {
+    ContactMechanisms: contactMechanisms = [],
+    ContactInstruction: contactInstruction
+  } = contactInformation
+
   return (
     <Card
       as="li"
@@ -37,14 +44,14 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
           dataCenter.contactInformation && (
             <>
               {
-                dataCenter.contactInformation.ContactInstruction && (
+                contactInstruction && (
                   <p className="collection-details-data-center__description">
-                    {dataCenter.contactInformation.ContactInstruction}
+                    {contactInstruction}
                   </p>
                 )
               }
               {
-                dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
+                contactMechanisms.map((contact, i) => {
                   const key = `data_center_email_${item}-${i}`
                   if (contact.Type === 'Email') {
                     return (
@@ -60,7 +67,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
               }
               <dl className="collection-details-data-center__contact">
                 {
-                  dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
+                  contactMechanisms.map((contact, i) => {
                     const key = `data_center_other_${item}-${i}`
                     if (contact.Type === 'Facebook') {
                       return (
@@ -92,7 +99,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
           )
         }
         {
-          !dataCenter.contactInformation && <p>No contact information for this data center.</p>
+          !contactInformation && <p>No contact information for this data center.</p>
         }
       </Card.Body>
     </Card>

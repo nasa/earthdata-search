@@ -58,11 +58,15 @@ class GranuleResultsHeader extends Component {
   }
 
   render() {
-    const { focusedCollectionMetadata, location } = this.props
     const { sortOrder, searchValue } = this.state
-    const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
+
+    const { focusedCollectionMetadata, location } = this.props
+
+    const [collectionId] = Object.keys(focusedCollectionMetadata)
     const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
-    const { title } = metadata
+    const { json } = metadata
+    const { dataset_id: title } = json
+
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
     return (

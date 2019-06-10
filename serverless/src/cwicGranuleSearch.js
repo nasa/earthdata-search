@@ -23,7 +23,8 @@ const getCwicGranulesUrl = async (collectionId) => {
       attributeNamePrefix: ''
     })
 
-    const granuleUrls = osddBody.OpenSearchDescription.Url
+    const { OpenSearchDescription: opensearchDescription = {} } = osddBody
+    const { Url: granuleUrls = [] } = opensearchDescription
 
     return {
       statusCode: osddResponse.statusCode,
