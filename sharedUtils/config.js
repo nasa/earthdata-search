@@ -1,6 +1,7 @@
 import config from '../static.config.json'
 import secretConfig from '../secret.config.json'
 
+export const getApplicationConfig = () => config.application
 export const getEarthdataConfig = env => config.earthdata[env]
 export const getEnvironmentConfig = () => config.environment[process.env.NODE_ENV]
 

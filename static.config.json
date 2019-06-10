@@ -1,4 +1,7 @@
 {
+  "application": {
+    "cmrTagNamespace": "edsc.extra.serverless"
+  },
   "environment": {
     "development": {
       "dbHost": "127.0.0.1",
