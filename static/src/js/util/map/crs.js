@@ -2,8 +2,6 @@ import L from 'leaflet'
 import 'proj4'
 import 'proj4leaflet'
 
-console.warn('L', L)
-
 const ScaledLonLatProjection = scale => ({
   project: latlng => (
     new L.Point(latlng.lng * scale, latlng.lat * scale)

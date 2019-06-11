@@ -7,9 +7,9 @@ import { getValueForTag } from '../tags'
 export const buildGibsLayers = (collectionJson) => {
   const availableLayers = []
 
-  const { tags =  } = collectionJson
+  const { tags = {} } = collectionJson
   // Exract the gibs tags from the collection metadata
-  const gibsTag = getValueForTag('gibs', collectionJson.tags)
+  const gibsTag = getValueForTag('gibs', tags)
 
   // If there is no gibs tag, return a human readable string
   if (!gibsTag) return ['None']
