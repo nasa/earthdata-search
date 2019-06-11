@@ -5,7 +5,7 @@ import {
 
 import { buildLayer } from '../../util/map/layers'
 
-class FeatureGroup extends MapLayer {
+export class FeatureGroup extends MapLayer {
   createLeafletElement({ metadata }) {
     const featureGroup = buildLayer({ color: '#54F7A3', fillOpacity: 0.4, weight: 1 }, metadata)
     return featureGroup

@@ -5,9 +5,6 @@ import { Badge, Card } from 'react-bootstrap'
 import './CollectionDetailsDataCenter.scss'
 
 export const CollectionDetailsDataCenter = ({ dataCenter, item }) => {
-  console.warn('dataCenter', dataCenter)
-  console.warn('dataCenter', item)
-
   const { contactInformation = {} } = dataCenter
   const {
     ContactMechanisms: contactMechanisms = [],

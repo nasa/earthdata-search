@@ -106,8 +106,6 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
     temporal,
     urls
   } = metadata
-  console.warn('metadata', metadata)
-  console.warn('relatedUrls', relatedUrls)
 
   return (
     <div className="collection-details-body">
