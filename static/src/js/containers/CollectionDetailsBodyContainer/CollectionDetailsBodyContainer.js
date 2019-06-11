@@ -27,8 +27,6 @@ export const CollectionDetailsBodyContainer = ({
 }) => {
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
-  console.warn('focusedCollectionMetadata', focusedCollectionMetadata)
-
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   return (

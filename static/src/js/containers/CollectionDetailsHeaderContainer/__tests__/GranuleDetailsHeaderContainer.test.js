@@ -1,31 +1,28 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { GranuleDetailsHeaderContainer } from '../GranuleDetailsHeaderContainer'
-import GranuleDetailsHeader from '../../../components/GranuleDetails/GranuleDetailsHeader'
+import { CollectionDetailsHeaderContainer } from '../CollectionDetailsHeaderContainer'
+import CollectionDetailsHeader from '../../../components/CollectionDetails/CollectionDetailsHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    granules: {
-      allIds: ['focusedGranule'],
+    collections: {
+      allIds: ['focusedCollection'],
       byId: {
-        focusedGranule: {
-          json: {
-            Granule: {}
-          },
-          metadataUrls: {
-            atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
-          },
-          xml: '<Granule><Granule>'
+        focusedCollection: {
+          excludedGranuleIds: [],
+          metadata: {
+            some: 'metadata'
+          }
         }
       }
     },
-    focusedGranule: 'focusedGranule'
+    focusedCollection: 'focusedCollection'
   }
 
-  const enzymeWrapper = shallow(<GranuleDetailsHeaderContainer {...props} />)
+  const enzymeWrapper = shallow(<CollectionDetailsHeaderContainer {...props} />)
 
   return {
     enzymeWrapper,
@@ -33,13 +30,20 @@ function setup() {
   }
 }
 
-describe('GranuleDetailsHeaderContainer component', () => {
-  test('passes its props and renders a single GranuleDetailsHeader component', () => {
+describe('CollectionDetailsHeaderContainer component', () => {
+  test('passes its props and renders a single CollectionDetailsHeader component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(GranuleDetailsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleDetailsHeader).props().json).toEqual({
-      Granule: {}
+    expect(enzymeWrapper.find(CollectionDetailsHeader).length).toBe(1)
+    expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
+      focusedCollectionMetadata: {
+        focusedCollection: {
+          excludedGranuleIds: [],
+          metadata: {
+            some: 'metadata'
+          }
+        }
+      }
     })
   })
 })
