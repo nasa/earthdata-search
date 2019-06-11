@@ -1,17 +1,19 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { GranuleDetailsTabContainer } from '../GranuleDetailsTabContainer'
-import GranuleDetailsTab from '../../../components/GranuleDetails/GranuleDetailsTab'
+import { CollectionDetailsTabContainer } from '../CollectionDetailsTabContainer'
+import { CollectionDetailsTab } from '../../../components/CollectionDetails/CollectionDetailsTab'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    onFocusedGranuleChange: jest.fn()
+    location: {
+      some: 'location'
+    }
   }
 
-  const enzymeWrapper = shallow(<GranuleDetailsTabContainer {...props} />)
+  const enzymeWrapper = shallow(<CollectionDetailsTabContainer {...props} />)
 
   return {
     enzymeWrapper,
@@ -19,14 +21,15 @@ function setup() {
   }
 }
 
-describe('GranuleDetailsTabContainer component', () => {
-  test('passes its props and renders a single GranuleDetailsTab component', () => {
-    const { enzymeWrapper, props } = setup()
+describe('CollectionDetailsTabContainer component', () => {
+  test('passes its props and renders a single CollectionDetailsTab component', () => {
+    const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(GranuleDetailsTab).length).toBe(1)
-    expect(typeof enzymeWrapper.find(GranuleDetailsTab).props().onFocusedGranuleChange).toEqual('function')
+    console.warn('enzymeWrapper', enzymeWrapper.debug())
 
-    enzymeWrapper.find(GranuleDetailsTab).dive().find('Link').simulate('click')
-    expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
+    expect(enzymeWrapper.find(CollectionDetailsTab).length).toBe(1)
+    expect(enzymeWrapper.find(CollectionDetailsTab).prop('location')).toEqual({
+      some: 'location'
+    })
   })
 })
