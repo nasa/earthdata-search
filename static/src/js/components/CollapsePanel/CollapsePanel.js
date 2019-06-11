@@ -54,14 +54,14 @@ export class CollapsePanel extends React.Component {
           className={buttonClassNames}
           type="button"
           onClick={e => this.onToggleClick(e)}
-          aria-controls="example-collapse-text"
+          aria-controls="collapse-text"
           aria-expanded={open}
         >
           {`${headerText} `}
           {icon}
         </button>
         <Collapse in={open} onEntering={this.onEntering}>
-          <div id="example-collapse-text" className={panelClassNames}>
+          <div id="collapse-text" className={panelClassNames}>
             {children}
           </div>
         </Collapse>
