@@ -1,5 +1,9 @@
 .collection-details-body {
+  display: flex;
+  flex-direction: column;
+
   &__content {
+    flex-grow: 1;
     padding: $spacer;
   }
 

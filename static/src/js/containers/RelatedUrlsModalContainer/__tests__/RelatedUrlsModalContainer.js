@@ -1,22 +1,30 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { FacetsModalContainer } from '../FacetsModalContainer'
-import FacetsModal from '../../../components/Facets/FacetsModal'
+import { RelatedUrlsModalContainer } from '../RelatedUrlsModalContainer'
+import { RelatedUrlsModal } from '../../../components/CollectionDetails/RelatedUrlsModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collectionHits: '1',
+    collections: {
+      allIds: ['focusedCollection'],
+      byId: {
+        focusedCollection: {
+          excludedGranuleIds: [],
+          metadata: {
+            some: 'metadata'
+          }
+        }
+      }
+    },
+    focusedCollection: 'focusedCollection',
     isOpen: true,
-    onApplyViewAllFacets: jest.fn(),
-    onChangeViewAllFacet: jest.fn(),
-    onToggleFacetsModal: jest.fn(),
-    viewAllFacets: { value: 'viewAllFacets' }
+    onToggleRelatedUrlsModal: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<FacetsModalContainer {...props} />)
+  const enzymeWrapper = shallow(<RelatedUrlsModalContainer {...props} />)
 
   return {
     enzymeWrapper,
@@ -24,16 +32,20 @@ function setup() {
   }
 }
 
-describe('FacetsModalContainer component', () => {
+describe('RelatedUrlsModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(FacetsModal).length).toBe(1)
-    expect(enzymeWrapper.find(FacetsModal).props().collectionHits).toEqual('1')
-    expect(enzymeWrapper.find(FacetsModal).props().isOpen).toEqual(true)
-    expect(typeof enzymeWrapper.find(FacetsModal).props().onApplyViewAllFacets).toEqual('function')
-    expect(typeof enzymeWrapper.find(FacetsModal).props().onChangeViewAllFacet).toEqual('function')
-    expect(typeof enzymeWrapper.find(FacetsModal).props().onToggleFacetsModal).toEqual('function')
-    expect(enzymeWrapper.find(FacetsModal).props().viewAllFacets).toEqual({ value: 'viewAllFacets' })
+    expect(enzymeWrapper.find(RelatedUrlsModal).length).toBe(1)
+    expect(enzymeWrapper.find(RelatedUrlsModal).props().focusedCollectionMetadata).toEqual({
+      focusedCollection: {
+        excludedGranuleIds: [],
+        metadata: {
+          some: 'metadata'
+        }
+      }
+    })
+    expect(enzymeWrapper.find(RelatedUrlsModal).props().isOpen).toEqual(true)
+    expect(typeof enzymeWrapper.find(RelatedUrlsModal).props().onToggleRelatedUrlsModal).toEqual('function')
   })
 })

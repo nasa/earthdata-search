@@ -20,7 +20,7 @@ export default async function cmrGranuleSearch(event) {
 
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
-    path: '/search/granules.json',
+    path: '/search/granules',
     permittedCmrKeys
   }))
 }

@@ -64,8 +64,7 @@ class GranuleResultsHeader extends Component {
 
     const [collectionId] = Object.keys(focusedCollectionMetadata)
     const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
-    const { json } = metadata
-    const { dataset_id: title } = json
+    const { dataset_id: title } = metadata
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 

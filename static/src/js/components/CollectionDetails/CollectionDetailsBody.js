@@ -93,8 +93,8 @@ const buildForDeveloperLink = (linkData, token) => {
 export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelatedUrlsModal }) => {
   const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
 
-  const { metadata: data } = focusedCollectionMetadata[collectionId]
-  const { metadata } = data
+  const { metadata, formattedMetadata } = focusedCollectionMetadata[collectionId]
+  const { summary } = metadata
   const {
     dataCenters,
     doi,
@@ -102,10 +102,9 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
     relatedUrls,
     scienceKeywords,
     spatial,
-    summary,
     temporal,
     urls
-  } = metadata
+  } = formattedMetadata
 
   return (
     <div className="collection-details-body">

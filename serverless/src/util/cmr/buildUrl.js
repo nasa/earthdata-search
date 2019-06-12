@@ -14,7 +14,7 @@ export const buildURL = (paramObj) => {
     permittedCmrKeys
   } = paramObj
 
-  const { params = {} } = JSON.parse(body)
+  const { params = {}, ext = 'json' } = JSON.parse(body)
 
   console.log(`Parameters received: ${Object.keys(params)}`)
 
@@ -25,7 +25,7 @@ export const buildURL = (paramObj) => {
   // Transform the query string hash to an encoded url string
   const queryParams = cmrStringify(obj, nonIndexedKeys)
 
-  const url = `${getEarthdataConfig('prod').cmrHost}${path}?${queryParams}`
+  const url = `${getEarthdataConfig('prod').cmrHost}${path}.${ext}?${queryParams}`
 
   console.log(`CMR Query: ${url}`)
 

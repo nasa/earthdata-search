@@ -1,12 +1,15 @@
 import {
   isClockwise,
+  getlprojection
+} from '../granules'
+
+import {
   isCartesian,
   getPoints,
   getPolygons,
   getLines,
-  getRectangles,
-  getlprojection
-} from '../granules'
+  getRectangles
+} from '../layers'
 
 import projections from '../projections'
 

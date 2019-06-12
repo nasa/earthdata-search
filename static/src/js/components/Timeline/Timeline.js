@@ -77,8 +77,8 @@ class Timeline extends Component {
 
         const {
           id,
-          timeStart,
-          timeEnd = new Date().toISOString()
+          time_start: timeStart,
+          time_end: timeEnd = new Date().toISOString()
         } = metadata
 
         const newInterval = nextTimeline.query.interval || defaultInterval
@@ -141,8 +141,8 @@ class Timeline extends Component {
     const {
       id,
       title,
-      timeStart,
-      timeEnd = false
+      time_start: timeStart,
+      time_end: timeEnd = false
     } = collection
 
     const {

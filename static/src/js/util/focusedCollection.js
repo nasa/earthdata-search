@@ -6,6 +6,7 @@ import { buildScienceKeywords } from './collectionMetadata/scienceKeywords'
 import { buildSpatial } from './collectionMetadata/spatial'
 import { buildTemporal } from './collectionMetadata/temporal'
 import { buildUrls } from './collectionMetadata/buildUrls'
+import CollectionRequest from './request/collectionRequest'
 
 export const getFocusedCollectionMetadata = (collectionId, collections) => {
   if (!collections) return {}
@@ -24,22 +25,8 @@ export const getFocusedCollectionMetadata = (collectionId, collections) => {
 export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
   // Metadata from the CMR .json response
   const jsonMetadata = {
-    boxes: json.boxes,
     gibsLayers: buildGibsLayers(json),
-    hasGranules: json.has_granules,
-    id: json.id,
-    isQwic: json.is_cwic,
-    lines: json.lines,
-    points: json.points,
-    polygons: json.polygons,
-    shortName: json.short_name,
-    summary: json.summary,
-    tags: json.tags,
-    timeStart: json.time_start,
-    timeEnd: json.time_end,
-    title: json.title,
-    urls: buildUrls(json, authToken),
-    versionId: json.version_id
+    urls: buildUrls(json, authToken)
   }
 
   // Metadata from the CMR .umm_json response
@@ -56,4 +43,17 @@ export const createFocusedCollectionMetadata = (json, ummJson, authToken) => {
     ...jsonMetadata,
     ...ummJsonMetadata
   }
+}
+
+export const getCollectionMetadata = async (params, authToken) => {
+  const requestObject = new CollectionRequest(authToken)
+
+  // Define both the umm and ummJson requests with the correct aruguments.
+  const collectionJsonRequest = () => requestObject.search(params)
+  const collectionUmmRequest = () => requestObject.search(params, 'umm_json')
+
+  return Promise.all([
+    collectionJsonRequest(),
+    collectionUmmRequest()
+  ])
 }

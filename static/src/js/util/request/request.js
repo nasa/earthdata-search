@@ -52,12 +52,14 @@ export default class Request {
       // in URLs and request payloads
       const snakeKeyData = snakeCaseKeys(data)
 
+      const { ext } = data
+
       // Prevent keys that our external services don't support from being sent
-      const filteredData = pick(snakeKeyData, this.permittedCmrKeys())
+      const filteredData = pick(snakeKeyData, this.permittedCmrKeys(ext))
 
       // CWIC does not support CORS so all of our requests will need to go through
       // Lambda. POST requests to Lambda use a JSON string
-      if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData })
+      if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData, ext })
       return prepKeysForCmr(filteredData, this.nonIndexedKeys())
     }
     return null
@@ -114,8 +116,15 @@ export default class Request {
   /*
    * Makes a POST request to this.searchPath
    */
-  search(params) {
-    return this.post(this.searchPath, params)
+  search(params, ext = 'json') {
+    // Only add the ext in unauthenticated requests
+    if (!this.authenticated && !this.lambda) {
+      const pathWithoutExt = this.searchPath.split('.')[0]
+      this.searchPath = `${pathWithoutExt}.${ext}`
+    }
+    // We pass the ext here as a param so we can intercept and send to lambda.
+    // Unauthenticated requests will ignore this key.
+    return this.post(this.searchPath, { ...params, ext })
   }
 
   /**

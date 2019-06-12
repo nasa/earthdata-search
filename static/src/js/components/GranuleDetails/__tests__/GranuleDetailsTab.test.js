@@ -9,6 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    location: {
+      search: '?test=value'
+    },
     onFocusedGranuleChange: jest.fn()
   }
 

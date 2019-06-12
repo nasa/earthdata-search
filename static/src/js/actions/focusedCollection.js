@@ -8,9 +8,9 @@ import {
 import { updateCollectionMetadata } from './collections'
 import { updateGranuleResults, addGranulesFromCollection } from './granules'
 import { updateAuthTokenFromHeaders } from './authToken'
-import { createFocusedCollectionMetadata } from '../util/focusedCollection'
-import CollectionRequest from '../util/request/collectionRequest'
-import ConceptRequest from '../util/request/conceptRequest'
+import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
+// import CollectionRequest from '../util/request/collectionRequest'
+// import ConceptRequest from '../util/request/conceptRequest'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -96,48 +96,37 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   }
 
   const { authToken } = getState()
-  const requestObject = new CollectionRequest(authToken)
-  const ummRequestObject = new ConceptRequest(authToken)
 
-  // Define both the umm and ummJson requests with the correct aruguments.
-  const collectionJsonRequest = () => requestObject.search({
+  let collectionJsonResp
+  let collectionUmmResp
+
+  getCollectionMetadata({
     concept_id: [focusedCollection],
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     includeHasGranules: true
-  })
-
-  const collectionUmmRequest = () => ummRequestObject.search(focusedCollection, 'umm_json')
-
-  let collectionJsonResponse
-  let collectionUmmResponse
-
-  // Get data in both json and umm_json formats. Both formats are used in order to create the
-  // metadata that we transform and add to the state on the [focusedCollection].metadata key.
-  await Promise.all([
-    collectionJsonRequest(),
-    collectionUmmRequest()
-  ])
+  }, authToken)
     .then(([collectionJson, collectionUmm]) => {
       const payload = []
-      const [json] = collectionJson.data.feed.entry
-      const ummJson = collectionUmm.data
+      const [metadata] = collectionJson.data.feed.entry
+      const [ummItem] = collectionUmm.data.items
+      const ummMetadata = ummItem.umm
 
       // Pass json and ummJson into createFocusedCollectionMetadata to transform/normalize the data
       // to be used in the UI.
-      const metadata = createFocusedCollectionMetadata(json, ummJson, authToken)
+      const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
 
       // The raw data from the json and ummJson requests are added to the state, as well as the
       // transformed/normalized metadata.
       payload.push({
         [focusedCollection]: {
-          json,
-          ummJson,
-          metadata
+          metadata,
+          ummMetadata,
+          formattedMetadata
         }
       })
 
-      collectionJsonResponse = collectionJson
-      collectionUmmResponse = collectionUmm
+      collectionJsonResp = collectionJson
+      collectionUmmResp = collectionUmm
 
       // The .all().then() will only fire when both requests resolve successfully, so we can
       // rely on collectionJson to have the correct auth information in its headers.
@@ -155,8 +144,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     })
 
   return {
-    json: collectionJsonResponse,
-    ummJson: collectionUmmResponse
+    json: collectionJsonResp,
+    ummJson: collectionUmmResp
   }
 }
 

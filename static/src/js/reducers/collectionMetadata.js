@@ -79,7 +79,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
       }
       action.payload.forEach((collection, index) => {
         const [collectionId] = Object.keys(collection)
-        const metadata = action.payload[index][collectionId]
+        const { metadata, ummMetadata, formattedMetadata } = action.payload[index][collectionId]
 
         if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
 
@@ -98,7 +98,9 @@ const collectionMetadataReducer = (state = initialState, action) => {
           granules: {},
           isCwic,
           isVisible,
-          metadata
+          metadata,
+          ummMetadata,
+          formattedMetadata
         }
       })
 
