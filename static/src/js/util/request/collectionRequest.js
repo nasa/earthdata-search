@@ -15,11 +15,17 @@ export default class CollectionRequest extends Request {
     } else {
       super(getEarthdataConfig('prod').cmrHost)
 
-      this.searchPath = 'search/collections.json'
+      // We do not define an extension here. It will be added in the search method.
+      this.searchPath = 'search/collections'
     }
   }
 
-  permittedCmrKeys() {
+  permittedCmrKeys(ext) {
+    if (ext === 'umm_json') {
+      return [
+        'concept_id'
+      ]
+    }
     return [
       'params',
       'bounding_box',
@@ -80,8 +86,15 @@ export default class CollectionRequest extends Request {
     const { statusCode = 200 } = data
     if (statusCode !== 200) return data
 
-    const { feed } = data
-    const { entry } = feed
+    let entry
+
+    if (data.items) {
+      entry = data.items
+    } else {
+      const { feed } = data
+      // eslint-disable-next-line prefer-destructuring
+      entry = feed.entry
+    }
 
     entry.map((collection) => {
       const transformedCollection = collection

@@ -5,14 +5,15 @@ import {
   UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY
 } from '../constants/actionTypes'
-import CollectionRequest from '../util/request/collectionRequest'
+// import CollectionRequest from '../util/request/collectionRequest'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
-import { prepareCollectionParams, buildSearchParams } from '../util/collections'
+// import { prepareCollectionParams, buildSearchParams } from '../util/collections'
 import { prepareGranuleParams, populateGranuleResults } from '../util/granules'
 import { convertSize } from '../util/project'
+import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 
 export const addCollectionToProject = payload => ({
   type: ADD_COLLECTION_TO_PROJECT,
@@ -103,7 +104,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
 }
 
 export const getProjectCollections = () => (dispatch, getState) => {
-  const collectionParams = prepareCollectionParams(getState())
+  // const collectionParams = prepareCollectionParams(getState())
   const { metadata } = getState()
   const { collections } = metadata
   const { projectIds } = collections
@@ -113,24 +114,35 @@ export const getProjectCollections = () => (dispatch, getState) => {
   }
 
   const { authToken } = getState()
-  const requestObject = new CollectionRequest(authToken)
-
-  const response = requestObject.search(buildSearchParams({
-    ...collectionParams,
+  const response = getCollectionMetadata({
+    includeGranuleCounts: true,
     featureFacets: {},
     conceptId: projectIds,
     includeFacets: undefined,
     tagKey: undefined
-  }))
-    .then((response) => {
+  }, authToken)
+    .then(([collectionJson, collectionUmm]) => {
       const payload = []
-      const { entry } = response.data.feed
-      entry.forEach((collection) => {
+      const { entry: responseJson } = collectionJson.data.feed
+      const { items: responseUmm } = collectionUmm.data
+
+      responseJson.forEach((collection) => {
         const { id } = collection
-        payload.push({ [id]: collection })
+        const metadata = collection
+        const ummIndex = responseUmm.findIndex(item => id === item.meta['concept-id'])
+        const ummMetadata = responseUmm[ummIndex].umm
+        const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
+
+        payload.push({
+          [id]: {
+            metadata,
+            ummMetadata,
+            formattedMetadata
+          }
+        })
       })
 
-      dispatch(updateAuthTokenFromHeaders(response.headers))
+      dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
       dispatch(actions.getProjectGranules())
     }, (error) => {

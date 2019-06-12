@@ -8,6 +8,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    location: {
+      search: '?some=test-params'
+    },
     onFocusedCollectionChange: jest.fn()
   }
 
@@ -24,6 +27,9 @@ describe('GranuleResultsTabContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsTab).length).toBe(1)
+    expect(enzymeWrapper.find(GranuleResultsTab).props().location).toEqual({
+      search: '?some=test-params'
+    })
     expect(typeof enzymeWrapper.find(GranuleResultsTab).props().onFocusedCollectionChange).toEqual('function')
   })
 })

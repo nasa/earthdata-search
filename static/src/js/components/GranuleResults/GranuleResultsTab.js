@@ -12,7 +12,6 @@ import './GranuleResultsTab.scss'
  */
 export class GranuleResultsTab extends PureComponent {
   render() {
-    console.warn('this.props', this.props)
     const { location, onFocusedCollectionChange } = this.props
 
     return (

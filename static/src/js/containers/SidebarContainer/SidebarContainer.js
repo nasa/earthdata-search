@@ -18,8 +18,8 @@ const SidebarContainer = ({ location }) => {
     <ProjectCollectionsContainer />
   )
 
-  const visible = pathname => pathname === '/search' || pathname === '/projects'
-  const sidebarVisible = visible(location.pathname)
+  const visible = pathname => pathname === 'search' || pathname === 'projects'
+  const sidebarVisible = visible(location.pathname.replace(/\//g, ''))
 
   return (
     <Sidebar

@@ -4,8 +4,6 @@ node_modules
 .serverless
 coverage
 secret.config.json
-.vscode
-
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 #

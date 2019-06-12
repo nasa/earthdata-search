@@ -5,7 +5,8 @@ import {
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_RELATED_URLS_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -20,6 +21,9 @@ const initialState = {
     searchValue: ''
   },
   facetsModal: {
+    isOpen: false
+  },
+  relatedUrlsModal: {
     isOpen: false
   }
 }
@@ -147,6 +151,22 @@ describe('TOGGLE_VIEW_ALL_FACETS_MODAL', () => {
     const expectedState = {
       ...initialState,
       facetsModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_RELATED_URLS_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_RELATED_URLS_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      relatedUrlsModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)

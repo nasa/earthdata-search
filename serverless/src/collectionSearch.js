@@ -54,7 +54,7 @@ export default async function collectionSearch(event) {
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
     nonIndexedKeys,
-    path: '/search/collections.json',
+    path: '/search/collections',
     permittedCmrKeys
   }))
 }

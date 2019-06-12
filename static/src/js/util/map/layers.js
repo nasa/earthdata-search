@@ -83,8 +83,6 @@ export function getRectangles(metadata = {}) {
 }
 
 export const buildLayer = (options, metadata) => {
-  console.warn('build layer options', { options, metadata })
-
   const layer = new L.FeatureGroup()
   const points = getPoints(metadata)
   const polygons = getPolygons(metadata)
@@ -99,7 +97,6 @@ export const buildLayer = (options, metadata) => {
   }
 
   if (polygons) {
-    console.warn('polygons', polygons)
     castArray(polygons).forEach((polygon) => {
       let polyLayer
       if (cartesian) {
@@ -146,7 +143,6 @@ export const buildLayer = (options, metadata) => {
     })
   }
 
-  console.warn('this is the end of layer', layer)
   return layer
 }
 

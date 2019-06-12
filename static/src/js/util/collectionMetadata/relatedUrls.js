@@ -16,10 +16,6 @@ export const sortRelatedUrls = (a, b) => {
   const url1 = a.URL
   const url2 = b.URL
 
-  console.warn('sorting', a.Type)
-  console.warn('sorting', b.Type)
-  console.warn('sorting', type1 > type2)
-
   if (type1 > type2) return 1
   if (type1 < type2) return -1
   if (subType1 > subType2) return 1

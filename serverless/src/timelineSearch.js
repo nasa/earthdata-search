@@ -18,7 +18,7 @@ export default async function timelineSearch(event) {
 
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
-    path: '/search/granules/timeline.json',
+    path: '/search/granules/timeline',
     permittedCmrKeys
   }))
 }

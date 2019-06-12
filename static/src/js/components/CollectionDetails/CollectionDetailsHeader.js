@@ -13,13 +13,8 @@ import './CollectionDetailsHeader.scss'
  */
 export const CollectionDetailsHeader = ({ focusedCollectionMetadata }) => {
   const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-  const { metadata: data } = focusedCollectionMetadata[collectionId]
-  const { metadata } = data
-  const {
-    shortName,
-    title,
-    versionId
-  } = metadata
+  const { metadata } = focusedCollectionMetadata[collectionId]
+  const { short_name: shortName, title, version_id: versionId } = metadata
 
   return (
     <>

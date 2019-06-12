@@ -26,9 +26,8 @@ export class RelatedUrlsModal extends Component {
     } = this.props
 
     const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-    const { metadata: data } = focusedCollectionMetadata[collectionId]
-    const { metadata } = data
-    const { relatedUrls } = metadata
+    const { formattedMetadata = {} } = focusedCollectionMetadata[collectionId]
+    const { relatedUrls = [] } = formattedMetadata
 
     return (
       <Modal

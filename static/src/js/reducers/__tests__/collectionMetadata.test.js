@@ -185,9 +185,9 @@ describe('UPDATE_COLLECTION_METADATA', () => {
           granules: {},
           isCwic: false,
           isVisible: true,
-          metadata: {
-            mock: 'data'
-          }
+          metadata: undefined,
+          ummMetadata: undefined,
+          formattedMetadata: undefined
         }
       }
     }
@@ -220,9 +220,6 @@ describe('UPDATE_COLLECTION_METADATA', () => {
             }
           },
           isVisible: true,
-          metadata: {
-            mock: 'data'
-          }
         }
       }
     }
@@ -235,9 +232,10 @@ describe('UPDATE_COLLECTION_METADATA', () => {
           excludedGranuleIds: ['granuleId1'],
           granules: {},
           isVisible: true,
-          metadata: {
-            mock: 'data'
-          }
+          isCwic: undefined,
+          metadata: undefined,
+          ummMetadata: undefined,
+          formattedMetadata: undefined
         }
       }
     }
