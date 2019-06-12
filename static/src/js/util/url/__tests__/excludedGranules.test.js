@@ -202,7 +202,7 @@ describe('url#encodeUrlQuery', () => {
           },
           focusedCollection: 'collectionId'
         }
-        expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId&pg[0][x]=12345!56789')
+        expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId&pg[0][cx]=12345!56789')
       })
     })
   })

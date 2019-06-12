@@ -116,15 +116,10 @@ export default class Request {
   /*
    * Makes a POST request to this.searchPath
    */
-  search(params, ext = 'json') {
-    // Only add the ext in unauthenticated requests
-    if (!this.authenticated && !this.lambda) {
-      const pathWithoutExt = this.searchPath.split('.')[0]
-      this.searchPath = `${pathWithoutExt}.${ext}`
-    }
+  search(params) {
     // We pass the ext here as a param so we can intercept and send to lambda.
     // Unauthenticated requests will ignore this key.
-    return this.post(this.searchPath, { ...params, ext })
+    return this.post(this.searchPath, params)
   }
 
   /**

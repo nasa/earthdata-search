@@ -12,9 +12,12 @@ function setup() {
       collectionId: {
         excludedGranuleIds: [],
         metadata: {
-          title: 'Title'
+          dataset_id: 'Title'
         }
       }
+    },
+    location: {
+      search: '?test=search-value'
     },
     onUpdateSortOrder: jest.fn(),
     onUpdateSearchValue: jest.fn(),

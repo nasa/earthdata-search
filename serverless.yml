@@ -204,7 +204,11 @@ functions:
           method: post
           cors:
             origin: '*'
-          path: collections
+          path: collections.{format}
+          request:
+            parameters:
+              paths:
+                format: true
           authorizer: edlAuthorizer
 
   cmrGranuleSearch:

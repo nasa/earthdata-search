@@ -2,6 +2,7 @@ import moxios from 'moxios'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
+import { getProjectCollectionsResponse } from './mocks'
 import actions from '../index'
 
 import {
@@ -192,7 +193,7 @@ describe('getProjectCollections', () => {
   })
 
   test('calls lambda to get authenticated collections', async () => {
-    moxios.stubRequest(/3001\/collections.*/, {
+    moxios.stubRequest(/3001\/collections\.json/, {
       status: 200,
       response: {
         feed: {
@@ -209,6 +210,36 @@ describe('getProjectCollections', () => {
           }],
           facets: {}
         }
+      },
+      headers: {
+        'cmr-hits': 1,
+        'jwt-token': 'token'
+      }
+    })
+
+    moxios.stubRequest(/3001\/collections\.umm_json/, {
+      status: 200,
+      response: {
+        hits: 1,
+        took: 234,
+        items: [
+          {
+            meta: {
+              'concept-id': 'collectionId1'
+            },
+            umm: {
+              data: 'collectionId1'
+            }
+          },
+          {
+            meta: {
+              'concept-id': 'collectionId2'
+            },
+            umm: {
+              data: 'collectionId2'
+            }
+          }
+        ]
       },
       headers: {
         'cmr-hits': 1,
@@ -244,20 +275,7 @@ describe('getProjectCollections', () => {
       })
       expect(storeActions[1]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: [
-          {
-            collectionId1: {
-              id: 'collectionId1',
-              mockCollectionData: 'goes here'
-            }
-          },
-          {
-            collectionId2: {
-              id: 'collectionId2',
-              mockCollectionData: 'collection data 2'
-            }
-          }
-        ]
+        payload: getProjectCollectionsResponse
       })
 
       expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)

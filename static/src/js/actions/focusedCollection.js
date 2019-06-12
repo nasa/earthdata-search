@@ -97,10 +97,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const { authToken } = getState()
 
-  let collectionJsonResp
-  let collectionUmmResp
-
-  getCollectionMetadata({
+  const response = getCollectionMetadata({
     concept_id: [focusedCollection],
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     includeHasGranules: true
@@ -125,9 +122,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         }
       })
 
-      collectionJsonResp = collectionJson
-      collectionUmmResp = collectionUmm
-
       // The .all().then() will only fire when both requests resolve successfully, so we can
       // rely on collectionJson to have the correct auth information in its headers.
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
@@ -143,10 +137,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       dispatch(updateFocusedCollection(''))
     })
 
-  return {
-    json: collectionJsonResp,
-    ummJson: collectionUmmResp
-  }
+  return response
 }
 
 /**

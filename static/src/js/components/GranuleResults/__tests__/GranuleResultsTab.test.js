@@ -9,6 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    location: {
+      search: '?test=search-value'
+    },
     onFocusedCollectionChange: jest.fn()
   }
 
@@ -33,7 +36,7 @@ describe('GranuleResultsTab component', () => {
 
     expect(enzymeWrapper.find(Link).length).toEqual(1)
     expect(enzymeWrapper.find(Link).prop('className')).toEqual('granule-results-tab__button')
-    expect(enzymeWrapper.find(Link).prop('to')).toEqual('/search')
+    expect(enzymeWrapper.find(Link).prop('to')).toEqual({ pathname: '/search', search: '?test=search-value' })
     expect(enzymeWrapper.find(Link).prop('children')[1]).toEqual(' Back to Collections')
   })
 

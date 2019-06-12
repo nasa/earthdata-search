@@ -6,6 +6,7 @@ import { getJwtToken } from './util'
  * Handler to perform an authenticated CMR Collection search
  */
 export default async function collectionSearch(event) {
+  // console.warn(event)
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
@@ -49,12 +50,13 @@ export default async function collectionSearch(event) {
     'tag_key'
   ]
 
-  const { body } = event
+  const { body, pathParameters } = event
+  const { format } = pathParameters
 
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
     nonIndexedKeys,
-    path: '/search/collections',
+    path: `/search/collections.${format}`,
     permittedCmrKeys
   }))
 }
