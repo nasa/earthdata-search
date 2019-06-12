@@ -22,6 +22,6 @@ describe('util#buildURL', () => {
       path: '/search/path',
       permittedCmrKeys
     }
-    expect(buildURL(params)).toEqual('http://example.com/search/path.json?param1=123&param2=abc&param3%5B%5D=987')
+    expect(buildURL(params)).toEqual('http://example.com/search/path?param1=123&param2=abc&param3%5B%5D=987')
   })
 })

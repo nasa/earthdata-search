@@ -27,7 +27,7 @@ export const sortRelatedUrls = (a, b) => {
 
 // Takes a umm_json object and returns the related urls formatted into a categorized array
 export const buildRelatedUrls = (ummJson) => {
-  const relatedUrls = ummJson.RelatedUrls
+  const { RelatedUrls: relatedUrls = [] } = ummJson
 
   // Build out an array of the categories in the correct order
   const collectionUrls = {

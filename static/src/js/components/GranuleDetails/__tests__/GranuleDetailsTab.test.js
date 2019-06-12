@@ -36,7 +36,7 @@ describe('GranuleDetailsTab component', () => {
 
     expect(enzymeWrapper.find(Link).length).toEqual(1)
     expect(enzymeWrapper.find(Link).prop('className')).toEqual('granule-results-tab__button')
-    expect(enzymeWrapper.find(Link).prop('to')).toEqual('/search/granules')
+    expect(enzymeWrapper.find(Link).prop('to')).toEqual({ pathname: '/search/granules', search: '?test=value' })
     expect(enzymeWrapper.find(Link).prop('children')[1]).toEqual(' Back to Granules')
   })
 

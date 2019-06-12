@@ -1,9 +1,11 @@
 import moxios from 'moxios'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import { remove, get } from 'tiny-cookie'
 
 import actions from '../index'
 import { updateFocusedCollection } from '../focusedCollection'
+import { getCollectionsResponseUnauth, getCollectionsResponseAuth } from './mocks'
 import {
   UPDATE_FOCUSED_COLLECTION,
   UPDATE_GRANULE_RESULTS,
@@ -187,7 +189,7 @@ describe('getFocusedCollection', () => {
   })
 
   test('should update the focusedCollection and call getGranules', async () => {
-    moxios.stubRequest(/gov\/search\/collections.*/, {
+    moxios.stubRequest(/search\/collections\.json/, {
       status: 200,
       response: {
         feed: {
@@ -195,11 +197,35 @@ describe('getFocusedCollection', () => {
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
           title: 'ECHO dataset metadata',
           entry: [{
-            mockCollectionData: 'goes here'
+            id: 'collectionId1',
+            short_name: 'id_1',
+            version_id: 'VersionID'
           }],
           facets: {},
           hits: 1
         }
+      },
+      headers: {
+        'cmr-hits': 1
+      }
+    })
+
+    moxios.stubRequest(/search\/collections\.umm_json/, {
+      status: 200,
+      response: {
+        hits: 1,
+        took: 234,
+        items: [{
+          meta: {
+            'concept-id': 'collectionId1'
+          },
+          umm: {
+            data: 'collectionId1'
+          }
+        }]
+      },
+      headers: {
+        'cmr-hits': 1
       }
     })
 
@@ -237,11 +263,7 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: [{
-          [collectionId]: {
-            mockCollectionData: 'goes here'
-          }
-        }]
+        payload: getCollectionsResponseUnauth
       })
     })
 
@@ -250,7 +272,7 @@ describe('getFocusedCollection', () => {
   })
 
   test('should update the authenticated focusedCollection and call getGranules', async () => {
-    moxios.stubRequest(/3001\/collections.*/, {
+    moxios.stubRequest(/3001\/collections\.json/, {
       status: 200,
       response: {
         feed: {
@@ -258,11 +280,33 @@ describe('getFocusedCollection', () => {
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
           title: 'ECHO dataset metadata',
           entry: [{
-            mockCollectionData: 'goes here'
+            id: 'collectionId1',
+            short_name: 'id_1',
+            version_id: 'VersionID'
           }],
           facets: {},
           hits: 1
         }
+      },
+      headers: {
+        'cmr-hits': 1,
+        'jwt-token': 'token'
+      }
+    })
+
+    moxios.stubRequest(/3001\/collections\.umm_json/, {
+      status: 200,
+      response: {
+        hits: 1,
+        took: 234,
+        items: [{
+          meta: {
+            'concept-id': 'collectionId1'
+          },
+          umm: {
+            data: 'collectionId1'
+          }
+        }]
       },
       headers: {
         'cmr-hits': 1,
@@ -304,11 +348,7 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: [{
-          [collectionId]: {
-            mockCollectionData: 'goes here'
-          }
-        }]
+        payload: getCollectionsResponseAuth
       })
     })
 
@@ -317,7 +357,7 @@ describe('getFocusedCollection', () => {
   })
 
   test('should not call getGranules is previous granules are used', async () => {
-    moxios.stubRequest(/collections.*/, {
+    moxios.stubRequest(/search\/collections\.json/, {
       status: 200,
       response: {
         feed: {
@@ -325,11 +365,35 @@ describe('getFocusedCollection', () => {
           id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?params_go_here',
           title: 'ECHO dataset metadata',
           entry: [{
-            mockCollectionData: 'goes here'
+            id: 'collectionId1',
+            short_name: 'id_1',
+            version_id: 'VersionID'
           }],
           facets: {},
           hits: 1
         }
+      },
+      headers: {
+        'cmr-hits': 1
+      }
+    })
+
+    moxios.stubRequest(/search\/collections\.umm_json/, {
+      status: 200,
+      response: {
+        hits: 1,
+        took: 234,
+        items: [{
+          meta: {
+            'concept-id': 'collectionId1'
+          },
+          umm: {
+            data: 'collectionId1'
+          }
+        }]
+      },
+      headers: {
+        'cmr-hits': 1
       }
     })
 
@@ -349,6 +413,7 @@ describe('getFocusedCollection', () => {
       }
     }
     const store = mockStore({
+      authToken: '',
       focusedCollection: collectionId,
       metadata: {
         collections: {
@@ -374,11 +439,7 @@ describe('getFocusedCollection', () => {
       // updateCollectionMetadata
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
-        payload: [{
-          [collectionId]: {
-            mockCollectionData: 'goes here'
-          }
-        }]
+        payload: getCollectionsResponseUnauth
       })
     })
 

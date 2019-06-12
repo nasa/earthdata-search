@@ -73,6 +73,10 @@ export default class CollectionRequest extends Request {
     ]
   }
 
+  search(params, ext = 'json') {
+    return this.post(`${this.searchPath}.${ext}`, params)
+  }
+
   /**
    * Transform the response before completing the Promise.
    * @param {Object} data - Response object from the object.

@@ -108,7 +108,7 @@ describe('Request#search', () => {
 
     const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
 
-    const params = { param1: 123 }
+    const params = { param1: 12, ext: 'json' }
     request.search(params)
 
     expect(postMock).toBeCalledTimes(1)
