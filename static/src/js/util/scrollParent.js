@@ -16,10 +16,4 @@ const scrollParent = (node) => {
   return scroll(node) ? node : scrollParent(node.parentNode)
 }
 
-// !node || node === document.body
-//   ? document.body
-//   : scroll(node)
-//     ? node
-//     : scrollParent(node.parentNode)
-
 export default scrollParent
