@@ -41,7 +41,7 @@ export const GranuleResultsBodyContainer = (props) => {
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   const { metadata } = focusedCollectionMetadata[focusedCollection]
-  const { isCwic = false } = metadata
+  const { is_cwic: isCwic = false } = metadata
 
   const { pageNum } = granuleQuery
 

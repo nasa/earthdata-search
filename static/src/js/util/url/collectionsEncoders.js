@@ -102,7 +102,7 @@ export const encodeCollections = (collections, focusedCollection) => {
         isVisible,
         isCwic
       } = collection
-      // const { is_cwic: isCwic = false } = metadata
+
       const excludedKey = isCwic ? 'cx' : 'x'
 
       if (granules && excludedGranuleIds.length > 0) {

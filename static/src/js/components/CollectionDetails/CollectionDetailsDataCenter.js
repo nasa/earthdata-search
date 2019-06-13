@@ -41,50 +41,56 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
               )
             }
             {
-              dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
-                const key = `data_center_email_${item}-${i}`
-                if (contact.Type === 'Email') {
-                  return (
-                    <p key={key} className="collection-details-data-center__email">
-                      <a href={`mailto:${contact.Value}`}>
-                        {contact.Value}
-                      </a>
-                    </p>
-                  )
-                }
-                return null
-              })
-            }
-            <dl className="collection-details-data-center__contact">
-              {
+              dataCenter.contactInformation.ContactMechanisms && (
                 dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
-                  const key = `data_center_other_${item}-${i}`
-                  if (contact.Type === 'Facebook') {
+                  const key = `data_center_email_${item}-${i}`
+                  if (contact.Type === 'Email') {
                     return (
-                      <React.Fragment key={key}>
-                        <dt>{`${contact.Type}:`}</dt>
-                        <dd>
-                          <a href={contact.Value} title={contact.Value}>
-                            Profile Link
-                          </a>
-                        </dd>
-                      </React.Fragment>
-                    )
-                  }
-                  if (contact.Type !== 'Email' && contact.Type !== 'Facebook') {
-                    return (
-                      <React.Fragment key={key}>
-                        <dt>{`${contact.Type}:`}</dt>
-                        <dd>
+                      <p key={key} className="collection-details-data-center__email">
+                        <a href={`mailto:${contact.Value}`}>
                           {contact.Value}
-                        </dd>
-                      </React.Fragment>
+                        </a>
+                      </p>
                     )
                   }
                   return null
                 })
-              }
-            </dl>
+              )
+            }
+            {
+              dataCenter.contactInformation.ContactMechanisms && (
+                <dl className="collection-details-data-center__contact">
+                  {
+                    dataCenter.contactInformation.ContactMechanisms.map((contact, i) => {
+                      const key = `data_center_other_${item}-${i}`
+                      if (contact.Type === 'Facebook') {
+                        return (
+                          <React.Fragment key={key}>
+                            <dt>{`${contact.Type}:`}</dt>
+                            <dd>
+                              <a href={contact.Value} title={contact.Value}>
+                                Profile Link
+                              </a>
+                            </dd>
+                          </React.Fragment>
+                        )
+                      }
+                      if (contact.Type !== 'Email' && contact.Type !== 'Facebook') {
+                        return (
+                          <React.Fragment key={key}>
+                            <dt>{`${contact.Type}:`}</dt>
+                            <dd>
+                              {contact.Value}
+                            </dd>
+                          </React.Fragment>
+                        )
+                      }
+                      return null
+                    })
+                  }
+                </dl>
+              )
+            }
           </>
         )
       }

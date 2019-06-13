@@ -126,31 +126,35 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
             }
             <dl className="collection-details-body__info">
               {
-                relatedUrls.length > 0 && (
-                  <>
-                    <dt>Related URLs:</dt>
-                    <dd className="collection-details-body__related-links">
-                      {buildRelatedUrlsList(relatedUrls)}
-                      <Button
-                        className="link link--separated collection-details-body__related-link"
-                        type="button"
-                        variant="link"
-                        bootstrapVariant="link"
-                        onClick={() => onToggleRelatedUrlsModal(true)}
-                      >
-                        View All Related URLs
-                      </Button>
-                      <a
-                        className="link link--external collection-details-body__related-link"
-                        href={urls.html.href}
-                        // eslint-disable-next-line react/jsx-no-target-blank
-                        target="_blank"
-                      >
-                        View More Info
-                      </a>
-                    </dd>
-                  </>
-                )
+                <>
+                  <dt>Related URLs:</dt>
+                  <dd className="collection-details-body__related-links">
+                    {
+                      relatedUrls.length > 0 && (
+                        <>
+                          {buildRelatedUrlsList(relatedUrls)}
+                          <Button
+                            className="link link--separated collection-details-body__related-link"
+                            type="button"
+                            variant="link"
+                            bootstrapVariant="link"
+                            onClick={() => onToggleRelatedUrlsModal(true)}
+                          >
+                            View All Related URLs
+                          </Button>
+                        </>
+                      )
+                    }
+                    <a
+                      className="link link--external collection-details-body__related-link"
+                      href={urls.html.href}
+                      // eslint-disable-next-line react/jsx-no-target-blank
+                      target="_blank"
+                    >
+                      View More Info
+                    </a>
+                  </dd>
+                </>
               }
               {
                 temporal && (
@@ -187,7 +191,9 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
         </div>
         <div className="row collection-details-body__row">
           {/* eslint-disable-next-line react/no-danger */}
-          <div className="col collection-details-body__summary" dangerouslySetInnerHTML={{ __html: summary }} />
+          <div className="col collection-details-body__summary">
+            {summary}
+          </div>
         </div>
         <div className="row">
           {
@@ -206,10 +212,6 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
           }
         </div>
       </div>
-      {/* <div>
-        More Actions
-        <div>Handoff Links</div>
-      </div> */}
       <CollapsePanel
         className="collection-details-body__for-devs"
         headerText="For Developers"
