@@ -26,6 +26,7 @@ export default class CollectionRequest extends Request {
         'concept_id'
       ]
     }
+
     return [
       'params',
       'bounding_box',
@@ -74,7 +75,7 @@ export default class CollectionRequest extends Request {
   }
 
   search(params, ext = 'json') {
-    return this.post(`${this.searchPath}.${ext}`, params)
+    return this.post(`${this.searchPath}.${ext}`, { ...params, ext })
   }
 
   /**

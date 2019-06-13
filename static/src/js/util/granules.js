@@ -73,7 +73,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const temporalString = encodeTemporal(temporal)
 
   const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
-    && !collectionMetadata.hasGranules
+    && !collectionMetadata.has_granules
 
   return {
     authToken,

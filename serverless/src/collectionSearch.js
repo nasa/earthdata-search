@@ -3,12 +3,17 @@ import { doSearchRequest } from './util/cmr/doSearchRequest'
 import { getJwtToken } from './util'
 
 /**
- * Handler to perform an authenticated CMR Collection search
+ * Returns the keys permitted by cmr based on the request format
+ * @param {String} format Format of the request (extension i.e. json or umm_json)
  */
-export default async function collectionSearch(event) {
-  // console.warn(event)
-  // Whitelist parameters supplied by the request
-  const permittedCmrKeys = [
+function getPermittedCmrKeys(format) {
+  if (format === 'umm_json') {
+    return [
+      'concept_id'
+    ]
+  }
+
+  return [
     'bounding_box',
     'collection_data_type',
     'concept_id',
@@ -37,6 +42,17 @@ export default async function collectionSearch(event) {
     'tag_key',
     'temporal'
   ]
+}
+
+/**
+ * Handler to perform an authenticated CMR Collection search
+ */
+export default async function collectionSearch(event) {
+  const { body, pathParameters } = event
+  const { format } = pathParameters
+
+  // Whitelist parameters supplied by the request
+  const permittedCmrKeys = getPermittedCmrKeys(format)
 
   const nonIndexedKeys = [
     'collection_data_type',
@@ -49,9 +65,6 @@ export default async function collectionSearch(event) {
     'sort_key',
     'tag_key'
   ]
-
-  const { body, pathParameters } = event
-  const { format } = pathParameters
 
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
