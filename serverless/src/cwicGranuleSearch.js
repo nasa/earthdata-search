@@ -147,9 +147,12 @@ export default async function cwicGranuleSearch(event) {
 
   try {
     const granuleResponse = await request.get({
+      time: true,
       uri: renderedTemplate,
       resolveWithFullResponse: true
     })
+
+    console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime}ms`)
 
     return {
       isBase64Encoded: false,

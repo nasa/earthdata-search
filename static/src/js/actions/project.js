@@ -5,12 +5,10 @@ import {
   UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY
 } from '../constants/actionTypes'
-// import CollectionRequest from '../util/request/collectionRequest'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
-// import { prepareCollectionParams, buildSearchParams } from '../util/collections'
 import { prepareGranuleParams, populateGranuleResults } from '../util/granules'
 import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
@@ -104,7 +102,6 @@ export const getProjectGranules = () => (dispatch, getState) => {
 }
 
 export const getProjectCollections = () => (dispatch, getState) => {
-  // const collectionParams = prepareCollectionParams(getState())
   const { metadata } = getState()
   const { collections } = metadata
   const { projectIds } = collections

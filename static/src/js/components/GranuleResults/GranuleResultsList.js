@@ -61,10 +61,13 @@ export const GranuleResultsList = (props) => {
 
   const granulesList = granuleIds.map((granuleId, index) => {
     const isLast = granuleIds.length > 0 && index === granuleIds.length - 1
+
+    // Ensure a unique key for granules with the same id (CWIC)
+    const granuleKey = `${granuleId}-${index}`
     return (
       <GranuleResultsItem
         collectionId={collectionId}
-        key={granuleId}
+        key={granuleKey}
         granule={granules.byId[granuleId]}
         isLast={isLast}
         location={location}
