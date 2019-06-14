@@ -85,12 +85,15 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   }
 
   const { collections } = metadata
-  const { allIds: fetchedCollectionIds } = collections
+  const { allIds: fetchedCollectionIds, byId: fetchedCollections } = collections
   // If we already have the metadata for this focusedCollection, don't fetch it again
   if (fetchedCollectionIds.indexOf(focusedCollection) !== -1) {
-    // If granules were copied from collections, don't make a new getGranules request
-    if (allIds.length === 0) dispatch(actions.getGranules())
-    return null
+    // Check to see if we already have metadata for this collection
+    if (Object.keys(fetchedCollections[focusedCollection].metadata).length) {
+      // If granules were copied from collections, don't make a new getGranules request
+      if (allIds.length === 0) dispatch(actions.getGranules())
+      return null
+    }
   }
 
   const { authToken } = getState()

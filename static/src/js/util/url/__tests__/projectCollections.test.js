@@ -14,14 +14,18 @@ describe('url#decodeUrlParams', () => {
             isCwic: false,
             isVisible: false,
             granules: {},
-            metadata: {}
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
             isCwic: false,
             isVisible: false,
             granules: {},
-            metadata: {}
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
           }
         },
         projectIds: ['collectionId1', 'collectionId2']
@@ -42,14 +46,18 @@ describe('url#decodeUrlParams', () => {
             isCwic: false,
             isVisible: false,
             granules: {},
-            metadata: {}
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
             isCwic: false,
             isVisible: false,
             granules: {},
-            metadata: {}
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
           }
         },
         projectIds: ['collectionId1', 'collectionId2']
@@ -70,14 +78,18 @@ describe('url#decodeUrlParams', () => {
             isCwic: false,
             isVisible: false,
             granules: {},
-            metadata: {}
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
             isCwic: false,
             isVisible: true,
             granules: {},
-            metadata: {}
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
           }
         },
         projectIds: ['collectionId1', 'collectionId2']
