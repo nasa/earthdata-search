@@ -15,7 +15,9 @@ describe('url#decodeUrlParams', () => {
               isCwic: false,
               isVisible: false,
               granules: {},
-              metadata: {}
+              metadata: {},
+              formattedMetadata: {},
+              ummMetadata: {}
             }
           },
           projectIds: []
@@ -36,7 +38,9 @@ describe('url#decodeUrlParams', () => {
               isCwic: true,
               isVisible: false,
               granules: {},
-              metadata: {}
+              metadata: {},
+              formattedMetadata: {},
+              ummMetadata: {}
             }
           },
           projectIds: []
@@ -59,7 +63,9 @@ describe('url#decodeUrlParams', () => {
               isCwic: false,
               isVisible: false,
               granules: {},
-              metadata: {}
+              metadata: {},
+              formattedMetadata: {},
+              ummMetadata: {}
             }
           },
           projectIds: ['collectionId']
@@ -82,7 +88,9 @@ describe('url#decodeUrlParams', () => {
               isCwic: false,
               isVisible: false,
               granules: {},
-              metadata: {}
+              metadata: {},
+              formattedMetadata: {},
+              ummMetadata: {}
             }
           },
           projectIds: ['collectionId']

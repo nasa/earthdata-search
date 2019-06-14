@@ -16,6 +16,8 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata }) => {
   const { metadata } = focusedCollectionMetadata[collectionId]
   const { short_name: shortName, title, version_id: versionId } = metadata
 
+  if (!Object.keys(metadata).length) return null
+
   return (
     <>
       <div className="row collection-details-header">

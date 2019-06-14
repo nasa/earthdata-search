@@ -106,6 +106,16 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
     urls
   } = formattedMetadata
 
+  if (!Object.keys(metadata).length || !Object.keys(formattedMetadata).length) {
+    return (
+      <div className="collection-details-body">
+        <div className="collection-details-body__content">
+          <h4>Details Loading...</h4>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="collection-details-body">
       <div className="collection-details-body__content">

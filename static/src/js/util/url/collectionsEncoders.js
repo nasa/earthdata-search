@@ -178,7 +178,9 @@ export const decodeCollections = (params) => {
       granules: {},
       isCwic,
       isVisible,
-      metadata: {}
+      metadata: {},
+      ummMetadata: {},
+      formattedMetadata: {}
     }
   })
 

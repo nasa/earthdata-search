@@ -128,6 +128,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
         const metadata = collection
         const ummIndex = responseUmm.findIndex(item => id === item.meta['concept-id'])
         const ummMetadata = responseUmm[ummIndex].umm
+
         const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
 
         payload.push({
