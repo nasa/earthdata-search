@@ -204,7 +204,7 @@ functions:
           method: post
           cors:
             origin: '*'
-          path: collections.{format}
+          path: collections/{format}
           request:
             parameters:
               paths:

@@ -193,7 +193,7 @@ describe('getProjectCollections', () => {
   })
 
   test('calls lambda to get authenticated collections', async () => {
-    moxios.stubRequest(/3001\/collections\.json/, {
+    moxios.stubRequest(/3001\/collections\/json/, {
       status: 200,
       response: {
         feed: {
@@ -217,7 +217,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    moxios.stubRequest(/3001\/collections\.umm_json/, {
+    moxios.stubRequest(/3001\/collections\/umm_json/, {
       status: 200,
       response: {
         hits: 1,
