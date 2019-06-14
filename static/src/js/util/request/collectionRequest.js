@@ -75,7 +75,12 @@ export default class CollectionRequest extends Request {
   }
 
   search(params, ext = 'json') {
-    return this.post(`${this.searchPath}.${ext}`, { ...params, ext })
+    let urlWithExtension = `${this.searchPath}.${ext}`
+    if (this.authToken && this.authToken !== '') {
+      urlWithExtension = `${this.searchPath}/${ext}`
+    }
+
+    return this.post(urlWithExtension, { ...params, ext })
   }
 
   /**

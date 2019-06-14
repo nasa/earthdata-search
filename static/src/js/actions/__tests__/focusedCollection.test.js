@@ -272,7 +272,7 @@ describe('getFocusedCollection', () => {
   })
 
   test('should update the authenticated focusedCollection and call getGranules', async () => {
-    moxios.stubRequest(/3001\/collections\.json/, {
+    moxios.stubRequest(/3001\/collections\/json/, {
       status: 200,
       response: {
         feed: {
@@ -294,7 +294,7 @@ describe('getFocusedCollection', () => {
       }
     })
 
-    moxios.stubRequest(/3001\/collections\.umm_json/, {
+    moxios.stubRequest(/3001\/collections\/umm_json/, {
       status: 200,
       response: {
         hits: 1,
