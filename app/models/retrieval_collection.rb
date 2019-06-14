@@ -67,7 +67,12 @@ class RetrievalCollection < ActiveRecord::Base
   #
   # @return [Fixnum] the number of granules requested by the user or DEFAULT_MAX_ORDER_SIZE, whichever is smaller
   def adjusted_granule_count
-    [DEFAULT_MAX_ORDER_SIZE, granule_count, max_order_size].min
+    considered_sizes = [DEFAULT_MAX_ORDER_SIZE, granule_count]
+
+    # If this is a limited collection consider the limited value in this count
+    considered_sizes << max_order_size if limited_collection?
+
+    considered_sizes.min
   end
 
   # Returns the tags assinged to this records collection.
