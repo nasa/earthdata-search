@@ -43,6 +43,7 @@ class SecondaryToolbar extends Component {
           className="secondary-toolbar__back"
           bootstrapVariant="light"
           icon="arrow-circle-o-left"
+          label="Back to Search"
         >
           Back to Search
         </Button>
@@ -57,6 +58,7 @@ class SecondaryToolbar extends Component {
             className="secondary-toolbar__project"
             bootstrapVariant="light"
             href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(projectPath)}`}
+            label="View Project"
           >
             My Project
           </Button>
@@ -73,6 +75,7 @@ class SecondaryToolbar extends Component {
           <Button
             className="secondary-toolbar__project"
             bootstrapVariant="light"
+            label="View Project"
           >
             My Project
           </Button>
@@ -88,6 +91,7 @@ class SecondaryToolbar extends Component {
         bootstrapVariant="light"
         href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}
         icon="lock"
+        label="Login"
       >
         Earthdata Login
       </Button>

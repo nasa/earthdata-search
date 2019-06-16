@@ -7,6 +7,10 @@ import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import ProjectCollectionsContainer
+  from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
+import ProjectPanelsContainer
+  from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 
 import actions from '../../actions'
 
@@ -27,7 +31,11 @@ export class Project extends Component {
   render() {
     return (
       <div className="route-wrapper route-wrapper--project">
-        <SidebarContainer />
+        <SidebarContainer
+          panels={<ProjectPanelsContainer />}
+        >
+          <ProjectCollectionsContainer />
+        </SidebarContainer>
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
             <SecondaryToolbarContainer />

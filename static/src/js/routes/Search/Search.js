@@ -47,6 +47,8 @@ import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import CollectionResultsHeader
   from '../../components/CollectionResults/CollectionResultsHeader'
+import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
+import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
 
@@ -69,7 +71,11 @@ export class Search extends Component {
     return (
       <div className="route-wrapper route-wrapper--search search">
         <MyDropzone />
-        <SidebarContainer />
+        <SidebarContainer>
+          <SidebarSection sectionTitle="Browse Collections">
+            <FacetsContainer />
+          </SidebarSection>
+        </SidebarContainer>
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
             <SearchFormContainer />

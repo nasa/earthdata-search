@@ -1,6 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
+import Button from '../Button/Button'
 import ProjectHeader from './ProjectHeader'
 import ProjectCollectionsList from './ProjectCollectionsList'
 
@@ -17,7 +18,8 @@ const ProjectCollections = (props) => {
     collections,
     collectionsSearch,
     onRemoveCollectionFromProject,
-    onToggleCollectionVisibility
+    onToggleCollectionVisibility,
+    onSetActivePanel
   } = props
 
   const collectionsLoading = collectionsSearch.isLoading
@@ -33,8 +35,21 @@ const ProjectCollections = (props) => {
         loading={collectionsLoading}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
+        onSetActivePanel={onSetActivePanel}
       />
-      <div className="project-collections__footer" />
+      <div className="project-collections__footer">
+        <p className="project-collections__footer-message">
+          Click &quot;Edit Options&quot; above to customize the output for each project.
+        </p>
+        <Button
+          variant="full"
+          bootstrapVariant="success"
+          icon="download"
+          label="Download project data"
+        >
+          Download Data
+        </Button>
+      </div>
     </section>
   )
 }
@@ -43,7 +58,8 @@ ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onSetActivePanel: PropTypes.func.isRequired
 }
 
 export default ProjectCollections

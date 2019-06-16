@@ -1,0 +1,31 @@
+.panel-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  padding: $spacer/2;
+  padding-right: 0;
+  border-bottom: 1px solid $color__black--300;
+
+  &__heading {
+    margin: 0;
+  }
+
+  &__heading-secondary {
+    display: block;
+    margin-bottom: $spacer/4;
+    font-size: 0.825rem;
+    color: $color__black--900;
+  }
+
+  &__heading-primary {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $color__black--500;
+  }
+
+  &__close {
+    color: $color__black--400;
+  }
+}

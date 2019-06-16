@@ -116,7 +116,8 @@ export const getProjectCollections = () => (dispatch, getState) => {
     featureFacets: {},
     conceptId: projectIds,
     includeFacets: undefined,
-    tagKey: undefined
+    tagKey: undefined,
+    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod'
   }, authToken)
     .then(([collectionJson, collectionUmm]) => {
       const payload = []

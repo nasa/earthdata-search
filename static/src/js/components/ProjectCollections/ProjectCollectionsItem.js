@@ -21,8 +21,10 @@ const ProjectCollectionItem = ({
   collectionId,
   collection,
   color,
+  index,
   onRemoveCollectionFromProject,
-  onToggleCollectionVisibility
+  onToggleCollectionVisibility,
+  onSetActivePanel
 }) => {
   const {
     granules,
@@ -39,9 +41,17 @@ const ProjectCollectionItem = ({
   return (
     <li style={{ borderLeftColor: color }} className="project-collections-item">
       <div className="project-collections-item__header">
-        <TruncateText as="h3" lines={3} className="project-collections-item__title">
-          {title}
-        </TruncateText>
+        <Button
+          className="project-collections-item__title-button"
+          variant="naked"
+          bootstrapVariant="link"
+          label={`${title} Collection Details`}
+          onClick={() => onSetActivePanel(`1.${index}.0`)}
+        >
+          <TruncateText as="h3" lines={3} className="project-collections-item__title">
+            {title}
+          </TruncateText>
+        </Button>
         <Dropdown className="project-collections-item__more-actions">
           <Dropdown.Toggle
             className="project-collections-item__more-actions-toggle"
@@ -86,6 +96,8 @@ const ProjectCollectionItem = ({
           variant="link"
           bootstrapVariant="link"
           icon="cog"
+          label="More options"
+          onClick={() => onSetActivePanel(`0.${index}.0`)}
         >
           More Options
         </Button>
@@ -98,8 +110,10 @@ ProjectCollectionItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   collection: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onSetActivePanel: PropTypes.func.isRequired
 }
 
 export default ProjectCollectionItem

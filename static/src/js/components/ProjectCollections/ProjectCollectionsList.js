@@ -22,7 +22,8 @@ export const ProjectCollectionsList = (props) => {
     loading,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
-    location
+    location,
+    onSetActivePanel
   } = props
 
   const {
@@ -39,9 +40,11 @@ export const ProjectCollectionsList = (props) => {
         collectionId={collectionId}
         collection={byId[collectionId]}
         color={color}
+        index={index}
         key={collectionId}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
+        onSetActivePanel={onSetActivePanel}
       />
     )
   })
@@ -77,7 +80,8 @@ ProjectCollectionsList.propTypes = {
   loading: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired
+  onToggleCollectionVisibility: PropTypes.func.isRequired,
+  onSetActivePanel: PropTypes.func.isRequired
 }
 
 export default withRouter(ProjectCollectionsList)

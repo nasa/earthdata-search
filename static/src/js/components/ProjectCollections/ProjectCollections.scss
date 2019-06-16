@@ -10,8 +10,14 @@
   background-color: $color__white;
 
   &__footer {
-    padding: 1rem;
+    padding: $spacer/2;
     border-top: 1px solid $color__black--300;
     border-right: 1px solid $color__black--300;
+  }
+
+  &__footer-message {
+    margin-bottom: $spacer/2;
+    font-size: 0.825rem;
+    color: $color__black--400;
   }
 }

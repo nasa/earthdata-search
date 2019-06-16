@@ -1,0 +1,29 @@
+.project-panels {
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    vertical-align: middle;
+    padding: $spacer/2 $spacer;
+  }
+
+  &__action {
+    margin-left: $spacer/2;
+  }
+
+  &__collection-status {
+    display: inline-block;
+    margin-right: $spacer/2;
+    font-size: 1.125rem;
+    color: $color__green;
+    vertical-align: middle;
+  }
+
+  &__collection-count {
+    display: inline-block;
+    margin-right: $spacer/2;
+    color: $color__black--400;
+    vertical-align: middle;
+  }
+}

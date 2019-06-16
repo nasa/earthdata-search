@@ -9,13 +9,23 @@
     display: flex;
   }
 
+  &__title-button {
+    display: block;
+    text-align: left;
+    color: $color__black--900;
+
+    &:hover,
+    &:active {
+      color: $color__black--400;
+    }
+  }
+
   &__title {
     flex-grow: 1;
     margin-bottom: $spacer/4;
     font-size: 0.85rem;
     line-height: 1.35em;
     font-weight: 700;
-    padding-left: $spacer/8;
   }
 
   &__stats-list {

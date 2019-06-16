@@ -19,6 +19,7 @@ import timelineReducer from './timeline'
 import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
+import projectPanelsReducer from './projectPanels'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
@@ -43,5 +44,6 @@ export default history => combineReducers({
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   timeline: timelineReducer,
-  ui: uiReducer
+  ui: uiReducer,
+  projectPanels: projectPanelsReducer
 })

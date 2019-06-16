@@ -26,8 +26,11 @@
 
   &__icon {
     display: inline-block;
-    margin-right: $spacer/2;
     vertical-align: middle;
+
+    &--push {
+      margin-right: $spacer/2;
+    }
   }
 
   &__badge {
