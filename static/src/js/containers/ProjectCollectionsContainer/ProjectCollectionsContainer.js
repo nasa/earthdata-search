@@ -17,7 +17,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
-  collectionsSearch: state.searchResults.collections
+  collectionsSearch: state.searchResults.collections,
+  projectPanels: state.projectPanels
 })
 
 export const ProjectCollectionsContainer = (props) => {
@@ -26,7 +27,8 @@ export const ProjectCollectionsContainer = (props) => {
     collectionsSearch,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
-    onSetActivePanel
+    onSetActivePanel,
+    projectPanels
   } = props
 
   return (
@@ -36,6 +38,7 @@ export const ProjectCollectionsContainer = (props) => {
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
       onSetActivePanel={onSetActivePanel}
+      projectPanels={projectPanels}
     />
   )
 }
@@ -45,7 +48,8 @@ ProjectCollectionsContainer.propTypes = {
   collectionsSearch: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired
+  onSetActivePanel: PropTypes.func.isRequired,
+  projectPanels: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

@@ -13,6 +13,7 @@ import ProjectPanelsContainer
   from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 
 import actions from '../../actions'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
@@ -29,8 +30,14 @@ export class Project extends Component {
   }
 
   render() {
+    const endpoint = `${getEarthdataConfig('prod').apiHost}/orders`
     return (
-      <div className="route-wrapper route-wrapper--project">
+      <form
+        id="form__project"
+        action={endpoint}
+        method="post"
+        className="route-wrapper route-wrapper--project"
+      >
         <SidebarContainer
           panels={<ProjectPanelsContainer />}
         >
@@ -41,7 +48,7 @@ export class Project extends Component {
             <SecondaryToolbarContainer />
           </header>
         </div>
-      </div>
+      </form>
     )
   }
 }

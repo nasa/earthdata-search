@@ -4,7 +4,7 @@ import queryString from 'query-string'
 import { Link } from 'react-router-dom'
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
-import TruncateText from 'react-truncate-text'
+// import TruncateText from 'react-truncate-text'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { commafy } from '../../util/commafy'
@@ -70,6 +70,8 @@ class CollectionResultsBody extends PureComponent {
 
       const isLast = collectionIds.length > 0 && index === collectionIds.length - 1
 
+      const summary = collection.summary.length > 280 ? `${collection.summary.substring(0, 280)}...` : collection.summary
+
       return (
         <li className="collection-results__item" key={collection.id}>
           <div className="collection-results__item-thumb">
@@ -111,7 +113,7 @@ class CollectionResultsBody extends PureComponent {
                 <strong> &bull; </strong>
                 <strong>{timeRange}</strong>
                 <strong> &bull; </strong>
-                <TruncateText lines="3">{collection.summary}</TruncateText>
+                {summary}
               </p>
             </div>
             <div className="collection-results__item-body-secondary">

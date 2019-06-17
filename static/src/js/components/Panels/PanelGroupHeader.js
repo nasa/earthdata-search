@@ -5,6 +5,14 @@ import Button from '../Button/Button'
 
 import './PanelGroupHeader.scss'
 
+
+/**
+ * Renders PanelGroupHeader.
+ * @param {object} props - The props passed into the component.
+ * @param {string} props.primaryHeading - The text to be used as the primary heading.
+ * @param {string} props.secondaryHeading - The text to be used as the secondary heading.
+ * @param {function} props.onPanelsClose - The action to close the panels.
+ */
 export const PanelGroupHeader = ({ primaryHeading, secondaryHeading, onPanelsClose }) => (
   <header className="panel-group-header">
     <h2 className="panel-group-header__heading">

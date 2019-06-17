@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CSSNano = require('cssnano')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
@@ -69,8 +69,8 @@ const Config = merge(StaticCommonConfig, {
     }),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
-    ]),
-    new BundleAnalyzerPlugin()
+    ])
+    // new BundleAnalyzerPlugin()
   ]
 })
 

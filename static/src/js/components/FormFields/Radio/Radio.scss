@@ -1,0 +1,31 @@
+.radio {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: $spacer/2 $spacer;
+  width: 100%;
+  border: 1px solid $color__black--200;
+  border-radius: 0.125rem;
+  vertical-align: middle;
+
+  &--is-selected {
+    background-color: $color__black--100;
+  }
+
+  &__input {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &__content {
+    display: inline-block;
+    margin-left: $spacer/2;
+    font-weight: 700;
+    color: $color__black--500;
+    vertical-align: middle;
+
+    .radio--is-selected & {
+      color: $color__black--600;
+    }
+  }
+}

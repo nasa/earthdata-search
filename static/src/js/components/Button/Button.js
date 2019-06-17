@@ -16,6 +16,7 @@ export const Button = ({
   label,
   onClick,
   title,
+  type,
   variant
 }) => {
   const buttonClasses = classNames(
@@ -55,6 +56,7 @@ export const Button = ({
       title={title}
       role="button"
       aria-label={label}
+      type={type}
     >
       {icon && <i className={iconClasses} /> }
       <span className="button__contents">
@@ -84,6 +86,7 @@ Button.defaultProps = {
   icon: null,
   onClick: null,
   title: null,
+  type: 'button',
   variant: null
 }
 
@@ -98,6 +101,7 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   title: PropTypes.string,
+  type: PropTypes.string,
   variant: PropTypes.string
 }
 

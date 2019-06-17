@@ -1,61 +1,63 @@
-import React, { Component, Children } from 'react'
+import React, { Children } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import PanelGroupFooter from './PanelGroupFooter'
 import PanelGroupHeader from './PanelGroupHeader'
 import PanelItem from './PanelItem'
 
 import './PanelGroup.scss'
 
+/**
+ * Renders PanelGroup.
+ * @param {object} props - The props passed into the component.
+ * @param {node} props.children - The panel group children. Should consist only of PanelItem components.
+ * @param {string} props.primaryHeading - The text to be used as the primary heading.
+ * @param {string} props.secondaryHeading - The text to be used as the secondary heading.
+ * @param {boolean} props.isOpen - A flag to desingate the PanelGroup as open.
+ * @param {boolean} props.isActive -  A flag to desingate the PanelGroup as active. Active PanelGroups are lifted to the highest index.
+ * @param {function} props.onPanelsClose - The action to close the panels.
+ */
 // eslint-disable-next-line react/prefer-stateless-function
-export class PanelGroup extends Component {
-  renderPanels(child, index) {
+export const PanelGroup = ({
+  activePanelId,
+  footer,
+  children,
+  primaryHeading,
+  secondaryHeading,
+  isOpen,
+  isActive,
+  onPanelsClose
+}) => {
+  const renderPanels = (child, index) => {
     if (!child) return null
-    const { activePanelId } = this.props
     const childProps = { ...child.props }
     if (!childProps.panelId) childProps.panelId = `${index}`
     childProps.isActive = !!(childProps.panelId === activePanelId)
+    childProps.footer = childProps.footer ? childProps.footer : footer
     return <PanelItem {...childProps} />
   }
 
-  render() {
-    const {
-      children,
-      primaryHeading,
-      secondaryHeading,
-      isOpen,
-      isActive,
-      onPanelsClose,
-      footer
-    } = this.props
+  const panels = Children.map(children, (child, index) => renderPanels(child, index))
 
-    const panels = Children.map(children, (child, index) => this.renderPanels(child, index))
+  const className = classNames([
+    'panel-group',
+    {
+      'panel-group--is-open': isOpen,
+      'panel-group--is-active': isActive
+    }
+  ])
 
-    const className = classNames([
-      'panel-group',
-      {
-        'panel-group--is-open': isOpen,
-        'panel-group--is-active': isActive
-      }
-    ])
 
-    return (
-      <div className={className}>
-        <PanelGroupHeader
-          primaryHeading={primaryHeading}
-          secondaryHeading={secondaryHeading}
-          onPanelsClose={onPanelsClose}
-        />
-        {panels}
-        {footer && (
-          <PanelGroupFooter
-            footer={footer}
-          />
-        )}
-      </div>
-    )
-  }
+  return (
+    <div className={className}>
+      <PanelGroupHeader
+        primaryHeading={primaryHeading}
+        secondaryHeading={secondaryHeading}
+        onPanelsClose={onPanelsClose}
+      />
+      {panels}
+    </div>
+  )
 }
 
 PanelGroup.defaultProps = {
@@ -64,8 +66,7 @@ PanelGroup.defaultProps = {
   isOpen: false,
   secondaryHeading: null,
   footer: null,
-  onPanelsClose: null,
-  onChangePanel: null
+  onPanelsClose: null
 }
 
 PanelGroup.propTypes = {
@@ -79,7 +80,6 @@ PanelGroup.propTypes = {
   activePanelId: PropTypes.string,
   secondaryHeading: PropTypes.string,
   onPanelsClose: PropTypes.func,
-  onChangePanel: PropTypes.func,
   footer: PropTypes.node
 }
 

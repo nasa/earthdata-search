@@ -19,7 +19,8 @@ const ProjectCollections = (props) => {
     collectionsSearch,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
-    onSetActivePanel
+    onSetActivePanel,
+    projectPanels
   } = props
 
   const collectionsLoading = collectionsSearch.isLoading
@@ -36,12 +37,14 @@ const ProjectCollections = (props) => {
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
         onSetActivePanel={onSetActivePanel}
+        projectPanels={projectPanels}
       />
       <div className="project-collections__footer">
         <p className="project-collections__footer-message">
           Click &quot;Edit Options&quot; above to customize the output for each project.
         </p>
         <Button
+          type="submit"
           variant="full"
           bootstrapVariant="success"
           icon="download"
@@ -59,7 +62,8 @@ ProjectCollections.propTypes = {
   collectionsSearch: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired
+  onSetActivePanel: PropTypes.func.isRequired,
+  projectPanels: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollections

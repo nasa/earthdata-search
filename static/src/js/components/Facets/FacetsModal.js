@@ -115,6 +115,7 @@ export class FacetsModal extends Component {
             <Button
               className="facets-modal__action facets-modal__action--cancel"
               bootstrapVariant="light"
+              label="Cancel"
               onClick={this.onModalClose}
             >
               Cancel
@@ -122,6 +123,7 @@ export class FacetsModal extends Component {
             <Button
               className="facets-modal__action facets-modal__action--apply"
               bootstrapVariant="primary"
+              label="Apply"
               onClick={this.onApplyClick}
             >
               Apply

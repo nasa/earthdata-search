@@ -8,10 +8,18 @@ import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
 import ProjectPanelSection from './ProjectPanelSection'
-import ProjectPanelAccessMethod from './ProjectPanelAccessMethod'
+import AccessMethod from './AccessMethod'
 
 import './ProjectPanels.scss'
 
+/**
+ * Renders ProjectPanels.
+ * @param {object} props - The props passed into the component.
+ * @param {object} props.collections - The current collections from the state.
+ * @param {object} props.projectPanels - The current projectPanels state.
+ * @param {function} props.onTogglePanels - Toggles the panels opened or closed.
+ * @param {function} props.onSetActivePanel - Switches the currently active panel.
+ */
 export const ProjectPanels = pure(({
   collections,
   projectPanels,
@@ -92,6 +100,12 @@ export const ProjectPanels = pure(({
       </div>
     )
 
+    const customFooter = (
+      <div>
+        This is a custom footer element that overrides the parent
+      </div>
+    )
+
     panelSectionEditOptions.push(
       <PanelGroup
         key={`${id}_edit-options`}
@@ -100,13 +114,47 @@ export const ProjectPanels = pure(({
         footer={editOptionsFooter}
       >
         <PanelItem>
+          <AccessMethod
+            index={index}
+            metadata={metadata}
+            onSetActivePanel={onSetActivePanel}
+          />
+        </PanelItem>
+        <PanelItem hideFooter>
           <ProjectPanelSection>
-            <ProjectPanelAccessMethod metadata={metadata} />
+            Some other panel edit-options. This panel item is using the hideFooter
+            prop to hide its footer.
+            <br />
+            <button
+              type="button"
+              onClick={() => onSetActivePanel(`0.${index}.0`)}
+            >
+              Go back
+            </button>
+            <button
+              type="button"
+              onClick={() => onSetActivePanel(`0.${index}.2`)}
+            >
+              See another panel item example
+            </button>
+            <br />
+            Panels are controlled using the onSetActivePanel action. The parameters are
+            dot separated indexes of the panel you would like to trigger.
+            They should be passed like so:
+            <br />
+            {'{Panel Section ID}.{Panel Group ID}.{Panel Item ID}'}
           </ProjectPanelSection>
         </PanelItem>
-        <PanelItem>
+        <PanelItem footer={customFooter}>
           <ProjectPanelSection>
-            Some other panel edit-options
+            This one is using a custom footer element.
+            <br />
+            <button
+              type="button"
+              onClick={() => onSetActivePanel(`0.${index}.1`)}
+            >
+              Go back
+            </button>
           </ProjectPanelSection>
         </PanelItem>
       </PanelGroup>

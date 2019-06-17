@@ -269,6 +269,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
             <Button
               className={classes.btnApply}
               bootstrapVariant="primary"
+              label="Apply"
               onClick={this.onApplyClick}
               disabled={disabled}
             >
@@ -277,6 +278,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
             <Button
               className={classes.btnCancel}
               bootstrapVariant="link"
+              label="Clear"
               onClick={this.onClearClick}
             >
               Clear

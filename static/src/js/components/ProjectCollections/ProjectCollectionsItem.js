@@ -2,6 +2,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
+import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
 import TruncateText from 'react-truncate-text'
 
@@ -22,6 +23,7 @@ const ProjectCollectionItem = ({
   collection,
   color,
   index,
+  isPanelActive,
   onRemoveCollectionFromProject,
   onToggleCollectionVisibility,
   onSetActivePanel
@@ -38,8 +40,15 @@ const ProjectCollectionItem = ({
   const { totalSize = {} } = granules
   const { size = '', unit = '' } = totalSize
 
+  const className = classNames([
+    'project-collections-item',
+    {
+      'project-collections-item--is-active': isPanelActive
+    }
+  ])
+
   return (
-    <li style={{ borderLeftColor: color }} className="project-collections-item">
+    <li style={{ borderLeftColor: color }} className={className}>
       <div className="project-collections-item__header">
         <Button
           className="project-collections-item__title-button"
@@ -111,6 +120,7 @@ ProjectCollectionItem.propTypes = {
   collection: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  isPanelActive: PropTypes.bool.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired
