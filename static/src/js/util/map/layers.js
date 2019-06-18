@@ -8,6 +8,7 @@ export function isCartesian(metadata = {}) {
 
 // Parse a spatial string into an array of LatLng points
 export function parseSpatial(str) {
+  if (!str) return null
   let newStr = str
   if (newStr instanceof Array) {
     [newStr] = str

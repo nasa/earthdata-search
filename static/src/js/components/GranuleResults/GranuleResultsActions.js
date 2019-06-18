@@ -26,6 +26,7 @@ const GranuleResultsActions = ({
       variant="link"
       bootstrapVariant="link"
       icon="plus-circle"
+      label="Add to project"
     >
       Add to project
     </Button>
@@ -37,6 +38,7 @@ const GranuleResultsActions = ({
       variant="link"
       bootstrapVariant="link"
       icon="times-circle"
+      label="Remove from project"
     >
       Remove from project
     </Button>
@@ -65,6 +67,7 @@ const GranuleResultsActions = ({
           bootstrapVariant="success"
           icon="download"
           variant="full"
+          label="Download All"
         >
           Download All
         </Button>

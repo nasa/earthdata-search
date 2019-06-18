@@ -7,8 +7,13 @@ import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import ProjectCollectionsContainer
+  from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
+import ProjectPanelsContainer
+  from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 
 import actions from '../../actions'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
@@ -25,15 +30,25 @@ export class Project extends Component {
   }
 
   render() {
+    const endpoint = `${getEarthdataConfig('prod').apiHost}/orders`
     return (
-      <div className="route-wrapper route-wrapper--project">
-        <SidebarContainer />
+      <form
+        id="form__project"
+        action={endpoint}
+        method="post"
+        className="route-wrapper route-wrapper--project"
+      >
+        <SidebarContainer
+          panels={<ProjectPanelsContainer />}
+        >
+          <ProjectCollectionsContainer />
+        </SidebarContainer>
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
             <SecondaryToolbarContainer />
           </header>
         </div>
-      </div>
+      </form>
     )
   }
 }

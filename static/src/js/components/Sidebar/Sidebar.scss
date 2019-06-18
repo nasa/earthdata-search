@@ -8,7 +8,15 @@
   flex-grow: 0;
   width: 17.5rem;
   z-index: 1;
-  background: $color__black--800;
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    z-index: 1;
+    background: $color__black--800;
+  }
 
   &__section-title {
     color: $color__white;

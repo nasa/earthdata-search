@@ -6,7 +6,7 @@ import Header from './SidebarHeader'
 
 import './Sidebar.scss'
 
-const Sidebar = ({ children, visible }) => {
+const Sidebar = ({ children, panels, visible }) => {
   const className = classNames({
     sidebar: true,
     'sidebar--hidden': !visible
@@ -14,16 +14,24 @@ const Sidebar = ({ children, visible }) => {
 
   return (
     <section className={className}>
-      <Header />
-      <section className="sidebar__content">
-        {children}
-      </section>
+      <div className="sidebar__inner">
+        <Header />
+        <section className="sidebar__content">
+          {children}
+        </section>
+      </div>
+      {panels && panels}
     </section>
   )
 }
 
+Sidebar.defaultProps = {
+  panels: null
+}
+
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
+  panels: PropTypes.node,
   visible: PropTypes.bool.isRequired
 }
 

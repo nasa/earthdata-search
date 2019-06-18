@@ -1,0 +1,19 @@
+.panel-group {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 600px;
+  background-color: $color__white;
+  transform: translateX(-100%);
+  z-index: 0;
+
+  &--is-open {
+    transform: translateX(0%);
+  }
+
+  &--is-active {
+    z-index: 1;
+  }
+}

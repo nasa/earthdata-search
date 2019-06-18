@@ -13,7 +13,10 @@ export const Button = ({
   children,
   href,
   icon,
+  label,
   onClick,
+  title,
+  type,
   variant
 }) => {
   const buttonClasses = classNames(
@@ -31,6 +34,7 @@ export const Button = ({
   if (icon) {
     iconClasses = classNames(
       'button__icon',
+      children ? 'button__icon--push' : null,
       icon ? `fa fa-${icon}` : null
     )
   }
@@ -49,6 +53,10 @@ export const Button = ({
       variant={bootstrapVariant}
       onClick={onClick}
       href={href}
+      title={title}
+      role="button"
+      aria-label={label}
+      type={type}
     >
       {icon && <i className={iconClasses} /> }
       <span className="button__contents">
@@ -72,10 +80,13 @@ Button.defaultProps = {
   badge: null,
   badgeVariant: null,
   bootstrapVariant: null,
+  children: null,
   className: null,
   href: null,
   icon: null,
   onClick: null,
+  title: null,
+  type: 'button',
   variant: null
 }
 
@@ -84,10 +95,13 @@ Button.propTypes = {
   badgeVariant: PropTypes.string,
   bootstrapVariant: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   href: PropTypes.string,
   icon: PropTypes.string,
+  label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  title: PropTypes.string,
+  type: PropTypes.string,
   variant: PropTypes.string
 }
 

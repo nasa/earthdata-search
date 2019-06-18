@@ -7,7 +7,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(type) {
   const props = {
-    onClick: jest.fn()
+    onClick: jest.fn(),
+    label: 'Test Label'
   }
 
   if (type === 'icon') {
@@ -57,5 +58,10 @@ describe('Button component', () => {
   test('should render self with a badge', () => {
     const { enzymeWrapper } = setup('badge')
     expect(enzymeWrapper.find('button').find('.badge').text()).toEqual('badge test')
+  })
+
+  test('should render self with a title', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.find('button').prop('aria-label')).toEqual('Test Label')
   })
 })

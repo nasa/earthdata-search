@@ -148,6 +148,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
                             type="button"
                             variant="link"
                             bootstrapVariant="link"
+                            label="View All Related URLs"
                             onClick={() => onToggleRelatedUrlsModal(true)}
                           >
                             View All Related URLs

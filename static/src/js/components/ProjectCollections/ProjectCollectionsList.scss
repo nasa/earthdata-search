@@ -1,8 +1,11 @@
 .project-collections-list {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   overflow-y: scroll;
 
   &__list {
+    overflow-x: hidden;
     overflow-y: scroll;
     margin: 0;
     padding: 0;

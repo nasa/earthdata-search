@@ -5,8 +5,42 @@
   border-right: 1px solid $color__black--300;
   border-left: 5px solid transparent;
 
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -24px;
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border: 1px solid $color__black--300;
+    box-shadow: 0 0 10px 3px rgba(0,0,0,0.04);
+    color: black;
+    transform: rotate(45deg) translate(-50%);
+    transition: right 0.2s ease-in-out;
+    will-change: right;
+  }
+
+  &--is-active {
+    &:after {
+      right: -14px;
+    }
+  }
+
   &__header {
     display: flex;
+  }
+
+  &__title-button {
+    display: block;
+    text-align: left;
+    color: $color__black--900;
+
+    &:hover,
+    &:active {
+      color: $color__black--400;
+    }
   }
 
   &__title {
@@ -15,7 +49,6 @@
     font-size: 0.85rem;
     line-height: 1.35em;
     font-weight: 700;
-    padding-left: $spacer/8;
   }
 
   &__stats-list {

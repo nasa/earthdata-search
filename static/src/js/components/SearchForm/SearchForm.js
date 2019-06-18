@@ -104,6 +104,7 @@ class SearchForm extends Component {
           <Button
             bootstrapVariant="inline-block"
             className="search-form__button search-form__button--clear"
+            label="Clear search"
             onClick={this.onSearchClear}
           >
             <i className="fa fa-eraser" />
@@ -113,6 +114,7 @@ class SearchForm extends Component {
             className="search-form__button search-form__button--dark search-form__button--toggle"
             onClick={this.onToggleFilterStack}
             title="Toggle Filter Stack"
+            label="Toggle Filter Stack"
           >
             <i className="fa fa-bars" />
           </Button>

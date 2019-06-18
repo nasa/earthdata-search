@@ -1,0 +1,15 @@
+.panel-item {
+  display: none;
+  width: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+
+  &--is-active {
+    display: flex;
+  }
+
+  &__content {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
