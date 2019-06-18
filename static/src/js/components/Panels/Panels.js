@@ -41,8 +41,13 @@ export class Panels extends Component {
       const panelGroupProps = { ...child.props }
       if (!panelGroupProps.panelGroupId) panelGroupProps.panelGroupId = `${index}`
 
-      panelGroupProps.isOpen = !!(panelGroupProps.panelGroupId === activePanelGroupId)
-      panelGroupProps.isActive = !!(panelGroupProps.panelGroupId === activePanelGroupId)
+      const isActivePanelGroup = !!(
+        panelSectionProps.panelSectionId === activePanelSectionId
+        && panelGroupProps.panelGroupId === activePanelGroupId
+      )
+
+      panelGroupProps.isOpen = isActivePanelGroup
+      panelGroupProps.isActive = isActivePanelGroup
       panelGroupProps.activePanelId = activePanelId
       panelGroupProps.onPanelsClose = this.onPanelsClose
       panelGroupProps.onChangePanel = this.onChangePanel

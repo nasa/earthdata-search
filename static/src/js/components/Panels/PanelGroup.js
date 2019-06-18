@@ -32,7 +32,10 @@ export const PanelGroup = ({
     if (!child) return null
     const childProps = { ...child.props }
     if (!childProps.panelId) childProps.panelId = `${index}`
-    childProps.isActive = !!(childProps.panelId === activePanelId)
+    const isPanelActive = !!(
+      isActive && childProps.panelId === activePanelId
+    )
+    childProps.isActive = isPanelActive
     childProps.footer = childProps.footer ? childProps.footer : footer
     return <PanelItem {...childProps} />
   }
