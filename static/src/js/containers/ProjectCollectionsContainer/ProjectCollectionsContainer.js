@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
-import { setActivePanel } from '../../reducers/projectPanels'
+import { setActivePanel } from '../../actions/projectPanels'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 const mapDispatchToProps = dispatch => ({

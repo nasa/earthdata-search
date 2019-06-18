@@ -1,19 +1,4 @@
-// import {
-//   MASTER_OVERLAY_PANEL_DRAG_END
-// } from '../constants/actionTypes'
-
-export const PROJECT_PANELS_TOGGLE = 'PROJECT_PANELS_TOGGLE'
-export const PROJECT_PANELS_SET_PANEL = 'PROJECT_PANELS_SET_PANEL'
-
-export const togglePanels = value => ({
-  type: PROJECT_PANELS_TOGGLE,
-  payload: value
-})
-
-export const setActivePanel = panelId => ({
-  type: PROJECT_PANELS_SET_PANEL,
-  payload: panelId
-})
+import { PROJECT_PANELS_TOGGLE, PROJECT_PANELS_SET_PANEL } from '../constants/actionTypes'
 
 const initialState = {
   isOpen: true,

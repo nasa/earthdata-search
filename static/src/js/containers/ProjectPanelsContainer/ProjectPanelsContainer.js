@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 // import actions from '../../actions/index'
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
-import { togglePanels, setActivePanel } from '../../reducers/projectPanels'
+import { togglePanels, setActivePanel } from '../../actions/projectPanels'
 
 
 const mapStateToProps = state => ({
