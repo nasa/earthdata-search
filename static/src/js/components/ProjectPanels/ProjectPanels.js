@@ -9,6 +9,7 @@ import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
 import ProjectPanelSection from './ProjectPanelSection'
 import AccessMethod from './AccessMethod'
+import CollectionDetails from './CollectionDetails'
 
 import './ProjectPanels.scss'
 
@@ -51,7 +52,7 @@ export const ProjectPanels = pure(({
     loaded = true
     const collection = byId[collectionId]
     const { metadata } = collection
-    const { dataset_id: title, id } = metadata
+    const { dataset_id: title, id, granule_count: granuleCount } = metadata
 
     const editOptionsFooter = (
       <div className="project-panels__footer">
@@ -167,9 +168,7 @@ export const ProjectPanels = pure(({
         secondaryHeading="Details"
       >
         <PanelItem>
-          <ProjectPanelSection>
-            Some other panel collection-details
-          </ProjectPanelSection>
+          <CollectionDetails granuleCount={granuleCount} />
         </PanelItem>
       </PanelGroup>
     )
