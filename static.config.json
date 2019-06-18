@@ -18,7 +18,8 @@
         "cmrClientId": "edsc-sit",
         "edlHost": "https://urs.sit.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback"
+        "redirectUriPath": "/urs_callback",
+        "edscHost": "http://localhost:8080"
       },
       "uat": {
         "apiHost": "http://localhost:3001",
@@ -27,7 +28,8 @@
         "cmrClientId": "edsc-uat",
         "edlHost": "https://urs.uat.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback"
+        "redirectUriPath": "/urs_callback",
+        "edscHost": "http://localhost:8080"
       },
       "prod": {
         "apiHost": "http://localhost:3001",
@@ -36,7 +38,8 @@
         "cmrClientId": "edsc-prod",
         "edlHost": "https://urs.earthdata.nasa.gov",
         "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback"
+        "redirectUriPath": "/urs_callback",
+        "edscHost": "http://localhost:8080"
       }
   }
 }

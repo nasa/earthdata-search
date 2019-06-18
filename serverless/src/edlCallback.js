@@ -16,7 +16,11 @@ export default async function edlCallback(event, context, callback) {
   const params = event.queryStringParameters
   const { code, state } = params
 
-  const { apiHost, redirectUriPath } = getEarthdataConfig('prod')
+  const {
+    apiHost,
+    edscHost,
+    redirectUriPath
+  } = getEarthdataConfig('prod')
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)
@@ -32,14 +36,12 @@ export default async function edlCallback(event, context, callback) {
   const { secret } = getSecretEarthdataConfig('prod')
   const jwtToken = jwt.sign({ token: oauth2.accessToken.create(oauthToken).token }, secret)
 
-  // Set the JWT token to a cookie and redirect back to EDSC
+  // Redirect to the auth_callback path with the token and real redirect path as params
+  const location = `${edscHost}/auth_callback?jwt=${jwtToken}&redirect=${encodeURIComponent(state)}`
   callback(null, {
     statusCode: 307,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-      'Set-Cookie': `authToken=${jwtToken}`,
-      Location: state
+      Location: location
     }
   })
 }
