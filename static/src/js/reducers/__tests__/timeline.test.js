@@ -1,14 +1,12 @@
 import timelineReducer from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY,
-  UPDATE_TIMELINE_STATE
+  UPDATE_TIMELINE_QUERY
 } from '../../constants/actionTypes'
 
 const initialState = {
-  intervals: [],
-  query: {},
-  state: {}
+  intervals: {},
+  query: {}
 }
 
 describe('INITIAL_STATE', () => {
@@ -21,26 +19,37 @@ describe('INITIAL_STATE', () => {
 
 describe('UPDATE_TIMELINE_INTERVALS', () => {
   test('returns the correct state', () => {
-    const intervals = [
-      [
-        1298937600,
-        1304208000,
-        3
-      ]
+    const results = [
+      {
+        'concept-id': 'collectionId',
+        intervals: [
+          [
+            1298937600,
+            1304208000,
+            3
+          ]
+        ]
+      }
     ]
 
     const action = {
       type: UPDATE_TIMELINE_INTERVALS,
       payload: {
-        results: [{
-          intervals
-        }]
+        results
       }
     }
 
     const expectedState = {
       ...initialState,
-      intervals
+      intervals: {
+        collectionId: [
+          [
+            1298937600,
+            1304208000,
+            3
+          ]
+        ]
+      }
     }
 
     expect(timelineReducer(undefined, action)).toEqual(expectedState)
@@ -59,24 +68,6 @@ describe('UPDATE_TIMELINE_QUERY', () => {
     const expectedState = {
       ...initialState,
       query: { interval }
-    }
-
-    expect(timelineReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('UPDATE_TIMELINE_STATE', () => {
-  test('returns the correct state', () => {
-    const center = '123456789'
-
-    const action = {
-      type: UPDATE_TIMELINE_STATE,
-      payload: { center }
-    }
-
-    const expectedState = {
-      ...initialState,
-      state: { center }
     }
 
     expect(timelineReducer(undefined, action)).toEqual(expectedState)

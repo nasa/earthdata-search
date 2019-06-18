@@ -7,12 +7,13 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollectionMetadata: {},
+    collectionMetadata: {},
     temporalSearch: {},
-    timeline: { query: {}, state: {} },
+    timeline: { intervals: {}, query: {}, state: {} },
+    showOverrideModal: false,
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
-    onChangeTimelineState: jest.fn()
+    onToggleOverrideTemporalModal: jest.fn()
   }
 
   const enzymeWrapper = shallow(<Timeline {...props} />)
@@ -31,63 +32,57 @@ describe('Timeline component', () => {
     expect(timelineSection.prop('className')).toEqual('timeline')
   })
 
-  test('should not display timeline if there is no focusedCollection', () => {
+  test('should update the timeline on componentDidMount', () => {
+    const setTimelineCenterSpy = jest.spyOn(Timeline.prototype, 'setTimelineCenter')
+    const setTimelineZoomSpy = jest.spyOn(Timeline.prototype, 'setTimelineZoom')
+    const setTimelineTemporalSpy = jest.spyOn(Timeline.prototype, 'setTimelineTemporal')
+    const setTimelineFocusSpy = jest.spyOn(Timeline.prototype, 'setTimelineFocus')
+
+    setup()
+
+    expect(setTimelineCenterSpy).toHaveBeenCalledTimes(1)
+    expect(setTimelineZoomSpy).toHaveBeenCalledTimes(1)
+    expect(setTimelineTemporalSpy).toHaveBeenCalledTimes(1)
+    expect(setTimelineFocusSpy).toHaveBeenCalledTimes(1)
+  })
+
+  test('should not display timeline if there is no collectionMetadata', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
     enzymeWrapper.setProps({
-      focusedCollectionMetadata: {
+      collectionMetadata: {
         collectionId: {
           metadata: {
-            mock: 'metadata'
+            mock: 'metadata',
+            title: 'mock title'
           }
         }
       }
     })
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'block' })
 
-    enzymeWrapper.setProps({ focusedCollection: '', focusedCollectionMetadata: {} })
+    enzymeWrapper.setProps({ collectionMetadata: {} })
     expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
   })
 
   describe('componentWillReceiveProps', () => {
-    test('when the focusedCollection is new', () => {
-      const { enzymeWrapper, props } = setup()
-      enzymeWrapper.setProps({
-        focusedCollectionMetadata: {
-          collectionId: {
-            metadata: {
-              id: 'collectionId',
-              time_start: '2019-01-01T00:00:00.000Z',
-              time_end: '2019-02-01T00:00:00.000Z'
-            }
-          }
-        }
-      })
-
-      expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
-      expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
-        endDate: '2019-02-01T00:00:00.000Z',
-        interval: 'day',
-        startDate: '2019-01-01T00:00:00.000Z'
-      }])
-    })
-
     test('when the timeline center is new', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.instance().$el.timeline = jest.fn()
       enzymeWrapper.setProps({
-        focusedCollectionMetadata: {
+        collectionMetadata: {
           collectionId: {
             metadata: {
               id: 'collectionId',
               time_start: '2019-01-01T00:00:00.000Z',
-              time_end: '2019-02-01T00:00:00.000Z'
+              time_end: '2019-02-01T00:00:00.000Z',
+              title: 'mock title'
             }
           }
         },
         timeline: {
-          query: {},
-          state: { center: '123456789' }
+          intervals: {},
+          query: { center: 123456789 }
         }
       })
 
@@ -104,7 +99,101 @@ describe('Timeline component', () => {
       })
 
       enzymeWrapper.setProps({
-        focusedCollectionMetadata: {
+        collectionMetadata: {
+          collectionId: {
+            metadata: {
+              id: 'collectionId',
+              time_start: '2019-01-01T00:00:00.000Z',
+              time_end: '2019-02-01T00:00:00.000Z',
+              title: 'mock title'
+            }
+          }
+        },
+        timeline: {
+          intervals: {},
+          query: {
+            center: 123456789,
+            interval: 'day'
+          }
+        }
+      })
+
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('zoom')
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('zoom', 4)
+    })
+
+    test('when the timeline focus is new', () => {
+      const { enzymeWrapper } = setup()
+      enzymeWrapper.instance().$el.timeline = jest.fn((method, value) => {
+        if (!value) {
+          return [123, 456]
+        }
+        return true
+      })
+
+      enzymeWrapper.setProps({
+        collectionMetadata: {
+          collectionId: {
+            metadata: {
+              id: 'collectionId',
+              time_start: '2019-01-01T00:00:00.000Z',
+              time_end: '2019-02-01T00:00:00.000Z',
+              title: 'mock title'
+            }
+          }
+        },
+        timeline: {
+          intervals: {},
+          query: {
+            center: 123456789,
+            end: 123457890,
+            interval: 'day',
+            start: 123456789
+          }
+        }
+      })
+
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('getFocus')
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('focus', new Date(123456789 * 1000), new Date(123457890 * 1000))
+    })
+
+    test('when the timeline focus is removed', () => {
+      const { enzymeWrapper } = setup()
+      enzymeWrapper.instance().$el.timeline = jest.fn((method, value) => {
+        if (!value) {
+          return [123, 456]
+        }
+        return true
+      })
+
+      enzymeWrapper.setProps({
+        collectionMetadata: {
+          collectionId: {
+            metadata: {
+              id: 'collectionId',
+              time_start: '2019-01-01T00:00:00.000Z',
+              time_end: '2019-02-01T00:00:00.000Z',
+              title: 'mock title'
+            }
+          }
+        },
+        timeline: {
+          intervals: {},
+          query: {
+            center: 123456789,
+            end: 123457890,
+            interval: 'day',
+            start: 123456789
+          }
+        }
+      })
+
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('getFocus')
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('focus', new Date(123456789 * 1000), new Date(123457890 * 1000))
+
+      // Remove the focus
+      enzymeWrapper.setProps({
+        collectionMetadata: {
           collectionId: {
             metadata: {
               id: 'collectionId',
@@ -114,13 +203,14 @@ describe('Timeline component', () => {
           }
         },
         timeline: {
-          query: { interval: 'day' },
-          state: { center: '123456789' }
+          intervals: {},
+          query: {
+            center: 123456789,
+            interval: 'day'
+          }
         }
       })
-
-      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('zoom')
-      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('zoom', 4)
+      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('focus')
     })
 
     test('when the temporal search is added', () => {
@@ -186,14 +276,20 @@ describe('Timeline component', () => {
         3
       ]]
       enzymeWrapper.setProps({
-        focusedCollectionMetadata: {
+        collectionMetadata: {
           [metadata.id]: {
             metadata
           }
         },
         timeline: {
-          intervals,
-          query: { interval: 'day' }
+          intervals: {
+            collectionId: intervals
+          },
+          query: {
+            endDate: new Date(1548979200000),
+            interval: 'day',
+            startDate: new Date(1546300800000)
+          }
         }
       })
 
@@ -202,6 +298,7 @@ describe('Timeline component', () => {
         title: metadata.title
       }])
       expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('data', metadata.id, {
+        color: '#2ECC71',
         end: 1548979200,
         intervals,
         resolution: 'day',
@@ -209,7 +306,7 @@ describe('Timeline component', () => {
       })
     })
 
-    test('when the focused collection is removed', () => {
+    test('when the collectionMetadata is removed', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.instance().$el.timeline = jest.fn((method, value) => {
         if (method === 'zoom' && !value) {
@@ -234,14 +331,15 @@ describe('Timeline component', () => {
 
       // Add some intervals
       enzymeWrapper.setProps({
-        focusedCollection: metadata.id,
-        focusedCollectionMetadata: {
+        collectionMetadata: {
           [metadata.id]: {
             metadata
           }
         },
         timeline: {
-          intervals,
+          intervals: {
+            collectionId: intervals
+          },
           query: {
             interval: 'day'
           }
@@ -254,10 +352,9 @@ describe('Timeline component', () => {
 
       // remove the focused collection and intervals
       enzymeWrapper.setProps({
-        focusedCollection: '',
-        focusedCollectionMetadata: {},
+        collectionMetadata: {},
         timeline: {
-          intervals: [],
+          intervals: {},
           query: {
             interval: 'day'
           }
@@ -272,26 +369,31 @@ describe('handleRangeChange', () => {
   test('when the center and zoom level changes', () => {
     const { enzymeWrapper, props } = setup()
 
+    const endDate = '1970-01-01T00:00:00.000Z'
+    const startDate = '1970-01-31T00:00:00.000Z'
+
     enzymeWrapper.instance().$el.timeline = jest.fn((method, value) => {
       if (method === 'center' && !value) {
         return 123456789000
       }
       return true
     })
-    enzymeWrapper.instance().handleRangeChange(jest.fn(), null, null, 'month')
+    enzymeWrapper.instance().handleRangeChange(jest.fn(), new Date(startDate), new Date(endDate), 'month')
 
-    expect(props.onChangeTimelineState.mock.calls.length).toBe(1)
-    expect(props.onChangeTimelineState.mock.calls[0]).toEqual([{
-      center: 123456789
-    }])
     expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
     expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
-      interval: 'month'
+      center: 123456789,
+      endDate,
+      interval: 'month',
+      startDate
     }])
   })
 
   test('when the center changes but zoom does not', () => {
     const { enzymeWrapper, props } = setup()
+
+    const endDate = '1970-01-01T00:00:00.000Z'
+    const startDate = '1970-01-31T00:00:00.000Z'
 
     enzymeWrapper.instance().$el.timeline = jest.fn((method, value) => {
       if (method === 'center' && !value) {
@@ -305,19 +407,22 @@ describe('handleRangeChange', () => {
 
     enzymeWrapper.setProps({
       timeline: {
+        intervals: {},
         query: {
           interval: 'day'
         }
       }
     })
 
-    enzymeWrapper.instance().handleRangeChange(jest.fn(), null, null, 'day')
+    enzymeWrapper.instance().handleRangeChange(jest.fn(), new Date(startDate), new Date(endDate), 'day')
 
-    expect(props.onChangeTimelineState.mock.calls.length).toBe(1)
-    expect(props.onChangeTimelineState.mock.calls[0]).toEqual([{
-      center: 123456789
+    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
+    expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
+      center: 123456789,
+      endDate,
+      interval: 'day',
+      startDate
     }])
-    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(0)
   })
 })
 
@@ -346,6 +451,44 @@ describe('handleTemporalSet', () => {
     expect(props.onChangeQuery.mock.calls.length).toBe(1)
     expect(props.onChangeQuery.mock.calls[0]).toEqual([{
       temporal: {}
+    }])
+  })
+})
+
+describe('handleFocusChange', () => {
+  test('when focus is added query is updated', () => {
+    const { enzymeWrapper, props } = setup()
+    const center = 1546300800
+
+    enzymeWrapper.instance().$el.timeline = jest.fn((method, value) => {
+      if (method === 'center' && !value) {
+        return center
+      }
+      return true
+    })
+
+    const start = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
+    const end = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
+    enzymeWrapper.instance().handleFocusChange(jest.fn(), start, end)
+
+    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
+    expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
+      center: 1546301,
+      end: end / 1000,
+      start: start / 1000
+    }])
+  })
+
+  test('when focus is removed query is updated', () => {
+    const { enzymeWrapper, props } = setup()
+
+    enzymeWrapper.instance().handleFocusChange(jest.fn(), undefined, undefined)
+
+    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
+    expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
+      end: undefined,
+      start: undefined
     }])
   })
 })

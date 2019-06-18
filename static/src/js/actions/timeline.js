@@ -3,19 +3,13 @@ import actions from './index'
 import TimelineRequest from '../util/request/timelineRequest'
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY,
-  UPDATE_TIMELINE_STATE
+  UPDATE_TIMELINE_QUERY
 } from '../constants/actionTypes'
 import { prepareTimelineParams } from '../util/timeline'
 import { updateAuthTokenFromHeaders } from './authToken'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
-  payload
-})
-
-export const updateTimelineState = payload => ({
-  type: UPDATE_TIMELINE_STATE,
   payload
 })
 
@@ -37,7 +31,7 @@ export const getTimeline = () => (dispatch, getState) => {
   const {
     authToken,
     boundingBox,
-    focusedCollection,
+    conceptId,
     endDate,
     interval,
     point,
@@ -49,7 +43,7 @@ export const getTimeline = () => (dispatch, getState) => {
 
   const response = requestObject.search({
     boundingBox,
-    echoCollectionId: focusedCollection,
+    conceptId,
     endDate,
     interval,
     point,
@@ -71,10 +65,6 @@ export const getTimeline = () => (dispatch, getState) => {
     })
 
   return response
-}
-
-export const changeTimelineState = state => (dispatch) => {
-  dispatch(updateTimelineState(state))
 }
 
 export const changeTimelineQuery = query => (dispatch) => {

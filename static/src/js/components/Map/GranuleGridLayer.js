@@ -22,7 +22,7 @@ import {
 } from '../../util/map/layers'
 import { dividePolygon } from '../../util/map/geo'
 import projectPath from '../../util/map/interpolation'
-import { colors, getColorByIndex } from '../../util/colors'
+import { getColorByIndex } from '../../util/colors'
 
 const config = {
   // eslint-disable-next-line max-len
@@ -740,7 +740,7 @@ class GranuleGridLayer extends MapLayer {
 
         layers.push({
           collectionId,
-          color: getColorByIndex(index, colors),
+          color: getColorByIndex(index),
           metadata,
           isVisible,
           granules: collectionGranules

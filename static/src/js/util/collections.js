@@ -20,6 +20,7 @@ export const prepareCollectionParams = (state) => {
     keyword,
     pageNum,
     spatial = {},
+    overrideTemporal = {},
     temporal = {}
   } = collectionQuery
 
@@ -32,7 +33,17 @@ export const prepareCollectionParams = (state) => {
   const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
   const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults
 
-  const temporalString = encodeTemporal(temporal)
+  // If we have an overrideTemporal use it, if not use temporal
+  let temporalString
+  const {
+    endDate: overrideEnd,
+    startDate: overrideStart
+  } = overrideTemporal
+  if (overrideEnd && overrideStart) {
+    temporalString = encodeTemporal(overrideTemporal)
+  } else {
+    temporalString = encodeTemporal(temporal)
+  }
 
   const {
     cmr: cmrFacets = {},

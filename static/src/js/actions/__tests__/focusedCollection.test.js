@@ -38,9 +38,11 @@ describe('changeFocusedCollection', () => {
   test('with a collectionId it should update the focusedCollection and call getFocusedCollection', () => {
     const collectionId = 'collectionId'
 
-    // mock getFocusedCollection
+    // mocks
     const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
     getFocusedCollectionMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
+    getTimelineMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -55,6 +57,11 @@ describe('changeFocusedCollection', () => {
         collection: {
           keyword: 'old stuff'
         }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
       }
     })
 
@@ -68,16 +75,19 @@ describe('changeFocusedCollection', () => {
       payload: collectionId
     })
 
-    // was getCollections called
+    // were the mocks called
     expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 
   test('with a previously visited collectionId it should update the focusedCollection and copy granules', () => {
     const collectionId = 'collectionId'
 
-    // mock getFocusedCollection
+    // mocks
     const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
     getFocusedCollectionMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
+    getTimelineMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const granules = {
@@ -104,6 +114,11 @@ describe('changeFocusedCollection', () => {
         collection: {
           keyword: 'old stuff'
         }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
       }
     })
 
@@ -123,16 +138,19 @@ describe('changeFocusedCollection', () => {
       payload: collectionId
     })
 
-    // was getCollections called
+    // were the mocks called
     expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 
   test('without a collectionId it should clear the focusedCollection', () => {
     const collectionId = ''
 
-    // mock getFocusedCollection
+    // mocks
     const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
     getFocusedCollectionMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
+    getTimelineMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const granules = {
@@ -144,14 +162,21 @@ describe('changeFocusedCollection', () => {
       }
     }
     const store = mockStore({
-      collections: {
-        allIds: [],
-        byId: {}
-      },
       focusedCollection: '',
+      metadata: {
+        collections: {
+          allIds: [],
+          byId: {}
+        }
+      },
       query: {
         collection: {
           keyword: 'old stuff'
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
         }
       },
       searchResults: {
@@ -172,8 +197,9 @@ describe('changeFocusedCollection', () => {
       }
     })
 
-    // was getCollections called
+    // were the mocks called
     expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 })
 

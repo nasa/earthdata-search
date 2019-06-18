@@ -25,7 +25,8 @@ const emptyDecodedResult = {
       point: undefined,
       polygon: undefined
     },
-    temporal: {}
+    temporal: {},
+    overrideTemporal: {}
   },
   timeline: undefined
 }

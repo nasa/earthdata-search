@@ -6,15 +6,12 @@ import actions from '../index'
 import {
   updateTimelineIntervals,
   updateTimelineQuery,
-  updateTimelineState,
   getTimeline,
-  changeTimelineState,
   changeTimelineQuery
 } from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
   UPDATE_TIMELINE_QUERY,
-  UPDATE_TIMELINE_STATE,
   UPDATE_AUTH
 } from '../../constants/actionTypes'
 
@@ -39,17 +36,6 @@ describe('updateTimelineQuery', () => {
       payload
     }
     expect(updateTimelineQuery(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('updateTimelineState', () => {
-  test('should create an action to update the timeline query', () => {
-    const payload = []
-    const expectedAction = {
-      type: UPDATE_TIMELINE_STATE,
-      payload
-    }
-    expect(updateTimelineState(payload)).toEqual(expectedAction)
   })
 })
 
@@ -82,12 +68,16 @@ describe('getTimeline', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: '',
-      focusedCollection: {
-        collectionId: 'collectionId'
-      },
+      focusedCollection: 'collectionId',
+      metadata: {},
       query: {
         collection: {
           spatial: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
         }
       },
       timeline: {
@@ -146,12 +136,16 @@ describe('getTimeline', () => {
     // mockStore with initialState
     const store = mockStore({
       authToken: 'token',
-      focusedCollection: {
-        collectionId: 'collectionId'
-      },
+      focusedCollection: 'collectionId',
+      metadata: {},
       query: {
         collection: {
           spatial: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
         }
       },
       timeline: {
@@ -192,6 +186,12 @@ describe('getTimeline', () => {
   test('returns no results if there is no focused collection', () => {
     const store = mockStore({
       focusedCollection: '',
+      metadata: {},
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
       timeline: {
         query: {},
         state: {}
@@ -215,12 +215,17 @@ describe('getTimeline', () => {
     })
 
     const store = mockStore({
-      focusedCollection: {
-        collectionId: 'collectionId'
-      },
+      authToken: '',
+      focusedCollection: 'collectionId',
+      metadata: {},
       query: {
         collection: {
           spatial: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
         }
       },
       timeline: {
@@ -236,34 +241,6 @@ describe('getTimeline', () => {
 
     await store.dispatch(getTimeline()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-})
-
-describe('changeTimelineState', () => {
-  test('should create an action to update the timeline state', () => {
-    const newState = {
-      center: '123456789'
-    }
-
-    // mockStore with initialState
-    const store = mockStore({
-      timeline: {
-        query: {},
-        state: {}
-      }
-    })
-
-    // call the dispatch
-    store.dispatch(changeTimelineState({ newState }))
-
-    // Is updateCollectionQuery called with the right payload
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_TIMELINE_STATE,
-      payload: {
-        newState
-      }
     })
   })
 })

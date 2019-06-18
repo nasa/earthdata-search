@@ -12,6 +12,7 @@ import { updateCollectionMetadata } from './collections'
 import { prepareGranuleParams, populateGranuleResults } from '../util/granules'
 import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
+import { prepareCollectionParams, buildSearchParams } from '../util/collections'
 
 export const addCollectionToProject = payload => ({
   type: ADD_COLLECTION_TO_PROJECT,
@@ -102,6 +103,8 @@ export const getProjectGranules = () => (dispatch, getState) => {
 }
 
 export const getProjectCollections = () => (dispatch, getState) => {
+  const collectionParams = prepareCollectionParams(getState())
+
   const { metadata } = getState()
   const { collections } = metadata
   const { projectIds } = collections
@@ -111,10 +114,12 @@ export const getProjectCollections = () => (dispatch, getState) => {
   }
 
   const { authToken } = getState()
+
+  const searchParams = buildSearchParams(collectionParams)
   const response = getCollectionMetadata({
-    includeGranuleCounts: true,
-    featureFacets: {},
+    ...searchParams,
     conceptId: projectIds,
+    featureFacets: {},
     includeFacets: undefined,
     tagKey: undefined,
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod'

@@ -19,8 +19,6 @@ const mapDispatchToProps = dispatch => ({
     query => dispatch(actions.changeQuery(query)),
   onChangeTimelineQuery:
     query => dispatch(actions.changeTimelineQuery(query)),
-  onChangeTimelineState:
-    state => dispatch(actions.changeTimelineState(state)),
   onChangeUrl:
     query => dispatch(actions.changeUrl(query)),
   onRestoreCollections:
@@ -37,6 +35,7 @@ const mapStateToProps = state => ({
   keywordSearch: state.query.collection.keyword,
   map: state.map,
   organizationFacets: state.facetsParams.cmr.data_center_h,
+  overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
   platformFacets: state.facetsParams.cmr.platform_h,
   pointSearch: state.query.collection.spatial.point,
@@ -57,7 +56,6 @@ export class UrlQueryContainer extends Component {
       onChangeMap,
       onChangeQuery,
       onChangeTimelineQuery,
-      onChangeTimelineState,
       onRestoreCollections,
       onUpdateCmrFacet,
       onUpdateFeatureFacet,
@@ -84,9 +82,7 @@ export class UrlQueryContainer extends Component {
     }
 
     if (timeline) {
-      const { state, query } = timeline
-      onChangeTimelineState(state)
-      onChangeTimelineQuery(query)
+      onChangeTimelineQuery(timeline)
     }
 
     if (featureFacets) {
@@ -147,7 +143,6 @@ UrlQueryContainer.propTypes = {
   onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
-  onChangeTimelineState: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
   onRestoreCollections: PropTypes.func.isRequired,
   onUpdateCmrFacet: PropTypes.func.isRequired,

@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 
 import ProjectCollectionItem from './ProjectCollectionsItem'
-import { colors, getColorByIndex } from '../../util/colors'
+import { getColorByIndex } from '../../util/colors'
 
 import './ProjectCollectionsList.scss'
 
@@ -38,7 +38,7 @@ export const ProjectCollectionsList = (props) => {
 
   const collectionsList = projectIds.map((collectionId, index) => {
     const isPanelActive = activePanel === index.toString()
-    const color = getColorByIndex(index, colors)
+    const color = getColorByIndex(index)
     return (
       <ProjectCollectionItem
         collectionId={collectionId}

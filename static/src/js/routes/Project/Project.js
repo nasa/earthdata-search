@@ -11,6 +11,8 @@ import ProjectCollectionsContainer
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
 import ProjectPanelsContainer
   from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
+import OverrideTemporalModalContainer
+  from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 
 import actions from '../../actions'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
@@ -48,6 +50,7 @@ export class Project extends Component {
             <SecondaryToolbarContainer />
           </header>
         </div>
+        <OverrideTemporalModalContainer />
       </form>
     )
   }

@@ -1,26 +1,32 @@
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY,
-  UPDATE_TIMELINE_STATE
+  UPDATE_TIMELINE_QUERY
 } from '../constants/actionTypes'
 
 const initialState = {
-  intervals: [],
-  query: {},
-  state: {}
+  intervals: {},
+  query: {}
 }
 
 const timelineReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_TIMELINE_INTERVALS: {
-      let intervals
+      const newIntervals = {}
       action.payload.results.forEach((result) => {
-        ({ intervals } = result)
+        const {
+          'concept-id': collectionId,
+          intervals
+        } = result
+
+        newIntervals[collectionId] = intervals
       })
 
       return {
         ...state,
-        intervals
+        intervals: {
+          ...state.intervals,
+          ...newIntervals
+        }
       }
     }
     case UPDATE_TIMELINE_QUERY: {
@@ -31,17 +37,6 @@ const timelineReducer = (state = initialState, action) => {
         ...state,
         query: {
           ...oldQuery,
-          ...payload
-        }
-      }
-    }
-    case UPDATE_TIMELINE_STATE: {
-      const { state: oldState } = state
-      const { payload } = action
-      return {
-        ...state,
-        state: {
-          ...oldState,
           ...payload
         }
       }

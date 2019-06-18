@@ -56,6 +56,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 
   const {
     spatial = {},
+    overrideTemporal = {},
     temporal = {}
   } = collectionQuery
 
@@ -70,7 +71,17 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const { metadata: collectionMetadata = {} } = focusedCollectionMetadata[collectionId]
   const { tags = {} } = collectionMetadata
 
-  const temporalString = encodeTemporal(temporal)
+  // If we have an overrideTemporal use it, if not use temporal
+  let temporalString
+  const {
+    endDate: overrideEnd,
+    startDate: overrideStart
+  } = overrideTemporal
+  if (overrideEnd && overrideStart) {
+    temporalString = encodeTemporal(overrideTemporal)
+  } else {
+    temporalString = encodeTemporal(temporal)
+  }
 
   const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
     && !collectionMetadata.has_granules

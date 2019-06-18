@@ -1,111 +1,170 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
+import { difference } from 'lodash'
+
 import '../../../../../node_modules/edsc-timeline/dist/edsc-timeline.min'
 import { timelineIntervals } from '../../util/timeline'
 import getObjectKeyByValue from '../../util/object'
+import { getColorByIndex } from '../../util/colors'
 
 const earliestStart = '1960-01-01'
-const defaultInterval = 'day'
 
 class Timeline extends Component {
   constructor(props) {
     super(props)
+
+    this.rows = {}
+
     this.handleTemporalSet = this.handleTemporalSet.bind(this)
     this.handleRangeChange = this.handleRangeChange.bind(this)
+    this.handleFocusChange = this.handleFocusChange.bind(this)
   }
 
   componentDidMount() {
     // Initialize the timeline plugin
     this.$el = $(this.el)
-    this.$el.timeline()
 
     this.$el.on('temporalchange.timeline', this.handleTemporalSet)
     this.$el.on('rangechange.timeline', this.handleRangeChange)
+    this.$el.on('focusset.timeline', this.handleFocusChange)
+    this.$el.on('focusremove.timeline', this.handleFocusChange)
+
+    this.$el.timeline()
+
+    // set any initial values in props
+    const { temporalSearch, timeline } = this.props
+    const { query } = timeline
+    const {
+      center,
+      end,
+      interval,
+      start
+    } = query
+
+    this.setTimelineCenter(center)
+    this.setTimelineZoom(interval)
+    this.setTimelineTemporal(temporalSearch)
+    this.setTimelineFocus(start, end)
   }
 
   componentWillReceiveProps(nextProps) {
     const {
-      focusedCollectionMetadata: oldFocusedCollectionMetadata,
       temporalSearch: oldTemporalSearch,
-      timeline: oldTimeline,
-      onChangeTimelineQuery
+      timeline: oldTimeline
     } = this.props
 
     const {
-      focusedCollectionMetadata: nextFocusedCollectionMetadata,
+      collectionMetadata: nextCollectionMetadata,
       temporalSearch: nextTemporalSearch,
       timeline: nextTimeline
     } = nextProps
 
     const {
-      query: oldTimelineQuery = {},
-      state: oldTimelineState = {}
+      query: oldTimelineQuery = {}
     } = oldTimeline
     const {
-      query: nextTimelineQuery = {},
-      state: nextTimelineState = {}
+      query: nextTimelineQuery = {}
     } = nextTimeline
-    let query = {}
+
+    const {
+      center: oldCenter,
+      interval: oldInterval
+    } = oldTimelineQuery
+    const {
+      center: nextCenter,
+      interval: nextInterval
+    } = nextTimelineQuery
 
     // if the timeline center has changed, set it
-    const { center: oldCenter } = oldTimelineState
-    const { center: nextCenter } = nextTimelineState
-    if (oldCenter !== nextCenter) this.setTimelineCenter(nextTimeline.state)
-
+    if (oldCenter !== nextCenter) this.setTimelineCenter(nextCenter)
 
     // if the timeline zoom has changed, set it
-    const { interval: oldInterval } = oldTimelineQuery
-    const { interval: nextInterval } = nextTimelineQuery
-    if (oldInterval !== nextInterval) this.setTimelineZoom(nextTimeline.query)
+    if (oldInterval !== nextInterval) this.setTimelineZoom(nextInterval)
 
+    // if the timeline focus has changed, set it
+    const {
+      end: oldFocusEnd,
+      start: oldFocusStart
+    } = oldTimelineQuery
+    const {
+      end: nextFocusEnd,
+      start: nextFocusStart
+    } = nextTimelineQuery
+    if (oldFocusEnd !== nextFocusEnd || oldFocusStart !== nextFocusStart) {
+      this.setTimelineFocus(nextFocusStart, nextFocusEnd)
+    }
 
     // if the temporal has changed, update the temporal
     if (oldTemporalSearch !== nextTemporalSearch) this.setTimelineTemporal(nextTemporalSearch)
 
-
-    // if the focusedCollection has changed, change the timeline query (will fetch timeline granules)
-
-    const [oldCollectionId = ''] = Object.keys(oldFocusedCollectionMetadata)
-    const [nextCollectionId = ''] = Object.keys(nextFocusedCollectionMetadata)
-    const nextCollection = nextFocusedCollectionMetadata[nextCollectionId]
-    if (oldCollectionId !== nextCollectionId) {
-      if (!nextCollection) {
-        onChangeTimelineQuery({})
-      } else {
-        const { metadata } = nextCollection
+    const newRows = {}
+    // Setup a row for each collection in collectionMetadata
+    if (difference(Object.keys(nextCollectionMetadata), Object.keys(this.rows)).length > 0) {
+      const timelineRows = []
+      Object.keys(nextCollectionMetadata).forEach((collectionId) => {
+        if (!nextCollectionMetadata[collectionId]) return
+        const { metadata } = nextCollectionMetadata[collectionId]
+        if (Object.keys(metadata).length === 0) return
 
         const {
-          id,
-          time_start: timeStart,
-          time_end: timeEnd = new Date().toISOString()
+          title
         } = metadata
 
-        const newInterval = nextTimeline.query.interval || defaultInterval
+        newRows[collectionId] = []
 
-        if (id) {
-          query = {
-            endDate: timeEnd,
-            interval: newInterval,
-            startDate: timeStart
-          }
+        let truncatedTitle = title
+        if (title.length > 67) {
+          truncatedTitle = `${title.substr(0, 67)}...`
         }
+        timelineRows.push({
+          id: collectionId,
+          title: truncatedTitle
+        })
+      })
 
-        onChangeTimelineQuery(query)
+      if (timelineRows.length > 0) {
+        this.rows = {
+          ...this.rows,
+          ...newRows
+        }
+        this.$el.timeline('rows', timelineRows)
       }
+    }
+    if (Object.keys(nextCollectionMetadata).length === 0) {
+      this.rows = {}
+      this.clearTimelineData()
     }
 
 
-    // if the timeline granules have changed
-    if (oldTimeline.intervals !== nextTimeline.intervals) {
-      if (nextCollection) {
-        const { metadata } = nextCollection
+    // For each collection in collectionMetadata, update the timeline data
+    Object.keys(nextTimeline.intervals).forEach((collectionId) => {
+      const intervals = nextTimeline.intervals[collectionId]
+      if (!nextCollectionMetadata[collectionId]) return
+      const { metadata } = nextCollectionMetadata[collectionId]
+      if (Object.keys(metadata).length === 0) return
 
-        this.setTimelineData(metadata, nextTimeline)
+      // if the collection already exists in the state, compare the new values
+      if (Object.keys(this.rows).indexOf(collectionId) !== -1) {
+        const oldIntervals = this.rows[collectionId]
+        if (oldIntervals !== intervals) {
+          this.rows = {
+            ...this.rows,
+            [collectionId]: intervals
+          }
+          this.setTimelineData(collectionId, nextTimeline, getColorByIndex(Object.keys(this.rows)
+            .indexOf(collectionId)))
+        }
       } else {
-        this.clearTimelineData()
+        // if the collection doesn't appear in the state, add the values
+        this.rows = {
+          ...this.rows,
+          [collectionId]: intervals
+        }
+        this.setTimelineData(collectionId, nextTimeline, getColorByIndex(Object.keys(this.rows)
+          .indexOf(collectionId)))
       }
-    }
+    })
   }
 
   componentWillUnmount() {
@@ -134,43 +193,38 @@ class Timeline extends Component {
 
   /**
    * Sets the rows (collections) and data (intervals or granules) in the timeline
-   * @param {object} collection Collection metadata
+   * @param {object} collectionId Collection metadata
    * @param {object} timeline Timeline object from the Redux store
    */
-  setTimelineData(collection, timeline) {
+  setTimelineData(collectionId, timeline, color) {
     const {
-      id,
-      title,
-      time_start: timeStart,
-      time_end: timeEnd = false
-    } = collection
-
-    const {
-      intervals,
+      intervals: allIntervals,
       query
     } = timeline
 
-    this.$el.timeline('rows', [{ id, title }])
+    const intervals = allIntervals[collectionId]
+
+    const { endDate, startDate } = query
 
     if (intervals) {
       const data = {
-        start: new Date(timeStart) / 1000,
-        end: (timeEnd ? new Date(timeEnd) : new Date()) / 1000,
+        color,
+        end: new Date(endDate) / 1000,
+        intervals,
         resolution: query.interval,
-        intervals
+        start: new Date(startDate) / 1000
       }
 
-      this.$el.timeline('data', id, data)
+      this.$el.timeline('data', collectionId, data)
     }
   }
 
 
   /**
    * Set the center of the timeline
-   * @param {string} timelineState Timeline query object from the Redux store (timeline.state)
+   * @param {string} center Timeline center value
    */
-  setTimelineCenter(timelineState) {
-    const { center } = timelineState
+  setTimelineCenter(center) {
     const oldCenter = this.findTimelineCenter()
 
     if (center && center !== oldCenter) {
@@ -182,15 +236,34 @@ class Timeline extends Component {
   /**
    * Set the zoom level on the timeline. Reads a english value for the zoom level, sets the value with an integer.
    * Mapping can be found in timelineIntervals
+   * @param {object} interval Timeline zoom level
+   */
+  setTimelineZoom(interval) {
+    const oldZoom = this.$el.timeline('zoom')
+    if (oldZoom) {
+      const oldInterval = getObjectKeyByValue(timelineIntervals, oldZoom.toString())
+
+      if (interval && interval !== oldInterval) {
+        const intervalNum = timelineIntervals[interval]
+        this.$el.timeline('zoom', parseInt(intervalNum, 10))
+      }
+    }
+  }
+
+
+  /**
+   * Set the zoom level on the timeline. Reads a english value for the zoom level, sets the value with an integer.
+   * Mapping can be found in timelineIntervals
    * @param {object} timelineQuery Timeline query object from the Redux store (timeline.query)
    */
-  setTimelineZoom(timelineQuery) {
-    const { interval } = timelineQuery
-    const oldInterval = getObjectKeyByValue(timelineIntervals, this.$el.timeline('zoom').toString())
-
-    if (interval && interval !== oldInterval) {
-      const intervalNum = timelineIntervals[interval]
-      this.$el.timeline('zoom', parseInt(intervalNum, 10))
+  setTimelineFocus(start, end) {
+    if (start && end) {
+      const [oldStart, oldEnd] = this.$el.timeline('getFocus')
+      if (oldStart / 1000 !== start && oldEnd / 1000 !== end) {
+        this.$el.timeline('focus', new Date(start * 1000), new Date(end * 1000))
+      }
+    } else {
+      this.$el.timeline('focus')
     }
   }
 
@@ -198,7 +271,7 @@ class Timeline extends Component {
    * Helper method to get the current Timeline center
    */
   findTimelineCenter() {
-    return Math.round(this.$el.timeline('center') / 1000)
+    return Math.round(this.$el.timeline('center') / 1000) || undefined
   }
 
 
@@ -219,16 +292,24 @@ class Timeline extends Component {
    */
   handleRangeChange(event, start, end, interval) {
     const {
-      onChangeTimelineQuery,
-      onChangeTimelineState,
-      timeline
+      onChangeTimelineQuery
     } = this.props
-    const { interval: oldInterval } = timeline.query
+
+    const endDate = new Date(end)
+    const startDate = new Date(start)
+
+    const query = {
+      endDate: endDate.toISOString(),
+      interval,
+      startDate: startDate.toISOString()
+    }
 
     const center = this.findTimelineCenter()
-    onChangeTimelineState({ center })
+    if (center) {
+      query.center = center
+    }
 
-    if (oldInterval !== interval) onChangeTimelineQuery({ interval })
+    onChangeTimelineQuery(query)
   }
 
 
@@ -252,11 +333,62 @@ class Timeline extends Component {
     }
   }
 
+  /**
+   * Handles creating/removing the focused date when the timeline fires those events
+   * @param {object} event jQuery event
+   * @param {string} start Start of focused date
+   * @param {string} end End of focused date
+   */
+  handleFocusChange(event, start, end) {
+    const {
+      showOverrideModal,
+      temporalSearch,
+      timeline,
+      onChangeQuery,
+      onChangeTimelineQuery,
+      onToggleOverrideTemporalModal
+    } = this.props
+
+    const newQuery = {
+      end: !end ? undefined : end / 1000,
+      start: !start ? undefined : start / 1000
+    }
+
+    if (start && end) {
+      const center = this.findTimelineCenter()
+      newQuery.center = center
+
+      // if temporalSearch exists and we are on the project page, show the modal
+      if (Object.keys(temporalSearch).length > 0 && showOverrideModal) {
+        onToggleOverrideTemporalModal(true)
+      }
+    }
+
+    if (!showOverrideModal || !start || !end) {
+      const { query } = timeline
+      const { end: oldEnd, start: oldStart } = query
+
+      // If the timeline doesn't have focus, don't bother trying to remove focus
+      let shouldUpdateQuery = true
+      if (!start && !end && !oldStart && !oldEnd) shouldUpdateQuery = false
+
+      if (shouldUpdateQuery) {
+        onChangeQuery({
+          overrideTemporal: {
+            endDate: !end ? undefined : new Date(end).toISOString(),
+            startDate: !start ? undefined : new Date(start).toISOString()
+          }
+        })
+      }
+    }
+    onChangeTimelineQuery(newQuery)
+  }
+
   render() {
-    const { focusedCollectionMetadata = {} } = this.props
-    const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
-    const metadata = focusedCollectionMetadata[collectionId]
-    // Don't display the timeline if there isn't a focusedCollection with metadata
+    const { collectionMetadata = {} } = this.props
+    const [collectionId = ''] = Object.keys(collectionMetadata)
+    const metadata = collectionMetadata[collectionId] || {}
+    // Don't display the timeline if there isn't a collection with metadata
     const display = collectionId === '' || Object.keys(metadata).length === 0 ? 'none' : 'block'
 
     return (
@@ -268,16 +400,17 @@ class Timeline extends Component {
 }
 
 Timeline.defaultProps = {
-  focusedCollectionMetadata: {}
+  collectionMetadata: {}
 }
 
 Timeline.propTypes = {
-  focusedCollectionMetadata: PropTypes.shape({}),
+  collectionMetadata: PropTypes.shape({}),
+  showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({}).isRequired,
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,
-  onChangeTimelineState: PropTypes.func.isRequired
+  onToggleOverrideTemporalModal: PropTypes.func.isRequired
 }
 
 export default Timeline

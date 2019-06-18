@@ -21,10 +21,16 @@ export default class TimelineRequest extends Request {
 
   permittedCmrKeys() {
     return [
-      'echo_collection_id',
+      'concept_id',
       'end_date',
       'interval',
       'start_date'
+    ]
+  }
+
+  nonIndexedKeys() {
+    return [
+      'concept_id'
     ]
   }
 }

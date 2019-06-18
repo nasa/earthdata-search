@@ -8,16 +8,21 @@ import { getJwtToken } from './util'
 export default async function timelineSearch(event) {
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
-    'echo_collection_id',
+    'concept_id',
     'end_date',
     'interval',
     'start_date'
+  ]
+
+  const nonIndexedKeys = [
+    'concept_id'
   ]
 
   const { body } = event
 
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
+    nonIndexedKeys,
     path: '/search/granules/timeline',
     permittedCmrKeys
   }))

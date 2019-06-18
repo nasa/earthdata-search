@@ -1,9 +1,10 @@
 import {
+  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
+  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
-  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
+  TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../constants/actionTypes'
@@ -20,6 +21,9 @@ const initialState = {
     searchValue: ''
   },
   facetsModal: {
+    isOpen: false
+  },
+  overrideTemporalModal: {
     isOpen: false
   },
   relatedUrlsModal: {
@@ -82,6 +86,14 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         facetsModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_OVERRIDE_TEMPORAL_MODAL: {
+      return {
+        ...state,
+        overrideTemporalModal: {
           isOpen: action.payload
         }
       }

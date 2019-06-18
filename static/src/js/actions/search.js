@@ -28,6 +28,11 @@ export const changeQuery = query => (dispatch) => {
   dispatch(actions.getTimeline())
 }
 
+export const changeProjectQuery = query => (dispatch) => {
+  dispatch(updateCollectionQuery(query))
+  dispatch(actions.getProjectCollections())
+}
+
 export const changeCollectionPageNum = pageNum => (dispatch) => {
   dispatch(updateCollectionQuery({ pageNum }))
   dispatch(actions.getCollections())
