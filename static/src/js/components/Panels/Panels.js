@@ -61,7 +61,8 @@ export class Panels extends Component {
   render() {
     const { children, show } = this.props
 
-    const panelGroups = Children.map(children, (child, index) => this.renderPanelGroup(child, index))
+    const panelGroups = Children.map(children,
+      (child, index) => this.renderPanelGroup(child, index))
 
     const className = classNames([
       'panels',

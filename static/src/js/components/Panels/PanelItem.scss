@@ -7,4 +7,9 @@
   &--is-active {
     display: flex;
   }
+
+  &__content {
+    height: 100%;
+    overflow-y: scroll;
+  }
 }

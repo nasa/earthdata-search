@@ -13,8 +13,12 @@ export const CollectionDetails = ({ granuleCount }) => (
   </ProjectPanelSection>
 )
 
+CollectionDetails.defaultProps = {
+  granuleCount: 0
+}
+
 CollectionDetails.propTypes = {
-  granuleCount: PropTypes.number.isRequired
+  granuleCount: PropTypes.number
 }
 
 export default CollectionDetails
