@@ -45,7 +45,9 @@ describe('AuthRequiredContainer component', () => {
 
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.type()).toEqual(null)
+    const div = enzymeWrapper.find('div')
+    expect(div.hasClass('route-wrapper')).toEqual(true)
+
     expect(window.location.href).toEqual(`http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`)
   })
 

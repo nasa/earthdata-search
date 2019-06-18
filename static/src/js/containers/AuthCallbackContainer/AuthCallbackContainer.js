@@ -35,8 +35,7 @@ export class AuthCallbackContainer extends Component {
 
   render() {
     return (
-      <>
-      </>
+      <div className="route-wrapper" />
     )
   }
 }
