@@ -7,7 +7,9 @@ import {
   masterOverlayPanelResize,
   granuleResultsPanelUpdateSortOrder,
   granuleResultsPanelUpdateSearchValue,
-  toggleFacetsModal
+  toggleFacetsModal,
+  toggleOverrideTemporalModal,
+  toggleRelatedUrlsModal
 } from '../ui'
 
 import {
@@ -16,7 +18,9 @@ import {
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  TOGGLE_RELATED_URLS_MODAL
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -149,6 +153,48 @@ describe('toggleFacetsModal', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleOverrideTemporalModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleOverrideTemporalModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleRelatedUrlsModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleRelatedUrlsModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_RELATED_URLS_MODAL,
       payload: true
     })
   })

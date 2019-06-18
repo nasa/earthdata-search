@@ -18,12 +18,30 @@ export const prepareTimelineParams = (state) => {
   const {
     authToken,
     focusedCollection,
+    metadata,
     query,
+    router,
     timeline
   } = state
 
-  // If we don't have a focusedCollection, bail out!
-  if (!focusedCollection) {
+  const { collections } = metadata
+
+  const { location } = router
+  const { pathname } = location
+  const isProjectPage = pathname.startsWith('/project')
+
+  let conceptIds = []
+  // If we are on the project page, we want to query the projectIds
+  if (isProjectPage) {
+    const { projectIds } = collections
+    conceptIds = projectIds
+  } else if (focusedCollection !== '') {
+    // if we aren't on the project page, we want to query the focusedCollection
+    conceptIds.push(focusedCollection)
+  }
+
+  // If we don't have any conceptIds, bail out!
+  if (conceptIds.length === 0) {
     return null
   }
 
@@ -49,7 +67,7 @@ export const prepareTimelineParams = (state) => {
   return {
     authToken,
     boundingBox,
-    focusedCollection,
+    conceptId: conceptIds,
     endDate,
     interval,
     point,

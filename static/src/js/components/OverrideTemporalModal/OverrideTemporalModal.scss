@@ -1,0 +1,21 @@
+.choice {
+  width: 50%;
+  text-align: center;
+  padding: 0.5em 0;
+
+  button {
+    display: inline-block;
+  }
+}
+
+.choice-1 {
+  float: left;
+}
+
+.choice-2 {
+  float: right;
+}
+
+.override-temporal-modal__footer-actions {
+  width: 100%;
+}

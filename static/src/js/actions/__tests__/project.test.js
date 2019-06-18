@@ -121,6 +121,9 @@ describe('getProjectGranules', () => {
       query: {
         collection: {},
         granule: {}
+      },
+      timeline: {
+        query: {}
       }
     })
 
@@ -170,6 +173,9 @@ describe('getProjectGranules', () => {
       query: {
         collection: {},
         granule: {}
+      },
+      timeline: {
+        query: {}
       }
     })
 

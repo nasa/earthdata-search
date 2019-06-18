@@ -151,5 +151,6 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
   if (collectionId !== '') dispatch(copyGranulesFromCollection(collectionId))
 
   dispatch(updateFocusedCollection(collectionId))
+  dispatch(actions.getTimeline())
   dispatch(actions.getFocusedCollection())
 }

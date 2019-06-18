@@ -81,6 +81,9 @@ describe('getGranules', () => {
           spatial: {}
         },
         granule: { pageNum: 1 }
+      },
+      timeline: {
+        query: {}
       }
     })
 
@@ -159,6 +162,9 @@ describe('getGranules', () => {
           spatial: {}
         },
         granule: { pageNum: 1 }
+      },
+      timeline: {
+        query: {}
       }
     })
 
@@ -245,6 +251,9 @@ describe('getGranules', () => {
           spatial: {}
         },
         granule: { pageNum: 1 }
+      },
+      timeline: {
+        query: {}
       }
     })
 

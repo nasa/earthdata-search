@@ -62,6 +62,12 @@ describe('changeQuery', () => {
         collection: {
           keyword: 'old stuff'
         }
+      },
+      metadata: {},
+      router: {
+        location: {
+          pathname: ''
+        }
       }
     })
 
@@ -160,6 +166,12 @@ describe('clearFilters', () => {
         keyword: 'keyword search',
         spatial: {
           point: '0,0'
+        }
+      },
+      metadata: {},
+      router: {
+        location: {
+          pathname: ''
         }
       }
     }

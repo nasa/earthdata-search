@@ -17,12 +17,12 @@ import {
 import { updateAuthToken } from './authToken'
 import {
   changeTimelineQuery,
-  changeTimelineState,
   getTimeline
 } from './timeline'
 import { searchNlp } from './nlp'
 import {
   changeQuery,
+  changeProjectQuery,
   clearFilters,
   changeCollectionPageNum,
   changeGranulePageNum
@@ -36,12 +36,13 @@ import {
   updateFeatureFacet
 } from './facets'
 import {
+  granuleResultsPanelUpdateSearchValue,
+  granuleResultsPanelUpdateSortOrder,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
-  granuleResultsPanelUpdateSortOrder,
-  granuleResultsPanelUpdateSearchValue,
   toggleFacetsModal,
+  toggleOverrideTemporalModal,
   toggleRelatedUrlsModal
 } from './ui'
 import {
@@ -74,8 +75,8 @@ const actions = {
   changeGranulePageNum,
   changeMap,
   changeQuery,
+  changeProjectQuery,
   changeTimelineQuery,
-  changeTimelineState,
   changeUrl,
   changeViewAllFacet,
   clearCollectionGranules,
@@ -98,6 +99,7 @@ const actions = {
   restoreCollections,
   searchNlp,
   toggleCollectionVisibility,
+  toggleOverrideTemporalModal,
   toggleFacetsModal,
   toggleRelatedUrlsModal,
   triggerViewAllFacets,

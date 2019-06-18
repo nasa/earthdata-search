@@ -13,11 +13,13 @@ function setup() {
       byId: {}
     },
     focusedCollection: '',
+    pathname: '/search',
     temporalSearch: {},
     timeline: { query: {}, state: {} },
+    onChangeProjectQuery: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
-    onChangeTimelineState: jest.fn()
+    onToggleOverrideTemporalModal: jest.fn()
   }
 
   const enzymeWrapper = shallow(<TimelineContainer {...props} />)
@@ -29,15 +31,75 @@ function setup() {
 }
 
 describe('TimelineContainer component', () => {
-  test('passes its props and renders a single Timeline component', () => {
+  test('does not render a timeline if no timeline should be rendered', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.find(Timeline).length).toBe(0)
+  })
+
+  test('passes its props and renders a single Timeline component on the search page', () => {
     const { enzymeWrapper, props } = setup()
+
+    enzymeWrapper.setProps({
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            mock: 'data'
+          }
+        }
+      },
+      focusedCollection: 'collectionId',
+      pathname: '/search/granules'
+    })
 
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
     expect(enzymeWrapper.find(Timeline).props()).toEqual({
       ...props,
+      onChangeProjectQuery: undefined,
       collections: undefined,
       focusedCollection: undefined,
-      focusedCollectionMetadata: {}
+      pathname: undefined,
+      collectionMetadata: {
+        collectionId: {
+          mock: 'data'
+        }
+      },
+      showOverrideModal: false
+    })
+  })
+
+  test('passes its props and renders a single Timeline component on the project page', () => {
+    const { enzymeWrapper, props } = setup()
+
+    enzymeWrapper.setProps({
+      collections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            mock: 'data'
+          }
+        },
+        projectIds: ['collectionId']
+      },
+      focusedCollection: 'collectionId',
+      pathname: '/project'
+    })
+
+    expect(enzymeWrapper.find(Timeline).length).toBe(1)
+    expect(enzymeWrapper.find(Timeline).props()).toEqual({
+      ...props,
+      onChangeProjectQuery: undefined,
+      onChangeQuery: props.onChangeProjectQuery,
+      collections: undefined,
+      focusedCollection: undefined,
+      pathname: undefined,
+      collectionMetadata: {
+        collectionId: {
+          mock: 'data'
+        }
+      },
+      showOverrideModal: true
     })
   })
 })

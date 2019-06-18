@@ -12,7 +12,7 @@ export const colors = {
  * @param {object} colors An object of color key value pairs.
  * @returns {object} A color hex value for the index.
  */
-export const getColorByIndex = (index, colors) => (
+export const getColorByIndex = index => (
   Object.values(colors)[index % Object.keys(colors).length]
 )
 

@@ -3,21 +3,30 @@ import { decodeUrlParams, encodeUrlQuery } from '../url'
 import emptyDecodedResult from './url.test'
 
 describe('url#decodeUrlParams', () => {
-  test('decodes timelineQuery correctly', () => {
+  test('decodes timelineQuery correctly without a focused date', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       timeline: {
-        query: {
-          end: '',
-          interval: 'day',
-          start: ''
-        },
-        state: {
-          center: '1534577879'
-        }
+        center: 1534577879,
+        end: undefined,
+        interval: 'day',
+        start: undefined
       }
     }
     expect(decodeUrlParams('?tl=1534577879!4!!')).toEqual(expectedResult)
+  })
+
+  test('decodes timelineQuery correctly with a focused date', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      timeline: {
+        center: 1546300800,
+        end: 1548979199,
+        interval: 'day',
+        start: 1546300800
+      }
+    }
+    expect(decodeUrlParams('?tl=1546300800!4!1546300800!1548979199')).toEqual(expectedResult)
   })
 })
 
@@ -27,11 +36,8 @@ describe('url#encodeUrlQuery', () => {
       const props = {
         pathname: '/path/here',
         timeline: {
-          collectionId: 'collectionId',
-          state: {
-            center: 1534577879
-          },
           query: {
+            center: 1534577879,
             interval: 'day'
           }
         }
@@ -44,7 +50,6 @@ describe('url#encodeUrlQuery', () => {
         pathname: '/path/here',
         timeline: {
           collectionId: 'collectionId',
-          state: {},
           query: {
             interval: 'day'
           }
@@ -53,19 +58,17 @@ describe('url#encodeUrlQuery', () => {
       expect(encodeUrlQuery(props)).toEqual('/path/here')
     })
 
-    test('encodes timelineQuery correctly when timeline is not visible', () => {
+    test('does not encode timelineQuery when timeline is not visible', () => {
       const props = {
-        pathname: '/path/here',
+        pathname: '/search',
         timeline: {
-          state: {
-            center: 1534577879
-          },
           query: {
+            center: 1534577879,
             interval: 'day'
           }
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here')
+      expect(encodeUrlQuery(props)).toEqual('/search')
     })
   })
 })

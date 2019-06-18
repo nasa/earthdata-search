@@ -40,7 +40,7 @@ const urlDefs = {
   polygonSearch: { shortKey: 'polygon', encode: encodeString, decode: decodeString },
   map: { shortKey: 'm', encode: encodeMap, decode: decodeMap },
   temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
-  timeline: { shortKey: 'tl', encode: encodeTimeline, decode: decodeTimeline },
+  overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
   featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
   platformFacets: { shortKey: 'fp', encode: encodeFacets, decode: decodeFacets },
   instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
@@ -77,6 +77,7 @@ export const decodeUrlParams = (paramString) => {
   const query = {}
   query.keyword = decodeHelp(params, 'keywordSearch')
   query.temporal = decodeHelp(params, 'temporalSearch')
+  query.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
 
   const spatial = {}
   spatial.point = decodeHelp(params, 'pointSearch')
@@ -84,7 +85,7 @@ export const decodeUrlParams = (paramString) => {
   spatial.polygon = decodeHelp(params, 'polygonSearch')
   query.spatial = spatial
 
-  const timeline = decodeHelp(params, 'timeline')
+  const timeline = decodeTimeline(params)
 
   const featureFacets = decodeHelp(params, 'featureFacets')
   const scienceKeywords = decodeScienceKeywords(params)
@@ -134,10 +135,12 @@ export const encodeUrlQuery = (props) => {
 
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const collectionsQuery = encodeCollections(props.collections, props.focusedCollection)
+  const timelineQuery = encodeTimeline(props.timeline, props.pathname)
 
   const encodedQuery = {
     ...collectionsQuery,
     ...query,
+    ...timelineQuery,
     ...scienceKeywordQuery
   }
 

@@ -30,10 +30,20 @@ describe('TimelineRequest#permittedCmrKeys', () => {
     const request = new TimelineRequest()
 
     expect(request.permittedCmrKeys()).toEqual([
-      'echo_collection_id',
+      'concept_id',
       'end_date',
       'interval',
       'start_date'
+    ])
+  })
+})
+
+describe('TimelineRequest#nonIndexedKeys', () => {
+  test('returns an array of timeline CMR keys', () => {
+    const request = new TimelineRequest()
+
+    expect(request.nonIndexedKeys()).toEqual([
+      'concept_id'
     ])
   })
 })

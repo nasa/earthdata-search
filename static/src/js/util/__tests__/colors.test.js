@@ -14,12 +14,12 @@ describe('util#colors', () => {
   describe('util#getColorByIndex', () => {
     describe('when color is in range', () => {
       test('returns the correct color', () => {
-        expect(getColorByIndex(1, colors)).toEqual('#3498DB')
+        expect(getColorByIndex(1)).toEqual('#3498DB')
       })
     })
     describe('when color is out of range', () => {
       test('returns the correct color', () => {
-        expect(getColorByIndex(5, colors)).toEqual('#2ECC71')
+        expect(getColorByIndex(5)).toEqual('#2ECC71')
       })
     })
   })
