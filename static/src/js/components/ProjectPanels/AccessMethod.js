@@ -30,7 +30,7 @@ export const AccessMethod = ({ index, onSetActivePanel }) => (
               placement="right"
               overlay={(
                 <Tooltip
-                  className="tooltip--large tooltip--ta-left tooltip--wide"
+                  className="tooltip--large tooltip--ta-left"
                 >
                   Direct download of all data associated with the selected granules.
                   The desired data will be available for download immediately.
@@ -52,7 +52,7 @@ export const AccessMethod = ({ index, onSetActivePanel }) => (
               placement="right"
               overlay={(
                 <Tooltip
-                  className="tooltip--large tooltip--ta-left tooltip--wide"
+                  className="tooltip--large tooltip--ta-left"
                 >
                   Submit a request for data to be staged for delivery. Data files will be
                   compressed in zip format and stored for retrieval via HTTP. You will
@@ -73,7 +73,7 @@ export const AccessMethod = ({ index, onSetActivePanel }) => (
               placement="right"
               overlay={(
                 <Tooltip
-                  className="tooltip--large tooltip--ta-left tooltip--wide"
+                  className="tooltip--large tooltip--ta-left"
                 >
                   Select options like variables, transformations, and output formats to customize
                   your data. The desired data files will be made available for access immediately.
@@ -95,7 +95,7 @@ export const AccessMethod = ({ index, onSetActivePanel }) => (
               placement="right"
               overlay={(
                 <Tooltip
-                  className="tooltip--large tooltip--ta-left tooltip--wide"
+                  className="tooltip--large tooltip--ta-left"
                 >
                   Select options like variables, transformations, and output formats to
                   customize your data. The desired data files will be made available for
