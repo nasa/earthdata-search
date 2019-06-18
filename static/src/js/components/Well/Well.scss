@@ -1,0 +1,33 @@
+.well {
+  width: 100%;
+  background-color: $color__white;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  &__main {
+    padding: $spacer;
+  }
+
+  &__heading {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  &__introduction {
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  &__section {
+    margin-bottom: $spacer;
+  }
+
+  &__footer {
+    padding: $spacer;
+    background-color: $color__green;
+    color: $color__white;
+    border-top: 5px solid #228047;
+  }
+}

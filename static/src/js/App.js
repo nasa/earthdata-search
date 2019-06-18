@@ -12,6 +12,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
 import Granules from './routes/Granules/Granules'
+import Data from './routes/Data/Data'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -47,6 +48,7 @@ class App extends Component {
               </Helmet>
               <Switch>
                 <Route path="/granules" component={Granules} />
+                <Route path="/data" component={Data} />
                 <Route path="/">
                   <>
                     <Switch>
@@ -76,7 +78,6 @@ class App extends Component {
                     </AuthRequiredContainer>
                   )}
                 />
-                <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
               </Switch>
               <FooterContainer />
             </ConnectedUrlQueryContainer>
