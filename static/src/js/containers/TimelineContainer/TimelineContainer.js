@@ -38,6 +38,7 @@ export const TimelineContainer = (props) => {
   let changeQueryMethod = onChangeQuery
   // Determine the collectionMetadata the timeline should be displaying
   const isProjectPage = pathname.startsWith('/project')
+  const isGranulesPage = pathname.startsWith('/search/granules')
   const collectionMetadata = {}
   if (isProjectPage) {
     const { byId, projectIds } = collections
@@ -47,7 +48,7 @@ export const TimelineContainer = (props) => {
     })
 
     changeQueryMethod = onChangeProjectQuery
-  } else if (focusedCollection !== '') {
+  } else if (isGranulesPage && focusedCollection !== '') {
     const metadata = getFocusedCollectionMetadata(focusedCollection, collections)
     collectionMetadata[focusedCollection] = metadata[focusedCollection]
   }
