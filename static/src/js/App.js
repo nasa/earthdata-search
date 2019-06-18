@@ -16,6 +16,8 @@ import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTok
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import ConnectedEdscMapContainer
   from './containers/MapContainer/MapContainer'
+import ConnectedAuthCallbackContainer
+  from './containers/AuthCallbackContainer/AuthCallbackContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -55,6 +57,7 @@ class App extends Component {
                     </AuthRequiredContainer>
                   )}
                 />
+                <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
               </Switch>
               <ConnectedEdscMapContainer />
               <FooterContainer />
