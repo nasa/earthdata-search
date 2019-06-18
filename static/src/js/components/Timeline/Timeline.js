@@ -252,9 +252,9 @@ class Timeline extends Component {
 
 
   /**
-   * Set the zoom level on the timeline. Reads a english value for the zoom level, sets the value with an integer.
-   * Mapping can be found in timelineIntervals
-   * @param {object} timelineQuery Timeline query object from the Redux store (timeline.query)
+   * Sets the timeline focus.
+   * @param {number} start Start date of focus in seconds
+   * @param {number} end End date of focus in seconds
    */
   setTimelineFocus(start, end) {
     if (start && end) {
@@ -385,14 +385,8 @@ class Timeline extends Component {
   }
 
   render() {
-    const { collectionMetadata = {} } = this.props
-    const [collectionId = ''] = Object.keys(collectionMetadata)
-    const metadata = collectionMetadata[collectionId] || {}
-    // Don't display the timeline if there isn't a collection with metadata
-    const display = collectionId === '' || Object.keys(metadata).length === 0 ? 'none' : 'block'
-
     return (
-      <section className="timeline" style={{ display }}>
+      <section className="timeline">
         <div ref={(el) => { this.el = el }} />
       </section>
     )

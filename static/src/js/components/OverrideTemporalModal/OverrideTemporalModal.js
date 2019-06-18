@@ -106,6 +106,7 @@ class OverrideTemporalModal extends Component {
               <Button
                 className="override-temporal-modal__action override-temporal-modal__action--focused"
                 bootstrapVariant="primary"
+                label="Use Focused Time Span"
                 onClick={this.onFocusedClick}
               >
                 Use Focused Time Span
@@ -115,6 +116,7 @@ class OverrideTemporalModal extends Component {
               <Button
                 className="override-temporal-modal__action override-temporal-modal__action--temporal"
                 bootstrapVariant="primary"
+                label="Use Temporal Constraint"
                 onClick={this.onTemporalClick}
               >
                 Use Temporal Constraint

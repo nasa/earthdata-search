@@ -39,7 +39,8 @@ describe('App component', () => {
           title: 'ECHO dataset metadata',
           entry: [{
             mockCollectionData: 'goes here',
-            id: 'mock-id'
+            id: 'mock-id',
+            summary: 'mock summary data'
           }],
           facets: {}
         }

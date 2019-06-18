@@ -46,25 +46,6 @@ describe('Timeline component', () => {
     expect(setTimelineFocusSpy).toHaveBeenCalledTimes(1)
   })
 
-  test('should not display timeline if there is no collectionMetadata', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
-    enzymeWrapper.setProps({
-      collectionMetadata: {
-        collectionId: {
-          metadata: {
-            mock: 'metadata',
-            title: 'mock title'
-          }
-        }
-      }
-    })
-    expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'block' })
-
-    enzymeWrapper.setProps({ collectionMetadata: {} })
-    expect(enzymeWrapper.find('section').prop('style')).toEqual({ display: 'none' })
-  })
-
   describe('componentWillReceiveProps', () => {
     test('when the timeline center is new', () => {
       const { enzymeWrapper } = setup()
