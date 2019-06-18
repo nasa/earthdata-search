@@ -1,8 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { ProjectCollectionsContainer } from '../ProjectCollectionsContainer'
-import ProjectCollections from '../../../components/ProjectCollections/ProjectCollections'
+import { ProjectPanelsContainer } from '../ProjectPanelsContainer'
+import ProjectPanels from '../../../components/ProjectPanels/ProjectPanels'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -27,11 +27,15 @@ function setup() {
       isLoading: false,
       isLoaded: true
     },
-    onRemoveCollectionFromProject: jest.fn(),
-    onToggleCollectionVisibility: jest.fn()
+    onTogglePanels: jest.fn(),
+    onSetActivePanel: jest.fn(),
+    projectPanels: {
+      activePanel: '0.0.0',
+      isOpen: false
+    }
   }
 
-  const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)
+  const enzymeWrapper = shallow(<ProjectPanelsContainer {...props} />)
 
   return {
     enzymeWrapper,
@@ -39,12 +43,12 @@ function setup() {
   }
 }
 
-describe('ProjectCollectionsContainer component', () => {
-  test('passes its props and renders a single ProjectCollections component', () => {
+describe('ProjectPanelsContainer component', () => {
+  test('passes its props and renders a single ProjectPanels component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(ProjectCollections).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectCollections).props().collections).toEqual({
+    expect(enzymeWrapper.find(ProjectPanels).length).toBe(1)
+    expect(enzymeWrapper.find(ProjectPanels).props().collections).toEqual({
       allIds: ['collectionId'],
       byId: {
         collectionId: {
@@ -53,7 +57,7 @@ describe('ProjectCollectionsContainer component', () => {
       },
       projectIds: ['collectionId']
     })
-    expect(enzymeWrapper.find(ProjectCollections).props().collectionsSearch).toEqual({
+    expect(enzymeWrapper.find(ProjectPanels).props().collectionsSearch).toEqual({
       allIds: ['collectionId'],
       byId: {
         collectionId: {
@@ -63,6 +67,11 @@ describe('ProjectCollectionsContainer component', () => {
       isLoading: false,
       isLoaded: true
     })
-    expect(typeof enzymeWrapper.find(ProjectCollections).props().onRemoveCollectionFromProject).toEqual('function')
+    expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
+    expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')
+    expect(enzymeWrapper.find(ProjectPanels).props().projectPanels).toEqual({
+      activePanel: '0.0.0',
+      isOpen: false
+    })
   })
 })

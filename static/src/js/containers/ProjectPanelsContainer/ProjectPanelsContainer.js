@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
     panelId => dispatch(setActivePanel(panelId))
 })
 
-export const ProjectCollectionsContainer = ({
+export const ProjectPanelsContainer = ({
   collections,
   collectionsSearch,
   projectPanels,
@@ -36,7 +36,7 @@ export const ProjectCollectionsContainer = ({
   />
 )
 
-ProjectCollectionsContainer.propTypes = {
+ProjectPanelsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
@@ -45,4 +45,4 @@ ProjectCollectionsContainer.propTypes = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectPanelsContainer)
