@@ -352,7 +352,7 @@ class DataAccessController < ApplicationController
 
       # Collect all the order option definitions guids which will define
       # the options associated with the granules the user is requesting
-      Array.wrap(info.fetch('option_definition_refs')).each do |ref|
+      Array.wrap(info['option_definition_refs']).each do |ref|
         option_id = ref['id']
         option_name = ref['name']
 
