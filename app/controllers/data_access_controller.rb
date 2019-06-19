@@ -139,7 +139,7 @@ class DataAccessController < ApplicationController
         access_methods = defaults.service_options.fetch('accessMethod', [])
         first_access_method = access_methods[0] || {}
 
-        model = first_access_method.fetch('model', '')
+        model = first_access_method['model']
         if model.present?
           doc = Nokogiri::XML(model)
           # reset spatial_subset_flag
@@ -150,7 +150,7 @@ class DataAccessController < ApplicationController
           end
 
           # update rawModel
-          raw_model = first_access_method.fetch('rawModel', '')
+          raw_model = first_access_method['rawModel']
           if raw_model.present?
             doc = Nokogiri::XML(raw_model)
             # reset spatial_subset_flag
@@ -346,13 +346,13 @@ class DataAccessController < ApplicationController
     # For each granule that we requested information from we'll use
     # the respone to create a more complete and compact list of option definitions
     Array.wrap(order_info).each do |info|
-      info = info['order_information']
+      info = info.fetch('order_information', {})
 
-      orderable_count += 1 if info['orderable']
+      orderable_count += 1 if info.fetch('orderable', false)
 
       # Collect all the order option definitions guids which will define
       # the options associated with the granules the user is requesting
-      Array.wrap(info['option_definition_refs']).each do |ref|
+      Array.wrap(info.fetch('option_definition_refs')).each do |ref|
         option_id = ref['id']
         option_name = ref['name']
 
