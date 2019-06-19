@@ -1,0 +1,14 @@
+.order-status-list {
+  margin-bottom: $spacer;
+
+  &__heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

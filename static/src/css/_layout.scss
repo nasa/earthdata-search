@@ -50,6 +50,7 @@
 
     .route-wrapper--content-page & {
       justify-content: flex-start;
+      overflow-y: scroll;
     }
   }
 
@@ -73,6 +74,7 @@
     max-width: 62.5rem;
     margin: 0 auto;
     padding-top: 2rem;
+    padding-bottom: 4rem;
   }
 
   &--light {
