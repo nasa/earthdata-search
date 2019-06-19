@@ -136,7 +136,10 @@ class DataAccessController < ApplicationController
       # This code removes any spatial params from the user's form, if they don't
       # have a bounding_box param on their project page.
       if params['bounding_box'].blank? && defaults.present?
-        model = defaults.service_options['accessMethod'][0]['model']
+        access_methods = defaults.service_options.fetch('accessMethod', [])
+        first_access_method = access_methods[0] || {}
+
+        model = first_access_method.fetch('model', '')
         if model.present?
           doc = Nokogiri::XML(model)
           # reset spatial_subset_flag
@@ -147,7 +150,7 @@ class DataAccessController < ApplicationController
           end
 
           # update rawModel
-          raw_model = defaults.service_options['accessMethod'][0]['rawModel']
+          raw_model = first_access_method.fetch('rawModel', '')
           if raw_model.present?
             doc = Nokogiri::XML(raw_model)
             # reset spatial_subset_flag
