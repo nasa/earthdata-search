@@ -26,7 +26,7 @@ portals: &portals
         title: ORNL DAAC AirMOSS Home
     scripts:
       - edsc-portal.ornl.min.js
-      
+
   above:
     org: ABoVE
     title: Search
@@ -35,7 +35,7 @@ portals: &portals
         - ABoVE
     scripts:
       - edsc-portal.ornl.min.js
-      
+
   ornldaac:
     org: ORNL DAAC
     title: Search
@@ -68,9 +68,9 @@ portals: &portals
     org: CEOS IDN
     title: International Directory Network (IDN) Search
     params:
-    	keyword:
+    keyword:
         - *
-    
+
     logos:
       - id: CEOS-logo
         image: /images/portals/idn/logo2.png
@@ -78,7 +78,7 @@ portals: &portals
         title: CEOS IDN Search
     scripts:
       - edsc-portal.cwic.js
-      
+
 examples: &examples
   example:
 
@@ -108,4 +108,4 @@ defaults:
   <<: *portals
 
 production:
-  <<: *portals   
+  <<: *portals
