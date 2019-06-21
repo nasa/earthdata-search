@@ -9,7 +9,8 @@ exports.up = (pgm) => {
       default: '{}'
     },
     echo_id: {
-      type: 'varchar(1000)'
+      type: 'varchar(1000)',
+      notNull: true
     },
     echo_profile: {
       type: 'jsonb',
@@ -22,8 +23,7 @@ exports.up = (pgm) => {
       default: '{}'
     },
     urs_id: {
-      type: 'varchar(1000)',
-      notNull: true
+      type: 'varchar(1000)'
     },
     urs_profile: {
       type: 'jsonb',
