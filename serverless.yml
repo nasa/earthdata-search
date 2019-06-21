@@ -26,6 +26,8 @@ provider:
     configSecretId:
       Ref: DbPasswordSecret
     storeUserLambda: ${self:custom.siteName}-storeUserData
+    collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
+
   vpc:
     securityGroupIds:
       - Ref: LambdaSecurityGroup
@@ -129,6 +131,18 @@ functions:
       - schedule:
           rate: cron(0 5 * * ? *)
           enabled: false
+
+  generateCollectionCapabilityTags:
+    handler: serverless/src/generateCollectionCapabilityTags/handler.default
+    description: Iterate over all CMR collections adding tags specific to EDSC
+    timeout: 300
+    events:
+      - schedule:
+          rate: cron(0 6 * * ? *)
+          enabled: false
+          input:
+            pageNumber: 1
+            perPage: 2000
 
   #
   # API Gateway Endpoints

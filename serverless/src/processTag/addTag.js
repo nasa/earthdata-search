@@ -19,7 +19,11 @@ export async function addTag({
   append,
   cmrToken
 }) {
-  if (tagData || requireGranules) {
+  let associationData = null
+
+  // Avoid querying CMR if we were already able to generate the appropriate
+  // payload by checking for searchCriteria.
+  if (searchCriteria && (tagData || requireGranules)) {
     const cmrParams = {
       include_tags: tagName,
       include_has_granules: true
@@ -43,7 +47,8 @@ export async function addTag({
       return collectionsResponse
     }
 
-    let associationData = null
+    // GIBS specific functionality (at the moment) for appending data
+    // to an existing tag for colormaps
     if (append) {
       associationData = collections.map((collection) => {
         const { tags = {} } = collection
@@ -70,7 +75,12 @@ export async function addTag({
     } else {
       associationData = collections.map(collection => ({ 'concept-id': collection.id }))
     }
+  } else {
+    associationData = tagData
+  }
 
+  // After setting associationData ensure that it has content, if no content
+  if (associationData) {
     try {
       const addTagUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations`
       await request.post({
