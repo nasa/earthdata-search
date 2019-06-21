@@ -11,6 +11,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
+import Granules from './routes/Granules/Granules'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -45,8 +46,26 @@ class App extends Component {
                 <title>Earthdata Search</title>
               </Helmet>
               <Switch>
-                <Route exact path="/">
-                  <Redirect to="/search" />
+                <Route path="/granules" component={Granules} />
+                <Route path="/">
+                  <>
+                    <Switch>
+                      <Route exact path="/">
+                        <Redirect to="/search" />
+                      </Route>
+                      <Route path="/search" component={Search} />
+                      <Route
+                        path="/projects"
+                        render={() => (
+                          <AuthRequiredContainer>
+                            <Project />
+                          </AuthRequiredContainer>
+                        )}
+                      />
+                      <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
+                    </Switch>
+                    <ConnectedEdscMapContainer />
+                  </>
                 </Route>
                 <Route path="/search" component={Search} />
                 <Route
@@ -59,7 +78,6 @@ class App extends Component {
                 />
                 <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
               </Switch>
-              <ConnectedEdscMapContainer />
               <FooterContainer />
             </ConnectedUrlQueryContainer>
           </ConnectedAuthTokenContainer>

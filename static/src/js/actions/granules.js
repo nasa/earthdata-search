@@ -12,6 +12,7 @@ import {
   UPDATE_GRANULE_RESULTS,
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
+  UPDATE_GRANULE_DOWNLOAD_PARAMS,
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
@@ -141,3 +142,8 @@ export const getGranules = () => (dispatch, getState) => {
 
   return response
 }
+
+export const updateGranuleDownloadParams = state => ({
+  type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
+  payload: state
+})

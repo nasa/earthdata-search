@@ -17,6 +17,10 @@ const emptyDecodedResult = {
   },
   focusedCollection: undefined,
   focusedGranule: undefined,
+  granuleDownloadParams: {
+    collectionId: undefined,
+    retrievalId: undefined
+  },
   map: {},
   project: undefined,
   query: {

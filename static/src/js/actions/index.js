@@ -11,6 +11,7 @@ import {
   excludeGranule,
   getGranules,
   undoExcludeGranule,
+  updateGranuleDownloadParams,
   updateGranuleResults,
   updateGranuleMetadata
 } from './granules'
@@ -115,6 +116,7 @@ const actions = {
   updateAuthToken,
   updateCmrFacet,
   updateFeatureFacet,
+  updateGranuleDownloadParams,
   updateGranuleMetadata,
   updateGranuleResults
 }
