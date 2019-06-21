@@ -1,5 +1,4 @@
 import AWS from 'aws-sdk'
-import knex from 'knex'
 import { getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 
 const secretsmanager = new AWS.SecretsManager()
@@ -62,20 +61,4 @@ export const getDbConnectionConfig = async (connectionConfig) => {
     database: process.env.dbName,
     port: process.env.dbPort
   }
-}
-
-/**
- * Returns a Knex database connection object to the EDSC RDS database
- */
-export const getDbConnection = async (dbConnection) => {
-  if (dbConnection === null) {
-    const dbConnectionConfig = await getDbConnectionConfig(null)
-
-    return knex({
-      client: 'pg',
-      connection: dbConnectionConfig
-    })
-  }
-
-  return dbConnection
 }

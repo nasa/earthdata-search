@@ -1,4 +1,4 @@
-import { pageAllCmrResults } from './pageAllCmrResults'
+import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 
 /**
  * Retrieve CMR service records that have a type that edsc supports for subsetting

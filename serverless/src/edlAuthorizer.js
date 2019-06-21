@@ -3,7 +3,6 @@ import simpleOAuth2 from 'simple-oauth2'
 import { getEdlConfig } from './configUtil'
 import { getSecretEarthdataConfig } from '../../sharedUtils/config'
 
-
 /**
  * Generate AuthPolicy for the Authorizer, and attach the JWT
  * @param {String} username username of authenticated uset
@@ -15,6 +14,7 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
   const authResponse = {}
   authResponse.principalId = username
   authResponse.context = { jwtToken }
+
   if (effect && resource) {
     const policyDocument = {}
     policyDocument.Version = '2012-10-17'
@@ -27,6 +27,7 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
 
     authResponse.policyDocument = policyDocument
   }
+
   return authResponse
 }
 
@@ -42,10 +43,12 @@ async function edlAuthorizer(event) {
     throw new Error('Unauthorized')
   }
 
+  // event.authorizationToken comes in as `Bearer: asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = event.authorizationToken.split(' ')
   let jwtToken = tokenParts[1]
 
   try {
+    // Pull the secret used to encrypt our jwtTokens
     const { secret } = getSecretEarthdataConfig('prod')
 
     return jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
@@ -68,11 +71,15 @@ async function edlAuthorizer(event) {
         }
       }
 
-      const username = decoded.token.endpoint.split('/').pop()
+      const { token } = decoded
+      const { endpoint } = token
+      const username = endpoint.split('/').pop()
+
       return generatePolicy(username, jwtToken, 'Allow', event.methodArn)
     })
   } catch (err) {
     console.log('Authorizer error. Invalid token', err)
+
     throw new Error('Unauthorized')
   }
 }

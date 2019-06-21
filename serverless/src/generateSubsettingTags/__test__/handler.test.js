@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'
 
 import { relevantServices, relevantServiceCollections } from './mocks'
 import * as getSystemToken from '../../util/urs/getSystemToken'
-import * as pageAllCmrResults from '../pageAllCmrResults'
+import * as pageAllCmrResults from '../../util/cmr/pageAllCmrResults'
 import * as getRelevantServices from '../getRelevantServices'
 import generateSubsettingTags from '../handler'
 

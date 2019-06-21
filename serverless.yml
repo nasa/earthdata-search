@@ -129,7 +129,7 @@ functions:
   # API Gateway Endpoints
   #
   getColorMap:
-    handler: serverless/src/getColorMap.default
+    handler: serverless/src/getColorMap/handler.default
     events:
       - http:
           method: get
