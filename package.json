@@ -3,10 +3,6 @@
   "description": "Earthdata Search",
   "version": "1.0.0",
   "repository": "nasa/earthdata-search",
-  "author": {
-    "name": "Patrick Quinn",
-    "email": "patrick@element84.com"
-  },
   "maintainers": [
     {
       "name": "Ryan Abbott",
@@ -27,8 +23,8 @@
     "copy-secrets": "cp secret.config.json.example secret.config.json",
     "migrate": "node-pg-migrate",
     "start": "NODE_ENV=development webpack-dev-server --open --config static.webpack.config.dev.js",
-    "migrate": "node-pg-migrate",
     "test": "jest",
+    "silent-test": "jest --silent",
     "test:watch": "jest --watchAll"
   },
   "devDependencies": {
@@ -63,6 +59,7 @@
     "jest": "^24.1.0",
     "jquery": "^3.4.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "mock-knex": "^0.4.5",
     "mockdate": "^2.0.2",
     "moxios": "^0.4.0",
     "node-sass": "^4.12.0",
@@ -105,7 +102,7 @@
     "font-awesome-loader": "^1.0.2",
     "history": "^4.7.2",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.16.5",
+    "knex": "^0.17.6",
     "leaflet": "^1.4.0",
     "leaflet-draw": "^1.0.4",
     "lodash": "^4.17.11",

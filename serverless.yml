@@ -25,12 +25,13 @@ provider:
       Ref: TagProcessingQueue
     configSecretId:
       Ref: DbPasswordSecret
+    storeUserLambda: ${self:custom.siteName}-storeUserData
   vpc:
-      securityGroupIds:
-        - Ref: LambdaSecurityGroup
-      subnetIds:
-        - ${self:custom.awsResources.subnet.a}
-        - ${self:custom.awsResources.subnet.b}
+    securityGroupIds:
+      - Ref: LambdaSecurityGroup
+    subnetIds:
+      - ${self:custom.awsResources.subnet.a}
+      - ${self:custom.awsResources.subnet.b}
   role: ScheduledLambdaRole
 
 plugins:
@@ -50,6 +51,10 @@ functions:
     timeout: 300
     webpack:
       includeMigrations: true
+
+  storeUserData:
+    timeout: 300
+    handler: serverless/src/storeUserData/handler.default
 
   #
   # SQS Lambdas
@@ -174,6 +179,15 @@ functions:
             origin: '*'
           path: login
 
+  edlCallback:
+    handler: serverless/src/edlCallback.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: urs_callback
+
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer.default
     cors:
@@ -231,14 +245,15 @@ functions:
           path: granules/timeline
           authorizer: edlAuthorizer
 
-  edlCallback:
-    handler: serverless/src/edlCallback.default
+  submitOrder:
+    handler: serverless/src/submitOrder/handler.default
     events:
       - http:
-          method: get
+          method: post
           cors:
             origin: '*'
-          path: urs_callback
+          path: orders
+          authorizer: edlAuthorizer
 
 #
 # Additional AWS Resources
@@ -436,6 +451,10 @@ resources:
                 - Effect: Allow
                   Action:
                     - secretsmanager:GetSecretValue
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - lambda:InvokeFunction
                   Resource: "*"
 
     GatewayResponseDefault4XX:
