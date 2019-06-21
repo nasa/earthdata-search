@@ -6,7 +6,8 @@ import {
   updateGranuleResults,
   getGranules,
   excludeGranule,
-  undoExcludeGranule
+  undoExcludeGranule,
+  updateGranuleDownloadParams
 } from '../granules'
 import {
   UPDATE_GRANULE_RESULTS,
@@ -16,7 +17,8 @@ import {
   LOADED_GRANULES,
   UPDATE_AUTH,
   EXCLUDE_GRANULE_ID,
-  UNDO_EXCLUDE_GRANULE_ID
+  UNDO_EXCLUDE_GRANULE_ID,
+  UPDATE_GRANULE_DOWNLOAD_PARAMS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -291,6 +293,23 @@ describe('undoExcludeGranule', () => {
     }
     const store = mockStore()
     store.dispatch(undoExcludeGranule(payload))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual(expectedAction)
+  })
+})
+
+describe('updateGranuleDownloadParams', () => {
+  test('should create an action to update the granule download parameters', () => {
+    const payload = {
+      retrievalId: 'retrievalId',
+      collectionId: 'collectionId'
+    }
+    const expectedAction = {
+      type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
+      payload
+    }
+    const store = mockStore()
+    store.dispatch(updateGranuleDownloadParams(payload))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual(expectedAction)
   })

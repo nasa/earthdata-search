@@ -46,7 +46,9 @@ const urlDefs = {
   instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
-  processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets }
+  processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
+  granuleDownloadRetrievalId: { shortKey: 'rid', encode: encodeString, decode: decodeString },
+  granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString }
 }
 
 /**
@@ -110,9 +112,14 @@ export const decodeUrlParams = (paramString) => {
     science_keywords_h: scienceKeywords
   }
 
+  const granuleDownloadParams = {}
+  granuleDownloadParams.retrievalId = decodeHelp(params, 'granuleDownloadRetrievalId')
+  granuleDownloadParams.collectionId = decodeHelp(params, 'granuleDownloadCollectionId')
+
   return {
     collections,
     cmrFacets,
+    granuleDownloadParams,
     featureFacets,
     focusedCollection,
     focusedGranule,

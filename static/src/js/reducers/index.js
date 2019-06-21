@@ -13,6 +13,7 @@ import {
 } from './facetsParams'
 import focusedCollectionReducer from './focusedCollection'
 import granuleResultsReducer from './granuleResults'
+import granuleDownloadParamsReducer from './granuleDownloadParams'
 import mapReducer from './map'
 import queryReducer from './query'
 import timelineReducer from './timeline'
@@ -31,6 +32,7 @@ export default history => combineReducers({
   }),
   focusedCollection: focusedCollectionReducer,
   focusedGranule: focusedGranuleReducer,
+  granuleDownloadParams: granuleDownloadParamsReducer,
   map: mapReducer,
   metadata: combineReducers({
     collections: collectionMetadataReducer,
