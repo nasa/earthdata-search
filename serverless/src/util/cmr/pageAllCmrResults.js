@@ -1,8 +1,8 @@
 import 'array-foreach-async'
 import request from 'request-promise'
 import { cmrUrl } from './cmrUrl'
-import { readCmrResults } from '../util/cmr/readCmrResults'
-import { getSystemToken } from '../util/urs/getSystemToken'
+import { readCmrResults } from './readCmrResults'
+import { getSystemToken } from '../urs/getSystemToken'
 
 let cmrToken = null
 

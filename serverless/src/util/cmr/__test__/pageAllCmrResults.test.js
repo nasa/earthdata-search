@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { pageAllCmrResults } from '../pageAllCmrResults'
-import * as getSystemToken from '../../util/urs/getSystemToken'
+import * as getSystemToken from '../../urs/getSystemToken'
 
 beforeEach(() => {
   jest.clearAllMocks()

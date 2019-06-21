@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import { chunkArray } from '../util'
 import { getRelevantServices } from './getRelevantServices'
-import { pageAllCmrResults } from './pageAllCmrResults'
+import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 
 let sqs
 

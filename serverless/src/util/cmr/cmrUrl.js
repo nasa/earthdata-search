@@ -1,5 +1,5 @@
 import { stringify } from 'qs'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
 
 /**
  * Construct a CMR url provided a path and query params

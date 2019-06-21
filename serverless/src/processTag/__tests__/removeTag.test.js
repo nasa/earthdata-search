@@ -13,7 +13,7 @@ describe('removeTag', () => {
 
     const cmrDeleteMock = jest.spyOn(request, 'delete').mockImplementation(() => jest.fn())
 
-    await removeTag.removeTag(
+    const removeTagResponse = await removeTag.removeTag(
       'edsc.extra.gibs',
       { short_name: 'MIL3MLS' },
       '1234-abcd-5678-efgh'
@@ -29,5 +29,38 @@ describe('removeTag', () => {
       json: true,
       resolveWithFullResponse: true
     })
+
+    expect(removeTagResponse).toBe(true)
+  })
+
+  test('reports an error when calls to cmr fail', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+
+    const cmrDeleteMock = jest.spyOn(request, 'delete').mockImplementation(() => {
+      throw new Error()
+    })
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+
+    const removeTagResponse = await removeTag.removeTag(
+      'edsc.extra.gibs',
+      { short_name: 'MIL3MLS' },
+      '1234-abcd-5678-efgh'
+    )
+
+    expect(cmrDeleteMock).toBeCalledTimes(1)
+    expect(cmrDeleteMock).toBeCalledWith({
+      uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
+      headers: {
+        'Echo-Token': '1234-abcd-5678-efgh'
+      },
+      body: { short_name: 'MIL3MLS' },
+      json: true,
+      resolveWithFullResponse: true
+    })
+
+    expect(consoleMock).toBeCalledTimes(1)
+    expect(removeTagResponse).toBe(false)
   })
 })

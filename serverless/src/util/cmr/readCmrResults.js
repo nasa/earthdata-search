@@ -4,7 +4,7 @@
  * @param {Object} cmrResponse The response object from CMR
  * @return {Array} The results from a successful response object
  */
-export const readCmrResults = (path, cmrResponse) => {
+export const readCmrResults = (providedPath, cmrResponse) => {
   // Return an empty result for non successful requests
   if (cmrResponse.statusCode !== 200) {
     console.log(cmrResponse.body)
@@ -12,10 +12,16 @@ export const readCmrResults = (path, cmrResponse) => {
     return []
   }
 
+  const [path, extension] = providedPath.split('.')
+
   const { body } = cmrResponse
 
-  // The collection search endpoint has a different response than all of the others
-  if (path.includes('collections')) {
+  // The collection and granule search endpoint has a different response
+  // than other concepts as does umm_json
+  if (
+    (extension && !extension.includes('umm_json'))
+    || path.includes('collections')
+    || path.includes('granules')) {
     const { feed } = body
     const { entry } = feed
 
