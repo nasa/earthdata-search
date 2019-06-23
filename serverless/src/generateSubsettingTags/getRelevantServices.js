@@ -1,3 +1,4 @@
+import 'array-foreach-async'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 
 /**
@@ -12,7 +13,7 @@ export const getRelevantServices = async () => {
 
   const serviceObjects = {}
 
-  await allCmrServices.forEach((service) => {
+  await allCmrServices.forEachAsync(async (service) => {
     const { meta, umm } = service
     const { 'concept-id': conceptId } = meta
     const { Type: serviceType, RelatedURLs: relatedUrls = [] } = umm

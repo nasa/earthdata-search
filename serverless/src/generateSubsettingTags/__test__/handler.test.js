@@ -78,20 +78,14 @@ describe('generateSubsettingTags', () => {
         action: 'ADD',
         append: false,
         requireGranules: false,
-        searchCriteria: {
-          condition: {
-            or: [
-              {
-                concept_id: 'C00000001-EDSC'
-              }
-            ]
+        tagData: [{
+          'concept-id': 'C00000001-EDSC',
+          data: {
+            id: 'S00000001-EDSC',
+            type: 'ESI',
+            url: 'http://mapserver.eol.ucar.edu/acadis/'
           }
-        },
-        tagData: {
-          id: 'S00000001-EDSC',
-          type: 'ESI',
-          url: 'http://mapserver.eol.ucar.edu/acadis/'
-        }
+        }]
       }),
       QueueUrl: 'http://example.com/queue'
     }])
@@ -101,21 +95,19 @@ describe('generateSubsettingTags', () => {
         action: 'ADD',
         append: false,
         requireGranules: false,
-        searchCriteria: {
-          condition: {
-            or: [
-              {
-                concept_id: 'C00000002-EDSC'
-              }, {
-                concept_id: 'C00000003-EDSC'
-              }
-            ]
+        tagData: [{
+          'concept-id': 'C00000002-EDSC',
+          data: {
+            id: 'S00000002-EDSC',
+            type: 'ESI'
           }
-        },
-        tagData: {
-          id: 'S00000002-EDSC',
-          type: 'ESI'
-        }
+        }, {
+          'concept-id': 'C00000003-EDSC',
+          data: {
+            id: 'S00000002-EDSC',
+            type: 'ESI'
+          }
+        }]
       }),
       QueueUrl: 'http://example.com/queue'
     }])
@@ -125,20 +117,14 @@ describe('generateSubsettingTags', () => {
         action: 'ADD',
         append: false,
         requireGranules: false,
-        searchCriteria: {
-          condition: {
-            or: [
-              {
-                concept_id: 'C00000009-EDSC'
-              }
-            ]
+        tagData: [{
+          'concept-id': 'C00000009-EDSC',
+          data: {
+            id: 'S00000003-EDSC',
+            type: 'ECHO ORDERS',
+            url: 'http://mapserver.eol.ucar.edu/acadis/'
           }
-        },
-        tagData: {
-          id: 'S00000003-EDSC',
-          type: 'ECHO ORDERS',
-          url: 'http://mapserver.eol.ucar.edu/acadis/'
-        }
+        }]
       }),
       QueueUrl: 'http://example.com/queue'
     }])
@@ -148,19 +134,13 @@ describe('generateSubsettingTags', () => {
         action: 'ADD',
         append: false,
         requireGranules: false,
-        searchCriteria: {
-          condition: {
-            or: [
-              {
-                concept_id: 'C00000005-EDSC'
-              }
-            ]
+        tagData: [{
+          'concept-id': 'C00000005-EDSC',
+          data: {
+            id: 'S00000005-EDSC',
+            type: 'OPeNDAP'
           }
-        },
-        tagData: {
-          id: 'S00000005-EDSC',
-          type: 'OPeNDAP'
-        }
+        }]
       }),
       QueueUrl: 'http://example.com/queue'
     }])
