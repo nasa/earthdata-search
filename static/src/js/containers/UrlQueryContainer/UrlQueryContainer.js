@@ -128,7 +128,7 @@ export class UrlQueryContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const { search: nextSearch } = nextProps
     const { onChangeUrl, search } = this.props
-    // console.log(this.props)
+
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
     // if the previous search and next search are the same
