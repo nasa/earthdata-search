@@ -8,6 +8,8 @@ import { timelineIntervals } from '../../util/timeline'
 import getObjectKeyByValue from '../../util/object'
 import { getColorByIndex } from '../../util/colors'
 
+import './Timeline.scss'
+
 const earliestStart = '1960-01-01'
 
 class Timeline extends Component {
@@ -349,18 +351,29 @@ class Timeline extends Component {
       onToggleOverrideTemporalModal
     } = this.props
 
-    const newQuery = {
+    const timelineQuery = {
       end: !end ? undefined : end / 1000,
       start: !start ? undefined : start / 1000
+    }
+    const newQuery = {
+      overrideTemporal: {
+        endDate: !end ? undefined : new Date(end).toISOString(),
+        startDate: !start ? undefined : new Date(start).toISOString()
+      }
     }
 
     if (start && end) {
       const center = this.findTimelineCenter()
-      newQuery.center = center
+      timelineQuery.center = center
 
       // if temporalSearch exists and we are on the project page, show the modal
-      if (Object.keys(temporalSearch).length > 0 && showOverrideModal) {
-        onToggleOverrideTemporalModal(true)
+      if (showOverrideModal) {
+        if (Object.keys(temporalSearch).length > 0) {
+          onToggleOverrideTemporalModal(true)
+        } else {
+          // If we shouldn't show the modal, just update the query
+          onChangeQuery(newQuery)
+        }
       }
     }
 
@@ -373,15 +386,10 @@ class Timeline extends Component {
       if (!start && !end && !oldStart && !oldEnd) shouldUpdateQuery = false
 
       if (shouldUpdateQuery) {
-        onChangeQuery({
-          overrideTemporal: {
-            endDate: !end ? undefined : new Date(end).toISOString(),
-            startDate: !start ? undefined : new Date(start).toISOString()
-          }
-        })
+        onChangeQuery(newQuery)
       }
     }
-    onChangeTimelineQuery(newQuery)
+    onChangeTimelineQuery(timelineQuery)
   }
 
   render() {
