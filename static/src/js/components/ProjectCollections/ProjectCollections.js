@@ -20,6 +20,7 @@ const ProjectCollections = (props) => {
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
+    project,
     projectPanels
   } = props
 
@@ -30,6 +31,7 @@ const ProjectCollections = (props) => {
       <ProjectHeader
         collections={collections}
         loading={collectionsLoading}
+        project={project}
       />
       <ProjectCollectionsList
         collections={collections}
@@ -37,6 +39,7 @@ const ProjectCollections = (props) => {
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onToggleCollectionVisibility={onToggleCollectionVisibility}
         onSetActivePanel={onSetActivePanel}
+        project={project}
         projectPanels={projectPanels}
       />
       <div className="project-collections__footer">
@@ -63,6 +66,7 @@ ProjectCollections.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired
 }
 

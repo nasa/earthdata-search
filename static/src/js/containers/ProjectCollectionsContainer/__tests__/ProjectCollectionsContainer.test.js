@@ -14,8 +14,7 @@ function setup() {
         collectionId: {
           mock: 'data'
         }
-      },
-      projectIds: ['collectionId']
+      }
     },
     collectionsSearch: {
       allIds: ['collectionId'],
@@ -30,6 +29,9 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
+    project: {
+      collectionIds: ['collectionId']
+    },
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -55,8 +57,10 @@ describe('ProjectCollectionsContainer component', () => {
         collectionId: {
           mock: 'data'
         }
-      },
-      projectIds: ['collectionId']
+      }
+    })
+    expect(enzymeWrapper.find(ProjectCollections).props().project).toEqual({
+      collectionIds: ['collectionId']
     })
     expect(enzymeWrapper.find(ProjectCollections).props().collectionsSearch).toEqual({
       allIds: ['collectionId'],

@@ -16,11 +16,13 @@ function setup() {
           excludedGranuleIds: [],
           metadata: {}
         }
-      },
-      projectIds: ['focusedCollection']
+      }
     },
     focusedCollection: 'focusedCollection',
     granules: { hits: 100 },
+    project: {
+      collectionIds: ['focusedCollection']
+    },
     onAddProjectCollection: jest.fn(),
     onRemoveCollectionFromProject: jest.fn()
   }

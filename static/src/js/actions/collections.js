@@ -1,6 +1,6 @@
 import CollectionRequest from '../util/request/collectionRequest'
 import {
-  buildSearchParams,
+  buildCollectionSearchParams,
   prepareCollectionParams
 } from '../util/collections'
 import { updateAuthTokenFromHeaders } from './authToken'
@@ -111,7 +111,7 @@ export const getCollections = () => (dispatch, getState) => {
 
   const requestObject = new CollectionRequest(authToken)
 
-  const response = requestObject.search(buildSearchParams(collectionParams))
+  const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {
       const payload = {}
       const { 'cmr-hits': cmrHits } = response.headers

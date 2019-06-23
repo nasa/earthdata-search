@@ -93,6 +93,57 @@ describe('changeQuery', () => {
   })
 })
 
+describe('changeProjectQuery', () => {
+  test('should update the search query and call getCollections', () => {
+    const newQuery = {
+      keyword: 'new keyword',
+      spatial: {
+        point: '0,0'
+      },
+      temporal: {}
+    }
+
+    // mock getCollections
+    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+    getProjectCollectionsMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      focusedCollection: '',
+      query: {
+        collection: {
+          keyword: 'old stuff'
+        }
+      },
+      metadata: {},
+      router: {
+        location: {
+          pathname: ''
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeProjectQuery({ ...newQuery }))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        keyword: 'new keyword',
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
+    })
+
+    // was getCollections called
+    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+  })
+})
+
 describe('changeCollectionPageNum', () => {
   test('should update the collection query and call getCollections', () => {
     const pageNum = 2

@@ -18,14 +18,16 @@ function setup() {
         collectionId2: {
           mock: 'data 2'
         }
-      },
-      projectIds: ['collectionId1', 'collectionId2']
+      }
     },
     loading: false,
     location: {},
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
+    project: {
+      collectionIds: ['collectionId1', 'collectionId2']
+    },
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: true

@@ -5,16 +5,13 @@ import {
   RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
-  ADD_COLLECTION_TO_PROJECT,
-  REMOVE_COLLECTION_FROM_PROJECT,
   UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY
 } from '../constants/actionTypes'
 
 const initialState = {
   allIds: [],
-  byId: {},
-  projectIds: []
+  byId: {}
 }
 
 const processResults = (results) => {
@@ -31,17 +28,6 @@ const processResults = (results) => {
 
 const collectionMetadataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_COLLECTION_TO_PROJECT: {
-      if (state.projectIds.indexOf(action.payload) !== -1) return state
-
-      return {
-        ...state,
-        projectIds: [
-          ...state.projectIds,
-          action.payload
-        ]
-      }
-    }
     case CLEAR_COLLECTION_GRANULES: {
       const byId = {}
 
@@ -58,18 +44,6 @@ const collectionMetadataReducer = (state = initialState, action) => {
       return {
         ...state,
         byId
-      }
-    }
-    case REMOVE_COLLECTION_FROM_PROJECT: {
-      const { projectIds } = state
-      const index = projectIds.indexOf(action.payload)
-
-      return {
-        ...state,
-        projectIds: [
-          ...state.projectIds.slice(0, index),
-          ...state.projectIds.slice(index + 1)
-        ]
       }
     }
     case UPDATE_COLLECTION_METADATA: {

@@ -95,7 +95,11 @@ export const decodeUrlParams = (paramString) => {
   const projects = decodeHelp(params, 'projectFacets')
   const processingLevels = decodeHelp(params, 'processingLevelFacets')
 
-  const { collections, focusedCollection } = decodeCollections(params)
+  const {
+    collections,
+    focusedCollection,
+    project
+  } = decodeCollections(params)
 
   const cmrFacets = {
     data_center_h: organizations,
@@ -113,6 +117,7 @@ export const decodeUrlParams = (paramString) => {
     focusedCollection,
     focusedGranule,
     map,
+    project,
     query,
     timeline
   }
@@ -134,7 +139,7 @@ export const encodeUrlQuery = (props) => {
   })
 
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
-  const collectionsQuery = encodeCollections(props.collections, props.focusedCollection)
+  const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timeline, props.pathname)
 
   const encodedQuery = {

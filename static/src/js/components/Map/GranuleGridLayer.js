@@ -720,7 +720,8 @@ class GranuleGridLayer extends MapLayer {
       collections,
       focusedCollection,
       isProjectPage,
-      granules
+      granules,
+      project
     } = props
 
     const layers = []
@@ -728,7 +729,7 @@ class GranuleGridLayer extends MapLayer {
 
     if (isProjectPage) {
       // If we are on the project page, return data for each project collection
-      const { projectIds } = collections
+      const { collectionIds: projectIds } = project
       projectIds.forEach((collectionId, index) => {
         const {
           granules: collectionGranules,

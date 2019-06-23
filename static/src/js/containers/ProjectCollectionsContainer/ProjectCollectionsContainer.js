@@ -18,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionsSearch: state.searchResults.collections,
+  project: state.project,
   projectPanels: state.projectPanels
 })
 
@@ -28,6 +29,7 @@ export const ProjectCollectionsContainer = (props) => {
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
+    project,
     projectPanels
   } = props
 
@@ -38,6 +40,7 @@ export const ProjectCollectionsContainer = (props) => {
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
       onSetActivePanel={onSetActivePanel}
+      project={project}
       projectPanels={projectPanels}
     />
   )
@@ -49,6 +52,7 @@ ProjectCollectionsContainer.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired
 }
 

@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   pathname: state.router.location.pathname,
+  project: state.project,
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })
@@ -27,6 +28,7 @@ export const TimelineContainer = (props) => {
     collections,
     focusedCollection,
     pathname,
+    project,
     temporalSearch,
     timeline,
     onChangeQuery,
@@ -41,7 +43,8 @@ export const TimelineContainer = (props) => {
   const isGranulesPage = pathname.startsWith('/search/granules')
   const collectionMetadata = {}
   if (isProjectPage) {
-    const { byId, projectIds } = collections
+    const { byId } = collections
+    const { collectionIds: projectIds } = project
     projectIds.forEach((collectionId, index) => {
       if (index > 2) return // only take the first 3 collections
       collectionMetadata[collectionId] = byId[collectionId]
@@ -76,6 +79,7 @@ TimelineContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
+  project: PropTypes.shape({}).isRequired,
   temporalSearch: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,

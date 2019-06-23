@@ -10,7 +10,8 @@ export const Radio = ({
   value,
   children,
   checked,
-  onChange
+  onChange,
+  onClick
 }) => {
   const labelClassName = classNames([
     'radio',
@@ -31,6 +32,7 @@ export const Radio = ({
         value={value}
         checked={checked ? 'checked' : ''}
         onChange={onChange}
+        onClick={onClick}
       />
       <span className="radio__content">{children}</span>
     </label>
@@ -39,7 +41,8 @@ export const Radio = ({
 
 Radio.defaultProps = {
   checked: null,
-  onChange: null
+  onChange: null,
+  onClick: null
 }
 
 Radio.propTypes = {
@@ -48,7 +51,8 @@ Radio.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onClick: PropTypes.func
 }
 
 export default Radio

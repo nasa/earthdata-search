@@ -19,10 +19,12 @@ describe('url#decodeUrlParams', () => {
               formattedMetadata: {},
               ummMetadata: {}
             }
-          },
-          projectIds: []
+          }
         },
-        focusedCollection: 'collectionId'
+        focusedCollection: 'collectionId',
+        project: {
+          collectionIds: []
+        }
       }
       expect(decodeUrlParams('?p=collectionId&pg[0][x]=12345!56789!MOCK')).toEqual(expectedResult)
     })
@@ -42,10 +44,12 @@ describe('url#decodeUrlParams', () => {
               formattedMetadata: {},
               ummMetadata: {}
             }
-          },
-          projectIds: []
+          }
         },
-        focusedCollection: 'collectionId'
+        focusedCollection: 'collectionId',
+        project: {
+          collectionIds: []
+        }
       }
       expect(decodeUrlParams('?p=collectionId&pg[0][cx]=12345!56789')).toEqual(expectedResult)
     })
@@ -67,10 +71,12 @@ describe('url#decodeUrlParams', () => {
               formattedMetadata: {},
               ummMetadata: {}
             }
-          },
-          projectIds: ['collectionId']
+          }
         },
-        focusedCollection: ''
+        focusedCollection: '',
+        project: {
+          collectionIds: ['collectionId']
+        }
       }
       expect(decodeUrlParams('?p=!collectionId&pg[1][x]=12345!56789!MOCK')).toEqual(expectedResult)
     })
@@ -92,10 +98,12 @@ describe('url#decodeUrlParams', () => {
               formattedMetadata: {},
               ummMetadata: {}
             }
-          },
-          projectIds: ['collectionId']
+          }
         },
-        focusedCollection: 'collectionId'
+        focusedCollection: 'collectionId',
+        project: {
+          collectionIds: ['collectionId']
+        }
       }
       expect(decodeUrlParams('?p=collectionId!collectionId&pg[1][x]=12345!56789!MOCK')).toEqual(expectedResult)
     })
@@ -108,10 +116,12 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       collections: {
         allIds: [],
-        byId: {},
-        projectIds: []
+        byId: {}
       },
-      focusedCollection: 'collectionId'
+      focusedCollection: 'collectionId',
+      project: {
+        collectionIds: []
+      }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
   })
@@ -121,10 +131,12 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       collections: {
         allIds: [],
-        byId: {},
-        projectIds: []
+        byId: {}
       },
-      focusedCollection: ''
+      focusedCollection: '',
+      project: {
+        collectionIds: []
+      }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here')
   })
@@ -143,10 +155,12 @@ describe('url#encodeUrlQuery', () => {
                 isCwic: false,
                 metadata: { mock: 'data' }
               }
-            },
-            projectIds: []
+            }
           },
-          focusedCollection: 'collectionId'
+          focusedCollection: 'collectionId',
+          project: {
+            collectionIds: []
+          }
         }
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
       })
@@ -163,10 +177,12 @@ describe('url#encodeUrlQuery', () => {
                 isCwic: false,
                 metadata: { mock: 'data' }
               }
-            },
-            projectIds: []
+            }
           },
-          focusedCollection: 'collectionId'
+          focusedCollection: 'collectionId',
+          project: {
+            collectionIds: []
+          }
         }
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId&pg[0][x]=12345!56789!MOCK')
       })
@@ -185,10 +201,12 @@ describe('url#encodeUrlQuery', () => {
                 isCwic: true,
                 metadata: { mock: 'data' }
               }
-            },
-            projectIds: []
+            }
           },
-          focusedCollection: 'collectionId'
+          focusedCollection: 'collectionId',
+          project: {
+            collectionIds: []
+          }
         }
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
       })
@@ -205,10 +223,12 @@ describe('url#encodeUrlQuery', () => {
                 isCwic: true,
                 metadata: { mock: 'data' }
               }
-            },
-            projectIds: []
+            }
           },
-          focusedCollection: 'collectionId'
+          focusedCollection: 'collectionId',
+          project: {
+            collectionIds: []
+          }
         }
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId&pg[0][cx]=12345!56789')
       })
@@ -228,10 +248,12 @@ describe('url#encodeUrlQuery', () => {
               isCwic: false,
               metadata: { mock: 'data' }
             }
-          },
-          projectIds: ['collectionId']
+          }
         },
-        focusedCollection: ''
+        focusedCollection: '',
+        project: {
+          collectionIds: ['collectionId']
+        }
       }
       expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId&pg[1][x]=12345!56789!MOCK')
     })
@@ -250,10 +272,12 @@ describe('url#encodeUrlQuery', () => {
               isCwic: false,
               metadata: { mock: 'data' }
             }
-          },
-          projectIds: ['collectionId']
+          }
         },
-        focusedCollection: 'collectionId'
+        focusedCollection: 'collectionId',
+        project: {
+          collectionIds: ['collectionId']
+        }
       }
       expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId!collectionId&pg[1][x]=12345!56789!MOCK')
     })

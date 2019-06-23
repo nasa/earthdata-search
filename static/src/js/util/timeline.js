@@ -18,13 +18,11 @@ export const prepareTimelineParams = (state) => {
   const {
     authToken,
     focusedCollection,
-    metadata,
+    project,
     query,
     router,
     timeline
   } = state
-
-  const { collections } = metadata
 
   const { location } = router
   const { pathname } = location
@@ -33,7 +31,7 @@ export const prepareTimelineParams = (state) => {
   let conceptIds = []
   // If we are on the project page, we want to query the projectIds
   if (isProjectPage) {
-    const { projectIds } = collections
+    const { collectionIds: projectIds } = project
     conceptIds = projectIds
   } else if (focusedCollection !== '') {
     // if we aren't on the project page, we want to query the focusedCollection

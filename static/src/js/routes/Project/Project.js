@@ -15,14 +15,21 @@ import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 
 import actions from '../../actions'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
-    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight))
+    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
+  onSubmitOrder:
+    () => dispatch(actions.submitOrder())
 })
 
 export class Project extends Component {
+  constructor(props) {
+    super(props)
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   componentDidMount() {
     const { onMasterOverlayHeightChange } = this.props
 
@@ -31,12 +38,18 @@ export class Project extends Component {
     onMasterOverlayHeightChange(0)
   }
 
+  handleSubmit(event) {
+    event.preventDefault()
+
+    const { onSubmitOrder } = this.props
+    onSubmitOrder()
+  }
+
   render() {
-    const endpoint = `${getEarthdataConfig('prod').apiHost}/orders`
     return (
       <form
         id="form__project"
-        action={endpoint}
+        onSubmit={this.handleSubmit}
         method="post"
         className="route-wrapper route-wrapper--project"
       >
@@ -58,8 +71,8 @@ export class Project extends Component {
 
 Project.propTypes = {
   location: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
-  onMasterOverlayHeightChange: PropTypes.func.isRequired
+  onMasterOverlayHeightChange: PropTypes.func.isRequired,
+  onSubmitOrder: PropTypes.func.isRequired
 }
 
 export default withRouter(

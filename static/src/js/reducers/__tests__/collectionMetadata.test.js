@@ -1,10 +1,8 @@
 import collectionMetadataReducer from '../collectionMetadata'
 import {
   COPY_GRANULE_RESULTS_TO_COLLECTION,
-  ADD_COLLECTION_TO_PROJECT,
   CLEAR_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
-  REMOVE_COLLECTION_FROM_PROJECT,
   RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
@@ -14,8 +12,7 @@ import {
 
 const initialState = {
   allIds: [],
-  byId: {},
-  projectIds: []
+  byId: {}
 }
 
 describe('INITIAL_STATE', () => {
@@ -23,50 +20,6 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(initialState)
-  })
-})
-
-describe('ADD_COLLECTION_TO_PROJECT', () => {
-  test('returns the correct state', () => {
-    const collectionId = 'collectionId'
-
-    const action = {
-      type: ADD_COLLECTION_TO_PROJECT,
-      payload: collectionId
-    }
-
-    const initial = {
-      ...initialState,
-      projectIds: ['existingCollectionId']
-    }
-
-    const expectedState = {
-      ...initial,
-      projectIds: ['existingCollectionId', collectionId]
-    }
-
-    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
-  })
-
-  test('returns the correct state if collection is already a project collection', () => {
-    const collectionId = 'collectionId'
-
-    const action = {
-      type: ADD_COLLECTION_TO_PROJECT,
-      payload: collectionId
-    }
-
-    const initial = {
-      ...initialState,
-      projectIds: [collectionId]
-    }
-
-    const expectedState = {
-      ...initial,
-      projectIds: [collectionId]
-    }
-
-    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
   })
 })
 
@@ -113,8 +66,7 @@ describe('CLEAR_COLLECTION_GRANULES', () => {
             mock: 'collection2'
           }
         }
-      },
-      projectIds: []
+      }
     }
 
     const expectedState = {
@@ -136,29 +88,6 @@ describe('CLEAR_COLLECTION_GRANULES', () => {
           }
         }
       }
-    }
-
-    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
-  })
-})
-
-describe('REMOVE_COLLECTION_FROM_PROJECT', () => {
-  test('returns the correct state', () => {
-    const collectionId = 'collectionId'
-
-    const action = {
-      type: REMOVE_COLLECTION_FROM_PROJECT,
-      payload: collectionId
-    }
-
-    const initial = {
-      ...initialState,
-      projectIds: ['existingCollectionId', collectionId, 'anotherExistingCollectionId']
-    }
-
-    const expectedState = {
-      ...initial,
-      projectIds: ['existingCollectionId', 'anotherExistingCollectionId']
     }
 
     expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
@@ -254,8 +183,7 @@ describe('RESTORE_COLLECTIONS', () => {
           granules: {},
           metadata: {}
         }
-      },
-      projectIds: []
+      }
     }
     const action = {
       type: RESTORE_COLLECTIONS,

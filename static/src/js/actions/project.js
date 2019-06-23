@@ -2,17 +2,21 @@ import actions from './index'
 import {
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
-  UPDATE_PROJECT_GRANULES,
-  TOGGLE_COLLECTION_VISIBILITY
+  RESTORE_PROJECT,
+  SELECT_ACCESS_METHOD,
+  TOGGLE_COLLECTION_VISIBILITY,
+  UPDATE_ACCESS_METHOD,
+  UPDATE_PROJECT_GRANULES
 } from '../constants/actionTypes'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { updateCollectionMetadata } from './collections'
-import { prepareGranuleParams, populateGranuleResults } from '../util/granules'
+import { prepareGranuleParams, populateGranuleResults, buildGranuleSearchParams } from '../util/granules'
 import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
-import { prepareCollectionParams, buildSearchParams } from '../util/collections'
+import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
+import emptyAccessMethod from '../util/emptyAccessMethod'
 
 export const addCollectionToProject = payload => ({
   type: ADD_COLLECTION_TO_PROJECT,
@@ -34,10 +38,42 @@ export const toggleCollectionVisibility = payload => ({
   payload
 })
 
+export const restoreProject = payload => ({
+  type: RESTORE_PROJECT,
+  payload
+})
+
+export const updateAccessMethod = payload => ({
+  type: UPDATE_ACCESS_METHOD,
+  payload
+})
+
+export const selectAccessMethod = payload => (dispatch, getState) => {
+  // Set the selected access method
+  dispatch({
+    type: SELECT_ACCESS_METHOD,
+    payload
+  })
+
+  const { collectionId, selectedAccessMethod } = payload
+  const { project } = getState()
+  const { byId } = project
+  const collection = byId[collectionId] || {}
+  const { accessMethods = {} } = collection
+  const method = accessMethods[selectedAccessMethod]
+
+  // update the access method unless a value already exists
+  if (!method) {
+    dispatch(updateAccessMethod({
+      collectionId,
+      method: emptyAccessMethod(selectedAccessMethod)
+    }))
+  }
+}
+
 export const getProjectGranules = () => (dispatch, getState) => {
-  const { metadata } = getState()
-  const { collections } = metadata
-  const { projectIds } = collections
+  const { project } = getState()
+  const { collectionIds: projectIds } = project
 
   return Promise.all(projectIds.map((collectionId) => {
     const granuleParams = prepareGranuleParams(getState(), collectionId)
@@ -48,12 +84,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     const {
       authToken,
-      boundingBox,
-      isCwicCollection,
-      pageNum,
-      point,
-      polygon,
-      temporalString
+      isCwicCollection
     } = granuleParams
 
     let requestObject = null
@@ -63,16 +94,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
       requestObject = new GranuleRequest(authToken)
     }
 
-    const searchResponse = requestObject.search({
-      boundingBox,
-      echoCollectionId: collectionId,
-      pageNum,
-      pageSize: 20,
-      point,
-      polygon,
-      sortKey: '-start_date',
-      temporal: temporalString
-    })
+    const searchResponse = requestObject.search(buildGranuleSearchParams(granuleParams))
       .then((response) => {
         const payload = populateGranuleResults(collectionId, isCwicCollection, response)
         let size = 0
@@ -105,9 +127,8 @@ export const getProjectGranules = () => (dispatch, getState) => {
 export const getProjectCollections = () => (dispatch, getState) => {
   const collectionParams = prepareCollectionParams(getState())
 
-  const { metadata } = getState()
-  const { collections } = metadata
-  const { projectIds } = collections
+  const { project } = getState()
+  const { collectionIds: projectIds } = project
 
   if (projectIds.length === 0) {
     return null
@@ -115,7 +136,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
   const { authToken } = getState()
 
-  const searchParams = buildSearchParams(collectionParams)
+  const searchParams = buildCollectionSearchParams(collectionParams)
   const response = getCollectionMetadata({
     ...searchParams,
     conceptId: projectIds,

@@ -19,8 +19,7 @@ function setup() {
         collectionId2: {
           mock: 'data 2'
         }
-      },
-      projectIds: ['collectionId1', 'collectionId2']
+      }
     },
     collectionsSearch: {
       allIds: ['collectionId1', 'collectionId2'],
@@ -37,6 +36,9 @@ function setup() {
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
+    project: {
+      collectionIds: ['collectionId1', 'collectionId2']
+    },
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -65,8 +67,10 @@ describe('ProjectCollectionsList component', () => {
         collectionId2: {
           mock: 'data 2'
         }
-      },
-      projectIds: ['collectionId1', 'collectionId2']
+      }
+    })
+    expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
+      collectionIds: ['collectionId1', 'collectionId2']
     })
     expect(enzymeWrapper.find(ProjectHeader).props().loading).toEqual(false)
 
@@ -80,10 +84,11 @@ describe('ProjectCollectionsList component', () => {
         collectionId2: {
           mock: 'data 2'
         }
-      },
-      projectIds: ['collectionId1', 'collectionId2']
+      }
     })
-    expect(enzymeWrapper.find(ProjectHeader).props().loading).toEqual(false)
+    expect(enzymeWrapper.find(ProjectCollectionsList).props().project).toEqual({
+      collectionIds: ['collectionId1', 'collectionId2']
+    })
 
     expect(enzymeWrapper.find('.project-collections__footer').length).toBe(1)
   })

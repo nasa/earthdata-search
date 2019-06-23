@@ -23,8 +23,9 @@ export class ProjectHeader extends Component {
   }
 
   render() {
-    const { collections } = this.props
-    const { byId, projectIds } = collections
+    const { collections, project } = this.props
+    const { byId } = collections
+    const { collectionIds: projectIds } = project
 
     let totalGranules = 0
     let size = 0
@@ -100,7 +101,8 @@ export class ProjectHeader extends Component {
 }
 
 ProjectHeader.propTypes = {
-  collections: PropTypes.shape({}).isRequired
+  collections: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired
 }
 
 export default ProjectHeader

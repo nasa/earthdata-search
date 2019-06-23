@@ -20,6 +20,7 @@ import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
 import projectPanelsReducer from './projectPanels'
+import projectReducer from './project'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
@@ -35,6 +36,8 @@ export default history => combineReducers({
     collections: collectionMetadataReducer,
     granules: granuleMetadataReducer
   }),
+  project: projectReducer,
+  projectPanels: projectPanelsReducer,
   query: queryReducer,
   router: connectRouter(history),
   searchResults: combineReducers({
@@ -44,6 +47,5 @@ export default history => combineReducers({
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   timeline: timelineReducer,
-  ui: uiReducer,
-  projectPanels: projectPanelsReducer
+  ui: uiReducer
 })

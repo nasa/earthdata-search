@@ -99,6 +99,34 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 }
 
 /**
+ * Translates the values returned from prepareGranuleParams to the camelCased keys that are expected in
+ * the granules.search() function
+ * @param {object} params - Params to be passed to the granules.search() function.
+ * @returns Parameters to be provided to the Granules request with camel cased keys
+ */
+export const buildGranuleSearchParams = (params) => {
+  const {
+    boundingBox,
+    collectionId,
+    pageNum,
+    point,
+    polygon,
+    temporalString
+  } = params
+
+  return {
+    boundingBox,
+    echoCollectionId: collectionId,
+    pageNum,
+    pageSize: 20,
+    point,
+    polygon,
+    sortKey: '-start_date',
+    temporal: temporalString
+  }
+}
+
+/**
  * Create the ECHO10 Metadata URLs using the granule concept ID
  * @param {string} granuleId - The granule ID
  * @returns {object} - An object containing the various URLs

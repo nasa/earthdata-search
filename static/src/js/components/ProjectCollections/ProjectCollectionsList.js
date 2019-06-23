@@ -24,13 +24,12 @@ export const ProjectCollectionsList = (props) => {
     onToggleCollectionVisibility,
     location,
     onSetActivePanel,
+    project,
     projectPanels
   } = props
 
-  const {
-    byId,
-    projectIds
-  } = collections
+  const { byId } = collections
+  const { collectionIds: projectIds } = project
 
   const projectIsEmpty = !projectIds.length
 
@@ -87,6 +86,7 @@ ProjectCollectionsList.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
+  project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired
 }
 

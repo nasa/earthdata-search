@@ -23,14 +23,14 @@ import './ProjectPanels.scss'
  */
 export const ProjectPanels = pure(({
   collections,
+  project,
   projectPanels,
+  onSelectAccessMethod,
   onTogglePanels,
   onSetActivePanel
 }) => {
-  const {
-    byId,
-    projectIds
-  } = collections
+  const { byId } = collections
+  const { collectionIds: projectIds } = project
 
   const { activePanel, isOpen } = projectPanels
   const panelSectionEditOptions = []
@@ -118,6 +118,7 @@ export const ProjectPanels = pure(({
           <AccessMethod
             index={index}
             metadata={metadata}
+            onSelectAccessMethod={onSelectAccessMethod}
             onSetActivePanel={onSetActivePanel}
           />
         </PanelItem>
@@ -192,8 +193,10 @@ export const ProjectPanels = pure(({
 })
 
 ProjectPanels.propTypes = {
-  projectPanels: PropTypes.shape({}).isRequired,
   collections: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  projectPanels: PropTypes.shape({}).isRequired,
+  onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired
 }
