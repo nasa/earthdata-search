@@ -26,6 +26,7 @@ function setup() {
     focusedCollection: '',
     granules: {},
     pathname: '/search',
+    project: {},
     map: {
       base: {
         blueMarble: true,

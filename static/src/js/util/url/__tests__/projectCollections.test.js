@@ -27,10 +27,12 @@ describe('url#decodeUrlParams', () => {
             formattedMetadata: {},
             ummMetadata: {}
           }
-        },
-        projectIds: ['collectionId1', 'collectionId2']
+        }
       },
-      focusedCollection: ''
+      focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
     }
     expect(decodeUrlParams('?p=!collectionId1!collectionId2')).toEqual(expectedResult)
   })
@@ -59,10 +61,12 @@ describe('url#decodeUrlParams', () => {
             formattedMetadata: {},
             ummMetadata: {}
           }
-        },
-        projectIds: ['collectionId1', 'collectionId2']
+        }
       },
-      focusedCollection: 'collectionId1'
+      focusedCollection: 'collectionId1',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
     }
     expect(decodeUrlParams('?p=collectionId1!collectionId1!collectionId2')).toEqual(expectedResult)
   })
@@ -91,10 +95,12 @@ describe('url#decodeUrlParams', () => {
             formattedMetadata: {},
             ummMetadata: {}
           }
-        },
-        projectIds: ['collectionId1', 'collectionId2']
+        }
       },
-      focusedCollection: ''
+      focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
     }
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[2][v]=t')).toEqual(expectedResult)
   })
@@ -106,10 +112,12 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       collections: {
         allIds: [],
-        byId: {},
-        projectIds: []
+        byId: {}
       },
-      focusedCollection: ''
+      focusedCollection: '',
+      project: {
+        collectionIds: []
+      }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here')
   })
@@ -119,10 +127,12 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
-        byId: {},
-        projectIds: ['collectionId1', 'collectionId2']
+        byId: {}
       },
-      focusedCollection: ''
+      focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2')
   })
@@ -132,10 +142,12 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
-        byId: {},
-        projectIds: ['collectionId1', 'collectionId2']
+        byId: {}
       },
-      focusedCollection: 'collectionId1'
+      focusedCollection: 'collectionId1',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId1!collectionId1!collectionId2')
   })
@@ -154,10 +166,12 @@ describe('url#encodeUrlQuery', () => {
             isVisible: true,
             metadata: {}
           }
-        },
-        projectIds: ['collectionId1', 'collectionId2']
+        }
       },
-      focusedCollection: ''
+      focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[2][v]=t')
   })

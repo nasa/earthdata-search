@@ -122,7 +122,6 @@ export class Search extends Component {
 
 Search.propTypes = {
   location: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
   onMasterOverlayHeightChange: PropTypes.func.isRequired
 }
 

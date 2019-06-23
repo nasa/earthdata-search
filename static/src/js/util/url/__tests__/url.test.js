@@ -18,6 +18,7 @@ const emptyDecodedResult = {
   focusedCollection: undefined,
   focusedGranule: undefined,
   map: {},
+  project: undefined,
   query: {
     keyword: undefined,
     spatial: {

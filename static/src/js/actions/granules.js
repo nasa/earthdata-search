@@ -1,4 +1,4 @@
-import { populateGranuleResults, prepareGranuleParams } from '../util/granules'
+import { populateGranuleResults, prepareGranuleParams, buildGranuleSearchParams } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
@@ -91,13 +91,9 @@ export const getGranules = () => (dispatch, getState) => {
 
   const {
     authToken,
-    boundingBox,
     collectionId,
     isCwicCollection,
-    pageNum,
-    point,
-    polygon,
-    temporalString
+    pageNum
   } = granuleParams
 
   dispatch(onGranulesLoading())
@@ -110,16 +106,7 @@ export const getGranules = () => (dispatch, getState) => {
     requestObject = new GranuleRequest(authToken)
   }
 
-  const response = requestObject.search({
-    boundingBox,
-    echoCollectionId: collectionId,
-    pageNum,
-    pageSize: 20,
-    point,
-    polygon,
-    sortKey: '-start_date',
-    temporal: temporalString
-  })
+  const response = requestObject.search(buildGranuleSearchParams(granuleParams))
     .then((response) => {
       const payload = populateGranuleResults(collectionId, isCwicCollection, response)
 

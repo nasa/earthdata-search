@@ -7,7 +7,7 @@ import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
-  projectIds: state.metadata.collections.projectIds
+  projectIds: state.project.collectionIds
 })
 
 export const SecondaryToolbarContainer = (props) => {

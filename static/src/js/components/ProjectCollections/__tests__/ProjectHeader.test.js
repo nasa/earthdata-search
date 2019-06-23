@@ -20,8 +20,10 @@ function setup(type) {
             mock: 'data 1'
           }
         }
-      },
-      projectIds: ['collectionId1']
+      }
+    },
+    project: {
+      collectionIds: ['collectionId1']
     }
   }
 
@@ -39,7 +41,7 @@ function setup(type) {
         }
       }
     }
-    props.collections.projectIds = ['collectionId1', 'collectionId2']
+    props.project.collectionIds = ['collectionId1', 'collectionId2']
   }
 
   if (type === 'multi-granule') {

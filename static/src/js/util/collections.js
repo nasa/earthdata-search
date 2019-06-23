@@ -4,7 +4,7 @@ import { categoryNameToCMRParam } from './facets'
 /**
  * Prepare parameters used in getCollections() based on current Redux State
  * @param {object} state Current Redux State
- * @returns Parameters used in buildSearchParams
+ * @returns Parameters used in buildCollectionSearchParams
  */
 export const prepareCollectionParams = (state) => {
   const {
@@ -75,11 +75,9 @@ export const prepareCollectionParams = (state) => {
  * Translates the values returned from prepareCollectionParams to the camelCased keys that are expected in
  * the collections.search() function
  * @param {object} params - Params to be passed to the collections.search() function.
- * @param {object} options - Optional options object
- * @param {boolean} options.viewAllFacetsRequest - Optional options object
  * @returns Parameters to be provided to the Collections request with camel cased keys
  */
-export const buildSearchParams = (params) => {
+export const buildCollectionSearchParams = (params) => {
   const {
     boundingBox,
     conceptId,

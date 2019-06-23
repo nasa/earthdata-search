@@ -22,7 +22,9 @@ const mapDispatchToProps = dispatch => ({
   onChangeUrl:
     query => dispatch(actions.changeUrl(query)),
   onRestoreCollections:
-    collections => dispatch(actions.restoreCollections(collections))
+    collections => dispatch(actions.restoreCollections(collections)),
+  onRestoreProject:
+    project => dispatch(actions.restoreProject(project))
 })
 
 const mapStateToProps = state => ({
@@ -41,6 +43,7 @@ const mapStateToProps = state => ({
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
+  project: state.project,
   projectFacets: state.facetsParams.cmr.project_h,
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   search: state.router.location.search,
@@ -57,6 +60,7 @@ export class UrlQueryContainer extends Component {
       onChangeQuery,
       onChangeTimelineQuery,
       onRestoreCollections,
+      onRestoreProject,
       onUpdateCmrFacet,
       onUpdateFeatureFacet,
       search
@@ -69,6 +73,7 @@ export class UrlQueryContainer extends Component {
       focusedCollection,
       focusedGranule,
       map,
+      project,
       query,
       timeline
     } = decodeUrlParams(search)
@@ -95,6 +100,10 @@ export class UrlQueryContainer extends Component {
 
     if (Object.keys(query).length > 0) {
       onChangeQuery({ ...query })
+    }
+
+    if (project) {
+      onRestoreProject(project)
     }
 
     if (collections) {
@@ -145,6 +154,7 @@ UrlQueryContainer.propTypes = {
   onChangeTimelineQuery: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
   onRestoreCollections: PropTypes.func.isRequired,
+  onRestoreProject: PropTypes.func.isRequired,
   onUpdateCmrFacet: PropTypes.func.isRequired,
   onUpdateFeatureFacet: PropTypes.func.isRequired,
   search: PropTypes.string

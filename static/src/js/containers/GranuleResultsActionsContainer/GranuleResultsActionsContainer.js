@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
+  project: state.project,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue
 })
@@ -31,6 +32,7 @@ export const GranuleResultsActionsContainer = (props) => {
     focusedCollection,
     granules,
     location,
+    project,
     onAddProjectCollection,
     onRemoveCollectionFromProject
   } = props
@@ -40,7 +42,7 @@ export const GranuleResultsActionsContainer = (props) => {
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   const [collectionId] = Object.keys(focusedCollectionMetadata)
-  const { projectIds } = collections
+  const { collectionIds: projectIds } = project
   const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
   const granuleCount = granules.hits
 
@@ -63,6 +65,7 @@ GranuleResultsActionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired
 }

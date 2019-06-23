@@ -14,8 +14,7 @@ function setup() {
         collectionId: {
           mock: 'data'
         }
-      },
-      projectIds: ['collectionId']
+      }
     },
     collectionsSearch: {
       allIds: ['collectionId'],
@@ -27,8 +26,12 @@ function setup() {
       isLoading: false,
       isLoaded: true
     },
-    onTogglePanels: jest.fn(),
+    onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
+    onTogglePanels: jest.fn(),
+    project: {
+      collectionIds: ['collectionId']
+    },
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -54,8 +57,10 @@ describe('ProjectPanelsContainer component', () => {
         collectionId: {
           mock: 'data'
         }
-      },
-      projectIds: ['collectionId']
+      }
+    })
+    expect(enzymeWrapper.find(ProjectPanels).props().project).toEqual({
+      collectionIds: ['collectionId']
     })
     expect(enzymeWrapper.find(ProjectPanels).props().collectionsSearch).toEqual({
       allIds: ['collectionId'],

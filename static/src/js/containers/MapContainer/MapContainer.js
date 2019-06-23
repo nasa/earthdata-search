@@ -46,7 +46,8 @@ const mapStateToProps = state => ({
   granules: state.searchResults.granules,
   map: state.map,
   masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
-  pathname: state.router.location.pathname
+  pathname: state.router.location.pathname,
+  project: state.project
 })
 
 export class MapContainer extends Component {
@@ -171,7 +172,8 @@ export class MapContainer extends Component {
       collections,
       focusedCollection,
       granules,
-      pathname
+      pathname,
+      project
     } = this.props
 
     const {
@@ -281,6 +283,7 @@ export class MapContainer extends Component {
           focusedCollection={focusedCollection}
           isProjectPage={isProjectPage}
           granules={granules}
+          project={project}
         />
         <ZoomHome />
         {
@@ -306,6 +309,7 @@ MapContainer.propTypes = {
   map: PropTypes.shape({}),
   masterOverlayPanelHeight: PropTypes.number.isRequired,
   pathname: PropTypes.string.isRequired,
+  project: PropTypes.shape({}).isRequired,
   onChangeMap: PropTypes.func.isRequired
 }
 

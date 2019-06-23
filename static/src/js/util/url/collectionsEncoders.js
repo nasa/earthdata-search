@@ -63,8 +63,15 @@ const decodedExcludeGranules = (excludedGranules) => {
  * @param {string} focusedCollection Focused Collection ID
  * @return {string} An object with encoded Collections
  */
-export const encodeCollections = (collections, focusedCollection) => {
-  const { byId, projectIds = [] } = collections || {}
+export const encodeCollections = (props) => {
+  const {
+    collections = {},
+    focusedCollection,
+    project = {}
+  } = props
+
+  const { byId } = collections
+  const { collectionIds: projectIds = [] } = project
 
   // pParameter - focusedCollection!projectCollection1!projectCollection2
   const pParameter = [
@@ -142,6 +149,7 @@ export const decodeCollections = (params) => {
 
   let focusedCollection = ''
   let collections
+  let project
   const allIds = []
   const byId = {}
   const projectIds = []
@@ -188,13 +196,16 @@ export const decodeCollections = (params) => {
   if (pg || projectIds.length > 0) {
     collections = {
       allIds,
-      byId,
-      projectIds
+      byId
+    }
+    project = {
+      collectionIds: projectIds
     }
   }
 
   return {
     collections,
-    focusedCollection
+    focusedCollection,
+    project
   }
 }

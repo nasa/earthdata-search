@@ -57,11 +57,15 @@ import {
 } from './focusedGranule'
 import {
   addProjectCollection,
-  removeCollectionFromProject,
-  getProjectGranules,
   getProjectCollections,
-  toggleCollectionVisibility
+  getProjectGranules,
+  removeCollectionFromProject,
+  restoreProject,
+  selectAccessMethod,
+  toggleCollectionVisibility,
+  updateAccessMethod
 } from './project'
+import { submitOrder } from './orders'
 
 const actions = {
   addProjectCollection,
@@ -97,13 +101,17 @@ const actions = {
   masterOverlayPanelResize,
   removeCollectionFromProject,
   restoreCollections,
+  restoreProject,
   searchNlp,
+  selectAccessMethod,
+  submitOrder,
   toggleCollectionVisibility,
   toggleOverrideTemporalModal,
   toggleFacetsModal,
   toggleRelatedUrlsModal,
   triggerViewAllFacets,
   undoExcludeGranule,
+  updateAccessMethod,
   updateAuthToken,
   updateCmrFacet,
   updateFeatureFacet,

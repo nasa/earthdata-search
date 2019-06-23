@@ -11,7 +11,10 @@ import {
   UPDATE_AUTH,
   UPDATE_COLLECTION_METADATA,
   UPDATE_PROJECT_GRANULES,
-  TOGGLE_COLLECTION_VISIBILITY
+  TOGGLE_COLLECTION_VISIBILITY,
+  RESTORE_PROJECT,
+  UPDATE_ACCESS_METHOD,
+  SELECT_ACCESS_METHOD
 } from '../../constants/actionTypes'
 
 import {
@@ -20,7 +23,10 @@ import {
   getProjectCollections,
   getProjectGranules,
   removeCollectionFromProject,
-  toggleCollectionVisibility
+  toggleCollectionVisibility,
+  restoreProject,
+  updateAccessMethod,
+  selectAccessMethod
 } from '../project'
 
 const mockStore = configureMockStore([thunk])
@@ -60,6 +66,102 @@ describe('toggleCollectionVisibility', () => {
       payload
     }
     expect(toggleCollectionVisibility(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('restoreProject', () => {
+  test('should create an action to restore project collections', () => {
+    const payload = {
+      collectionIds: ['collectionId1', 'collectionId2']
+    }
+    const expectedAction = {
+      type: RESTORE_PROJECT,
+      payload
+    }
+    expect(restoreProject(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('updateAccessMethod', () => {
+  test('should create an action to update an access method', () => {
+    const payload = {
+      collectionId: 'collectionId',
+      method: {
+        download: {
+          type: 'download'
+        }
+      }
+    }
+    const expectedAction = {
+      type: UPDATE_ACCESS_METHOD,
+      payload
+    }
+    expect(updateAccessMethod(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('selectAccessMethod', () => {
+  test('should create an action to select the access method and update the access methods', () => {
+    const payload = {
+      collectionId: 'collectionId',
+      selectedAccessMethod: 'download'
+    }
+
+    // mockStore with initialState
+    const store = mockStore({
+      project: {
+        byId: {},
+        collectionIds: ['collectionId']
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(selectAccessMethod(payload))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: SELECT_ACCESS_METHOD,
+      payload
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_ACCESS_METHOD,
+      payload: {
+        collectionId: 'collectionId',
+        method: { download: { type: 'download' } }
+      }
+    })
+  })
+
+  test('should not update the access methods if the method already exists', () => {
+    const payload = {
+      collectionId: 'collectionId',
+      selectedAccessMethod: 'download'
+    }
+
+    // mockStore with initialState
+    const store = mockStore({
+      project: {
+        byId: {
+          collectionId: {
+            accessMethods: {
+              download: {
+                type: 'download'
+              }
+            },
+            selectAccessMethod: 'mock'
+          }
+        },
+        collectionIds: ['collectionId']
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(selectAccessMethod(payload))
+    const storeActions = store.getActions()
+    expect(storeActions.length).toBe(1)
+    expect(storeActions[0]).toEqual({
+      type: SELECT_ACCESS_METHOD,
+      payload
+    })
   })
 })
 
@@ -113,11 +215,13 @@ describe('getProjectGranules', () => {
             collectionId2: {
               granules: {}
             }
-          },
-          projectIds: ['collectionId1', 'collectionId2']
+          }
         }
       },
       focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      },
       query: {
         collection: {},
         granule: {}
@@ -165,11 +269,13 @@ describe('getProjectGranules', () => {
             collectionId1: {
               granules: {}
             }
-          },
-          projectIds: ['collectionId1']
+          }
         }
       },
       focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1']
+      },
       query: {
         collection: {},
         granule: {}
@@ -262,11 +368,13 @@ describe('getProjectCollections', () => {
       metadata: {
         collections: {
           allIds: [],
-          byId: {},
-          projectIds: ['collectionId1', 'collectionId2']
+          byId: {}
         }
       },
       focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId1', 'collectionId2']
+      },
       query: {
         collection: {}
       }
@@ -294,11 +402,13 @@ describe('getProjectCollections', () => {
       metadata: {
         collections: {
           allIds: [],
-          byId: {},
-          projectIds: []
+          byId: {}
         }
       },
       focusedCollection: '',
+      project: {
+        collectionIds: []
+      },
       query: {
         collection: {}
       }
@@ -318,11 +428,13 @@ describe('getProjectCollections', () => {
       metadata: {
         collections: {
           allIds: [],
-          byId: {},
-          projectIds: ['collectionId']
+          byId: {}
         }
       },
       focusedCollection: '',
+      project: {
+        collectionIds: ['collectionId']
+      },
       query: {
         collection: {}
       }
@@ -350,11 +462,13 @@ describe('addProjectCollection', () => {
       metadata: {
         collections: {
           allIds: [],
-          byId: {},
-          projectIds: []
+          byId: {}
         }
       },
       focusedCollection: '',
+      project: {
+        collectionIds: []
+      },
       query: {
         collection: {}
       }

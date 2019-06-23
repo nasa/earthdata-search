@@ -14,6 +14,7 @@ function setup() {
     },
     focusedCollection: '',
     pathname: '/search',
+    project: {},
     temporalSearch: {},
     timeline: { query: {}, state: {} },
     onChangeProjectQuery: jest.fn(),
@@ -60,6 +61,7 @@ describe('TimelineContainer component', () => {
       collections: undefined,
       focusedCollection: undefined,
       pathname: undefined,
+      project: undefined,
       collectionMetadata: {
         collectionId: {
           mock: 'data'
@@ -79,11 +81,13 @@ describe('TimelineContainer component', () => {
           collectionId: {
             mock: 'data'
           }
-        },
-        projectIds: ['collectionId']
+        }
       },
       focusedCollection: 'collectionId',
-      pathname: '/project'
+      pathname: '/project',
+      project: {
+        collectionIds: ['collectionId']
+      }
     })
 
     expect(enzymeWrapper.find(Timeline).length).toBe(1)
@@ -94,6 +98,7 @@ describe('TimelineContainer component', () => {
       collections: undefined,
       focusedCollection: undefined,
       pathname: undefined,
+      project: undefined,
       collectionMetadata: {
         collectionId: {
           mock: 'data'

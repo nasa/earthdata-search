@@ -1,6 +1,6 @@
 import { toggleFacetsModal } from './ui'
 import CollectionRequest from '../util/request/collectionRequest'
-import { buildSearchParams, prepareCollectionParams } from '../util/collections'
+import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { prepareCMRFacetPayload } from '../util/facets'
 import { changeCmrFacet } from './facets'
 import { updateAuthTokenFromHeaders } from './authToken'
@@ -70,7 +70,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const { authToken } = collectionParams
   const requestObject = new CollectionRequest(authToken)
 
-  const response = requestObject.search(buildSearchParams(collectionParams))
+  const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((response) => {
       const payload = {}
 
