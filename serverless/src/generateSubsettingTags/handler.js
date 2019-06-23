@@ -61,19 +61,16 @@ const generateSubsettingTags = async (event, context) => {
 
     if (collections.length) {
       try {
-        // Conver the CMR Service Type to a lowercase string with no spaces
+        // Convert the CMR Service Type to a lowercase string with no spaces
         const tagPostFix = type.toLowerCase().replace(/ /g, '_')
 
-        const collectionCriteria = collections.map(collectionId => ({ concept_id: collectionId }))
+        const collectionTagData = collections.map(collectionId => ({ 'concept-id': collectionId, data: tagData }))
 
+        // Constrcut an array that we'll negate and use for removing the tag from collections that don't appear here
         if (['opendap', 'esi', 'echo_orders'].includes(tagPostFix)) {
-          collectionsToTag[tagPostFix].push(...collectionCriteria)
-        }
+          const collectionCriteria = collections.map(collectionId => ({ concept_id: collectionId }))
 
-        const searchCriteria = {
-          condition: {
-            or: collectionCriteria
-          }
+          collectionsToTag[tagPostFix].push(...collectionCriteria)
         }
 
         await sqs.sendMessage({
@@ -83,8 +80,7 @@ const generateSubsettingTags = async (event, context) => {
             action: 'ADD',
             append: false,
             requireGranules: false,
-            searchCriteria,
-            tagData
+            tagData: collectionTagData
           })
         }).promise()
       } catch (e) {
