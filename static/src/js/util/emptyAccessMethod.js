@@ -25,7 +25,7 @@ const emptyAccessMethod = (methodName) => {
       return echoOrderMethod
     case 'opendap':
       return {}
-    case 'egi':
+    case 'esi':
       return {}
     default:
       return downloadMethod

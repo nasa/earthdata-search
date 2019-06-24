@@ -21,7 +21,7 @@ export const AccessMethod = ({
   onSelectAccessMethod,
   onSetActivePanel
 }) => {
-  const { id } = metadata
+  const { id, tags } = metadata
 
   const handleAccessMethodSelection = (method) => {
     onSelectAccessMethod({
@@ -30,7 +30,7 @@ export const AccessMethod = ({
     })
   }
 
-  const capabilitiesData = getValueForTag('collection_capabilities')
+  const capabilitiesData = getValueForTag('collection_capabilities', tags)
   const { granule_online_access_flag: downloadable } = capabilitiesData || {}
 
   const radioList = []
@@ -121,14 +121,14 @@ export const AccessMethod = ({
     ))
   }
 
-  if (hasTag(metadata, 'subset_service.egi')) {
+  if (hasTag(metadata, 'subset_service.esi')) {
     radioList.push((
       <Radio
         id={`${id}_access-method__customize`}
         name={`${id}_access-method__customize`}
         key={`${id}_access-method__customize`}
         value="Customize"
-        onClick={() => handleAccessMethodSelection('egi')}
+        onClick={() => handleAccessMethodSelection('esi')}
       >
         Customize
         <OverlayTrigger
