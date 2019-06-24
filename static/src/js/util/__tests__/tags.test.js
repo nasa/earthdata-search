@@ -1,5 +1,5 @@
 import * as appConfig from '../../../../../sharedUtils/config'
-import { getValueForTag } from '../tags'
+import { getValueForTag, hasTag } from '../tags'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -15,7 +15,7 @@ describe('getValueForTag', () => {
     const tagValue = getValueForTag('tag', {})
     expect(tagValue).toEqual(undefined)
   })
-  
+
   test('returns undefined when an null is provided for tags', () => {
     const tagValue = getValueForTag('tag', null)
     expect(tagValue).toEqual(undefined)
@@ -60,5 +60,42 @@ describe('getValueForTag', () => {
     }
     const tagValue = getValueForTag('tag', tagData)
     expect(tagValue).toEqual([{ tagDataKey1: 'tagDataValue1' }, { tagDataKey2: 'tagDataValue2' }])
+  })
+})
+
+describe('hasTag', () => {
+  test('returns true when the tag exists', () => {
+    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+
+    const collection = {
+      tags: {
+        'edsc.test.tag': {}
+      }
+    }
+
+    const result = hasTag(collection, 'tag')
+    expect(result).toBeTruthy()
+  })
+
+  test('returns false if the tag does not exist', () => {
+    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+
+    const collection = {
+      tags: {
+        'edsc.test.tag': {}
+      }
+    }
+
+    const result = hasTag(collection, 'missing_tag')
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false if no tags exist', () => {
+    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+
+    const collection = {}
+
+    const result = hasTag(collection, 'missing_tag')
+    expect(result).toBeFalsy()
   })
 })

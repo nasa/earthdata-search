@@ -17,4 +17,15 @@ export const getValueForTag = (key, tags) => {
   return data
 }
 
-export default getValueForTag
+/**
+ * Searches collection metadata for the existance of a tag
+ * @param {Object} collection Collection metadata
+ * @param {String} key Tag key
+ */
+export const hasTag = (collection, key) => {
+  const { tags = {} } = collection
+
+  const tag = `${getApplicationConfig().cmrTagNamespace}.${key}`
+
+  return Object.keys(tags).indexOf(tag) !== -1
+}
