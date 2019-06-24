@@ -7,6 +7,7 @@ import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
 
 import './AccessMethod.scss'
+import { getValueForTag, hasTag } from '../../util/tags'
 
 /**
  * Renders AccessMethod.
@@ -20,23 +21,17 @@ export const AccessMethod = ({
   onSelectAccessMethod,
   onSetActivePanel
 }) => {
-  const {
-    id,
-    tags
-  } = metadata
+  const { id } = metadata
 
   const handleAccessMethodSelection = (method) => {
-    console.log('handleAccessMethodSelection', method)
     onSelectAccessMethod({
       collectionId: id,
       selectedAccessMethod: method
     })
   }
 
-  const collectionCapibilities = tags['edsc.extra.serverless.collection_capabilities']
-
-  const { data = {} } = collectionCapibilities
-  const { granule_online_access_flag: downloadable } = data
+  const capabilitiesData = getValueForTag('collection_capabilities')
+  const { granule_online_access_flag: downloadable } = capabilitiesData || {}
 
   const radioList = []
 
@@ -69,7 +64,7 @@ export const AccessMethod = ({
     ))
   }
 
-  if (Object.keys(tags).indexOf('edsc.extra.serverless.subset_service.echo_orders') !== -1) {
+  if (hasTag(metadata, 'subset_service.echo_orders')) {
     radioList.push((
       <Radio
         id={`${id}_access-method__stage-for-deliver`}
@@ -97,7 +92,7 @@ export const AccessMethod = ({
     ))
   }
 
-  if (Object.keys(tags).indexOf('edsc.extra.serverless.subset_service.opendap') !== -1) {
+  if (hasTag(metadata, 'subset_service.opendap')) {
     radioList.push((
       <Radio
         id={`${id}_access-method__opendap`}
@@ -126,7 +121,7 @@ export const AccessMethod = ({
     ))
   }
 
-  if (Object.keys(tags).indexOf('edsc.extra.serverless.subset_service.egi') !== -1) {
+  if (hasTag(metadata, 'subset_service.egi')) {
     radioList.push((
       <Radio
         id={`${id}_access-method__customize`}
@@ -160,7 +155,6 @@ export const AccessMethod = ({
     <div className="access-method">
       <ProjectPanelSection heading="Select Data Access Method">
         <div className="access-method__radio-list">
-          {/* <RadioList defaultValue="Download"> */}
           <RadioList>
             {radioList}
           </RadioList>

@@ -4,7 +4,7 @@ const downloadMethod = {
   }
 }
 
-// TODO
+// TODO Finish echoOrderMethod and other methods
 const echoOrderMethod = {
   echoOrder: {
     type: 'ECHO_ORDER'
@@ -23,6 +23,10 @@ const emptyAccessMethod = (methodName) => {
       return downloadMethod
     case 'echoOrder':
       return echoOrderMethod
+    case 'opendap':
+      return {}
+    case 'egi':
+      return {}
     default:
       return downloadMethod
   }
