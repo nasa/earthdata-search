@@ -11,7 +11,8 @@ let dbConnection = null
 
 const submitOrder = async (event) => {
   const { body } = event
-  const { collections, environment } = body
+  const { params = {} } = JSON.parse(body)
+  const { collections, environment } = params
 
   const jwtToken = getJwtToken(event)
 
