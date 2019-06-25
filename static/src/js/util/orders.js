@@ -1,6 +1,3 @@
-import cleanDeep from 'clean-deep'
-import snakeCaseKeys from 'snakecase-keys'
-
 import { prepareGranuleParams, buildGranuleSearchParams } from './granules'
 
 
@@ -34,9 +31,7 @@ export const prepareOrderParams = (state) => {
     returnValue.granule_count = granules.hits
 
     const params = buildGranuleSearchParams(prepareGranuleParams(state, collectionId))
-    const snakeCaseParams = snakeCaseKeys(params)
-    const granuleParams = cleanDeep(snakeCaseParams)
-    returnValue.granule_params = granuleParams
+    returnValue.granule_params = params
 
     const collectionConfig = configById[collectionId]
     const { accessMethods, selectedAccessMethod } = collectionConfig

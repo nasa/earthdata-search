@@ -8,7 +8,7 @@ import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
 import ProjectPanelSection from './ProjectPanelSection'
-import AccessMethod from './AccessMethod'
+import AccessMethod from '../AccessMethod/AccessMethod'
 import CollectionDetails from './CollectionDetails'
 
 import './ProjectPanels.scss'
