@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-import ProjectPanelSection from './ProjectPanelSection'
+import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
 
@@ -30,19 +30,17 @@ export const AccessMethod = ({
     })
   }
 
-  const capabilitiesData = getValueForTag('collection_capabilities', tags)
-  const { granule_online_access_flag: downloadable } = capabilitiesData || {}
-
   const radioList = []
 
+  const capabilitiesData = getValueForTag('collection_capabilities', tags)
+  const { granule_online_access_flag: downloadable } = capabilitiesData || {}
   if (downloadable) {
-    radioList.push((
+    radioList.push(
       <Radio
         id={`${id}_access-method__direct-download`}
         name={`${id}_access-method__direct-download`}
         key={`${id}_access-method__direct-download`}
-        value="Download"
-        onClick={() => handleAccessMethodSelection('download')}
+        value="download"
       >
         Direct Download
         <OverlayTrigger
@@ -61,7 +59,7 @@ export const AccessMethod = ({
           <i className="access-method__radio-tooltip fa fa-info-circle" />
         </OverlayTrigger>
       </Radio>
-    ))
+    )
   }
 
   if (hasTag(metadata, 'subset_service.echo_orders')) {
@@ -70,8 +68,7 @@ export const AccessMethod = ({
         id={`${id}_access-method__stage-for-deliver`}
         name={`${id}_access-method__stage-for-deliver`}
         key={`${id}_access-method__stage-for-deliver`}
-        value="Stage For Delivery"
-        onClick={() => handleAccessMethodSelection('echoOrder')}
+        value="echoOrder"
       >
         Stage For Delivery
         <OverlayTrigger
@@ -98,8 +95,7 @@ export const AccessMethod = ({
         id={`${id}_access-method__opendap`}
         name={`${id}_access-method__opendap`}
         key={`${id}_access-method__opendap`}
-        value="OPenDAP"
-        onClick={() => handleAccessMethodSelection('opendap')}
+        value="opendap"
       >
         Customize (OPeNDAP)
         <OverlayTrigger
@@ -127,8 +123,7 @@ export const AccessMethod = ({
         id={`${id}_access-method__customize`}
         name={`${id}_access-method__customize`}
         key={`${id}_access-method__customize`}
-        value="Customize"
-        onClick={() => handleAccessMethodSelection('esi')}
+        value="esi"
       >
         Customize
         <OverlayTrigger
@@ -155,7 +150,7 @@ export const AccessMethod = ({
     <div className="access-method">
       <ProjectPanelSection heading="Select Data Access Method">
         <div className="access-method__radio-list">
-          <RadioList>
+          <RadioList onChange={methodName => handleAccessMethodSelection(methodName)}>
             {radioList}
           </RadioList>
         </div>

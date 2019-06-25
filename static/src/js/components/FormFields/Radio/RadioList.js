@@ -15,6 +15,10 @@ export class RadioList extends Component {
   }
 
   onChange(e) {
+    const { onChange: propsOnChange } = this.props
+
+    propsOnChange(e.target.value)
+
     this.setState({
       selected: e.target.value
     })
@@ -39,12 +43,14 @@ export class RadioList extends Component {
 }
 
 RadioList.defaultProps = {
-  defaultValue: null
+  defaultValue: null,
+  onChange: null
 }
 
 RadioList.propTypes = {
   children: PropTypes.node.isRequired,
-  defaultValue: PropTypes.string
+  defaultValue: PropTypes.string,
+  onChange: PropTypes.func
 }
 
 export default RadioList
