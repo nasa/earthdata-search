@@ -66,7 +66,7 @@ const generateSubsettingTags = async (event, context) => {
 
         const collectionTagData = collections.map(collectionId => ({ 'concept-id': collectionId, data: tagData }))
 
-        // Constrcut an array that we'll negate and use for removing the tag from collections that don't appear here
+        // Construct an array that we'll negate and use for removing the tag from collections that don't appear here
         if (['opendap', 'esi', 'echo_orders'].includes(tagPostFix)) {
           const collectionCriteria = collections.map(collectionId => ({ concept_id: collectionId }))
 
