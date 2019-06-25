@@ -27,12 +27,12 @@ const submitOrder = async (event) => {
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
-  const trx = await dbConnection.transaction()
+  const orderDbTransaction = await dbConnection.transaction()
 
   try {
-    const userRecord = await trx('users').first('id').where({ urs_id: username })
+    const userRecord = await orderDbTransaction('users').first('id').where({ urs_id: username })
 
-    const retrievalRecord = await trx('retrievals').returning(['id', 'user_id', 'environment'])
+    const retrievalRecord = await orderDbTransaction('retrievals').returning(['id', 'user_id', 'environment'])
       .insert({
         user_id: userRecord.id,
         environment,
@@ -48,7 +48,7 @@ const submitOrder = async (event) => {
         granule_params: granuleParams
       } = collection
 
-      await trx('retrieval_collections').returning(['id'])
+      await orderDbTransaction('retrieval_collections').returning(['id'])
         .insert({
           retrieval_id: retrievalRecord.id,
           access_method: accessMethod,
@@ -58,7 +58,7 @@ const submitOrder = async (event) => {
         })
     })
 
-    await trx.commit()
+    await orderDbTransaction.commit()
 
 
     return {
@@ -71,7 +71,7 @@ const submitOrder = async (event) => {
     console.log(e)
 
     // On error rollback our transaction
-    trx.rollback()
+    orderDbTransaction.rollback()
 
     return {
       isBase64Encoded: false,

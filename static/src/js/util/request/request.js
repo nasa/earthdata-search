@@ -62,6 +62,7 @@ export default class Request {
       if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData, ext })
       return prepKeysForCmr(filteredData, this.nonIndexedKeys())
     }
+
     return null
   }
 
@@ -99,7 +100,7 @@ export default class Request {
 
   /**
    * Makes a GET request to the provided URL
-   * @param {string} url URL to send the request to
+   * @param {String} url URL to send the request to
    * @return {Promise} A Promise object representing the request that was made
    */
   get(url) {
