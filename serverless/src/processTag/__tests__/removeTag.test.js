@@ -42,7 +42,6 @@ describe('removeTag', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-
     const removeTagResponse = await removeTag.removeTag(
       'edsc.extra.gibs',
       { short_name: 'MIL3MLS' },

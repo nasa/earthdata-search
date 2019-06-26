@@ -39,7 +39,6 @@ const submitOrder = async (event) => {
         token: accessToken
       })
 
-
     await collections.forEachAsync(async (collection) => {
       const {
         id,

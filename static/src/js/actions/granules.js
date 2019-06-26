@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { populateGranuleResults, prepareGranuleParams, buildGranuleSearchParams, getDownloadUrls } from '../util/granules'
+import {
+  populateGranuleResults,
+  prepareGranuleParams,
+  buildGranuleSearchParams,
+  getDownloadUrls
+} from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
@@ -125,7 +130,6 @@ export const fetchLinks = (retrievalCollectionData, authToken) => (dispatch) => 
 
         // Fetch the download links from the granule metadata
         const granuleLinks = getDownloadUrls(entry)
-        console.log(granuleLinks)
 
         dispatch(updateGranuleLinks(granuleLinks.map(lnk => lnk.href)))
       })

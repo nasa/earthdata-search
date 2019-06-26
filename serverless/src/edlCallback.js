@@ -49,7 +49,7 @@ export default async function edlCallback(event) {
     }
 
     // Invoke the Lambda to store the authenticated users' data in our database
-    await invokeLambda('earthdata-search-lab-storeUserData', eventParams)
+    await invokeLambda(process.env.storeUserLambda, eventParams)
   } catch (e) {
     console.log(e)
   }

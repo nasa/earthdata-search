@@ -32,13 +32,16 @@ export const storeUserData = async (event) => {
   }
 
   const existingUser = await dbConnection('users').select('id').where({ urs_id: username })
+
+  let queryResponse
+
   if (existingUser.length) {
-    await dbConnection('users').update({ ...userPayload }).where({ urs_id: username })
+    queryResponse = await dbConnection('users').returning(['id', 'urs_id']).update({ ...userPayload }).where({ urs_id: username })
   } else {
-    await dbConnection('users').insert({ ...userPayload })
+    queryResponse = await dbConnection('users').returning(['id', 'urs_id']).insert({ ...userPayload })
   }
 
-  return {}
+  return queryResponse
 }
 
 export default storeUserData
