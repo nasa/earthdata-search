@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
-import GranuleListContainer from '../../containers/GranuleListContainer/GranuleListContainer'
+import GranuleLinkListContainer from '../../containers/GranuleLinkListContainer/GranuleLinkListContainer'
 
 export const Granules = () => (
   <div className="route-wrapper route-wrapper--granules route-wrapper--light">
@@ -10,7 +10,7 @@ export const Granules = () => (
       </header>
       <Switch>
         <Route path="/granules/download">
-          <GranuleListContainer />
+          <GranuleLinkListContainer />
         </Route>
       </Switch>
     </div>

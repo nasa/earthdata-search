@@ -1,4 +1,5 @@
-import { populateGranuleResults, prepareGranuleParams, buildGranuleSearchParams } from '../util/granules'
+import axios from 'axios'
+import { populateGranuleResults, prepareGranuleParams, buildGranuleSearchParams, getDownloadUrls } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
@@ -13,9 +14,11 @@ import {
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_DOWNLOAD_PARAMS,
+  UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
 
 export const addGranulesFromCollection = payload => ({
   type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
@@ -68,12 +71,121 @@ export const onUndoExcludeGranule = payload => ({
   payload
 })
 
+export const updateGranuleDownloadParams = payload => ({
+  type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
+  payload
+})
+
+export const updateGranuleLinks = payload => ({
+  type: UPDATE_GRANULE_LINKS,
+  payload
+})
+
 export const excludeGranule = data => (dispatch) => {
   const { collectionId, granuleId } = data
   dispatch(onExcludeGranule({
     collectionId,
     granuleId
   }))
+}
+
+/**
+ * Fetch all relevant links to the granules that are part of the provided collection
+ * @param {Integer} retrievalId Database id of the retrieval object
+ * @param {String} collectionId CMR collection id to get granules for from a retrieval
+ * @param {Object} retrievalCollectionData Retreival Collection response from the database
+ * @param {String} authToken The authenticated users' JWT token
+ */
+export const fetchLinks = (retrievalCollectionData, authToken) => (dispatch) => {
+  const requestObject = new GranuleRequest(authToken)
+
+  const {
+    collection_id: collectionId,
+    granule_count: granuleCount,
+    granule_params: granuleParams
+  } = retrievalCollectionData
+
+  // The number of granules to request per page from CMR
+  const pageSize = 500
+
+  // Determine how many pages we will need to load to display all granules
+  const totalPages = Math.ceil(granuleCount / pageSize)
+
+  return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
+    const granuleResponse = requestObject.search({
+      pageSize,
+      pageNum: pageNum + 1,
+      echoCollectionId: collectionId,
+      ...granuleParams
+    })
+      .then((response) => {
+        const { data } = response
+        const { feed } = data
+        const { entry } = feed
+
+        // Fetch the download links from the granule metadata
+        const granuleLinks = getDownloadUrls(entry)
+        console.log(granuleLinks)
+
+        dispatch(updateGranuleLinks(granuleLinks.map(lnk => lnk.href)))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+    return granuleResponse
+  }))
+}
+
+/**
+ * Fetch necessary record from the database and use them to retrieve granules from CMR
+ * @param {Object} data A retrieval collection record from the database
+ */
+export const fetchGranuleLinks = data => (dispatch, getState) => {
+  const { id: retrievalId, collection_id: collectionId } = data
+
+  if (retrievalId && collectionId) {
+    const { authToken } = getState()
+
+    const { apiHost } = getEarthdataConfig('prod')
+
+    // Fetch the retrieval collection data so we know what
+    // granule parameters were provided in the order
+    const lambdaResponse = axios({
+      method: 'get',
+      baseURL: apiHost,
+      url: `retrievals/${retrievalId}/collections/${collectionId}`,
+      headers: {
+        Authorization: `Bearer: ${authToken}`
+      }
+    }).then((response) => {
+      // Use the stored granule parameters to retrieve the granules from
+      // CMR to extract the urls from
+      const { data } = response
+
+      dispatch(updateGranuleDownloadParams(data))
+      dispatch(fetchLinks(data))
+    })
+      .catch((e) => {
+        if (e.response) {
+          const { data } = e.response
+          const { errors = [] } = data
+
+          console.log(errors)
+        } else {
+          console.log(e)
+        }
+      })
+
+    return lambdaResponse
+  }
+
+  return null
+}
+
+export const setGranuleDownloadParams = data => (dispatch) => {
+  dispatch(updateGranuleDownloadParams(data))
+  dispatch(fetchGranuleLinks(data))
 }
 
 export const undoExcludeGranule = collectionId => (dispatch) => {
@@ -142,8 +254,3 @@ export const getGranules = () => (dispatch, getState) => {
 
   return response
 }
-
-export const updateGranuleDownloadParams = state => ({
-  type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
-  payload: state
-})

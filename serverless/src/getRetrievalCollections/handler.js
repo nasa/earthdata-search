@@ -17,8 +17,7 @@ export default async function getRetrieval(event, context) {
     context.callbackWaitsForEmptyEventLoop = false
 
     const {
-      retrieval_id: providedRetrieval,
-      collection_id: providedCollection
+      retrieval_id: providedRetrieval
     } = event.pathParameters
 
     const jwtToken = getJwtToken(event)
@@ -35,9 +34,9 @@ export default async function getRetrieval(event, context) {
     dbConnection = await getDbConnection(dbConnection)
 
     const retrievalResponse = await dbConnection('retrieval_collections')
-      .first(
+      .select(
         'retrievals.id',
-        'retrievals.jsondata',
+        'retreivals.jsondata',
         'retrievals.environment',
         'access_method',
         'collection_id',
@@ -48,7 +47,6 @@ export default async function getRetrieval(event, context) {
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
-        'retrieval_collections.collection_id': providedCollection,
         'retrievals.id': providedRetrieval,
         'users.urs_id': username
       })
@@ -66,7 +64,7 @@ export default async function getRetrieval(event, context) {
       isBase64Encoded: false,
       statusCode: 404,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [`Retrieval Collection '${providedCollection}' (for Retrieval '${providedRetrieval}') not found.`] })
+      body: JSON.stringify({ errors: [`Retrieval '${providedRetrieval}') not found.`] })
     }
   } catch (e) {
     console.log(e)

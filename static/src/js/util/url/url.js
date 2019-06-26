@@ -25,7 +25,7 @@ export const stringify = params => qs.stringify(
   cleanDeep(params, { emptyObjects: false, undefinedValues: false }),
   {
     addQueryPrefix: true,
-    encoder: str => str.replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
+    encoder: str => str.toString().replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
   }
 )
 
@@ -113,8 +113,8 @@ export const decodeUrlParams = (paramString) => {
   }
 
   const granuleDownloadParams = {}
-  granuleDownloadParams.retrievalId = decodeHelp(params, 'granuleDownloadRetrievalId')
-  granuleDownloadParams.collectionId = decodeHelp(params, 'granuleDownloadCollectionId')
+  granuleDownloadParams.id = decodeHelp(params, 'granuleDownloadRetrievalId')
+  granuleDownloadParams.collection_id = decodeHelp(params, 'granuleDownloadCollectionId')
 
   return {
     collections,

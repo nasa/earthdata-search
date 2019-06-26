@@ -148,7 +148,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
               }
             }
           },
-          isVisible: true,
+          isVisible: true
         }
       }
     }

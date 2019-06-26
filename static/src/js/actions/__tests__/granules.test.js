@@ -7,7 +7,9 @@ import {
   getGranules,
   excludeGranule,
   undoExcludeGranule,
-  updateGranuleDownloadParams
+  updateGranuleDownloadParams,
+  updateGranuleLinks,
+  fetchGranuleLinks
 } from '../granules'
 import {
   UPDATE_GRANULE_RESULTS,
@@ -18,7 +20,8 @@ import {
   UPDATE_AUTH,
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_GRANULE_DOWNLOAD_PARAMS
+  UPDATE_GRANULE_DOWNLOAD_PARAMS,
+  UPDATE_GRANULE_LINKS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -301,8 +304,8 @@ describe('undoExcludeGranule', () => {
 describe('updateGranuleDownloadParams', () => {
   test('should create an action to update the granule download parameters', () => {
     const payload = {
-      retrievalId: 'retrievalId',
-      collectionId: 'collectionId'
+      retrievalId: 'id',
+      collectionId: 'collection_id'
     }
     const expectedAction = {
       type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
@@ -312,5 +315,117 @@ describe('updateGranuleDownloadParams', () => {
     store.dispatch(updateGranuleDownloadParams(payload))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual(expectedAction)
+  })
+})
+
+describe('updateGranuleLinks', () => {
+  test('should create an action to update the granule download parameters', () => {
+    const payload = {
+      granuleDownloadLinks: []
+    }
+    const expectedAction = {
+      type: UPDATE_GRANULE_LINKS,
+      payload
+    }
+    const store = mockStore()
+    store.dispatch(updateGranuleLinks(payload))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual(expectedAction)
+  })
+})
+
+describe('fetchGranuleLinks', () => {
+  beforeEach(() => {
+    moxios.install()
+
+    jest.clearAllMocks()
+  })
+
+  afterEach(() => {
+    moxios.uninstall()
+  })
+
+  test('calls lambda to get the retreival collection details', async () => {
+    const endpointResponse = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C194001241-LPDAAC_ECS',
+      collection_metadata: {},
+      granule_params: {
+        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+      },
+      granule_count: 888
+    }
+
+    moxios.stubRequest(/3001\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
+      status: 200,
+      response: endpointResponse
+    })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      collection_id: 'C194001241-LPDAAC_ECS'
+    }
+
+    await store.dispatch(fetchGranuleLinks(params, 'token'))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        ...endpointResponse
+      },
+      type: UPDATE_GRANULE_DOWNLOAD_PARAMS
+    })
+  })
+
+  test('takes no actions if parameters are missing', () => {
+    const store = mockStore({
+      query: {
+        collection: {
+          temporal: {},
+          spatial: {}
+        },
+        granule: { pageNum: 1 }
+      }
+    })
+
+    const params = {
+      id: 3
+    }
+
+    store.dispatch(fetchGranuleLinks(params, 'token'))
+    const storeActions = store.getActions()
+    expect(storeActions.length).toEqual(0)
+  })
+
+  test('takes no action when the request fails', async () => {
+    moxios.stubRequest(/3001\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
+      status: 404,
+      response: {
+        errors: [
+          'Retrieval Collection \'C194001241-LPDAAC_ECS\' (for Retrieval \'3\') not found'
+        ]
+      }
+    })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    const params = {
+      id: 3,
+      collection_id: 'C194001241-LPDAAC_ECS'
+    }
+
+    await store.dispatch(fetchGranuleLinks(params, 'token'))
+    expect(consoleMock).toHaveBeenCalledTimes(1)
   })
 })

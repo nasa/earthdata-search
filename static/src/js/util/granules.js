@@ -201,3 +201,22 @@ export const createDataLinks = (links = []) => {
     ...ftpLinks
   ]
 }
+
+/**
+* Pull out download links from within the granule metadata
+* @param {Array} granules search result for granules that a user has asked to download
+* @returns {Array} All relevant urls for downloadable granules
+*/
+// eslint-disable-next-line arrow-body-style
+export const getDownloadUrls = (granules) => {
+  // Iterate through each granule search result to pull out relevant links
+  return granules.map((granuleMetadata) => {
+    const { links: linkMetadata = [] } = granuleMetadata
+
+    // Find the correct link from the list within the metadata
+    return linkMetadata.find((link) => {
+      const { inherited, rel } = link
+      return rel.includes('/data#') && !inherited
+    })
+  }).filter(Boolean)
+}
