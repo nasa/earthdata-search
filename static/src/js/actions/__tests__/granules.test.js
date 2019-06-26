@@ -1,4 +1,5 @@
 import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -9,7 +10,8 @@ import {
   undoExcludeGranule,
   updateGranuleDownloadParams,
   updateGranuleLinks,
-  fetchGranuleLinks
+  fetchGranuleLinks,
+  fetchLinks
 } from '../granules'
 import {
   UPDATE_GRANULE_RESULTS,
@@ -427,5 +429,100 @@ describe('fetchGranuleLinks', () => {
 
     await store.dispatch(fetchGranuleLinks(params, 'token'))
     expect(consoleMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('fetchLinks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('calls lambda to get the retreival collection details', async () => {
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          entry: [
+            {
+              links: [
+                {
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                  type: 'application/x-hdfeos',
+                  title: 'This file may be downloaded directly from this link',
+                  hreflang: 'en-US',
+                  href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                },
+                {
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+                  type: 'text/html',
+                  title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+                  hreflang: 'en-US',
+                  href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                },
+                {
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+                  type: 'image/jpeg',
+                  title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+                  hreflang: 'en-US',
+                  href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+                }
+              ]
+            }
+          ]
+        }
+      })
+
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          entry: [
+            {
+              links: [
+                {
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                  type: 'application/x-hdfeos',
+                  title: 'This file may be downloaded directly from this link',
+                  hreflang: 'en-US',
+                  href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+                }
+              ]
+            }
+          ]
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C194001241-LPDAAC_ECS',
+      collection_metadata: {},
+      granule_params: {
+        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+      },
+      granule_count: 888
+    }
+
+    await store.dispatch(fetchLinks(params, 'token'))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: [
+        'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+      ],
+      type: UPDATE_GRANULE_LINKS
+    })
+    expect(storeActions[1]).toEqual({
+      payload: [
+        'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+      ],
+      type: UPDATE_GRANULE_LINKS
+    })
   })
 })
