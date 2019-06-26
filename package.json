@@ -62,6 +62,7 @@
     "mock-knex": "^0.4.5",
     "mockdate": "^2.0.2",
     "moxios": "^0.4.0",
+    "nock": "^10.0.6",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-scss": "^2.0.0",
