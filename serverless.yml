@@ -289,6 +289,16 @@ functions:
           path: retrievals/{retrieval_id}/collections/{collection_id}
           authorizer: edlAuthorizer
 
+  getRetrievalCollections:
+    handler: serverless/src/getRetrievalCollections/handler.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: retrievals/{retrieval_id}/collections
+          authorizer: edlAuthorizer
+
 #
 # Additional AWS Resources
 #

@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   onChangeUrl:
     query => dispatch(actions.changeUrl(query)),
   onUpdateGranuleDownloadParams:
-    params => dispatch(actions.updateGranuleDownloadParams(params)),
+    params => dispatch(actions.setGranuleDownloadParams(params)),
   onRestoreCollections:
     collections => dispatch(actions.restoreCollections(collections)),
   onRestoreProject:
@@ -32,8 +32,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   collections: state.metadata.collections,
-  granuleDownloadRetrievalId: state.granuleDownloadParams.retrievalId,
-  granuleDownloadCollectionId: state.granuleDownloadParams.collectionId,
+  granuleDownloadRetrievalId: state.granuleDownload.granuleDownloadParams.id,
+  granuleDownloadCollectionId: state.granuleDownload.granuleDownloadParams.collection_id,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,

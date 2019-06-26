@@ -1,17 +1,16 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Granules } from '../Granules'
+import { GranuleLinkListContainer } from '../GranuleLinkListContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    authToken: '',
-    granuleDownloadParams: {}
+    granuleDownloadLinks: []
   }
 
-  const enzymeWrapper = shallow(<Granules {...props} />)
+  const enzymeWrapper = shallow(<GranuleLinkListContainer {...props} />)
 
   return {
     enzymeWrapper,

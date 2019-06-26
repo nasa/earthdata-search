@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const GranuleList = ({ links }) => (
+export const GranuleLinkList = ({ links }) => (
   <ul className="granules-links-list">
     {
       links.map((link, i) => {
@@ -16,8 +16,8 @@ export const GranuleList = ({ links }) => (
   </ul>
 )
 
-GranuleList.propTypes = {
+GranuleLinkList.propTypes = {
   links: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
-export default GranuleList
+export default GranuleLinkList
