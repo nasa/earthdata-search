@@ -29,7 +29,7 @@ export const ProjectCollectionsList = (props) => {
   } = props
 
   const { byId } = collections
-  const { collectionIds: projectIds } = project
+  const { collectionIds: projectIds, byId: projectById } = project
 
   const projectIsEmpty = !projectIds.length
 
@@ -42,6 +42,7 @@ export const ProjectCollectionsList = (props) => {
       <ProjectCollectionItem
         collectionId={collectionId}
         collection={byId[collectionId]}
+        projectCollection={projectById[collectionId]}
         color={color}
         index={index}
         isPanelActive={isPanelActive}

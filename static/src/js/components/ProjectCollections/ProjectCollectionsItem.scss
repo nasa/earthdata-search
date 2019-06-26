@@ -33,6 +33,7 @@
   }
 
   &__title-button {
+    flex-grow: 1;
     display: block;
     text-align: left;
     color: $color__black--900;
@@ -98,6 +99,15 @@
   &__footer {
     display: flex;
     justify-content: flex-end;
+  }
+
+  &__status {
+    margin-right: $spacer/4;
+    font-size: 0.85rem;
+
+    &--invalid {
+      color: $color__red;
+    }
   }
 
   &__more-options-button {

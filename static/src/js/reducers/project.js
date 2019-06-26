@@ -14,13 +14,28 @@ const initialState = {
 const projectReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COLLECTION_TO_PROJECT: {
-      if (state.collectionIds.indexOf(action.payload) !== -1) return state
+      const collectionId = action.payload
+      if (state.collectionIds.indexOf(collectionId) !== -1) return state
+
+      const byId = {
+        ...state.byId
+      }
+
+      byId[collectionId] = {
+        ...byId[collectionId],
+        // TODO: This will likely change when dealing with default access methods
+        isValid: false
+      }
 
       return {
         ...state,
+        byId: {
+          ...state.byId,
+          ...byId
+        },
         collectionIds: [
           ...state.collectionIds,
-          action.payload
+          collectionId
         ]
       }
     }
@@ -37,12 +52,21 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case RESTORE_PROJECT: {
+      const { collectionIds } = action.payload
+      const byId = {}
+
+      collectionIds.forEach((id) => {
+        // TODO: This will likely change when dealing with default access methods
+        byId[id] = { isValid: false }
+      })
+
       return {
-        ...state,
-        ...action.payload
+        byId,
+        collectionIds
       }
     }
     case SELECT_ACCESS_METHOD: {
+      console.warn('SELECT_ACCESS_METHOD')
       const { collectionId, selectedAccessMethod } = action.payload
 
       const byId = {
@@ -63,7 +87,9 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case UPDATE_ACCESS_METHOD: {
-      const { collectionId, method } = action.payload
+      console.warn('UPDATE_ACCESS_METHOD')
+      // Check action for this and set isValid here
+      const { collectionId, isValid, method } = action.payload
 
       const byId = {
         ...state.byId
@@ -76,7 +102,8 @@ const projectReducer = (state = initialState, action) => {
         accessMethods: {
           ...accessMethods,
           ...method
-        }
+        },
+        isValid
       }
 
       return {

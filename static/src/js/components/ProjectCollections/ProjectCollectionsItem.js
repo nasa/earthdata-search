@@ -26,7 +26,8 @@ const ProjectCollectionItem = ({
   isPanelActive,
   onRemoveCollectionFromProject,
   onToggleCollectionVisibility,
-  onSetActivePanel
+  onSetActivePanel,
+  projectCollection
 }) => {
   const {
     granules,
@@ -39,13 +40,16 @@ const ProjectCollectionItem = ({
   } = metadata
   const { totalSize = {} } = granules
   const { size = '', unit = '' } = totalSize
+  const { isValid } = projectCollection
 
   const className = classNames([
     'project-collections-item',
     {
-      'project-collections-item--is-active': isPanelActive
+      'project-collections-item--is-active': isPanelActive,
+      'project-collections-item--is-valid': isValid
     }
   ])
+
 
   return (
     <li style={{ borderLeftColor: color }} className={className}>
@@ -100,6 +104,13 @@ const ProjectCollectionItem = ({
         </li>
       </ul>
       <div className="project-collections-item__footer">
+        {
+          !isValid && (
+            <span className="project-collections-item__status project-collections-item__status--invalid">
+              <i className="fa fa-exclamation-circle" />
+            </span>
+          )
+        }
         <Button
           className="project-collections-item__more-options-button"
           variant="link"
@@ -123,7 +134,8 @@ ProjectCollectionItem.propTypes = {
   isPanelActive: PropTypes.bool.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired
+  onSetActivePanel: PropTypes.func.isRequired,
+  projectCollection: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollectionItem

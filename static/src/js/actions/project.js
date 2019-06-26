@@ -17,6 +17,7 @@ import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
 import emptyAccessMethod from '../util/emptyAccessMethod'
+import isProjectCollectionValid from '../util/isProjectCollectionValid'
 
 export const addCollectionToProject = payload => ({
   type: ADD_COLLECTION_TO_PROJECT,
@@ -45,7 +46,10 @@ export const restoreProject = payload => ({
 
 export const updateAccessMethod = payload => ({
   type: UPDATE_ACCESS_METHOD,
-  payload
+  payload: {
+    ...payload,
+    isValid: isProjectCollectionValid(payload.method)
+  }
 })
 
 export const selectAccessMethod = payload => (dispatch, getState) => {
