@@ -59,7 +59,6 @@ const submitOrder = async (event) => {
 
     await orderDbTransaction.commit()
 
-
     return {
       isBase64Encoded: false,
       statusCode: 200,
