@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
+import isPath from '../../util/isPath'
+
 import ConnectedTimelineContainer from '../TimelineContainer/TimelineContainer'
+
 import './FooterContainer.scss'
 
 const mapStateToProps = state => ({
@@ -15,7 +20,8 @@ class FooterContainer extends Component {
   }
 
   render() {
-    const { loadTime } = this.props
+    const { loadTime, location } = this.props
+    const searchTimeVisible = isPath(location.pathname, ['/search', '/projects'])
 
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
@@ -25,7 +31,7 @@ class FooterContainer extends Component {
         <footer className="footer">
           <span className="footer__info footer__info--left">
             <span className="footer__ver-pill">v Research</span>
-            { loadTime !== 0 && (
+            {(searchTimeVisible && loadTime !== 0) && (
               <span className="footer__info-bit footer__info-bit--emph">
                 {`Search Time: ${loadTimeInSeconds}s`}
               </span>
@@ -74,7 +80,10 @@ FooterContainer.defaultProps = {
 }
 
 FooterContainer.propTypes = {
-  loadTime: PropTypes.number
+  loadTime: PropTypes.number,
+  location: PropTypes.shape({}).isRequired
 }
 
-export default connect(mapStateToProps)(FooterContainer)
+export default withRouter(
+  connect(mapStateToProps)(FooterContainer)
+)
