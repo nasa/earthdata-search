@@ -53,9 +53,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
     expect(updateGranuleDownloadParamsReducer(undefined, action)).toEqual(expectedState)
   })
-})
 
-describe('UPDATE_GRANULE_LINKS', () => {
   test('returns the correct state when data has been provided', () => {
     const action = {
       type: UPDATE_GRANULE_LINKS,
