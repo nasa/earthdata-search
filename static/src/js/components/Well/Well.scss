@@ -5,7 +5,7 @@
   overflow: hidden;
 
   &__main {
-    padding: $spacer;
+    padding: $spacer*1.5;
   }
 
   &__heading {
@@ -23,13 +23,10 @@
   }
 
   &__section {
-    margin-bottom: $spacer;
+    margin-bottom: $spacer*1.5;
   }
 
   &__footer {
-    padding: $spacer;
-    background-color: $color__green;
-    color: $color__white;
-    border-top: 5px solid #228047;
+    padding: $spacer*1.5;
   }
 }

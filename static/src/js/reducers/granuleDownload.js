@@ -10,7 +10,8 @@ const updateGranuleDownloadParamsReducer = (state = initialState, action) => {
     case UPDATE_GRANULE_DOWNLOAD_PARAMS: {
       return {
         ...state,
-        granuleDownloadParams: action.payload
+        granuleDownloadParams: action.payload,
+        granuleDownloadLinks: []
       }
     }
     case UPDATE_GRANULE_LINKS: {

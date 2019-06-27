@@ -24,7 +24,6 @@ class FooterContainer extends Component {
     const searchTimeVisible = isPath(location.pathname, ['/search', '/projects'])
 
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
-
     return (
       <React.Fragment>
         <ConnectedTimelineContainer />

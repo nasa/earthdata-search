@@ -39,6 +39,10 @@
       flex-wrap: nowrap;
       justify-content: space-between;
     }
+
+    .route-wrapper--light & {
+      display: block;
+    }
   }
 
   &__content {

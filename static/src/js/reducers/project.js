@@ -66,7 +66,6 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case SELECT_ACCESS_METHOD: {
-      console.warn('SELECT_ACCESS_METHOD')
       const { collectionId, selectedAccessMethod } = action.payload
 
       const byId = {
@@ -87,7 +86,6 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case UPDATE_ACCESS_METHOD: {
-      console.warn('UPDATE_ACCESS_METHOD')
       // Check action for this and set isValid here
       const { collectionId, isValid, method } = action.payload
 

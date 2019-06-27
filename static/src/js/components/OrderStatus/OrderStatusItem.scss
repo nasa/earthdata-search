@@ -56,4 +56,12 @@
     margin-left: $spacer/2;
     font-weight: 300;
   }
+
+  &__body {
+    display: flex;
+  }
+
+  &__button {
+    margin-right: $spacer/2;
+  }
 }

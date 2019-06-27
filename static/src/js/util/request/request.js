@@ -108,6 +108,9 @@ export default class Request {
       method: 'get',
       baseURL: this.baseUrl,
       url,
+      headers: {
+        Authorization: `Bearer: ${this.authToken}`
+      },
       transformRequest: [
         (data, headers) => this.transformRequest(data, headers)
       ]

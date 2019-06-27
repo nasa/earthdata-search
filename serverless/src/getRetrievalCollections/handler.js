@@ -36,7 +36,7 @@ export default async function getRetrieval(event, context) {
     const retrievalResponse = await dbConnection('retrieval_collections')
       .select(
         'retrievals.id',
-        'retreivals.jsondata',
+        'retrievals.jsondata',
         'retrievals.environment',
         'access_method',
         'collection_id',
@@ -52,11 +52,18 @@ export default async function getRetrieval(event, context) {
       })
 
     if (retrievalResponse) {
+      const response = {
+        id: retrievalResponse[0].id,
+        environment: retrievalResponse[0].environment,
+        jsondata: retrievalResponse[0].jsondata,
+        collections: retrievalResponse
+      }
+
       return {
         isBase64Encoded: false,
         statusCode: 200,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify(retrievalResponse)
+        body: JSON.stringify(response)
       }
     }
 

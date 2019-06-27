@@ -69,15 +69,6 @@ class App extends Component {
                     <ConnectedEdscMapContainer />
                   </>
                 </Route>
-                <Route path="/search" component={Search} />
-                <Route
-                  path="/projects"
-                  render={() => (
-                    <AuthRequiredContainer>
-                      <Project />
-                    </AuthRequiredContainer>
-                  )}
-                />
               </Switch>
               <FooterContainer />
             </ConnectedUrlQueryContainer>

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 export const WellFooter = ({
   children
 }) => (
-  <div className="well__footer">
+  <footer className="well__footer">
     {children}
-  </div>
+  </footer>
 )
 
 WellFooter.defaultProps = {

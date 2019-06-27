@@ -55,7 +55,10 @@ export const ProjectPanels = pure(({
     const { metadata } = collection
     const { dataset_id: title, id, granule_count: granuleCount } = metadata
 
-    const { isValid = false } = projectCollection
+    const {
+      isValid = false,
+      selectedAccessMethod
+    } = projectCollection
 
     const editOptionsFooter = (
       <div className="project-panels__footer">
@@ -134,6 +137,7 @@ export const ProjectPanels = pure(({
             metadata={metadata}
             onSelectAccessMethod={onSelectAccessMethod}
             onSetActivePanel={onSetActivePanel}
+            selectedAccessMethod={selectedAccessMethod}
           />
         </PanelItem>
         <PanelItem hideFooter>

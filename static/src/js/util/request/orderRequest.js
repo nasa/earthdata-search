@@ -11,8 +11,13 @@ export default class OrderRequest extends Request {
   permittedCmrKeys() {
     return [
       'collections',
-      'environment'
+      'environment',
+      'json_data'
     ]
+  }
+
+  collections(id) {
+    return this.get(`/retrievals/${id}/collections`)
   }
 
   submit(params) {

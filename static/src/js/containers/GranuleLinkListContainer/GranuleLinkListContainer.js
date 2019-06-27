@@ -4,21 +4,17 @@ import PropTypes from 'prop-types'
 import GranuleLinkList from '../../components/GranuleLinkList/GranuleLinkList'
 
 const mapStateToProps = state => ({
-  granuleDownloadLinks: state.granuleDownload.granuleDownloadLinks
+  granuleDownload: state.granuleDownload
 })
 
-export const GranuleLinkListContainer = (props) => {
-  const { granuleDownloadLinks = [] } = props
-
-  return (
-    <GranuleLinkList
-      links={granuleDownloadLinks}
-    />
-  )
-}
+export const GranuleLinkListContainer = ({ granuleDownload = {} }) => (
+  <GranuleLinkList
+    granuleDownload={granuleDownload}
+  />
+)
 
 GranuleLinkListContainer.propTypes = {
-  granuleDownloadLinks: PropTypes.arrayOf(PropTypes.string).isRequired
+  granuleDownload: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, null)(GranuleLinkListContainer)

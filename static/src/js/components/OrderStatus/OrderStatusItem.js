@@ -1,19 +1,57 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
+
+import Button from '../Button/Button'
 
 import './OrderStatusItem.scss'
 
-export const OrderStatusItem = ({ collection, type }) => {
+export const OrderStatusItem = ({ collection, onChangePath, type }) => {
+  const {
+    collection_id: collectionId,
+    collection_metadata: collectionMetadata,
+    id: retrievalId
+  } = collection
   const {
     dataset_id: datasetId,
     order_status: orderStatus
-  } = collection
+  } = collectionMetadata
 
   let itemBody
 
   if (type === 'download') {
-    itemBody = <>download body</>
+    itemBody = (
+      <>
+        <Link
+          to={{
+            pathname: '/granules/download',
+            search: `?rid=${retrievalId}&cid=${collectionId}`
+          }}
+          onClick={() => onChangePath(`/granules/download/?rid=${retrievalId}&cid=${collectionId}`)}
+        >
+          <Button
+            className="order-status-item__button"
+            bootstrapVariant="primary"
+            bootstrapSize="sm"
+            label="View/Download Data Links"
+            tooltip={(<>View or download data URLs</>)}
+            tooltipPlacement="bottom"
+            tooltipId="tooltip__download-links"
+          >
+            View/Download Data Links
+          </Button>
+        </Link>
+        {/* <Button
+          className="order-status-item__button"
+          bootstrapVariant="primary"
+          bootstrapSize="sm"
+          label="Download Access Script"
+        >
+          Download Access Script
+        </Button> */}
+      </>
+    )
   }
 
   if (type === 'order') {
@@ -110,6 +148,7 @@ export const OrderStatusItem = ({ collection, type }) => {
 
 OrderStatusItem.propTypes = {
   collection: PropTypes.shape({}).isRequired,
+  onChangePath: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired
 }
 

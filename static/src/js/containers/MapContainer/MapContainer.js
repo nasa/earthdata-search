@@ -14,6 +14,7 @@ import {
 import $ from 'jquery'
 
 import '../../util/map/sphericalPolygon'
+import isPath from '../../util/isPath'
 
 import LayerBuilder
   from '../../components/Map/LayerBuilder'
@@ -185,7 +186,7 @@ export class MapContainer extends Component {
       zoom
     } = map
 
-    const isProjectPage = pathname.startsWith('/project')
+    const isProjectPage = isPath(pathname, '/project')
 
     const center = [latitude, longitude]
 

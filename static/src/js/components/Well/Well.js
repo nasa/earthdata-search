@@ -14,21 +14,24 @@ export const Well = ({
   className,
   children,
   heading,
-  introduction
+  introduction,
+  variant
 }) => {
   const classes = classNames([
     'well',
-    className ? `well--${className}` : null,
+    variant ? `well--${variant}` : null,
     className
   ])
   return (
-    <div className={classes}>
-      <h2 className="well__heading">{heading}</h2>
-      <div className="well__intro">{introduction}</div>
+    <section className={classes}>
+      <header>
+        <h2 className="well__heading">{heading}</h2>
+        <div className="well__intro">{introduction}</div>
+      </header>
       <div className="well__content">
         {children}
       </div>
-    </div>
+    </section>
   )
 }
 
@@ -36,14 +39,16 @@ Well.defaultProps = {
   children: null,
   className: null,
   heading: null,
-  introduction: null
+  introduction: null,
+  variant: null
 }
 
 Well.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   heading: PropTypes.node,
-  introduction: PropTypes.node
+  introduction: PropTypes.node,
+  variant: PropTypes.string
 }
 
 Well.Footer = WellFooter

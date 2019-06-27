@@ -10,7 +10,8 @@ export const prepareOrderParams = (state) => {
   const {
     authToken,
     metadata = {},
-    project
+    project,
+    router
   } = state
 
   const { collections } = metadata
@@ -23,12 +24,13 @@ export const prepareOrderParams = (state) => {
   const projectCollections = []
   projectIds.forEach((collectionId) => {
     const projectCollection = byId[collectionId]
-    const { granules } = projectCollection
+    const { granules, metadata } = projectCollection
 
     const returnValue = {}
 
     returnValue.id = collectionId
     returnValue.granule_count = granules.hits
+    returnValue.collection_metadata = metadata
 
     const params = buildGranuleSearchParams(prepareGranuleParams(state, collectionId))
     returnValue.granule_params = params
@@ -40,10 +42,15 @@ export const prepareOrderParams = (state) => {
     projectCollections.push(returnValue)
   })
 
+  const jsonData = {
+    source: router.location.search
+  }
+
   return {
     authToken,
     collections: [...projectCollections],
-    environment: 'prod'
+    environment: 'prod',
+    json_data: jsonData
   }
 }
 
