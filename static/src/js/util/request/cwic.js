@@ -1,6 +1,6 @@
 import { parse as parseXml } from 'fast-xml-parser'
 import Request from './request'
-import { getTemporal } from '../edsc-date'
+import { getTemporal } from '../edscDate'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 export default class CwicGranuleRequest extends Request {

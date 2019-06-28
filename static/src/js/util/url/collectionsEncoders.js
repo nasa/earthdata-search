@@ -1,4 +1,4 @@
-import isNumber from '../is-number'
+import isNumber from '../isNumber'
 
 /**
  * Encode a list of Granule IDs

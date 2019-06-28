@@ -1,4 +1,4 @@
-import { normalizeTime, getTemporal } from '../edsc-date'
+import { normalizeTime, getTemporal } from '../edscDate'
 
 describe('normalizeTime', () => {
   describe('when no time is provided', () => {
