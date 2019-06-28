@@ -1,7 +1,7 @@
 import Request from './request'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
-import { getTemporal } from '../edsc-date'
+import { getTemporal } from '../edscDate'
 
 /**
  * Request object for granule specific requests

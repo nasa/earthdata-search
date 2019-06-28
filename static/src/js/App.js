@@ -12,6 +12,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
 import Granules from './routes/Granules/Granules'
+import Data from './routes/Data/Data'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -46,7 +47,22 @@ class App extends Component {
                 <title>Earthdata Search</title>
               </Helmet>
               <Switch>
-                <Route path="/granules" component={Granules} />
+                <Route
+                  path="/granules"
+                  render={() => (
+                    <AuthRequiredContainer>
+                      <Granules />
+                    </AuthRequiredContainer>
+                  )}
+                />
+                <Route
+                  path="/data"
+                  render={() => (
+                    <AuthRequiredContainer>
+                      <Data />
+                    </AuthRequiredContainer>
+                  )}
+                />
                 <Route path="/">
                   <>
                     <Switch>
@@ -67,16 +83,6 @@ class App extends Component {
                     <ConnectedEdscMapContainer />
                   </>
                 </Route>
-                <Route path="/search" component={Search} />
-                <Route
-                  path="/projects"
-                  render={() => (
-                    <AuthRequiredContainer>
-                      <Project />
-                    </AuthRequiredContainer>
-                  )}
-                />
-                <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
               </Switch>
               <FooterContainer />
             </ConnectedUrlQueryContainer>

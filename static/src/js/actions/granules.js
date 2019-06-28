@@ -118,10 +118,10 @@ export const fetchLinks = (retrievalCollectionData, authToken) => (dispatch) => 
 
   return Promise.all(Array.from(Array(totalPages)).map((_, pageNum) => {
     const granuleResponse = requestObject.search({
+      ...granuleParams,
       pageSize,
       pageNum: pageNum + 1,
-      echoCollectionId: collectionId,
-      ...granuleParams
+      echoCollectionId: collectionId
     })
       .then((response) => {
         const { data } = response

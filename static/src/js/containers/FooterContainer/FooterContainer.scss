@@ -54,7 +54,7 @@
 
     &:before {
       display: inline-block;
-      transform: translate(-0.25rem,-.165rem);
+      transform: translate(-0.275rem,-.165rem) scale(0.5);
       content: '\f111';
       font-family: 'FontAwesome';
       color: $color__white;

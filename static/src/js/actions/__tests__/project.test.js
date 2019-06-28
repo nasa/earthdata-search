@@ -86,6 +86,7 @@ describe('updateAccessMethod', () => {
   test('should create an action to update an access method', () => {
     const payload = {
       collectionId: 'collectionId',
+      isValid: true,
       method: {
         download: {
           type: 'download'
@@ -126,6 +127,7 @@ describe('selectAccessMethod', () => {
       type: UPDATE_ACCESS_METHOD,
       payload: {
         collectionId: 'collectionId',
+        isValid: true,
         method: { download: { type: 'download' } }
       }
     })

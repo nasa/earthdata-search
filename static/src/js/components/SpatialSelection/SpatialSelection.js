@@ -80,6 +80,16 @@ class SpatialSelection extends Component {
     this.onDrawStop = this.onDrawStop.bind(this)
   }
 
+  componentDidMount() {
+    const { mapRef } = this.props
+    const map = mapRef.leafletElement
+    if (!map) {
+      return
+    }
+
+    this.renderShape(this.props)
+  }
+
   componentWillReceiveProps(nextProps) {
     const { mapRef } = this.props
     const { drawnPoints, drawnLayer } = this.state

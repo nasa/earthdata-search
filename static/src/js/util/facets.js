@@ -1,6 +1,6 @@
 import qs from 'qs'
 import { camelCase } from 'lodash'
-import { isNumber } from './is-number'
+import { isNumber } from './isNumber'
 import { queryParamsFromUrlString } from './url/url'
 import { alphabet, createEmptyAlphabeticListObj } from './alphabetic-list'
 

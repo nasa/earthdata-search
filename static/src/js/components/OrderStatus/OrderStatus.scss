@@ -1,0 +1,58 @@
+.order-status {
+  &__links {
+    margin-top: $spacer;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__links-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  &__collection-link {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover,
+    &:active {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  .well__footer {
+    background-color: #27ae60;
+    color: $color__white;
+    border-top: 5px solid #249b56;
+  }
+
+  &__footer-link-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__footer-link-item {
+    margin-bottom: $spacer/4;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__footer-link-icon {
+    margin-right: $spacer/4;
+  }
+
+  &__footer-link {
+    color: $color__white;
+    text-decoration: underline;
+
+    &:hover,
+    &:active {
+      color: $color__white;
+      text-decoration: underline;
+    }
+  }
+}

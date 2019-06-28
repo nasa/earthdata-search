@@ -23,6 +23,10 @@
   overflow: hidden;
   align-items: flex-end;
 
+  &--dark {
+    background-color: $color__black--800;
+  }
+
   &__header {
     display: flex;
     flex-wrap: wrap;
@@ -35,6 +39,10 @@
       flex-wrap: nowrap;
       justify-content: space-between;
     }
+
+    .route-wrapper--light & {
+      display: block;
+    }
   }
 
   &__content {
@@ -43,6 +51,34 @@
     height: 100%;
     justify-content: space-between;
     flex-direction: column;
+
+    .route-wrapper--content-page & {
+      justify-content: flex-start;
+      overflow-y: scroll;
+    }
+  }
+
+  &__content-nav {
+    padding: $spacer/2 $spacer;
+    color: $color__white;
+    border-bottom: 1px solid $color__black--700;
+  }
+
+  &__content-nav-link {
+    color: $color__white;
+
+    &:hover,
+    &:active {
+      color: $color__black--100;
+    }
+  }
+
+  &__content-inner {
+    width: 100%;
+    max-width: 62.5rem;
+    margin: 0 auto;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
   }
 
   &--light {

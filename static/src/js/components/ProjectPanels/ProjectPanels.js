@@ -30,7 +30,7 @@ export const ProjectPanels = pure(({
   onSetActivePanel
 }) => {
   const { byId } = collections
-  const { collectionIds: projectIds } = project
+  const { collectionIds: projectIds, byId: projectById } = project
 
   const { activePanel, isOpen } = projectPanels
   const panelSectionEditOptions = []
@@ -51,14 +51,31 @@ export const ProjectPanels = pure(({
   projectIds.forEach((collectionId, index) => {
     loaded = true
     const collection = byId[collectionId]
+    const projectCollection = projectById[collectionId]
     const { metadata } = collection
     const { dataset_id: title, id, granule_count: granuleCount } = metadata
 
+    const {
+      isValid = false,
+      selectedAccessMethod
+    } = projectCollection
+
     const editOptionsFooter = (
       <div className="project-panels__footer">
-        <span className="project-panels__collection-status">
-          <i className="fa fa-check-circle" />
-        </span>
+        {
+          !isValid && (
+            <span className="project-panels__collection-status project-panels__collection-status--invalid">
+              <i className="fa fa-exclamation-circle" />
+            </span>
+          )
+        }
+        {
+          isValid && (
+            <span className="project-panels__collection-status project-panels__collection-status--valid">
+              <i className="fa fa-check-circle" />
+            </span>
+          )
+        }
         <span className="project-panels__collection-count">
           {`Collection ${index + 1} of ${projectIds.length}`}
         </span>
@@ -120,6 +137,7 @@ export const ProjectPanels = pure(({
             metadata={metadata}
             onSelectAccessMethod={onSelectAccessMethod}
             onSetActivePanel={onSetActivePanel}
+            selectedAccessMethod={selectedAccessMethod}
           />
         </PanelItem>
         <PanelItem hideFooter>

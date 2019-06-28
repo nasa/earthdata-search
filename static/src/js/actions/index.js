@@ -30,7 +30,7 @@ import {
   changeGranulePageNum
 } from './search'
 import { changeMap } from './map'
-import { changeUrl } from './urlQuery'
+import { changeUrl, changePath } from './urlQuery'
 import {
   changeCmrFacet,
   updateCmrFacet,
@@ -67,7 +67,7 @@ import {
   toggleCollectionVisibility,
   updateAccessMethod
 } from './project'
-import { submitOrder } from './orders'
+import { fetchOrder, submitOrder } from './order'
 
 const actions = {
   addProjectCollection,
@@ -81,6 +81,7 @@ const actions = {
   changeGranulePageNum,
   changeMap,
   changeQuery,
+  changePath,
   changeProjectQuery,
   changeTimelineQuery,
   changeUrl,
@@ -106,6 +107,7 @@ const actions = {
   restoreProject,
   searchNlp,
   selectAccessMethod,
+  fetchOrder,
   submitOrder,
   toggleCollectionVisibility,
   toggleOverrideTemporalModal,

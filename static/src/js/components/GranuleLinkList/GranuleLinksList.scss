@@ -1,0 +1,23 @@
+.granule-links-list {
+  &__header {
+    margin: $spacer;
+  }
+
+  &__intro {
+    display: flex;
+    align-items: center;
+  }
+
+  &__button {
+    margin-left: $spacer/2;
+  }
+
+  &__body {
+    margin: $spacer;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: $spacer;
+  }
+}

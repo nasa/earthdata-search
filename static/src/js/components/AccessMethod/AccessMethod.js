@@ -16,10 +16,13 @@ import { getValueForTag, hasTag } from '../../util/tags'
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
  */
 export const AccessMethod = ({
+  // eslint-disable-next-line no-unused-vars
   index,
   metadata,
   onSelectAccessMethod,
-  onSetActivePanel
+  // eslint-disable-next-line no-unused-vars
+  onSetActivePanel,
+  selectedAccessMethod
 }) => {
   const { id, tags } = metadata
 
@@ -150,12 +153,15 @@ export const AccessMethod = ({
     <div className="access-method">
       <ProjectPanelSection heading="Select Data Access Method">
         <div className="access-method__radio-list">
-          <RadioList onChange={methodName => handleAccessMethodSelection(methodName)}>
+          <RadioList
+            defaultValue={selectedAccessMethod}
+            onChange={methodName => handleAccessMethodSelection(methodName)}
+          >
             {radioList}
           </RadioList>
         </div>
       </ProjectPanelSection>
-      <ProjectPanelSection>
+      {/* <ProjectPanelSection>
         Access options go here
         <br />
         <button
@@ -164,7 +170,7 @@ export const AccessMethod = ({
         >
           Go to another panel item
         </button>
-      </ProjectPanelSection>
+      </ProjectPanelSection> */}
     </div>
   )
 }
@@ -172,14 +178,16 @@ export const AccessMethod = ({
 AccessMethod.defaultProps = {
   index: null,
   metadata: {},
-  onSetActivePanel: null
+  onSetActivePanel: null,
+  selectedAccessMethod: null
 }
 
 AccessMethod.propTypes = {
   index: PropTypes.number,
   metadata: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func
+  onSetActivePanel: PropTypes.func,
+  selectedAccessMethod: PropTypes.string
 }
 
 export default AccessMethod

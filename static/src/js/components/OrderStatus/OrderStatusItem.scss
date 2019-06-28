@@ -1,0 +1,67 @@
+.order-status-item {
+  margin-bottom: $spacer;
+  padding: $spacer;
+  border: 1px solid $color__black--300;
+  border-radius: $border-radius;
+
+  &--in-progress {
+    border-left: 4px solid $color__indigo;
+  }
+
+  &--complete {
+    border-left: 4px solid $color__green;
+  }
+
+  &--errored {
+    border-left: 4px solid $color__red;
+  }
+
+  &__heading {
+    font-size: 1rem;
+  }
+
+  &__state {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__state-display {
+    flex-grow: 0;
+    display: inline-block;
+    margin-right: $spacer;
+    width: 15%;
+    padding: $spacer/2;
+    background: $color__indigo;
+    border-radius: 2px;
+    color: $color__white;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  &__state-text {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__stats {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  &__percentage {
+    display: inline-block;
+    margin-left: $spacer/2;
+    font-weight: 300;
+  }
+
+  &__body {
+    display: flex;
+  }
+
+  &__button {
+    margin-right: $spacer/2;
+  }
+}

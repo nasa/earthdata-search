@@ -1,4 +1,4 @@
-import { isNumber } from '../is-number'
+import { isNumber } from '../isNumber'
 
 describe('isNumber', () => {
   describe('when provided a non number string', () => {

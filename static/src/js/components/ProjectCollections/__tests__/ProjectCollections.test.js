@@ -37,6 +37,14 @@ function setup() {
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
     project: {
+      byId: {
+        collectionId1: {
+          isValid: false
+        },
+        collectionId2: {
+          isValid: false
+        }
+      },
       collectionIds: ['collectionId1', 'collectionId2']
     },
     projectPanels: {
@@ -70,6 +78,14 @@ describe('ProjectCollectionsList component', () => {
       }
     })
     expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
+      byId: {
+        collectionId1: {
+          isValid: false
+        },
+        collectionId2: {
+          isValid: false
+        }
+      },
       collectionIds: ['collectionId1', 'collectionId2']
     })
     expect(enzymeWrapper.find(ProjectHeader).props().loading).toEqual(false)
@@ -87,6 +103,14 @@ describe('ProjectCollectionsList component', () => {
       }
     })
     expect(enzymeWrapper.find(ProjectCollectionsList).props().project).toEqual({
+      byId: {
+        collectionId1: {
+          isValid: false
+        },
+        collectionId2: {
+          isValid: false
+        }
+      },
       collectionIds: ['collectionId1', 'collectionId2']
     })
 

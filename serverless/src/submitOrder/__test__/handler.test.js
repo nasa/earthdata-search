@@ -40,11 +40,11 @@ describe('submitOrder', () => {
           id: 19
         })
       } else if (step === 3) {
-        query.response({
+        query.response([{
           id: 1,
           user_id: 19,
           environment: 'prod'
-        })
+        }])
       } else {
         query.response([])
       }

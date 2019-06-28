@@ -12,7 +12,7 @@ let dbConnection = null
 const submitOrder = async (event) => {
   const { body } = event
   const { params = {} } = JSON.parse(body)
-  const { collections, environment } = params
+  const { collections, environment, json_data: jsonData } = params
 
   const jwtToken = getJwtToken(event)
 
@@ -32,11 +32,13 @@ const submitOrder = async (event) => {
   try {
     const userRecord = await orderDbTransaction('users').first('id').where({ urs_id: username })
 
-    const retrievalRecord = await orderDbTransaction('retrievals').returning(['id', 'user_id', 'environment'])
+    const retrievalRecord = await orderDbTransaction('retrievals')
+      .returning(['id', 'user_id', 'environment', 'jsondata'])
       .insert({
         user_id: userRecord.id,
         environment,
-        token: accessToken
+        token: accessToken,
+        jsondata: jsonData
       })
 
     await collections.forEachAsync(async (collection) => {
@@ -44,14 +46,16 @@ const submitOrder = async (event) => {
         id,
         access_method: accessMethod,
         granule_count: granuleCount,
-        granule_params: granuleParams
+        granule_params: granuleParams,
+        collection_metadata: collectionMetadata
       } = collection
 
       await orderDbTransaction('retrieval_collections').returning(['id'])
         .insert({
-          retrieval_id: retrievalRecord.id,
+          retrieval_id: retrievalRecord[0].id,
           access_method: accessMethod,
           collection_id: id,
+          collection_metadata: collectionMetadata,
           granule_params: granuleParams,
           granule_count: granuleCount
         })
@@ -63,7 +67,7 @@ const submitOrder = async (event) => {
       isBase64Encoded: false,
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(retrievalRecord)
+      body: JSON.stringify(retrievalRecord[0])
     }
   } catch (e) {
     console.log(e)

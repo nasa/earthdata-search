@@ -1,6 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
+import { isProjectValid } from '../../util/isProjectValid'
+
 import Button from '../Button/Button'
 import ProjectHeader from './ProjectHeader'
 import ProjectCollectionsList from './ProjectCollectionsList'
@@ -25,6 +27,8 @@ const ProjectCollections = (props) => {
   } = props
 
   const collectionsLoading = collectionsSearch.isLoading
+  const projectCollections = project.collectionIds.map(collectionId => project.byId[collectionId])
+  const isValid = isProjectValid(projectCollections)
 
   return (
     <section className="project-collections">
@@ -44,7 +48,20 @@ const ProjectCollections = (props) => {
       />
       <div className="project-collections__footer">
         <p className="project-collections__footer-message">
-          Click &quot;Edit Options&quot; above to customize the output for each project.
+          {
+            !isValid && (
+              <>
+                Select a data access method for each collection in your project before downloading.
+              </>
+            )
+          }
+          {
+            isValid && (
+              <>
+                Click &quot;Edit Options&quot; above to customize the output for each project.
+              </>
+            )
+          }
         </p>
         <Button
           type="submit"
@@ -52,6 +69,7 @@ const ProjectCollections = (props) => {
           bootstrapVariant="success"
           icon="download"
           label="Download project data"
+          disabled={!isValid}
         >
           Download Data
         </Button>

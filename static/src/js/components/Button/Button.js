@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button as Btn, Badge } from 'react-bootstrap'
 import classNames from 'classnames'
+import {
+  Button as Btn,
+  Badge,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 
 import './Button.scss'
 
@@ -9,13 +14,18 @@ export const Button = ({
   badge,
   badgeVariant,
   bootstrapVariant,
+  bootstrapSize,
   className,
   children,
+  disabled,
   href,
   icon,
   label,
   onClick,
   title,
+  tooltip,
+  tooltipPlacement,
+  tooltipId,
   type,
   variant
 }) => {
@@ -47,16 +57,18 @@ export const Button = ({
     )
   }
 
-  return (
+  const button = (
     <Btn
       className={buttonClasses}
       variant={bootstrapVariant}
+      size={bootstrapSize}
       onClick={onClick}
       href={href}
       title={title}
       role="button"
       aria-label={label}
       type={type}
+      disabled={disabled}
     >
       {icon && <i className={iconClasses} /> }
       <span className="button__contents">
@@ -74,18 +86,38 @@ export const Button = ({
       )}
     </Btn>
   )
+
+  if (tooltip && tooltipId) {
+    return (
+      <OverlayTrigger
+        placement={tooltipPlacement || 'top'}
+        overlay={(
+          <Tooltip id={tooltipId}>{tooltip}</Tooltip>
+        )}
+      >
+        {button}
+      </OverlayTrigger>
+    )
+  }
+
+  return button
 }
 
 Button.defaultProps = {
   badge: null,
   badgeVariant: null,
+  bootstrapSize: null,
   bootstrapVariant: null,
+  disabled: false,
   children: null,
   className: null,
   href: null,
   icon: null,
   onClick: null,
   title: null,
+  tooltip: null,
+  tooltipId: null,
+  tooltipPlacement: null,
   type: 'button',
   variant: null
 }
@@ -93,7 +125,9 @@ Button.defaultProps = {
 Button.propTypes = {
   badge: PropTypes.string,
   badgeVariant: PropTypes.string,
+  bootstrapSize: PropTypes.string,
   bootstrapVariant: PropTypes.string,
+  disabled: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,
   href: PropTypes.string,
@@ -101,6 +135,12 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   title: PropTypes.string,
+  tooltip: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
+  tooltipPlacement: PropTypes.string,
+  tooltipId: PropTypes.string,
   type: PropTypes.string,
   variant: PropTypes.string
 }
