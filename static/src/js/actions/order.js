@@ -2,6 +2,8 @@ import { push } from 'connected-react-router'
 import prepareOrderParams from '../util/orders'
 import OrderRequest from '../util/request/orderRequest'
 
+import { isLinkType } from '../util/isLinkType'
+
 import { UPDATE_ORDER } from '../constants/actionTypes'
 
 export const updateOrder = orderData => ({
@@ -62,11 +64,11 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
           collection
         ]
 
-        const collectionLinks = links.filter((link = {}) => link.rel.indexOf('metadata#') > -1)
+        const metdataLinks = links.filter((link = {}) => isLinkType(link.rel, 'metadata'))
 
         order.links.push({
           datasetId,
-          links: collectionLinks
+          links: metdataLinks
         })
       })
       dispatch(updateOrder(order))

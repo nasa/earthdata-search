@@ -36,7 +36,6 @@ export const Data = ({
           <SecondaryToolbarContainer />
         </header>
         <nav className="route-wrapper__content-nav">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <Link
             className="route-wrapper__content-nav-link"
             to={{

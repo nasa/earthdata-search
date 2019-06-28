@@ -104,17 +104,25 @@ export default class Request {
    * @return {Promise} A Promise object representing the request that was made
    */
   get(url) {
-    return axios({
+    let requestOptions = {
       method: 'get',
       baseURL: this.baseUrl,
       url,
-      headers: {
-        Authorization: `Bearer: ${this.authToken}`
-      },
       transformRequest: [
         (data, headers) => this.transformRequest(data, headers)
       ]
-    })
+    }
+
+    if (this.authenticated) {
+      requestOptions = {
+        ...requestOptions,
+        headers: {
+          Authorization: `Bearer: ${this.authToken}`
+        }
+      }
+    }
+
+    return axios(requestOptions)
   }
 
   /*

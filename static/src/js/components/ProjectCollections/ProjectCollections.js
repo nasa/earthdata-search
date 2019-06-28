@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
-import projectIsValid from '../../util/isProjectValid'
+import { isProjectValid } from '../../util/isProjectValid'
 
 import Button from '../Button/Button'
 import ProjectHeader from './ProjectHeader'
@@ -28,7 +28,7 @@ const ProjectCollections = (props) => {
 
   const collectionsLoading = collectionsSearch.isLoading
   const projectCollections = project.collectionIds.map(collectionId => project.byId[collectionId])
-  const isValid = projectIsValid(projectCollections)
+  const isValid = isProjectValid(projectCollections)
 
   return (
     <section className="project-collections">

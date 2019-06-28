@@ -72,7 +72,6 @@ async function edlAuthorizer(event) {
       }
 
       const { token } = decoded
-      console.warn('token', token)
       const { endpoint } = token
       const username = endpoint.split('/').pop()
 

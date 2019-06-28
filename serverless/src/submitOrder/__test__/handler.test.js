@@ -54,8 +54,6 @@ describe('submitOrder', () => {
 
     const { queries } = dbTracker.queries
 
-    console.warn('queries', queries)
-
     expect(queries[0].sql).toContain('BEGIN')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('insert')
