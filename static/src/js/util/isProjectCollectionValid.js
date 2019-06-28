@@ -7,7 +7,6 @@ import { isEmpty } from 'lodash'
  */
 export const isProjectCollectionValid = (method) => {
   // Here is where we can check the method to see if its valid
-  console.log('method', method)
   if (!isEmpty(method)) return true
   return false
 }

@@ -113,7 +113,7 @@ export default class Request {
       ]
     }
 
-    if (this.authenticated) {
+    if (this.authenticated || this.lambda) {
       requestOptions = {
         ...requestOptions,
         headers: {

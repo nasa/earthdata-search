@@ -86,7 +86,6 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case UPDATE_ACCESS_METHOD: {
-      // Check action for this and set isValid here
       const { collectionId, isValid, method } = action.payload
 
       const byId = {
