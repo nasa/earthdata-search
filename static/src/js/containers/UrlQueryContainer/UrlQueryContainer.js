@@ -12,7 +12,29 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  search: state.router.location.search
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  collections: state.metadata.collections,
+  granuleDownloadRetrievalId: state.granuleDownload.granuleDownloadParams.id,
+  granuleDownloadCollectionId: state.granuleDownload.granuleDownloadParams.collection_id,
+  featureFacets: state.facetsParams.feature,
+  focusedCollection: state.focusedCollection,
+  focusedGranule: state.focusedGranule,
+  instrumentFacets: state.facetsParams.cmr.instrument_h,
+  keywordSearch: state.query.collection.keyword,
+  map: state.map,
+  organizationFacets: state.facetsParams.cmr.data_center_h,
+  overrideTemporalSearch: state.query.collection.overrideTemporal,
+  pathname: state.router.location.pathname,
+  platformFacets: state.facetsParams.cmr.platform_h,
+  pointSearch: state.query.collection.spatial.point,
+  polygonSearch: state.query.collection.spatial.polygon,
+  processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
+  project: state.project,
+  projectFacets: state.facetsParams.cmr.project_h,
+  scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
+  search: state.router.location.search,
+  temporalSearch: state.query.collection.temporal,
+  timeline: state.timeline
 })
 
 export class UrlQueryContainer extends Component {
@@ -26,7 +48,6 @@ export class UrlQueryContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.warn('componentWillReceiveProps URLQUERYCONTAINER')
     const { search: nextSearch } = nextProps
     const { onChangeUrl, search } = this.props
 

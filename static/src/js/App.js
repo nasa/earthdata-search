@@ -47,8 +47,22 @@ class App extends Component {
                 <title>Earthdata Search</title>
               </Helmet>
               <Switch>
-                <Route path="/granules" component={Granules} />
-                <Route path="/data" component={Data} />
+                <Route
+                  path="/granules"
+                  render={() => (
+                    <AuthRequiredContainer>
+                      <Granules />
+                    </AuthRequiredContainer>
+                  )}
+                />
+                <Route
+                  path="/data"
+                  render={() => (
+                    <AuthRequiredContainer>
+                      <Data />
+                    </AuthRequiredContainer>
+                  )}
+                />
                 <Route path="/">
                   <>
                     <Switch>

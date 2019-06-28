@@ -40,11 +40,11 @@ describe('submitOrder', () => {
           id: 19
         })
       } else if (step === 3) {
-        query.response({
+        query.response([{
           id: 1,
           user_id: 19,
           environment: 'prod'
-        })
+        }])
       } else {
         query.response([])
       }
@@ -53,6 +53,8 @@ describe('submitOrder', () => {
     const orderResponse = await submitOrder(orderPayload)
 
     const { queries } = dbTracker.queries
+
+    console.warn('queries', queries)
 
     expect(queries[0].sql).toContain('BEGIN')
     expect(queries[1].method).toEqual('first')

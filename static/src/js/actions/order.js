@@ -36,7 +36,7 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
   const response = requestObject.collections(id)
     .then((response) => {
       const { data } = response
-      const order = []
+      const order = {}
       order.id = data.id
       order.environment = data.environment
       order.jsondata = data.jsondata

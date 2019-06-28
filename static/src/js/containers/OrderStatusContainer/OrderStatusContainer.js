@@ -16,9 +16,7 @@ const mapDispatchToProps = dispatch => ({
   fetchOrder:
     (orderId, authToken) => dispatch(actions.fetchOrder(orderId, authToken)),
   onChangePath:
-    path => dispatch(actions.changePath(path)),
-  onUpdateGranuleDownloadParams:
-    params => dispatch(actions.setGranuleDownloadParams(params))
+    path => dispatch(actions.changePath(path))
 })
 
 export const OrderStatusContainer = ({
@@ -26,7 +24,6 @@ export const OrderStatusContainer = ({
   fetchOrder,
   match,
   onChangePath,
-  onUpdateGranuleDownloadParams,
   order
 }) => (
   <OrderStatus
@@ -34,7 +31,6 @@ export const OrderStatusContainer = ({
     fetchOrder={fetchOrder}
     match={match}
     onChangePath={onChangePath}
-    onUpdateGranuleDownloadParams={onUpdateGranuleDownloadParams}
     order={order}
   />
 )
@@ -44,7 +40,6 @@ OrderStatusContainer.propTypes = {
   fetchOrder: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onUpdateGranuleDownloadParams: PropTypes.func.isRequired,
   order: PropTypes.shape({}).isRequired
 }
 

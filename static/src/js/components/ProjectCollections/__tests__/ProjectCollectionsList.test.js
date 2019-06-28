@@ -26,6 +26,14 @@ function setup() {
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
     project: {
+      byId: {
+        collectionId1: {
+          isValid: false
+        },
+        collectionId2: {
+          isValid: false
+        }
+      },
       collectionIds: ['collectionId1', 'collectionId2']
     },
     projectPanels: {

@@ -17,7 +17,7 @@ export const OrderStatusList = ({
     <p className="order-status-list__introduction">{introduction}</p>
     <ul className="order-status-list__list">
       {
-        collections && collections.map(collection => console.warn(collection.collection_id) || (
+        collections && collections.map(collection => (
           <OrderStatusItem
             key={collection.collection_id}
             type={type}

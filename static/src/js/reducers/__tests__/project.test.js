@@ -36,6 +36,11 @@ describe('ADD_COLLECTION_TO_PROJECT', () => {
 
     const expectedState = {
       ...initial,
+      byId: {
+        collectionId: {
+          isValid: false
+        }
+      },
       collectionIds: ['existingCollectionId', collectionId]
     }
 
@@ -100,6 +105,11 @@ describe('RESTORE_PROJECT', () => {
 
     const expectedState = {
       ...initialState,
+      byId: {
+        collectionId: {
+          isValid: false
+        }
+      },
       collectionIds: ['collectionId']
     }
 

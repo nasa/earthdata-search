@@ -2,8 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { TruncateText } from 'react-truncate-text'
-
 import ProjectCollectionsItem from '../ProjectCollectionsItem'
 
 
@@ -27,7 +25,10 @@ function setup() {
     isPanelActive: false,
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
-    onSetActivePanel: jest.fn()
+    onSetActivePanel: jest.fn(),
+    projectCollection: {
+      isValid: false
+    }
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsItem {...props} />)
@@ -68,5 +69,22 @@ describe('ProjectCollectionItem component', () => {
     button.simulate('click')
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledTimes(1)
     expect(props.onToggleCollectionVisibility).toHaveBeenCalledWith('collectionId')
+  })
+
+  describe('validity icon', () => {
+    test('shows invalid by default', () => {
+      const { enzymeWrapper } = setup()
+      expect(enzymeWrapper.find('.project-collections-item__status--invalid').length).toEqual(1)
+    })
+
+    test('removes icon with a valid project collection', () => {
+      const { enzymeWrapper } = setup()
+      enzymeWrapper.setProps({
+        projectCollection: {
+          isValid: true
+        }
+      })
+      expect(enzymeWrapper.find('.project-collections-item__status--invalid').length).toEqual(0)
+    })
   })
 })
