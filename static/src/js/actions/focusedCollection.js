@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router'
 import actions from './index'
 import { updateGranuleQuery } from './search'
 import {
@@ -153,4 +154,18 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
   dispatch(updateFocusedCollection(collectionId))
   dispatch(actions.getTimeline())
   dispatch(actions.getFocusedCollection())
+}
+
+export const viewCollectionGranules = collectionId => (dispatch) => {
+  dispatch(changeFocusedCollection(collectionId))
+  dispatch(push({
+    pathname: '/search/granules'
+  }))
+}
+
+export const viewCollectionDetails = collectionId => (dispatch) => {
+  dispatch(changeFocusedCollection(collectionId))
+  dispatch(push({
+    pathname: '/search/granules/collection-details'
+  }))
 }

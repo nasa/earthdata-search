@@ -1,0 +1,14 @@
+.collection-results-header {
+  &__tip {
+    color: $color__black--300;
+  }
+
+  &__tip-label {
+    margin-right: $spacer/4;
+  }
+
+  &__tip-icon {
+    margin: 0 $spacer/4;
+    color: $color__green;
+  }
+}

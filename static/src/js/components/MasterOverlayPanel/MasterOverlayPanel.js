@@ -4,6 +4,9 @@ import $ from 'jquery'
 import { throttle } from 'lodash'
 
 import history from '../../util/history'
+
+import Button from '../Button/Button'
+
 import './MasterOverlayPanel.scss'
 
 /**
@@ -30,6 +33,7 @@ class MasterOverlayPanel extends PureComponent {
     this.onMasterOverlayHeightChange = props.onMasterOverlayHeightChange.bind(this)
     this.onMasterOverlayPanelDragStart = props.onMasterOverlayPanelDragStart.bind(this)
     this.onMasterOverlayPanelDragEnd = props.onMasterOverlayPanelDragEnd.bind(this)
+    this.onMasterOverlayPanelToggle = props.onMasterOverlayPanelToggle.bind(this)
     this.onMouseMove = throttle(this.onMouseMove.bind(this), 16)
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
@@ -136,9 +140,12 @@ class MasterOverlayPanel extends PureComponent {
       actions,
       body,
       header,
+      masterOverlayPanel,
       panelHeight,
       tabHandle
     } = this.props
+
+    const { isOpen } = masterOverlayPanel
 
     return (
       <div
@@ -147,7 +154,7 @@ class MasterOverlayPanel extends PureComponent {
       >
         <section className="master-overlay-panel__inner inner-panel">
           <header className="master-overlay-panel__header">
-            <span className="master-overlay-panel__tab">
+            <div className="master-overlay-panel__tab">
               <span
                 className="master-overlay-panel__tab-handle"
                 role="button"
@@ -157,10 +164,19 @@ class MasterOverlayPanel extends PureComponent {
                 }}
                 onMouseDown={this.onMouseDown}
               />
-              <h2 className="master-overlay-panel__tab-heading">
-                {tabHandle}
-              </h2>
-            </span>
+              <div className="master-overlay-panel__tab-content">
+                <h2 className="master-overlay-panel__tab-heading">
+                  {tabHandle}
+                </h2>
+                <Button
+                  className="master-overlay-panel__tab-toggle"
+                  label="Toggle panel"
+                  onClick={() => this.onMasterOverlayPanelToggle()}
+                >
+                  <i className={`fa fa-chevron-circle-${isOpen ? 'down' : 'up'}`} />
+                </Button>
+              </div>
+            </div>
             <div className="master-overlay-panel__header-content">
               {header}
             </div>
@@ -194,6 +210,7 @@ MasterOverlayPanel.propTypes = {
   onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onMasterOverlayPanelDragStart: PropTypes.func.isRequired,
   onMasterOverlayPanelDragEnd: PropTypes.func.isRequired,
+  onMasterOverlayPanelToggle: PropTypes.func.isRequired,
   tabHandle: PropTypes.node.isRequired
 }
 

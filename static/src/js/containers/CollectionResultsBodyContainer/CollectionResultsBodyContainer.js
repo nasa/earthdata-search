@@ -15,8 +15,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onFocusedCollectionChange:
-    collectionId => dispatch(actions.changeFocusedCollection(collectionId)),
+  onViewCollectionGranules:
+    collectionId => dispatch(actions.viewCollectionGranules(collectionId)),
+  onViewCollectionDetails:
+    collectionId => dispatch(actions.viewCollectionDetails(collectionId)),
   onChangeCollectionPageNum:
     data => dispatch(actions.changeCollectionPageNum(data))
 })
@@ -26,11 +28,12 @@ export const CollectionResultsBodyContainer = (props) => {
     collections,
     query,
     location,
-    onFocusedCollectionChange,
+    onViewCollectionGranules,
+    onViewCollectionDetails,
     onChangeCollectionPageNum
   } = props
 
-  const onWaypointEnter = (params) => {
+  const onWaypointEnter = (params = {}) => {
     if (params.event !== null) {
       const { pageNum } = query
       onChangeCollectionPageNum(pageNum + 1)
@@ -41,7 +44,8 @@ export const CollectionResultsBodyContainer = (props) => {
     <CollectionResultsBody
       collections={collections}
       location={location}
-      onFocusedCollectionChange={onFocusedCollectionChange}
+      onViewCollectionGranules={onViewCollectionGranules}
+      onViewCollectionDetails={onViewCollectionDetails}
       waypointEnter={onWaypointEnter}
     />
   )
@@ -51,7 +55,8 @@ CollectionResultsBodyContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   query: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  onViewCollectionDetails: PropTypes.func.isRequired,
   onChangeCollectionPageNum: PropTypes.func.isRequired
 }
 

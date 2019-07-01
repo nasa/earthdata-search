@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
@@ -16,5 +15,5 @@ CollectionDetailsTabContainer.propTypes = {
 }
 
 export default withRouter(
-  connect(null, null)(CollectionDetailsTabContainer)
+  CollectionDetailsTabContainer
 )

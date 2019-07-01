@@ -1,5 +1,5 @@
 import Request from './request'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edscDate'
 
@@ -58,8 +58,8 @@ export default class GranuleRequest extends Request {
 
       updatedGranule.formatted_temporal = getTemporal(granule.time_start, granule.time_end)
 
-      const h = 85
-      const w = 85
+      const h = getApplicationConfig().thumbnailSize.height
+      const w = getApplicationConfig().thumbnailSize.width
 
       if (granule.id) {
         // eslint-disable-next-line
