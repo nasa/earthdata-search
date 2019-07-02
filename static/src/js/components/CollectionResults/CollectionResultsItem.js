@@ -27,7 +27,9 @@ export const CollectionResultsListItem = ({
     has_temporal_subsetting: hasTemporalSubsetting = false,
     has_transforms: hasTransforms = false,
     has_variables: hasVariables = false,
+    has_map_imagery: hasMapImagery = false,
     is_cwic: isCwic = false,
+    is_nrt: isNrt = false,
     is_opendap: isOpendap = false,
     organizations = [],
     summary = '',
@@ -178,20 +180,17 @@ export const CollectionResultsListItem = ({
         tabIndex="0"
         className="collection-results-item__link"
         onKeyPress={(e) => {
-          console.warn('e.key', e.key)
           if (e.key === 'Enter') {
             onViewCollectionGranules(collection.id)
           }
           e.stopPropagation()
         }}
         onClick={(e) => {
-          console.warn('and a click')
           onViewCollectionGranules(collection.id)
           e.stopPropagation()
         }}
       >
         <div className="collection-results-item__thumb">
-          {/* eslint-disable-next-line max-len */}
           {
             thumbnail && (
               <img
@@ -264,7 +263,7 @@ export const CollectionResultsListItem = ({
               )
             }
             {
-              collection.has_map_imagery && (
+              hasMapImagery && (
                 <OverlayTrigger
                   placement="top"
                   overlay={(
@@ -294,7 +293,7 @@ export const CollectionResultsListItem = ({
               )
             }
             {
-              collection.is_nrt && (
+              isNrt && (
                 <OverlayTrigger
                   placement="top"
                   overlay={(
