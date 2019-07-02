@@ -115,7 +115,6 @@ export default class CollectionRequest extends Request {
       if (collection && collection.tags) {
         transformedCollection.is_cwic = Object.keys(collection.tags).includes('org.ceos.wgiss.cwic.granules.prod')
           && collection.has_granules === false
-
         transformedCollection.has_map_imagery = hasTag(collection, 'gibs')
       }
 

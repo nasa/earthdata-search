@@ -91,6 +91,18 @@
     }
   }
 
+  &__badge-icon {
+    &.fa {
+      margin-right: $spacer/3;
+      font-size: 0.75rem;
+      line-height: 0.625rem;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
   &__badge--attribution {
     background-color: $color__black--400;
     text-transform: none;

@@ -109,7 +109,9 @@ describe('CollectionRequest#transformResponse', () => {
         entry: [{
           id: 'collectionId',
           tags: {},
-          is_cwic: false
+          has_map_imagery: false,
+          is_cwic: false,
+          thumbnail: 'test-file-stub'
         }]
       }
     }
@@ -143,15 +145,97 @@ describe('CollectionRequest#transformResponse', () => {
         entry: [{
           id: 'collectionId',
           has_granules: false,
+          has_map_imagery: false,
           tags: {
             'org.ceos.wgiss.cwic.granules.prod': 'stuff here'
           },
-          is_cwic: true
+          is_cwic: true,
+          thumbnail: 'test-file-stub'
         }]
       }
     }
 
     expect(result).toEqual(expectedResult)
+  })
+
+  describe('return data with has_map_imagery flag correctly', () => {
+    test('when an image is defined', () => {
+      const request = new CollectionRequest()
+
+      const data = {
+        feed: {
+          id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=1',
+          title: 'ECHO collection metadata',
+          updated: '2019-05-21T01:08:02.143Z',
+          entry: [{
+            browse_flag: true,
+            id: 'collectionId',
+            has_granules: false,
+            tags: {
+              'edsc.extra.serverless.gibs': 'stuff here'
+            }
+          }]
+        }
+      }
+
+      const result = request.transformResponse(data)
+
+      const expectedResult = {
+        feed: {
+          ...data.feed,
+          entry: [{
+            id: 'collectionId',
+            browse_flag: true,
+            has_granules: false,
+            has_map_imagery: true,
+            is_cwic: false,
+            tags: {
+              'edsc.extra.serverless.gibs': 'stuff here'
+            },
+            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/datasets/collectionId?h=85&w=85'
+          }]
+        }
+      }
+
+      expect(result).toEqual(expectedResult)
+    })
+
+    test('when an image is not defined', () => {
+      const request = new CollectionRequest()
+
+      const data = {
+        feed: {
+          id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=1',
+          title: 'ECHO collection metadata',
+          updated: '2019-05-21T01:08:02.143Z',
+          entry: [{
+            browse_flag: false,
+            id: 'collectionId',
+            has_granules: false,
+            tags: {}
+          }]
+        }
+      }
+
+      const result = request.transformResponse(data)
+
+      const expectedResult = {
+        feed: {
+          ...data.feed,
+          entry: [{
+            browse_flag: false,
+            has_granules: false,
+            has_map_imagery: false,
+            id: 'collectionId',
+            is_cwic: false,
+            tags: {},
+            thumbnail: 'test-file-stub'
+          }]
+        }
+      }
+
+      expect(result).toEqual(expectedResult)
+    })
   })
 
   test('returns data if response is not success', () => {
