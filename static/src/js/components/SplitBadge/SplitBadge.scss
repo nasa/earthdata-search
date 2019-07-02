@@ -1,12 +1,17 @@
 .split-badge {
-  padding: 0;
-  padding-left: 0.5rem;
-  overflow: hidden;
+  // If the .split-badge__inner is empty, we want to use the normal padding. Otherwise,
+  // the height of the .split-badge__inner will provide the padding
+  &:not(&--empty) {
+    padding: 0;
+    padding-left: 0.5rem;
+  }
 
   &__inner {
     display: inline-block;
     margin-left: 0.5rem;
     padding: 0.3125rem 0.5rem;
-    background-color: rgba(0,0,0,0.4)
+    background-color: rgba(0,0,0,0.4);
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }

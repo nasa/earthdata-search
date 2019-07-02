@@ -8,46 +8,168 @@ import { pluralize } from '../../util/pluralize'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
+import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionResultsItem.scss'
 
 export const CollectionResultsListItem = ({
   collection,
+  isLast,
   onViewCollectionGranules,
   onViewCollectionDetails,
-  isLast,
   waypointEnter
 }) => {
+  const {
+    dataset_id: datasetId = null,
+    granule_count: granuleCount = 0,
+    has_formats: hasFormats = false,
+    has_spatial_subsetting: hasSpatialSubsetting = false,
+    has_temporal_subsetting: hasTemporalSubsetting = false,
+    has_transforms: hasTransforms = false,
+    has_variables: hasVariables = false,
+    is_cwic: isCwic = false,
+    is_opendap: isOpendap = false,
+    organizations = [],
+    summary = '',
+    thumbnail = null,
+    time_end: timeEnd = null,
+    time_start: timeStart = null
+  } = collection
+
   let displayOrganization = ''
 
-  if (collection.organizations && collection.organizations.length) {
-    [displayOrganization] = collection.organizations
+  if (organizations && organizations.length) {
+    [displayOrganization] = organizations
   }
 
   let timeRange = ''
 
-  if (collection.time_start || collection.time_end) {
-    if (collection.time_start && collection.time_end) {
-      const dateStart = new Date(collection.time_start).toISOString().split('T')[0]
-      const dateEnd = new Date(collection.time_end).toISOString().split('T')[0]
-
-      timeRange = `${dateStart} to ${dateEnd}`
-    }
-    if (collection.time_start) {
-      const dateStart = new Date(collection.time_start).toISOString().split('T')[0]
+  if (timeStart || timeEnd) {
+    if (timeStart) {
+      const dateStart = new Date(timeStart).toISOString().split('T')[0]
 
       timeRange = `${dateStart} ongoing`
     }
-    if (collection.time_end) {
-      const dateEnd = new Date(collection.time_end).toISOString().split('T')[0]
+    if (timeEnd) {
+      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
 
       timeRange = `Up to ${dateEnd}`
     }
+
+    if (timeStart && timeEnd) {
+      const dateStart = new Date(timeStart).toISOString().split('T')[0]
+      const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
+
+      timeRange = `${dateStart} to ${dateEnd}`
+    }
   }
 
-  const summary = collection.summary.length > 280 ? `${collection.summary.substring(0, 280)}...` : collection.summary
+  const description = summary.length > 280 ? `${summary.substring(0, 280)}...` : summary
   const thumbnailHeight = getApplicationConfig().thumbnailSize.height
   const thumbnailWidth = getApplicationConfig().thumbnailSize.width
+
+  let customizeBadges = null
+
+  if (isOpendap) {
+    customizeBadges = []
+
+    if (hasSpatialSubsetting) {
+      customizeBadges.push((
+        <OverlayTrigger
+          key="badge-icon__spatial-subsetting"
+          placement="top"
+          overlay={(
+            <Tooltip
+              id="tooltip_customize-spatial-subsetting"
+              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+            >
+              Spatial customizable options available
+            </Tooltip>
+          )}
+        >
+          <i className="fa fa-globe collection-results-item__badge-icon" />
+        </OverlayTrigger>
+      ))
+    }
+
+    if (hasVariables) {
+      customizeBadges.push((
+        <OverlayTrigger
+          key="badge-icon__variables"
+          placement="top"
+          overlay={(
+            <Tooltip
+              id="tooltip_customize-variables"
+              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+            >
+              Variable customizable options available
+            </Tooltip>
+          )}
+        >
+          <i className="fa fa-tags collection-results-item__badge-icon" />
+        </OverlayTrigger>
+      ))
+    }
+
+    if (hasTransforms) {
+      customizeBadges.push((
+        <OverlayTrigger
+          key="badge-icon__transforms"
+          placement="top"
+          overlay={(
+            <Tooltip
+              id="tooltip_customize-transforms"
+              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+            >
+              Data transformation options available
+            </Tooltip>
+          )}
+        >
+          <i className="fa fa-sliders collection-results-item__badge-icon" />
+        </OverlayTrigger>
+      ))
+    }
+
+    if (hasFormats) {
+      customizeBadges.push((
+        <OverlayTrigger
+          key="badge-icon__formats"
+          placement="top"
+          overlay={(
+            <Tooltip
+              id="tooltip_customize-formats"
+              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+            >
+              Reformatting options available
+            </Tooltip>
+          )}
+        >
+          <i className="fa fa-file-text-o collection-results-item__badge-icon" />
+        </OverlayTrigger>
+      ))
+    }
+
+    if (hasTemporalSubsetting) {
+      customizeBadges.push((
+        <OverlayTrigger
+          key="badge-icon__temporal-subsetting"
+          placement="top"
+          overlay={(
+            <Tooltip
+              id="tooltip_customize-temporal-subsetting"
+              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+            >
+              Temporal subsetting options available
+            </Tooltip>
+          )}
+        >
+          <i className="fa fa-clock-o collection-results-item__badge-icon" />
+        </OverlayTrigger>
+      ))
+    }
+
+    if (customizeBadges.length === 0) customizeBadges = null
+  }
 
   return (
     <li className="collection-results-item" key={collection.id}>
@@ -56,10 +178,14 @@ export const CollectionResultsListItem = ({
         tabIndex="0"
         className="collection-results-item__link"
         onKeyPress={(e) => {
-          onViewCollectionGranules(collection.id)
+          console.warn('e.key', e.key)
+          if (e.key === 'Enter') {
+            onViewCollectionGranules(collection.id)
+          }
           e.stopPropagation()
         }}
         onClick={(e) => {
+          console.warn('and a click')
           onViewCollectionGranules(collection.id)
           e.stopPropagation()
         }}
@@ -67,11 +193,11 @@ export const CollectionResultsListItem = ({
         <div className="collection-results-item__thumb">
           {/* eslint-disable-next-line max-len */}
           {
-            collection.thumbnail && (
+            thumbnail && (
               <img
                 className="collection-results-item__thumb-image"
-                src={collection.thumbnail}
-                alt={`Thumbnail for ${collection.dataset_id}`}
+                src={thumbnail}
+                alt={`Thumbnail for ${datasetId}`}
                 height={thumbnailHeight}
                 width={thumbnailWidth}
               />
@@ -82,28 +208,28 @@ export const CollectionResultsListItem = ({
           <div className="collection-results-item__body-primary">
             <div className="collection-results-item__info">
               <h3 className="collection-results-item__title">
-                {collection.dataset_id}
+                {datasetId}
               </h3>
               <p className="collection-results-item__desc">
                 {
-                  collection.is_cwic && (
+                  isCwic && (
                     <strong>Int&apos;l / Interagency</strong>
                   )
                 }
                 {
-                  !collection.is_cwic && (
-                    <strong>{`${commafy(collection.granule_count)} ${pluralize('Granule', collection.granule_count)}`}</strong>
+                  !isCwic && (
+                    <strong>{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</strong>
                   )
                 }
                 <strong> &bull; </strong>
                 <strong>{timeRange}</strong>
                 <strong> &bull; </strong>
-                {summary}
+                {description}
               </p>
             </div>
             <div className="collection-results-item__actions">
               <Button
-                className="collection-results-item__action"
+                className="collection-results-item__action collection-results-item__action--collection-details"
                 onClick={(e) => {
                   onViewCollectionDetails(collection.id)
                   e.stopPropagation()
@@ -117,11 +243,16 @@ export const CollectionResultsListItem = ({
           </div>
           <div className="collection-results-item__body-secondary">
             {
-              collection.is_cwic && (
+              isCwic && (
                 <OverlayTrigger
                   placement="top"
                   overlay={(
-                    <Tooltip id="tooltip__quic-badge" className="collection-results-item__badge-tooltip">Int&apos;l / Interagency Data</Tooltip>
+                    <Tooltip
+                      id="tooltip__quic-badge"
+                      className="collection-results-item__badge-tooltip"
+                    >
+                      Int&apos;l / Interagency Data
+                    </Tooltip>
                   )}
                 >
                   <Badge
@@ -137,7 +268,10 @@ export const CollectionResultsListItem = ({
                 <OverlayTrigger
                   placement="top"
                   overlay={(
-                    <Tooltip id="tooltip__map-imagery-badge" className="collection-results-item__badge-tooltip">
+                    <Tooltip
+                      id="tooltip__map-imagery-badge"
+                      className="collection-results-item__badge-tooltip"
+                    >
                       Supports advanced map visualizations using the GIBS tile service
                     </Tooltip>
                   )}
@@ -151,11 +285,23 @@ export const CollectionResultsListItem = ({
               )
             }
             {
+              isOpendap && (
+                <SplitBadge
+                  className="collection-results-item__badge  collection-results-item__badge--customizable"
+                  primary="Customizable"
+                  secondary={customizeBadges}
+                />
+              )
+            }
+            {
               collection.is_nrt && (
                 <OverlayTrigger
                   placement="top"
                   overlay={(
-                    <Tooltip id="tooltip__near-real-time-badge" className="collection-results-item__badge-tooltip">
+                    <Tooltip
+                      id="tooltip__near-real-time-badge"
+                      className="collection-results-item__badge-tooltip"
+                    >
                       Near Real Time (NRT) Data
                     </Tooltip>
                   )}
@@ -169,14 +315,16 @@ export const CollectionResultsListItem = ({
               )
             }
             {
-              collection.short_name && (
+              (
+                collection.short_name
+                && collection.version_id
+                && displayOrganization
+              ) && (
                 <Badge
                   className="badge collection-results-item__badge collection-results-item__badge--attribution"
                 >
                   {
-                    `${collection.short_name}
-                        v${collection.version_id} -
-                        ${displayOrganization}`
+                    `${collection.short_name} v${collection.version_id} - ${displayOrganization}`
                   }
                 </Badge>
               )
