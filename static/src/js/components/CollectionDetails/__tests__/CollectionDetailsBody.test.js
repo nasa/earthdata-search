@@ -59,6 +59,7 @@ describe('CollectionDetails component', () => {
     test('has the correct props', () => {
       const { enzymeWrapper } = setup()
       expect(enzymeWrapper.find(SplitBadge).props()).toEqual({
+        className: null,
         primary: 'DOI',
         secondary: '10.3334/ORNLDAAC/830',
         variant: 'primary'

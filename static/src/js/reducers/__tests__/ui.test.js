@@ -3,6 +3,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  MASTER_OVERLAY_PANEL_TOGGLE,
   GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
@@ -15,7 +16,9 @@ const initialState = {
     clickStartHeight: undefined,
     clickStartY: undefined,
     dragging: false,
-    height: 0
+    height: 0,
+    isOpen: true,
+    previousHeight: 0
   },
   granuleResultsPanel: {
     sortOrder: '-start_date',
@@ -97,11 +100,74 @@ describe('MASTER_OVERLAY_PANEL_UPDATE_RESIZE', () => {
       ...initialState,
       masterOverlayPanel: {
         ...initialState.masterOverlayPanel,
-        height
+        height,
+        previousHeight: height
       }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('MASTER_OVERLAY_PANEL_TOGGLE', () => {
+  describe('when the panel is open', () => {
+    test('returns the correct state', () => {
+      const initial = {
+        ...initialState,
+        masterOverlayPanel: {
+          ...initialState.masterOverlayPanel,
+          height: 42,
+          previousHeight: 42,
+          isOpen: true
+        }
+      }
+
+      const action = {
+        type: MASTER_OVERLAY_PANEL_TOGGLE
+      }
+
+      const expectedState = {
+        ...initialState,
+        masterOverlayPanel: {
+          ...initialState.masterOverlayPanel,
+          height: 0,
+          previousHeight: 42,
+          isOpen: false
+        }
+      }
+
+      expect(uiReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('when the panel is closed', () => {
+    test('returns the correct state', () => {
+      const initial = {
+        ...initialState,
+        masterOverlayPanel: {
+          ...initialState.masterOverlayPanel,
+          height: 0,
+          previousHeight: 42,
+          isOpen: false
+        }
+      }
+
+      const action = {
+        type: MASTER_OVERLAY_PANEL_TOGGLE
+      }
+
+      const expectedState = {
+        ...initialState,
+        masterOverlayPanel: {
+          ...initialState.masterOverlayPanel,
+          height: 42,
+          previousHeight: 42,
+          isOpen: true
+        }
+      }
+
+      expect(uiReducer(initial, action)).toEqual(expectedState)
+    })
   })
 })
 

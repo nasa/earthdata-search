@@ -1,0 +1,130 @@
+
+.collection-results-item {
+  border-bottom: 1px solid $border-color;
+
+  &__link {
+    display: flex;
+    padding: $spacer;
+    background-color: $color__white;
+
+    &:hover,
+    &:active {
+      cursor: pointer;
+      background-color: $color__black--100;
+    }
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  &__body-primary {
+    display: flex;
+  }
+
+  &__info {
+    width: 100%;
+  }
+
+  &__thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: 0.25rem;
+    width: 85px;
+    height: 85px;
+    margin-right: $spacer;
+    background: $color__black--900;
+  }
+
+  &__thumb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__title {
+    margin-top: $spacer * 0.25;
+    margin-bottom: $spacer * 0.75;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $color__black--800;
+  }
+
+  &__desc {
+    margin-bottom: $spacer * 0.25;
+    font-size: 0.75rem;
+    color: $color__black--600;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: flex-start;
+    margin-left: $spacer;
+  }
+
+  &__action {
+    margin-right: $spacer/4;
+    padding: .7rem .75rem;
+    color: $color__black--500;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .collection-results-item__link:hover & {
+      background-color: $color__black--200;
+      color: $color__black--600;
+    }
+  }
+
+  &__badge {
+    margin-right: $spacer/4;
+    color: $color__white;
+    text-transform: uppercase;
+
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  &__badge-icon {
+    &.fa {
+      margin-right: $spacer/3;
+      font-size: 0.75rem;
+      line-height: 0.625rem;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__badge--attribution {
+    background-color: $color__black--400;
+    text-transform: none;
+  }
+
+  &__badge--cwic {
+    background-color: $color__yellow;
+  }
+
+  &__badge--map-imagery {
+    background-color: $color__orange;
+  }
+
+  &__badge--near-real-time {
+    background-color: $color__neon-green;
+  }
+
+  &__badge-tooltip {
+    font-size: 0.75rem;
+
+    &--icon {
+      top: -0.35rem!important;
+    }
+  }
+}

@@ -4,7 +4,9 @@ import { getCollections, restoreCollections } from './collections'
 import {
   changeFocusedCollection,
   clearCollectionGranules,
-  getFocusedCollection
+  getFocusedCollection,
+  viewCollectionGranules,
+  viewCollectionDetails
 } from './focusedCollection'
 import {
   addGranulesFromCollection,
@@ -43,6 +45,7 @@ import {
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
+  masterOverlayPanelToggle,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal
@@ -102,6 +105,7 @@ const actions = {
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
+  masterOverlayPanelToggle,
   removeCollectionFromProject,
   restoreCollections,
   restoreProject,
@@ -122,7 +126,9 @@ const actions = {
   fetchGranuleLinks,
   setGranuleDownloadParams,
   updateGranuleMetadata,
-  updateGranuleResults
+  updateGranuleResults,
+  viewCollectionGranules,
+  viewCollectionDetails
 }
 
 export default actions

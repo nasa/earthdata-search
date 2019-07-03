@@ -1,7 +1,9 @@
 import React from 'react'
 
+import './CollectionResultsHeader.scss'
+
 const CollectionResultsHeader = () => (
-  <>
+  <div className="collection-results-header">
     <div className="row">
       <div className="col">
         <form className="form-inline mb-1" action="/">
@@ -66,15 +68,15 @@ const CollectionResultsHeader = () => (
     </div>
     <div className="row">
       <div className="col">
-        <span>
-          <strong>Tip:</strong>
+        <span className="collection-results-header__tip">
+          <strong className="collection-results-header__tip-label">Tip:</strong>
            Add
-          <i className="fa fa-plus" />
+          <i className="collection-results-header__tip-icon fa fa-plus" />
            collections to your project to compare and download their data.
         </span>
       </div>
     </div>
-  </>
+  </div>
 )
 
 export default CollectionResultsHeader

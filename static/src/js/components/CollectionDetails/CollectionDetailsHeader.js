@@ -19,8 +19,8 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata }) => {
   if (!Object.keys(metadata).length) return null
 
   return (
-    <>
-      <div className="row collection-details-header">
+    <div className="collection-details-header">
+      <div className="row">
         <div className="col align-self-start">
           <div className="collection-details-header__title-wrap">
             {
@@ -51,7 +51,7 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata }) => {
           </Dropdown>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

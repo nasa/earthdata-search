@@ -38,7 +38,7 @@ describe('GranuleResultsHeader component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.type()).toBe(Fragment)
+    expect(enzymeWrapper.type()).toBe('div')
   })
 
   test('renders a title', () => {

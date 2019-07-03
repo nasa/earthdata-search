@@ -1,25 +1,53 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import classNames from 'classnames'
 import { Badge } from 'react-bootstrap'
 
 import './SplitBadge.scss'
 
-const SplitBadge = ({ primary, secondary, variant }) => (
-  <Badge className="split-badge" variant={variant}>
-    {primary}
-    <span className="split-badge__inner">
-      {secondary}
-    </span>
-  </Badge>
-)
+const SplitBadge = ({
+  className,
+  primary,
+  secondary,
+  variant
+}) => {
+  const classes = classNames(
+    'split-badge',
+    {
+      'split-badge--empty': !(secondary),
+      [`${className}`]: className
+    }
+  )
+  return (
+    <Badge className={classes} variant={variant}>
+      {primary}
+      {
+        secondary && (
+          <span className="split-badge__inner">
+            {secondary}
+          </span>
+        )
+      }
+    </Badge>
+  )
+}
 
 SplitBadge.defaultProps = {
+  className: null,
+  secondary: null,
   variant: 'primary'
 }
 
 SplitBadge.propTypes = {
-  primary: PropTypes.string.isRequired,
-  secondary: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  primary: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]).isRequired,
+  secondary: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   variant: PropTypes.string
 }
 

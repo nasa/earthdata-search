@@ -154,3 +154,17 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
   dispatch(actions.getTimeline())
   dispatch(actions.getFocusedCollection())
 }
+
+export const viewCollectionGranules = collectionId => (dispatch) => {
+  dispatch(changeFocusedCollection(collectionId))
+  dispatch(actions.changeUrl({
+    pathname: '/search/granules'
+  }))
+}
+
+export const viewCollectionDetails = collectionId => (dispatch) => {
+  dispatch(changeFocusedCollection(collectionId))
+  dispatch(actions.changeUrl({
+    pathname: '/search/granules/collection-details'
+  }))
+}

@@ -69,8 +69,8 @@ class GranuleResultsHeader extends Component {
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
     return (
-      <>
-        <div className="row granule-results-header">
+      <div className="granule-results-header">
+        <div className="row">
           <div className="col-auto">
             <div className="granule-results-header__title-wrap">
               {
@@ -219,7 +219,7 @@ class GranuleResultsHeader extends Component {
             )}
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

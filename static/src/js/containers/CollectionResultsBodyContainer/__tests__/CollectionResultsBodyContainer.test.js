@@ -11,8 +11,9 @@ function setup() {
     collections: { value: 'collections' },
     query: { pageNum: 1 },
     location: { value: 'location' },
-    onFocusedCollectionChange: jest.fn(),
-    onChangeCollectionPageNum: jest.fn()
+    onChangeCollectionPageNum: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
+    onViewCollectionDetails: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
@@ -30,7 +31,8 @@ describe('CollectionResultsBodyContainer component', () => {
     expect(enzymeWrapper.find(CollectionResultsBody).length).toBe(1)
     expect(enzymeWrapper.find(CollectionResultsBody).props().collections).toEqual({ value: 'collections' })
     expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({ value: 'location' })
-    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onFocusedCollectionChange).toEqual('function')
+    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionGranules).toEqual('function')
+    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
   })
 
   test('waypointEnter calls onChangeCollectionPageNum', () => {

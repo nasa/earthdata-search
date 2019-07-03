@@ -1,6 +1,10 @@
 {
   "application": {
-    "cmrTagNamespace": "edsc.extra.serverless"
+    "cmrTagNamespace": "edsc.extra.serverless",
+    "thumbnailSize": {
+      "height": 85,
+      "width": 85
+    }
   },
   "environment": {
     "development": {

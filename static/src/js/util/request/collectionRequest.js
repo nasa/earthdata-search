@@ -1,5 +1,8 @@
 import Request from './request'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { hasTag } from '../tags'
+
+import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
  * Base Request object for collection specific requests
@@ -112,6 +115,20 @@ export default class CollectionRequest extends Request {
       if (collection && collection.tags) {
         transformedCollection.is_cwic = Object.keys(collection.tags).includes('org.ceos.wgiss.cwic.granules.prod')
           && collection.has_granules === false
+        transformedCollection.has_map_imagery = hasTag(collection, 'gibs')
+      }
+
+      if (collection && collection.collection_data_type) {
+        transformedCollection.is_nrt = !!(collection.collection_data_type === 'NEAR_REAL_TIME')
+      }
+
+      const h = getApplicationConfig().thumbnailSize.height
+      const w = getApplicationConfig().thumbnailSize.width
+
+      if (collection.id) {
+        transformedCollection.thumbnail = collection.browse_flag
+          ? `${getEarthdataConfig('prod').cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
+          : unavailableImg
       }
 
       return transformedCollection

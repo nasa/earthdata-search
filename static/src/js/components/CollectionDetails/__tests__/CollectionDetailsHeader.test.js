@@ -25,7 +25,8 @@ function setup() {
 describe('CollectionDetails component', () => {
   test('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toBe(React.Fragment)
+    expect(enzymeWrapper.type()).toEqual('div')
+    expect(enzymeWrapper.props().className).toEqual('collection-details-header')
     expect(enzymeWrapper.find('.collection-details-header').length).toEqual(1)
     expect(enzymeWrapper.find('.collection-details-header__title').text()).toEqual(
       'Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050'

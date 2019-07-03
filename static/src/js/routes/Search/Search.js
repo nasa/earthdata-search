@@ -45,14 +45,12 @@ import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
-import CollectionResultsHeader
-  from '../../components/CollectionResults/CollectionResultsHeader'
+import CollectionResultsHeaderContainer
+  from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 
 import actions from '../../actions'
-
-import '../../components/CollectionResults/CollectionResults.scss'
 
 const mapDispatchToProps = dispatch => ({
   onMasterOverlayHeightChange:
@@ -64,7 +62,7 @@ export class Search extends Component {
     const { onMasterOverlayHeightChange } = this.props
 
     // Set the height of the master overlay to 300px by default
-    onMasterOverlayHeightChange(300)
+    onMasterOverlayHeightChange(500)
   }
 
   render() {
@@ -85,7 +83,7 @@ export class Search extends Component {
             <Route exact path="/search">
               <MasterOverlayPanelContainer
                 tabHandle={<CollectionResultsTabContainer />}
-                header={<CollectionResultsHeader />}
+                header={<CollectionResultsHeaderContainer />}
                 body={<CollectionResultsBodyContainer />}
               />
             </Route>

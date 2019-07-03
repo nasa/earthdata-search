@@ -5,11 +5,46 @@
   z-index: 1;
   background: $color__white;
 
+  &__tab {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background: $color__white;
+  }
+
+  &__tab-content {
+    padding: 0.75rem 1rem;
+  }
+
+  &__tab-handle {
+    position: absolute;
+    top: 0;
+    height: 10px;
+    width: 100%;
+    background: $color__white url('~Images/drag.png') no-repeat center 5px;
+    cursor: row-resize;
+  }
+
   &__tab-heading {
+    display: inline-block;
     margin: 0;
-    padding: $spacer 1.25rem;
     font-size: 1.1875rem;
     font-weight: 700;
+    vertical-align: middle;
+  }
+
+  &__tab-toggle {
+    margin: 0 $spacer/2;
+    padding: 0;
+    display: inline-block;
+    color: $color__black--300;
+    line-height: 1rem;
+    font-size: 1.125rem;
+    vertical-align: middle;
+
+    &:hover {
+      color: $color__black--400;
+    }
   }
 
   &__inner {
@@ -20,22 +55,6 @@
     flex-grow: 0;
     flex-shrink: 0;
     height: 100%;
-  }
-
-  &__tab {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    background: $color__white;
-  }
-
-  &__tab-handle {
-    position: absolute;
-    top: 0;
-    height: 10px;
-    width: 100%;
-    background: $color__white url('~Images/drag.png') no-repeat center 5px;
-    cursor: row-resize;
   }
 
   &__header {

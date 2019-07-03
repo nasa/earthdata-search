@@ -1,0 +1,10 @@
+.collection-results-list {
+  margin: 0;
+  padding: 0;
+
+  &__loading {
+    padding: $spacer*2 0;
+    text-align: center;
+    color: $color__black--600;
+  }
+}

@@ -4,6 +4,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  MASTER_OVERLAY_PANEL_TOGGLE,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
@@ -26,6 +27,12 @@ export const masterOverlayPanelResize = newHeight => (dispatch) => {
   dispatch({
     type: MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
     payload: newHeight
+  })
+}
+
+export const masterOverlayPanelToggle = () => (dispatch) => {
+  dispatch({
+    type: MASTER_OVERLAY_PANEL_TOGGLE
   })
 }
 

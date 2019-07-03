@@ -20,7 +20,9 @@ const mapDispatchToProps = dispatch => ({
   onMasterOverlayPanelDragStart:
     data => dispatch(actions.masterOverlayPanelDragStart(data)),
   onMasterOverlayPanelDragEnd:
-    () => dispatch(actions.masterOverlayPanelDragEnd())
+    () => dispatch(actions.masterOverlayPanelDragEnd()),
+  onMasterOverlayPanelToggle:
+    () => dispatch(actions.masterOverlayPanelToggle())
 })
 
 /**
@@ -44,7 +46,8 @@ const MasterOverlayPanelContainer = (props) => {
     onFocusedCollectionChange,
     onMasterOverlayHeightChange,
     onMasterOverlayPanelDragStart,
-    onMasterOverlayPanelDragEnd
+    onMasterOverlayPanelDragEnd,
+    onMasterOverlayPanelToggle
   } = props
 
   return (
@@ -59,6 +62,7 @@ const MasterOverlayPanelContainer = (props) => {
       onMasterOverlayHeightChange={onMasterOverlayHeightChange}
       onMasterOverlayPanelDragStart={onMasterOverlayPanelDragStart}
       onMasterOverlayPanelDragEnd={onMasterOverlayPanelDragEnd}
+      onMasterOverlayPanelToggle={onMasterOverlayPanelToggle}
       tabHandle={tabHandle}
     />
   )
@@ -80,6 +84,7 @@ MasterOverlayPanelContainer.propTypes = {
   onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onMasterOverlayPanelDragStart: PropTypes.func.isRequired,
   onMasterOverlayPanelDragEnd: PropTypes.func.isRequired,
+  onMasterOverlayPanelToggle: PropTypes.func.isRequired,
   tabHandle: PropTypes.node.isRequired
 }
 

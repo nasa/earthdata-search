@@ -8,6 +8,7 @@ import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { createDataLinks } from '../../util/granules'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import './GranuleResultsItem.scss'
 
@@ -123,6 +124,8 @@ const GranuleResultsItem = ({
   const timeStart = temporal[0]
   const timeEnd = temporal[1]
   const thumbnail = browseFlag ? granuleThumbnail : false
+  const thumbnailHeight = getApplicationConfig().thumbnailSize.height
+  const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
   const dataLinks = createDataLinks(links)
 
@@ -135,7 +138,13 @@ const GranuleResultsItem = ({
         {
           thumbnail && (
             <div className="granule-results-item__thumb">
-              <img src={thumbnail} height="85" width="85" alt={`Browse Image for ${title}`} />
+              <img
+                className="granule-results-item__thumb-image"
+                src={thumbnail}
+                height={thumbnailHeight}
+                width={thumbnailWidth}
+                alt={`Browse Image for ${title}`}
+              />
             </div>
           )
         }

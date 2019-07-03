@@ -4,6 +4,7 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
+  MASTER_OVERLAY_PANEL_TOGGLE,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
@@ -14,7 +15,9 @@ const initialState = {
     clickStartHeight: undefined,
     clickStartY: undefined,
     dragging: false,
-    height: 0
+    height: 0,
+    previousHeight: 0,
+    isOpen: true
   },
   granuleResultsPanel: {
     sortOrder: '-start_date',
@@ -60,7 +63,19 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         masterOverlayPanel: {
           ...state.masterOverlayPanel,
-          height: action.payload
+          height: action.payload,
+          previousHeight: action.payload
+        }
+      }
+    }
+    case MASTER_OVERLAY_PANEL_TOGGLE: {
+      const { isOpen, previousHeight } = state.masterOverlayPanel
+      return {
+        ...state,
+        masterOverlayPanel: {
+          ...state.masterOverlayPanel,
+          height: isOpen ? 0 : previousHeight,
+          isOpen: !isOpen
         }
       }
     }
