@@ -9,6 +9,7 @@
 
   &__primary {
     display: flex;
+    align-items: stretch;
   }
 
   &__secondary {
@@ -22,7 +23,6 @@
   }
 
   &__button {
-    padding: .8em 1em;
     border: 0;
     border-radius: 0;
     background-color: $color__white;

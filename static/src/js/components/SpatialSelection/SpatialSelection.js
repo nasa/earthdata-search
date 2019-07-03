@@ -11,6 +11,7 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 
+import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise } from '../../util/map/geo'
 
 const normalColor = '#00ffff'
@@ -134,6 +135,17 @@ class SpatialSelection extends Component {
   onDrawStop() {
     const { onChangeMap } = this.props
     onChangeMap({ drawingNewLayer: '' })
+  }
+
+  // Callback from EditControl, called when the controls are mounted
+  onMounted(drawControl) {
+    console.warn('mounted', drawControl)
+
+    eventEmitter.on('map.drawStart', (e) => {
+      console.warn(e)
+      const { type } = e
+      drawControl._toolbars.draw._modes[type].handler.enable()
+    })
   }
 
   // Callback from EditControl, contains the layer that was just drawn
@@ -278,6 +290,7 @@ class SpatialSelection extends Component {
           onDrawStart={this.onDrawStart}
           onDrawStop={this.onDrawStop}
           onCreated={this.onCreate}
+          onMounted={this.onMounted}
           draw={{
             polygon: {
               drawError: errorOptions,
