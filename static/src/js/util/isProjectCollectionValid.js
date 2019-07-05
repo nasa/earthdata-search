@@ -14,7 +14,7 @@ export const isProjectCollectionValid = (method) => {
 
   const accessMethod = method[methodKey]
   const { isValid = false } = accessMethod || {}
-  // if (!isValid) return true
+
   return isValid
 }
 

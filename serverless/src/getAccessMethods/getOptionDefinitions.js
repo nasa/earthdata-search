@@ -32,6 +32,7 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
       const { option_definition: responseOptionDefinition } = JSON.parse(body)
       const { form } = responseOptionDefinition
 
+      // TODO figure out if we really need to save the option_definition data in the access method
       forms.push({
         [`echoOrder${index}`]: {
           option_definition: {

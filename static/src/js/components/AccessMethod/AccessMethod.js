@@ -189,8 +189,6 @@ export const AccessMethod = ({
             />
           )
         }
-        {/* This is weird */}
-        { !form && <></> }
         {/* Access options go here
         <br />
         <button
