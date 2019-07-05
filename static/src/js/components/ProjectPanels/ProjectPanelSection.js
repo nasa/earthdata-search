@@ -21,11 +21,12 @@ export const ProjectPanelSection = ({ children, heading }) => (
 )
 
 ProjectPanelSection.defaultProps = {
+  children: null,
   heading: null
 }
 
 ProjectPanelSection.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   heading: PropTypes.string
 }
 
