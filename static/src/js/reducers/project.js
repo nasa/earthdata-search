@@ -3,7 +3,8 @@ import {
   REMOVE_COLLECTION_FROM_PROJECT,
   RESTORE_PROJECT,
   SELECT_ACCESS_METHOD,
-  UPDATE_ACCESS_METHOD
+  UPDATE_ACCESS_METHOD,
+  ADD_ACCESS_METHODS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -21,11 +22,7 @@ const projectReducer = (state = initialState, action) => {
         ...state.byId
       }
 
-      byId[collectionId] = {
-        ...byId[collectionId],
-        // TODO: This will likely change when dealing with default access methods
-        isValid: false
-      }
+      byId[collectionId] = {}
 
       return {
         ...state,
@@ -56,8 +53,7 @@ const projectReducer = (state = initialState, action) => {
       const byId = {}
 
       collectionIds.forEach((id) => {
-        // TODO: This will likely change when dealing with default access methods
-        byId[id] = { isValid: false }
+        byId[id] = {}
       })
 
       return {
@@ -85,8 +81,8 @@ const projectReducer = (state = initialState, action) => {
         }
       }
     }
-    case UPDATE_ACCESS_METHOD: {
-      const { collectionId, isValid, method } = action.payload
+    case ADD_ACCESS_METHODS: {
+      const { collectionId, methods } = action.payload
 
       const byId = {
         ...state.byId
@@ -98,9 +94,38 @@ const projectReducer = (state = initialState, action) => {
         ...byId[collectionId],
         accessMethods: {
           ...accessMethods,
-          ...method
-        },
-        isValid
+          ...methods
+        }
+      }
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          ...byId
+        }
+      }
+    }
+    case UPDATE_ACCESS_METHOD: {
+      const { collectionId, method } = action.payload
+
+      const byId = {
+        ...state.byId
+      }
+
+      const [methodKey] = Object.keys(method)
+      const { accessMethods = {} } = byId[collectionId] || {}
+      const oldMethod = accessMethods[methodKey] || {}
+
+      byId[collectionId] = {
+        ...byId[collectionId],
+        accessMethods: {
+          ...accessMethods,
+          [methodKey]: {
+            ...oldMethod,
+            ...method[methodKey]
+          }
+        }
       }
 
       return {

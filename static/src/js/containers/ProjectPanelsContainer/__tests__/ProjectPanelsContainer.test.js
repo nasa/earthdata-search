@@ -29,6 +29,7 @@ function setup() {
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
+    onUpdateAccessMethod: jest.fn(),
     project: {
       collectionIds: ['collectionId']
     },

@@ -20,7 +20,9 @@ const mapDispatchToProps = dispatch => ({
   onTogglePanels:
     value => dispatch(togglePanels(value)),
   onSetActivePanel:
-    panelId => dispatch(setActivePanel(panelId))
+    panelId => dispatch(setActivePanel(panelId)),
+  onUpdateAccessMethod:
+    data => dispatch(actions.updateAccessMethod(data))
 })
 
 export const ProjectPanelsContainer = ({
@@ -30,7 +32,8 @@ export const ProjectPanelsContainer = ({
   projectPanels,
   onSelectAccessMethod,
   onTogglePanels,
-  onSetActivePanel
+  onSetActivePanel,
+  onUpdateAccessMethod
 }) => (
   <ProjectPanels
     collections={collections}
@@ -40,6 +43,7 @@ export const ProjectPanelsContainer = ({
     onSelectAccessMethod={onSelectAccessMethod}
     onTogglePanels={onTogglePanels}
     onSetActivePanel={onSetActivePanel}
+    onUpdateAccessMethod={onUpdateAccessMethod}
   />
 )
 
@@ -50,7 +54,8 @@ ProjectPanelsContainer.propTypes = {
   projectPanels: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired
+  onSetActivePanel: PropTypes.func.isRequired,
+  onUpdateAccessMethod: PropTypes.func.isRequired
 }
 
 

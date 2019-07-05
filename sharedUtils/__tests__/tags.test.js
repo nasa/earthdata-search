@@ -1,4 +1,4 @@
-import * as appConfig from '../../../../../sharedUtils/config'
+import * as appConfig from '../config'
 import { getValueForTag, hasTag } from '../tags'
 
 beforeEach(() => {

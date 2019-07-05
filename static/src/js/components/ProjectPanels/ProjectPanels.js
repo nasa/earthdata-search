@@ -12,6 +12,7 @@ import AccessMethod from '../AccessMethod/AccessMethod'
 import CollectionDetails from './CollectionDetails'
 
 import './ProjectPanels.scss'
+import { isAccessMethodValid } from '../../util/accessMethods'
 
 /**
  * Renders ProjectPanels.
@@ -27,7 +28,8 @@ export const ProjectPanels = pure(({
   projectPanels,
   onSelectAccessMethod,
   onTogglePanels,
-  onSetActivePanel
+  onSetActivePanel,
+  onUpdateAccessMethod
 }) => {
   const { byId } = collections
   const { collectionIds: projectIds, byId: projectById } = project
@@ -56,9 +58,10 @@ export const ProjectPanels = pure(({
     const { dataset_id: title, id, granule_count: granuleCount } = metadata
 
     const {
-      isValid = false,
+      accessMethods,
       selectedAccessMethod
     } = projectCollection
+    const isValid = isAccessMethodValid(projectCollection)
 
     const editOptionsFooter = (
       <div className="project-panels__footer">
@@ -133,10 +136,12 @@ export const ProjectPanels = pure(({
       >
         <PanelItem>
           <AccessMethod
+            accessMethods={accessMethods}
             index={index}
             metadata={metadata}
             onSelectAccessMethod={onSelectAccessMethod}
             onSetActivePanel={onSetActivePanel}
+            onUpdateAccessMethod={onUpdateAccessMethod}
             selectedAccessMethod={selectedAccessMethod}
           />
         </PanelItem>
@@ -216,7 +221,8 @@ ProjectPanels.propTypes = {
   projectPanels: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired
+  onSetActivePanel: PropTypes.func.isRequired,
+  onUpdateAccessMethod: PropTypes.func.isRequired
 }
 
 export default ProjectPanels

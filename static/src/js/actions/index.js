@@ -68,11 +68,16 @@ import {
   restoreProject,
   selectAccessMethod,
   toggleCollectionVisibility,
+  addAccessMethods,
   updateAccessMethod
 } from './project'
 import { fetchOrder, submitOrder } from './order'
+import {
+  fetchAccessMethods
+} from './accessMethods'
 
 const actions = {
+  addAccessMethods,
   addProjectCollection,
   addGranulesFromCollection,
   applyViewAllFacets,
@@ -83,15 +88,17 @@ const actions = {
   changeFocusedGranule,
   changeGranulePageNum,
   changeMap,
-  changeQuery,
   changePath,
   changeProjectQuery,
+  changeQuery,
   changeTimelineQuery,
   changeUrl,
   changeViewAllFacet,
   clearCollectionGranules,
   clearFilters,
   excludeGranule,
+  fetchAccessMethods,
+  fetchOrder,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,
@@ -111,7 +118,6 @@ const actions = {
   restoreProject,
   searchNlp,
   selectAccessMethod,
-  fetchOrder,
   submitOrder,
   toggleCollectionVisibility,
   toggleOverrideTemporalModal,

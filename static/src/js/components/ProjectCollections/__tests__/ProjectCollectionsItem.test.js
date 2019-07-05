@@ -27,7 +27,7 @@ function setup() {
     onToggleCollectionVisibility: jest.fn(),
     onSetActivePanel: jest.fn(),
     projectCollection: {
-      isValid: false
+      accessMethods: {}
     }
   }
 
@@ -81,7 +81,13 @@ describe('ProjectCollectionItem component', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.setProps({
         projectCollection: {
-          isValid: true
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
         }
       })
       expect(enzymeWrapper.find('.project-collections-item__status--invalid').length).toEqual(0)

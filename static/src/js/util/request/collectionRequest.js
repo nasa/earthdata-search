@@ -1,6 +1,6 @@
 import Request from './request'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { hasTag } from '../tags'
+import { hasTag } from '../../../../../sharedUtils/tags'
 
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 

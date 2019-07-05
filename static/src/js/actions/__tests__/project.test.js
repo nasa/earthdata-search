@@ -14,7 +14,8 @@ import {
   TOGGLE_COLLECTION_VISIBILITY,
   RESTORE_PROJECT,
   UPDATE_ACCESS_METHOD,
-  SELECT_ACCESS_METHOD
+  SELECT_ACCESS_METHOD,
+  ADD_ACCESS_METHODS
 } from '../../constants/actionTypes'
 
 import {
@@ -26,7 +27,8 @@ import {
   toggleCollectionVisibility,
   restoreProject,
   updateAccessMethod,
-  selectAccessMethod
+  selectAccessMethod,
+  addAccessMethods
 } from '../project'
 
 const mockStore = configureMockStore([thunk])
@@ -82,6 +84,25 @@ describe('restoreProject', () => {
   })
 })
 
+describe('addAccessMethods', () => {
+  test('should create an action to update an access method', () => {
+    const payload = {
+      collectionId: 'collectionId',
+      isValid: true,
+      method: {
+        download: {
+          type: 'download'
+        }
+      }
+    }
+    const expectedAction = {
+      type: ADD_ACCESS_METHODS,
+      payload
+    }
+    expect(addAccessMethods(payload)).toEqual(expectedAction)
+  })
+})
+
 describe('updateAccessMethod', () => {
   test('should create an action to update an access method', () => {
     const payload = {
@@ -122,14 +143,6 @@ describe('selectAccessMethod', () => {
     expect(storeActions[0]).toEqual({
       type: SELECT_ACCESS_METHOD,
       payload
-    })
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_ACCESS_METHOD,
-      payload: {
-        collectionId: 'collectionId',
-        isValid: true,
-        method: { download: { type: 'download' } }
-      }
     })
   })
 
@@ -363,6 +376,8 @@ describe('getProjectCollections', () => {
 
     const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
     getProjectGranulesMock.mockImplementation(() => jest.fn())
+    const fetchAccessMethodsMock = jest.spyOn(actions, 'fetchAccessMethods')
+    fetchAccessMethodsMock.mockImplementation(() => jest.fn())
 
     // mockStore with initialState
     const store = mockStore({
@@ -395,6 +410,7 @@ describe('getProjectCollections', () => {
       })
 
       expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
+      expect(fetchAccessMethodsMock).toHaveBeenCalledTimes(1)
     })
   })
 

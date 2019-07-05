@@ -6,7 +6,8 @@ import {
   SELECT_ACCESS_METHOD,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
-  UPDATE_PROJECT_GRANULES
+  UPDATE_PROJECT_GRANULES,
+  ADD_ACCESS_METHODS
 } from '../constants/actionTypes'
 import GranuleRequest from '../util/request/granuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
@@ -16,7 +17,6 @@ import { prepareGranuleParams, populateGranuleResults, buildGranuleSearchParams 
 import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
 import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
-import emptyAccessMethod from '../util/emptyAccessMethod'
 import isProjectCollectionValid from '../util/isProjectCollectionValid'
 
 export const addCollectionToProject = payload => ({
@@ -44,6 +44,11 @@ export const restoreProject = payload => ({
   payload
 })
 
+export const addAccessMethods = payload => ({
+  type: ADD_ACCESS_METHODS,
+  payload
+})
+
 export const updateAccessMethod = payload => ({
   type: UPDATE_ACCESS_METHOD,
   payload: {
@@ -52,28 +57,10 @@ export const updateAccessMethod = payload => ({
   }
 })
 
-export const selectAccessMethod = payload => (dispatch, getState) => {
-  // Set the selected access method
-  dispatch({
-    type: SELECT_ACCESS_METHOD,
-    payload
-  })
-
-  const { collectionId, selectedAccessMethod } = payload
-  const { project } = getState()
-  const { byId } = project
-  const collection = byId[collectionId] || {}
-  const { accessMethods = {} } = collection
-  const method = accessMethods[selectedAccessMethod]
-
-  // update the access method unless a value already exists
-  if (!method) {
-    dispatch(updateAccessMethod({
-      collectionId,
-      method: emptyAccessMethod(selectedAccessMethod)
-    }))
-  }
-}
+export const selectAccessMethod = payload => ({
+  type: SELECT_ACCESS_METHOD,
+  payload
+})
 
 export const getProjectGranules = () => (dispatch, getState) => {
   const { project } = getState()
@@ -174,6 +161,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
       dispatch(actions.getProjectGranules())
+      dispatch(actions.fetchAccessMethods())
     }, (error) => {
       throw new Error('Request failed', error)
     })

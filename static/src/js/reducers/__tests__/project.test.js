@@ -1,5 +1,6 @@
 import projectReducer from '../project'
 import {
+  ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
   RESTORE_PROJECT,
@@ -37,9 +38,7 @@ describe('ADD_COLLECTION_TO_PROJECT', () => {
     const expectedState = {
       ...initial,
       byId: {
-        collectionId: {
-          isValid: false
-        }
+        collectionId: {}
       },
       collectionIds: ['existingCollectionId', collectionId]
     }
@@ -106,9 +105,7 @@ describe('RESTORE_PROJECT', () => {
     const expectedState = {
       ...initialState,
       byId: {
-        collectionId: {
-          isValid: false
-        }
+        collectionId: {}
       },
       collectionIds: ['collectionId']
     }
@@ -142,15 +139,15 @@ describe('SELECT_ACCESS_METHOD', () => {
   })
 })
 
-describe('UPDATE_ACCESS_METHOD', () => {
+describe('ADD_ACCESS_METHODS', () => {
   test('returns the correct state', () => {
     const collectionId = 'collectionId'
 
     const action = {
-      type: UPDATE_ACCESS_METHOD,
+      type: ADD_ACCESS_METHODS,
       payload: {
         collectionId,
-        method: {
+        methods: {
           download: {
             type: 'download'
           }
@@ -172,5 +169,53 @@ describe('UPDATE_ACCESS_METHOD', () => {
     }
 
     expect(projectReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_ACCESS_METHOD', () => {
+  test('returns the correct state', () => {
+    const collectionId = 'collectionId'
+
+    const action = {
+      type: UPDATE_ACCESS_METHOD,
+      payload: {
+        collectionId,
+        method: {
+          echoOrder: {
+            model: 'form model'
+          }
+        }
+      }
+    }
+
+    const initial = {
+      byId: {
+        collectionId: {
+          accessMethods: {
+            echoOrder: {
+              type: 'ECHO_ORDER'
+            }
+          }
+        }
+      },
+      collectionIds: [collectionId]
+    }
+
+    const expectedState = {
+      ...initialState,
+      byId: {
+        collectionId: {
+          accessMethods: {
+            echoOrder: {
+              type: 'ECHO_ORDER',
+              model: 'form model'
+            }
+          }
+        }
+      },
+      collectionIds: [collectionId]
+    }
+
+    expect(projectReducer(initial, action)).toEqual(expectedState)
   })
 })

@@ -7,7 +7,111 @@ import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
 
 import './AccessMethod.scss'
-import { getValueForTag, hasTag } from '../../util/tags'
+import EchoForm from './EchoForm'
+
+const downloadButton = collectionId => (
+  <Radio
+    id={`${collectionId}_access-method__direct-download`}
+    name={`${collectionId}_access-method__direct-download`}
+    key={`${collectionId}_access-method__direct-download`}
+    value="download"
+  >
+    Direct Download
+    <OverlayTrigger
+      placement="right"
+      overlay={(
+        <Tooltip
+          className="tooltip--large tooltip--ta-left"
+        >
+          Direct download of all data associated with the selected granules.
+          The desired data will be available for download immediately.
+          Files will be accessed from a list of links displayed in the
+          browser or by using a download script.
+        </Tooltip>
+      )}
+    >
+      <i className="access-method__radio-tooltip fa fa-info-circle" />
+    </OverlayTrigger>
+  </Radio>
+)
+
+const echoOrderButton = (collectionId, methodKey) => (
+  <Radio
+    id={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
+    name={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
+    key={`${collectionId}_access-method__stage-for-delivery_${methodKey}`}
+    value={methodKey}
+  >
+    Stage For Delivery
+    <OverlayTrigger
+      placement="right"
+      overlay={(
+        <Tooltip
+          className="tooltip--large tooltip--ta-left"
+        >
+          Submit a request for data to be staged for delivery. Data files will be
+          compressed in zip format and stored for retrieval via HTTP. You will
+          receive an email from the data provider when your files are ready to download.
+        </Tooltip>
+      )}
+    >
+      <i className="access-method__radio-tooltip fa fa-info-circle" />
+    </OverlayTrigger>
+  </Radio>
+)
+
+const esiButton = (collectionId, methodKey) => (
+  <Radio
+    id={`${collectionId}_access-method__customize_${methodKey}`}
+    name={`${collectionId}_access-method__customize_${methodKey}`}
+    key={`${collectionId}_access-method__customize_${methodKey}`}
+    value={methodKey}
+  >
+    Customize
+    <OverlayTrigger
+      placement="right"
+      overlay={(
+        <Tooltip
+          className="tooltip--large tooltip--ta-left"
+        >
+          Select options like variables, transformations, and output formats to
+          customize your data. The desired data files will be made available for
+          access after the data provider has finished processing your request.
+          You will receive an email from the data provider when your
+          files are ready to download.
+        </Tooltip>
+      )}
+    >
+      <i className="access-method__radio-tooltip fa fa-info-circle" />
+    </OverlayTrigger>
+  </Radio>
+)
+
+const opendapButton = (collectionId, methodKey) => (
+  <Radio
+    id={`${collectionId}_access-method__opendap_${methodKey}`}
+    name={`${collectionId}_access-method__opendap_${methodKey}`}
+    key={`${collectionId}_access-method__opendap_${methodKey}`}
+    value={methodKey}
+  >
+    Customize (OPeNDAP)
+    <OverlayTrigger
+      placement="right"
+      overlay={(
+        <Tooltip
+          className="tooltip--large tooltip--ta-left"
+        >
+          Select options like variables, transformations, and output formats to customize
+          your data. The desired data files will be made available for access immediately.
+          Files will be accessed from a list of links in the browser or by using a
+          download script.
+        </Tooltip>
+      )}
+    >
+      <i className="access-method__radio-tooltip fa fa-info-circle" />
+    </OverlayTrigger>
+  </Radio>
+)
 
 /**
  * Renders AccessMethod.
@@ -16,138 +120,50 @@ import { getValueForTag, hasTag } from '../../util/tags'
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
  */
 export const AccessMethod = ({
+  accessMethods,
   // eslint-disable-next-line no-unused-vars
   index,
   metadata,
   onSelectAccessMethod,
   // eslint-disable-next-line no-unused-vars
   onSetActivePanel,
+  onUpdateAccessMethod,
   selectedAccessMethod
 }) => {
-  const { id, tags } = metadata
+  const { id: collectionId } = metadata
 
   const handleAccessMethodSelection = (method) => {
     onSelectAccessMethod({
-      collectionId: id,
+      collectionId,
       selectedAccessMethod: method
     })
   }
 
   const radioList = []
+  Object.keys(accessMethods).forEach((methodKey) => {
+    const accessMethod = accessMethods[methodKey]
+    const { type } = accessMethod
 
-  const capabilitiesData = getValueForTag('collection_capabilities', tags)
-  const { granule_online_access_flag: downloadable } = capabilitiesData || {}
-  if (downloadable) {
-    radioList.push(
-      <Radio
-        id={`${id}_access-method__direct-download`}
-        name={`${id}_access-method__direct-download`}
-        key={`${id}_access-method__direct-download`}
-        value="download"
-      >
-        Direct Download
-        <OverlayTrigger
-          placement="right"
-          overlay={(
-            <Tooltip
-              className="tooltip--large tooltip--ta-left"
-            >
-              Direct download of all data associated with the selected granules.
-              The desired data will be available for download immediately.
-              Files will be accessed from a list of links displayed in the
-              browser or by using a download script.
-            </Tooltip>
-          )}
-        >
-          <i className="access-method__radio-tooltip fa fa-info-circle" />
-        </OverlayTrigger>
-      </Radio>
-    )
-  }
+    switch (type) {
+      case 'download':
+        radioList.push(downloadButton(collectionId))
+        break
+      case 'ECHO_ORDER':
+        radioList.push(echoOrderButton(collectionId, methodKey))
+        break
+      case 'esi':
+        radioList.push(esiButton(collectionId, methodKey))
+        break
+      case 'opendap':
+        radioList.push(opendapButton(collectionId, methodKey))
+        break
+      default:
+        break
+    }
+  })
 
-  if (hasTag(metadata, 'subset_service.echo_orders')) {
-    radioList.push((
-      <Radio
-        id={`${id}_access-method__stage-for-deliver`}
-        name={`${id}_access-method__stage-for-deliver`}
-        key={`${id}_access-method__stage-for-deliver`}
-        value="echoOrder"
-      >
-        Stage For Delivery
-        <OverlayTrigger
-          placement="right"
-          overlay={(
-            <Tooltip
-              className="tooltip--large tooltip--ta-left"
-            >
-              Submit a request for data to be staged for delivery. Data files will be
-              compressed in zip format and stored for retrieval via HTTP. You will
-              receive an email from the data provider when your files are ready to download.
-            </Tooltip>
-          )}
-        >
-          <i className="access-method__radio-tooltip fa fa-info-circle" />
-        </OverlayTrigger>
-      </Radio>
-    ))
-  }
-
-  if (hasTag(metadata, 'subset_service.opendap')) {
-    radioList.push((
-      <Radio
-        id={`${id}_access-method__opendap`}
-        name={`${id}_access-method__opendap`}
-        key={`${id}_access-method__opendap`}
-        value="opendap"
-      >
-        Customize (OPeNDAP)
-        <OverlayTrigger
-          placement="right"
-          overlay={(
-            <Tooltip
-              className="tooltip--large tooltip--ta-left"
-            >
-              Select options like variables, transformations, and output formats to customize
-              your data. The desired data files will be made available for access immediately.
-              Files will be accessed from a list of links in the browser or by using a
-              download script.
-            </Tooltip>
-          )}
-        >
-          <i className="access-method__radio-tooltip fa fa-info-circle" />
-        </OverlayTrigger>
-      </Radio>
-    ))
-  }
-
-  if (hasTag(metadata, 'subset_service.esi')) {
-    radioList.push((
-      <Radio
-        id={`${id}_access-method__customize`}
-        name={`${id}_access-method__customize`}
-        key={`${id}_access-method__customize`}
-        value="esi"
-      >
-        Customize
-        <OverlayTrigger
-          placement="right"
-          overlay={(
-            <Tooltip
-              className="tooltip--large tooltip--ta-left"
-            >
-              Select options like variables, transformations, and output formats to
-              customize your data. The desired data files will be made available for
-              access after the data provider has finished processing your request.
-              You will receive an email from the data provider when your
-              files are ready to download.
-            </Tooltip>
-          )}
-        >
-          <i className="access-method__radio-tooltip fa fa-info-circle" />
-        </OverlayTrigger>
-      </Radio>
-    ))
-  }
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const { form, rawModel } = selectedMethod || {}
 
   return (
     <div className="access-method">
@@ -161,21 +177,35 @@ export const AccessMethod = ({
           </RadioList>
         </div>
       </ProjectPanelSection>
-      {/* <ProjectPanelSection>
-        Access options go here
+      <ProjectPanelSection>
+        {
+          form && (
+            <EchoForm
+              collectionId={collectionId}
+              form={form}
+              methodKey={selectedAccessMethod}
+              rawModel={rawModel}
+              onUpdateAccessMethod={onUpdateAccessMethod}
+            />
+          )
+        }
+        {/* This is weird */}
+        { !form && <></> }
+        {/* Access options go here
         <br />
         <button
           type="button"
           onClick={() => onSetActivePanel(`0.${index}.1`)}
         >
           Go to another panel item
-        </button>
-      </ProjectPanelSection> */}
+        </button> */}
+      </ProjectPanelSection>
     </div>
   )
 }
 
 AccessMethod.defaultProps = {
+  accessMethods: {},
   index: null,
   metadata: {},
   onSetActivePanel: null,
@@ -183,10 +213,12 @@ AccessMethod.defaultProps = {
 }
 
 AccessMethod.propTypes = {
+  accessMethods: PropTypes.shape({}),
   index: PropTypes.number,
   metadata: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
+  onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string
 }
 
