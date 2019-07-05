@@ -112,7 +112,8 @@ const StaticCommonConfig = {
       { from: './static/src/public', to: './' }
     ]),
     new webpack.ProvidePlugin({
-      jQuery: 'jquery'
+      jQuery: 'jquery',
+      $: 'jquery'
     }),
     // Prevent importing of all moment locales. Moment includes and uses en-us by default.
     // https://medium.com/@michalozogan/how-to-split-moment-js-locales-to-chunks-with-webpack-de9e25caccea

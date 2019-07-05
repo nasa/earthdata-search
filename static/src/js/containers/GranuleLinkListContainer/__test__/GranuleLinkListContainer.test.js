@@ -7,7 +7,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    granuleDownloadLinks: []
+    granuleDownload: {}
   }
 
   const enzymeWrapper = shallow(<GranuleLinkListContainer {...props} />)

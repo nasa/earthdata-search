@@ -10,6 +10,7 @@ import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 import Button from '../Button/Button'
 
 import './ProjectCollectionsItem.scss'
+import { isAccessMethodValid } from '../../util/accessMethods'
 
 /**
  * Renders ProjectCollectionItem.
@@ -40,7 +41,7 @@ const ProjectCollectionItem = ({
   } = metadata
   const { totalSize = {} } = granules
   const { size = '', unit = '' } = totalSize
-  const { isValid } = projectCollection
+  const isValid = isAccessMethodValid(projectCollection)
 
   const className = classNames([
     'project-collections-item',

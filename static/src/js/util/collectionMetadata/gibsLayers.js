@@ -1,4 +1,4 @@
-import { getValueForTag } from '../tags'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 /**
  * Build a string to represent the available gibs layers for the provided collection metadata

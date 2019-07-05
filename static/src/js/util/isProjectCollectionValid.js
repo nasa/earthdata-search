@@ -6,9 +6,16 @@ import { isEmpty } from 'lodash'
  * @return {boolean}
  */
 export const isProjectCollectionValid = (method) => {
+  if (!method) return false
   // Here is where we can check the method to see if its valid
-  if (!isEmpty(method)) return true
-  return false
+  const [methodKey] = Object.keys(method)
+
+  if (methodKey === 'download' && !isEmpty(method)) return true
+
+  const accessMethod = method[methodKey]
+  const { isValid = false } = accessMethod || {}
+  // if (!isValid) return true
+  return isValid
 }
 
 export default isProjectCollectionValid

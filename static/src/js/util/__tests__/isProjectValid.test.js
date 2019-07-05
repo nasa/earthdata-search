@@ -1,17 +1,18 @@
 import { isProjectValid } from '../isProjectValid'
+import { selectedAccessMethod } from '../../actions/project';
 
 describe('isProjectValid', () => {
   describe('when all collections are invalid', () => {
     test('returns false', () => {
       const collections = [
         {
-          isValid: false
+          accessMethods: {}
         },
         {
-          isValid: false
+          accessMethods: {}
         },
         {
-          isValid: false
+          accessMethods: {}
         }
       ]
       expect(isProjectValid(collections)).toEqual(false)
@@ -22,13 +23,19 @@ describe('isProjectValid', () => {
     test('returns false', () => {
       const collections = [
         {
-          isValid: true
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
         },
         {
-          isValid: false
+          accessMethods: {}
         },
         {
-          isValid: false
+          accessMethods: {}
         }
       ]
       expect(isProjectValid(collections)).toEqual(false)
@@ -39,13 +46,31 @@ describe('isProjectValid', () => {
     test('returns true', () => {
       const collections = [
         {
-          isValid: true
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
         },
         {
-          isValid: true
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
         },
         {
-          isValid: true
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
         }
       ]
       expect(isProjectValid(collections)).toEqual(true)

@@ -1,4 +1,4 @@
-import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getApplicationConfig } from './config'
 
 /**
  * Retrieve tag data for given CMR tag metadata and a key to look for
