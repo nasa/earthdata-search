@@ -3,8 +3,6 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import EchoForm from '../EchoForm'
-import Radio from '../../FormFields/Radio/Radio'
-import RadioList from '../../FormFields/Radio/RadioList'
 import { rawModel, echoForm, formWithModel } from './mocks'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -36,20 +34,20 @@ describe('EchoForm component', () => {
   describe('componentWillReceiveProps', () => {
     test('renders a new echoform', () => {
       const { enzymeWrapper } = setup()
-
+      const methodKey = 'echoOrder0'
       enzymeWrapper.instance().initializeEchoForm = jest.fn()
       enzymeWrapper.instance().$el.echoforms = jest.fn()
 
       enzymeWrapper.setProps({
         form: echoForm,
-        methodKey: 'echoOrder0',
+        methodKey,
         rawModel
       })
 
       expect(enzymeWrapper.instance().$el.echoforms.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().$el.echoforms.mock.calls).toEqual([['destroy']])
       expect(enzymeWrapper.instance().initializeEchoForm.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0]).toEqual([echoForm, rawModel])
+      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0]).toEqual([echoForm, rawModel, methodKey])
     })
   })
 

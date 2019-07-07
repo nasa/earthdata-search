@@ -13,12 +13,12 @@ class EchoForm extends Component {
   }
 
   componentDidMount() {
-    const { form, rawModel } = this.props
+    const { form, rawModel, methodKey } = this.props
 
     // Initialize the timeline plugin
     this.$el = $(this.el)
 
-    this.initializeEchoForm(form, rawModel)
+    this.initializeEchoForm(form, rawModel, methodKey)
 
     this.$el.on('echoforms:modelchange', this.syncModel)
   }
@@ -37,7 +37,7 @@ class EchoForm extends Component {
     if (form !== nextForm && methodKey !== nextMethodKey) {
       this.$el.echoforms('destroy')
 
-      this.initializeEchoForm(nextForm, nextRawModel)
+      this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey)
     }
   }
 
@@ -45,16 +45,27 @@ class EchoForm extends Component {
     this.$el.echoforms('destroy')
   }
 
-  initializeEchoForm(form, rawModel) {
+  /**
+   * Updates the EchoForm with the saved rawModel data, initializes the EchoForm plugin
+   * and syncs the new EchoForm model to the redux store
+   * @param {String} form EchoForm XML data
+   * @param {String} rawModel Non-pruned serialized EchoForm data
+   * @param {String} methodKey Redux store access method key, to be passed to syncModel to ensure the correct access method is updated in the store
+   */
+  initializeEchoForm(form, rawModel, methodKey) {
     const echoForm = this.insertModelIntoForm(rawModel, form)
 
     if (echoForm) this.$el.echoforms({ form: echoForm })
 
-    this.syncModel()
+    this.syncModel(methodKey)
   }
 
+  /**
+   * Updates the EchoForm XML with the saved rawModel data
+   * @param {String} rawModel Non-Pruned serialized EchoForm data
+   * @param {String} form EchoForm XML data
+   */
   insertModelIntoForm(rawModel, form) {
-    // populate form using rawModel
     if (rawModel) {
       return form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, `<instance>\n${rawModel}\n</instance>`)
     }
@@ -62,10 +73,17 @@ class EchoForm extends Component {
     return form
   }
 
-  syncModel() {
-    const { collectionId, methodKey, onUpdateAccessMethod } = this.props
-    const isValid = this.$el.echoforms('isValid')
+  /**
+   * Update the redux store access method with current values from the EchoForm plugin
+   * @param {String} key (optional) Redux store access method key. If not provided it will be pulled from current props. This needs to be passed in from componentWillReceiveProps in order to update the new access method
+   */
+  syncModel(key) {
+    let methodKey = key
+    const { collectionId, onUpdateAccessMethod } = this.props
 
+    if (!methodKey) ({ methodKey } = this.props)
+
+    const isValid = this.$el.echoforms('isValid')
     const model = this.$el.echoforms('serialize')
     const rawModel = this.$el.echoforms('serialize', { prune: false })
 

@@ -148,13 +148,13 @@ export const AccessMethod = ({
       case 'download':
         radioList.push(downloadButton(collectionId))
         break
-      case 'ECHO_ORDER':
+      case 'ECHO ORDERS':
         radioList.push(echoOrderButton(collectionId, methodKey))
         break
-      case 'esi':
+      case 'ESI':
         radioList.push(esiButton(collectionId, methodKey))
         break
-      case 'opendap':
+      case 'OPeNDAP':
         radioList.push(opendapButton(collectionId, methodKey))
         break
       default:

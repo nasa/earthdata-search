@@ -84,7 +84,7 @@ describe('AccessMethod component', () => {
         accessMethods: {
           echoOrder0: {
             isValid: true,
-            type: 'ECHO_ORDER'
+            type: 'ECHO ORDERS'
           }
         }
       })
@@ -99,7 +99,7 @@ describe('AccessMethod component', () => {
         accessMethods: {
           esi: {
             isValid: true,
-            type: 'esi'
+            type: 'ESI'
           }
         }
       })
@@ -114,7 +114,7 @@ describe('AccessMethod component', () => {
         accessMethods: {
           opendap: {
             isValid: true,
-            type: 'opendap'
+            type: 'OPeNDAP'
           }
         }
       })
@@ -134,7 +134,7 @@ describe('AccessMethod component', () => {
         accessMethods: {
           echoOrder0: {
             isValid: true,
-            type: 'ECHO_ORDER',
+            type: 'ECHO ORDERS',
             form
           }
         },
@@ -161,7 +161,7 @@ describe('AccessMethod component', () => {
         accessMethods: {
           echoOrder0: {
             isValid: true,
-            type: 'ECHO_ORDER',
+            type: 'ECHO ORDERS',
             form,
             rawModel
           }
