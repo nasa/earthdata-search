@@ -73,7 +73,7 @@ describe('fetchAccessMethods', () => {
     }
     const echoOrder0 = {
       id: 'service_id',
-      type: 'ECHO_ORDER',
+      type: 'ECHO ORDERS',
       url: 'mock url',
       option_definition: {
         id: 'option_definition_guid',

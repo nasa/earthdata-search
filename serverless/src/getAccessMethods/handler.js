@@ -38,8 +38,7 @@ const getAccessMethods = async (event) => {
         const [key] = Object.keys(form)
         accessMethods[key] = {
           ...echoOrderData,
-          ...form[key],
-          type: 'ECHO_ORDER'
+          ...form[key]
         }
       })
     }
@@ -48,14 +47,14 @@ const getAccessMethods = async (event) => {
   if (hasEsi) {
     // TODO implement this stuff
     accessMethods.esi = {
-      type: 'esi'
+      type: 'ESI'
     }
   }
 
   if (hasOpendap) {
     // TODO implement this stuff
     accessMethods.opendap = {
-      type: 'opendap'
+      type: 'OPeNDAP'
     }
   }
 

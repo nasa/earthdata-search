@@ -64,7 +64,8 @@ describe('getAccessMethods', () => {
                 option_definitions: [{
                   id: 'option_def_guid',
                   name: 'Option Definition'
-                }]
+                }],
+                type: 'ECHO ORDERS'
               }
             }
           }
@@ -78,13 +79,13 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           echoOrder0: {
+            type: 'ECHO ORDERS',
             form: 'mock echo form',
             option_definition: {
               id: 'option_def_guid',
               name: 'Option Definition'
             },
-            option_definitions: undefined,
-            type: 'ECHO_ORDER'
+            option_definitions: undefined
           }
         }
       }),
@@ -112,7 +113,7 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           esi: {
-            type: 'esi'
+            type: 'ESI'
           }
         }
       }),
@@ -140,7 +141,7 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           opendap: {
-            type: 'opendap'
+            type: 'OPeNDAP'
           }
         }
       }),

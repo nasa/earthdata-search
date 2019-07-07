@@ -193,7 +193,7 @@ describe('UPDATE_ACCESS_METHOD', () => {
         collectionId: {
           accessMethods: {
             echoOrder: {
-              type: 'ECHO_ORDER'
+              type: 'ECHO ORDERS'
             }
           }
         }
@@ -207,7 +207,7 @@ describe('UPDATE_ACCESS_METHOD', () => {
         collectionId: {
           accessMethods: {
             echoOrder: {
-              type: 'ECHO_ORDER',
+              type: 'ECHO ORDERS',
               model: 'form model'
             }
           }
