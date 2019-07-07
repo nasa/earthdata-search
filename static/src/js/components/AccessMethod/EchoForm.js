@@ -81,7 +81,7 @@ class EchoForm extends Component {
     let methodKey = key
     const { collectionId, onUpdateAccessMethod } = this.props
 
-    if (!methodKey) ({ methodKey } = this.props)
+    if (typeof methodKey !== 'string') ({ methodKey } = this.props)
 
     const isValid = this.$el.echoforms('isValid')
     const model = this.$el.echoforms('serialize')

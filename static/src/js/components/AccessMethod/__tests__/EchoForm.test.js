@@ -55,13 +55,13 @@ describe('EchoForm component', () => {
     test('renders a new echoform', () => {
       const { enzymeWrapper } = setup()
 
-      const mockStuff = jest.fn()
-      enzymeWrapper.instance().$el.echoforms = mockStuff
+      const mockEchoForms = jest.fn()
+      enzymeWrapper.instance().$el.echoforms = mockEchoForms
 
       enzymeWrapper.unmount()
 
-      expect(mockStuff.mock.calls.length).toBe(1)
-      expect(mockStuff.mock.calls).toEqual([['destroy']])
+      expect(mockEchoForms.mock.calls.length).toBe(1)
+      expect(mockEchoForms.mock.calls).toEqual([['destroy']])
     })
   })
 
@@ -124,7 +124,69 @@ describe('EchoForm component', () => {
 
   describe('syncModel', () => {
     test('updates the store with the echoform data', () => {
+      const collectionId = 'collectionId'
 
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.setProps({
+        collectionId
+      })
+
+      enzymeWrapper.instance().$el.echoforms = jest.fn((param, options) => {
+        if (param === 'isValid') return true
+        if (param === 'serialize' && options) return 'form rawModel'
+        if (param === 'serialize') return 'form model'
+        return null
+      })
+
+      enzymeWrapper.instance().syncModel('echoOrder0')
+
+      // 2 because componentDidMount calls syncModel
+      expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
+      expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
+        collectionId,
+        method: {
+          echoOrder0: {
+            isValid: true,
+            model: 'form model',
+            rawModel: 'form rawModel'
+          }
+        }
+      }])
+    })
+
+    test('updates the store with the echoform data if key is not provided', () => {
+      const collectionId = 'collectionId'
+
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.setProps({
+        collectionId,
+        methodKey: 'newMethodKey'
+      })
+
+      enzymeWrapper.instance().$el.echoforms = jest.fn((param, options) => {
+        if (param === 'isValid') return true
+        if (param === 'serialize' && options) return 'form rawModel'
+        if (param === 'serialize') return 'form model'
+        return null
+      })
+
+      // syncModel gets called with a jQuery event on componentDidMount
+      enzymeWrapper.instance().syncModel(jest.fn())
+
+      // 2 because componentDidMount calls syncModel
+      expect(props.onUpdateAccessMethod.mock.calls.length).toBe(2)
+      expect(props.onUpdateAccessMethod.mock.calls[1]).toEqual([{
+        collectionId,
+        method: {
+          newMethodKey: {
+            isValid: true,
+            model: 'form model',
+            rawModel: 'form rawModel'
+          }
+        }
+      }])
     })
   })
 })
