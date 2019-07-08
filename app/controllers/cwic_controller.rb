@@ -35,6 +35,7 @@ class CwicController < ApplicationController
 
   def build_raw_client
     Faraday.new(:url => root) do |conn|
+      conn.use FaradayMiddleware::FollowRedirects
       conn.use Echo::ClientMiddleware::LoggingMiddleware
       conn.adapter Faraday.default_adapter
     end
