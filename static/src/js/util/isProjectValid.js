@@ -8,6 +8,8 @@ import { isAccessMethodValid } from './accessMethods'
  */
 // eslint-disable-next-line arrow-body-style
 export const isProjectValid = (collections) => {
+  // TODO: Return more specific information as to why the project is invalid. This will likely require
+  // a similar change to the individual collection validation
   return collections.every(collection => isAccessMethodValid(collection))
 }
 
