@@ -86,8 +86,10 @@ ns.Project = do (ko,
       return true if !@loadingServiceType() && (@collection.total_size() == 'Not Provided' || @collection.total_size() && @collection.unit())
       false
 
-    _loadGranuleAccessOptions: ->
-      unless @granuleAccessOptions.peek()?
+    _loadGranuleAccessOptions: (retry) ->
+      # CWIC collections can be slow about loading.
+      # if we are retrying to load the access options ignore what is in @granuleAccessOptions
+      unless @granuleAccessOptions.peek()? && !retry
         dataSource = @collection.granuleDatasource()
         unless dataSource
           @granuleAccessOptions(hits: 0, methods: [])
@@ -105,7 +107,7 @@ ns.Project = do (ko,
 
           # Done loading
           @loadingServiceType(false)
-        retry = => @_loadGranuleAccessOptions
+        retry = => @_loadGranuleAccessOptions(true)
 
         dataSource.loadAccessOptions(success, retry)
 
