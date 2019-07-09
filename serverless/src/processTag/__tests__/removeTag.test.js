@@ -1,5 +1,4 @@
 import request from 'request-promise'
-
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as removeTag from '../removeTag'
 

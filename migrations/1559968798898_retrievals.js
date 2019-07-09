@@ -31,9 +31,8 @@ exports.up = (pgm) => {
       default: pgm.func('current_timestamp')
     }
   })
-};
+}
 
 exports.down = (pgm) => {
   pgm.dropTable('retrievals')
-};
-
+}

@@ -1,4 +1,4 @@
-exports.shorthands = undefined;
+exports.shorthands = undefined
 
 exports.up = (pgm) => {
   pgm.createTable('projects', {
@@ -25,8 +25,8 @@ exports.up = (pgm) => {
       default: pgm.func('current_timestamp')
     }
   })
-};
+}
 
 exports.down = (pgm) => {
   pgm.dropTable('projects')
-};
+}

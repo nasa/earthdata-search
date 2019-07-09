@@ -25,14 +25,14 @@ const generateCollectionCapabilityTags = async (event) => {
     sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
   }
 
-  const { pageNumber = 1, pageSize = 2000 } = event
+  const { pageNumber = 1, pageSize = 500 } = event
 
   const cmrParams = {
     has_granules_or_cwic: true,
     page_num: pageNumber,
     page_size: pageSize,
     include_granule_counts: true,
-    include_tags: 'org.ceos.wgiss.cwic.granules.prod'
+    include_tags: 'edsc.extra.serverless.*,org.ceos.wgiss.cwic.granules.prod'
   }
 
   const collectionSearchUrl = `${getEarthdataConfig('prod').cmrHost}/search/collections.json?${stringify(cmrParams)}`
@@ -45,7 +45,18 @@ const generateCollectionCapabilityTags = async (event) => {
     }
   })
 
-  const responseBody = readCmrResults(collectionSearchUrl, cmrResponse)
+  let cmrCollectionResponse
+  try {
+    await request.get({
+      uri: collectionSearchUrl,
+      json: true,
+      resolveWithFullResponse: true
+    })
+  } catch (e) {
+    console.log(e)
+  }
+
+  const responseBody = readCmrResults(collectionSearchUrl, cmrCollectionResponse)
 
   const chunkedCollections = chunkArray(responseBody, 100)
 
@@ -103,9 +114,9 @@ const generateCollectionCapabilityTags = async (event) => {
     }
   })
 
-  const { 'cmr-hits': cmrHits = 0 } = cmrResponse.headers
+  const { 'cmr-hits': cmrHits = 0 } = cmrCollectionResponse.headers
 
-  console.log(`CMR returns ${cmrHits} collections. Current page number is ${pageNumber}, iterating through ${pageSize} at a time.`)
+  console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, iterating through ${pageSize} at a time.`)
 
   if (cmrHits > pageNumber * pageSize) {
     const lambdaParams = {
@@ -114,9 +125,6 @@ const generateCollectionCapabilityTags = async (event) => {
     }
 
     try {
-      console.log(`Invoking ${process.env.collectionCapabilitiesLambda} with params:`)
-      console.log(lambdaParams)
-
       await invokeLambda(process.env.collectionCapabilitiesLambda, lambdaParams)
     } catch (e) {
       console.log(e)

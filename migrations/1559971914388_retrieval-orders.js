@@ -1,4 +1,4 @@
-exports.shorthands = undefined;
+exports.shorthands = undefined
 
 exports.up = (pgm) => {
   pgm.createTable('retrieval_orders', {
@@ -22,11 +22,6 @@ exports.up = (pgm) => {
     state: {
       type: 'varchar(1000)'
     },
-    search_params: {
-      type: 'jsonb',
-      notNull: true,
-      default: '{}'
-    },
     updated_at: {
       type: 'timestamp',
       notNull: true,
@@ -38,9 +33,8 @@ exports.up = (pgm) => {
       default: pgm.func('current_timestamp')
     }
   })
-};
+}
 
 exports.down = (pgm) => {
   pgm.dropTable('retrieval_orders')
-};
-
+}
