@@ -6,7 +6,7 @@ import TemporalSelectionDropdown from '../../components/TemporalDisplay/Temporal
 
 import actions from '../../actions'
 
-const mapDispathToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query))
 })
 
@@ -42,4 +42,4 @@ TemporalSelectionDropdownContainer.propTypes = {
   onChangeQuery: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispathToProps)(TemporalSelectionDropdownContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(TemporalSelectionDropdownContainer)

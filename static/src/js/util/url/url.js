@@ -9,6 +9,7 @@ import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
+import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -48,7 +49,9 @@ const urlDefs = {
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
   granuleDownloadRetrievalId: { shortKey: 'rid', encode: encodeString, decode: decodeString },
-  granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString }
+  granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString },
+  grid: { shortKey: 's2n', encode: encodeString, decode: decodeString },
+  gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords }
 }
 
 /**
@@ -80,6 +83,8 @@ export const decodeUrlParams = (paramString) => {
   query.keyword = decodeHelp(params, 'keywordSearch')
   query.temporal = decodeHelp(params, 'temporalSearch')
   query.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
+  query.grid = decodeHelp(params, 'grid')
+  query.gridCoords = decodeHelp(params, 'gridCoords')
 
   const spatial = {}
   spatial.point = decodeHelp(params, 'pointSearch')

@@ -12,6 +12,19 @@ import {
 } from '../../constants/actionTypes'
 
 const initialState = {
+  facetsModal: {
+    isOpen: false
+  },
+  granuleResultsPanel: {
+    sortOrder: '-start_date',
+    searchValue: ''
+  },
+  grid: {
+    selectingNewGrid: false
+  },
+  map: {
+    drawingNewLayer: false,
+  },
   masterOverlayPanel: {
     clickStartHeight: undefined,
     clickStartY: undefined,
@@ -19,13 +32,6 @@ const initialState = {
     height: 0,
     isOpen: true,
     previousHeight: 0
-  },
-  granuleResultsPanel: {
-    sortOrder: '-start_date',
-    searchValue: ''
-  },
-  facetsModal: {
-    isOpen: false
   },
   overrideTemporalModal: {
     isOpen: false

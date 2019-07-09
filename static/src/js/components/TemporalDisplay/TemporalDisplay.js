@@ -30,6 +30,13 @@ class TemporalDisplay extends PureComponent {
         startDate
       })
     }
+
+    this.onTimelineRemove = this.onTimelineRemove.bind(this)
+  }
+
+  onTimelineRemove() {
+    const { onRemoveTimelineFilter } = this.props
+    onRemoveTimelineFilter()
   }
 
   render() {
@@ -53,6 +60,7 @@ class TemporalDisplay extends PureComponent {
       <FilterStackItem
         icon="clock-o"
         title="Temporal"
+        onRemove={this.onTimelineRemove}
       >
         <FilterStackContents
           body={temporalStartDisplay}
@@ -72,6 +80,7 @@ TemporalDisplay.defaultProps = {
 }
 
 TemporalDisplay.propTypes = {
+  onRemoveTimelineFilter: PropTypes.func.isRequired,
   temporalSearch: PropTypes.shape({})
 }
 

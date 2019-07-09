@@ -7,7 +7,9 @@ import {
   MASTER_OVERLAY_PANEL_TOGGLE,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_SELECTING_NEW_GRID
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -31,6 +33,12 @@ const initialState = {
   },
   relatedUrlsModal: {
     isOpen: false
+  },
+  map: {
+    drawingNewLayer: false
+  },
+  grid: {
+    selectingNewGrid: false
   }
 }
 
@@ -118,6 +126,26 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         relatedUrlsModal: {
           isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_DRAWING_NEW_LAYER: {
+      const { map } = state
+      return {
+        ...state,
+        map: {
+          ...map,
+          drawingNewLayer: action.payload
+        }
+      }
+    }
+    case TOGGLE_SELECTING_NEW_GRID: {
+      const { grid } = state
+      return {
+        ...state,
+        grid: {
+          ...grid,
+          selectingNewGrid: action.payload
         }
       }
     }

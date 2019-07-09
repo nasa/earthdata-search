@@ -24,6 +24,8 @@ const emptyDecodedResult = {
   map: {},
   project: undefined,
   query: {
+    grid: undefined,
+    gridCoords: undefined,
     keyword: undefined,
     spatial: {
       boundingBox: undefined,

@@ -6,11 +6,13 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
     const initialState = {
       collection: {
+        grid: '',
         pageNum: 1,
         spatial: {},
         temporal: {}
       },
       granule: {
+        gridCoords: '',
         pageNum: 1
       }
     }
@@ -27,6 +29,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
       spatial: {
         point: '0,0'
       },
+      grid: '',
       temporal: {}
     }
     const action = {
@@ -36,7 +39,10 @@ describe('UPDATE_COLLECTION_QUERY', () => {
 
     const expectedState = {
       collection: payload,
-      granule: { pageNum: 1 }
+      granule: {
+        gridCoords: '',
+        pageNum: 1
+      }
     }
 
     expect(queryReducer(undefined, action)).toEqual(expectedState)
@@ -74,6 +80,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
 describe('UPDATE_GRANULE_QUERY', () => {
   test('returns the correct state', () => {
     const payload = {
+      gridCoords: '',
       pageNum: 1
     }
     const action = {
@@ -83,6 +90,7 @@ describe('UPDATE_GRANULE_QUERY', () => {
 
     const expectedState = {
       collection: {
+        grid: '',
         pageNum: 1,
         spatial: {},
         temporal: {}

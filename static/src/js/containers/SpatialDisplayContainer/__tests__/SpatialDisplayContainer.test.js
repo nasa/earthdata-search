@@ -8,10 +8,17 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    boundingBoxSearch: 'Test',
-    drawingNewLayer: 'Test',
-    pointSearch: 'Test',
-    polygonSearch: 'Test'
+    boundingBoxSearch: 'Test Bounding Box',
+    drawingNewLayer: false,
+    grid: 'Test Grid',
+    gridCoords: 'Test Grid Coords',
+    onChangeQuery: jest.fn(),
+    onGranuleGridCoords: jest.fn(),
+    onRemoveGridFilter: jest.fn(),
+    onRemoveSpatialFilter: jest.fn(),
+    pointSearch: 'Test Point Search',
+    polygonSearch: 'Test Polygon Search',
+    selectingNewGrid: false
   }
 
   const enzymeWrapper = shallow(<SpatialDisplayContainer {...props} />)
@@ -24,14 +31,21 @@ function setup() {
 
 describe('SpatialDisplayContainer component', () => {
   test('passes its props and renders a single SpatialDisplay component', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(SpatialDisplay).length).toBe(1)
     expect(enzymeWrapper.find(SpatialDisplay).props()).toEqual({
-      boundingBoxSearch: 'Test',
-      drawingNewLayer: 'Test',
-      pointSearch: 'Test',
-      polygonSearch: 'Test'
+      boundingBoxSearch: 'Test Bounding Box',
+      drawingNewLayer: false,
+      grid: 'Test Grid',
+      gridCoords: 'Test Grid Coords',
+      onChangeQuery: props.onChangeQuery,
+      onGranuleGridCoords: props.onGranuleGridCoords,
+      onRemoveGridFilter: props.onRemoveGridFilter,
+      onRemoveSpatialFilter: props.onRemoveSpatialFilter,
+      pointSearch: 'Test Point Search',
+      polygonSearch: 'Test Polygon Search',
+      selectingNewGrid: false
     })
   })
 })

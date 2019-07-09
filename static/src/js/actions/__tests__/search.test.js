@@ -60,7 +60,8 @@ describe('changeQuery', () => {
       focusedCollection: '',
       query: {
         collection: {
-          keyword: 'old stuff'
+          keyword: 'old stuff',
+          spatial: {}
         }
       },
       metadata: {},
@@ -213,10 +214,15 @@ describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
     const query = {
       focusedCollection: '',
-      collection: {
-        keyword: 'keyword search',
-        spatial: {
-          point: '0,0'
+      query: {
+        collection: {
+          keyword: 'keyword search',
+          spatial: {
+            point: '0,0'
+          }
+        },
+        granule: {
+          gridCoords: ''
         }
       },
       metadata: {},

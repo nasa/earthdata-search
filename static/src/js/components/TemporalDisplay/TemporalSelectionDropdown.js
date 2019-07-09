@@ -62,9 +62,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
   /**
    * Opens or closes the dropdown depending on the current state
    */
-  onDropdownToggle(nextState) {
-    console.warn('open', nextState)
-
+  onDropdownToggle() {
     const { open } = this.state
 
     this.setState({

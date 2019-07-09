@@ -126,23 +126,20 @@ class SpatialSelection extends Component {
     }
 
     const { layerType } = e
-    const { onChangeMap } = this.props
-    onChangeMap({ drawingNewLayer: layerType })
+    const { onToggleDrawingNewLayer } = this.props
+    onToggleDrawingNewLayer(layerType)
   }
 
   // Callback from EditControl, called when the drawing is stopped from
   // cancelling or completing
   onDrawStop() {
-    const { onChangeMap } = this.props
-    onChangeMap({ drawingNewLayer: '' })
+    const { onToggleDrawingNewLayer } = this.props
+    onToggleDrawingNewLayer(false)
   }
 
   // Callback from EditControl, called when the controls are mounted
   onMounted(drawControl) {
-    console.warn('mounted', drawControl)
-
     eventEmitter.on('map.drawStart', (e) => {
-      console.warn(e)
       const { type } = e
       drawControl._toolbars.draw._modes[type].handler.enable()
     })
@@ -332,10 +329,10 @@ SpatialSelection.propTypes = {
   boundingBoxSearch: PropTypes.string,
   isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),
-  onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string
+  polygonSearch: PropTypes.string,
+  onToggleDrawingNewLayer: PropTypes.func.isRequired
 }
 
 export default SpatialSelection

@@ -1,18 +1,22 @@
 import React, { PureComponent } from 'react'
+import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 
 import { eventEmitter } from '../../events/events'
 
 import './SpatialSelectionDropdown.scss'
 
-export default class SpatialSelectionDropdown extends PureComponent {
+export class SpatialSelectionDropdown extends PureComponent {
   constructor(props) {
     super(props)
-
     this.onItemClick = this.onItemClick.bind(this)
   }
 
   onItemClick(item) {
+    const {
+      onToggleSelectingNewGrid
+    } = this.props
+
     if (item === 'point') {
       eventEmitter.emit('map.drawStart', {
         type: 'marker'
@@ -30,12 +34,13 @@ export default class SpatialSelectionDropdown extends PureComponent {
         type: 'polygon'
       })
     }
+
+    if (item === 'grid') {
+      onToggleSelectingNewGrid(true)
+    }
   }
 
   render() {
-    // eslint-disable-next-line
-    const { rootCloseEvent } = this.props
-
     return (
       <Dropdown className="spatial-selection-dropdown">
         <Dropdown.Toggle
@@ -71,7 +76,10 @@ export default class SpatialSelectionDropdown extends PureComponent {
             <i className="fa fa-file-o spatial-selection-dropdown__icon" />
             File
           </Dropdown.Item>
-          <Dropdown.Item className="spatial-selection-dropdown__button">
+          <Dropdown.Item
+            className="spatial-selection-dropdown__button"
+            onClick={() => this.onItemClick('grid')}
+          >
             <i className="edsc-icon-globe-grid edsc-icon-fw spatial-selection-dropdown__icon" />
             Grid Coordinates
           </Dropdown.Item>
@@ -80,3 +88,9 @@ export default class SpatialSelectionDropdown extends PureComponent {
     )
   }
 }
+
+SpatialSelectionDropdown.propTypes = {
+  onToggleSelectingNewGrid: PropTypes.func.isRequired
+}
+
+export default SpatialSelectionDropdown

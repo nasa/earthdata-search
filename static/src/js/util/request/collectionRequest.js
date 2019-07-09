@@ -59,7 +59,8 @@ export default class CollectionRequest extends Request {
       'science_keywords_h',
       'sort_key',
       'tag_key',
-      'temporal'
+      'temporal',
+      'two_d_coordinate_system'
     ]
   }
 
@@ -81,6 +82,11 @@ export default class CollectionRequest extends Request {
     let urlWithExtension = `${this.searchPath}.${ext}`
     if (this.authToken && this.authToken !== '') {
       urlWithExtension = `${this.searchPath}/${ext}`
+    }
+
+    if (params.twoDCoordinateSystem && params.twoDCoordinateSystem.coordinates) {
+      // eslint-disable-next-line no-param-reassign
+      delete params.twoDCoordinateSystem.coordinates
     }
 
     return this.post(urlWithExtension, { ...params, ext })

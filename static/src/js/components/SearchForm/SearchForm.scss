@@ -6,6 +6,7 @@
   width: auto;
   z-index: 2;
   background-color: $color__black--900;
+  box-shadow: 0 0 1rem rgba($color__black--900, 0.35);
 
   &__primary {
     display: flex;
@@ -17,6 +18,7 @@
   }
 
   &__form {
+    flex-grow: 1;
     display: inline;
     vertical-align: middle;
     background-color: $color__white;
@@ -48,6 +50,7 @@
   }
 
   &__label {
+    width: 100%;
     margin-bottom: 0;
   }
 

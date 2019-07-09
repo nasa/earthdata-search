@@ -2,21 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const SpatialDisplayEntry = (props) => {
-  const { value } = props
+  const { children } = props
 
   return (
     <>
-      {value}
+      {children}
     </>
   )
 }
 
 SpatialDisplayEntry.defaultProps = {
-  value: ''
+  children: null
 }
 
 SpatialDisplayEntry.propTypes = {
-  value: PropTypes.string
+  children: PropTypes.node
 }
 
 export default SpatialDisplayEntry

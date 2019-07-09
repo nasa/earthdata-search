@@ -16,7 +16,8 @@ export default async function cmrGranuleSearch(event) {
     'point',
     'polygon',
     'sort_key',
-    'temporal'
+    'temporal',
+    'two_d_coordinate_system'
   ]
 
   const { body } = event

@@ -9,8 +9,8 @@ import actions from '../../actions'
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
 const mapDispathToProps = dispatch => ({
-  onChangeMap: query => dispatch(actions.changeMap(query)),
-  onChangeQuery: query => dispatch(actions.changeQuery(query))
+  onChangeQuery: query => dispatch(actions.changeQuery(query)),
+  onToggleDrawingNewLayer: state => dispatch(actions.toggleDrawingNewLayer(state))
 })
 
 const mapStateToProps = state => ({
@@ -24,11 +24,11 @@ export const SpatialSelectionContainer = (props) => {
   const {
     boundingBoxSearch,
     mapRef,
-    onChangeMap,
     onChangeQuery,
     pathname,
     pointSearch,
-    polygonSearch
+    polygonSearch,
+    onToggleDrawingNewLayer
   } = props
 
   const isProjectPage = pathname.startsWith('/project')
@@ -38,10 +38,10 @@ export const SpatialSelectionContainer = (props) => {
       boundingBoxSearch={boundingBoxSearch}
       isProjectPage={isProjectPage}
       mapRef={mapRef}
-      onChangeMap={onChangeMap}
       onChangeQuery={onChangeQuery}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
+      onToggleDrawingNewLayer={onToggleDrawingNewLayer}
     />
   )
 }
@@ -56,11 +56,11 @@ SpatialSelectionContainer.defaultProps = {
 SpatialSelectionContainer.propTypes = {
   boundingBoxSearch: PropTypes.string,
   mapRef: PropTypes.shape({}),
-  onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string
+  polygonSearch: PropTypes.string,
+  onToggleDrawingNewLayer: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispathToProps)(SpatialSelectionContainer)

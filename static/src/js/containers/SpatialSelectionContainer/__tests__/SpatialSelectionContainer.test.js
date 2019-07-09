@@ -10,8 +10,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     boundingBoxSearch: 'Test value',
-    onChangeMap: jest.fn(),
     onChangeQuery: jest.fn(),
+    onToggleDrawingNewLayer: jest.fn(),
     pathname: '/search',
     pointSearch: 'Test value',
     polygonSearch: 'Test value'
@@ -27,14 +27,14 @@ function setup() {
 
 describe('SpatialSelectionContainer component', () => {
   test('passes its props and renders a single SpatialSelection component', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(SpatialSelection).length).toBe(1)
     expect(enzymeWrapper.find(SpatialSelection).props().boundingBoxSearch).toEqual('Test value')
     expect(enzymeWrapper.find(SpatialSelection).props().isProjectPage).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual('Test value')
     expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual('Test value')
-    expect(typeof enzymeWrapper.find(SpatialSelection).props().onChangeMap).toEqual('function')
-    expect(typeof enzymeWrapper.find(SpatialSelection).props().onChangeQuery).toEqual('function')
+    expect(enzymeWrapper.find(SpatialSelection).props().onChangeQuery).toEqual(props.onChangeQuery)
+    expect(enzymeWrapper.find(SpatialSelection).props().onToggleDrawingNewLayer).toEqual(props.onToggleDrawingNewLayer)
   })
 })
