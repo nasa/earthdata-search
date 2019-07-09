@@ -105,6 +105,10 @@
     margin-right: $spacer/4;
     font-size: 0.85rem;
 
+    .fa {
+      vertical-align: middle;
+    }
+
     &--invalid {
       color: $color__red;
     }
