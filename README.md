@@ -24,7 +24,7 @@ Earthdata Search as separate projects with the "edsc-" (Earthdata Search compone
 
 ## License
 
-> Copyright © 2007-2014 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+> Copyright © 2007-2019 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
 >
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at
@@ -72,30 +72,30 @@ Click the "Feedback" icon on the Earthdata Login page and request that your new 
 
 Your Earthdata Login application's client ID will need to be saved in `config/application.yml`.
 
-```### Running
+### Running
 
 Run
 
-    docker-compose up
+```docker-compose up```
 
 ### Stopping
 
 To stop docker but keep the containers
 
-    docker-compose stop
+```docker-compose stop```
 
 To stop and remove all containers
 
-    docker-compose down
+```docker-compose down```
 
 Then visit http://localhost:3000/
 
 ### Running tests
 
-    docker-compose run web bundle exec rspec
+```docker-compose run web bundle exec rspec```
 
 ### Terminal Access
 
 If you want terminal access to inside the container, run
 
-    docker-compose run web bash```
+```docker-compose run web bash```
