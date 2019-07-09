@@ -19,12 +19,21 @@ provider:
         - Endpoint.Port
     dbUsername: edsc
     dbName: edsc_${self:provider.stage}
+
     colorMapQueueUrl:
       Ref: ColorMapsProcessingQueue
     tagQueueUrl:
       Ref: TagProcessingQueue
+    legacyServicesQueueUrl:
+      Ref: LegacyServicesOrderQueue
+    catalogRestQueueUrl:
+      Ref: CatalogRestOrderQueue
+    optionDefinitionQueueUrl:
+      Ref: OptionDefinitionsQueue
+
     configSecretId:
       Ref: DbPasswordSecret
+
     storeUserLambda: ${self:custom.siteName}-storeUserData
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
@@ -83,6 +92,20 @@ functions:
           arn:
             Fn::GetAtt:
               - TagProcessingQueue
+              - Arn
+
+  # We need to limit the concurrency on this lambda due to a call to Legacy Services
+  # within it. Putting too much load on the endpoint will cause production systems to fail
+  fetchOptionDefinitions:
+    handler: serverless/src/fetchOptionDefinitions/handler.default
+    timeout: 300
+    reservedConcurrency: 5
+    events:
+      - sqs:
+          batchSize: 5
+          arn:
+            Fn::GetAtt:
+              - OptionDefinitionsQueue
               - Arn
 
   #
@@ -355,6 +378,33 @@ resources:
       Type: 'AWS::SQS::Queue'
       Properties:
         VisibilityTimeout: 300
+
+    LegacyServicesOrderQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        VisibilityTimeout: 300
+
+    CatalogRestOrderQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        VisibilityTimeout: 300
+
+    OptionDefinitionsQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        VisibilityTimeout: 3600
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - OptionDefinitionDeadLetterQueue
+              - Arn
+          maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
+
+    OptionDefinitionDeadLetterQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.siteName}-DeadLetterQueue
+        MessageRetentionPeriod: 1209600
 
     LambdaSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'

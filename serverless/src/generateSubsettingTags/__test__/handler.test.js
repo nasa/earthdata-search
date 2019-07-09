@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk'
-
+import MockDate from 'mockdate'
+import request from 'request-promise'
 import { relevantServices, relevantServiceCollections } from './mocks'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as pageAllCmrResults from '../../util/cmr/pageAllCmrResults'
@@ -25,9 +26,25 @@ afterEach(() => {
 describe('generateSubsettingTags', () => {
   test('submits the correct data to sqs', async () => {
     // Set the necessary ENV variables to ensure all values are tested
-    process.env.tagQueueUrl = 'http://example.com/queue'
+    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+    process.env.optionDefinitionQueueUrl = 'http://example.com/optionDefinitionQueue'
 
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+
+    const serviceOptionsRequest = jest.spyOn(request, 'get').mockImplementationOnce(() => ({
+      statusCode: 200,
+      body: [
+        {
+          service_option_assignment: {
+            applies_only_to_granules: true,
+            catalog_item_id: 'C00000002-EDSC',
+            id: '00A6C11A-DCF0-50E9-74EC-2B02D51EBE85',
+            service_entry_id: '5AE45EAE-C41E-04C0-087A-5C6FF266F58E',
+            service_option_definition_id: '7914F90A-7A04-AD19-FAD7-A89F77949B25'
+          }
+        }
+      ]
+    }))
 
     jest.spyOn(getRelevantServices, 'getRelevantServices').mockImplementationOnce(() => relevantServices)
     jest.spyOn(pageAllCmrResults, 'pageAllCmrResults').mockImplementation(() => relevantServiceCollections)
@@ -59,9 +76,17 @@ describe('generateSubsettingTags', () => {
         sendMessage: sqsSendMessagePromise
       }))
 
+    // We set 'updated_at' in the subsetting tags so we need to mock the date here
+    MockDate.set('1984-07-02T16:00:00.000Z')
+
     const event = {}
     const context = {}
     await generateSubsettingTags(event, context)
+
+    MockDate.reset()
+
+    // Fetch all the service option definitions
+    expect(serviceOptionsRequest).toBeCalledTimes(1)
 
     // 4 calls to add tags to collections
     // 3 calls to remove stale tags
@@ -81,13 +106,14 @@ describe('generateSubsettingTags', () => {
         tagData: [{
           'concept-id': 'C00000001-EDSC',
           data: {
+            updated_at: '1984-07-02T16:00:00.000Z',
             id: 'S00000001-EDSC',
             type: 'ESI',
             url: 'http://mapserver.eol.ucar.edu/acadis/'
           }
         }]
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/tagQueue'
     }])
     expect(sqsSendMessagePromise.mock.calls[1]).toEqual([{
       MessageBody: JSON.stringify({
@@ -98,35 +124,33 @@ describe('generateSubsettingTags', () => {
         tagData: [{
           'concept-id': 'C00000002-EDSC',
           data: {
+            updated_at: '1984-07-02T16:00:00.000Z',
             id: 'S00000002-EDSC',
-            type: 'ESI'
+            type: 'ESI',
+            service_option_definition: '7914F90A-7A04-AD19-FAD7-A89F77949B25'
           }
         }, {
           'concept-id': 'C00000003-EDSC',
           data: {
+            updated_at: '1984-07-02T16:00:00.000Z',
             id: 'S00000002-EDSC',
             type: 'ESI'
           }
         }]
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/tagQueue'
     }])
     expect(sqsSendMessagePromise.mock.calls[2]).toEqual([{
       MessageBody: JSON.stringify({
-        tagName: 'edsc.extra.serverless.subset_service.echo_orders',
-        action: 'ADD',
-        append: false,
-        requireGranules: false,
-        tagData: [{
-          'concept-id': 'C00000009-EDSC',
-          data: {
-            id: 'S00000003-EDSC',
-            type: 'ECHO ORDERS',
-            url: 'http://mapserver.eol.ucar.edu/acadis/'
-          }
-        }]
+        collectionId: 'C00000009-EDSC',
+        tagData: {
+          updated_at: '1984-07-02T16:00:00.000Z',
+          id: 'S00000003-EDSC',
+          type: 'ECHO ORDERS',
+          url: 'http://mapserver.eol.ucar.edu/acadis/'
+        }
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/optionDefinitionQueue'
     }])
     expect(sqsSendMessagePromise.mock.calls[3]).toEqual([{
       MessageBody: JSON.stringify({
@@ -137,12 +161,13 @@ describe('generateSubsettingTags', () => {
         tagData: [{
           'concept-id': 'C00000005-EDSC',
           data: {
+            updated_at: '1984-07-02T16:00:00.000Z',
             id: 'S00000005-EDSC',
             type: 'OPeNDAP'
           }
         }]
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/tagQueue'
     }])
 
     /**
@@ -181,7 +206,7 @@ describe('generateSubsettingTags', () => {
           }
         }
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/tagQueue'
     }])
     expect(sqsSendMessagePromise.mock.calls[5]).toEqual([{
       MessageBody: JSON.stringify({
@@ -208,7 +233,7 @@ describe('generateSubsettingTags', () => {
           }
         }
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/tagQueue'
     }])
     expect(sqsSendMessagePromise.mock.calls[6]).toEqual([{
       MessageBody: JSON.stringify({
@@ -235,7 +260,7 @@ describe('generateSubsettingTags', () => {
           }
         }
       }),
-      QueueUrl: 'http://example.com/queue'
+      QueueUrl: 'http://example.com/tagQueue'
     }])
   })
 })

@@ -1,5 +1,4 @@
 import request from 'request-promise'
-
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as addTag from '../addTag'
 import * as getCollectionsByJson from '../getCollectionsByJson'

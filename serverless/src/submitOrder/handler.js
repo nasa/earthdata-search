@@ -3,8 +3,8 @@ import 'pg'
 import jwt from 'jsonwebtoken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
-
 import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { queueOrders } from './queueOrders'
 
 // Knex database connection object
 let dbConnection = null
@@ -45,12 +45,20 @@ const submitOrder = async (event) => {
       const {
         id,
         access_method: accessMethod,
+        collection_metadata: collectionMetadata,
         granule_count: granuleCount,
-        granule_params: granuleParams,
-        collection_metadata: collectionMetadata
+        granule_params: granuleParams
       } = collection
 
-      await orderDbTransaction('retrieval_collections').returning(['id'])
+      const newRetrievalCollection = await orderDbTransaction('retrieval_collections')
+        .returning([
+          'id',
+          'access_method',
+          'collection_id',
+          'collection_metadata',
+          'granule_params',
+          'granule_count'
+        ])
         .insert({
           retrieval_id: retrievalRecord[0].id,
           access_method: accessMethod,
@@ -59,6 +67,26 @@ const submitOrder = async (event) => {
           granule_params: granuleParams,
           granule_count: granuleCount
         })
+
+      try {
+        const { type } = accessMethod
+
+        if (type === 'esi') {
+          await queueOrders(
+            process.env.legacyServicesQueueUrl,
+            dbConnection,
+            newRetrievalCollection[0]
+          )
+        } else if (type === 'echo_orders') {
+          await queueOrders(
+            process.env.catalogRestQueueUrl,
+            dbConnection,
+            newRetrievalCollection[0]
+          )
+        }
+      } catch (e) {
+        console.log(e)
+      }
     })
 
     await orderDbTransaction.commit()
