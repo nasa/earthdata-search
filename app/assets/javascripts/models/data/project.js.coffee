@@ -89,7 +89,7 @@ ns.Project = do (ko,
     _loadGranuleAccessOptions: (retry) ->
       # CWIC collections can be slow about loading.
       # if we are retrying to load the access options ignore what is in @granuleAccessOptions
-      unless @granuleAccessOptions.peek()? && !retry
+      if !@granuleAccessOptions.peek()? || retry
         dataSource = @collection.granuleDatasource()
         unless dataSource
           @granuleAccessOptions(hits: 0, methods: [])
