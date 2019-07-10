@@ -49,7 +49,9 @@ export const searchNlp = keyword => (dispatch) => {
           }
         }
 
-        dispatch(actions.changeQuery(payload))
+        dispatch(actions.changeQuery({
+          collection: payload
+        }))
       }, (error) => {
         throw new Error('Request failed', error)
       })
@@ -57,7 +59,11 @@ export const searchNlp = keyword => (dispatch) => {
         console.log('Promise Rejected')
       })
   } else {
-    dispatch(actions.changeQuery({ keyword: '' }))
+    dispatch(actions.changeQuery({
+      collection: {
+        keyword: ''
+      }
+    }))
   }
 
   return response

@@ -1,5 +1,3 @@
-import { isEmpty } from 'lodash'
-
 import actions from './index'
 import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../constants/actionTypes'
 
@@ -13,50 +11,16 @@ export const updateGranuleQuery = payload => ({
   payload
 })
 
-export const changeQuery = newQuery => (dispatch, getState) => {
-  const state = getState()
-  const { query: prevQuery } = state
-  const {
-    collection: prevCollection = {},
-    granule: prevGranule = {}
-  } = prevQuery
+export const changeQuery = newQuery => (dispatch) => {
+  dispatch(updateCollectionQuery({
+    pageNum: 1,
+    ...newQuery.collection
+  }))
 
-  const collectionQuery = {}
-  const granuleQuery = {}
-
-  if (prevCollection.keyword !== newQuery.keyword) {
-    collectionQuery.keyword = newQuery.keyword
-  }
-  if (prevCollection.spatial !== newQuery.spatial) {
-    collectionQuery.spatial = newQuery.spatial
-  }
-  if (prevCollection.temporal !== newQuery.temporal) {
-    collectionQuery.temporal = newQuery.temporal
-  }
-  if (prevCollection.grid !== newQuery.grid) {
-    collectionQuery.grid = newQuery.grid
-  }
-  if (prevCollection.overrideTemporal !== newQuery.overrideTemporal) {
-    collectionQuery.overrideTemporal = newQuery.overrideTemporal
-  }
-
-  if (prevGranule.gridCoords !== newQuery.gridCoords) {
-    granuleQuery.gridCoords = newQuery.gridCoords
-  }
-
-  if (!isEmpty(collectionQuery)) {
-    dispatch(updateCollectionQuery({
-      pageNum: 1,
-      ...collectionQuery
-    }))
-  }
-
-  if (!isEmpty(granuleQuery)) {
-    dispatch(updateGranuleQuery({
-      pageNum: 1,
-      ...granuleQuery
-    }))
-  }
+  dispatch(updateGranuleQuery({
+    pageNum: 1,
+    ...newQuery.granule
+  }))
 
   // Remove all saved granules in the metadata/collections store
   dispatch(actions.clearCollectionGranules())
@@ -87,30 +51,44 @@ export const changeGranuleGridCoords = gridCoords => (dispatch) => {
 
 export const removeGridFilter = () => (dispatch) => {
   dispatch(changeQuery({
-    grid: '',
-    gridCoords: ''
+    collection: {
+      gridName: ''
+    },
+    granule: {
+      gridCoords: ''
+    }
   }))
   dispatch(actions.toggleSelectingNewGrid(false))
 }
 
 export const removeSpatialFilter = () => (dispatch) => {
   dispatch(changeQuery({
-    spatial: {}
+    collection: {
+      spatial: {}
+    }
   }))
   dispatch(actions.toggleDrawingNewLayer(false))
 }
 
 export const removeTemporalFilter = () => (dispatch) => {
   dispatch(changeQuery({
-    temporal: {}
+    collection: {
+      temporal: {}
+    }
   }))
 }
 
 export const clearFilters = () => (dispatch) => {
   const query = {
-    keyword: '',
-    spatial: {},
-    temporal: {}
+    collection: {
+      gridName: '',
+      keyword: '',
+      spatial: {},
+      temporal: {}
+    },
+    granule: {
+      gridCoords: ''
+    }
   }
 
   // Remove URL items

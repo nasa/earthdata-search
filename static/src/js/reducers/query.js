@@ -5,7 +5,7 @@ const initialState = {
     pageNum: 1,
     spatial: {},
     temporal: {},
-    grid: ''
+    gridName: ''
   },
   granule: {
     pageNum: 1,

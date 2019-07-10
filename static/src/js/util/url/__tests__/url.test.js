@@ -24,16 +24,20 @@ const emptyDecodedResult = {
   map: {},
   project: undefined,
   query: {
-    grid: undefined,
-    gridCoords: undefined,
-    keyword: undefined,
-    spatial: {
-      boundingBox: undefined,
-      point: undefined,
-      polygon: undefined
+    collection: {
+      gridName: undefined,
+      keyword: undefined,
+      overrideTemporal: {},
+      spatial: {
+        boundingBox: undefined,
+        point: undefined,
+        polygon: undefined
+      },
+      temporal: {}
     },
-    temporal: {},
-    overrideTemporal: {}
+    granule: {
+      gridCoords: undefined
+    }
   },
   timeline: undefined
 }

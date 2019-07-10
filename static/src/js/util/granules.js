@@ -59,7 +59,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     spatial = {},
     overrideTemporal = {},
     temporal = {},
-    grid = ''
+    gridName = ''
   } = collectionQuery
 
   const {
@@ -95,7 +95,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     authToken,
     boundingBox,
     collectionId,
-    grid,
+    gridName,
     gridCoords: encodeGridCoords(gridCoords),
     isCwicCollection,
     pageNum,
@@ -115,7 +115,7 @@ export const buildGranuleSearchParams = (params) => {
   const {
     boundingBox,
     collectionId,
-    grid,
+    gridName,
     gridCoords,
     pageNum,
     point,
@@ -125,9 +125,9 @@ export const buildGranuleSearchParams = (params) => {
 
   let twoDCoordinateSystem = ''
 
-  if (grid) {
+  if (gridName) {
     twoDCoordinateSystem = {}
-    twoDCoordinateSystem.name = grid
+    twoDCoordinateSystem.name = gridName
 
     if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
   }

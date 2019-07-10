@@ -61,8 +61,9 @@ export class Search extends Component {
   componentDidMount() {
     const { onMasterOverlayHeightChange } = this.props
 
-    // Set the height of the master overlay to 300px by default
-    onMasterOverlayHeightChange(500)
+    // Set the height of the master overlay to 500px by default
+    const panelHeight = window.innerHeight ? window.innerHeight / 2 : 500
+    onMasterOverlayHeightChange(panelHeight)
   }
 
   render() {

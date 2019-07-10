@@ -6,7 +6,7 @@ describe('INITIAL_STATE', () => {
     const action = { type: 'dummy_action' }
     const initialState = {
       collection: {
-        grid: '',
+        gridName: '',
         pageNum: 1,
         spatial: {},
         temporal: {}
@@ -29,7 +29,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
       spatial: {
         point: '0,0'
       },
-      grid: '',
+      gridName: '',
       temporal: {}
     }
     const action = {
@@ -90,7 +90,7 @@ describe('UPDATE_GRANULE_QUERY', () => {
 
     const expectedState = {
       collection: {
-        grid: '',
+        gridName: '',
         pageNum: 1,
         spatial: {},
         temporal: {}

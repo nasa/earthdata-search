@@ -13,7 +13,7 @@ function setup() {
     drawingNewLayer: false,
     pointSearch: '',
     polygonSearch: '',
-    grid: '',
+    gridName: '',
     gridCoords: '',
     onChangeQuery: jest.fn(),
     onGranuleGridCoords: jest.fn(),
@@ -119,7 +119,9 @@ describe('SpatialDisplay component', () => {
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
-        grid: 'test'
+        collection: {
+          gridName: 'test'
+        }
       })
     })
 

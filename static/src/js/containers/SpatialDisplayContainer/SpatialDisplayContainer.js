@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  grid: state.query.collection.grid,
+  gridName: state.query.collection.grid,
   gridCoords: state.query.granule.gridCoords,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
@@ -27,7 +27,7 @@ export const SpatialDisplayContainer = (props) => {
   const {
     boundingBoxSearch,
     drawingNewLayer,
-    grid,
+    gridName,
     gridCoords,
     onChangeQuery,
     onGranuleGridCoords,
@@ -42,7 +42,7 @@ export const SpatialDisplayContainer = (props) => {
     <SpatialDisplay
       boundingBoxSearch={boundingBoxSearch}
       drawingNewLayer={drawingNewLayer}
-      grid={grid}
+      gridName={gridName}
       gridCoords={gridCoords}
       onChangeQuery={onChangeQuery}
       onGranuleGridCoords={onGranuleGridCoords}
@@ -57,7 +57,7 @@ export const SpatialDisplayContainer = (props) => {
 
 SpatialDisplayContainer.defaultProps = {
   boundingBoxSearch: '',
-  grid: '',
+  gridName: '',
   gridCoords: '',
   pointSearch: '',
   polygonSearch: ''
@@ -69,7 +69,7 @@ SpatialDisplayContainer.propTypes = {
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
-  grid: PropTypes.string,
+  gridName: PropTypes.string,
   gridCoords: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onGranuleGridCoords: PropTypes.func.isRequired,

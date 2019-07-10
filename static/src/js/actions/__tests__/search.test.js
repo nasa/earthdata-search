@@ -44,11 +44,13 @@ describe('updateGranuleQuery', () => {
 describe('changeQuery', () => {
   test('should update the search query and call getCollections', () => {
     const newQuery = {
-      keyword: 'new keyword',
-      spatial: {
-        point: '0,0'
-      },
-      temporal: {}
+      collection: {
+        keyword: 'new keyword',
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
     }
 
     // mock getCollections
@@ -233,6 +235,7 @@ describe('clearFilters', () => {
       }
     }
     const emptyQuery = {
+      gridName: '',
       keyword: '',
       pageNum: 1,
       spatial: {},

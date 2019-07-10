@@ -92,9 +92,11 @@ export default class TemporalSelectionDropdown extends PureComponent {
     const { startDate, endDate } = temporal
 
     onChangeQuery({
-      temporal: {
-        startDate,
-        endDate
+      collection: {
+        temporal: {
+          startDate,
+          endDate
+        }
       }
     })
 
@@ -117,7 +119,11 @@ export default class TemporalSelectionDropdown extends PureComponent {
 
     const { onChangeQuery } = this.props
 
-    onChangeQuery({ temporal: '' })
+    onChangeQuery({
+      collection: {
+        temporal: ''
+      }
+    })
   }
 
   /**

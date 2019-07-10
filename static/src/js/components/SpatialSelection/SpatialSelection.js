@@ -182,7 +182,13 @@ class SpatialSelection extends Component {
     }
 
     this.setState({ drawnPoints: latLngs.join() })
-    onChangeQuery({ spatial: { [type]: latLngs.join() } })
+    onChangeQuery({
+      collection: {
+        spatial: {
+          [type]: latLngs.join()
+        }
+      }
+    })
   }
 
   // Takes an array of lat/lon pairs and returns array of objects with lat/lon keys

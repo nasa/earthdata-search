@@ -8,7 +8,10 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
-        keyword: 'keyword'
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          keyword: 'keyword'
+        }
       }
     }
     expect(decodeUrlParams('?q=keyword')).toEqual(expectedResult)

@@ -50,7 +50,7 @@ const urlDefs = {
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
   granuleDownloadRetrievalId: { shortKey: 'rid', encode: encodeString, decode: decodeString },
   granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString },
-  grid: { shortKey: 's2n', encode: encodeString, decode: decodeString },
+  gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords }
 }
 
@@ -79,18 +79,24 @@ export const decodeUrlParams = (paramString) => {
 
   const map = decodeHelp(params, 'map')
 
-  const query = {}
-  query.keyword = decodeHelp(params, 'keywordSearch')
-  query.temporal = decodeHelp(params, 'temporalSearch')
-  query.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
-  query.grid = decodeHelp(params, 'grid')
-  query.gridCoords = decodeHelp(params, 'gridCoords')
-
   const spatial = {}
   spatial.point = decodeHelp(params, 'pointSearch')
   spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
   spatial.polygon = decodeHelp(params, 'polygonSearch')
-  query.spatial = spatial
+
+  const collectionQuery = {}
+  const granuleQuery = {}
+  collectionQuery.spatial = spatial
+  collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
+  collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
+  collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
+  collectionQuery.gridName = decodeHelp(params, 'gridName')
+  granuleQuery.gridCoords = decodeHelp(params, 'gridCoords')
+
+  const query = {
+    collection: collectionQuery,
+    granule: granuleQuery
+  }
 
   const timeline = decodeTimeline(params)
 

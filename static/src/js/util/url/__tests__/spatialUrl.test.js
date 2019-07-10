@@ -8,9 +8,12 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
-        spatial: {
-          ...emptyDecodedResult.query.spatial,
-          point: '0,0'
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          spatial: {
+            ...emptyDecodedResult.query.collection.spatial,
+            point: '0,0'
+          }
         }
       }
     }
@@ -22,9 +25,12 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
-        spatial: {
-          ...emptyDecodedResult.query.spatial,
-          boundingBox: '0,10,20,30'
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          spatial: {
+            ...emptyDecodedResult.query.collection.spatial,
+            boundingBox: '0,10,20,30'
+          }
         }
       }
     }
@@ -36,9 +42,12 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
-        spatial: {
-          ...emptyDecodedResult.query.spatial,
-          polygon: '-77,38,-77,38,-76,38,-77,38'
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          spatial: {
+            ...emptyDecodedResult.query.collection.spatial,
+            polygon: '-77,38,-77,38,-76,38,-77,38'
+          }
         }
       }
     }

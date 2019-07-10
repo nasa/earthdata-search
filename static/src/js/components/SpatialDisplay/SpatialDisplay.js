@@ -23,7 +23,7 @@ class SpatialDisplay extends Component {
 
     this.state = {
       boundingBoxSearch: '',
-      grid: '',
+      gridName: '',
       gridCoords: '',
       pointSearch: '',
       polygonSearch: ''
@@ -39,7 +39,7 @@ class SpatialDisplay extends Component {
   componentWillReceiveProps(nextProps) {
     const {
       boundingBoxSearch,
-      grid,
+      gridName,
       gridCoords,
       pointSearch,
       polygonSearch
@@ -54,8 +54,8 @@ class SpatialDisplay extends Component {
     if (polygonSearch !== nextProps.polygonSearch) {
       this.setState({ polygonSearch: nextProps.polygonSearch })
     }
-    if (grid !== nextProps.grid) {
-      this.setState({ grid: nextProps.grid })
+    if (gridName !== nextProps.gridName) {
+      this.setState({ gridName: nextProps.gridName })
     }
     if (gridCoords !== nextProps.gridCoords) {
       this.setState({ gridCoords: nextProps.gridCoords })
@@ -65,7 +65,9 @@ class SpatialDisplay extends Component {
   onChangeGridType(e) {
     const { onChangeQuery } = this.props
     onChangeQuery({
-      grid: e.target.value
+      collection: {
+        gridName: e.target.value
+      }
     })
     e.preventDefault()
   }
@@ -108,7 +110,7 @@ class SpatialDisplay extends Component {
 
     const {
       boundingBoxSearch,
-      grid,
+      gridName,
       gridCoords,
       pointSearch,
       polygonSearch
@@ -118,8 +120,7 @@ class SpatialDisplay extends Component {
     const items = []
     let entry
 
-    if (selectingNewGrid || grid) {
-      console.warn('getting here')
+    if (selectingNewGrid || gridName) {
       const entry = (
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
@@ -131,7 +132,7 @@ class SpatialDisplay extends Component {
                 as="select"
                 onChange={this.onChangeGridType}
                 size="sm"
-                value={grid}
+                value={gridName}
               >
                 <option value="">Coordinate System...</option>
                 {
@@ -174,8 +175,8 @@ class SpatialDisplay extends Component {
 
       let hint = 'Select a coordinate system'
 
-      if (grid) {
-        const selectedGrid = findGridByName(grid)
+      if (gridName) {
+        const selectedGrid = findGridByName(gridName)
         const {
           axis0label,
           axis1label
@@ -333,7 +334,7 @@ SpatialDisplay.propTypes = {
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
-  grid: PropTypes.string.isRequired,
+  gridName: PropTypes.string.isRequired,
   gridCoords: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onGranuleGridCoords: PropTypes.func.isRequired,

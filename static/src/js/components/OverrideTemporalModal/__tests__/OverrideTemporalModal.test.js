@@ -39,9 +39,11 @@ describe('OverrideTemporalModal component', () => {
       enzymeWrapper.instance().onTemporalClick()
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
-        overrideTemporal: {
-          endDate: '2019-06-17T23:59:59.999Z',
-          startDate: '2015-07-01T06:14:00.000Z'
+        collection: {
+          overrideTemporal: {
+            endDate: '2019-06-17T23:59:59.999Z',
+            startDate: '2015-07-01T06:14:00.000Z'
+          }
         }
       })
       expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
@@ -55,9 +57,11 @@ describe('OverrideTemporalModal component', () => {
       enzymeWrapper.instance().onFocusedClick()
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
-        overrideTemporal: {
-          endDate: '2019-01-31T23:59:59.999Z',
-          startDate: '2019-01-01T00:00:00.000Z'
+        collection: {
+          overrideTemporal: {
+            endDate: '2019-01-31T23:59:59.999Z',
+            startDate: '2019-01-01T00:00:00.000Z'
+          }
         }
       })
       expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)

@@ -10,7 +10,7 @@ function setup() {
   const props = {
     boundingBoxSearch: 'Test Bounding Box',
     drawingNewLayer: false,
-    grid: 'Test Grid',
+    gridName: 'Test Grid',
     gridCoords: 'Test Grid Coords',
     onChangeQuery: jest.fn(),
     onGranuleGridCoords: jest.fn(),
@@ -37,7 +37,7 @@ describe('SpatialDisplayContainer component', () => {
     expect(enzymeWrapper.find(SpatialDisplay).props()).toEqual({
       boundingBoxSearch: 'Test Bounding Box',
       drawingNewLayer: false,
-      grid: 'Test Grid',
+      gridName: 'Test Grid',
       gridCoords: 'Test Grid Coords',
       onChangeQuery: props.onChangeQuery,
       onGranuleGridCoords: props.onGranuleGridCoords,

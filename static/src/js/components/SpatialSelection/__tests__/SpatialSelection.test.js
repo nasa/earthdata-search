@@ -166,7 +166,13 @@ describe('SpatialSelection component', () => {
 
       expect(enzymeWrapper.state().drawnPoints).toEqual('10,20')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
-      expect(props.onChangeQuery.mock.calls[0]).toEqual([{ spatial: { point: '10,20' } }])
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            point: '10,20'
+          }
+        }
+      }])
     })
 
     test('with boundingBox spatial sets the state and calls onChangeQuery', () => {
@@ -188,7 +194,13 @@ describe('SpatialSelection component', () => {
 
       expect(enzymeWrapper.state().drawnPoints).toEqual('10,20,30,40')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
-      expect(props.onChangeQuery.mock.calls[0]).toEqual([{ spatial: { boundingBox: '10,20,30,40' } }])
+      expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+        collection: {
+          spatial: {
+            boundingBox: '10,20,30,40'
+          }
+        }
+      }])
     })
 
     test('with polygon spatial sets the state and calls onChangeQuery', () => {
@@ -210,8 +222,10 @@ describe('SpatialSelection component', () => {
       expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15,10,0')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-        spatial: {
-          polygon: '10,0,20,10,5,15,10,0'
+        collection: {
+          spatial: {
+            polygon: '10,0,20,10,5,15,10,0'
+          }
         }
       }])
     })
@@ -235,8 +249,10 @@ describe('SpatialSelection component', () => {
       expect(enzymeWrapper.state().drawnPoints).toEqual('10,0,20,10,5,15,10,0')
       expect(props.onChangeQuery.mock.calls.length).toBe(1)
       expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-        spatial: {
-          polygon: '10,0,20,10,5,15,10,0'
+        collection: {
+          spatial: {
+            polygon: '10,0,20,10,5,15,10,0'
+          }
         }
       }])
     })

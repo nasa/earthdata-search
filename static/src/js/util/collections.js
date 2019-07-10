@@ -22,7 +22,7 @@ export const prepareCollectionParams = (state) => {
     spatial = {},
     overrideTemporal = {},
     temporal = {},
-    grid = ''
+    gridName = ''
   } = collectionQuery
 
   const {
@@ -61,7 +61,7 @@ export const prepareCollectionParams = (state) => {
     boundingBox,
     cmrFacets,
     featureFacets,
-    grid,
+    gridName,
     keyword,
     pageNum,
     point,
@@ -85,7 +85,7 @@ export const buildCollectionSearchParams = (params) => {
     conceptId,
     cmrFacets,
     featureFacets,
-    grid,
+    gridName,
     keyword,
     pageNum,
     point,
@@ -106,9 +106,9 @@ export const buildCollectionSearchParams = (params) => {
 
   let twoDCoordinateSystem = ''
 
-  if (grid) {
+  if (gridName) {
     twoDCoordinateSystem = {
-      name: grid
+      name: gridName
     }
   }
 

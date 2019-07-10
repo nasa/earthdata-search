@@ -23,7 +23,7 @@ const initialState = {
     selectingNewGrid: false
   },
   map: {
-    drawingNewLayer: false,
+    drawingNewLayer: false
   },
   masterOverlayPanel: {
     clickStartHeight: undefined,
