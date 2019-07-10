@@ -68,7 +68,7 @@ portals: &portals
     org: CEOS IDN
     title: International Directory Network (IDN) Search
     params:
-    keyword:
+      keyword:
         - *
 
     logos:
