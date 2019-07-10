@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    onRemoveTimelineFilter: jest.fn(),
     temporalSearch: {}
   }
 
@@ -28,6 +29,13 @@ describe('TemporalDisplayContainer component', () => {
     expect(enzymeWrapper.find(TemporalDisplay).length).toEqual(1)
 
     expect(enzymeWrapper.find(TemporalDisplay).exists()).toBe(true)
+  })
+
+  test('pass onRemoveTimelineFilter as a prop', () => {
+    const { enzymeWrapper, props } = setup()
+
+    expect(enzymeWrapper.find(TemporalDisplay).props().onRemoveTimelineFilter)
+      .toEqual(props.onRemoveTimelineFilter)
   })
 
   test('with start date and end date should render the temporal info', () => {

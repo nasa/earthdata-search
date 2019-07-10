@@ -30,7 +30,8 @@ export default class GranuleRequest extends Request {
       'point',
       'polygon',
       'sort_key',
-      'temporal'
+      'temporal',
+      'two_d_coordinate_system'
     ]
   }
 

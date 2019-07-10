@@ -325,13 +325,19 @@ class Timeline extends Component {
     const { onChangeQuery } = this.props
     if (start && end) {
       onChangeQuery({
-        temporal: {
-          endDate: new Date(end).toISOString(),
-          startDate: new Date(start).toISOString()
+        collection: {
+          temporal: {
+            endDate: new Date(end).toISOString(),
+            startDate: new Date(start).toISOString()
+          }
         }
       })
     } else {
-      onChangeQuery({ temporal: {} })
+      onChangeQuery({
+        collection: {
+          temporal: {}
+        }
+      })
     }
   }
 
@@ -356,9 +362,11 @@ class Timeline extends Component {
       start: !start ? undefined : start / 1000
     }
     const newQuery = {
-      overrideTemporal: {
-        endDate: !end ? undefined : new Date(end).toISOString(),
-        startDate: !start ? undefined : new Date(start).toISOString()
+      collection: {
+        overrideTemporal: {
+          endDate: !end ? undefined : new Date(end).toISOString(),
+          startDate: !start ? undefined : new Date(start).toISOString()
+        }
       }
     }
 

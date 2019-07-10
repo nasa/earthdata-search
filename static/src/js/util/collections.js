@@ -21,7 +21,8 @@ export const prepareCollectionParams = (state) => {
     pageNum,
     spatial = {},
     overrideTemporal = {},
-    temporal = {}
+    temporal = {},
+    gridName = ''
   } = collectionQuery
 
   const {
@@ -60,6 +61,7 @@ export const prepareCollectionParams = (state) => {
     boundingBox,
     cmrFacets,
     featureFacets,
+    gridName,
     keyword,
     pageNum,
     point,
@@ -83,6 +85,7 @@ export const buildCollectionSearchParams = (params) => {
     conceptId,
     cmrFacets,
     featureFacets,
+    gridName,
     keyword,
     pageNum,
     point,
@@ -99,6 +102,14 @@ export const buildCollectionSearchParams = (params) => {
   // detirmine the next results based on those facets.
   if (Object.keys(viewAllFacets).length) {
     facetsToSend = { ...viewAllFacets }
+  }
+
+  let twoDCoordinateSystem = ''
+
+  if (gridName) {
+    twoDCoordinateSystem = {
+      name: gridName
+    }
   }
 
   // Set up params that are not driven by the URL
@@ -137,6 +148,7 @@ export const buildCollectionSearchParams = (params) => {
     scienceKeywordsH: facetsToSend.science_keywords_h,
     tagKey,
     temporal: temporalString,
+    twoDCoordinateSystem,
     facetsSize: viewAllFacetsCategory
       ? { [categoryNameToCMRParam(viewAllFacetsCategory)]: 10000 }
       : undefined

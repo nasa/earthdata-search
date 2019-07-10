@@ -417,9 +417,11 @@ describe('handleTemporalSet', () => {
 
     expect(props.onChangeQuery.mock.calls.length).toBe(1)
     expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-      temporal: {
-        endDate: new Date(end).toISOString(),
-        startDate: new Date(start).toISOString()
+      collection: {
+        temporal: {
+          endDate: new Date(end).toISOString(),
+          startDate: new Date(start).toISOString()
+        }
       }
     }])
   })
@@ -431,7 +433,9 @@ describe('handleTemporalSet', () => {
 
     expect(props.onChangeQuery.mock.calls.length).toBe(1)
     expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-      temporal: {}
+      collection: {
+        temporal: {}
+      }
     }])
   })
 })

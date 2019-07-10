@@ -204,7 +204,11 @@ describe('TemporalSelectionDropdown component', () => {
 
     enzymeWrapper.instance().onClearClick()
 
-    expect(onChangeQueryMock).toHaveBeenCalledWith({ temporal: '' })
+    expect(onChangeQueryMock).toHaveBeenCalledWith({
+      collection: {
+        temporal: ''
+      }
+    })
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
     expect(enzymeWrapper.state()).toEqual({ open: false, temporal: { startDate: '', endDate: '' } })
   })
@@ -227,9 +231,11 @@ describe('TemporalSelectionDropdown component', () => {
     enzymeWrapper.instance().onApplyClick()
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
+      collection: {
+        temporal: {
+          endDate: '2019-03-30T00:00:00.000Z',
+          startDate: '2019-03-29T00:00:00.000Z'
+        }
       }
     })
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)

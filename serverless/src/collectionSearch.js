@@ -40,7 +40,8 @@ function getPermittedCmrKeys(format) {
     'science_keywords_h',
     'sort_key',
     'tag_key',
-    'temporal'
+    'temporal',
+    'two_d_coordinate_system'
   ]
 }
 

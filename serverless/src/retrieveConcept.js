@@ -8,7 +8,7 @@ import { getEarthdataConfig } from '../../sharedUtils/config'
  */
 function retrieveConcept(event) {
   const conceptUrl = `${getEarthdataConfig('prod').cmrHost}`
-    + `/search/concepts/${event.pathParameters.id}`
+    + `/search/concepts/${event.pathParameters.id}?pretty=true`
 
   console.log(conceptUrl)
 

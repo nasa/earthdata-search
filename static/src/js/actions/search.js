@@ -11,18 +11,19 @@ export const updateGranuleQuery = payload => ({
   payload
 })
 
-export const changeQuery = query => (dispatch) => {
-  // query is changing, so reset pageNum
-  const newQuery = {
-    ...query,
-    pageNum: 1
-  }
+export const changeQuery = newQuery => (dispatch) => {
+  dispatch(updateCollectionQuery({
+    pageNum: 1,
+    ...newQuery.collection
+  }))
 
-  dispatch(updateCollectionQuery(newQuery))
+  dispatch(updateGranuleQuery({
+    pageNum: 1,
+    ...newQuery.granule
+  }))
 
   // Remove all saved granules in the metadata/collections store
   dispatch(actions.clearCollectionGranules())
-
   dispatch(actions.getCollections())
   dispatch(actions.getGranules())
   dispatch(actions.getTimeline())
@@ -43,11 +44,51 @@ export const changeGranulePageNum = pageNum => (dispatch) => {
   dispatch(actions.getGranules())
 }
 
+export const changeGranuleGridCoords = gridCoords => (dispatch) => {
+  dispatch(updateGranuleQuery({ gridCoords }))
+  dispatch(actions.getGranules())
+}
+
+export const removeGridFilter = () => (dispatch) => {
+  dispatch(changeQuery({
+    collection: {
+      gridName: ''
+    },
+    granule: {
+      gridCoords: ''
+    }
+  }))
+  dispatch(actions.toggleSelectingNewGrid(false))
+}
+
+export const removeSpatialFilter = () => (dispatch) => {
+  dispatch(changeQuery({
+    collection: {
+      spatial: {}
+    }
+  }))
+  dispatch(actions.toggleDrawingNewLayer(false))
+}
+
+export const removeTemporalFilter = () => (dispatch) => {
+  dispatch(changeQuery({
+    collection: {
+      temporal: {}
+    }
+  }))
+}
+
 export const clearFilters = () => (dispatch) => {
   const query = {
-    keyword: '',
-    spatial: {},
-    temporal: {}
+    collection: {
+      gridName: '',
+      keyword: '',
+      spatial: {},
+      temporal: {}
+    },
+    granule: {
+      gridCoords: ''
+    }
   }
 
   // Remove URL items

@@ -25,11 +25,15 @@ import {
 } from './timeline'
 import { searchNlp } from './nlp'
 import {
-  changeQuery,
-  changeProjectQuery,
-  clearFilters,
   changeCollectionPageNum,
-  changeGranulePageNum
+  changeGranuleGridCoords,
+  changeGranulePageNum,
+  changeProjectQuery,
+  changeQuery,
+  clearFilters,
+  removeGridFilter,
+  removeSpatialFilter,
+  removeTemporalFilter
 } from './search'
 import { changeMap } from './map'
 import { changeUrl, changePath } from './urlQuery'
@@ -48,7 +52,9 @@ import {
   masterOverlayPanelToggle,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
-  toggleRelatedUrlsModal
+  toggleRelatedUrlsModal,
+  toggleDrawingNewLayer,
+  toggleSelectingNewGrid
 } from './ui'
 import {
   applyViewAllFacets,
@@ -83,6 +89,7 @@ const actions = {
   applyViewAllFacets,
   changeCmrFacet,
   changeCollectionPageNum,
+  changeGranuleGridCoords,
   changeFeatureFacet,
   changeFocusedCollection,
   changeFocusedGranule,
@@ -113,7 +120,12 @@ const actions = {
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   masterOverlayPanelToggle,
+  toggleDrawingNewLayer,
+  toggleSelectingNewGrid,
   removeCollectionFromProject,
+  removeGridFilter,
+  removeSpatialFilter,
+  removeTemporalFilter,
   restoreCollections,
   restoreProject,
   searchNlp,

@@ -16,6 +16,8 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   granuleDownloadRetrievalId: state.granuleDownload.granuleDownloadParams.id,
   granuleDownloadCollectionId: state.granuleDownload.granuleDownloadParams.collection_id,
+  gridName: state.query.collection.gridName,
+  gridCoords: state.query.granule.gridCoords,
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,

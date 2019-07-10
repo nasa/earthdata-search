@@ -9,6 +9,7 @@ import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
+import { decodeGridCoords, encodeGridCoords } from './gridEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -48,7 +49,9 @@ const urlDefs = {
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
   granuleDownloadRetrievalId: { shortKey: 'rid', encode: encodeString, decode: decodeString },
-  granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString }
+  granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString },
+  gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
+  gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords }
 }
 
 /**
@@ -76,16 +79,24 @@ export const decodeUrlParams = (paramString) => {
 
   const map = decodeHelp(params, 'map')
 
-  const query = {}
-  query.keyword = decodeHelp(params, 'keywordSearch')
-  query.temporal = decodeHelp(params, 'temporalSearch')
-  query.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
-
   const spatial = {}
   spatial.point = decodeHelp(params, 'pointSearch')
   spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
   spatial.polygon = decodeHelp(params, 'polygonSearch')
-  query.spatial = spatial
+
+  const collectionQuery = {}
+  const granuleQuery = {}
+  collectionQuery.spatial = spatial
+  collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
+  collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
+  collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
+  collectionQuery.gridName = decodeHelp(params, 'gridName')
+  granuleQuery.gridCoords = decodeHelp(params, 'gridCoords')
+
+  const query = {
+    collection: collectionQuery,
+    granule: granuleQuery
+  }
 
   const timeline = decodeTimeline(params)
 

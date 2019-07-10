@@ -40,10 +40,9 @@ describe('FilterStackItem component', () => {
     expect(enzymeWrapper.find('h3').hasClass('filter-stack-item__title visibility-hidden')).toBe(true)
   })
 
-  test('renders its body correctly', () => {
+  test('renders its body contents correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.filter-stack-item__body').at(0))
-    expect(enzymeWrapper.find('.filter-stack-item__body').at(0).text()).toBe('Hello!')
+    expect(enzymeWrapper.find('.filter-stack-item__body-contents').at(0).text()).toBe('Hello!')
   })
 })

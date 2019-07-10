@@ -10,9 +10,16 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     boundingBoxSearch: '',
-    drawingNewLayer: '',
+    drawingNewLayer: false,
     pointSearch: '',
-    polygonSearch: ''
+    polygonSearch: '',
+    gridName: '',
+    gridCoords: '',
+    onChangeQuery: jest.fn(),
+    onGranuleGridCoords: jest.fn(),
+    onRemoveGridFilter: jest.fn(),
+    onRemoveSpatialFilter: jest.fn(),
+    selectingNewGrid: false
   }
 
   const enzymeWrapper = shallow(<SpatialDisplay {...props} />)
@@ -40,7 +47,10 @@ describe('SpatialDisplay component', () => {
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
     expect(filterStackContents.props().title).toEqual('Point')
-    expect(filterStackContents.props().body.props.value).toEqual('38.80586900, -77.04188250') // Lat,Lon
+    const label = filterStackContents.props().body.props.children.props.children.props.children[0]
+    const input = filterStackContents.props().body.props.children.props.children.props.children[1]
+    expect(label.props.children).toContain('Coordinates:') // Lat,Lon
+    expect(input.props.children.props.value).toEqual('38.805869, -77.0418825') // Lat,Lon
   })
 
   test('with boundingBoxSearch should render the spatial info', () => {
@@ -54,8 +64,18 @@ describe('SpatialDisplay component', () => {
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
     expect(filterStackContents.props().title).toEqual('Rectangle')
-    expect(filterStackContents.props().body.props.value)
-      .toEqual('SW: 38.79165, -77.11976 NE: 38.99585, -76.90939') // Lat,Lon Lat,Lon
+
+    const sw = filterStackContents.props().body.props.children.props.children[0]
+    const swLabel = sw.props.children[0]
+    const swInput = sw.props.children[1]
+    expect(swLabel.props.children).toEqual('SW:')
+    expect(swInput.props.children.props.value).toEqual('38.79165, -77.11976')
+
+    const ne = filterStackContents.props().body.props.children.props.children[1]
+    const neLabel = ne.props.children[0]
+    const neInput = ne.props.children[1]
+    expect(neLabel.props.children).toEqual('NE:')
+    expect(neInput.props.children.props.value).toEqual('38.99585, -76.90939')
   })
 
   test('with polygonSearch should render without spatial info', () => {
@@ -73,7 +93,7 @@ describe('SpatialDisplay component', () => {
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
     expect(filterStackContents.props().title).toEqual('Polygon')
-    expect(filterStackContents.props().body.props.value).toEqual('')
+    expect(filterStackContents.props().body.props.children).toEqual(null)
   })
 
   test('componentWillReceiveProps sets the state', () => {
@@ -83,5 +103,111 @@ describe('SpatialDisplay component', () => {
     const newPoint = '0,0'
     enzymeWrapper.setProps({ pointSearch: newPoint })
     expect(enzymeWrapper.state().pointSearch).toEqual(newPoint)
+  })
+
+  describe('#onChangeGridType', () => {
+    test('calls onChangeQuery', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const preventDefaultMock = jest.fn()
+      enzymeWrapper.instance().onChangeGridType({
+        target: {
+          value: 'test'
+        },
+        preventDefault: preventDefaultMock
+      })
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          gridName: 'test'
+        }
+      })
+    })
+
+    test('calls preventDefault', () => {
+      const { enzymeWrapper } = setup()
+
+      const preventDefaultMock = jest.fn()
+      enzymeWrapper.instance().onChangeGridType({
+        target: {
+          value: 'test'
+        },
+        preventDefault: preventDefaultMock
+      })
+      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('#onSubmitGridCoords', () => {
+    describe('when blurred', () => {
+      test('calls onChangeQuery', () => {
+        const { enzymeWrapper, props } = setup()
+
+        const preventDefaultMock = jest.fn()
+        enzymeWrapper.instance().onSubmitGridCoords({
+          type: 'blur',
+          target: {
+            value: 'test'
+          },
+          preventDefault: preventDefaultMock
+        })
+
+        expect(props.onGranuleGridCoords).toHaveBeenCalledTimes(1)
+        expect(props.onGranuleGridCoords).toHaveBeenCalledWith('test')
+      })
+    })
+
+    describe('when enter key pressed', () => {
+      test('calls onChangeQuery', () => {
+        const { enzymeWrapper, props } = setup()
+
+        const preventDefaultMock = jest.fn()
+        enzymeWrapper.instance().onSubmitGridCoords({
+          type: 'keyUp',
+          key: 'Enter',
+          target: {
+            value: 'test'
+          },
+          preventDefault: preventDefaultMock
+        })
+
+        expect(props.onGranuleGridCoords).toHaveBeenCalledTimes(1)
+        expect(props.onGranuleGridCoords).toHaveBeenCalledWith('test')
+      })
+    })
+
+    test('calls preventDefault', () => {
+      const { enzymeWrapper } = setup()
+
+      const preventDefaultMock = jest.fn()
+      enzymeWrapper.instance().onChangeGridType({
+        target: {
+          value: 'test'
+        },
+        preventDefault: preventDefaultMock
+      })
+      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('#onGridRemove', () => {
+    test('calls onRemoveGridFilter', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.instance().onGridRemove()
+
+      expect(props.onRemoveGridFilter).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('#onSpatialRemove', () => {
+    test('calls onRemoveSpatialFilter', () => {
+      const { enzymeWrapper, props } = setup()
+
+      enzymeWrapper.instance().onSpatialRemove()
+
+      expect(props.onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
+    })
   })
 })

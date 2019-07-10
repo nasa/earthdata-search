@@ -36,6 +36,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.onApplyClick = this.onApplyClick.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
     this.onToggleClick = this.onToggleClick.bind(this)
+    this.onDropdownToggle = this.onDropdownToggle.bind(this)
     this.setEndDate = this.setEndDate.bind(this)
     this.setStartDate = this.setStartDate.bind(this)
   }
@@ -61,6 +62,18 @@ export default class TemporalSelectionDropdown extends PureComponent {
   /**
    * Opens or closes the dropdown depending on the current state
    */
+  onDropdownToggle() {
+    const { open } = this.state
+
+    this.setState({
+      open: !open
+    })
+  }
+
+
+  /**
+   * Opens or closes the dropdown depending on the current state
+   */
   onToggleClick() {
     const { open } = this.state
 
@@ -79,9 +92,11 @@ export default class TemporalSelectionDropdown extends PureComponent {
     const { startDate, endDate } = temporal
 
     onChangeQuery({
-      temporal: {
-        startDate,
-        endDate
+      collection: {
+        temporal: {
+          startDate,
+          endDate
+        }
       }
     })
 
@@ -104,7 +119,11 @@ export default class TemporalSelectionDropdown extends PureComponent {
 
     const { onChangeQuery } = this.props
 
-    onChangeQuery({ temporal: '' })
+    onChangeQuery({
+      collection: {
+        temporal: ''
+      }
+    })
   }
 
   /**
@@ -206,7 +225,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     }
 
     return (
-      <Dropdown show={open} className="temporal-selection-dropdown">
+      <Dropdown show={open} className="temporal-selection-dropdown" onToggle={this.onDropdownToggle}>
         <Dropdown.Toggle
           variant="inline-block"
           id="temporal-selection-dropdown"

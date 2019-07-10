@@ -37,7 +37,8 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'point',
       'polygon',
       'sort_key',
-      'temporal'
+      'temporal',
+      'two_d_coordinate_system'
     ])
   })
 })

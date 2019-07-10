@@ -11,6 +11,7 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 
+import { eventEmitter } from '../../events/events'
 import { makeCounterClockwise } from '../../util/map/geo'
 
 const normalColor = '#00ffff'
@@ -125,15 +126,23 @@ class SpatialSelection extends Component {
     }
 
     const { layerType } = e
-    const { onChangeMap } = this.props
-    onChangeMap({ drawingNewLayer: layerType })
+    const { onToggleDrawingNewLayer } = this.props
+    onToggleDrawingNewLayer(layerType)
   }
 
   // Callback from EditControl, called when the drawing is stopped from
   // cancelling or completing
   onDrawStop() {
-    const { onChangeMap } = this.props
-    onChangeMap({ drawingNewLayer: '' })
+    const { onToggleDrawingNewLayer } = this.props
+    onToggleDrawingNewLayer(false)
+  }
+
+  // Callback from EditControl, called when the controls are mounted
+  onMounted(drawControl) {
+    eventEmitter.on('map.drawStart', (e) => {
+      const { type } = e
+      drawControl._toolbars.draw._modes[type].handler.enable()
+    })
   }
 
   // Callback from EditControl, contains the layer that was just drawn
@@ -173,7 +182,13 @@ class SpatialSelection extends Component {
     }
 
     this.setState({ drawnPoints: latLngs.join() })
-    onChangeQuery({ spatial: { [type]: latLngs.join() } })
+    onChangeQuery({
+      collection: {
+        spatial: {
+          [type]: latLngs.join()
+        }
+      }
+    })
   }
 
   // Takes an array of lat/lon pairs and returns array of objects with lat/lon keys
@@ -278,6 +293,7 @@ class SpatialSelection extends Component {
           onDrawStart={this.onDrawStart}
           onDrawStop={this.onDrawStop}
           onCreated={this.onCreate}
+          onMounted={this.onMounted}
           draw={{
             polygon: {
               drawError: errorOptions,
@@ -319,10 +335,10 @@ SpatialSelection.propTypes = {
   boundingBoxSearch: PropTypes.string,
   isProjectPage: PropTypes.bool.isRequired,
   mapRef: PropTypes.shape({}),
-  onChangeMap: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.string,
-  polygonSearch: PropTypes.string
+  polygonSearch: PropTypes.string,
+  onToggleDrawingNewLayer: PropTypes.func.isRequired
 }
 
 export default SpatialSelection

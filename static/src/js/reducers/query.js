@@ -4,10 +4,12 @@ const initialState = {
   collection: {
     pageNum: 1,
     spatial: {},
-    temporal: {}
+    temporal: {},
+    gridName: ''
   },
   granule: {
-    pageNum: 1
+    pageNum: 1,
+    gridCoords: ''
   }
 }
 

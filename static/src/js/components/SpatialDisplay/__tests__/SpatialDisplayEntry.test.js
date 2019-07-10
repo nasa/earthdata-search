@@ -7,11 +7,14 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    type: 'start',
-    value: '38.79165, -77.11976'
+    type: 'start'
   }
 
-  const enzymeWrapper = shallow(<SpatialDisplayEntry {...props} />)
+  const enzymeWrapper = shallow(
+    <SpatialDisplayEntry {...props}>
+      38.79165, -77.11976
+    </SpatialDisplayEntry>
+  )
 
   return {
     enzymeWrapper,
@@ -20,7 +23,7 @@ function setup() {
 }
 
 describe('SpatialDisplayEntry component', () => {
-  test('with valid type and value should render correctly', () => {
+  test('with valid type and children should render correctly', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.text()).toEqual('38.79165, -77.11976')

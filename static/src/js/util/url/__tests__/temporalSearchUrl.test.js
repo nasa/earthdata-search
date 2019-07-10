@@ -8,9 +8,12 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
-        temporal: {
-          endDate: '2019-02-01T00:00:00.000Z',
-          startDate: '2019-01-01T00:00:00.000Z'
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          temporal: {
+            endDate: '2019-02-01T00:00:00.000Z',
+            startDate: '2019-01-01T00:00:00.000Z'
+          }
         }
       }
     }

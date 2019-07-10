@@ -92,6 +92,7 @@ export const restoreCollections = payload => (dispatch) => {
  */
 export const getCollections = () => (dispatch, getState) => {
   const collectionParams = prepareCollectionParams(getState())
+
   const {
     authToken,
     keyword,

@@ -13,8 +13,9 @@ const FilterStackContents = (props) => {
 
   return (
     <div className="filter-stack-contents">
-      { title && <strong>{`${title}:`}</strong>}
-      &nbsp;
+      { title && (
+        <div className="filter-stack-contents__label">{`${title}:`}</div>
+      )}
       { body && <div className="filter-stack-contents__body">{body}</div>}
     </div>
   )

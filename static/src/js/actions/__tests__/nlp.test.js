@@ -87,7 +87,9 @@ describe('nlp#searchNlp', () => {
 
     expect(addMock).toHaveBeenCalledTimes(1)
     expect(addMock).toHaveBeenCalledWith({
-      keyword: ''
+      collection: {
+        keyword: ''
+      }
     })
   })
 
@@ -108,7 +110,9 @@ describe('nlp#searchNlp', () => {
     await store.dispatch(actions.searchNlp('michigan')).then(() => {
       expect(addMock).toHaveBeenCalledTimes(1)
       expect(addMock).toHaveBeenCalledWith({
-        keyword: 'michigan'
+        collection: {
+          keyword: 'michigan'
+        }
       })
     })
   })
@@ -144,9 +148,11 @@ describe('nlp#searchNlp', () => {
     await store.dispatch(actions.searchNlp('michigan')).then(() => {
       expect(addMock).toHaveBeenCalledTimes(1)
       expect(addMock).toHaveBeenCalledWith({
-        keyword: 'michigan',
-        spatial: {
-          boundingBox: '-90.418392,41.696118,-82.122971,48.306063'
+        collection: {
+          keyword: 'michigan',
+          spatial: {
+            boundingBox: '-90.418392,41.696118,-82.122971,48.306063'
+          }
         }
       })
     })
@@ -177,8 +183,10 @@ describe('nlp#searchNlp', () => {
     store.dispatch(actions.searchNlp('march')).then(() => {
       expect(addMock).toHaveBeenCalledTimes(1)
       expect(addMock).toHaveBeenCalledWith({
-        keyword: 'march',
-        temporal: '2019-03-01T00:00:00Z,2019-03-31T23:59:59Z'
+        collection: {
+          keyword: 'march',
+          temporal: '2019-03-01T00:00:00Z,2019-03-31T23:59:59Z'
+        }
       })
     })
   })

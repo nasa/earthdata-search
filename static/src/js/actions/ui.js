@@ -7,7 +7,9 @@ import {
   MASTER_OVERLAY_PANEL_TOGGLE,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_SELECTING_NEW_GRID
 } from '../constants/actionTypes'
 
 export const masterOverlayPanelDragStart = data => (dispatch) => {
@@ -62,5 +64,15 @@ export const toggleOverrideTemporalModal = state => ({
 
 export const toggleRelatedUrlsModal = state => ({
   type: TOGGLE_RELATED_URLS_MODAL,
+  payload: state
+})
+
+export const toggleDrawingNewLayer = state => ({
+  type: TOGGLE_DRAWING_NEW_LAYER,
+  payload: state
+})
+
+export const toggleSelectingNewGrid = state => ({
+  type: TOGGLE_SELECTING_NEW_GRID,
   payload: state
 })

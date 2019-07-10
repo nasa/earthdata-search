@@ -6,13 +6,14 @@ import ConnectedSpatialDisplayContainer
   from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
 import ConnectedTemporalDisplayContainer
   from '../../containers/TemporalDisplayContainer/TemporalDisplayContainer'
-import ConnectedTemporalSelectionDropdownContainer
+import SpatialSelectionDropdownContainer
+  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
+import TemporalSelectionDropdownContainer
   from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 import FilterStack
   from '../FilterStack/FilterStack'
 // Form Fields
 import TextField from '../FormFields/TextField/TextField'
-import SpatialSelectionDropdown from '../SpatialDisplay/SpatialSelectionDropdown'
 
 import './SearchForm.scss'
 
@@ -99,8 +100,8 @@ class SearchForm extends Component {
               onBlur={this.onKeywordBlur}
             />
           </form>
-          <ConnectedTemporalSelectionDropdownContainer />
-          <SpatialSelectionDropdown />
+          <TemporalSelectionDropdownContainer />
+          <SpatialSelectionDropdownContainer />
           <Button
             bootstrapVariant="inline-block"
             className="search-form__button search-form__button--clear"

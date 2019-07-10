@@ -1,5 +1,6 @@
 import { getFocusedCollectionMetadata } from './focusedCollection'
 import { encodeTemporal } from './url/temporalEncoders'
+import { encodeGridCoords } from './url/gridEncoders'
 
 /**
  * Populate granule payload used to update the store
@@ -57,10 +58,14 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const {
     spatial = {},
     overrideTemporal = {},
-    temporal = {}
+    temporal = {},
+    gridName = ''
   } = collectionQuery
 
-  const { pageNum } = granuleQuery
+  const {
+    gridCoords = '',
+    pageNum
+  } = granuleQuery
 
   const {
     boundingBox,
@@ -90,6 +95,8 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     authToken,
     boundingBox,
     collectionId,
+    gridName,
+    gridCoords: encodeGridCoords(gridCoords),
     isCwicCollection,
     pageNum,
     point,
@@ -108,11 +115,22 @@ export const buildGranuleSearchParams = (params) => {
   const {
     boundingBox,
     collectionId,
+    gridName,
+    gridCoords,
     pageNum,
     point,
     polygon,
     temporalString
   } = params
+
+  let twoDCoordinateSystem = ''
+
+  if (gridName) {
+    twoDCoordinateSystem = {}
+    twoDCoordinateSystem.name = gridName
+
+    if (gridCoords) twoDCoordinateSystem.coordinates = gridCoords
+  }
 
   return {
     boundingBox,
@@ -122,7 +140,8 @@ export const buildGranuleSearchParams = (params) => {
     point,
     polygon,
     sortKey: '-start_date',
-    temporal: temporalString
+    temporal: temporalString,
+    twoDCoordinateSystem
   }
 }
 
