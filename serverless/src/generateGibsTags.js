@@ -2,6 +2,7 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import AWS from 'aws-sdk'
 import customGibsProducts from './static/gibs'
+import { getClientId } from '../../sharedUtils/config'
 
 let sqs
 
@@ -15,7 +16,10 @@ export async function getSupportedGibsLayers(mergeCustomProducts = true) {
   const worldviewResponse = await request.get({
     uri: worldviewConfig,
     json: true,
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
+    headers: {
+      'Client-Id': getClientId('prod').background
+    }
   })
 
   const supportedProjections = [

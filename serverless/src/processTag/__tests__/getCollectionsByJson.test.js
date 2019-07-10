@@ -13,6 +13,7 @@ describe('getCollectionsByJson', () => {
     const mockedTokenValue = 'mocked-system-token'
 
     const headers = {
+      'Client-Id': 'eed-edsc-test-serverless-background',
       'Echo-Token': mockedTokenValue
     }
 
@@ -54,6 +55,7 @@ describe('getCollectionsByJson', () => {
     expect(requestMock).toBeCalledWith({
       uri: 'http://example.com/search/collections.json?include_tags=edsc.extra.test',
       headers: {
+        'Client-Id': 'eed-edsc-test-serverless-background',
         'Echo-Token': 'mocked-system-token'
       },
       body: { condition: { short_name: 'MIL3MLS' } },

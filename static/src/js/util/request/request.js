@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
 import { prepKeysForCmr } from '../url/url'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
 
 /**
  * Parent class for the application API layer to communicate with external services
@@ -46,6 +46,10 @@ export default class Request {
       // eslint-disable-next-line no-param-reassign
       headers.Authorization = `Bearer: ${this.authToken}`
     }
+
+    // Add the Client-Id header
+    // eslint-disable-next-line no-param-reassign
+    headers['Client-Id'] = getClientId('prod').client
 
     if (data) {
       // Converts javascript compliant keys to snake cased keys for use

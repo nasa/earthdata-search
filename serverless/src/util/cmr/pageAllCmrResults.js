@@ -3,6 +3,7 @@ import request from 'request-promise'
 import { cmrUrl } from './cmrUrl'
 import { readCmrResults } from './readCmrResults'
 import { getSystemToken } from '../urs/getSystemToken'
+import { getClientId } from '../../../../sharedUtils/config'
 
 let cmrToken = null
 
@@ -29,6 +30,7 @@ export const pageAllCmrResults = async (path, queryParams = {}) => {
     const cmrResponse = await request.get({
       uri: cmrUrl(path, cmrParams),
       headers: {
+        'Client-Id': getClientId('prod').background,
         'Echo-Token': cmrToken
       },
       json: true,
@@ -51,6 +53,7 @@ export const pageAllCmrResults = async (path, queryParams = {}) => {
         const additionalCmrResponse = await request.get({
           uri: cmrUrl(path, cmrParams),
           headers: {
+            'Client-Id': getClientId('prod').background,
             'Echo-Token': cmrToken
           },
           json: true,

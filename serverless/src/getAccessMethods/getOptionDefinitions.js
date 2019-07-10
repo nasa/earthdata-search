@@ -2,7 +2,11 @@ import request from 'request-promise'
 import jwt from 'jsonwebtoken'
 import 'array-foreach-async'
 
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import {
+  getEarthdataConfig,
+  getSecretEarthdataConfig,
+  getClientId
+} from '../../../sharedUtils/config'
 
 export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   const forms = []
@@ -24,6 +28,7 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
         uri: url,
         resolveWithFullResponse: true,
         headers: {
+          'Client-Id': getClientId('prod').lamdbda,
           'Echo-Token': `${accessToken}:${clientId}`
         }
       })

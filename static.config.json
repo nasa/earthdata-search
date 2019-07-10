@@ -15,38 +15,64 @@
     "production": {}
   },
   "earthdata": {
-      "sit": {
-        "apiHost": "http://localhost:3001",
-        "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
-        "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
-        "cmrClientId": "edsc-sit",
-        "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
-        "edlHost": "https://urs.sit.earthdata.nasa.gov",
-        "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback",
-        "edscHost": "http://localhost:8080"
-      },
-      "uat": {
-        "apiHost": "http://localhost:3001",
-        "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
-        "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
-        "cmrClientId": "edsc-uat",
-        "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
-        "edlHost": "https://urs.uat.earthdata.nasa.gov",
-        "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback",
-        "edscHost": "http://localhost:8080"
-      },
-      "prod": {
-        "apiHost": "http://localhost:3001",
-        "cmrHost": "https://cmr.earthdata.nasa.gov",
-        "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
-        "cmrClientId": "edsc-prod",
-        "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
-        "edlHost": "https://urs.earthdata.nasa.gov",
-        "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
-        "redirectUriPath": "/urs_callback",
-        "edscHost": "http://localhost:8080"
+    "dev": {
+      "clientId": {
+        "background": "eed-edsc-dev-serverless-background",
+        "client": "eed-edsc-dev-serverless-client",
+        "lambda": "eed-edsc-dev-serverless-lambda"
       }
+    },
+    "test": {
+      "clientId": {
+        "background": "eed-edsc-test-serverless-background",
+        "client": "eed-edsc-test-serverless-client",
+        "lambda": "eed-edsc-test-serverless-lambda"
+      }
+    },
+    "sit": {
+      "apiHost": "http://localhost:3001",
+      "clientId": {
+        "background": "eed-edsc-sit-serverless-background",
+        "client": "eed-edsc-sit-serverless-client",
+        "lambda": "eed-edsc-sit-serverless-lambda"
+      },
+      "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
+      "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
+      "edlHost": "https://urs.sit.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
+      "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
+      "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
+      "redirectUriPath": "/urs_callback"
+    },
+    "uat": {
+      "apiHost": "http://localhost:3001",
+      "clientId": {
+        "background": "eed-edsc-uat-serverless-background",
+        "client": "eed-edsc-uat-serverless-client",
+        "lambda": "eed-edsc-uat-serverless-lambda"
+      },
+      "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
+      "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
+      "edlHost": "https://urs.uat.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
+      "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
+      "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
+      "redirectUriPath": "/urs_callback"
+    },
+    "prod": {
+      "apiHost": "http://localhost:3001",
+      "clientId": {
+        "background": "eed-edsc-prod-serverless-background",
+        "client": "eed-edsc-prod-serverless-client",
+        "lambda": "eed-edsc-prod-serverless-lambda"
+      },
+      "cmrHost": "https://cmr.earthdata.nasa.gov",
+      "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
+      "edlHost": "https://urs.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
+      "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
+      "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
+      "redirectUriPath": "/urs_callback"
+    }
   }
 }

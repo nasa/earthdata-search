@@ -1,7 +1,7 @@
 import request from 'request-promise'
 import jwt from 'jsonwebtoken'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
-import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
+import { getSecretEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -19,6 +19,7 @@ export const doSearchRequest = async (jwtToken, url) => {
       uri: url,
       resolveWithFullResponse: true,
       headers: {
+        'Client-Id': getClientId('prod').lambda,
         'Echo-Token': `${token.token.access_token}:${clientId}`
       }
     })

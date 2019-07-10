@@ -4,6 +4,7 @@ import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
 import { getDbConnection } from './util/database/getDbConnection'
+import { getClientId } from '../../sharedUtils/config'
 
 // Knex database connection object
 let dbConnection = null
@@ -35,7 +36,10 @@ const getProjectionCapabilities = async (projection) => {
 
     const gibsResponse = await request.get({
       uri: capabilitiesUrl,
-      resolveWithFullResponse: true
+      resolveWithFullResponse: true,
+      headers: {
+        'Client-Id': getClientId('prod').background
+      }
     })
 
     const parsedCapabilities = parseXml(gibsResponse.body, {

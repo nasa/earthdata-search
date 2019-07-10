@@ -23,6 +23,7 @@ describe('removeTag', () => {
     expect(cmrDeleteMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
       headers: {
+        'Client-Id': 'eed-edsc-test-serverless-background',
         'Echo-Token': '1234-abcd-5678-efgh'
       },
       body: { short_name: 'MIL3MLS' },
@@ -52,6 +53,7 @@ describe('removeTag', () => {
     expect(cmrDeleteMock).toBeCalledWith({
       uri: 'http://example.com/search/tags/edsc.extra.gibs/associations/by_query',
       headers: {
+        'Client-Id': 'eed-edsc-test-serverless-background',
         'Echo-Token': '1234-abcd-5678-efgh'
       },
       body: { short_name: 'MIL3MLS' },

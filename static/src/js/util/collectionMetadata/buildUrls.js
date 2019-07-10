@@ -1,4 +1,4 @@
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
 
 export const buildUrls = (json, authToken) => {
   const {
@@ -22,10 +22,10 @@ export const buildUrls = (json, authToken) => {
   const eartdataConfig = getEarthdataConfig('prod')
   const {
     apiHost,
-    cmrClientId,
     cmrHost,
     opensearchRoot
   } = eartdataConfig
+  const cmrClientId = getClientId('prod').client
 
   const urls = {}
 
