@@ -1,5 +1,9 @@
 import request from 'request-promise'
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import {
+  getEarthdataConfig,
+  getSecretEarthdataConfig,
+  getClientId
+} from '../../../sharedUtils/config'
 
 /**
  * Retrieve ECHO profile data for the provided username
@@ -18,6 +22,7 @@ export const getEchoProfileData = async (token) => {
     const echoRestProfileResponse = await request.get({
       uri: echoRestProfileUrl,
       headers: {
+        'Client-Id': getClientId('prod').lamdbda,
         'Echo-Token': `${token}:${clientId}`
       },
       json: true,

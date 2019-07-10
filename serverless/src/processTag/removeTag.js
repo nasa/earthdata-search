@@ -1,5 +1,5 @@
 import request from 'request-promise'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 
 /**
  * Removes a tag association from any collections meeting the provided search criteria
@@ -14,6 +14,7 @@ export async function removeTag(tagName, searchCriteria, cmrToken) {
     await request.delete({
       uri: tagRemovalUrl,
       headers: {
+        'Client-Id': getClientId('prod').background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

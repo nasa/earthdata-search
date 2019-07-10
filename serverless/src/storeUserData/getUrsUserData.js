@@ -1,5 +1,9 @@
 import request from 'request-promise'
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import {
+  getEarthdataConfig,
+  getSecretEarthdataConfig,
+  getClientId
+} from '../../../sharedUtils/config'
 
 /**
  * Retrieve URS profile data for the provided username
@@ -19,6 +23,7 @@ export const getUrsUserData = async (username, token) => {
     const ursProfileResponse = await request.get({
       uri: ursProfileUrl,
       headers: {
+        'Client-Id': getClientId('prod').lamdbda,
         Authorization: `Bearer ${token}`
       },
       json: true,

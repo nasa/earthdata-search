@@ -1,7 +1,7 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
 import { readCmrResults } from './readCmrResults'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 
 /**
  * Retrieves a single granule result from CMR
@@ -19,7 +19,10 @@ export const getSingleGranule = async (collectionId) => {
   const cmrResponse = await request.get({
     uri: granuleSearchUrl,
     json: true,
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
+    headers: {
+      'Client-Id': getClientId('prod').background
+    }
   })
 
   const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)

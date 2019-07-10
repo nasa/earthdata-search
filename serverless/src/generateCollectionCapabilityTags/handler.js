@@ -5,7 +5,7 @@ import { stringify } from 'qs'
 import { chunkArray } from '../util'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { readCmrResults } from '../util/cmr/readCmrResults'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { invokeLambda } from '../util/aws/invokeLambda'
 
 let lambda
@@ -39,7 +39,10 @@ const generateCollectionCapabilityTags = async (event) => {
   const cmrResponse = await request.get({
     uri: collectionSearchUrl,
     json: true,
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
+    headers: {
+      'Client-Id': getClientId('prod').background
+    }
   })
 
   const responseBody = readCmrResults(collectionSearchUrl, cmrResponse)

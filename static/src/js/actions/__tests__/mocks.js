@@ -39,7 +39,7 @@ export const getProjectCollectionsResponse = [
             title: 'Native'
           },
           osdd: {
-            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=undefined&versionId=undefined&dataCenter=collectionId1',
+            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=undefined&versionId=undefined&dataCenter=collectionId1',
             title: 'OSDD'
           }
         }
@@ -94,7 +94,7 @@ export const getProjectCollectionsResponse = [
             title: 'Native'
           },
           osdd: {
-            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=undefined&versionId=undefined&dataCenter=collectionId2',
+            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=undefined&versionId=undefined&dataCenter=collectionId2',
             title: 'OSDD'
           }
         }
@@ -152,7 +152,7 @@ export const getCollectionsResponseUnauth = [
             title: 'Native'
           },
           osdd: {
-            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=id_1&versionId=VersionID&dataCenter=collectionId1',
+            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=id_1&versionId=VersionID&dataCenter=collectionId1',
             title: 'OSDD'
           }
         }
@@ -211,7 +211,7 @@ export const getCollectionsResponseAuth = [
             title: 'Native'
           },
           osdd: {
-            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=id_1&versionId=VersionID&dataCenter=collectionId1',
+            href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=id_1&versionId=VersionID&dataCenter=collectionId1',
             title: 'OSDD'
           }
         }
@@ -228,4 +228,3 @@ export const getCollectionsResponseAuth = [
     }
   }
 ]
-

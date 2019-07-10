@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { getCollectionsByJson } from './getCollectionsByJson'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria
@@ -86,6 +86,7 @@ export async function addTag({
       await request.post({
         uri: addTagUrl,
         headers: {
+          'Client-Id': getClientId('prod').background,
           'Echo-Token': cmrToken
         },
         body: associationData,
@@ -107,6 +108,7 @@ export async function addTag({
     await request.post({
       uri: tagRemovalUrl,
       headers: {
+        'Client-Id': getClientId('prod').background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

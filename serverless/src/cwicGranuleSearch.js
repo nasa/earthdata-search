@@ -1,6 +1,7 @@
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { pick } from './util'
+import { getClientId } from '../../sharedUtils/config'
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
@@ -15,7 +16,10 @@ const getCwicGranulesUrl = async (collectionId) => {
   try {
     const osddResponse = await request.get({
       uri: collectionTemplate,
-      resolveWithFullResponse: true
+      resolveWithFullResponse: true,
+      headers: {
+        'Client-Id': getClientId('prod').lambda
+      }
     })
 
     const osddBody = parseXml(osddResponse.body, {
@@ -149,7 +153,10 @@ export default async function cwicGranuleSearch(event) {
     const granuleResponse = await request.get({
       time: true,
       uri: renderedTemplate,
-      resolveWithFullResponse: true
+      resolveWithFullResponse: true,
+      headers: {
+        'Client-Id': getClientId('prod').lamdbda
+      }
     })
 
     console.log(`CWIC Granule Request took ${granuleResponse.elapsedTime}ms`)

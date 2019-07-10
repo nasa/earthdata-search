@@ -7,3 +7,10 @@ export const getEnvironmentConfig = () => config.environment[process.env.NODE_EN
 
 export const getSecretEarthdataConfig = env => secretConfig.earthdata[env]
 export const getSecretEnvironmentConfig = () => secretConfig.environment[process.env.NODE_ENV]
+
+export const getClientId = (env) => {
+  if (process.env.NODE_ENV === 'test') return getEarthdataConfig('test').clientId
+  if (process.env.NODE_ENV === 'development') return getEarthdataConfig('dev').clientId
+
+  return getEarthdataConfig(env).clientId
+}

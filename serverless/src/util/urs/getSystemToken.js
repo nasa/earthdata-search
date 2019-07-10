@@ -1,7 +1,7 @@
 import request from 'request-promise'
 
 import { getEdlConfig } from '../../configUtil'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 import { getUrsSystemCredentials } from './getUrsSystemCredentials'
 
 /**
@@ -34,7 +34,10 @@ export const getSystemToken = async (providedToken) => {
       token: authenticationParams
     },
     json: true,
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
+    headers: {
+      'Client-Id': getClientId('prod').background
+    }
   })
 
   const { body } = tokenResponse

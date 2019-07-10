@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 
 /**
  * Query CMR using JQL
@@ -18,6 +18,7 @@ export async function getCollectionsByJson(queryParams, searchCriteria, cmrToken
     const collectionResponse = await request.post({
       uri: collectionUrl,
       headers: {
+        'Client-Id': getClientId('prod').background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

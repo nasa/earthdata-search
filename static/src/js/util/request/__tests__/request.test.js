@@ -53,7 +53,10 @@ describe('Request#transformRequest', () => {
 
     request.transformRequest(data, headers)
 
-    expect(headers).toEqual({ Authorization: `Bearer: ${token}` })
+    expect(headers).toEqual({
+      Authorization: `Bearer: ${token}`,
+      'Client-Id': 'eed-edsc-test-serverless-client'
+    })
   })
 
   test('correctly transforms data for CMR requests', () => {
@@ -63,7 +66,7 @@ describe('Request#transformRequest', () => {
 
     jest.spyOn(Request.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
 
-    const transformedData = request.transformRequest(data)
+    const transformedData = request.transformRequest(data, {})
 
     expect(transformedData).toEqual('param_name=123')
   })
@@ -76,7 +79,7 @@ describe('Request#transformRequest', () => {
 
     jest.spyOn(Request.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
 
-    const transformedData = request.transformRequest(data)
+    const transformedData = request.transformRequest(data, {})
 
     expect(transformedData).toEqual('{"params":{"param_name":123}}')
   })

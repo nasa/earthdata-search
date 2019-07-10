@@ -3,6 +3,7 @@ import 'pg'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from './util/database/getDbConnection'
+import { getClientId } from '../../sharedUtils/config'
 
 // Knex database connection object
 let dbConnection = null
@@ -59,7 +60,10 @@ export default async function processColorMap(event, context) {
 
     const gibsResponse = await request.get({
       uri: providedColorMap.url,
-      resolveWithFullResponse: true
+      resolveWithFullResponse: true,
+      headers: {
+        'Client-Id': getClientId('prod').background
+      }
     })
 
     const parsedColorMap = parseXml(gibsResponse.body, {
