@@ -4,6 +4,7 @@ import AWS from 'aws-sdk'
 import customGibsProducts from './static/gibs'
 import { getClientId } from '../../sharedUtils/config'
 
+// AWS SQS adapter
 let sqs
 
 const tagName = 'edsc.extra.serverless.gibs'

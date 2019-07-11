@@ -13,7 +13,7 @@ let dbConnection = null
 const colorMapsTableName = 'colormaps'
 
 // AWS SQS adapter
-const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
+let sqs
 
 /**
  * Parse the GIBS capabilities document and provide individual ColorMaps to SQS for further processing
@@ -21,6 +21,8 @@ const sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
  * @return {Object} An object containing a valid response code and a JSON body
  */
 const getProjectionCapabilities = async (projection) => {
+  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
+
   const capabilitiesUrl = `https://gibs.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?SERVICE=WMTS&request=GetCapabilities`
 
   console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
@@ -68,10 +70,6 @@ const getProjectionCapabilities = async (projection) => {
                 product: layer['ows:Identifier'],
                 url: link['xlink:href']
               })
-
-            console.log(knownColorMap)
-          } else {
-            console.log(knownColorMap)
           }
 
           try {

@@ -1,10 +1,11 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+import AWS from 'aws-sdk'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import submitOrder from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
-import * as queueOrders from '../queueOrders'
+import * as generateOrderPayloads from '../generateOrderPayloads'
 
 let dbConnectionToMock
 let dbTracker
@@ -58,6 +59,24 @@ describe('submitOrder', () => {
           user_id: 19,
           environment: 'prod'
         }])
+      } else if (step === 4) {
+        query.response([{
+          id: 2,
+          access_method: {
+            type: 'ECHO ORDERS',
+            id: 'S10000001-EDSC',
+            url: 'https://n5eil09e.ecs.edsc.org/egi/request'
+          },
+          collection_metadata: {},
+          granule_count: 27
+        }])
+      } else if (step === 5) {
+        query.response({
+          id: 19,
+          granule_params: {
+            bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+          }
+        })
       } else {
         query.response([])
       }
@@ -83,11 +102,12 @@ describe('submitOrder', () => {
   })
 
   test('correctly submits an order and queues order messages', async () => {
-    process.env.catalogRestQueueUrl = 'http://example.com/queue'
+    process.env.catalogRestQueueUrl = 'http://example.com/echoQueue'
 
     const retreivalCollectionRecord = {
+      id: 2,
       access_method: {
-        type: 'echo_orders',
+        type: 'ECHO ORDERS',
         id: 'S10000001-EDSC',
         url: 'https://n5eil09e.ecs.edsc.org/egi/request'
       },
@@ -95,7 +115,6 @@ describe('submitOrder', () => {
       granule_count: 27
     }
     dbTracker.on('query', (query, step) => {
-      console.log(query)
       if (step === 2) {
         query.response({
           id: 19
@@ -113,8 +132,20 @@ describe('submitOrder', () => {
       }
     })
 
-    const queueOrdersSpy = jest.spyOn(queueOrders, 'queueOrders')
-      .mockImplementationOnce(() => jest.fn())
+    const generateOrderPayloadsSpy = jest.spyOn(generateOrderPayloads, 'generateOrderPayloads')
+      .mockImplementationOnce(() => [{
+        page_num: 1,
+        page_size: 2000
+      }])
+
+    const sqsSendMessagePromise = jest.fn().mockReturnValue({
+      promise: jest.fn().mockResolvedValue()
+    })
+
+    AWS.SQS = jest.fn()
+      .mockImplementationOnce(() => ({
+        sendMessageBatch: sqsSendMessagePromise
+      }))
 
     const orderResponse = await submitOrder(echoOrderPayload)
 
@@ -124,7 +155,17 @@ describe('submitOrder', () => {
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('insert')
     expect(queries[3].method).toEqual('insert')
-    expect(queries[4].sql).toContain('COMMIT')
+    expect(queries[4].method).toEqual('insert')
+    expect(queries[5].sql).toContain('COMMIT')
+    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+      QueueUrl: 'http://example.com/echoQueue',
+      Entries: [{
+        Id: '2-1',
+        MessageBody: JSON.stringify({
+          url: 'https://n5eil09e.ecs.edsc.org/egi/request'
+        })
+      }]
+    }])
 
     const { body } = orderResponse
 
@@ -134,12 +175,8 @@ describe('submitOrder', () => {
       user_id: 19
     })
 
-    expect(queueOrdersSpy).toBeCalledTimes(1)
-    expect(queueOrdersSpy).toBeCalledWith(
-      'http://example.com/queue',
-      dbConnectionToMock,
-      retreivalCollectionRecord
-    )
+    expect(generateOrderPayloadsSpy).toBeCalledTimes(1)
+    expect(generateOrderPayloadsSpy).toBeCalledWith(retreivalCollectionRecord)
   })
 
   test('correctly rolls back the transaction on failure', async () => {

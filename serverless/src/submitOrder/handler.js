@@ -1,18 +1,25 @@
 import 'array-foreach-async'
 import 'pg'
+import AWS from 'aws-sdk'
+
 import jwt from 'jsonwebtoken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
 import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
-import { queueOrders } from './queueOrders'
+import { generateOrderPayloads } from './generateOrderPayloads'
 
 // Knex database connection object
 let dbConnection = null
+
+// AWS SQS adapter
+let sqs
 
 const submitOrder = async (event) => {
   const { body } = event
   const { params = {} } = JSON.parse(body)
   const { collections, environment, json_data: jsonData } = params
+
+  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
   const jwtToken = getJwtToken(event)
 
@@ -68,24 +75,68 @@ const submitOrder = async (event) => {
           granule_count: granuleCount
         })
 
-      try {
-        const { type } = accessMethod
+      const { type, url } = accessMethod
 
-        if (type === 'esi') {
-          await queueOrders(
-            process.env.legacyServicesQueueUrl,
-            dbConnection,
-            newRetrievalCollection[0]
-          )
-        } else if (type === 'echo_orders') {
-          await queueOrders(
-            process.env.catalogRestQueueUrl,
-            dbConnection,
-            newRetrievalCollection[0]
-          )
+      if (['ESI', 'ECHO ORDERS'].includes(type)) {
+        // The insert above returns an array but we've only added a single row
+        // so we will always take the first result
+        const [retrievalCollection] = newRetrievalCollection
+
+        const { id: retrievalCollectionId } = retrievalCollection
+
+        // Provide the inserted row to the generateOrder payload to construct
+        // the payloads we need to submit the users' order
+        const orderPayloads = await generateOrderPayloads(retrievalCollection)
+
+        let queueUrl
+
+        if (type === 'ESI') {
+          queueUrl = process.env.legacyServicesQueueUrl
+        } else if (type === 'ECHO ORDERS') {
+          queueUrl = process.env.catalogRestQueueUrl
         }
-      } catch (e) {
-        console.log(e)
+
+        // Initialize the array we'll send to sqs
+        let sqsEntries = []
+
+        await orderPayloads.forEachAsync(async (orderPayload) => {
+          const { page_num: pageNum } = orderPayload
+          try {
+            const newOrderRecord = await orderDbTransaction('retrieval_orders')
+              .returning(['id', 'granule_params'])
+              .insert({
+                retrieval_collection_id: retrievalCollectionId,
+                type,
+                granule_params: orderPayload
+              })
+
+            sqsEntries.push({
+              Id: `${retrievalCollectionId}-${pageNum}`,
+              MessageBody: JSON.stringify({
+                ...newOrderRecord,
+                url
+              })
+            })
+          } catch (e) {
+            console.log(e)
+          }
+
+          // MessageBatch only accepts batch sizes of 10 messages, so we'll
+          // chunk potentially larger request into acceptable chunks
+          if (pageNum % 10 === 0 || pageNum === orderPayloads.length) {
+            // Send all of the order messages to sqs as a single batch
+            try {
+              await sqs.sendMessageBatch({
+                QueueUrl: queueUrl,
+                Entries: sqsEntries
+              }).promise()
+            } catch (e) {
+              console.log(e)
+            }
+
+            sqsEntries = []
+          }
+        })
       }
     })
 

@@ -306,8 +306,8 @@ describe('fetchOrder', () => {
                 }
               }
             ],
-            echoOrder: [],
-            order: []
+            echo_orders: [],
+            esi: []
           },
           environment: 'prod',
           id: 7,

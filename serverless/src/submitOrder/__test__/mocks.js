@@ -31,7 +31,7 @@ export const echoOrderPayload = {
         {
           id: 'C10000005-EDSC',
           access_method: {
-            type: 'echo_orders',
+            type: 'ECHO ORDERS',
             id: 'S10000001-EDSC',
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },

@@ -1,11 +1,10 @@
 import 'array-foreach-async'
-import { SQS } from 'aws-sdk'
-import { getDbConnection } from '../util/database/getDbConnection'
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 
-let sqs
-
+// Maxium number of granules any order can request from cmr or legacy services
 const DEFAULT_MAX_ORDER_SIZE = 1000000
+
+// Default number of granules for chunked orders, overwritten only by limited collections
 const DEFAULT_GRANULES_PER_ORDER = 2000
 
 /**
@@ -56,20 +55,14 @@ const adjustedGranuleCount = (collectionMetadata, granuleCount) => {
   return Math.min(...consideredSizes)
 }
 
-export async function queueOrders(queueUrl, currentDbConnection, {
-  id,
-  access_method: accessMethod,
-  collection_metadata: collectionMetadata = {},
-  granule_count: granuleCount,
-  granule_params: granuleParams
-}) {
-  // Retrive a connection to the database
-  const dbConnection = await getDbConnection(currentDbConnection)
+export async function generateOrderPayloads(retrievalCollection) {
+  const {
+    collection_metadata: collectionMetadata = {},
+    granule_count: granuleCount,
+    granule_params: granuleParams
+  } = retrievalCollection
 
-  if (!sqs) {
-    sqs = new SQS({ apiVersion: '2012-11-05' })
-  }
-
+  // Determine the size of the entire order
   const orderGranuleCount = adjustedGranuleCount(collectionMetadata, granuleCount)
 
   // Determine the size of each chunked order adjusting for provider limitations
@@ -79,44 +72,19 @@ export async function queueOrders(queueUrl, currentDbConnection, {
   // granules the user requested
   const totalPages = Math.ceil(orderGranuleCount / pageSize)
 
-  const { url: orderEndpoint } = accessMethod
+  const orderPayloads = []
 
-  const sqsEntries = []
+  Array.from(Array(totalPages)).forEach((_, pageNum) => {
+    const adjustedPageNumber = pageNum + 1
 
-  await Array.from(Array(totalPages)).forEachAsync(async (_, pageNum) => {
-    try {
-      const newOrderRecord = await dbConnection('retrieval_orders').returning([
-        'id',
-        'granule_params'
-      ]).insert({
-        retrieval_collection_id: id,
-        granule_params: {
-          ...granuleParams,
+    orderPayloads.push({
+      ...granuleParams,
 
-          // Override these values if they were provided with the current iterations values
-          page_num: pageNum + 1,
-          page_size: pageSize
-        }
-      })
-
-      console.log(newOrderRecord)
-
-      sqsEntries.push({
-        MessageBody: JSON.stringify({
-          ...newOrderRecord,
-          orderEndpoint
-        })
-      })
-
-      console.log(sqsEntries)
-    } catch (e) {
-      console.log(e)
-    }
+      // Override these values if they were provided with the current iterations values
+      page_num: adjustedPageNumber,
+      page_size: pageSize
+    })
   })
 
-  // Send all of the order messages to sqs as a single batch
-  await sqs.sendMessageBatch({
-    QueueUrl: queueUrl,
-    Entries: sqsEntries
-  }).promise()
+  return orderPayloads
 }
