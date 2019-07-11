@@ -26,7 +26,8 @@ const GranuleResultsActions = ({
       variant="link"
       bootstrapVariant="link"
       icon="plus-circle"
-      label="Add to project"
+      label="Add collection to the current project"
+      title="Add collection to the current project"
     >
       Add to project
     </Button>
@@ -38,7 +39,8 @@ const GranuleResultsActions = ({
       variant="link"
       bootstrapVariant="link"
       icon="times-circle"
-      label="Remove from project"
+      label="Remove collection from the current project"
+      title="Remove collection from the current project"
     >
       Remove from project
     </Button>
