@@ -17,7 +17,10 @@ export const collectionListItemProps = {
     time_start: '2010-10-10T00:00:00.000Z',
     version_id: '2'
   },
+  isCollectionInProject: false,
   isLast: false,
+  onAddProjectCollection: jest.fn(),
+  onRemoveCollectionFromProject: jest.fn(),
   onViewCollectionGranules: jest.fn(),
   onViewCollectionDetails: jest.fn(),
   waypointEnter: jest.fn()

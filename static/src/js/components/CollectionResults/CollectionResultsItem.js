@@ -12,11 +12,14 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionResultsItem.scss'
 
-export const CollectionResultsListItem = ({
+export const CollectionResultsItem = ({
   collection,
+  isCollectionInProject,
   isLast,
-  onViewCollectionGranules,
+  onAddProjectCollection,
+  onRemoveCollectionFromProject,
   onViewCollectionDetails,
+  onViewCollectionGranules,
   waypointEnter
 }) => {
   const {
@@ -173,6 +176,36 @@ export const CollectionResultsListItem = ({
     if (customizeBadges.length === 0) customizeBadges = null
   }
 
+  const addToProjectButton = (
+    <Button
+      className="collection-results-item__action collection-results-item__action--add"
+      onClick={(e) => {
+        onAddProjectCollection(collection.id)
+        e.stopPropagation()
+      }}
+      variant="light"
+      bootstrapVariant="light"
+      icon="plus"
+      label="Add to project"
+      title="Add to project"
+    />
+  )
+
+  const removeFromProjectButton = (
+    <Button
+      className="collection-results-item__action collection-results-item__action--remove"
+      onClick={(e) => {
+        onRemoveCollectionFromProject(collection.id)
+        e.stopPropagation()
+      }}
+      variant="light"
+      bootstrapVariant="light"
+      icon="minus"
+      label="Remove from project"
+      title="Remove from project"
+    />
+  )
+
   return (
     <li className="collection-results-item" key={collection.id}>
       <div
@@ -238,6 +271,12 @@ export const CollectionResultsListItem = ({
                 bootstrapVariant="light"
                 icon="info-circle"
               />
+              {
+                isCollectionInProject && removeFromProjectButton
+              }
+              {
+                !isCollectionInProject && addToProjectButton
+              }
             </div>
           </div>
           <div className="collection-results-item__body-secondary">
@@ -343,12 +382,15 @@ export const CollectionResultsListItem = ({
   )
 }
 
-CollectionResultsListItem.propTypes = {
+CollectionResultsItem.propTypes = {
   collection: PropTypes.shape({}).isRequired,
+  isCollectionInProject: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
+  onAddProjectCollection: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
+  onViewCollectionGranules: PropTypes.func.isRequired,
   waypointEnter: PropTypes.func.isRequired
 }
 
-export default CollectionResultsListItem
+export default CollectionResultsItem

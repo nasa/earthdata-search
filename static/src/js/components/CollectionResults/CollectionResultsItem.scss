@@ -68,7 +68,6 @@
 
   &__action {
     margin-right: $spacer/4;
-    padding: .7rem .75rem;
     color: $color__black--500;
 
     &:last-child {
@@ -78,6 +77,31 @@
     .collection-results-item__link:hover & {
       background-color: $color__black--200;
       color: $color__black--600;
+    }
+
+    &--add {
+      color: $color__green;
+
+      .collection-results-item__link:hover & {
+        color: $color__green;
+      }
+
+      &:hover {
+        color: darken($color__green, 20);
+      }
+
+    }
+
+    &--remove {
+      color: $color__red;
+
+      .collection-results-item__link:hover & {
+        color: $color__red;
+      }
+
+      &:hover {
+        color: darken($color__red, 20);
+      }
     }
   }
 

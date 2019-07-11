@@ -7,6 +7,9 @@ import './CollectionResultsList.scss'
 
 export const CollectionResultsList = ({
   collections,
+  projectIds,
+  onAddProjectCollection,
+  onRemoveCollectionFromProject,
   onViewCollectionGranules,
   onViewCollectionDetails,
   waypointEnter
@@ -17,10 +20,15 @@ export const CollectionResultsList = ({
     const collection = collections.byId[id]
     const isLast = collectionIds.length > 0 && index === collectionIds.length - 1
 
+    const isCollectionInProject = projectIds.indexOf(id) !== -1
+
     return (
       <CollectionResultsItem
         key={collection.id}
+        isCollectionInProject={isCollectionInProject}
         collection={collection}
+        onAddProjectCollection={onAddProjectCollection}
+        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionGranules={onViewCollectionGranules}
         onViewCollectionDetails={onViewCollectionDetails}
         isLast={isLast}
@@ -43,6 +51,9 @@ export const CollectionResultsList = ({
 
 CollectionResultsList.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onAddProjectCollection: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   waypointEnter: PropTypes.func.isRequired
