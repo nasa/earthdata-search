@@ -16,7 +16,10 @@ class CollectionResultsBody extends PureComponent {
   render() {
     const {
       collections,
+      projectIds,
       waypointEnter,
+      onAddProjectCollection,
+      onRemoveCollectionFromProject,
       onViewCollectionGranules,
       onViewCollectionDetails
     } = this.props
@@ -25,6 +28,9 @@ class CollectionResultsBody extends PureComponent {
       <div className="collection-results-body">
         <CollectionResultsList
           collections={collections}
+          projectIds={projectIds}
+          onAddProjectCollection={onAddProjectCollection}
+          onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionGranules={onViewCollectionGranules}
           onViewCollectionDetails={onViewCollectionDetails}
           waypointEnter={waypointEnter}
@@ -36,7 +42,10 @@ class CollectionResultsBody extends PureComponent {
 
 CollectionResultsBody.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   location: PropTypes.shape({}).isRequired,
+  onAddProjectCollection: PropTypes.func.isRequired,
+  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   waypointEnter: PropTypes.func.isRequired

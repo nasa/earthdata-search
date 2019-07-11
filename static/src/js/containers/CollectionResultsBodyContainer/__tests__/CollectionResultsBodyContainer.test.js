@@ -9,8 +9,13 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collections: { value: 'collections' },
+    project: {
+      collectionIds: []
+    },
     query: { pageNum: 1 },
     location: { value: 'location' },
+    onAddProjectCollection: jest.fn(),
+    onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn()
@@ -30,7 +35,10 @@ describe('CollectionResultsBodyContainer component', () => {
 
     expect(enzymeWrapper.find(CollectionResultsBody).length).toBe(1)
     expect(enzymeWrapper.find(CollectionResultsBody).props().collections).toEqual({ value: 'collections' })
+    expect(enzymeWrapper.find(CollectionResultsBody).props().projectIds).toEqual([])
     expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({ value: 'location' })
+    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onAddProjectCollection).toEqual('function')
+    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onRemoveCollectionFromProject).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionGranules).toEqual('function')
     expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
   })
