@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import request from 'request-promise'
 import { chunkArray } from '../util'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
@@ -39,7 +39,10 @@ const generateSubsettingTags = async (event, context) => {
     const serviceOptionResponse = await request.get({
       uri: serviceOptionAssignmentUrl,
       json: true,
-      resolveWithFullResponse: true
+      resolveWithFullResponse: true,
+      headers: {
+        'Client-Id': getClientId('prod').background
+      }
     })
 
     serviceOptions = serviceOptionResponse.body
