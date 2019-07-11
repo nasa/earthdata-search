@@ -436,13 +436,13 @@ describe('CollectionResultsList component', () => {
     test('shows the add button when the collection is not in the project', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find('.collection-results-item__proj-action--add').exists()).toBeTruthy()
+      expect(enzymeWrapper.find('.collection-results-item__action--add').exists()).toBeTruthy()
     })
 
     test('clicking the button adds the collection to the project', () => {
       const { enzymeWrapper, props } = setup()
 
-      const button = enzymeWrapper.find('.collection-results-item__proj-action--add')
+      const button = enzymeWrapper.find('.collection-results-item__action--add')
       button.simulate('click', { stopPropagation: jest.fn() })
 
       expect(props.onAddProjectCollection.mock.calls.length).toBe(1)
@@ -457,7 +457,7 @@ describe('CollectionResultsList component', () => {
         isCollectionInProject: true
       })
 
-      expect(enzymeWrapper.find('.collection-results-item__proj-action--remove').exists()).toBeTruthy()
+      expect(enzymeWrapper.find('.collection-results-item__action--remove').exists()).toBeTruthy()
     })
 
     test('clicking the button removes the collection from the project', () => {
@@ -467,7 +467,7 @@ describe('CollectionResultsList component', () => {
         isCollectionInProject: true
       })
 
-      const button = enzymeWrapper.find('.collection-results-item__proj-action--remove')
+      const button = enzymeWrapper.find('.collection-results-item__action--remove')
       button.simulate('click', { stopPropagation: jest.fn() })
 
       expect(props.onRemoveCollectionFromProject.mock.calls.length).toBe(1)
