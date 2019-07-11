@@ -7,6 +7,7 @@ import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 
+// AWS SQS adapter
 let sqs
 let cmrToken
 

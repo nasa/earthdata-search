@@ -44,8 +44,8 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
       order.jsondata = data.jsondata
       order.collections = {
         download: [],
-        echoOrder: [],
-        order: []
+        echo_orders: [],
+        esi: []
       }
       order.links = []
       data.collections.forEach((collection) => {
@@ -53,14 +53,17 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
           access_method: accessMethod,
           collection_metadata: collectionMetadata
         } = collection
+
         const { type } = accessMethod
+        const accessMethodTypeKey = type.toLowerCase().replace(/ /g, '_')
+
         const {
           dataset_id: datasetId,
           links
         } = collectionMetadata
 
-        order.collections[type] = [
-          ...order.collections[type],
+        order.collections[accessMethodTypeKey] = [
+          ...order.collections[accessMethodTypeKey],
           collection
         ]
 

@@ -7,6 +7,7 @@ import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
 
+// AWS SQS adapter
 let sqs
 let cmrToken
 
@@ -18,9 +19,7 @@ const generateSubsettingTags = async (event, context) => {
   // eslint-disable-next-line
   context.callbackWaitsForEmptyEventLoop = false
 
-  if (!sqs) {
-    sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-  }
+  sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
 
   cmrToken = await getSystemToken(cmrToken)
 
@@ -85,8 +84,6 @@ const generateSubsettingTags = async (event, context) => {
     const serviceForTagging = serviceObjects[serviceConceptId]
     const { collections, tagData } = serviceForTagging
     const { type } = tagData
-
-    console.log(`Processing ${collections.length} collections`)
 
     if (collections.length) {
       try {

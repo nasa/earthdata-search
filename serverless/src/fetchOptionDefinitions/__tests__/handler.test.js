@@ -76,15 +76,8 @@ describe('generateSubsettingTags', () => {
     const context = {}
     await generateSubsettingTags(event, context)
 
-    // 4 calls to add tags to collections
-    // 3 calls to remove stale tags
     expect(sqsOptionDefinitions).toBeCalledTimes(1)
 
-    /**
-     * We have to make a call for each service that we are going
-     * to associate collections with. Our mocked data returns 4
-     * relevant services which will result in 4 calls to sqs
-     */
     expect(sqsOptionDefinitions.mock.calls[0]).toEqual([{
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.subset_service.echo_orders',
@@ -159,8 +152,7 @@ describe('generateSubsettingTags', () => {
     const context = {}
     await generateSubsettingTags(event, context)
 
-    // 4 calls to add tags to collections
-    // 3 calls to remove stale tags
+    // We should not send a message to sqs
     expect(sqsOptionDefinitions).toBeCalledTimes(0)
 
     // The first will output the number of records, the second will
