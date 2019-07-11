@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import 'array-foreach-async'
 import request from 'request-promise'
 import { stringify } from 'qs'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
 
@@ -49,7 +49,8 @@ const fetchOptionDefinitions = async (event, context) => {
         }, { indices: false, arrayFormat: 'brackets' }),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Echo-Token': cmrToken
+          'Echo-Token': cmrToken,
+          'Client-Id': getClientId('prod').background
         },
         json: true,
         resolveWithFullResponse: true
