@@ -186,8 +186,8 @@ export const CollectionResultsItem = ({
       variant="light"
       bootstrapVariant="light"
       icon="plus"
-      label="Add to project"
-      title="Add to project"
+      label="Add collection to the current project"
+      title="Add collection to the current project"
     />
   )
 
@@ -201,8 +201,8 @@ export const CollectionResultsItem = ({
       variant="light"
       bootstrapVariant="light"
       icon="minus"
-      label="Remove from project"
-      title="Remove from project"
+      label="Remove collection from the current project"
+      title="Remove collection from the current project"
     />
   )
 
