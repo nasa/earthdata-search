@@ -36,6 +36,10 @@ describe('getAccessMethods', () => {
           }
         }
       }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       statusCode: 200
     })
   })
@@ -89,6 +93,10 @@ describe('getAccessMethods', () => {
           }
         }
       }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       statusCode: 200
     })
   })
@@ -117,6 +125,10 @@ describe('getAccessMethods', () => {
           }
         }
       }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       statusCode: 200
     })
   })
@@ -145,6 +157,10 @@ describe('getAccessMethods', () => {
           }
         }
       }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       statusCode: 200
     })
   })
