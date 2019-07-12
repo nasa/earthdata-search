@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  gridName: state.query.collection.grid,
+  gridName: state.query.collection.gridName,
   gridCoords: state.query.granule.gridCoords,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
