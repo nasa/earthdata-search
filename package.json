@@ -108,7 +108,7 @@
     "knex": "^0.17.6",
     "leaflet": "^1.4.0",
     "leaflet-draw": "^1.0.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "moment": "^2.24.0",
     "node-pg-migrate": "^3.19.0",
     "node-pre-gyp": "^0.12.0",
