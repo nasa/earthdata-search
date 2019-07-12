@@ -23,7 +23,7 @@ export const getUrsUserData = async (username, token) => {
     const ursProfileResponse = await request.get({
       uri: ursProfileUrl,
       headers: {
-        'Client-Id': getClientId('prod').lamdbda,
+        'Client-Id': getClientId('prod').lambda,
         Authorization: `Bearer ${token}`
       },
       json: true,

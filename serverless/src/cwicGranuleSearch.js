@@ -155,7 +155,7 @@ export default async function cwicGranuleSearch(event) {
       uri: renderedTemplate,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').lamdbda
+        'Client-Id': getClientId('prod').lambda
       }
     })
 
