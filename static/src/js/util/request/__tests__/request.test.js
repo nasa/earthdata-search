@@ -54,7 +54,21 @@ describe('Request#transformRequest', () => {
     request.transformRequest(data, headers)
 
     expect(headers).toEqual({
-      Authorization: `Bearer: ${token}`,
+      Authorization: `Bearer: ${token}`
+    })
+  })
+
+  test('adds client-id header when not authenticated', () => {
+    const request = new Request(baseUrl)
+
+    request.authenticated = false
+
+    const data = { param1: 123 }
+    const headers = {}
+
+    request.transformRequest(data, headers)
+
+    expect(headers).toEqual({
       'Client-Id': 'eed-edsc-test-serverless-client'
     })
   })

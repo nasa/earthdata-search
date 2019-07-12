@@ -47,10 +47,6 @@ export default class Request {
       headers.Authorization = `Bearer: ${this.authToken}`
     }
 
-    // Add the Client-Id header
-    // eslint-disable-next-line no-param-reassign
-    headers['Client-Id'] = getClientId('prod').client
-
     if (data) {
       // Converts javascript compliant keys to snake cased keys for use
       // in URLs and request payloads
@@ -64,6 +60,11 @@ export default class Request {
       // CWIC does not support CORS so all of our requests will need to go through
       // Lambda. POST requests to Lambda use a JSON string
       if (this.authenticated || this.lambda) return JSON.stringify({ params: filteredData, ext })
+
+      // Add the Client-Id header for requests directly to CMR
+      // eslint-disable-next-line no-param-reassign
+      headers['Client-Id'] = getClientId('prod').client
+
       return prepKeysForCmr(filteredData, this.nonIndexedKeys())
     }
 
