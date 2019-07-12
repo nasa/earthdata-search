@@ -20,7 +20,8 @@ describe('getUrsUserData', () => {
     expect(ursGetMock).toBeCalledWith({
       uri: 'http://urs.example.com/api/users/test_user?client_id=clientId',
       headers: {
-        Authorization: 'Bearer fake.access.token'
+        Authorization: 'Bearer fake.access.token',
+        'Client-Id': 'eed-edsc-test-serverless-lambda'
       },
       json: true,
       resolveWithFullResponse: true

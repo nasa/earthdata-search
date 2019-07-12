@@ -23,7 +23,7 @@ export const getEchoPreferencesData = async (username, token) => {
     const echoRestPreferencesResponse = await request.get({
       uri: echoRestPreferencesUrl,
       headers: {
-        'Client-Id': getClientId('prod').lamdbda,
+        'Client-Id': getClientId('prod').lambda,
         'Echo-Token': `${token}:${clientId}`
       },
       json: true,

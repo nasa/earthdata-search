@@ -22,7 +22,7 @@ export const getEchoProfileData = async (token) => {
     const echoRestProfileResponse = await request.get({
       uri: echoRestProfileUrl,
       headers: {
-        'Client-Id': getClientId('prod').lamdbda,
+        'Client-Id': getClientId('prod').lambda,
         'Echo-Token': `${token}:${clientId}`
       },
       json: true,
