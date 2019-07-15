@@ -56,32 +56,32 @@ export class SpatialSelectionDropdown extends PureComponent {
             onClick={() => this.onItemClick('polygon')}
           >
             <i className="edsc-icon-poly-open edsc-icon-fw spatial-selection-dropdown__icon" />
-            Polygon
+            <span>Polygon</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
             onClick={() => this.onItemClick('rectangle')}
           >
             <i className="edsc-icon-rect-open edsc-icon-fw spatial-selection-dropdown__icon" />
-            Rectangle
+            <span>Rectangle</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
             onClick={() => this.onItemClick('point')}
           >
             <i className="fa fa-map-marker spatial-selection-dropdown__icon" />
-            Point
+            <span>Point</span>
           </Dropdown.Item>
           <Dropdown.Item className="spatial-selection-dropdown__button">
             <i className="fa fa-file-o spatial-selection-dropdown__icon" />
-            File
+            <span>File</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
             onClick={() => this.onItemClick('grid')}
           >
             <i className="edsc-icon-globe-grid edsc-icon-fw spatial-selection-dropdown__icon" />
-            Grid Coordinates
+            <span>Grid Coordinates</span>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
