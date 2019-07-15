@@ -76,9 +76,55 @@
     background-size: 16px 16px;
   }
 
+  .leaflet-control-layers {
+    label {
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
   .leaflet-control-layers-expanded {
-    padding: 10px 10px 0 10px;
-    width: 175px;
+    padding: 0;
+    width: 250px;
+    font-weight: 400;
+  }
+
+  .leaflet-control-layers-list {
+    width: 100%;
+  }
+
+  .leaflet-control-layers-separator {
+    margin: 0;
+    width: 100%;
+  }
+
+  .leaflet-control-layers-selector {
+    position: relative;
+    display: inline-block;
+    margin-top: 0;
+    margin-right: $spacer/4;
+    top: 0px;
+  }
+
+  .leaflet-control-layers-base {
+    padding: 10px;
+  }
+
+  .leaflet-control-layers-overlays {
+    padding: 10px;
+    padding-bottom: 0;
+  }
+
+  .leaflet-control-layers-attribution {
+    margin-top: 5px;
+    padding: 10px;
+    padding-top: 0px;
+    font-size: 10px;
+    color: $color__black--400;
+    text-align: right;
   }
 
   // Force the horizontal toolbar and adjust button radius
