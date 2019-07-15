@@ -17,8 +17,6 @@ import OverrideTemporalModalContainer
 import actions from '../../actions'
 
 const mapDispatchToProps = dispatch => ({
-  onMasterOverlayHeightChange:
-    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight)),
   onSubmitOrder:
     () => dispatch(actions.submitOrder())
 })
@@ -28,14 +26,6 @@ export class Project extends Component {
     super(props)
 
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  componentDidMount() {
-    const { onMasterOverlayHeightChange } = this.props
-
-    // Set the height of the master overlay to 0px by default. This makes sure the
-    // .leaflet-control-container is set to 100% height
-    onMasterOverlayHeightChange(0)
   }
 
   handleSubmit(event) {
@@ -71,7 +61,6 @@ export class Project extends Component {
 
 Project.propTypes = {
   location: PropTypes.shape({}).isRequired,
-  onMasterOverlayHeightChange: PropTypes.func.isRequired,
   onSubmitOrder: PropTypes.func.isRequired
 }
 

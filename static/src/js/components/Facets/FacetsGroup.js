@@ -37,6 +37,8 @@ class FacetsGroup extends Component {
   renderHeaderInfo() {
     const { facet } = this.props
 
+    if (!(facet.totalSelected > 0 || facet.children.length > 49)) return null
+
     return (
       <>
         {

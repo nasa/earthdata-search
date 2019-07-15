@@ -1,0 +1,37 @@
+.order-status-item-body {
+  &__state {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: $spacer/2;
+  }
+
+  &__state-display {
+    flex-grow: 0;
+    display: inline-block;
+    margin-right: $spacer;
+    padding: $spacer/2 $spacer;
+    background: $color__indigo;
+    border-radius: 2px;
+    color: $color__white;
+    text-align: center;
+    text-transform: capitalize;
+
+    &--success {
+      background-color: $color__green;
+    }
+
+    &--errored {
+      background-color: $color__red;
+    }
+  }
+
+  &__state-text {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__button {
+    display: inline-block;
+    margin-right: $spacer/2;
+  }
+}

@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onChangePath:
-    newHeight => dispatch(actions.masterOverlayPanelResize(newHeight))
+    path => dispatch(actions.changePath(path))
 })
 
 export const Data = ({

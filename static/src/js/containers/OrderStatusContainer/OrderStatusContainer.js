@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchOrder:
+  onFetchOrder:
     (orderId, authToken) => dispatch(actions.fetchOrder(orderId, authToken)),
   onChangePath:
     path => dispatch(actions.changePath(path))
@@ -21,23 +21,23 @@ const mapDispatchToProps = dispatch => ({
 
 export const OrderStatusContainer = ({
   authToken,
-  fetchOrder,
   match,
   onChangePath,
+  onFetchOrder,
   order
 }) => (
   <OrderStatus
     authToken={authToken}
-    fetchOrder={fetchOrder}
     match={match}
     onChangePath={onChangePath}
+    onFetchOrder={onFetchOrder}
     order={order}
   />
 )
 
 OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  fetchOrder: PropTypes.func.isRequired,
+  onFetchOrder: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   order: PropTypes.shape({}).isRequired
