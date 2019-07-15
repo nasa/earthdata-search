@@ -10,6 +10,8 @@
   }
 
   &__button {
+    display: flex;
+    align-items: center;
     padding-left: 0.625rem;
   }
 
@@ -17,15 +19,5 @@
     margin-right: .35rem;
     width: 1rem;
     text-align: center;
-  }
-
-  .edsc-icon-rect-open {
-    position: relative;
-    top: 2px;
-  }
-
-  .edsc-icon-poly-open {
-    position: relative;
-    top: 1px;
   }
 }
