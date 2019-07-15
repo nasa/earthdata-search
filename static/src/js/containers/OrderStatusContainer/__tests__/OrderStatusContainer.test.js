@@ -15,12 +15,12 @@ function setup(props) {
   }
 }
 
-describe('GranuleResultsBodyContainer component', () => {
-  describe('when passed granule metadata', () => {
-    test('passes its props and renders a single GranuleResultsBody component', () => {
+describe('OrderStatusContainer component', () => {
+  describe('when passed the correct props', () => {
+    test('passes its props and renders a single OrderStatus component', () => {
       const { enzymeWrapper, props } = setup({
         authToken: 'testToken',
-        fetchOrder: jest.fn(),
+        onFetchOrder: jest.fn(),
         match: {
           search: {
             id: 7

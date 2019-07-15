@@ -20,7 +20,7 @@ export const Well = ({
   const classes = classNames([
     'well',
     variant ? `well--${variant}` : null,
-    className
+    className ? `well--${className}` : null
   ])
   return (
     <section className={classes}>

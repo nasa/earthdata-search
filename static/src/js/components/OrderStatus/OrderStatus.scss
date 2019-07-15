@@ -22,9 +22,9 @@
   }
 
   .well__footer {
-    background-color: #27ae60;
+    background-color: $color__green;
     color: $color__white;
-    border-top: 5px solid #249b56;
+    border-top: 5px solid $color__green--dark
   }
 
   &__footer-link-list {
