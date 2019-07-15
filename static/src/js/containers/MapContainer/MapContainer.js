@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import 'proj4'
@@ -59,17 +58,7 @@ export class MapContainer extends Component {
     this.handleBaseLayerChange = this.handleBaseLayerChange.bind(this)
     this.handleOverlayChange = this.handleOverlayChange.bind(this)
     this.handleProjectionSwitching = this.handleProjectionSwitching.bind(this)
-  }
-
-  componentDidMount() {
-    // eslint-disable-next-line react/no-find-dom-node
-    this.controlContainer = ReactDOM
-      .findDOMNode(this.mapRef)
-      .querySelector('.leaflet-control-container')
-
-    if (this.controlContainer) {
-      this.onMasterOverlayPanelResize()
-    }
+    this.onMapReady = this.onMapReady.bind(this)
   }
 
   componentDidUpdate() {
@@ -85,6 +74,20 @@ export class MapContainer extends Component {
     if (this.controlContainer) {
       this.onMasterOverlayPanelResize(masterOverlayPanelHeight)
     }
+  }
+
+  onMapReady(e) {
+    const { target: map } = e
+
+    this.controlContainer = map._controlContainer
+    const layersControl = this.controlContainer.querySelector('.leaflet-control-layers-list')
+
+    const attributionElement = document.createElement('footer')
+    attributionElement.classList.add('leaflet-control-layers-attribution')
+    attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    layersControl.appendChild(attributionElement)
+
+    this.onMasterOverlayPanelResize()
   }
 
   onMasterOverlayPanelResize(newHeight) {
@@ -209,8 +212,14 @@ export class MapContainer extends Component {
         onOverlayAdd={this.handleOverlayChange}
         onOverlayRemove={this.handleOverlayChange}
         zoomAnimation={false}
+        whenReady={this.onMapReady}
       >
-        <LayersControl position="bottomright" ref={(r) => { this.controls = r }}>
+        <LayersControl
+          position="bottomright"
+          ref={(r) => {
+            this.controls = r
+          }}
+        >
           <BaseLayer
             checked={base.blueMarble}
             name="Blue Marble"
