@@ -15,4 +15,8 @@
     white-space: nowrap;
     margin-left: $spacer/2;
   }
+
+  &__user-dropdown-toggle {
+    line-height: 1.6rem;
+  }
 }
