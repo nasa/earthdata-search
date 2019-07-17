@@ -30,7 +30,7 @@ export const changeQuery = newQuery => (dispatch) => {
 }
 
 export const changeProjectQuery = query => (dispatch) => {
-  dispatch(updateCollectionQuery(query))
+  dispatch(updateCollectionQuery(query.collection))
   dispatch(actions.getProjectCollections())
 }
 
@@ -90,9 +90,6 @@ export const clearFilters = () => (dispatch) => {
       gridCoords: ''
     }
   }
-
-  // Remove URL items
-  dispatch(actions.changeUrl({}))
 
   // Update Store
   dispatch(changeQuery(query))
