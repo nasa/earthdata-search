@@ -1,10 +1,9 @@
-import { replace } from 'connected-react-router'
+import { replace, push } from 'connected-react-router'
 
 import { decodeUrlParams } from '../util/url/url'
 import actions from './index'
 
 export const changePath = (path = '') => (dispatch) => {
-  console.warn('changePath')
   const queryString = path.split('?')[1]
 
   const {
@@ -32,8 +31,6 @@ export const changePath = (path = '') => (dispatch) => {
     query,
     timeline
   } = decodeUrlParams(queryString)
-
-  console.warn('feature facets', featureFacets)
 
   if (map) {
     dispatch(changeMap(map))
@@ -89,8 +86,23 @@ export const changePath = (path = '') => (dispatch) => {
  * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
  * changeUrl({ pathname: '/a-new-url' })
  */
-export const changeUrl = options => (dispatch) => {
-  dispatch(replace(options))
-}
+export const changeUrl = options => (dispatch, getState) => {
+  const { router } = getState()
+  const { location } = router
+  const { pathname: oldPathname } = location
 
-export default changeUrl
+  let newPathname
+  if (typeof options === 'string') {
+    [newPathname] = options.split('?')
+  } else {
+    ({ pathname: newPathname } = options)
+  }
+
+  // Only replace if the pathname stays the same as the current pathname.
+  // Push if the pathname is different
+  if (oldPathname === newPathname) {
+    dispatch(replace(options))
+  } else {
+    dispatch(push(options))
+  }
+}
