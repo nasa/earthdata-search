@@ -1,14 +1,17 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 import { encodeUrlQuery } from '../../util/url/url'
 
+
 const mapDispatchToProps = dispatch => ({
   onChangePath:
     path => dispatch(actions.changePath(path)),
   onChangeUrl:
-    query => dispatch(actions.changeUrl(query))
+    (query, replace) => dispatch(actions.changeUrl(query, replace))
 })
 
 const mapStateToProps = state => ({
@@ -40,6 +43,8 @@ const mapStateToProps = state => ({
 })
 
 export class UrlQueryContainer extends Component {
+  static whyDidYouRender = true
+
   componentDidMount() {
     const {
       onChangePath,
@@ -50,22 +55,43 @@ export class UrlQueryContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.warn('recieving props')
     const { search: nextSearch } = nextProps
     const { onChangeUrl, search } = this.props
 
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
     // if the previous search and next search are the same
-    if (search === nextSearch) {
-      const path = encodeUrlQuery(nextProps)
+    const path = encodeUrlQuery(this.props)
+    const nextPath = encodeUrlQuery(nextProps)
 
+    console.warn('path === nextPath', path === nextPath)
+
+    // if (
+    //   !isEqual(this.props.featureFacets, nextProps.featureFacets)
+    //   || !isEqual(this.props.project.collectionIds, nextProps.project.collectionIds)
+    //   || !isEqual(this.props.focusedCollection, nextProps.focusedCollection)
+    // ) {
+    //   onChangeUrl(nextPath, false)
+    //   // onChangePath(nextPath)
+    //   return
+    // }
+
+    // onChangeUrl(nextPath)
+
+    console.warn('search', search)
+    console.warn('nextSearch', nextSearch)
+
+    if (search === nextSearch) {
       if (path !== '') {
-        onChangeUrl(path)
+        console.warn('change url from urlQueryContainer')
+        onChangeUrl(nextPath)
       }
     }
   }
 
   render() {
+    console.warn('URL QUERY ')
     const { children } = this.props
     return (
       <>
