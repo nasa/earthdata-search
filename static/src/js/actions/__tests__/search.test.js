@@ -99,11 +99,13 @@ describe('changeQuery', () => {
 describe('changeProjectQuery', () => {
   test('should update the search query and call getCollections', () => {
     const newQuery = {
-      keyword: 'new keyword',
-      spatial: {
-        point: '0,0'
-      },
-      temporal: {}
+      collection: {
+        keyword: 'new keyword',
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
     }
 
     // mock getCollections
@@ -251,19 +253,10 @@ describe('clearFilters', () => {
 
     // call the dispatch
     store.dispatch(actions.clearFilters())
-
-    // Is changeUrl called with the right payload
     const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: '@@router/CALL_HISTORY_METHOD',
-      payload: {
-        args: [{}],
-        method: 'push'
-      }
-    })
 
     // Is updateCollectionQuery called with the right payload
-    expect(storeActions[1]).toEqual({
+    expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: emptyQuery
     })

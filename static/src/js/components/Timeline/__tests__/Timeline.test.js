@@ -191,7 +191,8 @@ describe('Timeline component', () => {
           }
         }
       })
-      expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('focus')
+
+      expect(enzymeWrapper.instance().$el.timeline).not.toBeCalledWith('focus')
     })
 
     test('when the temporal search is added', () => {

@@ -841,7 +841,7 @@ class GranuleGridLayer extends MapLayer {
       } = data
 
       // if there are no granules, bail out
-      if (!granules.byId) return
+      if (Object.keys(granules.byId).length === 0) return
 
       // If the collecton is not visible, set the granuleData to an empty array
       const granuleData = isVisible ? Object.values(granules.byId) : []

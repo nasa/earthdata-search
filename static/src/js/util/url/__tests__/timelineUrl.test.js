@@ -35,11 +35,9 @@ describe('url#encodeUrlQuery', () => {
     test('encodes timelineQuery correctly when timeline is visible', () => {
       const props = {
         pathname: '/path/here',
-        timeline: {
-          query: {
-            center: 1534577879,
-            interval: 'day'
-          }
+        timelineQuery: {
+          center: 1534577879,
+          interval: 'day'
         }
       }
       expect(encodeUrlQuery(props)).toEqual('/path/here?tl=1534577879!4!!')
@@ -48,11 +46,8 @@ describe('url#encodeUrlQuery', () => {
     test('encodes timelineQuery correctly when the timeline has no center state', () => {
       const props = {
         pathname: '/path/here',
-        timeline: {
-          collectionId: 'collectionId',
-          query: {
-            interval: 'day'
-          }
+        timelineQuery: {
+          interval: 'day'
         }
       }
       expect(encodeUrlQuery(props)).toEqual('/path/here')
@@ -61,11 +56,9 @@ describe('url#encodeUrlQuery', () => {
     test('does not encode timelineQuery when timeline is not visible', () => {
       const props = {
         pathname: '/search',
-        timeline: {
-          query: {
-            center: 1534577879,
-            interval: 'day'
-          }
+        timelineQuery: {
+          center: 1534577879,
+          interval: 'day'
         }
       }
       expect(encodeUrlQuery(props)).toEqual('/search')

@@ -12,15 +12,11 @@ export const encodeTimeline = (timeline, pathname) => {
   if (!timeline) return ''
 
   const {
-    query
-  } = timeline
-
-  const {
     center,
     interval,
     start,
     end
-  } = query
+  } = timeline
 
   if (!center && !start && !end) return ''
 

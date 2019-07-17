@@ -27,11 +27,6 @@ class Timeline extends Component {
     // Initialize the timeline plugin
     this.$el = $(this.el)
 
-    this.$el.on('temporalchange.timeline', this.handleTemporalSet)
-    this.$el.on('rangechange.timeline', this.handleRangeChange)
-    this.$el.on('focusset.timeline', this.handleFocusChange)
-    this.$el.on('focusremove.timeline', this.handleFocusChange)
-
     this.$el.timeline()
 
     // set any initial values in props
@@ -48,6 +43,12 @@ class Timeline extends Component {
     this.setTimelineZoom(interval)
     this.setTimelineTemporal(temporalSearch)
     this.setTimelineFocus(start, end)
+
+    this.$el.on('temporalchange.timeline', this.handleTemporalSet)
+    this.$el.on('rangechange.timeline', this.handleRangeChange)
+    this.$el.on('focuschange.timeline', this.handleFocusChange)
+
+    this.$el.trigger('rangechange.timeline')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,7 +94,9 @@ class Timeline extends Component {
       end: nextFocusEnd,
       start: nextFocusStart
     } = nextTimelineQuery
-    if (oldFocusEnd !== nextFocusEnd || oldFocusStart !== nextFocusStart) {
+    if (nextFocusEnd
+      && nextFocusStart
+      && (oldFocusEnd !== nextFocusEnd || oldFocusStart !== nextFocusStart)) {
       this.setTimelineFocus(nextFocusStart, nextFocusEnd)
     }
 
@@ -264,8 +267,6 @@ class Timeline extends Component {
       if (oldStart / 1000 !== start && oldEnd / 1000 !== end) {
         this.$el.timeline('focus', new Date(start * 1000), new Date(end * 1000))
       }
-    } else {
-      this.$el.timeline('focus')
     }
   }
 
@@ -296,6 +297,11 @@ class Timeline extends Component {
     const {
       onChangeTimelineQuery
     } = this.props
+
+    if (!start) {
+      // eslint-disable-next-line no-param-reassign
+      [start, end, interval] = this.$el.timeline('range')
+    }
 
     const endDate = new Date(end)
     const startDate = new Date(start)

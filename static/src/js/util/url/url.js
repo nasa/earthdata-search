@@ -158,7 +158,7 @@ export const encodeUrlQuery = (props) => {
 
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const collectionsQuery = encodeCollections(props)
-  const timelineQuery = encodeTimeline(props.timeline, props.pathname)
+  const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
 
   const encodedQuery = {
     ...collectionsQuery,
