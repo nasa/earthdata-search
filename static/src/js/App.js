@@ -22,11 +22,13 @@ import ConnectedAuthCallbackContainer
   from './containers/AuthCallbackContainer/AuthCallbackContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
-//   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
-//   whyDidYouRender(React, { include: [/Search/] })
+const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
 
-//   const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
-//   whyDidYouUpdate(React, { include: [/Search/] })
+console.warn('Hmmm?')
+whyDidYouRender(React)
+
+// const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
+// whyDidYouUpdate(React, { include: [/Search/] })
 // }
 
 // Create the root App component

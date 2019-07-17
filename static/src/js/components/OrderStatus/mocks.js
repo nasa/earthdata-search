@@ -12,7 +12,7 @@ export const echoOrder = {
   collection_id: 'C194001243-LPDAAC_ECS',
   collection_metadata: {
     id: 'C194001243-LPDAAC_ECS',
-    order_status: 'not_validated',
+    order_status: 'complete',
     tags: {
       edsc_extra_gibs: {
         data: [

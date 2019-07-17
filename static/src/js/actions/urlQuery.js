@@ -1,26 +1,10 @@
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 
 import { decodeUrlParams } from '../util/url/url'
 import actions from './index'
 
-/**
- * Push a new url state to the store.
- * @param {String|Object} options - Pushes the string or an object containing 'pathname' and 'search' keys
- * as the new url. When passing an object, if only one key is passed, only the corresponding piece of the
- * url will be changed.
- *
- * @example
- * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=true'
- * changeUrl('/a-new-url/?some-param=true')
- *
- * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
- * changeUrl({ pathname: '/a-new-url' })
- */
-export const changeUrl = options => (dispatch) => {
-  dispatch(push(options))
-}
-
 export const changePath = (path = '') => (dispatch) => {
+  console.warn('changePath')
   const queryString = path.split('?')[1]
 
   const {
@@ -48,6 +32,8 @@ export const changePath = (path = '') => (dispatch) => {
     query,
     timeline
   } = decodeUrlParams(queryString)
+
+  console.warn('feature facets', featureFacets)
 
   if (map) {
     dispatch(changeMap(map))
@@ -88,6 +74,23 @@ export const changePath = (path = '') => (dispatch) => {
   if (granuleDownloadParams) {
     dispatch(setGranuleDownloadParams(granuleDownloadParams))
   }
+}
+
+/**
+ * Push a new url state to the store.
+ * @param {String|Object} options - Pushes the string or an object containing 'pathname' and 'search' keys
+ * as the new url. When passing an object, if only one key is passed, only the corresponding piece of the
+ * url will be changed.
+ *
+ * @example
+ * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=true'
+ * changeUrl('/a-new-url/?some-param=true')
+ *
+ * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
+ * changeUrl({ pathname: '/a-new-url' })
+ */
+export const changeUrl = options => (dispatch) => {
+  dispatch(replace(options))
 }
 
 export default changeUrl
