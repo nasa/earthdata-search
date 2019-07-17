@@ -22,10 +22,9 @@ import ConnectedAuthCallbackContainer
   from './containers/AuthCallbackContainer/AuthCallbackContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
-const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
+// const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
 
-console.warn('Hmmm?')
-whyDidYouRender(React)
+// whyDidYouRender(React)
 
 // const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
 // whyDidYouUpdate(React, { include: [/Search/] })
