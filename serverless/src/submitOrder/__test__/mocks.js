@@ -9,6 +9,7 @@ export const orderPayload = {
           },
           granule_count: 139,
           granule_params: {
+            echo_collection_id: 'C10000005-EDSC',
             bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
           },
           collection_metadata: {}
@@ -31,12 +32,13 @@ export const echoOrderPayload = {
         {
           id: 'C10000005-EDSC',
           access_method: {
-            type: 'ECHO ORDERS',
+            type: 'ESI',
             id: 'S10000001-EDSC',
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
           granule_count: 139,
           granule_params: {
+            echo_collection_id: 'C10000005-EDSC',
             bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
           },
           collection_metadata: {
@@ -73,6 +75,7 @@ export const badOrderPayload = {
           },
           granule_count: 139,
           granule_params: {
+            echo_collection_id: 'C10000005-EDSC',
             bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
           },
           collection_metadata: {}

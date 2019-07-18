@@ -108,6 +108,16 @@ functions:
               - OptionDefinitionsQueue
               - Arn
 
+  submitCatalogRestOrder:
+    handler: serverless/src/submitCatalogRestOrder/handler.default
+    timeout: 600
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - CatalogRestOrderQueue
+              - Arn
+
   #
   # Scheduled Lambdas
   #
@@ -339,34 +349,6 @@ resources:
   # A method to include environment specific resources
   # Resources: ${file(./resources-${self:provider.stage}.yml)}
   Resources:
-    # StaticSite:
-    #   Type: AWS::S3::Bucket
-    #   Properties:
-    #     BucketName: ${self:custom.siteName}
-
-    # StaticSiteS3BucketPolicy:
-    #   Type: AWS::S3::BucketPolicy
-    #   Properties:
-    #     Bucket:
-    #       Ref: StaticSite
-    #     PolicyDocument:
-    #       Statement:
-    #         - Sid: PublicReadGetObject
-    #           Effect: Allow
-    #           Principal: "*"
-    #           Action:
-    #             - s3:GetObject
-    #           Resource:
-    #             Fn::Join: [
-    #               "", [
-    #                 "arn:aws:s3:::",
-    #                 {
-    #                   "Ref": "StaticSite"
-    #                 },
-    #                 "/*"
-    #               ]
-    #             ]
-
     # SQS Queue to process Color Map entries
     ColorMapsProcessingQueue:
       Type: 'AWS::SQS::Queue'
@@ -387,7 +369,19 @@ resources:
     CatalogRestOrderQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
-        VisibilityTimeout: 300
+        VisibilityTimeout: 600 # Give orders a full day to complete
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - CatalogRestOrderDeadLetterQueue
+              - Arn
+          maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
+
+    CatalogRestOrderDeadLetterQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.siteName}-CatalogRestOrderDeadLetterQueue
+        MessageRetentionPeriod: 1209600
 
     OptionDefinitionsQueue:
       Type: 'AWS::SQS::Queue'
@@ -403,7 +397,7 @@ resources:
     OptionDefinitionDeadLetterQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${self:custom.siteName}-DeadLetterQueue
+        QueueName: ${self:custom.siteName}-OptionDefinitionDeadLetterQueue
         MessageRetentionPeriod: 1209600
 
     LambdaSecurityGroup:
