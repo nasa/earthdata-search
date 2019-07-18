@@ -354,9 +354,10 @@ describe('fetchGranuleLinks', () => {
       access_method: {
         type: 'download'
       },
-      collection_id: 'C194001241-LPDAAC_ECS',
+      collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
         bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
       },
       granule_count: 888
@@ -373,7 +374,7 @@ describe('fetchGranuleLinks', () => {
 
     const params = {
       id: 3,
-      collection_id: 'C194001241-LPDAAC_ECS'
+      collection_id: 'C10000005-EDSC'
     }
 
     await store.dispatch(fetchGranuleLinks(params, 'token'))
@@ -411,7 +412,7 @@ describe('fetchGranuleLinks', () => {
       status: 404,
       response: {
         errors: [
-          'Retrieval Collection \'C194001241-LPDAAC_ECS\' (for Retrieval \'3\') not found'
+          'Retrieval Collection \'C10000005-EDSC\' (for Retrieval \'3\') not found'
         ]
       }
     })
@@ -424,7 +425,7 @@ describe('fetchGranuleLinks', () => {
 
     const params = {
       id: 3,
-      collection_id: 'C194001241-LPDAAC_ECS'
+      collection_id: 'C10000005-EDSC'
     }
 
     await store.dispatch(fetchGranuleLinks(params, 'token'))
@@ -502,9 +503,10 @@ describe('fetchLinks', () => {
       access_method: {
         type: 'download'
       },
-      collection_id: 'C194001241-LPDAAC_ECS',
+      collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
         bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
       },
       granule_count: 888

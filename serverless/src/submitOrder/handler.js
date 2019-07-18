@@ -1,7 +1,6 @@
 import 'array-foreach-async'
 import 'pg'
 import AWS from 'aws-sdk'
-
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
 import { generateOrderPayloads } from './generateOrderPayloads'
@@ -30,9 +29,12 @@ const submitOrder = async (event) => {
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
+  // Initiate (BEGIN) a database transaction to ensure that no database
+  // rows are created and orphaned in the event of an error
   const orderDbTransaction = await dbConnection.transaction()
 
   try {
+    // Fetch the user id from the username in the token
     const userRecord = await orderDbTransaction('users').first('id').where({ urs_id: username })
 
     const retrievalRecord = await orderDbTransaction('retrievals')
@@ -71,6 +73,8 @@ const submitOrder = async (event) => {
           granule_count: granuleCount
         })
 
+      console.log('retrievalCollection', newRetrievalCollection[0])
+
       // Save Access Configuration
       const existingAccessConfig = await orderDbTransaction('access_configurations')
         .select('id')
@@ -91,6 +95,9 @@ const submitOrder = async (event) => {
           })
       }
 
+      // The relevant tag data is merged into the access method in the UI, this
+      // allows us to pull out the type of service and the url that the data will
+      // need to be submitted to
       const { type, url } = accessMethod
 
       if (['ESI', 'ECHO ORDERS'].includes(type)) {
@@ -104,19 +111,29 @@ const submitOrder = async (event) => {
         // the payloads we need to submit the users' order
         const orderPayloads = await generateOrderPayloads(retrievalCollection)
 
+        // Leaving debug until orders are fully code complete
+        console.log('orderPayloads', orderPayloads)
+
         let queueUrl
 
         if (type === 'ESI') {
-          queueUrl = process.env.legacyServicesQueueUrl
-        } else if (type === 'ECHO ORDERS') {
+          // Submits to Catalog Rest and is often referred to as a
+          // service order -- this is presenting in EDSC as the 'Customize' access method
           queueUrl = process.env.catalogRestQueueUrl
+        } else if (type === 'ECHO ORDERS') {
+          // Submits to Legacy Services (CMR) and is often referred to as an
+          // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
+          queueUrl = process.env.legacyServicesQueueUrl
         }
 
         // Initialize the array we'll send to sqs
         let sqsEntries = []
 
         await orderPayloads.forEachAsync(async (orderPayload) => {
+          // Avoid having to deal with paging again, pull out the page
+          // number from the order payload
           const { page_num: pageNum } = orderPayload
+
           try {
             const newOrderRecord = await orderDbTransaction('retrieval_orders')
               .returning(['id', 'granule_params'])
@@ -126,11 +143,13 @@ const submitOrder = async (event) => {
                 granule_params: orderPayload
               })
 
+            // Push the orders into an array that will be bulk pushed to SQS
             sqsEntries.push({
               Id: `${retrievalCollectionId}-${pageNum}`,
               MessageBody: JSON.stringify({
-                ...newOrderRecord,
-                url
+                ...newOrderRecord[0],
+                url,
+                accessToken
               })
             })
           } catch (e) {

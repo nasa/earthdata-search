@@ -74,6 +74,7 @@ describe('submitOrder', () => {
         query.response({
           id: 19,
           granule_params: {
+            echo_collection_id: 'C10000005-EDSC',
             bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
           }
         })
@@ -111,7 +112,7 @@ describe('submitOrder', () => {
     const retreivalCollectionRecord = {
       id: 2,
       access_method: {
-        type: 'ECHO ORDERS',
+        type: 'ESI',
         id: 'S10000001-EDSC',
         url: 'https://n5eil09e.ecs.edsc.org/egi/request'
       },
@@ -170,7 +171,8 @@ describe('submitOrder', () => {
       Entries: [{
         Id: '2-1',
         MessageBody: JSON.stringify({
-          url: 'https://n5eil09e.ecs.edsc.org/egi/request'
+          url: 'https://n5eil09e.ecs.edsc.org/egi/request',
+          accessToken: '2e8e995e7511c2c6620336797b'
         })
       }]
     }])
