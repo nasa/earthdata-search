@@ -1,5 +1,6 @@
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getOptionDefinitions } from './getOptionDefinitions'
+import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
 
 import { getJwtToken } from '../util'
 
@@ -45,9 +46,19 @@ const getAccessMethods = async (event) => {
   }
 
   if (hasEsi) {
-    // TODO implement this stuff
-    accessMethods.esi = {
-      type: 'ESI'
+    const esiData = getValueForTag('subset_service.esi', tags)
+    const { service_option_definitions: serviceOptionDefinitions } = esiData
+
+    if (serviceOptionDefinitions) {
+      const forms = await getServiceOptionDefinitions(serviceOptionDefinitions, jwtToken)
+
+      forms.forEach((form) => {
+        const [key] = Object.keys(form)
+        accessMethods[key] = {
+          ...esiData,
+          ...form[key]
+        }
+      })
     }
   }
 
