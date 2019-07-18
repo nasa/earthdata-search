@@ -1,6 +1,7 @@
 import getAccessMethods from '../handler'
 import * as getJwtToken from '../../util'
 import * as getOptionDefinitions from '../getOptionDefinitions'
+import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
 
 
 beforeEach(() => {
@@ -102,13 +103,32 @@ describe('getAccessMethods', () => {
   })
 
   test('populates a esi method', async () => {
+    jest.spyOn(getServiceOptionDefinitions, 'getServiceOptionDefinitions').mockImplementation(() => [
+      {
+        esi0: {
+          form: 'mock echo form',
+          service_option_definition: {
+            id: 'service_option_def_guid',
+            name: 'Service Option Definition'
+          },
+          service_option_definitions: undefined
+        }
+      }
+    ])
+
     const event = {
       body: JSON.stringify({
         params: {
           collection_id: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.esi': {
-              data: {}
+              data: {
+                service_option_definitions: [{
+                  id: 'service_option_def_guid',
+                  name: 'Option Option'
+                }],
+                type: 'ESI'
+              }
             }
           }
         }
@@ -120,8 +140,14 @@ describe('getAccessMethods', () => {
     expect(result).toEqual({
       body: JSON.stringify({
         accessMethods: {
-          esi: {
-            type: 'ESI'
+          esi0: {
+            type: 'ESI',
+            form: 'mock echo form',
+            service_option_definition: {
+              id: 'service_option_def_guid',
+              name: 'Service Option Definition'
+            },
+            service_option_definitions: undefined
           }
         }
       }),
