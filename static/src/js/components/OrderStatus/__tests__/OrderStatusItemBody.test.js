@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { Badge, ProgressBar } from 'react-bootstrap'
+import { OrderProgressList } from '../../OrderProgressList/OrderProgressList'
 
 import { orderStatusProps, orderStatusPropsEsi } from './mocks'
 
@@ -76,7 +76,7 @@ describe('OrderStatusItemBody component', () => {
           })
 
           enzymeWrapper.find('.order-status-item-body__button--more-details').prop('onClick')()
-          expect(enzymeWrapper.find('.order-status-item-body__progress-list').length).toEqual(1)
+          expect(enzymeWrapper.find(OrderProgressList).length).toEqual(1)
         })
       })
 
@@ -99,41 +99,10 @@ describe('OrderStatusItemBody component', () => {
           })
 
           enzymeWrapper.find('.order-status-item-body__button--more-details').prop('onClick')()
-          const progressList = enzymeWrapper.find('.order-status-item-body__progress-list')
+          const progressList = enzymeWrapper.find(OrderProgressList)
 
           test('is displayed', () => {
             expect(progressList.length).toEqual(1)
-          })
-
-          test('lists the orders', () => {
-            expect(progressList.find('.order-status-item-body__progress-item').length).toEqual(2)
-          })
-
-          test('shows the correct order metadata', () => {
-            const orderOne = progressList.find('.order-status-item-body__progress-item').at(0)
-            const orderTwo = progressList.find('.order-status-item-body__progress-item').at(1)
-
-            expect(orderOne.find('.order-status-item-body__progress-item-title').text()).toEqual('Order ID: 5000000333461')
-            expect(orderOne.find('.order-status-item-body__progress-item-processed').text()).toEqual('81 of 81 granules processed (100%)')
-            expect(orderOne.find(ProgressBar).prop('now')).toEqual(100)
-            expect(orderOne.find(Badge).text()).toEqual('Complete')
-
-            expect(orderTwo.find('.order-status-item-body__progress-item-title').text()).toEqual('Order ID: 5000000333462')
-            expect(orderTwo.find('.order-status-item-body__progress-item-processed').text()).toEqual('13 of 100 granules processed (13%)')
-            expect(orderTwo.find(ProgressBar).prop('now')).toEqual(13)
-            expect(orderTwo.find(Badge).text()).toEqual('In progress')
-          })
-
-          describe('contact information', () => {
-            test('displays correctly', () => {
-              expect(enzymeWrapper.find('.order-status-item-body__contact').length).toEqual(1)
-              expect(enzymeWrapper.find('.order-status-item-body__contact').text()).toEqual('For assistance, please contact NSIDC User Services at nsidc@nsidc.org')
-            })
-
-            test('creates an email link', () => {
-              expect(enzymeWrapper.find('.order-status-item-body__contact').find('a').prop('href')).toEqual('mailto:nsidc@nsidc.org')
-              expect(enzymeWrapper.find('.order-status-item-body__contact').find('a').text()).toEqual('nsidc@nsidc.org')
-            })
           })
         })
       })
@@ -150,35 +119,6 @@ describe('OrderStatusItemBody component', () => {
       describe('Download Links button', () => {
         test('is displayed', () => {
           expect(linksDropdown.length).toEqual(1)
-        })
-      })
-
-      describe('Download Links dropdown', () => {
-        test('displays the links', () => {
-          const linkOne = linksDropdown.find('.order-status-item-body__links-item').at(0)
-          const linkTwo = linksDropdown.find('.order-status-item-body__links-item').at(1)
-
-          expect(linkOne.find('.order-status-item-body__links-title').text()).toEqual('Order 1/2 Order ID: 5000000333461')
-          expect(linkOne.find('.order-status-item-body__links-list-item').length).toEqual(2)
-          expect(linkOne.find('.order-status-item-body__links-list-item').at(0).find('.order-status-item-body__links-link').text())
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html')
-          expect(linkOne.find('.order-status-item-body__links-list-item').at(0).find('.order-status-item-body__links-link').prop('href'))
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html')
-          expect(linkOne.find('.order-status-item-body__links-list-item').at(1).find('.order-status-item-body__links-link').text())
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.zip')
-          expect(linkOne.find('.order-status-item-body__links-list-item').at(1).find('.order-status-item-body__links-link').prop('href'))
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.zip')
-
-
-          expect(linkTwo.find('.order-status-item-body__links-title').text()).toEqual('Order 2/2 Order ID: 5000000333462')
-          expect(linkTwo.find('.order-status-item-body__links-list-item').at(0).find('.order-status-item-body__links-link').text())
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333462.html')
-          expect(linkTwo.find('.order-status-item-body__links-list-item').at(0).find('.order-status-item-body__links-link').prop('href'))
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333462.html')
-          expect(linkTwo.find('.order-status-item-body__links-list-item').at(1).find('.order-status-item-body__links-link').text())
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333462.zip')
-          expect(linkTwo.find('.order-status-item-body__links-list-item').at(1).find('.order-status-item-body__links-link').prop('href'))
-            .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333462.zip')
         })
       })
     })

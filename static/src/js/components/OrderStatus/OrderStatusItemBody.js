@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
-import { Badge, ProgressBar } from 'react-bootstrap'
-import { kebabCase } from 'lodash'
 
 import { getStateFromOrderStatus, formatOrderStatus } from '../../util/orderStatus'
 
 import Button from '../Button/Button'
 import ButtonDropdown from '../ButtonDropdown/ButtonDropdown'
+import OrderDropdownList from '../OrderDropdownList/OrderDropdownList'
+import OrderProgressList from '../OrderProgressList/OrderProgressList'
 
 import './OrderStatusItemBody.scss'
 
@@ -222,40 +222,10 @@ export class OrderStatusItemBody extends React.Component {
                     buttonLabel="Download Links"
                     disabled={downloadUrls.length === 0}
                   >
-                    <ul className="order-status-item-body__links">
-                      {
-                        orders.map((order, i) => {
-                          const {
-                            order_id: orderId,
-                            download_urls: orderDownloadUrls
-                          } = order
-
-                          return (
-                            <li
-                              key={orderId}
-                              className="order-status-item-body__links-item"
-                            >
-                              <h4 className="order-status-item-body__links-title">
-                                {`Order ${i + 1}/${totalOrders} `}
-                                <span>{`Order ID: ${orderId}`}</span>
-                              </h4>
-                              <ul className="order-status-item-body__links-list">
-                                {
-                                  orderDownloadUrls.map(href => (
-                                    <li
-                                      key={href}
-                                      className="order-status-item-body__links-list-item"
-                                    >
-                                      <a className="order-status-item-body__links-link" href={href}>{href}</a>
-                                    </li>
-                                  ))
-                                }
-                              </ul>
-                            </li>
-                          )
-                        })
-                      }
-                    </ul>
+                    <OrderDropdownList
+                      orders={orders}
+                      totalOrders={totalOrders}
+                    />
                   </ButtonDropdown>
                 </>
               )
@@ -288,54 +258,7 @@ export class OrderStatusItemBody extends React.Component {
           {
             detailsOpen && (
               <>
-                <ul className="order-status-item-body__progress-list">
-                  {
-                    orders.map((order) => {
-                      const {
-                        order_id: orderId,
-                        order_status: orderStatus,
-                        total_number: totalNumber,
-                        total_processed: totalProcessed
-                      } = order
-
-                      const percentProcessed = Math.floor(totalProcessed / totalNumber * 100)
-
-                      const badgeClass = classNames(
-                        'order-status-item-body__badge',
-                        {
-                          [`order-status-item-body__badge--${kebabCase(getStateFromOrderStatus(orderStatus))}`]: getStateFromOrderStatus(orderStatus)
-                        }
-                      )
-                      return (
-                        <li
-                          key={orderId}
-                          className="order-status-item-body__progress-item"
-                        >
-                          <header className="order-status-item-body__progress-item-header">
-                            <h5 className="order-status-item-body__progress-item-title">
-                              {'Order ID: '}
-                              <span>{orderId}</span>
-                            </h5>
-                            <div className="order-status-item-body__progress-item-info">
-                              <span className="order-status-item-body__progress-item-processed">
-                                {`${totalProcessed} of ${totalNumber} granules processed (${percentProcessed}%)`}
-                              </span>
-                              <Badge
-                                className={badgeClass}
-                              >
-                                {formatOrderStatus(orderStatus)}
-                              </Badge>
-                            </div>
-                          </header>
-                          <ProgressBar
-                            className="order-status-item-body__progress-item-bar"
-                            now={percentProcessed}
-                          />
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
+                <OrderProgressList orders={orders} />
                 {
                   contact && (
                     <footer className="order-status-item-body__contact">
