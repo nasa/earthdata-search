@@ -44,10 +44,10 @@ export class OrderStatus extends Component {
 
     // TODO: Remove this placeholder for echo orders. Currently the order status is being pulled from collection_metadata.order_status.
     // eslint-disable-next-line no-constant-condition
-    if (true && echoOrder) echoOrders.push(echoOrder)
+    if (false && echoOrder) echoOrders.push(echoOrder)
 
     // eslint-disable-next-line no-constant-condition
-    if (true && esiOrder) esiOrders.push(esiOrder)
+    if (false && esiOrder) esiOrders.push(esiOrder)
 
     const introduction = (
       <p>
