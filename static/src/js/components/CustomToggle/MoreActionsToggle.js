@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import CustomToggle from './CustomToggle'
 
 // Need to use a Class component here so this works with the refs passed from
-// the parent bootstrap-react component
+// the parent react-bootstrap component
 // eslint-disable-next-line react/prefer-stateless-function
 export class ToggleMoreActions extends Component {
   render() {

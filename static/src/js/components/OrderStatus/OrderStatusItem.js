@@ -8,11 +8,13 @@ import OrderStatusItemBody from './OrderStatusItemBody'
 import './OrderStatusItem.scss'
 
 export const OrderStatusItem = ({ collection, onChangePath, type }) => {
-  const { collection_metadata: collectionMetadata } = collection
+  const { collection_metadata: collectionMetadata, access_method: accessMethod } = collection
   const { dataset_id: datasetId } = collectionMetadata
+  const { order = {} } = accessMethod
+
   let {
     order_status: orderStatus
-  } = collectionMetadata
+  } = order
 
   if (type === 'download') orderStatus = 'complete'
 

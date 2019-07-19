@@ -22,6 +22,7 @@ export const Button = ({
   icon,
   label,
   onClick,
+  overlayClass,
   title,
   tooltip,
   tooltipPlacement,
@@ -92,7 +93,7 @@ export const Button = ({
       <OverlayTrigger
         placement={tooltipPlacement || 'top'}
         overlay={(
-          <Tooltip id={tooltipId}>{tooltip}</Tooltip>
+          <Tooltip id={tooltipId} className={overlayClass}>{tooltip}</Tooltip>
         )}
       >
         {button}
@@ -114,6 +115,9 @@ Button.defaultProps = {
   href: null,
   icon: null,
   onClick: null,
+  overlayClass: null,
+  popover: null,
+  popoverId: null,
   title: null,
   tooltip: null,
   tooltipId: null,
@@ -134,6 +138,7 @@ Button.propTypes = {
   icon: PropTypes.string,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  overlayClass: PropTypes.string,
   title: PropTypes.string,
   tooltip: PropTypes.oneOfType([
     PropTypes.string,
