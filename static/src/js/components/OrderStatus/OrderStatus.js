@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { echoOrder } from './mocks'
+import { echoOrder, esiOrder } from './mocks'
 
 import OrderStatusList from './OrderStatusList'
 import Well from '../Well/Well'
@@ -39,12 +39,15 @@ export class OrderStatus extends Component {
     const {
       download: downloads = [],
       echo_orders: echoOrders = [],
-      esi = []
+      esi_orders: esiOrders = []
     } = collections
 
     // TODO: Remove this placeholder for echo orders. Currently the order status is being pulled from collection_metadata.order_status.
     // eslint-disable-next-line no-constant-condition
     if (true && echoOrder) echoOrders.push(echoOrder)
+
+    // eslint-disable-next-line no-constant-condition
+    if (true && esiOrder) esiOrders.push(esiOrder)
 
     const introduction = (
       <p>
@@ -86,12 +89,12 @@ export class OrderStatus extends Component {
                 )
               }
               {
-                esi.length > 0 && (
+                esiOrders.length > 0 && (
                   <OrderStatusList
                     heading="Customize Product"
                     introduction={"When the data for the following orders become available, links will be displayed below and sent to the email address you've provided."}
-                    collections={esi}
-                    type="esi"
+                    collections={esiOrders}
+                    type="esi_order"
                     onChangePath={onChangePath}
                   />
                 )

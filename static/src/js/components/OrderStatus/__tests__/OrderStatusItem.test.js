@@ -50,8 +50,12 @@ describe('OrderStatus component', () => {
           collection: {
             collection_id: 'TEST_COLLECTION_111',
             collection_metadata: {
-              dataset_id: 'Test Dataset ID',
-              order_status: 'in progress'
+              dataset_id: 'Test Dataset ID'
+            },
+            access_method: {
+              order: {
+                order_status: 'in progress'
+              }
             }
           }
         })
@@ -66,8 +70,12 @@ describe('OrderStatus component', () => {
           collection: {
             collection_id: 'TEST_COLLECTION_111',
             collection_metadata: {
-              dataset_id: 'Test Dataset ID',
-              order_status: 'complete'
+              dataset_id: 'Test Dataset ID'
+            },
+            access_method: {
+              order: {
+                order_status: 'complete'
+              }
             }
           }
         })
@@ -82,8 +90,12 @@ describe('OrderStatus component', () => {
           collection: {
             collection_id: 'TEST_COLLECTION_111',
             collection_metadata: {
-              dataset_id: 'Test Dataset ID',
-              order_status: 'failed'
+              dataset_id: 'Test Dataset ID'
+            },
+            access_method: {
+              order: {
+                order_status: 'failed'
+              }
             }
           }
         })
