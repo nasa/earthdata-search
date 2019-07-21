@@ -14,6 +14,17 @@ export class RadioList extends Component {
     this.onChange = this.onChange.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { defaultValue: nextDefaultValue } = nextProps
+    const { defaultValue } = this.props
+
+    if (nextDefaultValue !== defaultValue) {
+      this.setState({
+        selected: nextDefaultValue
+      })
+    }
+  }
+
   onChange(e) {
     const { onChange: propsOnChange } = this.props
 

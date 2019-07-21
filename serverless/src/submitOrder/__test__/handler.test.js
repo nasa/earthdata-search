@@ -90,7 +90,11 @@ describe('submitOrder', () => {
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('insert')
     expect(queries[3].method).toEqual('insert')
-    expect(queries[4].sql).toContain('COMMIT')
+    // retrieve saved access configuration
+    expect(queries[4].method).toEqual('select')
+    // add new access configuration
+    expect(queries[5].method).toEqual('insert')
+    expect(queries[6].sql).toContain('COMMIT')
 
     const { body } = orderResponse
 
@@ -155,8 +159,12 @@ describe('submitOrder', () => {
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('insert')
     expect(queries[3].method).toEqual('insert')
-    expect(queries[4].method).toEqual('insert')
-    expect(queries[5].sql).toContain('COMMIT')
+    // retrieve saved access configuration
+    expect(queries[4].method).toEqual('select')
+    // add new access configuration
+    expect(queries[5].method).toEqual('insert')
+    expect(queries[6].method).toEqual('insert')
+    expect(queries[7].sql).toContain('COMMIT')
     expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{

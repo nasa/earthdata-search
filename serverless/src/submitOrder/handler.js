@@ -2,11 +2,13 @@ import 'array-foreach-async'
 import 'pg'
 import AWS from 'aws-sdk'
 
-import jwt from 'jsonwebtoken'
+// import jwt from 'jsonwebtoken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
-import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
+// import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { generateOrderPayloads } from './generateOrderPayloads'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getUsernameFromToken } from '../util/getUsernameFromToken'
 
 // Knex database connection object
 let dbConnection = null
@@ -23,13 +25,9 @@ const submitOrder = async (event) => {
 
   const jwtToken = getJwtToken(event)
 
-  // Get the access token and clientId to build the Echo-Token header
-  const { secret } = getSecretEarthdataConfig('prod')
-
-  const verifiedJwtToken = jwt.verify(jwtToken, secret)
-  const { token } = verifiedJwtToken
-  const { endpoint, access_token: accessToken } = token
-  const username = endpoint.split('/').pop()
+  const { token } = getVerifiedJwtToken(jwtToken)
+  const { access_token: accessToken } = token
+  const username = getUsernameFromToken(token)
 
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
@@ -74,6 +72,26 @@ const submitOrder = async (event) => {
           granule_params: granuleParams,
           granule_count: granuleCount
         })
+
+      // Save Access Configuration
+      const existingAccessConfig = await orderDbTransaction('access_configurations')
+        .select('id')
+        .where({ user_id: userRecord.id, collection_id: id })
+
+      if (existingAccessConfig.length) {
+        await orderDbTransaction('access_configurations')
+          .update({
+            access_method: accessMethod
+          })
+          .where({ user_id: userRecord.id, collection_id: id })
+      } else {
+        await orderDbTransaction('access_configurations')
+          .insert({
+            user_id: userRecord.id,
+            collection_id: id,
+            access_method: accessMethod
+          })
+      }
 
       const { type, url } = accessMethod
 

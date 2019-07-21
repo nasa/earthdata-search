@@ -37,6 +37,7 @@ describe('getOptionDefinitions', () => {
       {
         echoOrder0: {
           form: 'mock echo form',
+          form_digest: '948c584e60f9791b4d7b0e84ff538cd58ac8c0e4',
           option_definition: {
             id: 'option_def_guid',
             name: 'Option Definition'
@@ -85,6 +86,7 @@ describe('getOptionDefinitions', () => {
       {
         echoOrder0: {
           form: 'mock echo form 1',
+          form_digest: '9edb6f8f606fa9014402cf229751c03c35327135',
           option_definition: {
             id: 'option_def_guid_1',
             name: 'Option Definition'
@@ -95,6 +97,7 @@ describe('getOptionDefinitions', () => {
       {
         echoOrder1: {
           form: 'mock echo form 2',
+          form_digest: '26d076d6eeeb35e09c8b5581d32de368ae6f4892',
           option_definition: {
             id: 'option_def_guid_2',
             name: 'Option Definition'

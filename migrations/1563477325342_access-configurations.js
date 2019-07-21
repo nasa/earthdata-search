@@ -1,24 +1,20 @@
 exports.shorthands = undefined
 
 exports.up = (pgm) => {
-  pgm.createTable('retrievals', {
+  pgm.createTable('access_configurations', {
     id: 'id',
     user_id: {
       type: 'integer',
       references: 'users'
     },
-    jsondata: {
+    collection_id: {
+      type: 'varchar(1000)',
+      notNull: true
+    },
+    access_method: {
       type: 'jsonb',
       notNull: true,
       default: '{}'
-    },
-    token: {
-      type: 'varchar(100)',
-      notNull: true
-    },
-    environment: {
-      type: 'varchar(100)',
-      notNull: true
     },
     updated_at: {
       type: 'timestamp',
@@ -34,5 +30,5 @@ exports.up = (pgm) => {
 }
 
 exports.down = (pgm) => {
-  pgm.dropTable('retrievals')
+  pgm.dropTable('access_configurations')
 }
