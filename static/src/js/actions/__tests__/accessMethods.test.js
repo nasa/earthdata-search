@@ -60,7 +60,8 @@ describe('fetchAccessMethods', () => {
               isValid: true,
               type: 'download'
             }
-          }
+          },
+          selectedAccessMethod: 'download'
         }
       })
     })

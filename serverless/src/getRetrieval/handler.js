@@ -1,8 +1,8 @@
 import 'pg'
-import jwt from 'jsonwebtoken'
-import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getUsernameFromToken } from '../util/getUsernameFromToken'
 
 // Knex database connection object
 let dbConnection = null
@@ -20,13 +20,8 @@ export default async function getRetrieval(event, context) {
 
     const jwtToken = getJwtToken(event)
 
-    // Get the access token and clientId to build the Echo-Token header
-    const { secret } = getSecretEarthdataConfig('prod')
-
-    const verifiedJwtToken = jwt.verify(jwtToken, secret)
-    const { token } = verifiedJwtToken
-    const { endpoint } = token
-    const username = endpoint.split('/').pop()
+    const { token } = getVerifiedJwtToken(jwtToken)
+    const username = getUsernameFromToken(token)
 
     // Retrive a connection to the database
     dbConnection = await getDbConnection(dbConnection)

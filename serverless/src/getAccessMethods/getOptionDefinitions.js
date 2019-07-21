@@ -1,5 +1,4 @@
 import request from 'request-promise'
-import jwt from 'jsonwebtoken'
 import 'array-foreach-async'
 
 import {
@@ -7,6 +6,8 @@ import {
   getSecretEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
+import { generateFormDigest } from '../util/generateFormDigest'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 
 export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   const forms = []
@@ -17,10 +18,9 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
     const url = `${getEarthdataConfig('prod').cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
 
     // Get the access token and clientId to build the Echo-Token header
-    const { clientId, secret } = getSecretEarthdataConfig('prod')
+    const { clientId } = getSecretEarthdataConfig('prod')
 
-    const verifiedJwtToken = jwt.verify(jwtToken, secret)
-    const { token } = verifiedJwtToken
+    const { token } = getVerifiedJwtToken(jwtToken)
     const { access_token: accessToken } = token
 
     try {
@@ -37,14 +37,14 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
       const { option_definition: responseOptionDefinition } = JSON.parse(body)
       const { form } = responseOptionDefinition
 
-      // TODO figure out if we really need to save the option_definition data in the access method
       forms.push({
         [`echoOrder${index}`]: {
           option_definition: {
             ...optionDefinition
           },
           option_definitions: undefined,
-          form
+          form,
+          form_digest: generateFormDigest(form)
         }
       })
     } catch (e) {

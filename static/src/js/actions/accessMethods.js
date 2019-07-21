@@ -41,11 +41,12 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
       const response = requestObject.search({ collectionId, tags })
         .then((response) => {
           const { data } = response
-          const { accessMethods } = data
+          const { accessMethods, selectedAccessMethod } = data
 
           dispatch(actions.addAccessMethods({
             collectionId,
-            methods: accessMethods
+            methods: accessMethods,
+            selectedAccessMethod
           }))
         })
       return response
@@ -60,7 +61,8 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
             isValid: true,
             type: 'download'
           }
-        }
+        },
+        selectedAccessMethod: 'download'
       }))
     }
     return null

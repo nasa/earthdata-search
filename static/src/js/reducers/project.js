@@ -82,7 +82,7 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case ADD_ACCESS_METHODS: {
-      const { collectionId, methods } = action.payload
+      const { collectionId, methods, selectedAccessMethod } = action.payload
 
       const byId = {
         ...state.byId
@@ -95,7 +95,8 @@ const projectReducer = (state = initialState, action) => {
         accessMethods: {
           ...accessMethods,
           ...methods
-        }
+        },
+        selectedAccessMethod
       }
 
       return {

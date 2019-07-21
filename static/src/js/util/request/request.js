@@ -50,7 +50,13 @@ export default class Request {
     if (data) {
       // Converts javascript compliant keys to snake cased keys for use
       // in URLs and request payloads
-      const snakeKeyData = snakeCaseKeys(data, { exclude: [/edsc\.extra\.serverless/] })
+      const snakeKeyData = snakeCaseKeys(data, {
+        exclude: [
+          /edsc\.extra\.serverless/,
+          'rawModel',
+          'isValid'
+        ]
+      })
 
       const { ext } = data
 
