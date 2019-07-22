@@ -115,7 +115,7 @@ const generateSubsettingTags = async (event, context) => {
     console.log(e)
   }
 
-  // Retrive only those service objects that match the types edsc subsets
+  // Retrieve only those service objects that match the types edsc subsets
   const serviceObjects = await getRelevantServices()
 
   const allCollectionsWithServices = []

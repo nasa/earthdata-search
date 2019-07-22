@@ -24,7 +24,7 @@ const submitCatalogRestOrder = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
   if (!sqs) {

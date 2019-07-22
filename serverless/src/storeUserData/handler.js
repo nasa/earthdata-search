@@ -9,7 +9,7 @@ let dbConnection = null
 export const storeUserData = async (event) => {
   const { username, token } = event
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
   const ursUserData = await getUrsUserData(username, token)

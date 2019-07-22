@@ -15,7 +15,7 @@ export default async function getColorMap(event, context) {
 
     const { product: providedProduct } = event.pathParameters
 
-    // Retrive a connection to the database
+    // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
 
     const colorMapResponse = await dbConnection('colormaps')

@@ -36,7 +36,7 @@ export default async function processColorMap(event, context) {
 
   const { Records: sqsRecords = {} } = event
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
   console.log(`Processing ${sqsRecords.length} color map(s)`)

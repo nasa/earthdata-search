@@ -25,7 +25,7 @@ export default async function getRetrieval(event, context) {
     const { token } = getVerifiedJwtToken(jwtToken)
     const username = getUsernameFromToken(token)
 
-    // Retrive a connection to the database
+    // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
 
     const retrievalResponse = await dbConnection('retrieval_collections')
