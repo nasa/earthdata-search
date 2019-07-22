@@ -88,7 +88,7 @@ export class OrderStatusItemBody extends React.Component {
                 bootstrapVariant="primary"
                 bootstrapSize="sm"
                 label="View/Download Data Links"
-                tooltip={(<>View or download data URLs</>)}
+                tooltip="View or download data URLs"
                 tooltipPlacement="bottom"
                 tooltipId="tooltip__download-links"
               >
@@ -123,7 +123,7 @@ export class OrderStatusItemBody extends React.Component {
                     bootstrapVariant="primary"
                     bootstrapSize="sm"
                     label="View Browse Image Links"
-                    tooltip={(<>View clickable browse image links in the browser</>)}
+                    tooltip="View clickable browse image links in the browser"
                     tooltipPlacement="bottom"
                     tooltipId="tooltip__download-links"
                   >
@@ -245,7 +245,7 @@ export class OrderStatusItemBody extends React.Component {
                     bootstrapVariant="primary"
                     bootstrapSize="sm"
                     label="View Browse Image Links"
-                    tooltip={(<>View clickable browse image links in the browser</>)}
+                    tooltip="View clickable browse image links in the browser"
                     tooltipPlacement="bottom"
                     tooltipId="tooltip__download-links"
                   >
