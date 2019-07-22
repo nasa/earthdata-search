@@ -12,8 +12,6 @@ import * as getDbConnection from '../../util/database/getDbConnection'
 let dbConnectionToMock
 let dbTracker
 
-const OLD_ENV = process.env
-
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
@@ -34,19 +32,10 @@ beforeEach(() => {
 
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
-
-  // Manage resetting ENV variables
-  // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
-  // jest.resetModules()
-  process.env = { ...OLD_ENV }
-  delete process.env.NODE_ENV
 })
 
 afterEach(() => {
   dbTracker.uninstall()
-
-  // Restore any ENV variables overwritten in tests
-  process.env = OLD_ENV
 })
 
 describe('getAccessMethods', () => {
