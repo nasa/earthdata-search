@@ -26,7 +26,7 @@ const submitOrder = async (event) => {
   const { access_token: accessToken } = token
   const username = getUsernameFromToken(token)
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
   // Initiate (BEGIN) a database transaction to ensure that no database

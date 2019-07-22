@@ -28,7 +28,7 @@ const getProjectionCapabilities = async (projection) => {
   console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
 
   try {
-    // Retrive a connection to the database
+    // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
 
     // Delete colormaps that havent been updated in the last 5 days
