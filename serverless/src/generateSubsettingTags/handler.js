@@ -1,6 +1,7 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import request from 'request-promise'
+import { stringify } from 'qs'
 import { chunkArray } from '../util'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
@@ -10,6 +11,55 @@ import { getSystemToken } from '../util/urs/getSystemToken'
 // AWS SQS adapter
 let sqs
 let cmrToken
+
+/**
+ * Retrieve service option definition records
+ * @param {Array} serviceOptionIds Array of service option ids
+ */
+const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
+  // TODO: Consider consalidating this and the lambda that retrieves a single record
+  const { echoRestRoot } = getEarthdataConfig('prod')
+
+  // This is a get request so we need to consider URL length
+  const chunkedServiceOptionIds = chunkArray(serviceOptionIds, 50)
+
+  const serviceOptionIdNamePairs = {}
+
+  await chunkedServiceOptionIds.forEachAsync(async (serviceOptionIdChunk) => {
+    const serviceOptionDefinitionUrl = `${echoRestRoot}/service_option_definitions.json`
+
+    // Construct a query param string from the chunk of ids
+    const serviceOptionQueryParams = stringify({
+      id: serviceOptionIdChunk
+    }, { indices: false, arrayFormat: 'brackets' })
+
+    try {
+      // Request the service option definitions from legacy services
+      const serviceOptionDefinitionResponse = await request.get({
+        uri: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
+        headers: {
+          'Client-Id': getClientId('prod').background
+        },
+        json: true,
+        resolveWithFullResponse: true
+      })
+
+      // Iterate through the option definitions returned
+      const serviceOptionDefinitionResponseBody = serviceOptionDefinitionResponse.body
+
+      serviceOptionDefinitionResponseBody.forEach((serviceOptionObj) => {
+        const { service_option_definition: serviceOptionDefinition } = serviceOptionObj
+        const { id, name } = serviceOptionDefinition
+
+        serviceOptionIdNamePairs[id] = name
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  })
+
+  return serviceOptionIdNamePairs
+}
 
 /**
  * Handler to process subsetting information from UMM S associations on collections
@@ -33,19 +83,34 @@ const generateSubsettingTags = async (event, context) => {
 
   // Retrieve all known service option associations to use later when constructing
   // tag data payloads for ESI collections
-  let serviceOptions = []
+  let serviceOptionAssignments = []
+
+  // Service option assignments don't store the name of the service option so we have
+  // to retrieve them separately -- we will use this to store a simple key value pair
+  // mapping id => name
+  let serviceOptionIdNamePairs = {}
+
   const serviceOptionAssignmentUrl = `${echoRestRoot}/service_option_assignments.json`
   try {
     const serviceOptionResponse = await request.get({
       uri: serviceOptionAssignmentUrl,
-      json: true,
-      resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId('prod').background
-      }
+      },
+      json: true,
+      resolveWithFullResponse: true
     })
 
-    serviceOptions = serviceOptionResponse.body
+    serviceOptionAssignments = serviceOptionResponse.body
+
+    const serviceOptionIds = serviceOptionAssignments.map((optionAssociation) => {
+      const { service_option_assignment: optionAssignment } = optionAssociation
+      const { service_option_definition_id: optionId } = optionAssignment
+
+      return optionId
+    })
+
+    serviceOptionIdNamePairs = await getServiceOptionDefinitionIdNamePairs(serviceOptionIds)
   } catch (e) {
     console.log(e)
   }
@@ -102,18 +167,23 @@ const generateSubsettingTags = async (event, context) => {
 
           // Retrieve the service option definition (Echo Form Association) for ESI collections
           if (tagPostFix === 'esi') {
-            const foundServiceOption = serviceOptions.find((serviceOptionAssociation) => {
-              const { service_option_assignment: optionAssignment } = serviceOptionAssociation
+            const foundOptionAssignments = serviceOptionAssignments.filter((optionAssociation) => {
+              const { service_option_assignment: optionAssignment } = optionAssociation
               const { catalog_item_id: conceptId } = optionAssignment
 
               return conceptId === collectionId
             })
 
-            if (foundServiceOption) {
-              const { service_option_assignment: serviceOptionAssignment } = foundServiceOption
-              const { service_option_definition_id: optionDefinitionId } = serviceOptionAssignment
+            if (foundOptionAssignments.length > 0) {
+              data.service_option_definitions = foundOptionAssignments.map((foundServiceOption) => {
+                const { service_option_assignment: serviceOptionAssignment } = foundServiceOption
+                const { service_option_definition_id: optionDefinitionId } = serviceOptionAssignment
 
-              data.service_option_definition = optionDefinitionId
+                return {
+                  id: optionDefinitionId,
+                  name: serviceOptionIdNamePairs[optionDefinitionId]
+                }
+              })
             }
           } else if (tagPostFix === 'echo_orders') {
             // Because we've already retrieved collection and we know it support echo orders we'll send
