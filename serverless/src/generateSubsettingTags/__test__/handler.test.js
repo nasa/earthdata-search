@@ -31,7 +31,7 @@ describe('generateSubsettingTags', () => {
 
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const serviceOptionsRequest = jest.spyOn(request, 'get').mockImplementationOnce(() => ({
+    jest.spyOn(request, 'get').mockImplementationOnce(() => ({
       statusCode: 200,
       body: [
         {
@@ -41,6 +41,18 @@ describe('generateSubsettingTags', () => {
             id: '00A6C11A-DCF0-50E9-74EC-2B02D51EBE85',
             service_entry_id: '5AE45EAE-C41E-04C0-087A-5C6FF266F58E',
             service_option_definition_id: '7914F90A-7A04-AD19-FAD7-A89F77949B25'
+          }
+        }
+      ]
+    }))
+
+    jest.spyOn(request, 'get').mockImplementationOnce(() => ({
+      statusCode: 200,
+      body: [
+        {
+          service_option_definition: {
+            id: '7914F90A-7A04-AD19-FAD7-A89F77949B25',
+            name: 'EDSC ESI Service'
           }
         }
       ]
@@ -85,9 +97,6 @@ describe('generateSubsettingTags', () => {
 
     MockDate.reset()
 
-    // Fetch all the service option definitions
-    expect(serviceOptionsRequest).toBeCalledTimes(1)
-
     // 4 calls to add tags to collections
     // 3 calls to remove stale tags
     expect(sqsSendMessagePromise).toBeCalledTimes(7)
@@ -127,7 +136,10 @@ describe('generateSubsettingTags', () => {
             updated_at: '1984-07-02T16:00:00.000Z',
             id: 'S00000002-EDSC',
             type: 'ESI',
-            service_option_definition: '7914F90A-7A04-AD19-FAD7-A89F77949B25'
+            service_option_definitions: [{
+              id: '7914F90A-7A04-AD19-FAD7-A89F77949B25',
+              name: 'EDSC ESI Service'
+            }]
           }
         }, {
           'concept-id': 'C00000003-EDSC',
