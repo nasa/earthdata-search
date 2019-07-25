@@ -2,6 +2,10 @@ import xpath from 'xpath'
 import { DOMParser } from 'xmldom'
 import { namespaces } from './namespaces'
 
+/**
+ * Get subsetting parameters from the provided XML Document
+ * @param {String} xmlDocument ECHO Form xml as a string
+ */
 export const getSubsetDataLayers = (xmlDocument) => {
   const doc = new DOMParser().parseFromString(xmlDocument)
 

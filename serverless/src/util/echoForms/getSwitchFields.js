@@ -13,6 +13,10 @@ const booleanTranslations = {
   N: 'N'
 }
 
+/**
+ * Get boolean data from the provided XML Document
+ * @param {String} xmlDocument ECHO Form xml as a string
+ */
 export const getSwitchFields = (xmlDocument) => {
   const switchFields = ['INCLUDE_META']
 

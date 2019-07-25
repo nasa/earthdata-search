@@ -1,11 +1,14 @@
 import { findFieldElement } from './findFieldElement'
 
+/**
+ * Get projection parameters from the provided XML Document
+ * @param {String} xmlDocument ECHO Form xml as a string
+ */
 export const getNameValuePairsForProjections = (xmlDocument) => {
   const projectionFields = ['PROJECTION_PARAMETERS']
 
   const projectionFieldValues = {}
 
-  // TODO: Complete appropriate filtering
   projectionFields.forEach((field) => {
     const xmlField = findFieldElement(xmlDocument, field)
 
