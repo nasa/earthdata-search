@@ -118,6 +118,16 @@ functions:
               - CatalogRestOrderQueue
               - Arn
 
+  submitLegacyServicesOrder:
+    handler: serverless/src/submitLegacyServicesOrder/handler.default
+    timeout: 600
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - LegacyServicesOrderQueue
+              - Arn
+
   #
   # Scheduled Lambdas
   #
@@ -364,7 +374,19 @@ resources:
     LegacyServicesOrderQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
-        VisibilityTimeout: 300
+        VisibilityTimeout: 600
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - LegacyServicesOrderDeadLetterQueue
+              - Arn
+          maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
+
+    LegacyServicesOrderDeadLetterQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.siteName}-LegacyServicesOrderDeadLetterQueue
+        MessageRetentionPeriod: 1209600
 
     CatalogRestOrderQueue:
       Type: 'AWS::SQS::Queue'
