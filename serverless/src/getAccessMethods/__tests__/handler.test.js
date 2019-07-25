@@ -81,6 +81,7 @@ describe('getAccessMethods', () => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
+      isBase64Encoded: false,
       statusCode: 200
     })
   })
@@ -149,6 +150,7 @@ describe('getAccessMethods', () => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
+      isBase64Encoded: false,
       statusCode: 200
     })
   })
@@ -217,6 +219,7 @@ describe('getAccessMethods', () => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
+      isBase64Encoded: false,
       statusCode: 200
     })
   })
@@ -260,6 +263,7 @@ describe('getAccessMethods', () => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
+      isBase64Encoded: false,
       statusCode: 200
     })
   })
@@ -337,6 +341,7 @@ describe('getAccessMethods', () => {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Credentials': true
         },
+        isBase64Encoded: false,
         statusCode: 200
       })
     })
@@ -431,6 +436,7 @@ describe('getAccessMethods', () => {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Credentials': true
         },
+        isBase64Encoded: false,
         statusCode: 200
       })
     })
