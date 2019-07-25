@@ -16,7 +16,8 @@ export const changePath = (path = '') => (dispatch) => {
     restoreProject,
     updateCmrFacet,
     setGranuleDownloadParams,
-    updateFeatureFacet
+    updateFeatureFacet,
+    updateShapefile
   } = actions
 
   const {
@@ -29,11 +30,16 @@ export const changePath = (path = '') => (dispatch) => {
     map,
     project,
     query,
+    shapefile,
     timeline
   } = decodeUrlParams(queryString)
 
   if (map) {
     dispatch(changeMap(map))
+  }
+
+  if (shapefile) {
+    dispatch(updateShapefile(shapefile))
   }
 
   if (focusedGranule) {

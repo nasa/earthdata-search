@@ -23,6 +23,7 @@ import focusedGranuleReducer from './focusedGranule'
 import orderReducer from './order'
 import projectPanelsReducer from './projectPanels'
 import projectReducer from './project'
+import shapefileReducer from './shapefile'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
@@ -50,6 +51,7 @@ export default history => combineReducers({
     granules: granuleResultsReducer,
     viewAllFacets: viewAllFacetsRequestReducer
   }),
+  shapefile: shapefileReducer,
   timeline: timelineReducer,
   ui: uiReducer
 })

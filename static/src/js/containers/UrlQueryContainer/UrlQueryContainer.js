@@ -36,6 +36,7 @@ const mapStateToProps = state => ({
   projectFacets: state.facetsParams.cmr.project_h,
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   search: state.router.location.search,
+  shapefileId: state.shapefile.shapefileId,
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })

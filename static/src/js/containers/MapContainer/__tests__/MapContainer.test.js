@@ -22,6 +22,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    authToken: '',
     collections: {},
     focusedCollection: '',
     granules: {},
@@ -44,7 +45,9 @@ function setup() {
       zoom: 2
     },
     masterOverlayPanelHeight: 500,
-    onChangeMap: jest.fn()
+    shapefile: {},
+    onChangeMap: jest.fn(),
+    onSaveShapefile: jest.fn()
   }
 
   // Mount is required here so we can have access to the mapRef

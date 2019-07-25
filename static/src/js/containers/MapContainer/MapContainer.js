@@ -33,20 +33,24 @@ import actions from '../../actions/index'
 
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
+import ShapefileLayer from '../../components/Map/ShapefileLayer'
 
 const { BaseLayer, Overlay } = LayersControl
 
 const mapDispatchToProps = dispatch => ({
-  onChangeMap: query => dispatch(actions.changeMap(query))
+  onChangeMap: query => dispatch(actions.changeMap(query)),
+  onSaveShapefile: data => dispatch(actions.saveShapefile(data))
 })
 
 const mapStateToProps = state => ({
+  authToken: state.authToken,
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
   map: state.map,
   masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
   pathname: state.router.location.pathname,
+  shapefile: state.shapefile,
   project: state.project
 })
 
@@ -172,12 +176,15 @@ export class MapContainer extends Component {
 
   render() {
     const {
+      authToken,
       map,
       collections,
       focusedCollection,
       granules,
       pathname,
-      project
+      project,
+      shapefile,
+      onSaveShapefile
     } = this.props
 
     const {
@@ -303,6 +310,15 @@ export class MapContainer extends Component {
         }
         <ScaleControl position="bottomright" />
         <ConnectedSpatialSelectionContainer mapRef={this.mapRef} />
+        {
+          !isProjectPage && (
+          <ShapefileLayer
+            authToken={authToken}
+            shapefile={shapefile}
+            onSaveShapefile={onSaveShapefile}
+          />
+          )
+        }
       </Map>
     )
   }
@@ -313,6 +329,7 @@ MapContainer.defaultProps = {
 }
 
 MapContainer.propTypes = {
+  authToken: PropTypes.string.isRequired,
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
@@ -320,7 +337,9 @@ MapContainer.propTypes = {
   masterOverlayPanelHeight: PropTypes.number.isRequired,
   pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
-  onChangeMap: PropTypes.func.isRequired
+  shapefile: PropTypes.shape({}).isRequired,
+  onChangeMap: PropTypes.func.isRequired,
+  onSaveShapefile: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

@@ -68,6 +68,11 @@ export const removeSpatialFilter = () => (dispatch) => {
     }
   }))
   dispatch(actions.toggleDrawingNewLayer(false))
+  dispatch(actions.updateShapefile({
+    shapefileName: undefined,
+    shapefileId: undefined,
+    shapefileSize: undefined
+  }))
 }
 
 export const removeTemporalFilter = () => (dispatch) => {
@@ -93,4 +98,9 @@ export const clearFilters = () => (dispatch) => {
 
   // Update Store
   dispatch(changeQuery(query))
+  dispatch(actions.updateShapefile({
+    shapefileName: undefined,
+    shapefileId: undefined,
+    shapefileSize: undefined
+  }))
 }

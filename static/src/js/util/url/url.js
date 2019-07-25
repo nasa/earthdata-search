@@ -51,7 +51,8 @@ const urlDefs = {
   granuleDownloadRetrievalId: { shortKey: 'rid', encode: encodeString, decode: decodeString },
   granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
-  gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords }
+  gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
+  shapefileId: { shortKey: 'sf', encode: encodeString, decode: decodeString }
 }
 
 /**
@@ -127,16 +128,21 @@ export const decodeUrlParams = (paramString) => {
   granuleDownloadParams.id = decodeHelp(params, 'granuleDownloadRetrievalId')
   granuleDownloadParams.collection_id = decodeHelp(params, 'granuleDownloadCollectionId')
 
+  const shapefile = {
+    shapefileId: decodeHelp(params, 'shapefileId')
+  }
+
   return {
-    collections,
     cmrFacets,
-    granuleDownloadParams,
+    collections,
     featureFacets,
     focusedCollection,
     focusedGranule,
+    granuleDownloadParams,
     map,
     project,
     query,
+    shapefile,
     timeline
   }
 }

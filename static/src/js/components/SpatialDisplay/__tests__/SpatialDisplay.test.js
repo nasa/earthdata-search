@@ -19,7 +19,8 @@ function setup() {
     onGranuleGridCoords: jest.fn(),
     onRemoveGridFilter: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
-    selectingNewGrid: false
+    selectingNewGrid: false,
+    shapefile: {}
   }
 
   const enzymeWrapper = shallow(<SpatialDisplay {...props} />)
@@ -96,6 +97,56 @@ describe('SpatialDisplay component', () => {
     expect(filterStackContents.props().body.props.children).toEqual(null)
   })
 
+  test('with shapefile should render without spatial info', () => {
+    const { enzymeWrapper } = setup()
+    const newPolygon = '-77.04444122314453,38.99228142151045,'
+      + '-77.01992797851562,38.79166886339155,'
+      + '-76.89415168762207,38.902629947921575,'
+      + '-77.04444122314453,38.99228142151045'
+
+    enzymeWrapper.setProps({
+      polygonSearch: newPolygon,
+      shapefile: {
+        shapefileName: 'test file',
+        shapefileSize: '42 KB'
+      }
+    })
+
+    const filterStackItem = enzymeWrapper.find(FilterStackItem)
+    const filterStackContents = enzymeWrapper.find(FilterStackContents)
+
+    expect(filterStackItem.props().title).toEqual('Spatial')
+    expect(filterStackItem.props().icon).toEqual('crop')
+    expect(filterStackContents.props().title).toEqual('Shapefile')
+    expect(filterStackContents.props().body.props.children.props.children).toEqual(['test file', '42 KB'])
+  })
+
+  test('with grid should render the spatial info', () => {
+    const { enzymeWrapper } = setup()
+    const gridName = 'WRS-1'
+    const gridCoords = 'test coords'
+    enzymeWrapper.setProps({ gridCoords, gridName })
+
+    const filterStackItem = enzymeWrapper.find(FilterStackItem)
+    const filterStackContents = enzymeWrapper.find(FilterStackContents)
+
+    expect(filterStackItem.props().title).toEqual('Grid')
+    expect(filterStackItem.props().icon).toEqual('edsc-globe')
+    expect(filterStackContents.props().title).toEqual('Grid')
+
+    const gridNameSelect = filterStackContents.props().body.props.children.props.children[0]
+    const gridNameSelectLabel = gridNameSelect.props.children[0]
+    const gridNameSelectInput = gridNameSelect.props.children[1]
+    expect(gridNameSelectLabel.props.children).toEqual('Coordinate System')
+    expect(gridNameSelectInput.props.value).toEqual(gridName)
+
+    const gridCoordsInput = filterStackContents.props().body.props.children.props.children[1]
+    const gridCoordsInputLabel = gridCoordsInput.props.children[0]
+    const gridCoordsInputInput = gridCoordsInput.props.children[1]
+    expect(gridCoordsInputLabel.props.children).toEqual('Coordinates')
+    expect(gridCoordsInputInput.props.value).toEqual(gridCoords)
+  })
+
   test('componentWillReceiveProps sets the state', () => {
     const { enzymeWrapper } = setup()
 
@@ -136,6 +187,27 @@ describe('SpatialDisplay component', () => {
         preventDefault: preventDefaultMock
       })
       expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('#onChangeGridCoords', () => {
+    test('calls onChangeQuery', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.instance().onChangeGridCoords({
+        target: {
+          value: 'test coords'
+        }
+      })
+
+      expect(enzymeWrapper.state()).toEqual({
+        boundingBoxSearch: '',
+        gridCoords: 'test coords',
+        gridName: '',
+        pointSearch: '',
+        polygonSearch: '',
+        shapefile: {}
+      })
     })
   })
 
