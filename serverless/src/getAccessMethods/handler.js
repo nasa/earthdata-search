@@ -119,6 +119,7 @@ const getAccessMethods = async (event) => {
   }
 
   return {
+    isBase64Encoded: false,
     statusCode: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
