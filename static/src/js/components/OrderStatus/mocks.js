@@ -6,7 +6,7 @@ export const echoOrder = {
   },
   environment: 'prod',
   access_method: {
-    type: 'echo_order',
+    type: 'ECHO ORDERS',
     is_valid: true,
     order: {
       order_status: 'not_validated'
@@ -243,7 +243,7 @@ export const esiOrder = {
   },
   environment: 'prod',
   access_method: {
-    type: 'esi_order',
+    type: 'ESI',
     is_valid: true,
     order: {
       order_status: 'in progress',
