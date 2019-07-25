@@ -1,4 +1,3 @@
-import 'pg'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'

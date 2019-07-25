@@ -1,5 +1,4 @@
 import 'array-foreach-async'
-import 'pg'
 import AWS from 'aws-sdk'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
@@ -49,8 +48,6 @@ const submitCatalogRestOrder = async (event, context) => {
     const ursClientId = getSecretEarthdataConfig('prod').clientId
     const accessTokenWithClient = `${accessToken}:${ursClientId}`
 
-    console.log('granuleParams', granuleParams)
-
     const granuleResponse = await request.get({
       uri: cmrUrl('search/granules.json', granuleParams),
       headers: {
@@ -74,8 +71,6 @@ const submitCatalogRestOrder = async (event, context) => {
       .where({
         'retrieval_orders.id': id
       })
-
-    console.log('retrievalRecord', retrievalRecord)
 
     const {
       id: retrievalId,
@@ -110,7 +105,6 @@ const submitCatalogRestOrder = async (event, context) => {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId('prod').background
         },
-        // json: true,
         resolveWithFullResponse: true
       })
 
