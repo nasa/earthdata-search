@@ -1,7 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import nock from 'nock'
-// import { stringify } from 'qs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import { loadedEchoFormXml } from './mocks'
@@ -48,7 +47,6 @@ describe('submitLegacyServicesOrder', () => {
     }
 
     const echoProfile = {
-      // Contents limited to only necessary fields
       user_domain: 'OTHER',
       user_region: 'USA'
     }

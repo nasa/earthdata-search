@@ -1,5 +1,9 @@
 import { getFieldElementValue } from './getFieldElementValue'
 
+/**
+ * Get resampling parameters from the provided XML Document
+ * @param {String} xmlDocument ECHO Form xml as a string
+ */
 export const getNameValuePairsForResample = (xmlDocument) => {
   const resampleFields = ['RESAMPLE']
 

@@ -132,6 +132,11 @@ describe('submitOrder', () => {
         }])
       } else if (step === 4) {
         query.response([retreivalCollectionRecord])
+      } else if (step === 7) {
+        console.log(query)
+        query.response([{
+          id: 5
+        }])
       } else {
         query.response([])
       }
@@ -171,8 +176,8 @@ describe('submitOrder', () => {
       Entries: [{
         Id: '2-1',
         MessageBody: JSON.stringify({
-          url: 'https://n5eil09e.ecs.edsc.org/egi/request',
-          accessToken: '2e8e995e7511c2c6620336797b'
+          accessToken: '2e8e995e7511c2c6620336797b',
+          id: 5
         })
       }]
     }])

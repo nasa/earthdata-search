@@ -95,7 +95,7 @@ const submitOrder = async (event) => {
       // The relevant tag data is merged into the access method in the UI, this
       // allows us to pull out the type of service and the url that the data will
       // need to be submitted to
-      const { type, url } = accessMethod
+      const { type } = accessMethod
 
       if (['ESI', 'ECHO ORDERS'].includes(type)) {
         // The insert above returns an array but we've only added a single row
@@ -107,8 +107,6 @@ const submitOrder = async (event) => {
         // Provide the inserted row to the generateOrder payload to construct
         // the payloads we need to submit the users' order
         const orderPayloads = await generateOrderPayloads(retrievalCollection)
-
-        // Leaving debug until orders are fully code complete
 
         let queueUrl
 
@@ -132,7 +130,7 @@ const submitOrder = async (event) => {
 
           try {
             const newOrderRecord = await orderDbTransaction('retrieval_orders')
-              .returning(['id', 'granule_params'])
+              .returning(['id'])
               .insert({
                 retrieval_collection_id: retrievalCollectionId,
                 type,
@@ -143,9 +141,8 @@ const submitOrder = async (event) => {
             sqsEntries.push({
               Id: `${retrievalCollectionId}-${pageNum}`,
               MessageBody: JSON.stringify({
-                ...newOrderRecord[0],
-                url,
-                accessToken
+                accessToken,
+                id: newOrderRecord[0].id
               })
             })
           } catch (e) {

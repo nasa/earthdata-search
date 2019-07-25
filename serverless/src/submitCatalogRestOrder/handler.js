@@ -40,13 +40,30 @@ const submitCatalogRestOrder = async (event, context) => {
     // Destruct the payload from SQS
     const {
       accessToken,
-      granule_params: granuleParams,
-      id,
-      url
+      id
     } = JSON.parse(body)
 
     const ursClientId = getSecretEarthdataConfig('prod').clientId
     const accessTokenWithClient = `${accessToken}:${ursClientId}`
+
+    // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
+    const retrievalRecord = await dbConnection('retrieval_orders')
+      .first(
+        'retrievals.id',
+        'retrieval_collections.access_method',
+        'retrieval_collections.granule_params'
+      )
+      .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+      .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+      .where({
+        'retrieval_orders.id': id
+      })
+
+    const {
+      id: retrievalId,
+      access_method: accessMethod,
+      granule_params: granuleParams
+    } = retrievalRecord
 
     const granuleResponse = await request.get({
       uri: cmrUrl('search/granules.json', granuleParams),
@@ -60,27 +77,10 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
 
-    // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
-    const retrievalRecord = await dbConnection('retrieval_orders')
-      .first(
-        'retrievals.id',
-        'retrieval_collections.access_method'
-      )
-      .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
-      .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
-      .where({
-        'retrieval_orders.id': id
-      })
-
-    const {
-      id: retrievalId,
-      access_method: accessMethod
-    } = retrievalRecord
-
     // URL used when submitting the order to inform the user where they can retrieve their order status
     const edscStatusUrl = `${getEarthdataConfig('prod').edscHost}/data/retrieve/${retrievalId}`
 
-    const { model } = accessMethod
+    const { model, url } = accessMethod
 
     const orderPayload = {
       FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title),
@@ -95,8 +95,6 @@ const submitCatalogRestOrder = async (event, context) => {
       ...getBoundingBox(model)
     }
 
-    console.log('orderPayload', orderPayload)
-
     try {
       const orderResponse = await request.post({
         uri: url,
@@ -107,8 +105,6 @@ const submitCatalogRestOrder = async (event, context) => {
         },
         resolveWithFullResponse: true
       })
-
-      console.log(orderResponse.body)
 
       const orderResponseBody = parseXml(orderResponse.body, {
         ignoreAttributes: false,

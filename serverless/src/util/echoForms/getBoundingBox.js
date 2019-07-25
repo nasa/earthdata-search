@@ -2,6 +2,10 @@ import xpath from 'xpath'
 import { DOMParser } from 'xmldom'
 import { namespaces } from './namespaces'
 
+/**
+ * Get bounding box information from the provided XML Document
+ * @param {String} xmlDocument ECHO Form xml as a string
+ */
 export const getBoundingBox = (xmlDocument) => {
   const doc = new DOMParser().parseFromString(xmlDocument)
 
