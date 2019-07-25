@@ -53,6 +53,7 @@ import {
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
   toggleDrawingNewLayer,
+  toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal
 } from './ui'
@@ -144,6 +145,7 @@ const actions = {
   toggleFacetsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
+  toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
   triggerViewAllFacets,

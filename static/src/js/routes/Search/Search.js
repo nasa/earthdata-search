@@ -31,6 +31,12 @@ import GranuleResultsHeaderContainer
   from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+import GranuleFiltersHeaderContainer
+  from '../../containers/GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
+import GranuleFiltersBodyContainer
+  from '../../containers/GranuleFiltersBodyContainer/GranuleFiltersBodyContainer'
+import GranuleFiltersActionsContainer
+  from '../../containers/GranuleFiltersActionsContainer/GranuleFiltersActionsContainer'
 import GranuleDetailsTabContainer
   from '../../containers/GranuleDetailsTabContainer/GranuleDetailsTabContainer'
 import GranuleDetailsBodyContainer
@@ -43,6 +49,8 @@ import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import SecondaryOverlayPanelContainer
+  from '../../containers/SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 import CollectionResultsHeaderContainer
   from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
@@ -91,6 +99,11 @@ export class Search extends Component {
                 header={<GranuleResultsHeaderContainer />}
                 actions={<GranuleResultsActionsContainer />}
                 body={<GranuleResultsBodyContainer />}
+              />
+              <SecondaryOverlayPanelContainer
+                header={<GranuleFiltersHeaderContainer />}
+                body={<GranuleFiltersBodyContainer />}
+                footer={<GranuleFiltersActionsContainer />}
               />
             </Route>
             <Route exact path="/search/granules/granule-details">

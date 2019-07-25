@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
+import Button from '../Button/Button'
 import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionTitle } from './skeleton'
@@ -13,10 +14,12 @@ import './GranuleResultsHeader.scss'
  * Renders GranuleResultsHeader.
  * @param {object} props - The props passed into the component.
  * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
+ * @param {function} props.onToggleSecondaryOverlayPanel - Function to open the secondary overlay panel.
  * @param {function} props.onUpdateSortOrder - Function to call when the sort order is changed.
  * @param {function} props.onUpdateSearchValue - Function to call when the granule search value is changed.
  * @param {string} props.sortOrder - The current granule sort order from the state.
  * @param {string} props.searchValue - The current granule search value from the state.
+ * @param {object} props.secondaryOverlayPanel - The current state of the secondaryOverlayPanel.
  */
 class GranuleResultsHeader extends Component {
   constructor(props) {
@@ -60,8 +63,14 @@ class GranuleResultsHeader extends Component {
   render() {
     const { sortOrder, searchValue } = this.state
 
-    const { focusedCollectionMetadata, location } = this.props
+    const {
+      focusedCollectionMetadata,
+      location,
+      onToggleSecondaryOverlayPanel,
+      secondaryOverlayPanel
+    } = this.props
 
+    const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
     const [collectionId] = Object.keys(focusedCollectionMetadata)
     const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
     const { dataset_id: title } = metadata
@@ -192,13 +201,33 @@ class GranuleResultsHeader extends Component {
                     </div>
                   </div>
                   <div className="col-auto">
-                    <a
-                      className="granule-results-header__link"
-                      href="/"
-                    >
-                      <i className="fa fa-filter" />
-                      {' Granule Filters'}
-                    </a>
+                    {
+                      granuleFiltersOpen
+                        ? (
+                          <Button
+                            className="granule-results-header__link"
+                            onClick={() => onToggleSecondaryOverlayPanel(false)}
+                            variant="link"
+                            bootstrapVariant="link"
+                            icon="times"
+                            label="Close Granule Filters"
+                          >
+                            Granule Filters
+                          </Button>
+                        )
+                        : (
+                          <Button
+                            className="granule-results-header__link"
+                            onClick={() => onToggleSecondaryOverlayPanel(true)}
+                            variant="link"
+                            bootstrapVariant="link"
+                            icon="filter"
+                            label="Open Granule Filters"
+                          >
+                            Granule Filters
+                          </Button>
+                        )
+                    }
                   </div>
                   {
                     showUndoExcludedGranules && (
@@ -227,11 +256,13 @@ class GranuleResultsHeader extends Component {
 GranuleResultsHeader.propTypes = {
   focusedCollectionMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
-  searchValue: PropTypes.string.isRequired
+  searchValue: PropTypes.string.isRequired,
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsHeader

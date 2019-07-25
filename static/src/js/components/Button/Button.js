@@ -35,6 +35,7 @@ export const Button = ({
     {
       [`button--${variant}`]: !!variant,
       'button--icon': !!icon,
+      'button--icon-only': !!icon && children === null,
       'button--badge': !!badge
     },
     className

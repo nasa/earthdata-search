@@ -17,6 +17,11 @@
   &__link {
     font-size: 0.925rem;
     white-space: nowrap;
+
+    .button__icon {
+      font-size: 0.925rem;
+      line-height: 0.925rem;
+    }
   }
 
   &__filters-link {

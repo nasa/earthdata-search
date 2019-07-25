@@ -1,0 +1,12 @@
+.granule-filters-item {
+  margin-bottom: $spacer*1.25;
+
+  &__heading {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  &__description {
+    margin-bottom: $spacer/2;
+  }
+}

@@ -9,6 +9,7 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL
 } from '../constants/actionTypes'
@@ -70,6 +71,11 @@ export const toggleRelatedUrlsModal = state => ({
 
 export const toggleDrawingNewLayer = state => ({
   type: TOGGLE_DRAWING_NEW_LAYER,
+  payload: state
+})
+
+export const toggleSecondaryOverlayPanel = state => ({
+  type: TOGGLE_SECONDARY_OVERLAY_PANEL,
   payload: state
 })
 
