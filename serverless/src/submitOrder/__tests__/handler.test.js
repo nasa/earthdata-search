@@ -133,7 +133,6 @@ describe('submitOrder', () => {
       } else if (step === 4) {
         query.response([retreivalCollectionRecord])
       } else if (step === 7) {
-        console.log(query)
         query.response([{
           id: 5
         }])
