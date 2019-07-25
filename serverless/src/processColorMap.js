@@ -1,5 +1,4 @@
 import 'array-foreach-async'
-import 'pg'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from './util/database/getDbConnection'

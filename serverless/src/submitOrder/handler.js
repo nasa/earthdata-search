@@ -1,5 +1,4 @@
 import 'array-foreach-async'
-import 'pg'
 import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
@@ -73,8 +72,6 @@ const submitOrder = async (event) => {
           granule_count: granuleCount
         })
 
-      console.log('retrievalCollection', newRetrievalCollection[0])
-
       // Save Access Configuration
       const existingAccessConfig = await orderDbTransaction('access_configurations')
         .select('id')
@@ -112,7 +109,6 @@ const submitOrder = async (event) => {
         const orderPayloads = await generateOrderPayloads(retrievalCollection)
 
         // Leaving debug until orders are fully code complete
-        console.log('orderPayloads', orderPayloads)
 
         let queueUrl
 

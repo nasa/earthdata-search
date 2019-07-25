@@ -1,4 +1,3 @@
-import 'pg'
 import { getDbConnection } from '../util/database/getDbConnection'
 
 // Knex database connection object

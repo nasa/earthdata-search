@@ -1,5 +1,4 @@
 import 'array-foreach-async'
-import 'pg'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { addTag } from './addTag'
 import { removeTag } from './removeTag'

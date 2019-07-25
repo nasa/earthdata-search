@@ -1,3 +1,4 @@
+import 'pg'
 import knex from 'knex'
 import { getDbConnectionConfig } from '../database'
 
