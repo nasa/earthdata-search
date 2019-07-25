@@ -18,7 +18,8 @@ function setup() {
     onRemoveSpatialFilter: jest.fn(),
     pointSearch: 'Test Point Search',
     polygonSearch: 'Test Polygon Search',
-    selectingNewGrid: false
+    selectingNewGrid: false,
+    shapefile: {}
   }
 
   const enzymeWrapper = shallow(<SpatialDisplayContainer {...props} />)
@@ -45,7 +46,8 @@ describe('SpatialDisplayContainer component', () => {
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
       pointSearch: 'Test Point Search',
       polygonSearch: 'Test Polygon Search',
-      selectingNewGrid: false
+      selectingNewGrid: false,
+      shapefile: {}
     })
   })
 })

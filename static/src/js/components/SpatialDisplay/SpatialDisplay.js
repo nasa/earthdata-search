@@ -26,7 +26,8 @@ class SpatialDisplay extends Component {
       gridName: '',
       gridCoords: '',
       pointSearch: '',
-      polygonSearch: ''
+      polygonSearch: '',
+      shapefile: {}
     }
 
     this.onChangeGridType = this.onChangeGridType.bind(this)
@@ -42,7 +43,8 @@ class SpatialDisplay extends Component {
       gridName,
       gridCoords,
       pointSearch,
-      polygonSearch
+      polygonSearch,
+      shapefile
     } = this.props
 
     if (pointSearch !== nextProps.pointSearch) {
@@ -59,6 +61,16 @@ class SpatialDisplay extends Component {
     }
     if (gridCoords !== nextProps.gridCoords) {
       this.setState({ gridCoords: nextProps.gridCoords })
+    }
+
+    const { shapefileId, shapefileName } = shapefile
+    const {
+      shapefileId: nextShapefileId,
+      shapefileName: nextShapefileName
+    } = nextProps.shapefile
+
+    if (shapefileName !== nextShapefileName || shapefileId !== nextShapefileId) {
+      this.setState({ shapefile: nextProps.shapefile })
     }
   }
 
@@ -113,7 +125,8 @@ class SpatialDisplay extends Component {
       gridName,
       gridCoords,
       pointSearch,
-      polygonSearch
+      polygonSearch,
+      shapefile
     } = this.state
 
     const contents = []
@@ -291,6 +304,25 @@ class SpatialDisplay extends Component {
           title="Rectangle"
         />
       ))
+    } else if (((shapefile.shapefileName || shapefile.shapefileId)
+      && !drawingNewLayer)
+      || drawingNewLayer === 'shapefile') {
+      entry = (
+        <SpatialDisplayEntry>
+          <Form.Row className="spatial-display__form-row">
+            {shapefile.shapefileName}
+            {shapefile.shapefileSize}
+          </Form.Row>
+        </SpatialDisplayEntry>
+      )
+
+      contents.push((
+        <FilterStackContents
+          key="filter__shapefile"
+          body={entry}
+          title="Shapefile"
+        />
+      ))
     } else if ((polygonSearch && !drawingNewLayer) || drawingNewLayer === 'polygon') {
       entry = <SpatialDisplayEntry />
 
@@ -342,7 +374,8 @@ SpatialDisplay.propTypes = {
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.string.isRequired,
   polygonSearch: PropTypes.string.isRequired,
-  selectingNewGrid: PropTypes.bool.isRequired
+  selectingNewGrid: PropTypes.bool.isRequired,
+  shapefile: PropTypes.shape({}).isRequired
 }
 
 export default SpatialDisplay

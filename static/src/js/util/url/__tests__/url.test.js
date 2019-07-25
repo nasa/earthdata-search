@@ -39,6 +39,7 @@ const emptyDecodedResult = {
       gridCoords: undefined
     }
   },
+  shapefile: {},
   timeline: undefined
 }
 

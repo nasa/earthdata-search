@@ -3,7 +3,14 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 import { updateCollectionQuery, updateGranuleQuery } from '../search'
-import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../../constants/actionTypes'
+import {
+  UPDATE_COLLECTION_QUERY,
+  UPDATE_GRANULE_QUERY,
+  UPDATE_SHAPEFILE,
+  CLEAR_COLLECTION_GRANULES,
+  UPDATE_TIMELINE_INTERVALS,
+  TOGGLE_DRAWING_NEW_LAYER
+} from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -214,6 +221,187 @@ describe('changeGranulePageNum', () => {
   })
 })
 
+describe('changeGranuleGridCoords', () => {
+  test('should update the collection query and call getCollections', () => {
+    const coords = 'Test Grid Coords'
+
+    // mock getGranules
+    const getGranulesMock = jest.spyOn(actions, 'getGranules')
+    getGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: {},
+        granule: { pageNum: 1 }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeGranuleGridCoords(coords))
+
+    // Is updateGranuleQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: {
+        gridCoords: coords
+      }
+    })
+
+    // was getCollections called
+    expect(getGranulesMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('removeGridFilter', () => {
+  test('should remove the grid query', () => {
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: {
+          spatial: {},
+          temporal: {},
+          gridName: 'mock grid'
+        },
+        granule: {
+          gridCoords: 'mock coords'
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.removeGridFilter())
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        gridName: '',
+        pageNum: 1
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: {
+        gridCoords: '',
+        pageNum: 1
+      }
+    })
+  })
+})
+
+describe('removeSpatialFilter', () => {
+  test('should remove the spatial query', () => {
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: {
+          spatial: {
+            point: '0,0'
+          },
+          temporal: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.removeSpatialFilter())
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        pageNum: 1,
+        spatial: {}
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: {
+        pageNum: 1
+      }
+    })
+    expect(storeActions[2]).toEqual({
+      type: CLEAR_COLLECTION_GRANULES
+    })
+    expect(storeActions[3]).toEqual({
+      type: UPDATE_TIMELINE_INTERVALS,
+      payload: {
+        results: []
+      }
+    })
+    expect(storeActions[4]).toEqual({
+      type: TOGGLE_DRAWING_NEW_LAYER,
+      payload: false
+    })
+    expect(storeActions[5]).toEqual({
+      type: UPDATE_SHAPEFILE,
+      payload: {
+        shapefileName: undefined,
+        shapefileId: undefined,
+        shapefileSize: undefined
+      }
+    })
+  })
+})
+
+describe('removeTemporalFilter', () => {
+  test('should remove the temporal query', () => {
+    // mockStore with initialState
+    const store = mockStore({
+      query: {
+        collection: {
+          spatial: {},
+          temporal: {
+            endDate: '2019-02-09T00:17:36.267Z',
+            startDate: '2018-12-28T23:04:23.677Z'
+          }
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.removeTemporalFilter())
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        pageNum: 1,
+        temporal: {}
+      }
+    })
+  })
+})
+
 describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
     const query = {
@@ -259,6 +447,30 @@ describe('clearFilters', () => {
     expect(storeActions[0]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: emptyQuery
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_GRANULE_QUERY,
+      payload: {
+        gridCoords: '',
+        pageNum: 1
+      }
+    })
+    expect(storeActions[2]).toEqual({
+      type: CLEAR_COLLECTION_GRANULES
+    })
+    expect(storeActions[3]).toEqual({
+      type: UPDATE_TIMELINE_INTERVALS,
+      payload: {
+        results: []
+      }
+    })
+    expect(storeActions[4]).toEqual({
+      type: UPDATE_SHAPEFILE,
+      payload: {
+        shapefileName: undefined,
+        shapefileId: undefined,
+        shapefileSize: undefined
+      }
     })
 
     // was getCollections called

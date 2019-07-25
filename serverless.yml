@@ -227,6 +227,15 @@ functions:
             origin: '*'
           path: concepts/metadata
 
+  saveShapefile:
+    handler: serverless/src/saveShapefile/handler.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: save_shapefile
+
   edlLogin:
     handler: serverless/src/edlLogin.default
     events:

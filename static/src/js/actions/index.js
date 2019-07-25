@@ -81,6 +81,7 @@ import { fetchOrder, submitOrder } from './order'
 import {
   fetchAccessMethods
 } from './accessMethods'
+import { saveShapefile, updateShapefile } from './shapefiles'
 
 const actions = {
   addAccessMethods,
@@ -128,6 +129,7 @@ const actions = {
   removeTemporalFilter,
   restoreCollections,
   restoreProject,
+  saveShapefile,
   searchNlp,
   selectAccessMethod,
   submitOrder,
@@ -145,6 +147,7 @@ const actions = {
   setGranuleDownloadParams,
   updateGranuleMetadata,
   updateGranuleResults,
+  updateShapefile,
   viewCollectionGranules,
   viewCollectionDetails
 }

@@ -37,8 +37,6 @@ import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleDetailsHeaderContainer
   from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
-import MyDropzone
-  from '../../components/MyDropzone/MyDropzone'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SidebarContainer
@@ -69,7 +67,6 @@ export class Search extends Component {
   render() {
     return (
       <div className="route-wrapper route-wrapper--search search">
-        <MyDropzone />
         <SidebarContainer>
           <SidebarSection sectionTitle="Browse Collections">
             <FacetsContainer />
