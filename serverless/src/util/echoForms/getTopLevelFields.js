@@ -1,5 +1,9 @@
 import { getFieldElementValue } from './getFieldElementValue'
 
+/**
+ * Get the key / value pairs for all top level fields from the provided XML Document
+ * @param {String} xmlDocument ECHO Form xml as a string
+ */
 export const getTopLevelFields = (xmlDocument) => {
   const topLevelFields = [
     'BBOX',
