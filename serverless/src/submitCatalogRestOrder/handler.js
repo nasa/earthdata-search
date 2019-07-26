@@ -95,6 +95,10 @@ const submitCatalogRestOrder = async (event, context) => {
       ...getBoundingBox(model)
     }
 
+    // Remove any empty keys
+    Object.keys(orderPayload)
+      .forEach(key => (orderPayload[key].length === 0) && delete orderPayload[key])
+
     try {
       const orderResponse = await request.post({
         uri: url,
