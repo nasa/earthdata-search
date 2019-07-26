@@ -2,6 +2,8 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
+import { parse } from 'qs'
+
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
@@ -9,6 +11,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getNameValuePairsForProjections } from '../util/echoForms/getNameValuePairsForProjections'
 import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePairsForResample'
+import { getShapefile } from '../util/echoForms/getShapefile'
 import { getSubsetDataLayers } from '../util/echoForms/getSubsetDataLayers'
 import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
@@ -55,6 +58,7 @@ const submitCatalogRestOrder = async (event, context) => {
     const retrievalRecord = await dbConnection('retrieval_orders')
       .first(
         'retrievals.id',
+        'retrievals.jsondata',
         'retrieval_collections.access_method',
         'retrieval_collections.granule_params'
       )
@@ -66,6 +70,7 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const {
       id: retrievalId,
+      jsondata,
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
@@ -87,6 +92,20 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const { model, url } = accessMethod
 
+    // Retrieve the shapefile if one was provided
+    const { source } = JSON.parse(jsondata)
+    const { sf: shapefileId } = parse(source, { ignoreQueryPrefix: true })
+
+    let shapefileParam
+    if (shapefileId) {
+      const shapefileRecord = await dbConnection('shapefiles')
+        .first('file')
+        .where({ id: shapefileId })
+      const { file } = shapefileRecord
+
+      shapefileParam = getShapefile(model, file)
+    }
+
     const orderPayload = {
       FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title),
       CLIENT_STRING: `To view the status of your request, please see: ${edscStatusUrl}`,
@@ -97,7 +116,8 @@ const submitCatalogRestOrder = async (event, context) => {
       ...getNameValuePairsForProjections(model),
       ...getNameValuePairsForResample(model),
       ...getSubsetDataLayers(model),
-      ...getBoundingBox(model)
+      ...getBoundingBox(model),
+      ...shapefileParam
     }
 
     // Remove any empty keys

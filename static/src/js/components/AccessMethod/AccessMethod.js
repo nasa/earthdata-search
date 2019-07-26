@@ -124,6 +124,7 @@ export const AccessMethod = ({
   // eslint-disable-next-line no-unused-vars
   index,
   metadata,
+  shapefileId,
   onSelectAccessMethod,
   // eslint-disable-next-line no-unused-vars
   onSetActivePanel,
@@ -185,6 +186,7 @@ export const AccessMethod = ({
               form={form}
               methodKey={selectedAccessMethod}
               rawModel={rawModel}
+              shapefileId={shapefileId}
               onUpdateAccessMethod={onUpdateAccessMethod}
             />
           )
@@ -206,6 +208,7 @@ AccessMethod.defaultProps = {
   accessMethods: {},
   index: null,
   metadata: {},
+  shapefileId: null,
   onSetActivePanel: null,
   selectedAccessMethod: null
 }
@@ -214,6 +217,7 @@ AccessMethod.propTypes = {
   accessMethods: PropTypes.shape({}),
   index: PropTypes.number,
   metadata: PropTypes.shape({}),
+  shapefileId: PropTypes.string,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
