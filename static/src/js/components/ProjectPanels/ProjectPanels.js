@@ -26,6 +26,7 @@ export const ProjectPanels = pure(({
   collections,
   project,
   projectPanels,
+  shapefileId,
   onSelectAccessMethod,
   onTogglePanels,
   onSetActivePanel,
@@ -139,6 +140,7 @@ export const ProjectPanels = pure(({
             accessMethods={accessMethods}
             index={index}
             metadata={metadata}
+            shapefileId={shapefileId}
             onSelectAccessMethod={onSelectAccessMethod}
             onSetActivePanel={onSetActivePanel}
             onUpdateAccessMethod={onUpdateAccessMethod}
@@ -215,10 +217,15 @@ export const ProjectPanels = pure(({
   )
 })
 
+ProjectPanels.defaultProps = {
+  shapefileId: null
+}
+
 ProjectPanels.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
+  shapefileId: PropTypes.string,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

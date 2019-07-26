@@ -13,12 +13,17 @@ class EchoForm extends Component {
   }
 
   componentDidMount() {
-    const { form, rawModel, methodKey } = this.props
+    const {
+      form,
+      rawModel,
+      methodKey,
+      shapefileId
+    } = this.props
 
     // Initialize the timeline plugin
     this.$el = $(this.el)
 
-    this.initializeEchoForm(form, rawModel, methodKey)
+    this.initializeEchoForm(form, rawModel, methodKey, shapefileId)
 
     this.$el.on('echoforms:modelchange', this.syncModel)
   }
@@ -31,13 +36,14 @@ class EchoForm extends Component {
     const {
       form: nextForm,
       methodKey: nextMethodKey,
-      rawModel: nextRawModel
+      rawModel: nextRawModel,
+      shapefileId
     } = nextProps
 
     if (form !== nextForm && methodKey !== nextMethodKey) {
       this.$el.echoforms('destroy')
 
-      this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey)
+      this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey, shapefileId)
     }
   }
 
@@ -52,10 +58,12 @@ class EchoForm extends Component {
    * @param {String} rawModel Non-pruned serialized EchoForm data
    * @param {String} methodKey Redux store access method key, to be passed to syncModel to ensure the correct access method is updated in the store
    */
-  initializeEchoForm(form, rawModel, methodKey) {
+  initializeEchoForm(form, rawModel, methodKey, shapefileId) {
     const echoForm = this.insertModelIntoForm(rawModel, form)
 
     if (echoForm) this.$el.echoforms({ form: echoForm })
+
+    this.updateFormWithShapefile(shapefileId)
 
     this.syncModel(methodKey)
   }
@@ -72,6 +80,22 @@ class EchoForm extends Component {
 
     return form
   }
+
+  /**
+   * Enable/disable the shapefile field in an echoform if a shapefile was uploaded by the user.
+   * @param {String} shapefileId Database ID of shapefile
+   */
+  updateFormWithShapefile(shapefileId) {
+    const useShapefile = $('[id*=spatial] :input[id*=use-shapefile-element]')
+    const shapefileHelp = useShapefile.closest('.echoforms-elements').siblings('.echoforms-help')
+    if (shapefileId) {
+      shapefileHelp.html('Complex shapefiles may take longer to process. You will receive an email when your files are finished processing.')
+    } else {
+      useShapefile.prop('disabled', true).parent().siblings('label').css('color', '#aaa')
+      shapefileHelp.html('Click <b>Back to Search Session</b> and upload a KML or Shapefile to enable this option.')
+    }
+  }
+
 
   /**
    * Update the redux store access method with current values from the EchoForm plugin
@@ -109,7 +133,8 @@ class EchoForm extends Component {
 }
 
 EchoForm.defaultProps = {
-  rawModel: null
+  rawModel: null,
+  shapefileId: null
 }
 
 EchoForm.propTypes = {
@@ -117,6 +142,7 @@ EchoForm.propTypes = {
   form: PropTypes.string.isRequired,
   methodKey: PropTypes.string.isRequired,
   rawModel: PropTypes.string,
+  shapefileId: PropTypes.string,
   onUpdateAccessMethod: PropTypes.func.isRequired
 }
 

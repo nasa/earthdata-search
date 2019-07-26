@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   collections: state.metadata.collections,
   collectionsSearch: state.searchResults.collections,
   project: state.project,
-  projectPanels: state.projectPanels
+  projectPanels: state.projectPanels,
+  shapefileId: state.shapefile.shapefileId
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -30,6 +31,7 @@ export const ProjectPanelsContainer = ({
   collectionsSearch,
   project,
   projectPanels,
+  shapefileId,
   onSelectAccessMethod,
   onTogglePanels,
   onSetActivePanel,
@@ -40,6 +42,7 @@ export const ProjectPanelsContainer = ({
     collectionsSearch={collectionsSearch}
     project={project}
     projectPanels={projectPanels}
+    shapefileId={shapefileId}
     onSelectAccessMethod={onSelectAccessMethod}
     onTogglePanels={onTogglePanels}
     onSetActivePanel={onSetActivePanel}
@@ -47,11 +50,16 @@ export const ProjectPanelsContainer = ({
   />
 )
 
+ProjectPanelsContainer.defaultProps = {
+  shapefileId: null
+}
+
 ProjectPanelsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
+  shapefileId: PropTypes.string,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
