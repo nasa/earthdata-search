@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { orderStatusProps } from './mocks'
+import { retrievalStatusProps } from './mocks'
 
 import { OrderStatusList } from '../OrderStatusList'
 import OrderStatusItem from '../OrderStatusItem'
@@ -15,7 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: orderStatusProps.order.collections.download,
+    collections: retrievalStatusProps.retrieval.collections.download,
     heading: 'Stage For Delivery',
     introduction: 'When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.',
     type: 'echo_order',

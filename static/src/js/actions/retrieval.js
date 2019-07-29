@@ -1,21 +1,21 @@
 import { push } from 'connected-react-router'
 import prepareOrderParams from '../util/orders'
-import OrderRequest from '../util/request/orderRequest'
+import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { isLinkType } from '../util/isLinkType'
 
-import { UPDATE_ORDER } from '../constants/actionTypes'
+import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
 
-export const updateOrder = orderData => ({
-  type: UPDATE_ORDER,
-  payload: orderData
+export const updateRetrieval = retrievalData => ({
+  type: UPDATE_RETRIEVAL,
+  payload: retrievalData
 })
 
-export const submitOrder = () => (dispatch, getState) => {
+export const submitRetrieval = () => (dispatch, getState) => {
   const orderParams = prepareOrderParams(getState())
   const { authToken } = orderParams
 
-  const requestObject = new OrderRequest(authToken)
+  const requestObject = new RetrievalRequest(authToken)
 
   const response = requestObject.submit(orderParams)
     .then((response) => {
@@ -38,8 +38,8 @@ const fromUmmServiceType = type => type.toLowerCase().replace(/ /g, '_')
 /**
  * Fetch order data for an order
  */
-export const fetchOrder = (id, authToken) => (dispatch) => {
-  const requestObject = new OrderRequest(authToken)
+export const fetchRetrieval = (id, authToken) => (dispatch) => {
+  const requestObject = new RetrievalRequest(authToken)
 
   const response = requestObject.collections(id)
     .then((response) => {
@@ -81,7 +81,7 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
           links: metdataLinks
         })
       })
-      dispatch(updateOrder(order))
+      dispatch(updateRetrieval(order))
     })
     .catch((e) => {
       console.log('Promise Rejected', e)
@@ -90,4 +90,4 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
   return response
 }
 
-export default submitOrder
+export default submitRetrieval

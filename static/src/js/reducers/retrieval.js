@@ -1,4 +1,4 @@
-import { UPDATE_ORDER } from '../constants/actionTypes'
+import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
 
 const initialState = {
   id: null,
@@ -7,9 +7,9 @@ const initialState = {
   }
 }
 
-const orderReducer = (state = initialState, action) => {
+const retrievalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_ORDER: {
+    case UPDATE_RETRIEVAL: {
       return {
         ...state,
         ...action.payload
@@ -20,4 +20,4 @@ const orderReducer = (state = initialState, action) => {
   }
 }
 
-export default orderReducer
+export default retrievalReducer

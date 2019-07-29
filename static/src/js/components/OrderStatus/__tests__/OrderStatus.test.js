@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import { orderStatusProps, orderStatusPropsTwo } from './mocks'
+import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
 
 import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
@@ -16,7 +16,7 @@ beforeEach(() => {
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const props = orderStatusProps
+  const props = retrievalStatusProps
 
   const enzymeWrapper = mount(
     <StaticRouter>
@@ -37,20 +37,20 @@ describe('OrderStatus component', () => {
     expect(orderStatus).toBeDefined()
   })
 
-  test('calls onFetchOrder when mounted', () => {
+  test('calls onFetchRetrieval when mounted', () => {
     const { props } = setup()
-    expect(props.onFetchOrder).toHaveBeenCalledTimes(1)
-    expect(props.onFetchOrder).toHaveBeenCalledWith(7, 'testToken')
+    expect(props.onFetchRetrieval).toHaveBeenCalledTimes(1)
+    expect(props.onFetchRetrieval).toHaveBeenCalledWith(7, 'testToken')
   })
 
-  test('calls onFetchOrder when new props are recieved', () => {
+  test('calls onFetchRetrieval when new props are recieved', () => {
     const { enzymeWrapper, props } = setup()
     enzymeWrapper.find(OrderStatus).instance().componentWillReceiveProps({
-      ...orderStatusProps,
-      ...orderStatusPropsTwo
+      ...retrievalStatusProps,
+      ...retrievalStatusPropsTwo
     })
-    expect(props.onFetchOrder).toHaveBeenCalledTimes(2)
-    expect(props.onFetchOrder).toHaveBeenCalledWith(7, 'testToken2')
+    expect(props.onFetchRetrieval).toHaveBeenCalledTimes(2)
+    expect(props.onFetchRetrieval).toHaveBeenCalledWith(7, 'testToken2')
   })
 
   describe('introduction', () => {

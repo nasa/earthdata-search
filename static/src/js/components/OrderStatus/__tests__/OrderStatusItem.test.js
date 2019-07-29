@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-import { orderStatusProps } from './mocks'
+import { retrievalStatusProps } from './mocks'
 
 import { OrderStatusItem } from '../OrderStatusItem'
 
@@ -14,7 +14,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collection: orderStatusProps.order.collections.download[0],
+    collection: retrievalStatusProps.retrieval.collections.download[0],
     type: 'download',
     onChangePath: jest.fn(),
     ...overrideProps

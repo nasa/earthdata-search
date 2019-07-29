@@ -84,7 +84,7 @@ import {
   addAccessMethods,
   updateAccessMethod
 } from './project'
-import { fetchOrder, submitOrder } from './order'
+import { fetchRetrieval, submitRetrieval } from './retrieval'
 import {
   fetchAccessMethods
 } from './accessMethods'
@@ -121,6 +121,7 @@ const actions = {
   fetchAccessMethods,
   fetchOrder,
   fetchRetrievalCollection,
+  fetchRetrieval,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,
@@ -146,7 +147,7 @@ const actions = {
   selectAccessMethod,
   setGranuleDownloadParams,
   shapefileErrored,
-  submitOrder,
+  submitRetrieval,
   toggleCollectionVisibility,
   toggleDrawingNewLayer,
   toggleFacetsModal,

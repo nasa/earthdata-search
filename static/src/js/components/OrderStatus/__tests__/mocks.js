@@ -1,6 +1,6 @@
-export const orderStatusProps = {
+export const retrievalStatusProps = {
   authToken: 'testToken',
-  onFetchOrder: jest.fn(),
+  onFetchRetrieval: jest.fn(),
   match: {
     search: {
       id: 7
@@ -10,7 +10,7 @@ export const orderStatusProps = {
     }
   },
   onChangePath: jest.fn(),
-  order: {
+  retrieval: {
     id: 7,
     collections: {
       download: [
@@ -45,9 +45,9 @@ export const orderStatusProps = {
   }
 }
 
-export const orderStatusPropsTwo = {
+export const retrievalStatusPropsTwo = {
   authToken: 'testToken2',
-  order: {
+  retrieval: {
     id: 7,
     collections: {
       download: [
@@ -82,9 +82,9 @@ export const orderStatusPropsTwo = {
   }
 }
 
-export const orderStatusPropsEsi = {
+export const retrievalStatusPropsEsi = {
   authToken: 'testToken2',
-  order: {
+  retrieval: {
     id: 7,
     collections: {
       esi: [

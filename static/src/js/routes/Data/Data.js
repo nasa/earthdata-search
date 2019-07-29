@@ -15,7 +15,7 @@ import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 const mapStateToProps = state => ({
-  order: state.order
+  retrieval: state.retrieval
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -24,10 +24,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const Data = ({
-  order = {},
+  retrieval = {},
   onChangePath
 }) => {
-  const { jsondata = {} } = order
+  const { jsondata = {} } = retrieval
   const { source } = jsondata
   return (
     <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
@@ -60,7 +60,7 @@ export const Data = ({
 
 Data.propTypes = {
   onChangePath: PropTypes.func.isRequired,
-  order: PropTypes.shape({}).isRequired
+  retrieval: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(
