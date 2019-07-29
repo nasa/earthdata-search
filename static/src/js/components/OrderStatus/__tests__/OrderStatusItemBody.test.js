@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import { OrderProgressList } from '../../OrderProgressList/OrderProgressList'
 
-import { orderStatusProps, orderStatusPropsEsi } from './mocks'
+import { retrievalStatusProps, retrievalStatusPropsEsi } from './mocks'
 
 import { OrderStatusItemBody } from '../OrderStatusItemBody'
 
@@ -16,7 +16,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collection: orderStatusProps.order.collections.download[0],
+    collection: retrievalStatusProps.retrieval.collections.download[0],
     type: 'download',
     onChangePath: jest.fn(),
     ...overrideProps
@@ -40,8 +40,8 @@ describe('OrderStatusItemBody component', () => {
   describe('ESI Order', () => {
     test('displays the correct state', () => {
       const { enzymeWrapper } = setup({
-        collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-        type: 'esi_order'
+        collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+        type: 'esi'
       })
       expect(enzymeWrapper.find('.order-status-item-body__state').length).toEqual(1)
     })
@@ -49,8 +49,8 @@ describe('OrderStatusItemBody component', () => {
     describe('Order Info', () => {
       test('displays the processing status', () => {
         const { enzymeWrapper } = setup({
-          collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-          type: 'esi_order'
+          collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+          type: 'esi'
         })
 
         expect(enzymeWrapper.find('.order-status-item-body__processed').text()).toEqual('1/2 orders complete')
@@ -62,8 +62,8 @@ describe('OrderStatusItemBody component', () => {
       describe('More Details button', () => {
         test('is displayed', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-            type: 'esi_order'
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            type: 'esi'
           })
 
           expect(enzymeWrapper.find('.order-status-item-body__button--more-details').length).toEqual(1)
@@ -71,8 +71,8 @@ describe('OrderStatusItemBody component', () => {
 
         test('opens the panel on click', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-            type: 'esi_order'
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            type: 'esi'
           })
 
           enzymeWrapper.find('.order-status-item-body__button--more-details').prop('onClick')()
@@ -83,8 +83,8 @@ describe('OrderStatusItemBody component', () => {
       describe('More Details panel', () => {
         describe('on page load', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-            type: 'esi_order'
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            type: 'esi'
           })
 
           test('is not displayed', () => {
@@ -94,8 +94,8 @@ describe('OrderStatusItemBody component', () => {
 
         describe('after the button is clicked', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-            type: 'esi_order'
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            type: 'esi'
           })
 
           enzymeWrapper.find('.order-status-item-body__button--more-details').prop('onClick')()
@@ -110,8 +110,8 @@ describe('OrderStatusItemBody component', () => {
 
     describe('Download Links', () => {
       const { enzymeWrapper } = setup({
-        collection: orderStatusPropsEsi.order.collections.esi_orders[0],
-        type: 'esi_order'
+        collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+        type: 'esi'
       })
 
       const linksDropdown = enzymeWrapper.find('.order-status-item-body__button--links')
@@ -128,7 +128,7 @@ describe('OrderStatusItemBody component', () => {
     describe('in progress', () => {
       test('renders with the correct classname', () => {
         const { enzymeWrapper } = setup({
-          type: 'echo_order',
+          type: 'echo_orders',
           collection: {
             collection_id: 'TEST_COLLECTION_111',
             collection_metadata: {
@@ -151,7 +151,7 @@ describe('OrderStatusItemBody component', () => {
     describe('success', () => {
       test('renders with the correct classname', () => {
         const { enzymeWrapper } = setup({
-          type: 'echo_order',
+          type: 'echo_orders',
           collection: {
             collection_id: 'TEST_COLLECTION_111',
             collection_metadata: {
@@ -173,7 +173,7 @@ describe('OrderStatusItemBody component', () => {
     describe('error', () => {
       test('renders with the correct classname', () => {
         const { enzymeWrapper } = setup({
-          type: 'echo_order',
+          type: 'echo_orders',
           collection: {
             collection_id: 'TEST_COLLECTION_111',
             collection_metadata: {

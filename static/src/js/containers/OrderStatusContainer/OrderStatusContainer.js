@@ -9,12 +9,12 @@ import OrderStatus from '../../components/OrderStatus/OrderStatus'
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
-  order: state.order
+  retrieval: state.retrieval
 })
 
 const mapDispatchToProps = dispatch => ({
-  onFetchOrder:
-    (orderId, authToken) => dispatch(actions.fetchOrder(orderId, authToken)),
+  onFetchRetrieval:
+    (orderId, authToken) => dispatch(actions.fetchRetrieval(orderId, authToken)),
   onChangePath:
     path => dispatch(actions.changePath(path))
 })
@@ -23,24 +23,24 @@ export const OrderStatusContainer = ({
   authToken,
   match,
   onChangePath,
-  onFetchOrder,
-  order
+  onFetchRetrieval,
+  retrieval
 }) => (
   <OrderStatus
     authToken={authToken}
     match={match}
     onChangePath={onChangePath}
-    onFetchOrder={onFetchOrder}
-    order={order}
+    onFetchRetrieval={onFetchRetrieval}
+    retrieval={retrieval}
   />
 )
 
 OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onFetchOrder: PropTypes.func.isRequired,
+  onFetchRetrieval: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
-  order: PropTypes.shape({}).isRequired
+  retrieval: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

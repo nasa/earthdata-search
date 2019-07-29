@@ -1,6 +1,6 @@
-import orderReducer from '../order'
+import orderReducer from '../retrieval'
 import {
-  UPDATE_ORDER
+  UPDATE_RETRIEVAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -18,10 +18,10 @@ describe('INITIAL_STATE', () => {
   })
 })
 
-describe('UPDATE_ORDER', () => {
+describe('UPDATE_RETRIEVAL', () => {
   test('returns the correct state', () => {
     const action = {
-      type: UPDATE_ORDER,
+      type: UPDATE_RETRIEVAL,
       payload: {
         id: 7,
         collections: {

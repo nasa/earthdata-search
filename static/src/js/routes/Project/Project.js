@@ -17,8 +17,8 @@ import OverrideTemporalModalContainer
 import actions from '../../actions'
 
 const mapDispatchToProps = dispatch => ({
-  onSubmitOrder:
-    () => dispatch(actions.submitOrder())
+  onSubmitRetrieval:
+    () => dispatch(actions.submitRetrieval())
 })
 
 export class Project extends Component {
@@ -31,8 +31,8 @@ export class Project extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    const { onSubmitOrder } = this.props
-    onSubmitOrder()
+    const { onSubmitRetrieval } = this.props
+    onSubmitRetrieval()
   }
 
   render() {
@@ -61,7 +61,7 @@ export class Project extends Component {
 
 Project.propTypes = {
   location: PropTypes.shape({}).isRequired,
-  onSubmitOrder: PropTypes.func.isRequired
+  onSubmitRetrieval: PropTypes.func.isRequired
 }
 
 export default withRouter(

@@ -54,7 +54,7 @@ export class OrderStatusItemBody extends React.Component {
     } = collectionMetadata
 
     let {
-      order_status: orderStatus
+      order_status: orderStatus = ''
     } = order
 
     if (type === 'download') orderStatus = 'complete'
@@ -100,7 +100,7 @@ export class OrderStatusItemBody extends React.Component {
       )
     }
 
-    if (type === 'echo_order') {
+    if (type === 'echo_orders') {
       return (
         <div className="order-status-item-body">
           <div className="order-status-item-body__state">
@@ -137,10 +137,10 @@ export class OrderStatusItemBody extends React.Component {
       )
     }
 
-    if (type === 'esi_order') {
+    if (type === 'esi') {
       const { service_options: serviceOptions = {} } = order
       const {
-        orders,
+        orders = [],
         total_complete: totalComplete,
         total_number: totalNumber,
         total_orders: totalOrders,

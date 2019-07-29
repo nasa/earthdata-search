@@ -347,7 +347,7 @@ describe('fetchGranuleLinks', () => {
     moxios.uninstall()
   })
 
-  test('calls lambda to get the retreival collection details', async () => {
+  test('calls lambda to get the retrieval collection details', async () => {
     const endpointResponse = {
       id: 3,
       environment: 'prod',
@@ -438,7 +438,7 @@ describe('fetchLinks', () => {
     jest.clearAllMocks()
   })
 
-  test('calls lambda to get the retreival collection details', async () => {
+  test('calls lambda to get the retrieval collection details', async () => {
     nock(/localhost/)
       .post(/granules/)
       .reply(200, {

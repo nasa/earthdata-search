@@ -20,14 +20,14 @@ describe('OrderStatusContainer component', () => {
     test('passes its props and renders a single OrderStatus component', () => {
       const { enzymeWrapper, props } = setup({
         authToken: 'testToken',
-        onFetchOrder: jest.fn(),
+        onFetchRetrieval: jest.fn(),
         match: {
           search: {
             id: 7
           }
         },
         onChangePath: jest.fn(),
-        order: {
+        retrieval: {
           id: 7,
           collections: {
             download: [
@@ -43,9 +43,9 @@ describe('OrderStatusContainer component', () => {
 
       expect(enzymeWrapper.find(OrderStatus).length).toBe(1)
       expect(enzymeWrapper.find(OrderStatus).props().authToken).toEqual(props.authToken)
-      expect(enzymeWrapper.find(OrderStatus).props().fetchOrder).toEqual(props.fetchOrder)
+      expect(enzymeWrapper.find(OrderStatus).props().fetchRetrieval).toEqual(props.fetchRetrieval)
       expect(enzymeWrapper.find(OrderStatus).props().onChangePath).toEqual(props.onChangePath)
-      expect(enzymeWrapper.find(OrderStatus).props().order).toEqual(props.order)
+      expect(enzymeWrapper.find(OrderStatus).props().retrieval).toEqual(props.retrieval)
     })
   })
 })

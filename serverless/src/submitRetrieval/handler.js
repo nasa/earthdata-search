@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util'
-import { generateOrderPayloads } from './generateOrderPayloads'
+import { generateRetrievalPayloads } from './generateRetrievalPayloads'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 
@@ -12,7 +12,7 @@ let dbConnection = null
 // AWS SQS adapter
 let sqs
 
-const submitOrder = async (event) => {
+const submitRetrieval = async (event) => {
   const { body } = event
   const { params = {} } = JSON.parse(body)
   const { collections, environment, json_data: jsonData } = params
@@ -30,13 +30,13 @@ const submitOrder = async (event) => {
 
   // Initiate (BEGIN) a database transaction to ensure that no database
   // rows are created and orphaned in the event of an error
-  const orderDbTransaction = await dbConnection.transaction()
+  const retrievalDbTransaction = await dbConnection.transaction()
 
   try {
     // Fetch the user id from the username in the token
-    const userRecord = await orderDbTransaction('users').first('id').where({ urs_id: username })
+    const userRecord = await retrievalDbTransaction('users').first('id').where({ urs_id: username })
 
-    const retrievalRecord = await orderDbTransaction('retrievals')
+    const retrievalRecord = await retrievalDbTransaction('retrievals')
       .returning(['id', 'user_id', 'environment', 'jsondata'])
       .insert({
         user_id: userRecord.id,
@@ -54,7 +54,7 @@ const submitOrder = async (event) => {
         granule_params: granuleParams
       } = collection
 
-      const newRetrievalCollection = await orderDbTransaction('retrieval_collections')
+      const newRetrievalCollection = await retrievalDbTransaction('retrieval_collections')
         .returning([
           'id',
           'access_method',
@@ -73,18 +73,18 @@ const submitOrder = async (event) => {
         })
 
       // Save Access Configuration
-      const existingAccessConfig = await orderDbTransaction('access_configurations')
+      const existingAccessConfig = await retrievalDbTransaction('access_configurations')
         .select('id')
         .where({ user_id: userRecord.id, collection_id: id })
 
       if (existingAccessConfig.length) {
-        await orderDbTransaction('access_configurations')
+        await retrievalDbTransaction('access_configurations')
           .update({
             access_method: accessMethod
           })
           .where({ user_id: userRecord.id, collection_id: id })
       } else {
-        await orderDbTransaction('access_configurations')
+        await retrievalDbTransaction('access_configurations')
           .insert({
             user_id: userRecord.id,
             collection_id: id,
@@ -106,7 +106,7 @@ const submitOrder = async (event) => {
 
         // Provide the inserted row to the generateOrder payload to construct
         // the payloads we need to submit the users' order
-        const orderPayloads = await generateOrderPayloads(retrievalCollection)
+        const orderPayloads = await generateRetrievalPayloads(retrievalCollection)
 
         let queueUrl
 
@@ -129,7 +129,7 @@ const submitOrder = async (event) => {
           const { page_num: pageNum } = orderPayload
 
           try {
-            const newOrderRecord = await orderDbTransaction('retrieval_orders')
+            const newOrderRecord = await retrievalDbTransaction('retrieval_orders')
               .returning(['id'])
               .insert({
                 retrieval_collection_id: retrievalCollectionId,
@@ -168,7 +168,7 @@ const submitOrder = async (event) => {
       }
     })
 
-    await orderDbTransaction.commit()
+    await retrievalDbTransaction.commit()
 
     return {
       isBase64Encoded: false,
@@ -183,7 +183,7 @@ const submitOrder = async (event) => {
     console.log(e)
 
     // On error rollback our transaction
-    orderDbTransaction.rollback()
+    retrievalDbTransaction.rollback()
 
     return {
       isBase64Encoded: false,
@@ -197,4 +197,4 @@ const submitOrder = async (event) => {
   }
 }
 
-export default submitOrder
+export default submitRetrieval

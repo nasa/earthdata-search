@@ -20,7 +20,7 @@ import timelineReducer from './timeline'
 import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
-import orderReducer from './order'
+import retrievalReducer from './retrieval'
 import projectPanelsReducer from './projectPanels'
 import projectReducer from './project'
 
@@ -39,7 +39,7 @@ export default history => combineReducers({
     collections: collectionMetadataReducer,
     granules: granuleMetadataReducer
   }),
-  order: orderReducer,
+  retrieval: retrievalReducer,
   project: projectReducer,
   projectPanels: projectPanelsReducer,
   query: queryReducer,
