@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     onChangePath: jest.fn(),
-    order: {
+    retrieval: {
       jsondata: {
         source: '?some=testparams'
       }

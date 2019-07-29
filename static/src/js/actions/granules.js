@@ -98,7 +98,7 @@ export const excludeGranule = data => (dispatch) => {
  * Fetch all relevant links to the granules that are part of the provided collection
  * @param {Integer} retrievalId Database id of the retrieval object
  * @param {String} collectionId CMR collection id to get granules for from a retrieval
- * @param {Object} retrievalCollectionData Retreival Collection response from the database
+ * @param {Object} retrievalCollectionData retrieval Collection response from the database
  * @param {String} authToken The authenticated users' JWT token
  */
 export const fetchLinks = (retrievalCollectionData, authToken) => (dispatch) => {

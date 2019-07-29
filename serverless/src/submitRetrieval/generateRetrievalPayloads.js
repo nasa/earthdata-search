@@ -55,7 +55,7 @@ const adjustedGranuleCount = (collectionMetadata, granuleCount) => {
   return Math.min(...consideredSizes)
 }
 
-export async function generateOrderPayloads(retrievalCollection) {
+export async function generateRetrievalPayloads(retrievalCollection) {
   const {
     collection_metadata: collectionMetadata = {},
     granule_count: granuleCount,

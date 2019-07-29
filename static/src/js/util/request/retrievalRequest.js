@@ -1,7 +1,7 @@
 import Request from './request'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
-export default class OrderRequest extends Request {
+export default class RetrievalRequest extends Request {
   constructor(authToken) {
     super(getEarthdataConfig('sit').apiHost)
     this.authenticated = true
@@ -21,6 +21,6 @@ export default class OrderRequest extends Request {
   }
 
   submit(params) {
-    return this.post('/orders', params)
+    return this.post('/retrievals', params)
   }
 }

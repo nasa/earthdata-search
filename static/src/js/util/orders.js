@@ -2,9 +2,9 @@ import { prepareGranuleParams, buildGranuleSearchParams } from './granules'
 
 
 /**
- * Prepare parameters used in submitOrders() based on current Redux State
+ * Prepare parameters used in submitRetrieval() based on current Redux State
  * @param {object} state Current Redux State
- * @returns Parameters used in submitOrders()
+ * @returns Parameters used in submitRetrieval()
  */
 export const prepareOrderParams = (state) => {
   const {

@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { OrderProgressList } from '../OrderProgressList'
 import { OrderProgressItem } from '../OrderProgressItem'
 
-import { orderStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
+import { retrievalStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -14,7 +14,7 @@ beforeEach(() => {
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const { orders } = orderStatusPropsEsi.order.collections.esi_orders[0]
+  const { orders } = retrievalStatusPropsEsi.retrieval.collections.esi[0]
     .access_method.order.service_options
 
   const props = {

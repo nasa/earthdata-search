@@ -3,9 +3,9 @@ import mockKnex from 'mock-knex'
 import AWS from 'aws-sdk'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import submitOrder from '../handler'
+import submitRetrieval from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
-import * as generateOrderPayloads from '../generateOrderPayloads'
+import * as generateRetrievalPayloads from '../generateRetrievalPayloads'
 
 let dbConnectionToMock
 let dbTracker
@@ -46,7 +46,7 @@ afterEach(() => {
   process.env = OLD_ENV
 })
 
-describe('submitOrder', () => {
+describe('submitRetrieval', () => {
   test('correctly submits an order', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 2) {
@@ -83,7 +83,7 @@ describe('submitOrder', () => {
       }
     })
 
-    const orderResponse = await submitOrder(orderPayload)
+    const orderResponse = await submitRetrieval(orderPayload)
 
     const { queries } = dbTracker.queries
 
@@ -109,7 +109,7 @@ describe('submitOrder', () => {
   test('correctly submits an order and queues order messages', async () => {
     process.env.catalogRestQueueUrl = 'http://example.com/echoQueue'
 
-    const retreivalCollectionRecord = {
+    const retrievalCollectionRecord = {
       id: 2,
       access_method: {
         type: 'ESI',
@@ -131,7 +131,7 @@ describe('submitOrder', () => {
           environment: 'sit'
         }])
       } else if (step === 4) {
-        query.response([retreivalCollectionRecord])
+        query.response([retrievalCollectionRecord])
       } else if (step === 7) {
         query.response([{
           id: 5
@@ -141,7 +141,7 @@ describe('submitOrder', () => {
       }
     })
 
-    const generateOrderPayloadsSpy = jest.spyOn(generateOrderPayloads, 'generateOrderPayloads')
+    const generateRetrievalPayloadsSpy = jest.spyOn(generateRetrievalPayloads, 'generateRetrievalPayloads')
       .mockImplementationOnce(() => [{
         page_num: 1,
         page_size: 2000
@@ -156,7 +156,7 @@ describe('submitOrder', () => {
         sendMessageBatch: sqsSendMessagePromise
       }))
 
-    const orderResponse = await submitOrder(echoOrderPayload)
+    const orderResponse = await submitRetrieval(echoOrderPayload)
 
     const { queries } = dbTracker.queries
 
@@ -189,8 +189,8 @@ describe('submitOrder', () => {
       user_id: 19
     })
 
-    expect(generateOrderPayloadsSpy).toBeCalledTimes(1)
-    expect(generateOrderPayloadsSpy).toBeCalledWith(retreivalCollectionRecord)
+    expect(generateRetrievalPayloadsSpy).toBeCalledTimes(1)
+    expect(generateRetrievalPayloadsSpy).toBeCalledWith(retrievalCollectionRecord)
   })
 
   test('correctly rolls back the transaction on failure', async () => {
@@ -207,7 +207,7 @@ describe('submitOrder', () => {
       }
     })
 
-    const orderResponse = await submitOrder(badOrderPayload)
+    const orderResponse = await submitRetrieval(badOrderPayload)
 
     const { queries } = dbTracker.queries
 
