@@ -9,7 +9,7 @@ function setup() {
   const props = {
     location: {},
     onMasterOverlayHeightChange: jest.fn(),
-    onSubmitOrder: jest.fn()
+    onSubmitRetrieval: jest.fn()
   }
 
   const enzymeWrapper = shallow(<Project {...props} />)
@@ -27,12 +27,12 @@ describe('Project component', () => {
     expect(enzymeWrapper.exists()).toBeTruthy()
   })
 
-  test('handleSubmit calls onSubmitOrder', () => {
+  test('handleSubmit calls onSubmitRetrieval', () => {
     const { enzymeWrapper, props } = setup()
 
     const form = enzymeWrapper.find('form')
 
     form.simulate('submit', { preventDefault: jest.fn() })
-    expect(props.onSubmitOrder.mock.calls.length).toBe(1)
+    expect(props.onSubmitRetrieval.mock.calls.length).toBe(1)
   })
 })

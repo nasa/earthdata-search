@@ -11,30 +11,30 @@ import './OrderStatus.scss'
 
 export class OrderStatus extends Component {
   componentDidMount() {
-    const { onFetchOrder, match, authToken } = this.props
+    const { onFetchRetrieval, match, authToken } = this.props
     if (authToken !== '') {
       const { params } = match
       const { id: orderId } = params
       // TODO: There is probably a better way to kick off this call in a container
-      onFetchOrder(orderId, authToken)
+      onFetchRetrieval(orderId, authToken)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { onFetchOrder, match, authToken } = this.props
+    const { onFetchRetrieval, match, authToken } = this.props
     if (authToken !== nextProps.authToken && nextProps.authToken !== '') {
       const { params } = match
       const { id: orderId } = params
-      onFetchOrder(orderId, nextProps.authToken)
+      onFetchRetrieval(orderId, nextProps.authToken)
     }
   }
 
   render() {
-    const { order = {}, onChangePath } = this.props
-    const { jsondata = {}, links = [] } = order
+    const { retrieval = {}, onChangePath } = this.props
+    const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
 
-    const { id, collections } = order
+    const { id, collections } = retrieval
 
     const {
       download: downloads = [],
@@ -101,7 +101,7 @@ export class OrderStatus extends Component {
                     heading="Customize Product"
                     introduction={"When the data for the following orders become available, links will be displayed below and sent to the email address you've provided."}
                     collections={esiOrders}
-                    type="esi_order"
+                    type="esi"
                     onChangePath={onChangePath}
                   />
                 )
@@ -186,9 +186,9 @@ export class OrderStatus extends Component {
 
 OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onFetchOrder: PropTypes.func.isRequired,
+  onFetchRetrieval: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
-  order: PropTypes.shape({}).isRequired,
+  retrieval: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired
 }
 

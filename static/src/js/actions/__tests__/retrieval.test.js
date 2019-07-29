@@ -3,9 +3,9 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  submitOrder,
-  fetchOrder
-} from '../order'
+  submitRetrieval,
+  fetchRetrieval
+} from '../retrieval'
 
 const mockStore = configureMockStore([thunk])
 
@@ -13,7 +13,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('submitOrder', () => {
+describe('submitRetrieval', () => {
   beforeEach(() => {
     moxios.install()
 
@@ -25,7 +25,7 @@ describe('submitOrder', () => {
   })
 
   test('calls lambda to submit an order', async () => {
-    moxios.stubRequest(/\/orders/, {
+    moxios.stubRequest(/retrievals.*/, {
       status: 200,
       response: {
         id: 7
@@ -78,7 +78,7 @@ describe('submitOrder', () => {
     })
 
     // call the dispatch
-    await store.dispatch(submitOrder()).then(() => {
+    await store.dispatch(submitRetrieval()).then(() => {
       expect(store.getActions().length).toEqual(1)
       expect(store.getActions()[0]).toEqual({
         payload: {
@@ -91,7 +91,7 @@ describe('submitOrder', () => {
   })
 
   test('does not call updateCollectionResults on error', async () => {
-    moxios.stubRequest(/orders.*/, {
+    moxios.stubRequest(/retrievals.*/, {
       status: 500,
       response: {}
     })
@@ -141,13 +141,13 @@ describe('submitOrder', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    await store.dispatch(submitOrder()).then(() => {
+    await store.dispatch(submitRetrieval()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })
 
-describe('fetchOrder', () => {
+describe('fetchRetrieval', () => {
   beforeEach(() => {
     moxios.install()
 
@@ -259,7 +259,7 @@ describe('fetchOrder', () => {
     })
 
     // call the dispatch
-    await store.dispatch(fetchOrder(7)).then(() => {
+    await store.dispatch(fetchRetrieval(7)).then(() => {
       expect(store.getActions().length).toEqual(1)
       expect(store.getActions()[0]).toEqual({
         payload: {
@@ -336,7 +336,7 @@ describe('fetchOrder', () => {
             }
           ]
         },
-        type: 'UPDATE_ORDER'
+        type: 'UPDATE_RETRIEVAL'
       })
     })
   })
@@ -391,7 +391,7 @@ describe('fetchOrder', () => {
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
-    await store.dispatch(fetchOrder()).then(() => {
+    await store.dispatch(fetchRetrieval()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

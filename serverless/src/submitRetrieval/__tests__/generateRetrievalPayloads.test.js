@@ -1,12 +1,12 @@
-import { generateOrderPayloads } from '../generateOrderPayloads'
+import { generateRetrievalPayloads } from '../generateRetrievalPayloads'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('generateOrderPayloads', () => {
+describe('generateRetrievalPayloads', () => {
   test('returns the correct payload for a single page', async () => {
-    const orderPayloads = await generateOrderPayloads(
+    const orderPayloads = await generateRetrievalPayloads(
       {
         id: 19,
         access_method: {
@@ -32,7 +32,7 @@ describe('generateOrderPayloads', () => {
   })
 
   test('returns the correct payload for multiple pages', async () => {
-    const orderPayloads = await generateOrderPayloads(
+    const orderPayloads = await generateRetrievalPayloads(
       {
         id: 19,
         access_method: {
