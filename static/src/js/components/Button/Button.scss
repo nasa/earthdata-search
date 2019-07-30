@@ -10,10 +10,16 @@
   }
 
   &--link {
+    padding: 0;
+    vertical-align: baseline;
     border: 0;
 
     .button__icon {
       margin-right: $spacer/4;
+    }
+
+    .button__contents {
+      vertical-align: baseline;
     }
   }
 

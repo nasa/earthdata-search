@@ -20,6 +20,8 @@ import ConnectedEdscMapContainer
   from './containers/MapContainer/MapContainer'
 import ConnectedAuthCallbackContainer
   from './containers/AuthCallbackContainer/AuthCallbackContainer'
+import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
+import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 // const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -35,6 +37,10 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+  }
+
+  componentDidMount() {
+    this.shapefileDropzoneRef = React.createRef()
   }
 
   render() {
@@ -86,6 +92,12 @@ class App extends Component {
                 </Route>
               </Switch>
               <FooterContainer />
+              <Switch>
+                <Route path="/">
+                  <ShapefileUploadModalContainer />
+                  <ShapefileDropzoneContainer />
+                </Route>
+              </Switch>
             </ConnectedUrlQueryContainer>
           </ConnectedAuthTokenContainer>
         </ConnectedRouter>

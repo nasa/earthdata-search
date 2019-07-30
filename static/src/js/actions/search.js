@@ -71,7 +71,8 @@ export const removeSpatialFilter = () => (dispatch) => {
   dispatch(actions.updateShapefile({
     shapefileName: undefined,
     shapefileId: undefined,
-    shapefileSize: undefined
+    shapefileSize: undefined,
+    shapefileError: false
   }))
 }
 

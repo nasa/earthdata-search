@@ -114,11 +114,17 @@ describe('SpatialDisplay component', () => {
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    // expect(enzymeWrapper.debug()).toEqual(true)
 
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
-    expect(filterStackContents.props().title).toEqual('Shapefile')
-    expect(filterStackContents.props().body.props.children.props.children).toEqual(['test file', '42 KB'])
+    expect(filterStackContents.props().title).toEqual('Shape File')
+
+    const fileWrapper = filterStackContents.props().body.props.children.props.children.props.children
+    const fileName = fileWrapper[0].props.children
+    const fileSize = fileWrapper[1].props.children
+    expect(fileName).toEqual('test file')
+    expect(fileSize).toEqual('(42 KB)')
   })
 
   test('with grid should render the spatial info', () => {

@@ -1,3 +1,11 @@
+.modal-backdrop {
+  transition: all 0.2s ease;
+
+  .is-dragging & {
+    background-color: $color__green;
+  }
+}
+
 .modal {
   .modal-title {
     font-size: 1em;

@@ -9,6 +9,7 @@
   }
 
   &__form-row {
+    align-items: center;
     margin-left: 0;
     margin-right: 0;
   }
@@ -38,5 +39,19 @@
       color: $color__white;
       background-color: $color__black--600;
     }
+  }
+
+  &__text-primary {
+    max-width: 19rem;
+    margin-left: $spacer/4;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-style: italic;
+  }
+
+  &__text-secondary {
+    margin-left: $spacer/2;
+    color: $color__black--400;
+    font-size: 0.75rem;
   }
 }

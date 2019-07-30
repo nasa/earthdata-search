@@ -54,7 +54,8 @@ import {
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
   toggleDrawingNewLayer,
-  toggleSelectingNewGrid
+  toggleSelectingNewGrid,
+  toggleShapefileUploadModal
 } from './ui'
 import {
   applyViewAllFacets,
@@ -81,19 +82,23 @@ import { fetchOrder, submitOrder } from './order'
 import {
   fetchAccessMethods
 } from './accessMethods'
-import { saveShapefile, updateShapefile } from './shapefiles'
+import {
+  saveShapefile,
+  shapefileErrored,
+  updateShapefile
+} from './shapefiles'
 
 const actions = {
   addAccessMethods,
-  addProjectCollection,
   addGranulesFromCollection,
+  addProjectCollection,
   applyViewAllFacets,
   changeCmrFacet,
   changeCollectionPageNum,
-  changeGranuleGridCoords,
   changeFeatureFacet,
   changeFocusedCollection,
   changeFocusedGranule,
+  changeGranuleGridCoords,
   changeGranulePageNum,
   changeMap,
   changePath,
@@ -106,6 +111,7 @@ const actions = {
   clearFilters,
   excludeGranule,
   fetchAccessMethods,
+  fetchGranuleLinks,
   fetchOrder,
   getCollections,
   getFocusedCollection,
@@ -121,8 +127,6 @@ const actions = {
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
   masterOverlayPanelToggle,
-  toggleDrawingNewLayer,
-  toggleSelectingNewGrid,
   removeCollectionFromProject,
   removeGridFilter,
   removeSpatialFilter,
@@ -132,24 +136,27 @@ const actions = {
   saveShapefile,
   searchNlp,
   selectAccessMethod,
+  setGranuleDownloadParams,
+  shapefileErrored,
   submitOrder,
   toggleCollectionVisibility,
-  toggleOverrideTemporalModal,
+  toggleDrawingNewLayer,
   toggleFacetsModal,
+  toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
+  toggleSelectingNewGrid,
+  toggleShapefileUploadModal,
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,
   updateAuthToken,
   updateCmrFacet,
   updateFeatureFacet,
-  fetchGranuleLinks,
-  setGranuleDownloadParams,
   updateGranuleMetadata,
   updateGranuleResults,
   updateShapefile,
-  viewCollectionGranules,
-  viewCollectionDetails
+  viewCollectionDetails,
+  viewCollectionGranules
 }
 
 export default actions

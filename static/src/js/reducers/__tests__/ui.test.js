@@ -8,7 +8,8 @@ import {
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
-  TOGGLE_OVERRIDE_TEMPORAL_MODAL
+  TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -37,6 +38,9 @@ const initialState = {
     isOpen: false
   },
   relatedUrlsModal: {
+    isOpen: false
+  },
+  shapefileUploadModal: {
     isOpen: false
   }
 }
@@ -262,5 +266,21 @@ describe('TOGGLE_RELATED_URLS_MODAL', () => {
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+
+  describe('TOGGLE_SHAPEFILE_UPLOAD_MODAL', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+        payload: true
+      }
+
+      const expectedState = {
+        ...initialState,
+        shapefileUploadModal: { isOpen: true }
+      }
+
+      expect(uiReducer(undefined, action)).toEqual(expectedState)
+    })
   })
 })
