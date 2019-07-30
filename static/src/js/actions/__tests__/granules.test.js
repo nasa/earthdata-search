@@ -384,116 +384,12 @@ describe('updateGranuleLinks', () => {
   })
 })
 
-<<<<<<< HEAD
-=======
-describe('fetchGranuleLinks', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
-  test('calls lambda to get the retrieval collection details', async () => {
-    const endpointResponse = {
-      id: 3,
-      environment: 'sit',
-      access_method: {
-        type: 'download'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
-      },
-      granule_count: 888
-    }
-
-    moxios.stubRequest(/3001\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
-      status: 200,
-      response: endpointResponse
-    })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      collection_id: 'C10000005-EDSC'
-    }
-
-    await store.dispatch(fetchGranuleLinks(params, 'token'))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        ...endpointResponse
-      },
-      type: UPDATE_GRANULE_DOWNLOAD_PARAMS
-    })
-  })
-
-  test('takes no actions if parameters are missing', () => {
-    const store = mockStore({
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        },
-        granule: { pageNum: 1 }
-      }
-    })
-
-    const params = {
-      id: 3
-    }
-
-    store.dispatch(fetchGranuleLinks(params, 'token'))
-    const storeActions = store.getActions()
-    expect(storeActions.length).toEqual(0)
-  })
-
-  test('takes no action when the request fails', async () => {
-    moxios.stubRequest(/3001\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
-      status: 404,
-      response: {
-        errors: [
-          'Retrieval Collection \'C10000005-EDSC\' (for Retrieval \'3\') not found'
-        ]
-      }
-    })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
-
-    const params = {
-      id: 3,
-      collection_id: 'C10000005-EDSC'
-    }
-
-    await store.dispatch(fetchGranuleLinks(params, 'token'))
-    expect(consoleMock).toHaveBeenCalledTimes(1)
-  })
-})
-
->>>>>>> EDSC-2216: Renames retrieval endpoints and actions
 describe('fetchLinks', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-<<<<<<< HEAD
   test('calls lambda to get the granules from cmr', async () => {
-=======
-  test('calls lambda to get the retrieval collection details', async () => {
->>>>>>> EDSC-2216: Renames retrieval endpoints and actions
     nock(/localhost/)
       .post(/granules/)
       .reply(200, {
