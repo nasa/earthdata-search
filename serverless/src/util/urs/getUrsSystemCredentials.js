@@ -9,7 +9,7 @@ const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 export const getUrsSystemCredentials = async (ursSystemCredentials) => {
   if (ursSystemCredentials === null) {
     if (process.env.NODE_ENV === 'development') {
-      const { cmrSystemUsername, cmrSystemPassword } = getSecretEarthdataConfig('prod')
+      const { cmrSystemUsername, cmrSystemPassword } = getSecretEarthdataConfig('sit')
 
       return {
         username: cmrSystemUsername,

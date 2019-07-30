@@ -153,7 +153,7 @@ describe('Request#handleUnauthorized', () => {
     window.location = { href: returnPath }
 
     request.handleUnauthorized(data)
-    expect(window.location.href).toEqual(`http://localhost:3001/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`)
+    expect(window.location.href).toEqual(`http://localhost:3001/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`)
   })
 
   test('does not redirect if the response is valid', () => {

@@ -30,7 +30,7 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
         uri: url,
         resolveWithFullResponse: true,
         headers: {
-          'Client-Id': getClientId('prod').lambda,
+          'Client-Id': getClientId('sit').lambda,
           'Echo-Token': `${accessToken}:${clientId}`
         }
       })

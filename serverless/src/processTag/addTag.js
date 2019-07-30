@@ -82,11 +82,11 @@ export async function addTag({
   // After setting associationData ensure that it has content, if no content
   if (associationData) {
     try {
-      const addTagUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations`
+      const addTagUrl = `${getEarthdataConfig('sit').cmrHost}/search/tags/${tagName}/associations`
       await request.post({
         uri: addTagUrl,
         headers: {
-          'Client-Id': getClientId('prod').background,
+          'Client-Id': getClientId('sit').background,
           'Echo-Token': cmrToken
         },
         body: associationData,
@@ -103,12 +103,12 @@ export async function addTag({
   try {
     // If no tagData was provided, and granules are not required we dont need to ask CMR
     // for anything, so we'll just associate the tag with all collections that match the searchCriteria
-    const tagRemovalUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations/by_query`
+    const tagRemovalUrl = `${getEarthdataConfig('sit').cmrHost}/search/tags/${tagName}/associations/by_query`
 
     await request.post({
       uri: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId('prod').background,
+        'Client-Id': getClientId('sit').background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

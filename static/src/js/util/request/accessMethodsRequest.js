@@ -3,7 +3,7 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 export default class AccessMethodsRequest extends Request {
   constructor(authToken) {
-    super(getEarthdataConfig('prod').apiHost)
+    super(getEarthdataConfig('sit').apiHost)
     this.authenticated = true
     this.authToken = authToken
     this.searchPath = '/access_methods'

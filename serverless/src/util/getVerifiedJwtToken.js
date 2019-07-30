@@ -7,7 +7,7 @@ import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
  * @param {String} jwtToken
  */
 export const getVerifiedJwtToken = (jwtToken) => {
-  const { secret } = getSecretEarthdataConfig('prod')
+  const { secret } = getSecretEarthdataConfig('sit')
   const verifiedJwtToken = jwt.verify(jwtToken, secret)
   return verifiedJwtToken
 }

@@ -7,13 +7,13 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 export default class TimelineRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super(getEarthdataConfig('prod').apiHost)
+      super(getEarthdataConfig('sit').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules/timeline'
     } else {
-      super(getEarthdataConfig('prod').cmrHost)
+      super(getEarthdataConfig('sit').cmrHost)
 
       this.searchPath = 'search/granules/timeline'
     }

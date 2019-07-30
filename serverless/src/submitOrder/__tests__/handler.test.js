@@ -57,7 +57,7 @@ describe('submitOrder', () => {
         query.response([{
           id: 1,
           user_id: 19,
-          environment: 'prod'
+          environment: 'sit'
         }])
       } else if (step === 4) {
         query.response([{
@@ -100,7 +100,7 @@ describe('submitOrder', () => {
     const { body } = orderResponse
 
     expect(JSON.parse(body)).toEqual({
-      environment: 'prod',
+      environment: 'sit',
       id: 1,
       user_id: 19
     })
@@ -128,7 +128,7 @@ describe('submitOrder', () => {
         query.response([{
           id: 1,
           user_id: 19,
-          environment: 'prod'
+          environment: 'sit'
         }])
       } else if (step === 4) {
         query.response([retreivalCollectionRecord])
@@ -184,7 +184,7 @@ describe('submitOrder', () => {
     const { body } = orderResponse
 
     expect(JSON.parse(body)).toEqual({
-      environment: 'prod',
+      environment: 'sit',
       id: 1,
       user_id: 19
     })

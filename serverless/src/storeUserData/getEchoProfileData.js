@@ -18,14 +18,14 @@ export const getEchoProfileData = async (token) => {
     const { client } = edlConfig
     const { id: clientId } = client
 
-    const { echoRestRoot } = getEarthdataConfig('prod')
+    const { echoRestRoot } = getEarthdataConfig('sit')
 
     const echoRestProfileUrl = `${echoRestRoot}/users/current.json`
 
     const echoRestProfileResponse = await request.get({
       uri: echoRestProfileUrl,
       headers: {
-        'Client-Id': getClientId('prod').lambda,
+        'Client-Id': getClientId('sit').lambda,
         'Echo-Token': `${token}:${clientId}`
       },
       json: true,

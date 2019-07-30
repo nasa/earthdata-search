@@ -18,7 +18,7 @@ const getCwicGranulesUrl = async (collectionId) => {
       uri: collectionTemplate,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').lambda
+        'Client-Id': getClientId('sit').lambda
       }
     })
 
@@ -155,7 +155,7 @@ export default async function cwicGranuleSearch(event) {
       uri: renderedTemplate,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').lambda
+        'Client-Id': getClientId('sit').lambda
       }
     })
 

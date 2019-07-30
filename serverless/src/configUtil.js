@@ -11,7 +11,7 @@ const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 export const buildOauthConfig = clientConfig => ({
   client: clientConfig,
   auth: {
-    tokenHost: getEarthdataConfig('prod').edlHost
+    tokenHost: getEarthdataConfig('sit').edlHost
   }
 })
 
@@ -22,7 +22,7 @@ export const buildOauthConfig = clientConfig => ({
 export const getEdlConfig = async () => {
   try {
     if (process.env.NODE_ENV === 'development') {
-      const { clientId, password } = getSecretEarthdataConfig('prod')
+      const { clientId, password } = getSecretEarthdataConfig('sit')
 
       return buildOauthConfig({
         id: clientId,

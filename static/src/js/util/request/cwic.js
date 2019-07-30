@@ -5,7 +5,7 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 export default class CwicGranuleRequest extends Request {
   constructor() {
-    super(getEarthdataConfig('prod').apiHost)
+    super(getEarthdataConfig('sit').apiHost)
     this.lambda = true
     this.searchPath = 'cwic/granules'
   }

@@ -19,7 +19,7 @@ describe('getClientId', () => {
       client: 'eed-edsc-prod-serverless-client',
       lambda: 'eed-edsc-prod-serverless-lambda'
     }
-    expect(getClientId('prod')).toEqual(clientId)
+    expect(getClientId('sit')).toEqual(clientId)
   })
 
   test('returns the clientId object for test', () => {
@@ -31,7 +31,7 @@ describe('getClientId', () => {
       lambda: 'eed-edsc-test-serverless-lambda'
     }
 
-    expect(getClientId('prod')).toEqual(clientId)
+    expect(getClientId('sit')).toEqual(clientId)
   })
 
   test('returns the clientId object for development', () => {
@@ -43,6 +43,6 @@ describe('getClientId', () => {
       lambda: 'eed-edsc-dev-serverless-lambda'
     }
 
-    expect(getClientId('prod')).toEqual(clientId)
+    expect(getClientId('sit')).toEqual(clientId)
   })
 })

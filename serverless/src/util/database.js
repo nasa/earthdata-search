@@ -9,7 +9,7 @@ const secretsmanager = new AWS.SecretsManager()
 export const getDbCredentials = async (dbCredentials) => {
   if (dbCredentials === null) {
     if (process.env.NODE_ENV === 'development') {
-      const { dbUsername, dbPassword } = getSecretEarthdataConfig('prod')
+      const { dbUsername, dbPassword } = getSecretEarthdataConfig('sit')
 
       return {
         username: dbUsername,

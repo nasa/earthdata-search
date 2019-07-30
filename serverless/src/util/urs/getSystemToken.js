@@ -27,7 +27,7 @@ export const getSystemToken = async (providedToken) => {
     user_ip_address: '127.0.0.1'
   }
 
-  const authenticationUrl = `${getEarthdataConfig('prod').cmrHost}/legacy-services/rest/tokens.json`
+  const authenticationUrl = `${getEarthdataConfig('sit').cmrHost}/legacy-services/rest/tokens.json`
   const tokenResponse = await request.post({
     uri: authenticationUrl,
     body: {
@@ -36,7 +36,7 @@ export const getSystemToken = async (providedToken) => {
     json: true,
     resolveWithFullResponse: true,
     headers: {
-      'Client-Id': getClientId('prod').background
+      'Client-Id': getClientId('sit').background
     }
   })
 

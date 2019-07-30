@@ -47,7 +47,7 @@ async function edlAuthorizer(event) {
 
   try {
     // Pull the secret used to encrypt our jwtTokens
-    const { secret } = getSecretEarthdataConfig('prod')
+    const { secret } = getSecretEarthdataConfig('sit')
 
     return jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
       if (verifyError) {

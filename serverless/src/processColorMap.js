@@ -61,7 +61,7 @@ export default async function processColorMap(event, context) {
       uri: providedColorMap.url,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').background
+        'Client-Id': getClientId('sit').background
       }
     })
 

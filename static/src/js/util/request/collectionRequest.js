@@ -10,13 +10,13 @@ import unavailableImg from '../../../assets/images/image-unavailable.svg'
 export default class CollectionRequest extends Request {
   constructor(authToken) {
     if (authToken && authToken !== '') {
-      super(getEarthdataConfig('prod').apiHost)
+      super(getEarthdataConfig('sit').apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'collections'
     } else {
-      super(getEarthdataConfig('prod').cmrHost)
+      super(getEarthdataConfig('sit').cmrHost)
 
       // We do not define an extension here. It will be added in the search method.
       this.searchPath = 'search/collections'
@@ -133,7 +133,7 @@ export default class CollectionRequest extends Request {
 
       if (collection.id) {
         transformedCollection.thumbnail = collection.browse_flag
-          ? `${getEarthdataConfig('prod').cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
+          ? `${getEarthdataConfig('sit').cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
           : unavailableImg
       }
 

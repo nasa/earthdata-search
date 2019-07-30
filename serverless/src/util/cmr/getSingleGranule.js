@@ -20,14 +20,14 @@ export const getSingleGranule = async (collectionId) => {
   }
 
   try {
-    const granuleSearchUrl = `${getEarthdataConfig('prod').cmrHost}/search/granules.json?${stringify(cmrParams)}`
+    const granuleSearchUrl = `${getEarthdataConfig('sit').cmrHost}/search/granules.json?${stringify(cmrParams)}`
 
     const cmrResponse = await request.get({
       uri: granuleSearchUrl,
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').background
+        'Client-Id': getClientId('sit').background
       }
     })
     const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)

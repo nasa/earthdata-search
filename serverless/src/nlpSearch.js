@@ -26,7 +26,7 @@ export default function search(event, context, callback) {
   // Transform the query string hash to an encoded url string
   const queryParams = qs.stringify(obj)
 
-  const nlpUrl = `${getEarthdataConfig('prod').nlpHost}/nlp?${queryParams}`
+  const nlpUrl = `${getEarthdataConfig('sit').nlpHost}/nlp?${queryParams}`
 
   console.log(`NLP Query: ${nlpUrl}`)
 

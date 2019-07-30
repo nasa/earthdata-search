@@ -69,10 +69,10 @@ const submitLegacyServicesOrder = async (event, context) => {
     try {
       // 1. Submit an empty order
       const emptyOrderResponse = await request.post({
-        uri: `${getEarthdataConfig('prod').echoRestRoot}/orders.json`,
+        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders.json`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('prod').background
+          'Client-Id': getClientId('sit').background
         },
         body: { order: {} },
         json: true,
@@ -88,10 +88,10 @@ const submitLegacyServicesOrder = async (event, context) => {
       )
 
       await request.post({
-        uri: `${getEarthdataConfig('prod').echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
+        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('prod').background
+          'Client-Id': getClientId('sit').background
         },
         body: orderItemPayload,
         json: true,
@@ -102,10 +102,10 @@ const submitLegacyServicesOrder = async (event, context) => {
       const userInformationPayload = await constructUserInformationPayload(echoProfile, ursProfile)
 
       await request.put({
-        uri: `${getEarthdataConfig('prod').echoRestRoot}/orders/${orderId}/user_information`,
+        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders/${orderId}/user_information`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('prod').background
+          'Client-Id': getClientId('sit').background
         },
         body: userInformationPayload,
         json: true,
@@ -114,10 +114,10 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       // 4. Submit the order
       await request.post({
-        uri: `${getEarthdataConfig('prod').echoRestRoot}/orders/${orderId}/submit`,
+        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders/${orderId}/submit`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('prod').background
+          'Client-Id': getClientId('sit').background
         },
         json: true,
         resolveWithFullResponse: true
