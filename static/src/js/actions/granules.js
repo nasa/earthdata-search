@@ -151,7 +151,7 @@ export const fetchGranuleLinks = data => (dispatch, getState) => {
   if (retrievalId && collectionId) {
     const { authToken } = getState()
 
-    const { apiHost } = getEarthdataConfig('prod')
+    const { apiHost } = getEarthdataConfig('sit')
 
     // Fetch the retrieval collection data so we know what
     // granule parameters were provided in the order

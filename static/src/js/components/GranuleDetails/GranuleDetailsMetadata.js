@@ -13,7 +13,7 @@ export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
     'iso19115'
   ]
 
-  const { apiHost } = getEarthdataConfig('prod')
+  const { apiHost } = getEarthdataConfig('sit')
 
   return (
     <div className="granule-details-metadata">

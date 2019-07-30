@@ -19,13 +19,13 @@ export const buildUrls = (json, authToken) => {
     { ext: 'dif', title: 'DIF' }
   ]
 
-  const eartdataConfig = getEarthdataConfig('prod')
+  const eartdataConfig = getEarthdataConfig('sit')
   const {
     apiHost,
     cmrHost,
     opensearchRoot
   } = eartdataConfig
-  const cmrClientId = getClientId('prod').client
+  const cmrClientId = getClientId('sit').client
 
   const urls = {}
 

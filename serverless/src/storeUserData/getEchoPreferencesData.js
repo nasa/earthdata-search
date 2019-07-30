@@ -19,14 +19,14 @@ export const getEchoPreferencesData = async (username, token) => {
     const { client } = edlConfig
     const { id: clientId } = client
 
-    const { echoRestRoot } = getEarthdataConfig('prod')
+    const { echoRestRoot } = getEarthdataConfig('sit')
 
     const echoRestPreferencesUrl = `${echoRestRoot}/users/${username}/preferences.json`
 
     const echoRestPreferencesResponse = await request.get({
       uri: echoRestPreferencesUrl,
       headers: {
-        'Client-Id': getClientId('prod').lambda,
+        'Client-Id': getClientId('sit').lambda,
         'Echo-Token': `${token}:${clientId}`
       },
       json: true,

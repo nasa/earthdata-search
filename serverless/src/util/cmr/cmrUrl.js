@@ -8,7 +8,7 @@ import { getEarthdataConfig } from '../../../../sharedUtils/config'
  * @return {String} A completed and valid url to CMR
  */
 export const cmrUrl = (path, queryParams = {}) => {
-  const baseUrl = `${getEarthdataConfig('prod').cmrHost}/${path}`
+  const baseUrl = `${getEarthdataConfig('sit').cmrHost}/${path}`
 
   if (Object.keys(queryParams).length) {
     return `${baseUrl}?${stringify(queryParams, { indices: false, arrayFormat: 'brackets' })}`

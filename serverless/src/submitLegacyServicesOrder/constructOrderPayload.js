@@ -23,7 +23,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
     uri: cmrUrl('search/granules.json', granuleParams),
     headers: {
       'Echo-Token': accessTokenWithClient,
-      'Client-Id': getClientId('prod').background
+      'Client-Id': getClientId('sit').background
     },
     json: true,
     resolveWithFullResponse: true
@@ -35,7 +35,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
   const granuleOrderOptions = []
 
   // Ensure that only orders that apply to the requested option definition are selected
-  const optionInformationUrl = `${getEarthdataConfig('prod').echoRestRoot}/order_information.json`
+  const optionInformationUrl = `${getEarthdataConfig('sit').echoRestRoot}/order_information.json`
   const optionInformationResponse = await request.post({
     uri: optionInformationUrl,
     form: stringify({
@@ -44,7 +44,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': accessTokenWithClient,
-      'Client-Id': getClientId('prod').background
+      'Client-Id': getClientId('sit').background
     },
     json: true,
     resolveWithFullResponse: true

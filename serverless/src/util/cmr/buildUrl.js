@@ -25,7 +25,7 @@ export const buildURL = (paramObj) => {
   // Transform the query string hash to an encoded url string
   const queryParams = cmrStringify(obj, nonIndexedKeys)
 
-  const url = `${getEarthdataConfig('prod').cmrHost}${path}?${queryParams}`
+  const url = `${getEarthdataConfig('sit').cmrHost}${path}?${queryParams}`
 
   console.log(`CMR Query: ${url}`)
 

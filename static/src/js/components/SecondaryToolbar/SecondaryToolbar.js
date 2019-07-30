@@ -57,7 +57,7 @@ class SecondaryToolbar extends Component {
           <Button
             className="secondary-toolbar__project"
             bootstrapVariant="light"
-            href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(projectPath)}`}
+            href={`${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
           >
             My Project
@@ -89,7 +89,7 @@ class SecondaryToolbar extends Component {
       <Button
         className="secondary-toolbar__login"
         bootstrapVariant="light"
-        href={`${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`}
+        href={`${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`}
         icon="lock"
         label="Login"
       >

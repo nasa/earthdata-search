@@ -19,7 +19,7 @@ export class AuthRequiredContainer extends Component {
     const returnPath = window.location.href
 
     if (token === null) {
-      window.location.href = `${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`
     } else {
       this.setState({ isLoggedIn: true })
     }

@@ -73,7 +73,7 @@ const submitCatalogRestOrder = async (event, context) => {
       uri: cmrUrl('search/granules.json', granuleParams),
       headers: {
         'Echo-Token': accessTokenWithClient,
-        'Client-Id': getClientId('prod').background
+        'Client-Id': getClientId('sit').background
       },
       json: true,
       resolveWithFullResponse: true
@@ -82,7 +82,7 @@ const submitCatalogRestOrder = async (event, context) => {
     const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
 
     // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${getEarthdataConfig('prod').edscHost}/data/retrieve/${retrievalId}`
+    const edscStatusUrl = `${getEarthdataConfig('sit').edscHost}/data/retrieve/${retrievalId}`
 
     const { model, url } = accessMethod
 
@@ -109,7 +109,7 @@ const submitCatalogRestOrder = async (event, context) => {
         form: orderPayload,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('prod').background
+          'Client-Id': getClientId('sit').background
         },
         resolveWithFullResponse: true
       })

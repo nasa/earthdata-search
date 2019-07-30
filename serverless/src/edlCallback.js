@@ -18,7 +18,7 @@ const edlCallback = async (event) => {
     apiHost,
     edscHost,
     redirectUriPath
-  } = getEarthdataConfig('prod')
+  } = getEarthdataConfig('sit')
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)
@@ -35,7 +35,7 @@ const edlCallback = async (event) => {
   const { access_token: accessToken, endpoint } = token
   const username = endpoint.split('/').pop()
 
-  const { secret } = getSecretEarthdataConfig('prod')
+  const { secret } = getSecretEarthdataConfig('sit')
 
   // Create a JWT token from the EDL token
   const jwtToken = jwt.sign({ token }, secret)

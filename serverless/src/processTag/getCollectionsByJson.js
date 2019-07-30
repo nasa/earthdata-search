@@ -12,13 +12,13 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
  * @return {Object} The response body from CMR
  */
 export async function getCollectionsByJson(queryParams, searchCriteria, cmrToken) {
-  const collectionUrl = `${getEarthdataConfig('prod').cmrHost}/search/collections.json?${stringify(queryParams)}`
+  const collectionUrl = `${getEarthdataConfig('sit').cmrHost}/search/collections.json?${stringify(queryParams)}`
 
   try {
     const collectionResponse = await request.post({
       uri: collectionUrl,
       headers: {
-        'Client-Id': getClientId('prod').background,
+        'Client-Id': getClientId('sit').background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

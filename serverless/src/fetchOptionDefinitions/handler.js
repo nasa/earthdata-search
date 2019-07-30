@@ -26,7 +26,7 @@ const fetchOptionDefinitions = async (event, context) => {
 
   cmrToken = await getSystemToken(cmrToken)
 
-  const { echoRestRoot } = getEarthdataConfig('prod')
+  const { echoRestRoot } = getEarthdataConfig('sit')
 
   // Retrieve option definition data for the collections pertaining to the echo orders tag
   const optionDefinitionUrl = `${echoRestRoot}/order_information.json`
@@ -50,7 +50,7 @@ const fetchOptionDefinitions = async (event, context) => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken,
-          'Client-Id': getClientId('prod').background
+          'Client-Id': getClientId('sit').background
         },
         json: true,
         resolveWithFullResponse: true

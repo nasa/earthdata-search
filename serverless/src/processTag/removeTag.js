@@ -8,13 +8,13 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
  * @return {Object} An object representing the CMR tag association response
  */
 export async function removeTag(tagName, searchCriteria, cmrToken) {
-  const tagRemovalUrl = `${getEarthdataConfig('prod').cmrHost}/search/tags/${tagName}/associations/by_query`
+  const tagRemovalUrl = `${getEarthdataConfig('sit').cmrHost}/search/tags/${tagName}/associations/by_query`
 
   try {
     await request.delete({
       uri: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId('prod').background,
+        'Client-Id': getClientId('sit').background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

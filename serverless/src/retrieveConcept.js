@@ -7,7 +7,7 @@ import { getEarthdataConfig } from '../../sharedUtils/config'
  * Handler to perform an authenticated CMR concept search
  */
 function retrieveConcept(event) {
-  const conceptUrl = `${getEarthdataConfig('prod').cmrHost}`
+  const conceptUrl = `${getEarthdataConfig('sit').cmrHost}`
     + `/search/concepts/${event.pathParameters.id}?pretty=true`
 
   console.log(conceptUrl)

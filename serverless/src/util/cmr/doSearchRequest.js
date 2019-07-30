@@ -25,7 +25,7 @@ export const doSearchRequest = async (jwtToken, url) => {
       uri: url,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').lambda,
+        'Client-Id': getClientId('sit').lambda,
         'Echo-Token': `${token.token.access_token}:${clientId}`
       }
     })

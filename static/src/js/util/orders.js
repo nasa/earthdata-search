@@ -49,7 +49,7 @@ export const prepareOrderParams = (state) => {
   return {
     authToken,
     collections: [...projectCollections],
-    environment: 'prod',
+    environment: 'sit',
     json_data: jsonData
   }
 }

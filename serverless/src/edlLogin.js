@@ -18,7 +18,7 @@ const edlLogin = async (event, context, callback) => {
     apiHost,
     edlHost,
     redirectUriPath
-  } = getEarthdataConfig('prod')
+  } = getEarthdataConfig('sit')
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   callback(null, {

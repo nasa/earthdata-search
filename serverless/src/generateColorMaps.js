@@ -39,7 +39,7 @@ const getProjectionCapabilities = async (projection) => {
       uri: capabilitiesUrl,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').background
+        'Client-Id': getClientId('sit').background
       }
     })
 

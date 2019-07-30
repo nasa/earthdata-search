@@ -69,7 +69,7 @@ export default class Request {
 
       // Add the Client-Id header for requests directly to CMR
       // eslint-disable-next-line no-param-reassign
-      headers['Client-Id'] = getClientId('prod').client
+      headers['Client-Id'] = getClientId('sit').client
 
       return prepKeysForCmr(filteredData, this.nonIndexedKeys())
     }
@@ -152,7 +152,7 @@ export default class Request {
     if (data.statusCode === 401) {
       const returnPath = window.location.href
 
-      window.location.href = `${getEarthdataConfig('prod').apiHost}/login?cmr_env=${'prod'}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`
     }
   }
 }

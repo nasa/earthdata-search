@@ -35,16 +35,16 @@ const generateCollectionCapabilityTags = async (event) => {
     include_tags: 'edsc.extra.serverless.*,org.ceos.wgiss.cwic.granules.prod'
   }
 
-  const collectionSearchUrl = `${getEarthdataConfig('prod').cmrHost}/search/collections.json?${stringify(cmrParams)}`
+  const collectionSearchUrl = `${getEarthdataConfig('sit').cmrHost}/search/collections.json?${stringify(cmrParams)}`
 
   let cmrCollectionResponse
   try {
-    await request.get({
+    cmrCollectionResponse = await request.get({
       uri: collectionSearchUrl,
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('prod').background
+        'Client-Id': getClientId('sit').background
       }
     })
   } catch (e) {
