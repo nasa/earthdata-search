@@ -3,11 +3,11 @@ import 'array-foreach-async'
 
 import {
   getEarthdataConfig,
-  getSecretEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getEdlConfig } from '../configUtil'
 
 export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   const forms = []
@@ -15,13 +15,15 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
     const { id: guid } = optionDefinition
 
-    const url = `${getEarthdataConfig('prod').cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
-
-    // Get the access token and clientId to build the Echo-Token header
-    const { clientId } = getSecretEarthdataConfig('prod')
+    const url = `${getEarthdataConfig('sit').cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
 
     const { token } = getVerifiedJwtToken(jwtToken)
     const { access_token: accessToken } = token
+
+    // The client id is part of our Earthdata Login credentials
+    const edlConfig = await getEdlConfig()
+    const { client } = edlConfig
+    const { id: clientId } = client
 
     try {
       const response = await request.get({

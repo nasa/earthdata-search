@@ -16,7 +16,7 @@ export const getSystemToken = async (providedToken) => {
   const { username: dbUsername, password: dbPassword } = dbCredentials
 
   // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig(null)
+  const edlConfig = await getEdlConfig()
   const { client } = edlConfig
   const { id: clientId } = client
 

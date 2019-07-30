@@ -31,13 +31,11 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
   return authResponse
 }
 
-let edlConfig = null
-
 /**
  * API Gateway Authorizer to verify requets are authenticated
  */
 async function edlAuthorizer(event) {
-  edlConfig = await getEdlConfig(edlConfig)
+  const edlConfig = await getEdlConfig()
 
   if (!event.authorizationToken) {
     throw new Error('Unauthorized')

@@ -17,11 +17,16 @@ export const getUrsSystemCredentials = async (ursSystemCredentials) => {
       }
     }
 
-    // If not running in development mode fetch secrets from AWS
+    // Use a variable here for easier find/replace until cmr_env is implemented
+    const environment = 'sit'
+
+    console.log(`Fetching UrsSystemPasswordSecret_${environment}`)
+
     const params = {
-      SecretId: 'UrsSystemPasswordSecret'
+      SecretId: `UrsSystemPasswordSecret_${environment}`
     }
 
+    // If not running in development mode fetch secrets from AWS
     const secretValue = await secretsmanager.getSecretValue(params).promise()
 
     return JSON.parse(secretValue.SecretString)

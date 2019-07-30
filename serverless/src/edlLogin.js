@@ -1,14 +1,18 @@
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig } from '../../sharedUtils/config'
+import { getEdlConfig } from './configUtil'
 
 /**
  * Handler for redirecting the user to the correct EDL login URL
  */
-export default function edlLogin(event, context, callback) {
+const edlLogin = async (event, context, callback) => {
   const params = event.queryStringParameters
 
   const { state } = params
 
-  const { clientId } = getSecretEarthdataConfig('prod')
+  // The client id is part of our Earthdata Login credentials
+  const edlConfig = await getEdlConfig()
+  const { client } = edlConfig
+  const { id: clientId } = client
 
   const {
     apiHost,
@@ -24,3 +28,5 @@ export default function edlLogin(event, context, callback) {
     }
   })
 }
+
+export default edlLogin

@@ -1,9 +1,9 @@
 import request from 'request-promise'
 import {
   getEarthdataConfig,
-  getSecretEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
+import { getEdlConfig } from '../configUtil'
 
 /**
  * Retrieve URS profile data for the provided username
@@ -14,7 +14,9 @@ export const getUrsUserData = async (username, token) => {
   let userData = {}
 
   try {
-    const { clientId } = getSecretEarthdataConfig('prod')
+    const edlConfig = await getEdlConfig()
+    const { client } = edlConfig
+    const { id: clientId } = client
 
     const { edlHost } = getEarthdataConfig('prod')
 
