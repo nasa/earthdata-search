@@ -5,6 +5,7 @@ import { getClientId, getEarthdataConfig, getSecretEarthdataConfig } from '../..
 import { getDbConnection } from '../util/database/getDbConnection'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
+import { startOrderStatusUpdateWorkflow } from '../util/orderStatus'
 
 // Knex database connection object
 let dbConnection = null
@@ -120,6 +121,9 @@ const submitLegacyServicesOrder = async (event, context) => {
       })
 
       await dbConnection('retrieval_orders').update({ order_number: orderId }).where({ id })
+
+      // start the order status check workflow
+      startOrderStatusUpdateWorkflow(orderId, accessTokenWithClient)
     } catch (e) {
       console.log(e)
 

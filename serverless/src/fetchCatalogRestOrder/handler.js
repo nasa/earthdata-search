@@ -5,92 +5,83 @@ import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSecretEarthdataConfig, getClientId } from '../../../sharedUtils/config'
-
-// AWS SQS adapter
-let sqs
+import { normalizeCatalogRestOrderStatus } from '../util/orderStatus'
 
 // Knex database connection object
 let dbConnection = null
 
 let cmrToken
 
-const fetchCatalogRestOrder = async (event, context) => {
-  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-  // eslint-disable-next-line no-param-reassign
-  context.callbackWaitsForEmptyEventLoop = false
-
-  if (!sqs) {
-    sqs = new AWS.SQS({ apiVersion: '2012-11-05' })
-  }
-
+const fetchCatalogRestOrder = async (input) => {
   // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
-  const { Records: sqsRecords = [] } = event
-
-  console.log(`Processing ${sqsRecords.length} order(s)`)
-
   cmrToken = await getSystemToken(cmrToken)
 
-  await sqsRecords.forEachAsync(async (sqsRecord) => {
-    const { body } = sqsRecord
+  // Destruct the payload from the step function input
+  const {
+    accessToken,
+    id
+  } = JSON.parse(input)
 
-    // Destruct the payload from SQS
-    const {
-      accessToken,
-      id
-    } = JSON.parse(body)
+  const ursClientId = getSecretEarthdataConfig('prod').clientId
+  const accessTokenWithClient = `${accessToken}:${ursClientId}`
 
-    const ursClientId = getSecretEarthdataConfig('prod').clientId
-    const accessTokenWithClient = `${accessToken}:${ursClientId}`
-
-    // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
-    const retrievalRecord = await dbConnection('retrieval_orders')
-      .first(
-        'retrievals.id',
-        'retrieval_collections.access_method',
-        'retrieval_collections.granule_params',
-        'users.echo_profile',
-        'users.urs_profile'
-      )
-      .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
-      .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
-      .join('users', { 'retrievals.user_id': 'users.id' })
-      .where({
-        'retrieval_orders.id': id
-      })
-
-    const {
-      access_method: accessMethod
-    } = retrievalRecord
-
-    const { url } = accessMethod
-
-    const orderResponse = await request.get({
-      uri: `${url}/${id}`,
-      headers: {
-        'Echo-Token': accessTokenWithClient,
-        'Client-Id': getClientId('prod').background
-      },
-      resolveWithFullResponse: true
+  // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
+  const retrievalRecord = await dbConnection('retrieval_orders')
+    .first(
+      'retrievals.id',
+      'retrieval_collections.access_method',
+      'retrieval_collections.granule_params',
+      'users.echo_profile',
+      'users.urs_profile'
+    )
+    .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+    .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+    .join('users', { 'retrievals.user_id': 'users.id' })
+    .where({
+      'retrieval_orders.id': id
     })
 
-    const orderResponseBody = parseXml(orderResponse.body, {
-      ignoreAttributes: false,
-      attributeNamePrefix: ''
-    })
+  const {
+    access_method: accessMethod
+  } = retrievalRecord
 
-    const { order } = orderResponseBody
+  const { url } = accessMethod
 
-    // Updates the database with current order data
-    await dbConnection('retrieval_orders')
-      .update({
-        order_information: order
-      })
-      .where({
-        id
-      })
+  const orderResponse = await request.get({
+    uri: `${url}/${id}`,
+    headers: {
+      'Echo-Token': accessTokenWithClient,
+      'Client-Id': getClientId('prod').background
+    },
+    resolveWithFullResponse: true
   })
+
+  console.log('raw order response body:', orderResponse.body)
+
+  const orderResponseBody = parseXml(orderResponse.body, {
+    ignoreAttributes: false,
+    attributeNamePrefix: ''
+  })
+
+  console.log('parsed response body:', orderResponseBody)
+
+  const { 'eesi:agentResponse': agentResponse } = orderResponseBody
+  const { order } = agentResponse
+
+  // Updates the database with current order data
+  await dbConnection('retrieval_orders')
+    .update({
+      order_information: order
+    })
+    .where({
+      id
+    })
+  
+  return {
+    orderStatus: normalizeCatalogRestOrderStatus(order)
+  }
 }
 
 export default fetchCatalogRestOrder
