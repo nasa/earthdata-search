@@ -27,6 +27,7 @@ export const storeUserData = async (event) => {
     echo_id: id,
     echo_profile: user,
     echo_preferences: preferences,
+    environment: 'sit',
     urs_id: username,
     urs_profile: ursUserData
   }
