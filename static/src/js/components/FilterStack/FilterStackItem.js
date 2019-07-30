@@ -8,6 +8,7 @@ import './FilterStackItem.scss'
 const FilterStackItem = (props) => {
   const {
     children,
+    error,
     hint,
     icon,
     onRemove,
@@ -58,18 +59,30 @@ const FilterStackItem = (props) => {
             </div>
           )
         }
+        {
+          error && (
+            <div className="filter-stack-item__error">
+              {error}
+            </div>
+          )
+        }
       </div>
     </li>
   )
 }
 
 FilterStackItem.defaultProps = {
+  error: null,
   hint: null,
   onRemove: null
 }
 
 FilterStackItem.propTypes = {
   children: PropTypes.node.isRequired,
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   hint: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node

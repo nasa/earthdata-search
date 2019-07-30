@@ -9,7 +9,8 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
-  TOGGLE_SELECTING_NEW_GRID
+  TOGGLE_SELECTING_NEW_GRID,
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -39,6 +40,9 @@ const initialState = {
   },
   grid: {
     selectingNewGrid: false
+  },
+  shapefileUploadModal: {
+    isOpen: false
   }
 }
 
@@ -146,6 +150,14 @@ const uiReducer = (state = initialState, action) => {
         grid: {
           ...grid,
           selectingNewGrid: action.payload
+        }
+      }
+    }
+    case TOGGLE_SHAPEFILE_UPLOAD_MODAL: {
+      return {
+        ...state,
+        shapefileUploadModal: {
+          isOpen: action.payload
         }
       }
     }

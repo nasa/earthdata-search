@@ -7,7 +7,8 @@ import SpatialSelectionDropdown from '../../components/SpatialDisplay/SpatialSel
 import actions from '../../actions'
 
 const mapDispatchToProps = dispatch => ({
-  onToggleSelectingNewGrid: state => dispatch(actions.toggleSelectingNewGrid(state))
+  onToggleSelectingNewGrid: state => dispatch(actions.toggleSelectingNewGrid(state)),
+  onToggleShapefileUploadModal: state => dispatch(actions.toggleShapefileUploadModal(state))
 })
 
 /**
@@ -16,18 +17,21 @@ const mapDispatchToProps = dispatch => ({
  */
 const SpatialSelectionDropdownContainer = (props) => {
   const {
-    onToggleSelectingNewGrid
+    onToggleSelectingNewGrid,
+    onToggleShapefileUploadModal
   } = props
 
   return (
     <SpatialSelectionDropdown
       onToggleSelectingNewGrid={onToggleSelectingNewGrid}
+      onToggleShapefileUploadModal={onToggleShapefileUploadModal}
     />
   )
 }
 
 SpatialSelectionDropdownContainer.propTypes = {
-  onToggleSelectingNewGrid: PropTypes.func.isRequired
+  onToggleSelectingNewGrid: PropTypes.func.isRequired,
+  onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 
 export default connect(null, mapDispatchToProps)(SpatialSelectionDropdownContainer)

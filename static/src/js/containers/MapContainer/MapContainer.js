@@ -39,7 +39,8 @@ const { BaseLayer, Overlay } = LayersControl
 
 const mapDispatchToProps = dispatch => ({
   onChangeMap: query => dispatch(actions.changeMap(query)),
-  onSaveShapefile: data => dispatch(actions.saveShapefile(data))
+  onSaveShapefile: data => dispatch(actions.saveShapefile(data)),
+  onShapefileErrored: data => dispatch(actions.shapefileErrored(data))
 })
 
 const mapStateToProps = state => ({
@@ -184,7 +185,8 @@ export class MapContainer extends Component {
       pathname,
       project,
       shapefile,
-      onSaveShapefile
+      onSaveShapefile,
+      onShapefileErrored
     } = this.props
 
     const {
@@ -316,6 +318,7 @@ export class MapContainer extends Component {
             authToken={authToken}
             shapefile={shapefile}
             onSaveShapefile={onSaveShapefile}
+            onShapefileErrored={onShapefileErrored}
           />
           )
         }
@@ -339,7 +342,8 @@ MapContainer.propTypes = {
   project: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,
   onChangeMap: PropTypes.func.isRequired,
-  onSaveShapefile: PropTypes.func.isRequired
+  onSaveShapefile: PropTypes.func.isRequired,
+  onShapefileErrored: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

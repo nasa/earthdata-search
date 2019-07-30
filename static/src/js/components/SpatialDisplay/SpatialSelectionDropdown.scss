@@ -20,4 +20,14 @@
     width: 1rem;
     text-align: center;
   }
+
+  &__small {
+    margin-left: $spacer/4;
+    font-size: 0.75rem;
+    color: $color__black--500;
+
+    .dropdown-item:hover & {
+      color: inherit;
+    }
+  }
 }

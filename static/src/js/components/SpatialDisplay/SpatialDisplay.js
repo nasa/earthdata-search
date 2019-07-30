@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Form, Row } from 'react-bootstrap'
+import { isEqual } from 'lodash'
 
 import { availableSystems, findGridByName } from '../../util/grid'
 
@@ -63,13 +64,7 @@ class SpatialDisplay extends Component {
       this.setState({ gridCoords: nextProps.gridCoords })
     }
 
-    const { shapefileId, shapefileName } = shapefile
-    const {
-      shapefileId: nextShapefileId,
-      shapefileName: nextShapefileName
-    } = nextProps.shapefile
-
-    if (shapefileName !== nextShapefileName || shapefileId !== nextShapefileId) {
+    if (!isEqual(shapefile, nextProps.shapefile)) {
       this.setState({ shapefile: nextProps.shapefile })
     }
   }
@@ -132,6 +127,7 @@ class SpatialDisplay extends Component {
     const contents = []
     const items = []
     let entry
+    let spatialError
 
     if (selectingNewGrid || gridName) {
       const entry = (
@@ -304,23 +300,47 @@ class SpatialDisplay extends Component {
           title="Rectangle"
         />
       ))
-    } else if (((shapefile.shapefileName || shapefile.shapefileId)
+    } else if (((shapefile.shapefileName || shapefile.shapefileId || shapefile.shapefileError)
       && !drawingNewLayer)
       || drawingNewLayer === 'shapefile') {
+      const {
+        shapefileName,
+        shapefileError,
+        shapefileSize
+      } = shapefile
+
       entry = (
         <SpatialDisplayEntry>
-          <Form.Row className="spatial-display__form-row">
-            {shapefile.shapefileName}
-            {shapefile.shapefileSize}
-          </Form.Row>
+          <Row className="spatial-display__form-row">
+            {
+              shapefileName && (
+                <>
+                  <span className="spatial-display__text-primary">{shapefileName}</span>
+                  {
+                    shapefileSize && (
+                      <span className="spatial-display__text-secondary">{`(${shapefileSize})`}</span>
+                    )
+                  }
+                </>
+              )
+            }
+          </Row>
         </SpatialDisplayEntry>
       )
+
+      if (shapefileError) {
+        const { type } = shapefileError
+
+        if (type === 'upload_esri') {
+          spatialError = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        }
+      }
 
       contents.push((
         <FilterStackContents
           key="filter__shapefile"
           body={entry}
-          title="Shapefile"
+          title="Shape File"
         />
       ))
     } else if ((polygonSearch && !drawingNewLayer) || drawingNewLayer === 'polygon') {
@@ -341,6 +361,7 @@ class SpatialDisplay extends Component {
           key="item__spatial"
           icon="crop"
           title="Spatial"
+          error={spatialError}
           onRemove={this.onSpatialRemove}
         >
           {contents}

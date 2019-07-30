@@ -9,7 +9,8 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
-  TOGGLE_SELECTING_NEW_GRID
+  TOGGLE_SELECTING_NEW_GRID,
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL
 } from '../constants/actionTypes'
 
 export const masterOverlayPanelDragStart = data => (dispatch) => {
@@ -74,5 +75,10 @@ export const toggleDrawingNewLayer = state => ({
 
 export const toggleSelectingNewGrid = state => ({
   type: TOGGLE_SELECTING_NEW_GRID,
+  payload: state
+})
+
+export const toggleShapefileUploadModal = state => ({
+  type: TOGGLE_SHAPEFILE_UPLOAD_MODAL,
   payload: state
 })

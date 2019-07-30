@@ -3,41 +3,13 @@ import {
   withLeaflet,
   MapLayer
 } from 'react-leaflet'
-import Dropzone from 'dropzone'
-import $ from 'jquery'
+// import $ from 'jquery'
 
-import 'dropzone/dist/dropzone.css'
+import { eventEmitter } from '../../events/events'
+
 import './ShapefileLayer.scss'
 
 const MAX_POLYGON_SIZE = 50
-
-Dropzone.autoDiscover = false
-
-const dropzoneOptions = {
-  // Official Ogre web service
-  // We likely want to use this, once they fix OPTIONS requests
-  // See: https://github.com/wavded/ogre/pull/22
-  url: 'http://ogre.adc4gis.com/convert',
-  headers: {
-    'Cache-Control': undefined
-  },
-
-  // Test fallback behavior
-  // forceFallback: true
-
-  // Common options
-  paramName: 'upload',
-  // TODO reenable the clickable link from the modal
-  // clickable: '.geojson-dropzone-link',
-  createImageThumbnails: false,
-  acceptedFiles: '.zip,.kml,.kmz,.json,.geojson,.rss,.georss,.xml',
-  fallback() { // If the browser can't support the necessary features
-    return $('.select-shapefile').parent().hide()
-  },
-  parallelUploads: 1,
-  uploadMultiple: false,
-  previewTemplate: '<div>' // remove the dropzone preview
-}
 
 const defaultOptions = {
   selection: L.Draw.Polygon.prototype.options.shapeOptions
@@ -45,68 +17,41 @@ const defaultOptions = {
 
 class ShapefileLayerExtended extends L.Layer {
   initialize(props) {
-    this.removeFile = this.removeFile.bind(this)
+    this.onRemovedFile = this.onRemovedFile.bind(this)
     this.onSuccess = this.onSuccess.bind(this)
     this.clickLayer = this.clickLayer.bind(this)
-
-    this.onSaveShapefile = props.onSaveShapefile
     this.authToken = props.authToken
 
     this.options = {
       selection: L.extend({}, defaultOptions.selection)
     }
+
+    eventEmitter.on('shapefile.success', (file, resp) => {
+      this.onSuccess(file, resp)
+    })
+
+    eventEmitter.on('shapefile.removedfile', () => {
+      this.onRemovedFile()
+    })
   }
 
   onAdd(map) {
     this.map = map
-    const container = map.getContainer()
-    const dropzone = new Dropzone(container, dropzoneOptions)
-    dropzone.on('success', this.onSuccess)
-    dropzone.on('removedfile', this.removeFile)
-    dropzone.on('error', this.displayError)
-    this.dropzone = dropzone
-    L.DomUtil.addClass(container, 'dropzone')
     this.isAdded = true
   }
 
   onRemove() {
-    this.remove()
     this.map = null
     this.jsonLayer = null
     this.isAdded = false
   }
 
-  activate(showHelp = true) {
-    this.isActive = true
-    this.show()
-    if (showHelp) { this.showHelp() }
-  }
-
-  deactivate() {
-    this.isActive = false
-    this.hide()
-    this.hideHelp()
-  }
-
-  showHelp() {
-    L.DomUtil.addClass(this.map.getContainer(), 'is-geojson-help-visible')
-  }
-
-  hideHelp() {
-    L.DomUtil.removeClass(this.map.getContainer(), 'is-geojson-help-visible')
-  }
-
-  hide() {
-    $('.dz-preview').hide()
-    if ((this.jsonLayer != null) && this.isAdded) {
-      this.map.removeLayer(this.jsonLayer)
-    }
-
-    this.isAdded = false
+  onRemovedFile() {
+    if (this.jsonLayer != null) { this.map.removeLayer(this.jsonLayer) }
+    // this.map.fire('shapefile:stop')
   }
 
   show() {
-    $('.dz-preview').show()
     if ((this.jsonLayer != null) && !this.isAdded) {
       this.map.addLayer(this.jsonLayer)
     }
@@ -116,17 +61,14 @@ class ShapefileLayerExtended extends L.Layer {
     }
   }
 
-  remove() {
-    if (this.file != null) {
-      this.dropzone.removeFile(this.file)
-    }
+  activate() {
+    this.isActive = true
+    this.show()
   }
 
-  removeFile() {
-    this.dropzone.removeAllFiles(true)
-    if (this.jsonLayer != null) { this.map.removeLayer(this.jsonLayer) }
-    this.map.fire('shapefile:stop')
-    this.file = null
+  deactivate() {
+    this.isActive = false
+    this.hide()
   }
 
   // Leaflet 1.0+ changed the way that MultiPolygons are handled.
@@ -190,22 +132,7 @@ class ShapefileLayerExtended extends L.Layer {
   }
 
   onSuccess(file, response) {
-    const { name, size } = file
-    const fileSize = this.dropzone.filesize(size)
-      .replace('<strong>', '')
-      .replace('</strong>', '')
-
-    // send response to saveShapefile to be saved in the database
-    this.onSaveShapefile({
-      auth_token: this.authToken,
-      file: response,
-      filename: name,
-      size: fileSize
-    })
-
-    if (!this.isActive) { this.activate(false) }
-    this.hideHelp()
-    this.remove()
+    if (!this.isActive) { this.activate() }
 
     // look through response and separate all MultiPolygon types into their own polygon
     this.separateMultiPolygons(response)
@@ -238,12 +165,9 @@ class ShapefileLayerExtended extends L.Layer {
     })
 
     jsonLayer.on('click', this.clickLayer)
-
-    this.file = file
     this.jsonLayer = jsonLayer
-
-    this.map.addLayer(jsonLayer)
-    this.map.fire('shapefile:start')
+    jsonLayer.addTo(this.map)
+    // this.map.fire('shapefile:start')
     this.map.fitBounds(jsonLayer.getBounds())
 
     const children = jsonLayer.getLayers()
@@ -258,25 +182,14 @@ class ShapefileLayerExtended extends L.Layer {
     }
   }
 
-  displayError(file) {
-    if (file.name.match('.*shp')) {
-      const errorMessage = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
-      const errorDiv = document.createElement('div')
-      errorDiv.appendChild(document.createTextNode(errorMessage))
-      errorDiv.className += 'edsc-dz-error'
-      const { previewElement } = file
-      previewElement.getElementsByClassName('dz-details')[0].appendChild(errorDiv)
-      previewElement.removeChild(previewElement.querySelector('.dz-error-message'))
-    }
-  }
-
   clickLayer(e) {
     this.setConstraint(e.layer)
   }
 
   setConstraint(sourceLayer) {
-    let layer; let
-      layerType
+    let layer
+    let layerType
+
     if (sourceLayer.getLatLngs != null) {
       // Polygon
       const originalLatLngs = sourceLayer.getLatLngs()
@@ -328,8 +241,6 @@ class ShapefileLayerExtended extends L.Layer {
         result = L.LineUtil.simplify(points, tolerance += 1)
       }
 
-      console.log(`size ${newLatLngs.length} => ${result.length}`)
-
       newLatLngs = (result.map(point => map.layerPointToLatLng(point)))
     }
 
@@ -356,7 +267,7 @@ class ShapefileLayer extends MapLayer {
     const { shapefile } = toProps
     const { shapefileId, shapefileName } = shapefile
     if (!shapefileId && !shapefileName) {
-      element.removeFile()
+      element.onRemovedFile()
     }
   }
 }

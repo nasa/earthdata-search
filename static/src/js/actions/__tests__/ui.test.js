@@ -9,7 +9,8 @@ import {
   granuleResultsPanelUpdateSearchValue,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
-  toggleRelatedUrlsModal
+  toggleRelatedUrlsModal,
+  toggleShapefileUploadModal
 } from '../ui'
 
 import {
@@ -20,7 +21,8 @@ import {
   GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
-  TOGGLE_RELATED_URLS_MODAL
+  TOGGLE_RELATED_URLS_MODAL,
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -195,6 +197,27 @@ describe('toggleRelatedUrlsModal', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: TOGGLE_RELATED_URLS_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleShapefileUploadModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        shapefileUploadModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleShapefileUploadModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_SHAPEFILE_UPLOAD_MODAL,
       payload: true
     })
   })

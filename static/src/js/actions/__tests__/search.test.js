@@ -356,6 +356,7 @@ describe('removeSpatialFilter', () => {
     expect(storeActions[5]).toEqual({
       type: UPDATE_SHAPEFILE,
       payload: {
+        shapefileError: false,
         shapefileName: undefined,
         shapefileId: undefined,
         shapefileSize: undefined

@@ -1,0 +1,48 @@
+.shapefile-modal {
+  &__upload-link {
+    font-weight: 700;
+  }
+
+  &__hint {
+    color: $color__black--400;
+    font-size: 0.825rem;
+  }
+
+  &__hint-label {
+    margin-right: $spacer/4;
+    font-weight: 700;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: $spacer*2;
+  }
+
+  &__action {
+    margin-right: $spacer/2;
+  }
+
+  .modal-content {
+    position: relative;
+    padding: 0.55rem;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: $spacer/4;
+      border: 2px dashed $color__black--300;
+      border-radius: $border-radius-sm;
+      z-index: 0;
+      transition: all 0.2s ease-in-out;
+
+      .is-dragging & {
+        border: 2px dashed $color__black--400;
+      }
+    }
+  }
+}

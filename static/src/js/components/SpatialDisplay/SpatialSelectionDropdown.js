@@ -14,7 +14,8 @@ export class SpatialSelectionDropdown extends PureComponent {
 
   onItemClick(item) {
     const {
-      onToggleSelectingNewGrid
+      onToggleSelectingNewGrid,
+      onToggleShapefileUploadModal
     } = this.props
 
     if (item === 'point') {
@@ -33,6 +34,10 @@ export class SpatialSelectionDropdown extends PureComponent {
       eventEmitter.emit('map.drawStart', {
         type: 'polygon'
       })
+    }
+
+    if (item === 'file') {
+      onToggleShapefileUploadModal(true)
     }
 
     if (item === 'grid') {
@@ -72,9 +77,15 @@ export class SpatialSelectionDropdown extends PureComponent {
             <i className="fa fa-map-marker spatial-selection-dropdown__icon" />
             <span>Point</span>
           </Dropdown.Item>
-          <Dropdown.Item className="spatial-selection-dropdown__button">
+          <Dropdown.Item
+            className="spatial-selection-dropdown__button"
+            onClick={() => this.onItemClick('file')}
+          >
             <i className="fa fa-file-o spatial-selection-dropdown__icon" />
-            <span>File</span>
+            <span>
+              File
+              <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
+            </span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
@@ -90,7 +101,8 @@ export class SpatialSelectionDropdown extends PureComponent {
 }
 
 SpatialSelectionDropdown.propTypes = {
-  onToggleSelectingNewGrid: PropTypes.func.isRequired
+  onToggleSelectingNewGrid: PropTypes.func.isRequired,
+  onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 
 export default SpatialSelectionDropdown

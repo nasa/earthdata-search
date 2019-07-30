@@ -69,5 +69,11 @@
     font-size: 0.8rem;
     color: $color__black--400;
   }
+
+  &__error {
+    margin-top: $spacer/4;
+    font-size: 0.8rem;
+    color: $color__red;
+  }
 }
 
