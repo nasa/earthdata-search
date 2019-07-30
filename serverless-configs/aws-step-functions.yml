@@ -1,2 +1,49 @@
 stateMachines:
-  
+  UpdateOrderStatusWorkflow:
+    name: UpdateOrderStatusWorkflow
+    definition:
+      StartAt: InitialWait
+      States:
+        InitialWait:
+          Type: Wait
+          Seconds: 10
+          Next: DetermineOrderType
+        DetermineOrderType:
+          Type: Choice
+          Choices:
+            - Variable: "$.orderType"
+              StringEquals: "catalog-rest"
+              Next: FetchCatalogRestOrderStatus
+            - Variable: "$.orderType"
+              StringEquals: "legacy-services"
+              Next: FetchLegacyServicesOrderStatus
+        FetchCatalogRestOrderStatus:
+          Type: Task
+          Resource:
+            Fn::GetAtt: [fetchCatalogRestOrder, Arn]
+          Next: CheckOrderStatus
+        FetchLegacyServicesOrderStatus:
+          Type: Task
+          Resource:
+            Fn::GetAtt: [fetchLegacyServicesOrder, Arn]
+          Next: CheckOrderStatus
+        CheckOrderStatus:
+          Type: Choice
+          Choices:
+            - Variable: "$.orderStatus"
+              StringEquals: complete
+              Next: OrderComplete
+            - Variable: "$.orderStatus"
+              StringEquals: failed
+              Next: OrderFailed
+            - Variable: "$.orderStatus"
+              StringEquals: in_progress
+              Next: WaitForRetry
+        WaitForRetry:
+          Type: Wait
+          Seconds: 60
+          Next: DetermineOrderType
+        OrderComplete:
+          Type: Success
+        OrderFailed:
+          Type: Fail
