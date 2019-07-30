@@ -74,6 +74,7 @@
     "serverless-finch": "^2.4.2",
     "serverless-offline": "^4.9.4",
     "serverless-plugin-warmup": "^4.7.0-rc.1",
+    "serverless-step-functions": "^2.1.0",
     "serverless-webpack": "^5.2.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.24.0",
