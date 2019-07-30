@@ -31,7 +31,7 @@ provider:
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
     updateOrderStatusStateMachineArn:
-      Ref: UpdateOrderStatus
+      Ref: UpdateOrderStatusWorkflow
 
     configSecretId:
       Ref: DbPasswordSecret
