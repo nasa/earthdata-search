@@ -1,14 +1,11 @@
 import AWS from 'aws-sdk'
-
 import 'array-foreach-async'
 import request from 'request-promise'
-// import { stringify } from 'qs'
 import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getClientId } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../configUtil'
-// import { getSingleGranule } from '../util/cmr/getSingleGranule'
 
 // AWS SQS adapter
 let sqs
