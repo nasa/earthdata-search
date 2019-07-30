@@ -1,9 +1,9 @@
 import request from 'request-promise'
 import {
   getEarthdataConfig,
-  getSecretEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
+import { getEdlConfig } from '../configUtil'
 
 /**
  * Retrieve ECHO preferences data for the provided username
@@ -14,7 +14,10 @@ export const getEchoPreferencesData = async (username, token) => {
   let preferencesData = {}
 
   try {
-    const { clientId } = getSecretEarthdataConfig('prod')
+    // The client id is part of our Earthdata Login credentials
+    const edlConfig = await getEdlConfig()
+    const { client } = edlConfig
+    const { id: clientId } = client
 
     const { echoRestRoot } = getEarthdataConfig('prod')
 

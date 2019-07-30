@@ -4,14 +4,12 @@ import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/
 import { getEdlConfig } from './configUtil'
 import { invokeLambda } from './util/aws/invokeLambda'
 
-let edlConfig = null
-
 /**
  * Handler for the EDL callback. Fetches an EDL token based on 'code' param supplied by EDL. Sets
  * a cookie containing a JWT containing the EDL token
  */
-export default async function edlCallback(event) {
-  edlConfig = await getEdlConfig(edlConfig)
+const edlCallback = async (event) => {
+  const edlConfig = await getEdlConfig()
 
   const params = event.queryStringParameters
   const { code, state } = params
@@ -64,3 +62,5 @@ export default async function edlCallback(event) {
     }
   }
 }
+
+export default edlCallback

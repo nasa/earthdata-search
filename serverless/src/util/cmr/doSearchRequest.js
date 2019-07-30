@@ -2,6 +2,7 @@ import request from 'request-promise'
 import jwt from 'jsonwebtoken'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getSecretEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
+import { getEdlConfig } from '../../configUtil'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -10,11 +11,16 @@ import { getSecretEarthdataConfig, getClientId } from '../../../../sharedUtils/c
  */
 export const doSearchRequest = async (jwtToken, url) => {
   // Get the access token and clientId to build the Echo-Token header
-  const { clientId, secret } = getSecretEarthdataConfig('prod')
+  const { secret } = getSecretEarthdataConfig('sit')
 
   const token = jwt.verify(jwtToken, secret)
 
   try {
+    // The client id is part of our Earthdata Login credentials
+    const edlConfig = await getEdlConfig()
+    const { client } = edlConfig
+    const { id: clientId } = client
+
     const response = await request.get({
       uri: url,
       resolveWithFullResponse: true,
@@ -29,7 +35,10 @@ export const doSearchRequest = async (jwtToken, url) => {
     return {
       statusCode: response.statusCode,
       headers: {
-        ...headers,
+        'cmr-hits': headers['cmr-hits'],
+        'cmr-took': headers['cmr-took'],
+        'cmr-request-id': headers['cmr-request-id'],
+        'access-control-allow-origin': headers['access-control-allow-origin'],
         'access-control-expose-headers': prepareExposeHeaders(headers),
         'jwt-token': jwtToken
       },

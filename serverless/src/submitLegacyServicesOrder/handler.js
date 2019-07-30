@@ -1,10 +1,11 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import request from 'request-promise'
-import { getClientId, getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
+import { getEdlConfig } from '../configUtil'
 
 // Knex database connection object
 let dbConnection = null
@@ -36,8 +37,11 @@ const submitLegacyServicesOrder = async (event, context) => {
       id
     } = JSON.parse(body)
 
-    const ursClientId = getSecretEarthdataConfig('prod').clientId
-    const accessTokenWithClient = `${accessToken}:${ursClientId}`
+    const edlConfig = await getEdlConfig()
+    const { client } = edlConfig
+    const { id: clientId } = client
+
+    const accessTokenWithClient = `${accessToken}:${clientId}`
 
     // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
     const retrievalRecord = await dbConnection('retrieval_orders')

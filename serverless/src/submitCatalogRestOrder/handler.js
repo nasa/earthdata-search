@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
-import { getClientId, getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -12,6 +12,7 @@ import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePair
 import { getSubsetDataLayers } from '../util/echoForms/getSubsetDataLayers'
 import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
+import { getEdlConfig } from '../configUtil'
 
 // Knex database connection object
 let dbConnection = null
@@ -43,8 +44,11 @@ const submitCatalogRestOrder = async (event, context) => {
       id
     } = JSON.parse(body)
 
-    const ursClientId = getSecretEarthdataConfig('prod').clientId
-    const accessTokenWithClient = `${accessToken}:${ursClientId}`
+    const edlConfig = await getEdlConfig()
+    const { client } = edlConfig
+    const { id: clientId } = client
+
+    const accessTokenWithClient = `${accessToken}:${clientId}`
 
     // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
     const retrievalRecord = await dbConnection('retrieval_orders')
