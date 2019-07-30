@@ -1,0 +1,309 @@
+  #
+  # Standalone functions
+  #
+  migrateDatabase:
+    handler: serverless/src/migrateDatabase/handler.default
+    timeout: 300
+    webpack:
+      includeMigrations: true
+
+  storeUserData:
+    timeout: 300
+    handler: serverless/src/storeUserData/handler.default
+
+  #
+  # SQS Lambdas
+  #
+  processColorMap:
+    handler: serverless/src/processColorMap.default
+    timeout: 300
+    receiveMessageWaitTimeSeconds: 30
+    reservedConcurrency: 25
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - ColorMapsProcessingQueue
+              - Arn
+
+  processTag:
+    handler: serverless/src/processTag/handler.default
+    timeout: 300
+    receiveMessageWaitTimeSeconds: 30
+    reservedConcurrency: 25
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - TagProcessingQueue
+              - Arn
+
+  # We need to limit the concurrency on this lambda due to a call to Legacy Services
+  # within it. Putting too much load on the endpoint will cause production systems to fail
+  fetchOptionDefinitions:
+    handler: serverless/src/fetchOptionDefinitions/handler.default
+    timeout: 300
+    reservedConcurrency: 5
+    events:
+      - sqs:
+          batchSize: 5
+          arn:
+            Fn::GetAtt:
+              - OptionDefinitionsQueue
+              - Arn
+
+  submitCatalogRestOrder:
+    handler: serverless/src/submitCatalogRestOrder/handler.default
+    timeout: 600
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - CatalogRestOrderQueue
+              - Arn
+
+  submitLegacyServicesOrder:
+    handler: serverless/src/submitLegacyServicesOrder/handler.default
+    timeout: 600
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - LegacyServicesOrderQueue
+              - Arn
+
+  fetchCatalogRestOrder:
+    handler: serverless/src/fetchCatalogRestOrder/handler.default
+
+  fetchLegacyServicesOrder:
+    handler: serverless/src/fetchLegacyServicesOrder/handler.default
+    # events:
+    #   - sqs:
+    #       arn:
+    #         Fn::GetAtt:
+    #           - OrderStatusQueue
+    #           - Arn
+
+  #
+  # Scheduled Lambdas
+  #
+  generateColorMaps:
+    handler: serverless/src/generateColorMaps.default
+    description: Gather Color Map data from GIBS and store it in RDS
+    timeout: 300
+    events:
+      - schedule:
+          rate: cron(0 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg4326'
+      - schedule:
+          rate: cron(5 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg3857'
+      - schedule:
+          rate: cron(10 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg3413'
+      - schedule:
+          rate: cron(15 5 * * ? *)
+          enabled: false
+          input:
+            projection: 'epsg3031'
+
+  generateGibsTags:
+    handler: serverless/src/generateGibsTags.default
+    description: Tag CMR collections with GIBS product information
+    timeout: 300
+    events:
+      - schedule:
+          rate: cron(0 * * * ? *)
+          enabled: false
+
+  generateSubsettingTags:
+    handler: serverless/src/generateSubsettingTags/handler.default
+    description: Tag CMR collections with umm service subsetting information
+    timeout: 300
+    events:
+      - schedule:
+          rate: cron(0 5 * * ? *)
+          enabled: false
+
+  generateCollectionCapabilityTags:
+    handler: serverless/src/generateCollectionCapabilityTags/handler.default
+    description: Iterate over all CMR collections adding tags specific to EDSC
+    timeout: 300
+    events:
+      - schedule:
+          rate: cron(0 6 * * ? *)
+          enabled: false
+          input:
+            pageNumber: 1
+            perPage: 2000
+
+  #
+  # API Gateway Endpoints
+  #
+  getColorMap:
+    handler: serverless/src/getColorMap/handler.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: colormaps/{product}
+
+  cwicGranuleSearch:
+    handler: serverless/src/cwicGranuleSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: cwic/granules
+
+  nlpSearch:
+    handler: serverless/src/nlpSearch.default
+    memorySize: 128
+    events:
+      - http:
+          method: post
+          cors:
+            origin : '*'
+          path: nlp
+
+  conceptMetadata:
+    handler: serverless/src/conceptMetadata.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: concepts/metadata
+
+  edlLogin:
+    handler: serverless/src/edlLogin.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: login
+
+  edlCallback:
+    handler: serverless/src/edlCallback.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: urs_callback
+
+  edlAuthorizer:
+    handler: serverless/src/edlAuthorizer.default
+    cors:
+      origin: '*'
+
+  #
+  # EDL Authenticated API Gateway Endpoints
+  #
+
+  retrieveConcept:
+    handler: serverless/src/retrieveConcept.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: concepts/{id}
+          authorizer: edlAuthorizer
+          request:
+            parameters:
+              paths:
+                id: true
+
+  collectionSearch:
+    handler: serverless/src/collectionSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: collections/{format}
+          request:
+            parameters:
+              paths:
+                format: true
+          authorizer: edlAuthorizer
+
+  cmrGranuleSearch:
+    handler: serverless/src/cmrGranuleSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: granules
+          authorizer: edlAuthorizer
+
+  timelineSearch:
+    handler: serverless/src/timelineSearch.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: granules/timeline
+          authorizer: edlAuthorizer
+
+  submitRetrieval:
+    handler: serverless/src/submitRetrieval/handler.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: retrievals
+          authorizer: edlAuthorizer
+
+  getRetrieval:
+    handler: serverless/src/getRetrieval/handler.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: retrievals/{retrieval_id}
+          authorizer: edlAuthorizer
+
+  getRetrievalCollection:
+    handler: serverless/src/getRetrievalCollection/handler.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: retrievals/{retrieval_id}/collections/{collection_id}
+          authorizer: edlAuthorizer
+
+  getRetrievalCollections:
+    handler: serverless/src/getRetrievalCollections/handler.default
+    events:
+      - http:
+          method: get
+          cors:
+            origin: '*'
+          path: retrievals/{retrieval_id}/collections
+          authorizer: edlAuthorizer
+
+  getAccessMethods:
+    handler: serverless/src/getAccessMethods/handler.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: access_methods
+          authorizer: edlAuthorizer
