@@ -49,6 +49,8 @@ const fetchLegacyServicesOrder = async (input) => {
     })
 
   return {
+    accessToken,
+    id,
     orderStatus: normalizeLegacyServicesOrderStatus(order)
   }
 }

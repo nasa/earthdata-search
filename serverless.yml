@@ -30,8 +30,6 @@ provider:
       Ref: CatalogRestOrderQueue
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
-    updateOrderStatusStateMachineArn:
-      Ref: UpdateOrderStatusWorkflow
 
     configSecretId:
       Ref: DbPasswordSecret
