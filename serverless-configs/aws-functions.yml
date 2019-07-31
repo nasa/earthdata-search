@@ -73,6 +73,8 @@
             Fn::GetAtt:
               - CatalogRestOrderQueue
               - Arn
+    environment:
+      updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
   submitLegacyServicesOrder:
     handler: serverless/src/submitLegacyServicesOrder/handler.default
@@ -85,6 +87,8 @@
             Fn::GetAtt:
               - LegacyServicesOrderQueue
               - Arn
+    environment:
+      updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default

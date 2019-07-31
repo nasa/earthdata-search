@@ -1,6 +1,6 @@
 stateMachines:
   UpdateOrderStatusWorkflow:
-    name: UpdateOrderStatusWorkflow
+    name: UpdateOrderStatusWorkflow${self:provider.stage}
     definition:
       StartAt: InitialWait
       States:
@@ -48,6 +48,6 @@ stateMachines:
           Seconds: 60
           Next: DetermineOrderType
         OrderComplete:
-          Type: Success
+          Type: Succeed
         OrderFailed:
           Type: Fail
