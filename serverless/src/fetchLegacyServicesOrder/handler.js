@@ -1,4 +1,3 @@
-import AWS from 'aws-sdk'
 import 'array-foreach-async'
 import request from 'request-promise'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -21,22 +20,24 @@ const fetchLegacyServicesOrder = async (input) => {
     id
   } = JSON.parse(input)
 
-  const ursClientId = getSecretEarthdataConfig('prod').clientId
+  const ursClientId = getSecretEarthdataConfig('sit').clientId
   const accessTokenWithClient = `${accessToken}:${ursClientId}`
 
   // Retrieve the order from Legacy Services
   const orderResponse = await request.post({
-    uri: `${getEarthdataConfig('prod').echoRestRoot}/orders.json`,
+    uri: `${getEarthdataConfig('sit').echoRestRoot}/orders.json`,
     headers: {
       'Echo-Token': accessTokenWithClient,
-      'Client-Id': getClientId('prod').background
+      'Client-Id': getClientId('sit').background
     },
     body: { id },
     json: true,
     resolveWithFullResponse: true
   })
 
-  const { order } = orderResponse
+  console.log('Order Response Body', orderResponse.body)
+
+  const { order } = orderResponse.body
 
   // Updates the database with current order data
   await dbConnection('retrieval_orders')
@@ -46,7 +47,7 @@ const fetchLegacyServicesOrder = async (input) => {
     .where({
       id
     })
-  
+
   return {
     orderStatus: normalizeLegacyServicesOrderStatus(order)
   }

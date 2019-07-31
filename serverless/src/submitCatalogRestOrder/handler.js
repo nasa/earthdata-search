@@ -12,11 +12,8 @@ import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePair
 import { getSubsetDataLayers } from '../util/echoForms/getSubsetDataLayers'
 import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
-<<<<<<< HEAD
 import { getEdlConfig } from '../configUtil'
-=======
 import { startOrderStatusUpdateWorkflow } from '../util/orderStatus'
->>>>>>> EDSC-2216 Adds order status update step function workflow
 
 // Knex database connection object
 let dbConnection = null

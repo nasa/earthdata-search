@@ -20,12 +20,16 @@ stateMachines:
         FetchCatalogRestOrderStatus:
           Type: Task
           Resource:
-            Fn::GetAtt: [fetchCatalogRestOrder, Arn]
+            Fn::GetAtt:
+              - FetchCatalogRestOrderLambdaFunction
+              - Arn
           Next: CheckOrderStatus
         FetchLegacyServicesOrderStatus:
           Type: Task
           Resource:
-            Fn::GetAtt: [fetchLegacyServicesOrder, Arn]
+            Fn::GetAtt:
+              - FetchLegacyServicesOrderLambdaFunction
+              - Arn
           Next: CheckOrderStatus
         CheckOrderStatus:
           Type: Choice

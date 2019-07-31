@@ -56,19 +56,19 @@ const fetchCatalogRestOrder = async (input) => {
     uri: `${url}/${id}`,
     headers: {
       'Echo-Token': accessTokenWithClient,
-      'Client-Id': getClientId('prod').background
+      'Client-Id': getClientId('sit').background
     },
     resolveWithFullResponse: true
   })
 
-  console.log('raw order response body:', orderResponse.body)
+  console.log('Order Response Body', orderResponse.body)
 
   const orderResponseBody = parseXml(orderResponse.body, {
     ignoreAttributes: false,
     attributeNamePrefix: ''
   })
 
-  console.log('parsed response body:', orderResponseBody)
+  console.log('Parsed Order Response Body', orderResponse.body)
 
   const { 'eesi:agentResponse': agentResponse } = orderResponseBody
   const { order } = agentResponse
