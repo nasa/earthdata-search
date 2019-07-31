@@ -83,6 +83,8 @@ const fetchCatalogRestOrder = async (input) => {
     })
 
   return {
+    accessToken,
+    id,
     orderStatus: normalizeCatalogRestOrderStatus(order)
   }
 }

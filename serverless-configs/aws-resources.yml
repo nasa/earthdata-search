@@ -59,7 +59,7 @@ Resources:
   OrderStatusQueue:
     Type: 'AWS::SQS::Queue'
     Properties:
-      VisbilityTimeout: 300
+      VisibilityTimeout: 300
 
   OptionDefinitionDeadLetterQueue:
     Type: AWS::SQS::Queue
@@ -241,3 +241,9 @@ Resources:
       ResponseType: DEFAULT_5XX
       RestApiId:
         Ref: ApiGatewayRestApi
+
+Outputs:
+  UpdateOrderStatusWorkflow:
+    Description: ARN of the order status step function workflow
+    Value:
+      Ref: UpdateOrderStatusWorkflow${self:provider.stage}
