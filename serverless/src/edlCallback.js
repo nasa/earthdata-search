@@ -3,6 +3,7 @@ import simpleOAuth2 from 'simple-oauth2'
 import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 import { getEdlConfig } from './configUtil'
 import { invokeLambda } from './util/aws/invokeLambda'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 /**
  * Handler for the EDL callback. Fetches an EDL token based on 'code' param supplied by EDL. Sets
@@ -18,7 +19,7 @@ const edlCallback = async (event) => {
     apiHost,
     edscHost,
     redirectUriPath
-  } = getEarthdataConfig('sit')
+  } = getEarthdataConfig(cmrEnv())
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)
@@ -35,7 +36,7 @@ const edlCallback = async (event) => {
   const { access_token: accessToken, endpoint } = token
   const username = endpoint.split('/').pop()
 
-  const { secret } = getSecretEarthdataConfig('sit')
+  const { secret } = getSecretEarthdataConfig(cmrEnv())
 
   // Create a JWT token from the EDL token
   const jwtToken = jwt.sign({ token }, secret)

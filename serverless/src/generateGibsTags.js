@@ -19,7 +19,7 @@ export async function getSupportedGibsLayers(mergeCustomProducts = true) {
     json: true,
     resolveWithFullResponse: true,
     headers: {
-      'Client-Id': getClientId('sit').background
+      'Client-Id': getClientId().background
     }
   })
 

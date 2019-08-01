@@ -1,4 +1,5 @@
 import { prepareGranuleParams, buildGranuleSearchParams } from './granules'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 
 /**
@@ -49,7 +50,7 @@ export const prepareOrderParams = (state) => {
   return {
     authToken,
     collections: [...projectCollections],
-    environment: 'sit',
+    environment: cmrEnv(),
     json_data: jsonData
   }
 }

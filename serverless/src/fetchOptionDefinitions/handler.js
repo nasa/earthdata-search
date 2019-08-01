@@ -6,6 +6,7 @@ import { stringify } from 'qs'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getSingleGranule } from '../util/cmr/getSingleGranule'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // AWS SQS adapter
 let sqs
@@ -26,7 +27,7 @@ const fetchOptionDefinitions = async (event, context) => {
 
   cmrToken = await getSystemToken(cmrToken)
 
-  const { echoRestRoot } = getEarthdataConfig('sit')
+  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
   // Retrieve option definition data for the collections pertaining to the echo orders tag
   const optionDefinitionUrl = `${echoRestRoot}/order_information.json`
@@ -50,7 +51,7 @@ const fetchOptionDefinitions = async (event, context) => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Echo-Token': cmrToken,
-          'Client-Id': getClientId('sit').background
+          'Client-Id': getClientId().background
         },
         json: true,
         resolveWithFullResponse: true

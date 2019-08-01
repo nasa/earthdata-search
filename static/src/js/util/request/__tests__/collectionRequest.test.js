@@ -1,4 +1,5 @@
 import CollectionRequest from '../collectionRequest'
+import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.restoreAllMocks()
@@ -17,6 +18,8 @@ describe('CollectionRequest#constructor', () => {
   })
 
   test('sets the default values when unauthenticated', () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+
     const request = new CollectionRequest()
 
     expect(request.authenticated).toBeFalsy()
@@ -161,6 +164,8 @@ describe('CollectionRequest#transformResponse', () => {
 
   describe('return data with has_map_imagery flag correctly', () => {
     test('when an image is defined', () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+
       const request = new CollectionRequest()
 
       const data = {

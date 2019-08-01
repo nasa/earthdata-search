@@ -1,5 +1,6 @@
 import { pick } from './util'
 import { getEarthdataConfig } from '../../sharedUtils/config'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 const https = require('https')
 const qs = require('qs')
@@ -26,7 +27,7 @@ export default function search(event, context, callback) {
   // Transform the query string hash to an encoded url string
   const queryParams = qs.stringify(obj)
 
-  const nlpUrl = `${getEarthdataConfig('sit').nlpHost}/nlp?${queryParams}`
+  const nlpUrl = `${getEarthdataConfig(cmrEnv()).nlpHost}/nlp?${queryParams}`
 
   console.log(`NLP Query: ${nlpUrl}`)
 

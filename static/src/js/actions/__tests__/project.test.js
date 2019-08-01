@@ -1,9 +1,10 @@
 import moxios from 'moxios'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-
 import { getProjectCollectionsResponse } from './mocks'
 import actions from '../index'
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 import {
   ADD_COLLECTION_TO_PROJECT,
@@ -36,6 +37,8 @@ const mockStore = configureMockStore([thunk])
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+
+  jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 })
 
 describe('addCollectionToProject', () => {
@@ -205,7 +208,7 @@ describe('getProjectGranules', () => {
       response: {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json',
+          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json',
           title: 'ECHO dataset metadata',
           entry: granules,
           facets: {}
@@ -320,12 +323,19 @@ describe('getProjectCollections', () => {
   })
 
   test('calls lambda to get authenticated collections', async () => {
-    moxios.stubRequest(/3001\/collections\/json/, {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      apiHost: 'http://localhost',
+      cmrHost: 'https://cmr.earthdata.nasa.gov',
+      opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
+    }))
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+    moxios.stubRequest(/localhost\/collections\/json/, {
       status: 200,
       response: {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
+          id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
           title: 'ECHO dataset metadata',
           entry: [{
             id: 'collectionId1',
@@ -344,7 +354,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    moxios.stubRequest(/3001\/collections\/umm_json/, {
+    moxios.stubRequest(/localhost\/collections\/umm_json/, {
       status: 200,
       response: {
         hits: 1,

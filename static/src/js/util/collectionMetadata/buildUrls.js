@@ -1,4 +1,5 @@
 import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export const buildUrls = (json, authToken) => {
   const {
@@ -19,13 +20,13 @@ export const buildUrls = (json, authToken) => {
     { ext: 'dif', title: 'DIF' }
   ]
 
-  const eartdataConfig = getEarthdataConfig('sit')
+  const eartdataConfig = getEarthdataConfig(cmrEnv())
   const {
     apiHost,
     cmrHost,
     opensearchRoot
   } = eartdataConfig
-  const cmrClientId = getClientId('sit').client
+  const cmrClientId = getClientId().client
 
   const urls = {}
 

@@ -14,7 +14,7 @@ describe('getEchoPreferencesData', () => {
     const ursGetMock = jest.spyOn(request, 'get')
       .mockImplementationOnce(() => jest.fn())
 
-    getEchoPreferencesData('test_user', 'fake.access.token')
+    await getEchoPreferencesData('test_user', 'fake.access.token')
 
     expect(ursGetMock).toBeCalledTimes(1)
     expect(ursGetMock).toBeCalledWith({

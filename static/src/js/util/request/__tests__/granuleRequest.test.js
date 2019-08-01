@@ -1,4 +1,5 @@
 import GranuleRequest from '../granuleRequest'
+import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.restoreAllMocks()
@@ -7,16 +8,20 @@ beforeEach(() => {
 
 describe('GranuleRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ apiHost: 'http://localhost' }))
+
     const token = '123'
     const request = new GranuleRequest(token)
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost:3001')
+    expect(request.baseUrl).toEqual('http://localhost')
     expect(request.searchPath).toEqual('granules')
   })
 
   test('sets the default values when unauthenticated', () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+
     const request = new GranuleRequest()
 
     expect(request.authenticated).toBeFalsy()
@@ -57,6 +62,8 @@ describe('GranuleRequest#transformResponse', () => {
   })
 
   test('returns transformed data', () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+
     const request = new GranuleRequest()
 
     const data = {

@@ -8,17 +8,22 @@ beforeEach(() => {
 
 describe('getUrsUserData', () => {
   test('correctly requests a users data from urs', async () => {
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://urs.example.com' }))
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      edlHost: 'http://urs.example.com'
+    }))
+
+    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
+      clientId: 'test-clientId'
+    }))
 
     const ursGetMock = jest.spyOn(request, 'get')
       .mockImplementationOnce(() => jest.fn())
 
-    getUrsUserData('test_user', 'fake.access.token')
+    await getUrsUserData('test_user', 'fake.access.token')
 
     expect(ursGetMock).toBeCalledTimes(1)
     expect(ursGetMock).toBeCalledWith({
-      uri: 'http://urs.example.com/api/users/test_user?client_id=clientId',
+      uri: 'http://urs.example.com/api/users/test_user?client_id=test-clientId',
       headers: {
         Authorization: 'Bearer fake.access.token',
         'Client-Id': 'eed-edsc-test-serverless-lambda'
@@ -29,7 +34,6 @@ describe('getUrsUserData', () => {
   })
 
   test('correctly returns the users data', async () => {
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://urs.example.com' }))
 
     jest.spyOn(request, 'get')

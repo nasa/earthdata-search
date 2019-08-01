@@ -1,6 +1,7 @@
 import request from 'request-promise'
 import { getCollectionsByJson } from './getCollectionsByJson'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 /**
  * Adds a tag association to any collections meeting the provided search criteria
@@ -82,11 +83,11 @@ export async function addTag({
   // After setting associationData ensure that it has content, if no content
   if (associationData) {
     try {
-      const addTagUrl = `${getEarthdataConfig('sit').cmrHost}/search/tags/${tagName}/associations`
+      const addTagUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/tags/${tagName}/associations`
       await request.post({
         uri: addTagUrl,
         headers: {
-          'Client-Id': getClientId('sit').background,
+          'Client-Id': getClientId().background,
           'Echo-Token': cmrToken
         },
         body: associationData,
@@ -103,12 +104,12 @@ export async function addTag({
   try {
     // If no tagData was provided, and granules are not required we dont need to ask CMR
     // for anything, so we'll just associate the tag with all collections that match the searchCriteria
-    const tagRemovalUrl = `${getEarthdataConfig('sit').cmrHost}/search/tags/${tagName}/associations/by_query`
+    const tagRemovalUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/tags/${tagName}/associations/by_query`
 
     await request.post({
       uri: tagRemovalUrl,
       headers: {
-        'Client-Id': getClientId('sit').background,
+        'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

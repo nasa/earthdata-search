@@ -1,4 +1,5 @@
 import { getClientId } from '../config'
+import * as cmrEnv from '../cmrEnv'
 
 const OLD_ENV = process.env
 
@@ -14,12 +15,14 @@ describe('getClientId', () => {
   test('returns the clientId object for the given environment', () => {
     process.env.NODE_ENV = 'production'
 
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
     const clientId = {
       background: 'eed-edsc-prod-serverless-background',
       client: 'eed-edsc-prod-serverless-client',
       lambda: 'eed-edsc-prod-serverless-lambda'
     }
-    expect(getClientId('sit')).toEqual(clientId)
+    expect(getClientId()).toEqual(clientId)
   })
 
   test('returns the clientId object for test', () => {
@@ -31,7 +34,7 @@ describe('getClientId', () => {
       lambda: 'eed-edsc-test-serverless-lambda'
     }
 
-    expect(getClientId('sit')).toEqual(clientId)
+    expect(getClientId()).toEqual(clientId)
   })
 
   test('returns the clientId object for development', () => {
@@ -43,6 +46,6 @@ describe('getClientId', () => {
       lambda: 'eed-edsc-dev-serverless-lambda'
     }
 
-    expect(getClientId('sit')).toEqual(clientId)
+    expect(getClientId()).toEqual(clientId)
   })
 })

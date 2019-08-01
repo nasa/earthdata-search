@@ -2,6 +2,7 @@ import { getUrsUserData } from './getUrsUserData'
 import { getEchoProfileData } from './getEchoProfileData'
 import { getEchoPreferencesData } from './getEchoPreferencesData'
 import { getDbConnection } from '../util/database/getDbConnection'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // Knex database connection object
 let dbConnection = null
@@ -27,7 +28,7 @@ export const storeUserData = async (event) => {
     echo_id: id,
     echo_profile: user,
     echo_preferences: preferences,
-    environment: 'sit',
+    environment: cmrEnv(),
     urs_id: username,
     urs_profile: ursUserData
   }

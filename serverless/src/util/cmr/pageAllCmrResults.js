@@ -30,7 +30,7 @@ export const pageAllCmrResults = async (path, queryParams = {}) => {
     const cmrResponse = await request.get({
       uri: cmrUrl(path, cmrParams),
       headers: {
-        'Client-Id': getClientId('sit').background,
+        'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
       json: true,
@@ -53,7 +53,7 @@ export const pageAllCmrResults = async (path, queryParams = {}) => {
         const additionalCmrResponse = await request.get({
           uri: cmrUrl(path, cmrParams),
           headers: {
-            'Client-Id': getClientId('sit').background,
+            'Client-Id': getClientId().background,
             'Echo-Token': cmrToken
           },
           json: true,

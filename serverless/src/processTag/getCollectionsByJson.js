@@ -1,6 +1,7 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 /**
  * Query CMR using JQL
@@ -12,13 +13,13 @@ import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
  * @return {Object} The response body from CMR
  */
 export async function getCollectionsByJson(queryParams, searchCriteria, cmrToken) {
-  const collectionUrl = `${getEarthdataConfig('sit').cmrHost}/search/collections.json?${stringify(queryParams)}`
+  const collectionUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/collections.json?${stringify(queryParams)}`
 
   try {
     const collectionResponse = await request.post({
       uri: collectionUrl,
       headers: {
-        'Client-Id': getClientId('sit').background,
+        'Client-Id': getClientId().background,
         'Echo-Token': cmrToken
       },
       body: searchCriteria,

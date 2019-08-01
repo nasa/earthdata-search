@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk'
 import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 
@@ -9,7 +10,7 @@ const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 export const getUrsSystemCredentials = async (ursSystemCredentials) => {
   if (ursSystemCredentials === null) {
     if (process.env.NODE_ENV === 'development') {
-      const { cmrSystemUsername, cmrSystemPassword } = getSecretEarthdataConfig('sit')
+      const { cmrSystemUsername, cmrSystemPassword } = getSecretEarthdataConfig(cmrEnv())
 
       return {
         username: cmrSystemUsername,
@@ -18,12 +19,12 @@ export const getUrsSystemCredentials = async (ursSystemCredentials) => {
     }
 
     // Use a variable here for easier find/replace until cmr_env is implemented
-    const environment = 'sit'
+    const cmrEnvironment = cmrEnv()
 
-    console.log(`Fetching UrsSystemPasswordSecret_${environment}`)
+    console.log(`Fetching UrsSystemPasswordSecret_${cmrEnvironment}`)
 
     const params = {
-      SecretId: `UrsSystemPasswordSecret_${environment}`
+      SecretId: `UrsSystemPasswordSecret_${cmrEnvironment}`
     }
 
     // If not running in development mode fetch secrets from AWS

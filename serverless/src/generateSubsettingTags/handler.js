@@ -7,6 +7,7 @@ import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getRelevantServices } from './getRelevantServices'
 import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // AWS SQS adapter
 let sqs
@@ -18,7 +19,7 @@ let cmrToken
  */
 const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
   // TODO: Consider consalidating this and the lambda that retrieves a single record
-  const { echoRestRoot } = getEarthdataConfig('sit')
+  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
   // This is a get request so we need to consider URL length
   const chunkedServiceOptionIds = chunkArray(serviceOptionIds, 50)
@@ -38,7 +39,7 @@ const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
       const serviceOptionDefinitionResponse = await request.get({
         uri: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
         headers: {
-          'Client-Id': getClientId('sit').background
+          'Client-Id': getClientId().background
         },
         json: true,
         resolveWithFullResponse: true
@@ -79,7 +80,7 @@ const generateSubsettingTags = async (event, context) => {
     'Access-Control-Allow-Credentials': true
   }
 
-  const { echoRestRoot } = getEarthdataConfig('sit')
+  const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
   // Retrieve all known service option associations to use later when constructing
   // tag data payloads for ESI collections
@@ -95,7 +96,7 @@ const generateSubsettingTags = async (event, context) => {
     const serviceOptionResponse = await request.get({
       uri: serviceOptionAssignmentUrl,
       headers: {
-        'Client-Id': getClientId('sit').background
+        'Client-Id': getClientId().background
       },
       json: true,
       resolveWithFullResponse: true

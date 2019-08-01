@@ -350,7 +350,7 @@ describe('fetchGranuleLinks', () => {
   test('calls lambda to get the retreival collection details', async () => {
     const endpointResponse = {
       id: 3,
-      environment: 'sit',
+      environment: 'prod',
       access_method: {
         type: 'download'
       },
@@ -499,7 +499,7 @@ describe('fetchLinks', () => {
 
     const params = {
       id: 3,
-      environment: 'sit',
+      environment: 'prod',
       access_method: {
         type: 'download'
       },

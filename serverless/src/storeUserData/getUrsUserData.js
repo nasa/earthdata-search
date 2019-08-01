@@ -4,6 +4,7 @@ import {
   getClientId
 } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../configUtil'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 /**
  * Retrieve URS profile data for the provided username
@@ -18,14 +19,14 @@ export const getUrsUserData = async (username, token) => {
     const { client } = edlConfig
     const { id: clientId } = client
 
-    const { edlHost } = getEarthdataConfig('sit')
+    const { edlHost } = getEarthdataConfig(cmrEnv())
 
     const ursProfileUrl = `${edlHost}/api/users/${username}?client_id=${clientId}`
 
     const ursProfileResponse = await request.get({
       uri: ursProfileUrl,
       headers: {
-        'Client-Id': getClientId('sit').lambda,
+        'Client-Id': getClientId().lambda,
         Authorization: `Bearer ${token}`
       },
       json: true,

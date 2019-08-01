@@ -3,6 +3,7 @@ import request from 'request-promise'
 import { getEdlConfig } from '../../configUtil'
 import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 import { getUrsSystemCredentials } from './getUrsSystemCredentials'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * Returns a token from URS
@@ -27,7 +28,7 @@ export const getSystemToken = async (providedToken) => {
     user_ip_address: '127.0.0.1'
   }
 
-  const authenticationUrl = `${getEarthdataConfig('sit').cmrHost}/legacy-services/rest/tokens.json`
+  const authenticationUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/tokens.json`
   const tokenResponse = await request.post({
     uri: authenticationUrl,
     body: {
@@ -36,7 +37,7 @@ export const getSystemToken = async (providedToken) => {
     json: true,
     resolveWithFullResponse: true,
     headers: {
-      'Client-Id': getClientId('sit').background
+      'Client-Id': getClientId().background
     }
   })
 

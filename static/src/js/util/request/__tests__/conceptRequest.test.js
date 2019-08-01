@@ -1,5 +1,6 @@
 import ConceptRequest from '../conceptRequest'
 import Request from '../request'
+import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.restoreAllMocks()
@@ -8,16 +9,20 @@ beforeEach(() => {
 
 describe('ConceptRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ apiHost: 'http://localhost' }))
+
     const token = '123'
     const request = new ConceptRequest(token)
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost:3001')
+    expect(request.baseUrl).toEqual('http://localhost')
     expect(request.searchPath).toEqual('concepts')
   })
 
   test('sets the default values when unauthenticated', () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+
     const request = new ConceptRequest()
 
     expect(request.authenticated).toBeFalsy()

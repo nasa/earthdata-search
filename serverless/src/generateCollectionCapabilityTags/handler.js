@@ -7,6 +7,7 @@ import { getSingleGranule } from '../util/cmr/getSingleGranule'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { invokeLambda } from '../util/aws/invokeLambda'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 let lambda
 let sqs
@@ -35,7 +36,7 @@ const generateCollectionCapabilityTags = async (event) => {
     include_tags: 'edsc.extra.serverless.*,org.ceos.wgiss.cwic.granules.prod'
   }
 
-  const collectionSearchUrl = `${getEarthdataConfig('sit').cmrHost}/search/collections.json?${stringify(cmrParams)}`
+  const collectionSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/collections.json?${stringify(cmrParams)}`
 
   let cmrCollectionResponse
   try {
@@ -44,7 +45,7 @@ const generateCollectionCapabilityTags = async (event) => {
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('sit').background
+        'Client-Id': getClientId().background
       }
     })
   } catch (e) {
