@@ -3,15 +3,12 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import * as EventEmitter from '../../../events/events'
-import ShapefileDropzone from '../../../components/Dropzone/ShapefileDropzone'
 import { ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    // onRemoveTimelineFilter: jest.fn(),
-    // temporalSearch: {}
     authToken: 'test-auth-token',
     onRemoveTimelineFilter: jest.fn(),
     onShapefileErrored: jest.fn(),
@@ -82,14 +79,15 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-      'shapefile.success',
-      {
-        name: 'test-file-name.zip',
-        size: '<span>200KB</span>'
-      },
-      {
-        test: 'test-response'
-      })
+        'shapefile.success',
+        {
+          name: 'test-file-name.zip',
+          size: '<span>200KB</span>'
+        },
+        {
+          test: 'test-response'
+        }
+      )
     })
   })
 
@@ -114,8 +112,8 @@ describe('ShapefileDropzoneContainer component', () => {
   })
 
   describe('onRemovedFile callback', () => {
-   test('fires the correct callbacks', () => {
-      const { enzymeWrapper, props } = setup()
+    test('fires the correct callbacks', () => {
+      const { enzymeWrapper } = setup()
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
@@ -128,13 +126,14 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-      'shapefile.removedfile',
-      {
-        name: 'test-file.shp'
-      },
-      {
-        test: 'test-response'
-      })
+        'shapefile.removedfile',
+        {
+          name: 'test-file.shp'
+        },
+        {
+          test: 'test-response'
+        }
+      )
     })
   })
 })
