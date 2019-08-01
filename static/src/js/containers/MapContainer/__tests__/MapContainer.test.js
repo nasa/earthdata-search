@@ -47,7 +47,8 @@ function setup() {
     masterOverlayPanelHeight: 500,
     shapefile: {},
     onChangeMap: jest.fn(),
-    onSaveShapefile: jest.fn()
+    onSaveShapefile: jest.fn(),
+    onShapefileErrored: jest.fn()
   }
 
   // Mount is required here so we can have access to the mapRef

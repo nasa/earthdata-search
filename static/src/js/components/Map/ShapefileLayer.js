@@ -3,7 +3,6 @@ import {
   withLeaflet,
   MapLayer
 } from 'react-leaflet'
-// import $ from 'jquery'
 
 import { eventEmitter } from '../../events/events'
 
@@ -48,7 +47,6 @@ class ShapefileLayerExtended extends L.Layer {
 
   onRemovedFile() {
     if (this.jsonLayer != null) { this.map.removeLayer(this.jsonLayer) }
-    // this.map.fire('shapefile:stop')
   }
 
   show() {
@@ -120,6 +118,7 @@ class ShapefileLayerExtended extends L.Layer {
         })
       }
     }
+
     // remove MultiPolygon features from geojson files
     return (() => {
       const result = []
@@ -166,18 +165,12 @@ class ShapefileLayerExtended extends L.Layer {
 
     jsonLayer.on('click', this.clickLayer)
     this.jsonLayer = jsonLayer
-    jsonLayer.addTo(this.map)
-    // this.map.fire('shapefile:start')
+    this.map.addLayer(jsonLayer)
     this.map.fitBounds(jsonLayer.getBounds())
 
     const children = jsonLayer.getLayers()
 
-    // const tourSteps = []
-    if (children.length > 1) {
-      // let el
-      // const middleChild = children[Math.floor(children.length / 2)]
-      // el = middleChild.container != null ? middleChild.container : middleChild.icon
-    } if (children.length === 1) {
+    if (children.length === 1) {
       this.setConstraint(children[0])
     }
   }
@@ -197,6 +190,7 @@ class ShapefileLayerExtended extends L.Layer {
 
       if ((originalLatLngs[0].length > MAX_POLYGON_SIZE)
         && (latlngs.length !== originalLatLngs.length)) {
+        // TODO add notification about shapefile reduction
         // help.add('shapefile_reduction', { element: '.leaflet-draw-edit-edit' })
       }
 

@@ -114,7 +114,6 @@ describe('SpatialDisplay component', () => {
 
     const filterStackItem = enzymeWrapper.find(FilterStackItem)
     const filterStackContents = enzymeWrapper.find(FilterStackContents)
-    // expect(enzymeWrapper.debug()).toEqual(true)
 
     expect(filterStackItem.props().title).toEqual('Spatial')
     expect(filterStackItem.props().icon).toEqual('crop')
