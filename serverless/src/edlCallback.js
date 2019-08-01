@@ -18,7 +18,7 @@ const edlCallback = async (event) => {
   const {
     edscHost,
     redirectUriPath
-  } = getEarthdataConfig('prod')
+  } = getEarthdataConfig(cmrEnv())
 
   const { apiHost } = getEnvironmentConfig()
   const redirectUri = `${apiHost}${redirectUriPath}`
