@@ -234,7 +234,7 @@ functions:
           method: post
           cors:
             origin: '*'
-          path: save_shapefile
+          path: shapefiles
 
   edlLogin:
     handler: serverless/src/edlLogin.default

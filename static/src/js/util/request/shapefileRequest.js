@@ -16,6 +16,6 @@ export default class ShapefileRequest extends Request {
   }
 
   save(params) {
-    return this.post('save_shapefile', params)
+    return this.post('shapefiles', params)
   }
 }

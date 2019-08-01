@@ -303,6 +303,8 @@ class SpatialDisplay extends Component {
     } else if (((shapefile.shapefileName || shapefile.shapefileId || shapefile.shapefileError)
       && !drawingNewLayer)
       || drawingNewLayer === 'shapefile') {
+      // if (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
+      // render the shapefile display
       const {
         shapefileName,
         shapefileError,

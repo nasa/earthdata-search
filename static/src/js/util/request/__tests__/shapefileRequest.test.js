@@ -37,6 +37,6 @@ describe('ShapefileRequest#save', () => {
     request.save(params)
 
     expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('save_shapefile', params)
+    expect(postMock).toBeCalledWith('shapefiles', params)
   })
 })
