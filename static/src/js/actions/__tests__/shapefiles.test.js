@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import saveShapefile from '../shapefiles'
-import {  UPDATE_SHAPEFILE } from '../../constants/actionTypes'
+import { UPDATE_SHAPEFILE } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('saveShapefile', () => {
   test('calls the API to get collections', async () => {
     nock(/localhost/)
-      .post(/save_shapefile/)
+      .post(/shapefiles/)
       .reply(200, {
         shapefile_id: '123'
       })
@@ -63,7 +63,7 @@ describe('saveShapefile', () => {
 
   test('does not call updateCollectionResults on error', async () => {
     nock(/localhost/)
-      .post(/save_shapefile/)
+      .post(/shapefiles/)
       .reply(500)
 
     const data = {
