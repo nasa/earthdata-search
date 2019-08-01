@@ -1,9 +1,9 @@
 import Request from './request'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class ShapefileRequest extends Request {
   constructor() {
-    super(getEarthdataConfig('prod').apiHost)
+    super(getEnvironmentConfig().apiHost)
     this.lambda = true
   }
 
