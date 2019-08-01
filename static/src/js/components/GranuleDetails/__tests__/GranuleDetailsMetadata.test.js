@@ -50,7 +50,7 @@ describe('GranuleDetailsMetadata component', () => {
       const { enzymeWrapper } = setup()
       enzymeWrapper.setProps({ authToken: 'token' })
 
-      const baseUrl = 'http://localhost:3001/concepts/metadata?url='
+      const baseUrl = 'http://localhost:3000/concepts/metadata?url='
       const granuleUrl = encodeURIComponent('https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC')
       const tokenUrl = '&token=token'
 

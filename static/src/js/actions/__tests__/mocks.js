@@ -15,27 +15,27 @@ export const getProjectCollectionsResponse = [
         ],
         urls: {
           atom: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=token',
             title: 'ATOM'
           },
           dif: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=token',
             title: 'DIF'
           },
           echo10: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=token',
             title: 'ECHO10'
           },
           html: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=token',
             title: 'HTML'
           },
           iso19115: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=token',
             title: 'ISO19115'
           },
           native: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=token',
             title: 'Native'
           },
           osdd: {
@@ -70,27 +70,27 @@ export const getProjectCollectionsResponse = [
         ],
         urls: {
           atom: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.atom&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.atom&token=token',
             title: 'ATOM'
           },
           dif: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.dif&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.dif&token=token',
             title: 'DIF'
           },
           echo10: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.echo10&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.echo10&token=token',
             title: 'ECHO10'
           },
           html: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.html&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.html&token=token',
             title: 'HTML'
           },
           iso19115: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.iso19115&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.iso19115&token=token',
             title: 'ISO19115'
           },
           native: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.native&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.native&token=token',
             title: 'Native'
           },
           osdd: {
@@ -187,27 +187,27 @@ export const getCollectionsResponseAuth = [
         ],
         urls: {
           atom: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=token',
             title: 'ATOM'
           },
           dif: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=token',
             title: 'DIF'
           },
           echo10: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=token',
             title: 'ECHO10'
           },
           html: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=token',
             title: 'HTML'
           },
           iso19115: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=token',
             title: 'ISO19115'
           },
           native: {
-            href: 'http://localhost/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=token',
+            href: 'http://localhost:3000/concepts/metadata?url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=token',
             title: 'Native'
           },
           osdd: {

@@ -1,4 +1,4 @@
-import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getClientId, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export const buildUrls = (json, authToken) => {
@@ -22,10 +22,10 @@ export const buildUrls = (json, authToken) => {
 
   const eartdataConfig = getEarthdataConfig(cmrEnv())
   const {
-    apiHost,
     cmrHost,
     opensearchRoot
   } = eartdataConfig
+  const { apiHost } = getEnvironmentConfig()
   const cmrClientId = getClientId().client
 
   const urls = {}

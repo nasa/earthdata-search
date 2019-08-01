@@ -1,5 +1,5 @@
 import Request from './request'
-import { getApplicationConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edscDate'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
@@ -12,7 +12,7 @@ export default class GranuleRequest extends Request {
     const cmrEnvironment = cmrEnv()
 
     if (authToken && authToken !== '') {
-      super(getEarthdataConfig(cmrEnvironment).apiHost)
+      super(getEnvironmentConfig().apiHost)
 
       this.authenticated = true
       this.authToken = authToken

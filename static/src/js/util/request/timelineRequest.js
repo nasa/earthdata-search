@@ -1,5 +1,5 @@
 import Request from './request'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
@@ -10,7 +10,7 @@ export default class TimelineRequest extends Request {
     const cmrEnvironment = cmrEnv()
 
     if (authToken && authToken !== '') {
-      super(getEarthdataConfig(cmrEnvironment).apiHost)
+      super(getEnvironmentConfig().apiHost)
 
       this.authenticated = true
       this.authToken = authToken

@@ -139,7 +139,7 @@ describe('getFocusedGranule', () => {
   test('should update the authenticated granule metadata', async () => {
     const metadata = '<MockGranule>Data</MockGranule>'
 
-    moxios.stubRequest(/3001\/concepts.*/, {
+    moxios.stubRequest(/3000\/concepts.*/, {
       status: 200,
       response: metadata,
       headers: {

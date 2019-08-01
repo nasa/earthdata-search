@@ -23,8 +23,7 @@ import {
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { getEnvironmentConfig } from '../../../../sharedUtils/config'
 
 export const addGranulesFromCollection = payload => ({
   type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
@@ -152,7 +151,7 @@ export const fetchGranuleLinks = data => (dispatch, getState) => {
   if (retrievalId && collectionId) {
     const { authToken } = getState()
 
-    const { apiHost } = getEarthdataConfig(cmrEnv())
+    const { apiHost } = getEnvironmentConfig()
 
     // Fetch the retrieval collection data so we know what
     // granule parameters were provided in the order

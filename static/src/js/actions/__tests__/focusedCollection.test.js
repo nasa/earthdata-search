@@ -302,13 +302,12 @@ describe('getFocusedCollection', () => {
 
   test('should update the authenticated focusedCollection and call getGranules', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-      apiHost: 'http://localhost',
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    moxios.stubRequest(/localhost\/collections\/json/, {
+    moxios.stubRequest(/3000\/collections\/json/, {
       status: 200,
       response: {
         feed: {
@@ -330,7 +329,7 @@ describe('getFocusedCollection', () => {
       }
     })
 
-    moxios.stubRequest(/localhost\/collections\/umm_json/, {
+    moxios.stubRequest(/3000\/collections\/umm_json/, {
       status: 200,
       response: {
         hits: 1,
