@@ -1,6 +1,6 @@
 /**
  * Return the CMR environment to use
  */
-export const cmrEnv = () => 'prod'
+export const cmrEnv = () => 'sit'
 
 export default cmrEnv
