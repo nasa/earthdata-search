@@ -1,12 +1,9 @@
 import Request from './request'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class NlpRequest extends Request {
   constructor() {
-    const cmrEnvironment = cmrEnv()
-
-    super(getEarthdataConfig(cmrEnvironment).apiHost)
+    super(getEnvironmentConfig().apiHost)
     this.lambda = true
     this.searchPath = 'nlp'
   }

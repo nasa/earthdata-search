@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
 
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export class AuthRequiredContainer extends Component {
@@ -15,6 +15,7 @@ export class AuthRequiredContainer extends Component {
   }
 
   componentWillMount() {
+    const { apiHost } = getEnvironmentConfig()
     const cmrEnvironment = cmrEnv()
 
     const token = get('authToken')
@@ -22,7 +23,7 @@ export class AuthRequiredContainer extends Component {
     const returnPath = window.location.href
 
     if (token === null) {
-      window.location.href = `${getEarthdataConfig(cmrEnvironment).apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
     } else {
       this.setState({ isLoggedIn: true })
     }

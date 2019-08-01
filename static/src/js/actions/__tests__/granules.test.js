@@ -131,7 +131,7 @@ describe('getGranules', () => {
   })
 
   test('calls lambda to get authenticated granules', async () => {
-    moxios.stubRequest(/3001\/granules.*/, {
+    moxios.stubRequest(/3000\/granules.*/, {
       status: 200,
       response: {
         feed: {
@@ -363,7 +363,7 @@ describe('fetchGranuleLinks', () => {
       granule_count: 888
     }
 
-    moxios.stubRequest(/3001\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
+    moxios.stubRequest(/3000\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
       status: 200,
       response: endpointResponse
     })
@@ -408,7 +408,7 @@ describe('fetchGranuleLinks', () => {
   })
 
   test('takes no action when the request fails', async () => {
-    moxios.stubRequest(/3001\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
+    moxios.stubRequest(/3000\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
       status: 404,
       response: {
         errors: [

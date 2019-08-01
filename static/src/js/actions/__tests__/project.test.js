@@ -203,7 +203,7 @@ describe('getProjectGranules', () => {
       id: 'granuleId2',
       mockCollectionData: 'collection data 2'
     }]
-    moxios.stubRequest(/3001\/granules.*/, {
+    moxios.stubRequest(/3000\/granules.*/, {
       status: 200,
       response: {
         feed: {
@@ -273,7 +273,7 @@ describe('getProjectGranules', () => {
   })
 
   test('does not call updateProjectGranules on error', async () => {
-    moxios.stubRequest(/3001\/granules.*/, {
+    moxios.stubRequest(/3000\/granules.*/, {
       status: 500,
       response: {}
     })
@@ -324,13 +324,12 @@ describe('getProjectCollections', () => {
 
   test('calls lambda to get authenticated collections', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-      apiHost: 'http://localhost',
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
-    moxios.stubRequest(/localhost\/collections\/json/, {
+    moxios.stubRequest(/3000\/collections\/json/, {
       status: 200,
       response: {
         feed: {
@@ -354,7 +353,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    moxios.stubRequest(/localhost\/collections\/umm_json/, {
+    moxios.stubRequest(/3000\/collections\/umm_json/, {
       status: 200,
       response: {
         hits: 1,
@@ -446,7 +445,7 @@ describe('getProjectCollections', () => {
   })
 
   test('does not call updateCollectionMetadata on error', async () => {
-    moxios.stubRequest(/3001\/collections.*/, {
+    moxios.stubRequest(/3000\/collections.*/, {
       status: 500,
       response: {}
     })

@@ -50,7 +50,7 @@ describe('AuthRequiredContainer component', () => {
     const div = enzymeWrapper.find('div')
     expect(div.hasClass('route-wrapper')).toEqual(true)
 
-    expect(window.location.href).toEqual(`http://localhost:3001/login?cmr_env=prod&state=${encodeURIComponent(returnPath)}`)
+    expect(window.location.href).toEqual(`http://localhost:3000/login?cmr_env=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
   test('should render children if there is an auth cookie', () => {

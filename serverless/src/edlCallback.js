@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
 import { getEdlConfig } from './configUtil'
 import { invokeLambda } from './util/aws/invokeLambda'
 import { cmrEnv } from '../../sharedUtils/cmrEnv'
@@ -16,10 +16,11 @@ const edlCallback = async (event) => {
   const { code, state } = params
 
   const {
-    apiHost,
     edscHost,
     redirectUriPath
-  } = getEarthdataConfig(cmrEnv())
+  } = getEarthdataConfig('prod')
+
+  const { apiHost } = getEnvironmentConfig()
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)

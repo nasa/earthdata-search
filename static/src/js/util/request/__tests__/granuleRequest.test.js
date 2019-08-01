@@ -8,14 +8,12 @@ beforeEach(() => {
 
 describe('GranuleRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ apiHost: 'http://localhost' }))
-
     const token = '123'
     const request = new GranuleRequest(token)
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost')
+    expect(request.baseUrl).toEqual('http://localhost:3000')
     expect(request.searchPath).toEqual('granules')
   })
 

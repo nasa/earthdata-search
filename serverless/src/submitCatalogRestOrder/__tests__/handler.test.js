@@ -36,6 +36,11 @@ afterEach(() => {
 
 describe('submitCatalogRestOrder', () => {
   test('correctly discovers the correct fields from the provided xml', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.earthdata.nasa.gov',
+      edscHost: 'http://localhost:8080'
+    }))
+
     nock(/cmr/)
       .get(/search\/granules/)
       .reply(200, {

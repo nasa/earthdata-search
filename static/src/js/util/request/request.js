@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
 import { prepKeysForCmr } from '../url/url'
-import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig, getClientId } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
@@ -155,7 +155,7 @@ export default class Request {
     if (data.statusCode === 401) {
       const returnPath = window.location.href
 
-      window.location.href = `${getEarthdataConfig(cmrEnvironment).apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${getEnvironmentConfig().apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
     }
   }
 }

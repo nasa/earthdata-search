@@ -13,7 +13,7 @@ describe('CollectionRequest#constructor', () => {
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost:3001')
+    expect(request.baseUrl).toEqual('http://localhost:3000')
     expect(request.searchPath).toEqual('collections')
   })
 
