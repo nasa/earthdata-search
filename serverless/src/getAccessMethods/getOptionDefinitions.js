@@ -8,6 +8,7 @@ import {
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getEdlConfig } from '../configUtil'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   const forms = []
@@ -15,7 +16,7 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   await optionDefinitions.forEachAsync(async (optionDefinition, index) => {
     const { id: guid } = optionDefinition
 
-    const url = `${getEarthdataConfig('sit').cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
+    const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
 
     const { token } = getVerifiedJwtToken(jwtToken)
     const { access_token: accessToken } = token
@@ -30,7 +31,7 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
         uri: url,
         resolveWithFullResponse: true,
         headers: {
-          'Client-Id': getClientId('sit').lambda,
+          'Client-Id': getClientId().lambda,
           'Echo-Token': `${accessToken}:${clientId}`
         }
       })

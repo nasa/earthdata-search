@@ -1,9 +1,12 @@
 import Request from './request'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export default class OrderRequest extends Request {
   constructor(authToken) {
-    super(getEarthdataConfig('sit').apiHost)
+    const cmrEnvironment = cmrEnv()
+
+    super(getEarthdataConfig(cmrEnvironment).apiHost)
     this.authenticated = true
     this.authToken = authToken
   }

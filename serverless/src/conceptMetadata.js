@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import { getSecretEarthdataConfig } from '../../sharedUtils/config'
 import { getEdlConfig } from './configUtil'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 /**
  * Handler to perform an authenticated CMR concept metadata download
@@ -9,7 +10,7 @@ import { getEdlConfig } from './configUtil'
 const conceptMetadata = async (event, context, callback) => {
   const { url, token: jwtToken } = event.queryStringParameters
 
-  const { secret } = getSecretEarthdataConfig('sit')
+  const { secret } = getSecretEarthdataConfig(cmrEnv())
   const token = jwt.verify(jwtToken, secret)
 
   // The client id is part of our Earthdata Login credentials

@@ -1,5 +1,6 @@
 import { getEarthdataConfig } from '../../sharedUtils/config'
 import { getEdlConfig } from './configUtil'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 /**
  * Handler for redirecting the user to the correct EDL login URL
@@ -18,7 +19,7 @@ const edlLogin = async (event, context, callback) => {
     apiHost,
     edlHost,
     redirectUriPath
-  } = getEarthdataConfig('sit')
+  } = getEarthdataConfig(cmrEnv())
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   callback(null, {

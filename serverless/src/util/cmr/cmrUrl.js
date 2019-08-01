@@ -1,5 +1,6 @@
 import { stringify } from 'qs'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * Construct a CMR url provided a path and query params
@@ -8,7 +9,7 @@ import { getEarthdataConfig } from '../../../../sharedUtils/config'
  * @return {String} A completed and valid url to CMR
  */
 export const cmrUrl = (path, queryParams = {}) => {
-  const baseUrl = `${getEarthdataConfig('sit').cmrHost}/${path}`
+  const baseUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/${path}`
 
   if (Object.keys(queryParams).length) {
     return `${baseUrl}?${stringify(queryParams, { indices: false, arrayFormat: 'brackets' })}`

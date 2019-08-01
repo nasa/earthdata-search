@@ -38,7 +38,7 @@ describe('getRetrieval', () => {
       query.response([{
         jsondata: {},
         token: 'asdf',
-        environment: 'sit'
+        environment: 'prod'
       }])
     })
 

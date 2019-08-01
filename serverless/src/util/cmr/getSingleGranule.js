@@ -3,6 +3,7 @@ import { stringify } from 'qs'
 import { getSystemToken } from '../urs/getSystemToken'
 import { readCmrResults } from './readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 let cmrToken
 
@@ -20,14 +21,14 @@ export const getSingleGranule = async (collectionId) => {
   }
 
   try {
-    const granuleSearchUrl = `${getEarthdataConfig('sit').cmrHost}/search/granules.json?${stringify(cmrParams)}`
+    const granuleSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/granules.json?${stringify(cmrParams)}`
 
     const cmrResponse = await request.get({
       uri: granuleSearchUrl,
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('sit').background
+        'Client-Id': getClientId().background
       }
     })
     const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)

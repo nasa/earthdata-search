@@ -165,6 +165,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
       dispatch(actions.fetchAccessMethods())
     }, (error) => {
       throw new Error('Request failed', error)
+      // console.log('Request failed', error)
     })
     .catch((e) => {
       console.log('Promise Rejected', e)

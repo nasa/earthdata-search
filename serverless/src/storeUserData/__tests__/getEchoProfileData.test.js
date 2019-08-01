@@ -14,7 +14,7 @@ describe('getEchoProfileData', () => {
     const ursGetMock = jest.spyOn(request, 'get')
       .mockImplementationOnce(() => jest.fn())
 
-    getEchoProfileData('fake.access.token')
+    await getEchoProfileData('fake.access.token')
 
     expect(ursGetMock).toBeCalledTimes(1)
     expect(ursGetMock).toBeCalledWith({

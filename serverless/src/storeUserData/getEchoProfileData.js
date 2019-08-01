@@ -4,6 +4,7 @@ import {
   getClientId
 } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../configUtil'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 /**
  * Retrieve ECHO profile data for the provided username
@@ -18,14 +19,14 @@ export const getEchoProfileData = async (token) => {
     const { client } = edlConfig
     const { id: clientId } = client
 
-    const { echoRestRoot } = getEarthdataConfig('sit')
+    const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
     const echoRestProfileUrl = `${echoRestRoot}/users/current.json`
 
     const echoRestProfileResponse = await request.get({
       uri: echoRestProfileUrl,
       headers: {
-        'Client-Id': getClientId('sit').lambda,
+        'Client-Id': getClientId().lambda,
         'Echo-Token': `${token}:${clientId}`
       },
       json: true,

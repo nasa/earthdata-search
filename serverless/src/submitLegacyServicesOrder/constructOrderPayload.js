@@ -3,6 +3,7 @@ import { stringify } from 'qs'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 export const constructOrderPayload = async (accessMethod, granuleParams, accessTokenWithClient) => {
   const {
@@ -23,7 +24,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
     uri: cmrUrl('search/granules.json', granuleParams),
     headers: {
       'Echo-Token': accessTokenWithClient,
-      'Client-Id': getClientId('sit').background
+      'Client-Id': getClientId().background
     },
     json: true,
     resolveWithFullResponse: true
@@ -35,7 +36,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
   const granuleOrderOptions = []
 
   // Ensure that only orders that apply to the requested option definition are selected
-  const optionInformationUrl = `${getEarthdataConfig('sit').echoRestRoot}/order_information.json`
+  const optionInformationUrl = `${getEarthdataConfig(cmrEnv()).echoRestRoot}/order_information.json`
   const optionInformationResponse = await request.post({
     uri: optionInformationUrl,
     form: stringify({
@@ -44,7 +45,7 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Echo-Token': accessTokenWithClient,
-      'Client-Id': getClientId('sit').background
+      'Client-Id': getClientId().background
     },
     json: true,
     resolveWithFullResponse: true

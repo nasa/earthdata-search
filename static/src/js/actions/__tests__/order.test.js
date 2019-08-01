@@ -161,7 +161,7 @@ describe('fetchOrder', () => {
       status: 200,
       response: {
         id: 7,
-        environment: 'sit',
+        environment: 'prod',
         jsondata: {
           test: 'data'
         },
@@ -309,7 +309,7 @@ describe('fetchOrder', () => {
             echo_orders: [],
             esi: []
           },
-          environment: 'sit',
+          environment: 'prod',
           id: 7,
           jsondata: {
             test: 'data'

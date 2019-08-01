@@ -4,6 +4,7 @@ import snakeCaseKeys from 'snakecase-keys'
 
 import { prepKeysForCmr } from '../url/url'
 import { getEarthdataConfig, getClientId } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
  * Parent class for the application API layer to communicate with external services
@@ -69,7 +70,7 @@ export default class Request {
 
       // Add the Client-Id header for requests directly to CMR
       // eslint-disable-next-line no-param-reassign
-      headers['Client-Id'] = getClientId('sit').client
+      headers['Client-Id'] = getClientId().client
 
       return prepKeysForCmr(filteredData, this.nonIndexedKeys())
     }
@@ -149,10 +150,12 @@ export default class Request {
    * Handle an unauthorized response
    */
   handleUnauthorized(data) {
+    const cmrEnvironment = cmrEnv()
+
     if (data.statusCode === 401) {
       const returnPath = window.location.href
 
-      window.location.href = `${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${getEarthdataConfig(cmrEnvironment).apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
     }
   }
 }

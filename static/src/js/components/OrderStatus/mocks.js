@@ -4,7 +4,7 @@ export const echoOrder = {
   jsondata: {
     source: '?p=!C194001243-LPDAAC_ECS&pg[1][v]=t&m=219.36362750573883!-493.59375!0!1!0!0%2C2&ff=Customizable&tl=1536100540!3!!'
   },
-  environment: 'sit',
+  environment: 'prod',
   access_method: {
     type: 'ECHO ORDERS',
     is_valid: true,
@@ -241,7 +241,7 @@ export const esiOrder = {
   jsondata: {
     source: '?p=!C194001243-LPDAAC_ECS&pg[1][v]=t&m=219.36362750573883!-493.59375!0!1!0!0%2C2&ff=Customizable&tl=1536100540!3!!'
   },
-  environment: 'sit',
+  environment: 'prod',
   access_method: {
     type: 'ESI',
     is_valid: true,

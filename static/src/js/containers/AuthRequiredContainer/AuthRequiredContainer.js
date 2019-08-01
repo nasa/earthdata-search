@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export class AuthRequiredContainer extends Component {
   constructor(props) {
@@ -14,12 +15,14 @@ export class AuthRequiredContainer extends Component {
   }
 
   componentWillMount() {
+    const cmrEnvironment = cmrEnv()
+
     const token = get('authToken')
 
     const returnPath = window.location.href
 
     if (token === null) {
-      window.location.href = `${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = `${getEarthdataConfig(cmrEnvironment).apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
     } else {
       this.setState({ isLoggedIn: true })
     }

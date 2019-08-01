@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import './GranuleDetailsMetadata.scss'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
   const metdataUrlKeys = [
@@ -13,7 +14,7 @@ export const GranuleDetailsMetadata = ({ authToken, metadataUrls }) => {
     'iso19115'
   ]
 
-  const { apiHost } = getEarthdataConfig('sit')
+  const { apiHost } = getEarthdataConfig(cmrEnv())
 
   return (
     <div className="granule-details-metadata">

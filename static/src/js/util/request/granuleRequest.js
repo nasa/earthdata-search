@@ -2,20 +2,23 @@ import Request from './request'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import { getTemporal } from '../edscDate'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
  * Request object for granule specific requests
  */
 export default class GranuleRequest extends Request {
   constructor(authToken) {
+    const cmrEnvironment = cmrEnv()
+
     if (authToken && authToken !== '') {
-      super(getEarthdataConfig('sit').apiHost)
+      super(getEarthdataConfig(cmrEnvironment).apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules'
     } else {
-      super(getEarthdataConfig('sit').cmrHost)
+      super(getEarthdataConfig(cmrEnvironment).cmrHost)
 
       this.searchPath = 'search/granules.json'
     }
@@ -64,7 +67,7 @@ export default class GranuleRequest extends Request {
 
       if (granule.id) {
         // eslint-disable-next-line
-        updatedGranule.thumbnail = `${getEarthdataConfig('sit').cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+        updatedGranule.thumbnail = `${getEarthdataConfig(cmrEnv()).cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
       }
 
       return updatedGranule

@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
 import { getEdlConfig } from './configUtil'
 import { getSecretEarthdataConfig } from '../../sharedUtils/config'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 /**
  * Generate AuthPolicy for the Authorizer, and attach the JWT
@@ -47,7 +48,7 @@ async function edlAuthorizer(event) {
 
   try {
     // Pull the secret used to encrypt our jwtTokens
-    const { secret } = getSecretEarthdataConfig('sit')
+    const { secret } = getSecretEarthdataConfig(cmrEnv())
 
     return jwt.verify(jwtToken, secret, async (verifyError, decoded) => {
       if (verifyError) {

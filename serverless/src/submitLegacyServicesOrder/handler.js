@@ -6,6 +6,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
 import { getEdlConfig } from '../configUtil'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // Knex database connection object
 let dbConnection = null
@@ -69,10 +70,10 @@ const submitLegacyServicesOrder = async (event, context) => {
     try {
       // 1. Submit an empty order
       const emptyOrderResponse = await request.post({
-        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders.json`,
+        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('sit').background
+          'Client-Id': getClientId().background
         },
         body: { order: {} },
         json: true,
@@ -88,10 +89,10 @@ const submitLegacyServicesOrder = async (event, context) => {
       )
 
       await request.post({
-        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
+        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('sit').background
+          'Client-Id': getClientId().background
         },
         body: orderItemPayload,
         json: true,
@@ -102,10 +103,10 @@ const submitLegacyServicesOrder = async (event, context) => {
       const userInformationPayload = await constructUserInformationPayload(echoProfile, ursProfile)
 
       await request.put({
-        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders/${orderId}/user_information`,
+        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/user_information`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('sit').background
+          'Client-Id': getClientId().background
         },
         body: userInformationPayload,
         json: true,
@@ -114,10 +115,10 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       // 4. Submit the order
       await request.post({
-        uri: `${getEarthdataConfig('sit').echoRestRoot}/orders/${orderId}/submit`,
+        uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/submit`,
         headers: {
           'Echo-Token': accessTokenWithClient,
-          'Client-Id': getClientId('sit').background
+          'Client-Id': getClientId().background
         },
         json: true,
         resolveWithFullResponse: true

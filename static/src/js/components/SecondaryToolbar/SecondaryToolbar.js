@@ -8,6 +8,7 @@ import Button from '../Button/Button'
 
 import './SecondaryToolbar.scss'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -30,6 +31,8 @@ class SecondaryToolbar extends Component {
     } = this.props
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
+
+    const cmrEnvironment = cmrEnv()
 
     const backLink = (
       <Link
@@ -57,7 +60,7 @@ class SecondaryToolbar extends Component {
           <Button
             className="secondary-toolbar__project"
             bootstrapVariant="light"
-            href={`${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(projectPath)}`}
+            href={`${getEarthdataConfig(cmrEnvironment).apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
           >
             My Project
@@ -89,7 +92,7 @@ class SecondaryToolbar extends Component {
       <Button
         className="secondary-toolbar__login"
         bootstrapVariant="light"
-        href={`${getEarthdataConfig('sit').apiHost}/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`}
+        href={`${getEarthdataConfig(cmrEnvironment).apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`}
         icon="lock"
         label="Login"
       >

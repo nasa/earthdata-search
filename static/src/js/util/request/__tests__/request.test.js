@@ -1,4 +1,5 @@
 import Request from '../request'
+import * as cmrEnv from '../../../../../../sharedUtils/cmrEnv'
 
 const baseUrl = 'http://example.com'
 
@@ -19,7 +20,7 @@ describe('Request#constructor', () => {
 
   test('throws an error when no baseUrl value is provided', () => {
     expect(() => {
-      new Request()
+      Request()
     }).toThrow()
   })
 })
@@ -115,10 +116,6 @@ describe('Request#transformResponse', () => {
   })
 })
 
-// describe('Request#post', () => {
-//   test('what exactly?')
-// })
-
 describe('Request#search', () => {
   test('calls Request#post', () => {
     const request = new Request(baseUrl)
@@ -142,8 +139,9 @@ describe('Request#handleUnauthorized', () => {
   })
 
   test('redirects if the response is unauthorized', () => {
-    const request = new Request(baseUrl)
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
 
+    const request = new Request(baseUrl)
     const data = {
       statusCode: 401
     }
@@ -153,7 +151,7 @@ describe('Request#handleUnauthorized', () => {
     window.location = { href: returnPath }
 
     request.handleUnauthorized(data)
-    expect(window.location.href).toEqual(`http://localhost:3001/login?cmr_env=${'sit'}&state=${encodeURIComponent(returnPath)}`)
+    expect(window.location.href).toEqual(`http://localhost:3001/login?cmr_env=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
   test('does not redirect if the response is valid', () => {

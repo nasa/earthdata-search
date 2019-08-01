@@ -15,7 +15,7 @@ export const orderPayload = {
           collection_metadata: {}
         }
       ],
-      environment: 'sit'
+      environment: 'prod'
     }
   }),
   requestContext: {
@@ -54,7 +54,7 @@ export const echoOrderPayload = {
           }
         }
       ],
-      environment: 'sit'
+      environment: 'prod'
     }
   }),
   requestContext: {

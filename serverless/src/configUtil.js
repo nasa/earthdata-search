@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk'
 
 import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
+import { cmrEnv } from '../../sharedUtils/cmrEnv'
 
 const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 
@@ -11,7 +12,7 @@ const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 export const buildOauthConfig = clientConfig => ({
   client: clientConfig,
   auth: {
-    tokenHost: getEarthdataConfig('sit').edlHost
+    tokenHost: getEarthdataConfig(cmrEnv()).edlHost
   }
 })
 
@@ -21,8 +22,8 @@ export const buildOauthConfig = clientConfig => ({
  */
 export const getEdlConfig = async () => {
   try {
-    if (process.env.NODE_ENV === 'development') {
-      const { clientId, password } = getSecretEarthdataConfig('sit')
+    if (['development', 'test'].includes(process.env.NODE_ENV)) {
+      const { clientId, password } = getSecretEarthdataConfig(cmrEnv())
 
       return buildOauthConfig({
         id: clientId,
@@ -31,7 +32,7 @@ export const getEdlConfig = async () => {
     }
 
     // Use a variable here for easier find/replace until cmr_env is implemented
-    const environment = 'sit'
+    const environment = cmrEnv()
 
     console.log(`Fetching UrsClientConfigSecret_${environment}`)
 

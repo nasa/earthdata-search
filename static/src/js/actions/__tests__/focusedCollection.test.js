@@ -1,7 +1,6 @@
 import moxios from 'moxios'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { remove, get } from 'tiny-cookie'
 
 import actions from '../index'
 import { updateFocusedCollection } from '../focusedCollection'
@@ -15,6 +14,8 @@ import {
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UPDATE_AUTH
 } from '../../constants/actionTypes'
+import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import * as cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 const mockStore = configureMockStore([thunk])
 
@@ -215,6 +216,8 @@ describe('getFocusedCollection', () => {
   })
 
   test('should update the focusedCollection and call getGranules', async () => {
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
     moxios.stubRequest(/search\/collections\.json/, {
       status: 200,
       response: {
@@ -298,7 +301,14 @@ describe('getFocusedCollection', () => {
   })
 
   test('should update the authenticated focusedCollection and call getGranules', async () => {
-    moxios.stubRequest(/3001\/collections\/json/, {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      apiHost: 'http://localhost',
+      cmrHost: 'https://cmr.earthdata.nasa.gov',
+      opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
+    }))
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
+    moxios.stubRequest(/localhost\/collections\/json/, {
       status: 200,
       response: {
         feed: {
@@ -320,7 +330,7 @@ describe('getFocusedCollection', () => {
       }
     })
 
-    moxios.stubRequest(/3001\/collections\/umm_json/, {
+    moxios.stubRequest(/localhost\/collections\/umm_json/, {
       status: 200,
       response: {
         hits: 1,
@@ -383,6 +393,8 @@ describe('getFocusedCollection', () => {
   })
 
   test('should not call getGranules is previous granules are used', async () => {
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
+
     moxios.stubRequest(/search\/collections\.json/, {
       status: 200,
       response: {

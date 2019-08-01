@@ -1,19 +1,22 @@
 import Request from './request'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 /**
  * Request object for timeline specific requests
  */
 export default class TimelineRequest extends Request {
   constructor(authToken) {
+    const cmrEnvironment = cmrEnv()
+
     if (authToken && authToken !== '') {
-      super(getEarthdataConfig('sit').apiHost)
+      super(getEarthdataConfig(cmrEnvironment).apiHost)
 
       this.authenticated = true
       this.authToken = authToken
       this.searchPath = 'granules/timeline'
     } else {
-      super(getEarthdataConfig('sit').cmrHost)
+      super(getEarthdataConfig(cmrEnvironment).cmrHost)
 
       this.searchPath = 'search/granules/timeline'
     }

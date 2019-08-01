@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getSecretEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 import { getEdlConfig } from '../../configUtil'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -11,7 +12,7 @@ import { getEdlConfig } from '../../configUtil'
  */
 export const doSearchRequest = async (jwtToken, url) => {
   // Get the access token and clientId to build the Echo-Token header
-  const { secret } = getSecretEarthdataConfig('sit')
+  const { secret } = getSecretEarthdataConfig(cmrEnv())
 
   const token = jwt.verify(jwtToken, secret)
 
@@ -25,7 +26,7 @@ export const doSearchRequest = async (jwtToken, url) => {
       uri: url,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId('sit').lambda,
+        'Client-Id': getClientId().lambda,
         'Echo-Token': `${token.token.access_token}:${clientId}`
       }
     })
