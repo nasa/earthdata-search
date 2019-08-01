@@ -30,7 +30,7 @@
       }
     },
     "sit": {
-      "apiHost": "https://d114neooimuqfs.cloudfront.net",
+      "apiHost": "http://localhost:3001",
       "clientId": {
         "background": "eed-edsc-sit-serverless-background",
         "client": "eed-edsc-sit-serverless-client",
@@ -39,13 +39,13 @@
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
-      "edscHost": "https://searchlab.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
     "uat": {
-      "apiHost": "https://d114neooimuqfs.cloudfront.net",
+      "apiHost": "http://localhost:3001",
       "clientId": {
         "background": "eed-edsc-uat-serverless-background",
         "client": "eed-edsc-uat-serverless-client",
@@ -54,13 +54,13 @@
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
-      "edscHost": "https://searchlab.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
     "prod": {
-      "apiHost": "https://d114neooimuqfs.cloudfront.net",
+      "apiHost": "http://localhost:3001",
       "clientId": {
         "background": "eed-edsc-prod-serverless-background",
         "client": "eed-edsc-prod-serverless-client",
@@ -69,7 +69,7 @@
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
-      "edscHost": "https://searchlab.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "nlpHost": "https://edsc-nlp-prod.ngap.ecs.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
