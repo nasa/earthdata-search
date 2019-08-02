@@ -12,7 +12,7 @@ const tagName = 'edsc.extra.serverless.gibs'
 /*
  * Retrieve the worldview configuration file and pull out products that Earthdata Search supports
  */
-const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
+export const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
   const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
   const worldviewResponse = await request.get({
     uri: worldviewConfig,
