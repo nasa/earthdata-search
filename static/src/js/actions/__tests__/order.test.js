@@ -73,7 +73,8 @@ describe('submitOrder', () => {
         location: {
           search: '?some=testparams'
         }
-      }
+      },
+      shapefile: {}
     })
 
     // call the dispatch
@@ -134,7 +135,8 @@ describe('submitOrder', () => {
         location: {
           search: '?some=testparams'
         }
-      }
+      },
+      shapefile: {}
     })
 
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())

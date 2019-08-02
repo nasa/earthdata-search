@@ -12,7 +12,8 @@ export const prepareOrderParams = (state) => {
     authToken,
     metadata = {},
     project,
-    router
+    router,
+    shapefile
   } = state
 
   const { collections } = metadata
@@ -43,8 +44,12 @@ export const prepareOrderParams = (state) => {
     projectCollections.push(returnValue)
   })
 
+  const { source } = router.location
+  const { shapefileId } = shapefile
+
   const jsonData = {
-    source: router.location.search
+    source,
+    shapefileId
   }
 
   return {
