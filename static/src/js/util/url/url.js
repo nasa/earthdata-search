@@ -6,6 +6,7 @@ import { decodeFacets, encodeFacets } from './facetEncoders'
 import { decodeMap, encodeMap } from './mapEncoders'
 import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEncoders'
 import { decodeString, encodeString } from './stringEncoders'
+import { decodeInteger, encodeInteger } from './integerEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
@@ -52,7 +53,7 @@ const urlDefs = {
   granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
-  shapefileId: { shortKey: 'sf', encode: encodeString, decode: decodeString }
+  shapefileId: { shortKey: 'sf', encode: encodeInteger, decode: decodeInteger }
 }
 
 /**
