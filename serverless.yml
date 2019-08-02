@@ -47,6 +47,7 @@ provider:
 
 plugins:
   - serverless-finch
+  - serverless-plugin-warmup
   - serverless-offline
   - serverless-webpack
 
@@ -62,19 +63,25 @@ functions:
     timeout: 300
     webpack:
       includeMigrations: true
+    warmup:
+      enabled: false
 
   storeUserData:
     timeout: 300
     handler: serverless/src/storeUserData/handler.default
+    warmup:
+      concurrency: 3
 
   #
   # SQS Lambdas
   #
   processColorMap:
-    handler: serverless/src/processColorMap.default
+    handler: serverless/src/processColorMap/handler.default
     timeout: 300
     receiveMessageWaitTimeSeconds: 30
     reservedConcurrency: 25
+    warmup:
+      enabled: false
     events:
       - sqs:
           arn:
@@ -87,6 +94,8 @@ functions:
     timeout: 300
     receiveMessageWaitTimeSeconds: 30
     reservedConcurrency: 25
+    warmup:
+      enabled: false
     events:
       - sqs:
           arn:
@@ -100,6 +109,8 @@ functions:
     handler: serverless/src/fetchOptionDefinitions/handler.default
     timeout: 300
     reservedConcurrency: 5
+    warmup:
+      enabled: false
     events:
       - sqs:
           batchSize: 5
@@ -111,6 +122,8 @@ functions:
   submitCatalogRestOrder:
     handler: serverless/src/submitCatalogRestOrder/handler.default
     timeout: 600
+    warmup:
+      enabled: false
     events:
       - sqs:
           arn:
@@ -121,6 +134,8 @@ functions:
   submitLegacyServicesOrder:
     handler: serverless/src/submitLegacyServicesOrder/handler.default
     timeout: 600
+    warmup:
+      enabled: false
     events:
       - sqs:
           arn:
@@ -132,9 +147,11 @@ functions:
   # Scheduled Lambdas
   #
   generateColorMaps:
-    handler: serverless/src/generateColorMaps.default
+    handler: serverless/src/generateColorMaps/handler.default
     description: Gather Color Map data from GIBS and store it in RDS
     timeout: 300
+    warmup:
+      enabled: false
     events:
       - schedule:
           rate: cron(0 5 * * ? *)
@@ -158,9 +175,11 @@ functions:
             projection: 'epsg3031'
 
   generateGibsTags:
-    handler: serverless/src/generateGibsTags.default
+    handler: serverless/src/generateGibsTags/handler.default
     description: Tag CMR collections with GIBS product information
     timeout: 300
+    warmup:
+      enabled: false
     events:
       - schedule:
           rate: cron(0 * * * ? *)
@@ -170,6 +189,8 @@ functions:
     handler: serverless/src/generateSubsettingTags/handler.default
     description: Tag CMR collections with umm service subsetting information
     timeout: 300
+    warmup:
+      enabled: false
     events:
       - schedule:
           rate: cron(0 5 * * ? *)
@@ -179,6 +200,8 @@ functions:
     handler: serverless/src/generateCollectionCapabilityTags/handler.default
     description: Iterate over all CMR collections adding tags specific to EDSC
     timeout: 300
+    warmup:
+      enabled: false
     events:
       - schedule:
           rate: cron(0 6 * * ? *)
@@ -192,6 +215,8 @@ functions:
   #
   getColorMap:
     handler: serverless/src/getColorMap/handler.default
+    warmup:
+      enabled: false
     events:
       - http:
           method: get
@@ -200,7 +225,9 @@ functions:
           path: colormaps/{product}
 
   cwicGranuleSearch:
-    handler: serverless/src/cwicGranuleSearch.default
+    handler: serverless/src/cwicGranuleSearch/handler.default
+    warmer:
+      concurrency: 3
     events:
       - http:
           method: post
@@ -209,8 +236,10 @@ functions:
           path: cwic/granules
 
   nlpSearch:
-    handler: serverless/src/nlpSearch.default
+    handler: serverless/src/nlpSearch/handler.default
     memorySize: 128
+    warmer:
+      concurrency: 3
     events:
       - http:
           method: post
@@ -219,7 +248,7 @@ functions:
           path: nlp
 
   conceptMetadata:
-    handler: serverless/src/conceptMetadata.default
+    handler: serverless/src/conceptMetadata/handler.default
     events:
       - http:
           method: get
@@ -237,7 +266,9 @@ functions:
           path: shapefiles
 
   edlLogin:
-    handler: serverless/src/edlLogin.default
+    handler: serverless/src/edlLogin/handler.default
+    warmup:
+      concurrency: 3
     events:
       - http:
           method: get
@@ -246,7 +277,9 @@ functions:
           path: login
 
   edlCallback:
-    handler: serverless/src/edlCallback.default
+    handler: serverless/src/edlCallback/handler.default
+    warmup:
+      concurrency: 3
     events:
       - http:
           method: get
@@ -255,7 +288,9 @@ functions:
           path: urs_callback
 
   edlAuthorizer:
-    handler: serverless/src/edlAuthorizer.default
+    handler: serverless/src/edlAuthorizer/handler.default
+    warmer:
+      concurrency: 3
     cors:
       origin: '*'
 
@@ -264,7 +299,7 @@ functions:
   #
 
   retrieveConcept:
-    handler: serverless/src/retrieveConcept.default
+    handler: serverless/src/retrieveConcept/handler.default
     events:
       - http:
           method: get
@@ -278,7 +313,7 @@ functions:
                 id: true
 
   collectionSearch:
-    handler: serverless/src/collectionSearch.default
+    handler: serverless/src/collectionSearch/handler.default
     events:
       - http:
           method: post
@@ -292,7 +327,7 @@ functions:
           authorizer: edlAuthorizer
 
   cmrGranuleSearch:
-    handler: serverless/src/cmrGranuleSearch.default
+    handler: serverless/src/cmrGranuleSearch/handler.default
     events:
       - http:
           method: post
@@ -302,7 +337,7 @@ functions:
           authorizer: edlAuthorizer
 
   timelineSearch:
-    handler: serverless/src/timelineSearch.default
+    handler: serverless/src/timelineSearch/handler.default
     events:
       - http:
           method: post
@@ -638,3 +673,11 @@ custom:
     includeModules: true
     packager: 'npm'
     excludeFiles: src/**/*.test.js
+
+  warmup:
+    enabled: true
+    role: ScheduledLambdaRole
+    prewarm: true
+    timeout: 30
+    events: 
+      - schedule: 'cron(0/20 8-22 ? * MON-FRI *)'

@@ -5,7 +5,7 @@ import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
-import { getEdlConfig } from '../configUtil'
+import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // Knex database connection object

@@ -7,7 +7,7 @@ import {
 } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getEdlConfig } from '../configUtil'
+import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {

@@ -2,7 +2,7 @@ import request from 'request-promise'
 import jwt from 'jsonwebtoken'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { getSecretEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
-import { getEdlConfig } from '../../configUtil'
+import { getEdlConfig } from '../configUtil'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**

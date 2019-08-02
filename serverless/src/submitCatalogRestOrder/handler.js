@@ -14,7 +14,7 @@ import { getShapefile } from '../util/echoForms/getShapefile'
 import { getSubsetDataLayers } from '../util/echoForms/getSubsetDataLayers'
 import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
-import { getEdlConfig } from '../configUtil'
+import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // Knex database connection object

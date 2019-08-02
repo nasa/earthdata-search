@@ -1,6 +1,6 @@
 import request from 'request-promise'
 import gibsResponse from './mocks'
-import { getSupportedGibsLayers } from '../generateGibsTags'
+import { getSupportedGibsLayers } from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()

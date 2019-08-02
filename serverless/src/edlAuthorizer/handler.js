@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
-import { getEdlConfig } from './configUtil'
-import { getSecretEarthdataConfig } from '../../sharedUtils/config'
-import { cmrEnv } from '../../sharedUtils/cmrEnv'
+import { getEdlConfig } from '../util/configUtil'
+import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { isWarmUp } from '../util/isWarmup'
 
 /**
  * Generate AuthPolicy for the Authorizer, and attach the JWT
@@ -35,7 +36,10 @@ const generatePolicy = (username, jwtToken, effect, resource) => {
 /**
  * API Gateway Authorizer to verify requets are authenticated
  */
-async function edlAuthorizer(event) {
+const edlAuthorizer = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const edlConfig = await getEdlConfig()
 
   if (!event.authorizationToken) {

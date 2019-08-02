@@ -1,7 +1,8 @@
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
-import { pick } from './util'
-import { getClientId } from '../../sharedUtils/config'
+import { pick } from '../util/pick'
+import { getClientId } from '../../../sharedUtils/config'
+import { isWarmUp } from '../util/isWarmup'
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
@@ -104,7 +105,10 @@ const renderOpenSearchTemplate = (template, params) => {
 /**
  * Handler to retrieve granules from CWIC
  */
-export default async function cwicGranuleSearch(event) {
+const cwicGranuleSearch = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   // The headers we'll send back regardless of our response
   const responseHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -172,7 +176,9 @@ export default async function cwicGranuleSearch(event) {
       isBase64Encoded: false,
       statusCode: e.statusCode,
       headers: responseHeaders,
-      body: e.error
+      body: JSON.stringify({ errors: [e.error] })
     }
   }
 }
+
+export default cwicGranuleSearch

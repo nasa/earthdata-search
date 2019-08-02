@@ -1,4 +1,4 @@
-import { pick, getJwtToken } from '../util'
+import { pick } from '../pick'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -29,21 +29,5 @@ describe('util#pick', () => {
     const data = pick(object, desiredKeys)
 
     expect(Object.keys(data).sort()).toEqual(['array', 'b'])
-  })
-})
-
-describe('util#getJwtToken', () => {
-  test('correctly returns the JWT token when one is already set', () => {
-    const token = '123.456.789'
-
-    const event = {
-      requestContext: {
-        authorizer: {
-          jwtToken: token
-        }
-      }
-    }
-
-    expect(getJwtToken(event)).toEqual('123.456.789')
   })
 })

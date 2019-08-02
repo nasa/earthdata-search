@@ -4,10 +4,14 @@ import forge from 'node-forge'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
+import { isWarmUp } from '../util/isWarmup'
 
 let dbConnection = null
 
 const saveShapefile = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const { body } = event
   const { params } = JSON.parse(body)
   const {

@@ -1,16 +1,20 @@
 import { getValueForTag, hasTag } from '../../../sharedUtils/tags'
 import { getOptionDefinitions } from './getOptionDefinitions'
 import { getServiceOptionDefinitions } from './getServiceOptionDefinitions'
-import { getJwtToken } from '../util'
+import { getJwtToken } from '../util/getJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
+import { isWarmUp } from '../util/isWarmup'
 
 // Knex database connection object
 let dbConnection = null
 
 const getAccessMethods = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const { body } = event
   const { params = {} } = JSON.parse(body)
 

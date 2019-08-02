@@ -2,7 +2,7 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 
 import saveShapefile from '../handler'
-import * as getJwtToken from '../../util'
+import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getUsernameFromToken from '../../util/getUsernameFromToken'
 import * as getDbConnection from '../../util/database/getDbConnection'

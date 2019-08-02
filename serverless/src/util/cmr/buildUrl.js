@@ -1,4 +1,4 @@
-import { pick } from '../../util'
+import { pick } from '../pick'
 import { getEarthdataConfig } from '../../../../sharedUtils/config'
 import { cmrStringify } from './cmrStringify'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'

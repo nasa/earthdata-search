@@ -3,7 +3,7 @@ import {
   getEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../configUtil'
+import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 /**

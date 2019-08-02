@@ -1,13 +1,13 @@
 import AWS from 'aws-sdk'
 
-import { getEarthdataConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
-import { cmrEnv } from '../../sharedUtils/cmrEnv'
+import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 const secretsmanager = new AWS.SecretsManager({ region: 'us-east-1' })
 
 /**
  * Builds a configuration object used by the simple-oauth2 plugin
- * @param {*} clientConfig
+ * @param {Object} clientConfig
  */
 export const buildOauthConfig = clientConfig => ({
   client: clientConfig,
