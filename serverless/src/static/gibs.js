@@ -1,3 +1,7 @@
+/**
+ * The contents of this file are merged with the result of an http request made to GIBS
+ * for the purpose of generating Color Maps
+ */
 export const customGibsProducts = {
   layers: {
     MOPITT_CO_Daily_Total_Column_Day: {

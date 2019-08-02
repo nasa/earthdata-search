@@ -1,7 +1,8 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util'
+import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
+import { isWarmUp } from '../util/isWarmup'
 
 // Knex database connection object
 let dbConnection = null
@@ -10,6 +11,9 @@ let dbConnection = null
  * Handler to retrieve a single color map record from the application database
  */
 export default async function getRetrieval(event, context) {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   try {
     // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
     // eslint-disable-next-line no-param-reassign

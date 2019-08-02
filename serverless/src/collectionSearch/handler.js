@@ -1,6 +1,7 @@
-import { buildURL } from './util/cmr/buildUrl'
-import { doSearchRequest } from './util/cmr/doSearchRequest'
-import { getJwtToken } from './util'
+import { buildURL } from '../util/cmr/buildUrl'
+import { doSearchRequest } from '../util/cmr/doSearchRequest'
+import { getJwtToken } from '../util/getJwtToken'
+import { isWarmUp } from '../util/isWarmup'
 
 /**
  * Returns the keys permitted by cmr based on the request format
@@ -48,7 +49,10 @@ function getPermittedCmrKeys(format) {
 /**
  * Handler to perform an authenticated CMR Collection search
  */
-export default async function collectionSearch(event) {
+const collectionSearch = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const { body, pathParameters } = event
   const { format } = pathParameters
 
@@ -74,3 +78,5 @@ export default async function collectionSearch(event) {
     permittedCmrKeys
   }))
 }
+
+export default collectionSearch

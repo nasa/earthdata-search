@@ -1,8 +1,8 @@
 import 'array-foreach-async'
 import request from 'request-promise'
 import AWS from 'aws-sdk'
-import customGibsProducts from './static/gibs'
-import { getClientId } from '../../sharedUtils/config'
+import customGibsProducts from '../static/gibs'
+import { getClientId } from '../../../sharedUtils/config'
 
 // AWS SQS adapter
 let sqs
@@ -12,7 +12,7 @@ const tagName = 'edsc.extra.serverless.gibs'
 /*
  * Retrieve the worldview configuration file and pull out products that Earthdata Search supports
  */
-export async function getSupportedGibsLayers(mergeCustomProducts = true) {
+const getSupportedGibsLayers = async (mergeCustomProducts = true) => {
   const worldviewConfig = 'https://worldview.earthdata.nasa.gov/config/wv.json'
   const worldviewResponse = await request.get({
     uri: worldviewConfig,
@@ -97,7 +97,7 @@ export async function getSupportedGibsLayers(mergeCustomProducts = true) {
 /*
  * Convert a world view configuration object to a CMR search query object
  */
-export function configToCmrQuery(config) {
+const configToCmrQuery = async (config) => {
   const topLevelConfigs = []
 
   const supportedCmrQueryKeys = {
@@ -143,7 +143,7 @@ export function configToCmrQuery(config) {
 /*
  * Construct an object from product information provided world view that Earthdata Search can use to tag CMR collections
  */
-export async function constructLayerTagData(layer) {
+const constructLayerTagData = async (layer) => {
   const layerTagData = []
 
   const {
@@ -217,7 +217,7 @@ export async function constructLayerTagData(layer) {
 /**
  * Handler to process product information from world view and tag CMR collections
  */
-export default async function generateGibsTags(event, context) {
+const generateGibsTags = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -308,3 +308,5 @@ export default async function generateGibsTags(event, context) {
     body: JSON.stringify(allTagConditions)
   }
 }
+
+export default generateGibsTags

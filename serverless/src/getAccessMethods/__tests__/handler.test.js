@@ -2,7 +2,7 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 
 import getAccessMethods from '../handler'
-import * as getJwtToken from '../../util'
+import * as getJwtToken from '../../util/getJwtToken'
 import * as getOptionDefinitions from '../getOptionDefinitions'
 import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'

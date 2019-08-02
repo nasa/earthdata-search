@@ -1,15 +1,19 @@
 import jwt from 'jsonwebtoken'
 import simpleOAuth2 from 'simple-oauth2'
-import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../sharedUtils/config'
-import { getEdlConfig } from './configUtil'
-import { invokeLambda } from './util/aws/invokeLambda'
-import { cmrEnv } from '../../sharedUtils/cmrEnv'
+import { getEarthdataConfig, getEnvironmentConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
+import { getEdlConfig } from '../util/configUtil'
+import { invokeLambda } from '../util/aws/invokeLambda'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { isWarmUp } from '../util/isWarmup'
 
 /**
  * Handler for the EDL callback. Fetches an EDL token based on 'code' param supplied by EDL. Sets
  * a cookie containing a JWT containing the EDL token
  */
 const edlCallback = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const edlConfig = await getEdlConfig()
 
   const params = event.queryStringParameters

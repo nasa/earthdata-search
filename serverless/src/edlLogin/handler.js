@@ -1,11 +1,15 @@
-import { getEdlConfig } from './configUtil'
-import { cmrEnv } from '../../sharedUtils/cmrEnv'
-import { getEarthdataConfig, getEnvironmentConfig } from '../../sharedUtils/config'
+import { getEdlConfig } from '../util/configUtil'
+import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
+import { isWarmUp } from '../util/isWarmup'
 
 /**
  * Handler for redirecting the user to the correct EDL login URL
  */
-const edlLogin = async (event, context, callback) => {
+const edlLogin = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const params = event.queryStringParameters
 
   const { state } = params
@@ -23,12 +27,12 @@ const edlLogin = async (event, context, callback) => {
   const { apiHost } = getEnvironmentConfig()
   const redirectUri = `${apiHost}${redirectUriPath}`
 
-  callback(null, {
+  return {
     statusCode: 307,
     headers: {
       Location: `${edlHost}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${encodeURIComponent(state)}`
     }
-  })
+  }
 }
 
 export default edlLogin

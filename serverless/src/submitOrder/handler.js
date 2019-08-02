@@ -1,10 +1,11 @@
 import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util'
+import { getJwtToken } from '../util/getJwtToken'
 import { generateOrderPayloads } from './generateOrderPayloads'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
+import { isWarmUp } from '../util/isWarmup'
 
 // Knex database connection object
 let dbConnection = null
@@ -13,6 +14,9 @@ let dbConnection = null
 let sqs
 
 const submitOrder = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const { body } = event
   const { params = {} } = JSON.parse(body)
   const { collections, environment, json_data: jsonData } = params

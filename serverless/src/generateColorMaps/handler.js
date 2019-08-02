@@ -2,8 +2,8 @@ import 'array-foreach-async'
 import request from 'request-promise'
 import { parse as parseXml } from 'fast-xml-parser'
 import AWS from 'aws-sdk'
-import { getDbConnection } from './util/database/getDbConnection'
-import { getClientId } from '../../sharedUtils/config'
+import { getDbConnection } from '../util/database/getDbConnection'
+import { getClientId } from '../../../sharedUtils/config'
 
 // Knex database connection object
 let dbConnection = null

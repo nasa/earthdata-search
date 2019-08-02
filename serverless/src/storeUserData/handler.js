@@ -3,11 +3,15 @@ import { getEchoProfileData } from './getEchoProfileData'
 import { getEchoPreferencesData } from './getEchoPreferencesData'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { isWarmUp } from '../util/isWarmup'
 
 // Knex database connection object
 let dbConnection = null
 
-export const storeUserData = async (event) => {
+const storeUserData = async (event) => {
+  // Prevent execution if the event source is the warmer
+  if (await isWarmUp(event)) return false
+
   const { username, token } = event
 
   // Retrieve a connection to the database
@@ -35,15 +39,13 @@ export const storeUserData = async (event) => {
 
   const existingUser = await dbConnection('users').select('id').where({ urs_id: username })
 
-  let queryResponse
-
   if (existingUser.length) {
-    queryResponse = await dbConnection('users').returning(['id', 'urs_id']).update({ ...userPayload }).where({ urs_id: username })
+    await dbConnection('users').returning(['id', 'urs_id']).update({ ...userPayload }).where({ urs_id: username })
   } else {
-    queryResponse = await dbConnection('users').returning(['id', 'urs_id']).insert({ ...userPayload })
+    await dbConnection('users').returning(['id', 'urs_id']).insert({ ...userPayload })
   }
 
-  return queryResponse
+  return true
 }
 
 export default storeUserData
