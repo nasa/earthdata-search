@@ -2,7 +2,6 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
-import { parse } from 'qs'
 
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
@@ -93,8 +92,7 @@ const submitCatalogRestOrder = async (event, context) => {
     const { model, url } = accessMethod
 
     // Retrieve the shapefile if one was provided
-    const { source } = JSON.parse(jsondata)
-    const { sf: shapefileId } = parse(source, { ignoreQueryPrefix: true })
+    const { shapefileId } = JSON.parse(jsondata)
 
     let shapefileParam
     if (shapefileId) {
