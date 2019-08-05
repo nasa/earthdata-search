@@ -6,16 +6,10 @@ import { Granules } from '../Granules'
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const props = {
-    authToken: '',
-    retrievalCollcetion: {}
-  }
-
-  const enzymeWrapper = shallow(<Granules {...props} />)
+  const enzymeWrapper = shallow(<Granules />)
 
   return {
-    enzymeWrapper,
-    props
+    enzymeWrapper
   }
 }
 
