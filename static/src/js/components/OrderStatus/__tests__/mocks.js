@@ -87,7 +87,7 @@ export const orderStatusPropsEsi = {
   order: {
     id: 7,
     collections: {
-      esi_orders: [
+      esi: [
         {
           collection_id: 'TEST_COLLECTION_123',
           collection_metadata: {

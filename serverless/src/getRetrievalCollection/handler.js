@@ -10,7 +10,7 @@ let dbConnection = null
 /**
  * Handler to retrieve a single color map record from the application database
  */
-const getRetrieval = async (event, context) => {
+const getRetrievalCollection = async (event, context) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 
@@ -20,8 +20,7 @@ const getRetrieval = async (event, context) => {
     context.callbackWaitsForEmptyEventLoop = false
 
     const {
-      retrieval_id: providedRetrieval,
-      collection_id: providedCollection
+      id: providedRetrievalCollectionId
     } = event.pathParameters
 
     const jwtToken = getJwtToken(event)
@@ -34,9 +33,10 @@ const getRetrieval = async (event, context) => {
 
     const retrievalResponse = await dbConnection('retrieval_collections')
       .first(
-        'retrievals.id',
+        'retrievals.id AS retrieval_id',
         'retrievals.jsondata',
         'retrievals.environment',
+        'retrieval_collections.id',
         'access_method',
         'collection_id',
         'collection_metadata',
@@ -46,8 +46,7 @@ const getRetrieval = async (event, context) => {
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
-        'retrieval_collections.collection_id': providedCollection,
-        'retrievals.id': providedRetrieval,
+        'retrieval_collections.id': providedRetrievalCollectionId,
         'users.urs_id': username
       })
 
@@ -64,7 +63,7 @@ const getRetrieval = async (event, context) => {
       isBase64Encoded: false,
       statusCode: 404,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ errors: [`Retrieval Collection '${providedCollection}' (for Retrieval '${providedRetrieval}') not found.`] })
+      body: JSON.stringify({ errors: [`Retrieval Collection '${providedRetrievalCollectionId}' not found.`] })
     }
   } catch (e) {
     console.log(e)
@@ -78,4 +77,4 @@ const getRetrieval = async (event, context) => {
   }
 }
 
-export default getRetrieval
+export default getRetrievalCollection

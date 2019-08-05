@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   populateGranuleResults,
   prepareGranuleParams,
@@ -6,6 +5,7 @@ import {
   getDownloadUrls
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
+import OusGranuleRequest from '../util/request/ousGranuleRequest'
 import CwicGranuleRequest from '../util/request/cwic'
 import {
   ADD_MORE_GRANULE_RESULTS,
@@ -23,7 +23,6 @@ import {
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
-import { getEnvironmentConfig } from '../../../../sharedUtils/config'
 
 export const addGranulesFromCollection = payload => ({
   type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
@@ -95,13 +94,12 @@ export const excludeGranule = data => (dispatch) => {
 }
 
 /**
- * Fetch all relevant links to the granules that are part of the provided collection
- * @param {Integer} retrievalId Database id of the retrieval object
- * @param {String} collectionId CMR collection id to get granules for from a retrieval
+ * Fetch all relevant links from CMR to the granules that are part of the provided collection
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
- * @param {String} authToken The authenticated users' JWT token
  */
-export const fetchLinks = (retrievalCollectionData, authToken) => (dispatch) => {
+export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
+  const { authToken } = getState()
+
   const requestObject = new GranuleRequest(authToken)
 
   const {
@@ -142,54 +140,55 @@ export const fetchLinks = (retrievalCollectionData, authToken) => (dispatch) => 
 }
 
 /**
- * Fetch necessary record from the database and use them to retrieve granules from CMR
- * @param {Object} data A retrieval collection record from the database
+ * Fetch all relevant links from CMR Service Bridge (OPeNDAP) to the granules that are part of the provided collection
+ * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
-export const fetchGranuleLinks = data => (dispatch, getState) => {
-  const { id: retrievalId, collection_id: collectionId } = data
+export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState) => {
+  const { authToken } = getState()
 
-  if (retrievalId && collectionId) {
-    const { authToken } = getState()
+  const requestObject = new OusGranuleRequest(authToken)
 
-    const { apiHost } = getEnvironmentConfig()
+  const {
+    collection_id: collectionId,
+    granule_params: granuleParams
+  } = retrievalCollectionData
 
-    // Fetch the retrieval collection data so we know what
-    // granule parameters were provided in the order
-    const lambdaResponse = axios({
-      method: 'get',
-      baseURL: apiHost,
-      url: `retrievals/${retrievalId}/collections/${collectionId}`,
-      headers: {
-        Authorization: `Bearer: ${authToken}`
-      }
-    }).then((response) => {
-      // Use the stored granule parameters to retrieve the granules from
-      // CMR to extract the urls from
+  const {
+    temporal,
+    bounding_box: boundingBox
+  } = granuleParams
+
+  // TODO: Add excluded granules, output format, and variables @critical
+  const response = requestObject.search({
+    boundingBox,
+    echoCollectionId: collectionId,
+    temporal
+  })
+    .then((response) => {
       const { data } = response
+      const { items = [] } = data
 
-      dispatch(updateGranuleDownloadParams(data))
-      dispatch(fetchLinks(data))
+      dispatch(updateGranuleLinks(items))
     })
-      .catch((e) => {
-        if (e.response) {
-          const { data } = e.response
-          const { errors = [] } = data
+    .catch((error) => {
+      console.log(error)
+    })
 
-          console.log(errors)
-        } else {
-          console.log(e)
-        }
-      })
-
-    return lambdaResponse
-  }
-
-  return null
+  return response
 }
 
 export const setGranuleDownloadParams = data => (dispatch) => {
+  const { access_method: accessMethod } = data
+  const { type } = accessMethod
+
   dispatch(updateGranuleDownloadParams(data))
-  dispatch(fetchGranuleLinks(data))
+
+  // Determine which action to take based on the access method type
+  if (type === 'download') {
+    dispatch(fetchLinks(data))
+  } else if (type === 'OPeNDAP') {
+    dispatch(fetchOpendapLinks(data))
+  }
 }
 
 export const undoExcludeGranule = collectionId => (dispatch) => {

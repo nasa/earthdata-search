@@ -154,7 +154,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
         // set resolution to {projection}_resolution if it exists
         // and if the layer exists within newOptionSet
 
-        // TODO force map project to geo because we don't have projection switching yet
+        // TODO: Force map project to geo because we don't have projection switching yet
         this._map.projection = 'geographic'
         if ((this._map.projection === 'geographic') && newOptionSet.geographic) {
           matched = true

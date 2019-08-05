@@ -44,7 +44,7 @@
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
-      "edscHost": "https://searchlab.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "nlpHost": "https://edsc-nlp-sit.ngap.ecs.earthdata.nasa.gov",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"

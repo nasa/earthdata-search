@@ -15,8 +15,6 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   collections: state.metadata.collections,
-  granuleDownloadRetrievalId: state.granuleDownload.granuleDownloadParams.id,
-  granuleDownloadCollectionId: state.granuleDownload.granuleDownloadParams.collection_id,
   gridName: state.query.collection.gridName,
   gridCoords: state.query.granule.gridCoords,
   featureFacets: state.facetsParams.feature,

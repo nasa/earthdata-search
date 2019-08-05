@@ -336,6 +336,16 @@ functions:
           path: granules
           authorizer: edlAuthorizer
 
+  ousGranuleSearch:
+    handler: serverless/src/ousGranuleSearch/handler.default
+    events:
+      - http:
+          method: post
+          cors:
+            origin: '*'
+          path: granules/ous
+          authorizer: edlAuthorizer
+
   timelineSearch:
     handler: serverless/src/timelineSearch/handler.default
     events:
@@ -373,7 +383,7 @@ functions:
           method: get
           cors:
             origin: '*'
-          path: retrievals/{retrieval_id}/collections/{collection_id}
+          path: retrieval_collection/{id}
           authorizer: edlAuthorizer
 
   getRetrievalCollections:

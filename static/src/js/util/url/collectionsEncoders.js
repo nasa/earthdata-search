@@ -121,7 +121,7 @@ export const encodeCollections = (props) => {
       // Collection visible, don't encode the focusedCollection
       if (index !== 0 && isVisible) pg.v = 't'
 
-      // TODO Encode granule filters
+      // TODO: Encode granule filters
 
       pgParameter[index] = pg
     })
@@ -178,7 +178,7 @@ export const decodeCollections = (params) => {
       if (visible === 't') isVisible = true
     }
 
-    // TODO Decode granule filters
+    // TODO: Decode granule filters
 
     // Populate the collection object for the redux store
     byId[collectionId] = {

@@ -40,7 +40,7 @@ describe('OrderStatusItemBody component', () => {
   describe('ESI Order', () => {
     test('displays the correct state', () => {
       const { enzymeWrapper } = setup({
-        collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+        collection: orderStatusPropsEsi.order.collections.esi[0],
         type: 'esi_order'
       })
       expect(enzymeWrapper.find('.order-status-item-body__state').length).toEqual(1)
@@ -49,7 +49,7 @@ describe('OrderStatusItemBody component', () => {
     describe('Order Info', () => {
       test('displays the processing status', () => {
         const { enzymeWrapper } = setup({
-          collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+          collection: orderStatusPropsEsi.order.collections.esi[0],
           type: 'esi_order'
         })
 
@@ -62,7 +62,7 @@ describe('OrderStatusItemBody component', () => {
       describe('More Details button', () => {
         test('is displayed', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+            collection: orderStatusPropsEsi.order.collections.esi[0],
             type: 'esi_order'
           })
 
@@ -71,7 +71,7 @@ describe('OrderStatusItemBody component', () => {
 
         test('opens the panel on click', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+            collection: orderStatusPropsEsi.order.collections.esi[0],
             type: 'esi_order'
           })
 
@@ -83,7 +83,7 @@ describe('OrderStatusItemBody component', () => {
       describe('More Details panel', () => {
         describe('on page load', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+            collection: orderStatusPropsEsi.order.collections.esi[0],
             type: 'esi_order'
           })
 
@@ -94,7 +94,7 @@ describe('OrderStatusItemBody component', () => {
 
         describe('after the button is clicked', () => {
           const { enzymeWrapper } = setup({
-            collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+            collection: orderStatusPropsEsi.order.collections.esi[0],
             type: 'esi_order'
           })
 
@@ -110,7 +110,7 @@ describe('OrderStatusItemBody component', () => {
 
     describe('Download Links', () => {
       const { enzymeWrapper } = setup({
-        collection: orderStatusPropsEsi.order.collections.esi_orders[0],
+        collection: orderStatusPropsEsi.order.collections.esi[0],
         type: 'esi_order'
       })
 

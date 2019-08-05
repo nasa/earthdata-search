@@ -5,8 +5,8 @@ import {
 } from '../../constants/actionTypes'
 
 const initialState = {
-  granuleDownloadParams: {},
-  granuleDownloadLinks: []
+  retrievalCollection: {},
+  granuleLinks: []
 }
 
 describe('INITIAL_STATE', () => {
@@ -29,7 +29,7 @@ describe('UPDATE_GRANULE_DOWNLOAD_PARAMS', () => {
 
     const expectedState = {
       ...initialState,
-      granuleDownloadParams: {
+      retrievalCollection: {
         id: 1,
         collection_id: 'C1000005-EDSC'
       }
@@ -48,7 +48,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
     const expectedState = {
       ...initialState,
-      granuleDownloadLinks: ['http://google.jp']
+      granuleLinks: ['http://google.jp']
     }
 
     expect(updateGranuleDownloadParamsReducer(undefined, action)).toEqual(expectedState)
@@ -62,14 +62,14 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
     const initial = {
       ...initialState,
-      granuleDownloadLinks: [
+      granuleLinks: [
         'http://google.com'
       ]
     }
 
     const expectedState = {
       ...initial,
-      granuleDownloadLinks: [
+      granuleLinks: [
         'http://google.com',
         'http://google.jp'
       ]

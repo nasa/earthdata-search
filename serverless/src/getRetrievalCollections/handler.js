@@ -33,9 +33,10 @@ const getRetrievalCollections = async (event, context) => {
 
     const retrievalResponse = await dbConnection('retrieval_collections')
       .select(
-        'retrievals.id',
+        'retrievals.id AS retrieval_id',
         'retrievals.jsondata',
         'retrievals.environment',
+        'retrieval_collections.id',
         'access_method',
         'collection_id',
         'collection_metadata',

@@ -1,8 +1,20 @@
 import * as appConfig from '../config'
-import { getValueForTag, hasTag } from '../tags'
+import { tagName, getValueForTag, hasTag } from '../tags'
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+describe('tagName', () => {
+  test('returns the correct tag name with default namespace', () => {
+    const name = tagName('tag')
+    expect(name).toEqual('edsc.extra.serverless.tag')
+  })
+
+  test('returns the correct tag name with provided namespace', () => {
+    const name = tagName('tag', 'edsc.test')
+    expect(name).toEqual('edsc.test.tag')
+  })
 })
 
 describe('getValueForTag', () => {
@@ -44,7 +56,7 @@ describe('getValueForTag', () => {
       }
     }
     const tagValue = getValueForTag('tag', tagData)
-    expect(tagValue).toEqual({ tagDataKey: 'tagDataValue'})
+    expect(tagValue).toEqual({ tagDataKey: 'tagDataValue' })
   })
 
   test('returns an array when tag data is an array', () => {
