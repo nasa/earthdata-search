@@ -40,9 +40,9 @@ const storeUserData = async (event) => {
   const existingUser = await dbConnection('users').select('id').where({ urs_id: username })
 
   if (existingUser.length) {
-    await dbConnection('users').returning(['id', 'urs_id']).update({ ...userPayload }).where({ urs_id: username })
+    await dbConnection('users').update({ ...userPayload }).where({ urs_id: username })
   } else {
-    await dbConnection('users').returning(['id', 'urs_id']).insert({ ...userPayload })
+    await dbConnection('users').insert({ ...userPayload })
   }
 
   return true
