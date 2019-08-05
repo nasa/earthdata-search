@@ -7,6 +7,13 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    authToken: '',
+    match: {
+      params: {
+        id: '1'
+      }
+    },
+    onFetchRetrievalCollection: jest.fn(),
     granuleDownload: {}
   }
 

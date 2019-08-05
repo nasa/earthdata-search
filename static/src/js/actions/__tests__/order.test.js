@@ -309,7 +309,8 @@ describe('fetchOrder', () => {
               }
             ],
             echo_orders: [],
-            esi: []
+            esi: [],
+            opendap: []
           },
           environment: 'prod',
           id: 7,

@@ -74,9 +74,11 @@ const getAccessMethods = async (event) => {
   }
 
   if (hasOpendap) {
-    // TODO implement this stuff
+    const opendapData = getValueForTag('subset_service.opendap', tags)
+
     accessMethods.opendap = {
-      type: 'OPeNDAP'
+      ...opendapData,
+      isValid: true
     }
   }
 
@@ -99,7 +101,7 @@ const getAccessMethods = async (event) => {
 
     Object.keys(accessMethods).forEach((methodName) => {
       const method = accessMethods[methodName]
-      if (method.type === 'download' && savedAccessConfig.type === 'download') {
+      if (method.type === savedAccessConfig.type && ['download', 'OPeNDAP'].includes(method.type)) {
         selectedAccessMethod = methodName
         return
       }

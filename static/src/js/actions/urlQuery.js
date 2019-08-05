@@ -15,7 +15,6 @@ export const changePath = (path = '') => (dispatch) => {
     restoreCollections,
     restoreProject,
     updateCmrFacet,
-    setGranuleDownloadParams,
     updateFeatureFacet,
     updateShapefile
   } = actions
@@ -23,7 +22,6 @@ export const changePath = (path = '') => (dispatch) => {
   const {
     collections,
     cmrFacets,
-    granuleDownloadParams,
     featureFacets,
     focusedCollection,
     focusedGranule,
@@ -72,10 +70,6 @@ export const changePath = (path = '') => (dispatch) => {
 
   if (focusedCollection) {
     dispatch(changeFocusedCollection(focusedCollection))
-  }
-
-  if (granuleDownloadParams) {
-    dispatch(setGranuleDownloadParams(granuleDownloadParams))
   }
 }
 

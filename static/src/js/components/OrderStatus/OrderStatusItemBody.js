@@ -41,9 +41,8 @@ export class OrderStatusItemBody extends React.Component {
     } = this.props
 
     const {
-      collection_id: collectionId,
       collection_metadata: collectionMetadata,
-      id: retrievalId,
+      id,
       access_method: accessMethod
     } = collection
 
@@ -57,7 +56,7 @@ export class OrderStatusItemBody extends React.Component {
       order_status: orderStatus
     } = order
 
-    if (type === 'download') orderStatus = 'complete'
+    if (['download', 'opendap'].includes(type)) orderStatus = 'complete'
 
     const className = classNames([
       'order-status-item-body__state-display',
@@ -67,7 +66,7 @@ export class OrderStatusItemBody extends React.Component {
       }
     ])
 
-    if (type === 'download') {
+    if (['download', 'opendap'].includes(type)) {
       return (
         <div className="order-status-item-body">
           <div className="order-status-item-body__state">
@@ -79,10 +78,9 @@ export class OrderStatusItemBody extends React.Component {
             <Link
               className="order-status-item-body__button order-status-item-body__button--links"
               to={{
-                pathname: '/granules/download',
-                search: `?rid=${retrievalId}&cid=${collectionId}`
+                pathname: `/granules/download/${id}`
               }}
-              onClick={() => onChangePath(`/granules/download/?rid=${retrievalId}&cid=${collectionId}`)}
+              onClick={() => onChangePath(`/granules/download/${id}`)}
             >
               <Button
                 bootstrapVariant="primary"
@@ -114,10 +112,10 @@ export class OrderStatusItemBody extends React.Component {
                 <Link
                   className="order-status-item-body__button order-status-item-body__button--browse-links"
                   to={{
-                    pathname: '/granules/download',
-                    search: `?browse=true&rid=${retrievalId}&cid=${collectionId}`
+                    pathname: `/granules/download/${id}`,
+                    search: '?browse=true'
                   }}
-                  onClick={() => onChangePath(`/granules/download/?browse=true&rid=${retrievalId}&cid=${collectionId}`)}
+                  onClick={() => onChangePath(`/granules/download/${id}?browse=true`)}
                 >
                   <Button
                     bootstrapVariant="primary"
@@ -235,10 +233,10 @@ export class OrderStatusItemBody extends React.Component {
                 <Link
                   className="order-status-item-body__button"
                   to={{
-                    pathname: '/granules/download',
-                    search: `?browse=true&rid=${retrievalId}&cid=${collectionId}`
+                    pathname: `/granules/download/${id}`,
+                    search: '?browse=true'
                   }}
-                  onClick={() => onChangePath(`/granules/download/?browse=true&rid=${retrievalId}&cid=${collectionId}`)}
+                  onClick={() => onChangePath(`/granules/download/${id}?browse=true`)}
                 >
                   <Button
                     className="order-status-item-body__button order-status-item-body__button--browse-links"

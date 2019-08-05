@@ -48,57 +48,55 @@ class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <ConnectedAuthTokenContainer>
-            <ConnectedUrlQueryContainer>
-              <Helmet>
-                <meta charSet="utf-8" />
-                <title>Earthdata Search</title>
-              </Helmet>
-              <Switch>
-                <Route
-                  path="/granules"
-                  render={() => (
-                    <AuthRequiredContainer>
-                      <Granules />
-                    </AuthRequiredContainer>
-                  )}
-                />
-                <Route
-                  path="/data"
-                  render={() => (
-                    <AuthRequiredContainer>
-                      <Data />
-                    </AuthRequiredContainer>
-                  )}
-                />
-                <Route path="/">
-                  <>
-                    <Switch>
-                      <Route exact path="/">
-                        <Redirect to="/search" />
-                      </Route>
-                      <Route path="/search" component={Search} />
-                      <Route
-                        path="/projects"
-                        render={() => (
-                          <AuthRequiredContainer>
-                            <Project />
-                          </AuthRequiredContainer>
-                        )}
-                      />
-                      <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
-                    </Switch>
-                    <ConnectedEdscMapContainer />
-                  </>
-                </Route>
-              </Switch>
-              <FooterContainer />
-              <Switch>
-                <Route path="/">
-                  <ShapefileUploadModalContainer />
-                  <ShapefileDropzoneContainer />
-                </Route>
-              </Switch>
-            </ConnectedUrlQueryContainer>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>Earthdata Search</title>
+            </Helmet>
+            <Switch>
+              <Route
+                path="/granules"
+                render={() => (
+                  <AuthRequiredContainer>
+                    <Granules />
+                  </AuthRequiredContainer>
+                )}
+              />
+              <Route
+                path="/data"
+                render={() => (
+                  <AuthRequiredContainer>
+                    <Data />
+                  </AuthRequiredContainer>
+                )}
+              />
+              <Route path="/">
+                <ConnectedUrlQueryContainer>
+                  <Switch>
+                    <Route exact path="/">
+                      <Redirect to="/search" />
+                    </Route>
+                    <Route path="/search" component={Search} />
+                    <Route
+                      path="/projects"
+                      render={() => (
+                        <AuthRequiredContainer>
+                          <Project />
+                        </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route exact path="/auth_callback" component={ConnectedAuthCallbackContainer} />
+                  </Switch>
+                  <ConnectedEdscMapContainer />
+                </ConnectedUrlQueryContainer>
+              </Route>
+            </Switch>
+            <FooterContainer />
+            <Switch>
+              <Route path="/">
+                <ShapefileUploadModalContainer />
+                <ShapefileDropzoneContainer />
+              </Route>
+            </Switch>
           </ConnectedAuthTokenContainer>
         </ConnectedRouter>
       </Provider>

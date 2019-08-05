@@ -12,7 +12,7 @@ afterEach(() => {
 })
 
 describe('getClientId', () => {
-  test('returns the clientId object for the given environment', () => {
+  test('returns the clientId object for the prod environment', () => {
     process.env.NODE_ENV = 'production'
 
     jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'prod')
@@ -21,6 +21,32 @@ describe('getClientId', () => {
       background: 'eed-edsc-prod-serverless-background',
       client: 'eed-edsc-prod-serverless-client',
       lambda: 'eed-edsc-prod-serverless-lambda'
+    }
+    expect(getClientId()).toEqual(clientId)
+  })
+
+  test('returns the clientId object for the uat environment', () => {
+    process.env.NODE_ENV = 'production'
+
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'uat')
+
+    const clientId = {
+      background: 'eed-edsc-uat-serverless-background',
+      client: 'eed-edsc-uat-serverless-client',
+      lambda: 'eed-edsc-uat-serverless-lambda'
+    }
+    expect(getClientId()).toEqual(clientId)
+  })
+
+  test('returns the clientId object for the sit environment', () => {
+    process.env.NODE_ENV = 'production'
+
+    jest.spyOn(cmrEnv, 'cmrEnv').mockImplementation(() => 'sit')
+
+    const clientId = {
+      background: 'eed-edsc-sit-serverless-background',
+      client: 'eed-edsc-sit-serverless-client',
+      lambda: 'eed-edsc-sit-serverless-lambda'
     }
     expect(getClientId()).toEqual(clientId)
   })

@@ -10,8 +10,8 @@ import {
   undoExcludeGranule,
   updateGranuleDownloadParams,
   updateGranuleLinks,
-  fetchGranuleLinks,
-  fetchLinks
+  fetchLinks,
+  fetchOpendapLinks
 } from '../granules'
 import {
   UPDATE_GRANULE_RESULTS,
@@ -336,109 +336,12 @@ describe('updateGranuleLinks', () => {
   })
 })
 
-describe('fetchGranuleLinks', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
-  test('calls lambda to get the retreival collection details', async () => {
-    const endpointResponse = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'download'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
-      },
-      granule_count: 888
-    }
-
-    moxios.stubRequest(/3000\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
-      status: 200,
-      response: endpointResponse
-    })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      collection_id: 'C10000005-EDSC'
-    }
-
-    await store.dispatch(fetchGranuleLinks(params, 'token'))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        ...endpointResponse
-      },
-      type: UPDATE_GRANULE_DOWNLOAD_PARAMS
-    })
-  })
-
-  test('takes no actions if parameters are missing', () => {
-    const store = mockStore({
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        },
-        granule: { pageNum: 1 }
-      }
-    })
-
-    const params = {
-      id: 3
-    }
-
-    store.dispatch(fetchGranuleLinks(params, 'token'))
-    const storeActions = store.getActions()
-    expect(storeActions.length).toEqual(0)
-  })
-
-  test('takes no action when the request fails', async () => {
-    moxios.stubRequest(/3000\/retrievals\/\d\/collections\/C\d+-[A-Z]+/, {
-      status: 404,
-      response: {
-        errors: [
-          'Retrieval Collection \'C10000005-EDSC\' (for Retrieval \'3\') not found'
-        ]
-      }
-    })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
-
-    const params = {
-      id: 3,
-      collection_id: 'C10000005-EDSC'
-    }
-
-    await store.dispatch(fetchGranuleLinks(params, 'token'))
-    expect(consoleMock).toHaveBeenCalledTimes(1)
-  })
-})
-
 describe('fetchLinks', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  test('calls lambda to get the retreival collection details', async () => {
+  test('calls lambda to get the granules from cmr', async () => {
     nock(/localhost/)
       .post(/granules/)
       .reply(200, {
@@ -512,7 +415,7 @@ describe('fetchLinks', () => {
       granule_count: 888
     }
 
-    await store.dispatch(fetchLinks(params, 'token'))
+    await store.dispatch(fetchLinks(params))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       payload: [
@@ -523,6 +426,54 @@ describe('fetchLinks', () => {
     expect(storeActions[1]).toEqual({
       payload: [
         'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+      ],
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+})
+
+describe('fetchOpendapLinks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('calls lambda to get links from opendap', async () => {
+    nock(/localhost/)
+      .post(/ous/)
+      .reply(200, {
+        items: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'OPeNDAP'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+      },
+      granule_count: 3
+    }
+
+    await store.dispatch(fetchOpendapLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: [
+        'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+        'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+        'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
       ],
       type: UPDATE_GRANULE_LINKS
     })

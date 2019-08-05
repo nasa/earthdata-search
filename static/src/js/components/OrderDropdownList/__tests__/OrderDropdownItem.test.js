@@ -1,11 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-
-import { Badge, ProgressBar } from 'react-bootstrap'
-
 import { OrderDropdownItem } from '../OrderDropdownItem'
-
 import { orderStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
 
 beforeEach(() => {
@@ -15,8 +11,7 @@ beforeEach(() => {
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-
-  const order = orderStatusPropsEsi.order.collections.esi_orders[0]
+  const order = orderStatusPropsEsi.order.collections.esi[0]
     .access_method.order.service_options.orders[0]
 
   const props = {

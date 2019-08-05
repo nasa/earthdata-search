@@ -30,6 +30,12 @@ export const submitOrder = () => (dispatch, getState) => {
 }
 
 /**
+ * Convert the type of a provided UMM-S record to an object friendly key
+ * @param {String} type A UMM-S record type
+ */
+const fromUmmServiceType = type => type.toLowerCase().replace(/ /g, '_')
+
+/**
  * Fetch order data for an order
  */
 export const fetchOrder = (id, authToken) => (dispatch) => {
@@ -45,7 +51,8 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
       order.collections = {
         download: [],
         echo_orders: [],
-        esi: []
+        esi: [],
+        opendap: []
       }
       order.links = []
       data.collections.forEach((collection) => {
@@ -55,7 +62,7 @@ export const fetchOrder = (id, authToken) => (dispatch) => {
         } = collection
 
         const { type } = accessMethod
-        const accessMethodTypeKey = type.toLowerCase().replace(/ /g, '_')
+        const accessMethodTypeKey = fromUmmServiceType(type)
 
         const {
           dataset_id: datasetId,
