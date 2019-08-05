@@ -11,7 +11,6 @@ const ConditionalPlugin = (condition, plugin) => ({
 
     // The `serverless-plugin-warmup` plugin creates a lambda, we need to ignore it
     if (name[0] !== '_warmup') {
-      console.log(name)
       // Pull the filename of the Lambda
       let fileName = name.pop()
 
