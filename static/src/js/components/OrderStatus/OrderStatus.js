@@ -38,9 +38,16 @@ export class OrderStatus extends Component {
 
     const {
       download: downloads = [],
+      opendap: opendapOrders = [],
       echo_orders: echoOrders = [],
-      esi_orders: esiOrders = []
+      esi: esiOrders = []
     } = collections
+
+    // Combine the two types of orders that are direct download into a single heading
+    const downloadableOrders = [
+      ...downloads,
+      ...opendapOrders
+    ]
 
     // TODO: Remove this placeholder for echo orders. Currently the order status is being pulled from collection_metadata.order_status.
     // eslint-disable-next-line no-constant-condition
@@ -67,11 +74,11 @@ export class OrderStatus extends Component {
             <Well.Introduction>{introduction}</Well.Introduction>
             <Well.Section>
               {
-                downloads.length > 0 && (
+                downloadableOrders.length > 0 && (
                   <OrderStatusList
                     heading="Direct Download"
                     introduction={'Click the "View/Download Data Links" button to view or download a file containing links to your data.'}
-                    collections={downloads}
+                    collections={downloadableOrders}
                     type="download"
                     onChangePath={onChangePath}
                   />

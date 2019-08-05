@@ -241,7 +241,9 @@ describe('getAccessMethods', () => {
           collection_id: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.opendap': {
-              data: {}
+              data: {
+                type: 'OPeNDAP'
+              }
             }
           }
         }
@@ -254,7 +256,8 @@ describe('getAccessMethods', () => {
       body: JSON.stringify({
         accessMethods: {
           opendap: {
-            type: 'OPeNDAP'
+            type: 'OPeNDAP',
+            isValid: true
           }
         },
         selectedAccessMethod: 'opendap'

@@ -11,8 +11,6 @@ function setup() {
   const props = {
     boundingBoxSearch: '',
     collections: {},
-    granuleDownloadRetrievalId: '',
-    granuleDownloadCollectionId: '',
     gridName: '',
     gridCoords: '',
     featureFacets: {},

@@ -190,7 +190,7 @@ class ShapefileLayerExtended extends L.Layer {
 
       if ((originalLatLngs[0].length > MAX_POLYGON_SIZE)
         && (latlngs.length !== originalLatLngs.length)) {
-        // TODO add notification about shapefile reduction
+        // TODO: Add notification about shapefile reduction @critical
         // help.add('shapefile_reduction', { element: '.leaflet-draw-edit-edit' })
       }
 

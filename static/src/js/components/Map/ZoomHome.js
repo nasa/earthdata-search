@@ -33,7 +33,7 @@ class ZoomExtended extends Control.Zoom {
   }
 
   zoomHome() {
-    // TODO need to get info like spatial and project from props
+    // TODO: Need to get info like spatial and project from props
 
     // var bounds, i, len, point, points, spatial;
     // spatial = currentPage.query.spatial();

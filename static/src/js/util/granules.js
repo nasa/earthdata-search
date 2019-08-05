@@ -151,7 +151,7 @@ export const buildGranuleSearchParams = (params) => {
  * @returns {object} - An object containing the various URLs
  */
 export const createEcho10MetadataUrls = (granuleId) => {
-  // TODO: This should eventually support authentication by appending the token information
+  // TODO: This should eventually support authentication by appending the token information @high
   const metadataUrlTypes = [
     { ext: 'atom', title: 'ATOM' },
     { ext: 'echo10', title: 'ECHO 10' },

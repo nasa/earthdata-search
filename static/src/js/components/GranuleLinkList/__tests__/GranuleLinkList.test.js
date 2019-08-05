@@ -10,8 +10,14 @@ Enzyme.configure({ adapter: new Adapter() })
 describe('Granules component', () => {
   function setup() {
     const props = {
+      authToken: '',
+      onFetchRetrievalCollection: jest.fn(),
+      retrievalCollectionId: '2',
       granuleDownload: {
-        granuleDownloadLinks: []
+        granuleLinks: [],
+        retrievalCollection: {
+          granule_count: '0'
+        }
       }
     }
 
@@ -33,11 +39,14 @@ describe('Granules component', () => {
 describe('Granules component', () => {
   function setup() {
     const props = {
+      authToken: '',
+      onFetchRetrievalCollection: jest.fn(),
+      retrievalCollectionId: '2',
       granuleDownload: {
-        granuleDownloadLinks: [
+        granuleLinks: [
           'http://google.com'
         ],
-        granuleDownloadParams: {
+        retrievalCollection: {
           granule_count: 2
         }
       }
@@ -65,12 +74,15 @@ describe('Granules component', () => {
 describe('Granules component', () => {
   function setup() {
     const props = {
+      authToken: '',
+      onFetchRetrievalCollection: jest.fn(),
+      retrievalCollectionId: '2',
       granuleDownload: {
-        granuleDownloadLinks: [
+        granuleLinks: [
           'http://google.com',
           'http://google.jp'
         ],
-        granuleDownloadParams: {
+        retrievalCollection: {
           granule_count: 2
         }
       }

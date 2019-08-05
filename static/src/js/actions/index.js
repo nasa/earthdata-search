@@ -13,7 +13,6 @@ import {
   excludeGranule,
   getGranules,
   undoExcludeGranule,
-  fetchGranuleLinks,
   setGranuleDownloadParams,
   updateGranuleResults,
   updateGranuleMetadata
@@ -87,6 +86,7 @@ import {
   shapefileErrored,
   updateShapefile
 } from './shapefiles'
+import { fetchRetrievalCollection } from './retrievalCollection'
 
 const actions = {
   addAccessMethods,
@@ -111,8 +111,8 @@ const actions = {
   clearFilters,
   excludeGranule,
   fetchAccessMethods,
-  fetchGranuleLinks,
   fetchOrder,
+  fetchRetrievalCollection,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,

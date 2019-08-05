@@ -77,7 +77,7 @@ const GranuleResultsActions = ({
     )
   }
 
-  // TODO: Implement maxOrderSizeReached login that currently exists in master
+  // TODO: Implement maxOrderSizeReached modal that currently exists in master @critical
 
   const downloadButton = downloadAllButton()
 

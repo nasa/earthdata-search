@@ -49,8 +49,6 @@ const urlDefs = {
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
-  granuleDownloadRetrievalId: { shortKey: 'rid', encode: encodeString, decode: decodeString },
-  granuleDownloadCollectionId: { shortKey: 'cid', encode: encodeString, decode: decodeString },
   gridName: { shortKey: 's2n', encode: encodeString, decode: decodeString },
   gridCoords: { shortKey: 's2c', encode: encodeGridCoords, decode: decodeGridCoords },
   shapefileId: { shortKey: 'sf', encode: encodeInteger, decode: decodeInteger }
@@ -125,10 +123,6 @@ export const decodeUrlParams = (paramString) => {
     science_keywords_h: scienceKeywords
   }
 
-  const granuleDownloadParams = {}
-  granuleDownloadParams.id = decodeHelp(params, 'granuleDownloadRetrievalId')
-  granuleDownloadParams.collection_id = decodeHelp(params, 'granuleDownloadCollectionId')
-
   const shapefile = {
     shapefileId: decodeHelp(params, 'shapefileId')
   }
@@ -139,7 +133,6 @@ export const decodeUrlParams = (paramString) => {
     featureFacets,
     focusedCollection,
     focusedGranule,
-    granuleDownloadParams,
     map,
     project,
     query,
