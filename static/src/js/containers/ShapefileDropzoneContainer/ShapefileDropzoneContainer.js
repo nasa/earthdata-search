@@ -22,7 +22,7 @@ const dropzoneOptions = {
   // Official Ogre web service
   // We likely want to use this, once they fix OPTIONS requests
   // See: https://github.com/wavded/ogre/pull/22
-  url: 'http://ogre.adc4gis.com/convert',
+  url: 'https://ogre.adc4gis.com/convert',
   headers: {
     'Cache-Control': undefined
   },
