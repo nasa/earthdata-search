@@ -42,6 +42,7 @@ const nlpSearch = async (event) => {
   try {
     const nlpResponse = await request.get({
       uri: nlpUrl,
+      json: true,
       resolveWithFullResponse: true
     })
 
