@@ -42,7 +42,7 @@ describe('ShapefileDropzoneContainer component', () => {
       paramName: 'upload',
       previewTemplate: '<div>',
       uploadMultiple: false,
-      url: 'http://ogre.adc4gis.com/convert'
+      url: 'https://ogre.adc4gis.com/convert'
     })
   })
 
