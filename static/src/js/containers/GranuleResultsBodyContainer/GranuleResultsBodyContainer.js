@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
+  focusedGranule: state.focusedGranule,
   granules: state.searchResults.granules,
   granuleQuery: state.query.granule
 })
@@ -28,6 +29,7 @@ export const GranuleResultsBodyContainer = (props) => {
   const {
     collections,
     focusedCollection,
+    focusedGranule,
     granules,
     granuleQuery,
     location,
@@ -57,6 +59,7 @@ export const GranuleResultsBodyContainer = (props) => {
     <GranuleResultsBody
       collectionId={focusedCollection}
       excludedGranuleIds={excludedGranuleIds}
+      focusedGranule={focusedGranule}
       granules={granules}
       isCwic={isCwic}
       pageNum={pageNum}
@@ -71,6 +74,7 @@ export const GranuleResultsBodyContainer = (props) => {
 GranuleResultsBodyContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
+  focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,

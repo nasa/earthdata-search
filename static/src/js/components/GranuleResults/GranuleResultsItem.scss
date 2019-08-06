@@ -8,6 +8,10 @@
 
   &__header {
     padding: $spacer/2;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__body {
@@ -24,6 +28,14 @@
     font-weight: 400;
     line-height: 1.4em;
     word-wrap: break-word;
+
+    &.selected {
+      color: #3498db;
+    }
+
+    &:hover {
+      color: #3498db;
+    }
   }
 
   &__thumb {

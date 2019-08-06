@@ -16,6 +16,7 @@ function setup(type) {
     props = {
       collectionId: 'collectionId',
       excludedGranuleIds: [],
+      focusedGranule: '',
       granules: {
         hits: null,
         loadTime: null,
@@ -37,6 +38,7 @@ function setup(type) {
     props = {
       collectionId: 'collectionId',
       excludedGranuleIds: [],
+      focusedGranule: '',
       granules: {
         hits: null,
         loadTime: null,
@@ -58,6 +60,7 @@ function setup(type) {
     props = {
       collectionId: 'collectionId',
       excludedGranuleIds: [],
+      focusedGranule: '',
       granules: {
         hits: 23,
         loadTime: 1524,
@@ -89,6 +92,7 @@ function setup(type) {
     props = {
       collectionId: 'collectionId',
       excludedGranuleIds: ['G12345-PROV'],
+      focusedGranule: '',
       granules: {
         hits: 23,
         loadTime: 1524,
@@ -117,6 +121,7 @@ function setup(type) {
     props = {
       collectionId: 'collectionId',
       excludedGranuleIds: ['329585043'],
+      focusedGranule: '',
       granules: {
         hits: 23,
         loadTime: 1524,

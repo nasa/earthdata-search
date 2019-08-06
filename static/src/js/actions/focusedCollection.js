@@ -113,13 +113,16 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       // to be used in the UI.
       const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
 
+      const { is_cwic: isCwic = false } = metadata
+
       // The raw data from the json and ummJson requests are added to the state, as well as the
       // transformed/normalized metadata.
       payload.push({
         [focusedCollection]: {
           metadata,
           ummMetadata,
-          formattedMetadata
+          formattedMetadata,
+          isCwic
         }
       })
 

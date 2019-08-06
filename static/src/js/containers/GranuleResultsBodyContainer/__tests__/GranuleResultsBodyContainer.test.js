@@ -18,6 +18,7 @@ function setup() {
       }
     },
     focusedCollection: 'focusedCollection',
+    focusedGranule: '',
     granules: { value: 'granules' },
     granuleQuery: { pageNum: 1 },
     location: { search: 'value' },

@@ -167,7 +167,7 @@ export const decodeCollections = (params) => {
     if (index === 0) focusedCollection = collectionId
 
     let granuleIds = []
-    let isCwic = false
+    let isCwic
     let isVisible = false
     if (pg && pg[index]) {
       // Excluded Granules

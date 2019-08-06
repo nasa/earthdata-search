@@ -1,6 +1,7 @@
 export const getProjectCollectionsResponse = [
   {
     collectionId1: {
+      isCwic: false,
       formattedMetadata: {
         dataCenters: undefined,
         doi: undefined,
@@ -56,6 +57,7 @@ export const getProjectCollectionsResponse = [
   },
   {
     collectionId2: {
+      isCwic: false,
       formattedMetadata: {
         dataCenters: undefined,
         doi: undefined,
@@ -114,6 +116,7 @@ export const getProjectCollectionsResponse = [
 export const getCollectionsResponseUnauth = [
   {
     collectionId: {
+      isCwic: false,
       formattedMetadata: {
         dataCenters: undefined,
         doi: undefined,
@@ -173,6 +176,7 @@ export const getCollectionsResponseUnauth = [
 export const getCollectionsResponseAuth = [
   {
     collectionId: {
+      isCwic: false,
       formattedMetadata: {
         dataCenters: undefined,
         doi: undefined,

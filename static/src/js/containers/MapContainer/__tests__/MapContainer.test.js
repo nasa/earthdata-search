@@ -25,6 +25,7 @@ function setup() {
     authToken: '',
     collections: {},
     focusedCollection: '',
+    focusedGranule: '',
     granules: {},
     pathname: '/search',
     project: {},
@@ -46,7 +47,9 @@ function setup() {
     },
     masterOverlayPanelHeight: 500,
     shapefile: {},
+    onChangeFocusedGranule: jest.fn(),
     onChangeMap: jest.fn(),
+    onExcludeGranule: jest.fn(),
     onSaveShapefile: jest.fn(),
     onShapefileErrored: jest.fn()
   }

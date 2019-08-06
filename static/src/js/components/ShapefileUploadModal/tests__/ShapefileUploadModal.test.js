@@ -7,7 +7,7 @@ import ShapefileUploadModal from '../ShapefileUploadModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(state) {
+function setup() {
   const props = {
     onToggleShapefileUploadModal: jest.fn(),
     isOpen: false

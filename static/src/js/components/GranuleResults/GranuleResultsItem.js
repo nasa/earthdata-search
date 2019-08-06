@@ -9,6 +9,7 @@ import { Dropdown } from 'react-bootstrap'
 import murmurhash3 from '../../util/murmurhash3'
 import { createDataLinks } from '../../util/granules'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { eventEmitter } from '../../events/events'
 
 import './GranuleResultsItem.scss'
 
@@ -86,6 +87,7 @@ DataLinksButton.propTypes = {
  */
 const GranuleResultsItem = ({
   collectionId,
+  focusedGranule,
   granule,
   isLast,
   location,
@@ -129,10 +131,37 @@ const GranuleResultsItem = ({
 
   const dataLinks = createDataLinks(links)
 
+  const isFocusedGranule = focusedGranule === id
+
+  const handleClick = () => {
+    let stickyGranule = granule
+    if (isFocusedGranule) stickyGranule = null
+
+    eventEmitter.emit('edsc.stickygranule', { granule: stickyGranule })
+  }
+
+  const handleMouseEnter = () => {
+    eventEmitter.emit('edsc.focusgranule', { granule })
+  }
+
+  const handleMouseLeave = () => {
+    eventEmitter.emit('edsc.focusgranule', { granule: null })
+  }
+
   return (
-    <li className="granule-results-item">
-      <div className="granule-results-item__header">
-        <h3 className="granule-results-item__title">{title}</h3>
+    <li
+      className="granule-results-item"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        className="granule-results-item__header"
+        role="button"
+        tabIndex={0}
+        onClick={handleClick}
+        onKeyPress={handleClick}
+      >
+        <h3 className={`granule-results-item__title ${isFocusedGranule ? 'selected' : ''}`}>{title}</h3>
       </div>
       <div className="granule-results-item__body">
         {
@@ -206,6 +235,7 @@ const GranuleResultsItem = ({
 
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  focusedGranule: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
   isLast: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,

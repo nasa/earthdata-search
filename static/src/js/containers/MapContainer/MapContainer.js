@@ -11,6 +11,7 @@ import {
   ScaleControl
 } from 'react-leaflet'
 import $ from 'jquery'
+import { difference } from 'lodash'
 
 import '../../util/map/sphericalPolygon'
 import isPath from '../../util/isPath'
@@ -34,11 +35,17 @@ import actions from '../../actions/index'
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 import ShapefileLayer from '../../components/Map/ShapefileLayer'
+import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
+import murmurhash3 from '../../util/murmurhash3'
 
 const { BaseLayer, Overlay } = LayersControl
 
 const mapDispatchToProps = dispatch => ({
+  onChangeFocusedGranule:
+    granuleId => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeMap: query => dispatch(actions.changeMap(query)),
+  onExcludeGranule:
+    data => dispatch(actions.excludeGranule(data)),
   onSaveShapefile: data => dispatch(actions.saveShapefile(data)),
   onShapefileErrored: data => dispatch(actions.shapefileErrored(data))
 })
@@ -47,6 +54,7 @@ const mapStateToProps = state => ({
   authToken: state.authToken,
   collections: state.metadata.collections,
   focusedCollection: state.focusedCollection,
+  focusedGranule: state.focusedGranule,
   granules: state.searchResults.granules,
   map: state.map,
   masterOverlayPanelHeight: state.ui.masterOverlayPanel.height,
@@ -181,10 +189,13 @@ export class MapContainer extends Component {
       map,
       collections,
       focusedCollection,
+      focusedGranule,
       granules,
       pathname,
       project,
       shapefile,
+      onChangeFocusedGranule,
+      onExcludeGranule,
       onSaveShapefile,
       onShapefileErrored
     } = this.props
@@ -203,6 +214,26 @@ export class MapContainer extends Component {
     const center = [latitude, longitude]
 
     const maxZoom = projection === projections.geographic ? 7 : 4
+
+    const { isCwic } = granules
+    let nonExcludedGranules = granules
+    if (focusedCollection && collections.byId[focusedCollection]) {
+      const { excludedGranuleIds = [] } = collections.byId[focusedCollection]
+      const allGranuleIds = granules.allIds
+      let granuleIds
+      if (isCwic) {
+        granuleIds = allGranuleIds.filter((id) => {
+          const hashedId = murmurhash3(id).toString()
+          return excludedGranuleIds.indexOf(hashedId) === -1
+        })
+      } else {
+        granuleIds = difference(allGranuleIds, excludedGranuleIds)
+      }
+      nonExcludedGranules = { byId: {} }
+      granuleIds.forEach((granuleId) => {
+        nonExcludedGranules.byId[granuleId] = granules.byId[granuleId]
+      })
+    }
 
     if (this.mapRef) this.mapRef.leafletElement.options.crs = crsProjections[projection]
 
@@ -300,10 +331,15 @@ export class MapContainer extends Component {
         <GranuleGridLayer
           collections={collections}
           focusedCollection={focusedCollection}
+          focusedGranule={focusedGranule}
           isProjectPage={isProjectPage}
-          granules={granules}
+          granules={nonExcludedGranules}
           project={project}
+          projection={projection}
+          onChangeFocusedGranule={onChangeFocusedGranule}
+          onExcludeGranule={onExcludeGranule}
         />
+        <MouseEventsLayer />
         <ZoomHome />
         {
           !isProjectPage && (
@@ -335,13 +371,16 @@ MapContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
+  focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}),
   masterOverlayPanelHeight: PropTypes.number.isRequired,
   pathname: PropTypes.string.isRequired,
   project: PropTypes.shape({}).isRequired,
   shapefile: PropTypes.shape({}).isRequired,
+  onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
+  onExcludeGranule: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
   onShapefileErrored: PropTypes.func.isRequired
 }

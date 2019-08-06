@@ -53,17 +53,20 @@ const collectionMetadataReducer = (state = initialState, action) => {
       }
       action.payload.forEach((collection, index) => {
         const [collectionId] = Object.keys(collection)
-        const { metadata, ummMetadata, formattedMetadata } = action.payload[index][collectionId]
+        const {
+          metadata,
+          ummMetadata,
+          formattedMetadata,
+          isCwic
+        } = action.payload[index][collectionId]
 
         if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
 
         let excludedGranuleIds = []
-        let isCwic = false
         let isVisible = true
         if (state.byId[collectionId]) {
           ({
             excludedGranuleIds,
-            isCwic,
             isVisible
           } = state.byId[collectionId])
         }
