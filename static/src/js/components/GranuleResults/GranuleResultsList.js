@@ -31,6 +31,7 @@ export const GranuleResultsList = (props) => {
   const {
     collectionId,
     excludedGranuleIds,
+    focusedGranule,
     granules,
     isCwic,
     pageNum,
@@ -67,6 +68,7 @@ export const GranuleResultsList = (props) => {
     return (
       <GranuleResultsItem
         collectionId={collectionId}
+        focusedGranule={focusedGranule}
         key={granuleKey}
         granule={granules.byId[granuleId]}
         isLast={isLast}
@@ -137,6 +139,7 @@ export const GranuleResultsList = (props) => {
 GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   pageNum: PropTypes.number.isRequired,
   isCwic: PropTypes.bool.isRequired,

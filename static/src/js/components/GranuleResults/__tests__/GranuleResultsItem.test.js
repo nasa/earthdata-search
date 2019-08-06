@@ -2,15 +2,25 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import GranuleResultsItem from '../GranuleResultsItem'
+import * as EventEmitter from '../../../events/events'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(type) {
+  const defaultProps = {
+    collectionId: 'collectionId',
+    focusedGranule: '',
+    isLast: false,
+    location: { search: 'location' },
+    waypointEnter: jest.fn(),
+    onExcludeGranule: jest.fn(),
+    onFocusedGranuleChange: jest.fn()
+  }
   let props
 
   if (type === 'cmr') {
     props = {
-      collectionId: 'collectionId',
+      ...defaultProps,
       granule: {
         id: 'granuleId',
         browse_flag: true,
@@ -27,18 +37,36 @@ function setup(type) {
             href: 'htt[://linkhref'
           }
         ]
-      },
-      isLast: false,
-      location: { search: 'location' },
-      waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      }
+    }
+  }
+  if (type === 'focusedGranule') {
+    props = {
+      ...defaultProps,
+      focusedGranule: 'granuleId',
+      granule: {
+        id: 'granuleId',
+        browse_flag: true,
+        formatted_temporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        links: [
+          {
+            rel: 'http://linkrel',
+            title: 'linktitle',
+            href: 'htt[://linkhref'
+          }
+        ]
+      }
     }
   }
 
   if (type === 'no-thumb') {
     props = {
-      collectionId: 'collectionId',
+      ...defaultProps,
       granule: {
         browse_flag: false,
         formatted_temporal: [
@@ -53,18 +81,13 @@ function setup(type) {
             href: 'htt[://linkhref'
           }
         ]
-      },
-      isLast: false,
-      location: { search: 'location' },
-      waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      }
     }
   }
 
   if (type === 'cwic') {
     props = {
-      collectionId: 'collectionId',
+      ...defaultProps,
       granule: {
         id: 'granuleId',
         browse_flag: true,
@@ -82,12 +105,7 @@ function setup(type) {
             href: 'htt[://linkhref'
           }
         ]
-      },
-      isLast: false,
-      location: { search: 'location' },
-      waypointEnter: jest.fn(),
-      onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      }
     }
   }
 
@@ -98,6 +116,10 @@ function setup(type) {
     props
   }
 }
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
 describe('GranuleResultsItem component', () => {
   test('renders itself correctly', () => {
@@ -181,6 +203,53 @@ describe('GranuleResultsItem component', () => {
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
       })
+    })
+  })
+
+  describe('granule map events', () => {
+    test('hovering over a granule highlights the granule on the map', () => {
+      const { enzymeWrapper, props } = setup('cmr')
+
+      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+
+      const item = enzymeWrapper.find('.granule-results-item')
+      item.simulate('mouseenter')
+
+      expect(eventEmitterEmitMock).toBeCalledTimes(1)
+      expect(eventEmitterEmitMock).toBeCalledWith('edsc.focusgranule', { granule: props.granule })
+
+      jest.clearAllMocks()
+      item.simulate('mouseleave')
+
+      expect(eventEmitterEmitMock).toBeCalledTimes(1)
+      expect(eventEmitterEmitMock).toBeCalledWith('edsc.focusgranule', { granule: null })
+    })
+
+    test('clicking on a granule sets that granule as sticky on the map', () => {
+      const { enzymeWrapper, props } = setup('cmr')
+
+      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+
+      const itemHeader = enzymeWrapper.find('.granule-results-item__header')
+      itemHeader.simulate('click')
+
+      expect(eventEmitterEmitMock).toBeCalledTimes(1)
+      expect(eventEmitterEmitMock).toBeCalledWith('edsc.stickygranule', { granule: props.granule })
+    })
+
+    test('clicking on a focused granule removes that granule as sticky on the map', () => {
+      const { enzymeWrapper, props } = setup('focusedGranule')
+
+      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+
+      const itemHeader = enzymeWrapper.find('.granule-results-item__header')
+      itemHeader.simulate('click')
+
+      expect(eventEmitterEmitMock).toBeCalledTimes(1)
+      expect(eventEmitterEmitMock).toBeCalledWith('edsc.stickygranule', { granule: null })
     })
   })
 })

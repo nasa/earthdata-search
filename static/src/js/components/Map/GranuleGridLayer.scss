@@ -1,0 +1,35 @@
+.granule-spatial-label {
+  white-space: nowrap;
+  font-size: 1.2em;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 1px 1px 1px #000;
+
+  // Need to override styles placed on the icon by leaflet
+  width: 40em !important;
+  margin-left: -20em !important;
+
+  i.fa-stack-2x {
+    color: rgba(255,255,255, 0.2);
+    @include transition(color 0.3s ease-in-out);
+  }
+
+  a {
+    padding: 0 0 0 10px;
+    color: #fff;
+    text-shadow: none;
+
+    &:hover i.fa-stack-2x {
+      opacity: .9;
+      color: rgba(231, 76, 60, 0.9);
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

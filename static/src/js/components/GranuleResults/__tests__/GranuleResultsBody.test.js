@@ -10,6 +10,7 @@ function setup() {
   const props = {
     collectionId: 'collectionId',
     excludedGranuleIds: [],
+    focusedGranule: '',
     granules: {
       one: 'test',
       two: 'test'

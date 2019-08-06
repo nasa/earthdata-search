@@ -112,7 +112,6 @@ describe('UPDATE_COLLECTION_METADATA', () => {
         collectionId: {
           excludedGranuleIds: [],
           granules: {},
-          isCwic: false,
           isVisible: true,
           metadata: undefined,
           ummMetadata: undefined,

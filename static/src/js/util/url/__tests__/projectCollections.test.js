@@ -11,7 +11,6 @@ describe('url#decodeUrlParams', () => {
         byId: {
           collectionId1: {
             excludedGranuleIds: [],
-            isCwic: false,
             isVisible: false,
             granules: {},
             metadata: {},
@@ -20,7 +19,6 @@ describe('url#decodeUrlParams', () => {
           },
           collectionId2: {
             excludedGranuleIds: [],
-            isCwic: false,
             isVisible: false,
             granules: {},
             metadata: {},
@@ -45,7 +43,6 @@ describe('url#decodeUrlParams', () => {
         byId: {
           collectionId1: {
             excludedGranuleIds: [],
-            isCwic: false,
             isVisible: false,
             granules: {},
             metadata: {},
@@ -54,7 +51,6 @@ describe('url#decodeUrlParams', () => {
           },
           collectionId2: {
             excludedGranuleIds: [],
-            isCwic: false,
             isVisible: false,
             granules: {},
             metadata: {},
@@ -79,7 +75,6 @@ describe('url#decodeUrlParams', () => {
         byId: {
           collectionId1: {
             excludedGranuleIds: [],
-            isCwic: false,
             isVisible: false,
             granules: {},
             metadata: {},

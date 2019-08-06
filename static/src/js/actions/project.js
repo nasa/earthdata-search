@@ -150,11 +150,14 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
         const formattedMetadata = createFocusedCollectionMetadata(metadata, ummMetadata, authToken)
 
+        const { is_cwic: isCwic = false } = metadata
+
         payload.push({
           [id]: {
             metadata,
             ummMetadata,
-            formattedMetadata
+            formattedMetadata,
+            isCwic
           }
         })
       })
