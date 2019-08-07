@@ -1,6 +1,10 @@
 stateMachines:
   UpdateOrderStatusWorkflow:
-    name: UpdateOrderStatusWorkflow${self:provider.stage}
+    name: UpdateOrderStatusWorkflow-${self:provider.stage}
+    role:
+      Fn::GetAtt:
+        - ScheduledLambdaRole
+        - Arn
     definition:
       StartAt: InitialWait
       States:

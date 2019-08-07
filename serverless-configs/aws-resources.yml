@@ -246,4 +246,4 @@ Outputs:
   UpdateOrderStatusWorkflow:
     Description: ARN of the order status step function workflow
     Value:
-      Ref: UpdateOrderStatusWorkflow${self:provider.stage}
+      Ref: UpdateOrderStatusWorkflowDash${self:provider.stage}

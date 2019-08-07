@@ -33,7 +33,7 @@ afterEach(() => {
 })
 
 describe('getRetrieval', () => {
-  test('correctly retrieves a known colormap', async () => {
+  test('correctly retrieves a known retrieval', async () => {
     dbTracker.on('query', (query) => {
       query.response([{
         jsondata: {},
@@ -42,30 +42,57 @@ describe('getRetrieval', () => {
       }])
     })
 
-    const colorMapResponse = await getRetrieval(retrievalPayload, {})
+    const retrievalResponse = await getRetrieval(retrievalPayload, {})
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].method).toEqual('first')
+    expect(queries[0].method).toEqual('select')
 
-    const { body, statusCode } = colorMapResponse
+    const { body, statusCode } = retrievalResponse
 
-    expect(body).toEqual('{"jsondata":{},"token":"asdf","environment":"prod"}')
+    expect(body).toEqual('{"id":2,"jsondata":{},"retrieval_collections_ids":[]}')
     expect(statusCode).toEqual(200)
   })
 
-  test('returns a 404 when no colormap is found', async () => {
+  test('correctly retrieves a known retrieval with collection retrievals', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([{
+        retrieval_id: 2,
+        jsondata: {},
+        created_at: '2019-07-09 17:05:27.000000',
+        id: 22
+      }, {
+        retrieval_id: 2,
+        jsondata: {},
+        created_at: '2019-07-09 17:05:56.000000',
+        id: 23
+      }])
+    })
+
+    const retrievalResponse = await getRetrieval(retrievalPayload, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+
+    const { body, statusCode } = retrievalResponse
+
+    expect(body).toEqual('{"id":2,"jsondata":{},"created_at":"2019-07-09 17:05:27.000000","retrieval_collections_ids":[22,23]}')
+    expect(statusCode).toEqual(200)
+  })
+
+  test('returns a 404 when no retrieval is found', async () => {
     dbTracker.on('query', (query) => {
       query.response([])
     })
 
-    const colorMapResponse = await getRetrieval(retrievalPayload, {})
+    const retrievalResponse = await getRetrieval(retrievalPayload, {})
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].method).toEqual('first')
+    expect(queries[0].method).toEqual('select')
 
-    const { body, statusCode } = colorMapResponse
+    const { body, statusCode } = retrievalResponse
 
     expect(body).toEqual('{"errors":["Retrieval \'2\' not found."]}')
     expect(statusCode).toEqual(404)
@@ -76,13 +103,13 @@ describe('getRetrieval', () => {
       query.reject('Unknown Error')
     })
 
-    const colorMapResponse = await getRetrieval(retrievalPayload, {})
+    const retrievalResponse = await getRetrieval(retrievalPayload, {})
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].method).toEqual('first')
+    expect(queries[0].method).toEqual('select')
 
-    const { statusCode } = colorMapResponse
+    const { statusCode } = retrievalResponse
 
     expect(statusCode).toEqual(500)
   })
