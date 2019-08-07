@@ -43,7 +43,7 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata, collectionS
         {
           handoffLinks.length > 0 && (
             <div className="col-auto align-self-end">
-              <Dropdown className="collection-details-header__more-actions">
+              <Dropdown className="dropdown--carat-right dropdown--condensed collection-details-header__more-actions">
                 <Dropdown.Toggle
                   className="collection-details-header__more-actions-toggle"
                   as={ToggleMoreActions}
@@ -57,7 +57,7 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata, collectionS
                     handoffLinks.map(link => (
                       <Dropdown.Item
                         key={link.title}
-                        className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
+                        className="link link--external collection-details-header__more-actions-item collection-details-header__more-actions-vis"
                         href={link.href}
                       >
                         {link.title}

@@ -75,7 +75,7 @@ const ProjectCollectionItem = ({
             {title}
           </TruncateText>
         </Button>
-        <Dropdown className="project-collections-item__more-actions">
+        <Dropdown className="dropdown--carat-right dropdown--condensed project-collections-item__more-actions">
           <Dropdown.Toggle
             className="project-collections-item__more-actions-toggle"
             as={ToggleMoreActions}
@@ -83,6 +83,7 @@ const ProjectCollectionItem = ({
           <Dropdown.Menu
             className="project-collections-item__more-actions-menu"
             alignRight
+            size="sm"
           >
             <Dropdown.Item
               className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
@@ -107,7 +108,7 @@ const ProjectCollectionItem = ({
               handoffLinks.length > 0 && handoffLinks.map(link => (
                 <Dropdown.Item
                   key={link.title}
-                  className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
+                  className="link link--external collection-details-header__more-actions-item collection-details-header__more-actions-vis"
                   href={link.href}
                 >
                   {link.title}

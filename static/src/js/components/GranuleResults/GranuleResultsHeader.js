@@ -104,17 +104,16 @@ class GranuleResultsHeader extends Component {
               </Link>
             </div>
           </div>
-          <div className="col-auto">
-            {
+          {
               handoffLinks.length > 0 && (
-                <div className="col-auto align-self-end">
-                  <Dropdown className="collection-details-header__more-actions">
+                <div className="col-auto align-self-start">
+                  <Dropdown className="dropdown--carat-right dropdown--condensed granule-results-header__more-actions">
                     <Dropdown.Toggle
-                      className="collection-details-header__more-actions-toggle"
+                      className="granule-results-header__more-actions-toggle"
                       as={ToggleMoreActions}
                     />
                     <Dropdown.Menu
-                      className="collection-details-header__more-actions-menu"
+                      className="granule-results-header__more-actions-menu"
                       alignRight
                     >
                       <Dropdown.Header>Open collection in:</Dropdown.Header>
@@ -122,7 +121,7 @@ class GranuleResultsHeader extends Component {
                         handoffLinks.map(link => (
                           <Dropdown.Item
                             key={link.title}
-                            className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
+                            className="link link--external granule-results-header__more-actions-item granule-results-header__more-actions-vis"
                             href={link.href}
                           >
                             { link.title }
@@ -134,8 +133,6 @@ class GranuleResultsHeader extends Component {
                 </div>
               )
             }
-
-          </div>
         </div>
         <div className="row">
           <div className="col">
