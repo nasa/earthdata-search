@@ -7,19 +7,28 @@ describe('util#doSearchRequest', () => {
   test('correctly returns the search response', async () => {
     const body = { success: true }
     const headers = {
+      'cmr-hits': 1,
+      'cmr-took': 1,
+      'cmr-request-id': 123,
+      'access-control-allow-origin': '*',
       'access-control-expose-headers': 'jwt-token',
       'jwt-token': '123.456.789'
     }
     const statusCode = 200
     const expectedResponse = {
-      body,
+      body: JSON.stringify(body),
       headers,
       statusCode
     }
 
     jest.spyOn(request, 'get').mockImplementation(() => ({
       body,
-      headers: {},
+      headers: {
+        'cmr-hits': 1,
+        'cmr-took': 1,
+        'cmr-request-id': 123,
+        'access-control-allow-origin': '*'
+      },
       statusCode
     }))
 
