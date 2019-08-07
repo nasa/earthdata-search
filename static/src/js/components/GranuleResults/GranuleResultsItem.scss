@@ -29,12 +29,12 @@
     line-height: 1.4em;
     word-wrap: break-word;
 
-    &.selected {
-      color: #3498db;
+    .granule-results-item--selected & {
+      color: $color__brand--blue;
     }
 
     &:hover {
-      color: #3498db;
+      color: $color__brand--blue;
     }
   }
 

@@ -151,7 +151,7 @@ const GranuleResultsItem = ({
 
   return (
     <li
-      className="granule-results-item"
+      className={`granule-results-item ${isFocusedGranule ? 'granule-results-item--selected' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -162,7 +162,7 @@ const GranuleResultsItem = ({
         onClick={handleClick}
         onKeyPress={handleClick}
       >
-        <h3 className={`granule-results-item__title ${isFocusedGranule ? 'selected' : ''}`}>{title}</h3>
+        <h3 className="granule-results-item__title">{title}</h3>
       </div>
       <div className="granule-results-item__body">
         {
