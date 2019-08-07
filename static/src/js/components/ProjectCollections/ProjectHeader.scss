@@ -2,8 +2,8 @@
   flex-grow: 0;
   flex-shrink: 0;
   padding: $spacer*2 $spacer*0.75 $spacer;
-  border-right: 1px solid $color__black--300;
-  border-bottom: 1px solid $color__black--300;
+  border-right: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
 
   &__title {
     margin-bottom: $spacer/4;
