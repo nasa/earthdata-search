@@ -138,15 +138,15 @@ const GranuleResultsItem = ({
     let stickyGranule = granule
     if (focusedGranule === id) stickyGranule = null
 
-    eventEmitter.emit('edsc.stickygranule', { granule: stickyGranule })
+    eventEmitter.emit('map.stickygranule', { granule: stickyGranule })
   }
 
   const handleMouseEnter = () => {
-    eventEmitter.emit('edsc.focusgranule', { granule })
+    eventEmitter.emit('map.focusgranule', { granule })
   }
 
   const handleMouseLeave = () => {
-    eventEmitter.emit('edsc.focusgranule', { granule: null })
+    eventEmitter.emit('map.focusgranule', { granule: null })
   }
 
   return (

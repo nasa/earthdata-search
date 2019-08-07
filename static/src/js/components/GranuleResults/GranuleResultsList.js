@@ -39,7 +39,7 @@ export class GranuleResultsList extends PureComponent {
   }
 
   componentDidMount() {
-    eventEmitter.on('edsc.focusgranule', this.onFocusGranule)
+    eventEmitter.on('map.focusgranule', this.onFocusGranule)
   }
 
   componentWillUnmount() {

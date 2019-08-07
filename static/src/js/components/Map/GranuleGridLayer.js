@@ -68,12 +68,12 @@ class GranuleGridLayerExtended extends L.GridLayer {
       focusedGranule
     })
 
-    eventEmitter.on('edsc.mousemove', e => this._onEdscMousemove(e))
-    eventEmitter.on('edsc.mouseout', e => this._onEdscMouseout(e))
-    eventEmitter.on('edsc.click', e => this._onClick(e))
-    eventEmitter.on('edsc.focusgranule', granule => this._onEdscFocusgranule(granule))
-    eventEmitter.on('edsc.stickygranule', granule => this._onEdscStickygranule(granule))
-    eventEmitter.on('edsc.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
+    eventEmitter.on('map.mousemove', e => this._onEdscMousemove(e))
+    eventEmitter.on('map.mouseout', e => this._onEdscMouseout(e))
+    eventEmitter.on('map.click', e => this._onClick(e))
+    eventEmitter.on('map.focusgranule', granule => this._onEdscFocusgranule(granule))
+    eventEmitter.on('map.stickygranule', granule => this._onEdscStickygranule(granule))
+    eventEmitter.on('map.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
 
     this.originalOptions = { tileSize: 512 }
     return super.initialize(this.originalOptions)
@@ -635,7 +635,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   _onEdscMouseout() {
     if (this._map) {
       if (this._granule != null) {
-        eventEmitter.emit('edsc.focusgranule', { granule: null })
+        eventEmitter.emit('map.focusgranule', { granule: null })
       }
     }
   }
@@ -644,7 +644,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
     if (this._map) {
       const granule = this.granuleAt(e.layerPoint)
       if (this._granule !== granule) {
-        eventEmitter.emit('edsc.focusgranule', { granule })
+        eventEmitter.emit('map.focusgranule', { granule })
       }
     }
   }
@@ -655,7 +655,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       if (aTag.hasClass('panel-list-remove')) {
         const granuleId = aTag.data('granuleId')
-        eventEmitter.emit('edsc.excludestickygranule', granuleId)
+        eventEmitter.emit('map.excludestickygranule', granuleId)
         return
       }
 
@@ -664,8 +664,8 @@ class GranuleGridLayerExtended extends L.GridLayer {
       let granule = this.granuleAt(e.layerPoint)
       if (this._stickied === granule) { granule = null }
 
-      eventEmitter.emit('edsc.focusgranule', { granule })
-      eventEmitter.emit('edsc.stickygranule', { granule })
+      eventEmitter.emit('map.focusgranule', { granule })
+      eventEmitter.emit('map.stickygranule', { granule })
     }
   }
 
