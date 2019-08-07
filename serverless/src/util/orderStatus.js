@@ -19,9 +19,9 @@ const catalogRestStatusMap = {
  * @param {String} orderId Database ID for an order to retrieve
  * @param {String} accessToken CMR access token
  */
-export const startOrderStatusUpdateWorkflow = (orderId, accessToken) => {
+export const startOrderStatusUpdateWorkflow = async (orderId, accessToken) => {
   try {
-    const stepFunctionResponse = stepfunctions.startExecution({
+    const stepFunctionResponse = await stepfunctions.startExecution({
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,
       input: JSON.stringify({
         id: orderId,
@@ -29,7 +29,7 @@ export const startOrderStatusUpdateWorkflow = (orderId, accessToken) => {
       })
     }).promise()
 
-    console.log('State Machine InvocatioN: ', stepFunctionResponse)
+    console.log(`State Machine Invocation (Order ID: ${orderId}): `, stepFunctionResponse)
   } catch (e) {
     console.log(e)
   }
