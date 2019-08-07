@@ -110,6 +110,7 @@ const ProjectCollectionItem = ({
                   key={link.title}
                   className="link link--external collection-details-header__more-actions-item collection-details-header__more-actions-vis"
                   href={link.href}
+                  target="_blank"
                 >
                   {link.title}
                 </Dropdown.Item>

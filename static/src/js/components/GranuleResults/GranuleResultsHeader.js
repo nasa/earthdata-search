@@ -123,6 +123,7 @@ class GranuleResultsHeader extends Component {
                             key={link.title}
                             className="link link--external granule-results-header__more-actions-item granule-results-header__more-actions-vis"
                             href={link.href}
+                            target="_blank"
                           >
                             { link.title }
                           </Dropdown.Item>
