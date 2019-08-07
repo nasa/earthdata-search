@@ -64,9 +64,9 @@ class MouseEventsLayerExtended extends L.Layer {
     const $target = $(e.originalEvent.target)
     if ($target.closest('.geojson-help, .leaflet-popup-pane').length > 0) {
       this._clearHoverTimeout()
-      eventEmitter.emit('edsc.mouseout', e)
+      eventEmitter.emit('map.mouseout', e)
     }
-    eventEmitter.emit('edsc.mousemove', e)
+    eventEmitter.emit('map.mousemove', e)
     if ((hoverPoint == null)
       || ((abs(point.x - hoverPoint.x) + abs(point.y - hoverPoint.y)) > HOVER_SENSITIVITY_PX)) {
       // Allow the mouse to move slightly without triggering another hover event
@@ -76,13 +76,13 @@ class MouseEventsLayerExtended extends L.Layer {
   }
 
   _onMouseOut(e) {
-    eventEmitter.emit('edsc.mouseout', e)
+    eventEmitter.emit('map.mouseout', e)
     this._hoverPoint = null
     return this._clearHoverTimeout()
   }
 
   _onMouseClick(e) {
-    eventEmitter.emit('edsc.click', e)
+    eventEmitter.emit('map.click', e)
   }
 
   _clearHoverTimeout() {
@@ -91,11 +91,11 @@ class MouseEventsLayerExtended extends L.Layer {
 
   _setHoverTimeout(e) {
     this._clearHoverTimeout()
-    if (this._isHovering) { eventEmitter.emit('edsc.hoverout', e) }
+    if (this._isHovering) { eventEmitter.emit('map.hoverout', e) }
     this._isHovering = false
     const onHover = () => {
       this._isHovering = true
-      return eventEmitter.emit('edsc.hover', e)
+      return eventEmitter.emit('map.hover', e)
     }
     this._hoverTimer = setTimeout(onHover, hoverTimeoutMs)
     return this._hoverTimer
