@@ -10,6 +10,7 @@ function setup(type) {
   const defaultProps = {
     collectionId: 'collectionId',
     focusedGranule: '',
+    isFocused: false,
     isLast: false,
     location: { search: 'location' },
     waypointEnter: jest.fn(),
