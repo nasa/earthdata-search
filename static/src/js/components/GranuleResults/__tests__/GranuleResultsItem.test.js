@@ -218,13 +218,13 @@ describe('GranuleResultsItem component', () => {
       item.simulate('mouseenter')
 
       expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('edsc.focusgranule', { granule: props.granule })
+      expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: props.granule })
 
       jest.clearAllMocks()
       item.simulate('mouseleave')
 
       expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('edsc.focusgranule', { granule: null })
+      expect(eventEmitterEmitMock).toBeCalledWith('map.focusgranule', { granule: null })
     })
 
     test('clicking on a granule sets that granule as sticky on the map', () => {
@@ -237,11 +237,11 @@ describe('GranuleResultsItem component', () => {
       itemHeader.simulate('click')
 
       expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('edsc.stickygranule', { granule: props.granule })
+      expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: props.granule })
     })
 
     test('clicking on a focused granule removes that granule as sticky on the map', () => {
-      const { enzymeWrapper, props } = setup('focusedGranule')
+      const { enzymeWrapper } = setup('focusedGranule')
 
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       eventEmitterEmitMock.mockImplementation(() => jest.fn())
@@ -250,7 +250,7 @@ describe('GranuleResultsItem component', () => {
       itemHeader.simulate('click')
 
       expect(eventEmitterEmitMock).toBeCalledTimes(1)
-      expect(eventEmitterEmitMock).toBeCalledWith('edsc.stickygranule', { granule: null })
+      expect(eventEmitterEmitMock).toBeCalledWith('map.stickygranule', { granule: null })
     })
   })
 })
