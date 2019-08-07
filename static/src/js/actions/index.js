@@ -119,7 +119,6 @@ const actions = {
   clearFilters,
   excludeGranule,
   fetchAccessMethods,
-  fetchOrder,
   fetchRetrievalCollection,
   fetchRetrieval,
   getCollections,
