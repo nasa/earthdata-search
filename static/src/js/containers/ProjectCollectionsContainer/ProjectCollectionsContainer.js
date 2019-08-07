@@ -17,43 +17,47 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
-  collectionsSearch: state.searchResults.collections,
+  collectionsSearchResults: state.searchResults.collections,
   project: state.project,
-  projectPanels: state.projectPanels
+  projectPanels: state.projectPanels,
+  collectionSearch: state.query.collection
 })
 
 export const ProjectCollectionsContainer = (props) => {
   const {
     collections,
-    collectionsSearch,
+    collectionsSearchResults,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
     project,
-    projectPanels
+    projectPanels,
+    collectionSearch
   } = props
 
   return (
     <ProjectCollections
       collections={collections}
-      collectionsSearch={collectionsSearch}
+      collectionsSearchResults={collectionsSearchResults}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
       onSetActivePanel={onSetActivePanel}
       project={project}
       projectPanels={projectPanels}
+      collectionSearch={collectionSearch}
     />
   )
 }
 
 ProjectCollectionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
+  collectionsSearchResults: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired
+  projectPanels: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

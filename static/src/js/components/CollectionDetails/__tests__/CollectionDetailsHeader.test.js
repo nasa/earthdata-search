@@ -11,7 +11,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata
+    focusedCollectionMetadata: collectionDetailsBodyProps.focusedCollectionMetadata,
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsHeader {...props} />)
@@ -36,6 +37,6 @@ describe('CollectionDetails component', () => {
     expect(enzymeWrapper.find(Badge).at(1).text()).toEqual('Version 1')
     expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
     expect(enzymeWrapper.find(Dropdown.Item).length).toEqual(1)
-    expect(enzymeWrapper.find(Dropdown.Item).text()).toEqual('Giovanni Links')
+    expect(enzymeWrapper.find(Dropdown.Item).text()).toEqual('Giovanni')
   })
 })

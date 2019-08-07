@@ -31,7 +31,8 @@ function setup() {
     onUpdateSearchValue: jest.fn(),
     onUpdateSortOrder: jest.fn(),
     searchValue: 'searchValue',
-    sortOrder: 'sortOrder'
+    sortOrder: 'sortOrder',
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeaderContainer {...props} />)

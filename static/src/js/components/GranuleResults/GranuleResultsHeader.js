@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Dropdown } from 'react-bootstrap'
 
 import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionTitle } from './skeleton'
 
 import './GranuleResultsHeader.scss'
+import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
+import generateHandoffs from '../../util/handoffs/generateHandoffs'
 
 /**
  * Renders GranuleResultsHeader.
@@ -60,7 +62,7 @@ class GranuleResultsHeader extends Component {
   render() {
     const { sortOrder, searchValue } = this.state
 
-    const { focusedCollectionMetadata, location } = this.props
+    const { focusedCollectionMetadata, location, collectionSearch } = this.props
 
     const [collectionId] = Object.keys(focusedCollectionMetadata)
     const { metadata, excludedGranuleIds } = focusedCollectionMetadata[collectionId]
@@ -68,10 +70,12 @@ class GranuleResultsHeader extends Component {
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
+    const handoffLinks = generateHandoffs(metadata, collectionSearch)
+
     return (
       <div className="granule-results-header">
         <div className="row">
-          <div className="col-auto">
+          <div className="col">
             <div className="granule-results-header__title-wrap">
               {
                 // TODO: Create isLoading state in reducer so we can use that rather than the title
@@ -99,6 +103,38 @@ class GranuleResultsHeader extends Component {
                 {' View Details'}
               </Link>
             </div>
+          </div>
+          <div className="col-auto">
+            {
+              handoffLinks.length > 0 && (
+                <div className="col-auto align-self-end">
+                  <Dropdown className="collection-details-header__more-actions">
+                    <Dropdown.Toggle
+                      className="collection-details-header__more-actions-toggle"
+                      as={ToggleMoreActions}
+                    />
+                    <Dropdown.Menu
+                      className="collection-details-header__more-actions-menu"
+                      alignRight
+                    >
+                      <Dropdown.Header>Open collection in:</Dropdown.Header>
+                      {
+                        handoffLinks.map(link => (
+                          <Dropdown.Item
+                            key={link.title}
+                            className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
+                            href={link.href}
+                          >
+                            { link.title }
+                          </Dropdown.Item>
+                        ))
+                      }
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              )
+            }
+
           </div>
         </div>
         <div className="row">
@@ -231,7 +267,8 @@ GranuleResultsHeader.propTypes = {
   onUpdateSearchValue: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
-  searchValue: PropTypes.string.isRequired
+  searchValue: PropTypes.string.isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default GranuleResultsHeader

@@ -11,13 +11,20 @@ import Button from '../Button/Button'
 
 import './ProjectCollectionsItem.scss'
 import { isAccessMethodValid } from '../../util/accessMethods'
+import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 
 /**
  * Renders ProjectCollectionItem.
- * @param {object} props - The props passed into the component.
- * @param {object} props.collectionId - Collection ID
- * @param {object} props.collection - Collection passed from redux store.
- * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
+ * @param {Object} props.collectionId - CMR Concept ID of the collection
+ * @param {Object} props.collection - CMR metadata of the collection.
+ * @param {Object} props.color - Color assigned to the collection based on its location in the project list.
+ * @param {Object} props.index - Position of the collection in the project list.
+ * @param {Object} props.isPanelActive - Whether or not the panel for the collection is active.
+ * @param {Function} props.onRemoveCollectionFromProject - Function called when a collection is removed from the project.
+ * @param {Function} props.onToggleCollectionVisibility - Function called when visibility of the collection is toggled.
+ * @param {Function} props.onSetActivePanel - Function called when an active panel is set.
+ * @param {Object} props.projectCollection - Collection from project.byId
+ * @param {Object} props.collectionSearch - Search values from query.collection
  */
 const ProjectCollectionItem = ({
   collectionId,
@@ -28,7 +35,8 @@ const ProjectCollectionItem = ({
   onRemoveCollectionFromProject,
   onToggleCollectionVisibility,
   onSetActivePanel,
-  projectCollection
+  projectCollection,
+  collectionSearch
 }) => {
   const {
     granules,
@@ -51,6 +59,7 @@ const ProjectCollectionItem = ({
     }
   ])
 
+  const handoffLinks = generateHandoffs(metadata, collectionSearch)
 
   return (
     <li style={{ borderLeftColor: color }} className={className}>
@@ -89,6 +98,22 @@ const ProjectCollectionItem = ({
               <i className="project-collections-item__more-actions-icon fa fa-times-circle" />
               Remove
             </Dropdown.Item>
+            {
+              handoffLinks.length > 0 && (
+                <Dropdown.Header>Open collection in:</Dropdown.Header>
+              )
+            }
+            {
+              handoffLinks.length > 0 && handoffLinks.map(link => (
+                <Dropdown.Item
+                  key={link.title}
+                  className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
+                  href={link.href}
+                >
+                  {link.title}
+                </Dropdown.Item>
+              ))
+            }
           </Dropdown.Menu>
         </Dropdown>
       </div>
@@ -136,7 +161,8 @@ ProjectCollectionItem.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  projectCollection: PropTypes.shape({}).isRequired
+  projectCollection: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollectionItem

@@ -26,7 +26,8 @@ const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection,
   granules: state.searchResults.granules,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
-  searchValue: state.ui.granuleResultsPanel.searchValue
+  searchValue: state.ui.granuleResultsPanel.searchValue,
+  collectionSearch: state.query.collection
 })
 
 export const GranuleResultsHeaderContainer = (props) => {
@@ -38,7 +39,8 @@ export const GranuleResultsHeaderContainer = (props) => {
     onUpdateSearchValue,
     onUpdateSortOrder,
     searchValue,
-    sortOrder
+    sortOrder,
+    collectionSearch
   } = props
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
@@ -56,6 +58,7 @@ export const GranuleResultsHeaderContainer = (props) => {
         onUndoExcludeGranule={onUndoExcludeGranule}
         sortOrder={sortOrder}
         searchValue={searchValue}
+        collectionSearch={collectionSearch}
       />
     </>
   )
@@ -70,7 +73,8 @@ GranuleResultsHeaderContainer.propTypes = {
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
-  searchValue: PropTypes.string.isRequired
+  searchValue: PropTypes.string.isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

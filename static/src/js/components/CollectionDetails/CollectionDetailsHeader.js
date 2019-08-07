@@ -5,18 +5,25 @@ import { Badge, Dropdown } from 'react-bootstrap'
 import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 
 import './CollectionDetailsHeader.scss'
+import generateHandoffs from '../../util/handoffs/generateHandoffs'
 
 /**
  * Renders CollectionDetailsHeader.
  * @param {object} props - The props passed into the component.
  * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
  */
-export const CollectionDetailsHeader = ({ focusedCollectionMetadata }) => {
+export const CollectionDetailsHeader = ({ focusedCollectionMetadata, collectionSearch = {} }) => {
   const [collectionId = ''] = Object.keys(focusedCollectionMetadata)
   const { metadata } = focusedCollectionMetadata[collectionId]
-  const { short_name: shortName, title, version_id: versionId } = metadata
+  const {
+    short_name: shortName,
+    title,
+    version_id: versionId
+  } = metadata
 
   if (!Object.keys(metadata).length) return null
+
+  const handoffLinks = generateHandoffs(metadata, collectionSearch)
 
   return (
     <div className="collection-details-header">
@@ -32,31 +39,44 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata }) => {
             <Badge className="collection-details-header__version-id" variant="info">{`Version ${versionId}`}</Badge>
           </div>
         </div>
-        <div className="col-auto align-self-end">
-          <Dropdown className="collection-details-header__more-actions">
-            <Dropdown.Toggle
-              className="collection-details-header__more-actions-toggle"
-              as={ToggleMoreActions}
-            />
-            <Dropdown.Menu
-              className="collection-details-header__more-actions-menu"
-              alignRight
-            >
-              <Dropdown.Item
-                className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
-              >
-                Giovanni Links
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+
+        {
+          handoffLinks.length > 0 && (
+            <div className="col-auto align-self-end">
+              <Dropdown className="collection-details-header__more-actions">
+                <Dropdown.Toggle
+                  className="collection-details-header__more-actions-toggle"
+                  as={ToggleMoreActions}
+                />
+                <Dropdown.Menu
+                  className="collection-details-header__more-actions-menu"
+                  alignRight
+                >
+                  <Dropdown.Header>Open collection in:</Dropdown.Header>
+                  {
+                    handoffLinks.map(link => (
+                      <Dropdown.Item
+                        key={link.title}
+                        className="collection-details-header__more-actions-item collection-details-header__more-actions-vis"
+                        href={link.href}
+                      >
+                        {link.title}
+                      </Dropdown.Item>
+                    ))
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )
+        }
       </div>
     </div>
   )
 }
 
 CollectionDetailsHeader.propTypes = {
-  focusedCollectionMetadata: PropTypes.shape({}).isRequired
+  focusedCollectionMetadata: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default CollectionDetailsHeader

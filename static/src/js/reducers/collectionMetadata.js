@@ -33,11 +33,18 @@ const collectionMetadataReducer = (state = initialState, action) => {
 
       state.allIds.forEach((id) => {
         const collection = state.byId[id]
-        const { excludedGranuleIds, metadata } = collection
+        const {
+          excludedGranuleIds,
+          metadata,
+          ummMetadata,
+          formattedMetadata
+        } = collection
         byId[id] = {
           excludedGranuleIds,
           granules: {},
-          metadata
+          metadata,
+          ummMetadata,
+          formattedMetadata
         }
       })
 
@@ -46,6 +53,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
         byId
       }
     }
+
     case UPDATE_COLLECTION_METADATA: {
       const allIds = []
       const byId = {

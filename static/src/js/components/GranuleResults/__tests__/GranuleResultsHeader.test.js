@@ -23,7 +23,8 @@ function setup() {
     onUpdateSearchValue: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     sortOrder: 'start_date_newest_first',
-    searchValue: 'searchValue'
+    searchValue: 'searchValue',
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeader {...props} />)

@@ -21,7 +21,7 @@ function setup() {
         }
       }
     },
-    collectionsSearch: {
+    collectionsSearchResults: {
       allIds: ['collectionId1', 'collectionId2'],
       byId: {
         collectionId1: {
@@ -50,7 +50,8 @@ function setup() {
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: false
-    }
+    },
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<ProjectCollections {...props} />)

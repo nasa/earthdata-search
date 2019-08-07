@@ -11,25 +11,31 @@ import CollectionDetailsHeader from '../../components/CollectionDetails/Collecti
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection
+  focusedCollection: state.focusedCollection,
+  collectionSearch: state.query.collection
 })
 
 export const CollectionDetailsHeaderContainer = ({
   collections,
-  focusedCollection
+  focusedCollection,
+  collectionSearch = {}
 }) => {
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
 
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   return (
-    <CollectionDetailsHeader focusedCollectionMetadata={focusedCollectionMetadata} />
+    <CollectionDetailsHeader
+      focusedCollectionMetadata={focusedCollectionMetadata}
+      collectionSearch={collectionSearch}
+    />
   )
 }
 
 CollectionDetailsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired
+  focusedCollection: PropTypes.string.isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(
