@@ -45,7 +45,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {
     const {
       collectionId,
-      collection,
+      metadata,
       granules,
       color,
       focusedGranule,
@@ -61,31 +61,19 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
     this.setResults({
       collectionId,
-      collection,
+      metadata,
       granules,
       color,
       defaultGranules: granules,
       focusedGranule
     })
 
-    eventEmitter.on('edsc.mousemove', (e) => {
-      this._onEdscMousemove(e)
-    })
-    eventEmitter.on('edsc.mouseout', (e) => {
-      this._onEdscMouseout(e)
-    })
-    eventEmitter.on('edsc.click', (e) => {
-      this._onClick(e)
-    })
-    eventEmitter.on('edsc.focusgranule', (granule) => {
-      this._onEdscFocusgranule(granule)
-    })
-    eventEmitter.on('edsc.stickygranule', (granule) => {
-      this._onEdscStickygranule(granule)
-    })
-    eventEmitter.on('edsc.excludestickygranule', (granuleId) => {
-      this._onExcludeGranule(granuleId)
-    })
+    eventEmitter.on('edsc.mousemove', e => this._onEdscMousemove(e))
+    eventEmitter.on('edsc.mouseout', e => this._onEdscMouseout(e))
+    eventEmitter.on('edsc.click', e => this._onClick(e))
+    eventEmitter.on('edsc.focusgranule', granule => this._onEdscFocusgranule(granule))
+    eventEmitter.on('edsc.stickygranule', granule => this._onEdscStickygranule(granule))
+    eventEmitter.on('edsc.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
 
     this.originalOptions = { tileSize: 512 }
     return super.initialize(this.originalOptions)
@@ -104,6 +92,13 @@ class GranuleGridLayerExtended extends L.GridLayer {
   // Overwrite the leaflet onRemove function
   onRemove(map) {
     super.onRemove(map)
+    eventEmitter.off('edsc.mousemove', e => this._onEdscMousemove(e))
+    eventEmitter.off('edsc.mouseout', e => this._onEdscMouseout(e))
+    eventEmitter.off('edsc.click', e => this._onClick(e))
+    eventEmitter.off('edsc.focusgranule', granule => this._onEdscFocusgranule(granule))
+    eventEmitter.off('edsc.stickygranule', granule => this._onEdscStickygranule(granule))
+    eventEmitter.off('edsc.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
+
     this.granules = null
   }
 
@@ -569,7 +564,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     return this.redraw()
   }
 
-  // We might need this once we start looking at sticky granules
   _reorderedResults(results, defaultResults) {
     if (this._stickied && this._stickied !== null) {
       const newResults = results.concat()
@@ -631,86 +625,97 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   _onEdscFocuscollection(e) {
-    return this.setFocus(
-      (e.collection != null ? e.collection.id : undefined) === this.collection.id
-    )
+    if (this._map) {
+      this.setFocus(
+        (e.collection != null ? e.collection.id : undefined) === this.collectionId
+      )
+    }
   }
 
   _onEdscMouseout() {
-    if (this._granule != null) {
-      return eventEmitter.emit('edsc.focusgranule', { granule: null })
+    if (this._map) {
+      if (this._granule != null) {
+        eventEmitter.emit('edsc.focusgranule', { granule: null })
+      }
     }
-    return null
   }
 
   _onEdscMousemove(e) {
-    const granule = this.granuleAt(e.layerPoint)
-    if (this._granule !== granule) {
-      eventEmitter.emit('edsc.focusgranule', { granule })
+    if (this._map) {
+      const granule = this.granuleAt(e.layerPoint)
+      if (this._granule !== granule) {
+        eventEmitter.emit('edsc.focusgranule', { granule })
+      }
     }
   }
 
   _onClick(e) {
-    const aTag = $(e.originalEvent.target).closest('a')
+    if (this._map) {
+      const aTag = $(e.originalEvent.target).closest('a')
 
-    if (aTag.hasClass('panel-list-remove')) {
-      const granuleId = aTag.data('granuleId')
-      eventEmitter.emit('edsc.excludestickygranule', granuleId)
-      return
+      if (aTag.hasClass('panel-list-remove')) {
+        const granuleId = aTag.data('granuleId')
+        eventEmitter.emit('edsc.excludestickygranule', granuleId)
+        return
+      }
+
+      if (aTag.length !== 0) { return }
+
+      let granule = this.granuleAt(e.layerPoint)
+      if (this._stickied === granule) { granule = null }
+
+      eventEmitter.emit('edsc.focusgranule', { granule })
+      eventEmitter.emit('edsc.stickygranule', { granule })
     }
-
-    if (aTag.length !== 0) { return }
-
-    let granule = this.granuleAt(e.layerPoint)
-    if (this._stickied === granule) { granule = null }
-
-    eventEmitter.emit('edsc.focusgranule', { granule })
-    eventEmitter.emit('edsc.stickygranule', { granule })
   }
 
   _onEdscFocusgranule(e) {
-    const { granule } = e
-    this._granule = granule
+    if (this._map) {
+      const { granule } = e
+      this._granule = granule
 
-    if (this._granuleFocusLayer != null) {
-      this._granuleFocusLayer.onRemove(this._map)
+      if (this._granuleFocusLayer != null) {
+        this._granuleFocusLayer.onRemove(this._map)
+      }
+      this._granuleFocusLayer = this._focusLayer(granule, false)
+      if (this._granuleFocusLayer != null) this._granuleFocusLayer.onAdd(this._map)
     }
-    this._granuleFocusLayer = this._focusLayer(granule, false)
-    return (this._granuleFocusLayer != null ? this._granuleFocusLayer.onAdd(this._map) : undefined)
   }
 
   _onEdscStickygranule(e) {
-    const { granule } = e
+    if (this._map) {
+      const { granule } = e
 
-    if (this._stickied === granule) { return }
+      if (this._stickied === granule) { return }
 
-    this._stickied = granule
-    this.stickyId = granule != null ? granule.id : undefined // Ugly hack for testing
+      this._stickied = granule
+      this.stickyId = granule != null ? granule.id : undefined // Ugly hack for testing
 
-    let focusedGranuleId = ''
-    if (granule != null) focusedGranuleId = granule.id
-    this.onChangeFocusedGranule(focusedGranuleId)
+      let focusedGranuleId = ''
+      if (granule != null) focusedGranuleId = granule.id
+      this.onChangeFocusedGranule(focusedGranuleId)
 
-    if (this._granuleStickyLayer != null) {
-      this._granuleStickyLayer.onRemove(this._map)
-    }
-    this._granuleStickyLayer = this._stickyLayer(granule, true)
-    if (this._granuleStickyLayer != null) {
-      this._granuleStickyLayer.onAdd(this._map)
+      if (this._granuleStickyLayer != null) {
+        this._granuleStickyLayer.onRemove(this._map)
+      }
+      this._granuleStickyLayer = this._stickyLayer(granule, true)
+      if (this._granuleStickyLayer != null) {
+        this._granuleStickyLayer.onAdd(this._map)
 
-      if ((this._map.projection === 'geo') && (this._granuleFocusLayer != null)) {
-        const bounds = this._granuleFocusLayer.getBounds()
-        // Avoid zooming and panning tiny amounts
-        if (
-          (bounds != null ? bounds.isValid() : undefined)
-          && !this._map.getBounds().contains(bounds)
-        ) {
-          this._map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
+        if ((this._map.projection === 'geo') && (this._granuleFocusLayer != null)) {
+          const bounds = this._granuleFocusLayer.getBounds()
+          // Avoid zooming and panning tiny amounts
+          if (
+            (bounds != null ? bounds.isValid() : undefined)
+            && !this._map.getBounds().contains(bounds)
+          ) {
+            this._map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
+          }
         }
       }
-    }
 
-    this.loadResults(this.granules)
+      this.loadResults(this.granules)
+    }
   }
 
   _onExcludeGranule(granuleId) {
@@ -868,7 +873,7 @@ export class GranuleGridLayer extends MapLayer {
       const layer = new GranuleGridLayerExtended({
         collectionId,
         metadata,
-        granuleData,
+        granules: granuleData,
         color,
         focusedGranule,
         projection,
@@ -908,10 +913,9 @@ export class GranuleGridLayer extends MapLayer {
     // Nothing should be drawn, remove any existing layers
     if (layerData.length === 0) {
       Object.values(layers).forEach(layer => this.leafletElement.removeLayer(layer))
-    }
+    } else if (layerData.length < oldLayerData.length) {
+      // If there is less data than before, figure out which collection was removed and remove the layer
 
-    // If there is less data than before, figure out which collection was removed and remove the layer
-    if (layerData.length < oldLayerData.length) {
       const oldIds = oldLayerData.map(data => data.collectionId)
       const newIds = layerData.map(data => data.collectionId)
 
@@ -971,7 +975,7 @@ export class GranuleGridLayer extends MapLayer {
         const layer = new GranuleGridLayerExtended({
           collectionId,
           metadata,
-          granuleData,
+          granules: granuleData,
           color,
           focusedGranule,
           projection,

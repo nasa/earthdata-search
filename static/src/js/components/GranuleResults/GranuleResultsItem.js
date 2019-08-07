@@ -89,6 +89,7 @@ const GranuleResultsItem = ({
   collectionId,
   focusedGranule,
   granule,
+  isFocused,
   isLast,
   location,
   waypointEnter,
@@ -131,11 +132,11 @@ const GranuleResultsItem = ({
 
   const dataLinks = createDataLinks(links)
 
-  const isFocusedGranule = focusedGranule === id
+  const isFocusedGranule = isFocused || focusedGranule === id
 
   const handleClick = () => {
     let stickyGranule = granule
-    if (isFocusedGranule) stickyGranule = null
+    if (focusedGranule === id) stickyGranule = null
 
     eventEmitter.emit('edsc.stickygranule', { granule: stickyGranule })
   }
@@ -237,6 +238,7 @@ GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
   focusedGranule: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
+  isFocused: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
