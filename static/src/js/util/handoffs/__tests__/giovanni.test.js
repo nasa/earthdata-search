@@ -1,4 +1,14 @@
+// import MockDate from 'mockdate'
+
 import { fetchGiovanniHandoffUrl } from '../giovanni'
+
+// beforeAll(() => {
+//   MockDate.set('1984-07-02 00:00:00')
+// })
+
+// afterAll(() => {
+//   MockDate.reset()
+// })
 
 describe('handoffs#giovanni', () => {
   test('returns the default root and collection shortname when no subsetting is provided', () => {
@@ -98,7 +108,7 @@ describe('handoffs#giovanni', () => {
 
     expect(response).toEqual({
       title: 'Giovanni',
-      href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp&dataKeyword=earthdata_search&starttime=1984-07-02T09%3A23%3A00.000Z&endtime=1984-07-02T14%3A43%3A00.000Z'
+      href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp&dataKeyword=earthdata_search&starttime=1984-07-02T05%3A23%3A00.000Z&endtime=1984-07-02T10%3A43%3A00.000Z'
     })
   })
 
@@ -168,7 +178,7 @@ describe('handoffs#giovanni', () => {
 
     expect(response).toEqual({
       title: 'Giovanni',
-      href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp&dataKeyword=earthdata_search&starttime=1984-07-02T09%3A23%3A00.000Z&endtime=1984-07-02T14%3A43%3A00.000Z&bbox=-90.32766723632812%2C41.63677044970652%2C-82.2337646484375%2C48.34205200181264'
+      href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp&dataKeyword=earthdata_search&starttime=1984-07-02T05%3A23%3A00.000Z&endtime=1984-07-02T10%3A43%3A00.000Z&bbox=-90.32766723632812%2C41.63677044970652%2C-82.2337646484375%2C48.34205200181264'
     })
   })
 })
