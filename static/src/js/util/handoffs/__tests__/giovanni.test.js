@@ -1,14 +1,4 @@
-// import MockDate from 'mockdate'
-
 import { fetchGiovanniHandoffUrl } from '../giovanni'
-
-// beforeAll(() => {
-//   MockDate.set('1984-07-02 00:00:00')
-// })
-
-// afterAll(() => {
-//   MockDate.reset()
-// })
 
 describe('handoffs#giovanni', () => {
   test('returns the default root and collection shortname when no subsetting is provided', () => {
