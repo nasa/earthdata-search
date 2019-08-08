@@ -24,8 +24,8 @@ export const fetchGiovanniHandoffUrl = (collectionMetadata, collectionSearch = {
 
     // Giovanni requires both start and end dates for temporal searching
     if (startDate && endDate) {
-      subsettingParams.starttime = moment(startDate).toISOString()
-      subsettingParams.endtime = moment(endDate).toISOString()
+      subsettingParams.starttime = moment(startDate).utc().toISOString()
+      subsettingParams.endtime = moment(endDate).utc().toISOString()
     }
   }
 
