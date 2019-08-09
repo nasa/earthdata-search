@@ -1,18 +1,24 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import './GranuleFiltersHeader.scss'
 
-export const GranuleFiltersHeader = () => (
+export const GranuleFiltersHeader = ({
+  datasetId
+}) => (
   <div className="granule-filters-header">
     <i className="fa fa-filter" />
     <h2 className="granule-filters-header__primary">Granule Filters</h2>
-    <span className="granule-filters-header__secondary">Global Maps of Atmospheric Nitrogen Deposition, 1860, 1993, and 2050</span>
+    <span className="granule-filters-header__secondary">{datasetId}</span>
   </div>
 )
 
-// GranuleFiltersHeader.propTypes = {
-//   children: PropTypes.node.isRequired
-// }
+GranuleFiltersHeader.defaultProps = {
+  datasetId: ''
+}
+
+GranuleFiltersHeader.propTypes = {
+  datasetId: PropTypes.string
+}
 
 export default GranuleFiltersHeader

@@ -128,13 +128,33 @@ class GranuleResultsHeader extends Component {
                     </a>
                   </span>
                 </div>
-                <a
-                  className="granule-results-header__link"
-                  href="/"
-                >
-                  <i className="fa fa-filter" />
-                  {' Granule Filters'}
-                </a>
+                {
+                  granuleFiltersOpen
+                    ? (
+                      <Button
+                        className="granule-results-header__link"
+                        onClick={() => onToggleSecondaryOverlayPanel(false)}
+                        variant="link"
+                        bootstrapVariant="link"
+                        icon="times"
+                        label="Close Granule Filters"
+                      >
+                        Granule Filters
+                      </Button>
+                    )
+                    : (
+                      <Button
+                        className="granule-results-header__link"
+                        onClick={() => onToggleSecondaryOverlayPanel(true)}
+                        variant="link"
+                        bootstrapVariant="link"
+                        icon="filter"
+                        label="Open Granule Filters"
+                      >
+                        Granule Filters
+                      </Button>
+                    )
+                }
               </>
             )}
             {!metadata.is_cwic && (
@@ -210,6 +230,7 @@ class GranuleResultsHeader extends Component {
                             variant="link"
                             bootstrapVariant="link"
                             icon="times"
+                            title="Close filters"
                             label="Close Granule Filters"
                           >
                             Granule Filters
@@ -222,6 +243,7 @@ class GranuleResultsHeader extends Component {
                             variant="link"
                             bootstrapVariant="link"
                             icon="filter"
+                            title="Filter granules"
                             label="Open Granule Filters"
                           >
                             Granule Filters

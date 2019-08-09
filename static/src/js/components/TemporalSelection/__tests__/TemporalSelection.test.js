@@ -127,15 +127,10 @@ describe('TemporalSelection component', () => {
   })
 
   test('sets the start date correctly when an invalid date is passed', () => {
-    // console.warn('----- YOU ARE HERE -----')
     const { enzymeWrapper, props } = setup()
-    // const testObj = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-    // enzymeWrapper.find(Datepicker).at(0).props().onSubmit(testObj)
     enzymeWrapper.find(Datepicker).at(0).setProps({
       value: '2012-01-efss 12:00:00'
     })
-    console.warn('this', enzymeWrapper.find(Datepicker).at(0).props())
     expect(props.onSubmitStart).toBeCalledTimes(1)
     expect(props.onSubmitStart).toHaveBeenCalledWith('2012-01-efss 12:00:00')
   })

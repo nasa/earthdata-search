@@ -19,7 +19,8 @@ import {
   ERRORED_FACETS,
   STARTED_COLLECTIONS_TIMER,
   FINISHED_COLLECTIONS_TIMER,
-  RESTORE_COLLECTIONS
+  RESTORE_COLLECTIONS,
+  UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../constants/actionTypes'
 import { getProjectCollections } from './project'
 
@@ -84,6 +85,14 @@ export const restoreCollections = payload => (dispatch) => {
   })
   dispatch(getProjectCollections())
 }
+
+export const updateCollectionGranuleFilters = (id, granuleFilters) => ({
+  type: UPDATE_COLLECTION_GRANULE_FILTERS,
+  payload: {
+    id,
+    granuleFilters
+  }
+})
 
 /**
  * Perform a collections request based on the current redux state.

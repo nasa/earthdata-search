@@ -152,7 +152,6 @@ export default class TemporalSelectionDropdown extends PureComponent {
  * @param {moment} startDate - The moment object representing the startDate
  */
   setStartDate(startDate) {
-    console.warn('startDate', startDate)
     const {
       temporal
     } = this.state

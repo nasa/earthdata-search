@@ -31,26 +31,20 @@ import GranuleResultsHeaderContainer
   from '../../containers/GranuleResultsHeaderContainer/GranuleResultsHeaderContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-import GranuleFiltersHeaderContainer
-  from '../../containers/GranuleFiltersHeaderContainer/GranuleFiltersHeaderContainer'
-import GranuleFiltersBodyContainer
-  from '../../containers/GranuleFiltersBodyContainer/GranuleFiltersBodyContainer'
-import GranuleFiltersActionsContainer
-  from '../../containers/GranuleFiltersActionsContainer/GranuleFiltersActionsContainer'
 import GranuleDetailsTabContainer
   from '../../containers/GranuleDetailsTabContainer/GranuleDetailsTabContainer'
 import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleDetailsHeaderContainer
   from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
+import GranuleFiltersPanelContainer
+  from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
-import SecondaryOverlayPanelContainer
-  from '../../containers/SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
 import CollectionResultsHeaderContainer
   from '../../containers/CollectionResultsHeaderContainer/CollectionResultsHeaderContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
@@ -100,11 +94,7 @@ export class Search extends Component {
                 actions={<GranuleResultsActionsContainer />}
                 body={<GranuleResultsBodyContainer />}
               />
-              <SecondaryOverlayPanelContainer
-                header={<GranuleFiltersHeaderContainer />}
-                body={<GranuleFiltersBodyContainer />}
-                footer={<GranuleFiltersActionsContainer />}
-              />
+              <GranuleFiltersPanelContainer />
             </Route>
             <Route exact path="/search/granules/granule-details">
               <MasterOverlayPanelContainer

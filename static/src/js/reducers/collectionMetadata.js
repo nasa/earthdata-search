@@ -6,7 +6,8 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
   UPDATE_PROJECT_GRANULES,
-  TOGGLE_COLLECTION_VISIBILITY
+  TOGGLE_COLLECTION_VISIBILITY,
+  UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -64,15 +65,23 @@ const collectionMetadataReducer = (state = initialState, action) => {
 
         let excludedGranuleIds = []
         let isVisible = true
+        let granuleFilters = {
+          temporal: {
+            startDate: '',
+            endDate: ''
+          }
+        }
         if (state.byId[collectionId]) {
           ({
             excludedGranuleIds,
-            isVisible
+            isVisible,
+            granuleFilters
           } = state.byId[collectionId])
         }
         byId[collectionId] = {
           excludedGranuleIds,
           granules: {},
+          granuleFilters,
           isCwic,
           isVisible,
           metadata,
@@ -167,6 +176,20 @@ const collectionMetadataReducer = (state = initialState, action) => {
           [action.payload]: {
             ...state.byId[action.payload],
             isVisible: !state.byId[action.payload].isVisible
+          }
+        }
+      }
+    }
+    case UPDATE_COLLECTION_GRANULE_FILTERS: {
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload.id]: {
+            ...state.byId[action.payload.id],
+            granuleFilters: {
+              ...action.payload.granuleFilters
+            }
           }
         }
       }

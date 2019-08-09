@@ -1,6 +1,10 @@
 /* eslint-disable import/no-cycle */
 
-import { getCollections, restoreCollections } from './collections'
+import {
+  getCollections,
+  restoreCollections,
+  updateCollectionGranuleFilters
+} from './collections'
 import {
   changeFocusedCollection,
   clearCollectionGranules,
@@ -32,7 +36,8 @@ import {
   clearFilters,
   removeGridFilter,
   removeSpatialFilter,
-  removeTemporalFilter
+  removeTemporalFilter,
+  updateGranuleQuery
 } from './search'
 import { changeMap } from './map'
 import { changeUrl, changePath } from './urlQuery'
@@ -152,9 +157,11 @@ const actions = {
   undoExcludeGranule,
   updateAccessMethod,
   updateAuthToken,
+  updateCollectionGranuleFilters,
   updateCmrFacet,
   updateFeatureFacet,
   updateGranuleMetadata,
+  updateGranuleQuery,
   updateGranuleResults,
   updateShapefile,
   viewCollectionDetails,

@@ -61,9 +61,6 @@ export class TemporalSelection extends Component {
       startAfterEnd: false
     }
 
-    // console.warn('temporal', temporal)
-    // console.warn('start', !start.isValid())
-
     if (temporal && temporal.startDate && temporal.endDate) {
       if (end.isBefore(start)) {
         value.startAfterEnd = true
@@ -71,16 +68,12 @@ export class TemporalSelection extends Component {
     }
 
     if (temporal && temporal.startDate) {
-      // console.warn('EYYY')
       value.invalidStartDate = !start.isValid()
     }
 
     if (temporal && temporal.endDate) {
       value.invalidEndDate = !end.isValid()
     }
-
-    // console.warn('value', value)
-
     return value
   }
 

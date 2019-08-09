@@ -1,4 +1,5 @@
 import isNumber from '../isNumber'
+import { encodeTemporal, decodeTemporal } from './temporalEncoders'
 
 /**
  * Encode a list of Granule IDs
@@ -57,6 +58,16 @@ const decodedExcludeGranules = (excludedGranules) => {
   return result
 }
 
+const encodeGranuleFilters = (granuleFilters) => {
+  const pg = {}
+  pg.qt = encodeTemporal(granuleFilters.temporal)
+  if (granuleFilters.dayNightFlag) pg.dnf = granuleFilters.dayNightFlag
+  if (granuleFilters.browseOnly) pg.bo = granuleFilters.browseOnly
+  if (granuleFilters.onlineOnly) pg.oo = granuleFilters.onlineOnly
+  if (granuleFilters.cloudCover) pg.cc = granuleFilters.cloudCover
+  return pg
+}
+
 /**
  * Encodes a Collections object into an object
  * @param {object} collections Collections object
@@ -86,8 +97,7 @@ export const encodeCollections = (props) => {
   const pgParameter = []
   if (byId) {
     pParameter.split('!').forEach((collectionId, index) => {
-      const pg = {}
-
+      let pg = {}
 
       // if the focusedCollection is also in projectIds, don't encode the focusedCollection
       if (index === 0 && projectIds.indexOf(focusedCollection) !== -1) {
@@ -106,6 +116,7 @@ export const encodeCollections = (props) => {
       const {
         excludedGranuleIds = [],
         granules,
+        granuleFilters,
         isVisible,
         isCwic
       } = collection
@@ -122,6 +133,9 @@ export const encodeCollections = (props) => {
       if (index !== 0 && isVisible) pg.v = 't'
 
       // TODO: Encode granule filters
+      if (granuleFilters) {
+        pg = { ...pg, ...encodeGranuleFilters(granuleFilters) }
+      }
 
       pgParameter[index] = pg
     })
@@ -133,6 +147,16 @@ export const encodeCollections = (props) => {
   }
 
   return encoded
+}
+
+const decodeGranuleFilters = (pg = {}) => {
+  const granuleFilters = {}
+  granuleFilters.temporal = decodeTemporal(pg.qt)
+  if (pg.dnf) granuleFilters.dayNightFlag = pg.dnf
+  if (pg.bo) granuleFilters.browseOnly = pg.bo === 'true'
+  if (pg.oo) granuleFilters.onlineOnly = pg.oo === 'true'
+  if (pg.cc) granuleFilters.cloudCover = pg.cc
+  return granuleFilters
 }
 
 
@@ -167,8 +191,10 @@ export const decodeCollections = (params) => {
     if (index === 0) focusedCollection = collectionId
 
     let granuleIds = []
+    let granuleFilters = {}
     let isCwic
     let isVisible = false
+
     if (pg && pg[index]) {
       // Excluded Granules
       ({ isCwic, granuleIds } = decodedExcludeGranules(pg[index]))
@@ -176,14 +202,16 @@ export const decodeCollections = (params) => {
       // Collection visible
       const { v: visible = '' } = pg[index]
       if (visible === 't') isVisible = true
-    }
 
-    // TODO: Decode granule filters
+      // Granule Filters
+      granuleFilters = decodeGranuleFilters(pg[index])
+    }
 
     // Populate the collection object for the redux store
     byId[collectionId] = {
       excludedGranuleIds: granuleIds,
       granules: {},
+      granuleFilters,
       isCwic,
       isVisible,
       metadata: {},
