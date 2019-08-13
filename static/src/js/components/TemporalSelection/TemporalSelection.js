@@ -82,7 +82,8 @@ export class TemporalSelection extends Component {
       controlId,
       temporal,
       onSubmitStart,
-      onSubmitEnd
+      onSubmitEnd,
+      validate
     } = this.props
 
     const {
@@ -132,24 +133,33 @@ export class TemporalSelection extends Component {
             </Col>
           </Row>
         </div>
-        <Alert show={validation.startAfterEnd} variant="danger">
-          <strong>Start</strong>
-          {' '}
-          must be no later than
-          {' '}
-          <strong>End</strong>
-        </Alert>
-        <Alert
-          variant="danger"
-          show={
-            validation.invalidStartDate || validation.invalidEndDate
-          }
+        {
+          validate && (
+            <>
+              <Alert show={validation.startAfterEnd} variant="danger">
+                <strong>Start</strong>
+                {' '}
+                must be no later than
+                {' '}
+                <strong>End</strong>
+              </Alert>
+              <Alert
+                variant="danger"
+                show={
+                  validation.invalidStartDate || validation.invalidEndDate
+                }
+              >
+                Invalid
+                {` ${validation.invalidStartDate ? 'start' : 'end'} `}
+                date
+              </Alert>
+            </>
+          )
+        }
+        <Form.Group
+          className="mb-0"
+          controlId={`${controlId}__recurring`}
         >
-          Invalid
-          {` ${validation.invalidStartDate ? 'start' : 'end'} `}
-          date
-        </Alert>
-        <Form.Group controlId={`${controlId}__recurring`}>
           <Form.Check>
             <Form.Check.Input type="checkbox" />
             <Form.Check.Label className="temporal-selection__label">
@@ -165,7 +175,8 @@ export class TemporalSelection extends Component {
 TemporalSelection.defaultProps = {
   format: 'YYYY-MM-DDTHH:m:s.SSSZ',
   onValid: null,
-  onInvalid: null
+  onInvalid: null,
+  validate: true
 }
 
 TemporalSelection.propTypes = {
@@ -175,7 +186,8 @@ TemporalSelection.propTypes = {
   onSubmitEnd: PropTypes.func.isRequired,
   temporal: PropTypes.shape({}).isRequired,
   onValid: PropTypes.func,
-  onInvalid: PropTypes.func
+  onInvalid: PropTypes.func,
+  validate: PropTypes.bool
 }
 
 export default TemporalSelection

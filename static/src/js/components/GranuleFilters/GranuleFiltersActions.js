@@ -6,15 +6,18 @@ import Button from '../Button/Button'
 import './GranuleFiltersActions.scss'
 
 export const GranuleFiltersActions = ({
+  isValid,
   onApplyClick,
   onClearClick
 }) => (
   <div className="granule-filters-actions">
     <Button
       className="granule-filters-actions__action"
+      type="submit"
       label="Apply Filters"
       bootstrapVariant="primary"
-      onClick={() => onApplyClick()}
+      onClick={e => onApplyClick(e)}
+      disabled={!isValid}
     >
       Apply
     </Button>
@@ -22,7 +25,7 @@ export const GranuleFiltersActions = ({
       className="granule-filters-actions__action"
       label="Clear Filters"
       bootstrapVariant="secondary"
-      onClick={() => onClearClick()}
+      onClick={e => onClearClick(e)}
     >
       Clear
     </Button>
@@ -30,6 +33,7 @@ export const GranuleFiltersActions = ({
 )
 
 GranuleFiltersActions.propTypes = {
+  isValid: PropTypes.bool.isRequired,
   onApplyClick: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired
 }

@@ -1,3 +1,4 @@
+import actions from './index'
 import {
   populateGranuleResults,
   prepareGranuleParams,
@@ -23,6 +24,7 @@ import {
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
 import { updateAuthTokenFromHeaders } from './authToken'
+
 
 export const addGranulesFromCollection = payload => ({
   type: ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
@@ -256,4 +258,20 @@ export const getGranules = () => (dispatch, getState) => {
     })
 
   return response
+}
+
+/**
+ * Called when granule filters are submitted. Resets the granule query page, applies any granule filters,
+ * gets the granules, and optionally closes the sidebar panel.
+ * @param {String} collectionId - The id for the collection to update.
+ * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
+ * @param {Boolean} closePanel - If true, tells the overlay panel to close once the granules are recieved.
+ */
+// eslint-disable-next-line max-len
+export const applyGranuleFilters = (collectionId, granuleFilters, closePanel = false) => (dispatch) => {
+  dispatch(actions.updateGranuleQuery({ pageNum: 1 }))
+  dispatch(actions.updateCollectionGranuleFilters(collectionId, granuleFilters))
+  dispatch(getGranules()).then(() => {
+    if (closePanel) dispatch(actions.toggleSecondaryOverlayPanel(false))
+  })
 }

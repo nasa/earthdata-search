@@ -98,6 +98,15 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     startDate: overrideStart
   } = overrideTemporal
 
+  const encodeCloudCover = (val = {}) => {
+    if (val.min || val.max) {
+      return val
+    }
+    return ''
+  }
+
+  const cloudCoverString = encodeCloudCover(cloudCover)
+
   if (filterStart || filterEnd) {
     temporalString = encodeTemporal(filterTemporal)
   } else if (overrideEnd || overrideStart) {
@@ -113,7 +122,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     authToken,
     browseOnly,
     boundingBox,
-    cloudCover,
+    cloudCoverString,
     collectionId,
     dayNightFlag,
     gridName,

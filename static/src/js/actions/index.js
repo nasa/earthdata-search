@@ -14,6 +14,7 @@ import {
 } from './focusedCollection'
 import {
   addGranulesFromCollection,
+  applyGranuleFilters,
   excludeGranule,
   getGranules,
   undoExcludeGranule,
@@ -98,6 +99,7 @@ const actions = {
   addAccessMethods,
   addGranulesFromCollection,
   addProjectCollection,
+  applyGranuleFilters,
   applyViewAllFacets,
   changeCmrFacet,
   changeCollectionPageNum,
