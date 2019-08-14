@@ -1,5 +1,5 @@
 import isNumber from '../isNumber'
-import { encodeTemporal, decodeTemporal } from './temporalEncoders'
+import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEncoders'
 
 /**
  * Encode a list of Granule IDs
@@ -56,16 +56,6 @@ const decodedExcludeGranules = (excludedGranules) => {
     }
   }
   return result
-}
-
-const encodeGranuleFilters = (granuleFilters) => {
-  const pg = {}
-  pg.qt = encodeTemporal(granuleFilters.temporal)
-  if (granuleFilters.dayNightFlag) pg.dnf = granuleFilters.dayNightFlag
-  if (granuleFilters.browseOnly) pg.bo = granuleFilters.browseOnly
-  if (granuleFilters.onlineOnly) pg.oo = granuleFilters.onlineOnly
-  if (granuleFilters.cloudCover) pg.cc = granuleFilters.cloudCover
-  return pg
 }
 
 /**
@@ -132,7 +122,7 @@ export const encodeCollections = (props) => {
       // Collection visible, don't encode the focusedCollection
       if (index !== 0 && isVisible) pg.v = 't'
 
-      // TODO: Encode granule filters
+      // Add the granule encoded granule filters
       if (granuleFilters) {
         pg = { ...pg, ...encodeGranuleFilters(granuleFilters) }
       }
@@ -147,16 +137,6 @@ export const encodeCollections = (props) => {
   }
 
   return encoded
-}
-
-const decodeGranuleFilters = (pg = {}) => {
-  const granuleFilters = {}
-  granuleFilters.temporal = decodeTemporal(pg.qt)
-  if (pg.dnf) granuleFilters.dayNightFlag = pg.dnf
-  if (pg.bo) granuleFilters.browseOnly = pg.bo === 'true'
-  if (pg.oo) granuleFilters.onlineOnly = pg.oo === 'true'
-  if (pg.cc) granuleFilters.cloudCover = pg.cc
-  return granuleFilters
 }
 
 

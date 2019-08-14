@@ -128,9 +128,7 @@ describe('TemporalSelection component', () => {
 
   test('sets the start date correctly when an invalid date is passed', () => {
     const { enzymeWrapper, props } = setup()
-    enzymeWrapper.find(Datepicker).at(0).setProps({
-      value: '2012-01-efss 12:00:00'
-    })
+    enzymeWrapper.find(Datepicker).at(0).props().onSubmit('2012-01-efss 12:00:00')
     expect(props.onSubmitStart).toBeCalledTimes(1)
     expect(props.onSubmitStart).toHaveBeenCalledWith('2012-01-efss 12:00:00')
   })
@@ -141,103 +139,5 @@ describe('TemporalSelection component', () => {
 
     enzymeWrapper.find(Datepicker).at(1).props().onSubmit(testObj)
     expect(props.onSubmitEnd).toBeCalledTimes(1)
-  })
-
-  test('sets the start date correctly when an valid date is passed', () => {
-    const { enzymeWrapper } = setup()
-    const testObj = moment.utc('2012-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-    enzymeWrapper.find(Datepicker).at(0).props().onSubmit(testObj)
-    expect(enzymeWrapper.state().temporal.startDate).toEqual('2012-01-01T12:00:00.000Z')
-  })
-
-  test('sets the end date correctly when an valid date is passed', () => {
-    const { enzymeWrapper } = setup()
-    const testObj = moment.utc('2012-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-
-    enzymeWrapper.find(Datepicker).at(1).props().onSubmit(testObj)
-    expect(enzymeWrapper.state().temporal.endDate).toEqual('2012-01-01T12:00:00.000Z')
-  })
-
-  test('sets the state correctly with an invalid start date', () => {
-    const { enzymeWrapper } = setup()
-    const invalidDate = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-    const validStartDate = moment.utc('2012-01-01 12:00:00').toISOString()
-    const validEndDate = moment.utc('2012-01-02 12:00:00').toISOString()
-
-    enzymeWrapper.setState({ temporal: { startDate: validStartDate, endDate: validEndDate } })
-    enzymeWrapper.instance().setStartDate(invalidDate)
-    expect(enzymeWrapper.state().temporal.startDate).toBe('2012-01-efss 12:00:00')
-    expect(enzymeWrapper.state().temporal.endDate).toBe('2012-01-02T12:00:00.000Z')
-  })
-
-  test('sets the state correctly with an invalid end date', () => {
-    const { enzymeWrapper } = setup()
-    const invalidDate = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-    const validStartDate = moment.utc('2012-01-01 12:00:00').toISOString()
-    const validEndDate = moment.utc('2012-01-02 12:00:00').toISOString()
-
-    enzymeWrapper.setState({ temporal: { startDate: validStartDate, endDate: validEndDate } })
-    enzymeWrapper.instance().setEndDate(invalidDate)
-    expect(enzymeWrapper.state().temporal.startDate).toBe('2012-01-01T12:00:00.000Z')
-    expect(enzymeWrapper.state().temporal.endDate).toBe('2012-01-efss 12:00:00')
-  })
-
-  test('clears the values onClearClick', () => {
-    const { enzymeWrapper } = setup()
-    const onChangeQueryMock = jest.fn()
-    enzymeWrapper.setProps({
-      onChangeQuery: onChangeQueryMock,
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
-      }
-    })
-    enzymeWrapper.setState({ open: true })
-
-    enzymeWrapper.instance().onClearClick()
-
-    expect(onChangeQueryMock).toHaveBeenCalledWith({
-      collection: {
-        temporal: ''
-      }
-    })
-    expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-    expect(enzymeWrapper.state()).toEqual({ open: false, temporal: { startDate: '', endDate: '' } })
-  })
-
-  test('applies the values onApplyClick', () => {
-    const { enzymeWrapper } = setup()
-    const onChangeQueryMock = jest.fn()
-    enzymeWrapper.setProps({
-      onChangeQuery: onChangeQueryMock,
-      temporal: {}
-    })
-    enzymeWrapper.setState({
-      open: true,
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
-      }
-    })
-
-    enzymeWrapper.instance().onApplyClick()
-
-    expect(onChangeQueryMock).toHaveBeenCalledWith({
-      collection: {
-        temporal: {
-          endDate: '2019-03-30T00:00:00.000Z',
-          startDate: '2019-03-29T00:00:00.000Z'
-        }
-      }
-    })
-    expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-    expect(enzymeWrapper.state()).toEqual({
-      open: false,
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
-      }
-    })
   })
 })

@@ -65,12 +65,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
 
         let excludedGranuleIds = []
         let isVisible = true
-        let granuleFilters = {
-          temporal: {
-            startDate: '',
-            endDate: ''
-          }
-        }
+        let granuleFilters = {}
         if (state.byId[collectionId]) {
           ({
             excludedGranuleIds,

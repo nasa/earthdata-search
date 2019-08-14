@@ -11,7 +11,8 @@ import {
   onFacetsLoaded,
   onFacetsLoading,
   updateCollectionResults,
-  updateFacets
+  updateFacets,
+  updateCollectionGranuleFilters
 } from '../collections'
 import {
   ERRORED_COLLECTIONS,
@@ -25,7 +26,8 @@ import {
   UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS,
   UPDATE_AUTH,
-  ADD_MORE_COLLECTION_RESULTS
+  ADD_MORE_COLLECTION_RESULTS,
+  UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -111,6 +113,80 @@ describe('onFacetsErrored', () => {
       type: ERRORED_FACETS
     }
     expect(onFacetsErrored()).toEqual(expectedAction)
+  })
+})
+
+describe('updateCollectionGranuleFilters', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('should create an action to update the search query', async () => {
+    const store = mockStore({})
+
+    store.dispatch(updateCollectionGranuleFilters('collectionId', { cloudCover: true }))
+
+    const storeActions = store.getActions()
+
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_GRANULE_FILTERS,
+      payload: {
+        granuleFilters: {
+          cloudCover: true
+        },
+        id: 'collectionId'
+      }
+    })
+  })
+
+  test('should add truthy values to the action payload', async () => {
+    const store = mockStore({})
+
+    store.dispatch(updateCollectionGranuleFilters('collectionId', {
+      cloudCover: true,
+      dayNightFlag: '',
+      onlineOnly: false,
+      temporal: {}
+    }))
+
+    const storeActions = store.getActions()
+
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_GRANULE_FILTERS,
+      payload: {
+        granuleFilters: {
+          cloudCover: true
+        },
+        id: 'collectionId'
+      }
+    })
+  })
+
+  test('should allow only objects with truthy properties', async () => {
+    const store = mockStore({})
+
+    store.dispatch(updateCollectionGranuleFilters('collectionId', {
+      temporal: {},
+      cloudCover: {
+        max: 0,
+        min: 1
+      }
+    }))
+
+    const storeActions = store.getActions()
+
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_GRANULE_FILTERS,
+      payload: {
+        granuleFilters: {
+          cloudCover: {
+            max: 0,
+            min: 1
+          },
+        },
+        id: 'collectionId'
+      }
+    })
   })
 })
 
@@ -334,3 +410,4 @@ describe('getCollections', () => {
     })
   })
 })
+

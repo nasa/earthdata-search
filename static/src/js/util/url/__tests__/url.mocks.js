@@ -33,7 +33,9 @@ export const emptyDecodedResult = {
       gridCoords: undefined
     }
   },
-  shapefile: {},
+  shapefile: {
+    shapefileId: undefined
+  },
   timeline: undefined
 }
 

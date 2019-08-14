@@ -12,7 +12,7 @@ export const GranuleFiltersActions = ({
 }) => (
   <div className="granule-filters-actions">
     <Button
-      className="granule-filters-actions__action"
+      className="granule-filters-actions__action granule-filters-actions__action--apply"
       type="submit"
       label="Apply Filters"
       bootstrapVariant="primary"
@@ -22,7 +22,7 @@ export const GranuleFiltersActions = ({
       Apply
     </Button>
     <Button
-      className="granule-filters-actions__action"
+      className="granule-filters-actions__action granule-filters-actions__action--clear"
       label="Clear Filters"
       bootstrapVariant="secondary"
       onClick={e => onClearClick(e)}

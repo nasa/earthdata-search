@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Moment from 'moment'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import {
+  nullableValue,
+  nullableTemporal,
+  minLessThanMax,
+  maxLessThanMin,
+  startBeforeEnd
+} from '../../util/validation'
 
 import SecondaryOverlayPanelContainer
   from '../SecondaryOverlayPanelContainer/SecondaryOverlayPanelContainer'
@@ -27,7 +33,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onApplyGranuleFilters:
-    (focusedCollection, values) => dispatch(actions.applyGranuleFilters(focusedCollection, values)),
+    (focusedCollection, values, closePanel) => dispatch(
+      actions.applyGranuleFilters(focusedCollection, values, closePanel)
+    ),
   onGetGranules:
     () => dispatch(actions.getGranules()),
   onToggleSecondaryOverlayPanel:
@@ -109,7 +117,6 @@ export class GranuleFiltersPanelContainer extends Component {
 }
 
 const ValidationSchema = () => {
-  const dateFormat = 'YYYY-MM-DDTHH:m:s.SSSZ'
   const errors = {
     cloudCover: {
       invalidNumber: 'Enter a valid number',
@@ -123,36 +130,6 @@ const ValidationSchema = () => {
       invalidStartDate: 'Enter a valid start date',
       invalidEndDate: 'Enter a valid end date'
     }
-  }
-
-  const nullableValue = (value, originalValue) => (originalValue.trim() === '' ? null : value)
-
-  function minLessThanMax(value) {
-    const min = value
-    const max = this.resolve(Yup.ref('max'))
-
-    // If there is no max
-    if (min && !max) return true
-
-    // If the value is not set, dont check
-    if (min === null) return true
-    return min <= max
-  }
-
-  function maxLessThanMin(value) {
-    const max = value
-    const min = this.resolve(Yup.ref('min'))
-    if (max && !min) return true
-    if (max === null) return true
-    return max >= min
-  }
-
-  function startBeforeEnd(value) {
-    const endDate = this.resolve(Yup.ref('endDate'))
-    const momentEndVal = Moment(endDate, dateFormat, true)
-    const momentStartVal = Moment(value, dateFormat, true)
-    if (momentStartVal && !endDate) return true
-    return momentStartVal.isBefore(momentEndVal)
   }
 
   return Yup.object().shape({
@@ -179,19 +156,13 @@ const ValidationSchema = () => {
       startDate: Yup.date()
         .label('Start')
         .typeError(errors.temporal.invalidStartDate)
-        .transform((value, originalValue) => {
-          const momentVal = Moment(originalValue, dateFormat, true)
-          return momentVal.isValid() ? momentVal.toDate() : null
-        })
+        .transform(nullableTemporal)
         .nullable()
         // eslint-disable-next-line no-template-curly-in-string
         .test('start-before-end', '${path} should be before End', startBeforeEnd),
       endDate: Yup.date()
         .typeError(errors.temporal.invalidEndDate)
-        .transform((value, originalValue) => {
-          const momentVal = Moment(originalValue, dateFormat, true)
-          return momentVal.isValid() ? momentVal.toDate() : null
-        })
+        .transform(nullableTemporal)
         .nullable()
     })
   })
@@ -255,19 +226,19 @@ const EnhancedGranuleFiltersPanelContainer = withFormik({
 })(GranuleFiltersPanelContainer)
 
 GranuleFiltersPanelContainer.propTypes = {
-  values: PropTypes.shape({}).isRequired,
-  touched: PropTypes.shape({}).isRequired,
+  collections: PropTypes.shape({}).isRequired,
   errors: PropTypes.shape({}).isRequired,
-  handleChange: PropTypes.func.isRequired,
+  focusedCollection: PropTypes.string.isRequired,
   handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
-  collections: PropTypes.shape({}).isRequired,
-  focusedCollection: PropTypes.string.isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
+  setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  setFieldTouched: PropTypes.func.isRequired
+  touched: PropTypes.shape({}).isRequired,
+  values: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnhancedGranuleFiltersPanelContainer)
