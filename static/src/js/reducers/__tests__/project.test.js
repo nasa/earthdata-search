@@ -98,6 +98,9 @@ describe('RESTORE_PROJECT', () => {
     const action = {
       type: RESTORE_PROJECT,
       payload: {
+        byId: {
+          collectionId: {}
+        },
         collectionIds
       }
     }

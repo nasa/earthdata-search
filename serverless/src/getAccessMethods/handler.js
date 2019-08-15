@@ -7,6 +7,7 @@ import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
+import { getVariables } from './getVariables'
 
 // Knex database connection object
 let dbConnection = null
@@ -18,7 +19,11 @@ const getAccessMethods = async (event) => {
   const { body } = event
   const { params = {} } = JSON.parse(body)
 
-  const { collection_id: collectionId, tags } = params
+  const {
+    associations,
+    collection_id: collectionId,
+    tags
+  } = params
 
   const jwtToken = getJwtToken(event)
 
@@ -75,10 +80,15 @@ const getAccessMethods = async (event) => {
 
   if (hasOpendap) {
     const opendapData = getValueForTag('subset_service.opendap', tags)
+    const { variables: variableIds } = associations
+
+    const { keywordMappings, variables } = await getVariables(variableIds, jwtToken)
 
     accessMethods.opendap = {
       ...opendapData,
-      isValid: true
+      isValid: true,
+      keywordMappings,
+      variables
     }
   }
 

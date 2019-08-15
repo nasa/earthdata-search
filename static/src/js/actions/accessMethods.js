@@ -27,7 +27,7 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
     const { byId } = collections
     const collection = byId[collectionId]
     const { metadata: collectionMetadata } = collection
-    const { tags } = collectionMetadata
+    const { associations, tags } = collectionMetadata
 
     // if the collection has tag data, retrieve the access methods from lambda
     const hasEchoOrders = hasTag(collectionMetadata, 'subset_service.echo_orders')
@@ -38,7 +38,7 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
 
     if (hasEchoOrders || hasEsi || hasOpendap) {
       const requestObject = new AccessMethodsRequest(authToken)
-      const response = requestObject.search({ collectionId, tags })
+      const response = requestObject.search({ associations, collectionId, tags })
         .then((response) => {
           const { data } = response
           const { accessMethods, selectedAccessMethod } = data

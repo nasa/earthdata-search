@@ -5,6 +5,7 @@ import getAccessMethods from '../handler'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getOptionDefinitions from '../getOptionDefinitions'
 import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
+import * as getVariables from '../getVariables'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getUsernameFromToken from '../../util/getUsernameFromToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
@@ -235,9 +236,27 @@ describe('getAccessMethods', () => {
       }
     })
 
+    const keywordMappings = {
+      Keyword1: ['V123456-EDSC']
+    }
+
+    const variables = {
+      'V123456-EDSC': {
+        meta: {
+          mock: 'data'
+        },
+        umm: {
+          'concept-id': 'V123456-EDSC'
+        },
+        associations: {}
+      }
+    }
+    jest.spyOn(getVariables, 'getVariables').mockImplementation(() => ({ keywordMappings, variables }))
+
     const event = {
       body: JSON.stringify({
         params: {
+          associations: [],
           collection_id: 'collectionId',
           tags: {
             'edsc.extra.serverless.subset_service.opendap': {
@@ -257,7 +276,9 @@ describe('getAccessMethods', () => {
         accessMethods: {
           opendap: {
             type: 'OPeNDAP',
-            isValid: true
+            isValid: true,
+            keywordMappings,
+            variables
           }
         },
         selectedAccessMethod: 'opendap'

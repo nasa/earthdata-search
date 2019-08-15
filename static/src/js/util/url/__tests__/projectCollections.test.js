@@ -33,6 +33,10 @@ describe('url#decodeUrlParams', () => {
       },
       focusedCollection: '',
       project: {
+        byId: {
+          collectionId1: {},
+          collectionId2: {}
+        },
         collectionIds: ['collectionId1', 'collectionId2']
       }
     }
@@ -69,6 +73,10 @@ describe('url#decodeUrlParams', () => {
       },
       focusedCollection: 'collectionId1',
       project: {
+        byId: {
+          collectionId1: {},
+          collectionId2: {}
+        },
         collectionIds: ['collectionId1', 'collectionId2']
       }
     }
@@ -104,10 +112,57 @@ describe('url#decodeUrlParams', () => {
       },
       focusedCollection: '',
       project: {
+        byId: {
+          collectionId1: {},
+          collectionId2: {}
+        },
         collectionIds: ['collectionId1', 'collectionId2']
       }
     }
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[2][v]=t')).toEqual(expectedResult)
+  })
+
+  test('decodes selected variables correctly', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            excludedGranuleIds: [],
+            isCwic: false,
+            isVisible: false,
+            granules: {},
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
+          },
+          collectionId2: {
+            excludedGranuleIds: [],
+            isVisible: false,
+            granules: {},
+            metadata: {},
+            formattedMetadata: {},
+            ummMetadata: {}
+          }
+        }
+      },
+      focusedCollection: '',
+      project: {
+        byId: {
+          collectionId1: {
+            accessMethods: {
+              opendap: {
+                selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
+              }
+            }
+          },
+          collectionId2: {}
+        },
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
+    }
+    expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][uv]=V123456-EDSC!V987654-EDSC')).toEqual(expectedResult)
   })
 })
 
@@ -179,5 +234,40 @@ describe('url#encodeUrlQuery', () => {
       }
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[2][v]=t')
+  })
+
+  test('correctly encodes selected variables', () => {
+    const props = {
+      pathname: '/path/here',
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            isVisible: false,
+            metadata: {}
+          },
+          collectionId2: {
+            isVisible: false,
+            metadata: {}
+          }
+        }
+      },
+      focusedCollection: '',
+      project: {
+        byId: {
+          collectionId1: {
+            accessMethods: {
+              opendap: {
+                selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
+              }
+            },
+            selectedAccessMethod: 'opendap'
+          },
+          collectionId2: {}
+        },
+        collectionIds: ['collectionId1', 'collectionId2']
+      }
+    }
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][uv]=V123456-EDSC!V987654-EDSC')
   })
 })
