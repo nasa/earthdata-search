@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { pure } from 'recompose'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -10,9 +9,13 @@ import PanelSection from '../Panels/PanelSection'
 import ProjectPanelSection from './ProjectPanelSection'
 import AccessMethod from '../AccessMethod/AccessMethod'
 import CollectionDetails from './CollectionDetails'
+import VariableKeywordPanel from './VariableKeywordPanel'
+import VariablesPanel from './VariablesPanel'
+import VariableDetailsPanel from './VariableDetailsPanel'
+
+import { isAccessMethodValid } from '../../util/accessMethods'
 
 import './ProjectPanels.scss'
-import { isAccessMethodValid } from '../../util/accessMethods'
 
 /**
  * Renders ProjectPanels.
@@ -22,203 +25,364 @@ import { isAccessMethodValid } from '../../util/accessMethods'
  * @param {function} props.onTogglePanels - Toggles the panels opened or closed.
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
  */
-export const ProjectPanels = pure(({
-  collections,
-  project,
-  projectPanels,
-  shapefileId,
-  spatial,
-  onSelectAccessMethod,
-  onTogglePanels,
-  onSetActivePanel,
-  onUpdateAccessMethod
-}) => {
-  const { byId } = collections
-  if (Object.keys(byId).length === 0) return null
 
-  const { collectionIds: projectIds, byId: projectById } = project
+class ProjectPanels extends PureComponent {
+  constructor(props) {
+    super(props)
 
-  const { activePanel, isOpen } = projectPanels
-  const panelSectionEditOptions = []
-  const panelSectionCollectionDetails = []
+    this.state = {
+      selectedKeyword: null,
+      selectedVariable: null,
+      selectedVariables: [],
+      variables: null
+    }
 
-  let loaded = false
-  if (projectIds[0] && !Object.keys(byId[projectIds[0]].metadata).length) return null
+    this.onPanelClose = this.onPanelClose.bind(this)
+    this.onChangePanel = this.onChangePanel.bind(this)
+    this.selectKeyword = this.selectKeyword.bind(this)
+    this.onSaveVariables = this.onSaveVariables.bind(this)
+    this.onCheckboxChange = this.onCheckboxChange.bind(this)
+    this.clearSelectedKeyword = this.clearSelectedKeyword.bind(this)
+    this.clearSelectedVariable = this.clearSelectedVariable.bind(this)
+    this.onViewDetails = this.onViewDetails.bind(this)
+  }
 
-  const onPanelClose = () => {
+  onPanelClose() {
+    const { onTogglePanels } = this.props
     onTogglePanels(false)
   }
 
-  const onChangePanel = (panelId) => {
+  onChangePanel(panelId) {
+    const { onSetActivePanel } = this.props
     onSetActivePanel(panelId)
   }
 
-  projectIds.forEach((collectionId, index) => {
-    loaded = true
-    const collection = byId[collectionId]
-    const projectCollection = projectById[collectionId]
-    const { metadata } = collection
-    const { dataset_id: title, id, granule_count: granuleCount } = metadata
+  onCheckboxChange(variableId, e) {
+    const { selectedVariables, variables } = this.state
+    let newVariables
 
+    if (variableId === 'all') {
+      if (e.target.checked) {
+        newVariables = Object.keys(variables)
+      } else {
+        newVariables = []
+      }
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (e.target.checked) {
+        newVariables = [
+          ...selectedVariables,
+          variableId
+        ]
+      } else {
+        newVariables = selectedVariables.filter(variable => variable !== variableId)
+      }
+    }
+
+    this.setState({
+      selectedVariables: newVariables
+    })
+  }
+
+  onSaveVariables(collectionId, index) {
+    const { selectedVariables } = this.state
+    const { project, onUpdateAccessMethod } = this.props
+
+    const { byId: projectById } = project
+    const projectCollection = projectById[collectionId]
     const {
       accessMethods,
       selectedAccessMethod
     } = projectCollection
-    const isValid = isAccessMethodValid(projectCollection)
+    const selectedMethod = accessMethods[selectedAccessMethod]
 
-    const editOptionsFooter = (
-      <div className="project-panels__footer">
-        {
-          !isValid && (
-            <span className="project-panels__collection-status project-panels__collection-status--invalid">
-              <i className="fa fa-exclamation-circle" />
-            </span>
-          )
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          ...selectedMethod,
+          selectedVariables
         }
-        {
-          isValid && (
-            <span className="project-panels__collection-status project-panels__collection-status--valid">
-              <i className="fa fa-check-circle" />
-            </span>
-          )
-        }
-        <span className="project-panels__collection-count">
-          {`Collection ${index + 1} of ${projectIds.length}`}
-        </span>
-        {
-          index > 0 && (
-            <Button
-              className="project-panels__action"
-              label="Previous Collection"
-              bootstrapVariant="light"
-              onClick={() => onSetActivePanel(`0.${index - 1}.0`)}
-            >
-              Back
-            </Button>
-          )
-        }
-        {
-          index < projectIds.length - 1 && (
-            <Button
-              className="project-panels__action"
-              label="Next Collection"
-              bootstrapVariant="primary"
-              onClick={() => onSetActivePanel(`0.${index + 1}.0`)}
-            >
-              Next
-            </Button>
-          )
-        }
-        {
-          index === projectIds.length - 1 && (
-            <Button
-              className="project-panels__action"
-              label="Done"
-              bootstrapVariant="primary"
-              onClick={() => onTogglePanels(false)}
-            >
-              Done
-            </Button>
-          )
-        }
-      </div>
-    )
+      }
+    })
 
-    const customFooter = (
-      <div>
-        This is a custom footer element that overrides the parent
-      </div>
-    )
+    this.onChangePanel(`0.${index}.1`)
+  }
 
-    panelSectionEditOptions.push(
-      <PanelGroup
-        key={`${id}_edit-options`}
-        primaryHeading={title}
-        secondaryHeading="Edit Options"
-        footer={editOptionsFooter}
+  onViewDetails(variable, index) {
+    this.setState({ selectedVariable: variable })
+    this.onChangePanel(`0.${index}.3`)
+  }
+
+  backToOptions(index) {
+    this.setState({ selectedKeyword: null, variables: null })
+    this.onChangePanel(`0.${index}.0`)
+  }
+
+  selectKeyword(keyword, variables, index) {
+    this.setState({
+      selectedKeyword: keyword,
+      variables
+    })
+    this.onChangePanel(`0.${index}.2`)
+  }
+
+  clearSelectedKeyword(panelId) {
+    this.setState({ selectedKeyword: null, variables: null })
+    this.onChangePanel(panelId)
+  }
+
+  clearSelectedVariable(panelId) {
+    this.setState({ selectedVariable: null })
+    this.onChangePanel(panelId)
+  }
+
+  render() {
+    const {
+      collections,
+      project,
+      projectPanels,
+      shapefileId,
+      onSelectAccessMethod,
+      onTogglePanels,
+      onSetActivePanel,
+      onUpdateAccessMethod
+    } = this.props
+
+    const {
+      selectedKeyword,
+      selectedVariable,
+      selectedVariables,
+      variables
+    } = this.state
+
+    const { byId } = collections
+    const { collectionIds: projectIds, byId: projectById } = project
+
+    const { activePanel, isOpen } = projectPanels
+    const panelSectionEditOptions = []
+    const panelSectionCollectionDetails = []
+
+    let loaded = false
+
+    if (projectIds[0] && !Object.keys(byId[projectIds[0]].metadata).length) return null
+
+    projectIds.forEach((collectionId, index) => {
+      loaded = true
+      const collection = byId[collectionId]
+      const projectCollection = projectById[collectionId]
+      const { metadata } = collection
+      const { dataset_id: title, id, granule_count: granuleCount } = metadata
+
+      const {
+        accessMethods,
+        selectedAccessMethod
+      } = projectCollection
+      const isValid = isAccessMethodValid(projectCollection)
+
+      const editOptionsFooter = (
+        <div className="project-panels__footer">
+          {
+            !isValid && (
+              <span className="project-panels__collection-status project-panels__collection-status--invalid">
+                <i className="fa fa-exclamation-circle" />
+              </span>
+            )
+          }
+          {
+            isValid && (
+              <span className="project-panels__collection-status project-panels__collection-status--valid">
+                <i className="fa fa-check-circle" />
+              </span>
+            )
+          }
+          <span className="project-panels__collection-count">
+            {`Collection ${index + 1} of ${projectIds.length}`}
+          </span>
+          {
+            index > 0 && (
+              <Button
+                className="project-panels__action"
+                label="Previous Collection"
+                bootstrapVariant="light"
+                onClick={() => onSetActivePanel(`0.${index - 1}.0`)}
+              >
+                Back
+              </Button>
+            )
+          }
+          {
+            index < projectIds.length - 1 && (
+              <Button
+                className="project-panels__action"
+                label="Next Collection"
+                bootstrapVariant="primary"
+                onClick={() => onSetActivePanel(`0.${index + 1}.0`)}
+              >
+                Next
+              </Button>
+            )
+          }
+          {
+            index === projectIds.length - 1 && (
+              <Button
+                className="project-panels__action"
+                label="Done"
+                bootstrapVariant="primary"
+                onClick={() => onTogglePanels(false)}
+              >
+                Done
+              </Button>
+            )
+          }
+        </div>
+      )
+
+      const variablePanelFooter = (
+        <div>
+          <Button
+            type="button"
+            label="Back"
+            bootstrapVariant="light"
+            className="button secondary master-overlay-panel-item-footer-action"
+            onClick={() => this.clearSelectedKeyword(`0.${index}.1`)}
+            data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
+          >
+            Back
+          </Button>
+          <Button
+            type="button"
+            label="Save"
+            bootstrapVariant="primary"
+            className="collection-customization-save master-overlay-panel-item-footer-action"
+            onClick={() => this.onSaveVariables(collectionId, index)}
+            data-bind="visible: selectedKeyword() && !selectedVariable(), click: saveState"
+          >
+            Save
+          </Button>
+        </div>
+      )
+
+      const variableDetailsFooter = (
+        <div>
+          <Button
+            type="button"
+            label="Back"
+            bootstrapVariant="primary"
+            className="button master-overlay-panel-item-footer-action"
+            onClick={() => this.clearSelectedVariable(`0.${index}.2`)}
+            data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
+          >
+            Back
+          </Button>
+        </div>
+      )
+
+      const panelHeader = (
+        <div className="panel-item-section panel-item-section-padded panel-item-section-has-back-button">
+          <Button
+            className="button button-back master-overlay-panel-back"
+            type="button"
+            label="Back to Edit Options"
+            bootstrapVariant="link"
+            onClick={() => this.backToOptions(index)}
+          >
+            <i className="fa fa-chevron-left" />
+            Back to Edit Options
+          </Button>
+          <h3 className="panel-item-section-title">Variable Selection</h3>
+        </div>
+      )
+
+      // Panels are controlled using the onSetActivePanel action. The parameters are
+      // dot separated indexes of the panel you would like to trigger.
+      // They should be passed like so:
+      // {'{Panel Section ID}.{Panel Group ID}.{Panel Item ID}'}
+      panelSectionEditOptions.push(
+        <PanelGroup
+          key={`${id}_edit-options`}
+          primaryHeading={title}
+          secondaryHeading="Edit Options"
+          footer={editOptionsFooter}
+        >
+          <PanelItem>
+            <AccessMethod
+              accessMethods={accessMethods}
+              index={index}
+              metadata={metadata}
+              shapefileId={shapefileId}
+              onSelectAccessMethod={onSelectAccessMethod}
+              onSetActivePanel={onSetActivePanel}
+              onUpdateAccessMethod={onUpdateAccessMethod}
+              selectedAccessMethod={selectedAccessMethod}
+            />
+          </PanelItem>
+          <PanelItem hideFooter>
+            <ProjectPanelSection>
+              <VariableKeywordPanel
+                accessMethods={accessMethods}
+                index={index}
+                panelHeader={panelHeader}
+                selectedAccessMethod={selectedAccessMethod}
+                onSelectKeyword={this.selectKeyword}
+              />
+            </ProjectPanelSection>
+          </PanelItem>
+          <PanelItem footer={variablePanelFooter}>
+            <ProjectPanelSection>
+              <VariablesPanel
+                index={index}
+                panelHeader={panelHeader}
+                selectedKeyword={selectedKeyword}
+                selectedVariables={selectedVariables}
+                variables={variables}
+                onCheckboxChange={this.onCheckboxChange}
+                onClearSelectedKeyword={this.clearSelectedKeyword}
+                onViewDetails={this.onViewDetails}
+              />
+            </ProjectPanelSection>
+          </PanelItem>
+          <PanelItem footer={variableDetailsFooter}>
+            <ProjectPanelSection>
+              <VariableDetailsPanel
+                panelHeader={panelHeader}
+                variable={selectedVariable}
+              />
+            </ProjectPanelSection>
+          </PanelItem>
+        </PanelGroup>
+      )
+
+      panelSectionCollectionDetails.push(
+        <PanelGroup
+          key={`${id}_collection-details`}
+          primaryHeading={title}
+          secondaryHeading="Details"
+        >
+          <PanelItem>
+            <CollectionDetails granuleCount={granuleCount} />
+          </PanelItem>
+        </PanelGroup>
+      )
+    })
+
+    return (
+      <Panels
+        show={loaded && isOpen}
+        activePanel={activePanel}
+        onPanelClose={this.onPanelClose}
+        onChangePanel={this.onChangePanel}
       >
-        <PanelItem>
-          <AccessMethod
-            accessMethods={accessMethods}
-            index={index}
-            metadata={metadata}
-            shapefileId={shapefileId}
-            spatial={spatial}
-            onSelectAccessMethod={onSelectAccessMethod}
-            onSetActivePanel={onSetActivePanel}
-            onUpdateAccessMethod={onUpdateAccessMethod}
-            selectedAccessMethod={selectedAccessMethod}
-          />
-        </PanelItem>
-        <PanelItem hideFooter>
-          <ProjectPanelSection>
-            Some other panel edit-options. This panel item is using the hideFooter
-            prop to hide its footer.
-            <br />
-            <button
-              type="button"
-              onClick={() => onSetActivePanel(`0.${index}.0`)}
-            >
-              Go back
-            </button>
-            <button
-              type="button"
-              onClick={() => onSetActivePanel(`0.${index}.2`)}
-            >
-              See another panel item example
-            </button>
-            <br />
-            Panels are controlled using the onSetActivePanel action. The parameters are
-            dot separated indexes of the panel you would like to trigger.
-            They should be passed like so:
-            <br />
-            {'{Panel Section ID}.{Panel Group ID}.{Panel Item ID}'}
-          </ProjectPanelSection>
-        </PanelItem>
-        <PanelItem footer={customFooter}>
-          <ProjectPanelSection>
-            This one is using a custom footer element.
-            <br />
-            <button
-              type="button"
-              onClick={() => onSetActivePanel(`0.${index}.1`)}
-            >
-              Go back
-            </button>
-          </ProjectPanelSection>
-        </PanelItem>
-      </PanelGroup>
+        <PanelSection>
+          {panelSectionEditOptions}
+        </PanelSection>
+        <PanelSection>
+          {panelSectionCollectionDetails}
+        </PanelSection>
+      </Panels>
     )
-
-    panelSectionCollectionDetails.push(
-      <PanelGroup
-        key={`${id}_collection-details`}
-        primaryHeading={title}
-        secondaryHeading="Details"
-      >
-        <PanelItem>
-          <CollectionDetails granuleCount={granuleCount} />
-        </PanelItem>
-      </PanelGroup>
-    )
-  })
-
-  return (
-    <Panels
-      show={loaded && isOpen}
-      activePanel={activePanel}
-      onPanelClose={onPanelClose}
-      onChangePanel={onChangePanel}
-    >
-      <PanelSection>
-        {panelSectionEditOptions}
-      </PanelSection>
-      <PanelSection>
-        {panelSectionCollectionDetails}
-      </PanelSection>
-    </Panels>
-  )
-})
+  }
+}
 
 ProjectPanels.defaultProps = {
   shapefileId: null

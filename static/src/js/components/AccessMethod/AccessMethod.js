@@ -6,8 +6,10 @@ import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
 
-import './AccessMethod.scss'
 import EchoForm from './EchoForm'
+import Button from '../Button/Button'
+
+import './AccessMethod.scss'
 
 const downloadButton = collectionId => (
   <Radio
@@ -116,21 +118,25 @@ const opendapButton = (collectionId, methodKey) => (
 /**
  * Renders AccessMethod.
  * @param {object} props - The props passed into the component.
+ * @param {object} props.accessMethods - The accessMethods of the current collection.
  * @param {number} props.index - The index of the current collection.
+ * @param {object} props.metadata - The metadata of the current collection.
+ * @param {string} props.selectedAccessMethod - The selected access method of the current collection.
+ * @param {string} props.shapefileId - The shapefile id of the uploaded shapefile.
+ * @param {function} props.onSelectAccessMethod - Selects an access method.
  * @param {function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {function} props.onUpdateAccessMethod - Updates an access method.
  */
 export const AccessMethod = ({
   accessMethods,
-  // eslint-disable-next-line no-unused-vars
   index,
   metadata,
+  selectedAccessMethod,
   shapefileId,
   spatial,
   onSelectAccessMethod,
-  // eslint-disable-next-line no-unused-vars
   onSetActivePanel,
-  onUpdateAccessMethod,
-  selectedAccessMethod
+  onUpdateAccessMethod
 }) => {
   const { id: collectionId } = metadata
 
@@ -165,7 +171,16 @@ export const AccessMethod = ({
   })
 
   const selectedMethod = accessMethods[selectedAccessMethod]
-  const { form, rawModel } = selectedMethod || {}
+  const {
+    form,
+    rawModel,
+    selectedVariables = []
+  } = selectedMethod || {}
+
+  let isOpendap = false
+  if (selectedAccessMethod === 'opendap') {
+    isOpendap = true
+  }
 
   return (
     <div className="access-method">
@@ -179,9 +194,9 @@ export const AccessMethod = ({
           </RadioList>
         </div>
       </ProjectPanelSection>
-      <ProjectPanelSection>
-        {
-          form && (
+      {
+        form && (
+          <ProjectPanelSection>
             <EchoForm
               collectionId={collectionId}
               form={form}
@@ -191,17 +206,46 @@ export const AccessMethod = ({
               spatial={spatial}
               onUpdateAccessMethod={onUpdateAccessMethod}
             />
-          )
-        }
-        {/* Access options go here
-        <br />
-        <button
-          type="button"
-          onClick={() => onSetActivePanel(`0.${index}.1`)}
-        >
-          Go to another panel item
-        </button> */}
-      </ProjectPanelSection>
+          </ProjectPanelSection>
+        )
+      }
+      {
+        isOpendap && (
+          <ProjectPanelSection>
+            <h4>Variable Selection</h4>
+            <p>
+              Use science keywords to subset your collection granules by measurements and variables.
+            </p>
+
+            {
+              selectedVariables.length > 0 && (
+                <p className="panel-item-content panel-item-content-emphasis">
+                  <span>{selectedVariables.length}</span>
+                  variables selected
+                </p>
+              )
+            }
+
+            {
+              selectedVariables.length === 0 && (
+                <p className="panel-item-content panel-item-content-emphasis">
+                  No variables selected. All variables will be included in download.
+                </p>
+              )
+            }
+
+            <Button
+              type="button"
+              varient="primary"
+              bootstrapVariant="primary"
+              label="Edit Variables"
+              onClick={() => onSetActivePanel(`0.${index}.1`)}
+            >
+              Edit Variables
+            </Button>
+          </ProjectPanelSection>
+        )
+      }
     </div>
   )
 }

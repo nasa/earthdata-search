@@ -154,6 +154,7 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   const requestObject = new OusGranuleRequest(authToken)
 
   const {
+    access_method: accessMethod,
     collection_id: collectionId,
     granule_params: granuleParams
   } = retrievalCollectionData
@@ -163,11 +164,15 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
     bounding_box: boundingBox
   } = granuleParams
 
-  // TODO: Add excluded granules, output format, and variables @critical
+  // const { variables = ['V1200267322-HMR_TME'] } = accessMethod
+  const { selected_variables: variables } = accessMethod
+
+  // TODO: Add excluded granules, output format (EDSC-2329)
   const response = requestObject.search({
     boundingBox,
     echoCollectionId: collectionId,
-    temporal
+    temporal,
+    variables
   })
     .then((response) => {
       const { data } = response

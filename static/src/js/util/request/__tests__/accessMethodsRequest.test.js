@@ -22,6 +22,7 @@ describe('AccessMethodsRequest#permittedCmrKeys', () => {
     const request = new AccessMethodsRequest()
 
     expect(request.permittedCmrKeys()).toEqual([
+      'associations',
       'collection_id',
       'tags'
     ])

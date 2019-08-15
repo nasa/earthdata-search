@@ -20,6 +20,10 @@ const ousGranuleSearch = async (event) => {
     'variables'
   ]
 
+  const nonIndexedKeys = [
+    'variables'
+  ]
+
   const { body } = event
 
   // We need echo_collection_id to construct the URL but it is not listed
@@ -30,7 +34,8 @@ const ousGranuleSearch = async (event) => {
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
     path: `/service-bridge/ous/collection/${echoCollectionId}`,
-    permittedCmrKeys
+    permittedCmrKeys,
+    nonIndexedKeys
   }))
 }
 

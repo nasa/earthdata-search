@@ -24,6 +24,7 @@ describe('url#decodeUrlParams', () => {
         },
         focusedCollection: 'collectionId',
         project: {
+          byId: {},
           collectionIds: []
         }
       }
@@ -50,6 +51,7 @@ describe('url#decodeUrlParams', () => {
         },
         focusedCollection: 'collectionId',
         project: {
+          byId: {},
           collectionIds: []
         }
       }
@@ -78,6 +80,9 @@ describe('url#decodeUrlParams', () => {
         },
         focusedCollection: '',
         project: {
+          byId: {
+            collectionId: {}
+          },
           collectionIds: ['collectionId']
         }
       }
@@ -106,6 +111,9 @@ describe('url#decodeUrlParams', () => {
         },
         focusedCollection: 'collectionId',
         project: {
+          byId: {
+            collectionId: {}
+          },
           collectionIds: ['collectionId']
         }
       }

@@ -49,12 +49,7 @@ const projectReducer = (state = initialState, action) => {
       }
     }
     case RESTORE_PROJECT: {
-      const { collectionIds } = action.payload
-      const byId = {}
-
-      collectionIds.forEach((id) => {
-        byId[id] = {}
-      })
+      const { byId, collectionIds } = action.payload
 
       return {
         byId,
@@ -89,12 +84,18 @@ const projectReducer = (state = initialState, action) => {
       }
 
       const { accessMethods = {} } = byId[collectionId] || {}
+      const existingMethods = {}
+      Object.keys(methods).forEach((key) => {
+        existingMethods[key] = {
+          ...accessMethods[key],
+          ...methods[key]
+        }
+      })
 
       byId[collectionId] = {
         ...byId[collectionId],
         accessMethods: {
-          ...accessMethods,
-          ...methods
+          ...existingMethods
         },
         selectedAccessMethod
       }

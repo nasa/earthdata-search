@@ -11,6 +11,7 @@ export default class AccessMethodsRequest extends Request {
 
   permittedCmrKeys() {
     return [
+      'associations',
       'collection_id',
       'tags'
     ]

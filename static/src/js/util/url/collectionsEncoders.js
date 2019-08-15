@@ -58,6 +58,34 @@ const decodedExcludeGranules = (excludedGranules) => {
   return result
 }
 
+const encodeSelectedVariables = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    selectedVariables
+  } = selectedMethod
+
+  if (!selectedVariables) return null
+
+  return selectedVariables.join('!')
+}
+
+const decodedSelectedVariables = (pgParam) => {
+  const { uv: variableIds } = pgParam
+
+  if (!variableIds) return null
+
+  return variableIds.split('!')
+}
+
 /**
  * Encodes a Collections object into an object
  * @param {object} collections Collections object
@@ -72,7 +100,10 @@ export const encodeCollections = (props) => {
   } = props
 
   const { byId } = collections
-  const { collectionIds: projectIds = [] } = project
+  const {
+    byId: projectById = {},
+    collectionIds: projectIds = []
+  } = project
 
   // pParameter - focusedCollection!projectCollection1!projectCollection2
   const pParameter = [
@@ -127,6 +158,9 @@ export const encodeCollections = (props) => {
         pg = { ...pg, ...encodeGranuleFilters(granuleFilters) }
       }
 
+      // Encode selected variables
+      pg.uv = encodeSelectedVariables(projectById[collectionId])
+
       pgParameter[index] = pg
     })
   }
@@ -157,6 +191,7 @@ export const decodeCollections = (params) => {
   const allIds = []
   const byId = {}
   const projectIds = []
+  const projectById = {}
 
   p.split('!').forEach((collectionId, index) => {
     // If there is no collectionId, move on to the next index
@@ -175,6 +210,7 @@ export const decodeCollections = (params) => {
     let isCwic
     let isVisible = false
 
+    let variableIds
     if (pg && pg[index]) {
       // Excluded Granules
       ({ isCwic, granuleIds } = decodedExcludeGranules(pg[index]))
@@ -183,8 +219,13 @@ export const decodeCollections = (params) => {
       const { v: visible = '' } = pg[index]
       if (visible === 't') isVisible = true
 
-      // Granule Filters
+      // Decode selected variables
+      variableIds = decodedSelectedVariables(pg[index])
+
+      // Decode granule filters
       granuleFilters = decodeGranuleFilters(pg[index])
+
+      // TODO: Decode output format (EDSC-2329)
     }
 
     // Populate the collection object for the redux store
@@ -198,6 +239,20 @@ export const decodeCollections = (params) => {
       ummMetadata: {},
       formattedMetadata: {}
     }
+
+    if (index > 0) {
+      projectById[collectionId] = {}
+    }
+
+    if (variableIds) {
+      projectById[collectionId] = {
+        accessMethods: {
+          opendap: {
+            selectedVariables: variableIds
+          }
+        }
+      }
+    }
   })
 
   // if no decoded collections information exists, return undfined for collections
@@ -206,7 +261,9 @@ export const decodeCollections = (params) => {
       allIds,
       byId
     }
+
     project = {
+      byId: projectById,
       collectionIds: projectIds
     }
   }
