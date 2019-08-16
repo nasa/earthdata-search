@@ -160,7 +160,8 @@ describe('SpatialSelection component', () => {
       editControl.prop('onCreated')({
         layerType: 'marker',
         layer: {
-          getLatLng: jest.fn(() => latLngResponse)
+          getLatLng: jest.fn(() => latLngResponse),
+          remove: jest.fn()
         }
       })
 
@@ -188,7 +189,8 @@ describe('SpatialSelection component', () => {
       editControl.prop('onCreated')({
         layerType: 'rectangle',
         layer: {
-          getLatLngs: jest.fn(() => latLngResponse)
+          getLatLngs: jest.fn(() => latLngResponse),
+          remove: jest.fn()
         }
       })
 
@@ -215,7 +217,8 @@ describe('SpatialSelection component', () => {
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
-          getLatLngs: jest.fn(() => latLngResponse)
+          getLatLngs: jest.fn(() => latLngResponse),
+          remove: jest.fn()
         }
       })
 
@@ -242,7 +245,8 @@ describe('SpatialSelection component', () => {
       editControl.prop('onCreated')({
         layerType: 'polygon',
         layer: {
-          getLatLngs: jest.fn(() => latLngResponse)
+          getLatLngs: jest.fn(() => latLngResponse),
+          remove: jest.fn()
         }
       })
 
@@ -262,50 +266,15 @@ describe('SpatialSelection component', () => {
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onCreated')({
-        layerType: 'circle'
+        layerType: 'circle',
+        layer: {
+          remove: jest.fn()
+        }
       })
 
       expect(enzymeWrapper.state().drawnPoints).toEqual(null)
       expect(props.onChangeQuery.mock.calls.length).toBe(0)
     })
-  })
-
-  test('getShape returns a shape', () => {
-    const { enzymeWrapper } = setup(defaultProps)
-
-    const shape = enzymeWrapper.instance().getShape([
-      '10,0',
-      '20,10',
-      '5,15',
-      '10,0'
-    ])
-
-    expect(shape).toEqual([{
-      lat: 0,
-      lng: 10
-    }, {
-      lat: 10,
-      lng: 20
-    }, {
-      lat: 15,
-      lng: 5
-    }, {
-      lat: 0,
-      lng: 10
-    }])
-  })
-
-  test('splitListOfPoints splits a string of points into array of lat/lng points', () => {
-    const { enzymeWrapper } = setup(defaultProps)
-
-    const points = enzymeWrapper.instance().splitListOfPoints('10,0,20,10,5,15,10,0')
-
-    expect(points).toEqual([
-      '10,0',
-      '20,10',
-      '5,15',
-      '10,0'
-    ])
   })
 
   describe('renderShape', () => {
@@ -350,14 +319,4 @@ describe('SpatialSelection component', () => {
       expect(enzymeWrapper.instance().renderPolygon.mock.calls[0][1]).toBe(props.mapRef.leafletElement)
     })
   })
-
-  test.skip('renderPoint adds a point to the map and updates the state', () => {
-    const { enzymeWrapper } = setup(defaultProps)
-    // How to mock what leaflet is doing when creating a Marker and adding it to a map?
-
-    const point = [{ lat: 10, lng: 0 }]
-    enzymeWrapper.instance().renderPoint(point)
-  })
-  test.skip('renderBoundingBox adds a bounding box to the map and updates the state', () => { })
-  test.skip('renderPolygon adds a poolygon to the map and updates the state', () => { })
 })

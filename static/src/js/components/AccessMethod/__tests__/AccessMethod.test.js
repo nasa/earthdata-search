@@ -15,6 +15,7 @@ function setup() {
     index: 0,
     metadata: {},
     shapefileId: null,
+    spatial: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),

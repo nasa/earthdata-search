@@ -12,7 +12,7 @@ import icon from 'leaflet-draw/dist/images/marker-icon.png'
 import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 
 import { eventEmitter } from '../../events/events'
-import { makeCounterClockwise } from '../../util/map/geo'
+import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
 
 const normalColor = '#00ffff'
 const errorColor = '#990000'
@@ -104,7 +104,7 @@ class SpatialSelection extends Component {
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
 
-    if (newDrawing !== drawnPoints) {
+    if (drawnLayer._map === null || newDrawing !== drawnPoints) {
       // If the new drawing is different than the current drawing,
       // remove the current drawing
       if (drawnLayer) {
@@ -148,7 +148,7 @@ class SpatialSelection extends Component {
   // Callback from EditControl, contains the layer that was just drawn
   onCreate(e) {
     const { layer, layerType } = e
-    this.setState({ drawnLayer: layer })
+    e.layer.remove()
 
     // Update url/query with e.layer information
     let type
@@ -181,7 +181,10 @@ class SpatialSelection extends Component {
         return
     }
 
-    this.setState({ drawnPoints: latLngs.join() })
+    this.setState({
+      drawnLayer: layer,
+      drawnPoints: latLngs.join()
+    })
     onChangeQuery({
       collection: {
         spatial: {
@@ -189,21 +192,6 @@ class SpatialSelection extends Component {
         }
       }
     })
-  }
-
-  // Takes an array of lat/lon pairs and returns array of objects with lat/lon keys
-  // input: ['10,0','20,10']
-  // output: [{ lat: 0, lng: 10 }, { lat: 10, lng: 20 }]
-  getShape(points) {
-    return points.map(pointStr => L.latLng(pointStr.split(',').reverse()))
-  }
-
-  // Splits a string of points on every other comma
-  // input: '10,0,20,10'
-  // output: ['10,0','20,10']
-  splitListOfPoints(points) {
-    // split on every other `,`
-    return points.match(/[^,]+,[^,]+/g)
   }
 
   // Draws a leaflet shape based on provided props
@@ -219,15 +207,15 @@ class SpatialSelection extends Component {
 
     if (pointSearch) {
       this.setState({ drawnPoints: pointSearch })
-      this.renderPoint(this.getShape([pointSearch]), map)
+      this.renderPoint(getShape([pointSearch]), map)
     } else if (boundingBoxSearch) {
       this.setState({ drawnPoints: boundingBoxSearch })
-      const points = this.splitListOfPoints(boundingBoxSearch)
-      this.renderBoundingBox(this.getShape(points), map)
+      const points = splitListOfPoints(boundingBoxSearch)
+      this.renderBoundingBox(getShape(points), map)
     } else if (polygonSearch) {
       this.setState({ drawnPoints: polygonSearch })
-      const points = this.splitListOfPoints(polygonSearch)
-      this.renderPolygon(this.getShape(points), map)
+      const points = splitListOfPoints(polygonSearch)
+      this.renderPolygon(getShape(points), map)
     }
   }
 
@@ -239,7 +227,6 @@ class SpatialSelection extends Component {
       })
 
       marker.addTo(map)
-      map.panTo(marker.getLatLng())
       this.setState({ drawnLayer: marker })
     }
   }
@@ -262,7 +249,6 @@ class SpatialSelection extends Component {
       const rect = new L.Rectangle(bounds, options)
 
       rect.addTo(map)
-      map.panTo(L.latLngBounds(rect.getLatLngs()).getCenter())
       this.setState({ drawnLayer: rect })
     }
   }
@@ -278,7 +264,6 @@ class SpatialSelection extends Component {
       const poly = new L.SphericalPolygon(polygon, options)
 
       poly.addTo(map)
-      map.panTo(L.latLngBounds(poly.getLatLngs()).getCenter())
       this.setState({ drawnLayer: poly })
     }
   }
