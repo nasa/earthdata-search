@@ -14,11 +14,12 @@ beforeEach(() => {
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const order = retrievalStatusPropsEsi.retrieval.collections.esi[0]
-    .access_method.order.service_options.orders[0]
+  const order = retrievalStatusPropsEsi.retrieval.collections.esi[1].orders[0]
 
   const props = {
-    order
+    order,
+    totalNumber: 81,
+    totalProcessed: 81
   }
 
   const enzymeWrapper = shallow(<OrderProgressItem {...props} />)
@@ -38,7 +39,7 @@ describe('OrderProgressItem component', () => {
 
   test('shows the correct order metadata', () => {
     expect(enzymeWrapper.find('.order-progress-item__title').text()).toEqual('Order ID: 5000000333461')
-    expect(enzymeWrapper.find('.order-progress-item__processed').text()).toEqual('81 of 81 granules processed (100%)')
+    expect(enzymeWrapper.find('.order-progress-item__processed').text()).toEqual('81 of 81 granule(s) processed (100%)')
     expect(enzymeWrapper.find(ProgressBar).prop('now')).toEqual(100)
     expect(enzymeWrapper.find(Badge).text()).toEqual('Complete')
   })

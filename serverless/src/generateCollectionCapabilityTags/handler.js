@@ -76,13 +76,15 @@ const generateCollectionCapabilityTags = async (event) => {
             const {
               cloud_cover: cloudCover = false,
               day_night_flag: dayNightFlag,
-              online_access_flag: onlineAccessFlag = false
+              online_access_flag: onlineAccessFlag = false,
+              orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains = []
             } = singleGranule
 
             const tagData = {
               cloud_cover: cloudCover !== undefined,
               day_night_flag: dayNightFlag && ['DAY', 'NIGHT', 'BOTH'].includes(dayNightFlag.toUpperCase()),
-              granule_online_access_flag: onlineAccessFlag
+              granule_online_access_flag: onlineAccessFlag,
+              orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains.length > 0
             }
 
             associationPayload.push({

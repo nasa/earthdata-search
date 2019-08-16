@@ -10,6 +10,7 @@ export const OrderStatusList = ({
   heading,
   introduction,
   onChangePath,
+  onFetchRetrievalCollection,
   type
 }) => (
   <div className="order-status-list">
@@ -23,6 +24,7 @@ export const OrderStatusList = ({
             type={type}
             collection={collection}
             onChangePath={onChangePath}
+            onFetchRetrievalCollection={onFetchRetrievalCollection}
           />
         ))
       }
@@ -39,6 +41,7 @@ OrderStatusList.propTypes = {
   heading: PropTypes.string.isRequired,
   introduction: PropTypes.string.isRequired,
   onChangePath: PropTypes.func.isRequired,
+  onFetchRetrievalCollection: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired
 }
 

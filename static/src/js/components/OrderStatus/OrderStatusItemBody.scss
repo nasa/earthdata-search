@@ -19,11 +19,11 @@
     text-align: center;
     text-transform: capitalize;
 
-    &--success {
+    &--complete {
       background-color: $color__green;
     }
 
-    &--errored {
+    &--failed {
       background-color: $color__red;
     }
   }

@@ -113,7 +113,23 @@ const getAccessMethods = async (event) => {
         // Ensure the saved EchoForm is the same form as the current EchoForm
         if (formDigest === methodFormDigest) {
           selectedAccessMethod = methodName
-          accessMethods[methodName] = savedAccessConfig
+
+          // Pull out values from the saved access method that would not have changed
+          const {
+            form,
+            model,
+            rawModel,
+            form_digest: formDigest
+          } = savedAccessConfig
+
+          // Only override values that the user configured
+          accessMethods[methodName] = {
+            ...accessMethods[methodName],
+            form,
+            model,
+            rawModel,
+            form_digest: formDigest
+          }
         }
       }
     })

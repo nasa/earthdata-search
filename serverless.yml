@@ -43,7 +43,7 @@ provider:
     subnetIds:
       - ${self:custom.awsResources.subnet.a}
       - ${self:custom.awsResources.subnet.b}
-  role: ScheduledLambdaRole
+  role: EDSCLambdaRole
 
 plugins:
   - serverless-finch
@@ -70,7 +70,7 @@ stepFunctions: ${file(./serverless-configs/${self:provider.name}-step-functions.
 # Package each lambda into individual zip files. This reduces the size of
 # each lambda but increases the complexity of the compilation process slightly
 package:
-  individually: true
+  individually: false
 
 custom:
   siteName: earthdata-search-${self:provider.stage}
@@ -102,7 +102,7 @@ custom:
 
   warmup:
     enabled: true
-    role: ScheduledLambdaRole
+    role: EDSCLambdaRole
     prewarm: true
     timeout: 30
     events: 

@@ -2,8 +2,6 @@ import { push } from 'connected-react-router'
 import prepareOrderParams from '../util/orders'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
-import { isLinkType } from '../util/isLinkType'
-
 import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
 
 export const updateRetrieval = retrievalData => ({
@@ -11,6 +9,9 @@ export const updateRetrieval = retrievalData => ({
   payload: retrievalData
 })
 
+/**
+ * Submit data representing a Retrieval to be stored in the database
+ */
 export const submitRetrieval = () => (dispatch, getState) => {
   const orderParams = prepareOrderParams(getState())
   const { authToken } = orderParams
@@ -20,74 +21,57 @@ export const submitRetrieval = () => (dispatch, getState) => {
   const response = requestObject.submit(orderParams)
     .then((response) => {
       const { id: retrievalId } = response.data
+
       dispatch(push(`/data/retrieve/${retrievalId}`))
     })
     .catch((e) => {
-      console.log('Promise Rejected', e)
+      console.log(e)
     })
 
   return response
 }
 
 /**
- * Convert the type of a provided UMM-S record to an object friendly key
- * @param {String} type A UMM-S record type
+ * Fetch a retrieval from the database
+ * @param {Integer} id Database ID of the retrieval to lookup
+ * @param {String} authToken The authenticated users' JWT token
  */
-const fromUmmServiceType = type => type.toLowerCase().replace(/ /g, '_')
+export const fetchRetrieval = id => (dispatch, getState) => {
+  const { authToken } = getState()
 
-/**
- * Fetch order data for an order
- */
-export const fetchRetrieval = (id, authToken) => (dispatch) => {
   const requestObject = new RetrievalRequest(authToken)
-
-  const response = requestObject.collections(id)
+  const response = requestObject.fetch(id)
     .then((response) => {
       const { data } = response
-      const order = {}
-      order.id = data.id
-      order.environment = data.environment
-      order.jsondata = data.jsondata
-      order.collections = {
-        download: [],
-        echo_orders: [],
-        esi: [],
-        opendap: []
+      const { collections } = data
+
+      const updatedCollections = {
+        ...collections
       }
-      order.links = []
-      data.collections.forEach((collection) => {
-        const {
-          access_method: accessMethod,
-          collection_metadata: collectionMetadata
-        } = collection
 
-        const { type } = accessMethod
-        const accessMethodTypeKey = fromUmmServiceType(type)
+      Object.keys(collections).forEach((orderType) => {
+        Object.keys(collections[orderType]).forEach((collectionId) => {
+          const currentCollection = collections[orderType][collectionId]
 
-        const {
-          dataset_id: datasetId,
-          links
-        } = collectionMetadata
+          const { access_method: accessMethod } = currentCollection
+          const { type } = accessMethod
 
-        order.collections[accessMethodTypeKey] = [
-          ...order.collections[accessMethodTypeKey],
-          collection
-        ]
-
-        const metdataLinks = links.filter((link = {}) => isLinkType(link.rel, 'metadata'))
-
-        order.links.push({
-          datasetId,
-          links: metdataLinks
+          updatedCollections[orderType][collectionId] = {
+            ...currentCollection,
+            // Downloadable orders do not need to be loaded, default them to true
+            isLoaded: ['download', 'OPeNDAP'].includes(type)
+          }
         })
       })
-      dispatch(updateRetrieval(order))
+
+      dispatch(updateRetrieval({
+        ...data,
+        collections: updatedCollections
+      }))
     })
     .catch((e) => {
-      console.log('Promise Rejected', e)
+      console.log(e)
     })
 
   return response
 }
-
-export default submitRetrieval

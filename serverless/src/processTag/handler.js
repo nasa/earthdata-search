@@ -22,8 +22,6 @@ const processTag = async (event, context) => {
   await sqsRecords.forEachAsync(async (sqsRecord) => {
     const { body } = sqsRecord
 
-    console.log('body', body)
-
     const providedTag = JSON.parse(body)
 
     const {

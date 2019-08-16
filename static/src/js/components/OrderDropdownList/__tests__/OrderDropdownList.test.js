@@ -14,8 +14,7 @@ beforeEach(() => {
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const { orders } = retrievalStatusPropsEsi.retrieval.collections.esi[0]
-    .access_method.order.service_options
+  const { orders } = retrievalStatusPropsEsi.retrieval.collections.esi[1]
 
   const props = {
     orders,

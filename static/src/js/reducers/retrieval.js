@@ -1,10 +1,8 @@
-import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
+import { UPDATE_RETRIEVAL, UPDATE_RETRIEVAL_COLLECTION } from '../constants/actionTypes'
 
 const initialState = {
   id: null,
-  collections: {
-    download: []
-  }
+  collections: {}
 }
 
 const retrievalReducer = (state = initialState, action) => {
@@ -13,6 +11,31 @@ const retrievalReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload
+      }
+    }
+    case UPDATE_RETRIEVAL_COLLECTION: {
+      const {
+        id,
+        access_method: accessMethod
+      } = action.payload
+
+      const {
+        type
+      } = accessMethod
+
+      const collectionKey = `${type.toLowerCase().replace(/ /g, '_')}`
+
+      return {
+        ...state,
+        collections: {
+          ...state.collections,
+          [collectionKey]: {
+            ...state.collections[collectionKey],
+            [id]: {
+              ...action.payload
+            }
+          }
+        }
       }
     }
     default:

@@ -26,7 +26,7 @@ export const getTopLevelFields = (xmlDocument) => {
   topLevelFields.forEach((field) => {
     const xmlElement = getFieldElementValue(xmlDocument, field)
 
-    if (xmlElement.length) {
+    if (xmlElement && xmlElement.length) {
       populatedFields[field] = xmlElement
     }
   })

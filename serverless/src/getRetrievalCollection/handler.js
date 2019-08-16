@@ -31,18 +31,21 @@ const getRetrievalCollection = async (event, context) => {
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
 
-    const retrievalResponse = await dbConnection('retrieval_collections')
-      .first(
-        'retrievals.id AS retrieval_id',
-        'retrievals.jsondata',
-        'retrievals.environment',
+    const retrievalCollectionResponse = await dbConnection('retrieval_collections')
+      .select(
         'retrieval_collections.id',
-        'access_method',
-        'collection_id',
-        'collection_metadata',
-        'granule_params',
-        'granule_count'
+        'retrieval_collections.access_method',
+        'retrieval_collections.collection_id',
+        'retrieval_collections.collection_metadata',
+        'retrieval_collections.granule_params',
+        'retrieval_collections.granule_count',
+        'retrieval_orders.id AS retrieval_order_id',
+        'retrieval_orders.type',
+        'retrieval_orders.order_number',
+        'retrieval_orders.order_information',
+        'retrieval_orders.state'
       )
+      .leftJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
@@ -50,12 +53,54 @@ const getRetrievalCollection = async (event, context) => {
         'users.urs_id': username
       })
 
-    if (retrievalResponse) {
+    if (retrievalCollectionResponse !== null && retrievalCollectionResponse.length > 0) {
+      // Pull out the retrieval data from the first row (they will all be the same due to the join)
+      const [retrievalCollectionObject] = retrievalCollectionResponse
+
+      const {
+        id,
+        access_method: accessMethod,
+        collection_id: collectionId,
+        collection_metadata: collectionMetadata,
+        granule_params: granuleParams,
+        granule_count: granuleCount,
+        retrieval_order_id: retrievalOrderId // Used to check whether or not orders exist based on the left join
+      } = retrievalCollectionObject
+
+      let orders = []
+
+      // We used a left join above because there won't me any matching rows for
+      // downloadable order types but using the left join will return null values
+      // for those orders, we can check that here by checking any of the values
+      if (retrievalOrderId) {
+        orders = retrievalCollectionResponse.map(({
+          retrieval_order_id: id,
+          type,
+          order_number: orderNumber,
+          order_information: orderInformation,
+          state
+        }) => ({
+          id,
+          type,
+          order_number: orderNumber,
+          order_information: orderInformation,
+          state
+        }))
+      }
+
       return {
         isBase64Encoded: false,
         statusCode: 200,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify(retrievalResponse)
+        body: JSON.stringify({
+          id,
+          access_method: accessMethod,
+          collection_id: collectionId,
+          collection_metadata: collectionMetadata,
+          granule_params: granuleParams,
+          granule_count: granuleCount,
+          orders
+        })
       }
     }
 

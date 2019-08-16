@@ -19,6 +19,7 @@ const submitRetrieval = async (event) => {
 
   const { body } = event
   const { params = {} } = JSON.parse(body)
+
   const { collections, environment, json_data: jsonData } = params
 
   sqs = new AWS.SQS({ apiVersion: '2012-11-05' })

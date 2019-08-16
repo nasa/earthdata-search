@@ -24,12 +24,12 @@ import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
-// const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
+//   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
 
-// whyDidYouRender(React)
+//   whyDidYouRender(React)
 
-// const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
-// whyDidYouUpdate(React, { include: [/Search/] })
+//   const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
+//   whyDidYouUpdate(React, { include: [/Search/] })
 // }
 
 // Create the root App component

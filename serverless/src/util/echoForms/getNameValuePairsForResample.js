@@ -13,7 +13,9 @@ export const getNameValuePairsForResample = (xmlDocument) => {
     const valueField = getFieldElementValue(xmlDocument, `${fieldName}/*[contains(local-name(),'value')]`)
     const dimensionField = getFieldElementValue(xmlDocument, `${fieldName}/*[contains(local-name(),'dimension')]`)
 
-    resampleFieldValues[fieldName] = `${dimensionField}:${valueField}`
+    if (dimensionField && valueField) {
+      resampleFieldValues[fieldName] = `${dimensionField}:${valueField}`
+    }
   })
 
   return resampleFieldValues

@@ -8,11 +8,11 @@
     border-left: 4px solid $color__indigo;
   }
 
-  &--success {
+  &--complete {
     border-left: 4px solid $color__green;
   }
 
-  &--errored {
+  &--failed {
     border-left: 4px solid $color__red;
   }
 

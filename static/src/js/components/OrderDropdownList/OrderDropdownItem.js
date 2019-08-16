@@ -9,9 +9,15 @@ export const OrderDropdownItem = ({
   totalOrders
 }) => {
   const {
-    order_id: orderId,
-    download_urls: orderDownloadUrls
+    order_number: orderId,
+    order_information: orderInformation
   } = order
+
+  const {
+    downloadUrls: currentDownloadUrlsObject = {}
+  } = orderInformation
+  const { downloadUrl: orderDownloadUrls = [] } = currentDownloadUrlsObject
+
 
   return (
     <li

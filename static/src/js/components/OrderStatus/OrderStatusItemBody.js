@@ -36,6 +36,7 @@ export class OrderStatusItemBody extends React.Component {
 
     const {
       collection,
+      orderStatus,
       onChangePath,
       type
     } = this.props
@@ -43,37 +44,24 @@ export class OrderStatusItemBody extends React.Component {
     const {
       collection_metadata: collectionMetadata,
       id,
-      access_method: accessMethod
+      orders = []
     } = collection
-
-    const { order = {} } = accessMethod
 
     const {
       browse_flag: browseFlag
     } = collectionMetadata
 
-    let {
-      order_status: orderStatus = ''
-    } = order
-
-    if (['download', 'opendap'].includes(type)) orderStatus = 'complete'
-
     const className = classNames([
       'order-status-item-body__state-display',
       {
-        'order-status-item-body__state-display--success': getStateFromOrderStatus(orderStatus) === 'success',
-        'order-status-item-body__state-display--errored': getStateFromOrderStatus(orderStatus) === 'errored'
+        'order-status-item-body__state-display--complete': getStateFromOrderStatus(orderStatus) === 'complete',
+        'order-status-item-body__state-display--failed': getStateFromOrderStatus(orderStatus) === 'failed'
       }
     ])
 
     if (['download', 'opendap'].includes(type)) {
       return (
         <div className="order-status-item-body">
-          <div className="order-status-item-body__state">
-            <span className={className}>
-              {formatOrderStatus(orderStatus)}
-            </span>
-          </div>
           <div className="order-status-item-body__details">
             <Link
               className="order-status-item-body__button order-status-item-body__button--links"
@@ -136,15 +124,45 @@ export class OrderStatusItemBody extends React.Component {
     }
 
     if (type === 'esi') {
-      const { service_options: serviceOptions = {} } = order
-      const {
-        orders = [],
-        total_complete: totalComplete,
-        total_number: totalNumber,
-        total_orders: totalOrders,
-        total_processed: totalProcessed,
-        download_urls: downloadUrls
-      } = serviceOptions
+      // Total orders complete
+      let totalComplete = 0
+
+      // Total number of orders
+      const totalOrders = orders.length
+
+      // Total number of granules
+      let totalNumber = 0
+
+      // Total number of granules that have been processed by the provider
+      let totalProcessed = 0
+
+      // Urls to the completed orders
+      const downloadUrls = []
+
+      // Iterate through each of the orders that were created for the provided collection
+      orders.forEach((order) => {
+        const { order_information: orderInformation } = order
+
+        const {
+          downloadUrls: currentDownloadUrlsObject = {},
+          requestStatus = {}
+        } = orderInformation
+        const { downloadUrl: currentDownloadUrls = [] } = currentDownloadUrlsObject
+
+        const {
+          status: currentStatus,
+          numberProcessed: currentNumberProcessed = 0,
+          totalNumber: currentTotalNumber = 0
+        } = requestStatus
+
+        if (currentStatus === 'complete') {
+          totalComplete += 1
+        }
+
+        downloadUrls.push(...currentDownloadUrls)
+        totalNumber += currentTotalNumber
+        totalProcessed += currentNumberProcessed
+      })
 
       let contact
       let contactName
@@ -175,7 +193,12 @@ export class OrderStatusItemBody extends React.Component {
         contactEmail = contact.email
       }
 
-      const totalPercentProcessed = Math.floor(totalProcessed / totalNumber * 100)
+      let totalPercentProcessed
+      if (totalNumber === 0) {
+        totalPercentProcessed = 0
+      } else {
+        totalPercentProcessed = Math.floor(totalProcessed / totalNumber * 100)
+      }
 
       return (
         <div className="order-status-item-body">
@@ -256,7 +279,11 @@ export class OrderStatusItemBody extends React.Component {
           {
             detailsOpen && (
               <>
-                <OrderProgressList orders={orders} />
+                <OrderProgressList
+                  totalNumber={totalNumber}
+                  totalProcessed={totalProcessed}
+                  orders={orders}
+                />
                 {
                   contact && (
                     <footer className="order-status-item-body__contact">
@@ -278,6 +305,7 @@ export class OrderStatusItemBody extends React.Component {
 
 OrderStatusItemBody.propTypes = {
   collection: PropTypes.shape({}).isRequired,
+  orderStatus: PropTypes.string.isRequired,
   onChangePath: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired
 }

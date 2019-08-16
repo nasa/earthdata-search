@@ -3,9 +3,9 @@ import AWS from 'aws-sdk'
 const stepfunctions = new AWS.StepFunctions()
 
 const legacyServicesStatusMap = {
-  in_progress: ['NOT_VALIDATED', 'VALIDATED', 'QUOTING', 'QUOTED', 'QUOTED_WITH_EXCEPTIONS', 'SUBMITTING', 'SUBMITTED_WITH_EXCEPTIONS', 'PROCESSING', 'PROCESSING_WITH_EXCEPTIONS'],
+  in_progress: ['VALIDATED', 'QUOTING', 'QUOTED', 'QUOTED_WITH_EXCEPTIONS', 'SUBMITTING', 'SUBMITTED_WITH_EXCEPTIONS', 'PROCESSING', 'PROCESSING_WITH_EXCEPTIONS'],
   complete: ['CLOSED'],
-  failed: ['CANCELLING', 'CANCELLED', 'CLOSED_WITH_EXCEPTIONS']
+  failed: ['CANCELLING', 'CANCELLED', 'CLOSED_WITH_EXCEPTIONS', 'NOT_VALIDATED']
 }
 
 const catalogRestStatusMap = {
@@ -19,13 +19,14 @@ const catalogRestStatusMap = {
  * @param {String} orderId Database ID for an order to retrieve
  * @param {String} accessToken CMR access token
  */
-export const startOrderStatusUpdateWorkflow = async (orderId, accessToken) => {
+export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, orderType) => {
   try {
     const stepFunctionResponse = await stepfunctions.startExecution({
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,
       input: JSON.stringify({
         id: orderId,
-        accessToken
+        accessToken,
+        orderType
       })
     }).promise()
 
@@ -40,7 +41,7 @@ export const startOrderStatusUpdateWorkflow = async (orderId, accessToken) => {
  * @param {Object} legacyServicesOrder Response body from Legacy Services order endpoint
  */
 export const normalizeLegacyServicesOrderStatus = (legacyServicesOrder) => {
-  const orderStatus = legacyServicesOrder.status
+  const orderStatus = legacyServicesOrder.state
 
   return Object.keys(legacyServicesStatusMap)
     .find(k => legacyServicesStatusMap[k].includes(orderStatus))

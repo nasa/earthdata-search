@@ -159,7 +159,7 @@ Resources:
   #               - lambda.amazonaws.com
   #           Action: sts:AssumeRole
 
-  ScheduledLambdaRole:
+  EDSCLambdaRole:
     Type: "AWS::IAM::Role"
     Properties:
       ManagedPolicyArns:
@@ -181,6 +181,7 @@ Resources:
             Principal:
               Service:
                 - lambda.amazonaws.com
+                - states.amazonaws.com
             Action: sts:AssumeRole
       Policies:
         - PolicyName: RDSIAMAuthentication
@@ -212,15 +213,19 @@ Resources:
               - Effect: Allow
                 Action:
                   - sqs:*
-                Resource: "*"
+                Resource: '*'
               - Effect: Allow
                 Action:
                   - secretsmanager:GetSecretValue
-                Resource: "*"
+                Resource: '*'
               - Effect: Allow
                 Action:
                   - lambda:InvokeFunction
-                Resource: "*"
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - states:StartExecution
+                Resource: '*'
 
   GatewayResponseDefault4XX:
     Type: AWS::ApiGateway::GatewayResponse

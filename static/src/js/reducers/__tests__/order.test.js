@@ -5,9 +5,7 @@ import {
 
 const initialState = {
   id: null,
-  collections: {
-    download: []
-  }
+  collections: {}
 }
 
 describe('INITIAL_STATE', () => {

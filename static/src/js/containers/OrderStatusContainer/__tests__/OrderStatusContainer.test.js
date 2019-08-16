@@ -27,6 +27,7 @@ describe('OrderStatusContainer component', () => {
           }
         },
         onChangePath: jest.fn(),
+        onFetchRetrievalCollection: jest.fn(),
         retrieval: {
           id: 7,
           collections: {
@@ -43,7 +44,10 @@ describe('OrderStatusContainer component', () => {
 
       expect(enzymeWrapper.find(OrderStatus).length).toBe(1)
       expect(enzymeWrapper.find(OrderStatus).props().authToken).toEqual(props.authToken)
-      expect(enzymeWrapper.find(OrderStatus).props().fetchRetrieval).toEqual(props.fetchRetrieval)
+      expect(enzymeWrapper.find(OrderStatus).props().onFetchRetrieval)
+        .toEqual(props.onFetchRetrieval)
+      expect(enzymeWrapper.find(OrderStatus).props().onFetchRetrievalCollection)
+        .toEqual(props.onFetchRetrievalCollection)
       expect(enzymeWrapper.find(OrderStatus).props().onChangePath).toEqual(props.onChangePath)
       expect(enzymeWrapper.find(OrderStatus).props().retrieval).toEqual(props.retrieval)
     })

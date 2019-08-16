@@ -16,8 +16,8 @@ export default class RetrievalRequest extends Request {
     ]
   }
 
-  collections(id) {
-    return this.get(`/retrievals/${id}/collections`)
+  fetch(id) {
+    return this.get(`/retrievals/${id}`)
   }
 
   submit(params) {
