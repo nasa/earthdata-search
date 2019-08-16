@@ -104,7 +104,7 @@ class SpatialSelection extends Component {
       || nextProps.boundingBoxSearch
       || nextProps.polygonSearch
 
-    if (drawnLayer._map === null || newDrawing !== drawnPoints) {
+    if ((drawnLayer && drawnLayer._map === null) || newDrawing !== drawnPoints) {
       // If the new drawing is different than the current drawing,
       // remove the current drawing
       if (drawnLayer) {

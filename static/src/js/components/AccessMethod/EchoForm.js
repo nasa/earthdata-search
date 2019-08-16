@@ -60,7 +60,10 @@ class EchoForm extends Component {
    * @param {Object} spatial Spatial object from the redux store
    */
   getMbr(spatial) {
-    if (!spatial || Object.keys(spatial).length === 0) return undefined
+    // if there is no spatial, return undefined
+    if (!spatial) return undefined
+    const { point, boundingBox, polygon } = spatial
+    if (!point && !boundingBox && !polygon) return undefined
 
     const [south, west, north, east] = mbr(spatial)
     return {
