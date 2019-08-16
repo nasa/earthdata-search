@@ -13,7 +13,7 @@ export const OrderDropdownList = ({
     {
       orders.map((order, i) => (
         <OrderDropdownItem
-          key={order.order_id}
+          key={order.order_number}
           i={i}
           order={order}
           totalOrders={totalOrders}

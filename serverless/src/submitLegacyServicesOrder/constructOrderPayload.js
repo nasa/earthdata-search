@@ -32,6 +32,8 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
 
   const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
 
+  console.log(`Asking ECHO Rest for order information pertaining to ${JSON.stringify(granuleResponseBody.map(granule => granule.id), null, 4)}`)
+
   // Array to hold granules that belong to the order, that we'll return from this method
   const granuleOrderOptions = []
 
@@ -52,6 +54,8 @@ export const constructOrderPayload = async (accessMethod, granuleParams, accessT
   })
 
   const { body: orderInformationBody } = optionInformationResponse
+
+  console.log(`Recieved ${JSON.stringify(orderInformationBody, null, 4)}`)
 
   await orderInformationBody.forEachAsync((orderInfoObj) => {
     const { order_information: orderInformation = {} } = orderInfoObj

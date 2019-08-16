@@ -14,8 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onFetchRetrievalCollection:
-    (retrievalCollectionId, authToken) => dispatch(
-      actions.fetchRetrievalCollection(retrievalCollectionId, authToken)
+    retrievalCollectionId => dispatch(
+      actions.fetchRetrievalCollection(retrievalCollectionId)
     )
 })
 

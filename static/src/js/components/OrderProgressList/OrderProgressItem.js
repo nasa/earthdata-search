@@ -10,17 +10,21 @@ import { getStateFromOrderStatus, formatOrderStatus } from '../../util/orderStat
 import './OrderProgressItem.scss'
 
 export const OrderProgressItem = ({
-  order
+  order,
+  totalNumber,
+  totalProcessed
 }) => {
   const {
-    order_id: orderId,
-    order_status: orderStatus,
-    total_number: totalNumber,
-    total_processed: totalProcessed
+    order_number: orderId,
+    state: orderStatus
   } = order
 
-  const percentProcessed = Math.floor(totalProcessed / totalNumber * 100)
-
+  let totalPercentProcessed
+  if (totalNumber === 0) {
+    totalPercentProcessed = 0
+  } else {
+    totalPercentProcessed = Math.floor(totalProcessed / totalNumber * 100)
+  }
   const badgeClass = classNames(
     'order-progress-item__badge',
     {
@@ -39,7 +43,7 @@ export const OrderProgressItem = ({
         </h5>
         <div className="order-progress-item__info">
           <span className="order-progress-item__processed">
-            {`${totalProcessed} of ${totalNumber} granules processed (${percentProcessed}%)`}
+            { `${totalProcessed} of ${totalNumber} granule(s) processed (${totalPercentProcessed}%)`}
           </span>
           <Badge
             className={badgeClass}
@@ -50,14 +54,16 @@ export const OrderProgressItem = ({
       </header>
       <ProgressBar
         className="order-progress-item__bar"
-        now={percentProcessed}
+        now={totalPercentProcessed}
       />
     </li>
   )
 }
 
 OrderProgressItem.propTypes = {
-  order: PropTypes.shape({}).isRequired
+  order: PropTypes.shape({}).isRequired,
+  totalNumber: PropTypes.number.isRequired,
+  totalProcessed: PropTypes.number.isRequired
 }
 
 export default OrderProgressItem

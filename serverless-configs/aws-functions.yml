@@ -15,6 +15,11 @@
     warmup:
       concurrency: 3
 
+  editableDebugger:
+    handler: serverless/src/editableDebugger/handler.default
+    warmup:
+      enabled: false
+
   #
   # SQS Lambdas
   #
@@ -92,9 +97,13 @@
 
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default
+    warmup:
+      enabled: false
 
   fetchLegacyServicesOrder:
     handler: serverless/src/fetchLegacyServicesOrder/handler.default
+    warmup:
+      enabled: false
 
   #
   # Scheduled Lambdas
@@ -194,8 +203,7 @@
     events:
       - http:
           method: post
-          cors:
-            origin : '*'
+          cors: true
           path: nlp
 
   conceptMetadata:
@@ -238,8 +246,7 @@
     handler: serverless/src/edlAuthorizer/handler.default
     warmer:
       concurrency: 3
-    cors:
-      origin: '*'
+    cors: true
 
   #
   # EDL Authenticated API Gateway Endpoints
@@ -313,16 +320,7 @@
       - http:
           method: get
           cors: true
-          path: retrieval_collection/{id}
-          authorizer: edlAuthorizer
-
-  getRetrievalCollections:
-    handler: serverless/src/getRetrievalCollections/handler.default
-    events:
-      - http:
-          method: get
-          cors: true
-          path: retrievals/{retrieval_id}/collections
+          path: retrieval_collections/{id}
           authorizer: edlAuthorizer
 
   getAccessMethods:

@@ -3,7 +3,7 @@ stateMachines:
     name: UpdateOrderStatusWorkflow-${self:provider.stage}
     role:
       Fn::GetAtt:
-        - ScheduledLambdaRole
+        - EDSCLambdaRole
         - Arn
     definition:
       StartAt: InitialWait
@@ -15,11 +15,11 @@ stateMachines:
         DetermineOrderType:
           Type: Choice
           Choices:
-            - Variable: "$.orderType"
-              StringEquals: "catalog-rest"
+            - Variable: '$.orderType'
+              StringEquals: 'ESI'
               Next: FetchCatalogRestOrderStatus
-            - Variable: "$.orderType"
-              StringEquals: "legacy-services"
+            - Variable: '$.orderType'
+              StringEquals: 'ECHO ORDERS'
               Next: FetchLegacyServicesOrderStatus
         FetchCatalogRestOrderStatus:
           Type: Task
@@ -38,13 +38,13 @@ stateMachines:
         CheckOrderStatus:
           Type: Choice
           Choices:
-            - Variable: "$.orderStatus"
+            - Variable: '$.orderStatus'
               StringEquals: complete
               Next: OrderComplete
-            - Variable: "$.orderStatus"
+            - Variable: '$.orderStatus'
               StringEquals: failed
               Next: OrderFailed
-            - Variable: "$.orderStatus"
+            - Variable: '$.orderStatus'
               StringEquals: in_progress
               Next: WaitForRetry
         WaitForRetry:

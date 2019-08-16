@@ -38,7 +38,8 @@ describe('getRetrieval', () => {
       query.response([{
         jsondata: {},
         token: 'asdf',
-        environment: 'prod'
+        environment: 'prod',
+        collections: {}
       }])
     })
 
@@ -50,7 +51,7 @@ describe('getRetrieval', () => {
 
     const { body, statusCode } = retrievalResponse
 
-    expect(body).toEqual('{"id":2,"jsondata":{},"retrieval_collections_ids":[]}')
+    expect(body).toEqual('{"id":2,"jsondata":{},"collections":{},"links":[]}')
     expect(statusCode).toEqual(200)
   })
 
@@ -60,12 +61,22 @@ describe('getRetrieval', () => {
         retrieval_id: 2,
         jsondata: {},
         created_at: '2019-07-09 17:05:27.000000',
-        id: 22
+        id: 22,
+        access_method: {
+          type: 'download'
+        },
+        collection_metadata: {},
+        granule_count: 3
       }, {
         retrieval_id: 2,
         jsondata: {},
         created_at: '2019-07-09 17:05:56.000000',
-        id: 23
+        id: 23,
+        access_method: {
+          type: 'download'
+        },
+        collection_metadata: {},
+        granule_count: 3
       }])
     })
 
@@ -77,7 +88,33 @@ describe('getRetrieval', () => {
 
     const { body, statusCode } = retrievalResponse
 
-    expect(body).toEqual('{"id":2,"jsondata":{},"created_at":"2019-07-09 17:05:27.000000","retrieval_collections_ids":[22,23]}')
+    const expectedResponse = {
+      id: 2,
+      jsondata: {},
+      created_at: '2019-07-09 17:05:27.000000',
+      collections: {
+        download: {
+          22: {
+            id: 22,
+            access_method: {
+              type: 'download'
+            },
+            collection_metadata: {},
+            granule_count: 3
+          },
+          23: {
+            id: 23,
+            access_method: {
+              type: 'download'
+            },
+            collection_metadata: {},
+            granule_count: 3
+          }
+        }
+      },
+      links: []
+    }
+    expect(body).toEqual(JSON.stringify(expectedResponse))
     expect(statusCode).toEqual(200)
   })
 

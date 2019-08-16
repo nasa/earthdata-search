@@ -5,8 +5,7 @@ cache:
 script:
   - npm install
   - npm run copy-secrets
-  - npm test
-  # - npm run build
+  - npm run silent-test
 branches:
   only: # Only build master and EDSC-2133. All pull requests also get built
     - master

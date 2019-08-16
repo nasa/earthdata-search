@@ -43,8 +43,6 @@ export default async function processColorMap(event, context) {
   await sqsRecords.forEachAsync(async (sqsRecord) => {
     const { body } = sqsRecord
 
-    console.log('body', body)
-
     const providedColorMap = JSON.parse(body)
 
     console.log('providedColorMap', providedColorMap)

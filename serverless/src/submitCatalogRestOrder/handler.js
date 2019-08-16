@@ -8,6 +8,7 @@ import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
+import { getEmail } from '../util/echoForms/getEmail'
 import { getNameValuePairsForProjections } from '../util/echoForms/getNameValuePairsForProjections'
 import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePairsForResample'
 import { getShapefile } from '../util/echoForms/getShapefile'
@@ -91,12 +92,14 @@ const submitCatalogRestOrder = async (event, context) => {
     // URL used when submitting the order to inform the user where they can retrieve their order status
     const edscStatusUrl = `${getEarthdataConfig(cmrEnv()).edscHost}/data/retrieve/${retrievalId}`
 
-    const { model, url } = accessMethod
+    const { model, url, type } = accessMethod
+
+    console.log('Submitted Model: ', model)
 
     // Retrieve the shapefile if one was provided
-    const { shapefileId } = JSON.parse(jsondata)
+    const { shapefileId } = jsondata
 
-    let shapefileParam
+    let shapefileParam = {}
     if (shapefileId) {
       const shapefileRecord = await dbConnection('shapefiles')
         .first('file')
@@ -107,7 +110,7 @@ const submitCatalogRestOrder = async (event, context) => {
     }
 
     const orderPayload = {
-      FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title),
+      FILE_IDS: granuleResponseBody.map(granuleMetadata => granuleMetadata.title).join(','),
       CLIENT_STRING: `To view the status of your request, please see: ${edscStatusUrl}`,
 
       // Add echo forms keys to the order payload
@@ -117,17 +120,20 @@ const submitCatalogRestOrder = async (event, context) => {
       ...getNameValuePairsForResample(model),
       ...getSubsetDataLayers(model),
       ...getBoundingBox(model),
+      ...getEmail(model),
       ...shapefileParam
     }
 
     // Remove any empty keys
     Object.keys(orderPayload)
-      .forEach(key => (orderPayload[key].length === 0) && delete orderPayload[key])
+      .forEach(key => (orderPayload[key] == null
+        || orderPayload[key].length === 0) && delete orderPayload[key])
 
     try {
       const orderResponse = await request.post({
         uri: url,
         form: orderPayload,
+
         headers: {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId().background
@@ -144,10 +150,12 @@ const submitCatalogRestOrder = async (event, context) => {
       const { order } = agentResponse
       const { orderId } = order
 
+      console.log('agentResponse', agentResponse)
+
       await dbConnection('retrieval_orders').update({ order_number: orderId }).where({ id })
 
       // start the order status check workflow
-      startOrderStatusUpdateWorkflow(orderId, accessTokenWithClient)
+      await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
       console.log(e)
 

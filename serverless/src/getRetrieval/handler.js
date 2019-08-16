@@ -1,8 +1,10 @@
+import { keyBy, groupBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
+import { isLinkType } from '../../../static/src/js/util/isLinkType'
 
 // Knex database connection object
 let dbConnection = null
@@ -30,14 +32,19 @@ export default async function getRetrieval(event, context) {
     dbConnection = await getDbConnection(dbConnection)
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('jsondata', 'retrievals.created_at', 'retrievals.id AS retrieval_id', 'retrieval_collections.id')
+      .select('jsondata',
+        'retrievals.created_at',
+        'retrievals.id AS retrieval_id',
+        'retrieval_collections.id',
+        'retrieval_collections.access_method',
+        'retrieval_collections.collection_metadata',
+        'retrieval_collections.granule_count')
       .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
         'retrievals.id': providedRetrieval,
         'users.urs_id': username
       })
-
 
     if (retrievalResponse !== null && retrievalResponse.length > 0) {
       // Pull out the retrieval data from the first row (they will all be the same due to the join)
@@ -46,11 +53,55 @@ export default async function getRetrieval(event, context) {
       // Top level retrieval data
       const {
         created_at: createdAt,
-        jsondata
+        jsondata,
+        id
       } = retrievalObject
 
-      // Pull out all the ids of the retrieval collections that belong to this retrieval
-      const collectionIds = retrievalResponse.map(collectionRow => collectionRow.id).filter(Boolean)
+      // Gather the additional links before we massage the data below
+      const links = Object.values(retrievalResponse).map((collection) => {
+        const { collection_metadata: collectionMetadata = {} } = collection
+        const { dataset_id: datasetId, links = [] } = collectionMetadata
+
+        const metadataLinks = links.filter((link = {}) => isLinkType(link.rel, 'metadata'))
+
+        // Prevent redundant links
+        const uniqueMetadataLinks = metadataLinks.filter(
+          (thing, index, self) => index === self.findIndex(t => t.href === thing.href)
+        )
+
+        return {
+          dataset_id: datasetId,
+          links: uniqueMetadataLinks
+        }
+      }).filter(linkList => linkList.links.length > 0)
+
+      let collections = {}
+
+      if (id) {
+        collections = groupBy(retrievalResponse, row => row.access_method.type.toLowerCase().replace(/ /g, '_'))
+
+        // strip the body of each collection down to only necessary data instead of the entire result row
+        Object.keys(collections).forEach((collection) => {
+          collections[collection] = collections[collection].map(({
+            id,
+            access_method: accessMethod,
+            collection_metadata: collectionMetadata,
+            granule_count: granuleCount
+          }) => ({
+            id,
+            access_method: accessMethod,
+            collection_metadata: collectionMetadata,
+            granule_count: granuleCount
+          }))
+        })
+
+        // The groupBy above will key the collections array on the order type but will result in
+        // an array, we'll re-key this to be an object, keyed by the collection id for easy lookup
+        Object.keys(collections).forEach((orderType) => {
+          collections[orderType] = keyBy(collections[orderType],
+            collection => collection.id)
+        })
+      }
 
       return {
         isBase64Encoded: false,
@@ -60,7 +111,8 @@ export default async function getRetrieval(event, context) {
           id: providedRetrieval,
           jsondata,
           created_at: createdAt,
-          retrieval_collections_ids: collectionIds
+          collections,
+          links
         })
       }
     }

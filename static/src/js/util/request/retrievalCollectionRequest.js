@@ -9,6 +9,6 @@ export default class RetrievalCollectionRequest extends Request {
   }
 
   fetch(id) {
-    return this.get(`/retrieval_collection/${id}`)
+    return this.get(`/retrieval_collections/${id}`)
   }
 }

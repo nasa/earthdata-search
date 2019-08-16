@@ -16,9 +16,11 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collection: retrievalStatusProps.retrieval.collections.download[0],
+    collection: retrievalStatusProps.retrieval.collections.download[1],
     type: 'download',
+    orderStatus: 'creating',
     onChangePath: jest.fn(),
+    onFetchRetrievalCollection: jest.fn(),
     ...overrideProps
   }
 
@@ -40,21 +42,23 @@ describe('OrderStatusItemBody component', () => {
   describe('ESI Order', () => {
     test('displays the correct state', () => {
       const { enzymeWrapper } = setup({
-        collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
-        type: 'esi'
+        collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
+        type: 'esi',
+        orderStatus: 'in progress'
       })
       expect(enzymeWrapper.find('.order-status-item-body__state').length).toEqual(1)
     })
 
-    describe('Order Info', () => {
-      test('displays the processing status', () => {
+    describe('Aggregated Order Info', () => {
+      test('displays the \'in progress\' status', () => {
         const { enzymeWrapper } = setup({
-          collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
-          type: 'esi'
+          collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
+          type: 'esi',
+          orderStatus: 'in progress'
         })
 
         expect(enzymeWrapper.find('.order-status-item-body__processed').text()).toEqual('1/2 orders complete')
-        expect(enzymeWrapper.find('.order-status-item-body__status').text()).toContain('(44%)')
+        expect(enzymeWrapper.find('.order-status-item-body__status').text()).toEqual('1/2 orders complete (51%)')
       })
     })
 
@@ -62,7 +66,7 @@ describe('OrderStatusItemBody component', () => {
       describe('More Details button', () => {
         test('is displayed', () => {
           const { enzymeWrapper } = setup({
-            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
             type: 'esi'
           })
 
@@ -71,7 +75,7 @@ describe('OrderStatusItemBody component', () => {
 
         test('opens the panel on click', () => {
           const { enzymeWrapper } = setup({
-            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
             type: 'esi'
           })
 
@@ -83,7 +87,7 @@ describe('OrderStatusItemBody component', () => {
       describe('More Details panel', () => {
         describe('on page load', () => {
           const { enzymeWrapper } = setup({
-            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
             type: 'esi'
           })
 
@@ -94,7 +98,7 @@ describe('OrderStatusItemBody component', () => {
 
         describe('after the button is clicked', () => {
           const { enzymeWrapper } = setup({
-            collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+            collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
             type: 'esi'
           })
 
@@ -110,7 +114,7 @@ describe('OrderStatusItemBody component', () => {
 
     describe('Download Links', () => {
       const { enzymeWrapper } = setup({
-        collection: retrievalStatusPropsEsi.retrieval.collections.esi[0],
+        collection: retrievalStatusPropsEsi.retrieval.collections.esi[1],
         type: 'esi'
       })
 
@@ -122,73 +126,76 @@ describe('OrderStatusItemBody component', () => {
         })
       })
     })
-  })
 
-  describe('order status', () => {
-    describe('in progress', () => {
-      test('renders with the correct classname', () => {
-        const { enzymeWrapper } = setup({
-          type: 'echo_orders',
-          collection: {
-            collection_id: 'TEST_COLLECTION_111',
-            collection_metadata: {
-              dataset_id: 'Test Dataset ID'
-            },
-            access_method: {
-              order: {
-                order_status: 'in progress'
+    describe('ECHO Order', () => {
+      describe('in progress', () => {
+        test('renders with the correct classname', () => {
+          const { enzymeWrapper } = setup({
+            type: 'echo_orders',
+            collection: {
+              collection_id: 'TEST_COLLECTION_111',
+              collection_metadata: {
+                dataset_id: 'Test Dataset ID'
+              },
+              access_method: {
+                order: {
+                  order_status: 'in progress'
+                }
               }
-            }
-          }
-        })
+            },
+            orderStatus: 'in progress'
+          })
 
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').length).toEqual(1)
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--success')).toEqual(false)
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--errored')).toEqual(false)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').length).toEqual(1)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--complete')).toEqual(false)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--failed')).toEqual(false)
+        })
       })
-    })
 
-    describe('success', () => {
-      test('renders with the correct classname', () => {
-        const { enzymeWrapper } = setup({
-          type: 'echo_orders',
-          collection: {
-            collection_id: 'TEST_COLLECTION_111',
-            collection_metadata: {
-              dataset_id: 'Test Dataset ID'
-            },
-            access_method: {
-              order: {
-                order_status: 'complete'
+      describe('complete', () => {
+        test('renders with the correct classname', () => {
+          const { enzymeWrapper } = setup({
+            type: 'echo_orders',
+            collection: {
+              collection_id: 'TEST_COLLECTION_111',
+              collection_metadata: {
+                dataset_id: 'Test Dataset ID'
+              },
+              access_method: {
+                order: {
+                  order_status: 'complete'
+                }
               }
-            }
-          }
-        })
+            },
+            orderStatus: 'complete'
+          })
 
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').length).toEqual(1)
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--success')).toEqual(true)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').length).toEqual(1)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--complete')).toEqual(true)
+        })
       })
-    })
 
-    describe('error', () => {
-      test('renders with the correct classname', () => {
-        const { enzymeWrapper } = setup({
-          type: 'echo_orders',
-          collection: {
-            collection_id: 'TEST_COLLECTION_111',
-            collection_metadata: {
-              dataset_id: 'Test Dataset ID'
-            },
-            access_method: {
-              order: {
-                order_status: 'failed'
+      describe('failed', () => {
+        test('renders with the correct classname', () => {
+          const { enzymeWrapper } = setup({
+            type: 'echo_orders',
+            collection: {
+              collection_id: 'TEST_COLLECTION_111',
+              collection_metadata: {
+                dataset_id: 'Test Dataset ID'
+              },
+              access_method: {
+                order: {
+                  order_status: 'failed'
+                }
               }
-            }
-          }
-        })
+            },
+            orderStatus: 'failed'
+          })
 
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').length).toEqual(1)
-        expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--errored')).toEqual(true)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').length).toEqual(1)
+          expect(enzymeWrapper.find('.order-status-item-body__state-display').hasClass('order-status-item-body__state-display--failed')).toEqual(true)
+        })
       })
     })
   })

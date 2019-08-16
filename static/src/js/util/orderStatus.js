@@ -1,21 +1,36 @@
 import { upperFirst } from 'lodash'
 
 export const orderStates = {
-  success: [
+  complete: [
+    'closed',
     'complete'
   ],
-  errored: [
+  failed: [
     'failed',
-    'canceled',
+    'cancelled',
     'cancelling',
     'submit_rejected',
     'submit_failed',
     'quote_rejected',
     'quote_failed',
-    'not_validated'
+    'not_validated',
+    'complete_with_errors',
+    'closed_with_exceptions',
+    'not_found' // Custom EDSC status for orders that aren't found in the DB
   ],
   in_progress: [
-    'in progress'
+    'in progress',
+    'processing',
+    'validated',
+    'quoting',
+    'quoted',
+    'quoted_with_exceptions',
+    'submitting',
+    'submitted_with_exceptions',
+    'processing_with_exceptions'
+  ],
+  creating: [
+    'creating' // Custom EDSC status pertaining to orders before they are submitted
   ]
 }
 
@@ -29,13 +44,36 @@ export const formatOrderStatus = status => status.split('_').map(word => upperFi
 
 
 /**
- * Returns whether or not the order state state is 'errored', 'success', or 'in progress' based on its order status.
+ * Returns whether or not the order state is 'failed', 'complete', or 'in progress' based on its order status.
  * @param {String} status - The current order status
  * @returns {String|False} - A string representing the current state, or false if the state does not match a status.
  */
 export const getStateFromOrderStatus = (status) => {
-  if (orderStates.errored.indexOf(status) > -1) return 'errored'
-  if (orderStates.success.indexOf(status) > -1) return 'success'
-  if (orderStates.in_progress.indexOf(status) > -1) return 'in progress'
+  if (orderStates.failed.indexOf(status.toLowerCase()) > -1) return 'failed'
+  if (orderStates.complete.indexOf(status.toLowerCase()) > -1) return 'complete'
+  if (orderStates.in_progress.indexOf(status.toLowerCase()) > -1) return 'in progress'
+
   return false
+}
+
+/**
+ * Derive an order state from all orders
+ * @param {Array} orders An array of orders
+ */
+export const aggregatedOrderStatus = (orders = []) => {
+  let orderStatus = 'creating'
+
+  if (orders.some(order => getStateFromOrderStatus(order.state) === 'in progress')) {
+    orderStatus = 'in progress'
+  }
+
+  if (orders.every(order => getStateFromOrderStatus(order.state) === 'failed')) {
+    orderStatus = 'failed'
+  }
+
+  if (orders.every(order => getStateFromOrderStatus(order.state) === 'complete')) {
+    orderStatus = 'complete'
+  }
+
+  return orderStatus
 }

@@ -6,14 +6,18 @@ import OrderProgressItem from './OrderProgressItem'
 import './OrderProgressList.scss'
 
 export const OrderProgressList = ({
-  orders
+  orders,
+  totalNumber,
+  totalProcessed
 }) => (
   <ul className="order-progress-list">
     {
       orders.map(order => (
         <OrderProgressItem
-          key={order.order_id}
+          key={order.order_number}
           order={order}
+          totalNumber={totalNumber}
+          totalProcessed={totalProcessed}
         />
       ))
     }
@@ -23,7 +27,9 @@ export const OrderProgressList = ({
 OrderProgressList.propTypes = {
   orders: PropTypes.arrayOf(
     PropTypes.shape({})
-  ).isRequired
+  ).isRequired,
+  totalNumber: PropTypes.number.isRequired,
+  totalProcessed: PropTypes.number.isRequired
 }
 
 export default OrderProgressList

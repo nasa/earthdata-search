@@ -68,6 +68,8 @@ const submitLegacyServicesOrder = async (event, context) => {
       urs_profile: ursProfile
     } = retrievalRecord
 
+    const { type } = accessMethod
+
     try {
       // 1. Submit an empty order
       const emptyOrderResponse = await request.post({
@@ -89,6 +91,8 @@ const submitLegacyServicesOrder = async (event, context) => {
         accessMethod, granuleParams, accessTokenWithClient
       )
 
+      console.log(`Order Items Payload: ${JSON.stringify(orderItemPayload, null, 4)}`)
+
       await request.post({
         uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/order_items/bulk_action`,
         headers: {
@@ -102,6 +106,8 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       // 3. Add contact information
       const userInformationPayload = await constructUserInformationPayload(echoProfile, ursProfile)
+
+      console.log(`User Information Payload: ${JSON.stringify(userInformationPayload, null, 4)}`)
 
       await request.put({
         uri: `${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders/${orderId}/user_information`,
@@ -128,7 +134,7 @@ const submitLegacyServicesOrder = async (event, context) => {
       await dbConnection('retrieval_orders').update({ order_number: orderId }).where({ id })
 
       // start the order status check workflow
-      startOrderStatusUpdateWorkflow(orderId, accessTokenWithClient)
+      await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
       console.log(e)
 

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { echoOrder, esiOrder } from './mocks'
-
 import OrderStatusList from './OrderStatusList'
 import Well from '../Well/Well'
 
@@ -30,31 +28,29 @@ export class OrderStatus extends Component {
   }
 
   render() {
-    const { retrieval = {}, onChangePath } = this.props
+    const { retrieval = {}, onChangePath, onFetchRetrievalCollection } = this.props
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
 
     const { id, collections } = retrieval
 
-    const {
-      download: downloads = [],
-      opendap: opendapOrders = [],
-      echo_orders: echoOrders = [],
-      esi: esiOrders = []
+    let {
+      download: downloads = {},
+      opendap: opendapOrders = {},
+      echo_orders: echoOrders = {},
+      esi: esiOrders = {}
     } = collections
+
+    downloads = Object.values(downloads)
+    opendapOrders = Object.values(opendapOrders)
+    echoOrders = Object.values(echoOrders)
+    esiOrders = Object.values(esiOrders)
 
     // Combine the two types of orders that are direct download into a single heading
     const downloadableOrders = [
       ...downloads,
       ...opendapOrders
     ]
-
-    // TODO: Remove this placeholder for echo orders. Currently the order status is being pulled from collection_metadata.order_status.
-    // eslint-disable-next-line no-constant-condition
-    if (false && echoOrder) echoOrders.push(echoOrder)
-
-    // eslint-disable-next-line no-constant-condition
-    if (false && esiOrder) esiOrders.push(esiOrder)
 
     const introduction = (
       <p>
@@ -81,6 +77,7 @@ export class OrderStatus extends Component {
                     collections={downloadableOrders}
                     type="download"
                     onChangePath={onChangePath}
+                    onFetchRetrievalCollection={onFetchRetrievalCollection}
                   />
                 )
               }
@@ -90,8 +87,9 @@ export class OrderStatus extends Component {
                     heading="Stage For Delivery"
                     introduction={"When the data for the following orders becomes available, an email containing download links will be sent to the address you've provided."}
                     collections={echoOrders}
-                    type="echo_order"
+                    type="echo_orders"
                     onChangePath={onChangePath}
+                    onFetchRetrievalCollection={onFetchRetrievalCollection}
                   />
                 )
               }
@@ -103,49 +101,56 @@ export class OrderStatus extends Component {
                     collections={esiOrders}
                     type="esi"
                     onChangePath={onChangePath}
+                    onFetchRetrievalCollection={onFetchRetrievalCollection}
                   />
                 )
               }
             </Well.Section>
-            <Well.Heading>Additional Resources and Documentation</Well.Heading>
-            <Well.Section>
-              <ul className="order-status__links">
-                {
-                  links.map((link, i) => {
-                    const { datasetId, links } = link
-                    return (
-                      <li
-                        // eslint-disable-next-line react/no-array-index-key
-                        key={`${datasetId}_${i}`}
-                        className="order-status__links-item"
-                      >
-                        <h3 className="order-status__links-title">{datasetId}</h3>
-                        <ul className="order-status__collection-links">
-                          {
-                            links.map((link) => {
-                              const { href } = link
-                              return (
-                                <li
-                                  key={href}
-                                  className="order-status__collection-links-item"
-                                >
-                                  <a
-                                    href={href}
-                                    className="order-status__collection-link"
-                                  >
-                                    {href}
-                                  </a>
-                                </li>
-                              )
-                            })
-                          }
-                        </ul>
-                      </li>
-                    )
-                  })
-                }
-              </ul>
-            </Well.Section>
+            {
+              (links && links.length > 0) && (
+                <>
+                  <Well.Heading>Additional Resources and Documentation</Well.Heading>
+                  <Well.Section>
+                    <ul className="order-status__links">
+                      {
+                        links.map((link, i) => {
+                          const { dataset_id: datasetId, links } = link
+                          return (
+                            <li
+                              // eslint-disable-next-line react/no-array-index-key
+                              key={`${datasetId}_${i}`}
+                              className="order-status__links-item"
+                            >
+                              <h3 className="order-status__links-title">{datasetId}</h3>
+                              <ul className="order-status__collection-links">
+                                {
+                                  links.map((link) => {
+                                    const { href } = link
+                                    return (
+                                      <li
+                                        key={href}
+                                        className="order-status__collection-links-item"
+                                      >
+                                        <a
+                                          href={href}
+                                          className="order-status__collection-link"
+                                        >
+                                          {href}
+                                        </a>
+                                      </li>
+                                    )
+                                  })
+                                }
+                              </ul>
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </Well.Section>
+                </>
+              )
+            }
           </Well.Main>
           <Well.Footer>
             <Well.Heading>Next Steps</Well.Heading>
@@ -189,7 +194,8 @@ OrderStatus.propTypes = {
   onFetchRetrieval: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
-  onChangePath: PropTypes.func.isRequired
+  onChangePath: PropTypes.func.isRequired,
+  onFetchRetrievalCollection: PropTypes.func.isRequired
 }
 
 export default OrderStatus

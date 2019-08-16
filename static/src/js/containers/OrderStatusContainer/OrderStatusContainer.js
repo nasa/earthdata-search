@@ -14,7 +14,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onFetchRetrieval:
-    (orderId, authToken) => dispatch(actions.fetchRetrieval(orderId, authToken)),
+    retrievalId => dispatch(actions.fetchRetrieval(retrievalId)),
+  onFetchRetrievalCollection:
+    retrievalCollectionId => dispatch(
+      actions.fetchRetrievalCollection(retrievalCollectionId)
+    ),
   onChangePath:
     path => dispatch(actions.changePath(path))
 })
@@ -24,6 +28,7 @@ export const OrderStatusContainer = ({
   match,
   onChangePath,
   onFetchRetrieval,
+  onFetchRetrievalCollection,
   retrieval
 }) => (
   <OrderStatus
@@ -31,15 +36,17 @@ export const OrderStatusContainer = ({
     match={match}
     onChangePath={onChangePath}
     onFetchRetrieval={onFetchRetrieval}
+    onFetchRetrievalCollection={onFetchRetrievalCollection}
     retrieval={retrieval}
   />
 )
 
 OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onFetchRetrieval: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
+  onFetchRetrieval: PropTypes.func.isRequired,
+  onFetchRetrievalCollection: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }
 

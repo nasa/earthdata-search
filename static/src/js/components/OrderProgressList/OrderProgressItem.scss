@@ -28,11 +28,11 @@
     color: $color__white;
     background-color: $color__indigo;
 
-    &--success {
+    &--complete {
       background-color: $color__green;
     }
 
-    &--errored {
+    &--failed {
       background-color: $color__red;
     }
   }

@@ -167,50 +167,71 @@ describe('fetchRetrieval', () => {
         jsondata: {
           test: 'data'
         },
-        collections: [
-          {
-            collection_id: '12345-TEST',
-            access_method: {
-              type: 'download'
+        collections: {
+          download: {
+            1: {
+              collection_id: '12345-TEST',
+              access_method: {
+                type: 'download'
+              },
+              collection_metadata: {
+                dataset_id: 'Test one',
+                links: [
+                  {
+                    href: 'http://link.com/12345-TEST/test-href',
+                    hreflang: 'en-US',
+                    rel: 'http://link.com/12345-TEST/test-rel/metadata#'
+                  },
+                  {
+                    href: 'http://link.com/12345-TEST/test-href/somethingelse',
+                    hreflang: 'en-US',
+                    rel: 'http://link.com/12345-TEST/test-rel/somethingelse#'
+                  }
+                ]
+              }
             },
-            collection_metadata: {
-              dataset_id: 'Test one',
-              links: [
-                {
-                  href: 'http://link.com/12345-TEST/test-href',
-                  hreflang: 'en-US',
-                  rel: 'http://link.com/12345-TEST/test-rel/metadata#'
-                },
-                {
-                  href: 'http://link.com/12345-TEST/test-href/somethingelse',
-                  hreflang: 'en-US',
-                  rel: 'http://link.com/12345-TEST/test-rel/somethingelse#'
-                }
-              ]
-            }
-          },
-          {
-            collection_id: '67890-TEST',
-            access_method: {
-              type: 'download'
-            },
-            collection_metadata: {
-              dataset_id: 'Test two',
-              links: [
-                {
-                  href: 'http://link.com/67890-TEST/test-href',
-                  hreflang: 'en-US',
-                  rel: 'http://link.com/67890-TEST/test-rel/metadata#'
-                },
-                {
-                  href: 'http://link.com/67890-TEST/test-href/somethingelse',
-                  hreflang: 'en-US',
-                  rel: 'http://link.com/67890-TEST/test-rel/somethingelse#'
-                }
-              ]
+            2: {
+              collection_id: '67890-TEST',
+              access_method: {
+                type: 'download'
+              },
+              collection_metadata: {
+                dataset_id: 'Test two',
+                links: [
+                  {
+                    href: 'http://link.com/67890-TEST/test-href',
+                    hreflang: 'en-US',
+                    rel: 'http://link.com/67890-TEST/test-rel/metadata#'
+                  },
+                  {
+                    href: 'http://link.com/67890-TEST/test-href/somethingelse',
+                    hreflang: 'en-US',
+                    rel: 'http://link.com/67890-TEST/test-rel/somethingelse#'
+                  }
+                ]
+              }
             }
           }
-        ]
+        },
+        links: [{
+          datasetId: 'Test one',
+          links: [
+            {
+              href: 'http://link.com/12345-TEST/test-href',
+              hreflang: 'en-US',
+              rel: 'http://link.com/12345-TEST/test-rel/metadata#'
+            }
+          ]
+        }, {
+          datasetId: 'Test two',
+          links: [
+            {
+              href: 'http://link.com/67890-TEST/test-href',
+              hreflang: 'en-US',
+              rel: 'http://link.com/67890-TEST/test-rel/metadata#'
+            }
+          ]
+        }]
       },
       headers: {}
     })
@@ -264,8 +285,8 @@ describe('fetchRetrieval', () => {
       expect(store.getActions()[0]).toEqual({
         payload: {
           collections: {
-            download: [
-              {
+            download: {
+              1: {
                 access_method: {
                   type: 'download'
                 },
@@ -284,9 +305,10 @@ describe('fetchRetrieval', () => {
                       rel: 'http://link.com/12345-TEST/test-rel/somethingelse#'
                     }
                   ]
-                }
+                },
+                isLoaded: true
               },
-              {
+              2: {
                 access_method: {
                   type: 'download'
                 },
@@ -305,12 +327,10 @@ describe('fetchRetrieval', () => {
                       rel: 'http://link.com/67890-TEST/test-rel/somethingelse#'
                     }
                   ]
-                }
+                },
+                isLoaded: true
               }
-            ],
-            echo_orders: [],
-            esi: [],
-            opendap: []
+            }
           },
           environment: 'prod',
           id: 7,
