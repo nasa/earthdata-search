@@ -25,7 +25,7 @@ export class OrderStatusItem extends PureComponent {
           } catch (e) {
             console.log(e)
           }
-        }, 20000)
+        }, 60000)
       }
     }
   }
