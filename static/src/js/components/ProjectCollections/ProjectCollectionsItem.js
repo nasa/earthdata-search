@@ -6,12 +6,12 @@ import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
 import TruncateText from 'react-truncate-text'
 
-import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 import Button from '../Button/Button'
 
 import './ProjectCollectionsItem.scss'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
+import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 
 /**
  * Renders ProjectCollectionItem.
@@ -75,49 +75,23 @@ const ProjectCollectionItem = ({
             {title}
           </TruncateText>
         </Button>
-        <Dropdown className="dropdown--carat-right dropdown--condensed project-collections-item__more-actions">
-          <Dropdown.Toggle
-            className="project-collections-item__more-actions-toggle"
-            as={ToggleMoreActions}
-          />
-          <Dropdown.Menu
-            className="project-collections-item__more-actions-menu"
-            alignRight
-            size="sm"
+
+        <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
+          <Dropdown.Item
+            className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
+            onClick={() => onToggleCollectionVisibility(collectionId)}
           >
-            <Dropdown.Item
-              className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
-              onClick={() => onToggleCollectionVisibility(collectionId)}
-            >
-              <i className={`project-collections-item__more-actions-icon fa fa-${isVisible ? 'eye-slash' : 'eye'}`} />
-              Toggle Visibility
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
-              onClick={() => onRemoveCollectionFromProject(collectionId)}
-            >
-              <i className="project-collections-item__more-actions-icon fa fa-times-circle" />
-              Remove
-            </Dropdown.Item>
-            {
-              handoffLinks.length > 0 && (
-                <Dropdown.Header>Open collection in:</Dropdown.Header>
-              )
-            }
-            {
-              handoffLinks.length > 0 && handoffLinks.map(link => (
-                <Dropdown.Item
-                  key={link.title}
-                  className="link link--external collection-details-header__more-actions-item collection-details-header__more-actions-vis"
-                  href={link.href}
-                  target="_blank"
-                >
-                  {link.title}
-                </Dropdown.Item>
-              ))
-            }
-          </Dropdown.Menu>
-        </Dropdown>
+            <i className={`project-collections-item__more-actions-icon fa fa-${isVisible ? 'eye-slash' : 'eye'}`} />
+            Toggle Visibility
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
+            onClick={() => onRemoveCollectionFromProject(collectionId)}
+          >
+            <i className="project-collections-item__more-actions-icon fa fa-times-circle" />
+            Remove
+          </Dropdown.Item>
+        </MoreActionsDropdown>
       </div>
       <ul className="project-collections-item__stats-list">
         <li

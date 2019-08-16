@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Badge, Dropdown } from 'react-bootstrap'
+import { Badge } from 'react-bootstrap'
 
-import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
+import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 
 import './CollectionDetailsHeader.scss'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
@@ -40,36 +40,7 @@ export const CollectionDetailsHeader = ({ focusedCollectionMetadata, collectionS
           </div>
         </div>
 
-        {
-          handoffLinks.length > 0 && (
-            <div className="col-auto align-self-end">
-              <Dropdown className="dropdown--carat-right dropdown--condensed collection-details-header__more-actions">
-                <Dropdown.Toggle
-                  className="collection-details-header__more-actions-toggle"
-                  as={ToggleMoreActions}
-                />
-                <Dropdown.Menu
-                  className="collection-details-header__more-actions-menu"
-                  alignRight
-                >
-                  <Dropdown.Header>Open collection in:</Dropdown.Header>
-                  {
-                    handoffLinks.map(link => (
-                      <Dropdown.Item
-                        key={link.title}
-                        className="link link--external collection-details-header__more-actions-item collection-details-header__more-actions-vis"
-                        href={link.href}
-                        target="_blank"
-                      >
-                        {link.title}
-                      </Dropdown.Item>
-                    ))
-                  }
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          )
-        }
+        <MoreActionsDropdown className="col-auto align-self-end" handoffLinks={handoffLinks} />
       </div>
     </div>
   )

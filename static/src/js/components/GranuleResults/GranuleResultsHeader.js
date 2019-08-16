@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { OverlayTrigger, Tooltip, Dropdown } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionTitle } from './skeleton'
 
 import './GranuleResultsHeader.scss'
-import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
+import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 
 /**
  * Renders GranuleResultsHeader.
@@ -104,36 +104,8 @@ class GranuleResultsHeader extends Component {
               </Link>
             </div>
           </div>
-          {
-              handoffLinks.length > 0 && (
-                <div className="col-auto align-self-start">
-                  <Dropdown className="dropdown--carat-right dropdown--condensed granule-results-header__more-actions">
-                    <Dropdown.Toggle
-                      className="granule-results-header__more-actions-toggle"
-                      as={ToggleMoreActions}
-                    />
-                    <Dropdown.Menu
-                      className="granule-results-header__more-actions-menu"
-                      alignRight
-                    >
-                      <Dropdown.Header>Open collection in:</Dropdown.Header>
-                      {
-                        handoffLinks.map(link => (
-                          <Dropdown.Item
-                            key={link.title}
-                            className="link link--external granule-results-header__more-actions-item granule-results-header__more-actions-vis"
-                            href={link.href}
-                            target="_blank"
-                          >
-                            { link.title }
-                          </Dropdown.Item>
-                        ))
-                      }
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-              )
-            }
+
+          <MoreActionsDropdown className="col-auto align-self-end" handoffLinks={handoffLinks} />
         </div>
         <div className="row">
           <div className="col">

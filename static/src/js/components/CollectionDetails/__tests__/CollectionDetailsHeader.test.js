@@ -1,9 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Badge, Dropdown } from 'react-bootstrap'
+import { Badge } from 'react-bootstrap'
 import { collectionDetailsBodyProps } from './mocks'
 import CollectionDetailsHeader from '../CollectionDetailsHeader'
+import { MoreActionsDropdown } from '../../MoreActionsDropdown/MoreActionsDropdown'
 
 // TODO: Write more tests
 
@@ -35,8 +36,6 @@ describe('CollectionDetails component', () => {
     expect(enzymeWrapper.find(Badge).length).toEqual(2)
     expect(enzymeWrapper.find(Badge).at(0).text()).toEqual('1860_1993_2050_NITROGEN_830')
     expect(enzymeWrapper.find(Badge).at(1).text()).toEqual('Version 1')
-    expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
-    expect(enzymeWrapper.find(Dropdown.Item).length).toEqual(1)
-    expect(enzymeWrapper.find(Dropdown.Item).text()).toEqual('Giovanni')
+    expect(enzymeWrapper.find(MoreActionsDropdown).length).toEqual(1)
   })
 })
