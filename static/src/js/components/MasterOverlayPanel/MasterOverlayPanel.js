@@ -52,6 +52,7 @@ class MasterOverlayPanel extends PureComponent {
   }
 
   componentWillUnmount() {
+    this.onMasterOverlayPanelToggle()
     window.addEventListener('resize', this.onWindowResize)
   }
 

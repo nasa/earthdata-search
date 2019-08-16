@@ -30,6 +30,8 @@ const ProjectCollectionItem = ({
   onSetActivePanel,
   projectCollection
 }) => {
+  if (!collection) return null
+
   const {
     granules,
     isVisible,
@@ -127,9 +129,13 @@ const ProjectCollectionItem = ({
   )
 }
 
+ProjectCollectionItem.defaultProps = {
+  collection: undefined
+}
+
 ProjectCollectionItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  collection: PropTypes.shape({}).isRequired,
+  collection: PropTypes.shape({}),
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,

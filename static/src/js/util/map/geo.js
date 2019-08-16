@@ -598,3 +598,13 @@ export const dividePolygon = (latlngs) => {
     boundaries
   }
 }
+
+// Takes an array of lat/lon pairs and returns array of objects with lat/lon keys
+// input: ['10,0','20,10']
+// output: [{ lat: 0, lng: 10 }, { lat: 10, lng: 20 }]
+export const getShape = points => points.map(pointStr => L.latLng(pointStr.split(',').reverse()))
+
+// Splits a string of points on every other comma
+// input: '10,0,20,10'
+// output: ['10,0','20,10']
+export const splitListOfPoints = points => points.match(/[^,]+,[^,]+/g)

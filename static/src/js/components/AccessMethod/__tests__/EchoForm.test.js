@@ -14,6 +14,7 @@ function setup() {
     methodKey: '',
     rawModel: '',
     shapefileId: null,
+    spatial: {},
     onUpdateAccessMethod: jest.fn()
   }
 
@@ -48,7 +49,7 @@ describe('EchoForm component', () => {
       expect(enzymeWrapper.instance().$el.echoforms.mock.calls.length).toBe(1)
       expect(enzymeWrapper.instance().$el.echoforms.mock.calls).toEqual([['destroy']])
       expect(enzymeWrapper.instance().initializeEchoForm.mock.calls.length).toBe(1)
-      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0]).toEqual([echoForm, rawModel, methodKey, null])
+      expect(enzymeWrapper.instance().initializeEchoForm.mock.calls[0]).toEqual([echoForm, rawModel, methodKey, {}, null])
     })
   })
 
