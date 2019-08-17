@@ -36,6 +36,7 @@ export default async function getRetrieval(event, context) {
         'retrievals.created_at',
         'retrievals.id AS retrieval_id',
         'retrieval_collections.id',
+        'retrieval_collections.collection_id',
         'retrieval_collections.access_method',
         'retrieval_collections.collection_metadata',
         'retrieval_collections.granule_count')
@@ -85,11 +86,13 @@ export default async function getRetrieval(event, context) {
           collections[collection] = collections[collection].map(({
             id,
             access_method: accessMethod,
+            collection_id: collectionId,
             collection_metadata: collectionMetadata,
             granule_count: granuleCount
           }) => ({
             id,
             access_method: accessMethod,
+            collection_id: collectionId,
             collection_metadata: collectionMetadata,
             granule_count: granuleCount
           }))
