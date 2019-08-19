@@ -11,14 +11,18 @@ export const OrderDropdownList = ({
 }) => (
   <ul className="order-dropdown-list">
     {
-      orders.map((order, i) => (
-        <OrderDropdownItem
-          key={order.order_number}
-          i={i}
-          order={order}
-          totalOrders={totalOrders}
-        />
-      ))
+      orders.map((order, i) => {
+        const { order_number: orderNumber } = order
+
+        return (
+          <OrderDropdownItem
+            key={orderNumber}
+            i={i}
+            order={order}
+            totalOrders={totalOrders}
+          />
+        )
+      })
     }
   </ul>
 )

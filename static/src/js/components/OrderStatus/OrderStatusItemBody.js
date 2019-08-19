@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 
-import { getStateFromOrderStatus, formatOrderStatus } from '../../util/orderStatus'
+import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 
 import Button from '../Button/Button'
 import ButtonDropdown from '../ButtonDropdown/ButtonDropdown'

@@ -40,7 +40,7 @@ describe('OrderStatus component', () => {
   describe('Downloadable Orders', () => {
     test('renders correct status classname', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.hasClass('order-status-item--in-progress')).toEqual(false)
+      expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
       expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
       expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
     })
@@ -69,7 +69,7 @@ describe('OrderStatus component', () => {
             isLoaded: true
           }
         })
-        expect(enzymeWrapper.hasClass('order-status-item--in-progress')).toEqual(true)
+        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
       })
     })
 
@@ -145,7 +145,7 @@ describe('OrderStatus component', () => {
             isLoaded: true
           }
         })
-        expect(enzymeWrapper.hasClass('order-status-item--in-progress')).toEqual(true)
+        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
       })
     })
 

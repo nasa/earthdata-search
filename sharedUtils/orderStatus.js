@@ -1,3 +1,4 @@
+import AWS from 'aws-sdk'
 import { upperFirst } from 'lodash'
 
 export const orderStates = {
@@ -21,6 +22,7 @@ export const orderStates = {
   in_progress: [
     'in progress',
     'processing',
+    'pending',
     'validated',
     'quoting',
     'quoted',
@@ -35,13 +37,36 @@ export const orderStates = {
 }
 
 /**
+ * Initiate an order status workflow
+ * @param {String} orderId Database ID for an order to retrieve
+ * @param {String} accessToken CMR access token
+ */
+export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, orderType) => {
+  try {
+    const stepfunctions = new AWS.StepFunctions()
+
+    const stepFunctionResponse = await stepfunctions.startExecution({
+      stateMachineArn: process.env.updateOrderStatusStateMachineArn,
+      input: JSON.stringify({
+        id: orderId,
+        accessToken,
+        orderType
+      })
+    }).promise()
+
+    console.log(`State Machine Invocation (Order ID: ${orderId}): `, stepFunctionResponse)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+/**
  * Remove underscores, uppercase first letter, then add spaces back. This relies on multi worder statuses to look
  * like 'not_validated' which would output 'Not Validated'.
  * @param {String} status - The current order status
  * @returns {String} - The formatted order status.
  */
 export const formatOrderStatus = status => status.split('_').map(word => upperFirst(word)).join(' ')
-
 
 /**
  * Returns whether or not the order state is 'failed', 'complete', or 'in progress' based on its order status.
@@ -51,7 +76,7 @@ export const formatOrderStatus = status => status.split('_').map(word => upperFi
 export const getStateFromOrderStatus = (status) => {
   if (orderStates.failed.indexOf(status.toLowerCase()) > -1) return 'failed'
   if (orderStates.complete.indexOf(status.toLowerCase()) > -1) return 'complete'
-  if (orderStates.in_progress.indexOf(status.toLowerCase()) > -1) return 'in progress'
+  if (orderStates.in_progress.indexOf(status.toLowerCase()) > -1) return 'in_progress'
 
   return false
 }
@@ -63,7 +88,7 @@ export const getStateFromOrderStatus = (status) => {
 export const aggregatedOrderStatus = (orders = []) => {
   let orderStatus = 'creating'
 
-  if (orders.some(order => getStateFromOrderStatus(order.state) === 'in progress')) {
+  if (orders.some(order => getStateFromOrderStatus(order.state) === 'in_progress')) {
     orderStatus = 'in progress'
   }
 

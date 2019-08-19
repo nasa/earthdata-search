@@ -4,7 +4,7 @@ import { parse as parseXml } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getClientId } from '../../../sharedUtils/config'
-import { normalizeCatalogRestOrderStatus } from '../util/orderStatus'
+import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // Knex database connection object
@@ -91,7 +91,7 @@ const fetchCatalogRestOrder = async (input) => {
   return {
     accessToken,
     id,
-    orderStatus: normalizeCatalogRestOrderStatus(order),
+    orderStatus: getStateFromOrderStatus(status),
     orderType
   }
 }

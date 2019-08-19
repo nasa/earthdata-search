@@ -7,7 +7,7 @@ import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
  * @param {object} state Current Redux State
  * @returns Parameters used in submitRetrieval()
  */
-export const prepareOrderParams = (state) => {
+export const prepareRetrievalParams = (state) => {
   const {
     authToken,
     metadata = {},
@@ -60,4 +60,4 @@ export const prepareOrderParams = (state) => {
   }
 }
 
-export default prepareOrderParams
+export default prepareRetrievalParams

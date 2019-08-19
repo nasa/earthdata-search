@@ -32,7 +32,9 @@ function setup() {
     onUpdateSortOrder: jest.fn(),
     searchValue: 'searchValue',
     sortOrder: 'sortOrder',
-    collectionSearch: {}
+    collectionSearch: {},
+    onToggleSecondaryOverlayPanel: jest.fn(),
+    secondaryOverlayPanel: {}
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeaderContainer {...props} />)

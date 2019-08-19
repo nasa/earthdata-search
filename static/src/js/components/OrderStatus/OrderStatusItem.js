@@ -2,14 +2,18 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { getStateFromOrderStatus, aggregatedOrderStatus } from '../../util/orderStatus'
+import { getStateFromOrderStatus, aggregatedOrderStatus } from '../../../../../sharedUtils/orderStatus'
 import OrderStatusItemBody from './OrderStatusItemBody'
 
 import './OrderStatusItem.scss'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 export class OrderStatusItem extends PureComponent {
   componentDidMount() {
     const { collection, onFetchRetrievalCollection, type } = this.props
+
+    // TODO: Add a second value and refresh at different intervals for the different types of orders
+    const { orderStatusRefreshTime } = getApplicationConfig()
 
     if (collection && !['download', 'opendap'].includes(type)) {
       const { id } = collection
@@ -18,14 +22,14 @@ export class OrderStatusItem extends PureComponent {
         // Fetch the retrieval collection before waiting for the interval
         onFetchRetrievalCollection(id)
 
-        // Start refreshing the retrieval collection every 20 seconds
+        // Start refreshing the retrieval collection
         setInterval(() => {
           try {
             onFetchRetrievalCollection(id)
           } catch (e) {
             console.log(e)
           }
-        }, 60000)
+        }, orderStatusRefreshTime)
       }
     }
   }
@@ -56,7 +60,7 @@ export class OrderStatusItem extends PureComponent {
         'order-status-item',
         {
           'order-status-item--complete': hasStatus && getStateFromOrderStatus(orderStatus) === 'complete',
-          'order-status-item--in-progress': hasStatus && getStateFromOrderStatus(orderStatus) === 'in progress',
+          'order-status-item--in_progress': hasStatus && getStateFromOrderStatus(orderStatus) === 'in_progress',
           'order-status-item--failed': hasStatus && getStateFromOrderStatus(orderStatus) === 'failed'
         }
       )

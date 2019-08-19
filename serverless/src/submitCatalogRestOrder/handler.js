@@ -17,7 +17,7 @@ import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { startOrderStatusUpdateWorkflow } from '../util/orderStatus'
+import { startOrderStatusUpdateWorkflow } from '../../../sharedUtils/orderStatus'
 
 
 // Knex database connection object
@@ -133,7 +133,6 @@ const submitCatalogRestOrder = async (event, context) => {
       const orderResponse = await request.post({
         uri: url,
         form: orderPayload,
-
         headers: {
           'Echo-Token': accessTokenWithClient,
           'Client-Id': getClientId().background
@@ -150,11 +149,9 @@ const submitCatalogRestOrder = async (event, context) => {
       const { order } = agentResponse
       const { orderId } = order
 
-      console.log('agentResponse', agentResponse)
-
       await dbConnection('retrieval_orders').update({ order_number: orderId }).where({ id })
 
-      // start the order status check workflow
+      // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
       console.log(e)

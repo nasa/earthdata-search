@@ -11,6 +11,7 @@ function setup() {
     temporalSearch: {},
     timeline: { intervals: {}, query: {}, state: {} },
     showOverrideModal: false,
+    focusedCollection: '',
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn()
