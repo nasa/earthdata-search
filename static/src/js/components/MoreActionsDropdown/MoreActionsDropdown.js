@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 
 export const MoreActionsDropdown = ({
+  alignRight,
   children,
   className,
   handoffLinks
@@ -27,7 +28,7 @@ export const MoreActionsDropdown = ({
         />
         <Dropdown.Menu
           className="more-actions-dropdown__menu"
-          alignRight
+          alignRight={alignRight}
         >
           {children}
           {
@@ -56,12 +57,15 @@ export const MoreActionsDropdown = ({
 }
 
 MoreActionsDropdown.defaultProps = {
+  // TODO: Should default this to false, but need to update styles with respect to the carrot
+  alignRight: true,
   children: null,
   className: null,
   handoffLinks: []
 }
 
 MoreActionsDropdown.propTypes = {
+  alignRight: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
   handoffLinks: PropTypes.shape({})

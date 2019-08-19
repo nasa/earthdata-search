@@ -104,8 +104,7 @@ class GranuleResultsHeader extends Component {
               </Link>
             </div>
           </div>
-
-          <MoreActionsDropdown className="col-auto align-self-end" handoffLinks={handoffLinks} />
+          <MoreActionsDropdown className="col-auto" handoffLinks={handoffLinks} />
         </div>
         <div className="row">
           <div className="col">
