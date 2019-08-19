@@ -37,17 +37,25 @@ const mapDispatchToProps = dispatch => ({
   onApplyGranuleFilters:
     (focusedCollection, values, closePanel) => dispatch(
       actions.applyGranuleFilters(focusedCollection, values, closePanel)
-    ),
-  onGetGranules:
-    () => dispatch(actions.getGranules()),
-  onToggleSecondaryOverlayPanel:
-    state => dispatch(actions.toggleSecondaryOverlayPanel(state)),
-  onUpdateCollectionGranuleFilters:
-    (id, granuleFilters) => dispatch(actions.updateCollectionGranuleFilters(id, granuleFilters)),
-  onUpdateGranuleQuery:
-    state => dispatch(actions.updateGranuleQuery(state))
+    )
 })
 
+/**
+ * Renders GranuleFiltersPanelContainer.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collections - The collections.
+ * @param {String} props.focusedCollection - The focused collection id.
+ * @param {Object} props.temporal - The query temporal.
+ * @param {Function} props.onApplyGranuleFilters - Callback function to apply the granule filters.
+ * @param {Object} props.errors - Form errors provided by Formik.
+ * @param {Function} props.handleBlur - Callback function provided by Formik.
+ * @param {Function} props.handleChange - Callback function provided by Formik.
+ * @param {Object} props.metadata - The focused collection metadata.
+ * @param {Object} props.values - Form values provided by Formik.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Function} props.setFieldTouched - Callback function provided by Formik.
+ * @param {Object} props.touched - Form state provided by Formik.
+ */
 export class GranuleFiltersPanelContainer extends Component {
   constructor(props) {
     super(props)

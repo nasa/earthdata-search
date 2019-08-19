@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 
 import './GranuleFiltersHeader.scss'
 
+/**
+ * Renders GranuleFiltersHeader.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.datasetId - The title of the focused collection.
+ */
 export const GranuleFiltersHeader = ({
   datasetId
 }) => (

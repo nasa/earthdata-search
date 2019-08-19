@@ -5,6 +5,12 @@ import Button from '../Button/Button'
 
 import './GranuleFiltersActions.scss'
 
+/**
+ * Renders GranuleFiltersActions.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.onApplyClick - Callback function to apply the granule filters.
+ * @param {Object} props.onClearClick - Callback function to clear the granule filters.
+ */
 export const GranuleFiltersActions = ({
   isValid,
   onApplyClick,

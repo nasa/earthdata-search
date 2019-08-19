@@ -6,6 +6,15 @@ import Button from '../Button/Button'
 
 import './SecondaryOverlayPanel.scss'
 
+/**
+ * Renders SecondaryOverlayPanel.
+ * @param {Object} props - The props passed into the component.
+ * @param {Node} props.body - The panel body.
+ * @param {Node} props.header - The panel header.
+ * @param {Node} props.footer - The panel footer.
+ * @param {Boolean} props.isOpen - Determines if the panel should be open.
+ * @param {Function} props.onToggleSecondaryOverlayPanel - Callback function to toggle the panel.
+ */
 export const SecondaryOverlayPanel = ({
   body,
   header,

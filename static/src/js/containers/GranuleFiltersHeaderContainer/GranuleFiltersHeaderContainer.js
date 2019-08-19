@@ -11,6 +11,13 @@ const mapStateToProps = state => ({
   focusedCollection: state.focusedCollection
 })
 
+
+/**
+ * Renders GranuleFiltersHeaderContainer.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collections - The collections.
+ * @param {String} props.focusedCollection - The focused collection id.
+ */
 export const GranuleFiltersHeaderContainer = ({
   collections,
   focusedCollection

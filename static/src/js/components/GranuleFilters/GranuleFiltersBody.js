@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * Renders GranuleFiltersBody.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.granuleFiltersForm - The granule filters form.
+ */
 export const GranuleFiltersBody = ({
   granuleFiltersForm
 }) => (

@@ -3,6 +3,13 @@ import PropTypes from 'prop-types'
 
 import './GranuleFiltersItem.scss'
 
+/**
+ * Renders GranuleFiltersItem.
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.description - A description of the granule filter.
+ * @param {String} props.heading - The heading for the granule filter.
+ * @param {Node} props.children - The granule filter form element.
+ */
 export const GranuleFiltersItem = ({
   description,
   heading,

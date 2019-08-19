@@ -9,6 +9,18 @@ import GranuleFiltersList from './GranuleFiltersList'
 import GranuleFiltersItem from './GranuleFiltersItem'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
 
+/**
+ * Renders GranuleFiltersForm.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.errors - Form errors provided by Formik.
+ * @param {Function} props.handleBlur - Callback function provided by Formik.
+ * @param {Function} props.handleChange - Callback function provided by Formik.
+ * @param {Object} props.metadata - The focused collection metadata.
+ * @param {Object} props.values - Form values provided by Formik.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Function} props.setFieldTouched - Callback function provided by Formik.
+ * @param {Object} props.touched - Form state provided by Formik.
+ */
 export const GranuleFiltersForm = (props) => {
   const {
     errors,
