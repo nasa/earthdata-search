@@ -124,7 +124,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
 
     onChangeQuery({
       collection: {
-        temporal: ''
+        temporal: {}
       }
     })
   }

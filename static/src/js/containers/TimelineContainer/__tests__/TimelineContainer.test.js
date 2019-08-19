@@ -59,7 +59,8 @@ describe('TimelineContainer component', () => {
       ...props,
       onChangeProjectQuery: undefined,
       collections: undefined,
-      focusedCollection: undefined,
+      focusedCollection: 'collectionId',
+      granuleFilterTemporal: {},
       pathname: undefined,
       project: undefined,
       collectionMetadata: {
@@ -96,7 +97,8 @@ describe('TimelineContainer component', () => {
       onChangeProjectQuery: undefined,
       onChangeQuery: props.onChangeProjectQuery,
       collections: undefined,
-      focusedCollection: undefined,
+      focusedCollection: 'collectionId',
+      granuleFilterTemporal: {},
       pathname: undefined,
       project: undefined,
       collectionMetadata: {

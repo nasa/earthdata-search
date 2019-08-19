@@ -95,7 +95,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
       collection: {
-        temporal: ''
+        temporal: {}
       }
     })
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)

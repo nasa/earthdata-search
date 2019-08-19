@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import Moment from 'moment'
+import moment from 'moment'
 
 const dateFormat = 'YYYY-MM-DDTHH:m:s.SSSZ'
 
@@ -63,9 +63,35 @@ export function maxLessThanMin(value) {
  */
 export function startBeforeEnd(value) {
   const endDate = this.resolve(Yup.ref('endDate'))
-  const momentEndVal = Moment(endDate, dateFormat, true)
-  const momentStartVal = Moment(value, dateFormat, true)
+  const momentEndVal = moment(endDate, dateFormat, true)
+  const momentStartVal = moment(value, dateFormat, true)
   if (!value) return true
   if (momentStartVal && !endDate) return true
   return momentStartVal.isBefore(momentEndVal)
+}
+
+/**
+ * Checks to see if the value sits within two values
+ * @param {String} value - The field value to be validatated
+ * @param {String} startDate - The starting value to compare with
+ * @param {String} endDate - The ending value to compare with
+ * @returns {Boolean} The result
+ */
+export function dateOutsideRange(value, startDate, endDate) {
+  // const endDate = this.resolve(Yup.ref('endDate'))
+  const momentVal = moment(value, dateFormat, true)
+  const momentStartVal = moment(startDate, dateFormat, true)
+  const momentEndVal = moment(endDate, dateFormat, true)
+
+  if (!value) return true
+
+  if (startDate) {
+    if (!momentVal.isSame(momentStartVal) && !momentVal.isAfter(momentStartVal)) return false
+  }
+
+  if (endDate) {
+    if (!momentVal.isSame(momentEndVal) && !momentVal.isBefore(momentEndVal)) return false
+  }
+
+  return true
 }

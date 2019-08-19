@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 
 import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
 import {
+  dateOutsideRange,
   nullableValue,
   nullableTemporal,
   minLessThanMax,
@@ -28,7 +29,8 @@ import actions from '../../actions'
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
-  focusedCollection: state.focusedCollection
+  focusedCollection: state.focusedCollection,
+  temporal: state.query.collection.temporal
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -116,7 +118,10 @@ export class GranuleFiltersPanelContainer extends Component {
   }
 }
 
-const ValidationSchema = () => {
+const ValidationSchema = (props) => {
+  const { temporal = {} } = props
+  const { startDate = '', endDate = '' } = temporal
+
   const errors = {
     cloudCover: {
       invalidNumber: 'Enter a valid number',
@@ -128,7 +133,11 @@ const ValidationSchema = () => {
     },
     temporal: {
       invalidStartDate: 'Enter a valid start date',
-      invalidEndDate: 'Enter a valid end date'
+      invalidEndDate: 'Enter a valid end date',
+      // eslint-disable-next-line no-template-curly-in-string
+      outsideRange: '${path} is outside current temporal range',
+      // eslint-disable-next-line no-template-curly-in-string
+      startBeforeEnd: '${path} should be before End'
     }
   }
 
@@ -159,11 +168,16 @@ const ValidationSchema = () => {
         .transform(nullableTemporal)
         .nullable()
         // eslint-disable-next-line no-template-curly-in-string
-        .test('start-before-end', '${path} should be before End', startBeforeEnd),
+        .test('start-before-end', errors.temporal.startBeforeEnd, startBeforeEnd)
+
+        .test('inside-global-temporal', errors.temporal.outsideRange, value => dateOutsideRange(value, startDate, endDate)),
       endDate: Yup.date()
+        .label('End')
         .typeError(errors.temporal.invalidEndDate)
         .transform(nullableTemporal)
         .nullable()
+        // eslint-disable-next-line no-template-curly-in-string
+        .test('inside-global-temporal', errors.temporal.outsideRange, value => dateOutsideRange(value, startDate, endDate))
     })
   })
 }
