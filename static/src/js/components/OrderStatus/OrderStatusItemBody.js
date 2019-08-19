@@ -223,7 +223,8 @@ export class OrderStatusItemBody extends React.Component {
               className="order-status-item-body__button order-status-item-body__button--more-details"
               bootstrapVariant="primary"
               bootstrapSize="sm"
-              label="View Browse Image Links"
+              label="More Details"
+              disabled={totalNumber === 0}
               onClick={this.onDetailsToggle}
             >
               More Details

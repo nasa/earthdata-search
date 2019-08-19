@@ -23,14 +23,35 @@ export class OrderStatusItem extends PureComponent {
         onFetchRetrievalCollection(id)
 
         // Start refreshing the retrieval collection
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
           try {
-            onFetchRetrievalCollection(id)
+            this.shouldRefresh()
           } catch (e) {
             console.log(e)
           }
         }, orderStatusRefreshTime)
       }
+    }
+  }
+
+  shouldRefresh() {
+    const {
+      collection,
+      onFetchRetrievalCollection
+    } = this.props
+
+    const {
+      id,
+      orders = []
+    } = collection
+
+    const orderStatus = aggregatedOrderStatus(orders)
+
+    // If the order is in a terminal state stop asking for order status
+    if (['complete', 'failed'].includes(orderStatus)) {
+      clearInterval(this.intervalId)
+    } else {
+      onFetchRetrievalCollection(id)
     }
   }
 
