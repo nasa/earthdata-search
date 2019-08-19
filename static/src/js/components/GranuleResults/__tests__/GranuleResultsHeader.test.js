@@ -29,6 +29,8 @@ function setup(overrideProps) {
     secondaryOverlayPanel: {
       isOpen: false
     },
+    onToggleSecondaryOverlayPanel: jest.fn(),
+    secondaryOverlayPanel: {},
     ...overrideProps
   }
 

@@ -3,7 +3,7 @@ import request from 'request-promise'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
-import { normalizeLegacyServicesOrderStatus } from '../util/orderStatus'
+import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
 // Knex database connection object
@@ -85,7 +85,7 @@ const fetchLegacyServicesOrder = async (input) => {
   return {
     accessToken,
     id,
-    orderStatus: normalizeLegacyServicesOrderStatus(order),
+    orderStatus: getStateFromOrderStatus(state),
     orderType
   }
 }

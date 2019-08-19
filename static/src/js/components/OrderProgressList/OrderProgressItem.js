@@ -5,7 +5,7 @@ import { kebabCase } from 'lodash'
 
 import { Badge, ProgressBar } from 'react-bootstrap'
 
-import { getStateFromOrderStatus, formatOrderStatus } from '../../util/orderStatus'
+import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 
 import './OrderProgressItem.scss'
 
@@ -43,7 +43,7 @@ export const OrderProgressItem = ({
         </h5>
         <div className="order-progress-item__info">
           <span className="order-progress-item__processed">
-            { `${totalProcessed} of ${totalNumber} granule(s) processed (${totalPercentProcessed}%)`}
+            {`${totalProcessed} of ${totalNumber} granule(s) processed (${totalPercentProcessed}%)`}
           </span>
           <Badge
             className={badgeClass}

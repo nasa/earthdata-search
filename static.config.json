@@ -4,7 +4,8 @@
     "thumbnailSize": {
       "height": 85,
       "width": 85
-    }
+    },
+    "orderStatusRefreshTime": 60000
   },
   "environment": {
     "test": {

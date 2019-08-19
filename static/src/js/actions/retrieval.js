@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router'
-import prepareOrderParams from '../util/orders'
+import prepareRetrievalParams from '../util/retrievals'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
@@ -13,7 +13,7 @@ export const updateRetrieval = retrievalData => ({
  * Submit data representing a Retrieval to be stored in the database
  */
 export const submitRetrieval = () => (dispatch, getState) => {
-  const orderParams = prepareOrderParams(getState())
+  const orderParams = prepareRetrievalParams(getState())
   const { authToken } = orderParams
 
   const requestObject = new RetrievalRequest(authToken)

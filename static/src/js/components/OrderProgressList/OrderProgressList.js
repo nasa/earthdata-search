@@ -12,14 +12,18 @@ export const OrderProgressList = ({
 }) => (
   <ul className="order-progress-list">
     {
-      orders.map(order => (
-        <OrderProgressItem
-          key={order.order_number}
-          order={order}
-          totalNumber={totalNumber}
-          totalProcessed={totalProcessed}
-        />
-      ))
+      orders.map((order) => {
+        const { order_number: orderNumber } = order
+
+        return (
+          <OrderProgressItem
+            key={orderNumber}
+            order={order}
+            totalNumber={totalNumber}
+            totalProcessed={totalProcessed}
+          />
+        )
+      })
     }
   </ul>
 )

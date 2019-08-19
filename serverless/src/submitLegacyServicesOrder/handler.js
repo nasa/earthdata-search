@@ -7,7 +7,7 @@ import { constructOrderPayload } from './constructOrderPayload'
 import { constructUserInformationPayload } from './constructUserInformationPayload'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
-import { startOrderStatusUpdateWorkflow } from '../util/orderStatus'
+import { startOrderStatusUpdateWorkflow } from '../../../sharedUtils/orderStatus'
 
 // Knex database connection object
 let dbConnection = null
@@ -133,7 +133,7 @@ const submitLegacyServicesOrder = async (event, context) => {
 
       await dbConnection('retrieval_orders').update({ order_number: orderId }).where({ id })
 
-      // start the order status check workflow
+      // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessTokenWithClient, type)
     } catch (e) {
       console.log(e)
