@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import moment from 'moment'
+// import moment from 'moment'
 
-import Alert from 'react-bootstrap/Alert'
+// import Alert from 'react-bootstrap/Alert'
 import Dropdown from 'react-bootstrap/Dropdown'
-import Form from 'react-bootstrap/Form'
+// import Form from 'react-bootstrap/Form'
 
 import Button from '../Button/Button'
-import Datepicker from './Datepicker'
+import TemporalSelection from '../TemporalSelection/TemporalSelection'
 
 import './TemporalSelectionDropdown.scss'
 
@@ -27,6 +27,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
 
     this.state = {
       open: false,
+      disabled: false,
       temporal: {
         endDate: '',
         startDate: ''
@@ -39,6 +40,8 @@ export default class TemporalSelectionDropdown extends PureComponent {
     this.onDropdownToggle = this.onDropdownToggle.bind(this)
     this.setEndDate = this.setEndDate.bind(this)
     this.setStartDate = this.setStartDate.bind(this)
+    this.onValid = this.onValid.bind(this)
+    this.onInvalid = this.onInvalid.bind(this)
   }
 
 
@@ -121,15 +124,33 @@ export default class TemporalSelectionDropdown extends PureComponent {
 
     onChangeQuery({
       collection: {
-        temporal: ''
+        temporal: {}
       }
     })
   }
 
   /**
-   * Set the startDate prop
-   * @param {moment} startDate - The moment object representing the startDate
+   * Disables the submit button
    */
+  onInvalid() {
+    this.setState({
+      disabled: true
+    })
+  }
+
+  /**
+   * Disables the submit button
+   */
+  onValid() {
+    this.setState({
+      disabled: false
+    })
+  }
+
+  /**
+ * Set the startDate prop
+ * @param {moment} startDate - The moment object representing the startDate
+ */
   setStartDate(startDate) {
     const {
       temporal
@@ -162,48 +183,12 @@ export default class TemporalSelectionDropdown extends PureComponent {
     })
   }
 
-  /**
-   * Check the start and end dates and return an object containing any applicable errors
-   * @param {object} temporal - An object containing temporal values
-   */
-  checkTemporal(temporal) {
-    const start = moment.utc(temporal.startDate, 'YYYY-MM-DDTHH:m:s.SSSZ', true)
-    const end = moment.utc(temporal.endDate, 'YYYY-MM-DDTHH:m:s.SSSZ', true)
-    const value = {
-      invalidEndDate: false,
-      invalidStartDate: false,
-      startAfterEnd: false
-    }
-
-    if (temporal && temporal.startDate && temporal.endDate) {
-      if (end.isBefore(start)) {
-        value.startAfterEnd = true
-      }
-    }
-
-    if (temporal && temporal.startDate) {
-      value.invalidStartDate = !start.isValid()
-    }
-
-    if (temporal && temporal.endDate) {
-      value.invalidEndDate = !end.isValid()
-    }
-
-    return value
-  }
-
   render() {
     const {
+      disabled,
       open,
       temporal
     } = this.state
-
-    const temporalState = this.checkTemporal(temporal)
-    const disabled = (
-      temporalState.startAfterEnd
-      || temporalState.invalidStartDate
-      || temporalState.invalidEndDate
-    )
 
     const classes = {
       btnApply: classNames(
@@ -213,14 +198,6 @@ export default class TemporalSelectionDropdown extends PureComponent {
       btnCancel: classNames(
         'temporal-selection-dropdown__button',
         'temporal-selection-dropdown__button--cancel'
-      ),
-      inputStart: classNames(
-        'temporal-selection-dropdown__input-group',
-        'temporal-selection-dropdown__input-group--start'
-      ),
-      inputEnd: classNames(
-        'temporal-selection-dropdown__input-group',
-        'temporal-selection-dropdown__input-group--end'
       )
     }
 
@@ -235,55 +212,14 @@ export default class TemporalSelectionDropdown extends PureComponent {
           <i className="fa fa-clock-o" />
         </Dropdown.Toggle>
         <Dropdown.Menu className="temporal-selection-dropdown__menu">
-          <div className="temporal-selection-dropdown__inputs">
-            <Form.Group controlId="temporal-form__start-date" className={classes.inputStart}>
-              <Form.Label className="temporal-selection-dropdown__label">
-                Start
-              </Form.Label>
-              <Datepicker
-                id="temporal-form__start-date"
-                onSubmit={value => this.setStartDate(value)}
-                type="start"
-                value={temporal.startDate}
-              />
-            </Form.Group>
-            <Form.Group controlId="temporal-form__end-date" className={classes.inputEnd}>
-              <Form.Label className="temporal-selection-dropdown__label">
-                End
-              </Form.Label>
-              <Datepicker
-                id="temporal-form__end-date"
-                onSubmit={value => this.setEndDate(value)}
-                type="end"
-                value={temporal.endDate}
-              />
-            </Form.Group>
-          </div>
-          <Alert show={temporalState.startAfterEnd} variant="danger">
-            <strong>Start</strong>
-            {' '}
-            must be no later than
-            {' '}
-            <strong>End</strong>
-          </Alert>
-          <Alert
-            variant="danger"
-            show={
-              temporalState.invalidStartDate || temporalState.invalidEndDate
-            }
-          >
-            Invalid
-            {` ${temporalState.invalidStartDate ? 'start' : 'end'} ` }
-            date
-          </Alert>
-          <Form.Group controlId="temporal-form__recurring">
-            <Form.Check>
-              <Form.Check.Input type="checkbox" />
-              <Form.Check.Label className="temporal-selection-dropdown__label">
-                Recurring?
-              </Form.Check.Label>
-            </Form.Check>
-          </Form.Group>
+          <TemporalSelection
+            controlId="temporal-selection-dropdown"
+            temporal={temporal}
+            onSubmitStart={value => this.setStartDate(value)}
+            onSubmitEnd={value => this.setEndDate(value)}
+            onValid={this.onValid}
+            onInvalid={this.onInvalid}
+          />
           <div>
             <Button
               className={classes.btnApply}

@@ -37,12 +37,18 @@ const ProjectCollectionItem = ({
     isVisible,
     metadata
   } = collection
+
   const {
-    dataset_id: title,
-    granule_count: granuleCount
+    dataset_id: title
   } = metadata
-  const { totalSize = {} } = granules
+
+  const {
+    hits: granuleHits,
+    totalSize = {}
+  } = granules
+
   const { size = '', unit = '' } = totalSize
+
   const isValid = isAccessMethodValid(projectCollection)
 
   const className = classNames([
@@ -52,7 +58,6 @@ const ProjectCollectionItem = ({
       'project-collections-item--is-valid': isValid
     }
   ])
-
 
   return (
     <li style={{ borderLeftColor: color }} className={className}>
@@ -98,7 +103,7 @@ const ProjectCollectionItem = ({
         <li
           className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
         >
-          {`${abbreviate(granuleCount, 1)} Granules`}
+          {`${abbreviate(granuleHits, 1)} Granules`}
         </li>
         <li
           className="project-collections-item__stats-item project-collections-item__stats-item--total-size"

@@ -1,7 +1,7 @@
 import { decodeUrlParams, encodeUrlQuery } from '../url'
 import projections from '../../map/projections'
 
-import emptyDecodedResult from './url.test'
+import { emptyDecodedResult } from './url.mocks'
 
 describe('url#decodeUrlParams', () => {
   test('decodes map correctly', () => {

@@ -1,0 +1,17 @@
+.form-control-basic {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+  background-color: transparent;
+  background-clip: initial;
+
+  &.is-invalid {
+    padding: 0;
+    background-image: none;
+    border: none;
+  }
+}

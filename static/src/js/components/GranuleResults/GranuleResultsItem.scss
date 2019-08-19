@@ -47,6 +47,8 @@
     height: 5.2rem;
     width: 5.2rem;
     background-color: $color__black--900;
+    overflow: hidden;
+    font-size: 0.5rem;
   }
 
   &__thumb-image {

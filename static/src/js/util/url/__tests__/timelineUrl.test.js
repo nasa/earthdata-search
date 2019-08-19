@@ -1,6 +1,6 @@
 import { decodeUrlParams, encodeUrlQuery } from '../url'
 
-import emptyDecodedResult from './url.test'
+import { emptyDecodedResult } from './url.mocks'
 
 describe('url#decodeUrlParams', () => {
   test('decodes timelineQuery correctly without a focused date', () => {

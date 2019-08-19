@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
-import { difference } from 'lodash'
+import { difference, isEqual } from 'lodash'
 
 import '../../../../../node_modules/edsc-timeline/dist/edsc-timeline.min'
 import { timelineIntervals } from '../../util/timeline'
@@ -47,20 +47,24 @@ class Timeline extends Component {
     this.$el.on('temporalchange.timeline', this.handleTemporalSet)
     this.$el.on('rangechange.timeline', this.handleRangeChange)
     this.$el.on('focuschange.timeline', this.handleFocusChange)
+    this.$el.on('rowtemporalchange.timeline', this.handleRowTemporalChange)
 
     this.$el.trigger('rangechange.timeline')
   }
 
   componentWillReceiveProps(nextProps) {
     const {
+      granuleFilterTemporal: oldGranuleFilterTemporal,
       temporalSearch: oldTemporalSearch,
       timeline: oldTimeline
     } = this.props
 
     const {
       collectionMetadata: nextCollectionMetadata,
+      focusedCollection: nextFocusedCollection,
       temporalSearch: nextTemporalSearch,
-      timeline: nextTimeline
+      timeline: nextTimeline,
+      granuleFilterTemporal: nextGranuleFilterTemporal
     } = nextProps
 
     const {
@@ -170,6 +174,12 @@ class Timeline extends Component {
           .indexOf(collectionId)))
       }
     })
+
+    // If there is a granule filter temporal set, add the data for the focused collection
+    if (!isEqual(oldGranuleFilterTemporal, nextGranuleFilterTemporal)) {
+      const { startDate = '', endDate = '' } = nextGranuleFilterTemporal
+      this.setTimelineRowTemporal(nextFocusedCollection, { startDate, endDate })
+    }
   }
 
   componentWillUnmount() {
@@ -180,7 +190,7 @@ class Timeline extends Component {
 
   /**
    * Set temporal values in the timeline, causes the orange 'fenceposts' to appear
-   * @param {string} temporalSearch String with `start,end` temporal values
+   * @param {Object} temporalSearch - An object containing dates with the shape { startDate, endDate }
    */
   setTimelineTemporal(temporalSearch) {
     const { endDate, startDate } = temporalSearch
@@ -192,6 +202,24 @@ class Timeline extends Component {
       this.$el.timeline('setTemporal', [[rangeStart, rangeEnd]])
     } else {
       this.$el.timeline('setTemporal', [])
+    }
+  }
+
+  /**
+ * Set row specific temporal values in the timeline, causes the orange 'fenceposts' to appear. This will override the
+ * global temporal range for the focused collection
+ * @param {Object} temporalSearch - An object containing dates with the shape { startDate, endDate }
+ */
+  setTimelineRowTemporal(id, temporalSearch) {
+    const { endDate, startDate } = temporalSearch
+
+    if (startDate || endDate) {
+      const rangeStart = startDate ? new Date(startDate) : new Date(earliestStart)
+      const rangeEnd = endDate ? new Date(endDate) : new Date()
+
+      this.$el.timeline('setRowTemporal', id, [[rangeStart, rangeEnd]])
+    } else {
+      this.$el.timeline('setRowTemporal', id, [])
     }
   }
 
@@ -223,7 +251,6 @@ class Timeline extends Component {
       this.$el.timeline('data', collectionId, data)
     }
   }
-
 
   /**
    * Set the center of the timeline
@@ -416,13 +443,16 @@ class Timeline extends Component {
 }
 
 Timeline.defaultProps = {
-  collectionMetadata: {}
+  collectionMetadata: {},
+  granuleFilterTemporal: {}
 }
 
 Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}),
+  focusedCollection: PropTypes.string.isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({}).isRequired,
+  granuleFilterTemporal: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,

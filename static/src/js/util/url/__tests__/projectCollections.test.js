@@ -1,6 +1,6 @@
 import { decodeUrlParams, encodeUrlQuery } from '../url'
 
-import emptyDecodedResult from './url.test'
+import { emptyDecodedResult } from './url.mocks'
 
 describe('url#decodeUrlParams', () => {
   test('decodes project collections correctly', () => {
@@ -12,7 +12,9 @@ describe('url#decodeUrlParams', () => {
           collectionId1: {
             excludedGranuleIds: [],
             isVisible: false,
+            isCwic: undefined,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
@@ -20,7 +22,9 @@ describe('url#decodeUrlParams', () => {
           collectionId2: {
             excludedGranuleIds: [],
             isVisible: false,
+            isCwic: undefined,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
@@ -43,16 +47,20 @@ describe('url#decodeUrlParams', () => {
         byId: {
           collectionId1: {
             excludedGranuleIds: [],
+            isCwic: undefined,
             isVisible: false,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
+            isCwic: undefined,
             isVisible: false,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
@@ -77,6 +85,7 @@ describe('url#decodeUrlParams', () => {
             excludedGranuleIds: [],
             isVisible: false,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
@@ -86,6 +95,7 @@ describe('url#decodeUrlParams', () => {
             isCwic: false,
             isVisible: true,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}

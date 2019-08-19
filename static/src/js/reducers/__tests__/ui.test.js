@@ -9,7 +9,8 @@ import {
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
-  TOGGLE_SHAPEFILE_UPLOAD_MODAL
+  TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_SECONDARY_OVERLAY_PANEL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -38,6 +39,9 @@ const initialState = {
     isOpen: false
   },
   relatedUrlsModal: {
+    isOpen: false
+  },
+  secondaryOverlayPanel: {
     isOpen: false
   },
   shapefileUploadModal: {
@@ -267,20 +271,36 @@ describe('TOGGLE_RELATED_URLS_MODAL', () => {
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
   })
+})
 
-  describe('TOGGLE_SHAPEFILE_UPLOAD_MODAL', () => {
-    test('returns the correct state', () => {
-      const action = {
-        type: TOGGLE_SHAPEFILE_UPLOAD_MODAL,
-        payload: true
-      }
+describe('TOGGLE_SHAPEFILE_UPLOAD_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+      payload: true
+    }
 
-      const expectedState = {
-        ...initialState,
-        shapefileUploadModal: { isOpen: true }
-      }
+    const expectedState = {
+      ...initialState,
+      shapefileUploadModal: { isOpen: true }
+    }
 
-      expect(uiReducer(undefined, action)).toEqual(expectedState)
-    })
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_SECONDARY_OVERLAY_PANEL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_SECONDARY_OVERLAY_PANEL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      secondaryOverlayPanel: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
   })
 })

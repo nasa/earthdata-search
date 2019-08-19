@@ -1,4 +1,5 @@
 import isNumber from '../isNumber'
+import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEncoders'
 
 /**
  * Encode a list of Granule IDs
@@ -86,8 +87,7 @@ export const encodeCollections = (props) => {
   const pgParameter = []
   if (byId) {
     pParameter.split('!').forEach((collectionId, index) => {
-      const pg = {}
-
+      let pg = {}
 
       // if the focusedCollection is also in projectIds, don't encode the focusedCollection
       if (index === 0 && projectIds.indexOf(focusedCollection) !== -1) {
@@ -106,6 +106,7 @@ export const encodeCollections = (props) => {
       const {
         excludedGranuleIds = [],
         granules,
+        granuleFilters,
         isVisible,
         isCwic
       } = collection
@@ -121,7 +122,10 @@ export const encodeCollections = (props) => {
       // Collection visible, don't encode the focusedCollection
       if (index !== 0 && isVisible) pg.v = 't'
 
-      // TODO: Encode granule filters
+      // Add the granule encoded granule filters
+      if (granuleFilters) {
+        pg = { ...pg, ...encodeGranuleFilters(granuleFilters) }
+      }
 
       pgParameter[index] = pg
     })
@@ -167,8 +171,10 @@ export const decodeCollections = (params) => {
     if (index === 0) focusedCollection = collectionId
 
     let granuleIds = []
+    let granuleFilters = {}
     let isCwic
     let isVisible = false
+
     if (pg && pg[index]) {
       // Excluded Granules
       ({ isCwic, granuleIds } = decodedExcludeGranules(pg[index]))
@@ -176,14 +182,16 @@ export const decodeCollections = (params) => {
       // Collection visible
       const { v: visible = '' } = pg[index]
       if (visible === 't') isVisible = true
-    }
 
-    // TODO: Decode granule filters
+      // Granule Filters
+      granuleFilters = decodeGranuleFilters(pg[index])
+    }
 
     // Populate the collection object for the redux store
     byId[collectionId] = {
       excludedGranuleIds: granuleIds,
       granules: {},
+      granuleFilters,
       isCwic,
       isVisible,
       metadata: {},
