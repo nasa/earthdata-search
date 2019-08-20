@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
 
+import { mbr } from '../../util/map/mbr'
+
 import '../../../../../node_modules/edsc-echoforms/dist/jquery.echoforms-full.min'
 import './EchoForm.scss'
 
@@ -14,6 +16,7 @@ class EchoForm extends Component {
 
   componentDidMount() {
     const {
+      spatial,
       form,
       rawModel,
       methodKey,
@@ -23,7 +26,7 @@ class EchoForm extends Component {
     // Initialize the timeline plugin
     this.$el = $(this.el)
 
-    this.initializeEchoForm(form, rawModel, methodKey, shapefileId)
+    this.initializeEchoForm(form, rawModel, methodKey, spatial, shapefileId)
 
     this.$el.on('echoforms:modelchange', this.syncModel)
   }
@@ -34,6 +37,7 @@ class EchoForm extends Component {
       methodKey
     } = this.props
     const {
+      spatial,
       form: nextForm,
       methodKey: nextMethodKey,
       rawModel: nextRawModel,
@@ -43,12 +47,31 @@ class EchoForm extends Component {
     if (form !== nextForm && methodKey !== nextMethodKey) {
       this.$el.echoforms('destroy')
 
-      this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey, shapefileId)
+      this.initializeEchoForm(nextForm, nextRawModel, nextMethodKey, spatial, shapefileId)
     }
   }
 
   componentWillUnmount() {
     this.$el.echoforms('destroy')
+  }
+
+  /**
+   * Finds the minimum bounding rectangle for the given spatial constraints
+   * @param {Object} spatial Spatial object from the redux store
+   */
+  getMbr(spatial) {
+    // if there is no spatial, return undefined
+    if (!spatial) return undefined
+    const { point, boundingBox, polygon } = spatial
+    if (!point && !boundingBox && !polygon) return undefined
+
+    const [south, west, north, east] = mbr(spatial)
+    return {
+      BBOX_SOUTH: south,
+      BBOX_WEST: west,
+      BBOX_NORTH: north,
+      BBOX_EAST: east
+    }
   }
 
   /**
@@ -58,10 +81,12 @@ class EchoForm extends Component {
    * @param {String} rawModel Non-pruned serialized EchoForm data
    * @param {String} methodKey Redux store access method key, to be passed to syncModel to ensure the correct access method is updated in the store
    */
-  initializeEchoForm(form, rawModel, methodKey, shapefileId) {
+  initializeEchoForm(form, rawModel, methodKey, spatial, shapefileId) {
     const echoForm = this.insertModelIntoForm(rawModel, form)
 
-    if (echoForm) this.$el.echoforms({ form: echoForm })
+    const spatialMbr = this.getMbr(spatial)
+
+    if (echoForm) this.$el.echoforms({ form: echoForm, prepopulate: spatialMbr })
 
     this.updateFormWithShapefile(shapefileId)
 
@@ -143,6 +168,7 @@ EchoForm.propTypes = {
   methodKey: PropTypes.string.isRequired,
   rawModel: PropTypes.string,
   shapefileId: PropTypes.string,
+  spatial: PropTypes.shape({}).isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired
 }
 

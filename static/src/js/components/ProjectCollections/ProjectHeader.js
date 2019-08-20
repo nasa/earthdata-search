@@ -31,6 +31,8 @@ export class ProjectHeader extends Component {
     let size = 0
     projectIds.forEach((collectionId) => {
       const collection = byId[collectionId]
+      if (!collection) return
+
       const { granules } = collection
       const { hits, totalSize: granuleSize } = granules
 

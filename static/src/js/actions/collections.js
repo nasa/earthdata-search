@@ -1,3 +1,5 @@
+import { isPlainObject } from 'lodash'
+
 import CollectionRequest from '../util/request/collectionRequest'
 import {
   buildCollectionSearchParams,
@@ -19,7 +21,8 @@ import {
   ERRORED_FACETS,
   STARTED_COLLECTIONS_TIMER,
   FINISHED_COLLECTIONS_TIMER,
-  RESTORE_COLLECTIONS
+  RESTORE_COLLECTIONS,
+  UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../constants/actionTypes'
 import { getProjectCollections } from './project'
 
@@ -84,6 +87,40 @@ export const restoreCollections = payload => (dispatch) => {
   })
   dispatch(getProjectCollections())
 }
+
+/**
+ * Update the granule filters for the collection. Here we prune off any values that are not truthy,
+ * as well as any objects that contain only falsy values.
+ * @param {String} id - The id for the collection to update.
+ * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
+ */
+export const updateCollectionGranuleFilters = (id, granuleFilters) => (dispatch) => {
+  const prunedFilters = Object.keys(granuleFilters).reduce((obj, key) => {
+    const newObj = obj
+
+    // If the value is not an object, only add the key if the value is truthy. This removes
+    // any unset values
+    if (!isPlainObject(granuleFilters[key])) {
+      if (granuleFilters[key]) {
+        newObj[key] = granuleFilters[key]
+      }
+    } else if (Object.values(granuleFilters[key]).some(key => !!key)) {
+      // Otherwise, only add an object if it contains at least one truthy value
+      newObj[key] = granuleFilters[key]
+    }
+
+    return newObj
+  }, {})
+
+  dispatch({
+    type: UPDATE_COLLECTION_GRANULE_FILTERS,
+    payload: {
+      id,
+      granuleFilters: prunedFilters
+    }
+  })
+}
+
 
 /**
  * Perform a collections request based on the current redux state.

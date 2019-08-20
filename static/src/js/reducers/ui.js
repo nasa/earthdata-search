@@ -9,6 +9,7 @@ import {
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SELECTING_NEW_GRID,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL
 } from '../constants/actionTypes'
@@ -40,6 +41,9 @@ const initialState = {
   },
   grid: {
     selectingNewGrid: false
+  },
+  secondaryOverlayPanel: {
+    isOpen: false
   },
   shapefileUploadModal: {
     isOpen: false
@@ -140,6 +144,14 @@ const uiReducer = (state = initialState, action) => {
         map: {
           ...map,
           drawingNewLayer: action.payload
+        }
+      }
+    }
+    case TOGGLE_SECONDARY_OVERLAY_PANEL: {
+      return {
+        ...state,
+        secondaryOverlayPanel: {
+          isOpen: action.payload
         }
       }
     }

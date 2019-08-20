@@ -6,7 +6,7 @@ import GranuleResultsHeader from '../GranuleResultsHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     focusedCollectionMetadata: {
       collectionId: {
@@ -19,12 +19,17 @@ function setup() {
     location: {
       search: '?test=search-value'
     },
+    onToggleSecondaryOverlayPanel: jest.fn(),
     onUpdateSortOrder: jest.fn(),
     onUpdateSearchValue: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
     sortOrder: 'start_date_newest_first',
     searchValue: 'searchValue',
-    collectionSearch: {}
+    collectionSearch: {},
+    secondaryOverlayPanel: {
+      isOpen: false
+    },
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<GranuleResultsHeader {...props} />)
@@ -147,5 +152,51 @@ describe('handleUndoExcludeGranule', () => {
 
     expect(props.onUndoExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.onUndoExcludeGranule).toHaveBeenCalledWith('collectionId')
+  })
+})
+
+describe('granuleFilters link', () => {
+  describe('when filters are not active', () => {
+    test('displays correct icon when filters are not active', () => {
+      const { enzymeWrapper } = setup({
+        secondaryOverlayPanel: {
+          isOpen: false
+        }
+      })
+      expect(enzymeWrapper.find('.granule-results-header__link').at(1).prop('icon')).toEqual('filter')
+    })
+
+    test('fires the correct callback on click', () => {
+      const { enzymeWrapper, props } = setup({
+        secondaryOverlayPanel: {
+          isOpen: false
+        }
+      })
+      enzymeWrapper.find('.granule-results-header__link').at(1).simulate('click')
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(true)
+    })
+  })
+
+  describe('when filters are not active', () => {
+    test('displays correct icon when filters are active', () => {
+      const { enzymeWrapper } = setup({
+        secondaryOverlayPanel: {
+          isOpen: true
+        }
+      })
+      expect(enzymeWrapper.find('.granule-results-header__link').at(1).prop('icon')).toEqual('times')
+    })
+
+    test('fires the correct callback on click', () => {
+      const { enzymeWrapper, props } = setup({
+        secondaryOverlayPanel: {
+          isOpen: true
+        }
+      })
+      enzymeWrapper.find('.granule-results-header__link').at(1).simulate('click')
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledTimes(1)
+      expect(props.onToggleSecondaryOverlayPanel).toHaveBeenCalledWith(false)
+    })
   })
 })

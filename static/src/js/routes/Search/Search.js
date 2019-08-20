@@ -37,6 +37,8 @@ import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleDetailsHeaderContainer
   from '../../containers/GranuleDetailsHeaderContainer/GranuleDetailsHeaderContainer'
+import GranuleFiltersPanelContainer
+  from '../../containers/GranuleFiltersPanelContainer/GranuleFiltersPanelContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SidebarContainer
@@ -92,6 +94,7 @@ export class Search extends Component {
                 actions={<GranuleResultsActionsContainer />}
                 body={<GranuleResultsBodyContainer />}
               />
+              <GranuleFiltersPanelContainer />
             </Route>
             <Route exact path="/search/granules/granule-details">
               <MasterOverlayPanelContainer

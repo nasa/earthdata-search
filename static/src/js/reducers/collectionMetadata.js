@@ -6,7 +6,8 @@ import {
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
   UPDATE_PROJECT_GRANULES,
-  TOGGLE_COLLECTION_VISIBILITY
+  TOGGLE_COLLECTION_VISIBILITY,
+  UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -40,6 +41,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
           formattedMetadata
         } = collection
         byId[id] = {
+          ...collection,
           excludedGranuleIds,
           granules: {},
           metadata,
@@ -61,23 +63,29 @@ const collectionMetadataReducer = (state = initialState, action) => {
       }
       action.payload.forEach((collection, index) => {
         const [collectionId] = Object.keys(collection)
-        const { metadata, ummMetadata, formattedMetadata } = action.payload[index][collectionId]
+        const {
+          metadata,
+          ummMetadata,
+          formattedMetadata,
+          isCwic
+        } = action.payload[index][collectionId]
 
         if (state.allIds.indexOf(collectionId) === -1) allIds.push(collectionId)
 
         let excludedGranuleIds = []
-        let isCwic = false
         let isVisible = true
+        let granuleFilters = {}
         if (state.byId[collectionId]) {
           ({
             excludedGranuleIds,
-            isCwic,
-            isVisible
+            isVisible,
+            granuleFilters
           } = state.byId[collectionId])
         }
         byId[collectionId] = {
           excludedGranuleIds,
           granules: {},
+          granuleFilters,
           isCwic,
           isVisible,
           metadata,
@@ -172,6 +180,20 @@ const collectionMetadataReducer = (state = initialState, action) => {
           [action.payload]: {
             ...state.byId[action.payload],
             isVisible: !state.byId[action.payload].isVisible
+          }
+        }
+      }
+    }
+    case UPDATE_COLLECTION_GRANULE_FILTERS: {
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload.id]: {
+            ...state.byId[action.payload.id],
+            granuleFilters: {
+              ...action.payload.granuleFilters
+            }
           }
         }
       }

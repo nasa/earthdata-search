@@ -13,6 +13,8 @@ const mapDispatchToProps = dispatch => ({
     collectionId => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
     collectionId => dispatch(actions.removeCollectionFromProject(collectionId)),
+  onToggleSecondaryOverlayPanel:
+    state => dispatch(actions.toggleSecondaryOverlayPanel(state)),
   onUndoExcludeGranule:
     collectionId => dispatch(actions.undoExcludeGranule(collectionId)),
   onUpdateSortOrder:
@@ -27,7 +29,8 @@ const mapStateToProps = state => ({
   granules: state.searchResults.granules,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue,
-  collectionSearch: state.query.collection
+  collectionSearch: state.query.collection,
+  secondaryOverlayPanel: state.ui.secondaryOverlayPanel
 })
 
 export const GranuleResultsHeaderContainer = (props) => {
@@ -35,12 +38,14 @@ export const GranuleResultsHeaderContainer = (props) => {
     collections,
     focusedCollection,
     location,
+    onToggleSecondaryOverlayPanel,
     onUndoExcludeGranule,
     onUpdateSearchValue,
     onUpdateSortOrder,
     searchValue,
     sortOrder,
-    collectionSearch
+    collectionSearch,
+    secondaryOverlayPanel
   } = props
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
@@ -53,12 +58,14 @@ export const GranuleResultsHeaderContainer = (props) => {
         location={location}
         focusedCollection={focusedCollection}
         focusedCollectionMetadata={focusedCollectionMetadata}
+        onToggleSecondaryOverlayPanel={onToggleSecondaryOverlayPanel}
         onUpdateSortOrder={onUpdateSortOrder}
         onUpdateSearchValue={onUpdateSearchValue}
         onUndoExcludeGranule={onUndoExcludeGranule}
         sortOrder={sortOrder}
         searchValue={searchValue}
         collectionSearch={collectionSearch}
+        secondaryOverlayPanel={secondaryOverlayPanel}
       />
     </>
   )
@@ -69,12 +76,14 @@ GranuleResultsHeaderContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   focusedCollection: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
+  onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
   onUpdateSortOrder: PropTypes.func.isRequired,
   onUpdateSearchValue: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
   searchValue: PropTypes.string.isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired
+  collectionSearch: PropTypes.shape({}).isRequired,
+  secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

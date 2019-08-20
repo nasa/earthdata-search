@@ -22,9 +22,7 @@ export default class Coordinate {
   static fromPhiTheta(phi, theta) {
     let newPhi = phi
     let newTheta = theta
-    const { PI } = Math
-    const { cos } = Math
-    const { sin } = Math
+    const { PI, cos, sin } = Math
 
     const origTheta = newTheta
 
@@ -41,8 +39,8 @@ export default class Coordinate {
       newTheta += PI
     }
 
-    while (theta >= PI) { newTheta -= 2 * PI }
-    while (theta < -PI) { newTheta += 2 * PI }
+    while (newTheta >= PI) { newTheta -= 2 * PI }
+    while (newTheta < -PI) { newTheta += 2 * PI }
 
     // Maintain the same sign as the original when theta is +/- PI
     if ((newTheta === -PI) && (origTheta > 0)) { newTheta = PI }
@@ -64,7 +62,7 @@ export default class Coordinate {
     let newX = x
     let newY = y
     let newZ = z
-    let d = (newX * newX) + (y * y) + (z * z)
+    let d = (newX * newX) + (newY * newY) + (newZ * newZ)
     if (d === 0) {
       newX = 1
       d = 1

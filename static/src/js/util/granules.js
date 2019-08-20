@@ -73,16 +73,43 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     polygon
   } = spatial
 
-  const { metadata: collectionMetadata = {} } = focusedCollectionMetadata[collectionId]
+  const {
+    granuleFilters = {},
+    metadata: collectionMetadata = {}
+  } = focusedCollectionMetadata[collectionId]
+
   const { tags = {} } = collectionMetadata
+  const {
+    browseOnly,
+    cloudCover,
+    dayNightFlag,
+    onlineOnly,
+    temporal: filterTemporal = {}
+  } = granuleFilters
 
   // If we have an overrideTemporal use it, if not use temporal
   let temporalString
   const {
+    endDate: filterEnd,
+    startDate: filterStart
+  } = filterTemporal
+  const {
     endDate: overrideEnd,
     startDate: overrideStart
   } = overrideTemporal
-  if (overrideEnd && overrideStart) {
+
+  const encodeCloudCover = (val = {}) => {
+    if (val.min || val.max) {
+      return val
+    }
+    return ''
+  }
+
+  const cloudCoverString = encodeCloudCover(cloudCover)
+
+  if (filterStart || filterEnd) {
+    temporalString = encodeTemporal(filterTemporal)
+  } else if (overrideEnd || overrideStart) {
     temporalString = encodeTemporal(overrideTemporal)
   } else {
     temporalString = encodeTemporal(temporal)
@@ -93,10 +120,14 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 
   return {
     authToken,
+    browseOnly,
     boundingBox,
+    cloudCoverString,
     collectionId,
+    dayNightFlag,
     gridName,
     gridCoords: encodeGridCoords(gridCoords),
+    onlineOnly,
     isCwicCollection,
     pageNum,
     point,
@@ -114,9 +145,13 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 export const buildGranuleSearchParams = (params) => {
   const {
     boundingBox,
+    browseOnly,
+    cloudCover,
     collectionId,
+    dayNightFlag,
     gridName,
     gridCoords,
+    onlineOnly,
     pageNum,
     point,
     polygon,
@@ -134,7 +169,11 @@ export const buildGranuleSearchParams = (params) => {
 
   return {
     boundingBox,
+    browseOnly,
+    cloudCover,
+    dayNightFlag,
     echoCollectionId: collectionId,
+    onlineOnly,
     pageNum,
     pageSize: 20,
     point,

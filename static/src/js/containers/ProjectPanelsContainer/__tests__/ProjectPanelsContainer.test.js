@@ -36,7 +36,8 @@ function setup() {
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: false
-    }
+    },
+    spatial: {}
   }
 
   const enzymeWrapper = shallow(<ProjectPanelsContainer {...props} />)

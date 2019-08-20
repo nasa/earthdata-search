@@ -38,17 +38,25 @@ const ProjectCollectionItem = ({
   projectCollection,
   collectionSearch
 }) => {
+  if (!collection) return null
+
   const {
     granules,
     isVisible,
     metadata
   } = collection
+
   const {
-    dataset_id: title,
-    granule_count: granuleCount
+    dataset_id: title
   } = metadata
-  const { totalSize = {} } = granules
+
+  const {
+    hits: granuleHits,
+    totalSize = {}
+  } = granules
+
   const { size = '', unit = '' } = totalSize
+
   const isValid = isAccessMethodValid(projectCollection)
 
   const className = classNames([
@@ -97,7 +105,7 @@ const ProjectCollectionItem = ({
         <li
           className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
         >
-          {`${abbreviate(granuleCount, 1)} Granules`}
+          {`${abbreviate(granuleHits, 1)} Granules`}
         </li>
         <li
           className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
@@ -128,9 +136,13 @@ const ProjectCollectionItem = ({
   )
 }
 
+ProjectCollectionItem.defaultProps = {
+  collection: undefined
+}
+
 ProjectCollectionItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  collection: PropTypes.shape({}).isRequired,
+  collection: PropTypes.shape({}),
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,

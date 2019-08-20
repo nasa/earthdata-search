@@ -1,6 +1,6 @@
 import { decodeUrlParams, encodeUrlQuery } from '../url'
 
-import emptyDecodedResult from './url.test'
+import { emptyDecodedResult } from './url.mocks'
 
 describe('url#decodeUrlParams', () => {
   describe('focusedCollection excludedGranules', () => {
@@ -15,6 +15,7 @@ describe('url#decodeUrlParams', () => {
               isCwic: false,
               isVisible: false,
               granules: {},
+              granuleFilters: {},
               metadata: {},
               formattedMetadata: {},
               ummMetadata: {}
@@ -40,6 +41,7 @@ describe('url#decodeUrlParams', () => {
               isCwic: true,
               isVisible: false,
               granules: {},
+              granuleFilters: {},
               metadata: {},
               formattedMetadata: {},
               ummMetadata: {}
@@ -67,6 +69,7 @@ describe('url#decodeUrlParams', () => {
               isCwic: false,
               isVisible: false,
               granules: {},
+              granuleFilters: {},
               metadata: {},
               formattedMetadata: {},
               ummMetadata: {}
@@ -94,6 +97,7 @@ describe('url#decodeUrlParams', () => {
               isCwic: false,
               isVisible: false,
               granules: {},
+              granuleFilters: {},
               metadata: {},
               formattedMetadata: {},
               ummMetadata: {}

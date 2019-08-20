@@ -27,12 +27,15 @@ export const ProjectPanels = pure(({
   project,
   projectPanels,
   shapefileId,
+  spatial,
   onSelectAccessMethod,
   onTogglePanels,
   onSetActivePanel,
   onUpdateAccessMethod
 }) => {
   const { byId } = collections
+  if (Object.keys(byId).length === 0) return null
+
   const { collectionIds: projectIds, byId: projectById } = project
 
   const { activePanel, isOpen } = projectPanels
@@ -40,7 +43,6 @@ export const ProjectPanels = pure(({
   const panelSectionCollectionDetails = []
 
   let loaded = false
-
   if (projectIds[0] && !Object.keys(byId[projectIds[0]].metadata).length) return null
 
   const onPanelClose = () => {
@@ -141,6 +143,7 @@ export const ProjectPanels = pure(({
             index={index}
             metadata={metadata}
             shapefileId={shapefileId}
+            spatial={spatial}
             onSelectAccessMethod={onSelectAccessMethod}
             onSetActivePanel={onSetActivePanel}
             onUpdateAccessMethod={onUpdateAccessMethod}
@@ -226,6 +229,7 @@ ProjectPanels.propTypes = {
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
+  spatial: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

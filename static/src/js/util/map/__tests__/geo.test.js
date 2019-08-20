@@ -1,5 +1,5 @@
 import L from 'leaflet'
-import { calculateArea } from '../geo'
+import { calculateArea, getShape, splitListOfPoints } from '../geo'
 
 describe('geo#calculateArea', () => {
   const lls = latlngs => Array.from(latlngs).map(ll => L.latLng(ll))
@@ -64,5 +64,43 @@ describe('geo#calculateArea', () => {
     expect(calculateArea(
       lls([[0, 5], [90, 0], [0, -5], [-90, 0]])
     )).toBeCloseTo(0.30, 2)
+  })
+})
+
+describe('geo#getShape', () => {
+  test('getShape returns a shape', () => {
+    const shape = getShape([
+      '10,0',
+      '20,10',
+      '5,15',
+      '10,0'
+    ])
+
+    expect(shape).toEqual([{
+      lat: 0,
+      lng: 10
+    }, {
+      lat: 10,
+      lng: 20
+    }, {
+      lat: 15,
+      lng: 5
+    }, {
+      lat: 0,
+      lng: 10
+    }])
+  })
+})
+
+describe('geo#splitListOfPoints', () => {
+  test('splitListOfPoints splits a string of points into array of lat/lng points', () => {
+    const points = splitListOfPoints('10,0,20,10,5,15,10,0')
+
+    expect(points).toEqual([
+      '10,0',
+      '20,10',
+      '5,15',
+      '10,0'
+    ])
   })
 })

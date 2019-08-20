@@ -125,6 +125,7 @@ export const AccessMethod = ({
   index,
   metadata,
   shapefileId,
+  spatial,
   onSelectAccessMethod,
   // eslint-disable-next-line no-unused-vars
   onSetActivePanel,
@@ -187,6 +188,7 @@ export const AccessMethod = ({
               methodKey={selectedAccessMethod}
               rawModel={rawModel}
               shapefileId={shapefileId}
+              spatial={spatial}
               onUpdateAccessMethod={onUpdateAccessMethod}
             />
           )
@@ -218,6 +220,7 @@ AccessMethod.propTypes = {
   index: PropTypes.number,
   metadata: PropTypes.shape({}),
   shapefileId: PropTypes.string,
+  spatial: PropTypes.shape({}).isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,

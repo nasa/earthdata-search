@@ -13,6 +13,7 @@ import './GranuleResultsBody.scss'
 const GranuleResultsBody = ({
   collectionId,
   excludedGranuleIds,
+  focusedGranule,
   granules,
   isCwic,
   pageNum,
@@ -25,6 +26,7 @@ const GranuleResultsBody = ({
     <GranuleResultsList
       collectionId={collectionId}
       excludedGranuleIds={excludedGranuleIds}
+      focusedGranule={focusedGranule}
       granules={granules}
       isCwic={isCwic}
       pageNum={pageNum}
@@ -39,6 +41,7 @@ const GranuleResultsBody = ({
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  focusedGranule: PropTypes.string.isRequired,
   granules: PropTypes.shape({}).isRequired,
   isCwic: PropTypes.bool.isRequired,
   pageNum: PropTypes.number.isRequired,

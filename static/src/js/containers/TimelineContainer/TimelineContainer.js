@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
+
 import actions from '../../actions/index'
 
 import Timeline from '../../components/Timeline/Timeline'
@@ -42,6 +44,8 @@ export const TimelineContainer = (props) => {
   const isProjectPage = pathname.startsWith('/project')
   const isGranulesPage = pathname.startsWith('/search/granules')
   const collectionMetadata = {}
+  let granuleFilterTemporal
+
   if (isProjectPage) {
     const { byId } = collections
     const { collectionIds: projectIds } = project
@@ -56,13 +60,24 @@ export const TimelineContainer = (props) => {
     collectionMetadata[focusedCollection] = metadata[focusedCollection]
   }
 
+  if (!isEmpty(collectionMetadata[focusedCollection])) {
+    const { granuleFilters = {} } = collectionMetadata[focusedCollection]
+    if (!isEmpty(granuleFilters)) {
+      ({
+        temporal: granuleFilterTemporal
+      } = granuleFilters)
+    }
+  }
+
   if (Object.keys(collectionMetadata).length === 0) return null
 
   return (
     <Timeline
       collectionMetadata={collectionMetadata}
+      focusedCollection={focusedCollection}
       showOverrideModal={isProjectPage}
       temporalSearch={temporalSearch}
+      granuleFilterTemporal={granuleFilterTemporal}
       timeline={timeline}
       onChangeQuery={changeQueryMethod}
       onChangeTimelineQuery={onChangeTimelineQuery}

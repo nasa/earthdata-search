@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
-import { difference } from 'lodash'
+import { capitalize, difference } from 'lodash'
+import $ from 'jquery'
 
 import {
   withLeaflet,
@@ -13,7 +14,7 @@ import {
   isClockwise,
   getlprojection
 } from '../../util/map/granules'
-import {
+import buildLayer, {
   isCartesian,
   getPolygons,
   getLines,
@@ -24,7 +25,14 @@ import { dividePolygon } from '../../util/map/geo'
 import projectPath from '../../util/map/interpolation'
 import { getColorByIndex } from '../../util/colors'
 
+import { eventEmitter } from '../../events/events'
+import { getTemporal } from '../../util/edscDate'
+
+import './GranuleGridLayer.scss'
+import projections from '../../util/map/projections'
+
 const config = {
+  // debug: true,
   // eslint-disable-next-line max-len
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
   // eslint-disable-next-line max-len
@@ -34,51 +42,65 @@ const config = {
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
 
 class GranuleGridLayerExtended extends L.GridLayer {
-  initialize(collectionId, collection, granules, color) {
-    this.collectionId = collectionId
+  initialize(props) {
+    const {
+      collectionId,
+      metadata,
+      granules,
+      color,
+      focusedGranule,
+      projection,
+      onChangeFocusedGranule,
+      onExcludeGranule
+    } = props
 
-    this.setResults(collectionId, collection, granules, color)
+    this.collectionId = collectionId
+    this.projection = projection
+    this.onChangeFocusedGranule = onChangeFocusedGranule
+    this.onExcludeGranule = onExcludeGranule
+
+    this.setResults({
+      collectionId,
+      metadata,
+      granules,
+      color,
+      defaultGranules: granules,
+      focusedGranule
+    })
+
+    eventEmitter.on('map.mousemove', e => this._onEdscMousemove(e))
+    eventEmitter.on('map.mouseout', e => this._onEdscMouseout(e))
+    eventEmitter.on('map.click', e => this._onClick(e))
+    eventEmitter.on('map.focusgranule', granule => this._onEdscFocusgranule(granule))
+    eventEmitter.on('map.stickygranule', granule => this._onEdscStickygranule(granule))
+    eventEmitter.on('map.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
 
     this.originalOptions = { tileSize: 512 }
     return super.initialize(this.originalOptions)
   }
 
   // Overwrite the leaflet onAdd function
-  onAdd() {
+  onAdd(map) {
+    this._map = map
     super.onAdd()
 
     this._container.setAttribute('id', `granule-vis-${this.collectionId}`)
-    // this._handle(map, 'on', 'edsc.focuscollection')
-    // this.setFocus((map.focusedCollection != null ? map.focusedCollection.id : undefined) === this.collection.id)
-
-    // this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this.loadResults.bind(this)))
-    // this.loadResults(this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined)
-    // this._added = true
+    this._handle(this._map, 'on', 'edsc.focuscollection')
+    this.setFocus(this.collectionId)
   }
 
   // Overwrite the leaflet onRemove function
   onRemove(map) {
     super.onRemove(map)
-    // this._added = false
+    eventEmitter.off('edsc.mousemove', e => this._onEdscMousemove(e))
+    eventEmitter.off('edsc.mouseout', e => this._onEdscMouseout(e))
+    eventEmitter.off('edsc.click', e => this._onClick(e))
+    eventEmitter.off('edsc.focusgranule', granule => this._onEdscFocusgranule(granule))
+    eventEmitter.off('edsc.stickygranule', granule => this._onEdscStickygranule(granule))
+    eventEmitter.off('edsc.excludestickygranule', granuleId => this._onExcludeGranule(granuleId))
 
-    // this.setFocus(false, map)
-    // this._handle(map, 'off', 'edsc.focuscollection')
-    // if (this._resultsSubscription != null) {
-    //   this._resultsSubscription.dispose()
-    // }
     this.granules = null
   }
-
-  // _subscribe() {
-  //   if (this.collection.granuleDatasource() && this._added && !this._resultsSubscription) {
-  //     const granuleDatasource = this.collection.granuleDatasource()
-  //     this.granules = granuleDatasource.data()
-  //     this._resultsSubscription = __guard__(this.granules != null ? this.granules.results : undefined, x => x.subscribe(this.loadResults.bind(this)))
-  //     this.loadResults(this.granules != null ? this.granules.results() : undefined)
-  //     return (this._datasourceSubscription != null ? this._datasourceSubscription.dispose() : undefined)
-  //   }
-  //   return false
-  // }
 
   // Overwrite the leaflet createTile function
   createTile(tilePoint) {
@@ -143,7 +165,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
     const date = granule.time_start != null ? granule.time_start.substring(0, 10) : undefined
 
     let matched = false
-    // for (const optionSet of this.multiOptions) {
     this.multiOptions.forEach((optionSet) => {
       const newOptionSet = optionSet
       if (this.matches(granule, newOptionSet.match)) {
@@ -153,16 +174,13 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
         // set resolution to {projection}_resolution if it exists
         // and if the layer exists within newOptionSet
-
-        // TODO: Force map project to geo because we don't have projection switching yet
-        this._map.projection = 'geographic'
-        if ((this._map.projection === 'geographic') && newOptionSet.geographic) {
+        if ((this.projection === projections.geographic) && newOptionSet.geographic) {
           matched = true
           newResolution = newOptionSet.geographic_resolution
-        } else if ((this._map.projection === 'arctic') && newOptionSet.arctic) {
+        } else if ((this.projection === projections.arctic) && newOptionSet.arctic) {
           matched = true
           newResolution = newOptionSet.arctic_resolution
-        } else if ((this._map.projection === 'antarctic') && newOptionSet.antarctic) {
+        } else if ((this.projection === projections.antarctic) && newOptionSet.antarctic) {
           matched = true
           newResolution = newOptionSet.antarctic_resolution
         }
@@ -206,7 +224,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
   // Draw the granule tile
   drawTile(canvas, back, tilePoint) {
     let reverse
-    if ((this.granules === null) || (this.granules.length <= 0)) { return }
+    if ((this.granules == null) || (this.granules.length <= 0)) { return }
 
     const tileSize = this.getTileSize()
 
@@ -226,14 +244,13 @@ class GranuleGridLayerExtended extends L.GridLayer {
     let paths = []
     const pathsWithHoles = []
 
-    for (let i = 0; i < this.granules.length; i += 1) {
-      const granule = this.granules[i]
+    this.granules.forEach((granule, index) => {
       const overlaps = this.granulePathsOverlappingTile(granule, bounds)
       if (overlaps.length > 0) {
         const url = this.getTileUrl(tilePoint, granule)
         for (let j = 0; j < overlaps.length; j += 1) {
           const path = overlaps[j]
-          path.index = i
+          path.index = index
           path.url = url
           path.granule = granule
           if (path.poly != null) {
@@ -244,7 +261,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
         pathsWithHoles.push(overlaps)
         paths = paths.concat(overlaps)
       }
-    }
+    })
 
     setTimeout((
       () => this.drawOutlines(canvas, paths, nwPoint)
@@ -294,13 +311,15 @@ class GranuleGridLayerExtended extends L.GridLayer {
 
       ctx.beginPath()
       addPath(ctx, path)
-      // for (const hole of holes) {
+
       holes.forEach((hole) => {
         addPath(ctx, { poly: hole.poly.concat().reverse() })
       })
+
       ctx.stroke()
       addPath(ctx, boundary)
-      if ((path.line != null ? path.line.length : undefined) <= 0) { ctx.clip() }
+
+      if (!(path.line != null ? path.line.length : undefined) > 0) { ctx.clip() }
     })
     ctx.restore()
     return null
@@ -390,7 +409,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
         urlPaths
       } = pathsByUrl[i]
 
-      // ((i, urlPaths, url) => {
       // eslint-disable-next-line no-loop-func
       self.loadImage(url, (image) => {
         queue[i] = () => this.drawClippedImage(ctx, boundary, urlPaths, nwPoint, image, size)
@@ -405,7 +423,6 @@ class GranuleGridLayerExtended extends L.GridLayer {
         }
         return null
       })
-      // })(i, urlPaths, url)
     }
     return null
   }
@@ -422,7 +439,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       ctx.strokeStyle = ctx.fillStyle
       ctx.beginPath()
       addPath(ctx, path)
-      // for (const hole of holes) {
+
       holes.forEach(hole => addPath(ctx, hole))
 
       if (path.line != null) {
@@ -454,13 +471,10 @@ class GranuleGridLayerExtended extends L.GridLayer {
   granulePathsOverlappingTile(granule, tileBounds) {
     const result = []
 
-    // const interpolation = granule.isCartesian() ? 'cartesian' : 'geodetic'
     const interpolation = isCartesian(granule) ? 'cartesian' : 'geodetic'
-    // for (let polygon of (left = granule.getPolygons()) != null ? left : []) {
-    // Array.from(granule.getPolygons()).forEach((polygon) => {
-    Array.from(getPolygons(granule)).forEach((polygon) => {
-      // if (granule.isCartesian()) {
-      if (isCartesian(granule)) {
+
+    Array.from(getPolygons(granule)).some((polygon) => {
+      if (interpolation === 'cartesian') {
         this.addIntersections(result, polygon, tileBounds, 'poly', interpolation)
       } else {
         // Handle holes
@@ -472,14 +486,12 @@ class GranuleGridLayerExtended extends L.GridLayer {
       // Workaround for EDSC-657
       // Avoid spamming the map with a large number of barely intersecting orbits by only
       // drawing the first orbit. Hovering will continue to draw the full orbit.
-      if (granule.orbit) { return true }
-      return false
+      return granule.orbit
     })
 
     this.addIntersections(result, getRectangles(granule), tileBounds, 'poly', 'cartesian')
     this.addIntersections(result, getLines(granule), tileBounds, 'line', interpolation)
 
-    // for (const point of (left1 = granule.getPoints()) != null ? left1 : []) {
     Array.from(getPoints(granule)).forEach((point) => {
       if (tileBounds.contains(point)) {
         result.push({ point: this._map.latLngToLayerPoint(point) })
@@ -512,204 +524,270 @@ class GranuleGridLayerExtended extends L.GridLayer {
   }
 
   // Set the granule results that need to be drawna
-  setResults(collectionId, metadata, granules, color) {
+  setResults(props) {
+    const {
+      collectionId,
+      metadata,
+      granules,
+      color,
+      defaultGranules,
+      focusedGranule
+    } = props
+
     this.granules = granules
+    if (defaultGranules) {
+      this.defaultGranules = defaultGranules
 
-    this.color = color
+      if (focusedGranule === '') {
+        this._onEdscStickygranule({ granule: null })
+      } else {
+        const [granule] = defaultGranules.filter(g => g.id === focusedGranule)
+        this._onEdscStickygranule({ granule })
+      }
+    }
 
-    // Set multiOptions (gibs data)
-    const { tags = {} } = metadata
-    const { 'edsc.extra.serverless.gibs': gibsTag = {} } = tags
-    const { data } = gibsTag
-    this.multiOptions = data
+    if (color) this.color = color
 
-    if (this._container) {
+    if (metadata) {
+      // Set multiOptions (gibs data)
+      const { tags = {} } = metadata
+      const { 'edsc.extra.serverless.gibs': gibsTag = {} } = tags
+      const { data } = gibsTag
+      this.multiOptions = data
+    }
+
+    if (collectionId && this._container) {
       this._container.setAttribute('id', `granule-vis-${collectionId}`)
+      this.setFocus(collectionId)
     }
 
     return this.redraw()
   }
 
-  // We might need this once we start looking at sticky granules
-  // _reorderedResults(results, defaultResults) {
-  //   if (this._stickied != null) {
-  //     const newResults = results.concat()
-  //     const index = newResults.indexOf(this._stickied)
-  //     if (index === -1) {
-  //       this._stickied = null
-  //       this.stickyId = null
-  //       if (this._granuleStickyLayer != null) {
-  //         this._granuleStickyLayer.onRemove(this._map)
-  //       }
-  //       this._granuleStickyLayer = null
-  //     } else {
-  //       newResults.splice(index, 1)
-  //       newResults.unshift(this._stickied)
-  //     }
-  //     return newResults
-  //   }
-  //   return defaultResults
-  // }
+  _reorderedResults(results, defaultResults) {
+    if (this._stickied && this._stickied !== null) {
+      const newResults = results.concat()
+      const index = newResults.indexOf(this._stickied)
+      if (index === -1) {
+        this._stickied = null
+        this.stickyId = null
+        if (this._granuleStickyLayer != null) {
+          this._granuleStickyLayer.onRemove(this._map)
+        }
+        this._granuleStickyLayer = null
+      } else {
+        newResults.splice(index, 1)
+        newResults.unshift(this._stickied)
+      }
+      return newResults
+    }
+    return defaultResults
+  }
 
-  // loadResults(results) {
-  //   return this.setResults(this._reorderedResults(results, this.granules.byIds !== undefined ? Object.values(this.granules.byIds) : undefined))
-  // }
+  loadResults(results) {
+    const granules = this._reorderedResults(
+      results,
+      Object.values(this.defaultGranules)
+    )
 
-  // setFocus(focus, map = this._map) {
-  //   if (this._isFocused === focus) { return }
-  //   this._isFocused = focus
-  //   const events = ['edsc.mousemove', 'edsc.mouseout', 'click', 'edsc.focusgranule', 'edsc.stickygranule']
-  //   if (focus) {
-  //     this._handle(map, 'on', ...Array.from(events))
-  //   }
-  //   this._handle(map, 'off', ...Array.from(events))
-  //   if (this._granuleFocusLayer != null) {
-  //     this._granuleFocusLayer.onRemove(map)
-  //   }
-  //   this._granuleFocusLayer = null
-  //   if (this._granuleStickyLayer != null) {
-  //     this._granuleStickyLayer.onRemove(map)
-  //   }
-  //   this._granuleStickyLayer = null
-  // }
+    return this.setResults({
+      granules
+    })
+  }
 
-  // _handle(obj, onOrOff, ...events) {
-  //   return (() => {
-  //     const result = []
-  //     events.forEach((event) => {
-  //       const method = `_on${event.split('.').map(capitalize).join('')}`
-  //       result.push(obj[onOrOff](event, this[method]))
-  //     })
-  //     return result
-  //   })()
-  // }
+  setFocus(focus, map = this._map) {
+    if (this._isFocused === focus) { return }
+    this._isFocused = focus
+    const events = ['edsc.mousemove', 'edsc.mouseout', 'click', 'edsc.focusgranule', 'edsc.stickygranule']
+    if (focus) {
+      this._handle(map, 'on', ...Array.from(events))
+    }
+    this._handle(map, 'off', ...Array.from(events))
+    if (this._granuleFocusLayer != null) {
+      this._granuleFocusLayer.onRemove(map)
+    }
+    this._granuleFocusLayer = null
+    if (this._granuleStickyLayer != null) {
+      this._granuleStickyLayer.onRemove(map)
+    }
+    this._granuleStickyLayer = null
+  }
 
-  // _onEdscFocuscollection(e) {
-  //   return this.setFocus((e.collection != null ? e.collection.id : undefined) === this.collection.id)
-  // }
+  _handle(obj, onOrOff, ...events) {
+    return (() => {
+      const result = []
+      events.forEach((event) => {
+        const method = `_on${event.split('.').map(str => capitalize(str)).join('')}`
+        result.push(obj[onOrOff](event, this[method]))
+      })
+      return result
+    })()
+  }
 
-  // _onEdscMouseout() {
-  //   if (this._granule != null) {
-  //     return this._map.fire('edsc.focusgranule', { granule: null })
-  //   }
-  //   return null
-  // }
+  _onEdscFocuscollection(e) {
+    if (this._map) {
+      this.setFocus(
+        (e.collection != null ? e.collection.id : undefined) === this.collectionId
+      )
+    }
+  }
 
-  // _onEdscMousemove(e) {
-  //   const granule = this.granuleAt(e.layerPoint)
-  //   if (this._granule !== granule) {
-  //     return this._map.fire('edsc.focusgranule', { granule })
-  //   }
-  //   return null
-  // }
+  _onEdscMouseout() {
+    if (this._map) {
+      if (this._granule != null) {
+        eventEmitter.emit('map.focusgranule', { granule: null })
+      }
+    }
+  }
 
-  // _onClick(e) {
-  //   if ($(e.originalEvent.target).closest('a').hasClass('panel-list-remove')) {
-  //     return this._map.fire('edsc.excludestickygranule')
-  //   }
-  //   if ($(e.originalEvent.target).closest('a').length !== 0) { return null }
-  //   let granule = this.granuleAt(e.layerPoint)
-  //   if (this._stickied === granule) { granule = null }
-  //   this._map.fire('edsc.focusgranule', { granule })
-  //   return this._map.fire('edsc.stickygranule', { granule })
-  // }
+  _onEdscMousemove(e) {
+    if (this._map) {
+      const granule = this.granuleAt(e.layerPoint)
+      if (this._granule !== granule) {
+        eventEmitter.emit('map.focusgranule', { granule })
+      }
+    }
+  }
 
-  // _onEdscFocusgranule(e) {
-  //   const { granule } = e
-  //   this._granule = granule
+  _onClick(e) {
+    if (this._map) {
+      const aTag = $(e.originalEvent.target).closest('a')
 
-  //   if (this._granuleFocusLayer != null) {
-  //     this._granuleFocusLayer.onRemove(this._map)
-  //   }
-  //   this._granuleFocusLayer = this._focusLayer(granule, false)
-  //   return (this._granuleFocusLayer != null ? this._granuleFocusLayer.onAdd(this._map) : undefined)
-  // }
+      if (aTag.hasClass('panel-list-remove')) {
+        const granuleId = aTag.data('granuleId')
+        eventEmitter.emit('map.excludestickygranule', granuleId)
+        return
+      }
 
-  // _onEdscStickygranule(e) {
-  //   const { granule } = e
+      if (aTag.length !== 0) { return }
 
-  //   if (this._stickied === granule) { return }
+      let granule = this.granuleAt(e.layerPoint)
+      if (this._stickied === granule) { granule = null }
 
-  //   this._stickied = granule
-  //   this.stickyId = granule != null ? granule.id : undefined // Ugly hack for testing
+      eventEmitter.emit('map.focusgranule', { granule })
+      eventEmitter.emit('map.stickygranule', { granule })
+    }
+  }
 
-  //   if (this._granuleStickyLayer != null) {
-  //     this._granuleStickyLayer.onRemove(this._map)
-  //   }
-  //   this._granuleStickyLayer = this._stickyLayer(granule, true)
-  //   if (this._granuleStickyLayer != null) {
-  //     this._granuleStickyLayer.onAdd(this._map)
+  _onEdscFocusgranule(e) {
+    if (this._map) {
+      const { granule } = e
+      this._granule = granule
 
-  //     if ((this._map.projection === 'geo') && (this._granuleFocusLayer != null)) {
-  //       const bounds = this._granuleFocusLayer.getBounds()
-  //       // Avoid zooming and panning tiny amounts
-  //       if ((bounds != null ? bounds.isValid() : undefined) && !this._map.getBounds().contains(bounds)) {
-  //         this._map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
-  //       }
-  //     }
-  //   }
+      if (this._granuleFocusLayer != null) {
+        this._granuleFocusLayer.onRemove(this._map)
+      }
+      this._granuleFocusLayer = this._focusLayer(granule, false)
+      if (this._granuleFocusLayer != null) this._granuleFocusLayer.onAdd(this._map)
+    }
+  }
 
-  //   this.loadResults(this._results)
-  // }
+  _onEdscStickygranule(e) {
+    if (this._map) {
+      const { granule } = e
 
-  // _granuleLayer(granule, options) {
-  //   return granule.buildLayer(options)
-  // }
+      if (this._stickied === granule) { return }
 
-  // _focusLayer(granule) {
-  //   if (granule == null) { return null }
+      this._stickied = granule
+      this.stickyId = granule != null ? granule.id : undefined // Ugly hack for testing
 
-  //   return granule.buildLayer({
-  //     clickable: false, color: this.color, fillColor: this.color, opacity: 1
-  //   })
-  // }
+      let focusedGranuleId = ''
+      if (granule != null) focusedGranuleId = granule.id
+      this.onChangeFocusedGranule(focusedGranuleId)
 
-  // _stickyLayer(granule) {
-  //   let temporalLabel
-  //   if (granule == null) { return null }
+      if (this._granuleStickyLayer != null) {
+        this._granuleStickyLayer.onRemove(this._map)
+      }
+      this._granuleStickyLayer = this._stickyLayer(granule, true)
+      if (this._granuleStickyLayer != null) {
+        this._granuleStickyLayer.onAdd(this._map)
 
-  //   const layer = granule.buildLayer({
-  //     fillOpacity: 0, clickable: false, color: this.color, fillColor: this.color, opacity: 1
-  //   })
+        if ((this._map.projection === 'geo') && (this._granuleFocusLayer != null)) {
+          const bounds = this._granuleFocusLayer.getBounds()
+          // Avoid zooming and panning tiny amounts
+          if (
+            (bounds != null ? bounds.isValid() : undefined)
+            && !this._map.getBounds().contains(bounds)
+          ) {
+            this._map.fitBounds(bounds.pad(0.2)).panTo(bounds.getCenter())
+          }
+        }
+      }
 
-  //   const temporal = granule.getTemporal()
+      this.loadResults(this.granules)
+    }
+  }
 
-  //   if (temporal[0] && temporal[1]) {
-  //     temporalLabel = `<p>${temporal[0]}</p><p>${temporal[1]}</p>`
-  //   } else if (temporal[0]) {
-  //     temporalLabel = `<p>${temporal[0]}</p>`
-  //   } else if (temporal[1]) {
-  //     temporalLabel = `<p>${temporal[1]}</p>`
-  //   }
+  _onExcludeGranule(granuleId) {
+    this.onExcludeGranule({
+      collectionId: this.collectionId,
+      granuleId
+    })
+  }
 
-  //   let excludeHtml = ''
-  //   if (__guard__(this.collection.granuleDatasource(), x => x.hasCapability('excludeGranules'))) {
-  //     excludeHtml = '<a class="panel-list-remove" href="#" title="Remove granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>'
-  //   }
-  //   const icon = new L.DivIcon({
-  //     className: 'granule-spatial-label',
-  //     html: `<span class="granule-spatial-label-temporal">${temporalLabel}</span>${excludeHtml}`
-  //   })
+  _granuleLayer(granule, options) {
+    return buildLayer(options, granule)
+  }
+
+  _focusLayer(granule) {
+    if (granule == null) { return null }
+    return buildLayer({
+      clickable: false, color: this.color, fillColor: this.color, opacity: 1
+    }, granule)
+  }
+
+  _stickyLayer(granule) {
+    let temporalLabel
+    if (granule == null) { return null }
+
+    const layer = buildLayer({
+      fillOpacity: 0,
+      clickable: false,
+      color: this.color,
+      fillColor: this.color,
+      opacity: 1
+    }, granule)
+
+    const temporal = getTemporal(granule.time_start, granule.time_end)
+
+    if (temporal[0] && temporal[1]) {
+      temporalLabel = `<p>${temporal[0]}</p><p>${temporal[1]}</p>`
+    } else if (temporal[0]) {
+      temporalLabel = `<p>${temporal[0]}</p>`
+    } else if (temporal[1]) {
+      temporalLabel = `<p>${temporal[1]}</p>`
+    }
+
+    const { id: granuleId } = granule
+
+    let excludeHtml = ''
+    excludeHtml = `<a class="panel-list-remove" data-granule-id="${granuleId}" href="#" title="Remove granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>`
+    const icon = new L.DivIcon({
+      className: 'granule-spatial-label',
+      html: `<span class="granule-spatial-label-temporal">${temporalLabel}</span>${excludeHtml}`
+    })
 
 
-  //   const marker = L.marker([0, 0], { clickable: false, icon })
-  //   layer.addLayer(marker)
+    const marker = L.marker([0, 0], { clickable: false, icon })
+    layer.addLayer(marker)
 
-  //   let firstShape = layer.getLayers()[0]
-  //   if ((firstShape != null ? firstShape._interiors : undefined) != null) { firstShape = firstShape._interiors }
+    let firstShape = layer.getLayers()[0]
+    if ((firstShape != null ? firstShape._interiors : undefined) != null) {
+      firstShape = firstShape._interiors
+    }
 
-  //   if (firstShape != null) {
-  //     firstShape.on('add', function add() {
-  //       const center = (this.getLatLng != null) ? this.getLatLng() : this.getCenter()
-  //       return marker.setLatLng(center)
-  //     })
-  //   }
+    if (firstShape != null) {
+      firstShape.on('add', function add() {
+        const center = (this.getLatLng != null) ? this.getLatLng() : this.getCenter()
+        return marker.setLatLng(center)
+      })
+    }
 
-  //   return layer
-  // }
+    return layer
+  }
 }
 
-class GranuleGridLayer extends MapLayer {
+export class GranuleGridLayer extends MapLayer {
   /**
    * Get the data needed to create a new GranuleGridLayerExtended layer
    * @param {object} props
@@ -772,6 +850,13 @@ class GranuleGridLayer extends MapLayer {
   createLeafletElement(props) {
     const { layers = [] } = this
 
+    const {
+      focusedGranule,
+      projection,
+      onChangeFocusedGranule,
+      onExcludeGranule
+    } = props
+
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
     const layerData = this.getLayerData(props)
     layerData.forEach((data, index) => {
@@ -785,7 +870,16 @@ class GranuleGridLayer extends MapLayer {
       const { byId = {} } = granules
       const granuleData = Object.values(byId)
 
-      const layer = new GranuleGridLayerExtended(collectionId, metadata, granuleData, color)
+      const layer = new GranuleGridLayerExtended({
+        collectionId,
+        metadata,
+        granules: granuleData,
+        color,
+        focusedGranule,
+        projection,
+        onChangeFocusedGranule,
+        onExcludeGranule
+      })
 
       // Set the ZIndex for the layer
       layer.setZIndex(20 + index)
@@ -806,16 +900,22 @@ class GranuleGridLayer extends MapLayer {
   updateLeafletElement(fromProps, toProps) {
     const layers = this.leafletElement._layers // List of layers
 
+    const {
+      focusedGranule,
+      projection,
+      onChangeFocusedGranule,
+      onExcludeGranule
+    } = toProps
+
     const oldLayerData = this.getLayerData(fromProps)
     const layerData = this.getLayerData(toProps)
 
     // Nothing should be drawn, remove any existing layers
     if (layerData.length === 0) {
       Object.values(layers).forEach(layer => this.leafletElement.removeLayer(layer))
-    }
+    } else if (layerData.length < oldLayerData.length) {
+      // If there is less data than before, figure out which collection was removed and remove the layer
 
-    // If there is less data than before, figure out which collection was removed and remove the layer
-    if (layerData.length < oldLayerData.length) {
       const oldIds = oldLayerData.map(data => data.collectionId)
       const newIds = layerData.map(data => data.collectionId)
 
@@ -862,10 +962,26 @@ class GranuleGridLayer extends MapLayer {
         if (oldGranules === granules && oldIsVisible === isVisible) return
 
         // Update the layer with the new granuleData
-        layer.setResults(collectionId, metadata, granuleData, color)
+        layer.setResults({
+          collectionId,
+          metadata,
+          granules: granuleData,
+          color,
+          defaultGranules: granuleData,
+          focusedGranule
+        })
       } else {
         // A layer doesn't exist for this collection yet, maybe we just added a focusedCollection, so create a new layer
-        const layer = new GranuleGridLayerExtended(collectionId, metadata, granuleData, color)
+        const layer = new GranuleGridLayerExtended({
+          collectionId,
+          metadata,
+          granules: granuleData,
+          color,
+          focusedGranule,
+          projection,
+          onChangeFocusedGranule,
+          onExcludeGranule
+        })
         layer.setZIndex(20)
 
         // Add the layer to the feature group

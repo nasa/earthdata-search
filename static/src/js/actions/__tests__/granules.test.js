@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
+  applyGranuleFilters,
   updateGranuleResults,
   getGranules,
   excludeGranule,
@@ -23,8 +24,11 @@ import {
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_DOWNLOAD_PARAMS,
-  UPDATE_GRANULE_LINKS
+  UPDATE_GRANULE_LINKS,
+  UPDATE_GRANULE_QUERY
 } from '../../constants/actionTypes'
+import actions from '../index'
+
 
 const mockStore = configureMockStore([thunk])
 
@@ -38,6 +42,50 @@ describe('updateGranuleResults', () => {
     expect(updateGranuleResults(payload)).toEqual(expectedAction)
   })
 })
+
+// TODO FIX
+// describe('updateCollectionGranuleFilters', () => {
+//   beforeEach(() => {
+//     jest.clearAllMocks()
+//   })
+
+//   const store = mockStore({
+//     authToken: 'token',
+//     metadata: {
+//       collections: {
+//         allIds: ['collectionId'],
+//         byId: {
+//           collectionId: {
+//             mock: 'data'
+//           }
+//         }
+//       }
+//     },
+//     focusedCollection: 'collectionId',
+//     query: {
+//       collection: {
+//         temporal: {},
+//         spatial: {}
+//       },
+//       granule: { pageNum: 1 }
+//     },
+//     timeline: {
+//       query: {}
+//     }
+//   })
+
+//   store.dispatch(applyGranuleFilters('collectionId', { cloudCover: true }))
+//   const storeActions = store.getActions()
+
+//   const updateGranuleQueryMock = jest.spyOn(actions, 'updateGranuleQuery').mockImplementation(() => jest.fn())
+//   const updateCollectionGranuleFiltersMock = jest.spyOn(actions, 'updateCollectionGranuleFilters').mockImplementation(() => jest.fn())
+//   const getGranulesMock = jest.spyOn(actions, 'getGranules').mockImplementation(() => jest.fn())
+//   const toggleSecondaryOverlayPanelMock = jest.spyOn(actions, 'toggleSecondaryOverlayPanel').mockImplementation(() => jest.fn())
+
+//   test('should set the granule query to the first page', () => {
+//     expect(updateGranuleQueryMock).toHaveBeenCalledTimes(1)
+//   })
+// })
 
 describe('getGranules', () => {
   beforeEach(() => {

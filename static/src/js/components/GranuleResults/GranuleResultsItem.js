@@ -9,6 +9,7 @@ import { Dropdown } from 'react-bootstrap'
 import murmurhash3 from '../../util/murmurhash3'
 import { createDataLinks } from '../../util/granules'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { eventEmitter } from '../../events/events'
 
 import './GranuleResultsItem.scss'
 
@@ -86,7 +87,9 @@ DataLinksButton.propTypes = {
  */
 const GranuleResultsItem = ({
   collectionId,
+  focusedGranule,
   granule,
+  isFocused,
   isLast,
   location,
   waypointEnter,
@@ -129,9 +132,36 @@ const GranuleResultsItem = ({
 
   const dataLinks = createDataLinks(links)
 
+  const isFocusedGranule = isFocused || focusedGranule === id
+
+  const handleClick = () => {
+    let stickyGranule = granule
+    if (focusedGranule === id) stickyGranule = null
+
+    eventEmitter.emit('map.stickygranule', { granule: stickyGranule })
+  }
+
+  const handleMouseEnter = () => {
+    eventEmitter.emit('map.focusgranule', { granule })
+  }
+
+  const handleMouseLeave = () => {
+    eventEmitter.emit('map.focusgranule', { granule: null })
+  }
+
   return (
-    <li className="granule-results-item">
-      <div className="granule-results-item__header">
+    <li
+      className={`granule-results-item ${isFocusedGranule ? 'granule-results-item--selected' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        className="granule-results-item__header"
+        role="button"
+        tabIndex={0}
+        onClick={handleClick}
+        onKeyPress={handleClick}
+      >
         <h3 className="granule-results-item__title">{title}</h3>
       </div>
       <div className="granule-results-item__body">
@@ -206,7 +236,9 @@ const GranuleResultsItem = ({
 
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  focusedGranule: PropTypes.string.isRequired,
   granule: PropTypes.shape({}).isRequired,
+  isFocused: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,

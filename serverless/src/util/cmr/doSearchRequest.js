@@ -24,6 +24,7 @@ export const doSearchRequest = async (jwtToken, url) => {
 
     const response = await request.get({
       uri: url,
+      json: true,
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda,
@@ -43,7 +44,7 @@ export const doSearchRequest = async (jwtToken, url) => {
         'access-control-expose-headers': prepareExposeHeaders(headers),
         'jwt-token': jwtToken
       },
-      body
+      body: JSON.stringify(body)
     }
   } catch (e) {
     console.log('error', e)
@@ -51,7 +52,7 @@ export const doSearchRequest = async (jwtToken, url) => {
     if (e.response) {
       return {
         statusCode: e.statusCode,
-        body: JSON.stringify({ errors: [e.response.body] })
+        body: JSON.stringify({ errors: [e.response.body], statusCode: e.statusCode })
       }
     }
 

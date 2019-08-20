@@ -8,6 +8,10 @@
 
   &__header {
     padding: $spacer/2;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__body {
@@ -24,6 +28,14 @@
     font-weight: 400;
     line-height: 1.4em;
     word-wrap: break-word;
+
+    .granule-results-item--selected & {
+      color: $color__brand--blue;
+    }
+
+    &:hover {
+      color: $color__brand--blue;
+    }
   }
 
   &__thumb {
@@ -35,6 +47,8 @@
     height: 5.2rem;
     width: 5.2rem;
     background-color: $color__black--900;
+    overflow: hidden;
+    font-size: 0.5rem;
   }
 
   &__thumb-image {

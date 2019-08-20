@@ -8,9 +8,7 @@ import ProjectPanelSection from './ProjectPanelSection'
  * @param {object} props - The props passed into the component.
  */
 export const CollectionDetails = ({ granuleCount }) => (
-  <ProjectPanelSection heading={`Granules (${granuleCount} Total)`}>
-    Some collection details
-  </ProjectPanelSection>
+  <ProjectPanelSection heading={`Granules (${granuleCount} Total)`} />
 )
 
 CollectionDetails.defaultProps = {

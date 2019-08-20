@@ -1,6 +1,10 @@
 /* eslint-disable import/no-cycle */
 
-import { getCollections, restoreCollections } from './collections'
+import {
+  getCollections,
+  restoreCollections,
+  updateCollectionGranuleFilters
+} from './collections'
 import {
   changeFocusedCollection,
   clearCollectionGranules,
@@ -10,6 +14,7 @@ import {
 } from './focusedCollection'
 import {
   addGranulesFromCollection,
+  applyGranuleFilters,
   excludeGranule,
   getGranules,
   undoExcludeGranule,
@@ -32,7 +37,8 @@ import {
   clearFilters,
   removeGridFilter,
   removeSpatialFilter,
-  removeTemporalFilter
+  removeTemporalFilter,
+  updateGranuleQuery
 } from './search'
 import { changeMap } from './map'
 import { changeUrl, changePath } from './urlQuery'
@@ -53,6 +59,7 @@ import {
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
   toggleDrawingNewLayer,
+  toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal
 } from './ui'
@@ -92,6 +99,7 @@ const actions = {
   addAccessMethods,
   addGranulesFromCollection,
   addProjectCollection,
+  applyGranuleFilters,
   applyViewAllFacets,
   changeCmrFacet,
   changeCollectionPageNum,
@@ -144,15 +152,18 @@ const actions = {
   toggleFacetsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
+  toggleSecondaryOverlayPanel,
   toggleSelectingNewGrid,
   toggleShapefileUploadModal,
   triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,
   updateAuthToken,
+  updateCollectionGranuleFilters,
   updateCmrFacet,
   updateFeatureFacet,
   updateGranuleMetadata,
+  updateGranuleQuery,
   updateGranuleResults,
   updateShapefile,
   viewCollectionDetails,

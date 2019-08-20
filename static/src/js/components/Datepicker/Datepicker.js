@@ -54,6 +54,8 @@ class Datepicker extends PureComponent {
     container.appendChild(buttonContainer)
     buttonToday.innerHTML = 'Today'
     buttonClear.innerHTML = 'Clear'
+    buttonToday.type = 'button'
+    buttonClear.type = 'button'
     buttonToday.classList.add('datetime__button', 'datetime__button--today')
     buttonClear.classList.add('datetime__button', 'datetime__button--clear')
     buttonContainer.classList.add('datetime__buttons')
