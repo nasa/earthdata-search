@@ -76,7 +76,7 @@
     "serverless-plugin-warmup": "^4.7.0-rc.1",
     "serverless-step-functions": "^2.1.0",
     "serverless-webpack": "^5.2.0",
-    "style-loader": "^0.23.1",
+    "style-loader": "^1.0.0",
     "webpack": "^4.24.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.3",

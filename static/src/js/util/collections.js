@@ -10,6 +10,7 @@ export const prepareCollectionParams = (state) => {
   const {
     authToken,
     facetsParams = {},
+    portal = {},
     query,
     searchResults = {}
   } = state
@@ -56,6 +57,8 @@ export const prepareCollectionParams = (state) => {
   if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
   if (featureFacets.mapImagery) tagKey.push('edsc.extra.serverless.gibs')
 
+  const { query: portalQuery = {} } = portal
+
   return {
     authToken,
     boundingBox,
@@ -69,7 +72,8 @@ export const prepareCollectionParams = (state) => {
     tagKey,
     temporalString,
     viewAllFacetsCategory,
-    viewAllFacets
+    viewAllFacets,
+    ...portalQuery
   }
 }
 
@@ -84,12 +88,16 @@ export const buildCollectionSearchParams = (params) => {
     boundingBox,
     conceptId,
     cmrFacets,
+    dataCenter,
+    echoCollectionId,
     featureFacets,
     gridName,
+    hasGranulesOrCwic,
     keyword,
     pageNum,
     point,
     polygon,
+    project,
     tagKey,
     temporalString,
     viewAllFacetsCategory,
@@ -137,6 +145,9 @@ export const buildCollectionSearchParams = (params) => {
     collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
     concept_id: conceptId,
     dataCenterH: facetsToSend.data_center_h,
+    dataCenter,
+    echoCollectionId,
+    hasGranulesOrCwic,
     instrumentH: facetsToSend.instrument_h,
     keyword,
     pageNum,
@@ -145,6 +156,7 @@ export const buildCollectionSearchParams = (params) => {
     polygon,
     processingLevelIdH: facetsToSend.processing_level_id_h,
     projectH: facetsToSend.project_h,
+    project,
     scienceKeywordsH: facetsToSend.science_keywords_h,
     tagKey,
     temporal: temporalString,

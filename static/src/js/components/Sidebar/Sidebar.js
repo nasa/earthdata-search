@@ -6,7 +6,12 @@ import Header from './SidebarHeader'
 
 import './Sidebar.scss'
 
-const Sidebar = ({ children, panels, visible }) => {
+const Sidebar = ({
+  children,
+  panels,
+  portal,
+  visible
+}) => {
   const className = classNames({
     sidebar: true,
     'sidebar--hidden': !visible
@@ -15,7 +20,9 @@ const Sidebar = ({ children, panels, visible }) => {
   return (
     <section className={className}>
       <div className="sidebar__inner">
-        <Header />
+        <Header
+          portal={portal}
+        />
         <section className="sidebar__content">
           {children}
         </section>
@@ -32,6 +39,7 @@ Sidebar.defaultProps = {
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   panels: PropTypes.node,
+  portal: PropTypes.shape({}).isRequired,
   visible: PropTypes.bool.isRequired
 }
 
