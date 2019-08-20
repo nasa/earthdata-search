@@ -331,3 +331,12 @@
           cors: true
           path: access_methods
           authorizer: edlAuthorizer
+
+  ousGranuleSearch:
+    handler: serverless/src/ousGranuleSearch/handler.default
+    events:
+      - http:
+          method: post
+          cors: true
+          path: granules/ous
+          authorizer: edlAuthorizer
