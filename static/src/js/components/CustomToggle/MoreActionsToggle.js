@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import CustomToggle from './CustomToggle'
+
+import './MoreActionsToggle.scss'
 
 // Need to use a Class component here so this works with the refs passed from
 // the parent react-bootstrap component
@@ -12,9 +15,15 @@ export class ToggleMoreActions extends Component {
       className,
       onClick
     } = this.props
+
+    const moreActionsToggleClassNames = classNames(
+      className,
+      'more-actions-toggle'
+    )
+
     return (
       <CustomToggle
-        className={className}
+        className={moreActionsToggleClassNames}
         onClick={onClick}
         title="More actions"
         icon="ellipsis-v"

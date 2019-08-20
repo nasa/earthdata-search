@@ -1,4 +1,7 @@
 .link {
+  color: $color__brand--blue-dark;
+  text-decoration: underline;
+
   &--separated {
     &:after {
       display: inline-block;
@@ -14,9 +17,15 @@
       display: inline-block;
       padding-left: 0.3rem;
       content: "\f111";
-      font-size: 0.85rem;
+      font-size: 0.6rem;
       font-family: "EUI-Icon-Library";
       color: $color__black--300;
+    }
+
+    &:hover {
+      &:after {
+        color: $color__black--400;
+      }
     }
   }
 }

@@ -19,7 +19,8 @@ function setup() {
         }
       }
     },
-    focusedCollection: 'focusedCollection'
+    focusedCollection: 'focusedCollection',
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsHeaderContainer {...props} />)
@@ -36,6 +37,7 @@ describe('CollectionDetailsHeaderContainer component', () => {
 
     expect(enzymeWrapper.find(CollectionDetailsHeader).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsHeader).props('focusedCollectionMetadata')).toEqual({
+      collectionSearch: {},
       focusedCollectionMetadata: {
         focusedCollection: {
           excludedGranuleIds: [],

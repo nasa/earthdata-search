@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
   granules: state.searchResults.granules,
   sortOrder: state.ui.granuleResultsPanel.sortOrder,
   searchValue: state.ui.granuleResultsPanel.searchValue,
+  collectionSearch: state.query.collection,
   secondaryOverlayPanel: state.ui.secondaryOverlayPanel
 })
 
@@ -42,8 +43,9 @@ export const GranuleResultsHeaderContainer = (props) => {
     onUpdateSearchValue,
     onUpdateSortOrder,
     searchValue,
-    secondaryOverlayPanel,
-    sortOrder
+    sortOrder,
+    collectionSearch,
+    secondaryOverlayPanel
   } = props
 
   const focusedCollectionMetadata = getFocusedCollectionMetadata(focusedCollection, collections)
@@ -62,6 +64,7 @@ export const GranuleResultsHeaderContainer = (props) => {
         onUndoExcludeGranule={onUndoExcludeGranule}
         sortOrder={sortOrder}
         searchValue={searchValue}
+        collectionSearch={collectionSearch}
         secondaryOverlayPanel={secondaryOverlayPanel}
       />
     </>
@@ -79,6 +82,7 @@ GranuleResultsHeaderContainer.propTypes = {
   onUpdateSearchValue: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
   searchValue: PropTypes.string.isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }
 

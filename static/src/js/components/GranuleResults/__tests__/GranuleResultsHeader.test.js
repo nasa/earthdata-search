@@ -25,6 +25,7 @@ function setup(overrideProps) {
     onUndoExcludeGranule: jest.fn(),
     sortOrder: 'start_date_newest_first',
     searchValue: 'searchValue',
+    collectionSearch: {},
     secondaryOverlayPanel: {
       isOpen: false
     },

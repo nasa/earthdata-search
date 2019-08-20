@@ -16,7 +16,7 @@ function setup() {
         }
       }
     },
-    collectionsSearch: {
+    collectionsSearchResults: {
       allIds: ['collectionId'],
       byId: {
         collectionId: {
@@ -35,7 +35,8 @@ function setup() {
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: false
-    }
+    },
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)
@@ -62,7 +63,7 @@ describe('ProjectCollectionsContainer component', () => {
     expect(enzymeWrapper.find(ProjectCollections).props().project).toEqual({
       collectionIds: ['collectionId']
     })
-    expect(enzymeWrapper.find(ProjectCollections).props().collectionsSearch).toEqual({
+    expect(enzymeWrapper.find(ProjectCollections).props().collectionsSearchResults).toEqual({
       allIds: ['collectionId'],
       byId: {
         collectionId: {

@@ -5,10 +5,11 @@
   overflow-y: scroll;
 
   &__list {
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: visible;
+    overflow-y: visible;
     margin: 0;
     padding: 0;
+    padding-bottom: 5rem;
     list-style: none;
   }
 
@@ -19,11 +20,12 @@
     font-style: italic;
     text-align: center;
     color: $color__black--400;
-    border-right: 1px solid $color__black--300;
+    border-right: 1px solid $border-color;
   }
 
   &__filler {
     flex-grow: 1;
-    border-right: 1px solid $color__black--300;
+    border-right: 1px solid $border-color;
+    margin-top: -5rem;
   }
 }

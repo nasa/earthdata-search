@@ -28,7 +28,8 @@ function setup() {
     onSetActivePanel: jest.fn(),
     projectCollection: {
       accessMethods: {}
-    }
+    },
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsItem {...props} />)

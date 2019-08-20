@@ -1,9 +1,10 @@
 .project-collections-item {
   position: relative;
   padding: $spacer/2;
-  border-bottom: 1px solid $color__black--300;
-  border-right: 1px solid $color__black--300;
+  border-bottom: 1px solid $border-color;
+  border-right: 1px solid $border-color;
   border-left: 5px solid transparent;
+  overflow: visible;
 
   &:after {
     content: '';
@@ -14,7 +15,7 @@
     height: 15px;
     width: 15px;
     background: #fff;
-    border: 1px solid $color__black--300;
+    border: 1px solid $border-color;
     box-shadow: 0 0 10px 3px rgba(0,0,0,0.04);
     color: black;
     transform: rotate(45deg) translate(-50%);
@@ -81,17 +82,12 @@
     color: $color__black--400;
   }
 
-  &__more-actions-menu {
-    @include carat('topright');
-    left: 0.5rem!important;
-  }
-
   &__more-actions-item {
     padding: $spacer/4 $spacer/2;
   }
 
   &__more-actions-icon {
-    width: 1.5rem;
+    width: 1rem;
     margin-right: $spacer/4;
     text-align: center;
   }

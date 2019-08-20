@@ -9,6 +9,8 @@ import Skeleton from '../Skeleton/Skeleton'
 import { collectionTitle } from './skeleton'
 
 import './GranuleResultsHeader.scss'
+import generateHandoffs from '../../util/handoffs/generateHandoffs'
+import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 
 /**
  * Renders GranuleResultsHeader.
@@ -67,7 +69,8 @@ class GranuleResultsHeader extends Component {
       focusedCollectionMetadata,
       location,
       onToggleSecondaryOverlayPanel,
-      secondaryOverlayPanel
+      secondaryOverlayPanel,
+      collectionSearch
     } = this.props
 
     const { isOpen: granuleFiltersOpen } = secondaryOverlayPanel
@@ -77,10 +80,12 @@ class GranuleResultsHeader extends Component {
 
     const showUndoExcludedGranules = excludedGranuleIds.length > 0
 
+    const handoffLinks = generateHandoffs(metadata, collectionSearch)
+
     return (
       <div className="granule-results-header">
         <div className="row">
-          <div className="col-auto">
+          <div className="col">
             <div className="granule-results-header__title-wrap">
               {
                 // TODO: Create isLoading state in reducer so we can use that rather than the title
@@ -109,6 +114,7 @@ class GranuleResultsHeader extends Component {
               </Link>
             </div>
           </div>
+          <MoreActionsDropdown className="col-auto" handoffLinks={handoffLinks} />
         </div>
         <div className="row">
           <div className="col">
@@ -284,6 +290,7 @@ GranuleResultsHeader.propTypes = {
   onUndoExcludeGranule: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
   searchValue: PropTypes.string.isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }
 

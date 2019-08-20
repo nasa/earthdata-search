@@ -6,18 +6,25 @@ import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
 import TruncateText from 'react-truncate-text'
 
-import ToggleMoreActions from '../CustomToggle/MoreActionsToggle'
 import Button from '../Button/Button'
 
 import './ProjectCollectionsItem.scss'
 import { isAccessMethodValid } from '../../util/accessMethods'
+import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
+import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
 
 /**
  * Renders ProjectCollectionItem.
- * @param {object} props - The props passed into the component.
- * @param {object} props.collectionId - Collection ID
- * @param {object} props.collection - Collection passed from redux store.
- * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
+ * @param {Object} props.collectionId - CMR Concept ID of the collection
+ * @param {Object} props.collection - CMR metadata of the collection.
+ * @param {Object} props.color - Color assigned to the collection based on its location in the project list.
+ * @param {Object} props.index - Position of the collection in the project list.
+ * @param {Object} props.isPanelActive - Whether or not the panel for the collection is active.
+ * @param {Function} props.onRemoveCollectionFromProject - Function called when a collection is removed from the project.
+ * @param {Function} props.onToggleCollectionVisibility - Function called when visibility of the collection is toggled.
+ * @param {Function} props.onSetActivePanel - Function called when an active panel is set.
+ * @param {Object} props.projectCollection - Collection from project.byId
+ * @param {Object} props.collectionSearch - Search values from query.collection
  */
 const ProjectCollectionItem = ({
   collectionId,
@@ -28,7 +35,8 @@ const ProjectCollectionItem = ({
   onRemoveCollectionFromProject,
   onToggleCollectionVisibility,
   onSetActivePanel,
-  projectCollection
+  projectCollection,
+  collectionSearch
 }) => {
   if (!collection) return null
 
@@ -59,6 +67,8 @@ const ProjectCollectionItem = ({
     }
   ])
 
+  const handoffLinks = generateHandoffs(metadata, collectionSearch)
+
   return (
     <li style={{ borderLeftColor: color }} className={className}>
       <div className="project-collections-item__header">
@@ -73,31 +83,23 @@ const ProjectCollectionItem = ({
             {title}
           </TruncateText>
         </Button>
-        <Dropdown className="project-collections-item__more-actions">
-          <Dropdown.Toggle
-            className="project-collections-item__more-actions-toggle"
-            as={ToggleMoreActions}
-          />
-          <Dropdown.Menu
-            className="project-collections-item__more-actions-menu"
-            alignRight
+
+        <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
+          <Dropdown.Item
+            className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
+            onClick={() => onToggleCollectionVisibility(collectionId)}
           >
-            <Dropdown.Item
-              className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
-              onClick={() => onToggleCollectionVisibility(collectionId)}
-            >
-              <i className={`project-collections-item__more-actions-icon fa fa-${isVisible ? 'eye-slash' : 'eye'}`} />
-              Toggle Visibility
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
-              onClick={() => onRemoveCollectionFromProject(collectionId)}
-            >
-              <i className="project-collections-item__more-actions-icon fa fa-times-circle" />
-              Remove
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+            <i className={`project-collections-item__more-actions-icon fa fa-${isVisible ? 'eye-slash' : 'eye'}`} />
+            Toggle Visibility
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
+            onClick={() => onRemoveCollectionFromProject(collectionId)}
+          >
+            <i className="project-collections-item__more-actions-icon fa fa-times-circle" />
+            Remove
+          </Dropdown.Item>
+        </MoreActionsDropdown>
       </div>
       <ul className="project-collections-item__stats-list">
         <li
@@ -147,7 +149,8 @@ ProjectCollectionItem.propTypes = {
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  projectCollection: PropTypes.shape({}).isRequired
+  projectCollection: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollectionItem

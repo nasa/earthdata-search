@@ -18,15 +18,16 @@ import './ProjectCollections.scss'
 const ProjectCollections = (props) => {
   const {
     collections,
-    collectionsSearch,
+    collectionsSearchResults,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
     project,
-    projectPanels
+    projectPanels,
+    collectionSearch
   } = props
 
-  const collectionsLoading = collectionsSearch.isLoading
+  const collectionsLoading = collectionsSearchResults.isLoading
   const projectCollections = project.collectionIds.map(collectionId => project.byId[collectionId])
   const isValid = isProjectValid(projectCollections)
 
@@ -45,6 +46,7 @@ const ProjectCollections = (props) => {
         onSetActivePanel={onSetActivePanel}
         project={project}
         projectPanels={projectPanels}
+        collectionSearch={collectionSearch}
       />
       <div className="project-collections__footer">
         <p className="project-collections__footer-message">
@@ -80,12 +82,13 @@ const ProjectCollections = (props) => {
 
 ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
+  collectionsSearchResults: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired
+  projectPanels: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired
 }
 
 export default ProjectCollections

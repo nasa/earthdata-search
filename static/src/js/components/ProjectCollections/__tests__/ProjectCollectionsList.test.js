@@ -39,7 +39,8 @@ function setup() {
     projectPanels: {
       activePanel: '0.0.0',
       isOpen: true
-    }
+    },
+    collectionSearch: {}
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsList {...props} />)
