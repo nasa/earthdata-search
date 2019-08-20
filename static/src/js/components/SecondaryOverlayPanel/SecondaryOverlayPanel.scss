@@ -50,6 +50,7 @@
     flex-grow: 1;
     padding: $spacer;
     background-color: $color__black--700;
+    overflow-y: scroll;
   }
 
   &__footer {
