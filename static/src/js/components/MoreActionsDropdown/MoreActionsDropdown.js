@@ -68,7 +68,7 @@ MoreActionsDropdown.propTypes = {
   alignRight: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
-  handoffLinks: PropTypes.shape({})
+  handoffLinks: PropTypes.arrayOf(PropTypes.shape({}))
 }
 
 export default MoreActionsDropdown
