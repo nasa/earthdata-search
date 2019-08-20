@@ -14,8 +14,6 @@ const retrieveConcept = async (event) => {
   const conceptUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}`
     + `/search/concepts/${event.pathParameters.id}?pretty=true`
 
-  console.log(conceptUrl)
-
   return doSearchRequest(getJwtToken(event), conceptUrl)
 }
 
