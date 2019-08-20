@@ -5,12 +5,21 @@
   &__site-logo {
     display: flex;
     align-items: flex-end;
+  }
+
+  &__site-meatball {
+    display: flex;
+    align-items: flex-end;
     background-image: url('~Images/app-logo.png');
     background-size: 3.125rem 2.5rem;
     background-repeat: no-repeat;
     background-position: 0 center;
+    margin-right: 0.25rem;
     transition: background 0.2s ease-in-out;
     cursor: pointer;
+    width: 3.125rem;
+    height: 2.5rem;
+    flex-shrink: 0;
 
     &:hover {
       background-image: url('~Images/app-logo_hover.png');
@@ -28,7 +37,6 @@
   &__site-name {
     display: inline-block;
     margin-right: 0.5rem;
-    margin-left: 3.3rem;
     color: $color__white;
 
     &:hover {
@@ -60,5 +68,20 @@
     background: $color__brand--blue;
     border-radius: 0.125rem;
   }
-}
 
+  &__portal-logo {
+    display: block;
+    background-repeat: no-repeat;
+    background-size: auto 50px;
+    height: 50px;
+    text-indent: inherit;
+    margin: 5px 5px 0 0;
+    transition: background 0.2s ease-in-out;
+    flex-shrink: 0;
+
+    img {
+      display: block;
+      height: 50px;
+    }
+  }
+}

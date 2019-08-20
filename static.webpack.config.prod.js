@@ -4,7 +4,6 @@ const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CSSNano = require('cssnano')
@@ -62,11 +61,6 @@ const Config = merge(StaticCommonConfig, {
     extractHtml,
     new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin([path.resolve(__dirname, 'static/dist')]),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].min.css',
-      chunkFilename: '[id].[contenthash].min.css',
-      publicPath: '/'
-    }),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
     ])

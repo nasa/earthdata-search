@@ -21,6 +21,7 @@ import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
 import retrievalReducer from './retrieval'
+import portalsReducer from './portals'
 import projectPanelsReducer from './projectPanels'
 import projectReducer from './project'
 import shapefileReducer from './shapefile'
@@ -40,10 +41,11 @@ export default history => combineReducers({
     collections: collectionMetadataReducer,
     granules: granuleMetadataReducer
   }),
-  retrieval: retrievalReducer,
+  portal: portalsReducer,
   project: projectReducer,
   projectPanels: projectPanelsReducer,
   query: queryReducer,
+  retrieval: retrievalReducer,
   router: connectRouter(history),
   searchResults: combineReducers({
     collections: collectionsResultsReducer,

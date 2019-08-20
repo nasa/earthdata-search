@@ -46,6 +46,7 @@ const StaticCommonConfig = {
       },
       {
         test: /\.(css|scss)$/,
+        exclude: /portals/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader
@@ -99,13 +100,38 @@ const StaticCommonConfig = {
           { loader: 'style-loader' },
           { loader: 'font-awesome-loader' }
         ]
+      },
+      {
+        test: /portals.*style\.s?css$/i,
+        use: [
+          {
+            loader: 'style-loader',
+            options: { injectType: 'lazyStyleTag' }
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
+    new webpack.HashedModuleIdsPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].min.css',
-      chunkFilename: '[id].min.css',
+      filename: '[name].[contenthash].min.css',
+      chunkFilename: '[id].[contenthash].min.css',
       publicPath: '/'
     }),
     new CopyWebpackPlugin([
