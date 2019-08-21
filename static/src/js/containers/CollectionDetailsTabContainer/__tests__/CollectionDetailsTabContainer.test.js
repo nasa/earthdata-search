@@ -10,6 +10,9 @@ function setup() {
   const props = {
     location: {
       some: 'location'
+    },
+    match: {
+      path: 'location'
     }
   }
 
@@ -27,6 +30,9 @@ describe('CollectionDetailsTabContainer component', () => {
     expect(enzymeWrapper.find(CollectionDetailsTab).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDetailsTab).prop('location')).toEqual({
       some: 'location'
+    })
+    expect(enzymeWrapper.find(CollectionDetailsTab).prop('match')).toEqual({
+      path: 'location'
     })
   })
 })

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 /**
  * Renders GranuleDetailsTab.
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 
 export const GranuleDetailsTab = ({ location, onFocusedGranuleChange }) => (
   <span className="granule-results-tab">
-    <Link
+    <PortalLinkContainer
       className="granule-results-tab__button"
       type="button"
       to={{
@@ -22,7 +22,7 @@ export const GranuleDetailsTab = ({ location, onFocusedGranuleChange }) => (
     >
       <i className="fa fa-chevron-circle-left" />
       {' Back to Granules'}
-    </Link>
+    </PortalLinkContainer>
   </span>
 )
 

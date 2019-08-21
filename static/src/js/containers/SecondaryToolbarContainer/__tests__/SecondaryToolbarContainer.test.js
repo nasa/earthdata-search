@@ -10,6 +10,9 @@ function setup() {
   const props = {
     authToken: '',
     location: {},
+    portal: {
+      portalId: ''
+    },
     projectIds: []
   }
 

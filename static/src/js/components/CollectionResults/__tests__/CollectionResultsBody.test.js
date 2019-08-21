@@ -26,6 +26,7 @@ function setup() {
       loadTime: 1150,
       timerStart: null
     },
+    portal: {},
     projectIds: [],
     location: {
       pathname: '/test'

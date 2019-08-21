@@ -9,6 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     collections: { value: 'collections' },
+    portal: {},
     project: {
       collectionIds: []
     },

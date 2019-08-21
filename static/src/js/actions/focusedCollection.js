@@ -9,6 +9,7 @@ import { updateCollectionMetadata } from './collections'
 import { updateGranuleResults, addGranulesFromCollection } from './granules'
 import { updateAuthTokenFromHeaders } from './authToken'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
+import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 export const updateFocusedCollection = payload => ({
   type: UPDATE_FOCUSED_COLLECTION,
@@ -158,16 +159,18 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
   dispatch(actions.getFocusedCollection())
 }
 
-export const viewCollectionGranules = collectionId => (dispatch) => {
+export const viewCollectionGranules = collectionId => (dispatch, getState) => {
   dispatch(changeFocusedCollection(collectionId))
+
   dispatch(actions.changeUrl({
-    pathname: '/search/granules'
+    pathname: `${portalPathFromState(getState())}/search/granules`
   }))
 }
 
-export const viewCollectionDetails = collectionId => (dispatch) => {
+export const viewCollectionDetails = collectionId => (dispatch, getState) => {
   dispatch(changeFocusedCollection(collectionId))
+
   dispatch(actions.changeUrl({
-    pathname: '/search/granules/collection-details'
+    pathname: `${portalPathFromState(getState())}/search/granules/collection-details`
   }))
 }

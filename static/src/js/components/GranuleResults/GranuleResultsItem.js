@@ -3,7 +3,6 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Waypoint } from 'react-waypoint'
 import queryString from 'query-string'
-import { Link } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
@@ -12,6 +11,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { eventEmitter } from '../../events/events'
 
 import './GranuleResultsItem.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 class CustomDataLinksToggle extends React.Component {
   constructor(props, context) {
@@ -189,7 +189,7 @@ const GranuleResultsItem = ({
           </div>
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
-              <Link
+              <PortalLinkContainer
                 onClick={() => handleClickGranuleDetails(id)}
                 className="collection-results__item-title-link"
                 to={{
@@ -211,7 +211,7 @@ const GranuleResultsItem = ({
                 >
                   <i className="fa fa-info-circle" />
                 </button>
-              </Link>
+              </PortalLinkContainer>
               {
                 onlineAccessFlag && (
                   <DataLinksButton dataLinks={dataLinks} />

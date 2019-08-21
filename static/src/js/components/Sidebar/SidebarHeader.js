@@ -12,7 +12,7 @@ const Header = ({ portal }) => {
   } = portal
 
   let portalLink = '/'
-  if (portalId.length > 0) portalLink = `/search?portal=${portalId}`
+  if (portalId.length > 0) portalLink = `/portal/${portalId}/search`
 
   const portalLogo = () => {
     if (!logo) return null

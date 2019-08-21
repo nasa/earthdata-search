@@ -22,6 +22,7 @@ import ConnectedAuthCallbackContainer
   from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
+import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -43,18 +44,25 @@ class App extends Component {
     this.shapefileDropzoneRef = React.createRef()
   }
 
+  portalPaths(path) {
+    return [`/portal/:portalId${path}`, path]
+  }
+
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
+          <Helmet>
+            <meta charSet="utf-8" />
+            <title>Earthdata Search</title>
+          </Helmet>
+          <Switch>
+            <Route path={this.portalPaths('/')} component={ConnectedPortalContainer} />
+          </Switch>
           <ConnectedAuthTokenContainer>
-            <Helmet>
-              <meta charSet="utf-8" />
-              <title>Earthdata Search</title>
-            </Helmet>
             <Switch>
               <Route
-                path="/granules"
+                path={this.portalPaths('/granules')}
                 render={() => (
                   <AuthRequiredContainer>
                     <Granules />
@@ -62,22 +70,21 @@ class App extends Component {
                 )}
               />
               <Route
-                path="/data"
+                path={this.portalPaths('/data')}
                 render={() => (
                   <AuthRequiredContainer>
                     <Data />
                   </AuthRequiredContainer>
                 )}
               />
-              <Route path="/">
+              <Route path={this.portalPaths('/')}>
                 <ConnectedUrlQueryContainer>
                   <Switch>
-                    <Route exact path="/">
-                      <Redirect to="/search" />
-                    </Route>
-                    <Route path="/search" component={Search} />
+                    <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
+                    <Redirect exact from="/" to="/search" />
+                    <Route path={this.portalPaths('/search')} component={Search} />
                     <Route
-                      path="/projects"
+                      path={this.portalPaths('/projects')}
                       render={() => (
                         <AuthRequiredContainer>
                           <Project />
@@ -92,7 +99,7 @@ class App extends Component {
             </Switch>
             <FooterContainer />
             <Switch>
-              <Route path="/">
+              <Route path={this.portalPaths('/')}>
                 <ShapefileUploadModalContainer />
                 <ShapefileDropzoneContainer />
               </Route>

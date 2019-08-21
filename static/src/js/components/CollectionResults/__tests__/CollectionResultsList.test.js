@@ -26,6 +26,9 @@ function setup(propsOverride = {}) {
       loadTime: 1150,
       timerStart: null
     },
+    portal: {
+      portalId: ''
+    },
     projectIds: [],
     location: {
       pathname: '/test'

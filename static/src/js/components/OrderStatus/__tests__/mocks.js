@@ -11,6 +11,7 @@ export const retrievalStatusProps = {
     }
   },
   onChangePath: jest.fn(),
+  portal: {},
   retrieval: {
     id: 7,
     collections: {

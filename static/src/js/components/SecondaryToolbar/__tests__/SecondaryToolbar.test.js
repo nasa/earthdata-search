@@ -10,6 +10,9 @@ function setup(state) {
   const props = {
     authToken: '',
     location: {},
+    portal: {
+      portalId: ''
+    },
     projectIds: []
   }
 
@@ -64,6 +67,26 @@ describe('SecondaryToolbar component', () => {
       logoutButton.simulate('click')
 
       expect(instance.handleLogout).toBeCalledTimes(1)
+    })
+
+    test('the logout button should return to the root URL without a portal', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      const logoutButton = enzymeWrapper.find('.secondary-toolbar__logout')
+      expect(logoutButton.props().href).toEqual('/')
+    })
+
+    test('the logout button should return to the root portal URL with a portal', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      enzymeWrapper.setProps({
+        portal: {
+          portalId: 'simple'
+        }
+      })
+
+      const logoutButton = enzymeWrapper.find('.secondary-toolbar__logout')
+      expect(logoutButton.props().href).toEqual('/portal/simple/')
     })
   })
 

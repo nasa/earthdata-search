@@ -147,7 +147,8 @@ export const buildCollectionSearchParams = (params) => {
     dataCenterH: facetsToSend.data_center_h,
     dataCenter,
     echoCollectionId,
-    hasGranulesOrCwic,
+    // TODO: This might cause problems with EDSC-2143
+    hasGranulesOrCwic: hasGranulesOrCwic === undefined ? true : hasGranulesOrCwic,
     instrumentH: facetsToSend.instrument_h,
     keyword,
     pageNum,

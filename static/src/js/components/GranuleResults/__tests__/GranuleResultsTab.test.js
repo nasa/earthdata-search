@@ -1,9 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Link } from 'react-router-dom'
 
 import { GranuleResultsTab } from '../GranuleResultsTab'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -34,16 +34,16 @@ describe('GranuleResultsTab component', () => {
   test('renders its link correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(Link).length).toEqual(1)
-    expect(enzymeWrapper.find(Link).prop('className')).toEqual('granule-results-tab__button')
-    expect(enzymeWrapper.find(Link).prop('to')).toEqual({ pathname: '/search', search: '?test=search-value' })
-    expect(enzymeWrapper.find(Link).prop('children')[1]).toEqual(' Back to Collections')
+    expect(enzymeWrapper.find(PortalLinkContainer).length).toEqual(1)
+    expect(enzymeWrapper.find(PortalLinkContainer).prop('className')).toEqual('granule-results-tab__button')
+    expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/search', search: '?test=search-value' })
+    expect(enzymeWrapper.find(PortalLinkContainer).prop('children')[1]).toEqual(' Back to Collections')
   })
 
   describe('onFocusedCollectionChange', () => {
     test('is fired when link is clicked', () => {
       const { enzymeWrapper, props } = setup()
-      enzymeWrapper.find(Link).simulate('click')
+      enzymeWrapper.find(PortalLinkContainer).simulate('click')
 
       expect(props.onFocusedCollectionChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedCollectionChange).toHaveBeenCalledWith('')

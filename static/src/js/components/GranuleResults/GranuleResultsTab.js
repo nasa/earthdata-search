@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './GranuleResultsTab.scss'
 
@@ -16,7 +17,7 @@ export class GranuleResultsTab extends PureComponent {
 
     return (
       <span className="granule-results-tab">
-        <Link
+        <PortalLinkContainer
           className="granule-results-tab__button"
           type="button"
           to={{
@@ -27,7 +28,7 @@ export class GranuleResultsTab extends PureComponent {
         >
           <i className="fa fa-chevron-circle-left" />
           {' Back to Collections'}
-        </Link>
+        </PortalLinkContainer>
       </span>
     )
   }

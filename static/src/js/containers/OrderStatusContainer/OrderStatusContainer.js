@@ -9,6 +9,7 @@ import OrderStatus from '../../components/OrderStatus/OrderStatus'
 
 const mapStateToProps = state => ({
   authToken: state.authToken,
+  portal: state.portal,
   retrieval: state.retrieval
 })
 
@@ -26,6 +27,7 @@ const mapDispatchToProps = dispatch => ({
 export const OrderStatusContainer = ({
   authToken,
   match,
+  portal,
   onChangePath,
   onFetchRetrieval,
   onFetchRetrievalCollection,
@@ -34,6 +36,7 @@ export const OrderStatusContainer = ({
   <OrderStatus
     authToken={authToken}
     match={match}
+    portal={portal}
     onChangePath={onChangePath}
     onFetchRetrieval={onFetchRetrieval}
     onFetchRetrievalCollection={onFetchRetrievalCollection}
@@ -43,6 +46,7 @@ export const OrderStatusContainer = ({
 
 OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
+  portal: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,

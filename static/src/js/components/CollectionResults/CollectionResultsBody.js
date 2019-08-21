@@ -16,6 +16,7 @@ class CollectionResultsBody extends PureComponent {
   render() {
     const {
       collections,
+      portal,
       projectIds,
       waypointEnter,
       onAddProjectCollection,
@@ -28,6 +29,7 @@ class CollectionResultsBody extends PureComponent {
       <div className="collection-results-body">
         <CollectionResultsList
           collections={collections}
+          portal={portal}
           projectIds={projectIds}
           onAddProjectCollection={onAddProjectCollection}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -42,6 +44,7 @@ class CollectionResultsBody extends PureComponent {
 
 CollectionResultsBody.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   location: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,

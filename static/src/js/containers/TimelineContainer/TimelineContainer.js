@@ -7,6 +7,7 @@ import actions from '../../actions/index'
 
 import Timeline from '../../components/Timeline/Timeline'
 import { getFocusedCollectionMetadata } from '../../util/focusedCollection'
+import isPath from '../../util/isPath'
 
 const mapDispatchToProps = dispatch => ({
   onChangeQuery: query => dispatch(actions.changeQuery(query)),
@@ -41,8 +42,8 @@ export const TimelineContainer = (props) => {
 
   let changeQueryMethod = onChangeQuery
   // Determine the collectionMetadata the timeline should be displaying
-  const isProjectPage = pathname.startsWith('/project')
-  const isGranulesPage = pathname.startsWith('/search/granules')
+  const isProjectPage = isPath(pathname, ['/project'])
+  const isGranulesPage = isPath(pathname, ['/search/granules'])
   const collectionMetadata = {}
   let granuleFilterTemporal
 

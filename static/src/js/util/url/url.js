@@ -35,7 +35,6 @@ export const stringify = params => qs.stringify(
  * Mapping of URL Shortened Keys to their redux store keys
  */
 const urlDefs = {
-  portalId: { shortKey: 'portal', encode: encodeString, decode: decodeString },
   focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
   keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
   pointSearch: { shortKey: 'sp', encode: encodeString, decode: decodeString },
@@ -128,8 +127,6 @@ export const decodeUrlParams = (paramString) => {
     shapefileId: decodeHelp(params, 'shapefileId')
   }
 
-  const portalId = decodeHelp(params, 'portalId')
-
   return {
     cmrFacets,
     collections,
@@ -137,7 +134,6 @@ export const decodeUrlParams = (paramString) => {
     focusedCollection,
     focusedGranule,
     map,
-    portalId,
     project,
     query,
     shapefile,

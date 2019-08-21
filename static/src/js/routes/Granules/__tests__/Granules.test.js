@@ -6,7 +6,12 @@ import { Granules } from '../Granules'
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const enzymeWrapper = shallow(<Granules />)
+  const props = {
+    match: {
+      path: '/search'
+    }
+  }
+  const enzymeWrapper = shallow(<Granules {...props} />)
 
   return {
     enzymeWrapper

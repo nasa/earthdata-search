@@ -29,7 +29,6 @@ const mapStateToProps = state => ({
   platformFacets: state.facetsParams.cmr.platform_h,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  portalId: state.portal.portalId,
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
   project: state.project,
   projectFacets: state.facetsParams.cmr.project_h,

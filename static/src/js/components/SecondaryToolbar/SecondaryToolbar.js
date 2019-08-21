@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { remove } from 'tiny-cookie'
-import { Link } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
 
 import Button from '../Button/Button'
-
-import './SecondaryToolbar.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+
+import './SecondaryToolbar.scss'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class SecondaryToolbar extends Component {
     const {
       authToken,
       projectIds,
-      location
+      location,
+      portal
     } = this.props
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
@@ -36,7 +38,7 @@ class SecondaryToolbar extends Component {
     const cmrEnvironment = cmrEnv()
 
     const backLink = (
-      <Link
+      <PortalLinkContainer
         className="collection-results__item-title-link"
         to={{
           pathname: '/search',
@@ -51,7 +53,7 @@ class SecondaryToolbar extends Component {
         >
           Back to Search
         </Button>
-      </Link>
+      </PortalLinkContainer>
     )
 
     const buildProjectLink = (loggedIn) => {
@@ -69,7 +71,7 @@ class SecondaryToolbar extends Component {
         )
       }
       return (
-        <Link
+        <PortalLinkContainer
           className="collection-results__item-title-link"
           to={{
             pathname: '/projects',
@@ -83,7 +85,7 @@ class SecondaryToolbar extends Component {
           >
             My Project
           </Button>
-        </Link>
+        </PortalLinkContainer>
       )
     }
 
@@ -113,7 +115,7 @@ class SecondaryToolbar extends Component {
           <Dropdown.Item
             className="secondary-toolbar__logout"
             onClick={this.handleLogout}
-            href="/"
+            href={`${portalPath(portal)}/`}
           >
             Logout
           </Dropdown.Item>
@@ -140,7 +142,8 @@ class SecondaryToolbar extends Component {
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  location: PropTypes.shape({}).isRequired
+  location: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default SecondaryToolbar

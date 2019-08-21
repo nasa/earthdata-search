@@ -1,12 +1,10 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import {
-  withRouter,
-  Link
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import ProjectCollectionItem from './ProjectCollectionsItem'
 import { getColorByIndex } from '../../util/colors'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './ProjectCollectionsList.scss'
 
@@ -61,11 +59,11 @@ export const ProjectCollectionsList = (props) => {
       {projectIsEmpty && (
         <p className="project-collections-list__notice">
           {'Your project is empty. Click '}
-          <Link
+          <PortalLinkContainer
             to={`/search${location.search}`}
           >
             here
-          </Link>
+          </PortalLinkContainer>
           {' to return to search and add collections to your project.'}
         </p>
       )}

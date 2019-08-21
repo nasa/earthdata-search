@@ -11,6 +11,7 @@ export const prepareRetrievalParams = (state) => {
   const {
     authToken,
     metadata = {},
+    portal,
     project,
     router,
     shapefile
@@ -44,11 +45,14 @@ export const prepareRetrievalParams = (state) => {
     projectCollections.push(returnValue)
   })
 
-  const { source } = router.location
+  const { search } = router.location
   const { shapefileId } = shapefile
 
+  const { portalId } = portal
+
   const jsonData = {
-    source,
+    portalId,
+    source: search,
     shapefileId
   }
 
