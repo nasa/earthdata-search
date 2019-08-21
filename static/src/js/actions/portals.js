@@ -10,7 +10,7 @@ export const addPortal = payload => ({
  * Loads the portal config into the Redux Store.
  * @param {String} portalId Portal Name, must match the directory name in which the config is stored.
  */
-export const restorePortal = portalId => (dispatch) => {
+export const loadPortalConfig = portalId => (dispatch) => {
   try {
     const json = require(`../../../../portals/${portalId}/config.json`)
 
