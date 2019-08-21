@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 import './SidebarHeader.scss'
 
 const Header = ({ portal }) => {
-  console.log('Header', portal)
-
   const {
     portalId,
     logo,

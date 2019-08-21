@@ -94,7 +94,7 @@ import {
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import { restorePortal } from './portals'
+import { loadPortalConfig } from './portals'
 
 const actions = {
   addAccessMethods,
@@ -141,7 +141,7 @@ const actions = {
   removeSpatialFilter,
   removeTemporalFilter,
   restoreCollections,
-  restorePortal,
+  loadPortalConfig,
   restoreProject,
   saveShapefile,
   searchNlp,
