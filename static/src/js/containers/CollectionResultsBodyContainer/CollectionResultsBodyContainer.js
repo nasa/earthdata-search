@@ -11,6 +11,7 @@ import CollectionResultsBody from '../../components/CollectionResults/Collection
 
 const mapStateToProps = state => ({
   collections: state.searchResults.collections,
+  portal: state.portal,
   project: state.project,
   query: state.query.collection
 })
@@ -33,6 +34,7 @@ export const CollectionResultsBodyContainer = (props) => {
     collections,
     query,
     location,
+    portal,
     project,
     onAddProjectCollection,
     onRemoveCollectionFromProject,
@@ -53,6 +55,7 @@ export const CollectionResultsBodyContainer = (props) => {
   return (
     <CollectionResultsBody
       collections={collections}
+      portal={portal}
       projectIds={projectIds}
       location={location}
       onAddProjectCollection={onAddProjectCollection}
@@ -68,6 +71,7 @@ CollectionResultsBodyContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
   query: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

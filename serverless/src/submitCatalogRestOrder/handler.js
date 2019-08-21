@@ -18,6 +18,7 @@ import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { startOrderStatusUpdateWorkflow } from '../../../sharedUtils/orderStatus'
+import { portalPath } from '../../../sharedUtils/portalPath'
 
 
 // Knex database connection object
@@ -76,6 +77,7 @@ const submitCatalogRestOrder = async (event, context) => {
       access_method: accessMethod,
       granule_params: granuleParams
     } = retrievalRecord
+    const { portalId, shapefileId } = jsondata
 
     const granuleResponse = await request.get({
       uri: cmrUrl('search/granules.json', granuleParams),
@@ -90,15 +92,13 @@ const submitCatalogRestOrder = async (event, context) => {
     const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
 
     // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${getEarthdataConfig(cmrEnv()).edscHost}/data/retrieve/${retrievalId}`
+    const edscStatusUrl = `${getEarthdataConfig(cmrEnv()).edscHost}${portalPath({ portalId })}/data/retrieve/${retrievalId}`
 
     const { model, url, type } = accessMethod
 
     console.log('Submitted Model: ', model)
 
     // Retrieve the shapefile if one was provided
-    const { shapefileId } = jsondata
-
     let shapefileParam = {}
     if (shapefileId) {
       const shapefileRecord = await dbConnection('shapefiles')

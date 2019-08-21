@@ -56,6 +56,9 @@ describe('submitRetrieval', () => {
           pageNum: 1
         }
       },
+      portal: {
+        portalId: ''
+      },
       project: {
         byId: {
           collectionId: {
@@ -117,6 +120,9 @@ describe('submitRetrieval', () => {
         granule: {
           pageNum: 1
         }
+      },
+      portal: {
+        portalId: ''
       },
       project: {
         byId: {

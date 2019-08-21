@@ -55,7 +55,7 @@ describe('Header component', () => {
       expect(enzymeWrapper.find('.header__portal-logo').props().title).toEqual('Test Portal Home')
       expect(enzymeWrapper.find('.header__portal-logo img').props().src).toEqual('http://placehold.it/75x50')
       expect(enzymeWrapper.find('.header__portal-logo img').props().alt).toEqual('Test Portal Home')
-      expect(enzymeWrapper.find('.header__site-name').props().href).toEqual('/search?portal=simple')
+      expect(enzymeWrapper.find('.header__site-name').props().href).toEqual('/portal/simple/search')
     })
   })
 })

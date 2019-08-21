@@ -1,13 +1,15 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
-import { Link } from 'react-router-dom'
 
 import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
 
 import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
+import store from '../../../store/configureStore'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -19,9 +21,11 @@ function setup() {
   const props = retrievalStatusProps
 
   const enzymeWrapper = mount(
-    <StaticRouter>
-      <OrderStatus {...props} />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter>
+        <OrderStatus {...props} />
+      </StaticRouter>
+    </Provider>
   )
 
   return {
@@ -83,7 +87,7 @@ describe('OrderStatus component', () => {
     test('calls onChangePath when the search link is clicked', () => {
       const { enzymeWrapper, props } = setup()
       const orderStatus = enzymeWrapper.find(OrderStatus)
-      const backToSearchLink = orderStatus.find('.order-status__footer-link-list').find(Link).at(0)
+      const backToSearchLink = orderStatus.find('.order-status__footer-link-list').find(PortalLinkContainer).at(0)
       backToSearchLink.simulate('click')
       expect(props.onChangePath).toHaveBeenCalledTimes(1)
       expect(props.onChangePath).toHaveBeenCalledWith('/search/?test=source_link')

@@ -67,6 +67,9 @@ export class Search extends Component {
   }
 
   render() {
+    const { match } = this.props
+    const { path } = match
+
     return (
       <div className="route-wrapper route-wrapper--search search">
         <SidebarContainer>
@@ -80,14 +83,14 @@ export class Search extends Component {
             <SecondaryToolbarContainer />
           </header>
           <Switch>
-            <Route exact path="/search">
+            <Route exact path={`${path}`}>
               <MasterOverlayPanelContainer
                 tabHandle={<CollectionResultsTabContainer />}
                 header={<CollectionResultsHeaderContainer />}
                 body={<CollectionResultsBodyContainer />}
               />
             </Route>
-            <Route exact path="/search/granules">
+            <Route exact path={`${path}/granules`}>
               <MasterOverlayPanelContainer
                 tabHandle={<GranuleResultsTabContainer />}
                 header={<GranuleResultsHeaderContainer />}
@@ -96,14 +99,14 @@ export class Search extends Component {
               />
               <GranuleFiltersPanelContainer />
             </Route>
-            <Route exact path="/search/granules/granule-details">
+            <Route exact path={`${path}/granules/granule-details`}>
               <MasterOverlayPanelContainer
                 tabHandle={<GranuleDetailsTabContainer />}
                 header={<GranuleDetailsHeaderContainer />}
                 body={<GranuleDetailsBodyContainer />}
               />
             </Route>
-            <Route exact path="/search/granules/collection-details">
+            <Route exact path={`${path}/granules/collection-details`}>
               <MasterOverlayPanelContainer
                 tabHandle={<CollectionDetailsTabContainer />}
                 header={<CollectionDetailsHeaderContainer />}
@@ -120,7 +123,7 @@ export class Search extends Component {
 }
 
 Search.propTypes = {
-  location: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
   onMasterOverlayHeightChange: PropTypes.func.isRequired
 }
 

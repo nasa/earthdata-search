@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
 
 import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 
@@ -9,6 +8,7 @@ import Button from '../Button/Button'
 import ButtonDropdown from '../ButtonDropdown/ButtonDropdown'
 import OrderDropdownList from '../OrderDropdownList/OrderDropdownList'
 import OrderProgressList from '../OrderProgressList/OrderProgressList'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './OrderStatusItemBody.scss'
 
@@ -63,7 +63,7 @@ export class OrderStatusItemBody extends React.Component {
       return (
         <div className="order-status-item-body">
           <div className="order-status-item-body__details">
-            <Link
+            <PortalLinkContainer
               className="order-status-item-body__button order-status-item-body__button--links"
               to={{
                 pathname: `/granules/download/${id}`
@@ -80,7 +80,7 @@ export class OrderStatusItemBody extends React.Component {
               >
                 View/Download Data Links
               </Button>
-            </Link>
+            </PortalLinkContainer>
           </div>
         </div>
       )
@@ -97,7 +97,7 @@ export class OrderStatusItemBody extends React.Component {
           <div className="order-status-item-body__details">
             {
               browseFlag && (
-                <Link
+                <PortalLinkContainer
                   className="order-status-item-body__button order-status-item-body__button--browse-links"
                   to={{
                     pathname: `/granules/download/${id}`,
@@ -115,7 +115,7 @@ export class OrderStatusItemBody extends React.Component {
                   >
                     View Browse Image Links
                   </Button>
-                </Link>
+                </PortalLinkContainer>
               )
             }
           </div>
@@ -254,7 +254,7 @@ export class OrderStatusItemBody extends React.Component {
             }
             {
               browseFlag && (
-                <Link
+                <PortalLinkContainer
                   className="order-status-item-body__button"
                   to={{
                     pathname: `/granules/download/${id}`,
@@ -273,7 +273,7 @@ export class OrderStatusItemBody extends React.Component {
                   >
                     View Browse Image Links
                   </Button>
-                </Link>
+                </PortalLinkContainer>
               )
             }
           </div>

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
 import './CollectionDetailsTab.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 /**
  * Renders CollectionDetailsTab.
@@ -12,7 +12,7 @@ import './CollectionDetailsTab.scss'
 
 export const CollectionDetailsTab = ({ location }) => (
   <span className="collection-details-tab">
-    <Link
+    <PortalLinkContainer
       className="collection-details-tab__button"
       type="button"
       to={{
@@ -22,7 +22,7 @@ export const CollectionDetailsTab = ({ location }) => (
     >
       <i className="fa fa-chevron-circle-left" />
       {' Back to Granules'}
-    </Link>
+    </PortalLinkContainer>
   </span>
 )
 

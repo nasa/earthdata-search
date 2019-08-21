@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { startCase } from 'lodash'
 
 import CollectionResultsItem from './CollectionResultsItem'
 
@@ -7,6 +8,7 @@ import './CollectionResultsList.scss'
 
 export const CollectionResultsList = ({
   collections,
+  portal,
   projectIds,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
@@ -37,6 +39,12 @@ export const CollectionResultsList = ({
     )
   })
 
+  const {
+    portalId,
+    org = portalId,
+    title = portalId
+  } = portal
+
   return (
     <ul className="collection-results-list">
       {collectionResults}
@@ -45,12 +53,31 @@ export const CollectionResultsList = ({
           Loading collections...
         </li>
       )}
+      {
+        portalId.length && (
+          <p className="portal-escape">
+            Looking for more collections?
+            {' '}
+            <a href="/" className="portal-escape-link">
+              Leave
+              {' '}
+              {startCase(org)}
+              &#39;s
+              {' '}
+              {startCase(title)}
+              {' '}
+              Portal
+            </a>
+          </p>
+        )
+      }
     </ul>
   )
 }
 
 CollectionResultsList.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   projectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

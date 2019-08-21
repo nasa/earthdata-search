@@ -3,6 +3,7 @@ import prepareRetrievalParams from '../util/retrievals'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
+import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 export const updateRetrieval = retrievalData => ({
   type: UPDATE_RETRIEVAL,
@@ -13,7 +14,8 @@ export const updateRetrieval = retrievalData => ({
  * Submit data representing a Retrieval to be stored in the database
  */
 export const submitRetrieval = () => (dispatch, getState) => {
-  const orderParams = prepareRetrievalParams(getState())
+  const state = getState()
+  const orderParams = prepareRetrievalParams(state)
   const { authToken } = orderParams
 
   const requestObject = new RetrievalRequest(authToken)
@@ -22,7 +24,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     .then((response) => {
       const { id: retrievalId } = response.data
 
-      dispatch(push(`/data/retrieve/${retrievalId}`))
+      dispatch(push(`${portalPathFromState(state)}/data/retrieve/${retrievalId}`))
     })
     .catch((e) => {
       console.log(e)

@@ -1,9 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Link } from 'react-router-dom'
 
 import { CollectionDetailsTab } from '../CollectionDetailsTab'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -33,9 +33,9 @@ describe('CollectionDetailsTab component', () => {
   test('renders its link correctly', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(Link).length).toEqual(1)
-    expect(enzymeWrapper.find(Link).prop('className')).toEqual('collection-details-tab__button')
-    expect(enzymeWrapper.find(Link).prop('to')).toEqual({ pathname: '/search/granules', search: '?some=test-params' })
-    expect(enzymeWrapper.find(Link).prop('children')[1]).toEqual(' Back to Granules')
+    expect(enzymeWrapper.find(PortalLinkContainer).length).toEqual(1)
+    expect(enzymeWrapper.find(PortalLinkContainer).prop('className')).toEqual('collection-details-tab__button')
+    expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/search/granules', search: '?some=test-params' })
+    expect(enzymeWrapper.find(PortalLinkContainer).prop('children')[1]).toEqual(' Back to Granules')
   })
 })

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Route,
   Switch,
@@ -7,14 +8,22 @@ import {
 
 import GranuleLinkListContainer from '../../containers/GranuleLinkListContainer/GranuleLinkListContainer'
 
-export const Granules = () => (
-  <div className="route-wrapper route-wrapper--granules route-wrapper--light route-wrapper--content-page">
-    <div className="route-wrapper__content">
-      <Switch>
-        <Route path="/granules/download/:id" component={GranuleLinkListContainer} />
-      </Switch>
+export const Granules = ({ match }) => {
+  const { path } = match
+
+  return (
+    <div className="route-wrapper route-wrapper--granules route-wrapper--light route-wrapper--content-page">
+      <div className="route-wrapper__content">
+        <Switch>
+          <Route path={`${path}/download/:id`} component={GranuleLinkListContainer} />
+        </Switch>
+      </div>
     </div>
-  </div>
-)
+  )
+}
+
+Granules.propTypes = {
+  match: PropTypes.shape({}).isRequired
+}
 
 export default withRouter(Granules)

@@ -39,8 +39,7 @@ describe('loadPortalConfig', () => {
       hasScripts: false,
       query: {
         echoCollectionId: 'C203234523-LAADS'
-      },
-      title: 'Simple'
+      }
     }
 
     // mockStore with initialState

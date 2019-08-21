@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
 import { commafy } from '../../util/commafy'
@@ -10,6 +9,7 @@ import { stringify } from '../../util/url/url'
 import Button from '../Button/Button'
 
 import './GranuleResultsActions.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 const GranuleResultsActions = ({
   collectionId,
@@ -52,7 +52,7 @@ const GranuleResultsActions = ({
     if (p.split('!').indexOf(collectionId) < 1) p = `${p}!${collectionId}`
 
     return (
-      <Link
+      <PortalLinkContainer
         className="granule-results-actions__download-all"
         onClick={() => onAddProjectCollection(collectionId)}
         to={{
@@ -73,7 +73,7 @@ const GranuleResultsActions = ({
         >
           Download All
         </Button>
-      </Link>
+      </PortalLinkContainer>
     )
   }
 

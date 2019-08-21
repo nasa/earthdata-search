@@ -7,7 +7,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    location: {},
+    match: {},
     onMasterOverlayHeightChange: jest.fn()
   }
 

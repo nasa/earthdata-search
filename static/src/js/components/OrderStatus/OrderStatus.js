@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
 import OrderStatusList from './OrderStatusList'
 import Well from '../Well/Well'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './OrderStatus.scss'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 export class OrderStatus extends Component {
   componentDidMount() {
@@ -28,7 +29,12 @@ export class OrderStatus extends Component {
   }
 
   render() {
-    const { retrieval = {}, onChangePath, onFetchRetrievalCollection } = this.props
+    const {
+      portal,
+      retrieval = {},
+      onChangePath,
+      onFetchRetrievalCollection
+    } = this.props
     const { jsondata = {}, links = [] } = retrieval
     const { source } = jsondata
 
@@ -157,7 +163,7 @@ export class OrderStatus extends Component {
             <ul className="order-status__footer-link-list">
               <li className="order-status__footer-link-item">
                 <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
-                <Link
+                <PortalLinkContainer
                   className="order-status__footer-link"
                   to={{
                     pathname: '/search',
@@ -166,20 +172,20 @@ export class OrderStatus extends Component {
                   onClick={() => { onChangePath(`/search/${source}`) }}
                 >
                   Back to Earthdata Search Results
-                </Link>
+                </PortalLinkContainer>
               </li>
               <li className="order-status__footer-link-item">
                 <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
-                <Link
+                <PortalLinkContainer
                   className="order-status__footer-link"
                   to="/search"
                 >
                   Start a New Earthdata Search Session
-                </Link>
+                </PortalLinkContainer>
               </li>
               <li className="order-status__footer-link-item">
                 <i className="fa fa-chevron-circle-right order-status__footer-link-icon" />
-                <a className="order-status__footer-link" href="/data/status">View Your Download Status & History</a>
+                <a className="order-status__footer-link" href={`${portalPath(portal)}/data/status`}>View Your Download Status & History</a>
               </li>
             </ul>
           </Well.Footer>
@@ -193,6 +199,7 @@ OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired

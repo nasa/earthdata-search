@@ -13,7 +13,6 @@ export const changePath = (path = '') => (dispatch) => {
     changeQuery,
     changeTimelineQuery,
     restoreCollections,
-    loadPortalConfig,
     restoreProject,
     updateCmrFacet,
     updateFeatureFacet,
@@ -27,16 +26,11 @@ export const changePath = (path = '') => (dispatch) => {
     focusedCollection,
     focusedGranule,
     map,
-    portalId,
     project,
     query,
     shapefile,
     timeline
   } = decodeUrlParams(queryString)
-
-  if (portalId) {
-    dispatch(loadPortalConfig(portalId))
-  }
 
   if (map) {
     dispatch(changeMap(map))

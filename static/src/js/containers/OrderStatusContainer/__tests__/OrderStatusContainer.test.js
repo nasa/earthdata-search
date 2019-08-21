@@ -26,6 +26,7 @@ describe('OrderStatusContainer component', () => {
             id: 7
           }
         },
+        portal: {},
         onChangePath: jest.fn(),
         onFetchRetrievalCollection: jest.fn(),
         retrieval: {

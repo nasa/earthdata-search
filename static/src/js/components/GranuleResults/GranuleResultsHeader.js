@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import Button from '../Button/Button'
@@ -11,6 +10,7 @@ import { collectionTitle } from './skeleton'
 import './GranuleResultsHeader.scss'
 import generateHandoffs from '../../util/handoffs/generateHandoffs'
 import { MoreActionsDropdown } from '../MoreActionsDropdown/MoreActionsDropdown'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 /**
  * Renders GranuleResultsHeader.
@@ -102,7 +102,7 @@ class GranuleResultsHeader extends Component {
                   <h2 className="granule-results-header__title">{title}</h2>
                 )
               }
-              <Link
+              <PortalLinkContainer
                 className="granule-results-header__link"
                 to={{
                   pathname: '/search/granules/collection-details',
@@ -111,7 +111,7 @@ class GranuleResultsHeader extends Component {
               >
                 <i className="fa fa-info-circle" />
                 {' View Details'}
-              </Link>
+              </PortalLinkContainer>
             </div>
           </div>
           <MoreActionsDropdown className="col-auto" handoffLinks={handoffLinks} />

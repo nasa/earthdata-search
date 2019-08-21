@@ -102,7 +102,7 @@ const StaticCommonConfig = {
         ]
       },
       {
-        test: /portals.*style\.s?css$/i,
+        test: /portals.*styles\.s?css$/i,
         use: [
           {
             loader: 'style-loader',

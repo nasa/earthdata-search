@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-  Link,
   Route,
   Switch,
   withRouter
@@ -13,6 +12,7 @@ import actions from '../../actions/index'
 import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderStatusContainer'
 import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 const mapStateToProps = state => ({
   retrieval: state.retrieval
@@ -24,11 +24,14 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const Data = ({
+  match,
   retrieval = {},
   onChangePath
 }) => {
+  const { path } = match
   const { jsondata = {} } = retrieval
   const { source } = jsondata
+
   return (
     <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
       <div className="route-wrapper__content">
@@ -36,7 +39,7 @@ export const Data = ({
           <SecondaryToolbarContainer />
         </header>
         <nav className="route-wrapper__content-nav">
-          <Link
+          <PortalLinkContainer
             className="route-wrapper__content-nav-link"
             to={{
               pathname: '/projects',
@@ -46,11 +49,11 @@ export const Data = ({
           >
             <i className="fa fa-arrow-circle-o-left" />
             {' Back to Project'}
-          </Link>
+          </PortalLinkContainer>
         </nav>
         <div className="route-wrapper__content-inner">
           <Switch>
-            <Route path="/data/retrieve/:id" component={OrderStatusContainer} />
+            <Route path={`${path}/retrieve/:id`} component={OrderStatusContainer} />
           </Switch>
         </div>
       </div>
@@ -59,6 +62,7 @@ export const Data = ({
 }
 
 Data.propTypes = {
+  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }

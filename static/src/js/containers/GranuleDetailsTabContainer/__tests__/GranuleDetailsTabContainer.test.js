@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { GranuleDetailsTabContainer } from '../GranuleDetailsTabContainer'
 import GranuleDetailsTab from '../../../components/GranuleDetails/GranuleDetailsTab'
+import PortalLinkContainer from '../../PortalLinkContainer/PortalLinkContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -31,7 +32,7 @@ describe('GranuleDetailsTabContainer component', () => {
     expect(enzymeWrapper.find(GranuleDetailsTab).props().location).toEqual({
       search: '?some=test-params'
     })
-    enzymeWrapper.find(GranuleDetailsTab).dive().find('Link').simulate('click')
+    enzymeWrapper.find(GranuleDetailsTab).dive().find(PortalLinkContainer).simulate('click')
     expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
   })
 })
