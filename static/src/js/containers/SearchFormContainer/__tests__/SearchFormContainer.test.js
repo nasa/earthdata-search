@@ -10,7 +10,6 @@ function setup() {
   const props = {
     keywordSearch: 'Test value',
     onClearFilters: jest.fn(),
-    onChangeNlpSearch: jest.fn(),
     onChangeQuery: jest.fn()
   }
 
@@ -29,7 +28,6 @@ describe('SearchFormContainer component', () => {
     expect(enzymeWrapper.find(SearchForm).length).toBe(1)
     expect(enzymeWrapper.find(SearchForm).props().keywordSearch).toEqual('Test value')
     expect(typeof enzymeWrapper.find(SearchForm).props().onClearFilters).toEqual('function')
-    expect(typeof enzymeWrapper.find(SearchForm).props().onChangeNlpSearch).toEqual('function')
     expect(typeof enzymeWrapper.find(SearchForm).props().onChangeQuery).toEqual('function')
   })
 })

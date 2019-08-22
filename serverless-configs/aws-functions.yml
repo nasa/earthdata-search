@@ -195,17 +195,6 @@
           cors: true
           path: cwic/granules
 
-  nlpSearch:
-    handler: serverless/src/nlpSearch/handler.default
-    memorySize: 128
-    warmer:
-      concurrency: 3
-    events:
-      - http:
-          method: post
-          cors: true
-          path: nlp
-
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default
     events:

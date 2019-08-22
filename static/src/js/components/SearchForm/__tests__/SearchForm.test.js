@@ -10,7 +10,7 @@ function setup() {
   const props = {
     authToken: '',
     keywordSearch: 'Test value',
-    onChangeNlpSearch: jest.fn(),
+    onChangeQuery: jest.fn(),
     onClearFilters: jest.fn()
   }
 
@@ -48,8 +48,12 @@ describe('SearchForm component', () => {
     input.simulate('change', 'keywordSearch', 'new value')
     input.simulate('blur')
 
-    expect(props.onChangeNlpSearch.mock.calls.length).toBe(1)
-    expect(props.onChangeNlpSearch.mock.calls[0]).toEqual(['new value'])
+    expect(props.onChangeQuery.mock.calls.length).toBe(1)
+    expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+      collection: {
+        keyword: 'new value'
+      }
+    }])
   })
 
   test('should call onClearFilters when the Clear Button is clicked', () => {
