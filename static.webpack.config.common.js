@@ -52,9 +52,6 @@ const StaticCommonConfig = {
             loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: 'css-hot-loader'
-          },
-          {
             loader: 'css-loader',
             options: {
               sourceMap: true,
