@@ -20,8 +20,8 @@ const Header = ({ portal }) => {
     const {
       id,
       image,
-      link,
-      title
+      link = portalLink,
+      title: logoTitle
     } = logo
 
     return (
@@ -29,15 +29,15 @@ const Header = ({ portal }) => {
         id={id}
         className="header__portal-logo"
         href={link}
-        title={title}
+        title={logoTitle}
       >
         {
           image && (
-            <img src={image} alt={title} />
+            <img src={image} alt={logoTitle} />
           )
         }
         <span className="visually-hidden">
-          {title}
+          {logoTitle}
         </span>
       </a>
     )
