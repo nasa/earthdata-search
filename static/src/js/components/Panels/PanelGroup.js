@@ -15,6 +15,7 @@ import './PanelGroup.scss'
  * @param {string} props.secondaryHeading - The text to be used as the secondary heading.
  * @param {boolean} props.isOpen - A flag to desingate the PanelGroup as open.
  * @param {boolean} props.isActive -  A flag to desingate the PanelGroup as active. Active PanelGroups are lifted to the highest index.
+ * @param {function} props.onChangePanel - The action to change the panel.
  * @param {function} props.onPanelsClose - The action to close the panels.
  */
 // eslint-disable-next-line react/prefer-stateless-function
@@ -26,6 +27,7 @@ export const PanelGroup = ({
   secondaryHeading,
   isOpen,
   isActive,
+  onChangePanel,
   onPanelsClose
 }) => {
   const renderPanels = (child, index) => {
@@ -35,6 +37,7 @@ export const PanelGroup = ({
     const isPanelActive = !!(
       isActive && childProps.panelId === activePanelId
     )
+    childProps.onChangePanel = onChangePanel
     childProps.isActive = isPanelActive
     childProps.footer = childProps.footer ? childProps.footer : footer
     return <PanelItem {...childProps} />
@@ -69,6 +72,7 @@ PanelGroup.defaultProps = {
   isOpen: false,
   secondaryHeading: null,
   footer: null,
+  onChangePanel: null,
   onPanelsClose: null
 }
 
@@ -82,6 +86,7 @@ PanelGroup.propTypes = {
   primaryHeading: PropTypes.string.isRequired,
   activePanelId: PropTypes.string,
   secondaryHeading: PropTypes.string,
+  onChangePanel: PropTypes.func,
   onPanelsClose: PropTypes.func,
   footer: PropTypes.node
 }

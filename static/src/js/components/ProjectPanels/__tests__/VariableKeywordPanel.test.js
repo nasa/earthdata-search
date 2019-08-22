@@ -45,8 +45,8 @@ describe('VariableKeywordPanel', () => {
   test('displays the list of keywords', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.keyword-list-item').find('Button').at(0).props().children[0]).toEqual('Keyword1')
-    expect(enzymeWrapper.find('.keyword-list-item').find('Button').at(1).props().children[0]).toEqual('Keyword2')
+    expect(enzymeWrapper.find('.variable-keyword-panel__list-item').find('Button').at(0).props().children).toEqual('Keyword1')
+    expect(enzymeWrapper.find('.variable-keyword-panel__list-item').find('Button').at(1).props().children).toEqual('Keyword2')
   })
 
   test('displays the number of selected variables per keyword', () => {
@@ -61,14 +61,13 @@ describe('VariableKeywordPanel', () => {
       }
     })
 
-    const button = enzymeWrapper.find('.keyword-list-item').find('Button').at(0)
-    expect(button.find('.keyword-variables-selected').text()).toEqual('1')
+    expect(enzymeWrapper.find('.variable-keyword-panel__selected-count').text()).toEqual('1 selected')
   })
 
   test('clicking a keyword calls onSelectKeyword', () => {
     const { enzymeWrapper, props } = setup()
 
-    const button = enzymeWrapper.find('.keyword-list-item').find('Button').at(0)
+    const button = enzymeWrapper.find('.variable-keyword-panel__list-item').find('Button').at(0)
     button.simulate('click')
 
     expect(props.onSelectKeyword.mock.calls.length).toBe(1)

@@ -5,7 +5,8 @@
   flex-wrap: nowrap;
   padding: $spacer/2;
   padding-right: 0;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid $color__black--300;
+  background-color: $color__white;
 
   &__heading {
     margin: 0;

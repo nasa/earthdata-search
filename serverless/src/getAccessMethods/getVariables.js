@@ -28,7 +28,9 @@ const computeKeywordMappings = (items) => {
 
       if (!calculatedMappings[leafNode]) calculatedMappings[leafNode] = []
 
-      calculatedMappings[leafNode].push(variableId)
+      if (calculatedMappings[leafNode].indexOf(variableId) === -1) {
+        calculatedMappings[leafNode].push(variableId)
+      }
     })
   })
 

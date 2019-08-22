@@ -85,6 +85,7 @@ const projectReducer = (state = initialState, action) => {
 
       const { accessMethods = {} } = byId[collectionId] || {}
       const existingMethods = {}
+
       Object.keys(methods).forEach((key) => {
         existingMethods[key] = {
           ...accessMethods[key],

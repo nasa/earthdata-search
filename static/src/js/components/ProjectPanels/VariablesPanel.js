@@ -2,12 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { pure } from 'recompose'
 
+import { allVariablesSelected } from '../../util/variables'
+
 import Button from '../Button/Button'
+import ProjectPanelSection from './ProjectPanelSection'
+
+import './VariablesPanel.scss'
 
 export const VariablesPanel = (props) => {
   const {
     index,
-    panelHeader,
+    collectionId,
     selectedKeyword,
     selectedVariables,
     variables,
@@ -19,104 +24,105 @@ export const VariablesPanel = (props) => {
   if (!selectedKeyword || !variables) return null
 
   return (
-    <div>
-      {panelHeader}
-      <section>
-        <span className="selected-keyword">
+    <div className="variables-panel">
+      <ProjectPanelSection heading="Variable Selection" />
+      <section className="variables-panel__list-wrapper">
+        <header className="variables-panel__header">
           <Button
+            className="variables-panel__header-button"
             type="button"
             label="All Leafnodes"
+            variant="link"
             bootstrapVariant="link"
             onClick={() => onClearSelectedKeyword(`0.${index}.1`)}
           >
             All Leafnodes
           </Button>
-          <i className="child-spacer fa fa-chevron-circle-right" />
-          <strong>
+          <i className="variables-panel__header-spacer fa fa-chevron-circle-right" />
+          <span className="variables-panel__selected-keyword">
             {selectedKeyword}
-          </strong>
-        </span>
-      </section>
-      <section>
-        <div className="variable-list">
-          <div className="collection-variable-list-item">
-            <label className="collection-variable-list-item-label">
+          </span>
+        </header>
+        <ul className="variables-panel__list">
+          <li className="variables-panel__list-item">
+            <label className="variables-panel__list-item-label">
               <input
+                className="variables-panel__list-item-input"
                 type="checkbox"
-                className="select-all"
-                onChange={onCheckboxChange.bind(this, 'all')}
+                onChange={e => onCheckboxChange(e, 'all', collectionId)}
+                checked={allVariablesSelected(Object.keys(variables), selectedVariables)}
               />
-              <div className="collection-variable-info">
-                <span>Select All Variables</span>
+              <div className="variables-panel__list-item-info">
+                Select All Variables
               </div>
             </label>
-          </div>
-          <div className="collection-variables">
-            {
-              Object.keys(variables).map((variableId) => {
-                const variable = variables[variableId]
-                const selected = selectedVariables.indexOf(variableId) > -1
+          </li>
+          {
+            Object.keys(variables).map((variableId) => {
+              const variable = variables[variableId]
+              const selected = selectedVariables.indexOf(variableId) > -1
 
-                const { meta, umm } = variable
-                const { 'concept-id': conceptId } = meta
-                const { LongName, Name } = umm
+              const { meta, umm } = variable
+              const { 'concept-id': conceptId } = meta
+              const { LongName, Name } = umm
 
-                return (
-                  <div
-                    key={conceptId}
-                    className="collection-variable-list-item"
-                  >
-                    <label className="collection-variable-list-item-label">
-                      <input
-                        className="collection-variable-list-item-input"
-                        type="checkbox"
-                        checked={selected}
-                        onChange={onCheckboxChange.bind(this, variableId)}
-                      />
-                      <div className="collection-variable-info">
-                        <h4 className="collection-variable-heading">
-                          <span className="collection-variable-name">
-                            {Name}
-                          </span>
-                        </h4>
-                        <ul className="collection-variable-meta text-info">
-                          <li className="collection-variable-longname">
-                            {LongName}
-                          </li>
-                          <li>
-                            <Button
-                              className="collection-variable-details-link clean underline subtle"
-                              label="View Details"
-                              bootstrapVariant="primary"
-                              onClick={() => onViewDetails(variable, index)}
-                            >
-                              View Details
-                            </Button>
-                          </li>
-                        </ul>
-                      </div>
-                    </label>
-                  </div>
-                )
-              })
-            }
-          </div>
-        </div>
+              return (
+                <li
+                  key={conceptId}
+                  className="variables-panel__list-item"
+                >
+                  <label className="variables-panel__list-item-label">
+                    <input
+                      className="variables-panel__list-item-input"
+                      type="checkbox"
+                      checked={selected}
+                      onChange={e => onCheckboxChange(e, variableId, collectionId)}
+                    />
+                    <div className="variables-panel__list-item-info">
+                      <h4 className="variables-panel__list-item-heading">
+                        <span className="variables-panel__list-item-name">
+                          {Name}
+                        </span>
+                      </h4>
+                      <ul className="variables-panel__list-item-details">
+                        <li className="variables-panel__list-item-longname">
+                          {LongName}
+                        </li>
+                        <li>
+                          <Button
+                            className="variables-panel__list-item-details-link"
+                            bootstrapVariant="link"
+                            variant="link"
+                            label="View Details"
+                            onClick={() => onViewDetails(variable, index)}
+                          >
+                            View Details
+                          </Button>
+                        </li>
+                      </ul>
+                    </div>
+                  </label>
+                </li>
+              )
+            })
+          }
+        </ul>
       </section>
     </div>
   )
 }
 
 VariablesPanel.defaultProps = {
+  selectedVariables: [],
   selectedKeyword: undefined,
   variables: undefined
 }
 
 VariablesPanel.propTypes = {
   index: PropTypes.number.isRequired,
-  panelHeader: PropTypes.node.isRequired,
+  collectionId: PropTypes.string.isRequired,
   selectedKeyword: PropTypes.string,
-  selectedVariables: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedVariables: PropTypes.arrayOf(PropTypes.string),
   variables: PropTypes.shape({}),
   onCheckboxChange: PropTypes.func.isRequired,
   onClearSelectedKeyword: PropTypes.func.isRequired,
