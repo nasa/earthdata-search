@@ -60,12 +60,12 @@ describe('OrderStatus component', () => {
   describe('introduction', () => {
     test('displays the correct text', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).text()).toEqual('This page will automatically update as your orders are processed. The Order Status page can be accessed later by visiting https://search.earthdata.nasa.gov/data/retrieve/7 or the Download Status and History page.')
+      expect(enzymeWrapper.find(Well.Introduction).text()).toEqual('This page will automatically update as your orders are processed. The Order Status page can be accessed later by visiting http://localhost:8080/data/retrieve/7 or the Download Status and History page.')
     })
 
     test('order status link has correct href', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find('a').at(0).props().href).toEqual('https://search.earthdata.nasa.gov/data/retrieve/7')
+      expect(enzymeWrapper.find(Well.Introduction).find('a').at(0).props().href).toEqual('http://localhost:8080/data/retrieve/7')
     })
 
     test('status link has correct href', () => {
