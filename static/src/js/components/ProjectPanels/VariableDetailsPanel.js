@@ -22,7 +22,6 @@ export const VariableDetailsPanel = (props) => {
 
   return (
     <div className="variable-details-panel">
-      <ProjectPanelSection heading="Variable Selection" />
       <ProjectPanelSection>
         <header className="variable-details-panel__header">
           <h2 className="variable-details-panel__heading">
