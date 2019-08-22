@@ -1,0 +1,16 @@
+{
+  "hasStyles": true,
+  "hasScripts": true,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "ornl-daac-logo",
+    "link": "https://daac.ornl.gov",
+    "title": "ORNL DAAC Home"
+  },
+  "org": "ORNL DAAC",
+  "query": {
+    "dataCenter": "ORNL_DAAC",
+    "hasGranulesOrCwic": null
+  },
+  "title": "Search"
+}
