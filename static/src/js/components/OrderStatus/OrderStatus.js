@@ -7,6 +7,8 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import './OrderStatus.scss'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import cmrEnv from '../../../../../sharedUtils/cmrEnv'
 
 export class OrderStatus extends Component {
   componentDidMount() {
@@ -61,7 +63,7 @@ export class OrderStatus extends Component {
     const introduction = (
       <p>
         {'This page will automatically update as your orders are processed. The Order Status page can be accessed later by visiting '}
-        <a href={`https://search.earthdata.nasa.gov/data/retrieve/${id}`}>{`https://search.earthdata.nasa.gov/data/retrieve/${id}`}</a>
+        <a href={`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/data/retrieve/${id}`}>{`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/data/retrieve/${id}`}</a>
         {' or the '}
         <a href="/data/status/">Download Status and History</a>
         {' page.'}
