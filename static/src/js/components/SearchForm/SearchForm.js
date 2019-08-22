@@ -43,10 +43,14 @@ class SearchForm extends Component {
   }
 
   onFormSubmit(e) {
-    const { onChangeNlpSearch } = this.props
+    const { onChangeQuery } = this.props
     const { keywordSearch } = this.state
 
-    onChangeNlpSearch(keywordSearch)
+    onChangeQuery({
+      collection: {
+        keyword: keywordSearch
+      }
+    })
     e.preventDefault()
   }
 
@@ -55,10 +59,14 @@ class SearchForm extends Component {
   }
 
   onKeywordBlur() {
-    const { onChangeNlpSearch } = this.props
+    const { onChangeQuery } = this.props
     const { keywordSearch } = this.state
 
-    onChangeNlpSearch(keywordSearch)
+    onChangeQuery({
+      collection: {
+        keyword: keywordSearch
+      }
+    })
   }
 
   onSearchClear() {
@@ -133,7 +141,7 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = {
   keywordSearch: PropTypes.string.isRequired,
-  onChangeNlpSearch: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired
 }
 

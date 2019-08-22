@@ -27,7 +27,6 @@ import {
   changeTimelineQuery,
   getTimeline
 } from './timeline'
-import { searchNlp } from './nlp'
 import {
   changeCollectionPageNum,
   changeGranuleGridCoords,
@@ -144,7 +143,6 @@ const actions = {
   loadPortalConfig,
   restoreProject,
   saveShapefile,
-  searchNlp,
   selectAccessMethod,
   setGranuleDownloadParams,
   shapefileErrored,
