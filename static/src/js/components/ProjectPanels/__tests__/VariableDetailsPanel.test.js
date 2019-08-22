@@ -30,8 +30,8 @@ describe('VariableDetailsPanel', () => {
   test('displays the variable details', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('span.collection-variable-name').text()).toEqual('Variable Name')
-    expect(enzymeWrapper.find('p.collection-variable-longname').text()).toEqual('Variable Long Name')
-    expect(enzymeWrapper.find('p.collection-variable-description').text()).toEqual('Variable Definition')
+    expect(enzymeWrapper.find('.variable-details-panel__heading').text()).toEqual('Variable Name')
+    expect(enzymeWrapper.find('.variable-details-panel__longname').text()).toEqual('Variable Long Name')
+    expect(enzymeWrapper.find('.variable-details-panel__description').text()).toEqual('Variable Definition')
   })
 })

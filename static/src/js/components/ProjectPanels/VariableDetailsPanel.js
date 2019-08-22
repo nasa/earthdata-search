@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { pure } from 'recompose'
 
+import ProjectPanelSection from './ProjectPanelSection'
+
+import './VariableDetailsPanel.scss'
+
 export const VariableDetailsPanel = (props) => {
   const {
-    panelHeader,
     variable
   } = props
 
@@ -18,25 +21,23 @@ export const VariableDetailsPanel = (props) => {
   } = umm
 
   return (
-    <div>
-      {panelHeader}
-      <section className="master-overlay-panel-item-overlay">
-        <div className="panel-item-section panel-item-section-has-back-button variable-details">
-          <header>
-            <h2 className="collection-variable-heading">
-              <span className="collection-variable-name">
-                {name}
-              </span>
-            </h2>
-          </header>
-          <p className="collection-variable-longname text-info">
+    <div className="variable-details-panel">
+      <ProjectPanelSection heading="Variable Selection" />
+      <ProjectPanelSection>
+        <header className="variable-details-panel__header">
+          <h2 className="variable-details-panel__heading">
+            {name}
+          </h2>
+        </header>
+        <dl>
+          <dt className="variable-details-panel__longname">
             {longName}
-          </p>
-          <p className="collection-variable-description">
+          </dt>
+          <dd className="variable-details-panel__description">
             {definition}
-          </p>
-        </div>
-      </section>
+          </dd>
+        </dl>
+      </ProjectPanelSection>
     </div>
   )
 }
@@ -46,7 +47,6 @@ VariableDetailsPanel.defaultProps = {
 }
 
 VariableDetailsPanel.propTypes = {
-  panelHeader: PropTypes.node.isRequired,
   variable: PropTypes.shape({})
 }
 

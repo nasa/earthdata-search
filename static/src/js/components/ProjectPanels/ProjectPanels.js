@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { uniq } from 'lodash'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
-import ProjectPanelSection from './ProjectPanelSection'
 import AccessMethod from '../AccessMethod/AccessMethod'
 import CollectionDetails from './CollectionDetails'
 import VariableKeywordPanel from './VariableKeywordPanel'
@@ -33,7 +33,7 @@ class ProjectPanels extends PureComponent {
     this.state = {
       selectedKeyword: null,
       selectedVariable: null,
-      selectedVariables: [],
+      selectedVariables: {},
       variables: null
     }
 
@@ -45,6 +45,32 @@ class ProjectPanels extends PureComponent {
     this.clearSelectedKeyword = this.clearSelectedKeyword.bind(this)
     this.clearSelectedVariable = this.clearSelectedVariable.bind(this)
     this.onViewDetails = this.onViewDetails.bind(this)
+    this.backToOptions = this.backToOptions.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // const { selectedVariables: oldSelectedVariables } = this.state
+    const { project: nextProject } = nextProps
+    const { byId, collectionIds } = nextProject
+
+    const selectedVariables = {}
+
+    collectionIds.forEach((collectionId) => {
+      const { accessMethods = {} } = byId[collectionId]
+      const { opendap } = accessMethods
+
+      if (!opendap) return
+
+      const { selectedVariables: nextSelectedVariables = [] } = opendap
+
+      if (nextSelectedVariables.length > 0) {
+        selectedVariables[collectionId] = nextSelectedVariables
+      }
+    })
+
+    this.setState({
+      selectedVariables
+    })
   }
 
   onPanelClose() {
@@ -57,30 +83,41 @@ class ProjectPanels extends PureComponent {
     onSetActivePanel(panelId)
   }
 
-  onCheckboxChange(variableId, e) {
+  onCheckboxChange(e, variableId, collectionId) {
     const { selectedVariables, variables } = this.state
-    let newVariables
+    let newVariables = []
+    const selectedForCollection = selectedVariables[collectionId] || []
 
     if (variableId === 'all') {
       if (e.target.checked) {
-        newVariables = Object.keys(variables)
+        newVariables = [
+          ...selectedForCollection,
+          ...Object.keys(variables)
+        ]
       } else {
-        newVariables = []
+        // Remove the selected variable if it exists in the selectedForCollection
+        // eslint-disable-next-line arrow-body-style
+        newVariables = selectedForCollection.filter((selectedVariable) => {
+          return Object.keys(variables).indexOf(selectedVariable) === -1
+        })
       }
     } else {
       // eslint-disable-next-line no-lonely-if
       if (e.target.checked) {
         newVariables = [
-          ...selectedVariables,
+          ...selectedForCollection,
           variableId
         ]
       } else {
-        newVariables = selectedVariables.filter(variable => variable !== variableId)
+        newVariables = selectedForCollection.filter(variable => variable !== variableId)
       }
     }
 
     this.setState({
-      selectedVariables: newVariables
+      selectedVariables: {
+        ...selectedVariables,
+        [collectionId]: uniq(newVariables)
+      }
     })
   }
 
@@ -101,7 +138,7 @@ class ProjectPanels extends PureComponent {
       method: {
         [selectedAccessMethod]: {
           ...selectedMethod,
-          selectedVariables
+          selectedVariables: selectedVariables[collectionId]
         }
       }
     })
@@ -114,9 +151,9 @@ class ProjectPanels extends PureComponent {
     this.onChangePanel(`0.${index}.3`)
   }
 
-  backToOptions(index) {
+  backToOptions() {
     this.setState({ selectedKeyword: null, variables: null })
-    this.onChangePanel(`0.${index}.0`)
+    // this.onChangePanel(`0.${index}.0`)
   }
 
   selectKeyword(keyword, variables, index) {
@@ -180,6 +217,12 @@ class ProjectPanels extends PureComponent {
       } = projectCollection
       const isValid = isAccessMethodValid(projectCollection)
 
+      const backButtonOptions = {
+        text: 'Edit Options',
+        location: `0.${index}.0`,
+        callback: this.backToOptions
+      }
+
       const editOptionsFooter = (
         <div className="project-panels__footer">
           {
@@ -239,12 +282,12 @@ class ProjectPanels extends PureComponent {
       )
 
       const variablePanelFooter = (
-        <div>
+        <div className="project-panels__footer">
           <Button
             type="button"
             label="Back"
             bootstrapVariant="light"
-            className="button secondary master-overlay-panel-item-footer-action"
+            className="project-panels__action"
             onClick={() => this.clearSelectedKeyword(`0.${index}.1`)}
             data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
           >
@@ -254,7 +297,7 @@ class ProjectPanels extends PureComponent {
             type="button"
             label="Save"
             bootstrapVariant="primary"
-            className="collection-customization-save master-overlay-panel-item-footer-action"
+            className="project-panels__action"
             onClick={() => this.onSaveVariables(collectionId, index)}
             data-bind="visible: selectedKeyword() && !selectedVariable(), click: saveState"
           >
@@ -264,33 +307,17 @@ class ProjectPanels extends PureComponent {
       )
 
       const variableDetailsFooter = (
-        <div>
+        <div className="project-panels__footer">
           <Button
             type="button"
             label="Back"
             bootstrapVariant="primary"
-            className="button master-overlay-panel-item-footer-action"
+            className="project-panels__action"
             onClick={() => this.clearSelectedVariable(`0.${index}.2`)}
             data-bind="visible: selectedKeyword() && !selectedVariable(), click: clearKeyword"
           >
             Back
           </Button>
-        </div>
-      )
-
-      const panelHeader = (
-        <div className="panel-item-section panel-item-section-padded panel-item-section-has-back-button">
-          <Button
-            className="button button-back master-overlay-panel-back"
-            type="button"
-            label="Back to Edit Options"
-            bootstrapVariant="link"
-            onClick={() => this.backToOptions(index)}
-          >
-            <i className="fa fa-chevron-left" />
-            Back to Edit Options
-          </Button>
-          <h3 className="panel-item-section-title">Variable Selection</h3>
         </div>
       )
 
@@ -317,38 +344,39 @@ class ProjectPanels extends PureComponent {
               selectedAccessMethod={selectedAccessMethod}
             />
           </PanelItem>
-          <PanelItem hideFooter>
-            <ProjectPanelSection>
-              <VariableKeywordPanel
-                accessMethods={accessMethods}
-                index={index}
-                panelHeader={panelHeader}
-                selectedAccessMethod={selectedAccessMethod}
-                onSelectKeyword={this.selectKeyword}
-              />
-            </ProjectPanelSection>
+          <PanelItem
+            hideFooter
+            backButtonOptions={backButtonOptions}
+          >
+            <VariableKeywordPanel
+              accessMethods={accessMethods}
+              index={index}
+              selectedAccessMethod={selectedAccessMethod}
+              onSelectKeyword={this.selectKeyword}
+            />
           </PanelItem>
-          <PanelItem footer={variablePanelFooter}>
-            <ProjectPanelSection>
-              <VariablesPanel
-                index={index}
-                panelHeader={panelHeader}
-                selectedKeyword={selectedKeyword}
-                selectedVariables={selectedVariables}
-                variables={variables}
-                onCheckboxChange={this.onCheckboxChange}
-                onClearSelectedKeyword={this.clearSelectedKeyword}
-                onViewDetails={this.onViewDetails}
-              />
-            </ProjectPanelSection>
+          <PanelItem
+            footer={variablePanelFooter}
+            backButtonOptions={backButtonOptions}
+          >
+            <VariablesPanel
+              index={index}
+              collectionId={collectionId}
+              selectedKeyword={selectedKeyword}
+              selectedVariables={selectedVariables[collectionId]}
+              variables={variables}
+              onCheckboxChange={this.onCheckboxChange}
+              onClearSelectedKeyword={this.clearSelectedKeyword}
+              onViewDetails={this.onViewDetails}
+            />
           </PanelItem>
-          <PanelItem footer={variableDetailsFooter}>
-            <ProjectPanelSection>
-              <VariableDetailsPanel
-                panelHeader={panelHeader}
-                variable={selectedVariable}
-              />
-            </ProjectPanelSection>
+          <PanelItem
+            footer={variableDetailsFooter}
+            backButtonOptions={backButtonOptions}
+          >
+            <VariableDetailsPanel
+              variable={selectedVariable}
+            />
           </PanelItem>
         </PanelGroup>
       )

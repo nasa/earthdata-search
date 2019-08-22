@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
+import { pluralize } from '../../util/pluralize'
+
+import Skeleton from '../Skeleton/Skeleton'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import Radio from '../FormFields/Radio/Radio'
 import RadioList from '../FormFields/Radio/RadioList'
@@ -170,6 +173,24 @@ export const AccessMethod = ({
     }
   })
 
+  const skeleton = [1, 2, 3].map((skeleton, i) => {
+    const key = `skeleton_${i}`
+    return (
+      <Skeleton
+        key={key}
+        containerStyle={{ height: '2.9375rem', width: '18.75rem' }}
+        shapes={[{
+          shape: 'rectangle',
+          x: 0,
+          y: 0,
+          height: 40,
+          width: 300,
+          radius: 3
+        }]}
+      />
+    )
+  })
+
   const selectedMethod = accessMethods[selectedAccessMethod]
   const {
     form,
@@ -186,12 +207,18 @@ export const AccessMethod = ({
     <div className="access-method">
       <ProjectPanelSection heading="Select Data Access Method">
         <div className="access-method__radio-list">
-          <RadioList
-            defaultValue={selectedAccessMethod}
-            onChange={methodName => handleAccessMethodSelection(methodName)}
-          >
-            {radioList}
-          </RadioList>
+          {
+            radioList.length === 0
+              ? skeleton
+              : (
+                <RadioList
+                  defaultValue={selectedAccessMethod}
+                  onChange={methodName => handleAccessMethodSelection(methodName)}
+                >
+                  {radioList}
+                </RadioList>
+              )
+          }
         </div>
       </ProjectPanelSection>
       {
@@ -211,24 +238,22 @@ export const AccessMethod = ({
       }
       {
         isOpendap && (
-          <ProjectPanelSection>
-            <h4>Variable Selection</h4>
-            <p>
+          <ProjectPanelSection heading="Variable Selection">
+            <p className="access-method__section-intro">
               Use science keywords to subset your collection granules by measurements and variables.
             </p>
 
             {
               selectedVariables.length > 0 && (
-                <p className="panel-item-content panel-item-content-emphasis">
-                  <span>{selectedVariables.length}</span>
-                  variables selected
+                <p className="access-method__section-status">
+                  {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
                 </p>
               )
             }
 
             {
               selectedVariables.length === 0 && (
-                <p className="panel-item-content panel-item-content-emphasis">
+                <p className="access-method__section-status">
                   No variables selected. All variables will be included in download.
                 </p>
               )
@@ -236,9 +261,9 @@ export const AccessMethod = ({
 
             <Button
               type="button"
-              varient="primary"
               bootstrapVariant="primary"
               label="Edit Variables"
+              bootstrapSize="sm"
               onClick={() => onSetActivePanel(`0.${index}.1`)}
             >
               Edit Variables

@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { pure } from 'recompose'
+
 import Button from '../Button/Button'
+import ProjectPanelSection from './ProjectPanelSection'
+
+import './VariableKeywordPanel.scss'
 
 const getKeywordVariables = (keywordMappings, keyword, variables) => {
   const variableIds = keywordMappings[keyword]
@@ -26,7 +30,6 @@ export const VariableKeywordPanel = (props) => {
   const {
     accessMethods,
     index,
-    panelHeader,
     selectedAccessMethod,
     onSelectKeyword
   } = props
@@ -42,41 +45,43 @@ export const VariableKeywordPanel = (props) => {
   if (!variables) return null
 
   return (
-    <div>
-      {panelHeader}
-      <ul className="keyword-list list-alternating">
+    <>
+      <ProjectPanelSection heading="Variable Selection" />
+      <ul className="variable-keyword-panel__list list__alternating">
         {
           Object.keys(keywordMappings).map((keyword) => {
             const keywordVariables = getKeywordVariables(keywordMappings, keyword, variables)
             const key = `keywords-${keyword}`
+            // eslint-disable-next-line max-len
             const numberSelected = getNumberVariablesSelected(keywordMappings[keyword], selectedVariables)
 
             return (
               <li
-                className="keyword-list-item"
+                className="variable-keyword-panel__list-item"
                 key={key}
               >
                 <Button
+                  className="variable-keyword-panel__button"
                   type="button"
                   label={keyword}
                   bootstrapVariant="link"
                   onClick={() => onSelectKeyword(keyword, keywordVariables, index)}
                 >
                   {keyword}
-                  {
-                    numberSelected > 0 && (
-                      <span className="keyword-variables-selected">
-                        {numberSelected}
-                      </span>
-                    )
-                  }
                 </Button>
+                {
+                  numberSelected > 0 && (
+                    <span className="variable-keyword-panel__selected-count">
+                      {`${numberSelected} selected`}
+                    </span>
+                  )
+                }
               </li>
             )
           })
         }
       </ul>
-    </div>
+    </>
   )
 }
 
@@ -88,7 +93,6 @@ VariableKeywordPanel.defaultProps = {
 VariableKeywordPanel.propTypes = {
   accessMethods: PropTypes.shape({}),
   index: PropTypes.number.isRequired,
-  panelHeader: PropTypes.node.isRequired,
   selectedAccessMethod: PropTypes.string,
   onSelectKeyword: PropTypes.func.isRequired
 }
