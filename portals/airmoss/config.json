@@ -1,0 +1,16 @@
+{
+  "hasStyles": true,
+  "hasScripts": true,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "ornl-daac-logo",
+    "link": "https://airmoss.ornl.gov",
+    "title": "ORNL DAAC AirMOSS Home"
+  },
+  "org": "ORNL DAAC",
+  "query": {
+    "project": "AirMOSS",
+    "hasGranulesOrCwic": null
+  },
+  "title": "AirMOSS"
+}

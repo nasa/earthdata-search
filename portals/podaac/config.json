@@ -1,0 +1,16 @@
+{
+  "hasStyles": true,
+  "hasScripts": false,
+  "hideCollectionFilters": true,
+  "logo": {
+    "id": "podaac-logo",
+    "link": "https://podaac.jpl.nasa.gov",
+    "title": "PO.DAAC Home"
+  },
+  "org": "PO.DAAC",
+  "query": {
+    "dataCenter": "PO.DAAC",
+    "hasGranulesOrCwic": null
+  },
+  "title": "Search"
+}
