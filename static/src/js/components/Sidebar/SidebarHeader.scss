@@ -1,10 +1,16 @@
-.header {
+.sidebar-header {
   color: $color__white;
-  padding: 1rem 1.5rem 0.5rem 0.75rem;
+  padding: 1.5rem 0 0.5rem 0.75rem;
 
   &__site-logo {
     display: flex;
     align-items: flex-end;
+    flex-wrap: wrap;
+    margin-top: -$spacer/2;
+
+    & > * {
+      margin-top: $spacer/2;
+    }
   }
 
   &__site-meatball {
@@ -75,7 +81,8 @@
     background-size: auto 50px;
     height: 50px;
     text-indent: inherit;
-    margin: 5px 5px 0 0;
+    margin: 0;
+    margin-right: $spacer/4;
     transition: background 0.2s ease-in-out;
     flex-shrink: 0;
 

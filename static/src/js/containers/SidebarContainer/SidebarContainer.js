@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isPath } from '../../util/isPath'
 
 import Sidebar from '../../components/Sidebar/Sidebar'
@@ -17,6 +18,7 @@ export const SidebarContainer = ({
   panels,
   portal
 }) => {
+  const edscEnv = getApplicationConfig().env
   const sidebarVisible = isPath(location.pathname, ['/search', '/projects'])
 
   return (
@@ -24,6 +26,7 @@ export const SidebarContainer = ({
       panels={panels}
       portal={portal}
       visible={sidebarVisible}
+      edscEnv={edscEnv}
     >
       {children}
     </Sidebar>

@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 
 import './SidebarHeader.scss'
 
-const Header = ({ portal }) => {
+const Header = ({
+  edscEnv,
+  portal
+}) => {
   const {
     portalId,
     logo,
@@ -27,7 +30,7 @@ const Header = ({ portal }) => {
     return (
       <a
         id={id}
-        className="header__portal-logo"
+        className="sidebar-header__portal-logo"
         href={link}
         title={logoTitle}
       >
@@ -44,10 +47,10 @@ const Header = ({ portal }) => {
   }
 
   return (
-    <header className="header">
-      <h1 className="header__site-logo">
+    <header className="sidebar-header">
+      <h1 className="sidebar-header__site-logo">
         <a
-          className="header__site-meatball"
+          className="sidebar-header__site-meatball"
           href="/"
           title="Earthdata Search Home"
         >
@@ -59,16 +62,14 @@ const Header = ({ portal }) => {
         {portalLogo()}
 
         <a
-          className="header__site-name"
+          className="sidebar-header__site-name"
           href={portalLink}
         >
-          <span className="header__site-name-ent header__site-name-ent--e">{org}</span>
-          <span className="header__site-name-ent header__site-name-ent--s">{title}</span>
+          <span className="sidebar-header__site-name-ent sidebar-header__site-name-ent--e">{org}</span>
+          <span className="sidebar-header__site-name-ent sidebar-header__site-name-ent--s">{title}</span>
         </a>
-        <span className="header__site-env">
-          <i className="fa fa-bolt" />
-          {' '}
-          Serverless
+        <span className="sidebar-header__site-env">
+          {edscEnv.toUpperCase()}
         </span>
       </h1>
     </header>
@@ -76,6 +77,7 @@ const Header = ({ portal }) => {
 }
 
 Header.propTypes = {
+  edscEnv: PropTypes.string.isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 
