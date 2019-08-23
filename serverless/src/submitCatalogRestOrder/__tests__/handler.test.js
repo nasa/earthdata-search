@@ -4,6 +4,7 @@ import nock from 'nock'
 import { stringify } from 'qs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as startOrderStatusUpdateWorkflow from '../../../../sharedUtils/orderStatus'
 import { loadedEchoFormXml } from './mocks'
 import submitCatalogRestOrder from '../handler'
 
@@ -12,7 +13,10 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
+  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
+    clientId: 'clientId',
+    secret: 'jwt-secret'
+  }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
@@ -40,6 +44,8 @@ describe('submitCatalogRestOrder', () => {
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
+    const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+      .mockImplementation(() => (jest.fn()))
 
     nock(/cmr/)
       .get(/search\/granules/)
@@ -100,5 +106,6 @@ describe('submitCatalogRestOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('update')
+    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'asdfasdf:clientId', 'ESI')
   })
 })
