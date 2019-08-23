@@ -29,10 +29,7 @@ export const encodeTemporal = (temporal) => {
  */
 export const decodeTemporal = (string) => {
   if (!string) {
-    return {
-      startDate: '',
-      endDate: ''
-    }
+    return {}
   }
 
   const [startDate, endDate] = string.split(',')
