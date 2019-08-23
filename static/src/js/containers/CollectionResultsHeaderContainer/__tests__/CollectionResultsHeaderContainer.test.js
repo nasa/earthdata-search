@@ -7,7 +7,11 @@ import CollectionResultsHeader from '../../../components/CollectionResults/Colle
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const props = {}
+  const props = {
+    portal: {
+      portalId: ''
+    }
+  }
 
   const enzymeWrapper = shallow(<CollectionResultsHeaderContainer {...props} />)
 
@@ -21,6 +25,6 @@ describe('CollectionResultsHeaderContainer component', () => {
   test('passes its props and renders a single CollectionResultsHeader component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find(CollectionResultsHeader).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionResultsHeader).props('focusedCollectionMetadata')).toEqual({})
+    expect(enzymeWrapper.find(CollectionResultsHeader).props().portal).toEqual({ portalId: '' })
   })
 })
