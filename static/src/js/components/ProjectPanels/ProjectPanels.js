@@ -49,7 +49,6 @@ class ProjectPanels extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    // const { selectedVariables: oldSelectedVariables } = this.state
     const { project: nextProject } = nextProps
     const { byId, collectionIds } = nextProject
 
@@ -96,10 +95,9 @@ class ProjectPanels extends PureComponent {
         ]
       } else {
         // Remove the selected variable if it exists in the selectedForCollection
-        // eslint-disable-next-line arrow-body-style
-        newVariables = selectedForCollection.filter((selectedVariable) => {
-          return Object.keys(variables).indexOf(selectedVariable) === -1
-        })
+        newVariables = selectedForCollection.filter(selectedVariable => (
+          Object.keys(variables).indexOf(selectedVariable) === -1
+        ))
       }
     } else {
       // eslint-disable-next-line no-lonely-if
@@ -153,7 +151,6 @@ class ProjectPanels extends PureComponent {
 
   backToOptions() {
     this.setState({ selectedKeyword: null, variables: null })
-    // this.onChangePanel(`0.${index}.0`)
   }
 
   selectKeyword(keyword, variables, index) {

@@ -164,7 +164,6 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
     bounding_box: boundingBox
   } = granuleParams
 
-  // const { variables = ['V1200267322-HMR_TME'] } = accessMethod
   const { selected_variables: variables } = accessMethod
 
   // TODO: Add excluded granules, output format (EDSC-2329)
