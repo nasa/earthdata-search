@@ -280,6 +280,7 @@ AccessMethod.defaultProps = {
   index: null,
   metadata: {},
   shapefileId: null,
+  spatial: {},
   onSetActivePanel: null,
   selectedAccessMethod: null
 }
@@ -289,7 +290,7 @@ AccessMethod.propTypes = {
   index: PropTypes.number,
   metadata: PropTypes.shape({}),
   shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}).isRequired,
+  spatial: PropTypes.shape({}),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
