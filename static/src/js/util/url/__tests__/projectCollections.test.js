@@ -133,14 +133,17 @@ describe('url#decodeUrlParams', () => {
             isCwic: false,
             isVisible: false,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
           },
           collectionId2: {
             excludedGranuleIds: [],
+            isCwic: undefined,
             isVisible: false,
             granules: {},
+            granuleFilters: {},
             metadata: {},
             formattedMetadata: {},
             ummMetadata: {}
