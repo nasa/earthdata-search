@@ -54,7 +54,7 @@ export const CollectionResultsList = ({
         </li>
       )}
       {
-        portalId.length && (
+        portalId.length > 0 && (
           <p className="portal-escape">
             Looking for more collections?
             {' '}

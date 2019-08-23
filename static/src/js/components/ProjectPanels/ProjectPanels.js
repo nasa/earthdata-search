@@ -199,14 +199,18 @@ class ProjectPanels extends PureComponent {
 
     let loaded = false
 
-    if (projectIds[0] && !Object.keys(byId[projectIds[0]].metadata).length) return null
-
     projectIds.forEach((collectionId, index) => {
       loaded = true
       const collection = byId[collectionId]
+      if (!collection) return
+
       const projectCollection = projectById[collectionId]
       const { metadata } = collection
-      const { dataset_id: title, id, granule_count: granuleCount } = metadata
+      const {
+        dataset_id: title = '',
+        id,
+        granule_count: granuleCount
+      } = metadata
 
       const {
         accessMethods,

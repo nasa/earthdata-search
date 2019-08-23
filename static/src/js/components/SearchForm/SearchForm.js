@@ -43,15 +43,9 @@ class SearchForm extends Component {
   }
 
   onFormSubmit(e) {
-    const { onChangeQuery } = this.props
-    const { keywordSearch } = this.state
-
-    onChangeQuery({
-      collection: {
-        keyword: keywordSearch
-      }
-    })
     e.preventDefault()
+
+    document.getElementsByClassName('search-form__input').keywordSearch.blur()
   }
 
   onInputChange(field, value) {
