@@ -1,5 +1,7 @@
 {
   "application": {
+    "version": "1.101.1",
+    "env": "sit",
     "cmrTagNamespace": "edsc.extra.serverless",
     "thumbnailSize": {
       "height": 85,

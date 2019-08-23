@@ -8,6 +8,7 @@ import './Sidebar.scss'
 
 const Sidebar = ({
   children,
+  edscEnv,
   panels,
   portal,
   visible
@@ -21,6 +22,7 @@ const Sidebar = ({
     <section className={className}>
       <div className="sidebar__inner">
         <Header
+          edscEnv={edscEnv}
           portal={portal}
         />
         <section className="sidebar__content">
@@ -38,6 +40,7 @@ Sidebar.defaultProps = {
 
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
+  edscEnv: PropTypes.string.isRequired,
   panels: PropTypes.node,
   portal: PropTypes.shape({}).isRequired,
   visible: PropTypes.bool.isRequired

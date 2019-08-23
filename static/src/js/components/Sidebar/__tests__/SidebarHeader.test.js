@@ -7,6 +7,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    edscEnv: 'sit',
     portal: {
       portalId: ''
     },
@@ -24,9 +25,9 @@ describe('Header component', () => {
   test('should render the site header', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.header__site-meatball').props().href).toEqual('/')
-    expect(enzymeWrapper.find('.header__portal-logo').length).toEqual(0)
-    expect(enzymeWrapper.find('.header__site-name').props().href).toEqual('/')
+    expect(enzymeWrapper.find('.sidebar-header__site-meatball').props().href).toEqual('/')
+    expect(enzymeWrapper.find('.sidebar-header__portal-logo').length).toEqual(0)
+    expect(enzymeWrapper.find('.sidebar-header__site-name').props().href).toEqual('/')
   })
 
   describe('with portal information', () => {
@@ -49,13 +50,21 @@ describe('Header component', () => {
         }
       })
 
-      expect(enzymeWrapper.find('.header__site-meatball').props().href).toEqual('/')
-      expect(enzymeWrapper.find('.header__portal-logo').props().href).toEqual('http://example.com')
-      expect(enzymeWrapper.find('.header__portal-logo').props().id).toEqual('test-logo')
-      expect(enzymeWrapper.find('.header__portal-logo').props().title).toEqual('Test Portal Home')
-      expect(enzymeWrapper.find('.header__portal-logo img').props().src).toEqual('http://placehold.it/75x50')
-      expect(enzymeWrapper.find('.header__portal-logo img').props().alt).toEqual('Test Portal Home')
-      expect(enzymeWrapper.find('.header__site-name').props().href).toEqual('/portal/simple/search')
+      expect(enzymeWrapper.find('.sidebar-header__site-meatball').props().href).toEqual('/')
+      expect(enzymeWrapper.find('.sidebar-header__portal-logo').props().href).toEqual('http://example.com')
+      expect(enzymeWrapper.find('.sidebar-header__portal-logo').props().id).toEqual('test-logo')
+      expect(enzymeWrapper.find('.sidebar-header__portal-logo').props().title).toEqual('Test Portal Home')
+      expect(enzymeWrapper.find('.sidebar-header__portal-logo img').props().src).toEqual('http://placehold.it/75x50')
+      expect(enzymeWrapper.find('.sidebar-header__portal-logo img').props().alt).toEqual('Test Portal Home')
+      expect(enzymeWrapper.find('.sidebar-header__site-name').props().href).toEqual('/portal/simple/search')
+    })
+  })
+
+  describe('application version', () => {
+    test('displays the version correctly', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('.sidebar-header__site-env').text()).toEqual('SIT')
     })
   })
 })
