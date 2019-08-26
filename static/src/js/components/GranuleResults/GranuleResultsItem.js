@@ -2,7 +2,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Waypoint } from 'react-waypoint'
-import queryString from 'query-string'
+import qs from 'qs'
 import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
@@ -194,11 +194,11 @@ const GranuleResultsItem = ({
                 className="collection-results__item-title-link"
                 to={{
                   pathname: '/search/granules/granule-details',
-                  search: queryString
+                  search: qs
                     .stringify(
                       Object.assign(
                         {},
-                        queryString.parse(location.search),
+                        qs.parse(location.search),
                         { g: id }
                       )
                     )
