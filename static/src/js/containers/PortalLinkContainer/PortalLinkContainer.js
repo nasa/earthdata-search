@@ -13,7 +13,8 @@ export const PortalLinkContainer = ({
   onClick,
   portalId,
   to,
-  type
+  type,
+  target
 }) => {
   const portalPrefix = `/portal/${portalId}`
   let newTo = to
@@ -40,6 +41,7 @@ export const PortalLinkContainer = ({
       type={type}
       to={newTo}
       onClick={onClick}
+      target={target}
     >
       {children}
     </Link>
@@ -50,7 +52,8 @@ PortalLinkContainer.defaultProps = {
   children: null,
   className: '',
   onClick: null,
-  type: ''
+  type: '',
+  target: ''
 }
 
 PortalLinkContainer.propTypes = {
@@ -62,7 +65,8 @@ PortalLinkContainer.propTypes = {
     PropTypes.string,
     PropTypes.shape({})
   ]).isRequired,
-  type: PropTypes.string
+  type: PropTypes.string,
+  target: PropTypes.string
 }
 
 export default connect(mapStateToProps)(PortalLinkContainer)

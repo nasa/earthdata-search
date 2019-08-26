@@ -20,7 +20,7 @@
       "apiHost": "http://localhost:3001"
     },
     "production": {
-      "apiHost": "https://d114neooimuqfs.cloudfront.net"
+      "apiHost": "https://d948osfsqlvjz.cloudfront.net"
     }
   },
   "earthdata": {

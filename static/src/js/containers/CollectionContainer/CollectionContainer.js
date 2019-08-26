@@ -32,7 +32,6 @@ export class CollectionContainer extends Component {
 
     const { params } = match
     const { retrieval_id: retrievalId } = params
-    console.log(match)
 
     if (retrievalId) {
       onFetchRetrieval(retrievalId)

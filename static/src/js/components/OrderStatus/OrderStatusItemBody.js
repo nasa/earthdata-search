@@ -72,6 +72,7 @@ export class OrderStatusItemBody extends React.Component {
               to={{
                 pathname: `/downloads/${retrievalId}/collections/${id}/links`
               }}
+              target="_blank"
             >
               <Button
                 bootstrapVariant="primary"
@@ -89,6 +90,7 @@ export class OrderStatusItemBody extends React.Component {
               to={{
                 pathname: `/downloads/${retrievalId}/collections/${id}/script`
               }}
+              target="_blank"
             >
               <Button
                 bootstrapVariant="primary"

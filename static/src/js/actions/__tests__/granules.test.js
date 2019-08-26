@@ -4,12 +4,11 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
-  applyGranuleFilters,
+  // applyGranuleFilters,
   updateGranuleResults,
   getGranules,
   excludeGranule,
   undoExcludeGranule,
-  updateGranuleDownloadParams,
   updateGranuleLinks,
   fetchLinks,
   fetchOpendapLinks
@@ -24,9 +23,8 @@ import {
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS
-  // UPDATE_GRANULE_QUERY
 } from '../../constants/actionTypes'
-import actions from '../index'
+// import actions from '../index'
 
 
 const mockStore = configureMockStore([thunk])
@@ -42,7 +40,7 @@ describe('updateGranuleResults', () => {
   })
 })
 
-// TODO FIX
+// TODO: FIX
 // describe('updateCollectionGranuleFilters', () => {
 //   beforeEach(() => {
 //     jest.clearAllMocks()
