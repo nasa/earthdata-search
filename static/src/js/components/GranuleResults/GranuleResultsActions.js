@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import queryString from 'query-string'
+import qs from 'qs'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
@@ -47,7 +47,7 @@ const GranuleResultsActions = ({
   )
 
   const downloadAllButton = () => {
-    const params = queryString.parse(location.search)
+    const params = qs.parse(location.search)
     let { p = '' } = params
     if (p.split('!').indexOf(collectionId) < 1) p = `${p}!${collectionId}`
 

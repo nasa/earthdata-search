@@ -7,7 +7,7 @@ const webpack = require('webpack')
 const StaticCommonConfig = {
   name: 'static',
   entry: {
-    client: './static/src/index.js'
+    client: ['core-js/stable', 'regenerator-runtime/runtime', './static/src/index.js']
   },
   output: {
     filename: '[name].bundle.js',
@@ -25,7 +25,10 @@ const StaticCommonConfig = {
     rules: [
       {
         test: /\.js$/,
-        exclude: [/node_modules/, /font-awesome.config.js/],
+        exclude: [
+          /node_modules\/(?!(map-obj|snakecase-keys|strict-uri-encode|qs)\/).*/,
+          /font-awesome.config.js/
+        ],
         use: [
           {
             loader: 'babel-loader',

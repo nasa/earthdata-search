@@ -25,17 +25,13 @@
   }
 
   &__contents {
-    vertical-align: top;
-
-    .button--icon &,
-    .button--badge & {
-      vertical-align: middle;
-    }
+    vertical-align: initial;
+    line-height: 1em;
   }
 
   &__icon {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: initial;
     line-height: 1rem;
 
     &--push {
@@ -48,5 +44,6 @@
     font-weight: 300;
     background-color: rgba($color__black, 0.5);
     border-radius: 1em;
+    vertical-align: middle;
   }
 }
