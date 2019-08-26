@@ -55,7 +55,7 @@ const submitRetrieval = async (event) => {
         id,
         access_method: accessMethod,
         collection_metadata: collectionMetadata,
-        granule_count: granuleCount,
+        granule_count: granuleCount = 0,
         granule_params: granuleParams
       } = collection
 

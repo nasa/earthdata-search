@@ -1,4 +1,4 @@
-import { keyBy, groupBy } from 'lodash'
+import { keyBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
@@ -33,13 +33,17 @@ export default async function getRetrieval(event, context) {
 
     const retrievalResponse = await dbConnection('retrievals')
       .select('jsondata',
+        'retrievals.jsondata',
+        'retrievals.token',
+        'retrievals.environment',
         'retrievals.created_at',
         'retrievals.id AS retrieval_id',
         'retrieval_collections.id',
         'retrieval_collections.collection_id',
         'retrieval_collections.access_method',
         'retrieval_collections.collection_metadata',
-        'retrieval_collections.granule_count')
+        'retrieval_collections.granule_count',
+        'users.urs_id')
       .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
@@ -76,33 +80,42 @@ export default async function getRetrieval(event, context) {
         }
       }).filter(linkList => linkList.links.length > 0)
 
-      let collections = {}
-
+      const collections = {}
       if (id) {
-        collections = groupBy(retrievalResponse, row => row.access_method.type.toLowerCase().replace(/ /g, '_'))
+        collections.byId = keyBy(retrievalResponse, row => row.id)
 
-        // strip the body of each collection down to only necessary data instead of the entire result row
-        Object.keys(collections).forEach((collection) => {
-          collections[collection] = collections[collection].map(({
+        // Strip the body of each collection down to only necessary data instead of the entire result row
+        Object.keys(collections.byId).forEach((collection) => {
+          const {
             id,
             access_method: accessMethod,
             collection_id: collectionId,
             collection_metadata: collectionMetadata,
-            granule_count: granuleCount
-          }) => ({
+            granule_count: granuleCount,
+            retrieval_id: retrievalId,
+            urs_id: ursId
+          } = collections.byId[collection]
+
+          const { type } = accessMethod
+          const accessMethodKey = type.toLowerCase().replace(/ /g, '_')
+
+          // If the access method has not been added to the collection response
+          // yet, create an empty array for it
+          if (!(accessMethodKey in collections)) {
+            collections[accessMethodKey] = []
+          }
+
+          collections[accessMethodKey].push(id)
+
+          collections.byId[collection] = {
             id,
             access_method: accessMethod,
             collection_id: collectionId,
             collection_metadata: collectionMetadata,
-            granule_count: granuleCount
-          }))
-        })
-
-        // The groupBy above will key the collections array on the order type but will result in
-        // an array, we'll re-key this to be an object, keyed by the collection id for easy lookup
-        Object.keys(collections).forEach((orderType) => {
-          collections[orderType] = keyBy(collections[orderType],
-            collection => collection.id)
+            granule_count: granuleCount,
+            retrieval_id: retrievalId,
+            urs_id: ursId
+          }
         })
       }
 
@@ -128,6 +141,18 @@ export default async function getRetrieval(event, context) {
     }
   } catch (e) {
     console.log(e)
+
+    // There may be a better way of capturing this
+    if (e.message.includes('Unauthorized')) {
+      return {
+        isBase64Encoded: false,
+        statusCode: 401,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ errors: [e], statusCode: 401 })
+      }
+    }
 
     return {
       isBase64Encoded: false,

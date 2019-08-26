@@ -3,15 +3,12 @@ import { Provider } from 'react-redux'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
-
 import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
-
 import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
 import store from '../../../store/configureStore'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
-import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
-import cmrEnv from '../../../../../../sharedUtils/cmrEnv'
+import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -56,23 +53,27 @@ describe('OrderStatus component', () => {
       ...retrievalStatusPropsTwo
     })
     expect(props.onFetchRetrieval).toHaveBeenCalledTimes(2)
-    expect(props.onFetchRetrieval).toHaveBeenCalledWith(7, 'testToken2')
+    expect(props.onFetchRetrieval).toHaveBeenCalledWith(7, 'testToken')
   })
 
   describe('introduction', () => {
-    test('displays the correct text', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).text()).toEqual(`This page will automatically update as your orders are processed. The Order Status page can be accessed later by visiting ${getEarthdataConfig(cmrEnv()).edscHost}/data/retrieve/7 or the Download Status and History page.`)
+    beforeEach(() => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
     })
 
-    test('order status link has correct href', () => {
+    test('displays the correct text', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find('a').at(0).props().href).toEqual(`${getEarthdataConfig(cmrEnv()).edscHost}/data/retrieve/7`)
+      expect(enzymeWrapper.find(Well.Introduction).text()).toEqual('This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting http://localhost/downloads/7 or the Download Status and History page.')
+    })
+
+    test('download status link has correct href', () => {
+      const { enzymeWrapper } = setup()
+      expect(enzymeWrapper.find(Well.Introduction).find('a').at(0).props().href).toEqual('http://localhost/downloads/7')
     })
 
     test('status link has correct href', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find('a').at(1).props().href).toEqual('/data/status/')
+      expect(enzymeWrapper.find(Well.Introduction).find('a').at(1).props().href).toEqual('http://localhost/downloads')
     })
   })
 

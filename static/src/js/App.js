@@ -11,8 +11,7 @@ import FooterContainer from './containers/FooterContainer/FooterContainer'
 
 import Search from './routes/Search/Search'
 import Project from './routes/Project/Project'
-import Granules from './routes/Granules/Granules'
-import Data from './routes/Data/Data'
+import Downloads from './routes/Downloads/Downloads'
 import ConnectedUrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import ConnectedAuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -62,18 +61,10 @@ class App extends Component {
           <ConnectedAuthTokenContainer>
             <Switch>
               <Route
-                path={this.portalPaths('/granules')}
+                path={this.portalPaths('/downloads')}
                 render={() => (
                   <AuthRequiredContainer>
-                    <Granules />
-                  </AuthRequiredContainer>
-                )}
-              />
-              <Route
-                path={this.portalPaths('/data')}
-                render={() => (
-                  <AuthRequiredContainer>
-                    <Data />
+                    <Downloads />
                   </AuthRequiredContainer>
                 )}
               />

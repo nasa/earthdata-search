@@ -1,25 +1,17 @@
-import { UPDATE_GRANULE_DOWNLOAD_PARAMS, UPDATE_GRANULE_LINKS } from '../constants/actionTypes'
+import { UPDATE_GRANULE_LINKS } from '../constants/actionTypes'
 
-const initialState = {
-  retrievalCollection: {},
-  granuleLinks: []
-}
+const initialState = {}
 
 const updateGranuleDownloadParamsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_GRANULE_DOWNLOAD_PARAMS: {
-      return {
-        ...state,
-        retrievalCollection: action.payload,
-        granuleLinks: []
-      }
-    }
     case UPDATE_GRANULE_LINKS: {
+      const { [action.payload.id]: currentLinks = [] } = state
+
       return {
         ...state,
-        granuleLinks: [
-          ...state.granuleLinks,
-          ...action.payload
+        [action.payload.id]: [
+          ...currentLinks,
+          ...action.payload.links
         ]
       }
     }

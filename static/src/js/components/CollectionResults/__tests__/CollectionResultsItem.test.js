@@ -298,32 +298,26 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('customize badge', () => {
-      test('does not render when opendap is not set', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__badge--customizable').length).toEqual(0)
-      })
-
-      test('renders correctly when set', () => {
+      test('does not render when no customization flags are true', () => {
         const { enzymeWrapper } = setup({
-          collection: {
-            ...collectionListItemProps.collection,
-            is_opendap: true
-          }
+          collection: collectionListItemProps.collection
         })
-        expect(enzymeWrapper.find('.collection-results-item__badge--customizable').length).toEqual(1)
-        expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
+        expect(enzymeWrapper.find('.collection-results-item__badge--customizable').length).toEqual(0)
       })
 
       describe('spatial subsetting icon', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            is_opendap: true,
             has_spatial_subsetting: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
         const tooltip = shallow(customizeBadge.props().secondary[0])
+
+        test('renders the correct component', () => {
+          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
+        })
 
         test('renders correctly when set', () => {
           expect(tooltip.find('.fa-globe').length).toEqual(1)
@@ -338,12 +332,15 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            is_opendap: true,
             has_variables: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
         const tooltip = shallow(customizeBadge.props().secondary[0])
+
+        test('renders the correct component', () => {
+          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
+        })
 
         test('renders correctly when set', () => {
           expect(tooltip.find('.fa-tags').length).toEqual(1)
@@ -358,12 +355,15 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            is_opendap: true,
             has_transforms: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
         const tooltip = shallow(customizeBadge.props().secondary[0])
+
+        test('renders the correct component', () => {
+          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
+        })
 
         test('renders correctly when set', () => {
           expect(tooltip.find('.fa-sliders').length).toEqual(1)
@@ -378,12 +378,15 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            is_opendap: true,
             has_formats: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
         const tooltip = shallow(customizeBadge.props().secondary[0])
+
+        test('renders the correct component', () => {
+          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
+        })
 
         test('renders correctly when set', () => {
           expect(tooltip.find('.fa-file-text-o').length).toEqual(1)
@@ -398,12 +401,15 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collection: {
             ...collectionListItemProps.collection,
-            is_opendap: true,
             has_temporal_subsetting: true
           }
         })
         const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
         const tooltip = shallow(customizeBadge.props().secondary[0])
+
+        test('renders the correct component', () => {
+          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
+        })
 
         test('renders correctly when set', () => {
           expect(tooltip.find('.fa-clock-o').length).toEqual(1)

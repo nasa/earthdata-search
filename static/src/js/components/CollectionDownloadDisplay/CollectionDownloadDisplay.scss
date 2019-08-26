@@ -4,7 +4,6 @@
   }
 
   &__intro {
-    display: flex;
     align-items: center;
   }
 
@@ -19,5 +18,11 @@
   &__list {
     margin: 0;
     padding-left: $spacer;
+  }
+
+  pre {
+    font-size: .7em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 }

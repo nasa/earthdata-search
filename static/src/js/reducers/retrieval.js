@@ -15,22 +15,15 @@ const retrievalReducer = (state = initialState, action) => {
     }
     case UPDATE_RETRIEVAL_COLLECTION: {
       const {
-        id,
-        access_method: accessMethod
+        id
       } = action.payload
-
-      const {
-        type
-      } = accessMethod
-
-      const collectionKey = `${type.toLowerCase().replace(/ /g, '_')}`
 
       return {
         ...state,
         collections: {
           ...state.collections,
-          [collectionKey]: {
-            ...state.collections[collectionKey],
+          byId: {
+            ...state.collections.byId,
             [id]: {
               ...action.payload
             }

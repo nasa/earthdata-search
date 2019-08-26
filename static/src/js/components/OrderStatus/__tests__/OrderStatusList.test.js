@@ -19,6 +19,13 @@ function setup() {
     heading: 'Stage For Delivery',
     introduction: 'When the data for the following orders becomes available, an email containing download links will be sent to the address you\'ve provided.',
     type: 'echo_orders',
+    match: {
+      params: {
+        retrieval_id: 2,
+        id: 1
+      },
+      path: '/downloads/2/collections/1'
+    },
     onChangePath: jest.fn(),
     onFetchRetrievalCollection: jest.fn()
   }
@@ -94,6 +101,13 @@ describe('OrderStatus component', () => {
               }
             }
           ]
+        },
+        match: {
+          params: {
+            retrieval_id: 2,
+            id: 1
+          },
+          path: '/downloads/2/collections/1'
         },
         onChangePath: props.onChangePath,
         onFetchRetrievalCollection: props.onFetchRetrievalCollection,

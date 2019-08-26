@@ -24,8 +24,8 @@ const getRetrievalCollection = async (event, context) => {
     } = event.pathParameters
 
     const jwtToken = getJwtToken(event)
-
     const { token } = getVerifiedJwtToken(jwtToken)
+
     const username = getUsernameFromToken(token)
 
     // Retrieve a connection to the database
@@ -33,6 +33,9 @@ const getRetrievalCollection = async (event, context) => {
 
     const retrievalCollectionResponse = await dbConnection('retrieval_collections')
       .select(
+        'retrievals.id AS retrieval_id',
+        'retrievals.jsondata',
+        'retrievals.environment',
         'retrieval_collections.id',
         'retrieval_collections.access_method',
         'retrieval_collections.collection_id',
@@ -43,7 +46,8 @@ const getRetrievalCollection = async (event, context) => {
         'retrieval_orders.type',
         'retrieval_orders.order_number',
         'retrieval_orders.order_information',
-        'retrieval_orders.state'
+        'retrieval_orders.state',
+        'users.urs_id'
       )
       .leftJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
@@ -59,12 +63,14 @@ const getRetrievalCollection = async (event, context) => {
 
       const {
         id,
+        retrieval_id: retrievalId,
         access_method: accessMethod,
         collection_id: collectionId,
         collection_metadata: collectionMetadata,
         granule_params: granuleParams,
         granule_count: granuleCount,
-        retrieval_order_id: retrievalOrderId // Used to check whether or not orders exist based on the left join
+        retrieval_order_id: retrievalOrderId, // Used to check whether or not orders exist based on the left join
+        urs_id: ursId
       } = retrievalCollectionObject
 
       let orders = []
@@ -94,12 +100,14 @@ const getRetrievalCollection = async (event, context) => {
         headers: { 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({
           id,
+          retrieval_id: retrievalId,
           access_method: accessMethod,
           collection_id: collectionId,
           collection_metadata: collectionMetadata,
           granule_params: granuleParams,
           granule_count: granuleCount,
-          orders
+          orders,
+          urs_id: ursId
         })
       }
     }

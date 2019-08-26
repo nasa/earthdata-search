@@ -93,14 +93,15 @@ describe('getRetrieval', () => {
       jsondata: {},
       created_at: '2019-07-09 17:05:27.000000',
       collections: {
-        download: {
+        byId: {
           22: {
             id: 22,
             access_method: {
               type: 'download'
             },
             collection_metadata: {},
-            granule_count: 3
+            granule_count: 3,
+            retrieval_id: 2
           },
           23: {
             id: 23,
@@ -108,9 +109,11 @@ describe('getRetrieval', () => {
               type: 'download'
             },
             collection_metadata: {},
-            granule_count: 3
+            granule_count: 3,
+            retrieval_id: 2
           }
-        }
+        },
+        download: [22, 23]
       },
       links: []
     }

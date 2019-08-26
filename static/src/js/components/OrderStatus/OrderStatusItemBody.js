@@ -36,10 +36,14 @@ export class OrderStatusItemBody extends React.Component {
 
     const {
       collection,
+      match,
       orderStatus,
       onChangePath,
       type
     } = this.props
+
+    const { params } = match
+    const { retrieval_id: retrievalId } = params
 
     const {
       collection_metadata: collectionMetadata,
@@ -66,9 +70,8 @@ export class OrderStatusItemBody extends React.Component {
             <PortalLinkContainer
               className="order-status-item-body__button order-status-item-body__button--links"
               to={{
-                pathname: `/granules/download/${id}`
+                pathname: `/downloads/${retrievalId}/collections/${id}/links`
               }}
-              onClick={() => onChangePath(`/granules/download/${id}`)}
             >
               <Button
                 bootstrapVariant="primary"
@@ -79,6 +82,23 @@ export class OrderStatusItemBody extends React.Component {
                 tooltipId="tooltip__download-links"
               >
                 View/Download Data Links
+              </Button>
+            </PortalLinkContainer>
+            <PortalLinkContainer
+              className="order-status-item-body__button order-status-item-body__button--links"
+              to={{
+                pathname: `/downloads/${retrievalId}/collections/${id}/script`
+              }}
+            >
+              <Button
+                bootstrapVariant="primary"
+                bootstrapSize="sm"
+                label="Download Access Script"
+                tooltip="Download executable shell script (requires UNIX enviornment)"
+                tooltipPlacement="bottom"
+                tooltipId="tooltip__download-access-script"
+              >
+                Download Access Script
               </Button>
             </PortalLinkContainer>
           </div>
@@ -306,6 +326,7 @@ export class OrderStatusItemBody extends React.Component {
 
 OrderStatusItemBody.propTypes = {
   collection: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
   orderStatus: PropTypes.string.isRequired,
   onChangePath: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired

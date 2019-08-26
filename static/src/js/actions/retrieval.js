@@ -24,7 +24,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     .then((response) => {
       const { id: retrievalId } = response.data
 
-      dispatch(push(`${portalPathFromState(state)}/data/retrieve/${retrievalId}`))
+      dispatch(push(`${portalPathFromState(state)}/downloads/${retrievalId}`))
     })
     .catch((e) => {
       console.log(e)
@@ -51,19 +51,17 @@ export const fetchRetrieval = id => (dispatch, getState) => {
         ...collections
       }
 
-      Object.keys(collections).forEach((orderType) => {
-        Object.keys(collections[orderType]).forEach((collectionId) => {
-          const currentCollection = collections[orderType][collectionId]
+      Object.keys(collections.byId).forEach((collectionId) => {
+        const currentCollection = collections.byId[collectionId]
 
-          const { access_method: accessMethod } = currentCollection
-          const { type } = accessMethod
+        const { access_method: accessMethod } = currentCollection
+        const { type } = accessMethod
 
-          updatedCollections[orderType][collectionId] = {
-            ...currentCollection,
-            // Downloadable orders do not need to be loaded, default them to true
-            isLoaded: ['download', 'OPeNDAP'].includes(type)
-          }
-        })
+        updatedCollections.byId[collectionId] = {
+          ...currentCollection,
+          // Downloadable orders do not need to be loaded, default them to true
+          isLoaded: ['download', 'OPeNDAP'].includes(type)
+        }
       })
 
       dispatch(updateRetrieval({
@@ -72,7 +70,7 @@ export const fetchRetrieval = id => (dispatch, getState) => {
       }))
     })
     .catch((e) => {
-      console.log(e)
+      console.log('Failed to fetch retrieval', e)
     })
 
   return response

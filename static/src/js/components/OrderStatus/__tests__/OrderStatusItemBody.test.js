@@ -18,6 +18,13 @@ function setup(overrideProps) {
   const props = {
     collection: retrievalStatusProps.retrieval.collections.download[1],
     type: 'download',
+    match: {
+      params: {
+        retrieval_id: 2,
+        id: 1
+      },
+      path: '/downloads/2/collections/1'
+    },
     orderStatus: 'creating',
     onChangePath: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
