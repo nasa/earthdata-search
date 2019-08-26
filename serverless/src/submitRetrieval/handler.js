@@ -6,6 +6,7 @@ import { generateRetrievalPayloads } from './generateRetrievalPayloads'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 // Knex database connection object
 let dbConnection = null
@@ -175,6 +176,16 @@ const submitRetrieval = async (event) => {
 
     await retrievalDbTransaction.commit()
 
+    // Insert returns an array but we know that we're only inserting a
+    // single record so pop the first result row
+    const [newRetrieval] = retrievalRecord
+
+    // Encode the id of our new record before returning it
+    const response = {
+      ...newRetrieval,
+      id: obfuscateId(newRetrieval.id)
+    }
+
     return {
       isBase64Encoded: false,
       statusCode: 200,
@@ -182,7 +193,7 @@ const submitRetrieval = async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
-      body: JSON.stringify(retrievalRecord[0])
+      body: JSON.stringify(response)
     }
   } catch (e) {
     console.log(e)

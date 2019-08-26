@@ -25,7 +25,7 @@ export class OrderStatus extends Component {
     const { onFetchRetrieval, match, authToken } = this.props
     if (authToken !== nextProps.authToken && nextProps.authToken !== '') {
       const { params } = match
-      const { retrieval_id: retrievalId } = params
+      const { id: retrievalId } = params
       onFetchRetrieval(retrievalId, nextProps.authToken)
     }
   }

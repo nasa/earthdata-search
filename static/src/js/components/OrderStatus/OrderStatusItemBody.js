@@ -43,7 +43,7 @@ export class OrderStatusItemBody extends React.Component {
     } = this.props
 
     const { params } = match
-    const { retrieval_id: retrievalId } = params
+    const { id: retrievalId } = params
 
     const {
       collection_metadata: collectionMetadata,
