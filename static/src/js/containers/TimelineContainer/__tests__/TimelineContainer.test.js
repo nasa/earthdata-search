@@ -85,7 +85,7 @@ describe('TimelineContainer component', () => {
         }
       },
       focusedCollection: 'collectionId',
-      pathname: '/project',
+      pathname: '/projects',
       project: {
         collectionIds: ['collectionId']
       }
