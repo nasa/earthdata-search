@@ -113,7 +113,16 @@ export class PanelItem extends Component {
           className="panel-item__content"
           ref={(panelItemInner) => { this.panelItemInnerRef = panelItemInner }}
         >
-          {children}
+          {
+            typeof children === 'string' && (
+              children
+            )
+          }
+          {
+            typeof children !== 'string' && (
+              React.cloneElement(children, { isActive })
+            )
+          }
         </div>
         {
           (footer && !hideFooter) && (

@@ -13,6 +13,7 @@ function setup() {
   const props = {
     accessMethods: {},
     index: 0,
+    isActive: true,
     metadata: {},
     shapefileId: null,
     spatial: {},

@@ -133,6 +133,7 @@ const opendapButton = (collectionId, methodKey) => (
 export const AccessMethod = ({
   accessMethods,
   index,
+  isActive,
   metadata,
   selectedAccessMethod,
   shapefileId,
@@ -219,7 +220,7 @@ export const AccessMethod = ({
         </div>
       </ProjectPanelSection>
       {
-        form && (
+        form && isActive && (
           <ProjectPanelSection>
             <EchoForm
               collectionId={collectionId}
@@ -275,6 +276,7 @@ export const AccessMethod = ({
 AccessMethod.defaultProps = {
   accessMethods: {},
   index: null,
+  isActive: false,
   metadata: {},
   shapefileId: null,
   spatial: {},
@@ -285,6 +287,7 @@ AccessMethod.defaultProps = {
 AccessMethod.propTypes = {
   accessMethods: PropTypes.shape({}),
   index: PropTypes.number,
+  isActive: PropTypes.bool,
   metadata: PropTypes.shape({}),
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}),

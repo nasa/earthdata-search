@@ -9,7 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(state) {
   const props = {
     authToken: '',
-    location: {},
+    location: {
+      pathname: '/search'
+    },
     portal: {
       portalId: ''
     },
