@@ -5,7 +5,7 @@ import { stringify } from 'qs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as startOrderStatusUpdateWorkflow from '../../../../sharedUtils/orderStatus'
-import { loadedEchoFormXml } from './mocks'
+import { mockCatalogRestOrder } from './mocks'
 import submitCatalogRestOrder from '../handler'
 
 let dbTracker
@@ -62,7 +62,7 @@ describe('submitCatalogRestOrder', () => {
       .post('/egi/request', stringify({
         FILE_IDS: 'GRANULE_SHORT_NAME',
         CLIENT_STRING:
-          'To view the status of your request, please see: http://localhost:8080/data/retrieve/C10000005-EDSC',
+          'To view the status of your request, please see: http://localhost:8080/downloads/1',
         CLIENT: 'ESI',
         FORMAT: 'HDF-EOS',
         INCLUDE_META: 'Y',
@@ -76,12 +76,12 @@ describe('submitCatalogRestOrder', () => {
           '/MI1B2E/BlueBand,/MI1B2E/BRF Conversion Factors,/MI1B2E/GeometricParameters,/MI1B2E/NIRBand,/MI1B2E/RedBand',
         BBOX: ['-180,-90,180,90']
       }))
-      .reply(201, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><eesi:agentResponse><order><orderId>9876978</orderId><Instructions>To view the status of your request, please see: http://localhost:8080/data/retrieve/C10000005-EDSC</Instructions></order></eesi:agentResponse>')
+      .reply(201, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><eesi:agentResponse><order><orderId>9876978</orderId><Instructions>To view the status of your request, please see: http://localhost:8080/downloads/C10000005-EDSC</Instructions></order></eesi:agentResponse>')
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response([{
-          id: 'C10000005-EDSC',
+          id: '1',
           jsondata: { source: '?sf=1', shapefileId: 1 },
           access_method: {
             type: 'ESI',
@@ -99,7 +99,7 @@ describe('submitCatalogRestOrder', () => {
     })
 
     const context = {}
-    await submitCatalogRestOrder(loadedEchoFormXml, context)
+    await submitCatalogRestOrder(mockCatalogRestOrder, context)
 
     const { queries } = dbTracker.queries
 

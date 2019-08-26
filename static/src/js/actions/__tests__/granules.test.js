@@ -23,9 +23,8 @@ import {
   UPDATE_AUTH,
   EXCLUDE_GRANULE_ID,
   UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_GRANULE_DOWNLOAD_PARAMS,
-  UPDATE_GRANULE_LINKS,
-  UPDATE_GRANULE_QUERY
+  UPDATE_GRANULE_LINKS
+  // UPDATE_GRANULE_QUERY
 } from '../../constants/actionTypes'
 import actions from '../index'
 
@@ -351,23 +350,6 @@ describe('undoExcludeGranule', () => {
   })
 })
 
-describe('updateGranuleDownloadParams', () => {
-  test('should create an action to update the granule download parameters', () => {
-    const payload = {
-      retrievalId: 'id',
-      collectionId: 'collection_id'
-    }
-    const expectedAction = {
-      type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
-      payload
-    }
-    const store = mockStore()
-    store.dispatch(updateGranuleDownloadParams(payload))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual(expectedAction)
-  })
-})
-
 describe('updateGranuleLinks', () => {
   test('should create an action to update the granule download parameters', () => {
     const payload = {
@@ -466,15 +448,21 @@ describe('fetchLinks', () => {
     await store.dispatch(fetchLinks(params))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      payload: [
-        'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-      ],
+      payload: {
+        id: 3,
+        links: [
+          'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+        ]
+      },
       type: UPDATE_GRANULE_LINKS
     })
     expect(storeActions[1]).toEqual({
-      payload: [
-        'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-      ],
+      payload: {
+        id: 3,
+        links: [
+          'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+        ]
+      },
       type: UPDATE_GRANULE_LINKS
     })
   })
@@ -518,11 +506,14 @@ describe('fetchOpendapLinks', () => {
     await store.dispatch(fetchOpendapLinks(params))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      payload: [
-        'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-        'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-        'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-      ],
+      payload: {
+        id: 3,
+        links: [
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
+          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
+          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
+        ]
+      },
       type: UPDATE_GRANULE_LINKS
     })
   })

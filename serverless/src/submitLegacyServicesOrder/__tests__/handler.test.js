@@ -4,7 +4,7 @@ import nock from 'nock'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as startOrderStatusUpdateWorkflow from '../../../../sharedUtils/orderStatus'
-import { loadedEchoFormXml } from './mocks'
+import { mockLegacyServicesOrder } from './mocks'
 import submitLegacyServicesOrder from '../handler'
 
 let dbTracker
@@ -165,7 +165,7 @@ describe('submitLegacyServicesOrder', () => {
     })
 
     const context = {}
-    await submitLegacyServicesOrder(loadedEchoFormXml, context)
+    await submitLegacyServicesOrder(mockLegacyServicesOrder, context)
 
     const { queries } = dbTracker.queries
 

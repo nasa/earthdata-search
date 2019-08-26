@@ -198,10 +198,7 @@ export const AccessMethod = ({
     selectedVariables = []
   } = selectedMethod || {}
 
-  let isOpendap = false
-  if (selectedAccessMethod === 'opendap') {
-    isOpendap = true
-  }
+  const isOpendap = (selectedAccessMethod === 'opendap')
 
   return (
     <div className="access-method">

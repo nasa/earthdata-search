@@ -85,7 +85,7 @@ describe('submitRetrieval', () => {
       expect(store.getActions().length).toEqual(1)
       expect(store.getActions()[0]).toEqual({
         payload: {
-          args: ['/data/retrieve/7'],
+          args: ['/downloads/7'],
           method: 'push'
         },
         type: '@@router/CALL_HISTORY_METHOD'
@@ -174,7 +174,8 @@ describe('fetchRetrieval', () => {
           test: 'data'
         },
         collections: {
-          download: {
+          download: [1, 2],
+          byId: {
             1: {
               collection_id: '12345-TEST',
               access_method: {
@@ -291,7 +292,8 @@ describe('fetchRetrieval', () => {
       expect(store.getActions()[0]).toEqual({
         payload: {
           collections: {
-            download: {
+            download: [1, 2],
+            byId: {
               1: {
                 access_method: {
                   type: 'download'

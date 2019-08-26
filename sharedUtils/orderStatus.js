@@ -77,6 +77,7 @@ export const getStateFromOrderStatus = (status) => {
   if (orderStates.failed.indexOf(status.toLowerCase()) > -1) return 'failed'
   if (orderStates.complete.indexOf(status.toLowerCase()) > -1) return 'complete'
   if (orderStates.in_progress.indexOf(status.toLowerCase()) > -1) return 'in_progress'
+  if (orderStates.creating.indexOf(status.toLowerCase()) > -1) return 'creating'
 
   return false
 }
@@ -87,6 +88,9 @@ export const getStateFromOrderStatus = (status) => {
  */
 export const aggregatedOrderStatus = (orders = []) => {
   let orderStatus = 'creating'
+
+  // If no orders exist the state should return the default, creating
+  if (orders.length === 0) return orderStatus
 
   if (orders.some(order => getStateFromOrderStatus(order.state) === 'in_progress')) {
     orderStatus = 'in progress'

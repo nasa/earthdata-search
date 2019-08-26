@@ -19,7 +19,6 @@ import {
   UPDATE_GRANULE_RESULTS,
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_GRANULE_DOWNLOAD_PARAMS,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
@@ -77,11 +76,6 @@ export const onUndoExcludeGranule = payload => ({
   payload
 })
 
-export const updateGranuleDownloadParams = payload => ({
-  type: UPDATE_GRANULE_DOWNLOAD_PARAMS,
-  payload
-})
-
 export const updateGranuleLinks = payload => ({
   type: UPDATE_GRANULE_LINKS,
   payload
@@ -108,6 +102,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
   const requestObject = new GranuleRequest(authToken)
 
   const {
+    id,
     collection_id: collectionId,
     granule_count: granuleCount,
     granule_params: granuleParams
@@ -134,7 +129,10 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         // Fetch the download links from the granule metadata
         const granuleLinks = getDownloadUrls(entry)
 
-        dispatch(updateGranuleLinks(granuleLinks.map(lnk => lnk.href)))
+        dispatch(updateGranuleLinks({
+          id,
+          links: granuleLinks.map(lnk => lnk.href)
+        }))
       })
       .catch((error) => {
         console.log(error)
@@ -154,6 +152,7 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   const requestObject = new OusGranuleRequest(authToken)
 
   const {
+    id,
     access_method: accessMethod,
     collection_id: collectionId,
     granule_params: granuleParams
@@ -177,7 +176,10 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
       const { data } = response
       const { items = [] } = data
 
-      dispatch(updateGranuleLinks(items))
+      dispatch(updateGranuleLinks({
+        id,
+        links: items
+      }))
     })
     .catch((error) => {
       console.log(error)
@@ -186,11 +188,9 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
   return response
 }
 
-export const setGranuleDownloadParams = data => (dispatch) => {
+export const fetchRetrievalCollectionGranuleLinks = data => (dispatch) => {
   const { access_method: accessMethod } = data
   const { type } = accessMethod
-
-  dispatch(updateGranuleDownloadParams(data))
 
   // Determine which action to take based on the access method type
   if (type === 'download') {

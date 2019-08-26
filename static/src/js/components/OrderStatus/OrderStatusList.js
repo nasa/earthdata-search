@@ -9,6 +9,7 @@ export const OrderStatusList = ({
   collections,
   heading,
   introduction,
+  match,
   onChangePath,
   onFetchRetrievalCollection,
   type
@@ -23,6 +24,7 @@ export const OrderStatusList = ({
             key={collection.collection_id}
             type={type}
             collection={collection}
+            match={match}
             onChangePath={onChangePath}
             onFetchRetrievalCollection={onFetchRetrievalCollection}
           />
@@ -40,6 +42,7 @@ OrderStatusList.propTypes = {
   collections: PropTypes.arrayOf(PropTypes.shape({})),
   heading: PropTypes.string.isRequired,
   introduction: PropTypes.string.isRequired,
+  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired

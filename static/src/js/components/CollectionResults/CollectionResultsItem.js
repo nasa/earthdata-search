@@ -33,7 +33,6 @@ export const CollectionResultsItem = ({
     has_map_imagery: hasMapImagery = false,
     is_cwic: isCwic = false,
     is_nrt: isNrt = false,
-    is_opendap: isOpendap = false,
     organizations = [],
     summary = '',
     thumbnail = null,
@@ -73,108 +72,104 @@ export const CollectionResultsItem = ({
   const thumbnailHeight = getApplicationConfig().thumbnailSize.height
   const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
-  let customizeBadges = null
+  const customizeBadges = []
 
-  if (isOpendap) {
-    customizeBadges = []
-
-    if (hasSpatialSubsetting) {
-      customizeBadges.push((
-        <OverlayTrigger
-          key="badge-icon__spatial-subsetting"
-          placement="top"
-          overlay={(
-            <Tooltip
-              id="tooltip_customize-spatial-subsetting"
-              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-            >
-              Spatial customizable options available
-            </Tooltip>
-          )}
-        >
-          <i className="fa fa-globe collection-results-item__badge-icon" />
-        </OverlayTrigger>
-      ))
-    }
-
-    if (hasVariables) {
-      customizeBadges.push((
-        <OverlayTrigger
-          key="badge-icon__variables"
-          placement="top"
-          overlay={(
-            <Tooltip
-              id="tooltip_customize-variables"
-              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-            >
-              Variable customizable options available
-            </Tooltip>
-          )}
-        >
-          <i className="fa fa-tags collection-results-item__badge-icon" />
-        </OverlayTrigger>
-      ))
-    }
-
-    if (hasTransforms) {
-      customizeBadges.push((
-        <OverlayTrigger
-          key="badge-icon__transforms"
-          placement="top"
-          overlay={(
-            <Tooltip
-              id="tooltip_customize-transforms"
-              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-            >
-              Data transformation options available
-            </Tooltip>
-          )}
-        >
-          <i className="fa fa-sliders collection-results-item__badge-icon" />
-        </OverlayTrigger>
-      ))
-    }
-
-    if (hasFormats) {
-      customizeBadges.push((
-        <OverlayTrigger
-          key="badge-icon__formats"
-          placement="top"
-          overlay={(
-            <Tooltip
-              id="tooltip_customize-formats"
-              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-            >
-              Reformatting options available
-            </Tooltip>
-          )}
-        >
-          <i className="fa fa-file-text-o collection-results-item__badge-icon" />
-        </OverlayTrigger>
-      ))
-    }
-
-    if (hasTemporalSubsetting) {
-      customizeBadges.push((
-        <OverlayTrigger
-          key="badge-icon__temporal-subsetting"
-          placement="top"
-          overlay={(
-            <Tooltip
-              id="tooltip_customize-temporal-subsetting"
-              className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-            >
-              Temporal subsetting options available
-            </Tooltip>
-          )}
-        >
-          <i className="fa fa-clock-o collection-results-item__badge-icon" />
-        </OverlayTrigger>
-      ))
-    }
-
-    if (customizeBadges.length === 0) customizeBadges = null
+  if (hasSpatialSubsetting) {
+    customizeBadges.push((
+      <OverlayTrigger
+        key="badge-icon__spatial-subsetting"
+        placement="top"
+        overlay={(
+          <Tooltip
+            id="tooltip_customize-spatial-subsetting"
+            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+          >
+            Spatial customizable options available
+          </Tooltip>
+        )}
+      >
+        <i className="fa fa-globe collection-results-item__badge-icon" />
+      </OverlayTrigger>
+    ))
   }
+
+  if (hasVariables) {
+    customizeBadges.push((
+      <OverlayTrigger
+        key="badge-icon__variables"
+        placement="top"
+        overlay={(
+          <Tooltip
+            id="tooltip_customize-variables"
+            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+          >
+            Variable customizable options available
+          </Tooltip>
+        )}
+      >
+        <i className="fa fa-tags collection-results-item__badge-icon" />
+      </OverlayTrigger>
+    ))
+  }
+
+  if (hasTransforms) {
+    customizeBadges.push((
+      <OverlayTrigger
+        key="badge-icon__transforms"
+        placement="top"
+        overlay={(
+          <Tooltip
+            id="tooltip_customize-transforms"
+            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+          >
+            Data transformation options available
+          </Tooltip>
+        )}
+      >
+        <i className="fa fa-sliders collection-results-item__badge-icon" />
+      </OverlayTrigger>
+    ))
+  }
+
+  if (hasFormats) {
+    customizeBadges.push((
+      <OverlayTrigger
+        key="badge-icon__formats"
+        placement="top"
+        overlay={(
+          <Tooltip
+            id="tooltip_customize-formats"
+            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+          >
+            Reformatting options available
+          </Tooltip>
+        )}
+      >
+        <i className="fa fa-file-text-o collection-results-item__badge-icon" />
+      </OverlayTrigger>
+    ))
+  }
+
+  if (hasTemporalSubsetting) {
+    customizeBadges.push((
+      <OverlayTrigger
+        key="badge-icon__temporal-subsetting"
+        placement="top"
+        overlay={(
+          <Tooltip
+            id="tooltip_customize-temporal-subsetting"
+            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
+          >
+            Temporal subsetting options available
+          </Tooltip>
+        )}
+      >
+        <i className="fa fa-clock-o collection-results-item__badge-icon" />
+      </OverlayTrigger>
+    ))
+  }
+
+  // if (customizeBadges.length > 0.length === 0) customizeBadges.length > 0 = null
 
   const addToProjectButton = (
     <Button
@@ -323,7 +318,7 @@ export const CollectionResultsItem = ({
               )
             }
             {
-              isOpendap && (
+              customizeBadges.length > 0 && (
                 <SplitBadge
                   className="collection-results-item__badge  collection-results-item__badge--customizable"
                   primary="Customizable"

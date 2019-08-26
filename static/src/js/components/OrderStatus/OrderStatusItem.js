@@ -58,6 +58,7 @@ export class OrderStatusItem extends PureComponent {
   render() {
     const {
       collection,
+      match,
       onChangePath,
       onFetchRetrievalCollection,
       type
@@ -95,6 +96,7 @@ export class OrderStatusItem extends PureComponent {
             <OrderStatusItemBody
               type={type}
               collection={collection}
+              match={match}
               orderStatus={orderStatus}
               onChangePath={onChangePath}
               onFetchRetrievalCollection={onFetchRetrievalCollection}
@@ -111,6 +113,7 @@ export class OrderStatusItem extends PureComponent {
 
 OrderStatusItem.propTypes = {
   collection: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired

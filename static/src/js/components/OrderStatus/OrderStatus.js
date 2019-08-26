@@ -8,16 +8,16 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import './OrderStatus.scss'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import cmrEnv from '../../../../../sharedUtils/cmrEnv'
+import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 
 export class OrderStatus extends Component {
   componentDidMount() {
     const { onFetchRetrieval, match, authToken } = this.props
     if (authToken !== '') {
       const { params } = match
-      const { id: orderId } = params
+      const { id: retrievalId } = params
       // TODO: There is probably a better way to kick off this call in a container
-      onFetchRetrieval(orderId, authToken)
+      onFetchRetrieval(retrievalId, authToken)
     }
   }
 
@@ -25,13 +25,14 @@ export class OrderStatus extends Component {
     const { onFetchRetrieval, match, authToken } = this.props
     if (authToken !== nextProps.authToken && nextProps.authToken !== '') {
       const { params } = match
-      const { id: orderId } = params
-      onFetchRetrieval(orderId, nextProps.authToken)
+      const { retrieval_id: retrievalId } = params
+      onFetchRetrieval(retrievalId, nextProps.authToken)
     }
   }
 
   render() {
     const {
+      match,
       portal,
       retrieval = {},
       onChangePath,
@@ -41,18 +42,21 @@ export class OrderStatus extends Component {
     const { source } = jsondata
 
     const { id, collections } = retrieval
+    const { byId = {} } = collections
 
     let {
-      download: downloads = {},
-      opendap: opendapOrders = {},
-      echo_orders: echoOrders = {},
-      esi: esiOrders = {}
+      download: downloads = [],
+      opendap: opendapOrders = [],
+      echo_orders: echoOrders = [],
+      esi: esiOrders = []
     } = collections
 
-    downloads = Object.values(downloads)
-    opendapOrders = Object.values(opendapOrders)
-    echoOrders = Object.values(echoOrders)
-    esiOrders = Object.values(esiOrders)
+    const collectionsById = Object.values(byId)
+
+    downloads = collectionsById.filter(collection => downloads.includes(collection.id))
+    opendapOrders = collectionsById.filter(collection => opendapOrders.includes(collection.id))
+    echoOrders = collectionsById.filter(collection => echoOrders.includes(collection.id))
+    esiOrders = collectionsById.filter(collection => esiOrders.includes(collection.id))
 
     // Combine the two types of orders that are direct download into a single heading
     const downloadableOrders = [
@@ -62,10 +66,10 @@ export class OrderStatus extends Component {
 
     const introduction = (
       <p>
-        {'This page will automatically update as your orders are processed. The Order Status page can be accessed later by visiting '}
-        <a href={`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/data/retrieve/${id}`}>{`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/data/retrieve/${id}`}</a>
+        {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
+        <a href={`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/downloads/${id}`}>{`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/downloads/${id}`}</a>
         {' or the '}
-        <a href="/data/status/">Download Status and History</a>
+        <a href={`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/downloads`}>Download Status and History</a>
         {' page.'}
       </p>
     )
@@ -74,7 +78,7 @@ export class OrderStatus extends Component {
       <div className="order-status">
         <Well className="order-status">
           <Well.Main>
-            <Well.Heading>Order Status</Well.Heading>
+            <Well.Heading>Download Status</Well.Heading>
             <Well.Introduction>{introduction}</Well.Introduction>
             <Well.Section>
               {
@@ -84,6 +88,7 @@ export class OrderStatus extends Component {
                     introduction={'Click the "View/Download Data Links" button to view or download a file containing links to your data.'}
                     collections={downloadableOrders}
                     type="download"
+                    match={match}
                     onChangePath={onChangePath}
                     onFetchRetrievalCollection={onFetchRetrievalCollection}
                   />
@@ -96,6 +101,7 @@ export class OrderStatus extends Component {
                     introduction={"When the data for the following orders becomes available, an email containing download links will be sent to the address you've provided."}
                     collections={echoOrders}
                     type="echo_orders"
+                    match={match}
                     onChangePath={onChangePath}
                     onFetchRetrievalCollection={onFetchRetrievalCollection}
                   />
@@ -108,6 +114,7 @@ export class OrderStatus extends Component {
                     introduction={"When the data for the following orders become available, links will be displayed below and sent to the email address you've provided."}
                     collections={esiOrders}
                     type="esi"
+                    match={match}
                     onChangePath={onChangePath}
                     onFetchRetrievalCollection={onFetchRetrievalCollection}
                   />

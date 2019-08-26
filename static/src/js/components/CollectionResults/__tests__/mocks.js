@@ -2,7 +2,6 @@ export const collectionListItemProps = {
   collection: {
     dataset_id: 'Test Collection',
     id: 'collectionId1',
-    is_opendap: false,
     granule_count: 10,
     has_formats: false,
     has_spatial_subsetting: false,

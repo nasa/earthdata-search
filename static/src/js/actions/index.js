@@ -18,7 +18,7 @@ import {
   excludeGranule,
   getGranules,
   undoExcludeGranule,
-  setGranuleDownloadParams,
+  fetchRetrievalCollectionGranuleLinks,
   updateGranuleResults,
   updateGranuleMetadata
 } from './granules'
@@ -144,7 +144,7 @@ const actions = {
   restoreProject,
   saveShapefile,
   selectAccessMethod,
-  setGranuleDownloadParams,
+  fetchRetrievalCollectionGranuleLinks,
   shapefileErrored,
   submitRetrieval,
   toggleCollectionVisibility,

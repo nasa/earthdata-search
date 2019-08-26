@@ -1,4 +1,4 @@
-export const loadedEchoFormXml = {
+export const mockLegacyServicesOrder = {
   Records: [{
     body: JSON.stringify({
       accessToken: 'asdfasdf',

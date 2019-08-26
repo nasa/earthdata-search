@@ -17,6 +17,13 @@ function setup(overrideProps) {
     key: 'TEST_COLLECTION_111',
     collection: retrievalStatusProps.retrieval.collections.download[1],
     type: 'download',
+    match: {
+      params: {
+        retrieval_id: 2,
+        id: 1
+      },
+      path: '/downloads/2/collections/1'
+    },
     onChangePath: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
     ...overrideProps

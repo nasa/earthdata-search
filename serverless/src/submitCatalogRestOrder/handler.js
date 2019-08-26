@@ -92,7 +92,7 @@ const submitCatalogRestOrder = async (event, context) => {
     const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
 
     // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${getEarthdataConfig(cmrEnv()).edscHost}${portalPath({ portalId })}/data/retrieve/${retrievalId}`
+    const edscStatusUrl = `${getEarthdataConfig(cmrEnv()).edscHost}${portalPath({ portalId })}/downloads/${retrievalId}`
 
     const { model, url, type } = accessMethod
 
