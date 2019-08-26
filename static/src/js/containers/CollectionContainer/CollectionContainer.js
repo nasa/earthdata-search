@@ -66,7 +66,7 @@ export class CollectionContainer extends Component {
       retrieval
     } = this.props
 
-    const { params } = match
+    const { params, path } = match
 
     // Pull the retrieval collection from the store
     const { id } = params
@@ -77,7 +77,7 @@ export class CollectionContainer extends Component {
 
     return (
       <Switch>
-        <Route exact path={[`${match.path}/links`, `${match.path}/script`]}>
+        <Route exact path={[`${path}/links`, `${path}/script`]}>
           <CollectionDownloadDisplay
             onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
             retrievalCollection={retrievalCollection}

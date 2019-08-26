@@ -52,6 +52,7 @@ PortalLinkContainer.defaultProps = {
   children: null,
   className: '',
   onClick: null,
+  portalId: '',
   type: '',
   target: ''
 }
@@ -60,7 +61,7 @@ PortalLinkContainer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  portalId: PropTypes.string.isRequired,
+  portalId: PropTypes.string,
   to: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({})

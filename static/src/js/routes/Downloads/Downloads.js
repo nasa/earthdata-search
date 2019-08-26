@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-  Link,
   Route,
   Switch,
   withRouter
@@ -14,6 +13,7 @@ import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderStatusContainer'
 import CollectionContainer from '../../containers/CollectionContainer/CollectionContainer'
+import { PortalLinkContainer } from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 
 const mapStateToProps = state => ({
@@ -26,21 +26,25 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export const Downloads = ({
+  match,
   retrieval = {},
   onChangePath
 }) => {
   const { jsondata = {} } = retrieval
   const { source } = jsondata
+
+  const { path } = match
+
   return (
     <Switch>
-      <Route exact path="/downloads/:retrieval_id">
+      <Route exact path={`${path}/:retrieval_id`}>
         <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
               <SecondaryToolbarContainer />
             </header>
             <nav className="route-wrapper__content-nav">
-              <Link
+              <PortalLinkContainer
                 className="route-wrapper__content-nav-link"
                 to={{
                   pathname: '/projects',
@@ -50,7 +54,7 @@ export const Downloads = ({
               >
                 <i className="fa fa-arrow-circle-o-left" />
                 {' Back to Project'}
-              </Link>
+              </PortalLinkContainer>
             </nav>
             <div className="route-wrapper__content-inner">
               <OrderStatusContainer />
@@ -59,7 +63,7 @@ export const Downloads = ({
         </div>
       </Route>
 
-      <Route path="/downloads/:retrieval_id/collections/:id">
+      <Route path={`${path}/:retrieval_id/collections/:id`}>
         <div className="route-wrapper route-wrapper--collections route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <CollectionContainer />
@@ -71,6 +75,7 @@ export const Downloads = ({
 }
 
 Downloads.propTypes = {
+  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }
