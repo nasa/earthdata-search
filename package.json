@@ -150,6 +150,7 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
+    "scatter-swap": "^0.1.0",
     "simple-oauth2": "^2.2.1",
     "snakecase-keys": "^2.1.0",
     "terser-webpack-plugin": "^1.2.2",

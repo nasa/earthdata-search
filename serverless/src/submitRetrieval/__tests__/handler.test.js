@@ -101,7 +101,7 @@ describe('submitRetrieval', () => {
 
     expect(JSON.parse(body)).toEqual({
       environment: 'prod',
-      id: 1,
+      id: '4517239960',
       user_id: 19
     })
   })
@@ -185,7 +185,7 @@ describe('submitRetrieval', () => {
 
     expect(JSON.parse(body)).toEqual({
       environment: 'prod',
-      id: 1,
+      id: '4517239960',
       user_id: 19
     })
 

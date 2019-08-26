@@ -3,6 +3,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 // Knex database connection object
 let dbConnection = null
@@ -100,7 +101,7 @@ const getRetrievalCollection = async (event, context) => {
         headers: { 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({
           id,
-          retrieval_id: retrievalId,
+          retrieval_id: obfuscateId(retrievalId),
           access_method: accessMethod,
           collection_id: collectionId,
           collection_metadata: collectionMetadata,

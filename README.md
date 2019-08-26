@@ -138,6 +138,10 @@ This application runs in a VPC for NASA security purposes, therefor the followin
 - SUBNET_ID_A
 - SUBNET_ID_B
 
+For production use this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can se the following ENV var:
+
+- OBFUSCATION_SPIN
+
 To deploy the full application use the following:
 
 	NODE_ENV=production serverless deploy --stage UNIQUE_STAGE

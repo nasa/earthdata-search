@@ -5,6 +5,7 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
 // Knex database connection object
 let dbConnection = null
@@ -22,6 +23,9 @@ export default async function getRetrieval(event, context) {
     context.callbackWaitsForEmptyEventLoop = false
 
     const { retrieval_id: providedRetrieval } = event.pathParameters
+
+    // Decode the provided retrieval id
+    const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
     const jwtToken = getJwtToken(event)
 
@@ -43,11 +47,12 @@ export default async function getRetrieval(event, context) {
         'retrieval_collections.access_method',
         'retrieval_collections.collection_metadata',
         'retrieval_collections.granule_count',
+        'retrieval_collections.granule_params',
         'users.urs_id')
       .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
-        'retrievals.id': providedRetrieval,
+        'retrievals.id': decodedRetrievalId,
         'users.urs_id': username
       })
 
@@ -92,7 +97,7 @@ export default async function getRetrieval(event, context) {
             collection_id: collectionId,
             collection_metadata: collectionMetadata,
             granule_count: granuleCount,
-            retrieval_id: retrievalId,
+            granule_params: granuleParams,
             urs_id: ursId
           } = collections.byId[collection]
 
@@ -113,7 +118,8 @@ export default async function getRetrieval(event, context) {
             collection_id: collectionId,
             collection_metadata: collectionMetadata,
             granule_count: granuleCount,
-            retrieval_id: retrievalId,
+            granule_params: granuleParams,
+            retrieval_id: providedRetrieval, // Ensure the obfuscated id is returned
             urs_id: ursId
           }
         })
@@ -141,18 +147,6 @@ export default async function getRetrieval(event, context) {
     }
   } catch (e) {
     console.log(e)
-
-    // There may be a better way of capturing this
-    if (e.message.includes('Unauthorized')) {
-      return {
-        isBase64Encoded: false,
-        statusCode: 401,
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({ errors: [e], statusCode: 401 })
-      }
-    }
 
     return {
       isBase64Encoded: false,
