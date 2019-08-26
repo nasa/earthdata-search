@@ -31,6 +31,8 @@ provider:
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
 
+    obfuscationSpin: ${env:OBFUSCATION_SPIN}
+
     configSecretId:
       Ref: DbPasswordSecret
 
