@@ -169,8 +169,6 @@ export const CollectionResultsItem = ({
     ))
   }
 
-  // if (customizeBadges.length > 0.length === 0) customizeBadges.length > 0 = null
-
   const addToProjectButton = (
     <Button
       className="collection-results-item__action collection-results-item__action--add"

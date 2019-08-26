@@ -2,6 +2,11 @@ import url from 'url'
 import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
+/**
+ * Create and return a string representing a script users can use to download links from CMR
+ * @param {Array} granuleLinks Links to include in the download script
+ * @param {Object} retrievalCollection The retrieval collection data from the database
+ */
 export const generateDownloadScript = (granuleLinks, retrievalCollection) => {
   const {
     urs_id: username
