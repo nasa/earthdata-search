@@ -16,7 +16,6 @@ import { updateCollectionMetadata } from './collections'
 import { prepareGranuleParams, populateGranuleResults, buildGranuleSearchParams } from '../util/granules'
 import { convertSize } from '../util/project'
 import { createFocusedCollectionMetadata, getCollectionMetadata } from '../util/focusedCollection'
-import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
 import isProjectCollectionValid from '../util/isProjectCollectionValid'
 
 export const addCollectionToProject = payload => ({
@@ -116,8 +115,6 @@ export const getProjectGranules = () => (dispatch, getState) => {
 }
 
 export const getProjectCollections = () => (dispatch, getState) => {
-  const collectionParams = prepareCollectionParams(getState())
-
   const { project } = getState()
   const { collectionIds: projectIds } = project
 
@@ -127,15 +124,9 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
   const { authToken } = getState()
 
-  const searchParams = buildCollectionSearchParams(collectionParams)
   const response = getCollectionMetadata({
-    ...searchParams,
     conceptId: projectIds,
-    featureFacets: {},
-    includeFacets: undefined,
-    tagKey: undefined,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
-    pageNum: undefined
+    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod'
   }, authToken)
     .then(([collectionJson, collectionUmm]) => {
       const payload = []

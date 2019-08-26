@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { remove } from 'tiny-cookie'
 import { Dropdown } from 'react-bootstrap'
 
+import isPath from '../../util/isPath'
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -126,10 +127,10 @@ class SecondaryToolbar extends Component {
     return (
       <section className="secondary-toolbar">
         {
-          location.pathname === '/projects' && backLink
+          isPath(location.pathname, ['/projects']) && backLink
         }
         {
-          (location.pathname !== '/projects' && projectIds.length > 0) && projectLink
+          (!isPath(location.pathname, ['/projects']) && projectIds.length > 0) && projectLink
         }
         {
           !loggedIn ? loginLink : loggedInDropdown

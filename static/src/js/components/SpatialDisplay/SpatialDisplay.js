@@ -38,6 +38,26 @@ class SpatialDisplay extends Component {
     this.onSubmitGridCoords = this.onSubmitGridCoords.bind(this)
   }
 
+  componentDidMount() {
+    const {
+      boundingBoxSearch,
+      gridName,
+      gridCoords,
+      pointSearch,
+      polygonSearch,
+      shapefile
+    } = this.props
+
+    this.setState({
+      boundingBoxSearch,
+      gridName,
+      gridCoords,
+      pointSearch,
+      polygonSearch,
+      shapefile
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     const {
       boundingBoxSearch,

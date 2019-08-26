@@ -117,22 +117,18 @@
     events:
       - schedule:
           rate: cron(0 5 * * ? *)
-          enabled: false
           input:
             projection: 'epsg4326'
       - schedule:
           rate: cron(5 5 * * ? *)
-          enabled: false
           input:
             projection: 'epsg3857'
       - schedule:
           rate: cron(10 5 * * ? *)
-          enabled: false
           input:
             projection: 'epsg3413'
       - schedule:
           rate: cron(15 5 * * ? *)
-          enabled: false
           input:
             projection: 'epsg3031'
 
@@ -144,8 +140,7 @@
       enabled: false
     events:
       - schedule:
-          rate: cron(0 * * * ? *)
-          enabled: false
+          rate: cron(0 5 ? * MON-FRI *)
 
   generateSubsettingTags:
     handler: serverless/src/generateSubsettingTags/handler.default
@@ -155,8 +150,7 @@
       enabled: false
     events:
       - schedule:
-          rate: cron(0 5 * * ? *)
-          enabled: false
+          rate: cron(0 0/4 * * ? *)
 
   generateCollectionCapabilityTags:
     handler: serverless/src/generateCollectionCapabilityTags/handler.default
@@ -166,8 +160,7 @@
       enabled: false
     events:
       - schedule:
-          rate: cron(0 6 * * ? *)
-          enabled: false
+          rate: cron(0 0/4 * * ? *)
           input:
             pageNumber: 1
             perPage: 2000

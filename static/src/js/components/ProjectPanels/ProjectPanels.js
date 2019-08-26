@@ -202,10 +202,12 @@ class ProjectPanels extends PureComponent {
     projectIds.forEach((collectionId, index) => {
       loaded = true
       const collection = byId[collectionId]
-      if (!collection) return
+      if (Object.keys(collection).length === 0) return
 
       const projectCollection = projectById[collectionId]
       const { metadata } = collection
+
+      if (Object.keys(metadata).length === 0) return
       const {
         dataset_id: title = '',
         id,

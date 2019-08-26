@@ -17,6 +17,19 @@ class TemporalDisplay extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    const {
+      temporalSearch
+    } = this.props
+
+    const { endDate, startDate } = temporalSearch
+
+    this.setState({
+      endDate,
+      startDate
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     const {
       temporalSearch

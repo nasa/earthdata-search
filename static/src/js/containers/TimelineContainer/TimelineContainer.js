@@ -42,7 +42,7 @@ export const TimelineContainer = (props) => {
 
   let changeQueryMethod = onChangeQuery
   // Determine the collectionMetadata the timeline should be displaying
-  const isProjectPage = isPath(pathname, ['/project'])
+  const isProjectPage = isPath(pathname, ['/projects'])
   const isGranulesPage = isPath(pathname, ['/search/granules'])
   const collectionMetadata = {}
   let granuleFilterTemporal
