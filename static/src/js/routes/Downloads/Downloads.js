@@ -37,7 +37,7 @@ export const Downloads = ({
 
   return (
     <Switch>
-      <Route exact path={`${path}/:retrieval_id`}>
+      <Route exact path={`${path}/:id`}>
         <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">

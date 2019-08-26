@@ -23,7 +23,7 @@ const fetchLegacyServicesOrder = async (input) => {
   } = input
 
   // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
-  const retrievalRecord = await dbConnection('retrieval_orders')
+  const retrievalOrderRecord = await dbConnection('retrieval_orders')
     .first(
       'retrieval_orders.order_number'
     )
@@ -33,7 +33,7 @@ const fetchLegacyServicesOrder = async (input) => {
     })
 
   // If there is not record in the database prevent taking any additional actions
-  if (!retrievalRecord) {
+  if (!retrievalOrderRecord) {
     return {
       accessToken,
       id,
@@ -44,7 +44,7 @@ const fetchLegacyServicesOrder = async (input) => {
 
   const {
     order_number: orderNumber
-  } = retrievalRecord
+  } = retrievalOrderRecord
 
   console.log(`Requesting order data from Legacy Services at ${getEarthdataConfig(cmrEnv()).echoRestRoot}/orders.json`)
 
