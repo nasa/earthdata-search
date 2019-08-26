@@ -96,13 +96,13 @@ export class CollectionDownloadDisplay extends Component {
     const isLoading = totalGranules > granuleLinks.length
 
     return (
-      <section className="granule-links-list">
-        <header className="granule-links-list__header">
+      <section className="collection-download-display">
+        <header className="collection-download-display__header">
           {
             granuleFormat === 'script' && (
               <>
                 <h4>How to use this script</h4>
-                <p className="granule-links-list__intro">
+                <p className="collection-download-display__intro">
                   <strong>Linux: </strong>
                   { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
                   { 'For a detailed walk through of this process, please reference this ' }
@@ -131,10 +131,10 @@ export class CollectionDownloadDisplay extends Component {
             (!isLoading && granuleLinks.length > 0) && (
               <>
                 <h4>Collection granule links have been retrieved</h4>
-                <p className="granule-links-list__state">
+                <p className="collection-download-display__state">
                   {downloadButtonMessage}
                   <Button
-                    className="granule-links-list__button"
+                    className="collection-download-display__button"
                     bootstrapVariant="primary"
                     bootstrapSize="sm"
                     label={downloadButtonLabel}
@@ -150,7 +150,7 @@ export class CollectionDownloadDisplay extends Component {
             )
           }
         </header>
-        <div className="granule-links-list__body">
+        <div className="collection-download-display__body">
           {
             !isLoading && (
               <Card
@@ -158,7 +158,7 @@ export class CollectionDownloadDisplay extends Component {
               >
                 <Card.Body>
                   { granuleFormat === 'links' && (
-                    <ul className="granule-links-list__list">
+                    <ul className="collection-download-display__list">
                       {
                         granuleLinks.map((link, i) => {
                           const key = `link_${i}`
@@ -172,7 +172,7 @@ export class CollectionDownloadDisplay extends Component {
                     </ul>
                   )}
                   { granuleFormat === 'script' && (
-                    <pre className="granule-links-list__list">
+                    <pre className="collection-download-display__list">
                       {downloadFileContents}
                     </pre>
                   )

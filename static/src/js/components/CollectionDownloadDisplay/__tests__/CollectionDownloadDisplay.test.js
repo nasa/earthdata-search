@@ -81,11 +81,11 @@ describe('CollectionDownloadDisplay component', () => {
         })
 
         expect(enzymeWrapper.exists()).toBeTruthy()
-        expect(enzymeWrapper.find('ul.granule-links-list__list li').length).toBe(2)
+        expect(enzymeWrapper.find('ul.collection-download-display__list li').length).toBe(2)
         expect(enzymeWrapper.find('h4').text()).toBe(
           'Collection granule links have been retrieved'
         )
-        expect(enzymeWrapper.find('.granule-links-list__state').prop('children')[0]).toEqual(
+        expect(enzymeWrapper.find('.collection-download-display__state').prop('children')[0]).toEqual(
           'Please click the button to download these links'
         )
       })
@@ -136,15 +136,15 @@ describe('CollectionDownloadDisplay component', () => {
         })
 
         expect(enzymeWrapper.exists()).toBeTruthy()
-        expect(enzymeWrapper.find('pre.granule-links-list__list').text()).toContain('http://google.com')
-        expect(enzymeWrapper.find('pre.granule-links-list__list').text()).toContain('http://google.jp')
+        expect(enzymeWrapper.find('pre.collection-download-display__list').text()).toContain('http://google.com')
+        expect(enzymeWrapper.find('pre.collection-download-display__list').text()).toContain('http://google.jp')
         expect(enzymeWrapper.find('h4').at(0).text()).toBe(
           'How to use this script'
         )
         expect(enzymeWrapper.find('h4').at(1).text()).toBe(
           'Collection granule links have been retrieved'
         )
-        expect(enzymeWrapper.find('.granule-links-list__state').prop('children')[0]).toEqual(
+        expect(enzymeWrapper.find('.collection-download-display__state').prop('children')[0]).toEqual(
           'Please click the button to download the script'
         )
       })
@@ -196,11 +196,11 @@ describe('CollectionDownloadDisplay component', () => {
         })
 
         expect(enzymeWrapper.exists()).toBeTruthy()
-        expect(enzymeWrapper.find('ul.granule-links-list__list li').length).toBe(2)
+        expect(enzymeWrapper.find('ul.collection-download-display__list li').length).toBe(2)
         expect(enzymeWrapper.find('h4').text()).toBe(
           'Collection granule links have been retrieved'
         )
-        expect(enzymeWrapper.find('.granule-links-list__state').prop('children')[0]).toEqual(
+        expect(enzymeWrapper.find('.collection-download-display__state').prop('children')[0]).toEqual(
           'Please click the button to download these links'
         )
       })
@@ -267,15 +267,15 @@ describe('CollectionDownloadDisplay component', () => {
         })
 
         expect(enzymeWrapper.exists()).toBeTruthy()
-        expect(enzymeWrapper.find('pre.granule-links-list__list').text()).toContain('http://google.com')
-        expect(enzymeWrapper.find('pre.granule-links-list__list').text()).toContain('http://google.jp')
+        expect(enzymeWrapper.find('pre.collection-download-display__list').text()).toContain('http://google.com')
+        expect(enzymeWrapper.find('pre.collection-download-display__list').text()).toContain('http://google.jp')
         expect(enzymeWrapper.find('h4').at(0).text()).toBe(
           'How to use this script'
         )
         expect(enzymeWrapper.find('h4').at(1).text()).toBe(
           'Collection granule links have been retrieved'
         )
-        expect(enzymeWrapper.find('.granule-links-list__state').prop('children')[0]).toEqual(
+        expect(enzymeWrapper.find('.collection-download-display__state').prop('children')[0]).toEqual(
           'Please click the button to download the script'
         )
       })
