@@ -138,6 +138,10 @@ const submitLegacyServicesOrder = async (event, context) => {
     } catch (e) {
       console.log(e)
 
+      await dbConnection('retrieval_orders').update({
+        state: 'create_failed'
+      }).where({ id })
+
       // Re-throw the error to utilize the dead letter queue
       throw e
     }
