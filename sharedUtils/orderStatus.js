@@ -17,6 +17,7 @@ export const orderStates = {
     'not_validated',
     'complete_with_errors',
     'closed_with_exceptions',
+    'create_failed', // Custom EDSC status for orders that failed to create
     'not_found' // Custom EDSC status for orders that aren't found in the DB
   ],
   in_progress: [

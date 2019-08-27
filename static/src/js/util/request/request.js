@@ -83,9 +83,8 @@ export default class Request {
    * @param {Object} data - Response object from the request.
    * @return {Object} The transformed response.
    */
-  transformResponse(data) {
-    this.handleUnauthorized(data)
-
+  transformResponse(data, headers) {
+    this.handleUnauthorized(data, headers)
     return data
   }
 
@@ -152,13 +151,15 @@ export default class Request {
   /**
    * Handle an unauthorized response
    */
-  handleUnauthorized(data) {
+  handleUnauthorized(data, headers) {
     const cmrEnvironment = cmrEnv()
-
-    if (data.statusCode === 401) {
+    if (data.statusCode === 401 || headers.status === 401
+      || data.message === 'Unauthorized') {
+      // Determine the path to redirect to for logging in
       const returnPath = window.location.href
+      const redirectPath = `${getEnvironmentConfig().apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
 
-      window.location.href = `${getEnvironmentConfig().apiHost}/login?cmr_env=${cmrEnvironment}&state=${encodeURIComponent(returnPath)}`
+      window.location.href = redirectPath
     }
   }
 }
