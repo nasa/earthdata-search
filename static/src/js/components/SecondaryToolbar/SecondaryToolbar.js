@@ -114,6 +114,12 @@ class SecondaryToolbar extends Component {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item
+            className="secondary-toolbar__downloads"
+            href={`${portalPath(portal)}/downloads`}
+          >
+            Download Status &amp; History
+          </Dropdown.Item>
+          <Dropdown.Item
             className="secondary-toolbar__logout"
             onClick={this.handleLogout}
             href={`${portalPath(portal)}/`}
