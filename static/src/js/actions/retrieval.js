@@ -36,7 +36,6 @@ export const submitRetrieval = () => (dispatch, getState) => {
 /**
  * Fetch a retrieval from the database
  * @param {Integer} id Database ID of the retrieval to lookup
- * @param {String} authToken The authenticated users' JWT token
  */
 export const fetchRetrieval = id => (dispatch, getState) => {
   const { authToken } = getState()

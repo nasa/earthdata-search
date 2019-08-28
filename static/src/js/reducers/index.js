@@ -21,6 +21,7 @@ import uiReducer from './ui'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 import focusedGranuleReducer from './focusedGranule'
 import retrievalReducer from './retrieval'
+import retrievalHistoryReducer from './retrievalHistory'
 import portalsReducer from './portals'
 import projectPanelsReducer from './projectPanels'
 import projectReducer from './project'
@@ -46,6 +47,7 @@ export default history => combineReducers({
   projectPanels: projectPanelsReducer,
   query: queryReducer,
   retrieval: retrievalReducer,
+  retrievalHistory: retrievalHistoryReducer,
   router: connectRouter(history),
   searchResults: combineReducers({
     collections: collectionsResultsReducer,

@@ -84,6 +84,7 @@ import {
   updateAccessMethod
 } from './project'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
+import { fetchRetrievalHistory } from './retrievalHistory'
 import {
   fetchAccessMethods
 } from './accessMethods'
@@ -121,6 +122,7 @@ const actions = {
   fetchAccessMethods,
   fetchRetrievalCollection,
   fetchRetrieval,
+  fetchRetrievalHistory,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,

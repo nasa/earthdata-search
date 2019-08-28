@@ -13,7 +13,8 @@ import SecondaryToolbarContainer
   from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderStatusContainer'
 import CollectionContainer from '../../containers/CollectionContainer/CollectionContainer'
-import { PortalLinkContainer } from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import DownloadHistoryContainer from '../../containers/DownloadHistoryContainer/DownloadHistoryContainer'
 
 
 const mapStateToProps = state => ({
@@ -37,28 +38,38 @@ export const Downloads = ({
 
   return (
     <Switch>
-      <Route exact path={`${path}/:id`}>
+      <Route path={`${path}`}>
         <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
               <SecondaryToolbarContainer />
             </header>
-            <nav className="route-wrapper__content-nav">
-              <PortalLinkContainer
-                className="route-wrapper__content-nav-link"
-                to={{
-                  pathname: '/projects',
-                  search: source
-                }}
-                onClick={() => { onChangePath(`/projects/${source}`) }}
-              >
-                <i className="fa fa-arrow-circle-o-left" />
-                {' Back to Project'}
-              </PortalLinkContainer>
-            </nav>
-            <div className="route-wrapper__content-inner">
-              <OrderStatusContainer />
-            </div>
+
+            <Switch>
+              <Route exact path={`${path}`}>
+                <div className="route-wrapper__content-inner">
+                  <DownloadHistoryContainer />
+                </div>
+              </Route>
+              <Route exact path={`${path}/:id`}>
+                <nav className="route-wrapper__content-nav">
+                  <PortalLinkContainer
+                    className="route-wrapper__content-nav-link"
+                    to={{
+                      pathname: '/projects',
+                      search: source
+                    }}
+                    onClick={() => { onChangePath(`/projects/${source}`) }}
+                  >
+                    <i className="fa fa-arrow-circle-o-left" />
+                    {' Back to Project'}
+                  </PortalLinkContainer>
+                </nav>
+                <div className="route-wrapper__content-inner">
+                  <OrderStatusContainer />
+                </div>
+              </Route>
+            </Switch>
           </div>
         </div>
       </Route>

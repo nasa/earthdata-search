@@ -296,6 +296,15 @@
           path: retrievals/{retrieval_id}
           authorizer: edlAuthorizer
 
+  getRetrievals:
+    handler: serverless/src/getRetrievals/handler.default
+    events:
+      - http:
+          method: get
+          cors: true
+          path: retrievals
+          authorizer: edlAuthorizer
+
   getRetrievalCollection:
     handler: serverless/src/getRetrievalCollection/handler.default
     events:
