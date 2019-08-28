@@ -16,6 +16,10 @@ export default class RetrievalRequest extends Request {
     ]
   }
 
+  all() {
+    return this.get('/retrievals')
+  }
+
   fetch(id) {
     return this.get(`/retrievals/${id}`)
   }
