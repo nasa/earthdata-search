@@ -1,4 +1,4 @@
-import { UPDATE_MAP } from '../constants/actionTypes'
+import { UPDATE_MAP, RESTORE_FROM_URL } from '../constants/actionTypes'
 import projections from '../util/map/projections'
 
 const initialState = {
@@ -24,6 +24,14 @@ const mapReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload
+      }
+    }
+    case RESTORE_FROM_URL: {
+      const { map } = action.payload
+
+      return {
+        ...state,
+        ...map
       }
     }
     default:

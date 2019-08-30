@@ -4,7 +4,6 @@ import qs from 'qs'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
-import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
 
@@ -57,10 +56,7 @@ const GranuleResultsActions = ({
         onClick={() => onAddProjectCollection(collectionId)}
         to={{
           pathname: '/projects',
-          search: stringify({
-            ...params,
-            p
-          })
+          search: location.search
         }}
       >
         <Button

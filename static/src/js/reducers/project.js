@@ -1,10 +1,10 @@
 import {
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
-  RESTORE_PROJECT,
   SELECT_ACCESS_METHOD,
   UPDATE_ACCESS_METHOD,
-  ADD_ACCESS_METHODS
+  ADD_ACCESS_METHODS,
+  RESTORE_FROM_URL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -48,12 +48,12 @@ const projectReducer = (state = initialState, action) => {
         ]
       }
     }
-    case RESTORE_PROJECT: {
-      const { byId, collectionIds } = action.payload
+    case RESTORE_FROM_URL: {
+      const { project } = action.payload
 
       return {
-        byId,
-        collectionIds
+        ...state,
+        ...project
       }
     }
     case SELECT_ACCESS_METHOD: {

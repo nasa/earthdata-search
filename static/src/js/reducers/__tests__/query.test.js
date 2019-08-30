@@ -1,5 +1,5 @@
 import queryReducer from '../query'
-import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../../constants/actionTypes'
+import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
@@ -126,5 +126,25 @@ describe('UPDATE_GRANULE_QUERY', () => {
     }
 
     expect(queryReducer(initialState, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESTORE_FROM_URL', () => {
+  test('returns the correct state', () => {
+    const query = {
+      collection: { pageNum: 1 },
+      granule: { pageNum: 1 }
+    }
+
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        query
+      }
+    }
+
+    const expectedState = query
+
+    expect(queryReducer(undefined, action)).toEqual(expectedState)
   })
 })

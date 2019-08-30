@@ -2,13 +2,13 @@ import {
   COPY_GRANULE_RESULTS_TO_COLLECTION,
   CLEAR_COLLECTION_GRANULES,
   EXCLUDE_GRANULE_ID,
-  RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
   CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
   UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY,
-  UPDATE_COLLECTION_GRANULE_FILTERS
+  UPDATE_COLLECTION_GRANULE_FILTERS,
+  RESTORE_FROM_URL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -107,10 +107,12 @@ const collectionMetadataReducer = (state = initialState, action) => {
         }
       }
     }
-    case RESTORE_COLLECTIONS: {
+    case RESTORE_FROM_URL: {
+      const { collections } = action.payload
+
       return {
         ...state,
-        ...action.payload
+        ...collections
       }
     }
     case EXCLUDE_GRANULE_ID: {

@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Waypoint } from 'react-waypoint'
-import qs from 'qs'
 import { Dropdown } from 'react-bootstrap'
 
 import murmurhash3 from '../../util/murmurhash3'
@@ -196,14 +195,7 @@ const GranuleResultsItem = ({
                 onClick={() => handleClickGranuleDetails(id)}
                 to={{
                   pathname: '/search/granules/granule-details',
-                  search: qs
-                    .stringify(
-                      Object.assign(
-                        {},
-                        qs.parse(location.search),
-                        { g: id }
-                      )
-                    )
+                  search: location.search
                 }}
               >
                 <i className="fa fa-info-circle" />

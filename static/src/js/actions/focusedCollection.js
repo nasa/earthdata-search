@@ -162,15 +162,25 @@ export const changeFocusedCollection = collectionId => (dispatch) => {
 export const viewCollectionGranules = collectionId => (dispatch, getState) => {
   dispatch(changeFocusedCollection(collectionId))
 
+  const { router } = getState()
+  const { location } = router
+  const { search } = location
+
   dispatch(actions.changeUrl({
-    pathname: `${portalPathFromState(getState())}/search/granules`
+    pathname: `${portalPathFromState(getState())}/search/granules`,
+    search
   }))
 }
 
 export const viewCollectionDetails = collectionId => (dispatch, getState) => {
   dispatch(changeFocusedCollection(collectionId))
 
+  const { router } = getState()
+  const { location } = router
+  const { search } = location
+
   dispatch(actions.changeUrl({
-    pathname: `${portalPathFromState(getState())}/search/granules/collection-details`
+    pathname: `${portalPathFromState(getState())}/search/granules/collection-details`,
+    search
   }))
 }

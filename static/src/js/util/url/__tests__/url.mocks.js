@@ -19,6 +19,7 @@ export const emptyDecodedResult = {
   project: undefined,
   query: {
     collection: {
+      pageNum: 1,
       gridName: undefined,
       keyword: undefined,
       overrideTemporal: {},
@@ -31,6 +32,7 @@ export const emptyDecodedResult = {
       hasGranulesOrCwic: true
     },
     granule: {
+      pageNum: 1,
       gridCoords: undefined
     }
   },

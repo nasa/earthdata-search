@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import ProjectHeader from '../ProjectHeader'
@@ -25,10 +25,14 @@ function setup(overrideProps) {
     project: {
       collectionIds: ['collectionId1']
     },
+    savedProject: {
+      name: 'test project'
+    },
+    onUpdateProjectName: jest.fn(),
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<ProjectHeader {...props} />)
+  const enzymeWrapper = mount(<ProjectHeader {...props} />)
 
   return {
     enzymeWrapper,
@@ -40,7 +44,7 @@ describe('ProjectHeader component', () => {
   test('renders its title correctly', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('header').length).toBe(1)
-    expect(enzymeWrapper.find('.project-header__title').text()).toEqual('Lorem Ipsum')
+    expect(enzymeWrapper.find('.project-header__title').find('input').props().value).toEqual('test project')
   })
 
   describe('with one collection', () => {
@@ -169,6 +173,58 @@ describe('ProjectHeader component', () => {
 
     test('renders granule count correctly', () => {
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
+    })
+  })
+
+  describe('editing project name', () => {
+    test('when the state is editing the submit button is visible', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setState({ isEditingName: true })
+
+      expect(enzymeWrapper.find('.project-name__submit-button').length).toBe(1)
+      expect(enzymeWrapper.find('.project-name__edit-button').length).toBe(0)
+    })
+
+    test('when the state is not editing the edit button is visible', () => {
+      const { enzymeWrapper } = setup()
+
+      enzymeWrapper.setState({ isEditingName: false })
+
+      expect(enzymeWrapper.find('.project-name__submit-button').length).toBe(0)
+      expect(enzymeWrapper.find('.project-name__edit-button').length).toBe(1)
+    })
+
+    test('focusing the text field sets the state to editing', () => {
+      const { enzymeWrapper } = setup()
+
+      const input = enzymeWrapper.find('input')
+      input.simulate('focus')
+
+      expect(enzymeWrapper.state().isEditingName).toBeTruthy()
+    })
+
+    test('clicking the edit button sets the state to editing', () => {
+      const { enzymeWrapper } = setup()
+
+      const editButton = enzymeWrapper.find('.project-name__edit-button')
+      editButton.simulate('click')
+
+      expect(enzymeWrapper.state().isEditingName).toBeTruthy()
+    })
+
+    test('clicking the submit button calls onUpdateProjectName', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const editButton = enzymeWrapper.find('.project-name__edit-button')
+      editButton.simulate('click')
+
+      const submitButton = enzymeWrapper.find('.project-name__submit-button')
+      submitButton.simulate('click')
+
+      expect(enzymeWrapper.state().isEditingName).toBeFalsy()
+      expect(props.onUpdateProjectName).toBeCalledTimes(1)
+      expect(props.onUpdateProjectName).toBeCalledWith('test project')
     })
   })
 })

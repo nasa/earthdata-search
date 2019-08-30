@@ -12,52 +12,61 @@ const mapDispatchToProps = dispatch => ({
   onToggleCollectionVisibility:
     collectionId => dispatch(actions.toggleCollectionVisibility(collectionId)),
   onSetActivePanel:
-    panelId => dispatch(setActivePanel(panelId))
+    panelId => dispatch(setActivePanel(panelId)),
+  onUpdateProjectName:
+    name => dispatch(actions.updateProjectName(name))
 })
 
 const mapStateToProps = state => ({
   collections: state.metadata.collections,
+  collectionSearch: state.query.collection,
   collectionsSearchResults: state.searchResults.collections,
   project: state.project,
   projectPanels: state.projectPanels,
-  collectionSearch: state.query.collection
+  savedProject: state.savedProject
 })
 
 export const ProjectCollectionsContainer = (props) => {
   const {
     collections,
+    collectionSearch,
     collectionsSearchResults,
+    project,
+    projectPanels,
+    savedProject,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
-    project,
-    projectPanels,
-    collectionSearch
+    onUpdateProjectName
   } = props
 
   return (
     <ProjectCollections
       collections={collections}
+      collectionSearch={collectionSearch}
       collectionsSearchResults={collectionsSearchResults}
+      project={project}
+      projectPanels={projectPanels}
+      savedProject={savedProject}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onToggleCollectionVisibility={onToggleCollectionVisibility}
       onSetActivePanel={onSetActivePanel}
-      project={project}
-      projectPanels={projectPanels}
-      collectionSearch={collectionSearch}
+      onUpdateProjectName={onUpdateProjectName}
     />
   )
 }
 
 ProjectCollectionsContainer.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   collectionsSearchResults: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  projectPanels: PropTypes.shape({}).isRequired,
+  savedProject: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired
+  onUpdateProjectName: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCollectionsContainer)

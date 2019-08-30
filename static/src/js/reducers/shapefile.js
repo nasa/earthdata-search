@@ -1,4 +1,4 @@
-import { UPDATE_SHAPEFILE, ERRORED_SHAPEFILE } from '../constants/actionTypes'
+import { UPDATE_SHAPEFILE, ERRORED_SHAPEFILE, RESTORE_FROM_URL } from '../constants/actionTypes'
 
 const initialState = {
   shapefileError: false,
@@ -23,6 +23,14 @@ const shapefileReducer = (state = initialState, action) => {
         shapefileError: {
           type
         }
+      }
+    }
+    case RESTORE_FROM_URL: {
+      const { shapefile } = action.payload
+
+      return {
+        ...state,
+        ...shapefile
       }
     }
     default:

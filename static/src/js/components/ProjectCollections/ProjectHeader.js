@@ -7,6 +7,7 @@ import abbreviate from 'number-abbreviate'
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+// import Button from '../Button/Button'
 
 import './ProjectHeader.scss'
 
@@ -14,15 +15,80 @@ import './ProjectHeader.scss'
  * Renders ProjectHeader.
  * @param {object} props - The props passed into the component.
  * @param {object} props.collections - Collections passed from redux store.
+ * @param {object} props.project - Project collections passed from redux store.
+ * @param {object} props.savedProject - Saved Project information (name) passed from redux store
+ * @param {function} props.onUpdateProjectName - Function to updated the saved project name
  */
 
 export class ProjectHeader extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.component = this
+
+    const { savedProject } = props
+    const { name = '' } = savedProject
+
+    this.state = {
+      isEditingName: false,
+      projectName: name
+    }
+
+    this.textInput = React.createRef()
+
+    this.onInputChange = this.onInputChange.bind(this)
+    this.handleNameSubmit = this.handleNameSubmit.bind(this)
+    this.handleEditClick = this.handleEditClick.bind(this)
+    this.handleKeypress = this.handleKeypress.bind(this)
+    this.handleOnFocus = this.handleOnFocus.bind(this)
+    this.focusTextField = this.focusTextField.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { savedProject } = this.props
+    const { name = '' } = savedProject
+
+    const { savedProject: nextSavedProject } = nextProps
+    const { name: nextName } = nextSavedProject
+    if (name !== nextName) {
+      this.setState({ projectName: nextName })
+    }
+  }
+
+  onInputChange(event) {
+    this.setState({ projectName: event.target.value })
+  }
+
+  handleNameSubmit() {
+    const { onUpdateProjectName } = this.props
+    const { projectName } = this.state
+
+    this.setState({ isEditingName: false })
+    onUpdateProjectName(projectName)
+  }
+
+  handleKeypress(event) {
+    if (event.key === 'Enter') {
+      this.handleNameSubmit()
+      event.stopPropagation()
+      event.preventDefault()
+    }
+  }
+
+  handleEditClick() {
+    this.setState({ isEditingName: true })
+    this.focusTextField()
+  }
+
+  handleOnFocus() {
+    this.setState({ isEditingName: true })
+  }
+
+  focusTextField() {
+    this.textInput.current.focus()
   }
 
   render() {
+    const { isEditingName, projectName } = this.state
     const { collections, project } = this.props
     const { byId } = collections
     const { collectionIds: projectIds } = project
@@ -49,7 +115,55 @@ export class ProjectHeader extends Component {
 
     return (
       <header className="project-header">
-        <h2 className="project-header__title">Lorem Ipsum</h2>
+        <h2 className="project-header__title">
+          <input
+            name="projectName"
+            placeholder="Untitled Project"
+            value={projectName}
+            onFocus={this.handleOnFocus}
+            onChange={this.onInputChange}
+            onKeyPress={this.handleKeypress}
+            ref={this.textInput}
+          />
+          {
+            isEditingName && (
+              <button
+                type="button"
+                className="project-name__submit-button"
+                label="Submit project name"
+                onClick={this.handleNameSubmit}
+              >
+                <i className="fa fa-check" />
+              </button>
+              // <Button
+              //   className="project-name__submit-button"
+              //   label="Submit project name"
+              //   onClick={this.handleNameSubmit}
+              // >
+              //   <i className="fa fa-check" />
+              // </Button>
+            )
+          }
+          {
+            !isEditingName && (
+              <button
+                type="button"
+                className="project-name__edit-button"
+                label="Edit project name"
+                onClick={this.handleEditClick}
+              >
+                <i className="fa fa-pencil" />
+              </button>
+              // <Button
+              //   className="project-name__edit-button"
+              //   label="Edit project name"
+              //   onClick={this.handleEditClick}
+              // >
+              //   <i className="fa fa-pencil" />
+              // </Button>
+            )
+          }
+        </h2>
         <ul className="project-header__stats-list">
           {!Number.isNaN(totalGranules) && (
             <>
@@ -104,7 +218,9 @@ export class ProjectHeader extends Component {
 
 ProjectHeader.propTypes = {
   collections: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired
+  project: PropTypes.shape({}).isRequired,
+  savedProject: PropTypes.shape({}).isRequired,
+  onUpdateProjectName: PropTypes.func.isRequired
 }
 
 export default ProjectHeader

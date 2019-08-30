@@ -55,7 +55,7 @@ Resources:
             - OptionDefinitionDeadLetterQueue
             - Arn
         maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
-    
+
   OrderStatusQueue:
     Type: 'AWS::SQS::Queue'
     Properties:

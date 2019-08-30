@@ -1,5 +1,5 @@
 import focusedGranuleReducer from '../focusedGranule'
-import { UPDATE_FOCUSED_GRANULE } from '../../constants/actionTypes'
+import { UPDATE_FOCUSED_GRANULE, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
@@ -20,6 +20,21 @@ describe('UPDATE_FOCUSED_GRANULE', () => {
     }
 
     const expectedState = payload
+
+    expect(focusedGranuleReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESTORE_FROM_URL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        focusedGranule: ''
+      }
+    }
+
+    const expectedState = ''
 
     expect(focusedGranuleReducer(undefined, action)).toEqual(expectedState)
   })

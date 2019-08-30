@@ -3,7 +3,8 @@ import {
   UPDATE_SELECTED_FEATURE_FACET,
   UPDATE_SELECTED_CMR_FACET,
   UPDATE_SELECTED_VIEW_ALL_FACET,
-  COPY_CMR_FACETS_TO_VIEW_ALL
+  COPY_CMR_FACETS_TO_VIEW_ALL,
+  RESTORE_FROM_URL
 } from '../constants/actionTypes'
 
 const initialCmrState = {}
@@ -24,6 +25,14 @@ export const cmrFacetsReducer = (state = initialCmrState, action) => {
         ...action.payload
       }
     }
+    case RESTORE_FROM_URL: {
+      const { cmrFacets } = action.payload
+
+      return {
+        ...state,
+        ...cmrFacets
+      }
+    }
     default:
       return state
   }
@@ -35,6 +44,14 @@ export const featureFacetsReducer = (state = initialFeatureState, action) => {
       return {
         ...state,
         ...action.payload
+      }
+    }
+    case RESTORE_FROM_URL: {
+      const { featureFacets } = action.payload
+
+      return {
+        ...state,
+        ...featureFacets
       }
     }
     default:
