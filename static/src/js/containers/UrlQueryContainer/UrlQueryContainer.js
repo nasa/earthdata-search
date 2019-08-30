@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+
 import actions from '../../actions/index'
 import { encodeUrlQuery } from '../../util/url/url'
 
@@ -41,7 +42,15 @@ const mapStateToProps = state => ({
   timeline: state.timeline
 })
 
-export class UrlQueryContainer extends Component {
+export class UrlQueryContainer extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      currentPath: ''
+    }
+  }
+
   componentDidMount() {
     const {
       onChangePath,
@@ -54,15 +63,20 @@ export class UrlQueryContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const { search: nextSearch } = nextProps
     const { onChangeUrl, search } = this.props
+    const { currentPath } = this.state
 
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
     // if the previous search and next search are the same
     if (search === nextSearch) {
       const nextPath = encodeUrlQuery(nextProps)
-
-      if (nextPath !== '') {
-        onChangeUrl(nextPath)
+      if (currentPath !== nextPath) {
+        this.setState({
+          currentPath: nextPath
+        })
+        if (nextPath !== '') {
+          onChangeUrl(nextPath)
+        }
       }
     }
   }
@@ -85,7 +99,8 @@ UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
-  search: PropTypes.string
+  search: PropTypes.string,
+  project: PropTypes.shape({}).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)

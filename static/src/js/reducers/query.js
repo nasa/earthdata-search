@@ -1,4 +1,4 @@
-import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../constants/actionTypes'
+import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY, RESTORE_FROM_URL } from '../constants/actionTypes'
 
 const initialState = {
   collection: {
@@ -32,6 +32,14 @@ const queryReducer = (state = initialState, action) => {
           ...state.granule,
           ...action.payload
         }
+      }
+    }
+    case RESTORE_FROM_URL: {
+      const { query } = action.payload
+
+      return {
+        ...state,
+        ...query
       }
     }
     default:

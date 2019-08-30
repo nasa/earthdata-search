@@ -3,9 +3,9 @@ import {
   ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
   REMOVE_COLLECTION_FROM_PROJECT,
-  RESTORE_PROJECT,
   SELECT_ACCESS_METHOD,
-  UPDATE_ACCESS_METHOD
+  UPDATE_ACCESS_METHOD,
+  RESTORE_FROM_URL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -91,17 +91,19 @@ describe('REMOVE_COLLECTION_FROM_PROJECT', () => {
   })
 })
 
-describe('RESTORE_PROJECT', () => {
+describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const collectionIds = ['collectionId']
 
     const action = {
-      type: RESTORE_PROJECT,
+      type: RESTORE_FROM_URL,
       payload: {
-        byId: {
-          collectionId: {}
-        },
-        collectionIds
+        project: {
+          byId: {
+            collectionId: {}
+          },
+          collectionIds
+        }
       }
     }
 

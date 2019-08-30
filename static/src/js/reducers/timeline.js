@@ -1,6 +1,7 @@
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY
+  UPDATE_TIMELINE_QUERY,
+  RESTORE_FROM_URL
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -39,6 +40,14 @@ const timelineReducer = (state = initialState, action) => {
           ...oldQuery,
           ...payload
         }
+      }
+    }
+    case RESTORE_FROM_URL: {
+      const { timeline = initialState } = action.payload
+
+      return {
+        ...state,
+        ...timeline
       }
     }
     default:

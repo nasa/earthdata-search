@@ -94,70 +94,68 @@ describe('saveShapefile', () => {
   })
 
   describe('as an authticated user', () => {
-    describe('as an unauthticated user', () => {
-      test('saves the shapefile into the database', async () => {
-        dbTracker.on('query', (query, step) => {
-          if (step === 1) {
-            query.response({
-              id: 1
-            })
-          } else if (step === 2) {
-            query.response(undefined)
-          } else {
-            query.response([{
-              id: 123
-            }])
-          }
-        })
-
-        const event = {
-          body: JSON.stringify({
-            params: {
-              auth_token: 'mock token',
-              file: {},
-              filename: 'test_file.geojson'
-            }
+    test('saves the shapefile into the database', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response({
+            id: 1
           })
+        } else if (step === 2) {
+          query.response(undefined)
+        } else {
+          query.response([{
+            id: 123
+          }])
         }
-
-        const result = await saveShapefile(event)
-
-        const expectedBody = JSON.stringify({ shapefile_id: 123 })
-
-        expect(result.body).toEqual(expectedBody)
       })
 
-      test('returns an existing shapefile if it has already been uploaded', async () => {
-        dbTracker.on('query', (query, step) => {
-          if (step === 1) {
-            query.response({
-              id: 1
-            })
-          } else if (step === 2) {
-            query.response({
-              id: 12
-            })
-          } else {
-            query.response([])
+      const event = {
+        body: JSON.stringify({
+          params: {
+            auth_token: 'mock token',
+            file: {},
+            filename: 'test_file.geojson'
           }
         })
+      }
 
-        const event = {
-          body: JSON.stringify({
-            params: {
-              auth_token: 'mock token',
-              file: {},
-              filename: 'test_file.geojson'
-            }
+      const result = await saveShapefile(event)
+
+      const expectedBody = JSON.stringify({ shapefile_id: 123 })
+
+      expect(result.body).toEqual(expectedBody)
+    })
+
+    test('returns an existing shapefile if it has already been uploaded', async () => {
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response({
+            id: 1
           })
+        } else if (step === 2) {
+          query.response({
+            id: 12
+          })
+        } else {
+          query.response([])
         }
-
-        const result = await saveShapefile(event)
-
-        const expectedBody = JSON.stringify({ shapefile_id: 12 })
-
-        expect(result.body).toEqual(expectedBody)
       })
+
+      const event = {
+        body: JSON.stringify({
+          params: {
+            auth_token: 'mock token',
+            file: {},
+            filename: 'test_file.geojson'
+          }
+        })
+      }
+
+      const result = await saveShapefile(event)
+
+      const expectedBody = JSON.stringify({ shapefile_id: 12 })
+
+      expect(result.body).toEqual(expectedBody)
     })
   })
 })

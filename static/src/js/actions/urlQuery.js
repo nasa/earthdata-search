@@ -1,25 +1,29 @@
 import { replace, push } from 'connected-react-router'
+import { parse } from 'qs'
 
 import { decodeUrlParams } from '../util/url/url'
 import actions from './index'
+import ProjectRequest from '../util/request/projectRequest'
+import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
-export const changePath = (path = '') => (dispatch) => {
-  const queryString = path.split('?')[1]
+const restoreFromUrl = payload => ({
+  type: RESTORE_FROM_URL,
+  payload
+})
 
-  const {
-    changeFocusedCollection,
-    changeFocusedGranule,
-    changeMap,
-    changeQuery,
-    changeTimelineQuery,
-    restoreCollections,
-    restoreProject,
-    updateCmrFacet,
-    updateFeatureFacet,
-    updateShapefile
-  } = actions
-
-  const {
+export const updateStore = ({
+  collections,
+  cmrFacets,
+  featureFacets,
+  focusedCollection,
+  focusedGranule,
+  map,
+  project,
+  query,
+  shapefile,
+  timeline
+}) => (dispatch) => {
+  dispatch(restoreFromUrl({
     collections,
     cmrFacets,
     featureFacets,
@@ -30,46 +34,55 @@ export const changePath = (path = '') => (dispatch) => {
     query,
     shapefile,
     timeline
-  } = decodeUrlParams(queryString)
+  }))
 
-  if (map) {
-    dispatch(changeMap(map))
+  dispatch(actions.getCollections())
+  dispatch(actions.getProjectCollections())
+  dispatch(actions.getGranules())
+  dispatch(actions.getTimeline())
+}
+
+export const changePath = (path = '') => (dispatch) => {
+  const queryString = path.split('?')[1]
+
+  // if query string is a projectId, call getProject
+  if (queryString && queryString.indexOf('projectId=') === 0) {
+    const requestObject = new ProjectRequest()
+
+    const { projectId } = parse(queryString)
+
+    const projectResponse = requestObject.get(projectId)
+      .then((response) => {
+        const { data } = response
+        const {
+          name,
+          path: projectPath
+        } = data
+        const projectQueryString = projectPath.split('?')[1]
+        // save name and path into store, and projectId?
+        dispatch(actions.updateSavedProject({
+          path: projectPath,
+          name,
+          projectId
+        }))
+        dispatch(actions.updateStore(decodeUrlParams(projectQueryString)))
+      })
+
+    return projectResponse
   }
 
-  if (shapefile) {
-    dispatch(updateShapefile(shapefile))
-  }
+  dispatch(actions.updateStore(decodeUrlParams(queryString)))
+  return null
+}
 
-  if (focusedGranule) {
-    dispatch(changeFocusedGranule(focusedGranule))
-  }
 
-  if (timeline) {
-    dispatch(changeTimelineQuery(timeline))
-  }
-
-  if (featureFacets) {
-    dispatch(updateFeatureFacet(featureFacets))
-  }
-
-  if (cmrFacets) {
-    dispatch(updateCmrFacet(cmrFacets))
-  }
-
-  if (Object.keys(query).length > 0) {
-    dispatch(changeQuery({ ...query }))
-  }
-
-  if (project) {
-    dispatch(restoreProject(project))
-  }
-
-  if (collections) {
-    dispatch(restoreCollections(collections))
-  }
-
-  if (focusedCollection) {
-    dispatch(changeFocusedCollection(focusedCollection))
+const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
+  // Only replace if the pathname stays the same as the current pathname.
+  // Push if the pathname is different
+  if (oldPathname === newPathname) {
+    dispatch(replace(options))
+  } else {
+    dispatch(push(options))
   }
 }
 
@@ -87,22 +100,67 @@ export const changePath = (path = '') => (dispatch) => {
  * changeUrl({ pathname: '/a-new-url' })
  */
 export const changeUrl = options => (dispatch, getState) => {
-  const { router } = getState()
+  const {
+    authToken,
+    router,
+    savedProject
+  } = getState()
+
+  let newOptions = options
   const { location } = router
   const { pathname: oldPathname } = location
 
   let newPathname
   if (typeof options === 'string') {
     [newPathname] = options.split('?')
+
+    const { projectId, name, path } = savedProject
+    if (projectId || options.length > 2000) {
+      if (path !== newOptions) {
+        const requestObject = new ProjectRequest()
+
+        const projectResponse = requestObject.save({
+          authToken,
+          name,
+          path: newOptions,
+          projectId
+        })
+          .then((response) => {
+            const { data } = response
+            const {
+              project_id: newProjectId,
+              path: projectPath
+            } = data
+
+            newOptions = `${projectPath.split('?')[0]}?projectId=${newProjectId}`
+
+            if (projectId !== newProjectId) {
+              dispatch(replace(newOptions))
+            }
+
+            dispatch(actions.updateSavedProject({
+              path: projectPath,
+              name,
+              projectId: newProjectId
+            }))
+          })
+        return projectResponse
+      }
+    } else {
+      dispatch(updateUrl({
+        options: newOptions,
+        oldPathname,
+        newPathname
+      }))
+    }
   } else {
     ({ pathname: newPathname } = options)
-  }
 
-  // Only replace if the pathname stays the same as the current pathname.
-  // Push if the pathname is different
-  if (oldPathname === newPathname) {
-    dispatch(replace(options))
-  } else {
-    dispatch(push(options))
+    dispatch(updateUrl({
+      options: newOptions,
+      oldPathname,
+      newPathname
+    }))
   }
+  return null
 }

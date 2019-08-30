@@ -87,8 +87,8 @@ export const decodeUrlParams = (paramString) => {
   spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
   spatial.polygon = decodeHelp(params, 'polygonSearch')
 
-  const collectionQuery = {}
-  const granuleQuery = {}
+  const collectionQuery = { pageNum: 1 }
+  const granuleQuery = { pageNum: 1 }
   collectionQuery.spatial = spatial
   collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')

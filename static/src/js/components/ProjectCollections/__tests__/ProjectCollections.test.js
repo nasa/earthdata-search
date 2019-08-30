@@ -51,7 +51,12 @@ function setup() {
       activePanel: '0.0.0',
       isOpen: false
     },
-    collectionSearch: {}
+    collectionSearch: {},
+    savedProject: {
+      projectId: 1,
+      name: 'test name'
+    },
+    onUpdateProjectName: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollections {...props} />)
@@ -89,7 +94,10 @@ describe('ProjectCollectionsList component', () => {
       },
       collectionIds: ['collectionId1', 'collectionId2']
     })
-    expect(enzymeWrapper.find(ProjectHeader).props().loading).toEqual(false)
+    expect(enzymeWrapper.find(ProjectHeader).props().savedProject).toEqual({
+      projectId: 1,
+      name: 'test name'
+    })
 
     expect(enzymeWrapper.find(ProjectCollectionsList).length).toBe(1)
     expect(enzymeWrapper.find(ProjectCollectionsList).props().collections).toEqual({

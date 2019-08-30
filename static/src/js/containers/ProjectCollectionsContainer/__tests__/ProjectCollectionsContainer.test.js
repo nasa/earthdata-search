@@ -36,7 +36,9 @@ function setup() {
       activePanel: '0.0.0',
       isOpen: false
     },
-    collectionSearch: {}
+    collectionSearch: {},
+    savedProject: {},
+    onUpdateProjectName: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollectionsContainer {...props} />)

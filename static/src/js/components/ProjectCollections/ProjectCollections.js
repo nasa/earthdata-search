@@ -18,13 +18,15 @@ import './ProjectCollections.scss'
 const ProjectCollections = (props) => {
   const {
     collections,
+    collectionSearch,
     collectionsSearchResults,
+    project,
+    projectPanels,
+    savedProject,
     onRemoveCollectionFromProject,
     onToggleCollectionVisibility,
     onSetActivePanel,
-    project,
-    projectPanels,
-    collectionSearch
+    onUpdateProjectName
   } = props
 
   const collectionsLoading = collectionsSearchResults.isLoading
@@ -35,8 +37,9 @@ const ProjectCollections = (props) => {
     <section className="project-collections">
       <ProjectHeader
         collections={collections}
-        loading={collectionsLoading}
         project={project}
+        savedProject={savedProject}
+        onUpdateProjectName={onUpdateProjectName}
       />
       <ProjectCollectionsList
         collections={collections}
@@ -82,13 +85,15 @@ const ProjectCollections = (props) => {
 
 ProjectCollections.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  collectionSearch: PropTypes.shape({}).isRequired,
   collectionsSearchResults: PropTypes.shape({}).isRequired,
+  project: PropTypes.shape({}).isRequired,
+  projectPanels: PropTypes.shape({}).isRequired,
+  savedProject: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onToggleCollectionVisibility: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired,
-  projectPanels: PropTypes.shape({}).isRequired,
-  collectionSearch: PropTypes.shape({}).isRequired
+  onUpdateProjectName: PropTypes.func.isRequired
 }
 
 export default ProjectCollections

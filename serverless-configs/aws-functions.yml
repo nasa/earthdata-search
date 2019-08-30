@@ -204,6 +204,26 @@
           cors: true
           path: shapefiles
 
+  saveProject:
+    handler: serverless/src/saveProject/handler.default
+    warmup:
+      concurrency: 3
+    events:
+      - http:
+          method: post
+          cors: true
+          path: save_project
+
+  getProject:
+    handler: serverless/src/getProject/handler.default
+    warmup:
+      concurrency: 3
+    events:
+      - http:
+          method: get
+          cors: true
+          path: get_project
+
   edlLogin:
     handler: serverless/src/edlLogin/handler.default
     warmup:

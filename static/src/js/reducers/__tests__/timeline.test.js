@@ -1,7 +1,8 @@
 import timelineReducer from '../timeline'
 import {
   UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY
+  UPDATE_TIMELINE_QUERY,
+  RESTORE_FROM_URL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -69,6 +70,26 @@ describe('UPDATE_TIMELINE_QUERY', () => {
       ...initialState,
       query: { interval }
     }
+
+    expect(timelineReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESTORE_FROM_URL', () => {
+  test('returns the correct state', () => {
+    const timeline = {
+      intervals: {},
+      query: {}
+    }
+
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        timeline
+      }
+    }
+
+    const expectedState = timeline
 
     expect(timelineReducer(undefined, action)).toEqual(expectedState)
   })

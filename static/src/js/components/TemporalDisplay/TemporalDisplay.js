@@ -15,6 +15,7 @@ class TemporalDisplay extends PureComponent {
       endDate: '',
       startDate: ''
     }
+    this.onTimelineRemove = this.onTimelineRemove.bind(this)
   }
 
   componentDidMount() {
@@ -43,8 +44,6 @@ class TemporalDisplay extends PureComponent {
         startDate
       })
     }
-
-    this.onTimelineRemove = this.onTimelineRemove.bind(this)
   }
 
   onTimelineRemove() {

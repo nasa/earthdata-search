@@ -40,7 +40,11 @@ import {
   updateGranuleQuery
 } from './search'
 import { changeMap } from './map'
-import { changeUrl, changePath } from './urlQuery'
+import {
+  changeUrl,
+  changePath,
+  updateStore
+} from './urlQuery'
 import {
   changeCmrFacet,
   updateCmrFacet,
@@ -98,6 +102,7 @@ import {
 import { fetchRetrievalCollection } from './retrievalCollection'
 import { loadPortalConfig } from './portals'
 import { fetchDataQualitySummaries } from './dataQualitySummaries'
+import { updateProjectName, updateSavedProject } from './savedProject'
 
 const actions = {
   addAccessMethods,
@@ -170,7 +175,10 @@ const actions = {
   updateGranuleMetadata,
   updateGranuleQuery,
   updateGranuleResults,
+  updateProjectName,
+  updateSavedProject,
   updateShapefile,
+  updateStore,
   viewCollectionDetails,
   viewCollectionGranules
 }

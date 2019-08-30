@@ -1,5 +1,5 @@
 import focusedCollectionReducer from '../focusedCollection'
-import { UPDATE_FOCUSED_COLLECTION } from '../../constants/actionTypes'
+import { UPDATE_FOCUSED_COLLECTION, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
@@ -20,6 +20,21 @@ describe('UPDATE_FOCUSED_COLLECTION', () => {
     }
 
     const expectedState = payload
+
+    expect(focusedCollectionReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESTORE_FROM_URL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        focusedCollection: ''
+      }
+    }
+
+    const expectedState = ''
 
     expect(focusedCollectionReducer(undefined, action)).toEqual(expectedState)
   })

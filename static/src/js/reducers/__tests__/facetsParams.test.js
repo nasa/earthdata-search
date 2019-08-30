@@ -9,7 +9,8 @@ import {
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   UPDATE_SELECTED_CMR_FACET,
   UPDATE_SELECTED_FEATURE_FACET,
-  UPDATE_SELECTED_VIEW_ALL_FACET
+  UPDATE_SELECTED_VIEW_ALL_FACET,
+  RESTORE_FROM_URL
 } from '../../constants/actionTypes'
 
 describe('cmrFacetsReducer', () => {
@@ -39,6 +40,27 @@ describe('cmrFacetsReducer', () => {
           topic: 'Argriculture'
         }]
       }
+
+      expect(cmrFacetsReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('RESTORE_FROM_URL', () => {
+    test('returns the correct state', () => {
+      const cmrFacets = {
+        science_keywords_h: [{
+          topic: 'Argriculture'
+        }]
+      }
+
+      const action = {
+        type: RESTORE_FROM_URL,
+        payload: {
+          cmrFacets
+        }
+      }
+
+      const expectedState = cmrFacets
 
       expect(cmrFacetsReducer(undefined, action)).toEqual(expectedState)
     })
@@ -73,6 +95,27 @@ describe('featureFacetsReducer', () => {
         ...initialState,
         mapImagery: true
       }
+
+      expect(featureFacetsReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('RESTORE_FROM_URL', () => {
+    test('returns the correct state', () => {
+      const featureFacets = {
+        mapImagery: false,
+        nearRealTime: false,
+        customizable: false
+      }
+
+      const action = {
+        type: RESTORE_FROM_URL,
+        payload: {
+          featureFacets
+        }
+      }
+
+      const expectedState = featureFacets
 
       expect(featureFacetsReducer(undefined, action)).toEqual(expectedState)
     })

@@ -4,11 +4,11 @@ import {
   CLEAR_COLLECTION_GRANULES,
   CLEAR_EXCLUDE_GRANULE_ID,
   EXCLUDE_GRANULE_ID,
-  RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
   UPDATE_PROJECT_GRANULES,
-  TOGGLE_COLLECTION_VISIBILITY
+  TOGGLE_COLLECTION_VISIBILITY,
+  RESTORE_FROM_URL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -175,7 +175,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
   })
 })
 
-describe('RESTORE_COLLECTIONS', () => {
+describe('RESTORE_FROM_URL', () => {
   test('return the correct state', () => {
     const payload = {
       allIds: ['collectionId'],
@@ -188,8 +188,8 @@ describe('RESTORE_COLLECTIONS', () => {
       }
     }
     const action = {
-      type: RESTORE_COLLECTIONS,
-      payload
+      type: RESTORE_FROM_URL,
+      payload: { collections: payload }
     }
 
     const expectedState = {
