@@ -165,6 +165,8 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
         const { is_cwic: isCwic = false } = metadata
 
+        dispatch(actions.fetchDataQualitySummaries(id))
+
         payload.push({
           [id]: {
             metadata,

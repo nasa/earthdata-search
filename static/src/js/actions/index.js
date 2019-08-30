@@ -93,6 +93,7 @@ import {
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
 import { loadPortalConfig } from './portals'
+import { fetchDataQualitySummaries } from './dataQualitySummaries'
 
 const actions = {
   addAccessMethods,
@@ -118,6 +119,7 @@ const actions = {
   clearFilters,
   excludeGranule,
   fetchAccessMethods,
+  fetchDataQualitySummaries,
   fetchRetrievalCollection,
   fetchRetrieval,
   fetchRetrievalHistory,

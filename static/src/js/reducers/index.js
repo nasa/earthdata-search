@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
 import collectionMetadataReducer from './collectionMetadata'
+import dataQualitySummariesReducer from './dataQualitySummaries'
 import granuleMetadataReducer from './granuleMetadata'
 import collectionsResultsReducer from './collectionsResults'
 import authTokenReducer from './authToken'
@@ -29,6 +30,7 @@ import shapefileReducer from './shapefile'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
+  dataQualitySummaries: dataQualitySummariesReducer,
   facetsParams: combineReducers({
     feature: featureFacetsReducer,
     cmr: cmrFacetsReducer,

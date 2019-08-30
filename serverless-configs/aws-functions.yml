@@ -214,6 +214,17 @@
           cors: true
           path: login
 
+  getDataQualitySummaries:
+    handler: serverless/src/getDataQualitySummaries/handler.default
+    warmup:
+      concurrency: 3
+    events:
+      - http:
+          method: post
+          cors: true
+          path: dqs
+          authorizer: edlAuthorizer
+
   edlCallback:
     handler: serverless/src/edlCallback/handler.default
     warmup:
