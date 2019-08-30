@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -12,7 +12,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import './OrderStatusItemBody.scss'
 
-export class OrderStatusItemBody extends React.Component {
+export class OrderStatusItemBody extends Component {
   constructor() {
     super()
     this.state = {

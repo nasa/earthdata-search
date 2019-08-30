@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Collapse } from 'react-bootstrap'
 import $ from 'jquery'
@@ -7,7 +7,7 @@ import scrollParent from '../../util/scrollParent'
 
 window.$ = $
 
-export class CollapsePanel extends React.Component {
+export class CollapsePanel extends Component {
   constructor(props, context) {
     super(props, context)
 

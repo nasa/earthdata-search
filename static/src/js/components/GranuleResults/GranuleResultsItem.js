@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React from 'react'
+import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Waypoint } from 'react-waypoint'
 import qs from 'qs'
@@ -13,7 +13,7 @@ import { eventEmitter } from '../../events/events'
 import './GranuleResultsItem.scss'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
-class CustomDataLinksToggle extends React.Component {
+class CustomDataLinksToggle extends Component {
   constructor(props, context) {
     super(props, context)
     this.handleClick = this.handleClick.bind(this)

@@ -25,7 +25,10 @@ export default async function getColorMap(event, context) {
       return {
         isBase64Encoded: false,
         statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
         body: JSON.stringify(colorMapResponse.jsondata)
       }
     }
@@ -33,7 +36,10 @@ export default async function getColorMap(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       body: JSON.stringify({ errors: [`ColorMap '${providedProduct}' not found.`] })
     }
   } catch (e) {
@@ -42,7 +48,11 @@ export default async function getColorMap(event, context) {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+
+      },
       body: JSON.stringify({ errors: [e] })
     }
   }
