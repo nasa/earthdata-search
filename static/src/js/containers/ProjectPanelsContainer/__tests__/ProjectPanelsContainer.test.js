@@ -26,6 +26,7 @@ function setup() {
       isLoading: false,
       isLoaded: true
     },
+    dataQualitySummaries: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),

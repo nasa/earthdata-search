@@ -12,6 +12,7 @@ import CollectionDetails from './CollectionDetails'
 import VariableKeywordPanel from './VariableKeywordPanel'
 import VariablesPanel from './VariablesPanel'
 import VariableDetailsPanel from './VariableDetailsPanel'
+import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 
 import { isAccessMethodValid } from '../../util/accessMethods'
 
@@ -174,6 +175,7 @@ class ProjectPanels extends PureComponent {
   render() {
     const {
       collections,
+      dataQualitySummaries,
       project,
       projectPanels,
       shapefileId,
@@ -202,17 +204,19 @@ class ProjectPanels extends PureComponent {
     projectIds.forEach((collectionId, index) => {
       loaded = true
       const collection = byId[collectionId]
-      if (Object.keys(collection).length === 0) return
+      if (collection && Object.keys(collection).length === 0) return
 
       const projectCollection = projectById[collectionId]
       const { metadata } = collection
 
-      if (Object.keys(metadata).length === 0) return
+      if (metadata && Object.keys(metadata).length === 0) return
       const {
         dataset_id: title = '',
         id,
         granule_count: granuleCount
       } = metadata
+
+      const { [id]: collectionDataQualitySummaries = [] } = dataQualitySummaries
 
       const {
         accessMethods,
@@ -336,16 +340,20 @@ class ProjectPanels extends PureComponent {
           footer={editOptionsFooter}
         >
           <PanelItem>
-            <AccessMethod
-              accessMethods={accessMethods}
-              index={index}
-              metadata={metadata}
-              shapefileId={shapefileId}
-              onSelectAccessMethod={onSelectAccessMethod}
-              onSetActivePanel={onSetActivePanel}
-              onUpdateAccessMethod={onUpdateAccessMethod}
-              selectedAccessMethod={selectedAccessMethod}
-            />
+            <>
+              <DataQualitySummary dataQualitySummaries={collectionDataQualitySummaries} />
+
+              <AccessMethod
+                accessMethods={accessMethods}
+                index={index}
+                metadata={metadata}
+                shapefileId={shapefileId}
+                onSelectAccessMethod={onSelectAccessMethod}
+                onSetActivePanel={onSetActivePanel}
+                onUpdateAccessMethod={onUpdateAccessMethod}
+                selectedAccessMethod={selectedAccessMethod}
+              />
+            </>
           </PanelItem>
           <PanelItem
             hideFooter
@@ -421,6 +429,7 @@ ProjectPanels.defaultProps = {
 
 ProjectPanels.propTypes = {
   collections: PropTypes.shape({}).isRequired,
+  dataQualitySummaries: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectPanels: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
