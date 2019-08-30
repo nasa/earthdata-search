@@ -85,12 +85,12 @@ export const getVariables = async (variableIds, jwtToken) => {
   try {
     const response = await request.post({
       uri: url,
-      json: true,
-      resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda,
         'Echo-Token': `${accessToken}:${clientId}`
-      }
+      },
+      json: true,
+      resolveWithFullResponse: true
     })
 
     const { body } = response
