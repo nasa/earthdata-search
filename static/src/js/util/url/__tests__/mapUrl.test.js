@@ -31,6 +31,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   describe('map', () => {
     const defaultProps = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       map: {
         base: {

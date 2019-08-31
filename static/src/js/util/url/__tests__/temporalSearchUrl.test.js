@@ -24,6 +24,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes temporalSearch correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       temporalSearch: {
         endDate: '2019-02-01T00:00:00.000Z',

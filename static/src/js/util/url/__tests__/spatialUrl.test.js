@@ -58,6 +58,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes pointSearch correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       pointSearch: '0,0'
     }
@@ -66,6 +67,7 @@ describe('url#encodeUrlQuery', () => {
 
   test('encodes boundingBoxSearch correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       boundingBoxSearch: '0,10,20,30'
     }
@@ -74,6 +76,7 @@ describe('url#encodeUrlQuery', () => {
 
   test('encodes polygonSearch correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       polygonSearch: '-77,38,-77,38,-76,38,-77,38'
     }

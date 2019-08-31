@@ -27,7 +27,8 @@ export const emptyDecodedResult = {
         point: undefined,
         polygon: undefined
       },
-      temporal: {}
+      temporal: {},
+      hasGranulesOrCwic: true
     },
     granule: {
       gridCoords: undefined

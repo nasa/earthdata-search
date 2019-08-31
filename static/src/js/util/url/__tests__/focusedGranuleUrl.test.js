@@ -15,6 +15,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes focusedGranule correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       focusedGranule: 'granuleId'
     }

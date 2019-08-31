@@ -31,6 +31,7 @@ describe('url#decodeGranuleFilters', () => {
 describe('url#encodeGranuleFilters', () => {
   test('encodes granule filters correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       temporal: {
         endDate: '2016-07-09T00:00.000Z',
         startDate: '2015-07-09T00:00.000Z'
