@@ -18,12 +18,15 @@ export const prepareCollectionParams = (state) => {
   const { collection: collectionQuery } = query
 
   const {
+    gridName = '',
+    hasGranulesOrCwic,
     keyword,
-    pageNum,
-    spatial = {},
     overrideTemporal = {},
-    temporal = {},
-    gridName = ''
+    pageNum,
+    sortKey = [],
+    spatial = {},
+    tagKey: selectedTag,
+    temporal = {}
   } = collectionQuery
 
   const {
@@ -53,7 +56,7 @@ export const prepareCollectionParams = (state) => {
     viewAll: viewAllFacets = {}
   } = facetsParams
 
-  const tagKey = []
+  const tagKey = [selectedTag]
   if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
   if (featureFacets.mapImagery) tagKey.push('edsc.extra.serverless.gibs')
 
@@ -65,10 +68,12 @@ export const prepareCollectionParams = (state) => {
     cmrFacets,
     featureFacets,
     gridName,
+    hasGranulesOrCwic,
     keyword,
     pageNum,
     point,
     polygon,
+    sortKey,
     tagKey,
     temporalString,
     viewAllFacetsCategory,
@@ -98,6 +103,7 @@ export const buildCollectionSearchParams = (params) => {
     point,
     polygon,
     project,
+    sortKey: selectedSortKey,
     tagKey,
     temporalString,
     viewAllFacetsCategory,
@@ -122,7 +128,6 @@ export const buildCollectionSearchParams = (params) => {
 
   // Set up params that are not driven by the URL
   const defaultParams = {
-    hasGranulesOrCwic: true,
     includeFacets: 'v2',
     includeGranuleCounts: true,
     includeHasGranules: true,
@@ -136,7 +141,7 @@ export const buildCollectionSearchParams = (params) => {
       }
     },
     pageSize: 20,
-    sortKey: ['has_granules_or_cwic']
+    sortKey: ['has_granules_or_cwic', ...selectedSortKey]
   }
 
   return {
@@ -147,8 +152,7 @@ export const buildCollectionSearchParams = (params) => {
     dataCenterH: facetsToSend.data_center_h,
     dataCenter,
     echoCollectionId,
-    // TODO: This might cause problems with EDSC-2143
-    hasGranulesOrCwic: hasGranulesOrCwic === undefined ? true : hasGranulesOrCwic,
+    hasGranulesOrCwic,
     instrumentH: facetsToSend.instrument_h,
     keyword,
     pageNum,

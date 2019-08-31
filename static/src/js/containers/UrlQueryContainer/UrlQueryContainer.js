@@ -20,6 +20,7 @@ const mapStateToProps = state => ({
   featureFacets: state.facetsParams.feature,
   focusedCollection: state.focusedCollection,
   focusedGranule: state.focusedGranule,
+  hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
   map: state.map,
@@ -35,6 +36,7 @@ const mapStateToProps = state => ({
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   search: state.router.location.search,
   shapefileId: state.shapefile.shapefileId,
+  tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline
 })

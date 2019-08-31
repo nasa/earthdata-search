@@ -5,7 +5,8 @@ const initialState = {
     pageNum: 1,
     spatial: {},
     temporal: {},
-    gridName: ''
+    gridName: '',
+    hasGranulesOrCwic: true
   },
   granule: {
     pageNum: 1,

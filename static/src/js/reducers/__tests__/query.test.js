@@ -9,7 +9,8 @@ describe('INITIAL_STATE', () => {
         gridName: '',
         pageNum: 1,
         spatial: {},
-        temporal: {}
+        temporal: {},
+        hasGranulesOrCwic: true
       },
       granule: {
         gridCoords: '',
@@ -38,7 +39,10 @@ describe('UPDATE_COLLECTION_QUERY', () => {
     }
 
     const expectedState = {
-      collection: payload,
+      collection: {
+        ...payload,
+        hasGranulesOrCwic: true
+      },
       granule: {
         gridCoords: '',
         pageNum: 1
@@ -93,7 +97,8 @@ describe('UPDATE_GRANULE_QUERY', () => {
         gridName: '',
         pageNum: 1,
         spatial: {},
-        temporal: {}
+        temporal: {},
+        hasGranulesOrCwic: true
       },
       granule: payload
     }

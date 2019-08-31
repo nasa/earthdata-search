@@ -10,11 +10,11 @@ describe('url#decodeUrlParams', () => {
         ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
-          keyword: 'keyword'
+          tagKey: 'test.key'
         }
       }
     }
-    expect(decodeUrlParams('?q=keyword')).toEqual(expectedResult)
+    expect(decodeUrlParams('?tag_key=test.key')).toEqual(expectedResult)
   })
 })
 
@@ -23,8 +23,8 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      keywordSearch: 'keyword'
+      tagKey: 'test.key'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?q=keyword')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?tag_key=test.key')
   })
 })

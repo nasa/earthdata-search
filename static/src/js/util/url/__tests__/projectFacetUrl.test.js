@@ -17,6 +17,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes projectFacets correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       projectFacets: ['facet 1', 'facet 2']
     }

@@ -24,6 +24,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes platformFacets correctly', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       platformFacets: ['facet 1', 'facet 2']
     }

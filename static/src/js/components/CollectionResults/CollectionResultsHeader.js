@@ -4,8 +4,51 @@ import { Col, Form, Row } from 'react-bootstrap'
 
 import './CollectionResultsHeader.scss'
 
-const CollectionResultsHeader = ({ portal }) => {
+const eosdisTagKey = 'gov.nasa.eosdis'
+
+const CollectionResultsHeader = ({
+  collectionQuery,
+  portal,
+  onChangeQuery
+}) => {
   const { hideCollectionFilters } = portal
+
+  const handleSortSelect = (event) => {
+    const { target } = event
+    const { value } = target
+    const sortKey = value === 'relevance' ? undefined : [value]
+
+    onChangeQuery({
+      collection: {
+        sortKey
+      }
+    })
+  }
+
+  const handleCheckboxCheck = (event) => {
+    const { target } = event
+    const { checked, id } = target
+
+    const collection = {}
+    if (id === 'input__non-eosdis') {
+      if (checked) collection.tagKey = undefined
+      if (!checked) collection.tagKey = eosdisTagKey
+    }
+
+    if (id === 'input__only-granules') {
+      if (checked) collection.hasGranulesOrCwic = true
+      if (!checked) collection.hasGranulesOrCwic = undefined
+    }
+
+    onChangeQuery({
+      collection
+    })
+  }
+
+  const { hasGranulesOrCwic = false, tagKey } = collectionQuery
+  const isHasGranulesChecked = hasGranulesOrCwic
+  const isNonEosdisChecked = tagKey !== eosdisTagKey
+
   return (
     <div className="collection-results-header">
       <Row>
@@ -29,10 +72,11 @@ const CollectionResultsHeader = ({ portal }) => {
             <Form.Control
               as="select"
               size="sm"
+              onChange={e => handleSortSelect(e)}
             >
               <option value="relevance">Relevance</option>
-              <option value="usage">Usage</option>
-              <option value="end_data">End Date</option>
+              <option value="-usage_score">Usage</option>
+              <option value="-ongoing">End Date</option>
             </Form.Control>
           </Col>
           {
@@ -43,9 +87,10 @@ const CollectionResultsHeader = ({ portal }) => {
                   sm="auto"
                 >
                   <Form.Check
-                    defaultChecked
+                    checked={isHasGranulesChecked}
                     id="input__only-granules"
                     label="Only include collections with granules"
+                    onChange={event => handleCheckboxCheck(event)}
                   />
                 </Col>
                 <Col
@@ -53,9 +98,10 @@ const CollectionResultsHeader = ({ portal }) => {
                   sm="auto"
                 >
                   <Form.Check
-                    defaultChecked
+                    checked={isNonEosdisChecked}
                     id="input__non-eosdis"
                     label="Include non-EOSDIS collections"
+                    onChange={event => handleCheckboxCheck(event)}
                   />
                 </Col>
               </>
@@ -78,7 +124,9 @@ const CollectionResultsHeader = ({ portal }) => {
 }
 
 CollectionResultsHeader.propTypes = {
-  portal: PropTypes.shape({}).isRequired
+  collectionQuery: PropTypes.shape({}).isRequired,
+  portal: PropTypes.shape({}).isRequired,
+  onChangeQuery: PropTypes.func.isRequired
 }
 
 export default CollectionResultsHeader

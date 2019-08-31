@@ -125,6 +125,7 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode collections if no collections exist', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       collections: {
         allIds: [],
@@ -140,6 +141,7 @@ describe('url#encodeUrlQuery', () => {
 
   test('does not encode collections if no focusedCollection exist', () => {
     const props = {
+      hasGranulesOrCwic: true,
       pathname: '/path/here',
       collections: {
         allIds: [],
@@ -157,6 +159,7 @@ describe('url#encodeUrlQuery', () => {
     describe('CMR excludedGranules', () => {
       test('does not encode excludedGranules if no excludedGranules exist', () => {
         const props = {
+          hasGranulesOrCwic: true,
           pathname: '/path/here',
           collections: {
             allIds: ['collectionId'],
@@ -179,6 +182,7 @@ describe('url#encodeUrlQuery', () => {
 
       test('encodes excludedGranules correctly', () => {
         const props = {
+          hasGranulesOrCwic: true,
           pathname: '/path/here',
           collections: {
             allIds: ['collectionId'],
@@ -203,6 +207,7 @@ describe('url#encodeUrlQuery', () => {
     describe('CWIC excludedGranules', () => {
       test('does not encode excludedGranules if no excludedGranules exist', () => {
         const props = {
+          hasGranulesOrCwic: true,
           pathname: '/path/here',
           collections: {
             allIds: ['collectionId'],
@@ -225,6 +230,7 @@ describe('url#encodeUrlQuery', () => {
 
       test('encodes excludedGranules correctly', () => {
         const props = {
+          hasGranulesOrCwic: true,
           pathname: '/path/here',
           collections: {
             allIds: ['collectionId'],
@@ -250,6 +256,7 @@ describe('url#encodeUrlQuery', () => {
   describe('project collection excludedGranules', () => {
     test('encodes excludedGranules correctly', () => {
       const props = {
+        hasGranulesOrCwic: true,
         pathname: '/path/here',
         collections: {
           allIds: ['collectionId'],
@@ -274,6 +281,7 @@ describe('url#encodeUrlQuery', () => {
   describe('focused project collection excludedGranules', () => {
     test('encodes excludedGranules correctly', () => {
       const props = {
+        hasGranulesOrCwic: true,
         pathname: '/path/here',
         collections: {
           allIds: ['collectionId'],

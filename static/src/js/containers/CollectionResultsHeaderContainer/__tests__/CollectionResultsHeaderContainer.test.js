@@ -8,9 +8,11 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    collectionQuery: {},
     portal: {
       portalId: ''
-    }
+    },
+    onChangeQuery: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionResultsHeaderContainer {...props} />)
