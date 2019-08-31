@@ -21,10 +21,12 @@ const cmrGranuleSearch = async (event) => {
     'echo_collection_id',
     'exclude',
     'online_only',
+    'options',
     'page_num',
     'page_size',
     'point',
     'polygon',
+    'readable_granule_name',
     'sort_key',
     'temporal',
     'two_d_coordinate_system'
@@ -32,6 +34,7 @@ const cmrGranuleSearch = async (event) => {
 
   const nonIndexedKeys = [
     'exclude',
+    'readable_granule_name',
     'sort_key'
   ]
 

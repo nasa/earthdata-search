@@ -16,43 +16,58 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
  * Renders GranuleResultsHeader.
  * @param {object} props - The props passed into the component.
  * @param {object} props.focusedCollectionMetadata - Focused collection passed from redux store.
+ * @param {function} props.onApplyGranuleFilters - Function to apply sort and granule id filters.
  * @param {function} props.onToggleSecondaryOverlayPanel - Function to open the secondary overlay panel.
- * @param {function} props.onUpdateSortOrder - Function to call when the sort order is changed.
- * @param {function} props.onUpdateSearchValue - Function to call when the granule search value is changed.
- * @param {string} props.sortOrder - The current granule sort order from the state.
- * @param {string} props.searchValue - The current granule search value from the state.
  * @param {object} props.secondaryOverlayPanel - The current state of the secondaryOverlayPanel.
  */
 class GranuleResultsHeader extends Component {
   constructor(props) {
     super(props)
 
+    const { focusedCollectionMetadata } = props
+    const [collectionId] = Object.keys(focusedCollectionMetadata)
+    const { granuleFilters } = focusedCollectionMetadata[collectionId]
+
     this.state = {
-      sortOrder: props.sortOrder,
-      searchValue: props.searchValue
+      sortOrder: granuleFilters.sortKey,
+      searchValue: granuleFilters.readableGranuleName
     }
 
     this.handleUpdateSortOrder = this.handleUpdateSortOrder.bind(this)
     this.handleUpdateSearchValue = this.handleUpdateSearchValue.bind(this)
+    this.handleBlurSearchValue = this.handleBlurSearchValue.bind(this)
     this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
   }
 
   handleUpdateSortOrder(e) {
-    const { onUpdateSortOrder } = this.props
+    const { focusedCollectionMetadata, onApplyGranuleFilters } = this.props
+    const [collectionId] = Object.keys(focusedCollectionMetadata)
+
     const { value } = e.target
     this.setState({
       sortOrder: value
     })
-    onUpdateSortOrder(value)
+
+    onApplyGranuleFilters(collectionId, { sortKey: value })
   }
 
   handleUpdateSearchValue(e) {
-    const { onUpdateSearchValue } = this.props
     const { value } = e.target
+    const splitValue = value.split(/[,\s\n]\s*/g).join(',')
     this.setState({
-      searchValue: value
+      searchValue: splitValue
     })
-    onUpdateSearchValue(value)
+  }
+
+  handleBlurSearchValue() {
+    const { focusedCollectionMetadata, onApplyGranuleFilters } = this.props
+    const [collectionId] = Object.keys(focusedCollectionMetadata)
+
+    const { searchValue } = this.state
+    let readableGranuleName
+    if (searchValue) readableGranuleName = searchValue.split(',')
+
+    onApplyGranuleFilters(collectionId, { readableGranuleName })
   }
 
   handleUndoExcludeGranule() {
@@ -193,37 +208,40 @@ class GranuleResultsHeader extends Component {
                         className="col-form-label col-form-label-sm mr-1"
                         htmlFor="input__granule-search"
                       >
-                        Granule Search:
+                        Granule Search
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={(
+                            <Tooltip
+                              id="tooltip__granule-search"
+                              className="tooltip--large tooltip--ta-left tooltip--wide"
+                            >
+                              <strong>Wildcards:</strong>
+                              {' '}
+                              <ul className="m-0">
+                                <li>* (asterisk) matches any number of characters</li>
+                                <li>? (question mark) matches exactly one character.</li>
+                              </ul>
+                              <br />
+                              <strong>Delimiters:</strong>
+                              {' '}
+                              Separate multiple granule IDs by commas.
+                            </Tooltip>
+                          )}
+                        >
+                          <i className="fa fa-question-circle" />
+                        </OverlayTrigger>
+                        :
                       </label>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={(
-                          <Tooltip
-                            id="tooltip__granule-search"
-                            className="tooltip--large tooltip--ta-left tooltip--wide"
-                          >
-                            <strong>Wildcards:</strong>
-                            {' '}
-                            <ul className="m-0">
-                              <li>* (asterisk) matches any number of characters</li>
-                              <li>? (question mark) matches exactly one character.</li>
-                            </ul>
-                            <br />
-                            <strong>Delimiters:</strong>
-                            {' '}
-                            Separate multiple granule IDs by space, comma, or new line.
-                          </Tooltip>
-                        )}
-                      >
-                        <input
-                          id="input__granule-search"
-                          className="form-control form-control-sm granule-results-header__granule-search-input"
-                          type="text"
-                          placeholder="Search Single of Multiple Granule IDs..."
-                          onChange={this.handleUpdateSearchValue}
-                          value={searchValue}
-                        />
-                      </OverlayTrigger>
+                      <input
+                        id="input__granule-search"
+                        className="form-control form-control-sm granule-results-header__granule-search-input"
+                        type="text"
+                        placeholder="Search Single of Multiple Granule IDs..."
+                        onBlur={this.handleBlurSearchValue}
+                        onChange={this.handleUpdateSearchValue}
+                        value={searchValue}
+                      />
                     </div>
                   </div>
                   <div className="col-auto">
@@ -284,12 +302,9 @@ class GranuleResultsHeader extends Component {
 GranuleResultsHeader.propTypes = {
   focusedCollectionMetadata: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  onApplyGranuleFilters: PropTypes.func.isRequired,
   onToggleSecondaryOverlayPanel: PropTypes.func.isRequired,
-  onUpdateSortOrder: PropTypes.func.isRequired,
-  onUpdateSearchValue: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
-  sortOrder: PropTypes.string.isRequired,
-  searchValue: PropTypes.string.isRequired,
   collectionSearch: PropTypes.shape({}).isRequired,
   secondaryOverlayPanel: PropTypes.shape({}).isRequired
 }

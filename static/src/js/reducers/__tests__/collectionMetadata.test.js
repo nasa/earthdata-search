@@ -113,7 +113,7 @@ describe('UPDATE_COLLECTION_METADATA', () => {
         collectionId: {
           excludedGranuleIds: [],
           granules: {},
-          granuleFilters: {},
+          granuleFilters: { sortKey: '-start_date' },
           isVisible: true,
           isCwic: undefined,
           metadata: undefined,

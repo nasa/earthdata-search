@@ -40,10 +40,12 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'echo_collection_id',
       'exclude',
       'online_only',
+      'options',
       'page_num',
       'page_size',
       'point',
       'polygon',
+      'readable_granule_name',
       'sort_key',
       'temporal',
       'two_d_coordinate_system'
@@ -55,7 +57,10 @@ describe('GranuleRequest#nonIndexedKeys', () => {
   test('returns an array of timeline CMR keys', () => {
     const request = new GranuleRequest()
 
-    expect(request.nonIndexedKeys()).toEqual(['sort_key'])
+    expect(request.nonIndexedKeys()).toEqual([
+      'readable_granule_name',
+      'sort_key'
+    ])
   })
 })
 

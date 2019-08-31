@@ -33,10 +33,12 @@ export default class GranuleRequest extends Request {
       'echo_collection_id',
       'exclude',
       'online_only',
+      'options',
       'page_num',
       'page_size',
       'point',
       'polygon',
+      'readable_granule_name',
       'sort_key',
       'temporal',
       'two_d_coordinate_system'
@@ -45,6 +47,7 @@ export default class GranuleRequest extends Request {
 
   nonIndexedKeys() {
     return [
+      'readable_granule_name',
       'sort_key'
     ]
   }

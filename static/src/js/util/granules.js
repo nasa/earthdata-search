@@ -92,6 +92,8 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     cloudCover,
     dayNightFlag,
     onlineOnly,
+    readableGranuleName,
+    sortKey,
     temporal: filterTemporal = {}
   } = granuleFilters
 
@@ -126,6 +128,11 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
   const isCwicCollection = Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod')
     && !collectionMetadata.has_granules
 
+  const options = {}
+  if (readableGranuleName) {
+    options.readableGranuleName = { pattern: true }
+  }
+
   return {
     authToken,
     browseOnly,
@@ -137,10 +144,13 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     gridName,
     gridCoords: encodeGridCoords(gridCoords),
     onlineOnly,
+    options,
     isCwicCollection,
     pageNum,
     point,
     polygon,
+    readableGranuleName,
+    sortKey,
     temporalString
   }
 }
@@ -162,9 +172,12 @@ export const buildGranuleSearchParams = (params) => {
     gridName,
     gridCoords,
     onlineOnly,
+    options,
     pageNum,
     point,
     polygon,
+    readableGranuleName,
+    sortKey,
     temporalString
   } = params
 
@@ -185,11 +198,13 @@ export const buildGranuleSearchParams = (params) => {
     exclude,
     echoCollectionId: collectionId,
     onlineOnly,
+    options,
     pageNum,
     pageSize: 20,
     point,
     polygon,
-    sortKey: '-start_date',
+    readableGranuleName,
+    sortKey,
     temporal: temporalString,
     twoDCoordinateSystem
   }
