@@ -60,6 +60,7 @@ class App extends Component {
           </Switch>
           <ConnectedAuthTokenContainer>
             <Switch>
+              <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
               <Route
                 path={this.portalPaths('/downloads')}
                 render={() => (
