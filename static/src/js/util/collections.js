@@ -56,7 +56,8 @@ export const prepareCollectionParams = (state) => {
     viewAll: viewAllFacets = {}
   } = facetsParams
 
-  const tagKey = [selectedTag]
+  const tagKey = []
+  if (selectedTag) tagKey.push(selectedTag)
   if (featureFacets.customizable) tagKey.push('edsc.extra.subset_service.*')
   if (featureFacets.mapImagery) tagKey.push('edsc.extra.serverless.gibs')
 
