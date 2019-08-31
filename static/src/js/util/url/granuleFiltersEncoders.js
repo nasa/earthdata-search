@@ -12,6 +12,7 @@ export const encodeGranuleFilters = (granuleFilters) => {
   if (granuleFilters.browseOnly) pg.bo = granuleFilters.browseOnly
   if (granuleFilters.onlineOnly) pg.oo = granuleFilters.onlineOnly
   if (granuleFilters.cloudCover) pg.cc = granuleFilters.cloudCover
+  if (granuleFilters.readableGranuleName) pg.id = granuleFilters.readableGranuleName.join('!')
   return pg
 }
 
@@ -27,5 +28,6 @@ export const decodeGranuleFilters = (params = {}) => {
   if (params.bo) granuleFilters.browseOnly = params.bo === 'true'
   if (params.oo) granuleFilters.onlineOnly = params.oo === 'true'
   if (params.cc) granuleFilters.cloudCover = params.cc
+  if (params.id) granuleFilters.readableGranuleName = params.id.split('!')
   return granuleFilters
 }

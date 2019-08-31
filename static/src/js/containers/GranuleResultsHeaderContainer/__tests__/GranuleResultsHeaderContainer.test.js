@@ -25,13 +25,9 @@ function setup() {
       hits: 1
     },
     location: { value: 'location' },
-    onAddProjectCollection: jest.fn(),
+    onApplyGranuleFilters: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onUndoExcludeGranule: jest.fn(),
-    onUpdateSearchValue: jest.fn(),
-    onUpdateSortOrder: jest.fn(),
-    searchValue: 'searchValue',
-    sortOrder: 'sortOrder',
     collectionSearch: {},
     onToggleSecondaryOverlayPanel: jest.fn(),
     secondaryOverlayPanel: {}
@@ -57,9 +53,6 @@ describe('GranuleResultsHeaderContainer component', () => {
       }
     })
     expect(enzymeWrapper.find(GranuleResultsHeader).props().location).toEqual({ value: 'location' })
-    expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onUpdateSortOrder).toEqual('function')
-    expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onUpdateSearchValue).toEqual('function')
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().searchValue).toEqual('searchValue')
-    expect(enzymeWrapper.find(GranuleResultsHeader).props().sortOrder).toEqual('sortOrder')
+    expect(typeof enzymeWrapper.find(GranuleResultsHeader).props().onApplyGranuleFilters).toEqual('function')
   })
 })

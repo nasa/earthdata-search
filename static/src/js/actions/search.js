@@ -41,10 +41,12 @@ export const changeQuery = newQuery => (dispatch, getState) => {
     dispatch(clearExcludedGranules())
   }
 
-  dispatch(updateCollectionQuery({
-    pageNum: 1,
-    ...newQuery.collection
-  }))
+  if (newQuery.collection) {
+    dispatch(updateCollectionQuery({
+      pageNum: 1,
+      ...newQuery.collection
+    }))
+  }
 
   dispatch(updateGranuleQuery({
     pageNum: 1,
@@ -53,7 +55,8 @@ export const changeQuery = newQuery => (dispatch, getState) => {
 
   // Remove all saved granules in the metadata/collections store
   dispatch(actions.clearCollectionGranules())
-  dispatch(actions.getCollections())
+  // If the collection query didn't change don't get new collections
+  if (newQuery.collection) dispatch(actions.getCollections())
   dispatch(actions.getGranules())
   dispatch(actions.getTimeline())
 }

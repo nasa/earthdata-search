@@ -11,6 +11,10 @@ function setup(overrideProps) {
     focusedCollectionMetadata: {
       collectionId: {
         excludedGranuleIds: [],
+        granuleFilters: {
+          readableGranuleName: 'searchValue',
+          sortKey: '-start_date'
+        },
         metadata: {
           dataset_id: 'Title'
         }
@@ -19,18 +23,13 @@ function setup(overrideProps) {
     location: {
       search: '?test=search-value'
     },
-    onToggleSecondaryOverlayPanel: jest.fn(),
-    onUpdateSortOrder: jest.fn(),
-    onUpdateSearchValue: jest.fn(),
-    onUndoExcludeGranule: jest.fn(),
-    sortOrder: 'start_date_newest_first',
-    searchValue: 'searchValue',
     collectionSearch: {},
     secondaryOverlayPanel: {
       isOpen: false
     },
+    onApplyGranuleFilters: jest.fn(),
     onToggleSecondaryOverlayPanel: jest.fn(),
-    secondaryOverlayPanel: {},
+    onUndoExcludeGranule: jest.fn(),
     ...overrideProps
   }
 
@@ -73,10 +72,10 @@ describe('GranuleResultsHeader component', () => {
   test('renders the granule search with a tooltip', () => {
     const { enzymeWrapper } = setup()
     const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
-    const input = overlayTrigger.find('#input__granule-search')
+    const icon = overlayTrigger.find('.fa-question-circle')
 
     expect(overlayTrigger.length).toEqual(1)
-    expect(input.length).toEqual(1)
+    expect(icon.length).toEqual(1)
   })
 
   describe('handleUpdateSortOrder', () => {
@@ -92,7 +91,7 @@ describe('GranuleResultsHeader component', () => {
       expect(enzymeWrapper.state()).toEqual({ searchValue: 'searchValue', sortOrder: 'start_date_oldest_first' })
     })
 
-    test('fires the onUpdateSortOrder', () => {
+    test('fires the onApplyGranuleFilters', () => {
       const { enzymeWrapper, props } = setup()
       const mockEvent = {
         target: {
@@ -101,8 +100,8 @@ describe('GranuleResultsHeader component', () => {
       }
       enzymeWrapper.find('#input__sort-granules').simulate('change', mockEvent)
 
-      expect(props.onUpdateSortOrder).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateSortOrder).toHaveBeenCalledWith('start_date_oldest_first')
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { sortKey: 'start_date_oldest_first' })
     })
   })
 
@@ -111,25 +110,42 @@ describe('GranuleResultsHeader component', () => {
       const { enzymeWrapper } = setup()
       const mockEvent = {
         target: {
-          value: 'Some new value'
+          value: 'Some-new-value'
         }
       }
       enzymeWrapper.find('#input__granule-search').simulate('change', mockEvent)
 
-      expect(enzymeWrapper.state()).toEqual({ searchValue: 'Some new value', sortOrder: 'start_date_newest_first' })
+      expect(enzymeWrapper.state()).toEqual({ searchValue: 'Some-new-value', sortOrder: '-start_date' })
     })
+  })
 
-    test('fires the onUpdateSearchValue', () => {
+  describe('handleBlurSearchValue', () => {
+    test('fires the onApplyGranuleFilters', () => {
       const { enzymeWrapper, props } = setup()
       const mockEvent = {
         target: {
-          value: 'Some new value'
+          value: 'Some-new-value'
         }
       }
       enzymeWrapper.find('#input__granule-search').simulate('change', mockEvent)
+      enzymeWrapper.find('#input__granule-search').simulate('blur')
 
-      expect(props.onUpdateSearchValue).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateSearchValue).toHaveBeenCalledWith('Some new value')
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', { readableGranuleName: ['Some-new-value'] })
+    })
+
+    test('removes the parameter if the input is empty', () => {
+      const { enzymeWrapper, props } = setup()
+      const mockEvent = {
+        target: {
+          value: ''
+        }
+      }
+      enzymeWrapper.find('#input__granule-search').simulate('change', mockEvent)
+      enzymeWrapper.find('#input__granule-search').simulate('blur')
+
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', {})
     })
   })
 })

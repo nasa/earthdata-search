@@ -75,7 +75,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
 
         let excludedGranuleIds = []
         let isVisible = true
-        let granuleFilters = {}
+        let granuleFilters = { sortKey: '-start_date' }
         if (state.byId[collectionId]) {
           ({
             excludedGranuleIds,
