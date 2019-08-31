@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Form, Row } from 'react-bootstrap'
 
-import './CollectionResultsHeader.scss'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-const eosdisTagKey = 'gov.nasa.eosdis'
+import './CollectionResultsHeader.scss'
 
 const CollectionResultsHeader = ({
   collectionQuery,
@@ -32,7 +32,7 @@ const CollectionResultsHeader = ({
     const collection = {}
     if (id === 'input__non-eosdis') {
       if (checked) collection.tagKey = undefined
-      if (!checked) collection.tagKey = eosdisTagKey
+      if (!checked) collection.tagKey = getApplicationConfig().eosdisTagKey
     }
 
     if (id === 'input__only-granules') {
@@ -47,7 +47,7 @@ const CollectionResultsHeader = ({
 
   const { hasGranulesOrCwic = false, tagKey } = collectionQuery
   const isHasGranulesChecked = hasGranulesOrCwic
-  const isNonEosdisChecked = tagKey !== eosdisTagKey
+  const isNonEosdisChecked = tagKey !== getApplicationConfig().eosdisTagKey
 
   return (
     <div className="collection-results-header">
