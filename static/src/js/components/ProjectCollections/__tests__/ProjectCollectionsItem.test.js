@@ -11,6 +11,9 @@ function setup() {
   const props = {
     collectionId: 'collectionId',
     collection: {
+      excludedGranuleIds: [
+        'G10000001-EDSC'
+      ],
       granules: {
         hits: 4,
         totalSize: { size: '4.0', unit: 'MB' }
@@ -48,7 +51,7 @@ describe('ProjectCollectionItem component', () => {
     expect(enzymeWrapper.find('t').props().className).toEqual('project-collections-item__title')
     expect(enzymeWrapper.find('t').props().children).toEqual('Collection Title')
     expect(enzymeWrapper.find('t').props().lines).toEqual(3)
-    expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('4 Granules')
+    expect(enzymeWrapper.find('.project-collections-item__stats-item--granule-count').text()).toEqual('3 Granules')
     expect(enzymeWrapper.find('.project-collections-item__stats-item--total-size').text()).toEqual('Est. Size 4.0 MB')
   })
 

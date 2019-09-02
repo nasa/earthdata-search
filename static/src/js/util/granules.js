@@ -47,6 +47,14 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     return null
   }
 
+  const { excludedGranuleIds = [] } = collections.byId[collectionId]
+  const exclude = {}
+  if (excludedGranuleIds.length > 0) {
+    exclude.concept_id = []
+    exclude.concept_id.push(...excludedGranuleIds)
+  }
+
+  // TODO: Use `collections.byId[collectionId]` as it appears to do the same thing
   const focusedCollectionMetadata = getFocusedCollectionMetadata(collectionId, collections)
   if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
@@ -125,6 +133,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     cloudCoverString,
     collectionId,
     dayNightFlag,
+    // exclude,
     gridName,
     gridCoords: encodeGridCoords(gridCoords),
     onlineOnly,
@@ -139,7 +148,7 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
 /**
  * Translates the values returned from prepareGranuleParams to the camelCased keys that are expected in
  * the granules.search() function
- * @param {object} params - Params to be passed to the granules.search() function.
+ * @param {Object} params - Params to be passed to the granules.search() function.
  * @returns Parameters to be provided to the Granules request with camel cased keys
  */
 export const buildGranuleSearchParams = (params) => {
@@ -149,6 +158,7 @@ export const buildGranuleSearchParams = (params) => {
     cloudCover,
     collectionId,
     dayNightFlag,
+    exclude,
     gridName,
     gridCoords,
     onlineOnly,
@@ -172,6 +182,7 @@ export const buildGranuleSearchParams = (params) => {
     browseOnly,
     cloudCover,
     dayNightFlag,
+    exclude,
     echoCollectionId: collectionId,
     onlineOnly,
     pageNum,

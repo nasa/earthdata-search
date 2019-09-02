@@ -10,6 +10,8 @@ const cmrGranuleSearch = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 
+  const { body } = event
+
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
     'bounding_box',
@@ -17,6 +19,7 @@ const cmrGranuleSearch = async (event) => {
     'cloud_cover',
     'day_night_flag',
     'echo_collection_id',
+    'exclude',
     'online_only',
     'page_num',
     'page_size',
@@ -27,12 +30,16 @@ const cmrGranuleSearch = async (event) => {
     'two_d_coordinate_system'
   ]
 
-  const { body } = event
+  const nonIndexedKeys = [
+    'exclude',
+    'sort_key'
+  ]
 
   return doSearchRequest(getJwtToken(event), buildURL({
     body,
     path: '/search/granules.json',
-    permittedCmrKeys
+    permittedCmrKeys,
+    nonIndexedKeys
   }))
 }
 

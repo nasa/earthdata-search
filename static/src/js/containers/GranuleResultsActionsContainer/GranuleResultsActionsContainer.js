@@ -44,7 +44,10 @@ export const GranuleResultsActionsContainer = (props) => {
   const [collectionId] = Object.keys(focusedCollectionMetadata)
   const { collectionIds: projectIds } = project
   const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
-  const granuleCount = granules.hits
+
+  // Determine the correct granule count based on granules that have been removed
+  const { excludedGranuleIds = [] } = collections.byId[focusedCollection]
+  const granuleCount = (granules.hits - excludedGranuleIds.length)
 
   return (
     <>
