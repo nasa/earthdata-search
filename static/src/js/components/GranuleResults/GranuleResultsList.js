@@ -85,6 +85,9 @@ export class GranuleResultsList extends PureComponent {
       granuleIds = difference(allGranuleIds, excludedGranuleIds)
     }
 
+    // Determine the correct granule count based on granules that have been removed
+    const granuleCount = (hits - excludedGranuleIds.length)
+
     const initialLoading = (pageNum === 1 && !isLoaded)
 
     const granulesList = granuleIds.map((granuleId, index) => {
@@ -144,7 +147,7 @@ export class GranuleResultsList extends PureComponent {
                 />
               )
             }
-            {!initialLoading && `Showing ${commafy(visibleGranules)} of ${commafy(hits)} matching ${pluralize('granule', hits)}` }
+            {!initialLoading && `Showing ${commafy(visibleGranules)} of ${commafy(granuleCount)} matching ${pluralize('granule', granuleCount)}` }
           </span>
           <span className="granule-results-list__header-item">
             {

@@ -65,6 +65,7 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
         selectedAccessMethod: 'download'
       }))
     }
+
     return null
   }))
 }

@@ -27,7 +27,7 @@ export const prepareRetrievalParams = (state) => {
   const projectCollections = []
   projectIds.forEach((collectionId) => {
     const projectCollection = byId[collectionId]
-    const { granules, metadata } = projectCollection
+    const { granules, metadata, excludedGranuleIds = [] } = projectCollection
 
     const returnValue = {}
 
@@ -35,7 +35,21 @@ export const prepareRetrievalParams = (state) => {
     returnValue.granule_count = granules.hits
     returnValue.collection_metadata = metadata
 
-    const params = buildGranuleSearchParams(prepareGranuleParams(state, collectionId))
+    const preparedParams = prepareGranuleParams(state, collectionId)
+
+    // Add the excluded granule param right before we save the record to the
+    // database to prevent it from being taking into account in the granules panel
+    if (excludedGranuleIds.length > 0) {
+      preparedParams.exclude = {
+        concept_id: excludedGranuleIds
+      }
+
+      // Since we didn't use the `exclude` param in the granule panel (on purpose) we
+      // need to adjust the granule count if there were excluded granules
+      returnValue.granule_count = (granules.hits - excludedGranuleIds.length)
+    }
+
+    const params = buildGranuleSearchParams(preparedParams)
     returnValue.granule_params = params
 
     const collectionConfig = configById[collectionId]

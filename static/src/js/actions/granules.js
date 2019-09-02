@@ -93,7 +93,7 @@ export const excludeGranule = data => (dispatch) => {
  * Fetch all relevant links to the granules that are part of the provided collection
  * @param {Integer} retrievalId Database id of the retrieval object
  * @param {String} collectionId CMR collection id to get granules for from a retrieval
- * @param {Object} retrievalCollectionData retrieval Collection response from the database
+ * @param {Object} retrievalCollectionData Retrieval Collection response from the database
  * @param {String} authToken The authenticated users' JWT token
  */
 export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
@@ -147,6 +147,7 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
 export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState) => {
+  console.log('asdf')
   const { authToken } = getState()
 
   const requestObject = new OusGranuleRequest(authToken)
@@ -160,18 +161,28 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
 
   const {
     temporal,
-    bounding_box: boundingBox
+    bounding_box: boundingBox,
+    exclude = {}
   } = granuleParams
 
   const { selected_variables: variables } = accessMethod
 
-  // TODO: Add excluded granules, output format (EDSC-2329)
-  const response = requestObject.search({
+  const ousPayload = {
     boundingBox,
     echoCollectionId: collectionId,
     temporal,
     variables
-  })
+  }
+
+  // OUS has a slightly different syntax for excluding params
+  const { concept_id: excludedGranuleIds = [] } = exclude
+  if (excludedGranuleIds.length > 0) {
+    ousPayload.exclude_granules = true
+    ousPayload.granules = excludedGranuleIds
+  }
+
+  // TODO: Add output format (EDSC-2329)
+  const response = requestObject.search(ousPayload)
     .then((response) => {
       const { data } = response
       const { items = [] } = data

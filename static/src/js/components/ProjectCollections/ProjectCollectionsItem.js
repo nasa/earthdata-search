@@ -41,6 +41,7 @@ const ProjectCollectionItem = ({
   if (!collection) return null
 
   const {
+    excludedGranuleIds,
     granules,
     isVisible,
     metadata
@@ -51,9 +52,11 @@ const ProjectCollectionItem = ({
   } = metadata
 
   const {
-    hits: granuleHits,
+    hits,
     totalSize = {}
   } = granules
+
+  const granuleCount = (hits - excludedGranuleIds.length)
 
   const { size = '', unit = '' } = totalSize
 
@@ -105,7 +108,7 @@ const ProjectCollectionItem = ({
         <li
           className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
         >
-          {`${abbreviate(granuleHits, 1)} Granules`}
+          {`${abbreviate(granuleCount, 1)} Granules`}
         </li>
         <li
           className="project-collections-item__stats-item project-collections-item__stats-item--total-size"

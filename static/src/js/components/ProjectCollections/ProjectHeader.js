@@ -33,10 +33,10 @@ export class ProjectHeader extends Component {
       const collection = byId[collectionId]
       if (!collection) return
 
-      const { granules } = collection
+      const { excludedGranuleIds = [], granules } = collection
       const { hits, totalSize: granuleSize } = granules
 
-      totalGranules += hits
+      totalGranules += (hits - excludedGranuleIds.length)
       const convertedSize = convertSizeToMB(granuleSize)
       size += convertedSize
     })
