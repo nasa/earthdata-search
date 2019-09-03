@@ -2,6 +2,7 @@ import 'pg'
 
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
 let dbConnection = null
 
@@ -14,6 +15,8 @@ const getProject = async (event) => {
     projectId
   } = params
 
+  const decodedProjectId = deobfuscateId(projectId)
+
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
@@ -21,7 +24,7 @@ const getProject = async (event) => {
     const existingProjectRecord = await dbConnection('projects')
       .first('name', 'path')
       .where({
-        id: projectId
+        id: decodedProjectId
       })
 
     const { name, path } = existingProjectRecord

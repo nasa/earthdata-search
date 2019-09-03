@@ -65,7 +65,7 @@ describe('saveProject', () => {
       const expectedBody = JSON.stringify({
         name: '',
         path,
-        project_id: 12
+        project_id: '6249150326'
       })
 
       const { queries } = dbTracker.queries
@@ -96,7 +96,7 @@ describe('saveProject', () => {
         body: JSON.stringify({
           params: {
             path,
-            project_id: 12
+            project_id: 6249150326
           }
         })
       }
@@ -106,7 +106,7 @@ describe('saveProject', () => {
       const expectedBody = JSON.stringify({
         name: '',
         path,
-        project_id: 12
+        project_id: '6249150326'
       })
 
       const { queries } = dbTracker.queries
@@ -147,7 +147,7 @@ describe('saveProject', () => {
       const expectedBody = JSON.stringify({
         name: '',
         path,
-        project_id: 12
+        project_id: '6249150326'
       })
 
       const { queries } = dbTracker.queries
@@ -181,7 +181,7 @@ describe('saveProject', () => {
           params: {
             auth_token: 'mock token',
             path,
-            project_id: 12
+            project_id: '6249150326'
           }
         })
       }
@@ -191,7 +191,7 @@ describe('saveProject', () => {
       const expectedBody = JSON.stringify({
         name: '',
         path,
-        project_id: 12
+        project_id: '6249150326'
       })
 
       const { queries } = dbTracker.queries
@@ -225,7 +225,7 @@ describe('saveProject', () => {
           params: {
             auth_token: 'mock token',
             path,
-            project_id: 12
+            project_id: '6249150326'
           }
         })
       }
@@ -235,7 +235,7 @@ describe('saveProject', () => {
       const expectedBody = JSON.stringify({
         name: '',
         path,
-        project_id: 13
+        project_id: '1723465690'
       })
 
       const { queries } = dbTracker.queries

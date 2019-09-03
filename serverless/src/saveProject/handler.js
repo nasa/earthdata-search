@@ -4,6 +4,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 let dbConnection = null
 
@@ -101,7 +102,7 @@ const saveProject = async (event) => {
     body: JSON.stringify({
       name,
       path,
-      project_id: newProjectId
+      project_id: obfuscateId(newProjectId)
     })
   }
 }
