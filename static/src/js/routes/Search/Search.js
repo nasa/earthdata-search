@@ -79,8 +79,10 @@ export class Search extends Component {
         </SidebarContainer>
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
-            <SearchFormContainer />
-            <SecondaryToolbarContainer />
+            <div className="route-wrapper__header-primary">
+              <SearchFormContainer />
+              <SecondaryToolbarContainer />
+            </div>
           </header>
           <Switch>
             <Route exact path={`${path}`}>

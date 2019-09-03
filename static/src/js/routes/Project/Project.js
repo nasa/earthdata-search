@@ -50,7 +50,9 @@ export class Project extends Component {
         </SidebarContainer>
         <div className="route-wrapper__content">
           <header className="route-wrapper__header">
-            <SecondaryToolbarContainer />
+            <div className="route-wrapper__header-primary">
+              <SecondaryToolbarContainer />
+            </div>
           </header>
         </div>
         <OverrideTemporalModalContainer />

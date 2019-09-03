@@ -25,15 +25,20 @@
 
   &--dark {
     background-color: $color__black--800;
+    color: $color__black--400;
   }
 
   &__header {
+    border-bottom: 1px solid $color__black--700;
+  }
+
+  &__header-primary {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding: 0.625rem;
     width: 100%;
     height: auto;
+    padding: 0.625rem;
 
     @include media-breakpoint-up(md) {
       flex-wrap: nowrap;
@@ -61,7 +66,6 @@
   &__content-nav {
     padding: $spacer/2 $spacer;
     color: $color__white;
-    border-bottom: 1px solid $color__black--700;
   }
 
   &__content-nav-link {
@@ -83,5 +87,12 @@
 
   &--light {
     background: white;
+  }
+
+  &__page-heading {
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    border-bottom: 1px solid $color__black--700;
   }
 }
