@@ -196,8 +196,8 @@ class SpatialSelection extends Component {
 
   // Draws a leaflet shape based on provided props
   renderShape(props) {
-    const { mapRef } = props
-    const map = mapRef.leafletElement
+    const { featureGroupRef = {} } = this
+    const { leafletElement: featureGroup } = featureGroupRef
 
     const {
       pointSearch,
@@ -207,33 +207,33 @@ class SpatialSelection extends Component {
 
     if (pointSearch) {
       this.setState({ drawnPoints: pointSearch })
-      this.renderPoint(getShape([pointSearch]), map)
+      this.renderPoint(getShape([pointSearch]), featureGroup)
     } else if (boundingBoxSearch) {
       this.setState({ drawnPoints: boundingBoxSearch })
       const points = splitListOfPoints(boundingBoxSearch)
-      this.renderBoundingBox(getShape(points), map)
+      this.renderBoundingBox(getShape(points), featureGroup)
     } else if (polygonSearch) {
       this.setState({ drawnPoints: polygonSearch })
       const points = splitListOfPoints(polygonSearch)
-      this.renderPolygon(getShape(points), map)
+      this.renderPolygon(getShape(points), featureGroup)
     }
   }
 
   // Draws a leaflet Marker
-  renderPoint(point, map) {
-    if (map) {
+  renderPoint(point, featureGroup) {
+    if (featureGroup) {
       const marker = new L.Marker(point[0], {
         icon: L.Draw.Marker.prototype.options.icon
       })
 
-      marker.addTo(map)
+      marker.addTo(featureGroup)
       this.setState({ drawnLayer: marker })
     }
   }
 
   // Draws a leaflet Rectangle
-  renderBoundingBox(rectangle, map) {
-    if (map) {
+  renderBoundingBox(rectangle, featureGroup) {
+    if (featureGroup) {
       const shape = rectangle
       // southwest longitude should not be greater than northeast
       if (shape[0].lng > shape[1].lng) {
@@ -248,14 +248,14 @@ class SpatialSelection extends Component {
       )
       const rect = new L.Rectangle(bounds, options)
 
-      rect.addTo(map)
+      rect.addTo(featureGroup)
       this.setState({ drawnLayer: rect })
     }
   }
 
   // Draws a leaflet Polygon
-  renderPolygon(polygon, map) {
-    if (map) {
+  renderPolygon(polygon, featureGroup) {
+    if (featureGroup) {
       const options = L.extend(
         {},
         L.Draw.Polygon.prototype.options.shapeOptions,
@@ -263,7 +263,7 @@ class SpatialSelection extends Component {
       )
       const poly = new L.SphericalPolygon(polygon, options)
 
-      poly.addTo(map)
+      poly.addTo(featureGroup)
       this.setState({ drawnLayer: poly })
     }
   }
@@ -272,7 +272,7 @@ class SpatialSelection extends Component {
     const { isProjectPage } = this.props
 
     const controls = (
-      <FeatureGroup>
+      <FeatureGroup ref={(ref) => { this.featureGroupRef = ref }}>
         <EditControl
           position="bottomright"
           onDrawStart={this.onDrawStart}
