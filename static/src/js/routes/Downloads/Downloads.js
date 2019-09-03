@@ -50,34 +50,35 @@ export const Downloads = ({
         <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
           <div className="route-wrapper__content">
             <header className="route-wrapper__header">
-              <SecondaryToolbarContainer />
+              <div className="route-wrapper__header-primary">
+                <SecondaryToolbarContainer />
+              </div>
+              <div className="route-wrapper__header-secondary">
+                <Switch>
+                  <Route exact path={`${path}/:id`}>
+                    <nav className="route-wrapper__content-nav">
+                      <PortalLinkContainer
+                        className="route-wrapper__content-nav-link"
+                        to={{
+                          pathname: '/projects',
+                          search: source
+                        }}
+                        onClick={() => { onChangePath(`/projects/${source}`) }}
+                      >
+                        <i className="fa fa-arrow-circle-o-left" />
+                        {' Back to Project'}
+                      </PortalLinkContainer>
+                    </nav>
+                  </Route>
+                </Switch>
+              </div>
             </header>
-
-            <Switch>
-              <Route exact path={`${path}`}>
-                <div className="route-wrapper__content-inner">
-                  <DownloadHistoryContainer />
-                </div>
-              </Route>
-              <Route exact path={`${path}/:id`}>
-                <nav className="route-wrapper__content-nav">
-                  <PortalLinkContainer
-                    className="route-wrapper__content-nav-link"
-                    to={{
-                      pathname: '/projects',
-                      search: source
-                    }}
-                    onClick={() => { onChangePath(`/projects/${source}`) }}
-                  >
-                    <i className="fa fa-arrow-circle-o-left" />
-                    {' Back to Project'}
-                  </PortalLinkContainer>
-                </nav>
-                <div className="route-wrapper__content-inner">
-                  <OrderStatusContainer />
-                </div>
-              </Route>
-            </Switch>
+            <div className="route-wrapper__content-inner">
+              <Switch>
+                <Route exact path={`${path}`} component={DownloadHistoryContainer} />
+                <Route exact path={`${path}/:id`} component={OrderStatusContainer} />
+              </Switch>
+            </div>
           </div>
         </div>
       </Route>

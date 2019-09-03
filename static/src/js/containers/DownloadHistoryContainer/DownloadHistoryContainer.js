@@ -9,6 +9,8 @@ import actions from '../../actions'
 import { PortalLinkContainer } from '../PortalLinkContainer/PortalLinkContainer'
 import pluralize from '../../util/pluralize'
 
+import './DownloadHistoryContainer.scss'
+
 const mapStateToProps = state => ({
   authToken: state.authToken,
   portal: state.portal,
@@ -58,10 +60,10 @@ export class DownloadHistoryContainer extends Component {
 
     return (
       <>
-        <h2>Download Status & History</h2>
+        <h2 className="route-wrapper__page-heading">Download Status & History</h2>
         {
           retrievalHistory.length > 0 ? (
-            <Table striped variant="dark">
+            <Table className="order-status-table" striped variant="dark">
               <thead>
                 <tr>
                   <th>Contents</th>
@@ -90,7 +92,7 @@ export class DownloadHistoryContainer extends Component {
                             {this.retrievalDescription(collections)}
                           </PortalLinkContainer>
                         </td>
-                        <td>
+                        <td className="order-status-table__ago">
                           <TimeAgo date={createdAt} />
                         </td>
                       </tr>
