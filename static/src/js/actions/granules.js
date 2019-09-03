@@ -19,6 +19,7 @@ import {
   UPDATE_GRANULE_RESULTS,
   ADD_GRANULE_RESULTS_FROM_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
+  CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA
 } from '../constants/actionTypes'
@@ -74,6 +75,10 @@ export const onExcludeGranule = payload => ({
 export const onUndoExcludeGranule = payload => ({
   type: UNDO_EXCLUDE_GRANULE_ID,
   payload
+})
+
+export const onClearExcludedGranules = () => ({
+  type: CLEAR_EXCLUDE_GRANULE_ID
 })
 
 export const updateGranuleLinks = payload => ({
@@ -147,7 +152,6 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
 export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState) => {
-  console.log('asdf')
   const { authToken } = getState()
 
   const requestObject = new OusGranuleRequest(authToken)
@@ -213,6 +217,10 @@ export const fetchRetrievalCollectionGranuleLinks = data => (dispatch) => {
 
 export const undoExcludeGranule = collectionId => (dispatch) => {
   dispatch(onUndoExcludeGranule(collectionId))
+}
+
+export const clearExcludedGranules = collectionId => (dispatch) => {
+  dispatch(onClearExcludedGranules(collectionId))
 }
 
 export const getGranules = () => (dispatch, getState) => {

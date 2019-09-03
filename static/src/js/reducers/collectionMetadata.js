@@ -4,6 +4,7 @@ import {
   EXCLUDE_GRANULE_ID,
   RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
+  CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_METADATA,
   UPDATE_PROJECT_GRANULES,
   TOGGLE_COLLECTION_VISIBILITY,
@@ -145,6 +146,22 @@ const collectionMetadataReducer = (state = initialState, action) => {
         }
       }
     }
+    case CLEAR_EXCLUDE_GRANULE_ID: {
+      const { allIds } = state
+      const byId = {
+        ...state.byId
+      }
+
+      allIds.forEach((collectionId) => {
+        byId[collectionId].excludedGranuleIds = []
+      })
+
+      return {
+        ...state,
+        byId
+      }
+    }
+
     case COPY_GRANULE_RESULTS_TO_COLLECTION: {
       const { collectionId, granules } = action.payload
       const {

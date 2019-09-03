@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 import actions from '../index'
 import { updateCollectionQuery, updateGranuleQuery } from '../search'
 import {
+  CLEAR_EXCLUDE_GRANULE_ID,
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_QUERY,
   UPDATE_SHAPEFILE,
@@ -87,6 +88,9 @@ describe('changeQuery', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         keyword: 'new keyword',
@@ -100,6 +104,69 @@ describe('changeQuery', () => {
 
     // was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('should wipe excluded granule ids when overideTemporal is modified', () => {
+    const newQuery = {
+      collection: {
+        overideTemporal: {
+          endDate: '2019-02-09T00:17:36.267Z',
+          startDate: '2018-12-28T23:04:23.677Z'
+        }
+      }
+    }
+
+    // mockStore with initialState
+    const store = mockStore({
+      focusedCollection: '',
+      query: {
+        collection: {}
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeQuery({ ...newQuery }))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+  })
+
+  test('should wipe excluded granule ids when gridName is modified', () => {
+    const newQuery = {
+      collection: {
+        gridName: 'Test Grid'
+      }
+    }
+
+    // mockStore with initialState
+    const store = mockStore({
+      focusedCollection: '',
+      query: {
+        collection: {}
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeQuery({ ...newQuery }))
+
+    // Is updateCollectionQuery called with the right payload
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
   })
 })
 
@@ -284,13 +351,16 @@ describe('removeGridFilter', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         gridName: '',
         pageNum: 1
       }
     })
-    expect(storeActions[1]).toEqual({
+    expect(storeActions[2]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: {
         gridCoords: '',
@@ -328,32 +398,35 @@ describe('removeSpatialFilter', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         pageNum: 1,
         spatial: {}
       }
     })
-    expect(storeActions[1]).toEqual({
+    expect(storeActions[2]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: {
         pageNum: 1
       }
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: CLEAR_COLLECTION_GRANULES
     })
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: []
       }
     })
-    expect(storeActions[4]).toEqual({
+    expect(storeActions[5]).toEqual({
       type: TOGGLE_DRAWING_NEW_LAYER,
       payload: false
     })
-    expect(storeActions[5]).toEqual({
+    expect(storeActions[6]).toEqual({
       type: UPDATE_SHAPEFILE,
       payload: {
         shapefileError: false,
@@ -394,6 +467,9 @@ describe('removeTemporalFilter', () => {
     // Is updateCollectionQuery called with the right payload
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         pageNum: 1,
@@ -446,26 +522,29 @@ describe('clearFilters', () => {
 
     // Is updateCollectionQuery called with the right payload
     expect(storeActions[0]).toEqual({
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    })
+    expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: emptyQuery
     })
-    expect(storeActions[1]).toEqual({
+    expect(storeActions[2]).toEqual({
       type: UPDATE_GRANULE_QUERY,
       payload: {
         gridCoords: '',
         pageNum: 1
       }
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: CLEAR_COLLECTION_GRANULES
     })
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: UPDATE_TIMELINE_INTERVALS,
       payload: {
         results: []
       }
     })
-    expect(storeActions[4]).toEqual({
+    expect(storeActions[5]).toEqual({
       type: UPDATE_SHAPEFILE,
       payload: {
         shapefileName: undefined,
