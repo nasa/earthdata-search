@@ -5,8 +5,6 @@ import {
   masterOverlayPanelDragStart,
   masterOverlayPanelDragEnd,
   masterOverlayPanelResize,
-  granuleResultsPanelUpdateSortOrder,
-  granuleResultsPanelUpdateSearchValue,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
@@ -17,8 +15,6 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
-  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
@@ -91,50 +87,6 @@ describe('masterOverlayPanelResize', () => {
     expect(storeActions[0]).toEqual({
       type: MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
       payload: 100
-    })
-  })
-})
-
-describe('granuleResultsPanelUpdateSortOrder', () => {
-  test('should create an action to update the state', () => {
-    const store = mockStore({
-      ui: {
-        granuleResultsPanel: {
-          sortOrder: '-start_date',
-          searchValue: ''
-        }
-      }
-    })
-
-    const payload = ['new sort order']
-    store.dispatch(granuleResultsPanelUpdateSortOrder(payload))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-      payload: ['new sort order']
-    })
-  })
-})
-
-describe('granuleResultsPanelUpdateSearchValue', () => {
-  test('should create an action to update the state', () => {
-    const store = mockStore({
-      ui: {
-        granuleResultsPanel: {
-          sortOrder: '-start_date',
-          searchValue: ''
-        }
-      }
-    })
-
-    const payload = 'some new value'
-    store.dispatch(granuleResultsPanelUpdateSearchValue(payload))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-      payload: 'some new value'
     })
   })
 })
