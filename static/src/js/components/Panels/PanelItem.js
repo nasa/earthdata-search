@@ -54,6 +54,7 @@ export class PanelItem extends Component {
       backButtonOptions,
       children,
       footer,
+      header,
       hideFooter,
       isActive,
       onChangePanel
@@ -107,7 +108,16 @@ export class PanelItem extends Component {
         className={className}
       >
         <header className="panel-item__header">
-          {backButton}
+          {
+            header && (
+              <div className="panel-item__header-body">
+                {header}
+              </div>
+            )
+          }
+          <div className="panel-item__header-nav">
+            {backButton}
+          </div>
         </header>
         <div
           className="panel-item__content"
@@ -139,6 +149,7 @@ export class PanelItem extends Component {
 PanelItem.defaultProps = {
   backButtonOptions: null,
   footer: null,
+  header: null,
   hideFooter: false,
   isActive: false,
   onChangePanel: null
@@ -152,6 +163,7 @@ PanelItem.propTypes = {
   }),
   children: PropTypes.node.isRequired,
   footer: PropTypes.node,
+  header: PropTypes.node,
   hideFooter: PropTypes.bool,
   isActive: PropTypes.bool,
   onChangePanel: PropTypes.func

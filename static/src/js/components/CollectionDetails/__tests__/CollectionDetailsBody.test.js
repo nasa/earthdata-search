@@ -143,7 +143,7 @@ describe('CollectionDetails component', () => {
       const { enzymeWrapper } = setup()
       const children = enzymeWrapper.find(CollapsePanel).children()
       expect(enzymeWrapper.find(CollapsePanel).props().className).toEqual('collection-details-body__for-devs')
-      expect(enzymeWrapper.find(CollapsePanel).props().headerText).toEqual('For Developers')
+      expect(enzymeWrapper.find(CollapsePanel).props().header).toEqual('For Developers')
       expect(enzymeWrapper.find(CollapsePanel).props().panelClassName).toEqual('')
       expect(enzymeWrapper.find(CollapsePanel).props().scrollToBottom).toEqual(true)
       expect(children.find('.collection-details-body__dev-list a').length).toEqual(7)

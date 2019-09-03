@@ -339,21 +339,19 @@ class ProjectPanels extends PureComponent {
           secondaryHeading="Edit Options"
           footer={editOptionsFooter}
         >
-          <PanelItem>
-            <>
-              <DataQualitySummary dataQualitySummaries={collectionDataQualitySummaries} />
-
-              <AccessMethod
-                accessMethods={accessMethods}
-                index={index}
-                metadata={metadata}
-                shapefileId={shapefileId}
-                onSelectAccessMethod={onSelectAccessMethod}
-                onSetActivePanel={onSetActivePanel}
-                onUpdateAccessMethod={onUpdateAccessMethod}
-                selectedAccessMethod={selectedAccessMethod}
-              />
-            </>
+          <PanelItem
+            header={<DataQualitySummary dataQualitySummaries={collectionDataQualitySummaries} />}
+          >
+            <AccessMethod
+              accessMethods={accessMethods}
+              index={index}
+              metadata={metadata}
+              shapefileId={shapefileId}
+              onSelectAccessMethod={onSelectAccessMethod}
+              onSetActivePanel={onSetActivePanel}
+              onUpdateAccessMethod={onUpdateAccessMethod}
+              selectedAccessMethod={selectedAccessMethod}
+            />
           </PanelItem>
           <PanelItem
             hideFooter

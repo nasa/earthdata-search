@@ -11,7 +11,7 @@ function setup() {
     buttonClassName: 'test-button-class',
     className: 'test-wrap-class',
     children: <div className="test-child-wrap">Im a child!</div>,
-    headerText: 'test-header-text',
+    header: 'test-header-text',
     panelClassName: 'test-panel-class',
     scrollToBottom: false
   }
@@ -37,7 +37,7 @@ describe('CollapsePanel component', () => {
     enzymeWrapper.instance().onToggleClick = jest.fn()
     const button = enzymeWrapper.find('button')
     expect(button.length).toEqual(1)
-    expect(button.text()).toEqual('test-header-text ')
+    expect(button.text()).toEqual('test-header-text')
   })
 
   test('toggles when clicked', () => {
