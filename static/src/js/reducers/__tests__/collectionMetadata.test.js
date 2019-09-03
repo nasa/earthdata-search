@@ -2,6 +2,7 @@ import collectionMetadataReducer from '../collectionMetadata'
 import {
   COPY_GRANULE_RESULTS_TO_COLLECTION,
   CLEAR_COLLECTION_GRANULES,
+  CLEAR_EXCLUDE_GRANULE_ID,
   EXCLUDE_GRANULE_ID,
   RESTORE_COLLECTIONS,
   UNDO_EXCLUDE_GRANULE_ID,
@@ -200,7 +201,6 @@ describe('RESTORE_COLLECTIONS', () => {
   })
 })
 
-
 describe('EXCLUDE_GRANULE_ID', () => {
   test('returns the correct state', () => {
     const action = {
@@ -389,5 +389,110 @@ describe('UPDATE_PROJECT_GRANULES', () => {
     }
 
     expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('CLEAR_EXCLUDE_GRANULE_ID', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: CLEAR_EXCLUDE_GRANULE_ID
+    }
+
+    const initialState = {
+      allIds: ['collection1', 'collection2'],
+      byId: {
+        collection1: {
+          excludedGranuleIds: ['granule1', 'granule2'],
+          granules: {
+            allIds: ['granule1'],
+            byId: {
+              granule1: {
+                mock: 'granule1'
+              }
+            }
+          },
+          metadata: {
+            mock: 'collection1'
+          }
+        },
+        collection2: {
+          excludedGranuleIds: ['granule1'],
+          granules: {
+            allIds: ['granule1'],
+            byId: {
+              granule1: {
+                mock: 'granule1'
+              }
+            }
+          },
+          metadata: {
+            mock: 'collection1'
+          }
+        },
+        collection3: {
+          granules: {
+            allIds: ['granule1'],
+            byId: {
+              granule1: {
+                mock: 'granule1'
+              }
+            }
+          },
+          metadata: {
+            mock: 'collection2'
+          }
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      allIds: ['collection1', 'collection2'],
+      byId: {
+        collection1: {
+          excludedGranuleIds: [],
+          granules: {
+            allIds: ['granule1'],
+            byId: {
+              granule1: {
+                mock: 'granule1'
+              }
+            }
+          },
+          metadata: {
+            mock: 'collection1'
+          }
+        },
+        collection2: {
+          excludedGranuleIds: [],
+          granules: {
+            allIds: ['granule1'],
+            byId: {
+              granule1: {
+                mock: 'granule1'
+              }
+            }
+          },
+          metadata: {
+            mock: 'collection1'
+          }
+        },
+        collection3: {
+          granules: {
+            allIds: ['granule1'],
+            byId: {
+              granule1: {
+                mock: 'granule1'
+              }
+            }
+          },
+          metadata: {
+            mock: 'collection2'
+          }
+        }
+      }
+    }
+
+    expect(collectionMetadataReducer(initialState, action)).toEqual(expectedState)
   })
 })

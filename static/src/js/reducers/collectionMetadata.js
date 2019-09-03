@@ -153,7 +153,9 @@ const collectionMetadataReducer = (state = initialState, action) => {
       }
 
       allIds.forEach((collectionId) => {
-        byId[collectionId].excludedGranuleIds = []
+        if ('excludedGranuleIds' in byId[collectionId]) {
+          byId[collectionId].excludedGranuleIds = []
+        }
       })
 
       return {
