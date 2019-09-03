@@ -86,12 +86,10 @@ describe('ProjectHeader component', () => {
     })
 
     test('renders collection count correctly', () => {
-      // const { enzymeWrapper } = setup('multi-collection')
       expect(enzymeWrapper.find('.project-header__stats-item--collections').text()).toEqual('2 Collections')
     })
 
     test('renders collection size correctly', () => {
-      // const { enzymeWrapper } = setup('multi-collection')
       expect(enzymeWrapper.find('.project-header__stats-item--size').text().indexOf('9.0 MB') > -1).toEqual(true)
     })
   })
@@ -134,7 +132,6 @@ describe('ProjectHeader component', () => {
     })
 
     test('renders granule count correctly', () => {
-      // const { enzymeWrapper } = setup('multi-granule')
       expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('6 Granules')
     })
   })
