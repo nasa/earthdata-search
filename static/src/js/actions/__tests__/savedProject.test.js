@@ -43,7 +43,8 @@ describe('updateProjectName', () => {
     const store = mockStore({
       router: {
         location: {
-          pathname: '/projectId=1'
+          pathname: '/projectId=1',
+          search: ''
         }
       },
       savedProject: {
