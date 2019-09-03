@@ -1,6 +1,4 @@
 import {
-  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
@@ -37,20 +35,6 @@ export const masterOverlayPanelResize = newHeight => (dispatch) => {
 export const masterOverlayPanelToggle = () => (dispatch) => {
   dispatch({
     type: MASTER_OVERLAY_PANEL_TOGGLE
-  })
-}
-
-export const granuleResultsPanelUpdateSortOrder = sortOrder => (dispatch) => {
-  dispatch({
-    type: GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-    payload: sortOrder
-  })
-}
-
-export const granuleResultsPanelUpdateSearchValue = searchValue => (dispatch) => {
-  dispatch({
-    type: GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-    payload: searchValue
   })
 }
 

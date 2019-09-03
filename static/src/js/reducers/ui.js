@@ -1,6 +1,4 @@
 import {
-  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
   MASTER_OVERLAY_PANEL_DRAG_END,
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
@@ -92,24 +90,6 @@ const uiReducer = (state = initialState, action) => {
           ...state.masterOverlayPanel,
           height: isOpen ? 0 : previousHeight,
           isOpen: !isOpen
-        }
-      }
-    }
-    case GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER: {
-      return {
-        ...state,
-        granuleResultsPanel: {
-          ...state.granuleResultsPanel,
-          sortOrder: action.payload
-        }
-      }
-    }
-    case GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE: {
-      return {
-        ...state,
-        granuleResultsPanel: {
-          ...state.granuleResultsPanel,
-          searchValue: action.payload
         }
       }
     }

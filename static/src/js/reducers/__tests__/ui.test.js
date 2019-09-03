@@ -4,8 +4,6 @@ import {
   MASTER_OVERLAY_PANEL_DRAG_START,
   MASTER_OVERLAY_PANEL_UPDATE_RESIZE,
   MASTER_OVERLAY_PANEL_TOGGLE,
-  GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-  GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
   TOGGLE_VIEW_ALL_FACETS_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
@@ -182,46 +180,6 @@ describe('MASTER_OVERLAY_PANEL_TOGGLE', () => {
 
       expect(uiReducer(initial, action)).toEqual(expectedState)
     })
-  })
-})
-
-describe('GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER', () => {
-  test('returns the correct state', () => {
-    const sortOrder = 'sort order'
-    const action = {
-      type: GRANULE_RESULTS_PANEL_UPDATE_SORT_ORDER,
-      payload: sortOrder
-    }
-
-    const expectedState = {
-      ...initialState,
-      granuleResultsPanel: {
-        ...initialState.granuleResultsPanel,
-        sortOrder
-      }
-    }
-
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE', () => {
-  test('returns the correct state', () => {
-    const searchValue = 'new search value'
-    const action = {
-      type: GRANULE_RESULTS_PANEL_UPDATE_SEARCH_VALUE,
-      payload: searchValue
-    }
-
-    const expectedState = {
-      ...initialState,
-      granuleResultsPanel: {
-        ...initialState.granuleResultsPanel,
-        searchValue
-      }
-    }
-
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
