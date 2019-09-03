@@ -128,10 +128,27 @@ export const getProjectCollections = () => (dispatch, getState) => {
   const collectionParams = prepareCollectionParams(getState())
   const searchParams = buildCollectionSearchParams(collectionParams)
 
+  const {
+    includeGranuleCounts,
+    includeHasGranules,
+    boundingBox,
+    hasGranulesOrCwic,
+    point,
+    polygon,
+    temporal
+  } = searchParams
+
   const response = getCollectionMetadata({
-    ...searchParams,
     conceptId: projectIds,
-    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod'
+    includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
+    includeGranuleCounts,
+    includeHasGranules,
+    boundingBox,
+    hasGranulesOrCwic,
+    pageSize: 20,
+    point,
+    polygon,
+    temporal
   }, authToken)
     .then(([collectionJson, collectionUmm]) => {
       const payload = []

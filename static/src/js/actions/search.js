@@ -1,5 +1,7 @@
+import { isEqual } from 'lodash'
 import actions from './index'
 import { UPDATE_COLLECTION_QUERY, UPDATE_GRANULE_QUERY } from '../constants/actionTypes'
+import { clearExcludedGranules } from './granules'
 
 export const updateCollectionQuery = payload => ({
   type: UPDATE_COLLECTION_QUERY,
@@ -11,7 +13,34 @@ export const updateGranuleQuery = payload => ({
   payload
 })
 
-export const changeQuery = newQuery => (dispatch) => {
+export const changeQuery = newQuery => (dispatch, getState) => {
+  // Pull out the values from the query being changed
+  const { collection } = newQuery
+  const {
+    gridName,
+    spatial,
+    temporal,
+    overideTemporal
+  } = collection
+
+  // Pull out data from the store to compare to, if there are changes we should clear the excluded granules
+  const { query } = getState()
+  const { collection: collectionQuery = {} } = query
+  const {
+    gridName: gridNameQuery,
+    spatial: spatialQuery,
+    temporal: temporalQuery,
+    overrideTemporal: overrideTemporalQuery
+  } = collectionQuery
+
+  if ((!isEqual(gridName, gridNameQuery))
+    || (!isEqual(spatial, spatialQuery))
+    || (!isEqual(temporal, temporalQuery))
+    || (!isEqual(overideTemporal, overrideTemporalQuery))
+  ) {
+    dispatch(clearExcludedGranules())
+  }
+
   dispatch(updateCollectionQuery({
     pageNum: 1,
     ...newQuery.collection
