@@ -5,6 +5,8 @@ import $ from 'jquery'
 
 import scrollParent from '../../util/scrollParent'
 
+import './CollapsePanel.scss'
+
 window.$ = $
 
 export class CollapsePanel extends Component {
@@ -37,7 +39,7 @@ export class CollapsePanel extends Component {
       buttonClassName,
       className,
       children,
-      headerText,
+      header,
       panelClassName
     } = this.props
     const { open } = this.state
@@ -57,8 +59,12 @@ export class CollapsePanel extends Component {
           aria-controls="collapse-text"
           aria-expanded={open}
         >
-          {`${headerText} `}
-          {icon}
+          <span className="collapse-panel__button-primary">
+            {header}
+          </span>
+          <span className="collapse-panel__button-secondary">
+            {icon}
+          </span>
         </button>
         <Collapse in={open} onEntering={this.onEntering}>
           <div id="collapse-text" className={panelClassNames}>
@@ -81,7 +87,10 @@ CollapsePanel.propTypes = {
   buttonClassName: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  headerText: PropTypes.string.isRequired,
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]).isRequired,
   panelClassName: PropTypes.string,
   scrollToBottom: PropTypes.bool
 }

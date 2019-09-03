@@ -225,7 +225,7 @@ export const CollectionDetailsBody = ({ focusedCollectionMetadata, onToggleRelat
       </div>
       <CollapsePanel
         className="collection-details-body__for-devs"
-        headerText="For Developers"
+        header="For Developers"
         scrollToBottom
       >
         <div className="row">
