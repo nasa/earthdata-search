@@ -7,8 +7,6 @@ import actions from '../../actions'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 
 const mapStateToProps = state => ({
-  authToken: state.authToken,
-  portal: state.portal,
   retrievalHistory: state.retrievalHistory
 })
 
