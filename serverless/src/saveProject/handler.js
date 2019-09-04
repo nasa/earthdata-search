@@ -5,6 +5,7 @@ import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
 let dbConnection = null
 
@@ -41,10 +42,12 @@ const saveProject = async (event) => {
 
     // If there is a previous projectId, update that project
     if (projectId) {
+      const deobfuscatedProjectId = deobfuscateId(projectId)
+
       const existingProjectRecord = await dbConnection('projects')
         .first('id')
         .where({
-          id: projectId,
+          id: deobfuscatedProjectId,
           user_id: userId || null
         })
 
