@@ -182,8 +182,8 @@ describe('ProjectHeader component', () => {
 
       enzymeWrapper.setState({ isEditingName: true })
 
-      expect(enzymeWrapper.find('.project-name__submit-button').length).toBe(1)
-      expect(enzymeWrapper.find('.project-name__edit-button').length).toBe(0)
+      expect(enzymeWrapper.find('.project-header__button--submit').length).toBe(1)
+      expect(enzymeWrapper.find('.project-header__button--edit').length).toBe(0)
     })
 
     test('when the state is not editing the edit button is visible', () => {
@@ -191,8 +191,8 @@ describe('ProjectHeader component', () => {
 
       enzymeWrapper.setState({ isEditingName: false })
 
-      expect(enzymeWrapper.find('.project-name__submit-button').length).toBe(0)
-      expect(enzymeWrapper.find('.project-name__edit-button').length).toBe(1)
+      expect(enzymeWrapper.find('.project-header__button--submit').length).toBe(0)
+      expect(enzymeWrapper.find('.project-header__button--edit').length).toBe(1)
     })
 
     test('focusing the text field sets the state to editing', () => {
@@ -207,7 +207,7 @@ describe('ProjectHeader component', () => {
     test('clicking the edit button sets the state to editing', () => {
       const { enzymeWrapper } = setup()
 
-      const editButton = enzymeWrapper.find('.project-name__edit-button')
+      const editButton = enzymeWrapper.find('.project-header__button--edit')
       editButton.simulate('click')
 
       expect(enzymeWrapper.state().isEditingName).toBeTruthy()
@@ -216,10 +216,10 @@ describe('ProjectHeader component', () => {
     test('clicking the submit button calls onUpdateProjectName', () => {
       const { enzymeWrapper, props } = setup()
 
-      const editButton = enzymeWrapper.find('.project-name__edit-button')
+      const editButton = enzymeWrapper.find('.project-header__button--edit')
       editButton.simulate('click')
 
-      const submitButton = enzymeWrapper.find('.project-name__submit-button')
+      const submitButton = enzymeWrapper.find('.project-header__button--submit')
       submitButton.simulate('click')
 
       expect(enzymeWrapper.state().isEditingName).toBeFalsy()
