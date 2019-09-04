@@ -43,11 +43,11 @@ export const PortalLinkContainer = (props) => {
       dispatch,
       history,
       location,
+      to,
       match,
       portalId,
       staticContext,
       target,
-      to,
       onClick,
       ...rest
     } = props
@@ -58,7 +58,7 @@ export const PortalLinkContainer = (props) => {
         {...rest}
         onClick={(event) => {
           if (onClick) onClick(event)
-          history.push(to)
+          history.push(newTo)
         }}
       />
     )
