@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
+import classNames from 'classnames'
 
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { commafy } from '../../util/commafy'
@@ -30,10 +31,11 @@ export class ProjectHeader extends Component {
 
     this.state = {
       isEditingName: false,
-      projectName: name
+      projectName: name || 'Untitled Project'
     }
 
-    this.textInput = React.createRef()
+    this.projectTitleInput = React.createRef()
+    this.projectTitleText = React.createRef()
 
     this.onInputChange = this.onInputChange.bind(this)
     this.handleNameSubmit = this.handleNameSubmit.bind(this)
@@ -41,6 +43,11 @@ export class ProjectHeader extends Component {
     this.handleKeypress = this.handleKeypress.bind(this)
     this.handleOnFocus = this.handleOnFocus.bind(this)
     this.focusTextField = this.focusTextField.bind(this)
+    this.handleNameKeyPress = this.handleNameKeyPress.bind(this)
+  }
+
+  componentDidMount() {
+    this.renderInput()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,19 +57,31 @@ export class ProjectHeader extends Component {
     const { savedProject: nextSavedProject } = nextProps
     const { name: nextName } = nextSavedProject
     if (name !== nextName) {
-      this.setState({ projectName: nextName })
+      this.setState({
+        projectName: nextName
+      },
+      () => this.renderInput())
     }
   }
 
   onInputChange(event) {
-    this.setState({ projectName: event.target.value })
+    this.setState({
+      projectName: event.target.value
+    }, () => this.renderInput())
   }
 
   handleNameSubmit() {
     const { onUpdateProjectName } = this.props
     const { projectName } = this.state
 
-    this.setState({ isEditingName: false })
+    const newName = projectName || 'Untitled Project'
+
+    this.setState({
+      projectName: newName,
+      isEditingName: false
+    },
+    () => this.renderInput())
+
     onUpdateProjectName(projectName)
   }
 
@@ -75,8 +94,15 @@ export class ProjectHeader extends Component {
   }
 
   handleEditClick() {
-    this.setState({ isEditingName: true })
-    this.focusTextField()
+    this.setState({
+      isEditingName: true
+    }, () => this.focusTextField())
+  }
+
+  handleNameKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleEditClick()
+    }
   }
 
   handleOnFocus() {
@@ -84,7 +110,14 @@ export class ProjectHeader extends Component {
   }
 
   focusTextField() {
-    this.textInput.current.focus()
+    this.projectTitleInput.current.focus()
+  }
+
+  renderInput() {
+    const input = this.projectTitleInput.current
+    const text = this.projectTitleText.current
+
+    input.style.width = `${text.getBoundingClientRect().width}px`
   }
 
   render() {
@@ -113,30 +146,55 @@ export class ProjectHeader extends Component {
       unit: totalUnit
     } = totalSize
 
+    const projectHeaderNameClasses = classNames([
+      'project-header__name',
+      {
+        'project-header__name--is-editing': isEditingName
+      }
+    ])
+
     return (
       <header className="project-header">
-        <h2 className="project-header__title">
-          <input
-            name="projectName"
-            placeholder="Untitled Project"
-            value={projectName}
-            onFocus={this.handleOnFocus}
-            onChange={this.onInputChange}
-            onKeyPress={this.handleKeypress}
-            ref={this.textInput}
-          />
+        <div className={projectHeaderNameClasses}>
+          <div className="project-header__name-wrap">
+            <div className="project-header__name-saved">
+              <h2 className="project-header__title">
+                <span
+                  className="project-header__text-wrap"
+                  ref={this.projectTitleText}
+                  onClick={this.handleEditClick}
+                  role="button"
+                  tabIndex={0}
+                  onKeyPress={this.handleNameKeyPress}
+                >
+                  {projectName}
+                </span>
+              </h2>
+            </div>
+            <div className="project-header__name-editing">
+              <input
+                className="project-header__title"
+                name="projectName"
+                value={projectName}
+                onFocus={this.handleOnFocus}
+                onChange={this.onInputChange}
+                onKeyPress={this.handleKeypress}
+                ref={this.projectTitleInput}
+              />
+            </div>
+          </div>
           {
             isEditingName && (
               <button
                 type="button"
-                className="project-name__submit-button"
+                className="project-header__button project-header__button--submit"
                 label="Submit project name"
                 onClick={this.handleNameSubmit}
               >
                 <i className="fa fa-check" />
               </button>
               // <Button
-              //   className="project-name__submit-button"
+              //   className="project-header__submit-button"
               //   label="Submit project name"
               //   onClick={this.handleNameSubmit}
               // >
@@ -148,7 +206,7 @@ export class ProjectHeader extends Component {
             !isEditingName && (
               <button
                 type="button"
-                className="project-name__edit-button"
+                className="project-header__button project-header__button--edit"
                 label="Edit project name"
                 onClick={this.handleEditClick}
               >
@@ -163,7 +221,7 @@ export class ProjectHeader extends Component {
               // </Button>
             )
           }
-        </h2>
+        </div>
         <ul className="project-header__stats-list">
           {!Number.isNaN(totalGranules) && (
             <>
