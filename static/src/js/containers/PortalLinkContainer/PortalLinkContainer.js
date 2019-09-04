@@ -1,21 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 const mapStateToProps = state => ({
   portalId: state.portal.portalId
 })
 
-export const PortalLinkContainer = ({
-  children,
-  className,
-  onClick,
-  portalId,
-  to,
-  type,
-  target
-}) => {
+export const PortalLinkContainer = (props) => {
+  const {
+    children,
+    className,
+    onClick,
+    portalId,
+    to,
+    type,
+    target
+  } = props
+
   const portalPrefix = `/portal/${portalId}`
   let newTo = to
 
@@ -33,6 +35,33 @@ export const PortalLinkContainer = ({
     if (typeof to === 'string') {
       newTo = `${portalPrefix}${to}`
     }
+  }
+
+  if (type === 'button') {
+    // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
+    const {
+      dispatch,
+      history,
+      location,
+      match,
+      portalId,
+      staticContext,
+      target,
+      to,
+      onClick,
+      ...rest
+    } = props
+
+    return (
+      <button
+        type="button"
+        {...rest}
+        onClick={(event) => {
+          if (onClick) onClick(event)
+          history.push(to)
+        }}
+      />
+    )
   }
 
   return (
@@ -53,12 +82,18 @@ PortalLinkContainer.defaultProps = {
   className: '',
   onClick: null,
   portalId: '',
+  staticContext: null,
   type: '',
   target: '',
   to: ''
 }
 
 PortalLinkContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
+  staticContext: PropTypes.shape({}),
   children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
@@ -71,4 +106,6 @@ PortalLinkContainer.propTypes = {
   target: PropTypes.string
 }
 
-export default connect(mapStateToProps)(PortalLinkContainer)
+export default withRouter(
+  connect(mapStateToProps)(PortalLinkContainer)
+)

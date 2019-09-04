@@ -30,13 +30,15 @@ class GranuleResultsHeader extends Component {
 
     this.state = {
       sortOrder: granuleFilters.sortKey,
-      searchValue: granuleFilters.readableGranuleName
+      searchValue: granuleFilters.readableGranuleName || '',
+      prevSearchValue: granuleFilters.readableGranuleName
     }
 
     this.handleUpdateSortOrder = this.handleUpdateSortOrder.bind(this)
     this.handleUpdateSearchValue = this.handleUpdateSearchValue.bind(this)
     this.handleBlurSearchValue = this.handleBlurSearchValue.bind(this)
     this.handleUndoExcludeGranule = this.handleUndoExcludeGranule.bind(this)
+    this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
   }
 
   handleUpdateSortOrder(e) {
@@ -53,21 +55,41 @@ class GranuleResultsHeader extends Component {
 
   handleUpdateSearchValue(e) {
     const { value } = e.target
-    const splitValue = value.split(/[,\s\n]\s*/g).join(',')
+
     this.setState({
-      searchValue: splitValue
+      searchValue: value.split(/[,\s\n]\s*/g).join(',')
     })
   }
 
-  handleBlurSearchValue() {
+  handleSearch() {
     const { focusedCollectionMetadata, onApplyGranuleFilters } = this.props
     const [collectionId] = Object.keys(focusedCollectionMetadata)
 
-    const { searchValue } = this.state
-    let readableGranuleName
-    if (searchValue) readableGranuleName = searchValue.split(',')
+    const { searchValue, prevSearchValue } = this.state
 
-    onApplyGranuleFilters(collectionId, { readableGranuleName })
+    if (searchValue !== prevSearchValue) {
+      let readableGranuleName = null
+
+      if (searchValue) {
+        readableGranuleName = searchValue.split(',')
+      }
+
+      onApplyGranuleFilters(collectionId, { readableGranuleName })
+
+      this.setState({
+        prevSearchValue: searchValue
+      })
+    }
+  }
+
+  handleBlurSearchValue() {
+    this.handleSearch()
+  }
+
+  handleSearchKeyUp(e) {
+    if (e.key === 'Enter') {
+      this.handleSearch()
+    }
   }
 
   handleUndoExcludeGranule() {
@@ -179,7 +201,7 @@ class GranuleResultsHeader extends Component {
               </>
             )}
             {!metadata.is_cwic && (
-              <form className="form-inline" action="/">
+              <div className="form-inline">
                 <div className="form-row align-items-center">
                   <div className="col-auto">
                     <div className="form-group">
@@ -208,40 +230,41 @@ class GranuleResultsHeader extends Component {
                         className="col-form-label col-form-label-sm mr-1"
                         htmlFor="input__granule-search"
                       >
-                        Granule Search
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={(
-                            <Tooltip
-                              id="tooltip__granule-search"
-                              className="tooltip--large tooltip--ta-left tooltip--wide"
-                            >
-                              <strong>Wildcards:</strong>
-                              {' '}
-                              <ul className="m-0">
-                                <li>* (asterisk) matches any number of characters</li>
-                                <li>? (question mark) matches exactly one character.</li>
-                              </ul>
-                              <br />
-                              <strong>Delimiters:</strong>
-                              {' '}
-                              Separate multiple granule IDs by commas.
-                            </Tooltip>
-                          )}
-                        >
-                          <i className="fa fa-question-circle" />
-                        </OverlayTrigger>
-                        :
+                        Granule Search:
                       </label>
-                      <input
-                        id="input__granule-search"
-                        className="form-control form-control-sm granule-results-header__granule-search-input"
-                        type="text"
-                        placeholder="Search Single of Multiple Granule IDs..."
-                        onBlur={this.handleBlurSearchValue}
-                        onChange={this.handleUpdateSearchValue}
-                        value={searchValue}
-                      />
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={(
+                          <Tooltip
+                            id="tooltip__granule-search"
+                            className="tooltip--large tooltip--ta-left tooltip--wide"
+                          >
+                            <strong>Wildcards:</strong>
+                            {' '}
+                            <ul className="m-0">
+                              <li>* (asterisk) matches any number of characters</li>
+                              <li>? (question mark) matches exactly one character.</li>
+                            </ul>
+                            <br />
+                            <strong>Delimiters:</strong>
+                            {' '}
+                            Separate multiple granule IDs by commas.
+                          </Tooltip>
+                        )}
+                      >
+                        <span>
+                          <input
+                            id="input__granule-search"
+                            className="form-control form-control-sm granule-results-header__granule-search-input"
+                            type="text"
+                            placeholder="Search Single of Multiple Granule IDs..."
+                            onBlur={this.handleBlurSearchValue}
+                            onChange={this.handleUpdateSearchValue}
+                            onKeyUp={this.handleSearchKeyUp}
+                            value={searchValue}
+                          />
+                        </span>
+                      </OverlayTrigger>
                     </div>
                   </div>
                   <div className="col-auto">
@@ -290,7 +313,7 @@ class GranuleResultsHeader extends Component {
                     )
                   }
                 </div>
-              </form>
+              </div>
             )}
           </div>
         </div>

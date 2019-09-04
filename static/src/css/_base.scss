@@ -1,5 +1,11 @@
 * > * {
   box-sizing: inherit;
+
+  &:focus {
+    border-color: $color__black--300;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem $color__black--200;
+  }
 }
 
 html,
@@ -29,3 +35,12 @@ body {
     font-size: 115%;
   }
 }
+
+button {
+  &:focus {
+    border-color: $color__black--300;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem $color__black--200;
+  }
+}
+
