@@ -48,8 +48,6 @@ import {
   updateFeatureFacet
 } from './facets'
 import {
-  granuleResultsPanelUpdateSearchValue,
-  granuleResultsPanelUpdateSortOrder,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
@@ -131,8 +129,6 @@ const actions = {
   getProjectGranules,
   getTimeline,
   getViewAllFacets,
-  granuleResultsPanelUpdateSearchValue,
-  granuleResultsPanelUpdateSortOrder,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,

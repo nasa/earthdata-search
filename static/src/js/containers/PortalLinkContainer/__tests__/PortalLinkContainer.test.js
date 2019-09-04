@@ -67,4 +67,24 @@ describe('PortalLinkContainer component', () => {
     expect(link.props().children).toEqual('Click Here')
     expect(link.props().to).toEqual('/portal/simple/search')
   })
+
+  test('should return a button when the type is set', () => {
+    const pushMock = jest.fn()
+    const { enzymeWrapper } = setup({
+      type: 'button',
+      history: {
+        push: pushMock
+      }
+    })
+
+    const button = enzymeWrapper.find('button')
+    expect(button.props().className).toEqual('test-class')
+    expect(button.props().type).toEqual('button')
+    expect(button.props().children).toEqual('Click Here')
+
+    button.props().onClick()
+
+    expect(pushMock).toHaveBeenCalledTimes(1)
+    expect(pushMock).toHaveBeenCalledWith({ pathname: '/search' })
+  })
 })

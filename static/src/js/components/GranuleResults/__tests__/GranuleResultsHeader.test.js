@@ -72,10 +72,8 @@ describe('GranuleResultsHeader component', () => {
   test('renders the granule search with a tooltip', () => {
     const { enzymeWrapper } = setup()
     const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
-    const icon = overlayTrigger.find('.fa-question-circle')
 
     expect(overlayTrigger.length).toEqual(1)
-    expect(icon.length).toEqual(1)
   })
 
   describe('handleUpdateSortOrder', () => {
@@ -88,7 +86,11 @@ describe('GranuleResultsHeader component', () => {
       }
       enzymeWrapper.find('#input__sort-granules').simulate('change', mockEvent)
 
-      expect(enzymeWrapper.state()).toEqual({ searchValue: 'searchValue', sortOrder: 'start_date_oldest_first' })
+      expect(enzymeWrapper.state()).toEqual({
+        prevSearchValue: 'searchValue',
+        searchValue: 'searchValue',
+        sortOrder: 'start_date_oldest_first'
+      })
     })
 
     test('fires the onApplyGranuleFilters', () => {
@@ -115,7 +117,13 @@ describe('GranuleResultsHeader component', () => {
       }
       enzymeWrapper.find('#input__granule-search').simulate('change', mockEvent)
 
-      expect(enzymeWrapper.state()).toEqual({ searchValue: 'Some-new-value', sortOrder: '-start_date' })
+      enzymeWrapper.update()
+
+      expect(enzymeWrapper.state()).toEqual({
+        prevSearchValue: 'searchValue',
+        searchValue: 'Some-new-value',
+        sortOrder: '-start_date'
+      })
     })
   })
 
@@ -145,7 +153,9 @@ describe('GranuleResultsHeader component', () => {
       enzymeWrapper.find('#input__granule-search').simulate('blur')
 
       expect(props.onApplyGranuleFilters).toHaveBeenCalledTimes(1)
-      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', {})
+      expect(props.onApplyGranuleFilters).toHaveBeenCalledWith('collectionId', {
+        readableGranuleName: null
+      })
     })
   })
 })

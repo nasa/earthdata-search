@@ -190,8 +190,10 @@ const GranuleResultsItem = ({
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
               <PortalLinkContainer
+                className="button granule-results-item__button"
+                type="button"
+                title="View granule details"
                 onClick={() => handleClickGranuleDetails(id)}
-                className="collection-results__item-title-link"
                 to={{
                   pathname: '/search/granules/granule-details',
                   search: qs
@@ -204,13 +206,7 @@ const GranuleResultsItem = ({
                     )
                 }}
               >
-                <button
-                  className="button granule-results-item__button"
-                  type="button"
-                  title="View granule details"
-                >
-                  <i className="fa fa-info-circle" />
-                </button>
+                <i className="fa fa-info-circle" />
               </PortalLinkContainer>
               {
                 onlineAccessFlag && (
