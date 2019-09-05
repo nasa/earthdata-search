@@ -35,7 +35,6 @@ cat <<EOF > Dockerfile
 FROM node:10.15
 COPY . /build
 WORKDIR /build
-# RUN rm package-lock.json
 RUN npm install && npm install -g serverless && npm run build
 EOF
 
