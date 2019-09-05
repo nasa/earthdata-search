@@ -31,7 +31,7 @@ provider:
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
 
-    obfuscationSpin: ${env:OBFUSCATION_SPIN}
+    obfuscationSpin: ${self:custom.obfuscationSpin}
 
     configSecretId:
       Ref: DbPasswordSecret
@@ -76,6 +76,8 @@ package:
 
 custom:
   siteName: earthdata-search-${self:provider.stage}
+
+  obfuscationSpin: ${env:OBFUSCATION_SPIN}
 
   awsResources:
     vpc: ${env:VPC_ID}
