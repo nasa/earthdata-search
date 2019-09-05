@@ -99,6 +99,7 @@ describe('changePath', () => {
         map: {},
         query: {
           collection: {
+            hasGranulesOrCwic: true,
             overrideTemporal: {},
             pageNum: 1,
             spatial: {},
@@ -134,6 +135,7 @@ describe('changePath', () => {
       map: {},
       query: {
         collection: {
+          hasGranulesOrCwic: true,
           overrideTemporal: {},
           pageNum: 1,
           spatial: {},
