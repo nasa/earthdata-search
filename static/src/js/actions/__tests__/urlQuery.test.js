@@ -33,6 +33,7 @@ describe('updateStore', () => {
     }
 
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+    const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
     const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
     const getGranulesMock = jest.spyOn(actions, 'getGranules').mockImplementation(() => jest.fn())
     const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
@@ -53,6 +54,7 @@ describe('updateStore', () => {
     })
 
     expect(getCollectionsMock).toBeCalledTimes(1)
+    expect(getFocusedCollectionMock).toBeCalledTimes(1)
     expect(getProjectCollectionsMock).toBeCalledTimes(1)
     expect(getGranulesMock).toBeCalledTimes(1)
     expect(getTimelineMock).toBeCalledTimes(1)
@@ -62,7 +64,7 @@ describe('updateStore', () => {
 describe('changePath', () => {
   test('retrieves path from database if there is a projectId', async () => {
     nock(/localhost/)
-      .get(/get_project/)
+      .get(/projects/)
       .reply(200, {
         name: null,
         path: '/search?p=C00001-EDSC'
@@ -207,7 +209,7 @@ describe('changeUrl', () => {
     describe('when called with a projectId', () => {
       test('updates the stored path', async () => {
         nock(/localhost/)
-          .post('/save_project')
+          .post(/projects/)
           .reply(200, {
             project_id: 1,
             path: '/search?p=C00001-EDSC'
@@ -216,6 +218,7 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
+          query: {},
           router: {
             location: {
               pathname: '/projectId=1'
@@ -241,7 +244,7 @@ describe('changeUrl', () => {
 
       test('updates the url if a new projectId was created', async () => {
         nock(/localhost/)
-          .post('/save_project')
+          .post(/projects/)
           .reply(200, {
             project_id: 2,
             path: '/search?p=C00001-EDSC'

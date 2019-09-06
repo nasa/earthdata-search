@@ -48,8 +48,8 @@ describe('getProject', () => {
     })
 
     const event = {
-      queryStringParameters: {
-        projectId
+      pathParameters: {
+        id: projectId
       }
     }
 

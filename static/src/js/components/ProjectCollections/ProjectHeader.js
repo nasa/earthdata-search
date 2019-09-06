@@ -193,13 +193,6 @@ export class ProjectHeader extends Component {
               >
                 <i className="fa fa-check" />
               </button>
-              // <Button
-              //   className="project-header__submit-button"
-              //   label="Submit project name"
-              //   onClick={this.handleNameSubmit}
-              // >
-              //   <i className="fa fa-check" />
-              // </Button>
             )
           }
           {
@@ -212,13 +205,6 @@ export class ProjectHeader extends Component {
               >
                 <i className="fa fa-pencil" />
               </button>
-              // <Button
-              //   className="project-name__edit-button"
-              //   label="Edit project name"
-              //   onClick={this.handleEditClick}
-              // >
-              //   <i className="fa fa-pencil" />
-              // </Button>
             )
           }
         </div>

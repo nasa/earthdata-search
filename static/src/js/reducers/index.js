@@ -28,6 +28,7 @@ import projectPanelsReducer from './projectPanels'
 import projectReducer from './project'
 import shapefileReducer from './shapefile'
 import savedProjectReducer from './savedProject'
+import savedProjectsReducer from './savedProjects'
 
 export default history => combineReducers({
   authToken: authTokenReducer,
@@ -53,6 +54,7 @@ export default history => combineReducers({
   retrievalHistory: retrievalHistoryReducer,
   router: connectRouter(history),
   savedProject: savedProjectReducer,
+  savedProjects: savedProjectsReducer,
   searchResults: combineReducers({
     collections: collectionsResultsReducer,
     facets: facetsReducer,

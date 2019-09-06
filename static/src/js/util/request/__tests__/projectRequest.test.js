@@ -28,6 +28,20 @@ describe('ProjectRequest#permittedCmrKeys', () => {
   })
 })
 
+describe('ProjectRequest#all', () => {
+  test('calls Request#get', () => {
+    const token = '123'
+    const request = new ProjectRequest(token)
+
+    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
+
+    request.all()
+
+    expect(getMock).toBeCalledTimes(1)
+    expect(getMock).toBeCalledWith('/projects')
+  })
+})
+
 describe('ProjectRequest#save', () => {
   test('calls Request#post', () => {
     const request = new ProjectRequest()
@@ -38,20 +52,35 @@ describe('ProjectRequest#save', () => {
     request.save(params)
 
     expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('save_project', params)
+    expect(postMock).toBeCalledWith('/projects', params)
   })
 })
 
-describe('ProjectRequest#get', () => {
+describe('ProjectRequest#fetch', () => {
   test('calls Request#get', () => {
     const request = new ProjectRequest()
 
     const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
 
     const projectId = '12345'
-    request.get(projectId)
+    request.fetch(projectId)
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('get_project?projectId=12345')
+    expect(getMock).toBeCalledWith('/projects/12345')
+  })
+})
+
+describe('ProjectRequest#remove', () => {
+  test('calls Request#delete', () => {
+    const token = '123'
+    const request = new ProjectRequest(token)
+
+    const deleteMock = jest.spyOn(Request.prototype, 'delete').mockImplementation()
+
+    const projectId = '12345'
+    request.remove(projectId)
+
+    expect(deleteMock).toBeCalledTimes(1)
+    expect(deleteMock).toBeCalledWith('/projects/12345')
   })
 })

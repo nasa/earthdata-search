@@ -1,5 +1,3 @@
-import 'pg'
-
 import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
@@ -10,12 +8,12 @@ const getProject = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 
-  const params = event.queryStringParameters
+  const { pathParameters } = event
   const {
-    projectId
-  } = params
+    id
+  } = pathParameters
 
-  const decodedProjectId = deobfuscateId(projectId)
+  const decodedProjectId = deobfuscateId(id)
 
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
@@ -27,14 +25,12 @@ const getProject = async (event) => {
         id: decodedProjectId
       })
 
-    const { name, path } = existingProjectRecord
-
     // Return the name and path
     return {
       isBase64Encoded: false,
       statusCode: 200,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ name, path })
+      body: JSON.stringify(existingProjectRecord)
     }
   } catch (error) {
     console.log(error)

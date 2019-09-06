@@ -22,6 +22,8 @@ import ConnectedAuthCallbackContainer
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
+import SavedProjectsContainer from './containers/SavedProjectsContainer/SavedProjectsContainer'
+import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -66,6 +68,26 @@ class App extends Component {
                 render={() => (
                   <AuthRequiredContainer>
                     <Downloads />
+                  </AuthRequiredContainer>
+                )}
+              />
+              <Route
+                exact
+                path={this.portalPaths('/saved_projects')}
+                render={() => (
+                  <AuthRequiredContainer>
+                    <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
+                      <div className="route-wrapper__content">
+                        <header className="route-wrapper__header">
+                          <div className="route-wrapper__header-primary">
+                            <SecondaryToolbarContainer />
+                          </div>
+                        </header>
+                        <div className="route-wrapper__content-inner">
+                          <SavedProjectsContainer />
+                        </div>
+                      </div>
+                    </div>
                   </AuthRequiredContainer>
                 )}
               />

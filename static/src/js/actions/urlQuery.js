@@ -37,6 +37,7 @@ export const updateStore = ({
   }))
 
   dispatch(actions.getCollections())
+  dispatch(actions.getFocusedCollection())
   dispatch(actions.getProjectCollections())
   dispatch(actions.getGranules())
   dispatch(actions.getTimeline())
@@ -51,7 +52,7 @@ export const changePath = (path = '') => (dispatch) => {
 
     const { projectId } = parse(queryString)
 
-    const projectResponse = requestObject.get(projectId)
+    const projectResponse = requestObject.fetch(projectId)
       .then((response) => {
         const { data } = response
         const {
