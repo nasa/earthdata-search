@@ -128,13 +128,19 @@ describe('SpatialSelection component', () => {
     test('removes drawnLayers if they exist', () => {
       const { enzymeWrapper } = setup(defaultProps)
 
-      const drawnLayer = { remove: jest.fn() }
-      enzymeWrapper.setState({ drawnLayer })
+      enzymeWrapper.instance().featureGroupRef = {
+        leafletElement: {
+          removeLayer: jest.fn()
+        }
+      }
+
+      enzymeWrapper.setState({ drawnLayer: {} })
 
       const editControl = enzymeWrapper.find(EditControl)
       editControl.prop('onDrawStart')({ layerType: 'marker' })
 
-      expect(drawnLayer.remove.mock.calls.length).toBe(1)
+      expect(enzymeWrapper.instance().featureGroupRef.leafletElement.removeLayer.mock.calls.length)
+        .toBe(1)
     })
   })
 
