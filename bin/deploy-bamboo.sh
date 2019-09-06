@@ -42,7 +42,7 @@ dockerTag=edsc-$bamboo_STAGE_NAME
 docker build -t $dockerTag .
 
 # convenience function to invoke `docker run` with appropriate env vars instead of baking them into image
-dockerEnvRun() {
+dockerRun() {
     docker run \
         -e "NODE_ENV=production" \
         -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
@@ -57,11 +57,13 @@ dockerEnvRun() {
 # Execute serverless commands in Docker
 #######################################
 
+stageOpts="--stage $bamboo_STAGE_NAME"
+
 # Deploy AWS Resources
-dockerEnvRun serverless deploy --stage $bamboo_STAGE_NAME
+dockerRun serverless deploy $stageOpts
 
 # Migrate the database
-dockerEnvRun serverless invoke --function migrateDatabase --stage sit
+dockerRun serverless invoke $stageOpts --function migrateDatabase
 
 # Deploy static assets
-dockerEnvRun serverless client deploy --stage sit  --no-confirm
+dockerRun serverless client deploy $stageOpts --no-confirm
