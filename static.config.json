@@ -1,7 +1,7 @@
 {
   "application": {
-    "version": "1.101.1",
-    "env": "sit",
+    "version": "dev",
+    "env": "dev",
     "cmrTagNamespace": "edsc.extra.serverless",
     "thumbnailSize": {
       "height": 85,
@@ -21,7 +21,7 @@
       "apiHost": "http://localhost:3001"
     },
     "production": {
-      "apiHost": "https://d30czzksj9a4kf.cloudfront.net"
+      "apiHost": "http://localhost:3001"
     }
   },
   "earthdata": {
@@ -48,7 +48,7 @@
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
-      "edscHost": "https://search.sit.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -61,7 +61,7 @@
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
-      "edscHost": "https://search.uat.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -74,7 +74,7 @@
       "cmrHost": "https://cmr.earthdata.nasa.gov",
       "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
-      "edscHost": "https://search.earthdata.nasa.gov",
+      "edscHost": "http://localhost:8080",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     }
