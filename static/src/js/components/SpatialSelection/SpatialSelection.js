@@ -73,12 +73,16 @@ class SpatialSelection extends Component {
 
     this.state = {
       drawnLayer: null,
+      drawnLayerType: null,
       drawnPoints: null
     }
 
-    this.onCreate = this.onCreate.bind(this)
+    this.onCreated = this.onCreated.bind(this)
     this.onDrawStart = this.onDrawStart.bind(this)
     this.onDrawStop = this.onDrawStop.bind(this)
+    this.onEdited = this.onEdited.bind(this)
+    this.onDeleted = this.onDeleted.bind(this)
+    this.updateStateAndQuery = this.updateStateAndQuery.bind(this)
   }
 
   componentDidMount() {
@@ -121,8 +125,14 @@ class SpatialSelection extends Component {
     const { drawnLayer } = this.state
 
     if (drawnLayer) {
-      drawnLayer.remove()
-      this.setState({ drawnLayer: null })
+      const { featureGroupRef } = this
+      const { leafletElement } = featureGroupRef
+      leafletElement.removeLayer(drawnLayer)
+
+      this.setState({
+        drawnLayer: null,
+        drawnLayerType: null
+      })
     }
 
     const { layerType } = e
@@ -145,14 +155,21 @@ class SpatialSelection extends Component {
     })
   }
 
-  // Callback from EditControl, contains the layer that was just drawn
-  onCreate(e) {
-    const { layer, layerType } = e
-    e.layer.remove()
+  onEditStart(e) {
+    console.log('onEditStart', e, this)
+  }
 
-    // Update url/query with e.layer information
+  // Callback from EditControl, called when the layer is edited
+  onEdited() {
+    const { drawnLayer, drawnLayerType } = this.state
+    this.updateStateAndQuery(drawnLayer, drawnLayerType)
+  }
+
+  // Callback from EditControl, contains the layer that was just drawn
+  onCreated(e) {
+    const { layer, layerType } = e
+
     let type
-    let latLngs
     if (layerType === 'marker') {
       type = 'point'
     } else if (layerType === 'rectangle') {
@@ -161,9 +178,25 @@ class SpatialSelection extends Component {
       type = layerType
     }
 
+    this.updateStateAndQuery(layer, type)
+  }
+
+  // Callback from EditControl, called when the layer is deleted
+  onDeleted() {
+    const { onChangeQuery } = this.props
+    onChangeQuery({
+      collection: {
+        spatial: {}
+      }
+    })
+  }
+
+  // Determine the latLngs from the layer and type, then update the component state and the query
+  updateStateAndQuery(layer, type) {
     const { onChangeQuery } = this.props
 
     let originalLatLngs
+    let latLngs
     switch (type) {
       case 'point':
         latLngs = [layer.getLatLng()].map(p => `${p.lng},${p.lat}`)
@@ -183,6 +216,7 @@ class SpatialSelection extends Component {
 
     this.setState({
       drawnLayer: layer,
+      drawnLayerType: type,
       drawnPoints: latLngs.join()
     })
     onChangeQuery({
@@ -227,7 +261,10 @@ class SpatialSelection extends Component {
       })
 
       marker.addTo(featureGroup)
-      this.setState({ drawnLayer: marker })
+      this.setState({
+        drawnLayer: marker,
+        drawnLayerType: 'point'
+      })
     }
   }
 
@@ -249,7 +286,10 @@ class SpatialSelection extends Component {
       const rect = new L.Rectangle(bounds, options)
 
       rect.addTo(featureGroup)
-      this.setState({ drawnLayer: rect })
+      this.setState({
+        drawnLayer: rect,
+        drawnLayerType: 'boundingBox'
+      })
     }
   }
 
@@ -264,7 +304,10 @@ class SpatialSelection extends Component {
       const poly = new L.SphericalPolygon(polygon, options)
 
       poly.addTo(featureGroup)
-      this.setState({ drawnLayer: poly })
+      this.setState({
+        drawnLayer: poly,
+        drawnLayerType: 'polygon'
+      })
     }
   }
 
@@ -276,8 +319,11 @@ class SpatialSelection extends Component {
         position="bottomright"
         onDrawStart={this.onDrawStart}
         onDrawStop={this.onDrawStop}
-        onCreated={this.onCreate}
+        onCreated={this.onCreated}
         onMounted={this.onMounted}
+        onEdited={this.onEdited}
+        onDeleted={this.onDeleted}
+        onEditStart={this.onEditStart}
         draw={{
           polygon: {
             drawError: errorOptions,
