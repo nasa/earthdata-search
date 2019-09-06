@@ -8,7 +8,7 @@ import { Well } from '../../Well/Well'
 import { OrderStatus } from '../OrderStatus'
 import store from '../../../store/configureStore'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
-import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import * as getEnvironmentConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -58,7 +58,7 @@ describe('OrderStatus component', () => {
 
   describe('introduction', () => {
     beforeEach(() => {
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
+      jest.spyOn(getEnvironmentConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
     })
 
     test('displays the correct text', () => {

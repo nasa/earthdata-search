@@ -7,8 +7,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import './OrderStatus.scss'
 import { portalPath } from '../../../../../sharedUtils/portalPath'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { cmrEnv } from '../../../../../sharedUtils/cmrEnv'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export class OrderStatus extends Component {
   componentDidMount() {
@@ -64,12 +63,16 @@ export class OrderStatus extends Component {
       ...opendapOrders
     ]
 
+    const { edscHost } = getEnvironmentConfig()
+
     const introduction = (
       <p>
         {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-        <a href={`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/downloads/${id}`}>{`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/downloads/${id}`}</a>
+        <a href={`${edscHost}${portalPath(portal)}/downloads/${id}`}>
+          {`${edscHost}${portalPath(portal)}/downloads/${id}`}
+        </a>
         {' or the '}
-        <a href={`${getEarthdataConfig(cmrEnv()).edscHost}${portalPath(portal)}/downloads`}>Download Status and History</a>
+        <a href={`${edscHost}${portalPath(portal)}/downloads`}>Download Status and History</a>
         {' page.'}
       </p>
     )

@@ -19,12 +19,9 @@ const edlCallback = async (event) => {
   const params = event.queryStringParameters
   const { code, state } = params
 
-  const {
-    edscHost,
-    redirectUriPath
-  } = getEarthdataConfig(cmrEnv())
+  const { redirectUriPath } = getEarthdataConfig(cmrEnv())
+  const { apiHost, edscHost } = getEnvironmentConfig()
 
-  const { apiHost } = getEnvironmentConfig()
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)

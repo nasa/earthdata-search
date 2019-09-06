@@ -13,9 +13,7 @@ config="`cat static.config.json`"
 config="`jq '.application.version = $newValue' --arg newValue ${RELEASE_VERSION} <<< $config`"
 config="`jq '.application.env = $newValue' --arg newValue $bamboo_STAGE_NAME <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
-config="`jq '.earthdata.sit.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
-config="`jq '.earthdata.uat.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
-config="`jq '.earthdata.prod.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
+config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
 
 # overwrite static.config.json with new values
 echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
