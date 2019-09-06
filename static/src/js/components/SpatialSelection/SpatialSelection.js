@@ -272,39 +272,37 @@ class SpatialSelection extends Component {
     const { isProjectPage } = this.props
 
     const controls = (
-      <FeatureGroup ref={(ref) => { this.featureGroupRef = ref }}>
-        <EditControl
-          position="bottomright"
-          onDrawStart={this.onDrawStart}
-          onDrawStop={this.onDrawStop}
-          onCreated={this.onCreate}
-          onMounted={this.onMounted}
-          draw={{
-            polygon: {
-              drawError: errorOptions,
-              shapeOptions: colorOptions
-            },
-            rectangle: {
-              drawError: errorOptions,
-              shapeOptions: colorOptions
-            },
-            polyline: false,
-            circlemarker: false,
-            circle: false
-          }}
-          edit={{
-            selectedPathOptions: {
-              opacity: 0.6,
-              dashArray: '10, 10'
-            }
-          }}
-        />
-      </FeatureGroup>
+      <EditControl
+        position="bottomright"
+        onDrawStart={this.onDrawStart}
+        onDrawStop={this.onDrawStop}
+        onCreated={this.onCreate}
+        onMounted={this.onMounted}
+        draw={{
+          polygon: {
+            drawError: errorOptions,
+            shapeOptions: colorOptions
+          },
+          rectangle: {
+            drawError: errorOptions,
+            shapeOptions: colorOptions
+          },
+          polyline: false,
+          circlemarker: false,
+          circle: false
+        }}
+        edit={{
+          selectedPathOptions: {
+            opacity: 0.6,
+            dashArray: '10, 10'
+          }
+        }}
+      />
     )
     return (
-      <>
+      <FeatureGroup ref={(ref) => { this.featureGroupRef = ref }}>
         { !isProjectPage && controls }
-      </>
+      </FeatureGroup>
     )
   }
 }
