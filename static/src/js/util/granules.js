@@ -47,16 +47,16 @@ export const prepareGranuleParams = (state, projectCollectionId) => {
     return null
   }
 
-  const { excludedGranuleIds = [] } = collections.byId[collectionId]
+  // TODO: Use `collections.byId[collectionId]` as it appears to do the same thing
+  const focusedCollectionMetadata = getFocusedCollectionMetadata(collectionId, collections)
+  if (Object.keys(focusedCollectionMetadata).length === 0) return null
+
+  const { excludedGranuleIds = [] } = focusedCollectionMetadata
   const exclude = {}
   if (excludedGranuleIds.length > 0) {
     exclude.concept_id = []
     exclude.concept_id.push(...excludedGranuleIds)
   }
-
-  // TODO: Use `collections.byId[collectionId]` as it appears to do the same thing
-  const focusedCollectionMetadata = getFocusedCollectionMetadata(collectionId, collections)
-  if (Object.keys(focusedCollectionMetadata).length === 0) return null
 
   const {
     collection: collectionQuery,
