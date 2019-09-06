@@ -102,7 +102,8 @@ import {
 import { fetchRetrievalCollection } from './retrievalCollection'
 import { loadPortalConfig } from './portals'
 import { fetchDataQualitySummaries } from './dataQualitySummaries'
-import { updateProjectName, updateSavedProject } from './savedProject'
+import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
+import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 
 const actions = {
   addAccessMethods,
@@ -127,12 +128,15 @@ const actions = {
   clearCollectionGranules,
   clearFilters,
   deleteRetrieval,
+  deleteSavedProject,
   excludeGranule,
   fetchAccessMethods,
   fetchDataQualitySummaries,
   fetchRetrievalCollection,
   fetchRetrieval,
+  fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalHistory,
+  fetchSavedProjects,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,
@@ -141,6 +145,7 @@ const actions = {
   getProjectGranules,
   getTimeline,
   getViewAllFacets,
+  loadPortalConfig,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
@@ -150,11 +155,10 @@ const actions = {
   removeSpatialFilter,
   removeTemporalFilter,
   restoreCollections,
-  loadPortalConfig,
   restoreProject,
   saveShapefile,
   selectAccessMethod,
-  fetchRetrievalCollectionGranuleLinks,
+  setSavedProjects,
   shapefileErrored,
   submitRetrieval,
   toggleCollectionVisibility,
@@ -169,8 +173,8 @@ const actions = {
   undoExcludeGranule,
   updateAccessMethod,
   updateAuthToken,
-  updateCollectionGranuleFilters,
   updateCmrFacet,
+  updateCollectionGranuleFilters,
   updateFeatureFacet,
   updateGranuleMetadata,
   updateGranuleQuery,

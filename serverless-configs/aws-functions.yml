@@ -212,7 +212,7 @@
       - http:
           method: post
           cors: true
-          path: save_project
+          path: projects
 
   getProject:
     handler: serverless/src/getProject/handler.default
@@ -222,7 +222,7 @@
       - http:
           method: get
           cors: true
-          path: get_project
+          path: projects/{id}
 
   edlLogin:
     handler: serverless/src/edlLogin/handler.default
@@ -370,4 +370,22 @@
           method: post
           cors: true
           path: granules/ous
+          authorizer: edlAuthorizer
+
+  getProjects:
+    handler: serverless/src/getProjects/handler.default
+    events:
+      - http:
+          method: get
+          cors: true
+          path: projects
+          authorizer: edlAuthorizer
+
+  deleteProject:
+    handler: serverless/src/deleteProject/handler.default
+    events:
+      - http:
+          method: delete
+          cors: true
+          path: projects/{id}
           authorizer: edlAuthorizer

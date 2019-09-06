@@ -2,6 +2,7 @@ import { replace } from 'connected-react-router'
 
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 import ProjectRequest from '../util/request/projectRequest'
+import { setSavedProjects } from './savedProjects'
 
 export const updateSavedProject = payload => ({
   type: UPDATE_SAVED_PROJECT,
@@ -49,6 +50,25 @@ export const updateProjectName = name => (dispatch, getState) => {
       }))
 
       if (search.indexOf('?projectId=') === -1) dispatch(replace(`${pathname}?projectId=${projectId}`))
+    })
+    .catch((e) => {
+      console.log('Failed to update project name', e)
+    })
+
+  return response
+}
+
+export const deleteSavedProject = projectId => (dispatch, getState) => {
+  const { authToken } = getState()
+
+  const requestObject = new ProjectRequest(authToken)
+
+  const response = requestObject.remove(projectId)
+    .then((response) => {
+      console.log('delete response', response)
+      const { data } = response
+
+      dispatch(setSavedProjects(data))
     })
 
   return response

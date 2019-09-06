@@ -13,7 +13,9 @@ function setup() {
     portal: {
       portalId: ''
     },
-    projectIds: []
+    projectIds: [],
+    savedProject: {},
+    onUpdateProjectName: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SecondaryToolbarContainer {...props} />)

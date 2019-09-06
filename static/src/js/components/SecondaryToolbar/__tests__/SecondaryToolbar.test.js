@@ -6,7 +6,7 @@ import SecondaryToolbar from '../SecondaryToolbar'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(state) {
+function setup(state, overrideProps) {
   const props = {
     authToken: '',
     location: {
@@ -15,7 +15,10 @@ function setup(state) {
     portal: {
       portalId: ''
     },
-    projectIds: []
+    projectIds: [],
+    savedProject: {},
+    onUpdateProjectName: jest.fn(),
+    ...overrideProps
   }
 
   if (state === 'loggedIn') props.authToken = 'fakeauthkey'
@@ -41,6 +44,12 @@ describe('SecondaryToolbar component', () => {
 
       expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toEqual(0)
     })
+
+    test('should not render the project dropdown', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(0)
+    })
   })
 
   describe('when logged in', () => {
@@ -48,6 +57,12 @@ describe('SecondaryToolbar component', () => {
       const { enzymeWrapper } = setup('loggedIn')
 
       expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toEqual(1)
+    })
+
+    test('should render the user dropdown', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(1)
     })
 
     test('should not render a login button', () => {
@@ -121,6 +136,48 @@ describe('SecondaryToolbar component', () => {
 
         expect(enzymeWrapper.exists('.secondary-toolbar__project')).toBeTruthy()
       })
+    })
+  })
+
+  describe('Project name dropdown', () => {
+    test('does not display the project dropdown on the projects page', () => {
+      const { enzymeWrapper } = setup(undefined, {
+        location: {
+          pathname: '/projects'
+        }
+      })
+
+      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(0)
+    })
+
+    test('clicking the dropdown sets the state', () => {
+      const { enzymeWrapper } = setup('loggedIn')
+
+      const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
+      toggle.simulate('click')
+
+      expect(enzymeWrapper.state('projectDropdownOpen')).toBeTruthy()
+    })
+
+    test('clicking the save button sets the state and calls onUpdateProjectName', () => {
+      const { enzymeWrapper, props } = setup('loggedIn')
+
+      const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
+      toggle.simulate('click')
+
+      const input = enzymeWrapper.find('.secondary-toolbar__project-name-input')
+      input.simulate('change', {
+        target: {
+          value: 'test project name'
+        }
+      })
+
+      const saveButton = enzymeWrapper.find('.secondary-toolbar__button.secondary-toolbar__button--submit')
+      saveButton.simulate('click')
+
+      expect(enzymeWrapper.state('projectDropdownOpen')).toBeFalsy()
+      expect(props.onUpdateProjectName).toBeCalledTimes(1)
+      expect(props.onUpdateProjectName).toBeCalledWith('test project name')
     })
   })
 })

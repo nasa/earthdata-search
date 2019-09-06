@@ -12,7 +12,7 @@ let dbConnection = null
 /**
  * Handler to retrieve a single color map record from the application database
  */
-export default async function getRetrieval(event, context) {
+export default async function getRetrievals(event, context) {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 

@@ -2,8 +2,8 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
-import { updateSavedProject, updateProjectName } from '../savedProject'
+import { SET_SAVED_PROJECTS } from '../../constants/actionTypes'
+import { fetchSavedProjects, setSavedProjects } from '../savedProjects'
 
 const mockStore = configureMockStore([thunk])
 
@@ -12,33 +12,32 @@ beforeEach(() => {
   jest.restoreAllMocks()
 })
 
-describe('updateSavedProject', () => {
-  test('should create an action to update the savedProject', () => {
+describe('setSavedProjects', () => {
+  test('should create an action to set the savedProjects', () => {
     const payload = {
       path: '/search',
       projectId: 1
     }
 
     const expectedAction = {
-      type: UPDATE_SAVED_PROJECT,
+      type: SET_SAVED_PROJECTS,
       payload
     }
 
-    expect(updateSavedProject(payload)).toEqual(expectedAction)
+    expect(setSavedProjects(payload)).toEqual(expectedAction)
   })
 })
 
-describe('updateProjectName', () => {
+describe('fetchSavedProjects', () => {
   test('updates the project name then calls updateSavedProject', async () => {
     const name = 'test name'
 
     nock(/localhost/)
-      .post('/projects')
-      .reply(200, {
+      .get(/projects/)
+      .reply(200, [{
         name,
-        project_id: 1,
-        path: '/search?p=C00001-EDSC'
-      })
+        id: 1
+      }])
 
     const store = mockStore({
       router: {
@@ -53,15 +52,14 @@ describe('updateProjectName', () => {
       }
     })
 
-    await store.dispatch(updateProjectName(name)).then(() => {
+    await store.dispatch(fetchSavedProjects(name)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        payload: {
+        payload: [{
           name,
-          projectId: 1,
-          path: '/search?p=C00001-EDSC'
-        },
-        type: UPDATE_SAVED_PROJECT
+          id: 1
+        }],
+        type: SET_SAVED_PROJECTS
       })
     })
   })
