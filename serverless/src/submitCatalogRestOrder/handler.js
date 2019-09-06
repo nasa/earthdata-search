@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import { parse as parseXml } from 'fast-xml-parser'
 import request from 'request-promise'
 
-import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
+import { getClientId, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { cmrUrl } from '../util/cmr/cmrUrl'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -16,7 +16,6 @@ import { getSubsetDataLayers } from '../util/echoForms/getSubsetDataLayers'
 import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
 import { getEdlConfig } from '../util/configUtil'
-import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { startOrderStatusUpdateWorkflow } from '../../../sharedUtils/orderStatus'
 import { portalPath } from '../../../sharedUtils/portalPath'
 
@@ -91,8 +90,10 @@ const submitCatalogRestOrder = async (event, context) => {
 
     const granuleResponseBody = readCmrResults('search/granules', granuleResponse)
 
+    const { edscHost } = getEnvironmentConfig()
+
     // URL used when submitting the order to inform the user where they can retrieve their order status
-    const edscStatusUrl = `${getEarthdataConfig(cmrEnv()).edscHost}${portalPath({ portalId })}/downloads/${retrievalId}`
+    const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${retrievalId}`
 
     const { model, url, type } = accessMethod
 
