@@ -4,6 +4,7 @@ import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
+import { removeRetrievalHistory } from './retrievalHistory'
 
 export const updateRetrieval = retrievalData => ({
   type: UPDATE_RETRIEVAL,
@@ -73,4 +74,27 @@ export const fetchRetrieval = id => (dispatch, getState) => {
     })
 
   return response
+}
+
+/**
+ * Delete a retrieval from the database
+ * @param {Integer} id Database ID of the retrieval to lookup
+ */
+export const deleteRetrieval = id => (dispatch, getState) => {
+  const { authToken } = getState()
+
+  try {
+    const requestObject = new RetrievalRequest(authToken)
+    const response = requestObject.remove(id)
+      .then(() => {
+        dispatch(removeRetrievalHistory(id))
+      })
+      .catch((e) => {
+        console.log('Failed to delete retrieval', e)
+      })
+
+    return response
+  } catch (e) {
+    return null
+  }
 }

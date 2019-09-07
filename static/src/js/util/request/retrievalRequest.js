@@ -20,6 +20,10 @@ export default class RetrievalRequest extends Request {
     return this.get('/retrievals')
   }
 
+  remove(id) {
+    return this.delete(`/retrievals/${id}`)
+  }
+
   fetch(id) {
     return this.get(`/retrievals/${id}`)
   }

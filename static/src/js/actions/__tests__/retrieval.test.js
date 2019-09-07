@@ -1,10 +1,15 @@
-import moxios from 'moxios'
+import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
+  REMOVE_RETRIEVAL_HISTORY
+} from '../../constants/actionTypes'
+
+import {
   submitRetrieval,
-  fetchRetrieval
+  fetchRetrieval,
+  deleteRetrieval
 } from '../retrieval'
 
 const mockStore = configureMockStore([thunk])
@@ -14,24 +19,12 @@ beforeEach(() => {
 })
 
 describe('submitRetrieval', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('calls lambda to submit an order', async () => {
-    moxios.stubRequest(/retrievals.*/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .post(/retrievals/)
+      .reply(200, {
         id: 7
-      },
-      headers: {}
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -94,10 +87,11 @@ describe('submitRetrieval', () => {
   })
 
   test('does not call updateCollectionResults on error', async () => {
-    moxios.stubRequest(/retrievals.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/localhost/)
+      .post(/retrievals/)
+      .reply(500, {
+        errors: ['An error occured.']
+      })
 
     const store = mockStore({
       authToken: 'mockToken',
@@ -154,20 +148,10 @@ describe('submitRetrieval', () => {
 })
 
 describe('fetchRetrieval', () => {
-  beforeEach(() => {
-    moxios.install()
-
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    moxios.uninstall()
-  })
-
   test('calls lambda to get an order', async () => {
-    moxios.stubRequest(/\/retrievals/, {
-      status: 200,
-      response: {
+    nock(/localhost/)
+      .get(/retrievals/)
+      .reply(200, {
         id: 7,
         environment: 'prod',
         jsondata: {
@@ -239,9 +223,7 @@ describe('fetchRetrieval', () => {
             }
           ]
         }]
-      },
-      headers: {}
-    })
+      })
 
     // mockStore with initialState
     const store = mockStore({
@@ -370,10 +352,11 @@ describe('fetchRetrieval', () => {
   })
 
   test('does not call updateOrder on error', async () => {
-    moxios.stubRequest(/retrievals.*/, {
-      status: 500,
-      response: {}
-    })
+    nock(/localhost/)
+      .get(/2057964173/)
+      .reply(500, {
+        errors: ['An error occured.']
+      })
 
     const store = mockStore({
       authToken: 'mockToken',
@@ -420,6 +403,48 @@ describe('fetchRetrieval', () => {
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
     await store.dispatch(fetchRetrieval()).then(() => {
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+})
+
+describe('deleteRetrieval', () => {
+  test('calls lambda to delete a retrieval', async () => {
+    nock(/localhost/)
+      .delete(/2057964173/)
+      .reply(null)
+
+    // mockStore with initialState
+    const store = mockStore({
+      authToken: 'mockToken',
+      retrievalHistory: []
+    })
+
+    // call the dispatch
+    await store.dispatch(deleteRetrieval('2057964173')).then(() => {
+      expect(store.getActions().length).toEqual(1)
+      expect(store.getActions()[0]).toEqual({
+        payload: '2057964173',
+        type: REMOVE_RETRIEVAL_HISTORY
+      })
+    })
+  })
+
+  test('does not call removeRetrievalHistory on error', async () => {
+    nock(/localhost/)
+      .delete(/2057964173/)
+      .reply(500, {
+        errors: ['An error occured.']
+      })
+
+    const store = mockStore({
+      authToken: 'mockToken',
+      retrievalHistory: []
+    })
+
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+
+    await store.dispatch(deleteRetrieval('2057964173')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

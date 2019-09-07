@@ -26,7 +26,8 @@ describe('DownloadHistoryContainer component', () => {
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
         }],
-        onFetchRetrievalHistory: jest.fn()
+        onFetchRetrievalHistory: jest.fn(),
+        onDeleteRetrieval: jest.fn()
       })
 
       expect(enzymeWrapper.find(DownloadHistory).length).toBe(1)

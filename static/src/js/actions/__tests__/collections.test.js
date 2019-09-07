@@ -182,7 +182,7 @@ describe('updateCollectionGranuleFilters', () => {
           cloudCover: {
             max: 0,
             min: 1
-          },
+          }
         },
         id: 'collectionId'
       }
@@ -410,4 +410,3 @@ describe('getCollections', () => {
     })
   })
 })
-

@@ -11,6 +11,10 @@ function setup(overrideProps) {
   const props = {
     children: 'Click Here',
     className: 'test-class',
+    dispatch: jest.fn(),
+    match: {},
+    location: {},
+    history: {},
     onClick: jest.fn(),
     portalId: '',
     to: {

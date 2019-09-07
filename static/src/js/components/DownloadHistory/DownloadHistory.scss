@@ -11,4 +11,13 @@
   &__ago {
     white-space: nowrap;
   }
+
+  &__remove {
+    color: $color__white;
+
+    &:hover,
+    &:active {
+      color: $color__black--300;
+    }
+  }
 }

@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onFetchRetrievalHistory: () => dispatch(actions.fetchRetrievalHistory())
+  onFetchRetrievalHistory: () => dispatch(actions.fetchRetrievalHistory()),
+  onDeleteRetrieval: retrievalId => dispatch(actions.deleteRetrieval(retrievalId))
 })
 
 export class DownloadHistoryContainer extends Component {
@@ -24,10 +25,13 @@ export class DownloadHistoryContainer extends Component {
   }
 
   render() {
-    const { retrievalHistory } = this.props
+    const { retrievalHistory, onDeleteRetrieval } = this.props
 
     return (
-      <DownloadHistory retrievalHistory={retrievalHistory} />
+      <DownloadHistory
+        retrievalHistory={retrievalHistory}
+        onDeleteRetrieval={onDeleteRetrieval}
+      />
     )
   }
 }
@@ -40,7 +44,8 @@ DownloadHistoryContainer.propTypes = {
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
   ),
-  onFetchRetrievalHistory: PropTypes.func.isRequired
+  onFetchRetrievalHistory: PropTypes.func.isRequired,
+  onDeleteRetrieval: PropTypes.func.isRequired
 }
 
 export default withRouter(

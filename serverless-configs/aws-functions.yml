@@ -307,6 +307,15 @@
           path: retrievals/{retrieval_id}
           authorizer: edlAuthorizer
 
+  deleteRetrieval:
+    handler: serverless/src/deleteRetrieval/handler.default
+    events:
+      - http:
+          method: delete
+          cors: true
+          path: retrievals/{id}
+          authorizer: edlAuthorizer
+
   getRetrievals:
     handler: serverless/src/getRetrievals/handler.default
     events:
