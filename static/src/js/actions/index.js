@@ -81,7 +81,11 @@ import {
   addAccessMethods,
   updateAccessMethod
 } from './project'
-import { fetchRetrieval, submitRetrieval } from './retrieval'
+import {
+  fetchRetrieval,
+  submitRetrieval,
+  deleteRetrieval
+} from './retrieval'
 import { fetchRetrievalHistory } from './retrievalHistory'
 import {
   fetchAccessMethods
@@ -117,6 +121,7 @@ const actions = {
   changeViewAllFacet,
   clearCollectionGranules,
   clearFilters,
+  deleteRetrieval,
   excludeGranule,
   fetchAccessMethods,
   fetchDataQualitySummaries,

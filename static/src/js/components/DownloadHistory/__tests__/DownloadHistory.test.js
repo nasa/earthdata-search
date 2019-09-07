@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Table } from 'react-bootstrap'
-import { PortalLinkContainer } from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { DownloadHistory } from '../DownloadHistory'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -21,7 +21,8 @@ describe('DownloadHistory component', () => {
     test('renders a message when no retrievals exist', () => {
       const { enzymeWrapper } = setup({
         authToken: 'testToken',
-        retrievalHistory: []
+        retrievalHistory: [],
+        onDeleteRetrieval: jest.fn()
       })
 
       expect(enzymeWrapper.find(Table).length).toBe(0)
@@ -36,7 +37,8 @@ describe('DownloadHistory component', () => {
           jsondata: {},
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
-        }]
+        }],
+        onDeleteRetrieval: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
@@ -54,7 +56,8 @@ describe('DownloadHistory component', () => {
           collections: [{
             title: 'Collection Title'
           }]
-        }]
+        }],
+        onDeleteRetrieval: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
@@ -74,7 +77,8 @@ describe('DownloadHistory component', () => {
           }, {
             title: 'Collection Title Two'
           }]
-        }]
+        }],
+        onDeleteRetrieval: jest.fn()
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
@@ -94,7 +98,8 @@ describe('DownloadHistory component', () => {
           collections: [{
             title: 'Collection Title'
           }]
-        }]
+        }],
+        onDeleteRetrieval: jest.fn()
       })
 
       expect(enzymeWrapper.find(Table).length).toBe(1)

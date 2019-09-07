@@ -139,6 +139,32 @@ export default class Request {
     return axios(requestOptions)
   }
 
+  /**
+   * Makes a DELETE request to the provided url
+   * @param {url} url URL to send the request to
+   */
+  delete(url) {
+    let requestOptions = {
+      method: 'delete',
+      baseURL: this.baseUrl,
+      url,
+      transformResponse: axios.defaults.transformResponse.concat(
+        (data, headers) => this.transformResponse(data, headers)
+      )
+    }
+
+    if (this.authenticated || this.lambda) {
+      requestOptions = {
+        ...requestOptions,
+        headers: {
+          Authorization: `Bearer: ${this.authToken}`
+        }
+      }
+    }
+
+    return axios(requestOptions)
+  }
+
   /*
    * Makes a POST request to this.searchPath
    */

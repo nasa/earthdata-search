@@ -1,10 +1,15 @@
 import RetrievalRequest from '../util/request/retrievalRequest'
 
-import { SET_RETRIEVAL_HISTORY } from '../constants/actionTypes'
+import { SET_RETRIEVAL_HISTORY, REMOVE_RETRIEVAL_HISTORY } from '../constants/actionTypes'
 
 export const setRetrievalHistory = retrievalHistoryData => ({
   type: SET_RETRIEVAL_HISTORY,
   payload: retrievalHistoryData
+})
+
+export const removeRetrievalHistory = retrievalId => ({
+  type: REMOVE_RETRIEVAL_HISTORY,
+  payload: retrievalId
 })
 
 /**
@@ -25,5 +30,3 @@ export const fetchRetrievalHistory = () => (dispatch, getState) => {
 
   return response
 }
-
-export default fetchRetrievalHistory
