@@ -2,19 +2,24 @@ import { replace } from 'connected-react-router'
 
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 import ProjectRequest from '../util/request/projectRequest'
-import { setSavedProjects } from './savedProjects'
+import { removeSavedProject } from './savedProjects'
 
 export const updateSavedProject = payload => ({
   type: UPDATE_SAVED_PROJECT,
   payload
 })
 
+/**
+ * Action called when the project name is being updated
+ * @param {*} name New project name
+ */
 export const updateProjectName = name => (dispatch, getState) => {
   const {
     authToken,
     router,
     savedProject
   } = getState()
+
   const {
     path,
     projectId: savedProjectId
@@ -42,13 +47,13 @@ export const updateProjectName = name => (dispatch, getState) => {
         path
       } = data
 
-      // TODO isn't updating URL on new project with name
       dispatch(updateSavedProject({
         name,
         path,
         projectId
       }))
 
+      // If the URL didn't contain a projectId before, change the URL to a project URL
       if (search.indexOf('?projectId=') === -1) dispatch(replace(`${pathname}?projectId=${projectId}`))
     })
     .catch((e) => {
@@ -58,18 +63,26 @@ export const updateProjectName = name => (dispatch, getState) => {
   return response
 }
 
+/**
+ * Action called when deleting a saved project
+ * @param {*} projectId Project Id to delete
+ */
 export const deleteSavedProject = projectId => (dispatch, getState) => {
   const { authToken } = getState()
 
   const requestObject = new ProjectRequest(authToken)
 
-  const response = requestObject.remove(projectId)
-    .then((response) => {
-      console.log('delete response', response)
-      const { data } = response
+  try {
+    const response = requestObject.remove(projectId)
+      .then(() => {
+        dispatch(removeSavedProject(projectId))
+      })
+      .catch((e) => {
+        console.log('Failed to delete project', e)
+      })
 
-      dispatch(setSavedProjects(data))
-    })
-
-  return response
+    return response
+  } catch {
+    return null
+  }
 }

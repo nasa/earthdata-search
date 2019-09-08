@@ -8,7 +8,6 @@ import classNames from 'classnames'
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
-// import Button from '../Button/Button'
 
 import './ProjectHeader.scss'
 
