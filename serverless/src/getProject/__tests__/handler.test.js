@@ -62,4 +62,28 @@ describe('getProject', () => {
 
     expect(result.body).toEqual(expectedBody)
   })
+
+  test('returns a 404 if the project is not found', async () => {
+    const projectId = 123
+
+    dbTracker.on('query', (query) => {
+      query.response(undefined)
+    })
+
+    const event = {
+      pathParameters: {
+        id: projectId
+      }
+    }
+
+    const result = await getProject(event)
+
+    const expectedBody = JSON.stringify({ errors: ['Project \'123\' not found.'] })
+
+    const { queries } = dbTracker.queries
+    expect(queries[0].method).toEqual('first')
+
+    expect(result.body).toEqual(expectedBody)
+    expect(result.statusCode).toBe(404)
+  })
 })
