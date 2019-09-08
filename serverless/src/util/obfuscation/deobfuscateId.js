@@ -5,5 +5,5 @@ import ScatterSwap from 'scatter-swap'
  * @param {Integer} value The value to deobfuscate
  */
 export const deobfuscateId = (value, spin = process.env.obfuscationSpin) => (
-  new ScatterSwap(value, spin).reverseHash()
+  parseInt(new ScatterSwap(value, spin).reverseHash(), 10)
 )
