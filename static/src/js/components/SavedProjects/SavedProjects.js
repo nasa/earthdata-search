@@ -21,8 +21,8 @@ export class SavedProjects extends Component {
 
   /**
    * Returns the URL for a project
-   * @param {*} path Path field saved in the project
-   * @param {*} id The project Id
+   * @param {String} path Path field saved in the project
+   * @param {String} id The project Id
    */
   projectTo(path, id) {
     const [pathname] = path.split('?')
@@ -31,7 +31,7 @@ export class SavedProjects extends Component {
 
   /**
    * Determines the number of collections saved in the project path
-   * @param {*} path Project path
+   * @param {String} path Project path
    */
   projectContents(path) {
     const search = path.split('?')[1]
