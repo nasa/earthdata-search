@@ -10,10 +10,10 @@ const getProject = async (event) => {
 
   const { pathParameters } = event
   const {
-    id
+    id: providedProjectId
   } = pathParameters
 
-  const decodedProjectId = deobfuscateId(id)
+  const decodedProjectId = deobfuscateId(providedProjectId)
 
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
@@ -25,12 +25,21 @@ const getProject = async (event) => {
         id: decodedProjectId
       })
 
-    // Return the name and path
+    if (existingProjectRecord && existingProjectRecord !== null) {
+      // Return the name and path
+      return {
+        isBase64Encoded: false,
+        statusCode: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify(existingProjectRecord)
+      }
+    }
+
     return {
       isBase64Encoded: false,
-      statusCode: 200,
+      statusCode: 404,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(existingProjectRecord)
+      body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
   } catch (error) {
     console.log(error)

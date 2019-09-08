@@ -4,7 +4,6 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 let dbConnection = null
 
