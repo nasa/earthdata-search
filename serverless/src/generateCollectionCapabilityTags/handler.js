@@ -8,7 +8,9 @@ import { readCmrResults } from '../util/cmr/readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../sharedUtils/config'
 import { invokeLambda } from '../util/aws/invokeLambda'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getSystemToken } from '../util/urs/getSystemToken'
 
+let cmrToken
 let lambda
 let sqs
 
@@ -28,6 +30,8 @@ const generateCollectionCapabilityTags = async (event) => {
 
   const { pageNumber = 1, pageSize = 500 } = event
 
+  cmrToken = await getSystemToken(cmrToken)
+
   const cmrParams = {
     has_granules_or_cwic: true,
     page_num: pageNumber,
@@ -36,7 +40,8 @@ const generateCollectionCapabilityTags = async (event) => {
     include_tags: 'edsc.extra.serverless.*,org.ceos.wgiss.cwic.granules.prod'
   }
 
-  const collectionSearchUrl = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/collections.json?${stringify(cmrParams)}`
+  const { cmrHost } = getEarthdataConfig(cmrEnv())
+  const collectionSearchUrl = `${cmrHost}/search/collections.json?${stringify(cmrParams)}`
 
   let cmrCollectionResponse
   try {
@@ -45,7 +50,8 @@ const generateCollectionCapabilityTags = async (event) => {
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId().background
+        'Client-Id': getClientId().background,
+        'Echo-Client': cmrToken
       }
     })
   } catch (e) {

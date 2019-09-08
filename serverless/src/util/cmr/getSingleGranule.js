@@ -28,7 +28,8 @@ export const getSingleGranule = async (collectionId) => {
       json: true,
       resolveWithFullResponse: true,
       headers: {
-        'Client-Id': getClientId().background
+        'Client-Id': getClientId().background,
+        'Echo-Client': cmrToken
       }
     })
     const responseBody = readCmrResults(granuleSearchUrl, cmrResponse)
