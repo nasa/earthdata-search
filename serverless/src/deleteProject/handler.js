@@ -19,10 +19,10 @@ const deleteProject = async (event) => {
 
   const { pathParameters } = event
   const {
-    id
+    id: providedProjectId
   } = pathParameters
 
-  const decodedProjectId = deobfuscateId(id)
+  const decodedProjectId = deobfuscateId(providedProjectId)
 
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
@@ -30,44 +30,30 @@ const deleteProject = async (event) => {
   try {
     const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
 
-    const { id } = userRecord
-    const userId = id
+    const { id: userId } = userRecord
 
-    await dbConnection('projects')
+    const affectedRows = await dbConnection('projects')
       .where({
         user_id: userId,
         id: decodedProjectId
       })
       .del()
 
-    const projectRecords = await dbConnection('projects')
-      .select(
-        'projects.id',
-        'projects.name',
-        'projects.path',
-        'projects.created_at'
-      )
-      .join('users', { 'projects.user_id': 'users.id' })
-      .orderBy('projects.created_at', 'DESC')
-      .where({
-        'users.urs_id': username
-      })
+    if (affectedRows > 0) {
+      return {
+        isBase64Encoded: false,
+        statusCode: 204,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: null
+      }
+    }
 
-    // Return the name and path
+    // If no rows were affected the where clause returned no rows, return a 404
     return {
       isBase64Encoded: false,
-      statusCode: 200,
+      statusCode: 404,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify([
-        ...projectRecords.map((project) => {
-          const { id } = project
-
-          return {
-            ...project,
-            id: obfuscateId(id)
-          }
-        })
-      ])
+      body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
   } catch (error) {
     console.log(error)

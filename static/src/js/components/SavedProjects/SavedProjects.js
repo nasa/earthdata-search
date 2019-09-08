@@ -4,7 +4,7 @@ import { Table, OverlayTrigger, Popover } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
 
-import { PortalLinkContainer } from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import pluralize from '../../util/pluralize'
 import Button from '../Button/Button'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
@@ -19,11 +19,20 @@ export class SavedProjects extends Component {
     this.handleDeleteSavedProject = this.handleDeleteSavedProject.bind(this)
   }
 
+  /**
+   * Returns the URL for a project
+   * @param {*} path Path field saved in the project
+   * @param {*} id The project Id
+   */
   projectTo(path, id) {
     const [pathname] = path.split('?')
     return `${pathname}?projectId=${id}`
   }
 
+  /**
+   * Determines the number of collections saved in the project path
+   * @param {*} path Project path
+   */
   projectContents(path) {
     const search = path.split('?')[1]
     const { p = '' } = parse(search)

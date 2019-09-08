@@ -1,9 +1,14 @@
 import ProjectRequest from '../util/request/projectRequest'
 
-import { SET_SAVED_PROJECTS } from '../constants/actionTypes'
+import { SET_SAVED_PROJECTS, REMOVE_SAVED_PROJECT } from '../constants/actionTypes'
 
 export const setSavedProjects = payload => ({
   type: SET_SAVED_PROJECTS,
+  payload
+})
+
+export const removeSavedProject = payload => ({
+  type: REMOVE_SAVED_PROJECT,
   payload
 })
 

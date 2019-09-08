@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Table } from 'react-bootstrap'
-import { PortalLinkContainer } from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { SavedProjects } from '../SavedProjects'
 
 Enzyme.configure({ adapter: new Adapter() })
