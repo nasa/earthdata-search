@@ -21,6 +21,8 @@ const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
   // TODO: Consider consalidating this and the lambda that retrieves a single record
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
 
+  cmrToken = await getSystemToken(cmrToken)
+
   // This is a get request so we need to consider URL length
   const chunkedServiceOptionIds = chunkArray(serviceOptionIds, 50)
 
@@ -39,7 +41,8 @@ const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
       const serviceOptionDefinitionResponse = await request.get({
         uri: `${serviceOptionDefinitionUrl}?${serviceOptionQueryParams}`,
         headers: {
-          'Client-Id': getClientId().background
+          'Client-Id': getClientId().background,
+          'Echo-Client': cmrToken
         },
         json: true,
         resolveWithFullResponse: true
@@ -96,7 +99,9 @@ const generateSubsettingTags = async (event, context) => {
     const serviceOptionResponse = await request.get({
       uri: serviceOptionAssignmentUrl,
       headers: {
-        'Client-Id': getClientId().background
+        'Client-Id': getClientId().background,
+        'Echo-Client': cmrToken
+
       },
       json: true,
       resolveWithFullResponse: true
