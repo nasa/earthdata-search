@@ -68,7 +68,7 @@ describe('deleteRetrieval', () => {
     const response = await deleteRetrieval(event)
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('select')
+    expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('del')
 
     expect(response.statusCode).toEqual(204)
@@ -89,7 +89,7 @@ describe('deleteRetrieval', () => {
           id: 6
         }])
       } else if (step === 2) {
-        query.response(1)
+        query.response(0)
       } else {
         query.response(undefined)
       }
@@ -104,7 +104,7 @@ describe('deleteRetrieval', () => {
     const response = await deleteRetrieval(event)
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('select')
+    expect(queries[0].method).toEqual('first')
 
     expect(response.statusCode).toEqual(404)
   })

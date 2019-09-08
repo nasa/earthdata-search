@@ -18,7 +18,7 @@ export default async function deleteRetrieval(event) {
     const { id: providedRetrieval } = event.pathParameters
 
     // Decode the provided retrieval id
-    const decodedRetrievalId = parseInt(deobfuscateId(providedRetrieval), 10)
+    const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
     const jwtToken = getJwtToken(event)
     const { token } = getVerifiedJwtToken(jwtToken)
@@ -26,23 +26,20 @@ export default async function deleteRetrieval(event) {
 
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
-    // Postgres doesn't support deleting with a join so in order to ensure
-    // users can only delete their own records we'll get the ids of the records they own first
-    const userRetrievals = await dbConnection('retrievals')
-      .select('retrievals.id')
-      .join('users', { 'retrievals.user_id': 'users.id' })
-      .where({
-        'users.urs_id': username
-      })
-    // Ensure that the provided retrieval id belongs to the authenticated user
-    if (userRetrievals.map(r => r.id).includes(decodedRetrievalId)) {
-      await dbConnection('retrievals')
-        .join('users', { 'retrievals.user_id': 'users.id' })
-        .where({
-          'retrievals.id': decodedRetrievalId
-        })
-        .del()
 
+    // Retrieve the authenticated users' id to ensure the retrieval being deleted belongs to them
+    const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
+    const { id } = userRecord
+    const userId = id
+
+    const affectedRows = await dbConnection('retrievals')
+      .where({
+        user_id: userId,
+        id: decodedRetrievalId
+      })
+      .del()
+
+    if (affectedRows > 0) {
       return {
         isBase64Encoded: false,
         statusCode: 204,
@@ -51,6 +48,7 @@ export default async function deleteRetrieval(event) {
       }
     }
 
+    // If no rows were affected the where clause returned no rows, return a 404
     return {
       isBase64Encoded: false,
       statusCode: 404,
