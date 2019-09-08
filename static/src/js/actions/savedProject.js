@@ -11,7 +11,7 @@ export const updateSavedProject = payload => ({
 
 /**
  * Action called when the project name is being updated
- * @param {*} name New project name
+ * @param {String} name New project name
  */
 export const updateProjectName = name => (dispatch, getState) => {
   const {
@@ -65,7 +65,7 @@ export const updateProjectName = name => (dispatch, getState) => {
 
 /**
  * Action called when deleting a saved project
- * @param {*} projectId Project Id to delete
+ * @param {String} projectId Project Id to delete
  */
 export const deleteSavedProject = projectId => (dispatch, getState) => {
   const { authToken } = getState()
