@@ -42,7 +42,10 @@ const deleteProject = async (event) => {
       return {
         isBase64Encoded: false,
         statusCode: 204,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
+        },
         body: null
       }
     }
@@ -51,7 +54,10 @@ const deleteProject = async (event) => {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
+      },
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
   } catch (error) {
@@ -60,7 +66,10 @@ const deleteProject = async (event) => {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
+      },
       body: JSON.stringify({ errors: [error] })
     }
   }

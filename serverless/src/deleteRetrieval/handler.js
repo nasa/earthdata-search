@@ -43,7 +43,10 @@ export default async function deleteRetrieval(event) {
       return {
         isBase64Encoded: false,
         statusCode: 204,
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
+        },
         body: null
       }
     }
@@ -52,7 +55,10 @@ export default async function deleteRetrieval(event) {
     return {
       isBase64Encoded: false,
       statusCode: 404,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
+      },
       body: JSON.stringify({ errors: [`Retrieval '${providedRetrieval}' not found.`] })
     }
   } catch (e) {
@@ -61,7 +67,10 @@ export default async function deleteRetrieval(event) {
     return {
       isBase64Encoded: false,
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
+      },
       body: JSON.stringify({ errors: [e] })
     }
   }
