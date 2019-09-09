@@ -15,4 +15,16 @@
     white-space: nowrap;
     margin-left: $spacer/2;
   }
+
+  &__project-name-dropdown {
+    .dropdown-menu {
+      padding: $spacer/2;
+    }
+  }
+
+  &__project-name-dropdown-toggle {
+    &:after {
+      display: none;
+    }
+  }
 }
