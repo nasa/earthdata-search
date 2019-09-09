@@ -388,7 +388,7 @@ describe('getCollections', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
     await store.dispatch(getCollections()).then(() => {
       const storeActions = store.getActions()

@@ -6,7 +6,8 @@ import {
   prepareCollectionParams
 } from '../util/collections'
 import { updateAuthTokenFromHeaders } from './authToken'
-
+import { getProjectCollections } from './project'
+import { handleError } from './errors'
 
 import {
   ADD_MORE_COLLECTION_RESULTS,
@@ -24,7 +25,6 @@ import {
   RESTORE_COLLECTIONS,
   UPDATE_COLLECTION_GRANULE_FILTERS
 } from '../constants/actionTypes'
-import { getProjectCollections } from './project'
 
 export const addMoreCollectionResults = payload => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -173,7 +173,8 @@ export const getCollections = () => (dispatch, getState) => {
         dispatch(addMoreCollectionResults(payload))
       }
       dispatch(updateFacets(payload))
-    }, (error) => {
+    })
+    .catch((error) => {
       dispatch(finishCollectionsTimer())
       dispatch(onCollectionsErrored())
       dispatch(onFacetsErrored())
@@ -184,10 +185,9 @@ export const getCollections = () => (dispatch, getState) => {
         loaded: false
       }))
 
-      throw new Error('Request failed', error)
-    })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+      dispatch(handleError(error, 'collections'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

@@ -1,6 +1,7 @@
 import ProjectRequest from '../util/request/projectRequest'
 
 import { SET_SAVED_PROJECTS, REMOVE_SAVED_PROJECT } from '../constants/actionTypes'
+import { handleError } from './errors'
 
 export const setSavedProjects = payload => ({
   type: SET_SAVED_PROJECTS,
@@ -26,8 +27,10 @@ export const fetchSavedProjects = () => (dispatch, getState) => {
 
       dispatch(setSavedProjects(data))
     })
-    .catch((e) => {
-      console.log('Failed to fetch retrievals', e)
+    .catch((error) => {
+      dispatch(handleError(error, 'saved projects'))
+
+      console.error('Failed to fetch retrievals', error)
     })
 
   return response

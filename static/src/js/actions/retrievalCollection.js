@@ -1,6 +1,7 @@
 import RetrievalCollectionRequest from '../util/request/retrievalCollectionRequest'
 
 import { UPDATE_RETRIEVAL_COLLECTION } from '../constants/actionTypes'
+import { handleError } from './errors'
 
 export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
   type: UPDATE_RETRIEVAL_COLLECTION,
@@ -24,8 +25,10 @@ export const fetchRetrievalCollection = id => (dispatch, getState) => {
         isLoaded: true
       }))
     })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+    .catch((error) => {
+      dispatch(handleError(error, 'collection'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

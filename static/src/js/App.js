@@ -24,6 +24,7 @@ import ShapefileUploadModalContainer from './containers/ShapefileUploadModalCont
 import ConnectedPortalContainer from './containers/PortalContainer/PortalContainer'
 import SavedProjectsContainer from './containers/SavedProjectsContainer/SavedProjectsContainer'
 import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -60,6 +61,7 @@ class App extends Component {
           <Switch>
             <Route path={this.portalPaths('/')} component={ConnectedPortalContainer} />
           </Switch>
+          <ErrorBannerContainer />
           <ConnectedAuthTokenContainer>
             <Switch>
               <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />

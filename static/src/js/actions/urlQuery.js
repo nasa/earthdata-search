@@ -68,6 +68,11 @@ export const changePath = (path = '') => (dispatch) => {
         }))
         dispatch(actions.updateStore(decodeUrlParams(projectQueryString)))
       })
+      .catch((error) => {
+        dispatch(actions.handleError(error, 'project', 'updating'))
+
+        console.error(error)
+      })
 
     return projectResponse
   }
@@ -145,6 +150,12 @@ export const changeUrl = options => (dispatch, getState) => {
               projectId: newProjectId
             }))
           })
+          .catch((error) => {
+            dispatch(actions.handleError(error, 'project', 'updating'))
+
+            console.error(error)
+          })
+
         return projectResponse
       }
     } else {

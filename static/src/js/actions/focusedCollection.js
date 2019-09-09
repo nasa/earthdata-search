@@ -134,12 +134,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
       // If granules were copied from collections, don't make a new getGranules request.
       if (allIds.length === 0) dispatch(actions.getGranules())
-    }, (error) => {
-      console.log('Promise Rejected', error)
     })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+    .catch((error) => {
       dispatch(updateFocusedCollection(''))
+      dispatch(actions.handleError(error, 'collection'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

@@ -41,13 +41,13 @@ export const getFocusedGranule = () => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(actions.updateGranuleMetadata(payload))
-    }, (error) => {
+    })
+    .catch((error) => {
       dispatch(updateFocusedGranule(''))
 
-      throw new Error('Request failed', error)
-    })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+      dispatch(actions.handleError(error, 'granule'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

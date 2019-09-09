@@ -104,6 +104,7 @@ import { loadPortalConfig } from './portals'
 import { fetchDataQualitySummaries } from './dataQualitySummaries'
 import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
+import { handleError, removeError } from './errors'
 
 const actions = {
   addAccessMethods,
@@ -137,6 +138,7 @@ const actions = {
   fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalHistory,
   fetchSavedProjects,
+  handleError,
   getCollections,
   getFocusedCollection,
   getFocusedGranule,
@@ -156,6 +158,7 @@ const actions = {
   removeSpatialFilter,
   removeTemporalFilter,
   restoreCollections,
+  removeError,
   restoreProject,
   saveShapefile,
   selectAccessMethod,

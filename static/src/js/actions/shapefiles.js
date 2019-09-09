@@ -1,5 +1,6 @@
 import ShapefileRequest from '../util/request/shapefileRequest'
 import { ERRORED_SHAPEFILE, UPDATE_SHAPEFILE } from '../constants/actionTypes'
+import { handleError } from './errors'
 
 export const updateShapefile = payload => ({
   type: UPDATE_SHAPEFILE,
@@ -30,17 +31,17 @@ export const saveShapefile = data => (dispatch) => {
       const { shapefile_id: shapefileId } = response.data
 
       dispatch(updateShapefile({ shapefileId }))
-    }, (error) => {
+    })
+    .catch((error) => {
       dispatch(updateShapefile({
         shapefileId: undefined,
         shapefileName: undefined,
         shapefileSize: undefined
       }))
 
-      throw new Error('Request failed', error)
-    })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+      dispatch(handleError(error, 'shapefile'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

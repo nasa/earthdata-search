@@ -1,6 +1,7 @@
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { SET_RETRIEVAL_HISTORY, REMOVE_RETRIEVAL_HISTORY } from '../constants/actionTypes'
+import { handleError } from './errors'
 
 export const setRetrievalHistory = retrievalHistoryData => ({
   type: SET_RETRIEVAL_HISTORY,
@@ -24,8 +25,10 @@ export const fetchRetrievalHistory = () => (dispatch, getState) => {
 
       dispatch(setRetrievalHistory(data))
     })
-    .catch((e) => {
-      console.log('Failed to fetch retrievals', e)
+    .catch((error) => {
+      dispatch(handleError(error, 'retrieval history'))
+
+      console.error('Failed to fetch retrievals', error)
     })
 
   return response

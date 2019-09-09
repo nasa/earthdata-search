@@ -5,6 +5,7 @@ import RetrievalRequest from '../util/request/retrievalRequest'
 import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { removeRetrievalHistory } from './retrievalHistory'
+import { handleError } from './errors'
 
 export const updateRetrieval = retrievalData => ({
   type: UPDATE_RETRIEVAL,
@@ -27,8 +28,10 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
       dispatch(push(`${portalPathFromState(state)}/downloads/${retrievalId}`))
     })
-    .catch((e) => {
-      console.log(e)
+    .catch((error) => {
+      dispatch(handleError(error, 'retrieval', 'submitting'))
+
+      console.error(error)
     })
 
   return response
@@ -69,8 +72,10 @@ export const fetchRetrieval = id => (dispatch, getState) => {
         collections: updatedCollections
       }))
     })
-    .catch((e) => {
-      console.log('Failed to fetch retrieval', e)
+    .catch((error) => {
+      dispatch(handleError(error, 'retrieval'))
+
+      console.error('Failed to fetch retrieval', error)
     })
 
   return response
@@ -89,8 +94,10 @@ export const deleteRetrieval = id => (dispatch, getState) => {
       .then(() => {
         dispatch(removeRetrievalHistory(id))
       })
-      .catch((e) => {
-        console.log('Failed to delete retrieval', e)
+      .catch((error) => {
+        dispatch(handleError(error, 'retrieval', 'deleting'))
+
+        console.error('Failed to delete retrieval', error)
       })
 
     return response
