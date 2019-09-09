@@ -179,6 +179,7 @@ class ProjectPanels extends PureComponent {
       project,
       projectPanels,
       shapefileId,
+      spatial,
       onSelectAccessMethod,
       onTogglePanels,
       onSetActivePanel,
@@ -347,6 +348,7 @@ class ProjectPanels extends PureComponent {
               index={index}
               metadata={metadata}
               shapefileId={shapefileId}
+              spatial={spatial}
               onSelectAccessMethod={onSelectAccessMethod}
               onSetActivePanel={onSetActivePanel}
               onUpdateAccessMethod={onUpdateAccessMethod}
