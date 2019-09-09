@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table, OverlayTrigger, Popover } from 'react-bootstrap'
+import {
+  Form,
+  Table,
+  OverlayTrigger,
+  Popover
+} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
 
@@ -57,7 +62,7 @@ export class SavedProjects extends Component {
     const { edscHost } = getEarthdataConfig(cmrEnv())
 
     return (
-      <>
+      <div className="saved-projects">
         <h2 className="route-wrapper__page-heading">
           <i className="fa fa-folder-o" />
           {' '}
@@ -112,7 +117,7 @@ export class SavedProjects extends Component {
                               overlay={(
                                 <Popover
                                   id={`popover-basic-${id}`}
-                                  className="share-popover"
+                                  className="saved-projects__share-popover"
                                 >
                                   <Popover.Title>
                                     Share Project
@@ -122,34 +127,35 @@ export class SavedProjects extends Component {
                                       Share your project by copying the URL
                                       below and sending it to others.
                                     </p>
-                                    <p>
-                                      <input
-                                        type="text"
-                                        readOnly
-                                        value={sharePath}
-                                      />
-                                    </p>
+                                    <Form>
+                                      <Form.Group className="mb-0">
+                                        <Form.Control
+                                          className="saved-projects__share-input"
+                                          readOnly
+                                          value={sharePath}
+                                        />
+                                      </Form.Group>
+                                    </Form>
                                   </Popover.Content>
                                 </Popover>
                               )}
                             >
                               <Button
+                                className="saved-projects__button saved-projects__button--share"
                                 type="button"
                                 label="Share project"
-                                bootstrapVariant="light"
-                              >
-                                <i className="fa fa-share-square-o" />
-                              </Button>
+                                variant="naked"
+                                icon="share-square-o"
+                              />
                             </OverlayTrigger>
                             <Button
                               type="button"
                               className="saved-projects__button saved-projects__button--remove"
                               label="Remove project"
-                              bootstrapVariant="light"
+                              variant="naked"
+                              icon="times-circle"
                               onClick={() => this.handleDeleteSavedProject(id)}
-                            >
-                              <i className="fa fa-times-circle" />
-                            </Button>
+                            />
                           </div>
                         </td>
                       </tr>
@@ -162,7 +168,7 @@ export class SavedProjects extends Component {
             <p>No saved projects to display.</p>
           )
         }
-      </>
+      </div>
     )
   }
 }

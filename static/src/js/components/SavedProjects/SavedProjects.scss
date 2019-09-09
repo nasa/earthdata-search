@@ -1,3 +1,31 @@
+.saved-projects {
+  &__share-popover {
+    min-width: 230px;
+    max-width: 400px;
+    color: $color__black--600;
+  }
+
+  &__share-input {
+    width: 100%;
+  }
+
+  &__button {
+    margin-right: $spacer/2;
+    color: $color__white;
+
+    &--share {
+      i {
+        position: relative;
+        top: 0.0625rem;
+      }
+    }
+
+    &:hover {
+      color: $color__black--300;
+    }
+  }
+}
+
 .saved-projects-table {
   a {
     color: $color__black--100;
@@ -13,12 +41,3 @@
   }
 }
 
-.popover {
-  min-width: 230px;
-  max-width: 400px;
-  color: #333;
-
-  input {
-    width: 100%;
-  }
-}

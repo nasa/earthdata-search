@@ -34,6 +34,10 @@
     vertical-align: initial;
     line-height: 1rem;
 
+    .button--naked & {
+      vertical-align: middle;
+    }
+
     &--push {
       margin-right: $spacer/2;
     }

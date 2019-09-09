@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { remove } from 'tiny-cookie'
-import { Dropdown } from 'react-bootstrap'
+import { Col, Dropdown, Form } from 'react-bootstrap'
 
 import isPath from '../../util/isPath'
 import Button from '../Button/Button'
@@ -209,23 +209,27 @@ class SecondaryToolbar extends Component {
           <i className="fa fa-floppy-o" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <span>
-            <input
-              className="secondary-toolbar__project-name-input"
-              name="projectName"
-              value={projectName}
-              onChange={this.onInputChange}
-              onKeyPress={this.handleKeypress}
-            />
-            <Button
-              className="secondary-toolbar__button secondary-toolbar__button--submit"
-              bootstrapVariant="primary"
-              label="Save project name"
-              onClick={this.handleNameSubmit}
-            >
-              Save
-            </Button>
-          </span>
+          <Form inline className="flex-nowrap">
+            <Form.Row>
+              <Col>
+                <Form.Control
+                  className="secondary-toolbar__project-name-input"
+                  name="projectName"
+                  value={projectName}
+                  onChange={this.onInputChange}
+                  onKeyPress={this.handleKeypress}
+                />
+                <Button
+                  className="secondary-toolbar__button secondary-toolbar__button--submit"
+                  bootstrapVariant="primary"
+                  label="Save project name"
+                  onClick={this.handleNameSubmit}
+                >
+                  Save
+                </Button>
+              </Col>
+            </Form.Row>
+          </Form>
         </Dropdown.Menu>
       </Dropdown>
     )
