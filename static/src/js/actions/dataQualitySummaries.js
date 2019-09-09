@@ -1,6 +1,7 @@
 import DataQualitySummaryRequest from '../util/request/dataQualitySummaryRequest'
 
 import { SET_DATA_QUALITY_SUMMARIES } from '../constants/actionTypes'
+import { handleError } from './errors'
 
 export const setDataQualitySummaries = dqsData => ({
   type: SET_DATA_QUALITY_SUMMARIES,
@@ -23,8 +24,10 @@ export const fetchDataQualitySummaries = catalogItemId => (dispatch, getState) =
         dataQualitySummaries: data
       }))
     })
-    .catch((e) => {
-      console.log('Failed to fetch data quailty summaries', e)
+    .catch((error) => {
+      dispatch(handleError(error, 'data quality summaries'))
+
+      console.error('Failed to fetch data quailty summaries', error)
     })
 
   return response

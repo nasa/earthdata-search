@@ -140,7 +140,9 @@ export const fetchLinks = retrievalCollectionData => (dispatch, getState) => {
         }))
       })
       .catch((error) => {
-        console.log(error)
+        dispatch(actions.handleError(error, 'granule links'))
+
+        console.error(error)
       })
 
     return granuleResponse
@@ -197,7 +199,9 @@ export const fetchOpendapLinks = retrievalCollectionData => (dispatch, getState)
       }))
     })
     .catch((error) => {
-      console.log(error)
+      dispatch(actions.handleError(error, 'OPeNDAP links'))
+
+      console.error(error)
     })
 
   return response
@@ -266,20 +270,21 @@ export const getGranules = () => (dispatch, getState) => {
         dispatch(addMoreGranuleResults(payload))
       }
     })
-    .catch((e) => {
+    .catch((error) => {
       dispatch(onGranulesErrored())
       dispatch(finishGranulesTimer())
       dispatch(onGranulesLoaded({
         loaded: false
       }))
+      dispatch(actions.handleError(error, 'granules'))
 
-      if (e.response) {
-        const { data } = e.response
+      if (error.response) {
+        const { data } = error.response
         const { errors = [] } = data
 
-        console.log(errors)
+        console.error(errors)
       } else {
-        console.log(e)
+        console.error(error)
       }
     })
 

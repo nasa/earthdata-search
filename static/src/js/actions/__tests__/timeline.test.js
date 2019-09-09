@@ -237,7 +237,7 @@ describe('getTimeline', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
     await store.dispatch(getTimeline()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)

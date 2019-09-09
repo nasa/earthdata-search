@@ -100,14 +100,16 @@ export const getProjectGranules = () => (dispatch, getState) => {
         dispatch(updateAuthTokenFromHeaders(response.headers))
         dispatch(updateProjectGranules(payload))
       })
-      .catch((e) => {
-        if (e.response) {
-          const { data } = e.response
+      .catch((error) => {
+        dispatch(actions.handleError(error, 'granules'))
+
+        if (error.response) {
+          const { data } = error.response
           const { errors = [] } = data
 
-          console.log(errors)
+          console.error(errors)
         } else {
-          console.log(e)
+          console.error(error)
         }
       })
 
@@ -181,11 +183,11 @@ export const getProjectCollections = () => (dispatch, getState) => {
       dispatch(updateCollectionMetadata(payload))
       dispatch(actions.getProjectGranules())
       dispatch(actions.fetchAccessMethods())
-    }, (error) => {
-      throw new Error('Request failed', error)
     })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+    .catch((error) => {
+      dispatch(actions.handleError(error, 'collections'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

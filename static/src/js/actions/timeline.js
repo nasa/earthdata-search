@@ -7,6 +7,7 @@ import {
 } from '../constants/actionTypes'
 import { prepareTimelineParams } from '../util/timeline'
 import { updateAuthTokenFromHeaders } from './authToken'
+import { handleError } from './errors'
 
 export const updateTimelineIntervals = payload => ({
   type: UPDATE_TIMELINE_INTERVALS,
@@ -57,11 +58,11 @@ export const getTimeline = () => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(response.headers))
       dispatch(updateTimelineIntervals(payload))
-    }, (error) => {
-      throw new Error('Request failed', error)
     })
-    .catch(() => {
-      console.log('Promise Rejected')
+    .catch((error) => {
+      dispatch(handleError(error, 'timeline'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

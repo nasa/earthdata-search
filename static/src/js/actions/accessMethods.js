@@ -38,6 +38,7 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
 
     if (hasEchoOrders || hasEsi || hasOpendap) {
       const requestObject = new AccessMethodsRequest(authToken)
+
       const response = requestObject.search({ associations, collectionId, tags })
         .then((response) => {
           const { data } = response
@@ -49,6 +50,12 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
             selectedAccessMethod
           }))
         })
+        .catch((error) => {
+          dispatch(actions.handleError(error, 'access methods'))
+
+          console.error('Failed to fetch access methods', error)
+        })
+
       return response
     }
 

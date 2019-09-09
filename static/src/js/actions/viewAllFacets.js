@@ -13,6 +13,7 @@ import {
   UPDATE_SELECTED_VIEW_ALL_FACET,
   COPY_CMR_FACETS_TO_VIEW_ALL
 } from '../constants/actionTypes'
+import { handleError } from './errors'
 
 export const updateViewAllFacets = payload => ({
   type: UPDATE_VIEW_ALL_FACETS,
@@ -83,16 +84,16 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
         loaded: true
       }))
       dispatch(updateViewAllFacets(payload))
-    }, (error) => {
+    })
+    .catch((error) => {
       dispatch(onViewAllFacetsErrored())
       dispatch(onViewAllFacetsLoaded({
         loaded: false
       }))
 
-      throw new Error('Request failed', error)
-    })
-    .catch((e) => {
-      console.log('Promise Rejected', e)
+      dispatch(handleError(error, 'facets'))
+
+      console.error('Promise Rejected', error)
     })
 
   return response

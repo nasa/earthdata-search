@@ -3,6 +3,7 @@ import { replace } from 'connected-react-router'
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 import ProjectRequest from '../util/request/projectRequest'
 import { removeSavedProject } from './savedProjects'
+import { handleError } from './errors'
 
 export const updateSavedProject = payload => ({
   type: UPDATE_SAVED_PROJECT,
@@ -56,8 +57,10 @@ export const updateProjectName = name => (dispatch, getState) => {
       // If the URL didn't contain a projectId before, change the URL to a project URL
       if (search.indexOf('?projectId=') === -1) dispatch(replace(`${pathname}?projectId=${projectId}`))
     })
-    .catch((e) => {
-      console.log('Failed to update project name', e)
+    .catch((error) => {
+      dispatch(handleError(error, 'project name', 'updating'))
+
+      console.error('Failed to update project name', error)
     })
 
   return response
@@ -77,8 +80,10 @@ export const deleteSavedProject = projectId => (dispatch, getState) => {
       .then(() => {
         dispatch(removeSavedProject(projectId))
       })
-      .catch((e) => {
-        console.log('Failed to delete project', e)
+      .catch((error) => {
+        dispatch(handleError(error, 'saved project', 'deleting'))
+
+        console.error('Failed to delete project', error)
       })
 
     return response
