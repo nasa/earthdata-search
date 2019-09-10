@@ -324,7 +324,7 @@
       - http:
           method: get
           cors: true
-          path: retrievals/{retrieval_id}
+          path: retrievals/{id}
           authorizer: edlAuthorizer
 
   deleteRetrieval:

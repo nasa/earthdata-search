@@ -22,7 +22,7 @@ export default async function getRetrieval(event, context) {
     // eslint-disable-next-line no-param-reassign
     context.callbackWaitsForEmptyEventLoop = false
 
-    const { retrieval_id: providedRetrieval } = event.pathParameters
+    const { id: providedRetrieval } = event.pathParameters
 
     // Decode the provided retrieval id
     const decodedRetrievalId = deobfuscateId(providedRetrieval)

@@ -10,13 +10,9 @@ provider:
   memorySize: 256
   environment:
     dbEndpoint:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Address
+      Fn::ImportValue: ${self:provider.stage}-DatabaseEndpoint
     dbPort:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Port
+      Fn::ImportValue: ${self:provider.stage}-DatabasePort
     dbUsername: edsc
     dbName: edsc_${self:provider.stage}
 
@@ -31,21 +27,23 @@ provider:
     optionDefinitionQueueUrl:
       Ref: OptionDefinitionsQueue
 
-    obfuscationSpin: ${self:custom.obfuscationSpin}
+    obfuscationSpin: ${env:OBFUSCATION_SPIN}
 
     configSecretId:
-      Ref: DbPasswordSecret
+      Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
 
     storeUserLambda: ${self:custom.siteName}-storeUserData
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
   vpc:
     securityGroupIds:
-      - Ref: LambdaSecurityGroup
+      - Fn::ImportValue: ${self:provider.stage}-LambdaSecurityGroup
     subnetIds:
-      - ${self:custom.awsResources.subnet.a}
-      - ${self:custom.awsResources.subnet.b}
-  role: EDSCLambdaRole
+      - ${env:SUBNET_ID_A}
+      - ${env:SUBNET_ID_B}
+
+  role:
+    Fn::ImportValue: ${self:provider.stage}-ApplicationRole
 
 plugins:
   - serverless-finch
@@ -53,6 +51,7 @@ plugins:
   - serverless-offline
   - serverless-webpack
   - serverless-step-functions
+  - serverless-plugin-split-stacks
 
 #
 # Lambda Functions
@@ -77,13 +76,7 @@ package:
 custom:
   siteName: earthdata-search-${self:provider.stage}
 
-  obfuscationSpin: ${env:OBFUSCATION_SPIN}
-
-  awsResources:
-    vpc: ${env:VPC_ID}
-    subnet:
-      a: ${env:SUBNET_ID_A}
-      b: ${env:SUBNET_ID_B}
+  infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
 
   # Finch (S3 sync plugin)
   client:
@@ -106,8 +99,13 @@ custom:
 
   warmup:
     enabled: true
-    role: EDSCLambdaRole
+    role:
+      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
     prewarm: true
     timeout: 30
     events: 
       - schedule: 'cron(0/20 8-22 ? * MON-FRI *)'
+
+  # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
+  splitStacks:
+    perFunction: true

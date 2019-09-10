@@ -1,10 +1,8 @@
 stateMachines:
   UpdateOrderStatusWorkflow:
     name: UpdateOrderStatusWorkflow-${self:provider.stage}
-    role:
-      Fn::GetAtt:
-        - EDSCLambdaRole
-        - Arn
+    role: 
+      Fn::ImportValue: ${self:provider.stage}-ApplicationRole
     definition:
       StartAt: InitialWait
       States:
