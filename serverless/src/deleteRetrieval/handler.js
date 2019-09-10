@@ -1,7 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
@@ -21,8 +20,7 @@ export default async function deleteRetrieval(event) {
     const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
     const jwtToken = getJwtToken(event)
-    const { token } = getVerifiedJwtToken(jwtToken)
-    const username = getUsernameFromToken(token)
+    const { username } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)

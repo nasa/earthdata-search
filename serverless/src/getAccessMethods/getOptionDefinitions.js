@@ -18,8 +18,7 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
 
     const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
 
-    const userToken = await getAccessTokenFromJwtToken(jwtToken)
-    const { access_token: accessToken } = userToken
+    const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
     // The client id is part of our Earthdata Login credentials
     const edlConfig = await getEdlConfig()

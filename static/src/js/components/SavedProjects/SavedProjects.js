@@ -12,8 +12,7 @@ import { parse } from 'qs'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import pluralize from '../../util/pluralize'
 import Button from '../Button/Button'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import cmrEnv from '../../../../../sharedUtils/cmrEnv'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import './SavedProjects.scss'
 
@@ -59,7 +58,7 @@ export class SavedProjects extends Component {
   render() {
     const { savedProjects } = this.props
 
-    const { edscHost } = getEarthdataConfig(cmrEnv())
+    const { edscHost } = getEnvironmentConfig()
 
     return (
       <div className="saved-projects">

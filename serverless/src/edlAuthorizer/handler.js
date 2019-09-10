@@ -127,7 +127,8 @@ const edlAuthorizer = async (event) => {
             user_id: userId,
             access_token: accessToken,
             refresh_token: refreshToken,
-            expires_at: expiresAt
+            expires_at: expiresAt,
+            environment: cmrEnv()
           })
         } catch (error) {
           console.log('Error refreshing access token: ', error.message)

@@ -2,7 +2,6 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 let dbConnection = null
@@ -12,9 +11,7 @@ const getProjects = async (event) => {
   if (await isWarmUp(event)) return false
 
   const jwtToken = getJwtToken(event)
-
-  const { token } = getVerifiedJwtToken(jwtToken)
-  const username = getUsernameFromToken(token)
+  const { username } = getVerifiedJwtToken(jwtToken)
 
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)

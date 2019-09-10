@@ -389,3 +389,12 @@
           cors: true
           path: projects/{id}
           authorizer: edlAuthorizer
+
+  logout:
+    handler: serverless/src/logout/handler.default
+    events:
+      - http:
+          method: delete
+          cors: true
+          path: logout
+          authorizer: edlAuthorizer

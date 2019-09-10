@@ -1,6 +1,5 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
@@ -29,8 +28,7 @@ const saveProject = async (event) => {
     let userId
     // If user information was included, use it in the queries
     if (jwtToken) {
-      const { token } = getVerifiedJwtToken(jwtToken)
-      const username = getUsernameFromToken(token)
+      const { username } = getVerifiedJwtToken(jwtToken)
 
       const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
 

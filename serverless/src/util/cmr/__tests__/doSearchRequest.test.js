@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
 import request from 'request-promise'
 import { doSearchRequest } from '../doSearchRequest'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import * as getAccessTokenFromJwtToken from '../../urs/getAccessTokenFromJwtToken'
 
 describe('util#doSearchRequest', () => {
   test('correctly returns the search response', async () => {
@@ -38,7 +38,7 @@ describe('util#doSearchRequest', () => {
       }
     }
 
-    jest.spyOn(jwt, 'verify').mockImplementation(() => token)
+    jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => token)
     jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId' }))
 
     const jwtToken = '123.456.789'

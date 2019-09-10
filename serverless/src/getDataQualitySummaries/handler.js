@@ -3,10 +3,10 @@ import AWS from 'aws-sdk'
 import 'array-foreach-async'
 import request from 'request-promise'
 import { getClientId, getEarthdataConfig } from '../../../sharedUtils/config'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { getJwtToken } from '../util/getJwtToken'
 import { getEdlConfig } from '../util/configUtil'
+import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 // AWS SQS adapter
 let sqs
@@ -20,8 +20,7 @@ const getDataQualitySummaries = async (event) => {
   }
 
   const jwtToken = getJwtToken(event)
-  const { token } = getVerifiedJwtToken(jwtToken)
-  const { access_token: accessToken } = token
+  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
   // The client id is part of our Earthdata Login credentials
   const edlConfig = await getEdlConfig()

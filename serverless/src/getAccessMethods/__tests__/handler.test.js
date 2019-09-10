@@ -7,7 +7,6 @@ import * as getOptionDefinitions from '../getOptionDefinitions'
 import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
 import * as getVariables from '../getVariables'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getUsernameFromToken from '../../util/getUsernameFromToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
 let dbConnectionToMock
@@ -16,8 +15,7 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ token: 'mock token' }))
-  jest.spyOn(getUsernameFromToken, 'getUsernameFromToken').mockImplementation(() => 'testuser')
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -41,14 +39,8 @@ afterEach(() => {
 
 describe('getAccessMethods', () => {
   test('populates a download method', async () => {
-    dbTracker.on('query', (query, step) => {
-      if (step === 1) {
-        query.response({
-          id: 1
-        })
-      } else {
-        query.response([])
-      }
+    dbTracker.on('query', (query) => {
+      query.response([])
     })
 
     const event = {
@@ -88,14 +80,8 @@ describe('getAccessMethods', () => {
   })
 
   test('populates a echoOrder method', async () => {
-    dbTracker.on('query', (query, step) => {
-      if (step === 1) {
-        query.response({
-          id: 1
-        })
-      } else {
-        query.response([])
-      }
+    dbTracker.on('query', (query) => {
+      query.response([])
     })
 
     jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
@@ -157,14 +143,8 @@ describe('getAccessMethods', () => {
   })
 
   test('populates a esi method', async () => {
-    dbTracker.on('query', (query, step) => {
-      if (step === 1) {
-        query.response({
-          id: 1
-        })
-      } else {
-        query.response([])
-      }
+    dbTracker.on('query', (query) => {
+      query.response([])
     })
 
     jest.spyOn(getServiceOptionDefinitions, 'getServiceOptionDefinitions').mockImplementation(() => [
@@ -226,14 +206,8 @@ describe('getAccessMethods', () => {
   })
 
   test('populates a opendap method', async () => {
-    dbTracker.on('query', (query, step) => {
-      if (step === 1) {
-        query.response({
-          id: 1
-        })
-      } else {
-        query.response([])
-      }
+    dbTracker.on('query', (query) => {
+      query.response([])
     })
 
     const keywordMappings = {
@@ -294,14 +268,8 @@ describe('getAccessMethods', () => {
 
   describe('saved access configurations', () => {
     test('does not populate selectedAccessMethod if no saved configuration exists', async () => {
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response({
-            id: 1
-          })
-        } else {
-          query.response([])
-        }
+      dbTracker.on('query', (query) => {
+        query.response([])
       })
 
       jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
@@ -373,10 +341,6 @@ describe('getAccessMethods', () => {
     test('populates the default access configuration', async () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response({
-            id: 1
-          })
-        } else if (step === 2) {
           query.response({
             access_method: {
               type: 'ECHO ORDERS',

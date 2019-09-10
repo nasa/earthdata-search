@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { remove } from 'tiny-cookie'
 import { Col, Dropdown, Form } from 'react-bootstrap'
 
 import isPath from '../../util/isPath'
@@ -54,10 +53,11 @@ class SecondaryToolbar extends Component {
   }
 
   /**
-   * Remove the authToken cookie
+   * Log the user out by calling the onLogout action
    */
   handleLogout() {
-    remove('authToken')
+    const { onLogout } = this.props
+    onLogout()
   }
 
   handleNameSubmit() {
@@ -187,7 +187,6 @@ class SecondaryToolbar extends Component {
           <Dropdown.Item
             className="secondary-toolbar__logout"
             onClick={this.handleLogout}
-            href={`${portalPath(portal)}/`}
           >
             Logout
           </Dropdown.Item>
@@ -259,6 +258,7 @@ SecondaryToolbar.propTypes = {
   location: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
+  onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired
 }
 

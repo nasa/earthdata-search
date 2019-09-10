@@ -4,7 +4,6 @@ import mockKnex from 'mock-knex'
 import deleteProject from '../handler'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getUsernameFromToken from '../../util/getUsernameFromToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
 let dbConnectionToMock
@@ -14,9 +13,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ token: 'mock token' }))
-  jest.spyOn(getUsernameFromToken, 'getUsernameFromToken').mockImplementation(() => 'testuser')
-
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ username: 'testuser' }))
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',

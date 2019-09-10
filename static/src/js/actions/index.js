@@ -22,7 +22,7 @@ import {
   updateGranuleResults,
   updateGranuleMetadata
 } from './granules'
-import { updateAuthToken } from './authToken'
+import { logout, updateAuthToken } from './authToken'
 import {
   changeTimelineQuery,
   getTimeline
@@ -146,6 +146,7 @@ const actions = {
   getTimeline,
   getViewAllFacets,
   loadPortalConfig,
+  logout,
   masterOverlayPanelDragEnd,
   masterOverlayPanelDragStart,
   masterOverlayPanelResize,
