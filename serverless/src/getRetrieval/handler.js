@@ -2,7 +2,6 @@ import { keyBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
@@ -29,8 +28,7 @@ export default async function getRetrieval(event, context) {
 
     const jwtToken = getJwtToken(event)
 
-    const { token } = getVerifiedJwtToken(jwtToken)
-    const username = getUsernameFromToken(token)
+    const { id: userId } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
@@ -53,7 +51,7 @@ export default async function getRetrieval(event, context) {
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
         'retrievals.id': decodedRetrievalId,
-        'users.urs_id': username
+        'users.id': userId
       })
 
     if (retrievalResponse !== null && retrievalResponse.length > 0) {

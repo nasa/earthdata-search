@@ -5,7 +5,6 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { generateFormDigest } from '../util/generateFormDigest'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { getVariables } from './getVariables'
 
@@ -27,8 +26,7 @@ const getAccessMethods = async (event) => {
 
   const jwtToken = getJwtToken(event)
 
-  const { token } = getVerifiedJwtToken(jwtToken)
-  const username = getUsernameFromToken(token)
+  const { id: userId } = getVerifiedJwtToken(jwtToken)
 
   const hasEchoOrders = hasTag({ tags }, 'subset_service.echo_orders')
   const hasEsi = hasTag({ tags }, 'subset_service.esi')
@@ -95,13 +93,10 @@ const getAccessMethods = async (event) => {
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
-  // Retrieve the user from the database
-  const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
-
   // Retrieve the savedAccessConfig for this user and collection
   const accessConfigRecord = await dbConnection('access_configurations')
     .first('access_method')
-    .where({ user_id: userRecord.id, collection_id: collectionId })
+    .where({ user_id: userId, collection_id: collectionId })
 
   let selectedAccessMethod
 

@@ -2,7 +2,6 @@ import { groupBy, sortBy } from 'lodash'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
@@ -22,9 +21,7 @@ export default async function getRetrievals(event, context) {
     context.callbackWaitsForEmptyEventLoop = false
 
     const jwtToken = getJwtToken(event)
-
-    const { token } = getVerifiedJwtToken(jwtToken)
-    const username = getUsernameFromToken(token)
+    const { id: userId } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
@@ -39,7 +36,7 @@ export default async function getRetrievals(event, context) {
       .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
-        'users.urs_id': username
+        'users.id': userId
       })
 
     const groupedRetrievals = groupBy(retrievalResponse.map(retrieval => ({
