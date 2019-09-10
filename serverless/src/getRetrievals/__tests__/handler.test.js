@@ -1,7 +1,8 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+import * as getJwtToken from '../../util/getJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import getRetrievals from '../handler'
 
 let dbTracker
@@ -9,7 +10,8 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
+  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
@@ -61,15 +63,7 @@ describe('getRetrievals', () => {
       }])
     })
 
-    const retrievalsPayload = {
-      requestContext: {
-        authorizer: {
-          jwtToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlZHNjIiwiaWF0IjoxNTYwNjQzMzA5fQ.PdLjkskCyJdizimUEDKw-KIGyRQGVF4oYOk3OAfGNQw'
-        }
-      }
-    }
-
-    const retrievalResponse = await getRetrievals(retrievalsPayload, {})
+    const retrievalResponse = await getRetrievals({}, {})
 
     const { queries } = dbTracker.queries
 
@@ -113,15 +107,7 @@ describe('getRetrievals', () => {
       query.reject('Unknown Error')
     })
 
-    const retrievalsPayload = {
-      requestContext: {
-        authorizer: {
-          jwtToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlZHNjIiwiaWF0IjoxNTYwNjQzMzA5fQ.PdLjkskCyJdizimUEDKw-KIGyRQGVF4oYOk3OAfGNQw'
-        }
-      }
-    }
-
-    const retrievalResponse = await getRetrievals(retrievalsPayload, {})
+    const retrievalResponse = await getRetrievals({}, {})
 
     const { queries } = dbTracker.queries
 

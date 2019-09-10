@@ -23,8 +23,7 @@ const edlCallback = async (event) => {
 
   const edlConfig = await getEdlConfig()
 
-  const params = event.queryStringParameters
-  const { code, state } = params
+  const { code, state } = event.queryStringParameters
 
   const { redirectUriPath } = getEarthdataConfig(cmrEnv())
   const { apiHost, edscHost } = getEnvironmentConfig()
@@ -32,6 +31,7 @@ const edlCallback = async (event) => {
   const redirectUri = `${apiHost}${redirectUriPath}`
 
   const oauth2 = simpleOAuth2.create(edlConfig)
+
   const tokenConfig = {
     code,
     redirect_uri: redirectUri
@@ -61,8 +61,8 @@ const edlCallback = async (event) => {
     let userRow = await dbConnection('users').first('id').where({ urs_id: username, environment: cmrEnv() })
 
     // If there is no existing user, create one
-    if (userRow.length === 0) {
-      userRow = await dbConnection('users').returning('id').insert({
+    if (!userRow) {
+      [userRow] = await dbConnection('users').returning(['id']).insert({
         environment: cmrEnv(),
         urs_id: username
       })
