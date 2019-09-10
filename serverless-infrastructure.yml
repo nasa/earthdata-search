@@ -1,0 +1,20 @@
+service: earthdata-search-infrastructure
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'lab'}
+  region: us-east-1
+  vpc:
+    securityGroupIds:
+      - Ref: LambdaSecurityGroup
+    subnetIds:
+      - ${env:SUBNET_ID_A}
+      - ${env:SUBNET_ID_B}
+
+  role: ApplicationRole
+
+#
+# AWS Infrastructure Resources
+#
+resources: ${file(./serverless-configs/${self:provider.name}-infrastructure-resources.yml)}

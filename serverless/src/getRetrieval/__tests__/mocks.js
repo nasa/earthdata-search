@@ -1,6 +1,6 @@
 export const retrievalPayload = {
   pathParameters: {
-    retrieval_id: 2
+    id: 2
   },
   requestContext: {
     authorizer: {
