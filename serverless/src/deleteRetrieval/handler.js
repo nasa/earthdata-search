@@ -20,16 +20,12 @@ export default async function deleteRetrieval(event) {
     const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
     const jwtToken = getJwtToken(event)
-    const { username } = getVerifiedJwtToken(jwtToken)
+    const { id: userId } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
 
     // Retrieve the authenticated users' id to ensure the retrieval being deleted belongs to them
-    const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
-    const { id } = userRecord
-    const userId = id
-
     const affectedRows = await dbConnection('retrievals')
       .where({
         user_id: userId,
