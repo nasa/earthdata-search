@@ -6,9 +6,9 @@ import {
   getClientId
 } from '../../../sharedUtils/config'
 import { generateFormDigest } from '../util/generateFormDigest'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
+import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
   const forms = []
@@ -18,8 +18,8 @@ export const getOptionDefinitions = async (optionDefinitions, jwtToken) => {
 
     const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/legacy-services/rest/option_definitions/${guid}.json`
 
-    const { token } = getVerifiedJwtToken(jwtToken)
-    const { access_token: accessToken } = token
+    const userToken = await getAccessTokenFromJwtToken(jwtToken)
+    const { access_token: accessToken } = userToken
 
     // The client id is part of our Earthdata Login credentials
     const edlConfig = await getEdlConfig()

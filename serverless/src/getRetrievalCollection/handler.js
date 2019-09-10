@@ -1,7 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
@@ -25,9 +24,8 @@ const getRetrievalCollection = async (event, context) => {
     } = event.pathParameters
 
     const jwtToken = getJwtToken(event)
-    const { token } = getVerifiedJwtToken(jwtToken)
 
-    const username = getUsernameFromToken(token)
+    const { id: userId } = getVerifiedJwtToken(jwtToken)
 
     // Retrieve a connection to the database
     dbConnection = await getDbConnection(dbConnection)
@@ -55,7 +53,7 @@ const getRetrievalCollection = async (event, context) => {
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
         'retrieval_collections.id': providedRetrievalCollectionId,
-        'users.urs_id': username
+        'users.id': userId
       })
 
     if (retrievalCollectionResponse !== null && retrievalCollectionResponse.length > 0) {

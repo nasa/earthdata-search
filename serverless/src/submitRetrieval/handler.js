@@ -4,9 +4,9 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { generateRetrievalPayloads } from './generateRetrievalPayloads'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
+import { getUserAccessToken } from '../util/urs/getUserAccessToken'
 
 // Knex database connection object
 let dbConnection = null
@@ -27,9 +27,8 @@ const submitRetrieval = async (event) => {
 
   const jwtToken = getJwtToken(event)
 
-  const { token } = getVerifiedJwtToken(jwtToken)
-  const { access_token: accessToken } = token
-  const username = getUsernameFromToken(token)
+  const { id: userId } = getVerifiedJwtToken(jwtToken)
+  const { access_token: accessToken } = await getUserAccessToken(userId)
 
   // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
@@ -40,12 +39,12 @@ const submitRetrieval = async (event) => {
 
   try {
     // Fetch the user id from the username in the token
-    const userRecord = await retrievalDbTransaction('users').first('id').where({ urs_id: username })
+    // const userRecord = await retrievalDbTransaction('users').first('id').where({ urs_id: username })
 
     const retrievalRecord = await retrievalDbTransaction('retrievals')
       .returning(['id', 'user_id', 'environment', 'jsondata'])
       .insert({
-        user_id: userRecord.id,
+        user_id: userId,
         environment,
         token: accessToken,
         jsondata: jsonData
@@ -81,18 +80,18 @@ const submitRetrieval = async (event) => {
       // Save Access Configuration
       const existingAccessConfig = await retrievalDbTransaction('access_configurations')
         .select('id')
-        .where({ user_id: userRecord.id, collection_id: id })
+        .where({ user_id: userId, collection_id: id })
 
       if (existingAccessConfig.length) {
         await retrievalDbTransaction('access_configurations')
           .update({
             access_method: accessMethod
           })
-          .where({ user_id: userRecord.id, collection_id: id })
+          .where({ user_id: userId, collection_id: id })
       } else {
         await retrievalDbTransaction('access_configurations')
           .insert({
-            user_id: userRecord.id,
+            user_id: userId,
             collection_id: id,
             access_method: accessMethod
           })

@@ -1,9 +1,8 @@
 import request from 'request-promise'
-import jwt from 'jsonwebtoken'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
-import { getSecretEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
+import { getClientId } from '../../../../sharedUtils/config'
 import { getEdlConfig } from '../configUtil'
-import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
+import { getAccessTokenFromJwtToken } from '../urs/getAccessTokenFromJwtToken'
 
 /**
  * Performs a search request and returns the result body and the JWT
@@ -11,10 +10,7 @@ import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
  * @param {string} url URL for to perform search
  */
 export const doSearchRequest = async (jwtToken, url) => {
-  // Get the access token and clientId to build the Echo-Token header
-  const { secret } = getSecretEarthdataConfig(cmrEnv())
-
-  const token = jwt.verify(jwtToken, secret)
+  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
   try {
     // The client id is part of our Earthdata Login credentials
@@ -28,7 +24,7 @@ export const doSearchRequest = async (jwtToken, url) => {
       resolveWithFullResponse: true,
       headers: {
         'Client-Id': getClientId().lambda,
-        'Echo-Token': `${token.token.access_token}:${clientId}`
+        'Echo-Token': `${accessToken}:${clientId}`
       }
     })
 

@@ -3,7 +3,6 @@ import forge from 'node-forge'
 
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { isWarmUp } from '../util/isWarmup'
 
 let dbConnection = null
@@ -38,13 +37,10 @@ const saveShapefile = async (event) => {
 
     // If user information was included, use it in the queries
     if (jwtToken) {
-      const { token } = getVerifiedJwtToken(jwtToken)
-      const username = getUsernameFromToken(token)
+      const { id: userId } = getVerifiedJwtToken(jwtToken)
 
-      const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
-
-      shapefileSearchOptions.user_id = userRecord.id
-      shapefileInsertOptions.user_id = userRecord.id
+      shapefileSearchOptions.user_id = userId
+      shapefileInsertOptions.user_id = userId
     }
 
     // If the shapefile exists, return the ID
