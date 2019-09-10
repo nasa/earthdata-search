@@ -2,6 +2,9 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getJwtToken from '../../util/getJwtToken'
+import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+
 import getRetrieval from '../handler'
 import { retrievalPayload } from './mocks'
 
@@ -11,6 +14,8 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
+  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({

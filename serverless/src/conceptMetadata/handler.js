@@ -11,14 +11,14 @@ const conceptMetadata = async (event) => {
 
   const { url, token: jwtToken } = event.queryStringParameters
 
-  const token = await getAccessTokenFromJwtToken(jwtToken)
+  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
   // The client id is part of our Earthdata Login credentials
   const edlConfig = await getEdlConfig()
   const { client } = edlConfig
   const { id: clientId } = client
 
-  const conceptUrl = `${url}?token=${token.token.access_token}:${clientId}`
+  const conceptUrl = `${url}?token=${accessToken}:${clientId}`
 
   return {
     statusCode: 307,
