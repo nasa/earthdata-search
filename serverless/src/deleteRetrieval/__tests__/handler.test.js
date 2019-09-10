@@ -13,7 +13,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ username: 'testuser' }))
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
@@ -40,16 +40,6 @@ describe('deleteRetrieval', () => {
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
-        query.response([{
-          id: 1
-        }, {
-          id: 3
-        }, {
-          id: 4
-        }, {
-          id: 6
-        }])
-      } else if (step === 2) {
         query.response(1)
       } else {
         query.response(undefined)
@@ -65,8 +55,7 @@ describe('deleteRetrieval', () => {
     const response = await deleteRetrieval(event)
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('del')
+    expect(queries[0].method).toEqual('del')
 
     expect(response.statusCode).toEqual(204)
   })
@@ -76,16 +65,6 @@ describe('deleteRetrieval', () => {
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
-        query.response([{
-          id: 1
-        }, {
-          id: 3
-        }, {
-          id: 4
-        }, {
-          id: 6
-        }])
-      } else if (step === 2) {
         query.response(0)
       } else {
         query.response(undefined)
@@ -101,7 +80,7 @@ describe('deleteRetrieval', () => {
     const response = await deleteRetrieval(event)
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('first')
+    expect(queries[0].method).toEqual('del')
 
     expect(response.statusCode).toEqual(404)
   })

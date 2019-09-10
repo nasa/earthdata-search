@@ -13,7 +13,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ username: 'testuser' }))
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
@@ -40,10 +40,6 @@ describe('deleteProject', () => {
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
-        query.response({
-          id: 1
-        })
-      } else if (step === 2) {
         query.response(1)
       } else {
         query.response(undefined)
@@ -59,8 +55,7 @@ describe('deleteProject', () => {
     const result = await deleteProject(event)
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('del')
+    expect(queries[0].method).toEqual('del')
 
     expect(result.body).toBeNull()
     expect(result.statusCode).toBe(204)
@@ -71,10 +66,6 @@ describe('deleteProject', () => {
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
-        query.response({
-          id: 1
-        })
-      } else if (step === 2) {
         query.response(0)
       } else {
         query.response(undefined)
@@ -90,8 +81,7 @@ describe('deleteProject', () => {
     const result = await deleteProject(event)
 
     const { queries } = dbTracker.queries
-    expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('del')
+    expect(queries[0].method).toEqual('del')
 
     expect(result.body).toEqual(JSON.stringify({ errors: ['Project \'7023641925\' not found.'] }))
     expect(result.statusCode).toBe(404)

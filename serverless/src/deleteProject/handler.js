@@ -11,7 +11,7 @@ const deleteProject = async (event) => {
   if (await isWarmUp(event)) return false
 
   const jwtToken = getJwtToken(event)
-  const { username } = getVerifiedJwtToken(jwtToken)
+  const { id: userId } = getVerifiedJwtToken(jwtToken)
 
   const { pathParameters } = event
   const {
@@ -24,10 +24,6 @@ const deleteProject = async (event) => {
   dbConnection = await getDbConnection(dbConnection)
 
   try {
-    const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
-
-    const { id: userId } = userRecord
-
     const affectedRows = await dbConnection('projects')
       .where({
         user_id: userId,
