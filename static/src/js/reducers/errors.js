@@ -1,10 +1,5 @@
 import { ADD_ERROR, REMOVE_ERROR } from '../constants/actionTypes'
 
-// const initialState = [{
-//   id: '123',
-//   message: 'Test error here',
-//   title: 'error title'
-// }]
 const initialState = []
 
 const errorsReducer = (state = initialState, action) => {
