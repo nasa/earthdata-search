@@ -71,7 +71,10 @@ dockerRun() {
 
 stageOpts="--stage $bamboo_STAGE_NAME"
 
-# Deploy AWS Resources
+# Deploy AWS Infrastructure Resources
+dockerRun serverless deploy $stageOpts --config serverless-infrastructure.yml
+
+# Deploy AWS Application Resources
 dockerRun serverless deploy $stageOpts
 
 # Migrate the database
