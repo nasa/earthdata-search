@@ -2,8 +2,8 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
-import { updateSavedProject, updateProjectName } from '../savedProject'
+import { UPDATE_SAVED_PROJECT, REMOVE_SAVED_PROJECT } from '../../constants/actionTypes'
+import { updateSavedProject, updateProjectName, deleteSavedProject } from '../savedProject'
 
 const mockStore = configureMockStore([thunk])
 
@@ -62,6 +62,26 @@ describe('updateProjectName', () => {
           path: '/search?p=C00001-EDSC'
         },
         type: UPDATE_SAVED_PROJECT
+      })
+    })
+  })
+})
+
+describe('deleteSavedProject', () => {
+  test('calls lambda to delete a project', async () => {
+    nock(/localhost/)
+      .delete(/2057964173/)
+      .reply(204)
+
+    const store = mockStore({
+      authToken: 'mockToken'
+    })
+
+    await store.dispatch(deleteSavedProject('2057964173')).then(() => {
+      expect(store.getActions().length).toEqual(1)
+      expect(store.getActions()[0]).toEqual({
+        payload: '2057964173',
+        type: REMOVE_SAVED_PROJECT
       })
     })
   })
