@@ -2,10 +2,11 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import AWS from 'aws-sdk'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import submitRetrieval from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
 import * as generateRetrievalPayloads from '../generateRetrievalPayloads'
+import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+import * as getUserAccessToken from '../../util/urs/getUserAccessToken'
 
 let dbConnectionToMock
 let dbTracker
@@ -15,7 +16,8 @@ const OLD_ENV = process.env
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
+  jest.spyOn(getUserAccessToken, 'getUserAccessToken').mockImplementation(() => ({ access_token: '2e8e995e7511c2c6620336797b' }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -50,16 +52,12 @@ describe('submitRetrieval', () => {
   test('correctly submits an order', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 2) {
-        query.response({
-          id: 19
-        })
-      } else if (step === 3) {
         query.response([{
           id: 1,
           user_id: 19,
           environment: 'prod'
         }])
-      } else if (step === 4) {
+      } else if (step === 3) {
         query.response([{
           id: 2,
           access_method: {
@@ -70,7 +68,7 @@ describe('submitRetrieval', () => {
           collection_metadata: {},
           granule_count: 27
         }])
-      } else if (step === 5) {
+      } else if (step === 4) {
         query.response({
           id: 19,
           granule_params: {
@@ -88,14 +86,13 @@ describe('submitRetrieval', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].sql).toContain('BEGIN')
-    expect(queries[1].method).toEqual('first')
+    expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
-    expect(queries[3].method).toEqual('insert')
     // retrieve saved access configuration
-    expect(queries[4].method).toEqual('select')
+    expect(queries[3].method).toEqual('select')
     // add new access configuration
-    expect(queries[5].method).toEqual('insert')
-    expect(queries[6].sql).toContain('COMMIT')
+    expect(queries[4].method).toEqual('insert')
+    expect(queries[5].sql).toContain('COMMIT')
 
     const { body } = orderResponse
 
@@ -121,18 +118,14 @@ describe('submitRetrieval', () => {
     }
     dbTracker.on('query', (query, step) => {
       if (step === 2) {
-        query.response({
-          id: 19
-        })
-      } else if (step === 3) {
         query.response([{
           id: 1,
           user_id: 19,
           environment: 'prod'
         }])
-      } else if (step === 4) {
+      } else if (step === 3) {
         query.response([retrievalCollectionRecord])
-      } else if (step === 7) {
+      } else if (step === 6) {
         query.response([{
           id: 5
         }])
@@ -161,15 +154,14 @@ describe('submitRetrieval', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].sql).toContain('BEGIN')
-    expect(queries[1].method).toEqual('first')
+    expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
-    expect(queries[3].method).toEqual('insert')
     // retrieve saved access configuration
-    expect(queries[4].method).toEqual('select')
+    expect(queries[3].method).toEqual('select')
     // add new access configuration
+    expect(queries[4].method).toEqual('insert')
     expect(queries[5].method).toEqual('insert')
-    expect(queries[6].method).toEqual('insert')
-    expect(queries[7].sql).toContain('COMMIT')
+    expect(queries[6].sql).toContain('COMMIT')
     expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
@@ -196,10 +188,6 @@ describe('submitRetrieval', () => {
   test('correctly rolls back the transaction on failure', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 2) {
-        query.response({
-          id: 19
-        })
-      } else if (step === 3) {
         // Force a failure to ensure ROLLBACK is working
         query.reject('INSERT failed')
       } else {
@@ -212,9 +200,8 @@ describe('submitRetrieval', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].sql).toContain('BEGIN')
-    expect(queries[1].method).toEqual('first')
-    expect(queries[2].method).toEqual('insert')
-    expect(queries[3].sql).toContain('ROLLBACK')
+    expect(queries[1].method).toEqual('insert')
+    expect(queries[2].sql).toContain('ROLLBACK')
 
     const { statusCode } = orderResponse
 

@@ -4,7 +4,6 @@ import mockKnex from 'mock-knex'
 import saveShapefile from '../handler'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getUsernameFromToken from '../../util/getUsernameFromToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
 let dbConnectionToMock
@@ -13,8 +12,7 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ token: 'mock token' }))
-  jest.spyOn(getUsernameFromToken, 'getUsernameFromToken').mockImplementation(() => 'testuser')
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -97,10 +95,6 @@ describe('saveShapefile', () => {
     test('saves the shapefile into the database', async () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response({
-            id: 1
-          })
-        } else if (step === 2) {
           query.response(undefined)
         } else {
           query.response([{
@@ -129,10 +123,6 @@ describe('saveShapefile', () => {
     test('returns an existing shapefile if it has already been uploaded', async () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response({
-            id: 1
-          })
-        } else if (step === 2) {
           query.response({
             id: 12
           })

@@ -1,7 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import * as tinyCookie from 'tiny-cookie'
 import SecondaryToolbar from '../SecondaryToolbar'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -17,6 +16,7 @@ function setup(state, overrideProps) {
     },
     projectIds: [],
     savedProject: {},
+    onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
     ...overrideProps
   }
@@ -85,37 +85,15 @@ describe('SecondaryToolbar component', () => {
 
       expect(instance.handleLogout).toBeCalledTimes(1)
     })
-
-    test('the logout button should return to the root URL without a portal', () => {
-      const { enzymeWrapper } = setup('loggedIn')
-
-      const logoutButton = enzymeWrapper.find('.secondary-toolbar__logout')
-      expect(logoutButton.props().href).toEqual('/')
-    })
-
-    test('the logout button should return to the root portal URL with a portal', () => {
-      const { enzymeWrapper } = setup('loggedIn')
-
-      enzymeWrapper.setProps({
-        portal: {
-          portalId: 'simple'
-        }
-      })
-
-      const logoutButton = enzymeWrapper.find('.secondary-toolbar__logout')
-      expect(logoutButton.props().href).toEqual('/portal/simple/')
-    })
   })
 
   describe('handleLogout', () => {
-    test('successfully calls tiny-cookie remove', () => {
-      const { enzymeWrapper } = setup('loggedIn')
-
-      const removeMock = jest.spyOn(tinyCookie, 'remove')
+    test('calls onLogout', () => {
+      const { enzymeWrapper, props } = setup('loggedIn')
 
       enzymeWrapper.instance().handleLogout()
 
-      expect(removeMock).toBeCalledTimes(1)
+      expect(props.onLogout).toBeCalledTimes(1)
     })
   })
 

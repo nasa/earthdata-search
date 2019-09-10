@@ -2,37 +2,22 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { isWarmUp } from '../util/isWarmup'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
-import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 
 let dbConnection = null
 
-const deleteProject = async (event) => {
+const logout = async (event) => {
   // Prevent execution if the event source is the warmer
   if (await isWarmUp(event)) return false
 
   const jwtToken = getJwtToken(event)
-  const { username } = getVerifiedJwtToken(jwtToken)
-
-  const { pathParameters } = event
-  const {
-    id: providedProjectId
-  } = pathParameters
-
-  const decodedProjectId = deobfuscateId(providedProjectId)
+  const { id: userId } = getVerifiedJwtToken(jwtToken)
 
   // Retrive a connection to the database
   dbConnection = await getDbConnection(dbConnection)
 
   try {
-    const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
-
-    const { id: userId } = userRecord
-
-    const affectedRows = await dbConnection('projects')
-      .where({
-        user_id: userId,
-        id: decodedProjectId
-      })
+    const affectedRows = await dbConnection('user_tokens')
+      .where({ user_id: userId })
       .del()
 
     if (affectedRows > 0) {
@@ -55,7 +40,7 @@ const deleteProject = async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
+      body: JSON.stringify({ errors: [`User token '${userId}' not found.`] })
     }
   } catch (error) {
     console.log(error)
@@ -72,4 +57,4 @@ const deleteProject = async (event) => {
   }
 }
 
-export default deleteProject
+export default logout

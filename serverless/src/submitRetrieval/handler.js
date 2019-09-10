@@ -38,9 +38,6 @@ const submitRetrieval = async (event) => {
   const retrievalDbTransaction = await dbConnection.transaction()
 
   try {
-    // Fetch the user id from the username in the token
-    // const userRecord = await retrievalDbTransaction('users').first('id').where({ urs_id: username })
-
     const retrievalRecord = await retrievalDbTransaction('retrievals')
       .returning(['id', 'user_id', 'environment', 'jsondata'])
       .insert({

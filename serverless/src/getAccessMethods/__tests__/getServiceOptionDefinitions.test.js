@@ -1,9 +1,8 @@
-import jwt from 'jsonwebtoken'
 import nock from 'nock'
 
 import { getServiceOptionDefinitions } from '../getServiceOptionDefinitions'
-import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -19,10 +18,8 @@ describe('getServiceOptionDefinitions', () => {
         }
       })
 
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId', secret: 'secret' }))
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
-    jest.spyOn(jwt, 'verify').mockImplementation(() => ({ token: { access_token: 'access_token' } }))
+    jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 
     const serviceOptionDefinitions = [
       {
@@ -64,10 +61,8 @@ describe('getServiceOptionDefinitions', () => {
         }
       })
 
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ clientId: 'clientId', secret: 'secret' }))
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
-    jest.spyOn(jwt, 'verify').mockImplementation(() => ({ token: { access_token: 'access_token' } }))
+    jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 
     const serviceOptionDefinitions = [
       {

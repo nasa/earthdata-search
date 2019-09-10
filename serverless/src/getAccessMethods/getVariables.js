@@ -74,8 +74,7 @@ export const getVariables = async (variableIds, jwtToken) => {
 
   const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/variables.umm_json?${variableParams}`
 
-  const userToken = await getAccessTokenFromJwtToken(jwtToken)
-  const { access_token: accessToken } = userToken
+  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
 
   // The client id is part of our Earthdata Login credentials
   const edlConfig = await getEdlConfig()

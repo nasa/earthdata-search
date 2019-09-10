@@ -1,8 +1,10 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import nock from 'nock'
+import * as tinyCookie from 'tiny-cookie'
 
 import { UPDATE_AUTH } from '../../constants/actionTypes'
-import { updateAuthToken, updateAuthTokenFromHeaders } from '../authToken'
+import { logout, updateAuthToken, updateAuthTokenFromHeaders } from '../authToken'
 
 const mockStore = configureMockStore([thunk])
 
@@ -59,6 +61,32 @@ describe('updateAuthTokenFromHeaders', () => {
     expect(storeActions[0]).toEqual({
       type: UPDATE_AUTH,
       payload: ''
+    })
+  })
+})
+
+describe('logout', () => {
+  const { href } = window.location
+
+  afterEach(() => {
+    jest.clearAllMocks()
+    window.location.href = href
+  })
+
+  test('calls LogoutRequest, removes the cookie and redirects to the root url', async () => {
+    nock(/localhost/)
+      .delete(/logout/)
+      .reply(204)
+
+    const store = mockStore({
+      authToken: 'mockToken'
+    })
+
+    const removeMock = jest.spyOn(tinyCookie, 'remove')
+
+    await store.dispatch(logout()).then(() => {
+      expect(removeMock).toBeCalledTimes(1)
+      expect(window.location.href).toEqual('http://localhost/')
     })
   })
 })
