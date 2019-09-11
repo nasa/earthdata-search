@@ -12,7 +12,12 @@ export const removeError = payload => ({
   payload
 })
 
-export const handleError = (error, resource, verb = 'retrieving') => (dispatch) => {
+export const handleError = ({
+  error,
+  action,
+  resource,
+  verb = 'retrieving'
+}) => (dispatch) => {
   const {
     error: message = 'There was a problem completing the request'
   } = error
@@ -23,4 +28,6 @@ export const handleError = (error, resource, verb = 'retrieving') => (dispatch) 
     message,
     details: error
   }))
+
+  console.error(`Action [${action}] failed:`, error)
 }

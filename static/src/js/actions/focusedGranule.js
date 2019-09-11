@@ -45,9 +45,11 @@ export const getFocusedGranule = () => (dispatch, getState) => {
     .catch((error) => {
       dispatch(updateFocusedGranule(''))
 
-      dispatch(actions.handleError(error, 'granule'))
-
-      console.error('Promise Rejected', error)
+      dispatch(actions.handleError({
+        error,
+        action: 'getFocusedGranule',
+        resource: 'granule'
+      }))
     })
 
   return response

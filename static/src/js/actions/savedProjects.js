@@ -28,9 +28,11 @@ export const fetchSavedProjects = () => (dispatch, getState) => {
       dispatch(setSavedProjects(data))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'saved projects'))
-
-      console.error('Failed to fetch retrievals', error)
+      dispatch(handleError({
+        error,
+        action: 'fetchSavedProjects',
+        resource: 'saved projects'
+      }))
     })
 
   return response

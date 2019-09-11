@@ -91,9 +91,11 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
         loaded: false
       }))
 
-      dispatch(handleError(error, 'facets'))
-
-      console.error('Promise Rejected', error)
+      dispatch(handleError({
+        error,
+        action: 'getViewAllFacets',
+        resource: 'facets'
+      }))
     })
 
   return response

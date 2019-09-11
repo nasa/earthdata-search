@@ -69,9 +69,12 @@ export const changePath = (path = '') => (dispatch) => {
         dispatch(actions.updateStore(decodeUrlParams(projectQueryString)))
       })
       .catch((error) => {
-        dispatch(actions.handleError(error, 'project', 'updating'))
-
-        console.error(error)
+        dispatch(actions.handleError({
+          error,
+          action: 'changePath',
+          resource: 'project',
+          verb: 'updating'
+        }))
       })
 
     return projectResponse
@@ -151,9 +154,12 @@ export const changeUrl = options => (dispatch, getState) => {
             }))
           })
           .catch((error) => {
-            dispatch(actions.handleError(error, 'project', 'updating'))
-
-            console.error(error)
+            dispatch(actions.handleError({
+              error,
+              action: 'changeUrl',
+              resource: 'project',
+              verb: 'updating'
+            }))
           })
 
         return projectResponse

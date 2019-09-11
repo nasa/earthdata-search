@@ -51,9 +51,11 @@ export const fetchAccessMethods = () => (dispatch, getState) => {
           }))
         })
         .catch((error) => {
-          dispatch(actions.handleError(error, 'access methods'))
-
-          console.error('Failed to fetch access methods', error)
+          dispatch(actions.handleError({
+            error,
+            action: 'fetchAccessMethods',
+            resource: 'access methods'
+          }))
         })
 
       return response

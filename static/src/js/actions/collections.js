@@ -184,10 +184,11 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(onFacetsLoaded({
         loaded: false
       }))
-
-      dispatch(handleError(error, 'collections'))
-
-      console.error('Promise Rejected', error)
+      dispatch(handleError({
+        error,
+        action: 'getCollections',
+        resource: 'collections'
+      }))
     })
 
   return response

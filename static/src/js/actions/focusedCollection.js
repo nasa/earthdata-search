@@ -137,9 +137,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     })
     .catch((error) => {
       dispatch(updateFocusedCollection(''))
-      dispatch(actions.handleError(error, 'collection'))
-
-      console.error('Promise Rejected', error)
+      dispatch(actions.handleError({
+        error,
+        action: 'getFocusedCollection',
+        resource: 'collection'
+      }))
     })
 
   return response

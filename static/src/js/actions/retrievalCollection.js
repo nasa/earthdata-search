@@ -26,9 +26,11 @@ export const fetchRetrievalCollection = id => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'collection'))
-
-      console.error('Promise Rejected', error)
+      dispatch(handleError({
+        error,
+        action: 'fetchRetrievalCollection',
+        resource: 'collection'
+      }))
     })
 
   return response
