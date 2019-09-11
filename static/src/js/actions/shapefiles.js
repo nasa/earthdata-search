@@ -39,9 +39,11 @@ export const saveShapefile = data => (dispatch) => {
         shapefileSize: undefined
       }))
 
-      dispatch(handleError(error, 'shapefile'))
-
-      console.error('Promise Rejected', error)
+      dispatch(handleError({
+        error,
+        action: 'saveShapefile',
+        resource: 'shapefile'
+      }))
     })
 
   return response

@@ -25,9 +25,11 @@ export const fetchDataQualitySummaries = catalogItemId => (dispatch, getState) =
       }))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'data quality summaries'))
-
-      console.error('Failed to fetch data quailty summaries', error)
+      dispatch(handleError({
+        error,
+        action: 'fetchDataQualitySummaries',
+        resource: 'data quality summaries'
+      }))
     })
 
   return response

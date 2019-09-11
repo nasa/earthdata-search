@@ -58,9 +58,12 @@ export const updateProjectName = name => (dispatch, getState) => {
       if (search.indexOf('?projectId=') === -1) dispatch(replace(`${pathname}?projectId=${projectId}`))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'project name', 'updating'))
-
-      console.error('Failed to update project name', error)
+      dispatch(handleError({
+        error,
+        action: 'updateProjectName',
+        resource: 'project name',
+        verb: 'updating'
+      }))
     })
 
   return response
@@ -81,9 +84,12 @@ export const deleteSavedProject = projectId => (dispatch, getState) => {
         dispatch(removeSavedProject(projectId))
       })
       .catch((error) => {
-        dispatch(handleError(error, 'saved project', 'deleting'))
-
-        console.error('Failed to delete project', error)
+        dispatch(handleError({
+          error,
+          action: 'deleteSavedProject',
+          resource: 'saved project',
+          verb: 'deleting'
+        }))
       })
 
     return response

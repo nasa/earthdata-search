@@ -60,9 +60,11 @@ export const getTimeline = () => (dispatch, getState) => {
       dispatch(updateTimelineIntervals(payload))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'timeline'))
-
-      console.error('Promise Rejected', error)
+      dispatch(handleError({
+        error,
+        action: 'getTimeline',
+        resource: 'timeline'
+      }))
     })
 
   return response

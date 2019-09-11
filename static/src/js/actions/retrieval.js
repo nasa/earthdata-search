@@ -29,9 +29,12 @@ export const submitRetrieval = () => (dispatch, getState) => {
       dispatch(push(`${portalPathFromState(state)}/downloads/${retrievalId}`))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'retrieval', 'submitting'))
-
-      console.error(error)
+      dispatch(handleError({
+        error,
+        action: 'submitRetrieval',
+        resource: 'retrieval',
+        verb: 'submitting'
+      }))
     })
 
   return response
@@ -73,9 +76,11 @@ export const fetchRetrieval = id => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'retrieval'))
-
-      console.error('Failed to fetch retrieval', error)
+      dispatch(handleError({
+        error,
+        action: 'fetchRetrieval',
+        resource: 'retrieval'
+      }))
     })
 
   return response
@@ -95,9 +100,12 @@ export const deleteRetrieval = id => (dispatch, getState) => {
         dispatch(removeRetrievalHistory(id))
       })
       .catch((error) => {
-        dispatch(handleError(error, 'retrieval', 'deleting'))
-
-        console.error('Failed to delete retrieval', error)
+        dispatch(handleError({
+          error,
+          action: 'deleteRetrieval',
+          resource: 'retrieval',
+          verb: 'deleting'
+        }))
       })
 
     return response

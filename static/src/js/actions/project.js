@@ -101,16 +101,11 @@ export const getProjectGranules = () => (dispatch, getState) => {
         dispatch(updateProjectGranules(payload))
       })
       .catch((error) => {
-        dispatch(actions.handleError(error, 'granules'))
-
-        if (error.response) {
-          const { data } = error.response
-          const { errors = [] } = data
-
-          console.error(errors)
-        } else {
-          console.error(error)
-        }
+        dispatch(actions.handleError({
+          error,
+          action: 'getProjectGranules',
+          resource: 'granules'
+        }))
       })
 
     return searchResponse
@@ -185,9 +180,11 @@ export const getProjectCollections = () => (dispatch, getState) => {
       dispatch(actions.fetchAccessMethods())
     })
     .catch((error) => {
-      dispatch(actions.handleError(error, 'collections'))
-
-      console.error('Promise Rejected', error)
+      dispatch(actions.handleError({
+        error,
+        action: 'getProjectCollections',
+        resource: 'collections'
+      }))
     })
 
   return response

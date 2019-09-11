@@ -26,9 +26,11 @@ export const fetchRetrievalHistory = () => (dispatch, getState) => {
       dispatch(setRetrievalHistory(data))
     })
     .catch((error) => {
-      dispatch(handleError(error, 'retrieval history'))
-
-      console.error('Failed to fetch retrievals', error)
+      dispatch(handleError({
+        error,
+        action: 'fetchRetrievalHistory',
+        resource: 'retrieval history'
+      }))
     })
 
   return response
