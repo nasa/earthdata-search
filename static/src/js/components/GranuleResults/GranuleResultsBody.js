@@ -20,7 +20,8 @@ const GranuleResultsBody = ({
   location,
   waypointEnter,
   onExcludeGranule,
-  onFocusedGranuleChange
+  onFocusedGranuleChange,
+  onMetricsDataAccess
 }) => (
   <div className="granule-results-body">
     <GranuleResultsList
@@ -34,6 +35,7 @@ const GranuleResultsBody = ({
       waypointEnter={waypointEnter}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
+      onMetricsDataAccess={onMetricsDataAccess}
     />
   </div>
 )
@@ -48,7 +50,8 @@ GranuleResultsBody.propTypes = {
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired
+  onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 export default GranuleResultsBody

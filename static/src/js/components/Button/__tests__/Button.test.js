@@ -15,6 +15,10 @@ function setup(type) {
     props.icon = 'test'
   }
 
+  if (type === 'edsc-icon') {
+    props.icon = 'edsc-icon'
+  }
+
   if (type === 'badge') {
     props.badge = 'badge test'
   }
@@ -52,7 +56,14 @@ describe('Button component', () => {
     const { enzymeWrapper } = setup('icon')
 
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
-    expect(enzymeWrapper.find('i').hasClass('fa fa-test'))
+    expect(enzymeWrapper.find('i').hasClass('fa fa-test')).toEqual(true)
+  })
+
+  test('should render self with an edsc-icon', () => {
+    const { enzymeWrapper } = setup('edsc-icon')
+
+    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
+    expect(enzymeWrapper.find('i').hasClass('edsc-icon')).toEqual(true)
   })
 
   test('should render self with a badge', () => {
@@ -60,8 +71,18 @@ describe('Button component', () => {
     expect(enzymeWrapper.find('button').find('.badge').text()).toEqual('badge test')
   })
 
-  test('should render self with a title', () => {
+  test('should render self with an aria-label', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('button').prop('aria-label')).toEqual('Test Label')
+  })
+
+  test('should render self with an label', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
+  })
+
+  test('should render self with a label', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
   })
 })

@@ -13,6 +13,16 @@
     display: flex;
     align-items: center;
     padding-left: 0.625rem;
+
+    .button__icon {
+      margin-right: .35rem;
+      width: 1rem;
+      text-align: center;
+    }
+
+    .button__contents {
+      line-height: 1.25rem;
+    }
   }
 
   &__icon {

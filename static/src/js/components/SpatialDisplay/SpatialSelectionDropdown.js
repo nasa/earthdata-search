@@ -4,6 +4,8 @@ import { Dropdown } from 'react-bootstrap'
 
 import { eventEmitter } from '../../events/events'
 
+import Button from '../Button/Button'
+
 import './SpatialSelectionDropdown.scss'
 
 export class SpatialSelectionDropdown extends PureComponent {
@@ -58,30 +60,38 @@ export class SpatialSelectionDropdown extends PureComponent {
         <Dropdown.Menu className="spatial-selection-dropdown__menu">
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
+            as={Button}
+            icon="edsc-icon-poly-open edsc-icon-fw"
             onClick={() => this.onItemClick('polygon')}
+            label="Select Polygon"
           >
-            <i className="edsc-icon-poly-open edsc-icon-fw spatial-selection-dropdown__icon" />
             <span>Polygon</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
+            as={Button}
+            icon="edsc-icon-rect-open edsc-icon-fw"
             onClick={() => this.onItemClick('rectangle')}
+            label="Select Rectangle"
           >
-            <i className="edsc-icon-rect-open edsc-icon-fw spatial-selection-dropdown__icon" />
             <span>Rectangle</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
+            as={Button}
+            icon="map-marker"
             onClick={() => this.onItemClick('point')}
+            label="Select Point"
           >
-            <i className="fa fa-map-marker spatial-selection-dropdown__icon" />
             <span>Point</span>
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
+            as={Button}
+            icon="file-o"
             onClick={() => this.onItemClick('file')}
+            label="Select Shapefile"
           >
-            <i className="fa fa-file-o spatial-selection-dropdown__icon" />
             <span>
               File
               <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
@@ -89,9 +99,11 @@ export class SpatialSelectionDropdown extends PureComponent {
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
+            as={Button}
+            icon="edsc-icon-globe-grid edsc-icon-fw"
             onClick={() => this.onItemClick('grid')}
+            label="Select Grid Coordinates"
           >
-            <i className="edsc-icon-globe-grid edsc-icon-fw spatial-selection-dropdown__icon" />
             <span>Grid Coordinates</span>
           </Dropdown.Item>
         </Dropdown.Menu>

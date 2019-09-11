@@ -20,7 +20,8 @@ function setup() {
     onChangeProjectQuery: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
-    onToggleOverrideTemporalModal: jest.fn()
+    onToggleOverrideTemporalModal: jest.fn(),
+    onMetricsTimeline: jest.fn()
   }
 
   const enzymeWrapper = shallow(<TimelineContainer {...props} />)

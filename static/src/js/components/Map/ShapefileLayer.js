@@ -20,6 +20,7 @@ class ShapefileLayerExtended extends L.Layer {
     this.onSuccess = this.onSuccess.bind(this)
     this.clickLayer = this.clickLayer.bind(this)
     this.authToken = props.authToken
+    this.onMetricsMap = props.onMetricsMap
 
     this.options = {
       selection: L.extend({}, defaultOptions.selection)
@@ -167,6 +168,7 @@ class ShapefileLayerExtended extends L.Layer {
     this.jsonLayer = jsonLayer
     this.map.addLayer(jsonLayer)
     this.map.fitBounds(jsonLayer.getBounds())
+    this.onMetricsMap('Added Shapefile')
 
     const children = jsonLayer.getLayers()
 

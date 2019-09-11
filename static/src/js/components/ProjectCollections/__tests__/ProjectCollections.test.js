@@ -56,7 +56,8 @@ function setup() {
       projectId: 1,
       name: 'test name'
     },
-    onUpdateProjectName: jest.fn()
+    onUpdateProjectName: jest.fn(),
+    onMetricsDataAccess: jest.fn()
   }
 
   const enzymeWrapper = shallow(<ProjectCollections {...props} />)
@@ -69,7 +70,7 @@ function setup() {
 
 describe('ProjectCollectionsList component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+    const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(ProjectHeader).length).toBe(1)
     expect(enzymeWrapper.find(ProjectHeader).props().collections).toEqual({
@@ -122,6 +123,9 @@ describe('ProjectCollectionsList component', () => {
       },
       collectionIds: ['collectionId1', 'collectionId2']
     })
+
+    expect(enzymeWrapper.find(ProjectCollectionsList).props().onMetricsDataAccess)
+      .toEqual(props.onMetricsDataAccess)
 
     expect(enzymeWrapper.find('.project-collections__footer').length).toBe(1)
   })

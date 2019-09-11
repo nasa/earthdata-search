@@ -3,11 +3,10 @@
     margin-right: 0.7rem;
     border-radius: 4px;
     position: relative;
-    width: 1rem;
-    height: 1rem;
     vertical-align: top;
     opacity: 0.3;
     flex: none;
+    transform: scale(1.2);
 
     &:checked {
       opacity: 1;

@@ -51,13 +51,15 @@ class GranuleGridLayerExtended extends L.GridLayer {
       focusedGranule,
       projection,
       onChangeFocusedGranule,
-      onExcludeGranule
+      onExcludeGranule,
+      onMetricsMap
     } = props
 
     this.collectionId = collectionId
     this.projection = projection
     this.onChangeFocusedGranule = onChangeFocusedGranule
     this.onExcludeGranule = onExcludeGranule
+    this.onMetricsMap = onMetricsMap
 
     this.setResults({
       collectionId,
@@ -700,6 +702,7 @@ class GranuleGridLayerExtended extends L.GridLayer {
       }
       this._granuleStickyLayer = this._stickyLayer(granule, true)
       if (this._granuleStickyLayer != null) {
+        this.onMetricsMap('Selected Granule')
         this._granuleStickyLayer.onAdd(this._map)
 
         if ((this._map.projection === 'geo') && (this._granuleFocusLayer != null)) {
@@ -854,7 +857,8 @@ export class GranuleGridLayer extends MapLayer {
       focusedGranule,
       projection,
       onChangeFocusedGranule,
-      onExcludeGranule
+      onExcludeGranule,
+      onMetricsMap
     } = props
 
     // Create a GranuleGridLayerExtended layer from each data object in getLayerData
@@ -878,7 +882,8 @@ export class GranuleGridLayer extends MapLayer {
         focusedGranule,
         projection,
         onChangeFocusedGranule,
-        onExcludeGranule
+        onExcludeGranule,
+        onMetricsMap
       })
 
       // Set the ZIndex for the layer
@@ -904,7 +909,8 @@ export class GranuleGridLayer extends MapLayer {
       focusedGranule,
       projection,
       onChangeFocusedGranule,
-      onExcludeGranule
+      onExcludeGranule,
+      onMetricsMap
     } = toProps
 
     const oldLayerData = this.getLayerData(fromProps)
@@ -980,7 +986,8 @@ export class GranuleGridLayer extends MapLayer {
           focusedGranule,
           projection,
           onChangeFocusedGranule,
-          onExcludeGranule
+          onExcludeGranule,
+          onMetricsMap
         })
         layer.setZIndex(20)
 

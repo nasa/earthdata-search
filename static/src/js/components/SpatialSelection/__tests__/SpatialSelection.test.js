@@ -28,7 +28,9 @@ const defaultProps = {
   polygonSearch: '',
   onChangeQuery: jest.fn(),
   onChangeMap: jest.fn(),
-  onToggleDrawingNewLayer: jest.fn()
+  onToggleDrawingNewLayer: jest.fn(),
+  onMetricsMap: jest.fn(),
+  onMetricsSpatialEdit: jest.fn()
 }
 
 beforeEach(() => {
@@ -123,6 +125,18 @@ describe('SpatialSelection component', () => {
       expect(enzymeWrapper.state().drawnLayer).toEqual(null)
       expect(props.onToggleDrawingNewLayer.mock.calls.length).toBe(1)
       expect(props.onToggleDrawingNewLayer.mock.calls[0]).toEqual(['marker'])
+    })
+
+    test('sends the metricsMap event', () => {
+      const { enzymeWrapper, props } = setup(defaultProps)
+
+      const editControl = enzymeWrapper.find(EditControl)
+      editControl.prop('onDrawStart')({
+        layerType: 'marker'
+      })
+
+      expect(props.onMetricsMap.mock.calls.length).toBe(1)
+      expect(props.onMetricsMap.mock.calls[0]).toEqual(['Spatial: Marker'])
     })
 
     test('removes drawnLayers if they exist', () => {

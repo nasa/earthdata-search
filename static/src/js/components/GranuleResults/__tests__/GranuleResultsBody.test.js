@@ -20,7 +20,8 @@ function setup() {
     location: { search: 'value' },
     waypointEnter: jest.fn(),
     onExcludeGranule: jest.fn(),
-    onFocusedGranuleChange: jest.fn()
+    onFocusedGranuleChange: jest.fn(),
+    onMetricsDataAccess: jest.fn()
   }
 
   const enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
@@ -49,5 +50,13 @@ describe('GranuleResultsBody component', () => {
     })
     expect(enzymeWrapper.find(GranuleResultsList).props().pageNum).toEqual(1)
     expect(typeof enzymeWrapper.find(GranuleResultsList).props().waypointEnter).toEqual('function')
+  })
+
+  test('passes the onMetricsDataAccess callback to the GranuleResultsList component', () => {
+    const { enzymeWrapper, props } = setup()
+
+    expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
+    expect(enzymeWrapper.find(GranuleResultsList).props().onMetricsDataAccess)
+      .toEqual(props.onMetricsDataAccess)
   })
 })

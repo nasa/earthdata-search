@@ -79,7 +79,9 @@ class FacetsGroup extends Component {
             type="button"
             onClick={this.onToggle}
           >
-            <span className="facets-group__title">{facet.title}</span>
+            <span className="facets-group__title">
+              {facet.title}
+            </span>
             <div className="facets-group__action">
               {
                 !isOpen

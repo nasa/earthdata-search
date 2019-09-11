@@ -1,8 +1,14 @@
+require('@babel/register')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+const config = require('./sharedUtils/config')
+
+const envConfig = config.getEnvironmentConfig()
 
 const StaticCommonConfig = {
   name: 'static',
@@ -40,20 +46,9 @@ const StaticCommonConfig = {
         ]
       },
       {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader'
-          }
-        ]
-      },
-      {
         test: /\.(css|scss)$/,
         exclude: /portals/i,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
           {
             loader: 'css-loader',
             options: {
@@ -131,12 +126,36 @@ const StaticCommonConfig = {
     ]
   },
   plugins: [
-    new webpack.HashedModuleIdsPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].min.css',
-      chunkFilename: '[id].[contenthash].min.css',
-      publicPath: '/'
+    new HtmlWebPackPlugin({
+      favicon: path.join(__dirname, './static/src/public/favicon.ico'),
+      title: 'Earthdata Search',
+      meta: {
+        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
+      }
     }),
+    new HtmlWebpackPartialsPlugin([
+      {
+        path: path.join(__dirname, './static/src/partials/analytics.html'),
+        location: 'head',
+        priority: 'high',
+        options: {
+          analytics_id: envConfig.analyticsId,
+          environment: process.env.NODE_ENV,
+          ga_property_id: envConfig.tagManagerId
+        }
+      },
+      {
+        path: path.join(__dirname, './static/src/partials/defaultStyle.html'),
+        location: 'head',
+        priority: 'high'
+      },
+      {
+        path: path.join(__dirname, './static/src/partials/body.html'),
+        options: {
+          ga_property_id: envConfig.tagManagerId
+        }
+      }]),
+    new webpack.HashedModuleIdsPlugin(),
     new CopyWebpackPlugin([
       { from: './static/src/public', to: './' }
     ]),

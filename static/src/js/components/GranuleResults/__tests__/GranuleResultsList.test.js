@@ -30,7 +30,8 @@ function setup(type) {
       location: { search: 'value' },
       waypointEnter: jest.fn(),
       onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      onFocusedGranuleChange: jest.fn(),
+      onMetricsDataAccess: jest.fn()
     }
   }
 
@@ -52,7 +53,8 @@ function setup(type) {
       location: { search: 'value' },
       waypointEnter: jest.fn(),
       onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      onFocusedGranuleChange: jest.fn(),
+      onMetricsDataAccess: jest.fn()
     }
   }
 
@@ -84,7 +86,8 @@ function setup(type) {
       location: { search: 'value' },
       waypointEnter: jest.fn(),
       onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      onFocusedGranuleChange: jest.fn(),
+      onMetricsDataAccess: jest.fn()
     }
   }
 
@@ -113,7 +116,8 @@ function setup(type) {
       location: { search: 'value' },
       waypointEnter: jest.fn(),
       onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      onFocusedGranuleChange: jest.fn(),
+      onMetricsDataAccess: jest.fn()
     }
   }
 
@@ -142,7 +146,8 @@ function setup(type) {
       location: { search: 'value' },
       waypointEnter: jest.fn(),
       onExcludeGranule: jest.fn(),
-      onFocusedGranuleChange: jest.fn()
+      onFocusedGranuleChange: jest.fn(),
+      onMetricsDataAccess: jest.fn()
     }
   }
 

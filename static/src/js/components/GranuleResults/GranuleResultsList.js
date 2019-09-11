@@ -43,7 +43,7 @@ export class GranuleResultsList extends PureComponent {
   }
 
   componentWillUnmount() {
-    eventEmitter.off('edsc.focusgranule', this.onFocusGranule)
+    eventEmitter.off('map.focusgranule', this.onFocusGranule)
   }
 
   onFocusGranule({ granule }) {
@@ -65,7 +65,8 @@ export class GranuleResultsList extends PureComponent {
       location,
       waypointEnter,
       onExcludeGranule,
-      onFocusedGranuleChange
+      onFocusedGranuleChange,
+      onMetricsDataAccess
     } = this.props
     const {
       hits,
@@ -109,6 +110,7 @@ export class GranuleResultsList extends PureComponent {
           waypointEnter={waypointEnter}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
+          onMetricsDataAccess={onMetricsDataAccess}
         />
       )
     })
@@ -180,7 +182,8 @@ GranuleResultsList.propTypes = {
   location: PropTypes.shape({}).isRequired,
   waypointEnter: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired
+  onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 export default GranuleResultsList

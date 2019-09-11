@@ -89,6 +89,7 @@ const ProjectCollectionItem = ({
 
         <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
           <Dropdown.Item
+            as="button"
             className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
             onClick={() => onToggleCollectionVisibility(collectionId)}
           >
@@ -96,6 +97,7 @@ const ProjectCollectionItem = ({
             Toggle Visibility
           </Dropdown.Item>
           <Dropdown.Item
+            as="button"
             className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
             onClick={() => onRemoveCollectionFromProject(collectionId)}
           >

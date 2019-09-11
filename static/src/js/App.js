@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -25,6 +24,7 @@ import ConnectedPortalContainer from './containers/PortalContainer/PortalContain
 import SavedProjectsContainer from './containers/SavedProjectsContainer/SavedProjectsContainer'
 import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
+import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
@@ -54,10 +54,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Helmet>
-            <meta charSet="utf-8" />
-            <title>Earthdata Search</title>
-          </Helmet>
+          <MetricsEventsContainer />
           <Switch>
             <Route path={this.portalPaths('/')} component={ConnectedPortalContainer} />
           </Switch>

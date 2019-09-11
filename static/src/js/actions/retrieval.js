@@ -3,6 +3,7 @@ import prepareRetrievalParams from '../util/retrievals'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { UPDATE_RETRIEVAL } from '../constants/actionTypes'
+import { metricsDataAccess } from '../middleware/metrics/actions'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 import { removeRetrievalHistory } from './retrievalHistory'
 import { handleError } from './errors'
@@ -21,6 +22,49 @@ export const submitRetrieval = () => (dispatch, getState) => {
   const { authToken } = orderParams
 
   const requestObject = new RetrievalRequest(authToken)
+
+  const { project } = state
+  const {
+    collectionIds: projectCollectionIds = [],
+    byId: collectionsById = {}
+  } = project
+  const metricsCollections = projectCollectionIds.map((id) => {
+    const projectCollection = collectionsById[id]
+    const { selectedAccessMethod = '' } = projectCollection
+
+    const { accessMethods } = projectCollection
+    const selectedMethod = accessMethods[selectedAccessMethod]
+    const { type } = selectedMethod
+
+    let selectedService
+    let selectedType
+
+    if (type === 'DOWNLOAD') {
+      selectedService = 'Download'
+      selectedType = 'download'
+    } else if (type === 'ECHO ORDERS') {
+      const { option_definition: optionDefinition } = selectedMethod
+      const { name } = optionDefinition
+      selectedService = name
+      selectedType = 'order'
+    } else if (type === 'ESI') {
+      const { service_option_definition: optionDefinition } = selectedMethod
+      const { name } = optionDefinition
+      selectedService = name
+      selectedType = 'esi'
+    }
+
+    return {
+      collectionId: id,
+      type: selectedType,
+      service: selectedService
+    }
+  })
+
+  dispatch(metricsDataAccess({
+    type: 'data_access_completion',
+    collections: metricsCollections
+  }))
 
   const response = requestObject.submit(orderParams)
     .then((response) => {

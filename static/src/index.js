@@ -7,6 +7,8 @@ import App from './js/App'
 
 const wrapper = document.getElementById('root')
 
+if (module.hot) module.hot.accept()
+
 if (wrapper) {
   ReactDOM.render(
     <App />,

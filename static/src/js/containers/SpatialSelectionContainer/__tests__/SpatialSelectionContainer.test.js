@@ -14,7 +14,9 @@ function setup() {
     onToggleDrawingNewLayer: jest.fn(),
     pathname: '/search',
     pointSearch: 'Test value',
-    polygonSearch: 'Test value'
+    polygonSearch: 'Test value',
+    onMetricsMap: jest.fn(),
+    onMetricsSpatialEdit: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SpatialSelectionContainer {...props} />)

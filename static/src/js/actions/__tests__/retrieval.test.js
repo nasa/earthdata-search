@@ -57,7 +57,7 @@ describe('submitRetrieval', () => {
           collectionId: {
             accessMethods: {
               download: {
-                type: 'download'
+                type: 'DOWNLOAD'
               }
             },
             selectedAccessMethod: 'download'
@@ -75,8 +75,21 @@ describe('submitRetrieval', () => {
 
     // call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions().length).toEqual(1)
+      expect(store.getActions().length).toEqual(2)
+
       expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'Download',
+            type: 'download'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
+      })
+
+      expect(store.getActions()[1]).toEqual({
         payload: {
           args: ['/downloads/7'],
           method: 'push'

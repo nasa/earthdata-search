@@ -16,6 +16,7 @@ function setup(overrideProps) {
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
+    onMetricsTimeline: jest.fn(),
     ...overrideProps
   }
 
