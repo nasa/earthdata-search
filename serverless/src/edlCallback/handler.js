@@ -6,6 +6,7 @@ import { invokeLambda } from '../util/aws/invokeLambda'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { isWarmUp } from '../util/isWarmup'
 import { getDbConnection } from '../util/database/getDbConnection'
+import { getUsernameFromToken } from '../util/getUsernameFromToken'
 
 // Knex database connection object
 let dbConnection = null
@@ -46,13 +47,12 @@ const edlCallback = async (event) => {
   const {
     access_token: accessToken,
     refresh_token: refreshToken,
-    endpoint,
     expires_at: expiresAt
   } = token
 
   const { secret } = getSecretEarthdataConfig(cmrEnv())
 
-  const username = endpoint.split('/').pop()
+  const username = getUsernameFromToken(token)
 
   let jwtToken
 

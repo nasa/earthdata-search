@@ -59,7 +59,7 @@ describe('logout', () => {
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('del')
 
-    expect(result.body).toEqual(JSON.stringify({ errors: ['User token \'1\' not found.'] }))
+    expect(result.body).toEqual(JSON.stringify({ errors: ['User token for user \'1\' not found.'] }))
     expect(result.statusCode).toBe(404)
   })
 })

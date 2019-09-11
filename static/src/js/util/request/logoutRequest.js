@@ -13,6 +13,6 @@ export default class LogoutRequest extends Request {
   }
 
   logout() {
-    return super.delete('/logout')
+    return this.delete('/logout')
   }
 }
