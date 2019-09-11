@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import { ErrorBannerContainer } from '../ErrorBannerContainer'
-import ErrorBanner from '../../../components/ErrorBanner/ErrorBanner'
+import Banner from '../../../components/Banner/Banner'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -30,19 +30,23 @@ describe('ErrorBannerContainer component', () => {
   test('passes its props and renders a single ErrorBanner component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(ErrorBanner).length).toBe(1)
-    expect(enzymeWrapper.find(ErrorBanner).props().error).toEqual({
-      id: 1,
-      title: 'title',
-      message: 'message'
-    })
-
-    expect(typeof enzymeWrapper.find(ErrorBanner).props().onRemoveError).toEqual('function')
+    expect(enzymeWrapper.find(Banner).length).toBe(1)
+    expect(enzymeWrapper.find(Banner).props().title).toEqual('title')
+    expect(enzymeWrapper.find(Banner).props().message).toEqual('message')
+    expect(typeof enzymeWrapper.find(Banner).props().onClose).toEqual('function')
   })
 
   test('does not render an ErrorBanner with no errors', () => {
     const { enzymeWrapper } = setup({ errors: [] })
 
-    expect(enzymeWrapper.find(ErrorBanner).length).toBe(0)
+    expect(enzymeWrapper.find(Banner).length).toBe(0)
+  })
+
+  test('onRemoveError passes the correct id', () => {
+    const { enzymeWrapper, props } = setup()
+
+    enzymeWrapper.find(Banner).prop('onClose')()
+
+    expect(props.onRemoveError).toHaveBeenCalledTimes(1)
   })
 })
