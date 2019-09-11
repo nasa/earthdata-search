@@ -1,0 +1,73 @@
+.banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacer;
+  overflow: hidden;
+  transition: top 0.2s ease-in-out;
+  z-index: 1;
+
+  &--hidden {
+    top: -3em;
+  }
+
+  &--error {
+    background-color: #c0392b;
+    color: #fff;
+
+    .banner__title {
+      font-weight: 700;
+    }
+
+    .banner__message {
+      color: #fff;
+    }
+
+    .banner__close {
+      color: #fff;
+      color: rgba(255,255,255,0.7);
+      transition: color 0.15s ease-in-out;
+
+      &:hover {
+        color: #fff;
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
+
+  &__title {
+    display: inline;
+    margin: 0;
+    margin-right: $spacer/2;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+
+  &__message {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    line-height: 1rem;
+  }
+
+  &__close {
+    position: absolute;
+    top: 50%;
+    top: calc(50% + 1px);
+    right: 0.5rem;
+    color: $color__black--700;
+    transform: translateY(-50%);
+
+    &:hover {
+     color: $color__black--600;
+    }
+
+    &:focus {
+      border: 0;
+      outline: 0;
+    }
+  }
+}
+

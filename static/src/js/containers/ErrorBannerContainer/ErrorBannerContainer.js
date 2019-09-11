@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import actions from '../../actions/index'
-import { ErrorBanner } from '../../components/ErrorBanner/ErrorBanner'
+import { Banner } from '../../components/Banner/Banner'
 
 const mapDispatchToProps = dispatch => ({
   onRemoveError: id => dispatch(actions.removeError(id))
@@ -18,10 +18,22 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
 
   const [error] = errors
 
+  const {
+    id,
+    message,
+    title
+  } = error
+
+  const onClose = () => {
+    onRemoveError(id)
+  }
+
   return (
-    <ErrorBanner
-      error={error}
-      onRemoveError={onRemoveError}
+    <Banner
+      message={message}
+      onClose={onClose}
+      title={title}
+      type="error"
     />
   )
 }
