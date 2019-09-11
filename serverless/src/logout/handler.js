@@ -40,7 +40,7 @@ const logout = async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      body: JSON.stringify({ errors: [`User token '${userId}' not found.`] })
+      body: JSON.stringify({ errors: [`User token for user '${userId}' not found.`] })
     }
   } catch (error) {
     console.log(error)

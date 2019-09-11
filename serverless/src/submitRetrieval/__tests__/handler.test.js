@@ -5,8 +5,7 @@ import * as getDbConnection from '../../util/database/getDbConnection'
 import submitRetrieval from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
 import * as generateRetrievalPayloads from '../generateRetrievalPayloads'
-import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getUserAccessToken from '../../util/urs/getUserAccessToken'
+import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 
 let dbConnectionToMock
 let dbTracker
@@ -16,8 +15,7 @@ const OLD_ENV = process.env
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
-  jest.spyOn(getUserAccessToken, 'getUserAccessToken').mockImplementation(() => ({ access_token: '2e8e995e7511c2c6620336797b' }))
+  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: '2e8e995e7511c2c6620336797b', user_id: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({

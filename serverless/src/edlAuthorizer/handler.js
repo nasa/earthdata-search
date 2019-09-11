@@ -73,7 +73,6 @@ const edlAuthorizer = async (event) => {
         id: userId,
         username
       } = decodedJwtToken
-      console.log('decodedJwtToken', decodedJwtToken)
 
       // Retrieve the authenticated users' access tokens from the database
       const existingUserTokens = await dbConnection('user_tokens')

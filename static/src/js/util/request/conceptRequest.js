@@ -23,6 +23,6 @@ export default class ConceptRequest extends Request {
   }
 
   search(conceptId, format) {
-    return super.get(`${this.searchPath}/${conceptId}.${format}`)
+    return this.get(`${this.searchPath}/${conceptId}.${format}`)
   }
 }

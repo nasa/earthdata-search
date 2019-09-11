@@ -3,10 +3,9 @@ import AWS from 'aws-sdk'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { generateRetrievalPayloads } from './generateRetrievalPayloads'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isWarmUp } from '../util/isWarmup'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
-import { getUserAccessToken } from '../util/urs/getUserAccessToken'
+import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 // Knex database connection object
 let dbConnection = null
@@ -27,8 +26,10 @@ const submitRetrieval = async (event) => {
 
   const jwtToken = getJwtToken(event)
 
-  const { id: userId } = getVerifiedJwtToken(jwtToken)
-  const { access_token: accessToken } = await getUserAccessToken(userId)
+  const {
+    access_token: accessToken,
+    user_id: userId
+  } = getAccessTokenFromJwtToken(jwtToken)
 
   // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
