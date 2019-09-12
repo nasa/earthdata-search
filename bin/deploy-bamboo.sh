@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# bail on unset variables
+# Bail on unset variables
 set -u
+
+# Bail on errors
+set -e
 
 # Deployment configuration/variables
 ####################################
@@ -47,13 +50,13 @@ cat <<EOF > Dockerfile
 FROM node:10.15
 COPY . /build
 WORKDIR /build
-RUN npm install && npm install -g serverless && npm run build
+RUN npm install && npm install -g serverless@1.51.0 && npm run build
 EOF
 
 dockerTag=edsc-$bamboo_STAGE_NAME
 docker build -t $dockerTag .
 
-# convenience function to invoke `docker run` with appropriate env vars instead of baking them into image
+# Convenience function to invoke `docker run` with appropriate env vars instead of baking them into image
 dockerRun() {
     docker run \
         -e "NODE_ENV=production" \

@@ -43,6 +43,8 @@ const generateCollectionCapabilityTags = async (event) => {
   const { cmrHost } = getEarthdataConfig(cmrEnv())
   const collectionSearchUrl = `${cmrHost}/search/collections.json?${stringify(cmrParams)}`
 
+  console.log(`Requesting collections from ${collectionSearchUrl}`)
+
   let cmrCollectionResponse
   try {
     cmrCollectionResponse = await request.get({
@@ -57,6 +59,10 @@ const generateCollectionCapabilityTags = async (event) => {
   } catch (e) {
     console.log(e)
   }
+
+  const { 'cmr-hits': cmrHits = 0 } = cmrCollectionResponse.headers
+
+  console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, iterating through ${pageSize} at a time.`)
 
   const responseBody = readCmrResults(collectionSearchUrl, cmrCollectionResponse)
 
@@ -117,10 +123,6 @@ const generateCollectionCapabilityTags = async (event) => {
       }).promise()
     }
   })
-
-  const { 'cmr-hits': cmrHits = 0 } = cmrCollectionResponse.headers
-
-  console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, iterating through ${pageSize} at a time.`)
 
   if (cmrHits > pageNumber * pageSize) {
     const lambdaParams = {
