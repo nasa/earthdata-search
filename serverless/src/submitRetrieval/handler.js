@@ -29,7 +29,7 @@ const submitRetrieval = async (event) => {
   const {
     access_token: accessToken,
     user_id: userId
-  } = getAccessTokenFromJwtToken(jwtToken)
+  } = await getAccessTokenFromJwtToken(jwtToken)
 
   // Retrieve a connection to the database
   dbConnection = await getDbConnection(dbConnection)
