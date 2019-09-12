@@ -49,7 +49,7 @@ describe('fetchAccessMethods', () => {
     })
 
     // call the dispatch
-    await store.dispatch(fetchAccessMethods()).then(() => {
+    await store.dispatch(fetchAccessMethods([collectionId])).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: ADD_ACCESS_METHODS,
@@ -128,7 +128,7 @@ describe('fetchAccessMethods', () => {
     })
 
     // call the dispatch
-    await store.dispatch(fetchAccessMethods()).then(() => {
+    await store.dispatch(fetchAccessMethods([collectionId])).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: ADD_ACCESS_METHODS,

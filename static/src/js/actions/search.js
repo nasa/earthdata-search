@@ -56,7 +56,11 @@ export const changeQuery = newQuery => (dispatch, getState) => {
   // Remove all saved granules in the metadata/collections store
   dispatch(actions.clearCollectionGranules())
   // If the collection query didn't change don't get new collections
-  if (newQuery.collection) dispatch(actions.getCollections())
+  if (newQuery.collection) {
+    dispatch(actions.getCollections())
+    // Fetch metadata for collections added to the project
+    dispatch(actions.getProjectCollections())
+  }
   dispatch(actions.getGranules())
   dispatch(actions.getTimeline())
 }
