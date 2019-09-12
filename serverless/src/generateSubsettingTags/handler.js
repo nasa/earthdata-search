@@ -9,19 +9,13 @@ import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 
-// AWS SQS adapter
-let sqs
-let cmrToken
-
 /**
  * Retrieve service option definition records
  * @param {Array} serviceOptionIds Array of service option ids
  */
-const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
+const getServiceOptionDefinitionIdNamePairs = async (cmrToken, serviceOptionIds) => {
   // TODO: Consider consalidating this and the lambda that retrieves a single record
   const { echoRestRoot } = getEarthdataConfig(cmrEnv())
-
-  cmrToken = await getSystemToken(cmrToken)
 
   // This is a get request so we need to consider URL length
   const chunkedServiceOptionIds = chunkArray(serviceOptionIds, 50)
@@ -65,6 +59,10 @@ const getServiceOptionDefinitionIdNamePairs = async (serviceOptionIds) => {
   return serviceOptionIdNamePairs
 }
 
+// AWS SQS adapter
+let sqs
+let cmrToken
+
 /**
  * Handler to process subsetting information from UMM S associations on collections
  */
@@ -101,7 +99,6 @@ const generateSubsettingTags = async (event, context) => {
       headers: {
         'Client-Id': getClientId().background,
         'Echo-Client': cmrToken
-
       },
       json: true,
       resolveWithFullResponse: true
@@ -116,19 +113,22 @@ const generateSubsettingTags = async (event, context) => {
       return optionId
     })
 
-    serviceOptionIdNamePairs = await getServiceOptionDefinitionIdNamePairs(serviceOptionIds)
+    serviceOptionIdNamePairs = await getServiceOptionDefinitionIdNamePairs(
+      cmrToken,
+      serviceOptionIds
+    )
   } catch (e) {
     console.log(e)
   }
 
   // Retrieve only those service objects that match the types edsc subsets
-  const serviceObjects = await getRelevantServices()
+  const serviceObjects = await getRelevantServices(cmrToken)
 
   const allCollectionsWithServices = []
   const chunkedServices = chunkArray(Object.keys(serviceObjects), 100)
 
   await chunkedServices.forEachAsync(async (chunk) => {
-    const allCmrCollections = await pageAllCmrResults('search/collections.json', {
+    const allCmrCollections = await pageAllCmrResults(cmrToken, 'search/collections.json', {
       service_concept_id: chunk,
       has_granules: true
     })

@@ -1,20 +1,13 @@
 import request from 'request-promise'
 import { pageAllCmrResults } from '../pageAllCmrResults'
-import * as getSystemToken from '../../urs/getSystemToken'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-/**
- * Because CMR does not support using POST to query the service endpoint
- * we have to chunk our requests, the current page size is set to 500
- */
 describe('pageAllCmrResults', () => {
   test('does not iterate when uneccessary', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-
-    const cmrMock = jest.spyOn(request, 'get').mockImplementationOnce(() => ({
+    const cmrMock = jest.spyOn(request, 'post').mockImplementationOnce(() => ({
       statusCode: 200,
       headers: {
         'cmr-hits': 495
@@ -22,14 +15,12 @@ describe('pageAllCmrResults', () => {
       body: { items: [] }
     }))
 
-    await pageAllCmrResults('search/services')
+    await pageAllCmrResults('test-token', 'search/services')
 
     expect(cmrMock).toBeCalledTimes(1)
   })
 
   test('iterates through the correct number of pages', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-
     const pageResponse = {
       statusCode: 200,
       headers: {
@@ -37,13 +28,13 @@ describe('pageAllCmrResults', () => {
       },
       body: { items: [] }
     }
-    const cmrMock = jest.spyOn(request, 'get')
+    const cmrMock = jest.spyOn(request, 'post')
       .mockImplementationOnce(() => pageResponse)
       .mockImplementationOnce(() => pageResponse)
       .mockImplementationOnce(() => pageResponse)
       .mockImplementationOnce(() => pageResponse)
 
-    await pageAllCmrResults('search/services')
+    await pageAllCmrResults('test-token', 'search/services')
 
     expect(cmrMock).toBeCalledTimes(4)
   })
