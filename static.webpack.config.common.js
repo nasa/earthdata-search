@@ -32,7 +32,7 @@ const StaticCommonConfig = {
       {
         test: /\.js$/,
         exclude: [
-          /node_modules\/(?!(map-obj|snakecase-keys|strict-uri-encode|qs)\/).*/,
+          /node_modules\/(?!(map-obj|snakecase-keys|strict-uri-encode|qs|fast-xml-parser)\/).*/,
           /font-awesome.config.js/
         ],
         use: [
@@ -139,9 +139,11 @@ const StaticCommonConfig = {
         location: 'head',
         priority: 'high',
         options: {
-          analytics_id: envConfig.analyticsId,
           environment: process.env.NODE_ENV,
-          ga_property_id: envConfig.tagManagerId
+          gtmPropertyId: envConfig.gtmPropertyId,
+          includeGoogleTagManager: envConfig.includeGoogleTagManager,
+          gaId: envConfig.gaId,
+          includeDevGoogleAnalytics: envConfig.includeDevGoogleAnalytics
         }
       },
       {
@@ -152,7 +154,14 @@ const StaticCommonConfig = {
       {
         path: path.join(__dirname, './static/src/partials/body.html'),
         options: {
-          ga_property_id: envConfig.tagManagerId
+          gtmPropertyId: envConfig.gtmPropertyId
+        }
+      },
+      {
+        path: path.join(__dirname, './static/src/partials/ntpagetag.html'),
+        location: 'body',
+        options: {
+          includeNtPageTag: envConfig.includeNtPageTag
         }
       }]),
     new webpack.HashedModuleIdsPlugin(),

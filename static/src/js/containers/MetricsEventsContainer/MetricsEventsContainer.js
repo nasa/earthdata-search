@@ -29,6 +29,8 @@ export class MetricsEventsContainer extends Component {
     const { currentTarget = {} } = e
     const title = $(currentTarget)[0].title || $(currentTarget).text()
 
+    console.warn('some event here')
+
     onMetricsClick({
       elementLabel: title
     })

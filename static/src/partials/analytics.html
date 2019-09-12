@@ -1,10 +1,11 @@
+<% if (includeGoogleTagManager) { %>
 <script>
   var dataLayer = window.dataLayer = window.dataLayer || [];
 
-  <% if (environment === 'development') { %>
+  <% if (environment === 'development' && includeDevGoogleAnalytics === true) { %>
     dataLayer.push({
       'event': 'localIdentifier',
-      'localGAProperty': '<%= analytics_id %>'
+      'localGAProperty': '<%= gaId %>'
     });
   <% } %>
 
@@ -15,5 +16,6 @@
   }); var f = d.getElementsByTagName(s)[0],
     j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
       'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', '<%= ga_property_id %>');
+  })(window, document, 'script', 'dataLayer', '<%= gtmPropertyId %>');
 </script>
+<% } %>

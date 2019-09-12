@@ -11,8 +11,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
-const Config = merge(StaticCommonConfig, {
+const Config = merge.smartStrategy({
+  devtool: 'replace'
+})(StaticCommonConfig, {
   mode: 'production',
+  devtool: 'source-map',
   output: {
     filename: '[name].[contenthash].bundle.js',
     chunkFilename: '[name].[contenthash].bundle.js',
@@ -74,7 +77,7 @@ const Config = merge(StaticCommonConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].min.css',
       chunkFilename: '[id].[contenthash].min.css',
-    }),
+    })
     // new BundleAnalyzerPlugin()
   ]
 })

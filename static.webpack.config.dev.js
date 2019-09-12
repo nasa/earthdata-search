@@ -5,6 +5,7 @@ const StaticCommonConfig = require('./static.webpack.config.common')
 
 const Config = merge.smartStrategy(
   {
+    devtool: 'replace',
     'module.rules.use': 'prepend'
   }
 )(StaticCommonConfig, {

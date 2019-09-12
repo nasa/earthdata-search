@@ -99,14 +99,14 @@ export class ProjectCollections extends Component {
             {
               !isValid && (
                 <>
-                  Select a data access method for each collection in your project before downloading.
+                  {'Select a data access method for each collection in your project before downloading.'}
                 </>
               )
             }
             {
               isValid && (
                 <>
-                  Click &quot;Edit Options&quot; above to customize the output for each project.
+                  {'Click &quot;Edit Options&quot; above to customize the output for each project.'}
                 </>
               )
             }
