@@ -62,11 +62,8 @@ export const selectAccessMethod = payload => ({
   payload
 })
 
-export const getProjectGranules = () => (dispatch, getState) => {
-  const { project } = getState()
-  const { collectionIds: projectIds } = project
-
-  return Promise.all(projectIds.map((collectionId) => {
+export const getProjectGranules = collectionIds => (dispatch, getState) => (
+  Promise.all(collectionIds.map((collectionId) => {
     const granuleParams = prepareGranuleParams(getState(), collectionId)
 
     if (!granuleParams) {
@@ -110,13 +107,15 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     return searchResponse
   }))
-}
+)
 
-export const getProjectCollections = () => (dispatch, getState) => {
+export const getProjectCollections = collectionId => (dispatch, getState) => {
   const { project } = getState()
-  const { collectionIds: projectIds } = project
+  const { collectionIds: projectIds = [] } = project
 
-  if (projectIds.length === 0) {
+  const filteredIds = !collectionId ? projectIds : [collectionId]
+
+  if (filteredIds.length === 0) {
     return null
   }
 
@@ -136,7 +135,7 @@ export const getProjectCollections = () => (dispatch, getState) => {
   } = searchParams
 
   const response = getCollectionMetadata({
-    conceptId: projectIds,
+    conceptId: filteredIds,
     includeTags: 'edsc.*,org.ceos.wgiss.cwic.granules.prod',
     includeGranuleCounts,
     includeHasGranules,
@@ -176,8 +175,8 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
       dispatch(updateAuthTokenFromHeaders(collectionJson.headers))
       dispatch(updateCollectionMetadata(payload))
-      dispatch(actions.getProjectGranules())
-      dispatch(actions.fetchAccessMethods())
+      dispatch(actions.getProjectGranules(filteredIds))
+      dispatch(actions.fetchAccessMethods(filteredIds))
     })
     .catch((error) => {
       dispatch(actions.handleError({
@@ -192,5 +191,5 @@ export const getProjectCollections = () => (dispatch, getState) => {
 
 export const addProjectCollection = collectionId => (dispatch) => {
   dispatch(addCollectionToProject(collectionId))
-  dispatch(actions.getProjectCollections())
+  dispatch(actions.getProjectCollections(collectionId))
 }

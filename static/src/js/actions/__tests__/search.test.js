@@ -75,6 +75,7 @@ describe('changeQuery', () => {
         }
       },
       metadata: {},
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -122,6 +123,7 @@ describe('changeQuery', () => {
       query: {
         collection: {}
       },
+      project: {},
       router: {
         location: {
           pathname: ''
@@ -152,6 +154,7 @@ describe('changeQuery', () => {
       query: {
         collection: {}
       },
+      project: {},
       router: {
         location: {
           pathname: ''

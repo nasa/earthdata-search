@@ -250,7 +250,7 @@ describe('getProjectGranules', () => {
     })
 
     // call the dispatch
-    await store.dispatch(getProjectGranules()).then(() => {
+    await store.dispatch(getProjectGranules(['collectionId1', 'collectionId2'])).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: UPDATE_AUTH,
@@ -305,7 +305,7 @@ describe('getProjectGranules', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
-    await store.dispatch(getProjectGranules()).then(() => {
+    await store.dispatch(getProjectGranules(['collectionId1'])).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

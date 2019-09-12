@@ -6,22 +6,17 @@ import AccessMethodsRequest from '../util/request/accessMethodsRequest'
 /**
  * Fetch available access methods from the API
  */
-export const fetchAccessMethods = () => (dispatch, getState) => {
+export const fetchAccessMethods = collectionIds => (dispatch, getState) => {
   // Get the selected Access Method
   const {
     authToken,
-    metadata,
-    project
+    metadata
   } = getState()
 
   // If the user is not logged in, don't fetch any methods
   if (authToken === '') return null
 
-  const {
-    collectionIds: projectIds
-  } = project
-
-  return Promise.all(projectIds.map((collectionId) => {
+  return Promise.all(collectionIds.map((collectionId) => {
     // Get the tag data for the collection
     const { collections } = metadata
     const { byId } = collections
