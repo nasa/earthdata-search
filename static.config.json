@@ -26,7 +26,7 @@
       "edscHost": "http://localhost:8080",
       "includeGoogleTagManager": true,
       "gtmPropertyId": "GTM-WNP7MLF",
-      "includeDevGoogleAnalytics": true,
+      "includeDevGoogleAnalytics": false,
       "gaId": "UA-50960810-4",
       "includeNtPageTag": false
     },
