@@ -41,20 +41,22 @@ const generateCollectionCapabilityTags = async (event) => {
   }
 
   const { cmrHost } = getEarthdataConfig(cmrEnv())
-  const collectionSearchUrl = `${cmrHost}/search/collections.json?${stringify(cmrParams)}`
+  const collectionSearchUrl = `${cmrHost}/search/collections.json`
 
   console.log(`Requesting collections from ${collectionSearchUrl}`)
 
   let cmrCollectionResponse
   try {
-    cmrCollectionResponse = await request.get({
+    cmrCollectionResponse = await request.post({
       uri: collectionSearchUrl,
-      json: true,
-      resolveWithFullResponse: true,
+      form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
         'Client-Id': getClientId().background,
-        'Echo-Client': cmrToken
-      }
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Echo-Token': cmrToken
+      },
+      json: true,
+      resolveWithFullResponse: true
     })
   } catch (e) {
     console.log(e)

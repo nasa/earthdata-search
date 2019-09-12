@@ -5,11 +5,11 @@ import { pageAllCmrResults } from '../util/cmr/pageAllCmrResults'
  * Retrieve CMR service records that have a type that edsc supports for subsetting
  * @return {Array} An array representing CMR service objects that match our supported types
  */
-export const getRelevantServices = async () => {
+export const getRelevantServices = async (cmrToken) => {
   // Retrieve all of the services CMR has so that we can sift through and
   // find the relevant objects (we only need certain types and CMR does
   // not offer the ability to serach by type)
-  const allCmrServices = await pageAllCmrResults('search/services.umm_json')
+  const allCmrServices = await pageAllCmrResults(cmrToken, 'search/services.umm_json')
 
   const serviceObjects = {}
 

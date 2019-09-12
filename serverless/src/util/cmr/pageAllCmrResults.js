@@ -1,11 +1,9 @@
 import 'array-foreach-async'
+import { stringify } from 'qs'
 import request from 'request-promise'
-import { cmrUrl } from './cmrUrl'
 import { readCmrResults } from './readCmrResults'
-import { getSystemToken } from '../urs/getSystemToken'
-import { getClientId } from '../../../../sharedUtils/config'
-
-let cmrToken = null
+import { getClientId, getEarthdataConfig } from '../../../../sharedUtils/config'
+import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
 
 /**
  * CMR has a maximum page size of 2000, this method will automatically page through all results regardless of how many there are
@@ -13,24 +11,27 @@ let cmrToken = null
  * @param {Object} queryParams An object that will represent the query parameters in the url
  * @return {Array} An array representing all results from CMR
  */
-export const pageAllCmrResults = async (path, queryParams = {}) => {
+export const pageAllCmrResults = async (cmrToken, path, queryParams = {}) => {
   const pageSize = 500
 
   try {
-    cmrToken = await getSystemToken(cmrToken)
-
     // Default parameters that we need to send CMR to ensure correct paging
-    const cmrParams = Object.assign(queryParams, {
+    const cmrParams = {
+      ...queryParams,
       page_size: pageSize
-    })
+    }
 
     // Make an initial request so that we can get cmr-hits from the header, this
     // will help determine how many additional requests we'll need to make to get
     // all of the results
-    const cmrResponse = await request.get({
-      uri: cmrUrl(path, cmrParams),
+    const { cmrHost } = getEarthdataConfig(cmrEnv())
+
+    const cmrResponse = await request.post({
+      uri: `${cmrHost}/${path}`,
+      form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
       headers: {
         'Client-Id': getClientId().background,
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Echo-Token': cmrToken
       },
       json: true,
@@ -44,16 +45,23 @@ export const pageAllCmrResults = async (path, queryParams = {}) => {
     // Stats to determine how many total pages we'll need to loop through to
     // retrieve all the results from CMR
     const totalCmrHits = cmrResponse.headers['cmr-hits']
+
     const totalPages = Math.ceil(totalCmrHits / cmrParams.page_size)
+
+    console.log(`Paging ${totalCmrHits} CMR Results (${totalPages} page(s) based on provided parameters)`)
 
     if (totalPages > 1) {
       await Array.from(Array(totalPages - 1)).forEachAsync(async (_, k) => {
         cmrParams.page_num = k + 2
 
-        const additionalCmrResponse = await request.get({
-          uri: cmrUrl(path, cmrParams),
+        console.log(`Retrieving page ${cmrParams.page_num}...`)
+
+        const additionalCmrResponse = await request.post({
+          uri: `${cmrHost}/${path}`,
+          form: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
           headers: {
             'Client-Id': getClientId().background,
+            'Content-Type': 'application/x-www-form-urlencoded',
             'Echo-Token': cmrToken
           },
           json: true,
