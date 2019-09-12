@@ -85,7 +85,7 @@ describe('RESTORE_FROM_URL', () => {
     const action = {
       type: RESTORE_FROM_URL,
       payload: {
-        timeline
+        timeline: timeline.query
       }
     }
 

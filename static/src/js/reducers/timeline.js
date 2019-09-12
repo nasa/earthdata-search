@@ -47,7 +47,10 @@ const timelineReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        ...timeline
+        query: {
+          ...state.query,
+          ...timeline
+        }
       }
     }
     default:

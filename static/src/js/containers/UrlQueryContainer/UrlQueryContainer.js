@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
   shapefileId: state.shapefile.shapefileId,
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
-  timeline: state.timeline
+  timelineQuery: state.timeline.query
 })
 
 export class UrlQueryContainer extends PureComponent {

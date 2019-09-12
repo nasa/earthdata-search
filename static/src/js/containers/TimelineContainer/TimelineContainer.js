@@ -76,9 +76,10 @@ export const TimelineContainer = (props) => {
     <Timeline
       collectionMetadata={collectionMetadata}
       focusedCollection={focusedCollection}
+      granuleFilterTemporal={granuleFilterTemporal}
+      pathname={pathname}
       showOverrideModal={isProjectPage}
       temporalSearch={temporalSearch}
-      granuleFilterTemporal={granuleFilterTemporal}
       timeline={timeline}
       onChangeQuery={changeQueryMethod}
       onChangeTimelineQuery={onChangeTimelineQuery}

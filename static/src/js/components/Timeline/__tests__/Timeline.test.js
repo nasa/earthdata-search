@@ -5,16 +5,18 @@ import Timeline from '../Timeline'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     collectionMetadata: {},
     temporalSearch: {},
-    timeline: { intervals: {}, query: {}, state: {} },
+    timeline: { intervals: {}, query: {} },
     showOverrideModal: false,
     focusedCollection: '',
+    pathname: '/search/granules',
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
-    onToggleOverrideTemporalModal: jest.fn()
+    onToggleOverrideTemporalModal: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<Timeline {...props} />)
@@ -25,6 +27,11 @@ function setup() {
   }
 }
 
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
+
 describe('Timeline component', () => {
   test('should render self', () => {
     const { enzymeWrapper } = setup()
@@ -33,18 +40,75 @@ describe('Timeline component', () => {
     expect(timelineSection.prop('className')).toEqual('timeline')
   })
 
-  test('should update the timeline on componentDidMount', () => {
-    const setTimelineCenterSpy = jest.spyOn(Timeline.prototype, 'setTimelineCenter')
-    const setTimelineZoomSpy = jest.spyOn(Timeline.prototype, 'setTimelineZoom')
-    const setTimelineTemporalSpy = jest.spyOn(Timeline.prototype, 'setTimelineTemporal')
-    const setTimelineFocusSpy = jest.spyOn(Timeline.prototype, 'setTimelineFocus')
+  describe('componentDidMount', () => {
+    test('should update the timeline on componentDidMount', () => {
+      const setTimelineCenterSpy = jest.spyOn(Timeline.prototype, 'setTimelineCenter')
+      const setTimelineZoomSpy = jest.spyOn(Timeline.prototype, 'setTimelineZoom')
+      const setTimelineTemporalSpy = jest.spyOn(Timeline.prototype, 'setTimelineTemporal')
+      const setTimelineFocusSpy = jest.spyOn(Timeline.prototype, 'setTimelineFocus')
 
-    setup()
+      setup()
 
-    expect(setTimelineCenterSpy).toHaveBeenCalledTimes(1)
-    expect(setTimelineZoomSpy).toHaveBeenCalledTimes(1)
-    expect(setTimelineTemporalSpy).toHaveBeenCalledTimes(1)
-    expect(setTimelineFocusSpy).toHaveBeenCalledTimes(1)
+      expect(setTimelineCenterSpy).toHaveBeenCalledTimes(1)
+      expect(setTimelineZoomSpy).toHaveBeenCalledTimes(1)
+      expect(setTimelineTemporalSpy).toHaveBeenCalledTimes(1)
+      expect(setTimelineFocusSpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('calls onToggleOverrideTemporalModal on page load if spatial and focus both exist', () => {
+      jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+      const { props } = setup({
+        pathname: '/projects',
+        showOverrideModal: true,
+        temporalSearch: {
+          endDate: '2019-06-21T19:34:23.865Z',
+          startDate: '2018-12-28T15:56:46.870Z'
+        },
+        timeline: {
+          intervals: {},
+          query: {
+            center: 1552425382,
+            end: 1556668799.999,
+            interval: 'day',
+            start: 1554076800,
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
+        }
+      })
+
+      expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+    })
+
+    test('does not call onToggleOverrideTemporalModal on page load if spatial and focus don\'t both exist', () => {
+      jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+      const { props } = setup({
+        pathname: '/projects',
+        showOverrideModal: true,
+        temporalSearch: {},
+        timeline: {
+          intervals: {},
+          query: {
+            center: 1552425382,
+            end: 1556668799.999,
+            interval: 'day',
+            start: 1554076800,
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
+        }
+      })
+
+      expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+    })
   })
 
   describe('componentWillReceiveProps', () => {
@@ -345,6 +409,43 @@ describe('Timeline component', () => {
       })
       expect(enzymeWrapper.instance().$el.timeline).toBeCalledWith('rows', [])
     })
+
+    test('when pathname changes and the override modal should be shown', () => {
+      jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+      jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+      const { enzymeWrapper, props } = setup({
+        pathname: '/search/granules',
+        showOverrideModal: false,
+        temporalSearch: {
+          endDate: '2019-06-21T19:34:23.865Z',
+          startDate: '2018-12-28T15:56:46.870Z'
+        },
+        timeline: {
+          intervals: {},
+          query: {
+            center: 1552425382,
+            end: 1556668799.999,
+            interval: 'day',
+            start: 1554076800,
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
+        }
+      })
+
+      expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+
+      enzymeWrapper.setProps({
+        ...props,
+        pathname: '/projects',
+        showOverrideModal: true
+      })
+
+      expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+    })
   })
 })
 
@@ -440,6 +541,82 @@ describe('handleTemporalSet', () => {
       }
     }])
   })
+
+  test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', () => {
+    jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+    const { enzymeWrapper, props } = setup({
+      pathname: '/projects',
+      showOverrideModal: true,
+      timeline: {
+        intervals: {},
+        query: {
+          center: 1552425382,
+          end: 1556668799.999,
+          interval: 'day',
+          start: 1554076800,
+          endDate: '2020-09-11T21:16:22.000Z',
+          startDate: '2017-09-09T21:16:22.000Z'
+        }
+      }
+    })
+    const start = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
+    const end = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+
+    enzymeWrapper.instance().handleTemporalSet(jest.fn(), start, end)
+
+    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+  })
+
+  test('does not call onToggleOverrideTemporalModal when setting temporal and focus does not exist', () => {
+    jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+    const { enzymeWrapper, props } = setup({
+      pathname: '/projects',
+      showOverrideModal: true
+    })
+    const start = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
+    const end = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+
+    enzymeWrapper.instance().handleTemporalSet(jest.fn(), start, end)
+
+    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+  })
+
+  test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', () => {
+    jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+    const { enzymeWrapper, props } = setup({
+      pathname: '/search/granules',
+      showOverrideModal: false,
+      timeline: {
+        intervals: {},
+        query: {
+          center: 1552425382,
+          end: 1556668799.999,
+          interval: 'day',
+          start: 1554076800,
+          endDate: '2020-09-11T21:16:22.000Z',
+          startDate: '2017-09-09T21:16:22.000Z'
+        }
+      }
+    })
+    const start = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
+    const end = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+
+    enzymeWrapper.instance().handleTemporalSet(jest.fn(), start, end)
+
+    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+  })
 })
 
 describe('handleFocusChange', () => {
@@ -477,5 +654,70 @@ describe('handleFocusChange', () => {
       end: undefined,
       start: undefined
     }])
+  })
+
+  test('calls onToggleOverrideTemporalModal when setting focuse and temporal already exists', () => {
+    jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+    const { enzymeWrapper, props } = setup({
+      pathname: '/projects',
+      showOverrideModal: true,
+      temporalSearch: {
+        endDate: '2019-06-21T19:34:23.865Z',
+        startDate: '2018-12-28T15:56:46.870Z'
+      }
+    })
+
+    const start = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
+    const end = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
+    enzymeWrapper.instance().handleFocusChange(jest.fn(), start, end)
+
+    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+  })
+
+  test('does not call onToggleOverrideTemporalModal when setting focus and temporal does not exist', () => {
+    jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+    const { enzymeWrapper, props } = setup({
+      pathname: '/projects',
+      showOverrideModal: true
+    })
+
+    const start = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
+    const end = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
+    enzymeWrapper.instance().handleFocusChange(jest.fn(), start, end)
+
+    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+  })
+
+  test('does not call onToggleOverrideTemporalModal when setting focus and temporal exists on the granules page', () => {
+    jest.spyOn(Timeline.prototype, 'setTimelineCenter').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineZoom').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineTemporal').mockImplementation(() => jest.fn())
+    jest.spyOn(Timeline.prototype, 'setTimelineFocus').mockImplementation(() => jest.fn())
+
+    const { enzymeWrapper, props } = setup({
+      pathname: '/search/granules',
+      showOverrideModal: false,
+      temporalSearch: {
+        endDate: '2019-06-21T19:34:23.865Z',
+        startDate: '2018-12-28T15:56:46.870Z'
+      }
+    })
+
+    const start = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
+    const end = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
+    enzymeWrapper.instance().handleFocusChange(jest.fn(), start, end)
+
+    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
   })
 })

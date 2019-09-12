@@ -13,6 +13,10 @@ export const setDataQualitySummaries = dqsData => ({
  */
 export const fetchDataQualitySummaries = catalogItemId => (dispatch, getState) => {
   const { authToken } = getState()
+
+  // If the user is not logged in, don't fetch data quality summaries
+  if (authToken === '') return null
+
   const requestObject = new DataQualitySummaryRequest(authToken)
 
   const response = requestObject.fetch({ catalogItemId })

@@ -3,20 +3,20 @@ import getObjectKeyByValue from '../object'
 
 /**
  * Encodes a Timeline object into an encoded object
- * @param {object} timeline Timeline object with query and state
+ * @param {object} timelineQuery Timeline query object
  * @param {string} pathname Pathname string from react-router
  * @return {string} A `!` delimited string of the timeline values
  */
-export const encodeTimeline = (timeline, pathname) => {
+export const encodeTimeline = (timelineQuery, pathname) => {
   if (pathname === '/search') return ''
-  if (!timeline) return ''
+  if (!timelineQuery) return ''
 
   const {
     center,
     interval,
     start,
     end
-  } = timeline
+  } = timelineQuery
 
   if (!center && !start && !end) return ''
 
