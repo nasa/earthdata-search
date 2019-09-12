@@ -30,7 +30,12 @@ class Timeline extends Component {
     this.$el.timeline()
 
     // set any initial values in props
-    const { temporalSearch, timeline } = this.props
+    const {
+      showOverrideModal,
+      temporalSearch,
+      timeline,
+      onToggleOverrideTemporalModal
+    } = this.props
     const { query } = timeline
     const {
       center,
@@ -50,11 +55,16 @@ class Timeline extends Component {
     this.$el.on('rowtemporalchange.timeline', this.handleRowTemporalChange)
 
     this.$el.trigger('rangechange.timeline')
+
+    if (showOverrideModal && Object.keys(temporalSearch).length > 0 && start && end) {
+      onToggleOverrideTemporalModal(true)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const {
       granuleFilterTemporal: oldGranuleFilterTemporal,
+      pathname: oldPathname,
       temporalSearch: oldTemporalSearch,
       timeline: oldTimeline
     } = this.props
@@ -62,9 +72,12 @@ class Timeline extends Component {
     const {
       collectionMetadata: nextCollectionMetadata,
       focusedCollection: nextFocusedCollection,
+      granuleFilterTemporal: nextGranuleFilterTemporal,
+      pathname: nextPathname,
+      showOverrideModal,
       temporalSearch: nextTemporalSearch,
       timeline: nextTimeline,
-      granuleFilterTemporal: nextGranuleFilterTemporal
+      onToggleOverrideTemporalModal
     } = nextProps
 
     const {
@@ -179,6 +192,17 @@ class Timeline extends Component {
     if (!isEqual(oldGranuleFilterTemporal, nextGranuleFilterTemporal)) {
       const { startDate = '', endDate = '' } = nextGranuleFilterTemporal
       this.setTimelineRowTemporal(nextFocusedCollection, { startDate, endDate })
+    }
+
+    // If the pathname changed and we should show the override modal, show it
+    if (
+      (oldPathname !== nextPathname || oldPathname === undefined)
+      && showOverrideModal
+      && Object.keys(nextTemporalSearch).length > 0
+      && nextFocusStart
+      && nextFocusEnd
+    ) {
+      onToggleOverrideTemporalModal(true)
     }
   }
 
@@ -355,8 +379,23 @@ class Timeline extends Component {
    * @param {string} end End of temporal range
    */
   handleTemporalSet(event, start, end) {
-    const { onChangeQuery } = this.props
+    const {
+      showOverrideModal,
+      timeline,
+      onChangeQuery,
+      onToggleOverrideTemporalModal
+    } = this.props
+
     if (start && end) {
+      // if focused exists and we are on the project page, show the modal
+      if (showOverrideModal) {
+        const { query } = timeline
+        const { start: focusStart, end: focusEnd } = query
+        if (focusStart && focusEnd) {
+          onToggleOverrideTemporalModal(true)
+        }
+      }
+
       onChangeQuery({
         collection: {
           temporal: {
@@ -450,9 +489,10 @@ Timeline.defaultProps = {
 Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}),
   focusedCollection: PropTypes.string.isRequired,
+  granuleFilterTemporal: PropTypes.shape({}),
+  pathname: PropTypes.string.isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({}).isRequired,
-  granuleFilterTemporal: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeTimelineQuery: PropTypes.func.isRequired,

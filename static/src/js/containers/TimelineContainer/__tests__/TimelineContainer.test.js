@@ -61,7 +61,7 @@ describe('TimelineContainer component', () => {
       collections: undefined,
       focusedCollection: 'collectionId',
       granuleFilterTemporal: {},
-      pathname: undefined,
+      pathname: '/search/granules',
       project: undefined,
       collectionMetadata: {
         collectionId: {
@@ -99,7 +99,7 @@ describe('TimelineContainer component', () => {
       collections: undefined,
       focusedCollection: 'collectionId',
       granuleFilterTemporal: {},
-      pathname: undefined,
+      pathname: '/projects',
       project: undefined,
       collectionMetadata: {
         collectionId: {
