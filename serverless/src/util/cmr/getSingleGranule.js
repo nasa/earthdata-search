@@ -1,19 +1,14 @@
 import request from 'request-promise'
 import { stringify } from 'qs'
-import { getSystemToken } from '../urs/getSystemToken'
 import { readCmrResults } from './readCmrResults'
 import { getEarthdataConfig, getClientId } from '../../../../sharedUtils/config'
 import { cmrEnv } from '../../../../sharedUtils/cmrEnv'
-
-let cmrToken
 
 /**
  * Retrieves a single granule result from CMR
  * @param {String} collectionId CMR Collection ID
  */
-export const getSingleGranule = async (collectionId) => {
-  cmrToken = await getSystemToken(cmrToken)
-
+export const getSingleGranule = async (cmrToken, collectionId) => {
   const cmrParams = {
     echo_collection_id: collectionId,
     page_num: 1,

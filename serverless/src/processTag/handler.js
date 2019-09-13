@@ -3,7 +3,7 @@ import { getSystemToken } from '../util/urs/getSystemToken'
 import { addTag } from './addTag'
 import { removeTag } from './removeTag'
 
-let cmrToken = null
+let cmrToken
 
 /**
  * Handler that accepts a Tag (or array of Tags) from SQS to process and store in our database
