@@ -181,4 +181,37 @@ describe('AccessMethod component', () => {
       expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
     })
   })
+
+  describe('when the selected access method is opendap', () => {
+    test('selecting a output format calls onUpdateAccessMethod', () => {
+      const { enzymeWrapper, props } = setup()
+
+      const collectionId = 'collectionId'
+
+      enzymeWrapper.setProps({
+        accessMethods: {
+          opendap: {
+            isValid: true,
+            type: 'OPeNDAP',
+            supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+          }
+        },
+        metadata: { id: collectionId },
+        selectedAccessMethod: 'opendap'
+      })
+
+      const outputFormat = enzymeWrapper.find('#input__output-format')
+      outputFormat.simulate('change', { target: { value: 'nc4' } })
+
+      expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
+      expect(props.onUpdateAccessMethod).toBeCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          opendap: {
+            selectedOutputFormat: 'nc4'
+          }
+        }
+      })
+    })
+  })
 })

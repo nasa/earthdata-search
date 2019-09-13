@@ -5,10 +5,9 @@ import {
   getEarthdataConfig,
   getClientId
 } from '../../../sharedUtils/config'
-import { getEdlConfig } from '../util/configUtil'
 import { cmrEnv } from '../../../sharedUtils/cmrEnv'
 import { cmrStringify } from '../util/cmr/cmrStringify'
-import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
+import { getEchoToken } from '../util/urs/getEchoToken'
 
 /**
  * Returns variable ids grouped by their scienceKeywords
@@ -74,19 +73,12 @@ export const getVariables = async (variableIds, jwtToken) => {
 
   const url = `${getEarthdataConfig(cmrEnv()).cmrHost}/search/variables.umm_json?${variableParams}`
 
-  const { access_token: accessToken } = await getAccessTokenFromJwtToken(jwtToken)
-
-  // The client id is part of our Earthdata Login credentials
-  const edlConfig = await getEdlConfig()
-  const { client } = edlConfig
-  const { id: clientId } = client
-
   try {
     const response = await request.post({
       uri: url,
       headers: {
         'Client-Id': getClientId().lambda,
-        'Echo-Token': `${accessToken}:${clientId}`
+        'Echo-Token': await getEchoToken(jwtToken)
       },
       json: true,
       resolveWithFullResponse: true

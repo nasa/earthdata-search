@@ -8,6 +8,7 @@ import * as getServiceOptionDefinitions from '../getServiceOptionDefinitions'
 import * as getVariables from '../getVariables'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
+import * as getOutputFormats from '../getOutputFormats'
 
 let dbConnectionToMock
 let dbTracker
@@ -225,7 +226,17 @@ describe('getAccessMethods', () => {
         associations: {}
       }
     }
+
+    const supportedOutputFormats = [
+      'HDF4',
+      'NETCDF-3',
+      'NETCDF-4',
+      'BINARY',
+      'ASCII'
+    ]
+
     jest.spyOn(getVariables, 'getVariables').mockImplementation(() => ({ keywordMappings, variables }))
+    jest.spyOn(getOutputFormats, 'getOutputFormats').mockImplementation(() => ({ supportedOutputFormats }))
 
     const event = {
       body: JSON.stringify({
@@ -252,7 +263,8 @@ describe('getAccessMethods', () => {
             type: 'OPeNDAP',
             isValid: true,
             keywordMappings,
-            variables
+            variables,
+            supportedOutputFormats
           }
         },
         selectedAccessMethod: 'opendap'
