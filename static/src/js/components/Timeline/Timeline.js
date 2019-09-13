@@ -42,10 +42,9 @@ class Timeline extends Component {
       showOverrideModal,
       temporalSearch,
       timeline,
-      onToggleOverrideTemporalModal,
-      timeline
+      onToggleOverrideTemporalModal
     } = this.props
-\
+
     const { query } = timeline
     const {
       center,
