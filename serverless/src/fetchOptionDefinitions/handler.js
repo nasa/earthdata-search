@@ -39,7 +39,7 @@ const fetchOptionDefinitions = async (event, context) => {
     const { collectionId, tagData: providedTagData } = collectionGranuleAssocation
 
     try {
-      const singleGranule = await getSingleGranule(collectionId)
+      const singleGranule = await getSingleGranule(cmrToken, collectionId)
 
       const { id: granuleId } = singleGranule
 

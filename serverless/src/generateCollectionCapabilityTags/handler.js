@@ -84,7 +84,7 @@ const generateCollectionCapabilityTags = async (event) => {
         if (Object.keys(tags).includes('org.ceos.wgiss.cwic.granules.prod') && granuleCount === 0) {
           // Create an SQS Queue for adding CWIC specific data
         } else {
-          const singleGranule = await getSingleGranule(id)
+          const singleGranule = await getSingleGranule(cmrToken, id)
 
           if (singleGranule) {
             const {
